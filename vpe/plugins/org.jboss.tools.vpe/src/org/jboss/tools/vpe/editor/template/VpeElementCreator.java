@@ -7,13 +7,12 @@
  *
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
 import java.util.Map;
 
 import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -27,6 +26,7 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 
 public class VpeElementCreator extends VpeAbstractCreator {
 	private boolean caseSensitive;
@@ -36,7 +36,7 @@ public class VpeElementCreator extends VpeAbstractCreator {
 		this.caseSensitive = caseSensitive;
 		build(element, dependencyMap);
 	}
-	
+
 	private void build(Element element, VpeDependencyMap dependencyMap) {
 		Attr nameAttr = element.getAttributeNode(VpeTemplateManager.ATTR_ELEMENT_NAME);
 		if (nameAttr != null) {
@@ -50,6 +50,7 @@ public class VpeElementCreator extends VpeAbstractCreator {
 		}
 	}
 
+	@Override
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) throws VpeExpressionException {
 		if (expression != null) {
 			visualNodeMap.put(this, visualElement);
@@ -62,7 +63,14 @@ public class VpeElementCreator extends VpeAbstractCreator {
 		return null;
 	}
 
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNde, Object data, String name, String value) {
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.vpe.editor.template.VpeAbstractCreator#isRecreateAtAttrChange(org.jboss.tools.vpe.editor.context.VpePageContext, org.w3c.dom.Element, org.mozilla.interfaces.nsIDOMDocument, org.mozilla.interfaces.nsIDOMNode, java.lang.Object, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
+			Element sourceElement, nsIDOMDocument visualDocument,
+			nsIDOMNode visualNode, Object data, String name, String value) {
 		return true;
 	}
 }

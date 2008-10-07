@@ -26,8 +26,8 @@ import org.jboss.tools.vpe.editor.util.HTML;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -36,7 +36,7 @@ import org.w3c.dom.NodeList;
 public class VpePanelGridCreator extends VpeAbstractCreator {
 
 	private final String REDUNDANT_TEXT_SEPARATOR = "\n\n"; //$NON-NLS-1$
-	
+
 	private boolean caseSensitive;
 	private VpeExpression tableSizeExpr;
 	private VpeExpression captionClassExpr;
@@ -187,6 +187,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 		}
 	}
 
+	@Override
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument, nsIDOMElement visualElement,
 			Map visualNodeMap) throws VpeExpressionException {
@@ -214,7 +215,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 		td.appendChild(div);
 		tr.appendChild(td);
 		selectionTable.appendChild(tr);
-		
+
 		nsIDOMElement visualTable = visualDocument
 				.createElement(HTML.TAG_TABLE);
 
@@ -225,7 +226,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 				VpeCreator creator = (VpeCreator) propertyCreators.get(i);
 				if (creator != null) {
 					VpeCreatorInfo info = creator.create(pageContext,
-							(Element) sourceNode, visualDocument, visualTable,
+							sourceNode, visualDocument, visualTable,
 							visualNodeMap);
 					if (info != null && info.getVisualNode() != null) {
 						nsIDOMAttr attr = (nsIDOMAttr) info.getVisualNode();
@@ -257,10 +258,10 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 				int type = node.getNodeType();
 				if (type == Node.ELEMENT_NODE || type == Node.TEXT_NODE
 						&& node.getNodeValue().trim().length() > 0) {
-					
+
 					/*
 					 * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944
-					 * author: Denis Maliarevich 
+					 * author: Denis Maliarevich
 					 * Finds all unattended text nodes
 					 */
 					if (type == Node.TEXT_NODE) {
@@ -285,7 +286,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 					}
 				}
 			}
-			
+
 			/*
 			 * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944
 			 * author: Denis Maliarevich
@@ -301,7 +302,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 				div.appendChild(visualDocument.createTextNode(redundantText));
 			}
 			div.appendChild(visualTable);
-			
+
 			if (childrenCount > 0) {
 				if (tableSize == 0) {
 					tableSize = childrenCount;
@@ -311,7 +312,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 				nsIDOMElement visualHead = null;
 				nsIDOMElement visualFoot = null;
 				nsIDOMElement visualCaption = null;
-	
+
 				if (caption != null) {
 					visualCaption = visualDocument
 							.createElement(HTML.TAG_CAPTION);
@@ -348,16 +349,16 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 				nsIDOMElement visualBody = visualDocument
 						.createElement(HTML.TAG_TBODY);
 				visualTable.appendChild(visualBody);
-		
+
 				List rowClasses = getClasses(rowClassesExpr, sourceNode,
 						pageContext);
 				List columnClasses = getClasses(columnClassesExpr, sourceNode,
 						pageContext);
-				
+
 				int rci = 0; // index of row class
 				for (int i = 0; i < rowCount; i++) {
-					int cci = 0; // index of column class. Reset on every new row. 
-					
+					int cci = 0; // index of column class. Reset on every new row.
+
 					nsIDOMElement visualRow = visualDocument
 							.createElement(HTML.TAG_TR);
 					if (rowClasses.size() > 0) {
@@ -404,7 +405,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 					VpeCreator creator = (VpeCreator) propertyCreators.get(i);
 					if (creator != null) {
 						VpeCreatorInfo info = creator.create(pageContext,
-								(Element) sourceNode, visualDocument,
+								sourceNode, visualDocument,
 								visualTable, visualNodeMap);
 						if (info != null && info.getVisualNode() != null) {
 							nsIDOMAttr attr = (nsIDOMAttr) info.getVisualNode();
@@ -471,9 +472,14 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.vpe.editor.template.VpeAbstractCreator#isRecreateAtAttrChange(org.jboss.tools.vpe.editor.context.VpePageContext, org.w3c.dom.Element, org.mozilla.interfaces.nsIDOMDocument, org.mozilla.interfaces.nsIDOMNode, java.lang.Object, java.lang.String, java.lang.String)
+	 */
+	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
-			Element sourceElement, Document visualDocument, Node visualNde,
-			Object data, String name, String value) {
+			Element sourceElement, nsIDOMDocument visualDocument,
+			nsIDOMNode visualNode, Object data, String name, String value) {
 		return true;
 	}
+
 }

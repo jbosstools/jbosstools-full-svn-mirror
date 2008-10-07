@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
 import java.util.Map;
@@ -19,7 +19,6 @@ import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -31,12 +30,13 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		this.caseSensitive = caseSensitive;
 	}
 
+	@Override
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		VpeCreatorInfo creatorInfo = null;
 
 		boolean isHeader = false;
 		boolean isFooter = false;
-		
+
 		Node nameAttr = sourceNode.getAttributes().getNamedItem("name");
 		if (nameAttr != null) {
 			String name = nameAttr.getNodeValue();
@@ -55,7 +55,7 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 
 				nsIDOMNode header = null;
 				nsIDOMNode footer = null;
-				
+
 				if (visualParent != null && visualParent.getNodeName().equalsIgnoreCase("table")) {
 					nsIDOMNodeList children = visualParent.getChildNodes();
 					long count = children != null ? children.getLength() : 0;
@@ -76,7 +76,7 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 				}
 
 				nsIDOMElement cell = null;
-				int columnsCount = getColumnsCount(sourceParent); 
+				int columnsCount = getColumnsCount(sourceParent);
 				if (isHeader) {
 					cell = makeCell(columnsCount, HTML.TAG_TH, visualDocument);
 				} else if (isFooter) {
@@ -95,7 +95,15 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		return creatorInfo;
 	}
 
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
+
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.vpe.editor.template.VpeAbstractCreator#isRecreateAtAttrChange(org.jboss.tools.vpe.editor.context.VpePageContext, org.w3c.dom.Element, org.mozilla.interfaces.nsIDOMDocument, org.mozilla.interfaces.nsIDOMNode, java.lang.Object, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
+			Element sourceElement, nsIDOMDocument visualDocument,
+			nsIDOMNode visualNode, Object data, String name, String value) {
 		return true;
 	}
 
@@ -110,7 +118,7 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 			}
 		}
 	}
-	
+
 	private String getTableAttrValue(Node dataTableNode, String attrName) {
 		if (dataTableNode != null) {
 			Node attr = dataTableNode.getAttributes().getNamedItem(attrName);

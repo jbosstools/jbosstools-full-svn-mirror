@@ -144,14 +144,26 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 		return index;
 	}
 
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, Document visualDocument, Node visualNode, Object data, String name, String value) {
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.vpe.editor.template.VpeAbstractCreator#isRecreateAtAttrChange(org.jboss.tools.vpe.editor.context.VpePageContext, org.w3c.dom.Element, org.mozilla.interfaces.nsIDOMDocument, org.mozilla.interfaces.nsIDOMNode, java.lang.Object, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
+			Element sourceElement, nsIDOMDocument visualDocument,
+			nsIDOMNode visualNode, Object data, String name, String value) {
 		return true;
 	}
 
-	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode, Node visualNode, Map visualNodeMap) {
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.vpe.editor.template.VpeAbstractCreator#getNodeForUptate(org.jboss.tools.vpe.editor.context.VpePageContext, org.w3c.dom.Node, org.mozilla.interfaces.nsIDOMNode, java.util.Map)
+	 */
+	@Override
+	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode,
+			nsIDOMNode visualNode, Map visualNodeMap) {
 		return sourceNode.getParentNode();
 	}
 
+	@Override
 	public void removeElement(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
 		Object elements = visualNodeMap.get(this);
 		if (elements != null && elements instanceof VisualColumnElements) {
