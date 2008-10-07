@@ -130,79 +130,34 @@ public abstract class AbstractStructuredDataModel implements IPropertySource,
 		return typeString;
 	}
 
-	/**
-	 * ���ýڵ��Java���͡��������Ҫ������ȫ�����ￄ1�7code>java.lang.String</code>
-	 * ���������Ǹ������ͣ�������Ϊ<code>null</code>��
-	 * 
-	 * @param typeString
-	 *            �ڵ��Java����
-	 */
 	public void setTypeString(String typeString) {
 		this.typeString = typeString;
 	}
 
 	/**
-	 * ����Ԫ�ض����Ӵ�
 	 */
 	protected List children = new ArrayList();
 
 	private AbstractStructuredDataModel parent = null;
 
-	/**
-	 * ��ģ�������ü������ģ�ͷ���ı�ʱ����������Ѹı�֪ͨEditPart��
-	 * EditPart��Ҫʵ��PropertyChangeListener�ӿ�
-	 * �����������ʱ�����PropertyChangeListener�ӿ��е�peopertyChange����4��ɴ����ￄ1�7
-	 */
 	private PropertyChangeSupport listeners = new PropertyChangeSupport(this);
 
-	/**
-	 * Ϊģ����Ӽ����ￄ1�7
-	 * 
-	 * @param listener
-	 *            PropertyChangeSupport ������
-	 */
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		listeners.addPropertyChangeListener(listener);
 	}
 
-	/**
-	 * ɾ��ģ�͵ļ�����
-	 * 
-	 * @param listener
-	 *            PropertyChangeSupport ������
-	 */
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		listeners.removePropertyChangeListener(listener);
 	}
 
-	/**
-	 * ��ģ�ͷ���仯ʱ��Ҫ�������ￄ1�7����������
-	 * 
-	 * @param propName
-	 *            �ı�����ￄ1�7
-	 * @param oldValue
-	 * @param newValue
-	 */
 	public void firePropertyChange(String propName, Object oldValue,
 			Object newValue) {
 		listeners.firePropertyChange(propName, oldValue, newValue);
 	}
 
-	/**
-	 * ���ص�ǰģ�����е���Ԫ�ء����ǰģ��û����Ԫ�ￄ1�7
-	 * 
-	 * @return ��ǰģ�����е���Ԫ��
-	 */
 	public List getChildren() {
 		return children;
 	}
-
-	/**
-	 * �����Ԫ�أ���֪ͨģ����Ԫ�ط���ı�
-	 * 
-	 * @param child
-	 *            ��Ԫ��
-	 */
 	public void addChild(Object child) {
 		if (child == null)
 			return;
@@ -249,10 +204,6 @@ public abstract class AbstractStructuredDataModel implements IPropertySource,
 	}
 
 	/**
-	 * ɾ����Ԫ�أ���֪ͨģ����Ԫ�ط���ıￄ1�7
-	 * 
-	 * @param child
-	 *            ��Ԫ��
 	 */
 	public void removeChild(Object child) {
 		if (child == null || children == null)
@@ -271,9 +222,6 @@ public abstract class AbstractStructuredDataModel implements IPropertySource,
 	 * @see org.eclipse.ui.views.properties.IPropertySource#getEditableValue()
 	 */
 	public Object getEditableValue() {
-
-		// ����ģ��������Ϊ�ɱ༭������ֵ
-		// 
 		return this;
 	}
 
@@ -284,8 +232,6 @@ public abstract class AbstractStructuredDataModel implements IPropertySource,
 	 */
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 
-		// ��Ϊ�ڳ���ģ���з���null������쳣��������ﷵ��һ��0���ȵ�����
-		// 
 		return new IPropertyDescriptor[0];
 	}
 

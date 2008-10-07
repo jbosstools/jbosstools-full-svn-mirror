@@ -700,6 +700,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		context.setDataMappingRootModel(this.rootModel);
 		context.setSmooksConfigFile(((IFileEditorInput) getEditorInput())
 				.getFile());
+		context.setShell(getSite().getShell());
 	}
 
 	protected Composite createUISectionContainer(Composite parent, int columns) {

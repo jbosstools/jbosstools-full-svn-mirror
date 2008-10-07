@@ -17,6 +17,7 @@ import java.util.Properties;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.smooks.graphical.Param;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
@@ -36,6 +37,8 @@ public class SmooksConfigurationFileGenerateContext {
 	private Properties properties = new Properties();
 	protected IFile smooksConfigFile = null;
 	protected EditingDomain domain;
+	
+	private Shell shell;
 	
 	protected String smooksType = null;
 	/**
@@ -142,6 +145,12 @@ public class SmooksConfigurationFileGenerateContext {
 			Object key = keys.nextElement();
 			this.properties.put(key, properties.get(key));
 		}
+	}
+	public Shell getShell() {
+		return shell;
+	}
+	public void setShell(Shell shell) {
+		this.shell = shell;
 	}
 	
 }

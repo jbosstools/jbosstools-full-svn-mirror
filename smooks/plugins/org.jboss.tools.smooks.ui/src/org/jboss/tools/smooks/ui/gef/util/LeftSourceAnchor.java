@@ -8,7 +8,7 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
 
 /**
- * @author Administrator
+ * @author Dart
  * 
  */
 public class LeftSourceAnchor extends ChopboxAnchor {

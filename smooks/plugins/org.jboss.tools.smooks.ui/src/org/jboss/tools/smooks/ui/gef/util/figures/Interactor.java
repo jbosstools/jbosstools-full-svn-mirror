@@ -6,7 +6,7 @@ import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 
 /**
- * Interactor the +/- control commonly found in trees
+ * @deprecated
  */
 public class Interactor extends RectangleFigure {
 

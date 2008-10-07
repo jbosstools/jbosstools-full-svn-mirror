@@ -40,9 +40,6 @@ import org.jboss.tools.smooks.ui.gef.util.figures.ContainerLayout;
 import org.jboss.tools.smooks.ui.gef.util.figures.FillLayout;
 
 /**
- * ������ṹ��EditPart
- * 
- * @author wangpeng 2007-3-20 15:53:37
  * 
  */
 public class StructuredDataEditPart extends AbstractStructuredDataEditPart

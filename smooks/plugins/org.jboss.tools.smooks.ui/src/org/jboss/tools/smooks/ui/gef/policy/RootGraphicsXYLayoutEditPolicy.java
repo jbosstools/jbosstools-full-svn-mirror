@@ -15,6 +15,13 @@ import org.jboss.tools.smooks.ui.gef.commands.CommandMappingFactory;
 import org.jboss.tools.smooks.ui.gef.commands.ICommandMappingFactory;
 import org.jboss.tools.smooks.ui.gef.model.IGraphicalModel;
 
+
+
+/**
+ * @deprecated
+ * @author Dart
+ *
+ */
 public class RootGraphicsXYLayoutEditPolicy extends XYLayoutEditPolicy {
 
 	private ICommandMappingFactory mappingFactory = null;

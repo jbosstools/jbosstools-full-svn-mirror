@@ -35,7 +35,6 @@ public class AbstractStructuredDataConnectionModel implements PropertyChangeList
 	}
 
 	/**
-	 * t�ӵ���ʼ����ӵ�source
 	 */
 	public void attachSource() {
 		if (!source.getModelSourceConnections().contains(this)) {
@@ -44,7 +43,6 @@ public class AbstractStructuredDataConnectionModel implements PropertyChangeList
 	}
 
 	/**
-	 * t�ӵ�β����ӵ�target
 	 */
 	public void attachTarget() {
 		if (!target.getModelTargetConnections().contains(this)) {

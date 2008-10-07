@@ -11,6 +11,7 @@
 package org.jboss.tools.smooks.ui.gef.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.swt.widgets.TreeItem;
@@ -19,23 +20,25 @@ import org.eclipse.swt.widgets.TreeItem;
  * @author Dart Peng
  * @Date Jul 31, 2008
  */
-public class TreeItemRelationModel extends AbstractStructuredDataModel implements IConnectableModel {
-	
+public class TreeItemRelationModel extends AbstractStructuredDataModel
+		implements IConnectableModel {
+
 	public static final String PRO_TREE_ITEM_SELECTION_STATUS = "__pro_treeitem_selection_status";
-	
+
 	public static final String PRO_TREE_REPAINT = "__pro_tree_repaint";
-	
+
 	TreeItem treeItem = null;
 	List<Object> modelSourceConnections = new ArrayList<Object>();
 	List<Object> modelTargetConnections = new ArrayList<Object>();
+
 	public TreeItem getTreeItem() {
 		return treeItem;
 	}
-	
-	public boolean isCollapse(){
+
+	public boolean isCollapse() {
 		TreeItem item = getTreeItem();
 		int y = Integer.MAX_VALUE;
-		if(item != null){
+		if (item != null) {
 			y = item.getBounds().y;
 		}
 		return (y == 0);
@@ -54,7 +57,6 @@ public class TreeItemRelationModel extends AbstractStructuredDataModel implement
 		this.getModelTargetConnections().add(connx);
 		this.firePropertyChange(P_TARGET_CONNECTION, null, connx);
 	}
-
 
 	public void removeSourceConnection(Object connx) {
 		this.getModelSourceConnections().remove(connx);
@@ -80,6 +82,30 @@ public class TreeItemRelationModel extends AbstractStructuredDataModel implement
 
 	public void setModelTargetConnections(List<Object> modelTargetConnections) {
 		this.modelTargetConnections = modelTargetConnections;
+	}
+
+	public boolean isSourceConnectWith(IConnectableModel target) {
+		List list = this.getModelSourceConnections();
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			LineConnectionModel connection = (LineConnectionModel) iterator
+					.next();
+			if (connection.getTarget() == target) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isTargetConnectWith(IConnectableModel source) {
+		List list = this.getModelTargetConnections();
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			LineConnectionModel connection = (LineConnectionModel) iterator
+					.next();
+			if (connection.getSource() == source) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

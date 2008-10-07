@@ -13,8 +13,10 @@ import org.jboss.tools.smooks.ui.gef.editparts.StructuredDataContentEditPart;
 import org.jboss.tools.smooks.ui.gef.figures.IExpandable;
 import org.jboss.tools.smooks.ui.gef.util.figures.Interactor;
 
-//hooks up an interactor with an edit part and the figure that needs to be expanded and collapsed
-//
+/**
+ * @deprecated
+ *
+ */
 public class InteractorHelper implements MouseListener {
 
 	protected boolean needToPerformDefaultExpansion = true;

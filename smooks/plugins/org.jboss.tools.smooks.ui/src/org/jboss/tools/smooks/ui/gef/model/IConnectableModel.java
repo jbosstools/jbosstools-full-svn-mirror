@@ -34,4 +34,8 @@ public interface IConnectableModel {
 	public void removeSourceConnection(Object connx);
 
 	public void removeTargetConnection(Object connx);
+	
+	public boolean isSourceConnectWith(IConnectableModel target);
+	
+	public boolean isTargetConnectWith(IConnectableModel source);
 }

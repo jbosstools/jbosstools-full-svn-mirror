@@ -10,7 +10,9 @@ import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.jboss.tools.smooks.ui.gef.figures.IExpandable;
 import org.jboss.tools.smooks.ui.gef.figures.SpacingFigure;
-
+/**
+ * @deprecated
+ */
 public class ContainerLayout extends AbstractLayout {
 	protected boolean isHorizontal;
 
