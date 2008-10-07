@@ -255,7 +255,7 @@ WHERE COUNTRY = 'USA']]></programlisting>
                         
                         <section><title>Create Report Layout</title>
                                 
-                                <para>After  the Data source and Data set are specified you can continue with the report layout.</para>
+                                <para>After  the Data source and Data set are specified you can continue with the report layout. Please see the <xref linkend="birt_designer"/> chapter to learn more about BIRT Report Designer.</para>
                                 
                         </section>
                         
