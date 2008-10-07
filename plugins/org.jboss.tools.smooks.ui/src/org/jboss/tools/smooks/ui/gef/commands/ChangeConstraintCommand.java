@@ -15,6 +15,7 @@ import org.eclipse.gef.commands.Command;
 import org.jboss.tools.smooks.ui.gef.model.IGraphicalModel;
 
 /**
+ * @deprecated
  * @author Dart Peng
  * 
  */

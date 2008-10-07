@@ -145,7 +145,6 @@ public class GroupFigure extends RectangleFigure implements GraphicsConstants {
 	}
 
 	/**
-	 * ���ظ�Group��
 	 * @return
 	 */
 	public String getTextName() {

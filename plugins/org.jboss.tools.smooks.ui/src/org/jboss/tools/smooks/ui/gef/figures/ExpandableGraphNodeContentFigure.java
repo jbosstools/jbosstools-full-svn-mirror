@@ -65,7 +65,6 @@ public class ExpandableGraphNodeContentFigure extends GraphNodeContentFigure {
 	}
 
 	/**
-	 * @param interactor Ҫ���õ� interactor��
 	 */
 	public void setInteractor(IFigure interactor) {
 		this.interactor = interactor;

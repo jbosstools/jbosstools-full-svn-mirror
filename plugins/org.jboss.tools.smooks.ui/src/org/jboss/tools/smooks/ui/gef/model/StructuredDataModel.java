@@ -98,4 +98,12 @@ public class StructuredDataModel extends AbstractStructuredDataModel implements
 	public void setModelTargetConnections(List modelTargetConnections) {
 		this.modelTargetConnections = modelTargetConnections;
 	}
+
+	public boolean isSourceConnectWith(IConnectableModel target) {
+		throw new RuntimeException("Don't support this method currently");
+	}
+
+	public boolean isTargetConnectWith(IConnectableModel source) {
+		throw new RuntimeException("Don't support this method currently");
+	}
 }

@@ -20,19 +20,19 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.command.BasicCommandStack;
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.xml.type.AnyType;
-import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.smooks.analyzer.IMappingAnalyzer;
 import org.jboss.tools.smooks.analyzer.ISourceModelAnalyzer;
 import org.jboss.tools.smooks.analyzer.ITargetModelAnalyzer;
@@ -47,7 +47,6 @@ import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.ResourceType;
 import org.jboss.tools.smooks.model.SmooksFactory;
-import org.jboss.tools.smooks.model.SmooksPackage;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
@@ -150,8 +149,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	 * @param parentResourceConfigType
 	 * @param beanId
 	 */
-	protected void analyzeStructuredDataModel(
-			List resourceList,
+	protected void analyzeStructuredDataModel(List resourceList,
 			AbstractStructuredDataModel root,
 			AbstractStructuredDataModel dataModel,
 			ResourceConfigType parentResourceConfigType, String beanId) {
@@ -187,14 +185,14 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					ResourceConfigType resourceConfig = SmooksFactory.eINSTANCE
 							.createResourceConfigType();
 					resourceList.add(resourceConfig);
-//					Command addResourceConfigCommand = AddCommand
-//							.create(
-//									editingDomain,
-//									resourceList,
-//									SmooksPackage.eINSTANCE
-//											.getSmooksResourceListType_AbstractResourceConfig(),
-//									resourceConfig);
-//					addResourceConfigCommand.execute();
+					// Command addResourceConfigCommand = AddCommand
+					// .create(
+					// editingDomain,
+					// resourceList,
+					// SmooksPackage.eINSTANCE
+					// .getSmooksResourceListType_AbstractResourceConfig(),
+					// resourceConfig);
+					// addResourceConfigCommand.execute();
 					// resouceConfig.
 					resourceConfig
 							.setSelector(getSourceBeanSelectorString((AbstractStructuredDataModel) source));
@@ -351,10 +349,91 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.tools.smooks.analyzer.IMappingAnalyzer#analyzeMappingGraphModel(org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext)
+	 */
 	public void analyzeMappingGraphModel(
 			SmooksConfigurationFileGenerateContext context)
 			throws SmooksAnalyzerException {
 		GraphRootModel root = context.getDataMappingRootModel();
+		List sourceList = root.loadSourceModelList();
+		List targetList = root.loadTargetModelList();
+
+		JavaBeanModel rootSource = null;
+		JavaBeanModel rootTarget = null;
+
+		boolean needCheck = false;
+
+		for (Iterator iterator = sourceList.iterator(); iterator.hasNext();) {
+			AbstractStructuredDataModel sourcegm = (AbstractStructuredDataModel) iterator
+					.next();
+			if (sourcegm instanceof IConnectableModel) {
+				if (!((IConnectableModel) sourcegm).getModelSourceConnections()
+						.isEmpty()
+						|| !((IConnectableModel) sourcegm)
+								.getModelTargetConnections().isEmpty()) {
+					needCheck = true;
+					break;
+				}
+			}
+		}
+
+		if (needCheck) {
+			for (Iterator iterator = sourceList.iterator(); iterator.hasNext();) {
+				AbstractStructuredDataModel sourceGraphModel = (AbstractStructuredDataModel) iterator
+						.next();
+				JavaBeanModel source = (JavaBeanModel) sourceGraphModel
+						.getReferenceEntityModel();
+				if (source.isRoot()) {
+					rootSource = source;
+					break;
+				}
+			}
+
+			for (Iterator iterator = targetList.iterator(); iterator.hasNext();) {
+				AbstractStructuredDataModel targetGraphModel = (AbstractStructuredDataModel) iterator
+						.next();
+				JavaBeanModel target = (JavaBeanModel) targetGraphModel
+						.getReferenceEntityModel();
+				if (target.isRoot()) {
+					rootTarget = target;
+					break;
+				}
+			}
+			if (rootSource != null && rootTarget != null) {
+				AbstractStructuredDataModel rootSourceGraphModel = UIUtils
+						.findGraphModel(root, rootSource);
+				AbstractStructuredDataModel rootTargetGraphModel = UIUtils
+						.findGraphModel(root, rootTarget);
+				if (rootSourceGraphModel instanceof IConnectableModel
+						&& rootTargetGraphModel instanceof IConnectableModel) {
+					if (((IConnectableModel) rootSourceGraphModel)
+							.isSourceConnectWith((IConnectableModel) rootTargetGraphModel)) {
+						// do nothing
+					} else {
+						// ask user if they want to connect the root model
+						Shell displayParent = context.getShell();
+						boolean connectAuto = MessageDialog
+								.openQuestion(
+										displayParent,
+										"Connection Question",
+										"The root models don't be connected , maybe it will make some errors with the generation config file contents.\nDo you wan to connect them?");
+						if (connectAuto) {
+							// connect root model
+							LineConnectionModel connectionModel = new LineConnectionModel();
+							connectionModel
+									.setSource((IConnectableModel) rootSourceGraphModel);
+							connectionModel
+									.setTarget((IConnectableModel) rootTargetGraphModel);
+							connectionModel.connect();
+						}
+					}
+				}
+			}
+		}
+
 		SmooksResourceListType listType = context.getSmooksResourceListModel();
 		this.analyzeGraphicalModel(root, context.getGeneratorResourceList());
 	}
@@ -511,7 +590,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			if (ar instanceof ResourceConfigType) {
 				ResourceConfigType rc = (ResourceConfigType) ar;
 				ResourceType resourceType = rc.getResource();
-				if(resourceType == null) continue;
+				if (resourceType == null)
+					continue;
 				String resource = resourceType.getValue();
 				if (BEANPOPULATOR.equals(resource)) {
 					// create root beanmodel
@@ -591,7 +671,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			if (ar instanceof ResourceConfigType) {
 				ResourceConfigType rc = (ResourceConfigType) ar;
 				ResourceType resourceType = rc.getResource();
-				if(resourceType == null) continue;
+				if (resourceType == null)
+					continue;
 				String resource = resourceType.getValue();
 				if (BEANPOPULATOR.equals(resource)) {
 					// create root beanmodel
@@ -600,7 +681,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				}
 			}
 		}
-		if(current == null) return null;
+		if (current == null)
+			return null;
 		Class rootClass = null;
 		rootClassName = SmooksModelUtils.getParmaText("beanClass", current);
 		if (rootClassName != null && loader != null) {
