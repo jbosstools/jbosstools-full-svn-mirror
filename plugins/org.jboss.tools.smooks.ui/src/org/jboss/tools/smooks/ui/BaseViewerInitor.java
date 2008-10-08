@@ -25,6 +25,7 @@ public class BaseViewerInitor implements IViewerInitor {
 	protected String name = "nonamed";
 	protected String wizardIconPath = null;
 	IConfigurationElement configurationElement = null;
+	protected String description;
 
 	/**
 	 * @return the name
@@ -126,5 +127,13 @@ public class BaseViewerInitor implements IViewerInitor {
 	public void setConfigurationElement(
 			IConfigurationElement configurationElement) {
 		this.configurationElement = configurationElement;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

@@ -6,8 +6,9 @@
       <viewerInitor
             contentProvider="org.jboss.tools.smooks.xml.ui.XMLStructuredDataContentProvider"
             creationWizard="org.jboss.tools.smooks.xml.ui.XMLStructuredDataWizard"
+            description="XML data type comes from any .xml file."
             labelProvider="org.jboss.tools.smooks.xml.ui.XMLStructuredDataLabelProvider"
-            name="XML"
+            name="XML Data Type"
             typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
       </viewerInitor>
    </extension>

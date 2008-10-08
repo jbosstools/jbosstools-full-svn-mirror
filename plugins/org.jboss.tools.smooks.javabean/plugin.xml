@@ -6,8 +6,9 @@
       <viewerInitor
             contentProvider="org.jboss.tools.smooks.javabean.model.BeanContentProvider"
             creationWizard="org.jboss.tools.smooks.javabean.ui.NewJavaBeanStrucutredDataWizard"
+            description="This data type can get from any Java .class."
             labelProvider="org.jboss.tools.smooks.javabean.model.BeanlabelProvider"
-            name="JavaBean"
+            name="JavaBean Data Type"
             typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
       </viewerInitor>
    </extension>
