@@ -12,37 +12,45 @@
 
     <title>BIRT Designer</title>
 
-    <para>There are a number of ways we can improve the report's appearance: </para>
-        
-    <itemizedlist><listitem><para>Add a title to the top of the report;</para></listitem>
-    
-    
-    
-    Add a title to the top of the report. 
-        Add some color to enhance the column headings. 
-        Shrink the size of the city and state columns. 
-        Add some color to make the state and city group headers stand out. 
-        Format the phone numbers. 
-        Sort customers by name.
-    </itemizedlist>
-    
+
     
     
     
     
     <section id="birt_designer_introduction">
         
-        <title>BIRT Designer</title>
-       <para> text here</para>
+        <title>BIRT Report Designer</title>
+        <para>BIRT Designer is an intuitive and quite easy  Eclipse-based set of plugins to make reports. We will pass you through all its features.</para>
+            
     </section>
     
     
    
     <section id="birt_designer_features">
        
-        <title>BIRT Designer Features</title>
-        <para>text here</para>
+        <title>BIRT Report Designer Features</title>
+        <para>Here are the main BIRT Report Designer features:</para>
+        <itemizedlist><listitem><para><emphasis role="bold"></emphasis>Palette - Contains the standard BIRT report elements such as labels, tables, and charts and is used in conjunction with the Layout View to design reports.</para></listitem>
+        
+        
+        
+        </itemizedlist>
        
       
+      
+      
+        <para>There are a number of ways we can improve the report's appearance: </para>
+        
+        <itemizedlist><listitem><para>Add a title to the top of the report;</para></listitem>
+            
+            
+            
+            Add a title to the top of the report. 
+            Add some color to enhance the column headings. 
+            Shrink the size of the city and state columns. 
+            Add some color to make the state and city group headers stand out. 
+            Format the phone numbers. 
+            Sort customers by name.
+        </itemizedlist>
     </section>
 </chapter>
