@@ -30,4 +30,6 @@ public interface IViewerInitor {
 	String getName();
 	
 	String getWizardIconPath();
+	
+	String getDescription();
 }

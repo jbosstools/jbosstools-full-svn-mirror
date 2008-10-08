@@ -138,10 +138,11 @@ public class ViewerInitorStore {
 			
 			String iconPath = element.getAttribute(SmooksExtensionPointConstants.EXTENTION_POINT_ATTRIBUTE_ICON);
 			
+			String description = element.getAttribute(SmooksExtensionPointConstants.EXTENTION_POINT_ATTRIBUTE_DESCRIPTION);
 			BaseViewerInitor initor = new BaseViewerInitor();
 
 			initor.setName(name);
-			
+			initor.setDescription(description);
 			initor.setWizardIconPath(iconPath);
 			
 			initor.setTypeID(typeID);

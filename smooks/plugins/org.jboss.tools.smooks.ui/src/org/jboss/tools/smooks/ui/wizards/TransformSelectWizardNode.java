@@ -24,6 +24,15 @@ public class TransformSelectWizardNode implements IWizardNode {
 	String name = "";
 	String iconPath = null;
 	String pluginID = null;
+	String description = "";
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public String getPluginID() {
 		return pluginID;
 	}

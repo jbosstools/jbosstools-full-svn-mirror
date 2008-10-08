@@ -31,7 +31,10 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardSelectionPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
 import org.jboss.tools.smooks.ui.IViewerInitor;
 import org.jboss.tools.smooks.ui.ViewerInitorStore;
@@ -44,6 +47,7 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 
 	List registedWizard = new ArrayList();
 	TreeViewer viewer = null;
+	private Label desLabel;
 
 	/*
 	 * (non-Javadoc)
@@ -52,11 +56,21 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 	 */
 	public void createControl(Composite parent) {
 		// parent.setLayout(new FillLayout());
-		viewer = new TreeViewer(parent, SWT.NONE);
+		Composite main = new Composite(parent, SWT.NONE);
+
+		GridLayout gridLayout = new GridLayout();
+		main.setLayout(gridLayout);
+
+		viewer = new TreeViewer(main, SWT.NONE);
 		viewer.setContentProvider(new WizardNodeContentProvider());
 		viewer.setLabelProvider(new WizardNodeLabelProvider());
-
+		GridData gd = new GridData(GridData.FILL_BOTH);
+		viewer.getTree().setLayoutData(gd);
 		createAllExtentionWizard();
+
+		desLabel = new Label(main, SWT.NONE);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		desLabel.setLayoutData(gd);
 
 		viewer.setInput(registedWizard);
 		if (!registedWizard.isEmpty()) {
@@ -68,8 +82,13 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 				IStructuredSelection selection = (IStructuredSelection) event
 						.getSelection();
 				IWizardNode node = (IWizardNode) selection.getFirstElement();
+				desLabel.setText("");
 				if (node != null) {
 					setSelectedNode(node);
+					if(node instanceof TransformSelectWizardNode){
+						String des = ((TransformSelectWizardNode)node).getDescription();
+						desLabel.setText(des);
+					}
 					IStrucutredDataCreationWizard wizard = (IStrucutredDataCreationWizard) node
 							.getWizard();
 					TransformDataSelectionWizard pw = (TransformDataSelectionWizard) getWizard();
@@ -129,12 +148,17 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 			wn.setWizard(wizard);
 			wn.setName(viewerInitor.getName());
 			wn.setIconPath(viewerInitor.getWizardIconPath());
+			wn.setDescription(viewerInitor.getDescription());
 			this.registedWizard.add(wn);
 		}
 	}
 
 	public TransformDataWizardSelectionPage(String pageName) {
 		super(pageName);
+
+		setDescription("Select the transform data type");
+		setTitle("Data Type Selection");
+
 	}
 
 	public void activeSelectionWizard() {
