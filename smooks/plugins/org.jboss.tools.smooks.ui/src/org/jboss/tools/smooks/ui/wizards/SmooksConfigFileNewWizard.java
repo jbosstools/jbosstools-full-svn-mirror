@@ -1,22 +1,27 @@
 package org.jboss.tools.smooks.ui.wizards;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jface.operation.*;
-import java.lang.reflect.InvocationTargetException;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.CoreException;
-import java.io.*;
-import org.eclipse.ui.*;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.jboss.tools.smooks.graphical.util.GraphicalInformationSaver;
 import org.jboss.tools.smooks.ui.editors.TypeIDSelectionWizardPage;
-import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 
 /**
  * This is a sample new wizard. Its role is to create a new file resource in the
@@ -29,8 +34,11 @@ import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateCont
 
 public class SmooksConfigFileNewWizard extends Wizard implements INewWizard {
 	private SmooksConfigFileNewWizardPage page;
-	private ISelection selection;
 	private TypeIDSelectionWizardPage typeIDPage;
+
+	private IStructuredSelection selection;
+
+	private IWorkbench workbench;
 
 	/**
 	 * Constructor for SmooksConfigFileNewWizard.
@@ -43,9 +51,9 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard {
 	/**
 	 * Adding the page to the wizard.
 	 */
-
 	public void addPages() {
-		page = new SmooksConfigFileNewWizardPage(selection);
+		page = new SmooksConfigFileNewWizardPage("newSmooksFile1",
+				getSelection());
 		addPage(page);
 		typeIDPage = new TypeIDSelectionWizardPage("");
 		addPage(typeIDPage);
@@ -56,13 +64,14 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard {
 	 * will create an operation and run it using wizard as execution context.
 	 */
 	public boolean performFinish() {
-		final String containerName = page.getContainerName();
-		final String fileName = page.getFileName();
+		// final String containerName = page.getContainerName();
+		// final String fileName = page.getFileName();
+		final IFile file = page.createNewFile();
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException {
 				try {
-					doFinish(containerName, fileName, monitor);
+					doFinish(file, monitor);
 				} catch (CoreException e) {
 					throw new InvocationTargetException(e);
 				} finally {
@@ -89,21 +98,12 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard {
 	 * file.
 	 */
 
-	private void doFinish(String containerName, String fileName,
-			IProgressMonitor monitor) throws CoreException {
+	private void doFinish(final IFile file, IProgressMonitor monitor)
+			throws CoreException {
 		// create a sample file
-		monitor.beginTask("Creating " + fileName, 2);
 		String sourceTypeID = typeIDPage.getSourceID();
 		String targetTypeID = typeIDPage.getTargetID();
 
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IResource resource = root.findMember(new Path(containerName));
-		if (!resource.exists() || !(resource instanceof IContainer)) {
-			throwCoreException("Container \"" + containerName
-					+ "\" does not exist.");
-		}
-		IContainer container = (IContainer) resource;
-		final IFile file = container.getFile(new Path(fileName));
 		try {
 			InputStream stream = openContentStream();
 			if (file.exists()) {
@@ -137,8 +137,8 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard {
 	 */
 
 	private InputStream openContentStream() {
-		String contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+
-						  "     <smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.0.xsd\"/>";
+		String contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+				+ "     <smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.0.xsd\"/>";
 		return new ByteArrayInputStream(contents.getBytes());
 	}
 
@@ -148,13 +148,16 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard {
 		throw new CoreException(status);
 	}
 
-	/**
-	 * We will accept the selection in the workbench to see if we can initialize
-	 * from it.
-	 * 
-	 * @see IWorkbenchWizard#init(IWorkbench, IStructuredSelection)
-	 */
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		this.workbench = workbench;
+		this.selection = selection;
+	}
+
+	public IStructuredSelection getSelection() {
+		return selection;
+	}
+
+	public void setSelection(IStructuredSelection selection) {
 		this.selection = selection;
 	}
 }
