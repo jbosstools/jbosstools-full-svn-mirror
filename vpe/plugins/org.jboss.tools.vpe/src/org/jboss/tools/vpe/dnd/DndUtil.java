@@ -15,6 +15,7 @@ package org.jboss.tools.vpe.dnd;
 import org.eclipse.swt.events.TypedEvent;
 import org.jboss.tools.common.model.ui.editors.dnd.context.DropContext;
 import org.jboss.tools.common.model.ui.editors.dnd.context.IDNDTextEditor;
+import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMEvent;

@@ -164,8 +164,8 @@ import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionListener;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsISupportsCString;
+import org.mozilla.interfaces.nsISupportsString;
 import org.mozilla.xpcom.Mozilla;
-import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -2782,33 +2782,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		return tagname;
 	}
 	
-	/**
-	 * Determine is nsIFile instance.
-	 * 
-	 * @param support
-	 * @return
-	 */
-	private boolean isNsIFileInstance(nsISupports support) {
-        boolean rst = true;
-
-        try {
-            support.queryInterface(nsIFile.NS_IFILE_IID);
-        } catch (XPCOMException e) {
-            rst = false;
-        }
-        return rst;
-    }
-
-    private boolean isNsIStringInstance(nsISupports support) {
-        boolean rst = true;
-
-        try {
-            support.queryInterface(nsISupportsCString.NS_ISUPPORTSCSTRING_IID);
-        } catch (XPCOMException e) {
-            rst = false;
-        }
-        return rst;
-    }
 	public void externalDrop(nsIDOMMouseEvent mouseEvent, String flavor, String data) {
         onHideTooltip();
 
@@ -2823,19 +2796,23 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
         // if(object == null)
 
         nsISupports aValue = DndUtil.getDnDValue(mouseEvent);
-        String aFlavor = "";
-        if (isNsIFileInstance(aValue)) {
+        String aFlavor = ""; //$NON-NLS-1$
+        if (VpeDndUtil.isNsIFileInstance(aValue)) {
             nsIFile aFile = (nsIFile) aValue.queryInterface(nsIFile.NS_IFILE_IID);
-
+            
             if (aValue != null) {
                 data = aFile.getPath();
                 aFlavor = DndUtil.kFileMime;
             }
 
-        } else if (isNsIStringInstance(aValue)) {
+        } else if (VpeDndUtil.isNsICStringInstance(aValue)) {
             nsISupportsCString aString = (nsISupportsCString) aValue.queryInterface(nsISupportsCString.NS_ISUPPORTSCSTRING_IID);
             data = aString.getData();
             aFlavor = DndUtil.kHTMLMime;
+        } else if (VpeDndUtil.isNsIStringInstance(aValue)) {
+        	nsISupportsString aString =  (nsISupportsString) aValue.queryInterface(nsISupportsString.NS_ISUPPORTSSTRING_IID);
+        	data = aString.getData();
+        	aFlavor = DndUtil.kURLMime;
         }
 
         // if (object.getFileType() == XModelObject.FILE
