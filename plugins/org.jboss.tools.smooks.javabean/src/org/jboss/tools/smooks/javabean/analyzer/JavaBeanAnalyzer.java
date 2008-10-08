@@ -245,40 +245,47 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 									.getModelTargetConnections().isEmpty())
 								continue;
 							// how dispatch more than one connection???
-							LineConnectionModel childConnection = (LineConnectionModel) ((IConnectableModel) child)
-									.getModelTargetConnections().get(0);
-							if (connectionIsUsed(childConnection))
-								continue;
-							Object[] properties = childConnection
-									.getPropertyArray();
-							JavaBeanModel jbean = (JavaBeanModel) child
-									.getReferenceEntityModel();
-							String currentSelectorName = getSelectorString(
-									(AbstractStructuredDataModel) childConnection
-											.getTarget(),
-									(AbstractStructuredDataModel) childConnection
-											.getSource(),
-									(AbstractStructuredDataModel) source);
-							AnyType binding = SmooksModelUtils
-									.addBindingTypeToParamType(bindingsParam,
-											jbean.getName(),
-											currentSelectorName, null, null);
-							for (int i = 0; i < properties.length; i++) {
-								PropertyModel property = (PropertyModel) properties[i];
-								String pname = property.getName();
-								String pvalue = property.getValue();
-								binding.getAnyAttribute().add(
-										ExtendedMetaData.INSTANCE
-												.demandFeature(null, pname,
-														false), pvalue);
-							}
+							List<Object> targetConnectionModelList = ((IConnectableModel) child)
+									.getModelTargetConnections();
+							for (Iterator iterator3 = targetConnectionModelList
+									.iterator(); iterator3.hasNext();) {
+								LineConnectionModel childConnection = (LineConnectionModel) iterator3
+										.next();
+								if (connectionIsUsed(childConnection))
+									continue;
+								Object[] properties = childConnection
+										.getPropertyArray();
+								JavaBeanModel jbean = (JavaBeanModel) child
+										.getReferenceEntityModel();
+								String currentSelectorName = getSelectorString(
+										(AbstractStructuredDataModel) childConnection
+												.getTarget(),
+										(AbstractStructuredDataModel) childConnection
+												.getSource(),
+										(AbstractStructuredDataModel) source);
+								AnyType binding = SmooksModelUtils
+										.addBindingTypeToParamType(
+												bindingsParam, jbean.getName(),
+												currentSelectorName, null, null);
+								for (int i = 0; i < properties.length; i++) {
+									PropertyModel property = (PropertyModel) properties[i];
+									String pname = property.getName();
+									String pvalue = property.getValue();
+									binding.getAnyAttribute().add(
+											ExtendedMetaData.INSTANCE
+													.demandFeature(null, pname,
+															false), pvalue);
+								}
 
-							if (!jbean.isPrimitive()) {
-								analyzeStructuredDataModel(resourceList, root,
-										(AbstractStructuredDataModel) child,
-										resourceConfig, currentSelectorName);
+								if (!jbean.isPrimitive()) {
+									analyzeStructuredDataModel(
+											resourceList,
+											root,
+											(AbstractStructuredDataModel) child,
+											resourceConfig, currentSelectorName);
+								}
+								this.setConnectionUsed(childConnection);
 							}
-							this.setConnectionUsed(childConnection);
 						}
 
 					}
@@ -349,21 +356,19 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * If root node don't connect , it will ask user to connect them .
 	 * 
-	 * @see org.jboss.tools.smooks.analyzer.IMappingAnalyzer#analyzeMappingGraphModel(org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext)
+	 * @param context
 	 */
-	public void analyzeMappingGraphModel(
-			SmooksConfigurationFileGenerateContext context)
-			throws SmooksAnalyzerException {
+	private void checkRootNodeConnected(
+			SmooksConfigurationFileGenerateContext context) {
 		GraphRootModel root = context.getDataMappingRootModel();
 		List sourceList = root.loadSourceModelList();
 		List targetList = root.loadTargetModelList();
 
 		JavaBeanModel rootSource = null;
 		JavaBeanModel rootTarget = null;
-
 		boolean needCheck = false;
 
 		for (Iterator iterator = sourceList.iterator(); iterator.hasNext();) {
@@ -433,8 +438,18 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				}
 			}
 		}
+	}
 
-		SmooksResourceListType listType = context.getSmooksResourceListModel();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.tools.smooks.analyzer.IMappingAnalyzer#analyzeMappingGraphModel(org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext)
+	 */
+	public void analyzeMappingGraphModel(
+			SmooksConfigurationFileGenerateContext context)
+			throws SmooksAnalyzerException {
+		GraphRootModel root = context.getDataMappingRootModel();
+		checkRootNodeConnected(context);
 		this.analyzeGraphicalModel(root, context.getGeneratorResourceList());
 	}
 
