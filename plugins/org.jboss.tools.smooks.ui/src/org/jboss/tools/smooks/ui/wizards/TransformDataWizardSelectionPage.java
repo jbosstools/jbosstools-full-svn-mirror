@@ -111,7 +111,7 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 		// IWizardNode node = (IWizardNode) iterator.next();
 		// node.
 		// }
-		this.setControl(viewer.getControl());
+		this.setControl(main);
 	}
 
 	public IWizardPage getNextPage() {
