@@ -258,8 +258,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		Composite rootMainControl = form.getBody();
 		form.setText("Data Mapping Page");
 		Section section = this.createPageSectionHeader(rootMainControl,
-				Section.TITLE_BAR | Section.DESCRIPTION | Section.TWISTIE
-						| Section.EXPANDED, "Mapping Graph Edit Panel",
+				Section.TITLE_BAR | Section.DESCRIPTION , "Mapping Graph Edit Panel",
 				"Edit the source and target assosiation");
 		Composite mappingMainComposite = toolkit.createComposite(section);
 		GridLayout gly = new GridLayout();
