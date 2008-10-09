@@ -189,12 +189,13 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 					Object element) {
 				if (element == transformType)
 					return false;
-				if(modelPackage != null){
+				if (modelPackage != null) {
 					List hidenList = modelPackage.getHidenSmooksElements();
 					for (Iterator iterator = hidenList.iterator(); iterator
 							.hasNext();) {
 						Object object = (Object) iterator.next();
-						if(object == element) return false;
+						if (object == element)
+							return false;
 					}
 				}
 				return true;
@@ -298,6 +299,8 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 	}
 
 	protected void downButtonSelected() {
+		if (modelPackage == null)
+			return;
 		IStructuredSelection selection = (IStructuredSelection) dateTypeViewer
 				.getSelection();
 		Object object = selection.getFirstElement();
@@ -316,6 +319,8 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 	}
 
 	protected void upButtonSelected() {
+		if (modelPackage == null)
+			return;
 		IStructuredSelection selection = (IStructuredSelection) dateTypeViewer
 				.getSelection();
 		Object object = selection.getFirstElement();
@@ -333,6 +338,8 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 	}
 
 	protected void removeButtonSelected() {
+		if (modelPackage == null)
+			return;
 		IStructuredSelection selection = (IStructuredSelection) dateTypeViewer
 				.getSelection();
 		List selections = selection.toList();
@@ -354,6 +361,8 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 	}
 
 	protected void addButtonSelected() {
+		if (modelPackage == null)
+			return;
 		NewResourceConfigWizard wizard = new NewResourceConfigWizard();
 		WizardDialog dialog = new WizardDialog(parentEditor.getSite()
 				.getShell(), wizard);
