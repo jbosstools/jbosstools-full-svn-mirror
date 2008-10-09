@@ -17,12 +17,18 @@ public class XMLStructuredDataWizardPage extends
 	public XMLStructuredDataWizardPage(String pageName, String title,
 			ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
-		// TODO Auto-generated constructor stub
+		setPageText();
 	}
 
 	public XMLStructuredDataWizardPage(String pageName) {
 		super(pageName);
-		// TODO Auto-generated constructor stub
+		setPageText();
+	}
+
+	private void setPageText() {
+		this.setTitle("Select xml file");
+		this.setDescription("Select a .xml file to be the source/target data");
+
 	}
 
 	/*
