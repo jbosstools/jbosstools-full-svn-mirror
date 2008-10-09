@@ -101,25 +101,33 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 		formToolKit.paintBordersFor(beanClassComposite);
 
 		this.formToolKit.createLabel(parent, "Bean ID : ");
-		Composite beanIDComposite = formToolKit.createComposite(parent);
-		GridLayout bilg = new GridLayout();
-		bilg.numColumns = 2;
-		bilg.marginHeight = 0;
-		bilg.marginWidth = 1;
-		beanIDComposite.setLayout(bilg);
-
-		beanIDText = formToolKit.createText(beanIDComposite, "");
+		beanIDText = formToolKit.createText(parent, "");
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.grabExcessHorizontalSpace = true;
 		beanIDText.setLayoutData(gd);
-
-		idBrowseButton = formToolKit.createButton(beanIDComposite, "Browse",
-				SWT.NONE);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.grabExcessHorizontalSpace = true;
-		beanIDComposite.setLayoutData(gd);
-		formToolKit.paintBordersFor(beanIDComposite);
+		
+//		Composite beanIDComposite = formToolKit.createComposite(parent);
+//		GridLayout bilg = new GridLayout();
+//		bilg.numColumns = 1;
+//		bilg.marginHeight = 1;
+//		bilg.marginWidth = 1;
+//		beanIDComposite.setLayout(bilg);
+//
+//		beanIDText = formToolKit.createText(beanIDComposite, "");
+//		gd = new GridData(GridData.FILL_HORIZONTAL);
+//		gd.grabExcessHorizontalSpace = true;
+//		beanIDText.setLayoutData(gd);
+//
+//		idBrowseButton = formToolKit.createButton(beanIDComposite, "Browse",
+//				SWT.NONE);
+//		idBrowseButton.setEnabled(false);
+//		gd = new GridData(GridData.FILL_HORIZONTAL);
+//		gd.grabExcessHorizontalSpace = true;
+//		beanIDComposite.setLayoutData(gd);
+//		formToolKit.paintBordersFor(beanIDComposite);
 		formToolKit.paintBordersFor(parent);
+		
+		
 		configControls();
 		hookContorls();
 	}
@@ -199,13 +207,13 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 			}
 
 		});
-		idBrowseButton.addSelectionListener(new SelectionAdapter() {
-
-			public void widgetSelected(SelectionEvent e) {
-				idBrowseButtonSelected();
-			}
-
-		});
+//		idBrowseButton.addSelectionListener(new SelectionAdapter() {
+//
+//			public void widgetSelected(SelectionEvent e) {
+//				idBrowseButtonSelected();
+//			}
+//
+//		});
 	}
 
 	private void configControls() {
