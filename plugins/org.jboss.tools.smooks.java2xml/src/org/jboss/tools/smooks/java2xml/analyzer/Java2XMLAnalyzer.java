@@ -16,6 +16,8 @@ import java.util.List;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.smooks.analyzer.AbstractAnalyzer;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
@@ -52,6 +54,13 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 	public void analyzeMappingGraphModel(
 			SmooksConfigurationFileGenerateContext context)
 			throws SmooksAnalyzerException {
+		// TODO will modify soon
+		
+		if(true){
+			Shell shell = context.getShell();
+			MessageDialog.openWarning(shell, "Warning", "The java2xml can't be generate to config file currently.");
+		}
+		
 		GraphRootModel rootModel = context.getDataMappingRootModel();
 		List<SourceModel> sourceModelList = rootModel.loadSourceModelList();
 		List<TargetModel> targetModelList = rootModel.loadTargetModelList();

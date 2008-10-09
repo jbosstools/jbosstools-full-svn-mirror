@@ -22,6 +22,7 @@ import org.eclipse.core.resources.IFile;
 import org.jboss.tools.smooks.analyzer.ISourceModelAnalyzer;
 import org.jboss.tools.smooks.graphical.GraphInformations;
 import org.jboss.tools.smooks.graphical.Param;
+import org.jboss.tools.smooks.graphical.Params;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
 import org.jboss.tools.smooks.xml.model.DocumentObject;
@@ -38,19 +39,24 @@ public class XMLSourceModelAnalyzer implements ISourceModelAnalyzer {
 	public Object buildSourceInputObjects(GraphInformations graphInfo,
 			SmooksResourceListType listType, IFile sourceFile)
 			throws InvocationTargetException {
-		List<Param> paramList = graphInfo.getParams().getParam();
+		Params params = graphInfo.getParams();
 		String path = null;
-		for (Iterator<Param> iterator = paramList.iterator(); iterator
-				.hasNext();) {
-			Param param = (Param) iterator.next();
-			if (param.getName().equals(XML_FILE)) {
-				path = param.getValue();
-				break;
+		if (params != null) {
+			List<Param> paramList = graphInfo.getParams().getParam();
+			for (Iterator<Param> iterator = paramList.iterator(); iterator
+					.hasNext();) {
+				Param param = (Param) iterator.next();
+				if (param.getName().equals(XML_FILE)) {
+					path = param.getValue();
+					break;
+				}
 			}
 		}
 		if (path == null) {
-			throw new InvocationTargetException(new Exception(
-					"xml file path can't find in the graphInfo file"));
+			// TODO tell user the filepath can't find or not ?
+			return null;
+//			throw new InvocationTargetException(new Exception(
+//					"xml file path can't find in the graphInfo file"));
 		}
 		XMLObjectAnalyzer objectBuilder = new XMLObjectAnalyzer();
 		try {

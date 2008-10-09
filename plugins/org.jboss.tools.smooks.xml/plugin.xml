@@ -12,5 +12,17 @@
             typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
       </viewerInitor>
    </extension>
+   <extension
+         point="org.jboss.tools.smooks.ui.analyzer">
+      <mappingAnalyzer
+            class="org.jboss.tools.smooks.xml2xml.XML2XMLAnalyzer"
+            name="XML2XML Analyzer"
+            typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
+         <targetSourceType
+               id="org.jboss.tools.smooks.xml.viewerInitor.xml"
+               name="XML">
+         </targetSourceType>
+      </mappingAnalyzer>
+   </extension>
 
 </plugin>
