@@ -58,6 +58,11 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	}
 
 	public Object getReturnValue() {
+		try {
+			returnObject = this.loadedTheObject(fileText.getText());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return returnObject;
 	}
 	
@@ -106,7 +111,6 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		// registe the listener for controls
 		hookBrowseButtonSelectionAdapter();
 		hookFileTextModifyListener();
-		hookRadioButtonSelectionAdapter();
 		this.setControl(mainComposite);
 	}
 
@@ -176,6 +180,43 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		xsdLayout.marginWidth = 0;
 		xsdComposite.setLayout(xsdLayout);
 
+		Label nfileLanel = new Label(xsdComposite, SWT.NONE);
+		nfileLanel.setText("XML File Path :");
+		fileTextComposite = new Composite(xsdComposite, SWT.NONE);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.grabExcessHorizontalSpace = true;
+		fileTextComposite.setLayoutData(gd);
+		GridLayout xsdtgl = new GridLayout();
+		xsdtgl.marginWidth = 0;
+		xsdtgl.marginHeight = 0;
+		xsdtgl.numColumns = 1;
+		fileTextComposite.setLayout(xsdtgl);
+
+		fileText = new Text(fileTextComposite, SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		fileText.setLayoutData(gd);
+		gd.grabExcessHorizontalSpace = true;
+
+//		final Button loadXSDButton = new Button(fileTextComposite, SWT.NONE);
+//		loadXSDButton.setText("Load");
+//		loadXSDButton.addSelectionListener(new SelectionAdapter() {
+//
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				super.widgetSelected(e);
+//				reasourceLoaded = false;
+//				try {
+//					returnObject = loadedTheObject(fileText.getText());
+//					reasourceLoaded = true;
+//				} catch (Throwable e2) {
+//					// ignore
+//					e2.printStackTrace();
+//				}
+//				changeWizardPageStatus();
+//			}
+//
+//		});
+
 		Composite browseButtonComposite = new Composite(xsdComposite, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
@@ -202,75 +243,29 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		gd.horizontalAlignment = GridData.END;
 		fileSystemBrowseButton.setLayoutData(gd);
 
-		Label nfileLanel = new Label(xsdComposite, SWT.NONE);
-		nfileLanel.setText("XSD File Path :");
-		fileTextComposite = new Composite(xsdComposite, SWT.NONE);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.grabExcessHorizontalSpace = true;
-		fileTextComposite.setLayoutData(gd);
-		GridLayout xsdtgl = new GridLayout();
-		xsdtgl.marginWidth = 0;
-		xsdtgl.marginHeight = 0;
-		xsdtgl.numColumns = 2;
-		fileTextComposite.setLayout(xsdtgl);
-
-		fileText = new Text(fileTextComposite, SWT.BORDER);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		fileText.setLayoutData(gd);
-		gd.grabExcessHorizontalSpace = true;
-
-		final Button loadXSDButton = new Button(fileTextComposite, SWT.NONE);
-		loadXSDButton.setText("Load");
-		loadXSDButton.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				super.widgetSelected(e);
-				reasourceLoaded = false;
-				try {
-					returnObject = loadedTheObject(fileText.getText());
-					reasourceLoaded = true;
-				} catch (Throwable e2) {
-					// ignore
-					e2.printStackTrace();
-				}
-				changeWizardPageStatus();
-			}
-
-		});
-
-		// tableViewer = CheckboxTableViewer.newCheckList(xsdComposite,
-		// SWT.FULL_SELECTION | SWT.BORDER);
-		// gd = new GridData(GridData.FILL_BOTH);
-		// gd.heightHint = 200;
-		// gd.horizontalSpan = 2;
-		// tableViewer.getControl().setLayoutData(gd);
-		//		
-		// initTableViewer();
-
 		return xsdComposite;
 	}
 
 	abstract protected Object loadedTheObject(String path) throws Exception;
 
 	protected void initTableViewer() {
-		tableViewer.addCheckStateListener(new ICheckStateListener() {
-			boolean flag = true;
-
-			public void checkStateChanged(CheckStateChangedEvent event) {
-				if (flag) {
-					Object checkObject = event.getElement();
-					boolean check = event.getChecked();
-					flag = false;
-					tableViewer.setAllChecked(false);
-					tableViewer.setChecked(checkObject, check);
-					flag = true;
-					changeWizardPageStatus();
-				}
-			}
-		});
-		tableViewer.setContentProvider(new XSDStructuredModelContentProvider());
-		tableViewer.setLabelProvider(new XSDStructuredModelLabelProvider());
+//		tableViewer.addCheckStateListener(new ICheckStateListener() {
+//			boolean flag = true;
+//
+//			public void checkStateChanged(CheckStateChangedEvent event) {
+//				if (flag) {
+//					Object checkObject = event.getElement();
+//					boolean check = event.getChecked();
+//					flag = false;
+//					tableViewer.setAllChecked(false);
+//					tableViewer.setChecked(checkObject, check);
+//					flag = true;
+//					changeWizardPageStatus();
+//				}
+//			}
+//		});
+//		tableViewer.setContentProvider(new XSDStructuredModelContentProvider());
+//		tableViewer.setLabelProvider(new XSDStructuredModelLabelProvider());
 	}
 
 	protected void setCompositeChildrenEnabled(Composite composite,
@@ -305,9 +300,9 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		String error = null;
 		if (text == null || "".equals(text))
 			error = "Please Select a file";
-		if (!reasourceLoaded) {
-			error = "Resource must be loaded";
-		}
+//		if (!reasourceLoaded) {
+//			error = "Resource must be loaded";
+//		}
 		this.setErrorMessage(error);
 		this.setPageComplete(error == null);
 
