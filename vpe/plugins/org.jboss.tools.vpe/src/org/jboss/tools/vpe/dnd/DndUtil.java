@@ -137,5 +137,4 @@ public class DndUtil {
         iTransferable.getAnyTransferData(aFlavor, aData, aDataLen);
         return aData[0];
     }
-
 }
