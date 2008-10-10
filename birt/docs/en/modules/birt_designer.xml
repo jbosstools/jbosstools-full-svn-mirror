@@ -14,23 +14,41 @@
     
         <para>BIRT Designer is an intuitive and quite easy  Eclipse-based set of plugins to make reports. We will describe all its features to you.</para>
           
+          <section id="birt_designer_UI" xreflabel="birt_designer_UI">
+              <title>BIRT User Interface</title>
+              
+              <para>The central part of the user interface is the Layout Editor. It displays the whole process of building a report and contains the following tabs:</para>
+              
+              <itemizedlist>
+                  <listitem><para><emphasis role="bold">Layout</emphasis> - this is an area where you can edit your report design;</para></listitem>   
+                  <listitem><para><emphasis role="bold">Preview</emphasis> - runs your report created and shows the output;</para></listitem>   
+                  <listitem><para><emphasis role="bold">Script</emphasis> - on this page you can add JavaScript to your report to customize its behavior;</para></listitem>   
+                  <listitem><para><emphasis role="bold">XML Source</emphasis> - this is an area where you can view and modify the XML source of your report;</para></listitem>   
+                  <listitem><para><emphasis role="bold">Master Page</emphasis> - use it to format page data.</para></listitem>   
+                  
+                  
+                  
+                  
+              </itemizedlist>
+              
+          </section>
+          
     <section id="birt_designer_features">
        
         <title>BIRT Report Designer Features</title>
         <para>Here are the main BIRT Report Designer features:</para>
         <itemizedlist><listitem><para><emphasis role="bold">Palette</emphasis> - contains tables, labels, and charts. It is used in conjunction with the Layout View to design reports.</para></listitem>
-        <listitem><para><emphasis role="bold">Layout View</emphasis> - WYSIWYG editor that provides drag and drop creation of the presentation portion of your report.</para></listitem>
-         <listitem><para><emphasis role="bold">Data Explorer</emphasis> - Organizes your data sources (connections) and data sets (queries). The data set editor allows you to test your data set to ensure the report receives the correct data. Within this view multi dimensional cubes can be created using existing data sets. Cubes are currently used when building dynamic cross tables. This view also is used to design report parameters.</para></listitem>
-         <listitem><para><emphasis role="bold">Property Editor</emphasis> - Presents the most commonly used properties in a convenient format that makes editing quick and easy. BIRT also integrates with the standard Eclipse property view to provide a detailed listing of all properties for an item.</para></listitem>
-         <listitem><para><emphasis role="bold">Report Preview</emphasis> - You can test your report at any time with real data. The preview is a window directly within Eclipse.</para></listitem>
-         <listitem><para><emphasis role="bold">Script Editor</emphasis> - Scripting adds business logic to reports during data access, during report generation, or during viewing. The code editor provides standard Eclipse features for editing your scripts: syntax coloring, auto-complete and more. An interesting new feature, for BIRT 2.3 is the ability to debug scripts while the report is running.</para></listitem>
-         <listitem><para><emphasis role="bold">Outline</emphasis> - BIRT reports are organized as a tree structure with the overall report as the root, and separate categories for styles, report content, data sources, data sets, report parameters and more. The Outline view provides a compact overview of your entire report structure.</para></listitem>
-         <listitem><para><emphasis role="bold">Cheat Sheets</emphasis> - Learning a new tool is always a challenge, but Eclipse offers an innovative solution: cheat sheets. These are short bits of documentation that walk you through new tasks.</para></listitem>
-         <listitem><para><emphasis role="bold">Resource Explorer</emphasis> - BIRT allows the reuse of report objects, such as tables, data sources and styles. Objects created for reuse are stored in a library file. To browse the contents of report libraries BIRT supplies a Resource Explorer view. This view list all libraries within the resource folder, in addition other shared content such as images and JavaScript files.</para></listitem>
-         <listitem><para><emphasis role="bold">Chart Builder</emphasis> - Adding Charts to BIRT designs is expedited with the Chart Builder. Chart creation is separated into three phases: Select Chart Type, Select Data, and Format Chart.</para></listitem>
-         <listitem><para><emphasis role="bold">Expression Builder </emphasis> - BIRT expressions are really just simple scripts that return a value. Expressions are used for assigning data values to report elements, building image locations, hyperlinks, parameter default values and many other places. Expressions are constructed within BIRT using the Expression Builder.</para></listitem>
-        
-        </itemizedlist>
+            <listitem><para><emphasis role="bold">Data Explorer</emphasis> - Organizes your data sources (connections) and data sets (queries). The data set editor allows you to test your data set to ensure the report receives the correct data. Within this view multi dimensional cubes can be created using existing data sets. Cubes are currently used when building dynamic cross tables. This view also is used to design report parameters.</para></listitem>
+            <listitem><para><emphasis role="bold">Resource Explorer</emphasis> - BIRT allows the reuse of report objects, such as tables, data sources and styles. Objects created for reuse are stored in a library file. To browse the contents of report libraries BIRT supplies a Resource Explorer view. This view list all libraries within the resource folder, in addition other shared content such as images and JavaScript files.</para></listitem>
+            <listitem><para><emphasis role="bold">Property Editor</emphasis> - Presents the most commonly used properties in a convenient format that makes editing quick and easy. BIRT also integrates with the standard Eclipse property view to provide a detailed listing of all properties for an item.</para></listitem>
+            <listitem><para><emphasis role="bold">Layout View</emphasis> - WYSIWYG editor that provides drag and drop creation of the presentation portion of your report.</para></listitem>
+            <listitem><para><emphasis role="bold">Script Editor</emphasis> - Scripting adds business logic to reports during data access, during report generation, or during viewing. The code editor provides standard Eclipse features for editing your scripts: syntax coloring, auto-complete and more. An interesting new feature, for BIRT 2.3 is the ability to debug scripts while the report is running.</para></listitem>
+            <listitem><para><emphasis role="bold">Report Preview</emphasis> - You can test your report at any time with real data. The preview is a window directly within Eclipse.</para></listitem>
+           <listitem><para><emphasis role="bold">Chart Builder</emphasis> - Adding Charts to BIRT designs is expedited with the Chart Builder. Chart creation is separated into three phases: Select Chart Type, Select Data, and Format Chart.</para></listitem>
+          <listitem><para><emphasis role="bold">Expression Builder </emphasis> - BIRT expressions are really just simple scripts that return a value. Expressions are used for assigning data values to report elements, building image locations, hyperlinks, parameter default values and many other places. Expressions are constructed within BIRT using the Expression Builder.</para></listitem>
+        <listitem><para><emphasis role="bold">Cheat Sheets</emphasis> - Learning a new tool is always a challenge, but Eclipse offers an innovative solution: cheat sheets. These are short bits of documentation that walk you through new tasks.</para></listitem>
+        <listitem><para><emphasis role="bold">Outline</emphasis> - BIRT reports are organized as a tree structure with the overall report as the root, and separate categories for styles, report content, data sources, data sets, report parameters and more. The Outline view provides a compact overview of your entire report structure.</para></listitem>
+            </itemizedlist>
        
       
       
