@@ -59,6 +59,7 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 		if(true){
 			Shell shell = context.getShell();
 			MessageDialog.openWarning(shell, "Warning", "The java2xml can't be generate to config file currently.");
+			return;
 		}
 		
 		GraphRootModel rootModel = context.getDataMappingRootModel();
