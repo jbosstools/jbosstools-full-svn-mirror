@@ -35,8 +35,11 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelBuilder;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
 import org.jboss.tools.smooks.model.DocumentRoot;
+import org.jboss.tools.smooks.model.SmooksFactory;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.util.SmooksResourceFactoryImpl;
+import org.jboss.tools.smooks.utils.UIUtils;
 
 /**
  * @author Dart Peng
@@ -51,7 +54,7 @@ public class SmooksFormEditor extends FormEditor implements
 	private ComposedAdapterFactory adapterFactory;
 	private AdapterFactoryEditingDomain editingDomain;
 	private Resource smooksResource;
-	
+
 	private boolean forceDirty = false;
 
 	public SmooksFormEditor() {
@@ -69,8 +72,6 @@ public class SmooksFormEditor extends FormEditor implements
 	protected CommandStack createCommandStack() {
 		return new BasicCommandStack();
 	}
-	
-	
 
 	@Override
 	public boolean isDirty() {
@@ -79,16 +80,20 @@ public class SmooksFormEditor extends FormEditor implements
 
 	@Override
 	protected void addPages() {
-		graphicalPage = new SmooksGraphicalFormPage(this, "graph", "Mapping");
 		try {
+			graphicalPage = new SmooksGraphicalFormPage(this, "graph",
+					"Mapping");
 			int index = this.addPage(this.graphicalPage);
 			this.setPageText(index, "Graph");
 			normalPage = new SmooksNormalContentEditFormPage(this, "normal",
-					"Normal Edition",null);
+					"Normal Edition", null);
 			index = this.addPage(normalPage);
 			setPageText(index, "Normal");
-		} catch (PartInitException e) {
-			e.printStackTrace();
+			// Set a default NormalPacakge to Normal Page
+			this.refreshNormalPage(Collections.EMPTY_LIST);
+		} catch (Exception e) {
+			UIUtils.showErrorDialog(getSite().getShell(), UIUtils
+					.createErrorStatus(e));
 		}
 	}
 
@@ -103,7 +108,7 @@ public class SmooksFormEditor extends FormEditor implements
 			throws PartInitException {
 		super.init(site, input);
 		IFile file = ((IFileEditorInput) input).getFile();
-		String path =file.getLocation().toOSString();
+		String path = file.getLocation().toOSString();
 		if (this.getEditingDomain() != null && smooksResource == null) {
 			smooksResource = new SmooksResourceFactoryImpl().createResource(URI
 					.createFileURI(path));
@@ -114,13 +119,29 @@ public class SmooksFormEditor extends FormEditor implements
 					e.printStackTrace();
 				}
 			}
+			DocumentRoot documentRoot = null;
+			if(smooksResource.getContents().isEmpty()){
+				documentRoot = SmooksFactory.eINSTANCE.createDocumentRoot();
+				smooksResource.getContents().add(documentRoot);
+			}else{
+				documentRoot = (DocumentRoot) smooksResource.getContents().get(0);
+			}
+			
+			SmooksResourceListType resourceList = documentRoot.getSmooksResourceList();
+			if(resourceList == null){
+				resourceList = SmooksFactory.eINSTANCE.createSmooksResourceListType();
+				documentRoot.setSmooksResourceList(resourceList);
+			}
+			
 		}
 	}
 
 	public void refreshNormalPage(List resourceHidenConfigs) {
 		NormalSmooksModelPackage modelPackage = createSmooksModelPackage();
-		if (this.normalPage != null) {
+		if (modelPackage != null){
 			modelPackage.setHidenSmooksElements(resourceHidenConfigs);
+		}
+		if (this.normalPage != null) {
 			normalPage.setModelPackage(modelPackage);
 		}
 	}
@@ -142,8 +163,8 @@ public class SmooksFormEditor extends FormEditor implements
 		graphicalPage.doSave(monitor);
 		fireEditorDirty(false);
 	}
-	
-	public void fireEditorDirty(boolean dirty){
+
+	public void fireEditorDirty(boolean dirty) {
 		this.forceDirty = dirty;
 		this.firePropertyChange(PROP_DIRTY);
 	}
