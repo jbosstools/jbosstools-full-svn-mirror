@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<vpe:templates/>
+<vpe:templates>
+ <vpe:tag case-sensitive="no" name="">
+  <vpe:template children="no" modify="no">
+   <vpe:any style="color:red" tag-for-display="tag-name1" value="tag-value"/>
+  </vpe:template>
+ </vpe:tag>
+ <vpe:tag case-sensitive="no" name="">
+  <vpe:template children="no" modify="no">
+   <vpe:any style="color:white" tag-for-display="tag-name2" value="tag-value"/>
+  </vpe:template>
+ </vpe:tag>
+</vpe:templates>
