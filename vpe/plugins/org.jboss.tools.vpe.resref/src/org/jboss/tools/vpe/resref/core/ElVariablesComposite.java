@@ -3,13 +3,10 @@ package org.jboss.tools.vpe.resref.core;
 import java.util.List;
 
 import org.jboss.tools.common.el.core.ELReferenceList;
-import org.jboss.tools.common.meta.XAttribute;
-import org.jboss.tools.common.meta.XModelEntity;
-import org.jboss.tools.common.meta.constraint.impl.XAttributeConstraintFileFilter;
-import org.jboss.tools.common.meta.impl.XModelMetaDataImpl;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.common.resref.core.ResourceReferenceList;
 import org.jboss.tools.common.resref.ui.AbstractResourceReferencesComposite;
+import org.jboss.tools.common.resref.ui.BaseAddReferenceSupport;
 import org.jboss.tools.common.resref.ui.ResourceReferencesTableProvider;
 
 /**
@@ -37,7 +34,7 @@ public class ElVariablesComposite extends AbstractResourceReferencesComposite {
      */
     @Override
     protected String getEntity() {
-        return (file != null) ? "VPEElReference" : "VPEElReferenceExt";
+        return (file != null) ? "VPEElReference" : "VPEElReferenceExt";  //$NON-NLS-1$//$NON-NLS-2$
     }
 
     /**c
@@ -64,7 +61,7 @@ public class ElVariablesComposite extends AbstractResourceReferencesComposite {
 		ResourceReference css = getDefaultResourceReference();
 
 		initFilterInFileChooser();
-		boolean ok = VpeAddReferenceSupport.add(file, css, getReferenceArray(),
+		boolean ok = BaseAddReferenceSupport.add(file, css, getReferenceArray(),
 				getEntity());
 		if (!ok)
 			return;
@@ -82,7 +79,7 @@ public class ElVariablesComposite extends AbstractResourceReferencesComposite {
 		}
 		ResourceReference css = getReferenceArray()[index];
 		initFilterInFileChooser();
-		boolean ok = VpeAddReferenceSupport.edit(file, css,
+		boolean ok = BaseAddReferenceSupport.edit(file, css,
 				getReferenceArray(), getEntity());
 		if (ok) {
 			update();

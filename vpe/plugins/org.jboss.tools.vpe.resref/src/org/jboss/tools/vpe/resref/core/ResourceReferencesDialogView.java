@@ -29,6 +29,7 @@ import org.jboss.tools.common.model.ui.objecteditor.XTable;
 import org.jboss.tools.common.model.ui.wizards.query.AbstractQueryWizardView;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.common.resref.core.ResourceReferenceList;
+import org.jboss.tools.common.resref.ui.BaseAddReferenceSupport;
 import org.jboss.tools.common.resref.ui.ResourceReferencesTableProvider;
 
 public abstract class ResourceReferencesDialogView extends AbstractQueryWizardView {
@@ -124,7 +125,7 @@ public abstract class ResourceReferencesDialogView extends AbstractQueryWizardVi
 
 	protected void add(int index) {
 		ResourceReference css = new ResourceReference("", ResourceReference.FOLDER_SCOPE);
-		boolean ok = VpeAddReferenceSupport.add(file, css, getReferenceArray(), getEntity());
+		boolean ok = BaseAddReferenceSupport.add(file, css, getReferenceArray(), getEntity());
 		if(!ok) return;
 		dataList.add(css);
 		update();
@@ -134,7 +135,7 @@ public abstract class ResourceReferencesDialogView extends AbstractQueryWizardVi
 	protected void edit(int index) {
 		if(index < 0) return;
 		ResourceReference css = getReferenceArray()[index];
-		boolean ok = VpeAddReferenceSupport.edit(file, css, getReferenceArray(), getEntity());
+		boolean ok = BaseAddReferenceSupport.edit(file, css, getReferenceArray(), getEntity());
 		if(!ok) return;
 		update();
 	}

@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.common.resref.core.ResourceReferenceList;
 import org.jboss.tools.common.resref.ui.AbstractResourceReferencesComposite;
+import org.jboss.tools.common.resref.ui.BaseAddReferenceSupport;
 import org.jboss.tools.common.resref.ui.ResourceReferencesTableProvider;
 
 public abstract class VpeResourceReferencesComposite extends AbstractResourceReferencesComposite {
@@ -41,7 +42,7 @@ public abstract class VpeResourceReferencesComposite extends AbstractResourceRef
 		ResourceReference css = getDefaultResourceReference();
 		
 		initFilterInFileChooser();
-		boolean ok = VpeAddReferenceSupport.add(file, css, getReferenceArray(), getEntity());
+		boolean ok = BaseAddReferenceSupport.add(file, css, getReferenceArray(), getEntity());
 		if(!ok) return;
 		dataList.add(css);
 		update();
@@ -52,7 +53,7 @@ public abstract class VpeResourceReferencesComposite extends AbstractResourceRef
 		if(index < 0) return;
 		ResourceReference css = getReferenceArray()[index];
 		initFilterInFileChooser();
-		boolean ok = VpeAddReferenceSupport.edit(file, css, getReferenceArray(), getEntity());
+		boolean ok = BaseAddReferenceSupport.edit(file, css, getReferenceArray(), getEntity());
 		if(!ok) return;
 		update();
 	}

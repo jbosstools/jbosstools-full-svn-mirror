@@ -42,4 +42,5 @@ public final class Messages {
     public static String INCLUDED_TAG_LIBS;
     public static String SUBSTITUTED_EL_EXPRESSIONS;
     public static String ACTUAL_RUN_TIME_ABSOLUTE_FOLDER;
+    public static String INVALID_EL_EXPRESSION;
 }

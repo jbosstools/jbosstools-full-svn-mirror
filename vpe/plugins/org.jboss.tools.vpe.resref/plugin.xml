@@ -4,5 +4,7 @@
     <extension point="org.jboss.tools.common.model.classes">
        <xclass id="org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
 		class="org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"/>
+	   <xclass id="org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
+		class="org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"/>
     </extension>
 </plugin>

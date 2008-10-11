@@ -138,7 +138,7 @@
   <XActionItem kind="list">
    <XActionItem kind="list" name="CreateActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
      displayName="Add El Reference..." kind="action" name="AddItem">
      <EntityData EntityName="VPEElReference">
       <AttributeData AttributeName="location"/>
@@ -149,7 +149,7 @@
    </XActionItem>
    <XActionItem kind="list" name="EditActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
      displayName="Edit El Reference..." kind="action" name="EditItem">
      <EntityData EntityName="VPEElReference">
       <AttributeData AttributeName="location"/>
@@ -192,7 +192,7 @@
   <XActionItem kind="list">
    <XActionItem kind="list" name="CreateActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
      displayName="Add El Reference..." kind="action" name="AddItem">
      <EntityData EntityName="VPEElReferenceExt">
       <AttributeData AttributeName="location"/>
@@ -203,7 +203,7 @@
    </XActionItem>
    <XActionItem kind="list" name="EditActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
      displayName="Edit El Reference..." kind="action" name="EditItem">
      <EntityData EntityName="VPEElReference">
       <AttributeData AttributeName="location"/>
@@ -244,7 +244,7 @@
   <XActionItem kind="list">
    <XActionItem kind="list" name="CreateActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
      displayName="Add El Reference..." kind="action" name="AddItem">
      <EntityData EntityName="VPEGlobalElReference">
       <AttributeData AttributeName="location" Mandatory="no"/>
@@ -255,7 +255,7 @@
    </XActionItem>
    <XActionItem kind="list" name="EditActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
      displayName="Edit El Reference..." kind="action" name="EditItem">
      <EntityData EntityName="VPEGlobalElReference">
       <AttributeData AttributeName="location"/>
@@ -297,7 +297,7 @@
   <XActionItem kind="list">
    <XActionItem kind="list" name="CreateActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
      displayName="Add El Reference..." kind="action" name="AddItem">
      <EntityData EntityName="VPEGlobalElReferenceExt">
       <AttributeData AttributeName="location"/>
@@ -308,7 +308,7 @@
    </XActionItem>
    <XActionItem kind="list" name="EditActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
      displayName="Edit El Reference..." kind="action" name="EditItem">
      <EntityData EntityName="VPEGlobalElReferenceExt">
       <AttributeData AttributeName="location"/>
