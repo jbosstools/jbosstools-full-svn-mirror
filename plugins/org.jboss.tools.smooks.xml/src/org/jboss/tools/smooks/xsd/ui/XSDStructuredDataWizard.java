@@ -12,6 +12,7 @@ package org.jboss.tools.smooks.xsd.ui;
 
 import java.util.Properties;
 
+import org.eclipse.jface.wizard.IWizardNode;
 import org.jboss.tools.smooks.xml.AbstractFileSelectionWizardPage;
 import org.jboss.tools.smooks.xml.AbstractStructuredDdataWizard;
 import org.jboss.tools.smooks.xml.XmlActivator;
@@ -21,6 +22,7 @@ import org.jboss.tools.smooks.xml.XmlActivator;
  * @Date Aug 18, 2008
  */
 public class XSDStructuredDataWizard extends AbstractStructuredDdataWizard {
+	IWizardNode wizard;
 	Properties properties = new Properties();
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.smooks.xml.AbstractStructuredDdataWizard#createAbstractFileSelectionWizardPage()
@@ -39,5 +41,4 @@ public class XSDStructuredDataWizard extends AbstractStructuredDdataWizard {
 	public Properties getProperties() {
 		return this.properties;
 	}
-
 }

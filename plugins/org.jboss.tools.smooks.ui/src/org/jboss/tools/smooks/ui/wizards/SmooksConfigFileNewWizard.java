@@ -13,6 +13,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
@@ -21,6 +22,9 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.jboss.tools.smooks.graphical.util.GraphicalInformationSaver;
+import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
+import org.jboss.tools.smooks.ui.editors.SmooksFileEditorInput;
+import org.jboss.tools.smooks.ui.editors.SmooksFormEditor;
 import org.jboss.tools.smooks.ui.editors.TypeIDSelectionWizardPage;
 
 /**
@@ -55,7 +59,8 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard {
 		page = new SmooksConfigFileNewWizardPage("newSmooksFile1",
 				getSelection());
 		addPage(page);
-		typeIDPage = new TypeIDSelectionWizardPage("");
+		typeIDPage = new TypeIDSelectionWizardPage("", true);
+		typeIDPage.setSelection(selection);
 		addPage(typeIDPage);
 	}
 
@@ -124,7 +129,33 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard {
 				IWorkbenchPage page = PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getActivePage();
 				try {
-					IDE.openEditor(page, file, true);
+					SmooksFileEditorInput input = new SmooksFileEditorInput(
+							file);
+					IStrucutredDataCreationWizard sourceWizard = typeIDPage
+							.getSourceWizard();
+
+					IStrucutredDataCreationWizard targetWizard = typeIDPage
+							.getTargetWizard();
+
+					if (sourceWizard != null) {
+						if (((IWizard) sourceWizard).getPageCount() != 0) {
+							if (((IWizard) sourceWizard).performFinish())
+								input
+										.setSourceTreeViewerInputContents(sourceWizard
+												.getTreeViewerInputContents());
+						}
+					}
+					if (targetWizard != null) {
+						if (((IWizard) targetWizard).getPageCount() != 0) {
+							if (((IWizard) targetWizard).performFinish())
+								input
+										.setTargetTreeViewerInputContents(targetWizard
+												.getTreeViewerInputContents());
+						}
+					}
+
+					IDE.openEditor(page, input, SmooksFormEditor.EDITOR_ID,
+							true);// openEditor(page, file, true);
 				} catch (PartInitException e) {
 				}
 			}

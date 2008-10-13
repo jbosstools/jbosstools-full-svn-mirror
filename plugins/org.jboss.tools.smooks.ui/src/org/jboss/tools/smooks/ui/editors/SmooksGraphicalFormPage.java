@@ -258,7 +258,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		Composite rootMainControl = form.getBody();
 		form.setText("Data Mapping Page");
 		Section section = this.createPageSectionHeader(rootMainControl,
-				Section.TITLE_BAR | Section.DESCRIPTION , "Mapping Graph Edit Panel",
+				Section.TITLE_BAR | Section.DESCRIPTION,
+				"Mapping Graph Edit Panel",
 				"Edit the source and target assosiation");
 		Composite mappingMainComposite = toolkit.createComposite(section);
 		GridLayout gly = new GridLayout();
@@ -453,9 +454,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	protected void initTargetTreeViewer() {
 		if (this.targetTreeViewerInputModel != null) {
-			List list = new ArrayList();
-			list.add(targetTreeViewerInputModel);
-			targetViewer.setInput(list);
+			targetViewer.setInput(targetTreeViewerInputModel);
 		}
 	}
 
@@ -475,9 +474,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	protected void initSourceTreeViewer() {
 		if (this.sourceTreeViewerInputModel != null) {
-			List list = new ArrayList();
-			list.add(sourceTreeViewerInputModel);
-			sourceViewer.setInput(list);
+			sourceViewer.setInput(sourceTreeViewerInputModel);
 		}
 	}
 
@@ -862,10 +859,10 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				.getInstance().getTargetModelAnalyzer(targetDataTypeID);
 		IMappingAnalyzer connectionAnalyzer = AnalyzerFactory.getInstance()
 				.getMappingAnalyzer(sourceDataTypeID, targetDataTypeID);
-		if (sourceModelAnalyzer != null)
+		if (sourceModelAnalyzer != null && sourceTreeViewerInputModel == null)
 			sourceTreeViewerInputModel = sourceModelAnalyzer
 					.buildSourceInputObjects(graph, listType, file);
-		if (targetModelAnalyzer != null)
+		if (targetModelAnalyzer != null && targetTreeViewerInputModel == null)
 			targetTreeViewerInputModel = targetModelAnalyzer
 					.buildTargetInputObjects(graph, listType, file);
 		if (connectionAnalyzer != null) {
@@ -952,6 +949,13 @@ public class SmooksGraphicalFormPage extends FormPage implements
 					.getEditingDomain();
 			smooksResource = ((SmooksFormEditor) parentEditor)
 					.getSmooksResource();
+		}
+		if (input instanceof SmooksFileEditorInput) {
+			this.sourceTreeViewerInputModel = ((SmooksFileEditorInput) input)
+					.getSourceTreeViewerInputContents();
+			
+			this.targetTreeViewerInputModel = ((SmooksFileEditorInput) input)
+			.getTargetTreeViewerInputContents();
 		}
 
 		// }
