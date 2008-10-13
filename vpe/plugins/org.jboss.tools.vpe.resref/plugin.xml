@@ -8,5 +8,7 @@
 		class="org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"/>
 	   <xclass id="org.jboss.tools.vpe.resref.core.VpeCSSReferenceSupport"
 		class="org.jboss.tools.vpe.resref.core.VpeCSSReferenceSupport"/>
+	   <xclass id="org.jboss.tools.vpe.resref.core.VpeTaglibReferenceSupport"
+		class="org.jboss.tools.vpe.resref.core.VpeTaglibReferenceSupport"/>
     </extension>
 </plugin>
