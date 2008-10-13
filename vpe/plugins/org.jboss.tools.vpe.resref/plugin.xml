@@ -6,5 +6,7 @@
 		class="org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"/>
 	   <xclass id="org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
 		class="org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"/>
+	   <xclass id="org.jboss.tools.vpe.resref.core.VpeCSSReferenceSupport"
+		class="org.jboss.tools.vpe.resref.core.VpeCSSReferenceSupport"/>
     </extension>
 </plugin>

@@ -35,7 +35,7 @@
   <XActionItem kind="list">
    <XActionItem kind="list" name="CreateActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeCSSReferenceSupport"
      displayName="Add CSS Reference..." kind="action" name="AddItem">
      <EntityData EntityName="VPECSSReference">
       <AttributeData AttributeName="location"/>
@@ -45,7 +45,7 @@
    </XActionItem>
    <XActionItem kind="list" name="EditActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeCSSReferenceSupport"
      displayName="Edit CSS Reference..." kind="action" name="EditItem">
      <EntityData EntityName="VPECSSReference">
       <AttributeData AttributeName="location"/>
@@ -85,7 +85,7 @@
   <XActionItem kind="list">
    <XActionItem kind="list" name="CreateActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeCSSReferenceSupport"
      displayName="Add CSS Reference..." kind="action" name="AddItem">
      <EntityData EntityName="VPECSSReferenceExt">
       <AttributeData AttributeName="location"/>
@@ -95,7 +95,7 @@
    </XActionItem>
    <XActionItem kind="list" name="EditActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeCSSReferenceSupport"
      displayName="Edit CSS Reference..." kind="action" name="EditItem">
      <EntityData EntityName="VPECSSReferenceExt">
       <AttributeData AttributeName="location"/>
