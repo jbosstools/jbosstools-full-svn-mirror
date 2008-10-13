@@ -16,25 +16,29 @@
 			who for some reason cannot use Seam.</para>
 	</note>
 
-	<para>In this chapter you'll find out how to create a simple <ulink url="http://java.sun.com/products/jsp/">JSP</ulink> application using the JBoss
-		Developer Studio. The application will show a classic &quot;Hello World!&quot; on
-		the page.</para>
-	<para>We&apos;ll assume that you have already launched JBoss Developer Studio and also that
-		the Web Development perspective is the current perspective. If not, make it active by
-		selecting <emphasis>
+	<para>In this chapter you'll find out how to create a simple <ulink
+			url="http://java.sun.com/products/jsp/">JSP</ulink> application using the
+			<property>JBoss Developer Studio</property>. The application will show a classic
+		&quot;Hello World!&quot; on the page.</para>
+	<para>We&apos;ll assume that you have already launched <property>JBoss Developer
+		Studio</property> and also that the <property>Web Development</property> perspective is the
+		current perspective. If not, make it active by selecting <emphasis>
 			<property>Window &gt; Open Perspective &gt; Web Development</property>
 		</emphasis> from the menu bar or by selecting <emphasis>
 			<property>Window &gt; Open Perspective &gt; Other...</property>
 		</emphasis> from the menu bar and then selecting Web Development from the Select Perspective
 		dialog box.</para>
+
 	<section id="SettingUpTheProject">
 		<?dbhtml filename="SettingUpTheProject.html"?>
 		<title>Setting Up the Project</title>
-		<para>The main purpose of this section is to tell you about creation a Dynamic Web Project.</para>
+		<para>We are going to start with the creating a Dynamic Web Project with a minimal
+			structure, i.e. with just required facets. Thus this section will perform you all
+			necessary steps on how to do this.</para>
 		<itemizedlist>
 			<listitem>
 				<para>Go to the menu bar and select <emphasis>
-						<property>File &gt; New &gt; Project...</property>
+						<property>File &gt; New &gt; Other...</property>
 					</emphasis></para>
 			</listitem>
 			<listitem>
@@ -52,7 +56,9 @@
 				<para>Enter &quot;jspHello&quot; as a project name</para>
 			</listitem>
 			<listitem>
-				<para>Leave everything else as is, and click <emphasis>
+				<para>Then select <emphasis>
+						<property>Minimal Configuration</property>
+					</emphasis> from the list of possible configurations and click <emphasis>
 						<property>Finish</property>
 					</emphasis></para>
 			</listitem>
@@ -65,7 +71,11 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>A jspHello node should appear in the upper-left Package Explorer view.</para>
+
+		<para>The <emphasis>
+				<property>jspHello</property>
+			</emphasis> node should appear in the upper-left <property>Package Explorer</property>
+			view.</para>
 		<figure>
 			<title>New Web Project</title>
 			<mediaobject>
@@ -77,15 +87,15 @@
 	</section>
 
 	<section id="CreatingJSPPage">
-	<?dbhtml filename="CreatingJSPPage.html"?>
-	<title>Creating JSP Page</title>
+		<?dbhtml filename="CreatingJSPPage.html"?>
+		<title>Creating JSP Page</title>
 		<para>This section covers all the points how to create, edit and then preview JSP page.</para>
 		<para>In our simple application we need to create only one JSP page which displays a
-			&quot;Hello World!&quot; message.</para>
+				<emphasis>&quot;Hello World!&quot;</emphasis> message.</para>
 		<itemizedlist>
 			<listitem>
-				<para>Right click <emphasis><property>WebContent &gt; New &gt; JSP</property>.
-					</emphasis></para>
+				<para>Right click <emphasis><property>WebContent &gt; New &gt;
+						JSP</property>. </emphasis></para>
 			</listitem>
 			<listitem>
 				<para>Type &quot;hello.jsp&quot; for a file name and click the <emphasis>
@@ -111,12 +121,14 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>Our hello.jsp page will now appear in Project Explorer.</para>
+		<para>Our <emphasis>
+				<property>hello.jsp</property>
+			</emphasis> page will now appear in <property>Project Explorer</property>.</para>
 		<section id="EditingJSPPage">
 			<?dbhtml filename="EditingJSPPage.html"?>
 			<title>Editing a JSP Page</title>
 			<para>Let&apos;s now make a little change so that a jsp page displays
-				&quot;Hello World!&quot; message.</para>
+					<emphasis>&quot;Hello World!&quot;</emphasis> message.</para>
 			<itemizedlist>
 				<listitem>
 					<para>Insert this line inside the <emphasis role="bold">
@@ -138,7 +150,9 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>After changes made your hello.jsp page should look like this:</para>
+			<para>After changes made your <emphasis>
+					<property>hello.jsp</property>
+				</emphasis> page should look like this:</para>
 			<figure>
 				<title>Hello.jsp Page</title>
 				<mediaobject>
@@ -147,27 +161,38 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
+
+			<para>This line will actually output <emphasis>&quot;Hello
+				World!&quot;</emphasis> message in the <property>Console</property>. To make the
+				message displayed in the Browser, just replace this line with the simple
+					<emphasis>Hello World!</emphasis>.</para>
 		</section>
 
 		<section id="WebXML">
 			<?dbhtml filename="WebXML.html"?>
 			<title>web.xml file</title>
-			<para>When you are creating web project the wizard creates the web.xml for you
-				automatically. The web.xml file editor provided by JBoss Developer Studio is
-				available in two modes: <property>tree</property> and <property>source</property>.</para>
+			<para>When you are creating web project the wizard creates the <emphasis>
+					<property>web.xml</property>
+				</emphasis> for you automatically. The <property>web.xml file editor</property>
+				provided by <property>JBoss Developer Studio</property> is available in two modes:
+					<property>Tree</property> and <property>Source</property>.</para>
 			<figure>
 				<title>Web.xml in Design and Source Mode</title>
 				<mediaobject>
 					<imageobject>
-						<imagedata fileref="images/jsp_application/jsp_application_6.png" scale="90"/>
+						<imagedata fileref="images/jsp_application/jsp_application_6.png" scale="90"
+						/>
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>Both modes are fully synchronized. Let&apos;s add mapping to our hello.jsp
-				page in web.xml file.</para>
+			<para>Both modes are fully synchronized. Let&apos;s add mapping to our <emphasis>
+					<property>hello.jsp</property>
+				</emphasis> page in <emphasis>
+					<property>web.xml</property>
+				</emphasis> file.</para>
 			<itemizedlist>
 				<listitem>
-					<para>Switch to <property>source</property> mode.</para>
+					<para>Switch to <property>Source</property> tab.</para>
 				</listitem>
 				<listitem>
 					<para>Add the next code into <emphasis role="bold">
@@ -177,8 +202,8 @@
 			</itemizedlist>
 			<programlisting role="XML"><![CDATA[<welcome-file>hello.jsp</welcome-file>
 ]]></programlisting>
-			<para>If you come back to design mode you will see that the changes made are
-				automatically reflected in that mode.</para>
+			<para>If you come back to <property>Tree</property> mode you will see that the changes
+				made are automatically reflected in that mode.</para>
 			<para>Actually you don&apos;t really need to do any configurations right now.</para>
 		</section>
 
@@ -186,16 +211,18 @@
 			<?dbhtml filename="DeployTheProject.html"?>
 			<title>Deploying the project</title>
 			<para>While creating any web project you could experience a pain writing ant scripts and
-				managing the packaging even when writing the most trivial web
-				applications. With JBoss Developer Studio you are saved from such a pain. All you
-				need is to start JBoss server and launch your application in your favorite browser.</para>
-			<para>You can also create a war archive with JBDS&apos;s Archive Tools and export it
-				to any web server.</para>
+				managing the packaging even when writing the most trivial web applications. With
+					<property>JBoss Developer Studio</property> you are saved from such a pain. All
+				you need is to start <property>JBoss Server</property> and launch your application
+				in your favorite browser.</para>
+			<para>You can also create a war archive with <ulink
+					url="&aslink;#Project_archivesView">JBDS&apos;s Archive Tools</ulink>
+				and export it to any web server.</para>
 			<section id="WarConfig">
 				<?dbhtml filename="WarConfig.html"?>
 				<title>WAR Config</title>
-				<para>Project archives managing is available through <property>Project
-					archives</property> view.</para>
+				<para>Project archives managing is available through <ulink
+						url="&aslink;#Project_archivesView">Project Archives view</ulink>.</para>
 				<itemizedlist>
 					<listitem>
 						<para>Select <emphasis>
@@ -207,7 +234,8 @@
 						<para>Select a project in Package Explorer you want to be archived</para>
 					</listitem>
 				</itemizedlist>
-				<para>In Project Archives you will see available archive types for the project:</para>
+				<para>In <property>Project Archives</property> you will see available archive types
+					for the project:</para>
 				<figure>
 					<title>Project Archives</title>
 					<mediaobject>
@@ -223,7 +251,8 @@
 							</emphasis> option to create war archive</para>
 					</listitem>
 				</itemizedlist>
-				<para>In the dialog New WAR you can see automatically selected default values</para>
+				<para>In the <property>New WAR</property> dialog you can see automatically selected
+					default values.</para>
 				<figure>
 					<title>New WAR Archive</title>
 					<mediaobject>
@@ -250,9 +279,10 @@
 					</listitem>
 					<listitem>
 						<para>Click <emphasis>
-								<property>Finish</property>.
-							</emphasis> The <emphasis>.war</emphasis> file will appear in Package
-							Explorer and in Project archives view as structure tree: <figure>
+								<property>Finish</property>. </emphasis> The
+							<emphasis>.war</emphasis> file will appear in <property>Package
+							Explorer</property> and also in <property>Project Archives</property>
+							view as structure tree: <figure>
 								<title>Archive is Created</title>
 								<mediaobject>
 									<imageobject>
@@ -268,21 +298,20 @@
 									<imageobject>
 										<imagedata
 											fileref="images/jsp_application/jsp_application_12.png"
-											/>
+										/>
 									</imageobject>
 								</mediaobject>
 							</figure>
 						</para>
 					</listitem>
 				</itemizedlist>
-				<para>Via Project archives view you could now edit your archive, add new folders,
-					publish to server, and so on:</para>
+				<para>Via <property>Project Archives</property> view you could now edit your
+					archive, add new folders, publish to server, and so on:</para>
 				<figure>
 					<title>Configure Archive</title>
 					<mediaobject>
 						<imageobject>
-							<imagedata fileref="images/jsp_application/jsp_application_13.png"
-								/>
+							<imagedata fileref="images/jsp_application/jsp_application_13.png"/>
 						</imageobject>
 					</mediaobject>
 				</figure>
@@ -291,10 +320,11 @@
 			<section id="AutoRedeploy">
 				<?dbhtml filename="AutoRedeploy.html"?>
 				<title>Auto redeploy</title>
-				<para>When you are creating a web application and register it on JBoss server it is
-					automatically deployed into <emphasis>/deploy</emphasis> directory of the
-					server. JBDS comes with the feature of auto-redeploy. It means that you
-					don&apos;t need to restart JBoss. Any changes made in the application in
+				<para>When you are creating a web application and register it on <property>JBoss
+						Server</property> it is automatically deployed into
+					<emphasis>/deploy</emphasis> directory of the server. JBDS comes with the
+					feature of auto-redeploy. It means that you don&apos;t need to restart
+						<property>JBoss Server</property>. Any changes made in the application in
 					exploded format will trigger a redeployment on the server.</para>
 			</section>
 		</section>
@@ -302,12 +332,15 @@
 		<section id="Previewtab">
 			<?dbhtml filename="Previewtab.html"?>
 			<title>JSP Page Preview</title>
-			<para>JBDS comes with JSP design-time preview features. When designing JSP pages you can
-				easily preview how they will look during runtime. You can even attach your
-				stylesheet to the preview.</para>
+			<para><property>JBDS</property> comes with JSP design-time preview features. When
+				designing JSP pages you can easily preview how they will look during runtime. You
+				can even <ulink url="&jsflink;#el_exp_para">attach your stylesheet to the
+					Preview</ulink>.</para>
 			<itemizedlist>
 				<listitem>
-					<para>Make a little change to hello.jsp page, e.g. put this code snippet:</para>
+					<para>Make a little change to <emphasis>
+							<property>hello.jsp</property>
+						</emphasis> page, e.g. put this code snippet:</para>
 				</listitem>
 			</itemizedlist>
 			<programlisting role="XML"><![CDATA[<%= new java.util.Date() %>
@@ -319,8 +352,8 @@
 						</emphasis> button.</para>
 				</listitem>
 				<listitem>
-					<para>Switch to Preview page by clicking Preview tab at the bottom of the page.
-						You will see how the page will look at runtime.</para>
+					<para>Switch to Preview page by clicking <property>Preview</property> tab at the
+						bottom of the page. You will see how the page will look at runtime.</para>
 				</listitem>
 			</itemizedlist>
 			<!--		<figure>
@@ -336,12 +369,13 @@
 		<section id="LaunchingTheProject">
 			<?dbhtml filename="LaunchingTheProject.html"?>
 			<title>Launch JSP Project</title>
-			<para>Let&apos;s now launch our project on server. We&apos;ll use JBoss server
-				that is shipped with JBoss Developer Studio.</para>
+			<para>Let&apos;s now launch our project on server. We&apos;ll use
+					<property>JBoss Server</property> that is shipped with <property>JBoss Developer
+					Studio</property>. You can do it by performing one of the following actions:</para>
 			<itemizedlist>
 				<listitem>
-					<para>Start JBoss server from JBoss Server view by clicking the Start
-					icon.</para>
+					<para>Start JBoss Server from <ulink url="&aslink;#JBossServerView">JBoss
+							Server view</ulink> by clicking the Start icon.</para>
 				</listitem>
 			</itemizedlist>
 			<figure>
@@ -355,12 +389,14 @@
 			<itemizedlist>
 				<listitem>
 					<para>Click the Run icon or right click your project folder and select <emphasis>
-							<property>Run As &gt; Run on Server</property>.
-						</emphasis> If you haven&apos;t made any changes in web.xml file or
-						cleared it out you can launch the application by right clicking the
-						hello.jsp page and selecting <emphasis>
-							<property>Run on the Server</property>.
-						</emphasis></para>
+							<property>Run As &gt; Run on Server</property>. </emphasis> If you
+						haven&apos;t made any changes in <emphasis>
+							<property>web.xml</property>
+						</emphasis> file or cleared it out you can launch the application by right
+						clicking the <emphasis>
+							<property>hello.jsp</property>
+						</emphasis> page and selecting <emphasis>
+							<property>Run on the Server</property>. </emphasis></para>
 				</listitem>
 			</itemizedlist>
 			<figure>
@@ -371,7 +407,7 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>You should see the next page in a browser :</para>
+			<para>You should see the next page in a Browser :</para>
 			<figure>
 				<title>Running Project</title>
 				<mediaobject>
@@ -381,6 +417,10 @@
 				</mediaobject>
 			</figure>
 		</section>
+		<para>Thus with the help of this chapter you&apos;ve learnt how to organize a Dynamic
+			Web Project with a minimal configuration, add any staff to it (in our case it&apos;s
+			just one jsp page) and deploy and run it on the <property>JBoss Server</property>
+			shipped with <property>JBDS</property>.</para>
 	</section>
 
 </chapter>

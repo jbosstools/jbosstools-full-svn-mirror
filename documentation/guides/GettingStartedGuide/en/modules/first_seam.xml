@@ -446,7 +446,7 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
           <property>Run As... > Run On Server</property>
         </emphasis> which will show the appropriate url in the browser. Alternatively you can
         manually enter <emphasis>
-          <property>http://localhost/workshop/myAction.seam</property>
+          <property>http://localhost:8080/workshop/myAction.seam</property>
         </emphasis> into a browser.</para>
 
       <figure>
@@ -764,9 +764,9 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
     <section id="use_hibernate_tools">
       <title>Use Hibernate Tools to Query Data via JPA</title>
 
-      <para>Now, it’s time to write some JPA queries using the Hibernate Tools perspective in JBoss
-        Developer Studio.</para>
-      <para>In the upper right corner of the workbench there is a small <property>>></property>,
+      <para>Now, it&apos;s time to write some JPA queries using the Hibernate perspective in <property>JBoss
+        Developer Studio</property>.</para>
+      <para>In the upper right corner of the workbench there is a small icon (see the figure below),
         click on it and choose <property>Hibernate</property>.</para>
 
       <figure>
