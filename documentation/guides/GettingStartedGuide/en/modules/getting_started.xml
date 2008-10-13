@@ -571,6 +571,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     <para>Steps to reproduce the issue</para>
    </listitem>
   </orderedlist>
+
+  <para><property>JBDS</property> subscribers can get necessary support on our <ulink
+    url="https://network.jboss.com/jbossnetwork/login.html">Support Portal</ulink>.</para>
  </section>
 
 
