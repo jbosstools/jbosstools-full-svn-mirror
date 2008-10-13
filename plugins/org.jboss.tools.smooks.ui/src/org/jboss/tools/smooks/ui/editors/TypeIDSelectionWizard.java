@@ -10,16 +10,22 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.editors;
 
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.ui.INewWizard;
+import org.eclipse.ui.IWorkbench;
 
 /**
  * @author Dart Peng<br>
  * Date : Sep 5, 2008
  */
-public class TypeIDSelectionWizard extends Wizard {
+public class TypeIDSelectionWizard extends Wizard implements INewWizard {
 	private String sourceDataTypeID = null;
 	private String targetDataTypeID = null;
+	private Object sourceTreeViewerInputContents;
+	private Object targetTreeViewerInputContents;
 	private TypeIDSelectionWizardPage page = null;
+	private IStructuredSelection selection;
 	public String getSourceDataTypeID() {
 		return sourceDataTypeID;
 	}
@@ -36,6 +42,7 @@ public class TypeIDSelectionWizard extends Wizard {
 	public void addPages(){
 		if(page == null){
 			page = new TypeIDSelectionWizardPage("TypeID Selection",false);
+			page.setSelection(selection);
 			this.addPage(page);
 		}
 		super.addPages();
@@ -51,7 +58,27 @@ public class TypeIDSelectionWizard extends Wizard {
 		if(sid == null || tid == null) return false;
 		this.sourceDataTypeID = sid;
 		this.targetDataTypeID = tid;
+		setSourceTreeViewerInputContents(page.getSourceTreeViewerInputContents());
+		setTargetTreeViewerInputContents(page.getTargetTreeViewerInputContents());
 		return true;
+	}
+	public Object getSourceTreeViewerInputContents() {
+		return sourceTreeViewerInputContents;
+	}
+	public void setSourceTreeViewerInputContents(
+			Object sourceTreeViewerInputContents) {
+		this.sourceTreeViewerInputContents = sourceTreeViewerInputContents;
+	}
+	public Object getTargetTreeViewerInputContents() {
+		return targetTreeViewerInputContents;
+	}
+	public void setTargetTreeViewerInputContents(
+			Object targetTreeViewerInputContents) {
+		this.targetTreeViewerInputContents = targetTreeViewerInputContents;
+	}
+	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		this.selection = selection;
+		if(page != null) page.setSelection(selection);
 	}
 
 }
