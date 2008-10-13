@@ -106,5 +106,5 @@ public final class HTML {
 
 	public static final String STYLE_PARAMETER_WIDTH = "width"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_HEIGHT = "height"; //$NON-NLS-1$
-	
+	public static final String STYLE_PARAMETER_MAX_HEIGHT = "max-height"; //$NON-NLS-1$	
 }
