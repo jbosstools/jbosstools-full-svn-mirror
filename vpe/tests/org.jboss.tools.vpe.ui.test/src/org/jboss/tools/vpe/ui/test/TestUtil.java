@@ -31,6 +31,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.internal.contentassist.ContentAssistUtils;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
+import org.jboss.tools.test.util.JobUtils;
 import org.jboss.tools.test.util.ResourcesUtils;
 import org.jboss.tools.tests.ImportBean;
 import org.jboss.tools.vpe.editor.VpeController;
@@ -142,11 +143,17 @@ public class TestUtil {
 	 * @throws CoreException the core exception
 	 */
 	static public void removeProject(String projectName) throws CoreException {
-		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
-				projectName);
-		if (project != null) {
-			project.delete(IResource.ALWAYS_DELETE_PROJECT_CONTENT,
-					new NullProgressMonitor());
+		boolean saveAutoBuild = ResourcesUtils.setBuildAutomatically(false);
+		try {
+			IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
+					projectName);
+			if (project != null) {
+				project.delete(IResource.ALWAYS_DELETE_PROJECT_CONTENT,
+						new NullProgressMonitor());
+				JobUtils.waitForIdle();
+			}
+		} finally {
+			ResourcesUtils.setBuildAutomatically(saveAutoBuild);
 		}
 	}
 
