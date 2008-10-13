@@ -59,7 +59,8 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard {
 		page = new SmooksConfigFileNewWizardPage("newSmooksFile1",
 				getSelection());
 		addPage(page);
-		typeIDPage = new TypeIDSelectionWizardPage("", true);
+		// TODO don't use the WizardSelectionPage
+		typeIDPage = new TypeIDSelectionWizardPage("", false);
 		typeIDPage.setSelection(selection);
 		addPage(typeIDPage);
 	}
@@ -131,28 +132,8 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard {
 				try {
 					SmooksFileEditorInput input = new SmooksFileEditorInput(
 							file);
-					IStrucutredDataCreationWizard sourceWizard = typeIDPage
-							.getSourceWizard();
-
-					IStrucutredDataCreationWizard targetWizard = typeIDPage
-							.getTargetWizard();
-
-					if (sourceWizard != null) {
-						if (((IWizard) sourceWizard).getPageCount() != 0) {
-							if (((IWizard) sourceWizard).performFinish())
-								input
-										.setSourceTreeViewerInputContents(sourceWizard
-												.getTreeViewerInputContents());
-						}
-					}
-					if (targetWizard != null) {
-						if (((IWizard) targetWizard).getPageCount() != 0) {
-							if (((IWizard) targetWizard).performFinish())
-								input
-										.setTargetTreeViewerInputContents(targetWizard
-												.getTreeViewerInputContents());
-						}
-					}
+					input.setSourceTreeViewerInputContents(typeIDPage.getSourceTreeViewerInputContents());
+					input.setTargetTreeViewerInputContents(typeIDPage.getTargetTreeViewerInputContents());
 
 					IDE.openEditor(page, input, SmooksFormEditor.EDITOR_ID,
 							true);// openEditor(page, file, true);

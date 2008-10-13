@@ -14,6 +14,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
@@ -24,8 +26,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.IWizardNode;
-import org.eclipse.jface.wizard.IWizardPage;
-import org.eclipse.jface.wizard.WizardSelectionPage;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -34,10 +35,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.INewWizard;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
+import org.eclipse.ui.forms.events.IHyperlinkListener;
+import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.jboss.tools.smooks.analyzer.AnalyzerFactory;
 import org.jboss.tools.smooks.analyzer.DataTypeID;
 import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
 import org.jboss.tools.smooks.ui.IViewerInitor;
+import org.jboss.tools.smooks.ui.StructuredDataCreationWizardDailog;
 import org.jboss.tools.smooks.ui.ViewerInitorStore;
 import org.jboss.tools.smooks.ui.wizards.TransformSelectWizardNode;
 
@@ -45,10 +50,20 @@ import org.jboss.tools.smooks.ui.wizards.TransformSelectWizardNode;
  * @author Dart Peng<br>
  *         Date : Sep 5, 2008
  */
-public class TypeIDSelectionWizardPage extends WizardSelectionPage {
+public class TypeIDSelectionWizardPage extends WizardPage {
+	/**
+	 * @deprecated
+	 */
 	protected IStrucutredDataCreationWizard sourceWizard;
 
+	/**
+	 * @deprecated
+	 */
 	protected IStrucutredDataCreationWizard targetWizard;
+
+	private Object sourceTreeViewerInputContents;
+
+	private Object targetTreeViewerInputContents;
 
 	protected CheckboxTableViewer source;
 	protected CheckboxTableViewer target;
@@ -57,6 +72,10 @@ public class TypeIDSelectionWizardPage extends WizardSelectionPage {
 	private String targetID = null;
 	private IStructuredSelection selection;
 	private boolean showDataSelectPage = false;
+
+	private Hyperlink sourceDataLink;
+
+	private Hyperlink targetDataLink;
 
 	public IStructuredSelection getSelection() {
 		return selection;
@@ -87,40 +106,52 @@ public class TypeIDSelectionWizardPage extends WizardSelectionPage {
 		this.showDataSelectPage = showDataSelectPage;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.wizard.WizardSelectionPage#getNextPage()
-	 */
-	public IWizardPage getNextPage() {
-		if (this.getSelectedNode() == null) {
-			return null;
-		}
+	// public boolean canFlipToNextPage() {
+	// if (!showDataSelectPage) {
+	// return isPageComplete() && getNextPage() != null;
+	// }
+	// return super.canFlipToNextPage();
+	// }
 
-		boolean isCreated = getSelectedNode().isContentCreated();
-
-		IWizard wizard = getSelectedNode().getWizard();
-
-		if (wizard == null) {
-			setSelectedNode(null);
-			return null;
-		}
-		if (!isCreated) {
-			if (wizard instanceof IStrucutredDataCreationWizard) {
-				String targetID = getDataTypeID(target);
-				if (targetID != null) {
-					((IStrucutredDataCreationWizard) wizard)
-							.setNextDataCreationWizardNode(this
-									.getSourceWizard(targetID));
-				}
-			}
-			if (wizard instanceof INewWizard) {
-				((INewWizard) wizard).init(null, selection);
-			}
-			wizard.addPages();
-		}
-		return wizard.getStartingPage();
-	}
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see org.eclipse.jface.wizard.WizardSelectionPage#getNextPage()
+	// */
+	// public IWizardPage getNextPage() {
+	// if (!showDataSelectPage) {
+	// if (this.getWizard() != null) {
+	// return this.getWizard().getNextPage(this);
+	// }
+	// }
+	// if (this.getSelectedNode() == null) {
+	// return null;
+	// }
+	//
+	// boolean isCreated = getSelectedNode().isContentCreated();
+	//
+	// IWizard wizard = getSelectedNode().getWizard();
+	//
+	// if (wizard == null) {
+	// setSelectedNode(null);
+	// return null;
+	// }
+	// if (!isCreated) {
+	// if (wizard instanceof IStrucutredDataCreationWizard) {
+	// String targetID = getDataTypeID(target);
+	// if (targetID != null) {
+	// ((IStrucutredDataCreationWizard) wizard)
+	// .setNextDataCreationWizardNode(this
+	// .getSourceWizard(targetID));
+	// }
+	// }
+	// if (wizard instanceof INewWizard) {
+	// ((INewWizard) wizard).init(null, selection);
+	// }
+	// wizard.addPages();
+	// }
+	// return wizard.getStartingPage();
+	// }
 
 	/*
 	 * (non-Javadoc)
@@ -150,7 +181,94 @@ public class TypeIDSelectionWizardPage extends WizardSelectionPage {
 		target.setInput(sourceList);
 		initViewer();
 
+		sourceDataLink = new Hyperlink(mainComposite, SWT.NONE);
+		sourceDataLink.setText("Source Model Select:Empty");
+		sourceDataLink.addHyperlinkListener(new IHyperlinkListener() {
+
+			public void linkActivated(HyperlinkEvent e) {
+				openSourceWizard();
+			}
+
+			public void linkEntered(HyperlinkEvent e) {
+
+			}
+
+			public void linkExited(HyperlinkEvent e) {
+
+			}
+
+		});
+		targetDataLink = new Hyperlink(mainComposite, SWT.NONE);
+		targetDataLink.setText("Target Model Select:Empty");
+		targetDataLink.addHyperlinkListener(new IHyperlinkListener() {
+
+			public void linkActivated(HyperlinkEvent e) {
+				openTargetWizard();
+			}
+
+			public void linkEntered(HyperlinkEvent e) {
+
+			}
+
+			public void linkExited(HyperlinkEvent e) {
+
+			}
+
+		});
+
 		this.setControl(mainComposite);
+	}
+
+	protected void openTargetWizard() {
+		targetTreeViewerInputContents = getReturnObjectFromWizard(getTargetID());
+		resetLinkText();
+	}
+
+	protected IWizard getWizardViaDataID(String dataID) {
+		if (dataID == null)
+			return null;
+		IWizardNode wn = getSourceWizard(dataID);
+		// setSelectedNode(wn);
+		IWizard sw = wn.getWizard();
+		if (sw instanceof IStrucutredDataCreationWizard) {
+			// ((IStrucutredDataCreationWizard)sw).i
+		}
+		if (sw instanceof INewWizard) {
+			((INewWizard) sw).init(null, this.getSelection());
+		}
+		return sw;
+	}
+
+	protected Object getReturnObjectFromWizard(String dataID) {
+		IWizard wizard = getWizardViaDataID(dataID);
+		if (wizard != null) {
+			StructuredDataCreationWizardDailog dialog = new StructuredDataCreationWizardDailog(
+					getShell(), wizard);
+			if (dialog.open() == Dialog.OK) {
+				return dialog.getCurrentCreationWizard()
+						.getTreeViewerInputContents();
+			}
+		} else {
+			MessageDialog.openInformation(getShell(), "Info",
+					"Please select the data type first");
+		}
+
+		return null;
+	}
+
+	protected void openSourceWizard() {
+		sourceTreeViewerInputContents = getReturnObjectFromWizard(getSourceID());
+		resetLinkText();
+	}
+
+	private void resetLinkText() {
+		if (sourceTreeViewerInputContents != null) {
+			sourceDataLink.setText("Source Model Select");
+		}
+
+		if (targetTreeViewerInputContents != null) {
+			targetDataLink.setText("Target Model Select");
+		}
 	}
 
 	protected String getDataTypeID(CheckboxTableViewer viewer) {
@@ -231,31 +349,35 @@ public class TypeIDSelectionWizardPage extends WizardSelectionPage {
 
 				if (viewer == source) {
 					String sourceID = getDataTypeID(source);
-					IWizardNode wn = getSourceWizard(sourceID);
-					setSelectedNode(wn);
 					setSourceID(sourceID);
-					IWizard sw = wn.getWizard();
-					if (sw instanceof IStrucutredDataCreationWizard) {
-						setSourceWizard((IStrucutredDataCreationWizard) sw);
-					}
+					// TODO don't use that to display the source selection
+					// wizard page.
+					// IWizardNode wn = getSourceWizard(sourceID);
+					// setSelectedNode(wn);
+					// IWizard sw = wn.getWizard();
+					// if (sw instanceof IStrucutredDataCreationWizard) {
+					// setSourceWizard((IStrucutredDataCreationWizard) sw);
+					// }
 				}
 
 				if (viewer == target) {
-					IWizardNode node = getSelectedNode();
+					// IWizardNode node = getSelectedNode();
 					String targetID = getDataTypeID(target);
-					IWizardNode targetNode = getSourceWizard(targetID);
-					IWizard tnw = targetNode.getWizard();
-					if (tnw instanceof IStrucutredDataCreationWizard) {
-						setTargetWizard((IStrucutredDataCreationWizard) tnw);
-					}
-					if (node != null) {
-						IWizard wizard = node.getWizard();
-						if (wizard != null
-								&& wizard instanceof IStrucutredDataCreationWizard) {
-							((IStrucutredDataCreationWizard) wizard)
-									.setNextDataCreationWizardNode(targetNode);
-						}
-					}
+					// TODO don't use that to display the target selection
+					// wizard page.
+					// IWizardNode targetNode = getSourceWizard(targetID);
+					// IWizard tnw = targetNode.getWizard();
+					// if (tnw instanceof IStrucutredDataCreationWizard) {
+					// setTargetWizard((IStrucutredDataCreationWizard) tnw);
+					// }
+					// if (node != null) {
+					// IWizard wizard = node.getWizard();
+					// if (wizard != null
+					// && wizard instanceof IStrucutredDataCreationWizard) {
+					// ((IStrucutredDataCreationWizard) wizard)
+					// .setNextDataCreationWizardNode(targetNode);
+					// }
+					// }
 					setTargetID(targetID);
 				}
 			}
@@ -326,5 +448,23 @@ public class TypeIDSelectionWizardPage extends WizardSelectionPage {
 
 	public void setTargetWizard(IStrucutredDataCreationWizard targetWizard) {
 		this.targetWizard = targetWizard;
+	}
+
+	public Object getSourceTreeViewerInputContents() {
+		return sourceTreeViewerInputContents;
+	}
+
+	public void setSourceTreeViewerInputContents(
+			Object sourceTreeViewerInputContents) {
+		this.sourceTreeViewerInputContents = sourceTreeViewerInputContents;
+	}
+
+	public Object getTargetTreeViewerInputContents() {
+		return targetTreeViewerInputContents;
+	}
+
+	public void setTargetTreeViewerInputContents(
+			Object targetTreeViewerInputContents) {
+		this.targetTreeViewerInputContents = targetTreeViewerInputContents;
 	}
 }
