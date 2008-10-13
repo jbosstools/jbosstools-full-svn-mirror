@@ -3,9 +3,13 @@
  */
 package org.jboss.tools.smooks.xml;
 
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.wizard.IWizardNode;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.INewWizard;
+import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
 
 /**
@@ -13,9 +17,14 @@ import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
  * 
  */
 public abstract class AbstractStructuredDdataWizard extends Wizard implements
-		IStrucutredDataCreationWizard {
+		IStrucutredDataCreationWizard ,INewWizard{
+	protected IWorkbench workbench;
+	
+	protected IStructuredSelection selection;
+	
 	protected AbstractFileSelectionWizardPage page = null;
 	protected Object xsdElement  = null;
+	protected IWizardNode strucutredDataCreationWizardNode;
 	/**
 	 * 
 	 */
@@ -27,6 +36,8 @@ public abstract class AbstractStructuredDdataWizard extends Wizard implements
 	public void addPages() {
 		if(page == null){
 			page = createAbstractFileSelectionWizardPage();
+			page.setSelection(this.selection);
+			page.activeNextWizardNode(strucutredDataCreationWizardNode);
 		}
 		this.addPage(page);
 	}
@@ -50,5 +61,17 @@ public abstract class AbstractStructuredDdataWizard extends Wizard implements
 	public void init(IEditorSite site, IEditorInput input) {
 		
 	}
+	public void setNextDataCreationWizardNode(IWizardNode wizardNode) {
+		strucutredDataCreationWizardNode = wizardNode;
+		if(page != null){
+			page.activeNextWizardNode(strucutredDataCreationWizardNode);
+		}
+	}
 
+	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		this.workbench = workbench;
+		this.selection = selection;
+	}
+	
+	
 }

@@ -27,6 +27,26 @@ public class SmooksFileEditorInput extends FileEditorInput {
 	
 	private List targetModel = new ArrayList();
 	
+	private Object sourceRoot = null;
+	
+	private Object targetRoot = null;
+	
+	public Object getSourceTreeViewerInputContents() {
+		return sourceRoot;
+	}
+
+	public void setSourceTreeViewerInputContents(Object sourceRoot) {
+		this.sourceRoot = sourceRoot;
+	}
+
+	public Object getTargetTreeViewerInputContents() {
+		return targetRoot;
+	}
+
+	public void setTargetTreeViewerInputContents(Object targetRoot) {
+		this.targetRoot = targetRoot;
+	}
+
 	public SmooksFileEditorInput(IFile file) {
 		super(file);
 	}
@@ -58,7 +78,5 @@ public class SmooksFileEditorInput extends FileEditorInput {
 	public void setTargetModel(List targetModel) {
 		this.targetModel = targetModel;
 	}
-	
-	
 
 }

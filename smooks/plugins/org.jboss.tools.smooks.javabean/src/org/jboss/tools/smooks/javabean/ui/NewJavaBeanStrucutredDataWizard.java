@@ -15,12 +15,18 @@ import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.internal.core.JavaProject;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.wizard.IWizardNode;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.INewWizard;
+import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.smooks.javabean.JavaBeanActivator;
 import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
 
@@ -28,11 +34,11 @@ import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
  * @author Dart Peng
  * @Date Aug 5, 2008
  */
-public class NewJavaBeanStrucutredDataWizard extends Wizard implements IStrucutredDataCreationWizard{
+public class NewJavaBeanStrucutredDataWizard extends Wizard implements IStrucutredDataCreationWizard,INewWizard{
 	JavaBeanConfigWizardPage page = null;
 	IJavaProject project = null;
 	Object result = null;
-	
+	IWizardNode wizard;
 	Properties properties = new Properties();
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
@@ -42,6 +48,9 @@ public class NewJavaBeanStrucutredDataWizard extends Wizard implements IStrucutr
 		super.addPages();
 		if(page == null){
 			page = new JavaBeanConfigWizardPage(project);
+			if(this.wizard != null){
+				page.activeNextWizardNode(wizard);
+			}
 			this.addPage(page);
 		}
 	}
@@ -79,6 +88,26 @@ public class NewJavaBeanStrucutredDataWizard extends Wizard implements IStrucutr
 
 	public Properties getProperties() {
 		return this.properties;
+	}
+
+	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		if(selection != null){
+			Object obj = selection.getFirstElement();
+			if(obj instanceof JavaProject){
+				this.project = (JavaProject)obj;
+			}
+			if(obj instanceof IResource){
+				IProject project = ((IResource)obj).getProject();
+				this.project = JavaCore.create(project);
+			}
+		}
+	}
+
+	public void setNextDataCreationWizardNode(IWizardNode wizard) {
+		this.wizard = wizard;
+		if(page != null){
+			page.activeNextWizardNode(this.wizard);
+		}
 	}
 
 }

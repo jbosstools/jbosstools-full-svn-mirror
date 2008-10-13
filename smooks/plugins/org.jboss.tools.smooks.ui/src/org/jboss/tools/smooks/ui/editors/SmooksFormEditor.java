@@ -47,6 +47,7 @@ import org.jboss.tools.smooks.utils.UIUtils;
  */
 public class SmooksFormEditor extends FormEditor implements
 		ITabbedPropertySheetPageContributor {
+	
 	SmooksGraphicalFormPage graphicalPage = null;
 	private TabbedPropertySheetPage tabbedPropertySheetPage;
 	private SmooksNormalContentEditFormPage normalPage;

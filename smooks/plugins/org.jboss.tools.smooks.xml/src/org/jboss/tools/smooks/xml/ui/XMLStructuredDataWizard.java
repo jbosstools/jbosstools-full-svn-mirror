@@ -21,6 +21,8 @@ import org.jboss.tools.smooks.xml.XmlActivator;
  * @Date Aug 18, 2008
  */
 public class XMLStructuredDataWizard extends AbstractStructuredDdataWizard {
+	
+	
 	Properties properties = new Properties();
 	String filePath = null;
 
@@ -49,5 +51,4 @@ public class XMLStructuredDataWizard extends AbstractStructuredDdataWizard {
 	public Properties getProperties() {
 		return properties;
 	}
-
 }

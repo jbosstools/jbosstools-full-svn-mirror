@@ -35,7 +35,7 @@ public class TypeIDSelectionWizard extends Wizard {
 	
 	public void addPages(){
 		if(page == null){
-			page = new TypeIDSelectionWizardPage("TypeID Selection");
+			page = new TypeIDSelectionWizardPage("TypeID Selection",false);
 			this.addPage(page);
 		}
 		super.addPages();

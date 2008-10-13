@@ -8,12 +8,12 @@ import java.util.Collections;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
-import org.eclipse.jface.viewers.ICheckStateListener;
-import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.wizard.IWizard;
+import org.eclipse.jface.wizard.IWizardNode;
+import org.eclipse.jface.wizard.IWizardPage;
+import org.eclipse.jface.wizard.WizardSelectionPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -28,16 +28,15 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.jboss.tools.smooks.xsd.model.XSDStructuredModelContentProvider;
-import org.jboss.tools.smooks.xsd.model.XSDStructuredModelLabelProvider;
+import org.eclipse.ui.INewWizard;
 
 /**
  * 
  * @author Dart Peng Date : 2008-8-13
  */
-public abstract class AbstractFileSelectionWizardPage extends WizardPage
+public abstract class AbstractFileSelectionWizardPage extends WizardSelectionPage
 		implements SelectionListener {
-
+	protected IStructuredSelection selection;
 	protected Object returnObject = null;
 	protected Text fileText;
 	protected Composite fileTextComposite;
@@ -45,12 +44,6 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	protected Button fileSystemBrowseButton;
 	protected boolean reasourceLoaded = false;
 	private Button workspaceBrowseButton;
-
-	public AbstractFileSelectionWizardPage(String pageName, String title,
-			ImageDescriptor titleImage) {
-		super(pageName, title, titleImage);
-		// TODO Auto-generated constructor stub
-	}
 
 	public AbstractFileSelectionWizardPage(String pageName) {
 		super(pageName);
@@ -68,6 +61,32 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	
 	public String getFilePath(){
 		return fileText.getText();
+	}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.wizard.WizardSelectionPage#getNextPage()
+	 */
+	public IWizardPage getNextPage() {
+		if (this.getSelectedNode() == null) {
+			return null;
+		}
+
+		boolean isCreated = getSelectedNode().isContentCreated();
+
+		IWizard wizard = getSelectedNode().getWizard();
+
+		if (wizard == null) {
+			setSelectedNode(null);
+			return null;
+		}
+		if (!isCreated) {
+			if (wizard instanceof INewWizard) {
+				((INewWizard) wizard).init(null, getSelection());
+			}
+			wizard.addPages();
+		}
+		return wizard.getStartingPage();
 	}
 
 	/*
@@ -245,6 +264,10 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 
 		return xsdComposite;
 	}
+	
+	public void activeNextWizardNode(IWizardNode node){
+		setSelectedNode(node);
+	}
 
 	abstract protected Object loadedTheObject(String path) throws Exception;
 
@@ -322,6 +345,14 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 
 	public void setTableViewer(CheckboxTableViewer tableViewer) {
 		this.tableViewer = tableViewer;
+	}
+
+	public IStructuredSelection getSelection() {
+		return selection;
+	}
+
+	public void setSelection(IStructuredSelection selection) {
+		this.selection = selection;
 	}
 
 }
