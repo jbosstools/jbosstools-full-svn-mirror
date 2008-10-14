@@ -572,7 +572,7 @@
    </XActionItem>
    <XActionItem kind="list" name="EditActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.VpeTaglibReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeTaglibReferenceSupport"
      displayName="Edit TLD Reference..." kind="action" name="EditItem">
      <EntityData EntityName="VPETLDReferenceExt">
       <AttributeData AttributeName="location"/>
