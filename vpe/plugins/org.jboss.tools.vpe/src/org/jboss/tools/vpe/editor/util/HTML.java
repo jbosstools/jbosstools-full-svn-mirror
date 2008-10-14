@@ -91,6 +91,7 @@ public final class HTML {
 	public static final String ATTR_DISPLAY = "display"; //$NON-NLS-1$
 	public static final String ATTR_READONLY = "readonly"; //$NON-NLS-1$
 	public static final String ATTR_SCOPE = "scope"; //$NON-NLS-1$
+	public static final String ATTR_SPAN = "span"; //$NON-NLS-1$
 
 	public static final String VALUE_TOP_ALIGN = "top"; //$NON-NLS-1$
 	public static final String VALUE_RIGHT_ALIGN = "right"; //$NON-NLS-1$
