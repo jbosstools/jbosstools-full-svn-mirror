@@ -40,7 +40,7 @@ import org.jboss.tools.vpe.editor.util.ElService;
 import org.w3c.dom.Node;
 
 public class VpeFunctionSrc extends VpeFunction {
-    static final String IMG_UNRESOLVED = "unresolved.gif"; //$NON-NLS-1$
+    static final String IMG_UNRESOLVED = "unresolved_image.gif"; //$NON-NLS-1$
     static final String IMG_PREFIX = "file:///"; //$NON-NLS-1$
 
     public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
@@ -179,7 +179,7 @@ public class VpeFunctionSrc extends VpeFunction {
     }
 
     protected String getUnresolved() {
-	return IMG_UNRESOLVED;
+	return IMG_PREFIX + getAbsoluteResourcePath(IMG_UNRESOLVED);
     }
 
     protected String getPrefix() {
@@ -242,5 +242,17 @@ public class VpeFunctionSrc extends VpeFunction {
 
         resolvedValue = ElService.getInstance().replaceEl(file, resolvedValue);
         return resolvedValue;
+    }
+    
+    public static String getAbsoluteResourcePath(String resourcePathInPlugin) {
+	String pluginPath = VpePlugin.getPluginResourcePath();
+	IPath pluginFile = new Path(pluginPath);
+	File file = pluginFile.append(resourcePathInPlugin).toFile();
+	if (file.exists()) {
+	    return file.getAbsolutePath();
+	} else {
+	    throw new RuntimeException("Can't get path for " //$NON-NLS-1$
+		    + resourcePathInPlugin);
+	}
     }
 }
