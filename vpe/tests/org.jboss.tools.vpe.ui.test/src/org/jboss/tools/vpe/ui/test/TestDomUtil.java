@@ -45,9 +45,9 @@ public class TestDomUtil {
 
 	final public static String ILLEGAL_ATTRIBUTES_SEPARATOR = Constants.COMMA;
 
-	final public static String START_REGEX = "{"; //$NON-NLS-1$
+	final public static String START_REGEX = "/"; //$NON-NLS-1$
 
-	final public static String END_REGEX = "}"; //$NON-NLS-1$
+	final public static String END_REGEX = "/"; //$NON-NLS-1$
 
 	public static Document getDocument(File file) throws FileNotFoundException {
 		// create reader
@@ -218,40 +218,44 @@ public class TestDomUtil {
 					throw new ComparisonException("there is not : \"" + name
 							+ "\" attribute");
 
-				if (HTML.ATTR_STYLE.equalsIgnoreCase(name)) {
-
-					String[] modelParameters = modelAttr.getNodeValue().split(
-							Constants.SEMICOLON);
-					String[] vpeParameters = vpeAttr.getNodeValue().split(
-							Constants.SEMICOLON);
-
-					for (int j = 0; j < modelParameters.length; j++) {
-						String modelParam = modelParameters[j];
-						String vpeParam = vpeParameters[j];
-
-						String[] splittedModelParam = modelParam.split(
-								Constants.COLON, 2);
-
-						String[] splittedVpeParam = vpeParam.split(
-								Constants.COLON, 2);
-
-						if (!splittedModelParam[0].trim().equals(
-								splittedVpeParam[0].trim())) {
-							throw new ComparisonException(
-									"param of style attribute is\""
-											+ splittedVpeParam[0].trim()
-											+ "\" but must be \""
-											+ splittedModelParam[0].trim()
-											+ "\"");
-						}
-
-						if (splittedModelParam.length > 1)
-							compareComplexStrings(splittedModelParam[1].trim(),
-									splittedVpeParam[1].trim());
-
-					}
-
-				} else {
+//				if (HTML.ATTR_STYLE.equalsIgnoreCase(name)) {
+//
+//					String[] modelParameters = modelAttr.getNodeValue().split(
+//							Constants.SEMICOLON);
+//					String[] vpeParameters = vpeAttr.getNodeValue().split(
+//							Constants.SEMICOLON);
+//
+//					for (int j = 0; j < modelParameters.length; j++) {
+//						String modelParam = modelParameters[j];
+//						String vpeParam = vpeParameters[j];
+//
+//						String[] splittedModelParam = modelParam.split(
+//								Constants.COLON, 2);
+//
+//						String[] splittedVpeParam = vpeParam.split(
+//								Constants.COLON, 2);
+//
+//						if (!splittedModelParam[0].trim().equals(
+//								splittedVpeParam[0].trim())) {
+//							throw new ComparisonException(
+//									"param of style attribute is\""
+//											+ splittedVpeParam[0].trim()
+//											+ "\" but must be \""
+//											+ splittedModelParam[0].trim()
+//											+ "\"");
+//						}
+//						
+////						compareComplexStrings(splittedModelParam[0].trim(), splittedVpeParam[0].trim());
+//						
+//
+//						if (splittedModelParam.length > 1)
+//							compareComplexStrings(splittedModelParam[1].trim(),
+//									splittedVpeParam[1].trim());
+//
+//					}
+//
+//				} 
+			else {
 
 					compareComplexStrings(modelAttr.getNodeValue().trim(),
 							vpeAttr.getNodeValue().trim());
