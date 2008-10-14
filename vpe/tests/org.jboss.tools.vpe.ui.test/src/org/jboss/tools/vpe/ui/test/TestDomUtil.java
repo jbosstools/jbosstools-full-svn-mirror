@@ -245,8 +245,9 @@ public class TestDomUtil {
 											+ "\"");
 						}
 
-						compareComplexStrings(splittedModelParam[1].trim(),
-								splittedVpeParam[1].trim());
+						if (splittedModelParam.length > 1)
+							compareComplexStrings(splittedModelParam[1].trim(),
+									splittedVpeParam[1].trim());
 
 					}
 
