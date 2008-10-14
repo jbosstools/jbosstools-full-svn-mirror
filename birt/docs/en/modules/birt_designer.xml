@@ -17,19 +17,33 @@
           <section id="birt_designer_UI" xreflabel="birt_designer_UI">
               <title>BIRT User Interface</title>
               
-              <para>The central part of the user interface is the Layout Editor. It displays the whole process of building a report and contains the following tabs:</para>
+              <para>The central part of the user interface is the <property>Layout Editor</property>. It displays the whole process of building a report and contains the following tabs:</para>
               
               <itemizedlist>
                   <listitem><para><emphasis role="bold">Layout</emphasis> - this is an area where you can edit your report design;</para></listitem>   
                   <listitem><para><emphasis role="bold">Preview</emphasis> - runs your report created and shows the output;</para></listitem>   
                   <listitem><para><emphasis role="bold">Script</emphasis> - on this page you can add JavaScript to your report to customize its behavior;</para></listitem>   
                   <listitem><para><emphasis role="bold">XML Source</emphasis> - this is an area where you can view and modify the XML source of your report;</para></listitem>   
-                  <listitem><para><emphasis role="bold">Master Page</emphasis> - use it to format page data.</para></listitem>   
+                  <listitem><para><emphasis role="bold">Master Page</emphasis> - use it to format page data.</para></listitem>   </itemizedlist>
+                  
+              <para>The next part of user interface is different <property>Views</property> that can be arranged around the Layout Editor area the way you like:</para> 
+                  
+                  <itemizedlist>
+                      <listitem><para><emphasis role="bold">Palette</emphasis> - BIRT View that shows the standard report items you can add to your report using drag and drop.</para></listitem>
+                      <listitem><para><emphasis role="bold">Outline</emphasis> - BIRT View that shows the structure of your report as a tree view.</para></listitem>
+                      <listitem><para><emphasis role="bold">Navigator</emphasis> - Standard Eclipse view that shows your projects, and the reports within your projects.</para></listitem>
+                      <listitem><para><emphasis role="bold">Data Explorer</emphasis> - BIRT View that shows your data sources (connections), data sets (queries) and report parameters. You also use this view to add data set columns to your report layout.</para></listitem>
+                      <listitem><para><emphasis role="bold">Property Editor</emphasis> - BIRT View that displays properties for many report items. It has tabs and groupings that organize properties into categories.</para></listitem>
+                      <listitem><para><emphasis role="bold">Properties View</emphasis> - Standard Eclipse view that shows all properties for a report item as a simple list. This view is optional, and we will not use it in this tutorial.</para></listitem>
+                      <listitem><para><emphasis role="bold">Library Explorer View</emphasis> - BIRT allows the reuse of report objects, such as tables, data sources and styles. Objects created for reuse are stored in a library file. The Library Explorer will display Libraries that exist in the resource folder. Developed libraries can be added to the resource folder by selecting File→Publish Library to Resource Folder or by right clicking in Library Explorer and selecting add. The resource folder location can be configured. </para></listitem>
+                      
+                      
+                      
+                  </itemizedlist>
                   
                   
                   
-                  
-              </itemizedlist>
+              
               
           </section>
            
