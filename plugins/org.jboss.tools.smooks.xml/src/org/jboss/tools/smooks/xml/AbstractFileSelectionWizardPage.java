@@ -3,6 +3,7 @@
  */
 package org.jboss.tools.smooks.xml;
 
+import java.io.File;
 import java.util.Collections;
 
 import org.eclipse.core.resources.IFile;
@@ -182,12 +183,9 @@ public abstract class AbstractFileSelectionWizardPage extends WizardSelectionPag
 		// dialog.setInitialSelections(selectedResources);
 		if (files.length > 0) {
 			IFile file = files[0];
-			String s = ResourcesPlugin.getWorkspace().getRoot().getLocation().append(
-					file.getFullPath()).toString();
+			String s = file.getLocation().toOSString();
 			relationT.setText(s);
-			return;
 		}
-		relationT.setText("");
 	}
 
 	protected Composite createFileSelectionComposite(Composite parent) {
@@ -313,9 +311,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardSelectionPag
 		String path = dialog.open();
 		if (path != null) {
 			relationText.setText(path);
-		} else {
-			relationText.setText("");
-		}
+		} 
 	}
 
 	protected void changeWizardPageStatus() {
@@ -323,6 +319,12 @@ public abstract class AbstractFileSelectionWizardPage extends WizardSelectionPag
 		String error = null;
 		if (text == null || "".equals(text))
 			error = "Please Select a file";
+		
+		File tempFile = new File(text);
+		if(!tempFile.exists()){
+			error = "Can't find the file , please select another one.";
+		}
+		
 //		if (!reasourceLoaded) {
 //			error = "Resource must be loaded";
 //		}
