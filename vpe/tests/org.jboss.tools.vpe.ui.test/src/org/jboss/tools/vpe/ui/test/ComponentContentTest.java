@@ -92,8 +92,7 @@ public abstract class ComponentContentTest extends VpeTest {
 
 		for (String id : ids) {
 
-			assertEquals(true, compareElements(controller, xmlTestDocument, id,
-					id));
+			compareElements(controller, xmlTestDocument, id, id);
 		}
 
 		if (getException() != null) {
@@ -109,13 +108,19 @@ public abstract class ComponentContentTest extends VpeTest {
 	 * @param elementId
 	 * @param xmlTestId
 	 * @return
+	 * @throws ComparisonException
 	 */
-	protected boolean compareElements(VpeController controller,
-			Document xmlTestDocument, String elementId, String xmlTestId) {
+	protected void compareElements(VpeController controller,
+			Document xmlTestDocument, String elementId, String xmlTestId)
+			throws ComparisonException {
 
 		// get element by id
 		nsIDOMElement vpeElement = findElementById(controller, elementId);
 		assertNotNull(vpeElement);
+
+		// DOMTreeDumper dumper = new DOMTreeDumper(
+		// VpeDebug.VISUAL_DUMP_PRINT_HASH);
+		// dumper.dumpToStream(System.out, vpeElement);
 
 		// get test element by id - get <test id="..." > element and get his
 		// first child
@@ -125,7 +130,7 @@ public abstract class ComponentContentTest extends VpeTest {
 		assertNotNull(xmlModelElement);
 
 		// compare DOMs
-		return TestDomUtil.compareNodes(vpeElement, xmlModelElement);
+		TestDomUtil.compareNodes(vpeElement, xmlModelElement);
 
 	}
 
@@ -186,9 +191,7 @@ public abstract class ComponentContentTest extends VpeTest {
 				.getDocumentElement();
 		assertNotNull(modelElement);
 
-		// compare elements
-		assertEquals(true, TestDomUtil
-				.compareNodes(visualElement, modelElement));
+		TestDomUtil.compareNodes(visualElement, modelElement);
 
 		if (getException() != null) {
 			throw getException();
@@ -234,7 +237,7 @@ public abstract class ComponentContentTest extends VpeTest {
 		nsIDOMElement visualElement = findElementById(controller, elementId);
 		assertNull(visualElement);
 
-		// check children of non-visual 
+		// check children of non-visual
 		NodeList children = sourceELement.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
 			Node child = children.item(i);
@@ -261,8 +264,7 @@ public abstract class ComponentContentTest extends VpeTest {
 		assertNotNull(modelElement);
 
 		// compare elements
-		assertEquals(true, TestDomUtil
-				.compareNodes(visualElement, modelElement));
+		TestDomUtil.compareNodes(visualElement, modelElement);
 
 		if (getException() != null) {
 			throw getException();

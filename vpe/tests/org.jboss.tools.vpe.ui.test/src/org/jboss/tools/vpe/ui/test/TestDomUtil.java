@@ -16,9 +16,14 @@ import java.io.FileReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jboss.tools.common.model.util.XMLUtil;
-import org.mozilla.interfaces.nsIDOMElement;
+import org.jboss.tools.vpe.editor.util.Constants;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.w3c.dom.Attr;
@@ -34,7 +39,15 @@ import org.w3c.dom.NodeList;
  */
 public class TestDomUtil {
 
-	public static String ID_ATTRIBUTE = "id";
+	final public static String ID_ATTRIBUTE = "id"; //$NON-NLS-1$
+
+	final public static String ILLEGAL_ATTRIBUTES = "illegalAttributes"; //$NON-NLS-1$
+
+	final public static String ILLEGAL_ATTRIBUTES_SEPARATOR = Constants.COMMA;
+
+	final public static String START_REGEX = "{"; //$NON-NLS-1$
+
+	final public static String END_REGEX = "}"; //$NON-NLS-1$
 
 	public static Document getDocument(File file) throws FileNotFoundException {
 		// create reader
@@ -103,40 +116,34 @@ public class TestDomUtil {
 	 * @param vpeNode
 	 * @param schemeNode
 	 * @return
+	 * @throws ComparisonException
 	 */
-	public static boolean compareNodes(nsIDOMNode vpeNode, Node schemeNode) {
+	public static void compareNodes(nsIDOMNode vpeNode, Node modelNode)
+			throws ComparisonException {
 
-		// compare node's features
-		if ((schemeNode.getNodeType() != vpeNode.getNodeType())
-				|| (!schemeNode.getNodeName().equalsIgnoreCase(
-						vpeNode.getNodeName()))
-				|| ((schemeNode.getNodeValue() != null) && (!schemeNode
-						.getNodeValue().trim().equalsIgnoreCase(
-								vpeNode.getNodeValue().trim()))))
-			return false;
-
+		if (!modelNode.getNodeName().equalsIgnoreCase(vpeNode.getNodeName())) {
+			throw new ComparisonException("name of tag is \""
+					+ vpeNode.getNodeName() + "\"but must be \""
+					+ modelNode.getNodeName() + "\"");
+		}
+		if ((modelNode.getNodeValue() != null)
+				&& (!modelNode.getNodeValue().trim().equalsIgnoreCase(
+						vpeNode.getNodeValue().trim()))) {
+			throw new ComparisonException("value of " + vpeNode.getNodeName()
+					+ " is \"" + vpeNode.getNodeValue().trim()
+					+ "\" but must be \"" + modelNode.getNodeValue().trim()
+					+ "\"");
+		}
 		// compare node's attributes
-		if (schemeNode.getNodeType() == Node.ELEMENT_NODE) {
+		if (modelNode.getNodeType() == Node.ELEMENT_NODE) {
 
-			NamedNodeMap attributes = schemeNode.getAttributes();
-			nsIDOMElement vpeElement = (nsIDOMElement) vpeNode
-					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-			if (attributes != null) {
-				for (int i = 0; i < attributes.getLength(); i++) {
-					Attr attr = (Attr) attributes.item(i);
-
-					if ((!vpeElement.hasAttribute(attr.getName()))
-							|| (!attr.getNodeValue().trim().equals(
-									vpeElement.getAttributeNode(attr.getName())
-											.getNodeValue().trim())))
-						return false;
-				}
-			}
+			compareAttributes(modelNode.getAttributes(), vpeNode
+					.getAttributes());
 		}
 
 		// compare children
 		nsIDOMNodeList vpeChildren = vpeNode.getChildNodes();
-		NodeList schemeChildren = schemeNode.getChildNodes();
+		NodeList schemeChildren = modelNode.getChildNodes();
 		int realCount = 0;
 		for (int i = 0; i < schemeChildren.getLength(); i++) {
 
@@ -158,12 +165,9 @@ public class TestDomUtil {
 
 			}
 
-			if (!compareNodes(vpeChild, schemeChild))
-				return false;
+			compareNodes(vpeChild, schemeChild);
 
 		}
-
-		return true;
 
 	}
 
@@ -185,4 +189,118 @@ public class TestDomUtil {
 		}
 		return ids;
 	}
+
+	private static void compareAttributes(NamedNodeMap modelAttributes,
+			nsIDOMNamedNodeMap vpeAttributes) throws ComparisonException {
+
+		for (int i = 0; i < modelAttributes.getLength(); i++) {
+			Attr modelAttr = (Attr) modelAttributes.item(i);
+			String name = modelAttr.getName();
+
+			// if there are limitation of attributes
+			if (ILLEGAL_ATTRIBUTES.equals(name)) {
+
+				String[] illegalAttributes = modelAttr.getNodeValue().split(
+						ILLEGAL_ATTRIBUTES_SEPARATOR);
+
+				for (String illegalAttributeName : illegalAttributes) {
+					if (vpeAttributes.getNamedItem(illegalAttributeName.trim()) != null)
+						throw new ComparisonException("illegal attribute :"
+								+ illegalAttributeName);
+				}
+
+			} else {
+
+				nsIDOMAttr vpeAttr = (nsIDOMAttr) vpeAttributes.getNamedItem(
+						name).queryInterface(nsIDOMAttr.NS_IDOMATTR_IID);
+
+				if (vpeAttr == null)
+					throw new ComparisonException("there is not : \"" + name
+							+ "\" attribute");
+
+				if (HTML.ATTR_STYLE.equalsIgnoreCase(name)) {
+
+					String[] modelParameters = modelAttr.getNodeValue().split(
+							Constants.SEMICOLON);
+					String[] vpeParameters = vpeAttr.getNodeValue().split(
+							Constants.SEMICOLON);
+
+					for (int j = 0; j < modelParameters.length; j++) {
+						String modelParam = modelParameters[j];
+						String vpeParam = vpeParameters[j];
+
+						String[] splittedModelParam = modelParam.split(
+								Constants.COLON, 2);
+
+						String[] splittedVpeParam = vpeParam.split(
+								Constants.COLON, 2);
+
+						if (!splittedModelParam[0].trim().equals(
+								splittedVpeParam[0].trim())) {
+							throw new ComparisonException(
+									"param of style attribute is\""
+											+ splittedVpeParam[0].trim()
+											+ "\" but must be \""
+											+ splittedModelParam[0].trim()
+											+ "\"");
+						}
+
+						compareComplexStrings(splittedModelParam[1].trim(),
+								splittedVpeParam[1].trim());
+
+					}
+
+				} else {
+
+					compareComplexStrings(modelAttr.getNodeValue().trim(),
+							vpeAttr.getNodeValue().trim());
+
+				}
+			}
+		}
+	}
+
+	static private void compareComplexStrings(String modelString,
+			String vpeString) throws ComparisonException {
+
+		if (modelString.startsWith(START_REGEX)
+				&& modelString.endsWith(END_REGEX)) {
+
+			String regex = modelString.substring(START_REGEX.length(),
+					modelString.length() - END_REGEX.length());
+
+			Matcher matcher = Pattern.compile(regex).matcher(vpeString);
+			if (!matcher.find()) {
+				throw new ComparisonException("string is\"" + vpeString
+						+ "\" but pattern is \"" + regex + "\"");
+			}
+
+		} else if (!modelString.equals(vpeString)) {
+			throw new ComparisonException("string is\"" + vpeString
+					+ "\" but must be \"" + modelString + "\"");
+		}
+
+	}
+
+	/**
+	 * is created to be sure that attributes/parameters will be correctly
+	 * compared ( ignore case )
+	 * 
+	 * @param list
+	 * @param string
+	 * @return
+	 */
+	static private boolean findIgnoreCase(String[] strings,
+			String requiredString) {
+
+		for (String string : strings) {
+
+			if (string.equalsIgnoreCase(requiredString))
+				return true;
+
+		}
+
+		return false;
+	}
+
 }

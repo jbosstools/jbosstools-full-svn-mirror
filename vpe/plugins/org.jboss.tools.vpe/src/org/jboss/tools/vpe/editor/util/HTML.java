@@ -87,8 +87,8 @@ public final class HTML {
 	public static final String ATTR_ALIGN = "align"; //$NON-NLS-1$
 	public static final String ATTR_SRC = "src"; //$NON-NLS-1$
 	public static final String ATTR_ALT = "alt"; //$NON-NLS-1$
-	public static final String ATTR_JSFC = "jsfc";  //$NON-NLS-1$
-	public static final String ATTR_DISPLAY = "display";  //$NON-NLS-1$
+	public static final String ATTR_JSFC = "jsfc"; //$NON-NLS-1$
+	public static final String ATTR_DISPLAY = "display"; //$NON-NLS-1$
 	public static final String ATTR_READONLY = "readonly"; //$NON-NLS-1$
 	public static final String ATTR_SCOPE = "scope"; //$NON-NLS-1$
 
@@ -102,9 +102,10 @@ public final class HTML {
 	public static final String VALUE_CHECKBOX_TYPE = "checkbox"; //$NON-NLS-1$
 	public static final String VALUE_HIDDEN_TYPE = "hidden"; //$NON-NLS-1$
 	public static final String VALUE_BUTTON_TYPE = "button"; //$NON-NLS-1$
-	public static final String VALUE_ALIGN_CENTER= "center"; //$NON-NLS-1$
+	public static final String VALUE_ALIGN_CENTER = "center"; //$NON-NLS-1$
 
 	public static final String STYLE_PARAMETER_WIDTH = "width"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_HEIGHT = "height"; //$NON-NLS-1$
+	public static final String STYLE_PARAMETER_BACKGROUND_IMAGE = "background-image"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_MAX_HEIGHT = "max-height"; //$NON-NLS-1$	
 }
