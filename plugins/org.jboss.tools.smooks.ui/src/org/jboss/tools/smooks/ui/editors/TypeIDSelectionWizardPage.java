@@ -106,53 +106,6 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		this.showDataSelectPage = showDataSelectPage;
 	}
 
-	// public boolean canFlipToNextPage() {
-	// if (!showDataSelectPage) {
-	// return isPageComplete() && getNextPage() != null;
-	// }
-	// return super.canFlipToNextPage();
-	// }
-
-	// /*
-	// * (non-Javadoc)
-	// *
-	// * @see org.eclipse.jface.wizard.WizardSelectionPage#getNextPage()
-	// */
-	// public IWizardPage getNextPage() {
-	// if (!showDataSelectPage) {
-	// if (this.getWizard() != null) {
-	// return this.getWizard().getNextPage(this);
-	// }
-	// }
-	// if (this.getSelectedNode() == null) {
-	// return null;
-	// }
-	//
-	// boolean isCreated = getSelectedNode().isContentCreated();
-	//
-	// IWizard wizard = getSelectedNode().getWizard();
-	//
-	// if (wizard == null) {
-	// setSelectedNode(null);
-	// return null;
-	// }
-	// if (!isCreated) {
-	// if (wizard instanceof IStrucutredDataCreationWizard) {
-	// String targetID = getDataTypeID(target);
-	// if (targetID != null) {
-	// ((IStrucutredDataCreationWizard) wizard)
-	// .setNextDataCreationWizardNode(this
-	// .getSourceWizard(targetID));
-	// }
-	// }
-	// if (wizard instanceof INewWizard) {
-	// ((INewWizard) wizard).init(null, selection);
-	// }
-	// wizard.addPages();
-	// }
-	// return wizard.getStartingPage();
-	// }
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -350,34 +303,10 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 				if (viewer == source) {
 					String sourceID = getDataTypeID(source);
 					setSourceID(sourceID);
-					// TODO don't use that to display the source selection
-					// wizard page.
-					// IWizardNode wn = getSourceWizard(sourceID);
-					// setSelectedNode(wn);
-					// IWizard sw = wn.getWizard();
-					// if (sw instanceof IStrucutredDataCreationWizard) {
-					// setSourceWizard((IStrucutredDataCreationWizard) sw);
-					// }
 				}
 
 				if (viewer == target) {
-					// IWizardNode node = getSelectedNode();
 					String targetID = getDataTypeID(target);
-					// TODO don't use that to display the target selection
-					// wizard page.
-					// IWizardNode targetNode = getSourceWizard(targetID);
-					// IWizard tnw = targetNode.getWizard();
-					// if (tnw instanceof IStrucutredDataCreationWizard) {
-					// setTargetWizard((IStrucutredDataCreationWizard) tnw);
-					// }
-					// if (node != null) {
-					// IWizard wizard = node.getWizard();
-					// if (wizard != null
-					// && wizard instanceof IStrucutredDataCreationWizard) {
-					// ((IStrucutredDataCreationWizard) wizard)
-					// .setNextDataCreationWizardNode(targetNode);
-					// }
-					// }
 					setTargetID(targetID);
 				}
 			}
@@ -386,9 +315,6 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		TableColumn nameColumn = new TableColumn(viewer.getTable(), SWT.NONE);
 		nameColumn.setWidth(100);
 		nameColumn.setText("Name");
-		// TableColumn idColumn = new TableColumn(viewer.getTable(), SWT.NONE);
-		// idColumn.setWidth(100);
-		// idColumn.setText("ID");
 		viewer.setContentProvider(new TypeIDContentProvider());
 		viewer.setLabelProvider(new TypeIDLabelProvider());
 		return viewer;
