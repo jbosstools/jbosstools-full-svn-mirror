@@ -54,6 +54,8 @@ public class JavaBeanConfigWizardPage extends WizardSelectionPage implements
 		super("beansearchwizardpage");
 		this.project = selection;
 		setPageComplete(true);
+		setTitle("JavaBean Class selection page");
+		setDescription("Select the JavaBean class");
 	}
 	
 	public void activeNextWizardNode(IWizardNode node){
