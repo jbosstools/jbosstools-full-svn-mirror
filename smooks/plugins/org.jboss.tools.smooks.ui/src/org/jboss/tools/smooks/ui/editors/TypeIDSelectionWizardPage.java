@@ -275,7 +275,7 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		Object[] objs = viewer.getCheckedElements();
 		if (objs == null)
 			return null;
-		if (objs.length > 1)
+		if (objs.length <= 0)
 			return null;
 		DataTypeID d = (DataTypeID) objs[0];
 		return d.getId();
