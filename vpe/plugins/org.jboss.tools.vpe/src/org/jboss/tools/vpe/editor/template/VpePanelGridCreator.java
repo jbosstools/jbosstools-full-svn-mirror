@@ -23,6 +23,7 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.util.VpeClassUtil;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -350,9 +351,9 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 						.createElement(HTML.TAG_TBODY);
 				visualTable.appendChild(visualBody);
 
-				List rowClasses = getClasses(rowClassesExpr, sourceNode,
+				List<String> rowClasses = VpeClassUtil.getClasses(rowClassesExpr, sourceNode,
 						pageContext);
-				List columnClasses = getClasses(columnClassesExpr, sourceNode,
+				List<String> columnClasses = VpeClassUtil.getClasses(columnClassesExpr, sourceNode,
 						pageContext);
 
 				int rci = 0; // index of row class
@@ -419,22 +420,6 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 		}
 
 		return creatorInfo;
-	}
-
-	private List getClasses(VpeExpression expression, Node sourceNode,
-			VpePageContext pageContext) throws VpeExpressionException {
-		List b = new ArrayList();
-		if (expression != null && sourceNode != null) {
-			String classes = expression.exec(pageContext, sourceNode)
-					.stringValue();
-			String[] a = classes.split(",");
-			for (int i = 0; i < a.length; i++) {
-				if (a[i].trim().length() > 0) {
-					b.add(a[i].trim());
-				}
-			}
-		}
-		return b;
 	}
 
 	private void makeSpecial(Node header, nsIDOMElement visualHead,
