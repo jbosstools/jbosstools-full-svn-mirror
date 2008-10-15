@@ -929,7 +929,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		if (list == null)
 			return null;
 		if (parentModel.isList() || parentModel.isArray()) {
-			if (list.size() >= 1) {
+			if (list.size() >= 1 && parentModel.hasGenericType()) {
 				JavaBeanModel m = (JavaBeanModel) list.get(0);
 				return m;
 			}

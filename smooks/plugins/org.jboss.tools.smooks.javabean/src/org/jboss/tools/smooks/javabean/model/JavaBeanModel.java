@@ -41,6 +41,8 @@ public class JavaBeanModel implements IValidatable {
 	private boolean collection = false;
 
 	private boolean isPrimitive = false;
+	
+	private boolean hasGenericType = false;
 
 	private Class<? extends Object> beanClass = null;
 
@@ -117,6 +119,7 @@ public class JavaBeanModel implements IValidatable {
 								.getActualTypeArguments()[0];
 						Class beanType = (Class) gtype;
 						componentClass = beanType;
+						setGenericType(true);
 					}
 				}
 			}
@@ -356,6 +359,14 @@ public class JavaBeanModel implements IValidatable {
 			}
 		}
 		return buffer.toString();
+	}
+
+	public boolean hasGenericType() {
+		return hasGenericType;
+	}
+
+	public void setGenericType(boolean hasGenericType) {
+		this.hasGenericType = hasGenericType;
 	}
 
 }
