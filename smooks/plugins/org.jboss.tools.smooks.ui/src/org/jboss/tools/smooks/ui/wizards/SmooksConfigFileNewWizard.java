@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
@@ -13,7 +14,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
@@ -22,7 +22,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.jboss.tools.smooks.graphical.util.GraphicalInformationSaver;
-import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
 import org.jboss.tools.smooks.ui.editors.SmooksFileEditorInput;
 import org.jboss.tools.smooks.ui.editors.SmooksFormEditor;
 import org.jboss.tools.smooks.ui.editors.TypeIDSelectionWizardPage;
@@ -132,8 +131,21 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard {
 				try {
 					SmooksFileEditorInput input = new SmooksFileEditorInput(
 							file);
-					input.setSourceTreeViewerInputContents(typeIDPage.getSourceTreeViewerInputContents());
-					input.setTargetTreeViewerInputContents(typeIDPage.getTargetTreeViewerInputContents());
+					Object sourceObj = typeIDPage.getSourceTreeViewerInputContents();
+					if(sourceObj instanceof List){
+						if(!((List)sourceObj).isEmpty()){
+							sourceObj = ((List)sourceObj).get(0);
+						}
+					}
+					input.setSourceTreeViewerInputContents(sourceObj);
+					
+					Object targetObj = typeIDPage.getSourceTreeViewerInputContents();
+					if(targetObj instanceof List){
+						if(!((List)targetObj).isEmpty()){
+							targetObj = ((List)targetObj).get(0);
+						}
+					}
+					input.setTargetTreeViewerInputContents(targetObj);
 
 					IDE.openEditor(page, input, SmooksFormEditor.EDITOR_ID,
 							true);// openEditor(page, file, true);

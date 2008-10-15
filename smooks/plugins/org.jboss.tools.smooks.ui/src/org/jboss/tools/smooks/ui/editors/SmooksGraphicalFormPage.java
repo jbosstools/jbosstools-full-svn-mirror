@@ -454,7 +454,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	protected void initTargetTreeViewer() {
 		if (this.targetTreeViewerInputModel != null) {
-			targetViewer.setInput(targetTreeViewerInputModel);
+			List arrayList = new ArrayList();
+			arrayList.add(targetTreeViewerInputModel);
+			targetViewer.setInput(arrayList);
 		}
 	}
 
@@ -474,7 +476,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	protected void initSourceTreeViewer() {
 		if (this.sourceTreeViewerInputModel != null) {
-			sourceViewer.setInput(sourceTreeViewerInputModel);
+			List arrayList = new ArrayList();
+			arrayList.add(sourceTreeViewerInputModel);
+			sourceViewer.setInput(arrayList);
 		}
 	}
 
@@ -601,6 +605,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	protected void createTargetGraphModels() {
 		Tree tree = targetViewer.getTree();
 		TreeItem[] items = tree.getItems();
+		clearExsitingGraphModels(TargetModel.class);
 		createGraphModels(items, TargetModel.class);
 	}
 
@@ -975,7 +980,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	}
 
 	/**
-	 * 
+	 * It's a very important method <p>
+	 * If call the method , there will open the data selection wizard to allow user select new data , <p>
+	 * when user select the new data , the connections will be removed.
 	 * @param viewer
 	 */
 	protected void showCreationWizard(TreeViewer viewer) {
@@ -991,19 +998,18 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			this.getSmooksConfigurationFileGenerateContext().addProperties(
 					cw.getProperties());
 			String typeID = cw.getInputDataTypeID();
-			if (UIUtils.setTheProvidersForTreeViewer(viewer, typeID)) {
-				if (viewer.getInput() != null) {
-					if (!MessageDialog
-							.openQuestion(
-									getSite().getShell(),
-									"Changed Data?",
-									"Do you want to change the data?if you do this , all connections will be losted")) {
-						return;
-					}
+			if (viewer.getInput() != null) {
+				if (!MessageDialog
+						.openQuestion(
+								getSite().getShell(),
+								"Changed Data ?",
+								"Do you want to change the data ? If you do so , all connections will be losted")) {
+					return;
 				}
+			}
+			if (UIUtils.setTheProvidersForTreeViewer(viewer, typeID)) {
 				viewer.setInput(cw.getTreeViewerInputContents());
 				try {
-					// viewer.expandAll();
 					if (viewer == this.sourceViewer) {
 						this.createSourceGraphModels();
 						sourceDataTypeID = typeID;
