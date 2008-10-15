@@ -173,8 +173,8 @@ public class JavaBeanModelLoadComposite extends Composite implements
 				Class clazz = loader.loadClass(this.classText.getText());
 				rootJavaBean = JavaBeanModelFactory
 						.getJavaBeanModelWithLazyLoad(clazz);
-			}catch(Exception e){
-				
+			} catch (Exception e) {
+
 			}
 		}
 		// if (rootJavaBean != null)
@@ -203,8 +203,13 @@ public class JavaBeanModelLoadComposite extends Composite implements
 					Object result = results[0];
 					String packageFullName = JavaModelUtil
 							.getTypeContainerName((IType) result);
-					classText.setText(packageFullName + "."
-							+ ((IType) result).getElementName());
+					if (packageFullName == null
+							|| packageFullName.length() <= 0) {
+						classText.setText(((IType) result).getElementName());
+					} else {
+						classText.setText(packageFullName + "."
+								+ ((IType) result).getElementName());
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -213,6 +218,5 @@ public class JavaBeanModelLoadComposite extends Composite implements
 		}
 
 	}
-	
 
 }
