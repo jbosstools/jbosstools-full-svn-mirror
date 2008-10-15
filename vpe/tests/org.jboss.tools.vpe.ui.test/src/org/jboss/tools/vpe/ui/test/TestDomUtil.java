@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
 
 import org.jboss.tools.common.model.util.XMLUtil;
 import org.jboss.tools.vpe.editor.util.Constants;
-import org.jboss.tools.vpe.editor.util.HTML;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -122,17 +121,17 @@ public class TestDomUtil {
 			throws ComparisonException {
 
 		if (!modelNode.getNodeName().equalsIgnoreCase(vpeNode.getNodeName())) {
-			throw new ComparisonException("name of tag is \""
-					+ vpeNode.getNodeName() + "\"but must be \""
-					+ modelNode.getNodeName() + "\"");
+			throw new ComparisonException("name of tag is \"" //$NON-NLS-1$
+					+ vpeNode.getNodeName() + "\"but must be \"" //$NON-NLS-1$
+					+ modelNode.getNodeName() + "\""); //$NON-NLS-1$
 		}
 		if ((modelNode.getNodeValue() != null)
 				&& (!modelNode.getNodeValue().trim().equalsIgnoreCase(
 						vpeNode.getNodeValue().trim()))) {
-			throw new ComparisonException("value of " + vpeNode.getNodeName()
-					+ " is \"" + vpeNode.getNodeValue().trim()
-					+ "\" but must be \"" + modelNode.getNodeValue().trim()
-					+ "\"");
+			throw new ComparisonException("value of " + vpeNode.getNodeName() //$NON-NLS-1$
+					+ " is \"" + vpeNode.getNodeValue().trim() //$NON-NLS-1$
+					+ "\" but must be \"" + modelNode.getNodeValue().trim() //$NON-NLS-1$
+					+ "\""); //$NON-NLS-1$
 		}
 		// compare node's attributes
 		if (modelNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -205,18 +204,22 @@ public class TestDomUtil {
 
 				for (String illegalAttributeName : illegalAttributes) {
 					if (vpeAttributes.getNamedItem(illegalAttributeName.trim()) != null)
-						throw new ComparisonException("illegal attribute :"
+						throw new ComparisonException("illegal attribute :" //$NON-NLS-1$
 								+ illegalAttributeName);
 				}
 
 			} else {
 
+				
+				if (vpeAttributes.getNamedItem(
+						name) == null)
+					throw new ComparisonException("there is not : \"" + name //$NON-NLS-1$
+							+ "\" attribute"); //$NON-NLS-1$
+				
 				nsIDOMAttr vpeAttr = (nsIDOMAttr) vpeAttributes.getNamedItem(
 						name).queryInterface(nsIDOMAttr.NS_IDOMATTR_IID);
 
-				if (vpeAttr == null)
-					throw new ComparisonException("there is not : \"" + name
-							+ "\" attribute");
+				
 
 //				if (HTML.ATTR_STYLE.equalsIgnoreCase(name)) {
 //
@@ -255,12 +258,10 @@ public class TestDomUtil {
 //					}
 //
 //				} 
-			else {
 
 					compareComplexStrings(modelAttr.getNodeValue().trim(),
 							vpeAttr.getNodeValue().trim());
 
-				}
 			}
 		}
 	}
@@ -276,13 +277,13 @@ public class TestDomUtil {
 
 			Matcher matcher = Pattern.compile(regex).matcher(vpeString);
 			if (!matcher.find()) {
-				throw new ComparisonException("string is\"" + vpeString
-						+ "\" but pattern is \"" + regex + "\"");
+				throw new ComparisonException("string is\"" + vpeString //$NON-NLS-1$
+						+ "\" but pattern is \"" + regex + "\""); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 
 		} else if (!modelString.equals(vpeString)) {
-			throw new ComparisonException("string is\"" + vpeString
-					+ "\" but must be \"" + modelString + "\"");
+			throw new ComparisonException("string is\"" + vpeString //$NON-NLS-1$
+					+ "\" but must be \"" + modelString + "\""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 	}

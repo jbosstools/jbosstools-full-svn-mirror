@@ -19,8 +19,10 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
+import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
+import org.jboss.tools.vpe.xulrunner.browser.util.DOMTreeDumper;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Document;
@@ -77,6 +79,7 @@ public abstract class ComponentContentTest extends VpeTest {
 
 		TestUtil.waitForJobs();
 
+		TestUtil.delay(2000);
 		VpeController controller = getVpeController((JSPMultiPageEditor) editor);
 
 		// get xml test file
@@ -118,9 +121,9 @@ public abstract class ComponentContentTest extends VpeTest {
 		nsIDOMElement vpeElement = findElementById(controller, elementId);
 		assertNotNull(vpeElement);
 
-		// DOMTreeDumper dumper = new DOMTreeDumper(
-		// VpeDebug.VISUAL_DUMP_PRINT_HASH);
-		// dumper.dumpToStream(System.out, vpeElement);
+		 DOMTreeDumper dumper = new DOMTreeDumper(
+		 VpeDebug.VISUAL_DUMP_PRINT_HASH);
+		 dumper.dumpToStream(System.out, vpeElement);
 
 		// get test element by id - get <test id="..." > element and get his
 		// first child
