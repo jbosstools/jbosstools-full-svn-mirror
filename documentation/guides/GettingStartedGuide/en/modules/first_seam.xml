@@ -23,7 +23,8 @@
     <section id="start_dev_db">
       <title>Start Development Database</title>
 
-      <para>Before opening the JBoss Developer studio you need to <ulink url="http://anonsvn.jboss.org/repos/jbosstools/trunk/documentation/guides/GettingStartedGuide/en/database.zip"
+      <para>Before opening the JBoss Developer studio you need to <ulink
+          url="http://anonsvn.jboss.org/repos/jbosstools/trunk/documentation/guides/GettingStartedGuide/en/database.zip"
           >download</ulink> and start a Workshop Database.</para>
       <para>To start the database just run <property>./runDBServer.sh</property> or
           <property>runDBServer.bat</property> from the database directory.</para>
@@ -43,8 +44,8 @@
     <section id="create_deploy_seam">
       <title>Create and deploy Seam Web Project</title>
 
-      <para>Minimize the terminal window and run the JBoss Developer Studio from Applications Menu
-        or from the desktop icon.</para>
+      <para>Minimize the terminal window and run the <property>JBoss Developer Studio</property>
+        from Applications Menu or from the desktop icon.</para>
       <para>First of all you get the Workspace Launcher. Change the default workspace location if
         it's needed. Click on <property>Ok</property>. </para>
 
@@ -61,12 +62,11 @@
         in <link linkend="Welcome">previous</link> chapter. Now select <property>Create
         New...</property> icon and then press on <property>Create Seam Project</property> link.</para>
 
-      <para>The New Seam Project wizard is started. You need to enter a name (e.g.,
-        &quot;workshop&quot;) and a location directory for your new project. The wizard has
-        an option for selecting the actual Server (and not just WTP runtime) that will be used for
-        the project. This allow the wizard to correctly identify where the needed datasource and
-        driver libraries need to go. All settings are already specified. Click on
-        <property>Next</property>.</para>
+      <para>The <property>New Seam Project wizard</property> is started. You need to enter a name
+        (e.g., &quot;workshop&quot;) and a location directory for your new project. The
+        wizard has an option for selecting the actual Server (and not just WTP runtime) that will be
+        used for the project. This allows the wizard to correctly identify where the needed
+        datasource and driver libraries need to go.</para>
 
       <figure>
         <title>New Seam Project Wizard</title>
@@ -77,12 +77,18 @@
         </mediaobject>
       </figure>
 
-      <para>Next, you will be asked to select the "features" you want to use in your project. This
-        allows JBoss Developer Studio to setup the appropriate tooling for your project. Since JBoss
-        Seam integrates all popular Java EE frameworks, you can select any combination of
-        technologies from the list. Here, for this project, we will select Dynamic Web Module, Java,
-        JavaServer Faces (JSF), and Seam Facet for a typical database-driven web application. The
-        default project facets should suffice, click on <property>Next</property>.</para>
+      <para>All settings are already specified here, you can just modify the Configuration. Chose needed
+        one from the list of already predefined configurations or click on the <emphasis>
+          <property>Modify...</property>
+        </emphasis> to configure your custom facets pattern.</para>
+
+      <para>On the hole appeared dialog allows to select the "features" you want to use in your
+        project. Doing this <property>JBoss Developer Studio</property> setups the appropriate
+        tooling for your project. Since JBoss Seam integrates all popular Java EE frameworks, you
+        can select any combination of technologies from the list. Here, for the default
+        configuration, Dynamic Web Module, Java, JavaServer Faces (JSF), and Seam Facet are already
+        selected for a typical database-driven web application. The default project facets should
+        suffice.</para>
 
       <figure id="ProjectFacetsSpecifyingScreen">
         <title>Project Facets Specifying</title>
@@ -93,11 +99,9 @@
         </mediaobject>
       </figure>
 
-      <para>In the <link linkend="ProjectFacetsSpecifyingScreen">Project Facets Specifying</link>
-        form you can also bring up server runtimes panel by clicking <property>Show
-        Runtimes</property> in the bottom right corner. This panel shows available server runtimes.
-        Then this button will be changed into <property>Hide Runtimes</property> one.</para>
-      <para>Click <property>Next</property> to proceed further.</para>
+      <para>In the <property>Project Facets wizard</property> form you can also bring up server
+        runtimes panel by clicking <property> Runtimes</property> tab on the right corner. This
+        panel shows available server runtimes.</para>
 
       <figure>
         <title>Runtimes Selecting</title>
@@ -107,7 +111,13 @@
           </imageobject>
         </mediaobject>
       </figure>
-
+    
+      <para>Click on <emphasis>
+        <property>Ok</property>
+      </emphasis> and then <emphasis>
+        <property>Next</property>
+      </emphasis> to proceed further.</para>
+      
       <para>A dynamic web application contains both web pages and Java code. The wizard will ask you
         where you want to put those files. You can just leave the default values or choose another
         folder.</para>
@@ -764,8 +774,8 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
     <section id="use_hibernate_tools">
       <title>Use Hibernate Tools to Query Data via JPA</title>
 
-      <para>Now, it&apos;s time to write some JPA queries using the Hibernate perspective in <property>JBoss
-        Developer Studio</property>.</para>
+      <para>Now, it&apos;s time to write some JPA queries using the Hibernate perspective in
+          <property>JBoss Developer Studio</property>.</para>
       <para>In the upper right corner of the workbench there is a small icon (see the figure below),
         click on it and choose <property>Hibernate</property>.</para>
 
