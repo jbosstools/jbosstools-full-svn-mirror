@@ -12,7 +12,7 @@
 
     <title>BIRT Report Designer</title>
     
-        <para>BIRT Designer is an intuitive and quite easy  Eclipse-based set of plugins to make reports. We will describe all its features to you.</para>
+        <para>BIRT Designer is an intuitive and quite easy  Eclipse-based set of plugins to make reports. In this chapter we will describe its interface and all its features to you.</para>
           
           <section id="birt_designer_UI" xreflabel="birt_designer_UI">
               <title>BIRT User Interface</title>
