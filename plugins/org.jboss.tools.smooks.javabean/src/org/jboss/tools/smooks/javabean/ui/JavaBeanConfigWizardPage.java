@@ -11,29 +11,24 @@
 package org.jboss.tools.smooks.javabean.ui;
 
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.IWizardNode;
 import org.eclipse.jface.wizard.IWizardPage;
-import org.eclipse.jface.wizard.WizardSelectionPage;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.INewWizard;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
-import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
 
 /**
  * @author Dart Peng
  * 
  * @CreateTime Jul 21, 2008
  */
-public class JavaBeanConfigWizardPage extends WizardSelectionPage implements
+public class JavaBeanConfigWizardPage extends WizardPage implements
 		SelectionListener {
 	
 	TreeViewer treeViewer;
@@ -58,38 +53,6 @@ public class JavaBeanConfigWizardPage extends WizardSelectionPage implements
 		setDescription("Select the JavaBean class");
 	}
 	
-	public void activeNextWizardNode(IWizardNode node){
-		setSelectedNode(node);
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.wizard.WizardSelectionPage#getNextPage()
-	 */
-	public IWizardPage getNextPage() {
-		if (this.getSelectedNode() == null) {
-			return null;
-		}
-
-		boolean isCreated = getSelectedNode().isContentCreated();
-
-		IWizard wizard = getSelectedNode().getWizard();
-
-		if (wizard == null) {
-			setSelectedNode(null);
-			return null;
-		}
-		if (!isCreated) {
-			if (wizard instanceof INewWizard) {
-				StructuredSelection selection = new StructuredSelection(project);
-				((INewWizard) wizard).init(null, selection);
-			}
-			wizard.addPages();
-		}
-		return wizard.getStartingPage();
-	}
-
 	protected void initilize() {
 	}
 

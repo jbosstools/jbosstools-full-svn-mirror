@@ -112,7 +112,7 @@ import org.jboss.tools.smooks.model.DocumentRoot;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
-import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
+import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
 import org.jboss.tools.smooks.ui.IViewerInitor;
 import org.jboss.tools.smooks.ui.StructuredDataCreationWizardDailog;
 import org.jboss.tools.smooks.ui.gef.editparts.SmooksEditPartFactory;
@@ -454,9 +454,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	protected void initTargetTreeViewer() {
 		if (this.targetTreeViewerInputModel != null) {
-			List arrayList = new ArrayList();
-			arrayList.add(targetTreeViewerInputModel);
-			targetViewer.setInput(arrayList);
+			targetViewer.setInput(targetTreeViewerInputModel);
 		}
 	}
 
@@ -476,9 +474,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	protected void initSourceTreeViewer() {
 		if (this.sourceTreeViewerInputModel != null) {
-			List arrayList = new ArrayList();
-			arrayList.add(sourceTreeViewerInputModel);
-			sourceViewer.setInput(arrayList);
+			sourceViewer.setInput(sourceTreeViewerInputModel);
 		}
 	}
 
@@ -993,7 +989,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		StructuredDataCreationWizardDailog dialog = new StructuredDataCreationWizardDailog(
 				getEditorSite().getShell(), wizard);
 		if (dialog.open() == WizardDialog.OK) {
-			IStrucutredDataCreationWizard cw = dialog
+			IStructuredDataCreationWizard cw = dialog
 					.getCurrentCreationWizard();
 			this.getSmooksConfigurationFileGenerateContext().addProperties(
 					cw.getProperties());

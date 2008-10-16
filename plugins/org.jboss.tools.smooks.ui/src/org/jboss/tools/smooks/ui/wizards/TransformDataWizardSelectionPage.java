@@ -35,7 +35,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
+import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
 import org.jboss.tools.smooks.ui.IViewerInitor;
 import org.jboss.tools.smooks.ui.ViewerInitorStore;
 
@@ -89,7 +89,7 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 						String des = ((TransformSelectWizardNode)node).getDescription();
 						desLabel.setText(des);
 					}
-					IStrucutredDataCreationWizard wizard = (IStrucutredDataCreationWizard) node
+					IStructuredDataCreationWizard wizard = (IStructuredDataCreationWizard) node
 							.getWizard();
 					TransformDataSelectionWizard pw = (TransformDataSelectionWizard) getWizard();
 					wizard.init(pw.getSite(), pw.getInput());
@@ -141,7 +141,7 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 		for (Iterator iterator = viewers.iterator(); iterator.hasNext();) {
 			IViewerInitor viewerInitor = (IViewerInitor) iterator.next();
 			TransformSelectWizardNode wn = new TransformSelectWizardNode();
-			IStrucutredDataCreationWizard wizard = viewerInitor
+			IStructuredDataCreationWizard wizard = viewerInitor
 					.getStructuredDataLoadWizard();
 			if (wizard == null)
 				continue;

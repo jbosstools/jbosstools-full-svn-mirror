@@ -25,7 +25,9 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.IWizard;
+import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.IWizardNode;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -40,10 +42,11 @@ import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.jboss.tools.smooks.analyzer.AnalyzerFactory;
 import org.jboss.tools.smooks.analyzer.DataTypeID;
-import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
+import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
 import org.jboss.tools.smooks.ui.IViewerInitor;
 import org.jboss.tools.smooks.ui.StructuredDataCreationWizardDailog;
 import org.jboss.tools.smooks.ui.ViewerInitorStore;
+import org.jboss.tools.smooks.ui.wizards.ISmooksDataCreationAddtionWizard;
 import org.jboss.tools.smooks.ui.wizards.TransformSelectWizardNode;
 
 /**
@@ -51,15 +54,9 @@ import org.jboss.tools.smooks.ui.wizards.TransformSelectWizardNode;
  *         Date : Sep 5, 2008
  */
 public class TypeIDSelectionWizardPage extends WizardPage {
-	/**
-	 * @deprecated
-	 */
-	protected IStrucutredDataCreationWizard sourceWizard;
+	protected IWizard sourceDataCreationWizard;
 
-	/**
-	 * @deprecated
-	 */
-	protected IStrucutredDataCreationWizard targetWizard;
+	protected IWizard targetDataCreationWizard;
 
 	private Object sourceTreeViewerInputContents;
 
@@ -70,6 +67,8 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 	private List sourceList;
 	private String sourceID = null;
 	private String targetID = null;
+	private String oldSourceID = null;
+	private String oldTargetID = null;
 	private IStructuredSelection selection;
 	private boolean showDataSelectPage = false;
 
@@ -104,6 +103,91 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 	public TypeIDSelectionWizardPage(String pageName, boolean showDataSelectPage) {
 		super(pageName);
 		this.showDataSelectPage = showDataSelectPage;
+	}
+
+	@Override
+	public boolean canFlipToNextPage() {
+		if (this.getSourceID() != null || getTargetID() != null) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public IWizardPage getNextPage() {
+		String sourceID = this.getSourceID();
+		String targetID = this.getTargetID();
+		IStructuredDataCreationWizard sourceWizard = null;
+		IStructuredDataCreationWizard targetWizard = null;
+		IWizard rootWizard = getWizard();
+		ISmooksDataCreationAddtionWizard wizard = (ISmooksDataCreationAddtionWizard) rootWizard;
+		if (sourceID == null) {
+			wizard.clearSourceWizardPages();
+		}
+		if (targetID == null) {
+			wizard.clearTargetWizardPages();
+		}
+		if (sourceID != null && (!sourceID.equals(oldSourceID))) {
+			sourceWizard = ViewerInitorStore.getInstance()
+					.getStructuredDataCreationWizard(sourceID);
+			oldSourceID = sourceID;
+		}
+		if (targetID != null && (!targetID.equals(oldTargetID))) {
+			targetWizard = ViewerInitorStore.getInstance()
+					.getStructuredDataCreationWizard(targetID);
+			oldTargetID = targetID;
+		}
+		if (!wizardIsCreated(sourceWizard) && sourceWizard != null) {
+			if (sourceWizard instanceof INewWizard) {
+				((INewWizard) sourceWizard).init(null, selection);
+			}
+			sourceWizard.addPages();
+		}
+		if (!wizardIsCreated(targetWizard) && targetWizard != null) {
+			if (targetWizard instanceof INewWizard) {
+				((INewWizard) targetWizard).init(null, selection);
+			}
+			targetWizard.addPages();
+		}
+		addDataCreationPages(sourceWizard, targetWizard);
+		return super.getNextPage();
+	}
+
+	private void addDataCreationPages(IWizard sourceWizard, IWizard targetWizard) {
+		IWizard rootWizard = getWizard();
+		if (rootWizard instanceof ISmooksDataCreationAddtionWizard) {
+			ISmooksDataCreationAddtionWizard wizard = (ISmooksDataCreationAddtionWizard) rootWizard;
+			if (sourceWizard != null) {
+				wizard.clearSourceWizardPages();
+				IWizardPage[] pages = sourceWizard.getPages();
+				for (int i = 0; i < pages.length; i++) {
+					IWizardPage p = pages[i];
+					wizard.addSourceWizardPage(p);
+					p.setWizard(rootWizard);
+				}
+			}
+
+			if (targetWizard != null) {
+				wizard.clearTargetWizardPages();
+				IWizardPage[] pages = targetWizard.getPages();
+				for (int i = 0; i < pages.length; i++) {
+					IWizardPage p = pages[i];
+					wizard.addTargetWizardPage(p);
+					p.setWizard(rootWizard);
+				}
+			}
+		}
+		sourceDataCreationWizard =  sourceWizard;
+		targetDataCreationWizard =  targetWizard;
+	}
+
+	private boolean wizardIsCreated(IWizard wizard) {
+		if (wizard == null)
+			return false;
+		if (wizard.getPageCount() <= 0) {
+			return false;
+		}
+		return true;
 	}
 
 	/*
@@ -151,6 +235,8 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 			}
 
 		});
+		// TODO don't show this
+		sourceDataLink.setVisible(false);
 		targetDataLink = new Hyperlink(mainComposite, SWT.NONE);
 		targetDataLink.setText("Target Model Select:Empty");
 		targetDataLink.addHyperlinkListener(new IHyperlinkListener() {
@@ -168,6 +254,8 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 			}
 
 		});
+		// TODO don't show this
+		targetDataLink.setVisible(false);
 
 		this.setControl(mainComposite);
 	}
@@ -183,7 +271,7 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		IWizardNode wn = getSourceWizard(dataID);
 		// setSelectedNode(wn);
 		IWizard sw = wn.getWizard();
-		if (sw instanceof IStrucutredDataCreationWizard) {
+		if (sw instanceof IStructuredDataCreationWizard) {
 			// ((IStrucutredDataCreationWizard)sw).i
 		}
 		if (sw instanceof INewWizard) {
@@ -269,7 +357,7 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 			IViewerInitor viewerInitor = (IViewerInitor) iterator.next();
 			if (viewerInitor.getTypeID().equals(id)) {
 				TransformSelectWizardNode wn = new TransformSelectWizardNode();
-				IStrucutredDataCreationWizard wizard = viewerInitor
+				IStructuredDataCreationWizard wizard = viewerInitor
 						.getStructuredDataLoadWizard();
 				if (wizard == null)
 					return null;
@@ -308,6 +396,10 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 				if (viewer == target) {
 					String targetID = getDataTypeID(target);
 					setTargetID(targetID);
+				}
+				IWizardContainer container = getContainer();
+				if (container != null) {
+					container.updateButtons();
 				}
 			}
 
@@ -360,21 +452,6 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 
 	}
 
-	public IStrucutredDataCreationWizard getSourceWizard() {
-		return sourceWizard;
-	}
-
-	public void setSourceWizard(IStrucutredDataCreationWizard sourceWizard) {
-		this.sourceWizard = sourceWizard;
-	}
-
-	public IStrucutredDataCreationWizard getTargetWizard() {
-		return targetWizard;
-	}
-
-	public void setTargetWizard(IStrucutredDataCreationWizard targetWizard) {
-		this.targetWizard = targetWizard;
-	}
 
 	public Object getSourceTreeViewerInputContents() {
 		return sourceTreeViewerInputContents;
@@ -392,5 +469,13 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 	public void setTargetTreeViewerInputContents(
 			Object targetTreeViewerInputContents) {
 		this.targetTreeViewerInputContents = targetTreeViewerInputContents;
+	}
+
+	public IWizard getSourceDataCreationWizard() {
+		return sourceDataCreationWizard;
+	}
+
+	public IWizard getTargetDataCreationWizard() {
+		return targetDataCreationWizard;
 	}
 }

@@ -7,14 +7,13 @@ import java.io.File;
 import java.util.Collections;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.IWizardNode;
 import org.eclipse.jface.wizard.IWizardPage;
-import org.eclipse.jface.wizard.WizardSelectionPage;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -35,7 +34,7 @@ import org.eclipse.ui.INewWizard;
  * 
  * @author Dart Peng Date : 2008-8-13
  */
-public abstract class AbstractFileSelectionWizardPage extends WizardSelectionPage
+public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		implements SelectionListener {
 	protected IStructuredSelection selection;
 	protected Object returnObject = null;
@@ -63,33 +62,6 @@ public abstract class AbstractFileSelectionWizardPage extends WizardSelectionPag
 	public String getFilePath(){
 		return fileText.getText();
 	}
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.wizard.WizardSelectionPage#getNextPage()
-	 */
-	public IWizardPage getNextPage() {
-		if (this.getSelectedNode() == null) {
-			return null;
-		}
-
-		boolean isCreated = getSelectedNode().isContentCreated();
-
-		IWizard wizard = getSelectedNode().getWizard();
-
-		if (wizard == null) {
-			setSelectedNode(null);
-			return null;
-		}
-		if (!isCreated) {
-			if (wizard instanceof INewWizard) {
-				((INewWizard) wizard).init(null, getSelection());
-			}
-			wizard.addPages();
-		}
-		return wizard.getStartingPage();
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -261,10 +233,6 @@ public abstract class AbstractFileSelectionWizardPage extends WizardSelectionPag
 		fileSystemBrowseButton.setLayoutData(gd);
 
 		return xsdComposite;
-	}
-	
-	public void activeNextWizardNode(IWizardNode node){
-		setSelectedNode(node);
 	}
 
 	abstract protected Object loadedTheObject(String path) throws Exception;

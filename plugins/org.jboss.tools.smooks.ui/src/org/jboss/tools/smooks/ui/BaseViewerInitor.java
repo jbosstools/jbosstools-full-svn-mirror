@@ -63,9 +63,9 @@ public class BaseViewerInitor implements IViewerInitor {
 	/**
 	 * @return the structuredDataLoadWizard
 	 */
-	public IStrucutredDataCreationWizard getStructuredDataLoadWizard() {
+	public IStructuredDataCreationWizard getStructuredDataLoadWizard() {
 		try {
-			return ((IStrucutredDataCreationWizard) configurationElement
+			return ((IStructuredDataCreationWizard) configurationElement
 					.createExecutableExtension(SmooksExtensionPointConstants.EXTENTION_POINT_ATTRIBUTE_CREATION_WIZARD));
 		} catch (CoreException e) {
 			e.printStackTrace();

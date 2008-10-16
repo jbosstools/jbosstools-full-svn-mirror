@@ -648,7 +648,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			buildSourceInputProperties(listType, model, false, isError,
 					current, classLoader);
 		}
-		return model;
+		List list = new ArrayList();
+		if(model != null) list.add(model);
+		return list;
 	}
 
 	public Object buildSourceInputObjects(GraphInformations graphInfo,
@@ -719,7 +721,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		setSelectorIsUsed(rootClassName);
 		buildChildrenOfTargetInputModel(listType, rootModel, false,
 				rootIsError, current, loader);
-		return rootModel;
+		List list = new ArrayList();
+		list.add(rootModel);
+		return list;
 	}
 
 	protected void buildChildrenOfTargetInputModel(
