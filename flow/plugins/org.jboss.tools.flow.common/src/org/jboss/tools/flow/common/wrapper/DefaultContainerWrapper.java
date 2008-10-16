@@ -3,6 +3,8 @@ package org.jboss.tools.flow.common.wrapper;
 import java.util.List;
 
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.ui.views.properties.IPropertySource;
+import org.jboss.tools.common.properties.DefaultContainerPropertySource;
 import org.jboss.tools.flow.common.model.Connection;
 import org.jboss.tools.flow.common.model.Container;
 import org.jboss.tools.flow.common.model.Flow;
@@ -16,6 +18,11 @@ public class DefaultContainerWrapper extends AbstractContainerWrapper {
 	private AcceptsElementStrategy acceptsElementStrategy;
 	private AcceptsIncomingConnectionStrategy incomingConnectionStrategy;
 	private AcceptsOutgoingConnectionStrategy outgoingConnectionStrategy;
+	private DefaultContainerPropertySource propertySource;
+
+	protected void internalSetName(String name) {
+		getNode().setName(name);
+	}
 
 	protected void internalAddElement(NodeWrapper element) {
         Node node = (Node)element.getElement();
@@ -117,4 +124,19 @@ public class DefaultContainerWrapper extends AbstractContainerWrapper {
 		}
 	}
 
+    @SuppressWarnings("unchecked")
+	public Object getAdapter(Class adapter) {
+    	if (adapter == IPropertySource.class) {
+    		return getPropertySource();
+    	}
+    	return super.getAdapter(adapter);
+    }
+    
+    private IPropertySource getPropertySource() {
+    	if (propertySource == null) {
+    		propertySource = new DefaultContainerPropertySource(this);
+    	}
+    	return propertySource;
+    }
+    
 }

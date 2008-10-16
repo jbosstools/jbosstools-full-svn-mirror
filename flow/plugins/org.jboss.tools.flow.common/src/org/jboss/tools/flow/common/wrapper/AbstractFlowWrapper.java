@@ -29,7 +29,8 @@ import java.util.Map;
  */
 public abstract class AbstractFlowWrapper extends AbstractWrapper implements FlowWrapper {
 
-    private Map<String, NodeWrapper> elements = new HashMap<String, NodeWrapper>();
+    private Map<String, NodeWrapper> elementMap = new HashMap<String, NodeWrapper>();
+    private List<NodeWrapper> elementList = new ArrayList<NodeWrapper>();
     private transient List<ModelListener> listeners = new ArrayList<ModelListener>();
     
     public abstract Integer getRouterLayout();
@@ -44,11 +45,11 @@ public abstract class AbstractFlowWrapper extends AbstractWrapper implements Flo
 
     public List<NodeWrapper> getElements() {
         return Collections.unmodifiableList(
-            new ArrayList<NodeWrapper>(elements.values()));
+            new ArrayList<NodeWrapper>(elementList));
     }
     
     public NodeWrapper getElement(String id) {
-        return (NodeWrapper) elements.get(id);
+        return (NodeWrapper) elementMap.get(id);
     }
     
     public void addElement(NodeWrapper element) {
@@ -59,7 +60,8 @@ public abstract class AbstractFlowWrapper extends AbstractWrapper implements Flo
     }
     
     public void localAddElement(NodeWrapper element) {
-        elements.put(element.getId(), element);
+        elementMap.put(element.getId(), element);
+        elementList.add(element);
     }
     
     public boolean acceptsElement(NodeWrapper element) {
@@ -68,10 +70,15 @@ public abstract class AbstractFlowWrapper extends AbstractWrapper implements Flo
     
     protected abstract void internalAddElement(NodeWrapper element);
     
+    public void localRemoveElement(NodeWrapper element) {
+        elementMap.remove(element.getId());
+        elementList.remove(element);    	
+    }
+    
     public void removeElement(NodeWrapper element) {
-        elements.remove(element.getId());
-        notifyListeners(CHANGE_ELEMENTS);
+    	localRemoveElement(element);
         internalRemoveElement(element);
+        notifyListeners(CHANGE_ELEMENTS);
     }
     
     protected abstract void internalRemoveElement(NodeWrapper element);
