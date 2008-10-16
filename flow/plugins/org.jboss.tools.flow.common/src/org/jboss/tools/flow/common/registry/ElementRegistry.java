@@ -83,7 +83,7 @@ public class ElementRegistry {
 		}
 		((Element)element).setMetaData("configurationElement", configurationElement);
 		Wrapper result = new DefaultConnectionWrapper();
-		result.setElement(element);
+		result.setElement((Element)element);
 		return result;
 	}
 	
@@ -97,7 +97,7 @@ public class ElementRegistry {
 		}
 		((Node)element).setMetaData("configurationElement", configurationElement);
 		DefaultNodeWrapper result = new DefaultNodeWrapper();
-		result.setElement(element);
+		result.setElement((Element)element);
 		AcceptsIncomingConnectionStrategy acceptsIncomingConnectionStrategy = createAcceptsIncomingConnectionStrategy(configurationElement);
 		if (acceptsIncomingConnectionStrategy != null) {
 			acceptsIncomingConnectionStrategy.setNode((Node)element);
@@ -122,7 +122,7 @@ public class ElementRegistry {
 		}
 		((Element) element).setMetaData("configurationElement", configurationElement);
 		DefaultContainerWrapper result = new DefaultContainerWrapper();
-		result.setElement(element);
+		result.setElement((Element)element);
 		AcceptsElementStrategy acceptsElementStrategy = createAcceptsElementStrategy(configurationElement);
 		if (acceptsElementStrategy != null) {
 			acceptsElementStrategy.setContainer((Container)element);
@@ -184,7 +184,7 @@ public class ElementRegistry {
 		}
 		((Element) element).setMetaData("configurationElement", configurationElement);
 		DefaultFlowWrapper result = new DefaultFlowWrapper();		
-		result.setElement(element);
+		result.setElement((Element)element);
 		AcceptsElementStrategy acceptsElementStrategy = createAcceptsElementStrategy(configurationElement);
 		if (acceptsElementStrategy != null) {
 			acceptsElementStrategy.setContainer((Container)result.getElement());

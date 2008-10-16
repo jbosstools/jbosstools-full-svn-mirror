@@ -28,9 +28,8 @@ public class DefaultNodeWrapper extends AbstractNodeWrapper {
 		return getNode().getName();
 	}
 
-	public void internalSetName(String name) {
+	protected void internalSetName(String name) {
 		getNode().setName(name);
-		notifyListeners(CHANGE_VISUAL);
 	}
 
 	protected void internalSetConstraint(Rectangle constraint) {

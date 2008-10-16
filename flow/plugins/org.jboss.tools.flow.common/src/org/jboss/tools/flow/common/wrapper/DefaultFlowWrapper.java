@@ -1,5 +1,8 @@
 package org.jboss.tools.flow.common.wrapper;
 
+import org.eclipse.ui.views.properties.IPropertySource;
+import org.jboss.tools.common.properties.DefaultFlowPropertySource;
+import org.jboss.tools.flow.common.model.DefaultFlow;
 import org.jboss.tools.flow.common.model.Flow;
 import org.jboss.tools.flow.common.model.Node;
 import org.jboss.tools.flow.common.strategy.AcceptsElementStrategy;
@@ -7,6 +10,15 @@ import org.jboss.tools.flow.common.strategy.AcceptsElementStrategy;
 public class DefaultFlowWrapper extends AbstractFlowWrapper {
 	
 	private AcceptsElementStrategy acceptsElementStrategy;
+	private DefaultFlowPropertySource propertySource;
+	
+	public String getName() {
+		return ((DefaultFlow)getElement()).getName();
+	}
+	
+	public void setName(String name) {
+		((DefaultFlow)getElement()).setName(name);
+	}
 
     public Integer getRouterLayout() {
         Integer routerLayout = (Integer) ((Flow)getElement()).getMetaData("routerLayout");
@@ -48,6 +60,21 @@ public class DefaultFlowWrapper extends AbstractFlowWrapper {
     
     public void setAcceptsElementStrategy(AcceptsElementStrategy strategy) {
     	this.acceptsElementStrategy = strategy;
+    }
+
+    @SuppressWarnings("unchecked")
+	public Object getAdapter(Class adapter) {
+    	if (adapter == IPropertySource.class) {
+    		return getPropertySource();
+    	}
+    	return super.getAdapter(adapter);
+    }
+    
+    private IPropertySource getPropertySource() {
+    	if (propertySource == null) {
+    		propertySource = new DefaultFlowPropertySource(this);
+    	}
+    	return propertySource;
     }
     
 }

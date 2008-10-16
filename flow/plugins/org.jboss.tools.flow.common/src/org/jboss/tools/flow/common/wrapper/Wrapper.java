@@ -1,9 +1,13 @@
 package org.jboss.tools.flow.common.wrapper;
 
-public interface Wrapper {
+import org.eclipse.core.runtime.IAdaptable;
+import org.jboss.tools.flow.common.model.Element;
+
+
+public interface Wrapper extends IAdaptable {
 	
-	void setElement(Object element);
-	Object getElement();
+	void setElement(Element element);
+	Element getElement();
 	
     void addListener(ModelListener listener);
     void removeListener(ModelListener listener);
