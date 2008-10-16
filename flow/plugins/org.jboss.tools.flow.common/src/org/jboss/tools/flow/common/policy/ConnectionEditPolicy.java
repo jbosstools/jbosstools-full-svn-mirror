@@ -38,8 +38,6 @@ import org.jboss.tools.flow.common.wrapper.NodeWrapper;
  */
 public class ConnectionEditPolicy extends org.eclipse.gef.editpolicies.ConnectionEditPolicy {
 
-//	private ConnectionFactory elementConnectionFactory;
-	
 	private CreationFactory elementConnectionFactory;
 	
 	public void setElementConnectionFactory(CreationFactory elementConnectionFactory) {
