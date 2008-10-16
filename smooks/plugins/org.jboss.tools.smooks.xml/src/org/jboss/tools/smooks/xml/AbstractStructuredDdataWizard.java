@@ -10,14 +10,14 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
-import org.jboss.tools.smooks.ui.IStrucutredDataCreationWizard;
+import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
 
 /**
  * @author Dart
  * 
  */
 public abstract class AbstractStructuredDdataWizard extends Wizard implements
-		IStrucutredDataCreationWizard ,INewWizard{
+		IStructuredDataCreationWizard ,INewWizard{
 	protected IWorkbench workbench;
 	
 	protected IStructuredSelection selection;
@@ -37,7 +37,6 @@ public abstract class AbstractStructuredDdataWizard extends Wizard implements
 		if(page == null){
 			page = createAbstractFileSelectionWizardPage();
 			page.setSelection(this.selection);
-			page.activeNextWizardNode(strucutredDataCreationWizardNode);
 		}
 		this.addPage(page);
 	}
@@ -60,12 +59,6 @@ public abstract class AbstractStructuredDdataWizard extends Wizard implements
 
 	public void init(IEditorSite site, IEditorInput input) {
 		
-	}
-	public void setNextDataCreationWizardNode(IWizardNode wizardNode) {
-		strucutredDataCreationWizardNode = wizardNode;
-		if(page != null){
-			page.activeNextWizardNode(strucutredDataCreationWizardNode);
-		}
 	}
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {

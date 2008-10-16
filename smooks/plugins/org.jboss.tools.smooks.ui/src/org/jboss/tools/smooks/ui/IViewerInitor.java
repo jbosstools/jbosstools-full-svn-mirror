@@ -25,7 +25,7 @@ public interface IViewerInitor {
 	
 	String getTypeID();
 	
-	IStrucutredDataCreationWizard getStructuredDataLoadWizard();
+	IStructuredDataCreationWizard getStructuredDataLoadWizard();
 	
 	String getName();
 	

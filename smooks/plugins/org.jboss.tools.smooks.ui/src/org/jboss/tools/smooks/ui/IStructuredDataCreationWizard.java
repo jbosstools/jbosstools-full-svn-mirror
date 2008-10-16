@@ -21,7 +21,7 @@ import org.eclipse.ui.IEditorSite;
  * @author Dart Peng
  * @Date Aug 5, 2008
  */
-public interface IStrucutredDataCreationWizard extends IWizard {
+public interface IStructuredDataCreationWizard extends IWizard {
 	
 	public Object getTreeViewerInputContents();
 	
@@ -30,7 +30,5 @@ public interface IStrucutredDataCreationWizard extends IWizard {
 	public String getInputDataTypeID();
 	
 	public Properties getProperties();
-	
-	public void setNextDataCreationWizardNode(IWizardNode wizardNode);
 	
 }

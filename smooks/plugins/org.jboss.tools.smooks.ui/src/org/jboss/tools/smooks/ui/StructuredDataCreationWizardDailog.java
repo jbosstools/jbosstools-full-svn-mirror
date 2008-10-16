@@ -25,10 +25,10 @@ public class StructuredDataCreationWizardDailog extends WizardDialog {
 		super(parentShell, newWizard);
 	}
 	
-	public IStrucutredDataCreationWizard getCurrentCreationWizard(){
+	public IStructuredDataCreationWizard getCurrentCreationWizard(){
 		IWizard w = getWizard();
-		if(w != null && w instanceof IStrucutredDataCreationWizard){
-			return (IStrucutredDataCreationWizard)w;
+		if(w != null && w instanceof IStructuredDataCreationWizard){
+			return (IStructuredDataCreationWizard)w;
 		}
 		return null;
 	}

@@ -43,7 +43,7 @@ public class ViewerInitorStore {
 		return null;
 	}
 	
-	public IStrucutredDataCreationWizard getStructuredDataCreationWizard(String typeID) {
+	public IStructuredDataCreationWizard getStructuredDataCreationWizard(String typeID) {
 		if (this.getInitorMap() == null)
 			return null;
 		IViewerInitor initor = this.getInitorMap().get(typeID);
