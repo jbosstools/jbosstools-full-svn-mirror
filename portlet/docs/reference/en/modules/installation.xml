@@ -8,7 +8,7 @@
 
     <itemizedlist>
         <listitem>
-            <para>First, you need to have Eclipse Ganymede with JBoss Tools 3.0.0.Alpha1 installed.</para>
+            <para>First, you need to have Eclipse Ganymede with JBoss Tools 3.0.0.Alpha1 and higher installed.</para>
 
             <tip>
                 <title>Tip:</title>

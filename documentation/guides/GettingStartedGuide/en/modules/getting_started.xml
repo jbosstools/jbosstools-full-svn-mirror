@@ -386,7 +386,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      <para>Get Eclipse and Web Tools</para>
     </listitem>
    </itemizedlist>
-   <para>The currant version of JBoss Tools (3.0.0Alpha1) targets at Eclipse 3.4/Ganymede and WTP
+   <para>The currant version of JBoss Tools (3.0.0.beta1) targets at Eclipse 3.4/Ganymede and WTP
     3.0.</para>
 
    <tip>
