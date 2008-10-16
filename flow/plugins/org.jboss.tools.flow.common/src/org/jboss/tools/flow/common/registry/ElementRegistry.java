@@ -339,5 +339,15 @@ public class ElementRegistry {
 			}			
 		};
 	}
+	
+	public static CreationFactory getCreationFactory(Element element) {
+		String id = null;
+		IConfigurationElement configurationElement = 
+			(IConfigurationElement)element.getMetaData("configurationElement");
+		if (configurationElement != null) {
+			id = configurationElement.getAttribute("id");
+		}
+		return id == null ? null : getCreationFactory(id);
+	}
 
 }

@@ -30,9 +30,9 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.editparts.AbstractConnectionEditPart;
 import org.eclipse.gef.editpolicies.ConnectionEndpointEditPolicy;
 import org.eclipse.gef.requests.CreationFactory;
-import org.eclipse.gef.requests.SimpleFactory;
 import org.jboss.tools.flow.common.policy.ConnectionBendpointEditPolicy;
 import org.jboss.tools.flow.common.policy.ConnectionEditPolicy;
+import org.jboss.tools.flow.common.registry.ElementRegistry;
 import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.DefaultConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.ModelEvent;
@@ -58,7 +58,7 @@ public class ConnectionEditPart extends AbstractConnectionEditPart implements Mo
     }
     
     protected CreationFactory getElementConnectionFactory() {
-    	return new SimpleFactory(getElementConnectionType());
+    	return ElementRegistry.getCreationFactory(getElementConnection().getElement());
     }
     
     
