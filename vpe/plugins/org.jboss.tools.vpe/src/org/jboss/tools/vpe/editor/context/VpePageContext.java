@@ -258,7 +258,7 @@ public class VpePageContext implements IVisualContext {
 
 		ResourceReference[] list = getIncludeCss();
 		for (int i = 0; i < list.length; i++) {
-			visualBuilder.addLinkNodeToHead(list[i].getLocation(), "yes");
+			visualBuilder.addLinkNodeToHead(list[i].getLocation(), "yes", false);
 		}
 	}
 

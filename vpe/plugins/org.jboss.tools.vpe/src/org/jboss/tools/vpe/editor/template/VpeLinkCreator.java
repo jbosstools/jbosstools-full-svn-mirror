@@ -72,7 +72,7 @@ public class VpeLinkCreator extends VpeAbstractCreator {
 		String href_value = getExprValue(pageContext, hrefExpr, sourceNode);
 		String rel_value = getExprValue(pageContext, relExpr, sourceNode);
 
-		nsIDOMNode newNode = pageContext.getVisualBuilder().addLinkNodeToHead(href_value, "no");
+		nsIDOMNode newNode = pageContext.getVisualBuilder().addLinkNodeToHead(href_value, "no", false);
 		visualNodeMap.put(this, newNode);
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(null);
 		return creatorInfo;
@@ -94,7 +94,7 @@ public class VpeLinkCreator extends VpeAbstractCreator {
 		nsIDOMNode oldNode = (nsIDOMNode)visualNodeMap.get(this);
 		nsIDOMNode newNode;
 		if(oldNode == null){
-			newNode = pageContext.getVisualBuilder().addLinkNodeToHead(href_value, "no");
+			newNode = pageContext.getVisualBuilder().addLinkNodeToHead(href_value, "no", false);
 		}else{
 			newNode = pageContext.getVisualBuilder().replaceLinkNodeToHead(oldNode, href_value, "no");
 			if(visualNodeMap.containsKey(this)) visualNodeMap.remove(this);

@@ -750,7 +750,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		if (l != null) {
 			for (int i = 0; i < l.length; i++) {
 				ResourceReference item = l[i];
-				addLinkNodeToHead("file:///" + item.getLocation(), YES_STRING); //$NON-NLS-1$
+				addLinkNodeToHead("file:///" + item.getLocation(), YES_STRING, false); //$NON-NLS-1$
 			}
 		}
 	}
@@ -1366,16 +1366,29 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				scroll);
 	}
 
-	public nsIDOMNode addLinkNodeToHead(String href_val, String ext_val) {
-		nsIDOMElement newNode = createLinkNode(href_val,
-				ATTR_REL_STYLESHEET_VALUE, ext_val);
+    /**
+     * 
+     * @param href_val
+     * @param ext_val
+     * @param firstElement
+     *            true - first node in head, false - last node
+     * @return
+     */
+    public nsIDOMNode addLinkNodeToHead(String href_val, String ext_val,
+	    boolean firstElement) {
+	nsIDOMElement newNode = createLinkNode(href_val,
+		ATTR_REL_STYLESHEET_VALUE, ext_val);
 
-		// TODO Dzmitry Sakovich
-		// Fix priority CSS classes JBIDE-1713
-		nsIDOMNode firstNode = getHeadNode().getFirstChild();
-		getHeadNode().insertBefore(newNode, firstNode);
-		return newNode;
+	// TODO Dzmitry Sakovich
+	// Fix priority CSS classes JBIDE-1713
+	if (firstElement) {
+	    nsIDOMNode firstNode = getHeadNode().getFirstChild();
+	    getHeadNode().insertBefore(newNode, firstNode);
+	} else {
+	    getHeadNode().appendChild(newNode);
 	}
+	return newNode;
+    }
 
 	public nsIDOMNode replaceLinkNodeToHead(nsIDOMNode oldNode,
 			String href_val, String ext_val) {
@@ -1385,11 +1398,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return newNode;
 	}
 
-	public nsIDOMNode replaceLinkNodeToHead(String href_val, String ext_val) {
+	public nsIDOMNode replaceLinkNodeToHead(String href_val, String ext_val, boolean firstElement) {
 		nsIDOMNode newNode = null;
 		nsIDOMNode oldNode = getLinkNode(href_val, ext_val);
 		if (oldNode == null) {
-			newNode = addLinkNodeToHead(href_val, ext_val);
+			newNode = addLinkNodeToHead(href_val, ext_val, firstElement);
 		}
 		return newNode;
 	}
