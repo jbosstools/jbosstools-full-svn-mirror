@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="viewerInitor" name="viewerInitor" schema="schema/viewerInitor.exsd"/>
+   <extension-point id="analyzer" name="analyzer" schema="schema/analyzer.exsd"/>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Smooks Form Editor"
+            extensions="smooks"
+            icon="icons/sample.gif"
+            class="org.jboss.tools.smooks.ui.editors.SmooksFormEditor"
+            id="org.jboss.tools.smooks.ui.editors.SmooksFormEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertySections">
+      <propertySections
+            contributorId="org.jboss.tools.smooks.ui.editors.SmooksFormEditor">
+         <propertySection
+               class="org.jboss.tools.smooks.ui.ConnectionPropertySection"
+               id="org.jboss.tools.smooks.ui.connection.propertyTab.Section"
+               tab="org.jboss.tools.smooks.ui.connection.propertyTab">
+            <input
+                  type="org.jboss.tools.smooks.ui.gef.model.LineConnectionModel">
+            </input>
+         </propertySection>
+      </propertySections>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="org.jboss.tools.smooks.ui.editors.SmooksFormEditor"
+            typeMapper="org.jboss.tools.smooks.ui.SmooksGraphPropertyTypeMapper">
+         <propertyCategory
+               category="connection"></propertyCategory>
+      </propertyContributor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="org.jboss.tools.smooks.ui.editors.SmooksFormEditor">
+         <propertyTab
+               category="connection"
+               id="org.jboss.tools.smooks.ui.connection.propertyTab"
+               label="Mapping Properties">
+         </propertyTab>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.jboss.tools.smooks.ui.wizards"
+            name="Smooks">
+      </category>
+      <wizard
+            category="org.jboss.tools.smooks.ui.wizards"
+            class="org.jboss.tools.smooks.ui.wizards.SmooksConfigFileNewWizard"
+            icon="icons/sample.gif"
+            id="org.jboss.tools.smooks.ui.wizards.SmooksConfigFileNewWizard"
+            name="Smooks Configuration File">
+      </wizard>
+   </extension>
+</plugin>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="setup-team">
+	<title>Team</title>
+	<para>
+		Team should contains
+		<itemizedlist>
+			<listitem>
+				<para>1 QA Team Lead</para>
+			</listitem>
+			<listitem>
+				<para>2 QA Engineers</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+</sect1>

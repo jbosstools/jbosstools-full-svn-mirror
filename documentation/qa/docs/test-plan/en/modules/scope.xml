@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="scope">
+	<title>Scope</title>
+	<para>This section describes WHAT is being tested:</para>
+	<itemizedlist>
+		<listitem>
+			<para>
+				The scope of the tests, i.e. what will be covered by the
+				tests and – possibly – what will not be.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Some explanation on where these other tests will/should
+				be performed. This part is optional, since coverage
+				information should rather be contained in a unique
+				umbrella document, e.g. a test strategy document.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Explanation on the function/product that is being
+				tested.
+			</para>
+		</listitem>
+	</itemizedlist>
+</chapter>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<GraphInformations xmlns="http://www.jboss.org/tools/smooks/graphicalInformation">
+  <mappingType targetTypeID="org.jboss.tools.smooks.ui.viewerInitor.javabean" sourceTypeID="org.jboss.tools.smooks.ui.viewerInitor.javabean"/>
+</GraphInformations>

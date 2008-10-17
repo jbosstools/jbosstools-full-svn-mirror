@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+  <extension
+         point="org.jboss.tools.smooks.ui.viewerInitor">
+      <viewerInitor
+            contentProvider="org.jboss.tools.smooks.javabean.model.BeanContentProvider"
+            creationWizard="org.jboss.tools.smooks.javabean.ui.NewJavaBeanStrucutredDataWizard"
+            description="This data type can get from any Java .class."
+            labelProvider="org.jboss.tools.smooks.javabean.model.BeanlabelProvider"
+            name="JavaBean Data Type"
+            typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+      </viewerInitor>
+   </extension>
+  <extension
+        point="org.jboss.tools.smooks.ui.analyzer">
+     <mappingAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           name="JavaBean Analyzer"
+           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+        <targetSourceType
+              id="org.jboss.tools.smooks.ui.viewerInitor.javabean"
+              name="java2java">
+        </targetSourceType>
+     </mappingAnalyzer>
+     <sourceModelAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           level="0"
+           name="JavaBean SourceModel Analyzer"
+           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+     </sourceModelAnalyzer>
+     <targetModelAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           level="0"
+           name="JavaBean TargetModel Analyzer"
+           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+     </targetModelAnalyzer>
+  </extension>
+</plugin>
