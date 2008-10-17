@@ -16,6 +16,7 @@ import java.util.Properties;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.internal.core.JavaProject;
@@ -94,6 +95,14 @@ public class NewJavaBeanStrucutredDataWizard extends Wizard implements IStructur
 			if(obj instanceof IResource){
 				IProject project = ((IResource)obj).getProject();
 				this.project = JavaCore.create(project);
+			}
+			
+			if(project == null){
+				if(obj instanceof IAdaptable){
+					IResource relateResource =(IResource) ((IAdaptable)obj).getAdapter(IResource.class);
+					IProject project = relateResource.getProject();
+					this.project = JavaCore.create(project);
+				}
 			}
 		}
 	}
