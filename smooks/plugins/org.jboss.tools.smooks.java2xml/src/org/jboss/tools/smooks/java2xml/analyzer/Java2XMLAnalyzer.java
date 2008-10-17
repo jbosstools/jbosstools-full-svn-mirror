@@ -19,6 +19,7 @@ import org.dom4j.Element;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.smooks.analyzer.AbstractAnalyzer;
+import org.jboss.tools.smooks.analyzer.DesignTimeAnalyzeResult;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
@@ -62,7 +63,7 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 			return;
 		}
 		
-		GraphRootModel rootModel = context.getDataMappingRootModel();
+		GraphRootModel rootModel = context.getGraphicalRootModel();
 		List<SourceModel> sourceModelList = rootModel.loadSourceModelList();
 		List<TargetModel> targetModelList = rootModel.loadTargetModelList();
 
@@ -171,6 +172,12 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 			parent = parent.getParent();
 		}
 		return "${" + name + "}";
+	}
+
+	public DesignTimeAnalyzeResult analyzeGraphModel(
+			SmooksConfigurationFileGenerateContext context) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

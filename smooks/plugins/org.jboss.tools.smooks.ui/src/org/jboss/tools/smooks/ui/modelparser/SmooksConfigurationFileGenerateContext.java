@@ -68,7 +68,7 @@ public class SmooksConfigurationFileGenerateContext {
 	/**
 	 * @return the dataMappingRootModel
 	 */
-	public GraphRootModel getDataMappingRootModel() {
+	public GraphRootModel getGraphicalRootModel() {
 		return dataMappingRootModel;
 	}
 	/**

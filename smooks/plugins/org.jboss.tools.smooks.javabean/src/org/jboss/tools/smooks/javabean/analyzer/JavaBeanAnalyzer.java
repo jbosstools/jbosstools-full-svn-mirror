@@ -33,6 +33,7 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.jboss.tools.smooks.analyzer.DesignTimeAnalyzeResult;
 import org.jboss.tools.smooks.analyzer.IMappingAnalyzer;
 import org.jboss.tools.smooks.analyzer.ISourceModelAnalyzer;
 import org.jboss.tools.smooks.analyzer.ITargetModelAnalyzer;
@@ -356,6 +357,50 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 	}
 
+	private DesignTimeAnalyzeResult checkOtherNodeConnected(
+			SmooksConfigurationFileGenerateContext context) {
+		GraphRootModel root = context.getGraphicalRootModel();
+		List sourceList = root.loadSourceModelList();
+		List targetList = root.loadTargetModelList();
+		StringBuffer buffer = new StringBuffer();
+		for (Iterator iterator = targetList.iterator(); iterator.hasNext();) {
+			AbstractStructuredDataModel targetm = (AbstractStructuredDataModel) iterator
+					.next();
+			if (targetm instanceof IConnectableModel) {
+				if (((IConnectableModel) targetm).getModelTargetConnections()
+						.isEmpty()) {
+					continue;
+				}
+
+				JavaBeanModel javaModel = (JavaBeanModel) targetm
+						.getReferenceEntityModel();
+				JavaBeanModel parent = javaModel.getParent();
+				if (parent != null) {
+					AbstractStructuredDataModel pgm = UIUtils.findGraphModel(
+							root, parent);
+					if (pgm != null && pgm instanceof IConnectableModel) {
+						if (((IConnectableModel) pgm)
+								.getModelTargetConnections().isEmpty()) {
+							buffer
+									.append("The parent of Java node \""
+											+ javaModel.getName()
+											+ "\" : \""
+											+ parent.getName()
+											+ "\" doesn't be connected by any source node!\n");
+						}
+					}
+				}
+			}
+		}
+		String result = buffer.toString();
+		if ("".equals(result)) {
+			return null;
+		}
+		DesignTimeAnalyzeResult dr = new DesignTimeAnalyzeResult();
+		dr.setErrorMessage(result);
+		return dr;
+	}
+
 	/**
 	 * If root node don't connect , it will ask user to connect them .
 	 * 
@@ -363,7 +408,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	 */
 	private void checkRootNodeConnected(
 			SmooksConfigurationFileGenerateContext context) {
-		GraphRootModel root = context.getDataMappingRootModel();
+		GraphRootModel root = context.getGraphicalRootModel();
 		List sourceList = root.loadSourceModelList();
 		List targetList = root.loadTargetModelList();
 
@@ -424,7 +469,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 								.openQuestion(
 										displayParent,
 										"Connection Question",
-										"The root models don't be connected , maybe it will make some errors with the generation config file contents.\nDo you wan to connect them?");
+										"The root models don't be connected , it will make some errors with the generation config file contents.\nDo you wan to connect them?");
 						if (connectAuto) {
 							// connect root model
 							LineConnectionModel connectionModel = new LineConnectionModel();
@@ -448,22 +493,21 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	public void analyzeMappingGraphModel(
 			SmooksConfigurationFileGenerateContext context)
 			throws SmooksAnalyzerException {
-		GraphRootModel root = context.getDataMappingRootModel();
-		checkRootNodeConnected(context);
+		GraphRootModel root = context.getGraphicalRootModel();
 		this.analyzeGraphicalModel(root, context.getGeneratorResourceList());
 	}
 
 	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType, Object sourceObject,
 			Object targetObject) {
-		if(sourceObject instanceof List){
-			if(!((List)sourceObject).isEmpty()){
-				sourceObject = (JavaBeanModel) ((List)sourceObject).get(0);
+		if (sourceObject instanceof List) {
+			if (!((List) sourceObject).isEmpty()) {
+				sourceObject = (JavaBeanModel) ((List) sourceObject).get(0);
 			}
 		}
-		if(targetObject instanceof List){
-			if(!((List)targetObject).isEmpty()){
-				targetObject = (JavaBeanModel) ((List)targetObject).get(0);
+		if (targetObject instanceof List) {
+			if (!((List) targetObject).isEmpty()) {
+				targetObject = (JavaBeanModel) ((List) targetObject).get(0);
 			}
 		}
 		if (!(sourceObject instanceof JavaBeanModel)
@@ -659,7 +703,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					current, classLoader);
 		}
 		List list = new ArrayList();
-		if(model != null) list.add(model);
+		if (model != null)
+			list.add(model);
 		return list;
 	}
 
@@ -956,5 +1001,11 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			}
 		}
 		return null;
+	}
+
+	public DesignTimeAnalyzeResult analyzeGraphModel(
+			SmooksConfigurationFileGenerateContext context) {
+		checkRootNodeConnected(context);
+		return checkOtherNodeConnected(context);
 	}
 }
