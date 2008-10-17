@@ -456,6 +456,16 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType, Object sourceObject,
 			Object targetObject) {
+		if(sourceObject instanceof List){
+			if(!((List)sourceObject).isEmpty()){
+				sourceObject = (JavaBeanModel) ((List)sourceObject).get(0);
+			}
+		}
+		if(targetObject instanceof List){
+			if(!((List)targetObject).isEmpty()){
+				targetObject = (JavaBeanModel) ((List)targetObject).get(0);
+			}
+		}
 		if (!(sourceObject instanceof JavaBeanModel)
 				|| !(targetObject instanceof JavaBeanModel)) {
 			return MappingResourceConfigList.createEmptyList();
