@@ -95,6 +95,7 @@ import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.analyzer.AnalyzerFactory;
+import org.jboss.tools.smooks.analyzer.DesignTimeAnalyzeResult;
 import org.jboss.tools.smooks.analyzer.IMappingAnalyzer;
 import org.jboss.tools.smooks.analyzer.ISourceModelAnalyzer;
 import org.jboss.tools.smooks.analyzer.ITargetModelAnalyzer;
@@ -114,7 +115,9 @@ import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
 import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
 import org.jboss.tools.smooks.ui.IViewerInitor;
+import org.jboss.tools.smooks.ui.SmooksUIActivator;
 import org.jboss.tools.smooks.ui.StructuredDataCreationWizardDailog;
+import org.jboss.tools.smooks.ui.ViewerInitorStore;
 import org.jboss.tools.smooks.ui.gef.editparts.SmooksEditPartFactory;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
@@ -128,6 +131,7 @@ import org.jboss.tools.smooks.ui.gef.tools.TargetTreeDropTargetListener;
 import org.jboss.tools.smooks.ui.gef.util.GraphicsConstants;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.jboss.tools.smooks.ui.wizards.TransformDataSelectionWizard;
+import org.jboss.tools.smooks.utils.SmooksGraphConstants;
 import org.jboss.tools.smooks.utils.UIUtils;
 
 /**
@@ -164,6 +168,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	private ISelection selection;
 	protected MappingResourceConfigList mappingResourceConfigList;
 	protected AdapterFactoryEditingDomain editingDomain;
+	private Label notifyLabel;
+	private boolean canSaveFile = true;
+	private Label imageLabel;
 
 	public ISelection getSelection() {
 		return selection;
@@ -268,6 +275,20 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		mappingMainComposite.setLayout(gly);
 		section.setClient(mappingMainComposite);
 
+		Composite notifyComposite = toolkit
+				.createComposite(mappingMainComposite);
+		GridData ngd = new GridData(GridData.FILL_HORIZONTAL);
+		ngd.horizontalSpan = 3;
+		GridLayout ngl = new GridLayout();
+		ngl.numColumns = 2;
+		notifyComposite.setLayout(ngl);
+		notifyComposite.setLayoutData(ngd);
+		imageLabel = toolkit.createLabel(notifyComposite, "");
+		imageLabel.setImage(SmooksUIActivator.getDefault().getImageRegistry()
+				.get(SmooksGraphConstants.IMAGE_EMPTY));
+		notifyLabel = toolkit.createLabel(notifyComposite, "" );
+		GridData nlgd = new GridData(GridData.FILL_HORIZONTAL);
+		notifyLabel.setLayoutData(nlgd);
 		GridData sgd = new GridData(GridData.FILL_BOTH);
 		section.setLayoutData(sgd);
 		{
@@ -648,6 +669,16 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	 */
 	@Override
 	public void doSave(IProgressMonitor monitor) {
+		if (!canSaveFile) {
+			boolean cleanError = MessageDialog
+					.openQuestion(
+							getSite().getShell(),
+							"Clean all the errors please",
+							"There occurs some errors on the graphical design , please clean all errors .\n" +
+							"Click \"Yes\" to return . If you don't care that , click \"No\" to save file.");
+			if (cleanError)
+				return;
+		}
 		SmooksFileBuilder builder = this.getSmooksFileBuilder();
 		builder.setSmooksResource(this.smooksResource);
 		SmooksConfigurationFileGenerateContext context = this
@@ -756,6 +787,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 					public void commandStackChanged(EventObject event) {
 						commandStackChanged = true;
+						analyzeDesignGraph();
 						updateSelectionActions();
 						getManagedForm().dirtyStateChanged();
 					}
@@ -901,8 +933,10 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			if (dialog.open() == org.eclipse.jface.dialogs.Dialog.OK) {
 				sourceDataTypeID = wizard.getSourceDataTypeID();
 				targetDataTypeID = wizard.getTargetDataTypeID();
-				sourceTreeViewerInputModel = wizard.getSourceTreeViewerInputContents();
-				targetTreeViewerInputModel = wizard.getTargetTreeViewerInputContents();
+				sourceTreeViewerInputModel = wizard
+						.getSourceTreeViewerInputContents();
+				targetTreeViewerInputModel = wizard
+						.getTargetTreeViewerInputContents();
 				this.getSmooksConfigurationFileGenerateContext()
 						.setSourceDataTypeID(sourceDataTypeID);
 				this.getSmooksConfigurationFileGenerateContext()
@@ -956,9 +990,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		if (input instanceof SmooksFileEditorInput) {
 			this.sourceTreeViewerInputModel = ((SmooksFileEditorInput) input)
 					.getSourceTreeViewerInputContents();
-			
+
 			this.targetTreeViewerInputModel = ((SmooksFileEditorInput) input)
-			.getTargetTreeViewerInputContents();
+					.getTargetTreeViewerInputContents();
 		}
 
 		// }
@@ -976,9 +1010,13 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	}
 
 	/**
-	 * It's a very important method <p>
-	 * If call the method , there will open the data selection wizard to allow user select new data , <p>
+	 * It's a very important method
+	 * <p>
+	 * If call the method , there will open the data selection wizard to allow
+	 * user select new data ,
+	 * <p>
 	 * when user select the new data , the connections will be removed.
+	 * 
 	 * @param viewer
 	 */
 	protected void showCreationWizard(TreeViewer viewer) {
@@ -1210,8 +1248,61 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	public void commandStackChanged(EventObject event) {
 		commandStackChanged = true;
+		analyzeDesignGraph();
 		updateSelectionActions();
 		getManagedForm().dirtyStateChanged();
+	}
+
+	protected void setErrorMessage(String errorMessage) {
+		imageLabel.setImage(SmooksUIActivator.getDefault().getImageRegistry().get(SmooksGraphConstants.IMAGE_EMPTY));
+		notifyLabel.setText("");
+		canSaveFile = true;
+		if (errorMessage != null) {
+			imageLabel.setImage(SmooksUIActivator.getDefault()
+					.getImageRegistry().get(SmooksGraphConstants.IMAGE_ERROR));
+			notifyLabel.setText(errorMessage);
+			canSaveFile = false;
+		}
+	}
+
+	protected void setWarningMessage(String warningMessage) {
+		imageLabel.setImage(SmooksUIActivator.getDefault().getImageRegistry().get(SmooksGraphConstants.IMAGE_EMPTY));
+		notifyLabel.setText("");
+		if (warningMessage != null) {
+			imageLabel
+					.setImage(SmooksUIActivator.getDefault().getImageRegistry()
+							.get(SmooksGraphConstants.IMAGE_WARNING));
+			notifyLabel.setText(warningMessage);
+		}
+	}
+
+	protected void analyzeDesignGraph() {
+		try {
+			IMappingAnalyzer analyzer = AnalyzerFactory.getInstance()
+					.getMappingAnalyzer(sourceDataTypeID, targetDataTypeID);
+			SmooksConfigurationFileGenerateContext context = this
+					.createContext();
+			this.initSmooksConfigurationFileGenerateContext(context);
+			DesignTimeAnalyzeResult result = analyzer
+					.analyzeGraphModel(context);
+			if (result != null) {
+				String errorMessage = result.getErrorMessage();
+				String warningMessage = result.getWarningMessage();
+
+				if (errorMessage != null) {
+					setErrorMessage(errorMessage);
+					return;
+				}
+
+				if (warningMessage != null) {
+					setWarningMessage(warningMessage);
+					return;
+				}
+			}
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

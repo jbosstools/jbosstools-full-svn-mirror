@@ -327,6 +327,8 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		if (wizard instanceof TypeIDSelectionWizard) {
 			String s = ((TypeIDSelectionWizard) wizard).getSourceDataTypeID();
 			String t = ((TypeIDSelectionWizard) wizard).getTargetDataTypeID();
+			this.setSourceID(s);
+			this.setTargetID(t);
 			if (initViewerCheckState(s, source)) {
 				source.getTable().setEnabled(false);
 			}

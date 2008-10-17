@@ -45,6 +45,7 @@ public class SmooksUIActivator extends AbstractUIPlugin {
 	@Override
 	protected void initializeImageRegistry(ImageRegistry reg) {
 		super.initializeImageRegistry(reg);
+		reg.put(SmooksGraphConstants.IMAGE_EMPTY, getImageDescriptor(SmooksGraphConstants.IMAGE_PATH_BLANK));
 		reg.put(SmooksGraphConstants.IMAGE_ERROR, getImageDescriptor(SmooksGraphConstants.IMAGE_PATH_ERROR));
 		reg.put(SmooksGraphConstants.IMAGE_WARNING, getImageDescriptor(SmooksGraphConstants.IMAGE_PATH_WARNING));
 	}

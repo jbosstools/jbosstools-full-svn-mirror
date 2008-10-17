@@ -58,8 +58,8 @@ public class TypeIDSelectionWizard extends Wizard implements INewWizard {
 		if(sid == null || tid == null) return false;
 		this.sourceDataTypeID = sid;
 		this.targetDataTypeID = tid;
-		setSourceTreeViewerInputContents(page.getSourceTreeViewerInputContents());
-		setTargetTreeViewerInputContents(page.getTargetTreeViewerInputContents());
+//		setSourceTreeViewerInputContents(page.getSourceTreeViewerInputContents());
+//		setTargetTreeViewerInputContents(page.getTargetTreeViewerInputContents());
 		return true;
 	}
 	public Object getSourceTreeViewerInputContents() {

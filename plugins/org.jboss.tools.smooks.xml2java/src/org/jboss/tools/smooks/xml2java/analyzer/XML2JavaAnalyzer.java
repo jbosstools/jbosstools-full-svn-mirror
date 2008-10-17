@@ -18,6 +18,7 @@ import javax.swing.text.html.HTMLDocument.HTMLReader.TagAction;
 
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.jboss.tools.smooks.analyzer.AbstractAnalyzer;
+import org.jboss.tools.smooks.analyzer.DesignTimeAnalyzeResult;
 import org.jboss.tools.smooks.analyzer.MappingModel;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
@@ -58,7 +59,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			throws SmooksAnalyzerException {
 
 		SmooksResourceListType listType = context.getSmooksResourceListModel();
-		GraphRootModel rootModel = context.getDataMappingRootModel();
+		GraphRootModel rootModel = context.getGraphicalRootModel();
 		List children = rootModel.getChildren();
 		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
 			TreeItemRelationModel dataModel = (TreeItemRelationModel) iterator
@@ -144,7 +145,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			boolean isComplex = true;
 			JavaBeanModel child = (JavaBeanModel) iterator.next();
 			AbstractStructuredDataModel graphModel = UIUtils.findGraphModel(
-					context.getDataMappingRootModel(), child);
+					context.getGraphicalRootModel(), child);
 			LineConnectionModel connection = UIUtils
 					.getFirstTargetModelViaConnection(graphModel);
 			if (connection == null)
@@ -380,6 +381,12 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 				return resource;
 			}
 		}
+		return null;
+	}
+
+	public DesignTimeAnalyzeResult analyzeGraphModel(
+			SmooksConfigurationFileGenerateContext context) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
