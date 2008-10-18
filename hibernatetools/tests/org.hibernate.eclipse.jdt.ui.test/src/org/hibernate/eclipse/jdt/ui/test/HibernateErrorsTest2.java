@@ -175,7 +175,14 @@ public class HibernateErrorsTest2 extends HibernateConsoleTest {
 				}
 			}, new NullProgressMonitor());
 		}
+		if (!deleted) {
+			proj.delete(false, true,null);
+		}
 		waitForJobs();
+		try {
+			delete(file);
+		} catch (Throwable e) {
+		}
 		delete(file);
 	}
 	public void testDummy() throws JavaModelException {
@@ -212,9 +219,14 @@ public class HibernateErrorsTest2 extends HibernateConsoleTest {
 		buffer.append("Cannot remove the ");
 		buffer.append(file.getAbsolutePath());
 		buffer.append(" file. ");
-		if (file.exists() && file.isDirectory()) {
-			buffer.append("List=");
-			buffer.append(file.list());
+		if (file.exists()) {
+			if (file.isDirectory()) {
+				buffer.append(" ;List=");
+				buffer.append(file.list());
+			} else {
+				buffer.append(" ;length=");
+				buffer.append(file.length());
+			}
 		}
 		return buffer.toString();
 	}
