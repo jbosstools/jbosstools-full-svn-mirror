@@ -12,6 +12,8 @@
 package org.jboss.tools.vpe.editor.util;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -336,13 +338,18 @@ public class DocTypeUtil {
 
 							Attr attr = element.getAttributeNode(attributeName);
 							
-							File file = new File(attr.getValue());
-							if (!file.exists()) {
-								// corrected path
-								attr.setValue(Constants.FILE_PREFIX + initFile.getParent()
-										+ File.separator + attr.getValue());
+							try {
+								URI uri = new URI(attr.getValue());
+								if (!uri.isAbsolute()) {
+									// corrected path
+									attr.setValue(Constants.FILE_PREFIX + initFile.getParent()
+											+ File.separator + attr.getValue());
 
+								}
+							} catch (URISyntaxException e) {
+								VpePlugin.getPluginLog().logError(e.getMessage());
 							}
+							
 						}
 
 					}
