@@ -71,4 +71,8 @@
 			contextId="org.jboss.tools.vpe.editorContext"
 			sequence="M1+M2+Tab"/>
 	</extension>
+  <extension
+        point="org.jboss.tools.jst.jsp.visulaEditorImplementations"  id="org.jboss.tools.vpe.editor.VpeEditorPartFactory">
+        	<visualEditorImplementation name="XulRunner Visual Editor" class="org.jboss.tools.vpe.editor.VpeEditorPartFactory"/>
+  </extension>
 </plugin>
