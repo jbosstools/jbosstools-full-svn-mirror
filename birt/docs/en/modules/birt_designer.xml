@@ -29,13 +29,13 @@
               <para>The next part of user interface is different <property>Views</property> that can be arranged around the Layout Editor area the way you like:</para> 
                   
                   <itemizedlist>
-                      <listitem><para><emphasis role="bold">Palette</emphasis> - BIRT View that shows the standard report items you can add to your report using drag and drop.</para></listitem>
-                      <listitem><para><emphasis role="bold">Outline</emphasis> - BIRT View that shows the structure of your report as a tree view.</para></listitem>
-                      <listitem><para><emphasis role="bold">Navigator</emphasis> - Standard Eclipse view that shows your projects, and the reports within your projects.</para></listitem>
-                      <listitem><para><emphasis role="bold">Data Explorer</emphasis> - BIRT View that shows your data sources (connections), data sets (queries) and report parameters. You also use this view to add data set columns to your report layout.</para></listitem>
-                      <listitem><para><emphasis role="bold">Property Editor</emphasis> - BIRT View that displays properties for many report items. It has tabs and groupings that organize properties into categories.</para></listitem>
-                      <listitem><para><emphasis role="bold">Properties View</emphasis> - Standard Eclipse view that shows all properties for a report item as a simple list. This view is optional, and we will not use it in this tutorial.</para></listitem>
-                      <listitem><para><emphasis role="bold">Library Explorer View</emphasis> - BIRT allows the reuse of report objects, such as tables, data sources and styles. Objects created for reuse are stored in a library file. The Library Explorer will display Libraries that exist in the resource folder. Developed libraries can be added to the resource folder by selecting File→Publish Library to Resource Folder or by right clicking in Library Explorer and selecting add. The resource folder location can be configured. </para></listitem>
+                      <listitem><para><emphasis role="bold">Palette</emphasis> - shows the standard report items you can add to your report using drag and drop.</para></listitem>
+                      <listitem><para><emphasis role="bold">Outline</emphasis> - shows the structure of your report as a tree view.</para></listitem>
+                      <listitem><para><emphasis role="bold">Navigator</emphasis> - shows your projects and reports within the projects.</para></listitem>
+                      <listitem><para><emphasis role="bold">Data Explorer</emphasis> - shows your data sources, data sets and report parameters. You also can use this view to add data set columns to your report layout.</para></listitem>
+                      <listitem><para><emphasis role="bold">Property Editor</emphasis> - displays properties for many report items.</para></listitem>
+                      <listitem><para><emphasis role="bold">Properties View</emphasis> - shows all properties for a report item as a simple list.</para></listitem>
+                      <listitem><para><emphasis role="bold">Library Explorer View</emphasis> - allows the reuse of report objects, such as tables, data sources and styles. Objects created for reuse are stored in a library file. The Library Explorer will display Libraries that exist in the Resource folder. Developed libraries can be added to the resource folder by selecting <emphasis>File→Publish Library in Resource Folder</emphasis>. The resource folder location can be configured. </para></listitem>
                       
                       
                       
@@ -60,23 +60,12 @@
             <listitem><para><emphasis role="bold">Report Preview</emphasis> - Report Preview is used to test your newly created report with some real data.</para></listitem>
            <listitem><para><emphasis role="bold">Chart Builder</emphasis> - using the Chart Builder you can add any charts to the design of your report. Just select a chart type, then data and, finally, format the chart.</para></listitem>
           <listitem><para><emphasis role="bold">Expression Builder </emphasis> - expressions are simple scripts that return a value. They are used to assign data values to report elements, build image locations, hyperlinks, parameter default values etc.</para></listitem>
-        <listitem><para><emphasis role="bold">Cheat Sheets</emphasis> - Cheat  sheets are small pices of useful dosumentation that lead you through a report creation process. Just select when you need and then follow the instructions.</para></listitem>
+        <listitem><para><emphasis role="bold">Cheat Sheets</emphasis> - Cheat  sheets are small pices of useful documentation that lead you through a report creation process. Just select what you need and then follow the instructions.</para></listitem>
         <listitem><para><emphasis role="bold">Outline</emphasis> - this view provides a compact overview of the entire report structure.</para></listitem>
             </itemizedlist>
        
       
       
       
-        <para>There are a number of ways we can improve the report's appearance: </para>
-        
-          <itemizedlist>
-          <listitem><para>Add a title to the top of the report;</para></listitem>
-            <listitem><para> Add a title to the top of the report. </para></listitem>  
-            <listitem><para> Add some color to enhance the column headings. </para></listitem>
-            <listitem><para> Shrink the size of the city and state columns. </para></listitem>  
-            <listitem><para>Add some color to make the state and city group headers stand out. </para></listitem>
-            <listitem><para>Format the phone numbers. </para></listitem>
-            <listitem><para>Sort customers by name.</para></listitem>
-           </itemizedlist>
-    </section>
+          </section>
 </chapter>
