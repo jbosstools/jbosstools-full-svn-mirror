@@ -281,7 +281,7 @@ public class VpeStyleUtil {
 	sourceElement.setAttribute(ATTRIBUTE_STYLE, style);
     }
 
-    // selets parameter from atribute style
+    // selects parameter from attribute style
     public static String deleteFromString(String data, String begin, String end) {
 	int startPosition = data.indexOf(begin);
 
@@ -317,7 +317,7 @@ public class VpeStyleUtil {
 		value = getFilePath(input, value);
 	}
 
-	value = FILE_PROTOCOL + SLASH + SLASH + value;
+	value = FILE_PROTOCOL + SLASH + SLASH + value.replace('\\', '/');
 	URL url = null;
 	try {
 	    url = new URL(value);
@@ -371,7 +371,7 @@ public class VpeStyleUtil {
 				filePath = getFilePath(input, filePath);
 			}
 
-			filePath = FILE_PROTOCOL + SLASH + SLASH + filePath;
+			filePath = FILE_PROTOCOL + SLASH + SLASH + filePath.replace('\\', '/');
 			URL url = null;
 			try {
 				url = new URL(filePath);
@@ -491,7 +491,7 @@ public class VpeStyleUtil {
 			if (!new File(filePath).isAbsolute()) {
 				filePath = getFilePath(href_val, filePath);
 			} else {
-				filePath = FILE_PROTOCOL + SLASH + SLASH + filePath;
+				filePath = FILE_PROTOCOL + SLASH + SLASH + filePath.replace('\\', '/');
 			}
 
 			URL url = null;
@@ -530,9 +530,9 @@ public class VpeStyleUtil {
 		if (tagPath.isEmpty()) {
 			if (showUnresolvedImage) {
 				return FILE_PROTOCOL + SLASH + SLASH
-						+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH);
+						+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH).replace('\\', '/');
 			} else {
-				return path;
+				return path.replace('\\', '/');
 			}
 		}
 		
@@ -545,16 +545,16 @@ public class VpeStyleUtil {
 						.equalsIgnoreCase(device))) {
 			if (showUnresolvedImage) {
 				return FILE_PROTOCOL + SLASH + SLASH
-						+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH);
+						+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH).replace('\\', '/');
 			} else {
-				return path;
+				return path.replace('\\', '/');
 			}
 		}
 
 		File locFile = tagPath.toFile();
 		if (locFile.exists()) {
 			return FILE_PROTOCOL + SLASH + SLASH + SLASH
-					+ locFile.getAbsolutePath();
+					+ locFile.getAbsolutePath().replace('\\', '/');
 		}
 
 		IEditorInput input = pageContext.getEditPart().getEditorInput();
@@ -603,16 +603,16 @@ public class VpeStyleUtil {
 					File f = new File(location + File.separator + pathCopy);
 					if (f.exists()) {
 						return FILE_PROTOCOL + SLASH + SLASH + SLASH
-								+ f.getPath();
+								+ f.getPath().replace('\\', '/');
 					}
 				}
 			}
 		}
 		if (showUnresolvedImage) {
 			return FILE_PROTOCOL + SLASH + SLASH
-					+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH);
+					+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH).replace('\\', '/');
 		} else {
-			return path;
+			return path.replace('\\', '/');
 		}
 	}
 

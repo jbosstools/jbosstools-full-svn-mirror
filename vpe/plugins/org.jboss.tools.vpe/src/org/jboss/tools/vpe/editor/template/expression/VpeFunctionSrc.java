@@ -179,7 +179,7 @@ public class VpeFunctionSrc extends VpeFunction {
     }
 
     protected String getUnresolved() {
-	return IMG_PREFIX + getAbsoluteResourcePath(IMG_UNRESOLVED);
+	return IMG_PREFIX + getAbsoluteResourcePath(IMG_UNRESOLVED).replace('\\', '/');
     }
 
     protected String getPrefix() {
