@@ -40,6 +40,7 @@ import org.jboss.tools.smooks.ui.gef.model.TreeItemRelationModel;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.jboss.tools.smooks.utils.UIUtils;
 import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
+import org.jboss.tools.smooks.xml.model.DocumentObject;
 import org.jboss.tools.smooks.xml.model.TagObject;
 import org.jboss.tools.smooks.xml.model.TagPropertyObject;
 
@@ -203,6 +204,9 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType, Object sourceObject,
 			Object targetObject) {
+		if(sourceObject instanceof DocumentObject){
+			sourceObject = ((DocumentObject)sourceObject).getRootTag();
+		}
 		if(targetObject instanceof List){
 			targetObject = (JavaBeanModel) ((List)targetObject).get(0);
 		}
