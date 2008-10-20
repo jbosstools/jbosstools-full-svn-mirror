@@ -227,6 +227,7 @@ public class JavaBeanModel implements IValidatable {
 			Class beanType = beanClass.getComponentType();
 			setMany(true);
 			componentClass = beanType;
+			setGenericType(true);
 		}
 		return many;
 	}
