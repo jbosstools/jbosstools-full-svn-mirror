@@ -17,11 +17,16 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.smooks.model,
  org.jboss.tools.smooks.model.edit,
  org.eclipse.ui.ide,
- org.jboss.tools.smooks.graphicalInfo
+ org.jboss.tools.smooks.xml;bundle-version="1.0.0"
 Eclipse-LazyStart: true
-Export-Package: org.jboss.tools.smooks.javabean,
+Export-Package: org.jboss.tools.smooks.java2xml.analyzer,
+ org.jboss.tools.smooks.java2xml.utils,
+ org.jboss.tools.smooks.javabean,
  org.jboss.tools.smooks.javabean.analyzer,
  org.jboss.tools.smooks.javabean.commandprocessor,
  org.jboss.tools.smooks.javabean.model,
- org.jboss.tools.smooks.javabean.ui
-Bundle-ClassPath: .
+ org.jboss.tools.smooks.javabean.ui,
+ org.jboss.tools.smooks.javabean.uitils,
+ org.jboss.tools.smooks.xml2java.analyzer
+Bundle-ClassPath: .,
+ libs/dom4j-1.6.1.jar

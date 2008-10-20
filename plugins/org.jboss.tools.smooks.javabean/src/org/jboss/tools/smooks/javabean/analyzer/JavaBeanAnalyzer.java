@@ -350,6 +350,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			AbstractStructuredDataModel sourceModel) {
 		JavaBeanModel source = (JavaBeanModel) sourceModel
 				.getReferenceEntityModel();
+		if(source.getBeanClass().isArray()){
+			return source.getName();
+		}
 		if (Collection.class.isAssignableFrom(source.getBeanClass())) {
 			return source.getName();
 		}
@@ -538,7 +541,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					}
 					String beanClass = SmooksModelUtils.getParmaText(
 							"beanClass", rc);
-					if (targetName.equals(beanClass)) {
+					if (targetName!=null && targetName.trim().equals(beanClass)) {
 						setSelectorIsUsed(sourceName);
 						// create the first connection
 						mappingModelList.add(new MappingModel(source, target));
