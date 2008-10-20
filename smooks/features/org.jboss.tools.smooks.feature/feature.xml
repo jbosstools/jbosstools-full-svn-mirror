@@ -219,21 +219,7 @@ litigation.
    </license>
 
    <plugin
-         id="org.jboss.tools.smooks.javabean"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.jboss.tools.smooks.model"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.jboss.tools.smooks.model.edit"
+         id="org.jboss.tools.smooks.core"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -241,13 +227,6 @@ litigation.
 
    <plugin
          id="org.jboss.tools.smooks.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.jboss.tools.smooks.xml"
          download-size="0"
          install-size="0"
          version="0.0.0"
