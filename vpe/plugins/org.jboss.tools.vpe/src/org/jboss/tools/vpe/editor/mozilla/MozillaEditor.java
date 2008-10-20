@@ -729,6 +729,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		addSelectionListener();
 		xulRunnerEditor.addResizerListener();
 		controller.reinit();
+		setDomDocument(xulRunnerEditor.getDOMDocument());
 
 	}
 	
