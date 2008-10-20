@@ -36,4 +36,35 @@
            typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
      </targetModelAnalyzer>
   </extension>
+  
+  <extension
+         point="org.jboss.tools.smooks.ui.analyzer">
+      <mappingAnalyzer
+            class="org.jboss.tools.smooks.java2xml.analyzer.Java2XMLAnalyzer"
+            name="Java Bean"
+            typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+         <targetSourceType
+               id="org.jboss.tools.smooks.xml.viewerInitor.xml"
+               name="XML">
+         </targetSourceType>
+      </mappingAnalyzer>
+   </extension>
+   
+   <extension
+         point="org.jboss.tools.smooks.ui.analyzer">
+      <mappingAnalyzer
+            class="org.jboss.tools.smooks.xml2java.analyzer.XML2JavaAnalyzer"
+            name="XML2Java"
+            typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
+         <targetSourceType
+               id="org.jboss.tools.smooks.ui.viewerInitor.javabean"
+               name="JavaBean">
+         </targetSourceType>
+      </mappingAnalyzer>
+      <sourceModelAnalyzer
+            class="org.jboss.tools.smooks.xml2java.analyzer.XMLSourceModelAnalyzer"
+            name="XML"
+            typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
+      </sourceModelAnalyzer>
+   </extension>
 </plugin>

@@ -3,6 +3,12 @@
 <plugin>
    <extension-point id="viewerInitor" name="viewerInitor" schema="schema/viewerInitor.exsd"/>
    <extension-point id="analyzer" name="analyzer" schema="schema/analyzer.exsd"/>
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.jboss.org/tools/smooks/graphicalInformation" 
+       class = "org.jboss.tools.smooks.graphical.GraphicalPackage"
+       genModel = "model/graphical.genmodel" /> 
+  </extension>
 
    <extension
          point="org.eclipse.ui.editors">

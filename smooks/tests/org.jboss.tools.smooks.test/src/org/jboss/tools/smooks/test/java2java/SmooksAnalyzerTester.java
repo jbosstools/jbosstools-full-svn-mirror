@@ -55,7 +55,7 @@ public class SmooksAnalyzerTester extends TestCase {
 		return new BasicCommandStack();
 	}
 	public SmooksAnalyzerTester() throws IOException {
-		super();
+//		super();
 		adapterFactory = new ComposedAdapterFactory(
 				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactory
@@ -71,7 +71,7 @@ public class SmooksAnalyzerTester extends TestCase {
 				GraphicalPackage.eINSTANCE);
 		Registry.INSTANCE.put(SmooksPackage.eNS_URI, SmooksPackage.eINSTANCE);
 
-		resource = editingDomain.getResourceSet().createResource(null);
+		resource = new SmooksResourceFactoryImpl().createResource(null);
 		Resource gr = new XMLResourceFactoryImpl().createResource(null);
 		InputStream stream1 = classLoader
 				.getResourceAsStream("org/jboss/tools/smooks/test/java2java/Test.xml");
