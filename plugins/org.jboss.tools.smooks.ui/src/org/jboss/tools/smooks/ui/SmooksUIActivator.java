@@ -4,7 +4,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.jboss.tools.smooks.javabean.ui.JavaImageConstants;
 import org.jboss.tools.smooks.utils.SmooksGraphConstants;
+import org.jboss.tools.smooks.xml.XMLImageConstants;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -14,6 +16,14 @@ public class SmooksUIActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.jboss.tools.smooks.ui";
+	
+
+	public static final String TYPE_ID_XSD = "org.jboss.tools.smooks.xml.viewerInitor.xsd";
+
+	public static final String TYPE_ID_XML = "org.jboss.tools.smooks.xml.viewerInitor.xml";
+
+	public static final String DATA_TYPE_ID_JAVABEAN = "org.jboss.tools.smooks.ui.viewerInitor.javabean";
+
 
 	// The shared instance
 	private static SmooksUIActivator plugin;
@@ -48,6 +58,16 @@ public class SmooksUIActivator extends AbstractUIPlugin {
 		reg.put(SmooksGraphConstants.IMAGE_EMPTY, getImageDescriptor(SmooksGraphConstants.IMAGE_PATH_BLANK));
 		reg.put(SmooksGraphConstants.IMAGE_ERROR, getImageDescriptor(SmooksGraphConstants.IMAGE_PATH_ERROR));
 		reg.put(SmooksGraphConstants.IMAGE_WARNING, getImageDescriptor(SmooksGraphConstants.IMAGE_PATH_WARNING));
+		reg.put(XMLImageConstants.IMAGE_XML_ATTRIBUTE,
+				imageDescriptorFromPlugin(PLUGIN_ID,
+						"icons/full/obj16/attribute_obj.gif"));
+		reg.put(XMLImageConstants.IMAGE_XML_ELEMENT,
+				imageDescriptorFromPlugin(PLUGIN_ID,
+						"icons/full/obj16/element_obj.gif"));
+		reg.put(JavaImageConstants.IMAGE_JAVA_ATTRIBUTE,
+				imageDescriptorFromPlugin(PLUGIN_ID, "icons/full/obj16/att_obj.gif"));
+		reg.put(JavaImageConstants.IMAGE_JAVA_OBJECT,
+				imageDescriptorFromPlugin(PLUGIN_ID, "icons/full/obj16/class_obj.gif"));
 	}
 
 	/**
