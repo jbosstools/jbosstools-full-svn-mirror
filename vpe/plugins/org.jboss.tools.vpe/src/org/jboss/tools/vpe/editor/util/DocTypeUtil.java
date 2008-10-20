@@ -339,7 +339,7 @@ public class DocTypeUtil {
 							File file = new File(attr.getValue());
 							if (!file.exists()) {
 								// corrected path
-								attr.setValue(initFile.getParent()
+								attr.setValue(Constants.FILE_PREFIX + initFile.getParent()
 										+ File.separator + attr.getValue());
 
 							}
