@@ -22,6 +22,7 @@ import org.jboss.tools.smooks.ui.modelparser.IStructuredModelParser;
  * @author Dart Peng
  * 
  * @CreateTime Jul 22, 2008
+ * @deprecated
  */
 public class CreateStructuredDataModelCommand extends Command {
 	private AbstractStructuredDataModel parent;
