@@ -40,7 +40,11 @@ public class TreeItemRelationModel extends AbstractStructuredDataModel
 		int y = Integer.MAX_VALUE;
 		if (item != null) {
 			y = item.getBounds().y;
+			// for windows
+			TreeItem parentItem = item.getParentItem();
+			if(parentItem == null) return false;
 		}
+		
 		return (y == 0);
 	}
 
