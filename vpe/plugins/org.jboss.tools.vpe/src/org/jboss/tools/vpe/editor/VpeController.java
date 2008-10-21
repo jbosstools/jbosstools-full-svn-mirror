@@ -287,14 +287,19 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		sourceModel.addModelLifecycleListener(this);
 
-		XModel xm = null;
-		IProject project = ((IFileEditorInput)pageContext.getEditPart().getEditorInput()).getFile().getProject();
-		IModelNature mn = EclipseResourceUtil.getModelNature(project);
-		if(mn!=null) {
-			xm = mn.getModel();
-		}
-		if(xm != null) {
-			WebProject.getInstance(xm).getTaglibMapping().revalidate(WebAppHelper.getWebApp(xm));
+		IEditorInput editorInput = pageContext.getEditPart().getEditorInput();
+		if(editorInput instanceof IFileEditorInput) {
+			XModel xm = null;
+			IProject project = ((IFileEditorInput) editorInput).getFile()
+					.getProject();
+			IModelNature mn = EclipseResourceUtil.getModelNature(project);
+			if (mn != null) {
+				xm = mn.getModel();
+			}
+			if (xm != null) {
+				WebProject.getInstance(xm).getTaglibMapping().revalidate(
+						WebAppHelper.getWebApp(xm));
+			}
 		}
 
 		IDOMDocument sourceDocument = sourceModel.getDocument();
