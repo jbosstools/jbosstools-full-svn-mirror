@@ -34,14 +34,17 @@ public class NewResourceConfigWizardPage extends WizardPage implements ISelectio
 
 	private NewResourceConfigKey selectedKey = null;
 	
+	
 	public NewResourceConfigWizardPage(String pageName, String title,
 			ImageDescriptor titleImage) {
-		super(pageName, title, titleImage);
-		// TODO Auto-generated constructor stub
+		super(pageName, "Select New ResourceConfig Type", titleImage);
+		setDescription("Select the ResourceConfig type to add into the config file");
 	}
 
 	public NewResourceConfigWizardPage(String pageName) {
 		super(pageName);
+		setTitle("Select New ResourceConfig Type");
+		setDescription("Select the ResourceConfig type to add into the config file");
 	}
 
 	/* (non-Javadoc)

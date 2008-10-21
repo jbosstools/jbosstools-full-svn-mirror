@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -31,6 +32,7 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -103,11 +105,13 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 	public TypeIDSelectionWizardPage(String pageName, boolean showDataSelectPage) {
 		super(pageName);
 		this.showDataSelectPage = showDataSelectPage;
+		setTitle("Select Source/Target Data Type");
+		setDescription("Select the data type for source/target data");
 	}
 
 	@Override
 	public boolean canFlipToNextPage() {
-		if (this.getSourceID() != null || getTargetID() != null) {
+		if (this.getSourceID() != null && getTargetID() != null) {
 			return true;
 		}
 		return false;
@@ -207,12 +211,26 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 
 		Label tl = new Label(mainComposite, SWT.NONE);
 		tl.setText("Target Data Type ID List : ");
-
-		source = createTableViewer(mainComposite);
+		
+		Composite sourceBorder = new Composite(mainComposite,SWT.NONE);
+		sourceBorder.setBackground(ColorConstants.black);
+		FillLayout sbLayout = new FillLayout();
+		sbLayout.marginHeight = 1;
+		sbLayout.marginWidth = 1;
+		sourceBorder.setLayout(sbLayout);
+		source = createTableViewer(sourceBorder);
 		GridData gd = new GridData(GridData.FILL_BOTH);
-		source.getTable().setLayoutData(gd);
-		target = createTableViewer(mainComposite);
-		target.getTable().setLayoutData(gd);
+		sourceBorder.setLayoutData(gd);
+		
+		
+		Composite targetBorder = new Composite(mainComposite,SWT.NONE);
+		targetBorder.setBackground(ColorConstants.black);
+		FillLayout tbLayout = new FillLayout();
+		tbLayout.marginHeight = 1;
+		tbLayout.marginWidth = 1;
+		targetBorder.setLayout(tbLayout);
+		target = createTableViewer(targetBorder);
+		targetBorder.setLayoutData(gd);
 
 		source.setInput(sourceList);
 		target.setInput(sourceList);
@@ -299,17 +317,19 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 
 	protected void openSourceWizard() {
 		sourceTreeViewerInputContents = getReturnObjectFromWizard(getSourceID());
-		resetLinkText();
+//		resetLinkText();
 	}
-
+/**
+ * @deprecated
+ */
 	private void resetLinkText() {
-		if (sourceTreeViewerInputContents != null) {
-			sourceDataLink.setText("Source Model Select");
-		}
-
-		if (targetTreeViewerInputContents != null) {
-			targetDataLink.setText("Target Model Select");
-		}
+		// if (sourceTreeViewerInputContents != null) {
+		// sourceDataLink.setText("Source Model Select");
+		// }
+		//
+		// if (targetTreeViewerInputContents != null) {
+		// targetDataLink.setText("Target Model Select");
+		// }
 	}
 
 	protected String getDataTypeID(CheckboxTableViewer viewer) {
@@ -407,7 +427,7 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 
 		});
 		TableColumn nameColumn = new TableColumn(viewer.getTable(), SWT.NONE);
-		nameColumn.setWidth(100);
+		nameColumn.setWidth(250);
 		nameColumn.setText("Name");
 		viewer.setContentProvider(new TypeIDContentProvider());
 		viewer.setLabelProvider(new TypeIDLabelProvider());

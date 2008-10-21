@@ -63,7 +63,7 @@
       <wizard
             category="org.jboss.tools.smooks.ui.wizards"
             class="org.jboss.tools.smooks.ui.wizards.SmooksConfigFileNewWizard"
-            icon="icons/sample.gif"
+            icon="icons/full/obj16/esb16.png"
             id="org.jboss.tools.smooks.ui.wizards.SmooksConfigFileNewWizard"
             name="Smooks Configuration File">
       </wizard>

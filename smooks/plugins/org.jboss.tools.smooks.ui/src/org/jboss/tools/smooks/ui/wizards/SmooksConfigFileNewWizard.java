@@ -24,6 +24,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
+import org.jboss.tools.common.model.ui.ModelUIImages;
 import org.jboss.tools.smooks.graphical.util.GraphicalInformationSaver;
 import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
 import org.jboss.tools.smooks.ui.editors.SmooksFileEditorInput;
@@ -58,6 +59,8 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 	public SmooksConfigFileNewWizard() {
 		super();
 		setNeedsProgressMonitor(true);
+		super.setWindowTitle("New Smooks Configuration File");
+		setDefaultPageImageDescriptor(ModelUIImages.getImageDescriptor(ModelUIImages.WIZARD_NEW_PROJECT));
 	}
 
 	/**
@@ -213,12 +216,12 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 
 	public void addSourceWizardPage(IWizardPage page) {
 		sourceCreationPages.add(page);
-		page.setTitle("Source Data Selection Page");
+		page.setTitle("Source Data Selection");
 	}
 
 	public void addTargetWizardPage(IWizardPage page) {
 		targetCreationPages.add(page);
-		page.setTitle("Target Data Selection Page");
+		page.setTitle("Target Data Selection");
 	}
 
 	public void clearSourceWizardPages() {
