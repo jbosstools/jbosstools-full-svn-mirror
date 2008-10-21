@@ -13,6 +13,9 @@ public class SmooksConfigFileNewWizardPage extends WizardNewFileCreationPage {
 			IStructuredSelection selection) {
 		super(pageName, selection);
 		setFileExtension("smooks");
+		super.setTitle("Smooks Configuration");
+		super.setDescription("Create a new Smooks configuration file");
+		this.setFileName("newConfig.smooks");
 	}
 
 	@Override
