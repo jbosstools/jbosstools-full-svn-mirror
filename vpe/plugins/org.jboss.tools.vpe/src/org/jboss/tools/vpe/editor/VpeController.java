@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -87,10 +88,12 @@ import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.jboss.tools.common.el.core.ELReferenceList;
+import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
+import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
 import org.jboss.tools.common.model.ui.editor.IModelObjectEditorInput;
 import org.jboss.tools.common.model.ui.editors.dnd.DropCommandFactory;
@@ -111,6 +114,8 @@ import org.jboss.tools.common.resref.core.ResourceReferenceListListener;
 import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
 import org.jboss.tools.jst.jsp.editor.IVisualController;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.jst.web.model.helpers.WebAppHelper;
+import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.jst.web.tld.TLDToPaletteHelper;
 import org.jboss.tools.jst.web.tld.TLDUtil;
 import org.jboss.tools.jst.web.tld.URIConstants;
@@ -281,6 +286,17 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			return;
 		}
 		sourceModel.addModelLifecycleListener(this);
+
+		XModel xm = null;
+		IProject project = ((IFileEditorInput)pageContext.getEditPart().getEditorInput()).getFile().getProject();
+		IModelNature mn = EclipseResourceUtil.getModelNature(project);
+		if(mn!=null) {
+			xm = mn.getModel();
+		}
+		if(xm != null) {
+			WebProject.getInstance(xm).getTaglibMapping().revalidate(WebAppHelper.getWebApp(xm));
+		}
+
 		IDOMDocument sourceDocument = sourceModel.getDocument();
 		visualBuilder.refreshExternalLinks();
 		visualBuilder.buildDom(sourceDocument);
