@@ -1,6 +1,5 @@
 package org.jboss.tools.smooks.ui.gef.policy;
 
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalEditPart;
@@ -10,10 +9,8 @@ import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
-import org.jboss.tools.smooks.ui.gef.commands.ChangeConstraintCommand;
 import org.jboss.tools.smooks.ui.gef.commands.CommandMappingFactory;
 import org.jboss.tools.smooks.ui.gef.commands.ICommandMappingFactory;
-import org.jboss.tools.smooks.ui.gef.model.IGraphicalModel;
 
 
 
@@ -55,15 +52,16 @@ public class RootGraphicsXYLayoutEditPolicy extends XYLayoutEditPolicy {
 	@Override
 	protected Command createChangeConstraintCommand(EditPart child,
 			Object constraint) {
-		Rectangle con = (Rectangle) constraint;
-		Object model = child.getModel();
-		ChangeConstraintCommand command = null;
-		if (model instanceof IGraphicalModel) {
-			command = new ChangeConstraintCommand();
-			command.setConstraint(con);
-			command.setGraphicalModel((IGraphicalModel) model);
-		}
-		return command;
+//		Rectangle con = (Rectangle) constraint;
+//		Object model = child.getModel();
+//		ChangeConstraintCommand command = null;
+//		if (model instanceof IGraphicalModel) {
+//			command = new ChangeConstraintCommand();
+//			command.setConstraint(con);
+//			command.setGraphicalModel((IGraphicalModel) model);
+//		}
+//		return command;
+		return null;
 	}
 
 	@Override

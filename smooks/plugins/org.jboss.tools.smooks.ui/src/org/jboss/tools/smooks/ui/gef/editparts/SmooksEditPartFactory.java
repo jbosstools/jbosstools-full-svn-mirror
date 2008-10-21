@@ -3,12 +3,8 @@ package org.jboss.tools.smooks.ui.gef.editparts;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
-import org.jboss.tools.smooks.ui.gef.model.HiddenAreaModel;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
-import org.jboss.tools.smooks.ui.gef.model.RootModel;
 import org.jboss.tools.smooks.ui.gef.model.SourceModel;
-import org.jboss.tools.smooks.ui.gef.model.StructuredDataContentModel;
-import org.jboss.tools.smooks.ui.gef.model.StructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.TargetModel;
 
 /**
@@ -25,8 +21,9 @@ public class SmooksEditPartFactory implements EditPartFactory {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.gef.EditPartFactory#createEditPart(org.eclipse.gef.EditPart,
-	 *      java.lang.Object)
+	 * @see
+	 * org.eclipse.gef.EditPartFactory#createEditPart(org.eclipse.gef.EditPart,
+	 * java.lang.Object)
 	 */
 	public EditPart createEditPart(EditPart context, Object model) {
 		EditPart part = getPartForElement(model);
@@ -43,15 +40,7 @@ public class SmooksEditPartFactory implements EditPartFactory {
 	 */
 	private EditPart getPartForElement(Object modelElement) {
 
-		if (modelElement instanceof RootModel) {
-			return new RootModelEditPart();
-		} else if (modelElement instanceof HiddenAreaModel) {
-			return new HiddenEditPart();
-		} else if (modelElement instanceof StructuredDataModel) {
-			return new StructuredDataEditPart();
-		} else if (modelElement instanceof StructuredDataContentModel) {
-			return new StructuredDataContentEditPart();
-		} else if (modelElement instanceof LineConnectionModel) {
+		if (modelElement instanceof LineConnectionModel) {
 			return new StructuredDataConnectionEditPart();
 		} else if (modelElement instanceof GraphRootModel) {
 			return new RootModelEditPart();
