@@ -46,6 +46,7 @@
       
    </extension>
 
+   <!--
    <extension
         point="org.eclipse.wst.common.project.facet.core.presets">
      <static-preset id="preset.jboss.portlet.v20">
@@ -63,6 +64,7 @@
        <factory class="org.jboss.tools.portlet.core.internal.project.facet.PortletConfigurationPresetFactory10"/>
      </dynamic-preset>
    </extension>
+   -->
    
    <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
     	<supported>
@@ -121,6 +123,7 @@
       
    </extension>
 
+   <!--
    <extension
         point="org.eclipse.wst.common.project.facet.core.presets">
      <static-preset id="preset.jboss.jsfportlet.v20">
@@ -140,7 +143,7 @@
        <factory class="org.jboss.tools.portlet.core.internal.project.facet.JSFPortletConfigurationPresetFactory10"/>
      </dynamic-preset>
    </extension>
-   
+   -->
    <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
     	<supported>
 			<runtime-component any="true"/>
@@ -203,13 +206,14 @@
      </static-preset>
    </extension>
    
+   <!--
    <extension
         point="org.eclipse.wst.common.project.facet.core.presets">
      <dynamic-preset id="preset.jboss.seamportlet.v10">
        <factory class="org.jboss.tools.portlet.core.internal.project.facet.SeamPortletConfigurationPresetFactory10"/>
      </dynamic-preset>
    </extension>
-   
+   -->
    <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
     	<supported>
 			<runtime-component any="true"/>
