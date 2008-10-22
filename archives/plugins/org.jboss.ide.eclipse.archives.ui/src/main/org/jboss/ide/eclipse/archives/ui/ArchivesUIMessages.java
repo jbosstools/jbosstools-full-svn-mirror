@@ -14,6 +14,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class ArchivesUIMessages extends NLS {
 	public static String BuildError;
+	public static String BuildError2;
 	public static String DoNotShowThisAgain;
 	public static String BuildArchivesNode;
 	public static String SelectAProject;
@@ -126,9 +127,10 @@ public class ArchivesUIMessages extends NLS {
 	public static String PreferencePageTitle;
 	public static String ProjectSpecificSettings;
 	public static String CorePreferences;
+	public static String ProjectExplorerPreferences;
 	public static String EnableIncrementalBuilder;
 	public static String ShowBuildErrorDialog;
-
+	public static String EnableNodeAlways;
 	public static String ProjectPackagesView;
 	public static String ShowFullOutputPath;
 	public static String ShowFullRootDirectory;
