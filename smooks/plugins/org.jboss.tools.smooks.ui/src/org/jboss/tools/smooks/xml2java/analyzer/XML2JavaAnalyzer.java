@@ -218,6 +218,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		JavaBeanModel sourceTarget = (JavaBeanModel) targetObject;
 
 		ResourceConfigType rootResourceConfig = findFirstMappingResourceConfig(listType);
+		// if can't find the root , return null
+		if(rootResourceConfig ==null) return null;
 		String xmlName = rootResourceConfig.getSelector();
 		AbstractXMLObject source = findXMLObjectByName(xmlName, sourceRoot);
 		if (source == null)

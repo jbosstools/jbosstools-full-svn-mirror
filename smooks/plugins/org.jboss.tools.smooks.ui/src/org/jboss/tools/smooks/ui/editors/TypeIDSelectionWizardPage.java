@@ -116,6 +116,16 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		}
 		return false;
 	}
+	
+	
+
+	@Override
+	public boolean isPageComplete() {
+		if (this.getSourceID() != null && getTargetID() != null) {
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public IWizardPage getNextPage() {
@@ -280,7 +290,6 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 
 	protected void openTargetWizard() {
 		targetTreeViewerInputContents = getReturnObjectFromWizard(getTargetID());
-		resetLinkText();
 	}
 
 	protected IWizard getWizardViaDataID(String dataID) {

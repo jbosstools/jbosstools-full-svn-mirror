@@ -154,8 +154,13 @@
       </mappingAnalyzer>
       <sourceModelAnalyzer
             class="org.jboss.tools.smooks.xml2java.analyzer.XMLSourceModelAnalyzer"
-            name="XML"
+            name="XML Source"
             typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
       </sourceModelAnalyzer>
+      <targetModelAnalyzer
+            class="org.jboss.tools.smooks.xml2java.analyzer.XMLTargetModelAnalyzer"
+            name="XML Target"
+            typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
+      </targetModelAnalyzer>
    </extension>
 </plugin>

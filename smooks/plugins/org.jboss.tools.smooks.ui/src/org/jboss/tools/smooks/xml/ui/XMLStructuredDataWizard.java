@@ -35,7 +35,7 @@ public class XMLStructuredDataWizard extends AbstractStructuredDdataWizard {
 
 	public boolean performFinish() {
 		filePath = page.getFilePath();
-		properties.put(XML_FILE, filePath);
+//		properties.put(XML_FILE, filePath);
 		return super.performFinish();
 	}
 

@@ -62,6 +62,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	public String getFilePath(){
 		return fileText.getText();
 	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -913,7 +913,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	protected void initTransformViewerModel(IEditorSite site, IEditorInput input)
 			throws Throwable {
 		graphicalInformationSaver = new GraphicalInformationSaver(input);
-
+		
 		GraphInformations graph = null;
 		try {
 			graph = graphicalInformationSaver.doLoad();

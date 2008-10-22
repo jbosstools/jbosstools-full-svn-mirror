@@ -16,11 +16,13 @@ public class SmooksConfigFileNewWizardPage extends WizardNewFileCreationPage {
 		super.setTitle("Smooks Configuration");
 		super.setDescription("Create a new Smooks configuration file");
 		this.setFileName("newConfig.smooks");
+		this.setAllowExistingResources(false);
 	}
 
 	@Override
 	protected boolean validatePage() {
 		boolean flag = super.validatePage();
+		if(!flag) return flag;
 		String name = this.getFileName();
 		if (name.indexOf(".") == -1)
 			return flag;

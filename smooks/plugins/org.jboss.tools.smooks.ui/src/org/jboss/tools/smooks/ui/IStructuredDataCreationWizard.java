@@ -31,4 +31,6 @@ public interface IStructuredDataCreationWizard extends IWizard {
 	
 	public Properties getProperties();
 	
+	public String getStructuredDataSourcePath();
+	
 }
