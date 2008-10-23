@@ -24,4 +24,5 @@ public class Constants {
 	public static final String PIXEL = "px"; //$NON-NLS-1$
 	public static final String PERCENT = "%"; //$NON-NLS-1$
 	public static final String COMMA = ","; //$NON-NLS-1$
+	public static final String FILE_PREFIX = "file://"; //$NON-NLS-1$
 }
