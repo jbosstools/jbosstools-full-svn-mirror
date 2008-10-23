@@ -193,13 +193,17 @@ public class TestUtil {
 	/**
 	 * Wait for idle.
 	 */
-	public static void waitForIdle() {
+	public static void waitForIdle(long maxIdle) {
 		long start = System.currentTimeMillis();
 		while (!Job.getJobManager().isIdle()) {
 			delay(500);
-			if ( (System.currentTimeMillis()-start) > MAX_IDLE ) 
+			if ( (System.currentTimeMillis()-start) > maxIdle ) 
 				throw new RuntimeException("A long running task detected"); //$NON-NLS-1$
 		}
+	}
+	
+	public static void waitForIdle() {
+		waitForIdle(MAX_IDLE);
 	}
 
 	/**

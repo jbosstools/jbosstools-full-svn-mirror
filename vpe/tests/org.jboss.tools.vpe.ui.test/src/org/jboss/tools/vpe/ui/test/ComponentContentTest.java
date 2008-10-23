@@ -133,7 +133,11 @@ public abstract class ComponentContentTest extends VpeTest {
 		assertNotNull(xmlModelElement);
 
 		// compare DOMs
-		TestDomUtil.compareNodes(vpeElement, xmlModelElement);
+		try {
+			TestDomUtil.compareNodes(vpeElement, xmlModelElement);
+		} catch (ComparisonException e) {
+			fail(e.getMessage());
+		}
 
 	}
 
