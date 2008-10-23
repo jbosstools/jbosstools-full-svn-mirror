@@ -329,7 +329,7 @@
 
    <extension point="org.eclipse.ui.views"> 
    	  <view
-         id="org.eclipse.wst.server.ui.ServersViewProvisional"
+         id="org.jboss.tools.wst.server.ui.ServersViewProvisional"
          name="JBoss Servers View 2 (beta)"
          category="org.eclipse.wst.server.ui"
          class="org.eclipse.wst.server.ui.internal.view.servers.provisional.ServersView"
@@ -340,7 +340,7 @@
       <decorator
             class="org.eclipse.wst.server.ui.internal.view.servers.provisional.ServerDecorator"
             icon="icons/obj16/server.gif"
-            id="org.eclipse.wst.server.ui.navigatorDecorator"
+            id="org.jboss.tools.wst.server.ui.navigatorDecorator"
             label="Server State Decorator"
             lightweight="true"
             location="BOTTOM_RIGHT">
@@ -363,7 +363,7 @@
 	         activeByDefault="true"
 	         contentProvider="org.eclipse.wst.server.ui.internal.view.servers.provisional.ServerContentProvider"
 	         icon="icons/cview16/servers_view.gif"
-	         id="org.eclipse.wst.server.ui.ServersView.content.root"
+	         id="org.jboss.tools.wst.server.ui.ServersView.content.root"
 	         labelProvider="org.eclipse.wst.server.ui.internal.view.servers.provisional.ServerLabelProvider"
 	         name="Servers View Default Content"
 	         priority="highest">
@@ -383,19 +383,35 @@
 	         </or></possibleChildren>
 	      <actionProvider
 	            class="org.eclipse.wst.server.ui.internal.view.servers.provisional.ServerActionProvider"
-	            id="org.eclipse.wst.server.ui.internal.view.servers.provisional.ServerActionProvider"
+	            id="org.jboss.tools.wst.server.ui.internal.view.servers.provisional.ServerActionProvider"
 	            priority="highest">
+          <enablement>
+             <or>
+                <instanceof
+                      value="org.eclipse.wst.server.core.IServer">
+                </instanceof>
+                <instanceof
+                      value="org.eclipse.wst.server.ui.internal.view.servers.ModuleServer">
+                </instanceof>
+               <adapt
+                     type="java.util.Collection">
+                  <count
+                        value="0">
+                  </count>
+               </adapt>
+             </or>
+          </enablement>
 	      </actionProvider>
 	   </navigatorContent>
 	</extension>
 	<extension
 	      point="org.eclipse.ui.navigator.viewer">
 	   <viewerContentBinding
-	         viewerId="org.eclipse.wst.server.ui.ServersViewProvisional">
+	         viewerId="org.jboss.tools.wst.server.ui.ServersViewProvisional">
 	      <includes>
 	         <contentExtension
 	               isRoot="true"
-	               pattern="org.eclipse.wst.server.ui.ServersView.content.root">
+	               pattern="org.jboss.tools.wst.server.ui.ServersView.content.root">
 	         </contentExtension>
 	      </includes>
 	   </viewerContentBinding>
@@ -479,7 +495,7 @@
 	<extension
 	      point="org.eclipse.ui.navigator.viewer">
 	   <viewerContentBinding
-	         viewerId="org.eclipse.wst.server.ui.ServersViewProvisional">
+	         viewerId="org.jboss.tools.wst.server.ui.ServersViewProvisional">
 	      <includes>
 	         <contentExtension
 	               isRoot="false"
