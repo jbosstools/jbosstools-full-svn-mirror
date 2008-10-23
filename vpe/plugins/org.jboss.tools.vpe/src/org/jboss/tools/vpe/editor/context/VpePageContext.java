@@ -219,6 +219,9 @@ public class VpePageContext implements IVisualContext {
 	}
 
 	public List<TaglibData> getIncludeTaglibs() {
+		if (getEditPart() == null) {
+			return new ArrayList<TaglibData>();
+		}
 		IEditorInput input = getEditPart().getEditorInput();
 		IFile file = null;
 		if (input instanceof IFileEditorInput) {
