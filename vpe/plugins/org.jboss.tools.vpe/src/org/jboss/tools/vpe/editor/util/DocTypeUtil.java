@@ -339,7 +339,7 @@ public class DocTypeUtil {
 							Attr attr = element.getAttributeNode(attributeName);
 							
 							try {
-								URI uri = new URI(attr.getValue());
+								URI uri = new URI(attr.getValue().replace('\\', '/'));
 								if (!uri.isAbsolute()) {
 									// corrected path
 									attr.setValue(Constants.FILE_PREFIX + initFile.getParent()
