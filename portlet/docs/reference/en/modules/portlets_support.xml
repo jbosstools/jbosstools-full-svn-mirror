@@ -32,8 +32,8 @@
             </mediaobject>
         </figure>
 
-        <para>The wizard fills in The Web Project and Source Folder fields for you. Then you need to specify
-            the Java package and the Class name and click <emphasis>
+        <para>The wizard fills in The Web Project and Source Folder fields for you. Then you need to
+            specify the Java package and the Class name and click <emphasis>
                 <property>Next</property>
             </emphasis>.</para>
 
@@ -205,9 +205,9 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        
+
         <para>The JSF Portlet looks in the Browser as follows.</para>
-        
+
         <figure>
             <title>JSF Portlet in the Browser Window</title>
             <mediaobject>
@@ -217,4 +217,13 @@
             </mediaobject>
         </figure>
     </section>
+
+    <para>With this document you&apos;ve learnt how to get started with <property>JBoss
+            Portal</property> using <property>JBoss Tools</property> suite of Eclipse plugins. The
+        above chapters walked you through the steps on how to organize a web project with portlets
+        which includes a sample staff and deploy it onto the <property>JBoss Portal</property>.</para>
+
+    <para>If you still have questions or suggestions you are always welcome on our <ulink
+            url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
+        >Forum</ulink>. Your feedback will be very much appreciated.</para>
 </chapter>
