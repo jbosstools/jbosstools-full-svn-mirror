@@ -366,12 +366,12 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 	}
 
-	private DesignTimeAnalyzeResult checkOtherNodeConnected(
+	private DesignTimeAnalyzeResult[] checkOtherNodeConnected(
 			SmooksConfigurationFileGenerateContext context) {
 		GraphRootModel root = context.getGraphicalRootModel();
 		List sourceList = root.loadSourceModelList();
 		List targetList = root.loadTargetModelList();
-		StringBuffer buffer = new StringBuffer();
+		List<DesignTimeAnalyzeResult> arList = new ArrayList<DesignTimeAnalyzeResult>();
 		for (Iterator iterator = targetList.iterator(); iterator.hasNext();) {
 			AbstractStructuredDataModel targetm = (AbstractStructuredDataModel) iterator
 					.next();
@@ -390,24 +390,21 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					if (pgm != null && pgm instanceof IConnectableModel) {
 						if (((IConnectableModel) pgm)
 								.getModelTargetConnections().isEmpty()) {
-							buffer
-									.append("The parent of Java node \""
-											+ javaModel.getName()
-											+ "\" : \""
-											+ parent.getName()
-											+ "\" doesn't be connected by any source node!\n");
+							String errorMessage = "The parent of Java node \""
+								+ javaModel.getName()
+								+ "\" : \""
+								+ parent.getName()
+								+ "\" doesn't be connected by any source node";
+							DesignTimeAnalyzeResult dr = new DesignTimeAnalyzeResult();
+							dr.setErrorMessage(errorMessage);
+							
+							arList.add(dr);
 						}
 					}
 				}
 			}
 		}
-		String result = buffer.toString();
-		if ("".equals(result)) {
-			return null;
-		}
-		DesignTimeAnalyzeResult dr = new DesignTimeAnalyzeResult();
-		dr.setErrorMessage(result);
-		return dr;
+		return arList.toArray(new DesignTimeAnalyzeResult[0]);
 	}
 
 	/**
@@ -1044,7 +1041,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		return null;
 	}
 
-	public DesignTimeAnalyzeResult analyzeGraphModel(
+	public DesignTimeAnalyzeResult[] analyzeGraphModel(
 			SmooksConfigurationFileGenerateContext context) {
 		checkRootNodeConnected(context);
 		return checkOtherNodeConnected(context);

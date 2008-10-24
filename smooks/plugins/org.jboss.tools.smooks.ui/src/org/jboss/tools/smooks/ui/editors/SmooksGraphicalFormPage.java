@@ -61,6 +61,8 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
@@ -92,6 +94,7 @@ import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
+import org.eclipse.ui.forms.widgets.ImageHyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.analyzer.AnalyzerFactory;
@@ -141,6 +144,9 @@ import org.jboss.tools.smooks.utils.UIUtils;
 public class SmooksGraphicalFormPage extends FormPage implements
 		ISelectionChangedListener, ISelectionProvider,
 		org.eclipse.emf.common.command.CommandStackListener {
+
+	private List<DesignTimeAnalyzeResult> analyzeResultList = new ArrayList<DesignTimeAnalyzeResult>();
+
 	private static final String REFERENCE_MODEL = "__reference_model";
 	protected SmooksConfigurationFileGenerateContext smooksConfigurationFileGenerateContext;
 	protected IViewerInitor sourceViewerInitor;
@@ -168,9 +174,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	private ISelection selection;
 	protected MappingResourceConfigList mappingResourceConfigList;
 	protected AdapterFactoryEditingDomain editingDomain;
-	private Label notifyLabel;
 	private boolean canSaveFile = true;
-	private Label imageLabel;
+
+	private Composite designTimeAnalyzeResultRegion;
 
 	public ISelection getSelection() {
 		return selection;
@@ -268,37 +274,38 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				Section.TITLE_BAR | Section.DESCRIPTION,
 				"Mapping Graph Edit Panel",
 				"Edit the source and target assosiation");
-		Composite mappingMainComposite = toolkit.createComposite(section);
-		GridLayout gly = new GridLayout();
-		gly.numColumns = 3;
-		gly.horizontalSpacing = 0;
-		mappingMainComposite.setLayout(gly);
-		section.setClient(mappingMainComposite);
 
-		Composite notifyComposite = toolkit
-				.createComposite(mappingMainComposite);
-		GridData ngd = new GridData(GridData.FILL_HORIZONTAL);
-		ngd.horizontalSpan = 3;
+		Composite mainComposite = toolkit.createComposite(section);
+		section.setClient(mainComposite);
+
+		GridLayout mainLayout = new GridLayout();
+		mainComposite.setLayout(mainLayout);
+
+		SashForm sashForm = new SashForm(mainComposite, SWT.VERTICAL);
+		GridData sashFormLd = new GridData(GridData.FILL_BOTH);
+		sashForm.setLayoutData(sashFormLd);
+
+		sashForm.setSashWidth(1);
+		
+		designTimeAnalyzeResultRegion = toolkit.createComposite(sashForm);
 		GridLayout ngl = new GridLayout();
 		ngl.numColumns = 2;
-		notifyComposite.setLayout(ngl);
-		notifyComposite.setLayoutData(ngd);
-		imageLabel = toolkit.createLabel(notifyComposite, "");
-		imageLabel.setImage(SmooksUIActivator.getDefault().getImageRegistry()
-				.get(SmooksGraphConstants.IMAGE_EMPTY));
-		notifyLabel = toolkit.createLabel(notifyComposite, "" );
-		GridData nlgd = new GridData(GridData.FILL_HORIZONTAL);
-		notifyLabel.setLayoutData(nlgd);
+		ngl.marginWidth = 0;
+		designTimeAnalyzeResultRegion.setLayout(ngl);
+
+		SashForm mappingMainComposite = new SashForm(sashForm, SWT.NONE);
+		mappingMainComposite.setSashWidth(1);
 		GridData sgd = new GridData(GridData.FILL_BOTH);
 		section.setLayoutData(sgd);
 		{
 			Composite composite1 = toolkit
 					.createComposite(mappingMainComposite);
 			GridLayout layout = new GridLayout();
-			layout.marginHeight = 1;
 			layout.marginWidth = 1;
-			GridData gd = new GridData(GridData.FILL_BOTH);
+			layout.marginHeight = 1;
 			composite1.setLayout(layout);
+
+			GridData gd = new GridData(GridData.FILL_BOTH);
 			sourceViewer = this.createSourceTreeViewer(composite1);
 			sourceViewer.getTree().setLayoutData(gd);
 			sourceViewer.addDragSupport(DND.DROP_MOVE | DND.DROP_COPY
@@ -320,26 +327,16 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			composite1.setLayoutData(gd);
 			composite1.setBackground(GraphicsConstants.groupBorderColor);
 		}
+
 		{
 			Composite composite2 = toolkit
 					.createComposite(mappingMainComposite);
-			GridData composite2LData = new GridData();
-			composite2LData.grabExcessHorizontalSpace = true;
-			composite2LData.grabExcessVerticalSpace = true;
-			composite2LData.horizontalAlignment = GridData.FILL;
-			composite2LData.verticalAlignment = GridData.FILL;
-			composite2.setLayoutData(composite2LData);
 			composite2.setLayout(new FillLayout());
 			this.setGraphicalViewer(createGraphicalViewer(composite2));
 		}
 		{
 			Composite composite3 = toolkit
 					.createComposite(mappingMainComposite);
-			GridData composite3LData = new GridData();
-			composite3LData.grabExcessHorizontalSpace = true;
-			composite3LData.verticalAlignment = GridData.FILL;
-			composite3LData.grabExcessVerticalSpace = true;
-			composite3LData.horizontalAlignment = GridData.FILL;
 			GridLayout layout = new GridLayout();
 			layout.marginWidth = 1;
 			layout.marginHeight = 1;
@@ -362,8 +359,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		}
 
 		{
-			Composite underToolPanel = toolkit
-					.createComposite(mappingMainComposite);
+			Composite underToolPanel = toolkit.createComposite(mainComposite);
 			GridData sgd1 = new GridData(GridData.FILL_HORIZONTAL);
 			GridLayout underLayout = new GridLayout();
 			underLayout.numColumns = 3;
@@ -416,8 +412,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		// section1.setLayoutData(sgd1);
 
 		toolkit.paintBordersFor(rootMainControl);
-
 		form.pack();
+		sashForm.setWeights(new int[] { 8, 100 });
 		if (initSourceTreeViewerProviders()) {
 			initSourceTreeViewer();
 			expandSourceConnectionModel();
@@ -665,7 +661,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ui.forms.editor.FormPage#doSave(org.eclipse.core.runtime.IProgressMonitor)
+	 * @see
+	 * org.eclipse.ui.forms.editor.FormPage#doSave(org.eclipse.core.runtime.
+	 * IProgressMonitor)
 	 */
 	@Override
 	public void doSave(IProgressMonitor monitor) {
@@ -674,8 +672,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 					.openQuestion(
 							getSite().getShell(),
 							"Clean all the errors please",
-							"There occurs some errors on the graphical design , please clean all errors .\n" +
-							"Click \"Yes\" to return . If you don't care that , click \"No\" to save file.");
+							"There occurs some errors on the graphical design , please clean all errors .\n"
+									+ "Click \"Yes\" to return . If you don't care that , click \"No\" to save file.");
 			if (cleanError)
 				return;
 		}
@@ -913,7 +911,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	protected void initTransformViewerModel(IEditorSite site, IEditorInput input)
 			throws Throwable {
 		graphicalInformationSaver = new GraphicalInformationSaver(input);
-		
+
 		GraphInformations graph = null;
 		try {
 			graph = graphicalInformationSaver.doLoad();
@@ -975,8 +973,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ui.forms.editor.FormPage#init(org.eclipse.ui.IEditorSite,
-	 *      org.eclipse.ui.IEditorInput)
+	 * @see
+	 * org.eclipse.ui.forms.editor.FormPage#init(org.eclipse.ui.IEditorSite,
+	 * org.eclipse.ui.IEditorInput)
 	 */
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
@@ -1096,7 +1095,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see org.eclipse.ui.forms.events.IHyperlinkListener#linkActivated(org.eclipse.ui.forms.events.HyperlinkEvent)
+		 * @see
+		 * org.eclipse.ui.forms.events.IHyperlinkListener#linkActivated(org.
+		 * eclipse.ui.forms.events.HyperlinkEvent)
 		 */
 		public void linkActivated(HyperlinkEvent e) {
 			showCreationWizard(viewer);
@@ -1105,7 +1106,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see org.eclipse.ui.forms.events.IHyperlinkListener#linkEntered(org.eclipse.ui.forms.events.HyperlinkEvent)
+		 * @see
+		 * org.eclipse.ui.forms.events.IHyperlinkListener#linkEntered(org.eclipse
+		 * .ui.forms.events.HyperlinkEvent)
 		 */
 		public void linkEntered(HyperlinkEvent e) {
 
@@ -1114,7 +1117,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see org.eclipse.ui.forms.events.IHyperlinkListener#linkExited(org.eclipse.ui.forms.events.HyperlinkEvent)
+		 * @see
+		 * org.eclipse.ui.forms.events.IHyperlinkListener#linkExited(org.eclipse
+		 * .ui.forms.events.HyperlinkEvent)
 		 */
 		public void linkExited(HyperlinkEvent e) {
 
@@ -1146,7 +1151,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
+		 * @see
+		 * org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets
+		 * .Event)
 		 */
 		public void handleEvent(Event event) {
 			TreeItem item = (TreeItem) event.item;
@@ -1179,7 +1186,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see org.eclipse.swt.events.PaintListener#paintControl(org.eclipse.swt.events.PaintEvent)
+		 * @see
+		 * org.eclipse.swt.events.PaintListener#paintControl(org.eclipse.swt
+		 * .events.PaintEvent)
 		 */
 		public void paintControl(PaintEvent e) {
 			Tree tree = (Tree) e.getSource();
@@ -1253,27 +1262,32 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		getManagedForm().dirtyStateChanged();
 	}
 
-	protected void setErrorMessage(String errorMessage) {
-		imageLabel.setImage(SmooksUIActivator.getDefault().getImageRegistry().get(SmooksGraphConstants.IMAGE_EMPTY));
-		notifyLabel.setText("");
-		canSaveFile = true;
-		if (errorMessage != null) {
-			imageLabel.setImage(SmooksUIActivator.getDefault()
-					.getImageRegistry().get(SmooksGraphConstants.IMAGE_ERROR));
-			notifyLabel.setText(errorMessage);
-			canSaveFile = false;
+	protected void updateErrorMessage() {
+		for (Iterator<DesignTimeAnalyzeResult> iterator = this.analyzeResultList
+				.iterator(); iterator.hasNext();) {
+			DesignTimeAnalyzeResult result = (DesignTimeAnalyzeResult) iterator
+					.next();
+			if (result.getErrorMessage() != null) {
+				if(canSaveFile) canSaveFile = false;
+				Label imageLabel = new Label(designTimeAnalyzeResultRegion,
+						SWT.NONE);
+				GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+				imageLabel.setLayoutData(gd);
+				imageLabel.setImage(SmooksUIActivator.getDefault()
+						.getImageRegistry().get(
+								SmooksGraphConstants.IMAGE_ERROR));
+				Label notifyLabel = new Label(designTimeAnalyzeResultRegion,
+						SWT.NONE);
+				GridData nlgd = new GridData(GridData.FILL_HORIZONTAL);
+				notifyLabel.setLayoutData(nlgd);
+				notifyLabel.setText(result.getErrorMessage());
+				
+			}
 		}
 	}
 
-	protected void setWarningMessage(String warningMessage) {
-		imageLabel.setImage(SmooksUIActivator.getDefault().getImageRegistry().get(SmooksGraphConstants.IMAGE_EMPTY));
-		notifyLabel.setText("");
-		if (warningMessage != null) {
-			imageLabel
-					.setImage(SmooksUIActivator.getDefault().getImageRegistry()
-							.get(SmooksGraphConstants.IMAGE_WARNING));
-			notifyLabel.setText(warningMessage);
-		}
+	protected void updateWarningMessage() {
+
 	}
 
 	protected void analyzeDesignGraph() {
@@ -1283,26 +1297,31 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			SmooksConfigurationFileGenerateContext context = this
 					.createContext();
 			this.initSmooksConfigurationFileGenerateContext(context);
-			DesignTimeAnalyzeResult result = analyzer
+			DesignTimeAnalyzeResult[] results = analyzer
 					.analyzeGraphModel(context);
-			if (result != null) {
-				String errorMessage = result.getErrorMessage();
-				String warningMessage = result.getWarningMessage();
-
-				if (errorMessage != null) {
-					setErrorMessage(errorMessage);
-					return;
-				}
-
-				if (warningMessage != null) {
-					setWarningMessage(warningMessage);
-					return;
-				}
+			analyzeResultList.clear();
+			for (int i = 0; i < results.length; i++) {
+				analyzeResultList.add(results[i]);
 			}
+			updateNotifyMessage();
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	protected void updateNotifyMessage() {
+		canSaveFile = true;
+		Control[] children = designTimeAnalyzeResultRegion.getChildren();
+		for (int i = 0; i < children.length; i++) {
+			Control c = children[i];
+			c.setVisible(false);
+			c.dispose();
+			c = null;
+		}
+		updateErrorMessage();
+		updateWarningMessage();
+		designTimeAnalyzeResultRegion.layout(true);
 	}
 
 	/**

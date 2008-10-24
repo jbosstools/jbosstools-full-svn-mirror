@@ -174,7 +174,7 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 		return "${" + name + "}";
 	}
 
-	public DesignTimeAnalyzeResult analyzeGraphModel(
+	public DesignTimeAnalyzeResult[] analyzeGraphModel(
 			SmooksConfigurationFileGenerateContext context) {
 		// TODO Auto-generated method stub
 		return null;

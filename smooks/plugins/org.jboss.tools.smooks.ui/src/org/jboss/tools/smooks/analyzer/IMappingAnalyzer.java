@@ -26,6 +26,6 @@ public interface IMappingAnalyzer {
 	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType,Object sourceObject,Object targetObject);
 	
-	public DesignTimeAnalyzeResult analyzeGraphModel(SmooksConfigurationFileGenerateContext context);
+	public DesignTimeAnalyzeResult[] analyzeGraphModel(SmooksConfigurationFileGenerateContext context);
 	
 }

@@ -46,7 +46,7 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 		return null;
 	}
 
-	public DesignTimeAnalyzeResult analyzeGraphModel(
+	public DesignTimeAnalyzeResult[] analyzeGraphModel(
 			SmooksConfigurationFileGenerateContext context) {
 		// TODO Auto-generated method stub
 		return null;

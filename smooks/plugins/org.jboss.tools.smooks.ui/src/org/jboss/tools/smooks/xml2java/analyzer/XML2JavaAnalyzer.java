@@ -393,7 +393,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		return null;
 	}
 
-	public DesignTimeAnalyzeResult analyzeGraphModel(
+	public DesignTimeAnalyzeResult[] analyzeGraphModel(
 			SmooksConfigurationFileGenerateContext context) {
 		// TODO Auto-generated method stub
 		return null;
