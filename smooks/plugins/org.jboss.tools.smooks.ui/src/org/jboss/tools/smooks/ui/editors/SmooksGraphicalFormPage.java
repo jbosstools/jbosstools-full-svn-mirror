@@ -253,21 +253,6 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	@Override
 	protected void createFormContent(IManagedForm managedForm) {
 
-		try {
-			this.initTransformViewerModel((IEditorSite) getSite(),
-					getEditorInput());
-			if (mappingResourceConfigList != null)
-				callParentRefillNormalModelInfor(mappingResourceConfigList
-						.getRelationgResourceConfigList());
-		} catch (IOWrappedException ex) {
-			MessageDialog.openWarning(getSite().getShell(), "Waring",
-					"Exceptions occurd during parsing Smooks file, no worries");
-		} catch (Throwable e) {
-			Status status = UIUtils.createErrorStatus(e);
-			ErrorDialog.openError(getSite().getShell(), "Error", "error",
-					status);
-		}
-
 		final ScrolledForm form = managedForm.getForm();
 		FormToolkit toolkit = managedForm.getToolkit();
 
@@ -927,7 +912,6 @@ public class SmooksGraphicalFormPage extends FormPage implements
 					.getSmooksConfigurationFileGenerateContext());
 		} catch (Throwable t) {
 			// ignore
-			t.printStackTrace();
 		}
 		IFile file = ((IFileEditorInput) input).getFile();
 		if (sourceDataTypeID == null || targetDataTypeID == null) {
@@ -1000,8 +984,22 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			this.targetTreeViewerInputModel = ((SmooksFileEditorInput) input)
 					.getTargetTreeViewerInputContents();
 		}
-
-		// }
+		Throwable throwable = null;
+		try {
+			this.initTransformViewerModel((IEditorSite) getSite(),
+					getEditorInput());
+			if (mappingResourceConfigList != null)
+				callParentRefillNormalModelInfor(mappingResourceConfigList
+						.getRelationgResourceConfigList());
+		} catch (IOWrappedException ex) {
+			MessageDialog.openWarning(getSite().getShell(), "Waring",
+					"Exceptions occurd during parsing Smooks file, no worries");
+		} catch (Throwable e) {
+			throwable = e;
+		}
+		if (throwable != null) {
+			((SmooksFormEditor) getEditor()).setOnlyShowTextEditor(true,throwable);
+		}
 	}
 
 	protected void initFormEditorWithGraphInfo(GraphInformations graph) {
@@ -1342,7 +1340,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			}
 			updateNotifyMessage();
 		} catch (CoreException e) {
-			UIUtils.showErrorDialog(getSite().getShell(), UIUtils.createErrorStatus(e));
+			UIUtils.showErrorDialog(getSite().getShell(), UIUtils
+					.createErrorStatus(e));
 		}
 	}
 
