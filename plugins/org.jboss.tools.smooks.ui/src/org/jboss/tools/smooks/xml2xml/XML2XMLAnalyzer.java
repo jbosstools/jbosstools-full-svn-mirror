@@ -47,7 +47,7 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType, Object sourceObject,
 			Object targetObject) {
-		return null;
+		throw new RuntimeException("The Smooks editor doesn't support to parse the XML2XML config file currently.The feature is coming soon...");
 	}
 
 	public DesignTimeAnalyzeResult[] analyzeGraphModel(
