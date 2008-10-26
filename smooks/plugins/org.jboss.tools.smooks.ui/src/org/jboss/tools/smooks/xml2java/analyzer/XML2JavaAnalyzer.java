@@ -58,7 +58,6 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 	public void analyzeMappingGraphModel(
 			SmooksConfigurationFileGenerateContext context)
 			throws SmooksAnalyzerException {
-
 		SmooksResourceListType listType = context.getSmooksResourceListModel();
 		GraphRootModel rootModel = context.getGraphicalRootModel();
 		List children = rootModel.getChildren();
@@ -218,6 +217,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		JavaBeanModel sourceTarget = (JavaBeanModel) targetObject;
 
 		ResourceConfigType rootResourceConfig = findFirstMappingResourceConfig(listType);
+		// if can't find the root , return null
+		if(rootResourceConfig ==null) return null;
 		String xmlName = rootResourceConfig.getSelector();
 		AbstractXMLObject source = findXMLObjectByName(xmlName, sourceRoot);
 		if (source == null)
@@ -391,7 +392,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		return null;
 	}
 
-	public DesignTimeAnalyzeResult analyzeGraphModel(
+	public DesignTimeAnalyzeResult[] analyzeGraphModel(
 			SmooksConfigurationFileGenerateContext context) {
 		// TODO Auto-generated method stub
 		return null;

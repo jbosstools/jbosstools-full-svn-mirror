@@ -10,8 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.analyzer;
 
-import java.util.List;
-
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 
@@ -20,12 +18,32 @@ import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateCont
  * 
  */
 public interface IMappingAnalyzer {
+	/**
+	 * Parse the graphical model and generate the smooks config file model
+	 * @param context
+	 * @throws SmooksAnalyzerException
+	 */
 	public void analyzeMappingGraphModel(
 			SmooksConfigurationFileGenerateContext context)
 			throws SmooksAnalyzerException;
+	
+	/**
+	 * Parse the smooks config file model what loaded by EMF , and create the relating graphical model for it.
+	 * @param listType
+	 * @param sourceObject
+	 * @param targetObject
+	 * @return
+	 */
 	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType,Object sourceObject,Object targetObject);
 	
-	public DesignTimeAnalyzeResult analyzeGraphModel(SmooksConfigurationFileGenerateContext context);
+	/**
+	 * Analyze the graphical model to find the incorrect logic model and return the analyze result.<p>
+	 * The graphical editor will display the analyze result.
+	 * @param context
+	 * @return
+	 */
+	public DesignTimeAnalyzeResult[] analyzeGraphModel(SmooksConfigurationFileGenerateContext context);
 	
 }
+
