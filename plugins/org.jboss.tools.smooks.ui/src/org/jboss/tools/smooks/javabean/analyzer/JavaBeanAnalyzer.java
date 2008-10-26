@@ -39,8 +39,11 @@ import org.jboss.tools.smooks.analyzer.ISourceModelAnalyzer;
 import org.jboss.tools.smooks.analyzer.ITargetModelAnalyzer;
 import org.jboss.tools.smooks.analyzer.MappingModel;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
+import org.jboss.tools.smooks.analyzer.ResolveCommand;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
 import org.jboss.tools.smooks.graphical.GraphInformations;
+import org.jboss.tools.smooks.graphical.Param;
+import org.jboss.tools.smooks.graphical.Params;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModelFactory;
 import org.jboss.tools.smooks.model.AbstractResourceConfig;
@@ -75,6 +78,10 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	public static final Object PRO_PROJECT_NAME = "__pro_project_name_";
 
 	public static final String SPACE_STRING = " ";
+
+	private static final int TARGET_DATA = 1;
+
+	private static final int SOURCE_DATA = 0;
 
 	private List usedConnectionList = new ArrayList();
 
@@ -350,7 +357,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			AbstractStructuredDataModel sourceModel) {
 		JavaBeanModel source = (JavaBeanModel) sourceModel
 				.getReferenceEntityModel();
-		if(source.getBeanClass().isArray()){
+		if (source.getBeanClass().isArray()) {
 			return source.getName();
 		}
 		if (Collection.class.isAssignableFrom(source.getBeanClass())) {
@@ -360,12 +367,12 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 	}
 
-	private DesignTimeAnalyzeResult checkOtherNodeConnected(
+	private DesignTimeAnalyzeResult[] checkOtherNodeConnected(
 			SmooksConfigurationFileGenerateContext context) {
 		GraphRootModel root = context.getGraphicalRootModel();
 		List sourceList = root.loadSourceModelList();
 		List targetList = root.loadTargetModelList();
-		StringBuffer buffer = new StringBuffer();
+		List<DesignTimeAnalyzeResult> arList = new ArrayList<DesignTimeAnalyzeResult>();
 		for (Iterator iterator = targetList.iterator(); iterator.hasNext();) {
 			AbstractStructuredDataModel targetm = (AbstractStructuredDataModel) iterator
 					.next();
@@ -384,24 +391,22 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					if (pgm != null && pgm instanceof IConnectableModel) {
 						if (((IConnectableModel) pgm)
 								.getModelTargetConnections().isEmpty()) {
-							buffer
-									.append("The parent of Java node \""
-											+ javaModel.getName()
-											+ "\" : \""
-											+ parent.getName()
-											+ "\" doesn't be connected by any source node!\n");
+							String errorMessage = "The parent of Java node \""
+								+ javaModel.getName()
+								+ "\" : \""
+								+ parent.getName()
+								+ "\" doesn't be connected by any source node";
+							DesignTimeAnalyzeResult dr = new DesignTimeAnalyzeResult();
+							dr.setErrorMessage(errorMessage);
+							Java2JavaResolveCommand command = new Java2JavaResolveCommand(context);
+//							command.setResolveDescription(resolveDescription);
+							arList.add(dr);
 						}
 					}
 				}
 			}
 		}
-		String result = buffer.toString();
-		if ("".equals(result)) {
-			return null;
-		}
-		DesignTimeAnalyzeResult dr = new DesignTimeAnalyzeResult();
-		dr.setErrorMessage(result);
-		return dr;
+		return arList.toArray(new DesignTimeAnalyzeResult[0]);
 	}
 
 	/**
@@ -491,7 +496,11 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jboss.tools.smooks.analyzer.IMappingAnalyzer#analyzeMappingGraphModel(org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext)
+	 * @see
+	 * org.jboss.tools.smooks.analyzer.IMappingAnalyzer#analyzeMappingGraphModel
+	 * (
+	 * org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext
+	 * )
 	 */
 	public void analyzeMappingGraphModel(
 			SmooksConfigurationFileGenerateContext context)
@@ -541,7 +550,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					}
 					String beanClass = SmooksModelUtils.getParmaText(
 							"beanClass", rc);
-					if (targetName!=null && targetName.trim().equals(beanClass)) {
+					if (targetName != null
+							&& targetName.trim().equals(beanClass)) {
 						setSelectorIsUsed(sourceName);
 						// create the first connection
 						mappingModelList.add(new MappingModel(source, target));
@@ -649,6 +659,27 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		return null;
 	}
 
+	private String getDataSourceClass(GraphInformations info, int dataMode) {
+		String key = "sourceDataPath";
+		if (dataMode == SOURCE_DATA) {
+			key = "sourceDataPath";
+		}
+		if (dataMode == TARGET_DATA) {
+			key = "targetDataPath";
+		}
+
+		Params params = info.getParams();
+		List paramList = params.getParam();
+		for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
+			Param param = (Param) iterator.next();
+			if (key.equals(param.getName())) {
+				return param.getValue();
+			}
+		}
+
+		return null;
+	}
+
 	public Object buildSourceInputObjects(GraphInformations graphInfo,
 			SmooksResourceListType listType, IFile sourceFile,
 			ClassLoader classLoader) throws InvocationTargetException {
@@ -673,9 +704,12 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				}
 			}
 		}
-
-		if (rootClassName == null)
+		if (rootClassName == null) {
+			rootClassName = this.getDataSourceClass(graphInfo, SOURCE_DATA);
+		}
+		if (rootClassName == null) {
 			return null;
+		}
 
 		boolean isWarning = false;
 		boolean isError = false;
@@ -756,10 +790,16 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				}
 			}
 		}
-		if (current == null)
+		if (current == null) {
+			rootClassName = this.getDataSourceClass(graphInfo, TARGET_DATA);
+		}
+		// if can't load the source from GraphicalInformation , return NULL
+		if (current == null && rootClassName == null)
 			return null;
 		Class rootClass = null;
-		rootClassName = SmooksModelUtils.getParmaText("beanClass", current);
+		if (rootClassName == null) {
+			rootClassName = SmooksModelUtils.getParmaText("beanClass", current);
+		}
 		if (rootClassName != null && loader != null) {
 			try {
 				rootClass = loader.loadClass(rootClassName);
@@ -801,9 +841,6 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				String selector = SmooksModelUtils
 						.getAttributeValueFromAnyType(binding,
 								SmooksModelUtils.ATTRIBUTE_SELECTOR);
-				// if(property == null){
-				// continue;
-				// }
 				processBindingPropertyFromTargetModel(listType, property,
 						selector, beanModel, classLoader);
 			}
@@ -1006,7 +1043,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		return null;
 	}
 
-	public DesignTimeAnalyzeResult analyzeGraphModel(
+	public DesignTimeAnalyzeResult[] analyzeGraphModel(
 			SmooksConfigurationFileGenerateContext context) {
 		checkRootNodeConnected(context);
 		return checkOtherNodeConnected(context);
