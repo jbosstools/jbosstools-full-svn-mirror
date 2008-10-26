@@ -123,6 +123,7 @@ import org.jboss.tools.smooks.model.DocumentRoot;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
+import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
 import org.jboss.tools.smooks.ui.IViewerInitor;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
@@ -1285,13 +1286,13 @@ public class SmooksGraphicalFormPage extends FormPage implements
 								SmooksGraphConstants.IMAGE_ERROR));
 				Label notifyLabel = new Label(designTimeAnalyzeResultRegion,
 						SWT.NONE);
-				Menu menu = new Menu(getSite().getShell(),SWT.POP_UP);
+				Menu menu = new Menu(getSite().getShell(), SWT.POP_UP);
 				List<ResolveCommand> list = result.getResolveProblem();
 				for (Iterator iterator2 = list.iterator(); iterator2.hasNext();) {
 					final ResolveCommand resolveCommand = (ResolveCommand) iterator2
 							.next();
-					MenuItem item = new MenuItem(menu,SWT.NONE);
-					item.addSelectionListener(new SelectionListener(){
+					MenuItem item = new MenuItem(menu, SWT.NONE);
+					item.addSelectionListener(new SelectionListener() {
 
 						public void widgetDefaultSelected(SelectionEvent arg0) {
 							widgetSelected(arg0);
@@ -1300,10 +1301,15 @@ public class SmooksGraphicalFormPage extends FormPage implements
 						public void widgetSelected(SelectionEvent arg0) {
 							try {
 								resolveCommand.execute();
+								commandStackChanged = true;
+								analyzeDesignGraph();
+								firePropertyChange(PROP_DIRTY);
 							} catch (Exception e) {
+								UIUtils.showErrorDialog(getSite().getShell(),
+										UIUtils.createErrorStatus(e));
 							}
 						}
-						
+
 					});
 					item.setText(resolveCommand.getResolveDescription());
 					item.setImage(resolveCommand.getImage());
@@ -1336,8 +1342,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			}
 			updateNotifyMessage();
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			UIUtils.showErrorDialog(getSite().getShell(), UIUtils.createErrorStatus(e));
 		}
 	}
 
