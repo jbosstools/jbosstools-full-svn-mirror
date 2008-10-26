@@ -33,6 +33,7 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.jboss.tools.smooks.analyzer.CompositeResolveCommand;
 import org.jboss.tools.smooks.analyzer.DesignTimeAnalyzeResult;
 import org.jboss.tools.smooks.analyzer.IMappingAnalyzer;
 import org.jboss.tools.smooks.analyzer.ISourceModelAnalyzer;
@@ -391,13 +392,13 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						if (((IConnectableModel) pgm)
 								.getModelTargetConnections().isEmpty()) {
 							String errorMessage = "The parent of Java node \""
-								+ javaModel.getName()
-								+ "\" : \""
-								+ parent.getName()
-								+ "\" doesn't be connected by any source node";
+									+ javaModel.getName()
+									+ "\" : \""
+									+ parent.getName()
+									+ "\" doesn't be connected by any source node";
 							DesignTimeAnalyzeResult dr = new DesignTimeAnalyzeResult();
 							dr.setErrorMessage(errorMessage);
-							
+							createResolveCommand(dr, context, javaModel, parent);
 							arList.add(dr);
 						}
 					}
@@ -405,6 +406,63 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			}
 		}
 		return arList.toArray(new DesignTimeAnalyzeResult[0]);
+	}
+
+	private void createResolveCommand(DesignTimeAnalyzeResult result,
+			SmooksConfigurationFileGenerateContext context,
+			JavaBeanModel currentNode, JavaBeanModel parentNode) {
+		GraphRootModel root = context.getGraphicalRootModel();
+		HashMap<AbstractStructuredDataModel, AbstractStructuredDataModel> tempMap = new HashMap<AbstractStructuredDataModel, AbstractStructuredDataModel>();
+		// Disconnect all connections command
+		Java2JavaResolveCommand disconnectCommand = new Java2JavaResolveCommand(
+				context);
+		CompositeResolveCommand compositeCommand = new CompositeResolveCommand(
+				context);
+		compositeCommand.setResolveDescription("Connect all needed connections");
+		disconnectCommand
+				.setResolveDescription("Disconnect all connections of the current \""
+						+ currentNode.getName() + "\"node");
+		AbstractStructuredDataModel targetNode = UIUtils.findGraphModel(root,
+				currentNode);
+		if (targetNode instanceof IConnectableModel) {
+			List<Object> connections = ((IConnectableModel) targetNode)
+					.getModelTargetConnections();
+			for (Iterator iterator = connections.iterator(); iterator.hasNext();) {
+				LineConnectionModel line = (LineConnectionModel) iterator
+						.next();
+				AbstractStructuredDataModel source = (AbstractStructuredDataModel) line
+						.getSource();
+				JavaBeanModel sourceBean = (JavaBeanModel) source
+						.getReferenceEntityModel();
+				JavaBeanModel sourceParent = sourceBean.getParent();
+				if (sourceParent == null) {
+					sourceParent = sourceBean;
+				}
+				AbstractStructuredDataModel sourceParentNode = UIUtils
+						.findGraphModel(root, sourceParent);
+				// Connect the parent command
+				AbstractStructuredDataModel targetParentNode = UIUtils
+						.findGraphModel(root, parentNode);
+				if (tempMap.get(sourceParentNode) == null) {
+					Java2JavaResolveCommand connectParent = new Java2JavaResolveCommand(
+							context);
+					connectParent.setResolveDescription("Connect the \""
+							+ sourceParent.getName() + "\" to the \""
+							+ parentNode.getName() + "\"");
+					connectParent.setSourceModel(sourceParentNode);
+					connectParent.setTargetModel(targetParentNode);
+					result.addResolveCommand(connectParent);
+					tempMap.put(sourceParentNode,targetParentNode);
+					compositeCommand.addCommand(connectParent);
+				}
+
+				disconnectCommand.addDisconnectionModel(line);
+			}
+		}
+		result.addResolveCommand(disconnectCommand);
+		if (!compositeCommand.isEmpty()) {
+			result.addResolveCommand(compositeCommand);
+		}
 	}
 
 	/**

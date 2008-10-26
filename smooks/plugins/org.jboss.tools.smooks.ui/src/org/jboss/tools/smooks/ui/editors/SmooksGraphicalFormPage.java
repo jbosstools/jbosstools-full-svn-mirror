@@ -62,15 +62,19 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.TreeEvent;
 import org.eclipse.swt.events.TreeListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -80,6 +84,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IEditorInput;
@@ -94,7 +101,6 @@ import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
-import org.eclipse.ui.forms.widgets.ImageHyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.analyzer.AnalyzerFactory;
@@ -104,6 +110,7 @@ import org.jboss.tools.smooks.analyzer.ISourceModelAnalyzer;
 import org.jboss.tools.smooks.analyzer.ITargetModelAnalyzer;
 import org.jboss.tools.smooks.analyzer.MappingModel;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
+import org.jboss.tools.smooks.analyzer.ResolveCommand;
 import org.jboss.tools.smooks.analyzer.ResourceConfigEraser;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
 import org.jboss.tools.smooks.analyzer.SmooksFileBuilder;
@@ -116,11 +123,11 @@ import org.jboss.tools.smooks.model.DocumentRoot;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
+import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
 import org.jboss.tools.smooks.ui.IViewerInitor;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
 import org.jboss.tools.smooks.ui.StructuredDataCreationWizardDailog;
-import org.jboss.tools.smooks.ui.ViewerInitorStore;
 import org.jboss.tools.smooks.ui.gef.editparts.SmooksEditPartFactory;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
@@ -286,7 +293,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		sashForm.setLayoutData(sashFormLd);
 
 		sashForm.setSashWidth(1);
-		
+
 		designTimeAnalyzeResultRegion = toolkit.createComposite(sashForm);
 		GridLayout ngl = new GridLayout();
 		ngl.numColumns = 2;
@@ -1268,7 +1275,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			DesignTimeAnalyzeResult result = (DesignTimeAnalyzeResult) iterator
 					.next();
 			if (result.getErrorMessage() != null) {
-				if(canSaveFile) canSaveFile = false;
+				if (canSaveFile)
+					canSaveFile = false;
 				Label imageLabel = new Label(designTimeAnalyzeResultRegion,
 						SWT.NONE);
 				GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
@@ -1278,10 +1286,39 @@ public class SmooksGraphicalFormPage extends FormPage implements
 								SmooksGraphConstants.IMAGE_ERROR));
 				Label notifyLabel = new Label(designTimeAnalyzeResultRegion,
 						SWT.NONE);
+				Menu menu = new Menu(getSite().getShell(), SWT.POP_UP);
+				List<ResolveCommand> list = result.getResolveProblem();
+				for (Iterator iterator2 = list.iterator(); iterator2.hasNext();) {
+					final ResolveCommand resolveCommand = (ResolveCommand) iterator2
+							.next();
+					MenuItem item = new MenuItem(menu, SWT.NONE);
+					item.addSelectionListener(new SelectionListener() {
+
+						public void widgetDefaultSelected(SelectionEvent arg0) {
+							widgetSelected(arg0);
+						}
+
+						public void widgetSelected(SelectionEvent arg0) {
+							try {
+								resolveCommand.execute();
+								commandStackChanged = true;
+								analyzeDesignGraph();
+								firePropertyChange(PROP_DIRTY);
+							} catch (Exception e) {
+								UIUtils.showErrorDialog(getSite().getShell(),
+										UIUtils.createErrorStatus(e));
+							}
+						}
+
+					});
+					item.setText(resolveCommand.getResolveDescription());
+					item.setImage(resolveCommand.getImage());
+				}
+				notifyLabel.setMenu(menu);
 				GridData nlgd = new GridData(GridData.FILL_HORIZONTAL);
 				notifyLabel.setLayoutData(nlgd);
 				notifyLabel.setText(result.getErrorMessage());
-				
+
 			}
 		}
 	}
@@ -1305,8 +1342,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			}
 			updateNotifyMessage();
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			UIUtils.showErrorDialog(getSite().getShell(), UIUtils.createErrorStatus(e));
 		}
 	}
 

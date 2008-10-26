@@ -58,7 +58,6 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 	public void analyzeMappingGraphModel(
 			SmooksConfigurationFileGenerateContext context)
 			throws SmooksAnalyzerException {
-
 		SmooksResourceListType listType = context.getSmooksResourceListModel();
 		GraphRootModel rootModel = context.getGraphicalRootModel();
 		List children = rootModel.getChildren();

@@ -21,24 +21,28 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jboss.tools.smooks.analyzer.IMappingAnalyzer#analyzeMappingGraphModel(org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext)
+	 * @see
+	 * org.jboss.tools.smooks.analyzer.IMappingAnalyzer#analyzeMappingGraphModel
+	 * (
+	 * org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext
+	 * )
 	 */
 	public void analyzeMappingGraphModel(
 			SmooksConfigurationFileGenerateContext context)
 			throws SmooksAnalyzerException {
-		if (true) {
-			Shell shell = context.getShell();
-			MessageDialog.openWarning(shell, "Warning",
-					"The xml2xml can't be generate to config file currently.");
-			return;
-		}
+		Shell shell = context.getShell();
+		MessageDialog.openWarning(shell, "Warning",
+				"The xml2xml can't be generate to config file currently.");
+		return;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jboss.tools.smooks.analyzer.IMappingAnalyzer#analyzeMappingSmooksModel(org.jboss.tools.smooks.model.SmooksResourceListType,
-	 *      java.lang.Object, java.lang.Object)
+	 * @see
+	 * org.jboss.tools.smooks.analyzer.IMappingAnalyzer#analyzeMappingSmooksModel
+	 * (org.jboss.tools.smooks.model.SmooksResourceListType, java.lang.Object,
+	 * java.lang.Object)
 	 */
 	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType, Object sourceObject,

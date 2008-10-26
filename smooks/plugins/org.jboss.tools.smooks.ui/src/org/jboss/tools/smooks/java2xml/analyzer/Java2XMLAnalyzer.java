@@ -56,7 +56,6 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 			SmooksConfigurationFileGenerateContext context)
 			throws SmooksAnalyzerException {
 		// TODO will modify soon
-		
 		if(true){
 			Shell shell = context.getShell();
 			MessageDialog.openWarning(shell, "Warning", "The java2xml can't be generate to config file currently.");
