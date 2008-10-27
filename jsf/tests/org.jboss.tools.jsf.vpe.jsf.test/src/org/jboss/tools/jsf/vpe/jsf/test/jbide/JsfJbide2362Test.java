@@ -62,7 +62,6 @@ public class JsfJbide2362Test extends VpeTest {
 		ELEMENTS.add("h:inputText"); //$NON-NLS-1$
 		ELEMENTS.add("h:inputTextarea"); //$NON-NLS-1$
 		ELEMENTS.add("h:inputSecret"); //$NON-NLS-1$
-		ELEMENTS.add("h:inputHidden"); //$NON-NLS-1$
 	}
 
 	public JsfJbide2362Test(String name) {
@@ -231,7 +230,7 @@ public class JsfJbide2362Test extends VpeTest {
 				}
 
 				// wait
-				TestUtil.delay(500);
+				TestUtil.delay(1000);
 				// wait
 				assertNotNull(xulRunnerEditor.getLastSelectedNode());
 			}
