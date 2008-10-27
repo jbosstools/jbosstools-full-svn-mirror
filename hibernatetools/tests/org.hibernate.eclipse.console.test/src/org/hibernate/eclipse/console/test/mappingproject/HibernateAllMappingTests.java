@@ -30,6 +30,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.hibernate.eclipse.console.HibernateConsolePerspectiveFactory;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
+import org.jboss.tools.test.util.JobUtils;
 
 public class HibernateAllMappingTests extends TestCase {
 
@@ -65,7 +66,7 @@ public class HibernateAllMappingTests extends TestCase {
 				PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(HibernateConsolePerspectiveFactory.ID_CONSOLE_PERSPECTIVE));
 
 
-		waitForJobs();
+		JobUtils.waitForIdle();
 		runTestsAfterSetup();
 		ProjectUtil.createConsoleCFG();
 	}
@@ -88,10 +89,10 @@ public class HibernateAllMappingTests extends TestCase {
 	}
 
 	public void tearDown() throws Exception {
-		waitForJobs();
+		JobUtils.waitForIdle();
 		runTestsBeforeTearDown();
-		waitForJobs();
-		delay(1000);
+		JobUtils.waitForIdle();
+		JobUtils.delay(1000);
 		//this.project.deleteIProject();
 		//waitForJobs();
 		super.tearDown();
@@ -103,45 +104,6 @@ public class HibernateAllMappingTests extends TestCase {
 			Test test = suite.testAt(i);
 			test.run(result);
 		}
-	}
-
-	/**
-	 * Process UI input but do not return for the specified time interval.
-	 *
-	 * @param waitTimeMillis
-	 *            the number of milliseconds
-	 */
-	protected void delay(long waitTimeMillis) {
-		if (waitTimeMillis <= 0) return;
-		Display display = Display.getCurrent();
-
-		// If this is the UI thread,
-		// then process input.
-		if (display != null) {
-			long endTimeMillis = System.currentTimeMillis() + waitTimeMillis;
-			while (System.currentTimeMillis() < endTimeMillis) {
-				if (!display.readAndDispatch())
-					display.sleep();
-			}
-			display.update();
-		}
-
-		// Otherwise, perform a simple sleep.
-		else {
-			try {
-				Thread.sleep(waitTimeMillis);
-			} catch (InterruptedException e) {
-				// Ignored.
-			}
-		}
-	}
-
-	/**
-	 * Wait until all background tasks are complete.
-	 */
-	public void waitForJobs() {
-		while (Platform.getJobManager().currentJob() != null)
-			delay(1000);
 	}
 
 	protected MappingTestProject getProject() {
@@ -180,7 +142,7 @@ public class HibernateAllMappingTests extends TestCase {
 					for (int k = 0; k < suite.testCount(); k++) {
 						Test test = suite.testAt(k);
 						test.run(result);
-						waitForJobs();
+						JobUtils.waitForIdle();
 					}
 					//==============================
 					pack_count++;
@@ -191,8 +153,8 @@ public class HibernateAllMappingTests extends TestCase {
 						String time = period / 1000 + "." + (period % 1000) / 100; //$NON-NLS-1$
 						System.out.println( time +ConsoleTestMessages.HibernateAllMappingTests_seconds + javaElement.getElementName());
 					}
-					waitForJobs();
-					delay(Customization.EACTH_PACK_TEST_DELAY);
+					JobUtils.waitForIdle();
+					JobUtils.delay(Customization.EACTH_PACK_TEST_DELAY);
 
 					if (Customization.STOP_AFTER_MISSING_PACK){
 						if (result.failureCount() > prev_failCount) break;
@@ -209,9 +171,9 @@ public class HibernateAllMappingTests extends TestCase {
 			System.out.print(( System.currentTimeMillis() - start_time ) / 1000 + ConsoleTestMessages.HibernateAllMappingTests_seconds + "\t" );	 //$NON-NLS-1$
 			System.out.println( pack_count + ConsoleTestMessages.HibernateAllMappingTests_packages_tested );
 		}
-		waitForJobs();
+		JobUtils.waitForIdle();
 
-		delay(Customization.AFTER_ALL_PACKS_DELAY);
+		JobUtils.delay(Customization.AFTER_ALL_PACKS_DELAY);
 	}
 
 	/**

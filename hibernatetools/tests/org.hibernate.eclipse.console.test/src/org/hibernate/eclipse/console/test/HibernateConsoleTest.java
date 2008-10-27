@@ -17,6 +17,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.hibernate.eclipse.console.HibernateConsolePerspectiveFactory;
+import org.jboss.tools.test.util.JobUtils;
 
 public abstract class HibernateConsoleTest extends TestCase {
 
@@ -33,7 +34,7 @@ public abstract class HibernateConsoleTest extends TestCase {
 		this.project = createTestProject();
 
 
-		waitForJobs();
+		JobUtils.waitForIdle();
 		PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().setPerspective(
 						PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(HibernateConsolePerspectiveFactory.ID_CONSOLE_PERSPECTIVE));
