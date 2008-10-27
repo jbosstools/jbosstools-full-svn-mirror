@@ -156,12 +156,24 @@ public class TestDomUtil {
 
 			nsIDOMNode vpeChild = vpeChildren.item(realCount++);
 
+			if (null == vpeChild) {
+				throw new ComparisonException(
+						"Child of node \"" //$NON-NLS-1$
+								+ vpeNode.getNodeName()
+								+ "\" is \"null\", but should be \"" + schemeChild.getNodeName() + "\""); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+
 			// leave out empty text nodes in vpe dom model
 			while (((vpeChild.getNodeType() == Node.TEXT_NODE) && ((vpeChild
 					.getNodeValue() == null) || (vpeChild.getNodeValue().trim()
 					.length() == 0)))) {
 				vpeChild = vpeChildren.item(realCount++);
-
+				if (null == vpeChild) {
+					throw new ComparisonException(
+							"Child of node \"" //$NON-NLS-1$
+									+ vpeNode.getNodeName()
+									+ "\" is \"null\", but should be \"" + schemeChild.getNodeName() + "\""); //$NON-NLS-1$ //$NON-NLS-2$
+				}
 			}
 
 			compareNodes(vpeChild, schemeChild);
