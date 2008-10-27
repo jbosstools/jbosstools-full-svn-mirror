@@ -156,7 +156,7 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType, Object sourceObject,
 			Object targetObject) {
-		throw new RuntimeException("The Smooks editor doesn't support to parse the Java2XML config file currently.The feature is coming soon..");
+		throw new RuntimeException("The Smooks editor doesn't support to parse the Java2XML config file currently.");
 	}
 
 	protected String getTheJavaBeanString(JavaBeanModel currentModel) {
