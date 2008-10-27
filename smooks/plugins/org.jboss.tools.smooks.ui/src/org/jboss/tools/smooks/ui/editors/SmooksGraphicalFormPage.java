@@ -276,8 +276,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		SashForm sashForm = new SashForm(mainComposite, SWT.VERTICAL);
 		GridData sashFormLd = new GridData(GridData.FILL_BOTH);
 		sashForm.setLayoutData(sashFormLd);
-
-		sashForm.setSashWidth(1);
+//		sashForm.
+//		sashForm.setSashWidth(1);
 
 		designTimeAnalyzeResultRegion = toolkit.createComposite(sashForm);
 		GridLayout ngl = new GridLayout();
@@ -286,7 +286,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		designTimeAnalyzeResultRegion.setLayout(ngl);
 
 		SashForm mappingMainComposite = new SashForm(sashForm, SWT.NONE);
-		mappingMainComposite.setSashWidth(1);
+		// under the eclipse3.3
+//		mappingMainComposite.setSashWidth(1);
 		GridData sgd = new GridData(GridData.FILL_BOTH);
 		section.setLayoutData(sgd);
 		{
