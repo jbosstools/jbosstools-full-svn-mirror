@@ -15,10 +15,10 @@ package org.jboss.tools.smooks.xml2java.analyzer;
  * @author Dart Peng<br>
  *         Date : Sep 23, 2008
  */
-public class XMLSourceModelAnalyzer extends AbstractXMLModelAnalyzer{
+public class XMLTargetModelAnalyzer extends AbstractXMLModelAnalyzer{
 
-	public XMLSourceModelAnalyzer() {
-		super("sourceDataPath");
+	public XMLTargetModelAnalyzer() {
+		super("targetDataPath");
 	}
 	
 }

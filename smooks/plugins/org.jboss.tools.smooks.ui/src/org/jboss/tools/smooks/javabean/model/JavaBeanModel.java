@@ -28,6 +28,12 @@ import org.jboss.tools.smooks.javabean.uitils.JavaPropertyUtils;
  */
 public class JavaBeanModel implements IValidatable {
 
+	private String beanClassString = null;
+	
+	public void setBeanClassString(String beanClassString) {
+		this.beanClassString = beanClassString;
+	}
+
 	private Object waring = null;
 
 	private Object error = null;
@@ -81,6 +87,9 @@ public class JavaBeanModel implements IValidatable {
 	}
 
 	public String getBeanClassString() {
+		if(beanClassString != null){
+			return this.beanClassString;
+		}
 		Class clazz = this.getBeanClass();
 		if (clazz == null)
 			return "<null>";

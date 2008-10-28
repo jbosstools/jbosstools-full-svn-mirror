@@ -367,104 +367,6 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 	}
 
-	private DesignTimeAnalyzeResult[] checkOtherNodeConnected(
-			SmooksConfigurationFileGenerateContext context) {
-		GraphRootModel root = context.getGraphicalRootModel();
-		List sourceList = root.loadSourceModelList();
-		List targetList = root.loadTargetModelList();
-		List<DesignTimeAnalyzeResult> arList = new ArrayList<DesignTimeAnalyzeResult>();
-		for (Iterator iterator = targetList.iterator(); iterator.hasNext();) {
-			AbstractStructuredDataModel targetm = (AbstractStructuredDataModel) iterator
-					.next();
-			if (targetm instanceof IConnectableModel) {
-				if (((IConnectableModel) targetm).getModelTargetConnections()
-						.isEmpty()) {
-					continue;
-				}
-
-				JavaBeanModel javaModel = (JavaBeanModel) targetm
-						.getReferenceEntityModel();
-				JavaBeanModel parent = javaModel.getParent();
-				if (parent != null) {
-					AbstractStructuredDataModel pgm = UIUtils.findGraphModel(
-							root, parent);
-					if (pgm != null && pgm instanceof IConnectableModel) {
-						if (((IConnectableModel) pgm)
-								.getModelTargetConnections().isEmpty()) {
-							String errorMessage = "The parent of Java node \""
-									+ javaModel.getName()
-									+ "\" : \""
-									+ parent.getName()
-									+ "\" doesn't be connected by any source node";
-							DesignTimeAnalyzeResult dr = new DesignTimeAnalyzeResult();
-							dr.setErrorMessage(errorMessage);
-							createResolveCommand(dr, context, javaModel, parent);
-							arList.add(dr);
-						}
-					}
-				}
-			}
-		}
-		return arList.toArray(new DesignTimeAnalyzeResult[0]);
-	}
-
-	private void createResolveCommand(DesignTimeAnalyzeResult result,
-			SmooksConfigurationFileGenerateContext context,
-			JavaBeanModel currentNode, JavaBeanModel parentNode) {
-		GraphRootModel root = context.getGraphicalRootModel();
-		HashMap<AbstractStructuredDataModel, AbstractStructuredDataModel> tempMap = new HashMap<AbstractStructuredDataModel, AbstractStructuredDataModel>();
-		// Disconnect all connections command
-		Java2JavaResolveCommand disconnectCommand = new Java2JavaResolveCommand(
-				context);
-		CompositeResolveCommand compositeCommand = new CompositeResolveCommand(
-				context);
-		compositeCommand.setResolveDescription("Connect all needed connections");
-		disconnectCommand
-				.setResolveDescription("Disconnect all connections of the current \""
-						+ currentNode.getName() + "\"node");
-		AbstractStructuredDataModel targetNode = UIUtils.findGraphModel(root,
-				currentNode);
-		if (targetNode instanceof IConnectableModel) {
-			List<Object> connections = ((IConnectableModel) targetNode)
-					.getModelTargetConnections();
-			for (Iterator iterator = connections.iterator(); iterator.hasNext();) {
-				LineConnectionModel line = (LineConnectionModel) iterator
-						.next();
-				AbstractStructuredDataModel source = (AbstractStructuredDataModel) line
-						.getSource();
-				JavaBeanModel sourceBean = (JavaBeanModel) source
-						.getReferenceEntityModel();
-				JavaBeanModel sourceParent = sourceBean.getParent();
-				if (sourceParent == null) {
-					sourceParent = sourceBean;
-				}
-				AbstractStructuredDataModel sourceParentNode = UIUtils
-						.findGraphModel(root, sourceParent);
-				// Connect the parent command
-				AbstractStructuredDataModel targetParentNode = UIUtils
-						.findGraphModel(root, parentNode);
-				if (tempMap.get(sourceParentNode) == null) {
-					Java2JavaResolveCommand connectParent = new Java2JavaResolveCommand(
-							context);
-					connectParent.setResolveDescription("Connect the \""
-							+ sourceParent.getName() + "\" to the \""
-							+ parentNode.getName() + "\"");
-					connectParent.setSourceModel(sourceParentNode);
-					connectParent.setTargetModel(targetParentNode);
-					result.addResolveCommand(connectParent);
-					tempMap.put(sourceParentNode,targetParentNode);
-					compositeCommand.addCommand(connectParent);
-				}
-
-				disconnectCommand.addDisconnectionModel(line);
-			}
-		}
-		result.addResolveCommand(disconnectCommand);
-		if (!compositeCommand.isEmpty()) {
-			result.addResolveCommand(compositeCommand);
-		}
-	}
-
 	/**
 	 * If root node don't connect , it will ask user to connect them .
 	 * 
@@ -791,14 +693,26 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			isError = true;
 		}
 		if (model != null) {
+			setCollectionsInstanceClassName(model, current);
 			this.setSelectorIsUsed(rootClassName);
 			buildSourceInputProperties(listType, model, false, isError,
 					current, classLoader);
 		}
-		List list = new ArrayList();
+		List<JavaBeanModel> list = new ArrayList<JavaBeanModel>();
 		if (model != null)
 			list.add(model);
 		return list;
+	}
+
+	private void setCollectionsInstanceClassName(JavaBeanModel model,
+			ResourceConfigType resourceConfig) {
+		if (Collection.class.isAssignableFrom(model.getBeanClass())) {
+			String instanceName = SmooksModelUtils.getParmaText("beanClass",
+					resourceConfig);
+			if (instanceName != null) {
+				model.setBeanClassString(instanceName);
+			}
+		}
 	}
 
 	public Object buildSourceInputObjects(GraphInformations graphInfo,
@@ -1016,6 +930,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					model = new JavaBeanModel(null, referenceSelector);
 					model.setError("don't exist");
 					model.setProperties(new ArrayList());
+					setCollectionsInstanceClassName(model, resourceConfig);
 				}
 				if (currentModel.getError() != null) {
 					currentModel.addProperty(model);
@@ -1102,6 +1017,11 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	public DesignTimeAnalyzeResult[] analyzeGraphModel(
 			SmooksConfigurationFileGenerateContext context) {
 		checkRootNodeConnected(context);
-		return checkOtherNodeConnected(context);
+		List<DesignTimeAnalyzeResult> typeCheckResults = UIUtils
+				.checkTargetJavaModelType(context);
+		List<DesignTimeAnalyzeResult> connectionCheckResults = UIUtils
+				.checkJavaModelNodeConnection(context);
+		typeCheckResults.addAll(connectionCheckResults);
+		return typeCheckResults.toArray(new DesignTimeAnalyzeResult[] {});
 	}
 }

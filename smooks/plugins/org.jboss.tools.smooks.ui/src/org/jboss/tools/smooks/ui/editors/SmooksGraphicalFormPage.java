@@ -24,7 +24,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionLayer;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -57,6 +56,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -66,15 +66,12 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.TreeEvent;
 import org.eclipse.swt.events.TreeListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -86,7 +83,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IEditorInput;
@@ -123,7 +119,6 @@ import org.jboss.tools.smooks.model.DocumentRoot;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
-import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
 import org.jboss.tools.smooks.ui.IViewerInitor;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
@@ -719,6 +714,13 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		context.setDataMappingRootModel(this.rootModel);
 		context.setSmooksConfigFile(((IFileEditorInput) getEditorInput())
 				.getFile());
+		
+		context.setSourceViewerLabelProvider((LabelProvider)sourceViewer.getLabelProvider());
+		context.setSourceViewerContentProvider((ITreeContentProvider)sourceViewer.getContentProvider());
+		
+		context.setTargetViewerLabelProvider((LabelProvider)targetViewer.getLabelProvider());
+		context.setTargetViewerContentProvider((ITreeContentProvider)targetViewer.getContentProvider());
+		
 		context.setShell(getSite().getShell());
 	}
 

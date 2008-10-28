@@ -53,7 +53,10 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jboss.tools.smooks.analyzer.IAnalyzer#analyzeMappingGraphModel(org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext)
+	 * @see
+	 * org.jboss.tools.smooks.analyzer.IAnalyzer#analyzeMappingGraphModel(org
+	 * .jboss
+	 * .tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext)
 	 */
 	public void analyzeMappingGraphModel(
 			SmooksConfigurationFileGenerateContext context)
@@ -203,11 +206,11 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType, Object sourceObject,
 			Object targetObject) {
-		if(sourceObject instanceof DocumentObject){
-			sourceObject = ((DocumentObject)sourceObject).getRootTag();
+		if (sourceObject instanceof DocumentObject) {
+			sourceObject = ((DocumentObject) sourceObject).getRootTag();
 		}
-		if(targetObject instanceof List){
-			targetObject = (JavaBeanModel) ((List)targetObject).get(0);
+		if (targetObject instanceof List) {
+			targetObject = (JavaBeanModel) ((List) targetObject).get(0);
 		}
 		if (!(sourceObject instanceof AbstractXMLObject)
 				|| !(targetObject instanceof JavaBeanModel)) {
@@ -218,7 +221,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 
 		ResourceConfigType rootResourceConfig = findFirstMappingResourceConfig(listType);
 		// if can't find the root , return null
-		if(rootResourceConfig ==null) return null;
+		if (rootResourceConfig == null)
+			return null;
 		String xmlName = rootResourceConfig.getSelector();
 		AbstractXMLObject source = findXMLObjectByName(xmlName, sourceRoot);
 		if (source == null)
@@ -394,8 +398,12 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 
 	public DesignTimeAnalyzeResult[] analyzeGraphModel(
 			SmooksConfigurationFileGenerateContext context) {
-		// TODO Auto-generated method stub
-		return null;
+		List<DesignTimeAnalyzeResult> typeCheckResults = UIUtils
+				.checkTargetJavaModelType(context);
+		List<DesignTimeAnalyzeResult> connectionCheckResults = UIUtils
+				.checkJavaModelNodeConnection(context);
+		typeCheckResults.addAll(connectionCheckResults);
+		return typeCheckResults.toArray(new DesignTimeAnalyzeResult[] {});
 	}
 
 }
