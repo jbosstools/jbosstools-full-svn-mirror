@@ -121,9 +121,9 @@ public abstract class ComponentContentTest extends VpeTest {
 		nsIDOMElement vpeElement = findElementById(controller, elementId);
 		assertNotNull(vpeElement);
 
-		 DOMTreeDumper dumper = new DOMTreeDumper(
-		 VpeDebug.VISUAL_DUMP_PRINT_HASH);
-		 dumper.dumpToStream(System.out, vpeElement);
+		// DOMTreeDumper dumper = new DOMTreeDumper(
+		// VpeDebug.VISUAL_DUMP_PRINT_HASH);
+		// dumper.dumpToStream(System.out, vpeElement);
 
 		// get test element by id - get <test id="..." > element and get his
 		// first child
