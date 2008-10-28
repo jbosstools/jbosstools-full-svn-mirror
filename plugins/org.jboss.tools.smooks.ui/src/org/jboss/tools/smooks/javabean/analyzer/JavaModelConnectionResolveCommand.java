@@ -17,7 +17,7 @@ import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateCont
  * @author Dart
  *
  */
-public class Java2JavaResolveCommand extends ResolveCommand {
+public class JavaModelConnectionResolveCommand extends ResolveCommand {
 
 	private AbstractStructuredDataModel sourceModel;
 	
@@ -45,7 +45,7 @@ public class Java2JavaResolveCommand extends ResolveCommand {
 		this.targetModel = targetModel;
 	}
 
-	public Java2JavaResolveCommand(
+	public JavaModelConnectionResolveCommand(
 			SmooksConfigurationFileGenerateContext context) {
 		super(context);
 	}

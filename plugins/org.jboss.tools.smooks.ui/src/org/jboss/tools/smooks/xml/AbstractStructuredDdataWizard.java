@@ -17,31 +17,29 @@ import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
  * 
  */
 public abstract class AbstractStructuredDdataWizard extends Wizard implements
-		IStructuredDataCreationWizard ,INewWizard{
+		IStructuredDataCreationWizard, INewWizard {
 	protected IWorkbench workbench;
-	
+
 	protected IStructuredSelection selection;
-	
+
 	protected AbstractFileSelectionWizardPage page = null;
-	protected Object xsdElement  = null;
+	protected Object xsdElement = null;
 	protected IWizardNode strucutredDataCreationWizardNode;
-	/**
-	 * 
-	 */
+
 	public AbstractStructuredDdataWizard() {
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void addPages() {
-		if(page == null){
+		if (page == null) {
 			page = createAbstractFileSelectionWizardPage();
 			page.setSelection(this.selection);
 		}
 		this.addPage(page);
 	}
 
-	abstract protected AbstractFileSelectionWizardPage createAbstractFileSelectionWizardPage() ;
+	abstract protected AbstractFileSelectionWizardPage createAbstractFileSelectionWizardPage();
 
 	/*
 	 * (non-Javadoc)
@@ -53,18 +51,28 @@ public abstract class AbstractStructuredDdataWizard extends Wizard implements
 		xsdElement = this.page.getReturnValue();
 		return true;
 	}
+
 	public Object getTreeViewerInputContents() {
 		return xsdElement;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.ui.IStructuredDataCreationWizard#
+	 * getStructuredDataSourcePath()
+	 */
+	public String getStructuredDataSourcePath() {
+		return page.getFilePath();
+	}
+
 	public void init(IEditorSite site, IEditorInput input) {
-		
+
 	}
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.workbench = workbench;
 		this.selection = selection;
 	}
-	
-	
+
 }

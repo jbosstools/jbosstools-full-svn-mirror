@@ -12,16 +12,18 @@ package org.jboss.tools.smooks.javabean.ui;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.Section;
-import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
+import org.jboss.tools.smooks.ui.AbstractSmooksPropertySection;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
 
@@ -29,9 +31,11 @@ import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
  * @author Dart Peng
  * @Date : Oct 27, 2008
  */
-public class JavaBeanPropertiesSection extends AbstractPropertySection {
+public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 
 	private Text beanClassText;
+
+	private boolean lock = false;
 
 	@Override
 	public void createControls(Composite parent,
@@ -54,34 +58,76 @@ public class JavaBeanPropertiesSection extends AbstractPropertySection {
 
 		controlComposite.setLayout(gl);
 
-		factory.createLabel(controlComposite, "BeanClass");
+		factory.createLabel(controlComposite, "Target instance class name : ");
 
 		beanClassText = factory.createText(controlComposite, "");
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		beanClassText.setLayoutData(gd);
+		beanClassText.setEnabled(false);
+		hookBeanClasText();
 	}
 
-	public void refresh() {
-		super.refresh();
-		beanClassText.setEnabled(false);
+	private void hookBeanClasText() {
+		beanClassText.addModifyListener(new ModifyListener() {
+
+			public void modifyText(ModifyEvent arg0) {
+				JavaBeanModel model = getJavaBeanModel();
+				if (model != null) {
+					model.setBeanClassString(beanClassText.getText());
+					if (isLock())
+						return;
+					fireDirty();
+					refresh();
+				}
+			}
+
+		});
+	}
+
+	public boolean isLock() {
+		return lock;
+	}
+
+	private JavaBeanModel getJavaBeanModel() {
 		IStructuredSelection selection = (IStructuredSelection) this
 				.getSelection();
 		Object obj = selection.getFirstElement();
 		if (obj == null)
-			return;
+			return null;
 		if (obj instanceof EditPart) {
 			Object model = ((EditPart) obj).getModel();
 			if (model instanceof LineConnectionModel) {
 				AbstractStructuredDataModel target = (AbstractStructuredDataModel) ((LineConnectionModel) model)
 						.getTarget();
 				Object referenceObj = target.getReferenceEntityModel();
-				if(referenceObj instanceof JavaBeanModel){
-					beanClassText.setEnabled(true);
-					String className = ((JavaBeanModel)referenceObj).getBeanClass().getName();
-					beanClassText.setText(className);
+				if (referenceObj instanceof JavaBeanModel) {
+					return (JavaBeanModel) referenceObj;
 				}
 			}
 		}
+		return null;
+	}
+
+	public void refresh() {
+		super.refresh();
+
+		JavaBeanModel model = getJavaBeanModel();
+		if (model != null) {
+			if (!beanClassText.getEnabled())
+				beanClassText.setEnabled(true);
+			String className = model.getBeanClassString();
+			lockEventFire();
+			beanClassText.setText(className);
+			unLockEventFire();
+		}
+	}
+
+	private void unLockEventFire() {
+		lock = false;
+	}
+
+	private void lockEventFire() {
+		lock = true;
 	}
 
 }

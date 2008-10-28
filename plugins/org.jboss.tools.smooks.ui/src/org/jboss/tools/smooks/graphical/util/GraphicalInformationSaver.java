@@ -42,7 +42,7 @@ public class GraphicalInformationSaver {
 	private IEditorInput input;
 
 	protected Resource graphicalFileResource;
-	
+
 	private IFile file = null;
 
 	/**
@@ -114,6 +114,12 @@ public class GraphicalInformationSaver {
 
 	public void doSave(IProgressMonitor monitor, String sourceid,
 			String targetid) throws IOException, CoreException {
+		this.doSave(monitor, sourceid,targetid,null);
+	}
+
+	public void doSave(IProgressMonitor monitor, String sourceid,
+			String targetid, Properties properties) throws IOException,
+			CoreException {
 		GraphInformations graph = null;
 		if (graphicalFileResource != null) {
 			if (graphicalFileResource.getContents().isEmpty()) {
@@ -125,10 +131,15 @@ public class GraphicalInformationSaver {
 			}
 			if (graph != null) {
 				initMappingTypes(graph, sourceid, targetid);
+				Params params = GraphicalFactory.eINSTANCE.createParams();
+				graph.setParams(params);
+				initParams(params, properties);
 			}
 			graphicalFileResource.save(Collections.EMPTY_MAP);
-			if(this.file != null) file.refreshLocal(IResource.DEPTH_ONE, monitor);
+			if (this.file != null)
+				file.refreshLocal(IResource.DEPTH_ONE, monitor);
 		}
+
 	}
 
 	public void doSave(IProgressMonitor monitor,
@@ -136,36 +147,18 @@ public class GraphicalInformationSaver {
 			CoreException {
 		String sourceID = context.getSourceDataTypeID();
 		String targetID = context.getTargetDataTypeID();
-		GraphInformations graph = null;
-		if (graphicalFileResource != null) {
-			if (graphicalFileResource.getContents().isEmpty()) {
-				graph = GraphicalFactory.eINSTANCE.createGraphInformations();
-				graphicalFileResource.getContents().add(graph);
-			} else {
-				graph = (GraphInformations) graphicalFileResource.getContents()
-						.get(0);
-			}
-			if (graph != null) {
-				initMappingTypes(graph, sourceID, targetID);
-				Params params = GraphicalFactory.eINSTANCE.createParams();
-				graph.setParams(params);
-				initParams(params, context);
-			}
-			graphicalFileResource.save(Collections.EMPTY_MAP);
-			if(this.file != null) file.refreshLocal(IResource.DEPTH_ONE, monitor);
-		}
-
+		Properties properties = context.getProperties();
+		this.doSave(monitor, sourceID,targetID,properties);
 	}
 
-	private void initParams(Params params,
-			SmooksConfigurationFileGenerateContext context) {
-		Properties pros = context.getProperties();
-		Enumeration<Object> keys = pros.keys();
+	private void initParams(Params params, Properties properties) {
+		if(properties == null) return;
+		Enumeration<Object> keys = properties.keys();
 		while (keys.hasMoreElements()) {
 			String key = (String) keys.nextElement();
 			Param param = GraphicalFactory.eINSTANCE.createParam();
 			param.setName(key);
-			param.setValue(pros.getProperty(key));
+			param.setValue(properties.getProperty(key));
 			params.getParam().add(param);
 		}
 	}

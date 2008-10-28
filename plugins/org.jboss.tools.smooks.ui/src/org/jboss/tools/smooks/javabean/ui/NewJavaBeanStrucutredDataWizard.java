@@ -27,6 +27,7 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
 
@@ -34,24 +35,30 @@ import org.jboss.tools.smooks.ui.SmooksUIActivator;
  * @author Dart Peng
  * @Date Aug 5, 2008
  */
-public class NewJavaBeanStrucutredDataWizard extends Wizard implements IStructuredDataCreationWizard,INewWizard{
+public class NewJavaBeanStrucutredDataWizard extends Wizard implements
+		IStructuredDataCreationWizard, INewWizard {
 	JavaBeanConfigWizardPage page = null;
 	IJavaProject project = null;
 	Object result = null;
 	Properties properties = new Properties();
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
 	@Override
 	public void addPages() {
 		super.addPages();
-		if(page == null){
+		if (page == null) {
 			page = new JavaBeanConfigWizardPage(project);
 			this.addPage(page);
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
 	 */
 	@Override
@@ -67,12 +74,12 @@ public class NewJavaBeanStrucutredDataWizard extends Wizard implements IStructur
 	}
 
 	public void init(IEditorSite site, IEditorInput input) {
-		if(input != null && input instanceof IFileEditorInput){
-			IFileEditorInput fi = (IFileEditorInput)input;
+		if (input != null && input instanceof IFileEditorInput) {
+			IFileEditorInput fi = (IFileEditorInput) input;
 			IProject project = fi.getFile().getProject();
-			if(project instanceof IJavaProject){
-				this.project = (IJavaProject)project;
-			}else{
+			if (project instanceof IJavaProject) {
+				this.project = (IJavaProject) project;
+			} else {
 				this.project = JavaCore.create(project);
 			}
 		}
@@ -87,23 +94,34 @@ public class NewJavaBeanStrucutredDataWizard extends Wizard implements IStructur
 	}
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		if(selection != null){
+		if (selection != null) {
 			Object obj = selection.getFirstElement();
-			if(obj instanceof JavaProject){
-				this.project = (JavaProject)obj;
+			if (obj instanceof JavaProject) {
+				this.project = (JavaProject) obj;
 			}
-			if(obj instanceof IResource){
-				IProject project = ((IResource)obj).getProject();
+			if (obj instanceof IResource) {
+				IProject project = ((IResource) obj).getProject();
 				this.project = JavaCore.create(project);
 			}
-			
-			if(project == null){
-				if(obj instanceof IAdaptable){
-					IResource relateResource =(IResource) ((IAdaptable)obj).getAdapter(IResource.class);
+
+			if (project == null) {
+				if (obj instanceof IAdaptable) {
+					IResource relateResource = (IResource) ((IAdaptable) obj)
+							.getAdapter(IResource.class);
 					IProject project = relateResource.getProject();
 					this.project = JavaCore.create(project);
 				}
 			}
 		}
+	}
+
+	public String getStructuredDataSourcePath() {
+		JavaBeanModel model = page.getJavaBeanModel();
+		if (model != null) {
+			Class clazz = model.getBeanClass();
+			if (clazz != null)
+				return clazz.getName();
+		}
+		return null;
 	}
 }

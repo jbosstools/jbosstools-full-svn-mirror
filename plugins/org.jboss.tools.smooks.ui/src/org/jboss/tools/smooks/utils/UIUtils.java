@@ -1,6 +1,9 @@
 package org.jboss.tools.smooks.utils;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +15,7 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.layout.FillLayout;
@@ -20,11 +24,19 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.jboss.tools.smooks.analyzer.CompositeResolveCommand;
+import org.jboss.tools.smooks.analyzer.DesignTimeAnalyzeResult;
+import org.jboss.tools.smooks.javabean.analyzer.JavaModelConnectionResolveCommand;
+import org.jboss.tools.smooks.javabean.analyzer.JavaModelResolveCommand;
+import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
 import org.jboss.tools.smooks.ui.ViewerInitorStore;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
+import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
+import org.jboss.tools.smooks.ui.gef.model.TargetModel;
+import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 
 /**
  * 
@@ -39,19 +51,158 @@ public class UIUtils {
 		fill.marginWidth = marginW;
 		return fill;
 	}
-	
-	public static Status createErrorStatus(Throwable throwable,String message){
-		while(throwable != null && throwable instanceof InvocationTargetException){
-			throwable = ((InvocationTargetException)throwable).getTargetException();
+
+	public static void createJavaModelConnectionErrorResolveCommand(
+			DesignTimeAnalyzeResult result,
+			SmooksConfigurationFileGenerateContext context,
+			JavaBeanModel currentNode, JavaBeanModel parentNode) {
+		GraphRootModel root = context.getGraphicalRootModel();
+		HashMap<AbstractStructuredDataModel, AbstractStructuredDataModel> tempMap = new HashMap<AbstractStructuredDataModel, AbstractStructuredDataModel>();
+		// Disconnect all connections command
+		JavaModelConnectionResolveCommand disconnectCommand = new JavaModelConnectionResolveCommand(
+				context);
+		CompositeResolveCommand compositeCommand = new CompositeResolveCommand(
+				context);
+		compositeCommand
+				.setResolveDescription("Connect all needed connections");
+		disconnectCommand
+				.setResolveDescription("Disconnect all connections of the current \""
+						+ currentNode.getName() + "\"node");
+		AbstractStructuredDataModel targetNode = UIUtils.findGraphModel(root,
+				currentNode);
+		if (targetNode instanceof IConnectableModel) {
+			List<Object> connections = ((IConnectableModel) targetNode)
+					.getModelTargetConnections();
+			for (Iterator iterator = connections.iterator(); iterator.hasNext();) {
+				LineConnectionModel line = (LineConnectionModel) iterator
+						.next();
+				AbstractStructuredDataModel source = (AbstractStructuredDataModel) line
+						.getSource();
+				Object sourceBean = (Object) source.getReferenceEntityModel();
+				Object sourceParent = context.getSourceViewerProvider()
+						.getParent(sourceBean);
+				if (sourceParent == null) {
+					sourceParent = sourceBean;
+				}
+				AbstractStructuredDataModel sourceParentNode = UIUtils
+						.findGraphModel(root, sourceParent);
+				// Connect the parent command
+				AbstractStructuredDataModel targetParentNode = UIUtils
+						.findGraphModel(root, parentNode);
+				if (tempMap.get(sourceParentNode) == null) {
+					JavaModelConnectionResolveCommand connectParent = new JavaModelConnectionResolveCommand(
+							context);
+					connectParent.setResolveDescription("Connect the \""
+							+ context.getSourceViewerLabelProvider().getText(
+									sourceParent) + "\" to the \""
+							+ parentNode.getName() + "\"");
+					connectParent.setSourceModel(sourceParentNode);
+					connectParent.setTargetModel(targetParentNode);
+					result.addResolveCommand(connectParent);
+					tempMap.put(sourceParentNode, targetParentNode);
+					compositeCommand.addCommand(connectParent);
+				}
+
+				disconnectCommand.addDisconnectionModel(line);
+			}
 		}
-		return new Status(Status.ERROR,SmooksUIActivator.PLUGIN_ID,message,throwable);
+		result.addResolveCommand(disconnectCommand);
+		if (!compositeCommand.isEmpty()) {
+			result.addResolveCommand(compositeCommand);
+		}
 	}
-	
-	public static void showErrorDialog(Shell shell,Status status){
+
+	public static List<DesignTimeAnalyzeResult> checkJavaModelNodeConnection(
+			SmooksConfigurationFileGenerateContext context) {
+		GraphRootModel root = context.getGraphicalRootModel();
+		List targetList = root.loadTargetModelList();
+		List<DesignTimeAnalyzeResult> arList = new ArrayList<DesignTimeAnalyzeResult>();
+		for (Iterator iterator = targetList.iterator(); iterator.hasNext();) {
+			AbstractStructuredDataModel targetm = (AbstractStructuredDataModel) iterator
+					.next();
+			if (targetm instanceof IConnectableModel) {
+				if (((IConnectableModel) targetm).getModelTargetConnections()
+						.isEmpty()) {
+					continue;
+				}
+				if (!(targetm.getReferenceEntityModel() instanceof JavaBeanModel)) {
+					continue;
+				}
+				JavaBeanModel javaModel = (JavaBeanModel) targetm
+						.getReferenceEntityModel();
+				JavaBeanModel parent = javaModel.getParent();
+				if (parent != null) {
+					AbstractStructuredDataModel pgm = UIUtils.findGraphModel(
+							root, parent);
+					if (pgm != null && pgm instanceof IConnectableModel) {
+						if (((IConnectableModel) pgm)
+								.getModelTargetConnections().isEmpty()) {
+							String errorMessage = "The parent of Java node \""
+									+ javaModel.getName()
+									+ "\" : \""
+									+ parent.getName()
+									+ "\" doesn't be connected by any source node";
+							DesignTimeAnalyzeResult dr = new DesignTimeAnalyzeResult();
+							dr.setErrorMessage(errorMessage);
+							createJavaModelConnectionErrorResolveCommand(dr,
+									context, javaModel, parent);
+							arList.add(dr);
+						}
+					}
+				}
+			}
+		}
+		return arList;
+	}
+
+	public static List<DesignTimeAnalyzeResult> checkTargetJavaModelType(
+			SmooksConfigurationFileGenerateContext context) {
+		GraphRootModel root = context.getGraphicalRootModel();
+		List<DesignTimeAnalyzeResult> resultList = new ArrayList<DesignTimeAnalyzeResult>();
+		List<TargetModel> targetList = root.loadTargetModelList();
+		for (Iterator<TargetModel> iterator = targetList.iterator(); iterator
+				.hasNext();) {
+			TargetModel targetModel = (TargetModel) iterator.next();
+			Object refObj = targetModel.getReferenceEntityModel();
+			if (refObj instanceof JavaBeanModel) {
+				Class clazz = ((JavaBeanModel) refObj).getBeanClass();
+				if (clazz != null && (clazz.isInterface())) {
+					DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
+					result
+							.setErrorMessage("Java model \""
+									+ ((JavaBeanModel) refObj).getName()
+									+ "\" can't be instanced case its instance class is interface or abstractclass");
+					if (List.class.isAssignableFrom(clazz)) {
+						JavaModelResolveCommand command = new JavaModelResolveCommand(
+								context);
+						command
+								.setResolveDescription("Change the instance class to \"java.util.ArrayList\"");
+						command.setInstanceName("java.util.ArrayList");
+						command.setJavaBean((JavaBeanModel) refObj);
+						result.addResolveCommand(command);
+					}
+					resultList.add(result);
+				}
+			}
+		}
+		return resultList;
+	}
+
+	public static Status createErrorStatus(Throwable throwable, String message) {
+		while (throwable != null
+				&& throwable instanceof InvocationTargetException) {
+			throwable = ((InvocationTargetException) throwable)
+					.getTargetException();
+		}
+		return new Status(Status.ERROR, SmooksUIActivator.PLUGIN_ID, message,
+				throwable);
+	}
+
+	public static void showErrorDialog(Shell shell, Status status) {
 		ErrorDialog.openError(shell, "Error", "error", status);
 	}
-	
-	public static Status createErrorStatus(Throwable throwable){
+
+	public static Status createErrorStatus(Throwable throwable) {
 		return createErrorStatus(throwable, "Error");
 	}
 
@@ -79,7 +230,8 @@ public class UIUtils {
 
 	public static LineConnectionModel getFirstSourceModelViaConnection(
 			AbstractStructuredDataModel target) {
-		if(target == null) return null;
+		if (target == null)
+			return null;
 		if (target instanceof IConnectableModel) {
 			List list = ((IConnectableModel) target)
 					.getModelSourceConnections();
@@ -90,10 +242,11 @@ public class UIUtils {
 		}
 		return null;
 	}
-	
+
 	public static LineConnectionModel getFirstTargetModelViaConnection(
 			AbstractStructuredDataModel source) {
-		if(source == null) return null;
+		if (source == null)
+			return null;
 		if (source instanceof IConnectableModel) {
 			List list = ((IConnectableModel) source)
 					.getModelTargetConnections();

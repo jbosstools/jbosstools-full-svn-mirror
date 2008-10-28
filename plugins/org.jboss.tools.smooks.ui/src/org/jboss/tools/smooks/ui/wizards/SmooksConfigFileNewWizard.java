@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
@@ -42,6 +43,10 @@ import org.jboss.tools.smooks.ui.editors.TypeIDSelectionWizardPage;
 
 public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 		ISmooksDataCreationAddtionWizard {
+	public static final String PRO_SOURCE_DATA_PATH = "sourceDataPath";
+
+	public static final String PRO_TARGET_DATA_PATH = "targetDataPath";
+
 	private SmooksConfigFileNewWizardPage page;
 	private TypeIDSelectionWizardPage typeIDPage;
 
@@ -60,7 +65,8 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 		super();
 		setNeedsProgressMonitor(true);
 		super.setWindowTitle("New Smooks Configuration File");
-		setDefaultPageImageDescriptor(ModelUIImages.getImageDescriptor(ModelUIImages.WIZARD_NEW_PROJECT));
+		setDefaultPageImageDescriptor(ModelUIImages
+				.getImageDescriptor(ModelUIImages.WIZARD_NEW_PROJECT));
 	}
 
 	/**
@@ -118,9 +124,10 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 	private void doFinish(final IFile file, IProgressMonitor monitor)
 			throws CoreException {
 		// create a sample file
-		String sourceTypeID = typeIDPage.getSourceID();
-		String targetTypeID = typeIDPage.getTargetID();
-
+		final String sourceTypeID = typeIDPage.getSourceID();
+		final String targetTypeID = typeIDPage.getTargetID();
+		final String[] sourceDataPath = new String[] { null };
+		final String[] targetDataPath = new String[] { null };
 		try {
 			InputStream stream = openContentStream();
 			if (file.exists()) {
@@ -129,11 +136,12 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 				file.create(stream, true, monitor);
 			}
 			stream.close();
-			GraphicalInformationSaver ginforSave = new GraphicalInformationSaver(
-					file);
-			ginforSave.doSave(monitor, sourceTypeID, targetTypeID);
 		} catch (IOException e) {
+			// ignore
 		}
+		final GraphicalInformationSaver ginforSave = new GraphicalInformationSaver(
+				file);
+
 		monitor.worked(1);
 		monitor.setTaskName("Opening file for editing...");
 		getShell().getDisplay().asyncExec(new Runnable() {
@@ -156,32 +164,41 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 					if (sourceWizard instanceof IStructuredDataCreationWizard) {
 						Object sourceObj = ((IStructuredDataCreationWizard) sourceWizard)
 								.getTreeViewerInputContents();
-//						if (sourceObj instanceof List) {
-//							if (!((List) sourceObj).isEmpty()) {
-//								sourceObj = ((List) sourceObj).get(0);
-//							}
-//						}
+						sourceDataPath[0] = ((IStructuredDataCreationWizard) sourceWizard)
+								.getStructuredDataSourcePath();
 						input.setSourceTreeViewerInputContents(sourceObj);
 					}
 
 					if (targetWizard instanceof IStructuredDataCreationWizard) {
 						Object targetObj = ((IStructuredDataCreationWizard) targetWizard)
 								.getTreeViewerInputContents();
-//						if (targetObj instanceof List) {
-//							if (!((List) targetObj).isEmpty()) {
-//								targetObj = ((List) targetObj).get(0);
-//							}
-//						}
+						targetDataPath[0] = ((IStructuredDataCreationWizard) targetWizard)
+								.getStructuredDataSourcePath();
 						input.setTargetTreeViewerInputContents(targetObj);
 
 					}
-
+					Properties properties = null;
+					if (sourceDataPath[0] != null || targetDataPath[0] != null) {
+						properties = new Properties();
+						if (sourceDataPath[0] != null) {
+							properties.setProperty(PRO_SOURCE_DATA_PATH, sourceDataPath[0]);
+						}
+						if (targetDataPath[0] != null) {
+							properties.setProperty(PRO_TARGET_DATA_PATH, targetDataPath[0]);
+						}
+					}
+					try {
+						ginforSave.doSave(null, sourceTypeID, targetTypeID, properties);
+					} catch (IOException e) {
+					} catch (CoreException e) {
+					}
 					IDE.openEditor(page, input, SmooksFormEditor.EDITOR_ID,
 							true);// openEditor(page, file, true);
 				} catch (PartInitException e) {
 				}
 			}
 		});
+		
 		monitor.worked(1);
 	}
 

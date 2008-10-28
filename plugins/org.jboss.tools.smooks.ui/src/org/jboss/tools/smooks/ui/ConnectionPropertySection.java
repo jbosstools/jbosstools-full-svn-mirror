@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.forms.widgets.Section;
-import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataConnectionModel;
@@ -44,7 +43,7 @@ import org.jboss.tools.smooks.ui.gef.model.PropertyModel;
  * @author Dart Peng<br>
  *         Date : Sep 4, 2008
  */
-public class ConnectionPropertySection extends AbstractPropertySection {
+public class ConnectionPropertySection extends AbstractSmooksPropertySection {
 
 	private TableViewer tableViewer;
 
@@ -107,9 +106,11 @@ public class ConnectionPropertySection extends AbstractPropertySection {
 				if (element instanceof PropertyModel && value instanceof String) {
 					if (property.equals("name")) {
 						((PropertyModel) element).setName((String) value);
+						fireDirty();
 					}
 					if (property.equals("value")) {
 						((PropertyModel) element).setValue((String) value);
+						fireDirty();
 					}
 					refresh();
 				}
