@@ -27,8 +27,8 @@ public class SmooksTextEdtor extends TextEditor {
 		super();
 		Assert.isNotNull(error);
 		this.error = error;
-		while(error != null && error instanceof InvocationTargetException){
-			error = ((InvocationTargetException)error).getTargetException();
+		while(this.error != null && this.error instanceof InvocationTargetException){
+			this.error = ((InvocationTargetException)this.error).getTargetException();
 		}
 	}
 
@@ -57,7 +57,9 @@ public class SmooksTextEdtor extends TextEditor {
 				.get(SmooksGraphConstants.IMAGE_ERROR));
 
 	    Label messageLabel = new Label(errorComposite, SWT.NONE);
-		messageLabel.setText(error.getLocalizedMessage());
+	    String errorMessage = error.getLocalizedMessage();
+	    if(errorMessage == null ) errorMessage = "unknown error happen";
+		messageLabel.setText(errorMessage);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		messageLabel.setLayoutData(gd);
 
