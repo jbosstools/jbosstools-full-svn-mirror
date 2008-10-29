@@ -1488,10 +1488,12 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 //        System.err.println("Hello world4");
     }
 
-    @SuppressWarnings("restriction")
     public void beforeTemplateCreated(VpePageContext pageContext, Node sourceNode, nsIDOMDocument domDocument) {
-        final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
-
+        IFile file = null;
+        //Fix for JBIDE-3030
+        if(pageContext.getVisualBuilder().getCurrentIncludeInfo()!=null) {
+        	file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
+        }
         if ((file != null)) {
           //  Node first((Element
             if (sourceNode.getNodeType() == Node.TEXT_NODE) {

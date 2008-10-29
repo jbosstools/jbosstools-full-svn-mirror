@@ -376,7 +376,7 @@ public final class ElService implements IELService {
     }
 
     public String replaceElAndResources(VpePageContext pageContext, Node attributeNode) {
-        final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
+   
         
         String attribuString = null;
         if (attributeNode instanceof Attr) {
@@ -387,6 +387,11 @@ public final class ElService implements IELService {
         String rst  = attribuString;
         
         rst = ResourceUtil.getBundleValue(pageContext, attributeNode);
+        //fix for JBIDE-3030
+        if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null) {
+        	return rst;
+        }
+        final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
         rst = replaceEl(file, rst);
 
         return rst;

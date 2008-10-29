@@ -238,6 +238,10 @@ public class VpeFunctionSrc extends VpeFunction {
      */
     protected String resolveEL(VpePageContext pageContext, String value) {
         String resolvedValue = value.replaceFirst("^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        //Fix for JBIDE-3030
+        if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null){
+        	return resolvedValue;
+        }
         final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
 
         resolvedValue = ElService.getInstance().replaceEl(file, resolvedValue);

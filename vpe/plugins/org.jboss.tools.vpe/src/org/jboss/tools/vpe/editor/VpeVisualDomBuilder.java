@@ -2208,7 +2208,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		VpeIncludeInfo info = (VpeIncludeInfo) includeStack.get(1);
 		return ((IndexedRegion) info.getElement()).getStartOffset();
 	}
-
+	/**
+	 * Can be a null in some cases, for example when we open an external file, see JBIDE-3030
+	 * @return file include info
+	 */
 	public VpeIncludeInfo getCurrentIncludeInfo() {
 		if (includeStack.size() <= 0)
 			return null;
