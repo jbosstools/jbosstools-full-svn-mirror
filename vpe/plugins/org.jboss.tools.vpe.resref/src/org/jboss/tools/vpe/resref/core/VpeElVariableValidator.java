@@ -12,6 +12,7 @@ package org.jboss.tools.vpe.resref.core;
 
 import java.util.Properties;
 
+import org.jboss.tools.common.el.core.model.ELModel;
 import org.jboss.tools.common.el.core.parser.ELParser;
 import org.jboss.tools.common.el.core.parser.ELParserUtil;
 import org.jboss.tools.common.meta.action.impl.DefaultWizardDataValidator;
@@ -45,8 +46,8 @@ public class VpeElVariableValidator extends DefaultWizardDataValidator {
 		} 
 	 	String location = (String) data.get("location"); //$NON-NLS-1$
 	 	ELParser elParser = ELParserUtil.getDefaultFactory().createParser();
-	 	elParser.parse("#{"+location+'}'); //$NON-NLS-1$
-	 	if(elParser.getSyntaxErrors().size()>0) {
+	 	ELModel model = elParser.parse("#{"+location+'}'); //$NON-NLS-1$
+	 	if(model == null || model.getSyntaxErrors().size()>0) {
 	 		message=Messages.INVALID_EL_EXPRESSION;
 	 	}
 	 	
