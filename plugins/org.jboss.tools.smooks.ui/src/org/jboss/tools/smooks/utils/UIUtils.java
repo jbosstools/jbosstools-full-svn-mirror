@@ -2,7 +2,6 @@ package org.jboss.tools.smooks.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -15,7 +14,6 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.layout.FillLayout;
@@ -165,27 +163,68 @@ public class UIUtils {
 			TargetModel targetModel = (TargetModel) iterator.next();
 			Object refObj = targetModel.getReferenceEntityModel();
 			if (refObj instanceof JavaBeanModel) {
-				Class clazz = ((JavaBeanModel) refObj).getBeanClass();
-				if (clazz != null && (clazz.isInterface())) {
-					DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
-					result
-							.setErrorMessage("Java model \""
-									+ ((JavaBeanModel) refObj).getName()
-									+ "\" can't be instanced case its instance class is interface or abstractclass");
-					if (List.class.isAssignableFrom(clazz)) {
+				if (!targetModel.getModelTargetConnections().isEmpty()) {
+					String instanceName = ((JavaBeanModel) refObj)
+							.getBeanClassString();
+					Class instanceClazz = null;
+					if(((JavaBeanModel) refObj).isPrimitive()) {
+						// TODO process primitive type
+						continue;
+					}
+					String errorMessage = "";
+					try {
+						ClassLoader loader = newProjectClassLoader(context
+								.getSmooksConfigFile());
+						instanceClazz = loader.loadClass(instanceName);
+					} catch (Exception e) {
+						errorMessage = e.toString();
+					}
+					if (instanceClazz == null) {
+						DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
+						result.setErrorMessage("The instance class of \""
+								+ ((JavaBeanModel) refObj).getName()
+								+ "\" can't be loaded. Instance name is \"" + instanceName + "\"");
 						JavaModelResolveCommand command = new JavaModelResolveCommand(
 								context);
 						command
-								.setResolveDescription("Change the instance class to \"java.util.ArrayList\"");
-						command.setInstanceName("java.util.ArrayList");
+								.setResolveDescription("Change the instance class to \""
+										+ ((JavaBeanModel) refObj)
+												.getBeanClass()
+												.getCanonicalName() + "\"");
+						command.setInstanceName(((JavaBeanModel) refObj).getBeanClass().getCanonicalName());
 						command.setJavaBean((JavaBeanModel) refObj);
 						result.addResolveCommand(command);
+						resultList.add(result);
 					}
-					resultList.add(result);
+					if (instanceClazz != null && instanceClazz.isInterface()) {
+						DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
+						result
+								.setErrorMessage("Java model \""
+										+ ((JavaBeanModel) refObj).getName()
+										+ "\" can't be instanced. Instance name is \"" + instanceName + "\"");
+						if (List.class.isAssignableFrom(instanceClazz)) {
+							JavaModelResolveCommand command = new JavaModelResolveCommand(
+									context);
+							command
+									.setResolveDescription("Change the instance class to \"java.util.ArrayList\"");
+							command.setInstanceName("java.util.ArrayList");
+							command.setJavaBean((JavaBeanModel) refObj);
+							result.addResolveCommand(command);
+						}
+						resultList.add(result);
+					}
 				}
 			}
 		}
 		return resultList;
+	}
+
+	public static ClassLoader newProjectClassLoader(IFile file)
+			throws Exception {
+		IProject p = file.getProject();
+		IJavaProject jp = JavaCore.create(p);
+		ProjectClassLoader loader = new ProjectClassLoader(jp);
+		return loader;
 	}
 
 	public static Status createErrorStatus(Throwable throwable, String message) {

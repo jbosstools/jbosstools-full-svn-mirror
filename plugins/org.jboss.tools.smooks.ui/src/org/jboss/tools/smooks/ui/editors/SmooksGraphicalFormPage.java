@@ -1289,7 +1289,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 						SWT.NONE);
 				Menu menu = new Menu(getSite().getShell(), SWT.POP_UP);
 				List<ResolveCommand> list = result.getResolveProblem();
-				for (Iterator iterator2 = list.iterator(); iterator2.hasNext();) {
+				for (Iterator<ResolveCommand> iterator2 = list.iterator(); iterator2.hasNext();) {
 					final ResolveCommand resolveCommand = (ResolveCommand) iterator2
 							.next();
 					MenuItem item = new MenuItem(menu, SWT.NONE);
