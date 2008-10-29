@@ -118,7 +118,6 @@ public class NewPortletClassWizardPage extends NewJavaClassWizardPageEx {
 	protected void handleClassButtonSelected() {
 		getControl().setCursor(new Cursor(getShell().getDisplay(), SWT.CURSOR_WAIT));
 		IProject project = (IProject) model.getProperty(PROJECT);
-		IVirtualComponent component = ComponentCore.createComponent(project);
 		MultiSelectFilteredFileSelectionDialog ms = new MultiSelectFilteredFileSelectionDialog(
 				getShell(),
 				"New Portlet",
@@ -126,7 +125,13 @@ public class NewPortletClassWizardPage extends NewJavaClassWizardPageEx {
 				new String[0], 
 				false, 
 				project);
-		IContainer root = component.getRootFolder().getUnderlyingFolder();
+		IVirtualComponent component = ComponentCore.createComponent(project);
+		IContainer root = null;
+		if (component != null) {
+			root = component.getRootFolder().getUnderlyingFolder();
+		} else {
+			root = project;
+		}
 		ms.setInput(root);
 		ms.open();
 		if (ms.getReturnCode() == Window.OK) {
