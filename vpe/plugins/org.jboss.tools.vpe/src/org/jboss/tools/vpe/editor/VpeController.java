@@ -10,11 +10,11 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
@@ -31,6 +31,7 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.bindings.Binding;
 import org.eclipse.jface.bindings.keys.KeySequence;
 import org.eclipse.jface.bindings.keys.KeyStroke;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -261,8 +262,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		dropWindow = new VpeDropWindow(editPart.getSite().getShell());
 	}
 
-	void init(StructuredTextEditor sourceEditor, MozillaEditor visualEditor)
-			throws Exception {
+	void init(StructuredTextEditor sourceEditor, MozillaEditor visualEditor) {
 		this.sourceEditor = sourceEditor;
 		if (sourceEditor instanceof IJSPTextEditor) {
 			((IJSPTextEditor) sourceEditor).setVPEController(this);
@@ -1868,16 +1868,28 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	ExtendedProperties createExtendedProperties(Node node) {
-		try {
+	
 			Class c = ModelFeatureFactory.getInstance().getFeatureClass(
 					"org.jboss.tools.jst.jsp.outline.VpeProperties"); //$NON-NLS-1$
-			return (ExtendedProperties) c.getDeclaredConstructor(
-					new Class[] { Node.class }).newInstance(
-					new Object[] { node });
-		} catch (Exception e) {
-			VpePlugin.reportProblem(e);
+			try {
+				return (ExtendedProperties) c.getDeclaredConstructor(
+						new Class[] { Node.class }).newInstance(
+						new Object[] { node });
+			} catch (IllegalArgumentException e) {
+				VpePlugin.getPluginLog().logError(e);
+			} catch (SecurityException e) {
+				VpePlugin.getPluginLog().logError(e);
+			} catch (InstantiationException e) {
+				VpePlugin.getPluginLog().logError(e);
+			} catch (IllegalAccessException e) {
+				VpePlugin.getPluginLog().logError(e);
+			} catch (InvocationTargetException e) {
+				VpePlugin.getPluginLog().logError(e);
+			} catch (NoSuchMethodException e) {
+				VpePlugin.getPluginLog().logError(e);
+			}
 			return null;
-		}
+
 	}
 
 	private void test(Node node) {
@@ -2200,7 +2212,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 
 		public void run() {
-			try {
+
 				String tagName = item.getAttributeValue("name"); //$NON-NLS-1$
 
 				XModelObject parent = item.getParent();
@@ -2267,9 +2279,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				p.put("selectionProvider", selProvider); //$NON-NLS-1$
 				PaletteInsertHelper.insertIntoEditor(sourceEditor
 						.getTextViewer(), p);
-			} catch (Exception e) {
-				VpePlugin.reportProblem(e);
-			}
 
 		}
 
@@ -2320,12 +2329,14 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			this.offset = offset;
 			this.length = length;
 			if (length > 0) {
-				try {
-					text = sourceEditor.getTextViewer().getDocument().get(
-							offset, length);
-				} catch (Exception ex) {
-					VpePlugin.reportProblem(ex);
-				}
+
+					try {
+						text = sourceEditor.getTextViewer().getDocument().get(
+								offset, length);
+					} catch (BadLocationException e) {
+						VpePlugin.getPluginLog().logError(e);
+					}
+
 			}
 		}
 
@@ -2335,7 +2346,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			try {
 				text = sourceEditor.getTextViewer().getDocument().get(offset,
 						length);
-			} catch (Exception ex) {
+			} catch (BadLocationException ex) {
 				VpePlugin.reportProblem(ex);
 			}
 		}
@@ -2747,11 +2758,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					.getInnerDropInfo(mouseEvent);
 			caretParent = visualDropInfo.getDropContainer();
 			caretOffset = visualDropInfo.getDropOffset();
-			try {
-				canDrop = true;
-			} catch (Exception ex) {
-				VpePlugin.reportProblem(ex);
-			}
+			canDrop = true;
+
 		}
 		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 			System.out
@@ -3048,12 +3056,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public VpeIncludeList getIncludeList() {
-		try {
-			if (includeList == null)
-				throw new Exception("includeList - NULL!!!"); //$NON-NLS-1$
-		} catch (Exception e) {
-			VpePlugin.getPluginLog().logError(e);
-		}
+
+		if (includeList == null)
+				VpePlugin.getPluginLog().logError("includeList - NULL!!!");
+
 		return includeList;
 	}
 	
