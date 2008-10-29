@@ -141,6 +141,10 @@ public final class ElService implements IELService {
      */
     public boolean isCloneableNode(VpePageContext pageContext,Node sourceNode) {
         boolean rst = false;
+        // fix for JBIDE-3030
+        if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null) {
+        	return rst;
+        }
         final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
         
         if (((this.isAvailable(file) && this.isAvailableForNode(sourceNode, file))) || isInResourcesBundle(pageContext, sourceNode)){
