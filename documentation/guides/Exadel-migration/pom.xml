@@ -37,7 +37,7 @@
 					</dependency>
 				</dependencies>
 				<configuration>
-					<sourceDocumentName>master.xml</sourceDocumentName>
+					<sourceDocumentName>master_output.xml</sourceDocumentName>
 					<sourceDirectory>${pom.basedir}/en</sourceDirectory>
 					<imageResource>
 						<directory>${pom.basedir}/en</directory>
