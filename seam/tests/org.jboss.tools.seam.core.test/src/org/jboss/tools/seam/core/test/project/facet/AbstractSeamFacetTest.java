@@ -32,6 +32,7 @@ import org.jboss.tools.seam.internal.core.project.facet.SeamFacetInstallDataMode
 import org.jboss.tools.seam.internal.core.project.facet.SeamProjectCreator;
 import org.jboss.tools.test.util.JobUtils;
 import org.jboss.tools.test.util.ResourcesUtils;
+import org.jboss.tools.test.util.WorkbenchUtils;
 
 /**
  * Base class for facet related tests; based on the facet test class found in
@@ -106,6 +107,7 @@ public abstract class AbstractSeamFacetTest extends TestCase {
 	    boolean oldAutoBuilding = true; 
 		Exception last = null;
 		try {
+			WorkbenchUtils.closeAllEditors();
 			oldAutoBuilding = ResourcesUtils.setBuildAutomatically(false);
 			ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
 		    JobUtils.waitForIdle(); 
