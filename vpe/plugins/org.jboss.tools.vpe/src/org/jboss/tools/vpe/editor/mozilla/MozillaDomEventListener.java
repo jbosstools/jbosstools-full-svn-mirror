@@ -10,7 +10,6 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.mozilla;
 
-import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -122,7 +121,7 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 	 * @see org.mozilla.interfaces.nsIDOMEventListener#handleEvent(org.mozilla.interfaces.nsIDOMEvent)
 	 */
 	public void handleEvent(nsIDOMEvent domEvent) {
-		try{
+
 			if(getEditorDomEventListener()==null){
 				
 				return;
@@ -184,11 +183,6 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 				getEditorDomEventListener().onRefresh();
 			}
 
-		}catch(Throwable th) {
-
-			VpePlugin.getPluginLog().logError("Event Handling Error", th); //$NON-NLS-1$
-			throw new RuntimeException(th);
-		}
 	}
 
 	/* (non-Javadoc)
