@@ -2,7 +2,7 @@
 
 /* -----Override jbossorg.css----- */
 
-/* body {
+body {
     background-image:url(../images/community/bkg_gradient.gif);
     background-repeat:repeat-x;
 background-image:url(../images/richfaces_label2.png);
@@ -26,8 +26,8 @@ top:0px;
 left:0px;
 z-index:-1;
 }
-*/
 
+/*
 body {
 background-image:url(../images/jbosstools_label2.png);
 background-repeat:no-repeat;
@@ -53,7 +53,7 @@ top:0px;
 left:0px;
 z-index:-1;
 }
-
+*/
 div.book{
     font-family:'Lucida Grande', Geneva, Verdana, Arial, sans-serif;
     font-size:12px;

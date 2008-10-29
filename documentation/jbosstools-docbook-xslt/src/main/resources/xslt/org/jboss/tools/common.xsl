@@ -120,7 +120,14 @@
     </span> 
   </xsl:template> 
   <!-- XHTML and PDF -->
-  <xsl:template match="//node()[@diffmk:change]">
+  
+  <xsl:template match="//diffmk:wrapper">
+         	<span class="diffmkwrapper">
+  			<xsl:value-of select="."/> 
+  		</span>
+  </xsl:template>
+  
+  <!--xsl:template match="//node()[@diffmk:change]">
   	<xsl:choose>
   		 <xsl:when test="local-name()='note' or local-name()='tip' or local-name()='important' or local-name()='warning' or local-name()='caution'"> 
   			<xsl:call-template name="my.graphical.admonition"/>
@@ -167,7 +174,7 @@
   			<xsl:apply-templates /> 
 		</div>
 	</div>
-	</xsl:template>
+	</xsl:template-->
 
 	<xsl:template match="abstract" mode="titlepage.mode">
 	  <xsl:apply-templates select="." mode="class.attribute"/>
