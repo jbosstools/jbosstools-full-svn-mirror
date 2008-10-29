@@ -11,7 +11,7 @@
 <body>
 <h1>What's New Visual Page Editor</h1>
 
-<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../core/core-news-3.0.0.Alpha1.html">Core News &gt;</a></p>
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../esb/esb-news-1.1.0.Beta1.html">ESB News &gt;</a></p>
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
   <tr>
     <td colspan="2">
@@ -47,6 +47,19 @@
     </td>
   </tr>
   <tr>
+    <td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Drag'n'Drop of components are back!</b></td>
+    <td valign="top"><p>
+    Drag'n'Drop of components now show a caret to indicate where the component will be dropped.
+   </p>      
+      <p><img src="../images/jsfcompletions.png"/></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+  <tr>
     <td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Unique icons for Richfaces tags in palette</b></td>
     <td valign="top"><p>
     Richfaces tags now have unique icons in the JBoss Tools palette instead of all using the default tag icon.
@@ -54,9 +67,121 @@
       <p><img src="../images/richfaces_palette_icons.png"/></p>
     </td>
   </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Support for more Richfaces and JSF 2 tags</b></td>
+    <td valign="top"><p>
+	<code>rich:hotKey, rich:ajaxValidator, rich:graphValidator, rich:beanValidator, rich:extendedDataTable</code> is now supported in the Visual Page Editor.	
+   </p>      
+<p>We also added initial support for some new tags from JSF 2: <code>h:body, h:head, h:outputscript, h:outputstyle</code></p>
+    </td>
+  </tr>
    <tr>
     <td colspan="2"><hr />
     </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>External CSS Editing</b></td>
+    <td valign="top"><p>
+    <p>There is now a CSS <b>class</b> wizard that can be used to add or edit CSS styles in existing CSS style files.</p>
+
+    <p>This wizard is also used for style edits in Visual Page Editor.</p>
+
+    <p><img src="../images/externalcss_editing.png"/></p>
+   </p>      
+    </td>
+  </tr>
+   <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>No More UAC Dialog in Vista</b></td>
+    <td valign="top"><p>
+    When opening Visual Page Editor on Vista users were previously presented with 2 security check dialogs caused by regedit being used to check for XULRunner installations.
+    This check is now removed and Vista users should have two less UAC dialogs to worry about.
+   </p>      
+    </td>
+  </tr>
+   <tr>
+    <td colspan="2"><hr />
+   </td>
+
+   <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Show Non-visual tags</b></td>
+    <td valign="top"><p>
+    The visual page editor now has a option to show non-visual tags.
+   </p>      
+      <p><img src="../images/shownon-visual tags.png"/></p>
+
+<p>When enabled a small grey box with the non-visual tags will be drawn in the visual part to more easily see where the boundaries are and to provide a way to select them more easily by just clicking.</p>
+
+<p><img src="../images/show_non_visual_tags.png"/></p>
+    </td>
+  </tr>
+   <tr>
+    <td colspan="2"><hr />
+   </td>
+
+
+   <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Improvement to template for unknown tags</b></td>
+    <td valign="top"><p>
+	It have always been able to setup a template for unknown tags by right clicking them in the Visual Page Editor:
+   </p>      
+      <p><img src="../images/unknown_tag_template.png"/></p>
+
+<p>We have improved the dialog for defining the template to allow you to select which html tag to use and instead of restricted styling options you can know use CSS to define the style.</p>
+
+<p><img src="../images/unknown_tag_template_dialog.png"/></p>
+    </td>
+  </tr>
+   <tr>
+    <td colspan="2"><hr />
+   </td>
+
+  <tr>
+    <td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>More speed improvements</b></td>
+    <td valign="top"><p>
+	We did another round of speed improvements to the Visual Page Editor and now typing directly in the visual part is done with lot less pauses.
+   </p>      
+    </td>
+  </tr>
+   <tr>
+    <td colspan="2"><hr />
+   </td>
+
+
+  <tr>
+    <td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Resource bundle for nested includes</b></td>
+    <td valign="top"><p> Visual Page Editor has a preference for
+	showing the raw EL or render the translated string for
+	resource bundles. In previous versions there were problems
+	with rendering the resource bundles when the content came from
+	nested includes. That is now fixed making it available at all
+	levels.
+   </p>      
+
+<p><img src="../images/resourcebundle_rendering.png"/></p>
+    </td>
+  </tr>
+   <tr>
+    <td colspan="2"><hr />
+   </td>
+
+
+
 </table>
 
 </body>
