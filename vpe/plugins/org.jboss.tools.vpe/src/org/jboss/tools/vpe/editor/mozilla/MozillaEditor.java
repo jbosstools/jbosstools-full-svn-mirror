@@ -28,10 +28,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -58,8 +55,8 @@ import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage;
-import org.jboss.tools.vpe.editor.toolbar.VpeDropDownMenu;
 import org.jboss.tools.vpe.editor.toolbar.IVpeToolBarManager;
+import org.jboss.tools.vpe.editor.toolbar.VpeDropDownMenu;
 import org.jboss.tools.vpe.editor.toolbar.VpeToolBarManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.toolbar.format.TextFormattingToolBar;
@@ -90,7 +87,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 	static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
 	private XulRunnerEditor xulRunnerEditor;
-	private nsIDOMDocument domDocument;
 	private nsIDOMEventTarget documentEventTarget;
 	private nsIDOMElement contentArea;
 	private nsIDOMNode headNode;
@@ -454,18 +450,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 
 	public nsIDOMDocument getDomDocument() {
-		if (domDocument == null) {
-			domDocument = xulRunnerEditor.getDOMDocument();
-		}
-		return domDocument;
-	}
-	
-	/**
-	 * @param domDocument the domDocument to set
-	 */
-	protected void setDomDocument(nsIDOMDocument domDocument) {
-		
-		this.domDocument = domDocument;
+		return  xulRunnerEditor.getDOMDocument();
 	}
 
 	public nsIDOMElement getContentArea() {
@@ -604,7 +589,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.DRAGOVEREVENT, getContentAreaEventListener(), false);
 			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.DBLCLICK, getContentAreaEventListener(), false);
 		
-			if (domDocument != null && documentEventTarget != null) {
+			if (getDomDocument() != null && documentEventTarget != null) {
 				documentEventTarget.removeEventListener(MozillaDomEventListener.KEYPRESS, getContentAreaEventListener(), false); 
 			}
 			getContentAreaEventListener().setVisualEditor(null);
