@@ -45,7 +45,7 @@
       </mediaobject>
     </figure>
 
-    <itemizedlist continuation="continues">
+    <itemizedlist>
       <listitem>
         <para>In the wizard screen, select the <emphasis><property>Change...</property></emphasis> button next to
           the <emphasis><property>*.war Location</property></emphasis> field. Browse to the location of the *.war file for
@@ -84,7 +84,7 @@
       </mediaobject>
     </figure>
 
-    <itemizedlist continuation="continues">
+    <itemizedlist>
       <listitem>
         <para>Click on the <emphasis><property>Finish</property></emphasis> button.</para>
       </listitem>
@@ -121,7 +121,7 @@
       </mediaobject>
     </figure>
 
-    <itemizedlist continuation="continues">
+    <itemizedlist>
       <listitem>
         <para>Follow the same steps as with the JSF Project From <property>*.war</property> import
         wizard.</para>
@@ -138,7 +138,7 @@
       </mediaobject>
     </figure>
 
-    <itemizedlist continuation="continues">
+    <itemizedlist>
       <listitem>
         <para>Click on the <emphasis><property>Finish</property></emphasis> button.</para>
       </listitem>

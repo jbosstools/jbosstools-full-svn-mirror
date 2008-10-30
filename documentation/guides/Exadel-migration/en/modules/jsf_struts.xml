@@ -38,7 +38,7 @@
    </mediaobject>
   </figure>
   
-  <itemizedlist continuation="continues">
+  <itemizedlist>
    <listitem><para>In the first screen of the wizard, select the <emphasis><property>Change...</property></emphasis> button next to the <emphasis><property>web.xml Location</property></emphasis> field. Browse to the location of the web.xml file for the application you 
     want to import as a <property>JSF project</property>. Once you select it, you&apos;ll be returned to the dialog box to see a project name derived from the web.xml file you selected. 
     You can edit this project name, if you wish.</para></listitem>
@@ -53,7 +53,7 @@
    </mediaobject>
   </figure>
  
-  <itemizedlist continuation="continues" id="import_jsf_screen">
+  <itemizedlist id="import_jsf_screen">
    <listitem><para>In the <emphasis><property>Project Folders</property></emphasis> screen, you can configure the rest of your project. Afterwards click on the <emphasis><property>Finish</property></emphasis> button.</para></listitem>
    </itemizedlist>
 		<para>On this step JBoss Developer Studio will try to determine your project
@@ -76,7 +76,7 @@
    </mediaobject>
   </figure>
  
-  <itemizedlist continuation="continues">
+  <itemizedlist>
    <listitem><para>Once the project is imported, it will appear in the Package Explorer view.</para></listitem>
    </itemizedlist>
   
@@ -114,7 +114,7 @@
    </mediaobject>
   </figure>
   
-  <itemizedlist continuation="continues">
+  <itemizedlist>
    <listitem><para>In the Project Location screen of the wizard, select the <emphasis><property>Change... </property></emphasis>button next to the <emphasis><property>web.xml Location</property></emphasis> field. Browse the location of the web.xml file for the application you 
     want to import as a <property>Struts project</property>. Once you select it, you&apos;ll be returned to the dialog box to see a project name derived from the web.xml file you selected. 
     You can edit this project name, if you wish.</para></listitem>
@@ -129,7 +129,7 @@
    </mediaobject>
   </figure>
   
-  <itemizedlist continuation="continues">
+  <itemizedlist>
    <listitem><para>In the next screen, JBoss Developer Studio will try to determine your project structure. The upper pane shows the modules in this project. 
     The lower pane allows you to edit the details of the select module. If the project structure is non-standard, some values might be left blank.
     You can edit any values by hand or by using the <emphasis><property>Change...</property></emphasis> button.</para></listitem>
@@ -144,7 +144,7 @@
    </mediaobject>
   </figure>
   
-  <itemizedlist continuation="continues">
+  <itemizedlist>
    <listitem><para>In the <emphasis><property>Project Folders</property></emphasis> screen, you can configure the rest of your project. Afterwards click on the <emphasis><property>Finish</property></emphasis> button.</para>
    </listitem>
    </itemizedlist>
@@ -166,7 +166,7 @@
    </mediaobject>
   </figure>
   
-  <itemizedlist continuation="continues">
+  <itemizedlist>
    <listitem><para>Once the project is imported, it will appear in the Package Explorer view.</para></listitem>
   </itemizedlist>
   
