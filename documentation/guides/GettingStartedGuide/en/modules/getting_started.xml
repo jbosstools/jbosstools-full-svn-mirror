@@ -52,8 +52,7 @@
       is recommended to use the SysV service scripts for production servers.</para>
     </listitem>
     <listitem>
-     <para>Download and install the appropriate -compat RPM from JPackage <ulink
-       url="ftp://jpackage.hmdc.harvard.edu/JPackage/1.7/generic/RPMS.non-free/">here</ulink>.
+     <para>Download and install the appropriate -compat RPM from JPackage <ulink  url="ftp://jpackage.hmdc.harvard.edu/JPackage/1.7/generic/RPMS.non-free/">here</ulink>.
       Please ensure you choose a matching version of the -compat package to the JDK you've
       installed.</para>
     </listitem>
@@ -74,9 +73,9 @@ export PATH=$PATH:$JAVA_HOME/bin]]></programlisting>
 
     <para>﻿If you have JDK already installed and added in your system path, you should add
       <emphasis>$JAVA_HOME/bin</emphasis> before the old <emphasis>$PATH</emphasis> (not after it)
-     so that the new version of JDK can be found first, i. e. <para>
+     so that the new version of JDK can be found first, i. e. <emphasis>
       <emphasis>export PATH=$JAVA_HOME/bin:$PATH</emphasis>
-     </para> This way, the machine will pick up the new JVM first. You only need to run
+     </emphasis> This way, the machine will pick up the new JVM first. You only need to run
      "alternative" as a safe guard for the right JVM. </para>
    </note>
 
@@ -200,8 +199,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
   <itemizedlist>
    <listitem>
-    <para>First of all you need the appropriate installation file for your platform from <ulink
-      url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">Red Hat
+    <para>First of all you need the appropriate installation file for your platform from 
+     <ulink  url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">Red Hat
      website</ulink>.</para>
    </listitem>
    <listitem>
@@ -261,8 +260,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
   <itemizedlist>
    <listitem>
-    <para>Installation process includes <ulink
-      url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application
+    <para>Installation process includes <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application
       Platform</ulink>. Select <emphasis>
       <property>Yes</property>
      </emphasis> to use it in JBoss Developer Studio.</para>
@@ -392,12 +390,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <tip>
     <title>Tip:</title>
     <para>We recommend you do not use Eclipse.org update site to go from Eclipse 3.3 to Eclipse 3.4.
-     Instead we suggest that you download the full binary from <ulink
-      url="http://www.eclipse.org/downloads/">here</ulink>.</para>
+     Instead we suggest that you download the full binary from <ulink url="http://www.eclipse.org/downloads/">here</ulink>.</para>
    </tip>
 
-   <para>If you can only use Eclipse 3.3 use <ulink
-     url="http://www.jboss.org/tools/download/index.html#stable">JBoss Tools 2.1.2</ulink>, but
+   <para>If you can only use Eclipse 3.3 use <ulink url="http://www.jboss.org/tools/download/index.html#stable">JBoss Tools 2.1.2</ulink>, but
     JBoss Tools 2.x will not have any of the new features.</para>
 
    <note>
@@ -422,8 +418,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
         >http://download.jboss.org/jbosstools/updates/stable</ulink></para>
      </listitem>
      <listitem>
-      <para> Development Updates: <ulink
-        url="http://download.jboss.org/jbosstools/updates/development"
+      <para> Development Updates: <ulink url="http://download.jboss.org/jbosstools/updates/development"
         >http://download.jboss.org/jbosstools/updates/development</ulink></para>
      </listitem>
     </itemizedlist>
@@ -440,8 +435,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     </emphasis> directory and it will be readily available. It might be necessary to start Eclipse
     with eclipse -clean to make sure it starts clean and rereads the new list of plugins.</para>
 
-   <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink
-     url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read
+   <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read
     about dependencies between standalone plug-ins.</para>
   </section>
 
@@ -556,8 +550,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <section id="Support">
   <?dbhtml filename="Support.html"?>
   <title>Support</title>
-  <para>If you have comments or questions, you can discuss them at our <ulink
-    url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
+  <para>If you have comments or questions, you can discuss them at our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
     Developer Studio Forum</ulink>.</para>
   <para>When writing to the forum for questions, please include the following information:</para>
   <orderedlist>
@@ -572,8 +565,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </listitem>
   </orderedlist>
 
-  <para><property>JBDS</property> subscribers can get necessary support on our <ulink
-    url="https://network.jboss.com/jbossnetwork/login.html">Support Portal</ulink>.</para>
+  <para><property>JBDS</property> subscribers can get necessary support on our <ulink url="https://network.jboss.com/jbossnetwork/login.html">Support Portal</ulink>.</para>
  </section>
 
 
@@ -582,15 +574,12 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <title>Other relevant resources on the topic</title>
   <para>JBDS on JBoss: <ulink url="http://labs.jboss.com/rhdevstudio/">JBoss Developer
    Studio</ulink></para>
-  <para>Forum: <ulink
-    url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
+  <para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
    Forum</ulink></para>
-  <para>Subscription: <ulink
-    url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">JBDS
+  <para>Subscription: <ulink url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">JBDS
    Subscription</ulink></para>
 
-  <para>The latest documentation builds are available <ulink
-    url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
+  <para>The latest documentation builds are available <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
  </section>
 
 </chapter>

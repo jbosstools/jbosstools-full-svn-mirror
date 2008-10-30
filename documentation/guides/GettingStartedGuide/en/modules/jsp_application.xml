@@ -121,9 +121,9 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>Our <emphasis>
-				<property>hello.jsp</property>
-			</emphasis> page will now appear in <property>Project Explorer</property>.</para>
+		<para>Our <emphasis><property>hello.jsp</property></emphasis> page will now appear in 
+			<property>Project Explorer</property>.
+		</para>
 		<section id="EditingJSPPage">
 			<?dbhtml filename="EditingJSPPage.html"?>
 			<title>Editing a JSP Page</title>
@@ -416,11 +416,12 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
+			<para>Thus with the help of this chapter you&apos;ve learnt how to organize a Dynamic
+				Web Project with a minimal configuration, add any staff to it (in our case it&apos;s
+				just one jsp page) and deploy and run it on the <property>JBoss Server</property>
+				shipped with <property>JBDS</property>.
+			</para>
 		</section>
-		<para>Thus with the help of this chapter you&apos;ve learnt how to organize a Dynamic
-			Web Project with a minimal configuration, add any staff to it (in our case it&apos;s
-			just one jsp page) and deploy and run it on the <property>JBoss Server</property>
-			shipped with <property>JBDS</property>.</para>
-	</section>
 
+		</section>
 </chapter>
