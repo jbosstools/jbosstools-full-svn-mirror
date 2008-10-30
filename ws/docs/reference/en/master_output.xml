@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+"http://www.docbook.org/xml/4.3/docbookx.dtd"
+
+[<!ENTITY  overview SYSTEM "modules/overview.xml">
+<!ENTITY topdown SYSTEM "modules/topdown.xml">
+<!ENTITY preference SYSTEM "modules/preference.xml">
+<!ENTITY webproject SYSTEM "modules/webproject.xml">
+<!ENTITY client SYSTEM "modules/client.xml">
+]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
+    
+     <bookinfo>
+         <title>JBoss WS User Guide</title>
+         <author><firstname>Denny</firstname><surname>Xu</surname><email>dxu@redhat.com</email></author>
+         <author><firstname>Grid</firstname><surname>Qian</surname><email>fqian@redhat.com</email></author>           
+         <pubdate>July 2008</pubdate>
+	     <copyright>
+	          <year>2008</year>
+	          <holder>JBoss, a division of Red Hat Inc.</holder>
+	     </copyright>
+         <releaseinfo>
+            Version: <diffmk:wrapper diffmk:change="changed">3.0.0.beta1
+         </diffmk:wrapper></releaseinfo>
+<abstract diffmk:change="added">
+   <title diffmk:change="added"></title>
+       <para diffmk:change="added">
+           <ulink diffmk:change="added" url="http://download.jboss.org/jbosstools/nightly-docs/en/ws_ref_guide/pdf/WS_Reference_Guide.pdf"><diffmk:wrapper diffmk:change="added">PDF version</diffmk:wrapper></ulink>
+       </para>
+</abstract>
+
+
+    
+    </bookinfo>
+    
+    <toc></toc> 
+    
+<chapter id="overview" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/ws/docs/reference/en/modules/overview.xml">
+   <title>JBossWS Runtime Overview</title>
+
+    <para>JBossWS is a web service framework developed as <diffmk:wrapper diffmk:change="added">a </diffmk:wrapper>part of the JBoss Application Server. It implements the JAX-WS specification that defines a programming model and run-time architecture for implementing web services in Java, targeted at the Java Platform, Enterprise Edition 5 (Java EE <diffmk:wrapper diffmk:change="changed">5).</diffmk:wrapper></para>
+
+</chapter>
+    
+<chapter id="create_ws_topdown" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/ws/docs/reference/en/modules/topdown.xml">
+   <?dbhtml filename="topdown.html"?>
+   <chapterinfo>
+      <keywordset>
+         <keyword>JBoss Tools</keyword>
+         <keyword>Web Service</keyword>
+         <keyword>JBossWS Web Service runtime</keyword>
+      </keywordset>
+   </chapterinfo>
+
+   <title>Creating a Web Service using JBossWS runtime</title>
+   <para>In this chapter we provide you with the necessary steps to create a Web Service using
+      JBossWS runtime.</para>
+
+   <section id="createproject">
+      <title>Creating a Dynamic Web project</title>
+
+      <para>Before <diffmk:wrapper diffmk:change="changed">creating </diffmk:wrapper>a web service, you <diffmk:wrapper diffmk:change="changed">should </diffmk:wrapper>have a Dynamic Web Project <diffmk:wrapper diffmk:change="added">created:</diffmk:wrapper></para>
+      <figure float="0">
+         <title>Dynamic Web Project</title>
+         <mediaobject>
+            <imageobject>
+               <imagedata fileref="images/jbossws_webproject_1.png"></imagedata>
+            </imageobject>
+         </mediaobject>
+      </figure>
+      <para>Create <diffmk:wrapper diffmk:change="added">a</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">the service </diffmk:wrapper>Web project by selecting <emphasis>
+            <property moreinfo="none">New &gt; Project... &gt; Dynamic Web project</property>
+         </emphasis>. Enter the following information: </para>
+      <itemizedlist>
+         <listitem>
+            <para>Project Name: enter a project name</para>
+         </listitem>
+         <listitem>
+            <para>Target runtime: any server depending on <diffmk:wrapper diffmk:change="changed">your installation. </diffmk:wrapper>If it is not listed, <diffmk:wrapper diffmk:change="deleted">click
+               </diffmk:wrapper><diffmk:wrapper diffmk:change="added">click </diffmk:wrapper>New and browse to the location where it is <diffmk:wrapper diffmk:change="changed">installed </diffmk:wrapper><diffmk:wrapper diffmk:change="added">to. </diffmk:wrapper>You may set <emphasis>
+                  <property moreinfo="none">Target Runtime</property>
+               </emphasis> to <emphasis>
+                  <property moreinfo="none">None</property>
+               </emphasis>, in this case, you <diffmk:wrapper diffmk:change="changed">should </diffmk:wrapper>add <link diffmk:change="added" linkend="addfacet">JBoss Web Service
+                  facet to the project</link> .</para>
+            <figure float="0">
+               <title>Dynamic Web Project Wizard</title>
+               <mediaobject>
+                  <imageobject>
+                     <imagedata fileref="images/jbossws_webproject_2.png"></imagedata>
+                  </imageobject>
+               </mediaobject>
+            </figure>
+         </listitem>
+         <listitem>
+            <para><diffmk:wrapper diffmk:change="changed">Configure </diffmk:wrapper>Web Module <diffmk:wrapper diffmk:change="changed">values:</diffmk:wrapper></para>
+            <figure float="0">
+               <title><diffmk:wrapper diffmk:change="deleted">Configures </diffmk:wrapper>Web Module Settings <diffmk:wrapper diffmk:change="added">Configuration</diffmk:wrapper></title>
+               <mediaobject>
+                  <imageobject>
+                     <imagedata fileref="images/jbossws_webproject_3.png"></imagedata>
+                  </imageobject>
+               </mediaobject>
+            </figure>
+         </listitem>
+      </itemizedlist>
+      <para>Click <diffmk:wrapper diffmk:change="added">on the </diffmk:wrapper><property moreinfo="none">Finish</property> button.</para>
+   </section>
+
+   <section id="addfacet">
+      <title>Configure JBoss Web Service facet settings</title>
+      <para>If you have already <diffmk:wrapper diffmk:change="changed">created </diffmk:wrapper>a <diffmk:wrapper diffmk:change="changed">new </diffmk:wrapper><diffmk:wrapper diffmk:change="added">Dynamic Web</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">web </diffmk:wrapper>project, the next step is to add JBoss Web
+         Service facet to the <diffmk:wrapper diffmk:change="added">project:</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">project </diffmk:wrapper></para>
+      <figure float="0" id="figure_addfacet">
+         <title>Configure JBoss Web Service Facet</title>
+         <mediaobject>
+            <imageobject>
+               <imagedata fileref="images/jbossws_facet.png"></imagedata>
+            </imageobject>
+         </mediaobject>
+      </figure>
+      <para>Server Supplied JBossWS Runtime: If you have already set a JBoss runtime to the
+         project's target runtime, you may choose <emphasis>
+            <property moreinfo="none">Server Supplied JBossWS Runtime</property>
+         </emphasis> and then click <emphasis>
+            <property moreinfo="none">Ok</property>
+         </emphasis> to finish the configuration of JBoss Web Service facet. 
+      </para>
+      <para>If the project has no <emphasis>
+            <property moreinfo="none">Target Runtime</property>
+         </emphasis> settings, you <diffmk:wrapper diffmk:change="changed">should </diffmk:wrapper>check the second radio button and specify a JBossWS <diffmk:wrapper diffmk:change="deleted">runtime
+         </diffmk:wrapper><diffmk:wrapper diffmk:change="added">runtime </diffmk:wrapper>from the list. You also can create a new JBossWS runtime, click <diffmk:wrapper diffmk:change="added">on the </diffmk:wrapper><emphasis>
+            <property moreinfo="none">New...</property>
+         </emphasis> button will bring you to another dialog <diffmk:wrapper diffmk:change="changed">to configure </diffmk:wrapper>new JBossWS runtime.</para>
+      <figure float="0" id="figure_addfacet1">
+         <title>Configure JBossWS Runtime</title>
+         <mediaobject>
+            <imageobject>
+               <imagedata fileref="images/jbossws_newruntime.png"></imagedata>
+            </imageobject>
+         </mediaobject>
+      </figure>
+      <para>See how to configure a new JBossWS runtime <link diffmk:change="added" linkend="preference"><diffmk:wrapper diffmk:change="added">here</diffmk:wrapper></link><diffmk:wrapper diffmk:change="changed">:</diffmk:wrapper></para>
+
+   </section>
+
+
+   <section id="topdownwebservice">
+      <title>Creating a Web Service from a WSDL document using JBossWS runtime</title>
+      <para>In this chapter we provide you with the necessary steps to create a Web Service from a
+         WSDL document using JBossWS runtime.</para>
+      <para>At first, please make sure that you have already <diffmk:wrapper diffmk:change="changed">created </diffmk:wrapper>a dynamic Web project with <diffmk:wrapper diffmk:change="deleted">JBoss
+         </diffmk:wrapper><diffmk:wrapper diffmk:change="added">JBoss </diffmk:wrapper>Web Service facet <diffmk:wrapper diffmk:change="deleted">get </diffmk:wrapper>installed. </para>
+      <para><diffmk:wrapper diffmk:change="added">See how to</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">To </diffmk:wrapper>make it <diffmk:wrapper diffmk:change="deleted">see </diffmk:wrapper><link linkend="createproject"><diffmk:wrapper diffmk:change="added">here</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">create dynamic Web project</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">&gt; </diffmk:wrapper>and <link linkend="addfacet"><diffmk:wrapper diffmk:change="added">here</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">add JBoss Web Service facet</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+
+      <para>To create <diffmk:wrapper diffmk:change="added">a </diffmk:wrapper>Web Service using JBossWS runtime select<emphasis>
+            <property moreinfo="none">File &gt; New &gt; Other &gt; Web Services &gt; Web Service</property>
+         </emphasis> to run Web Service creation wizard. 
+      </para>
+      <para>Let's get through the wizard <diffmk:wrapper diffmk:change="changed">step-by-step:</diffmk:wrapper></para>
+      <figure float="0" id="figure_create_ws_topdown">
+         <title>New Web Service Wizard</title>
+         <mediaobject>
+            <imageobject>
+               <imagedata fileref="images/jbossws_ws_creation1.png"></imagedata>
+            </imageobject>
+         </mediaobject>
+      </figure>
+      <para>First, please select <property moreinfo="none">Top down Java bean Web Service</property> from <diffmk:wrapper diffmk:change="added">the </diffmk:wrapper>Web
+         Service type list, and select a WSDL document from workspace, click <diffmk:wrapper diffmk:change="changed">on the 
+            </diffmk:wrapper>Server <diffmk:wrapper diffmk:change="added">name
+         lilnk </diffmk:wrapper>on the page will bring you to another dialog. Here you can specify the server to a
+         JBoss Server and Web Service runtime to JBossWS <diffmk:wrapper diffmk:change="changed">runtime:</diffmk:wrapper></para>
+      <figure float="0" id="figure_create_ws_topdown_setserver">
+         <title>Select Server and Web Service runtime</title>
+         <mediaobject>
+            <imageobject>
+               <imagedata fileref="images/jbossws_ws_creation1_1.png"></imagedata>
+            </imageobject>
+         </mediaobject>
+      </figure>
+
+      <para>Click on <diffmk:wrapper diffmk:change="added">the </diffmk:wrapper><emphasis>
+            <property moreinfo="none">Finish</property>
+         </emphasis> <diffmk:wrapper diffmk:change="added">button</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">Button you </diffmk:wrapper><diffmk:wrapper diffmk:change="changed">to see </diffmk:wrapper>the <diffmk:wrapper diffmk:change="changed">next </diffmk:wrapper>wizard <diffmk:wrapper diffmk:change="added">view opened:</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">view.</diffmk:wrapper></para>
+
+      <figure float="0" id="figure_create_ws_topdown1">
+         <title>New Web Service Wizard</title>
+         <mediaobject>
+            <imageobject>
+               <imagedata fileref="images/jbossws_ws_creation1.png"></imagedata>
+            </imageobject>
+         </mediaobject>
+      </figure>
+
+      <para>Click on <diffmk:wrapper diffmk:change="added">the </diffmk:wrapper><emphasis>
+            <property moreinfo="none">Next</property>
+         </emphasis> button to <diffmk:wrapper diffmk:change="added">proceed:</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">next step</diffmk:wrapper></para>
+      <figure float="0" id="figure_create_ws_topdown_codegen">
+         <title>New Web Service Wizard</title>
+         <mediaobject>
+            <imageobject>
+               <imagedata fileref="images/jbossws_ws_creation2.png"></imagedata>
+            </imageobject>
+         </mediaobject>
+      </figure>
+      <para>On this page, the default package name comes from the namespace of the WSDL document,
+         you also can change it to any valid package name you want. JAX-WS specification should be
+         set to 2.0 if your JBossWS runtime in JBoss Server is JBossWS native runtime. You can
+         specify a catalog file and binding files if you <diffmk:wrapper diffmk:change="added">have them.</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">have. </diffmk:wrapper>If you want the wizard <diffmk:wrapper diffmk:change="added">to
+         </diffmk:wrapper>generate empty implementation classes for the Web Service, check the <emphasis>
+            <property moreinfo="none">Generate default Web Service implementation classes</property>
+         </emphasis> check <diffmk:wrapper diffmk:change="added">box.</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">box . </diffmk:wrapper>If you want <diffmk:wrapper diffmk:change="added">to </diffmk:wrapper>update the default Web.xml file with the Web Service
+         servlets <diffmk:wrapper diffmk:change="deleted">get </diffmk:wrapper>configured, check <diffmk:wrapper diffmk:change="added">the </diffmk:wrapper><emphasis>
+            <property moreinfo="none">Update the default Web.xml</property>
+         </emphasis> check box. Click on <diffmk:wrapper diffmk:change="added">the </diffmk:wrapper><emphasis>
+            <property moreinfo="none">Next</property>
+         </emphasis> or <diffmk:wrapper diffmk:change="added">on the </diffmk:wrapper><emphasis>
+            <property moreinfo="none">Finish</property>
+         </emphasis> button to generate <diffmk:wrapper diffmk:change="added">code.</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">code </diffmk:wrapper></para>
+
+      <para>Once the Web Service code is generated, you can view the implementation class and add
+         business logic to each method.</para>
+      <figure float="0" id="figure_impl_code">
+         <title>The generated implementation Java code</title>
+         <mediaobject>
+            <imageobject>
+               <imagedata fileref="images/jbossws_ws_Impl_code_view.png"></imagedata>
+            </imageobject>
+         </mediaobject>
+      </figure>
+      <para>View <diffmk:wrapper diffmk:change="added">the </diffmk:wrapper>Web.xml <diffmk:wrapper diffmk:change="added">file:</diffmk:wrapper></para>
+      <figure float="0" id="figure_webxml">
+         <title>Web.xml</title>
+         <mediaobject>
+            <imageobject>
+               <imagedata fileref="images/jbossws_ws_webxml.png"></imagedata>
+            </imageobject>
+         </mediaobject>
+      </figure>
+
+   </section>
+
+   <section id="bottomupws">
+      <title>Creating a Web service from a Java bean using JBossWS runtime</title>
+      <para>The Web Service wizard assists you in creating a new Web service, configuring it for
+         deployment, and <diffmk:wrapper diffmk:change="added">then</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">deploying the </diffmk:wrapper><diffmk:wrapper diffmk:change="changed">deploying it </diffmk:wrapper>to <diffmk:wrapper diffmk:change="changed">the </diffmk:wrapper>server.</para>
+      <para>To create a Web service from a bean using JBoss WS:</para>
+      <para>Setup <link linkend="preference">JBoss WS and development environment</link>.</para>
+      <para><diffmk:wrapper diffmk:change="added">Create</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">Creating </diffmk:wrapper><link diffmk:change="added" linkend="createproject">a Dynamic Web project</link>.</para>
+      <para>Add <link diffmk:change="added" linkend="addfacet">JBossWS Facet</link> to Web <diffmk:wrapper diffmk:change="added">project.</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">project.</diffmk:wrapper></para>
+      <para>Create a Web Service from a java bean: </para>
+      <itemizedlist>
+         <listitem>
+            <para>Switch to the Java EE perspective <emphasis>
+                  <property moreinfo="none">Window &gt; Open Perspective &gt; Java EE</property>
+               </emphasis>.</para>
+         </listitem>
+         <listitem>
+            <para>In the Project Explorer view, select the bean that you created or imported into
+               the source folder of your Web project.</para>
+            <figure float="0">
+               <title>Create a new Bean Class</title>
+               <mediaobject>
+                  <imageobject>
+                     <imagedata fileref="images/jbossws_bottomup.png" scale="80"></imagedata>
+                  </imageobject>
+               </mediaobject>
+            </figure>
+         </listitem>
+         <listitem>
+            <para>Click <emphasis>
+                  <property moreinfo="none">File &gt; New &gt; Other</property>
+               </emphasis><diffmk:wrapper diffmk:change="added">. Select</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">.Select </diffmk:wrapper>Web Services in order to display <diffmk:wrapper diffmk:change="deleted">the </diffmk:wrapper>various Web service wizards.
+               Select the Web Service wizard. Click <diffmk:wrapper diffmk:change="added">on the </diffmk:wrapper><property moreinfo="none">Next</property> button.</para>
+            <figure float="0">
+               <title>New Web Service</title>
+               <mediaobject>
+                  <imageobject>
+                     <imagedata fileref="images/jbossws_bottomup_1.png"></imagedata>
+                  </imageobject>
+               </mediaobject>
+            </figure>
+         </listitem>
+         <listitem>
+            <para><diffmk:wrapper diffmk:change="changed">On </diffmk:wrapper>the first Web Service wizard page: select <property moreinfo="none">Bottom up Java bean Web
+                  service</property> as your Web service type, and select the Java bean from which
+               the service will be <diffmk:wrapper diffmk:change="changed">created:</diffmk:wrapper></para>
+            <figure float="0">
+               <title>Set Web Service Common values</title>
+               <mediaobject>
+                  <imageobject>
+                     <imagedata fileref="images/jbossws_bottomup_2.png"></imagedata>
+                  </imageobject>
+               </mediaobject>
+            </figure>
+            <itemizedlist>
+               <listitem>
+                  <para>Select the stages of Web service development that you want to complete using
+                     the slider: </para>
+                  <itemizedlist>
+                     <listitem>
+                        <para>Develop: this will develop the WSDL definition and implementation of
+                           the Web service. This includes such tasks as creating <diffmk:wrapper diffmk:change="deleted">the </diffmk:wrapper>modules <diffmk:wrapper diffmk:change="added">that</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">which
+                           will </diffmk:wrapper><diffmk:wrapper diffmk:change="added">will
+                           </diffmk:wrapper>contain <diffmk:wrapper diffmk:change="deleted">the </diffmk:wrapper>generated code, WSDL files, deployment descriptors, and
+                           <diffmk:wrapper diffmk:change="deleted">Java </diffmk:wrapper><diffmk:wrapper diffmk:change="added">Java
+                           </diffmk:wrapper>files when appropriate.</para>
+                     </listitem>
+                     <listitem>
+                        <para>Assemble: this ensures the project that will host the Web service or
+                           client gets associated to an EAR when required by the target application
+                           server.</para>
+                     </listitem>
+                     <listitem>
+                        <para>Deploy: this will create the deployment code for the service.</para>
+                     </listitem>
+                     <listitem>
+                        <para>Install: this will install and configure the Web module and EARs on
+                           the target server.</para>
+                     </listitem>
+                     <listitem>
+                        <para>Start: this will start the server once the service has been installed
+                           on it. The server-config.wsdd file will be generated.</para>
+                     </listitem>
+                     <listitem>
+                        <para>Test: this will provide various options for testing the service, such
+                           as using the Web Service Explorer or sample <diffmk:wrapper diffmk:change="changed">JSPs.</diffmk:wrapper></para>
+                     </listitem>
+                  </itemizedlist>
+               </listitem>
+               <listitem> 
+                  <para>Select your server: the default server is displayed. If you want to deploy
+                  your service to a different server click the link to specify a different server.
+                  </para>
+               </listitem>
+               <listitem>
+                  <para>Select your runtime: ensure the JBoss WS runtime is selected.</para>
+               </listitem>
+               <listitem>
+                  <para>Select the service project: the project selected in your workspace is
+                  displayed. To select a different project click on the project link. If you are
+                  deploying to JBoss Application Server you will also be asked to select the EAR
+                  associated with the project. Ensure that the project selected as the Client Web
+                  Project is different from the Service Web Project, or the service will be
+                  overwritten by the client's generated artifacts.</para>
+               </listitem>
+               <listitem>
+                  <para>If you want to create a client, select the type of proxy to be generated
+                  and repeat the above steps for the client. The better way is to create a web
+                  service client project <diffmk:wrapper diffmk:change="changed">separately.</diffmk:wrapper></para>
+               </listitem>
+            </itemizedlist>
+            <para>Click <diffmk:wrapper diffmk:change="added">on the </diffmk:wrapper><property moreinfo="none">Next</property> button.</para>
+         </listitem>
+         <listitem>
+            <para><diffmk:wrapper diffmk:change="changed">On </diffmk:wrapper>the JBoss Web Service Code Generation Configuration page, <diffmk:wrapper diffmk:change="deleted">you </diffmk:wrapper>set <diffmk:wrapper diffmk:change="added">the following
+               </diffmk:wrapper>values:</para>
+            <figure float="0">
+               <title>Set Web Service values <diffmk:wrapper diffmk:change="changed">for </diffmk:wrapper>Code Generation</title>
+               <mediaobject>
+                  <imageobject>
+                     <imagedata fileref="images/jbossws_bottomup_3.png"></imagedata>
+                  </imageobject>
+               </mediaobject>
+            </figure>
+            <itemizedlist>
+               <listitem>
+                  <para>Generate WSDL file: select it, you will get a generated WSDL file in your
+                     project. But this wsdl's services' address location values are not <diffmk:wrapper diffmk:change="added">a </diffmk:wrapper>real
+                     address. </para>
+               </listitem>
+               <listitem>
+                  <para>After the Web service has been created, the following <diffmk:wrapper diffmk:change="changed">option can become
+                  </diffmk:wrapper><diffmk:wrapper diffmk:change="added">available depending </diffmk:wrapper>on the options you selected: Update the default <diffmk:wrapper diffmk:change="added">web.xm
+                     file.</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">web.xml. </diffmk:wrapper><diffmk:wrapper diffmk:change="changed">If selected, </diffmk:wrapper>you may test the web service by Explorer.</para>
+               </listitem>
+            </itemizedlist>
+            <para>Click <diffmk:wrapper diffmk:change="added">on the </diffmk:wrapper><property moreinfo="none">Next</property> button.</para>
+         </listitem>
+         <listitem>
+            <para><diffmk:wrapper diffmk:change="changed">On </diffmk:wrapper>this page, the project is deployed to the server. <diffmk:wrapper diffmk:change="changed">You </diffmk:wrapper>can start <diffmk:wrapper diffmk:change="added">the </diffmk:wrapper>server and <diffmk:wrapper diffmk:change="deleted">test
+               </diffmk:wrapper><diffmk:wrapper diffmk:change="added">test </diffmk:wrapper>the web service. If you want to publish the web service to a UDDI registry, you <diffmk:wrapper diffmk:change="deleted">may
+               </diffmk:wrapper><diffmk:wrapper diffmk:change="added">may </diffmk:wrapper>click <diffmk:wrapper diffmk:change="added">the </diffmk:wrapper><property moreinfo="none">Next</property> button to publish it. If not, you may click
+               <diffmk:wrapper diffmk:change="added">the 
+                  </diffmk:wrapper><property moreinfo="none">Finish</property> button.</para>
+            <figure float="0">
+               <title>Start a Server</title>
+               <mediaobject>
+                  <imageobject>
+                     <imagedata fileref="images/jbossws_bottomup_4.png"></imagedata>
+                  </imageobject>
+               </mediaobject>
+            </figure>
+         </listitem>
+      </itemizedlist>
+      <para>After the Web Service has been created, the following <diffmk:wrapper diffmk:change="added">options </diffmk:wrapper>may <diffmk:wrapper diffmk:change="changed">become </diffmk:wrapper><diffmk:wrapper diffmk:change="added">available
+         </diffmk:wrapper>depending on the options
+         <diffmk:wrapper diffmk:change="deleted">you </diffmk:wrapper>selected:</para>
+      <itemizedlist>
+         <listitem>
+            <para> the generated web services <diffmk:wrapper diffmk:change="changed">code</diffmk:wrapper></para>
+         </listitem>
+         <listitem>
+            <para>If <diffmk:wrapper diffmk:change="changed">you </diffmk:wrapper>selected to generate <diffmk:wrapper diffmk:change="added">a </diffmk:wrapper>WSDL file, you will get the file in your project's
+               WebContent &gt; wsdl folder.</para>
+            <figure float="0">
+               <title>The generated WSDL file</title>
+               <mediaobject>
+                  <imageobject>
+                     <imagedata fileref="images/jbossws_bottomup_6.png" scale="80"></imagedata>
+                  </imageobject>
+               </mediaobject>
+            </figure>
+         </listitem>
+         <listitem>
+            <para>If <diffmk:wrapper diffmk:change="changed">you </diffmk:wrapper>selected to update the default web.xml, you will test the web service in
+               <diffmk:wrapper diffmk:change="added">the browser.</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">browser.Open </diffmk:wrapper><diffmk:wrapper diffmk:change="added">Open </diffmk:wrapper>the Explorer, input the url for the web service according to <diffmk:wrapper diffmk:change="deleted">web.xml
+               </diffmk:wrapper><diffmk:wrapper diffmk:change="added">web.xml </diffmk:wrapper>plus <property moreinfo="none">?wsdl.</property>, you will get the WSDL file from Explorer. </para>
+            <figure float="0">
+               <title>The Updated web.xml <diffmk:wrapper diffmk:change="added">file</diffmk:wrapper></title>
+               <mediaobject>
+                  <imageobject>
+                     <imagedata fileref="images/jbossws_bottomup_5.png" scale="80"></imagedata>
+                  </imageobject>
+               </mediaobject>
+            </figure>
+         </listitem>
+      </itemizedlist>
+   </section>
+
+</chapter>
+
+    
+<chapter id="client" revisionflag="added" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/ws/docs/reference/en/modules/client.xml">
+  <title>Creating a Web Service Client from a WSDL Document using JBoss WS</title>
+  <para>To create a Web Service Client from a WSDL Document using JBoss WS:</para>
+  <para>Setup <link linkend="preference">JBoss WS and development environment</link>.</para>
+  <para><link linkend="createproject">Creating a Dynamic Web project</link>.</para>
+  <para><link linkend="addfacet">Add JBossWS Facet to Web project</link>.</para>
+  <para>Create a Web Service Client from a WSDL document: </para>
+     <itemizedlist>
+        <listitem>
+           <para>Switch to the Java EE perspective <emphasis><property moreinfo="none">Window &gt; Open Perspective &gt; Java EE</property></emphasis>.</para>
+        </listitem>
+        <listitem>
+           <para>In the Project Explorer view, select the bean that you created or imported into the source folder of your Web project.</para> 
+        </listitem>
+        <listitem>
+           <para>Click <emphasis><property moreinfo="none">File &gt; New &gt; Other</property></emphasis>.Select Web Services in order to display the various Web service wizards. Select the Web Service Client wizard. Click <property moreinfo="none">Next</property> button.</para> 
+             <figure float="0">
+                <title>New Web Service Client</title>
+                <mediaobject>
+                   <imageobject>
+                      <imagedata fileref="images/jbossws_client.png"></imagedata>
+                   </imageobject>
+                </mediaobject>
+             </figure>
+        </listitem>
+        <listitem>
+           <para>The first and second Web Service Client wizard page are same to <link linkend="topdownwebservice">Web Service from a WSDL document</link>.</para> 
+             <figure float="0">
+                <title>Set Web Service Common values</title>
+                <mediaobject>
+                   <imageobject>
+                      <imagedata fileref="images/jbossws_client_1.png"></imagedata>
+                   </imageobject>
+                </mediaobject>
+             </figure>
+             <figure float="0">
+                <title>Set Web Service values about WSDL file</title>
+                <mediaobject>
+                   <imageobject>
+                      <imagedata fileref="images/jbossws_client_2.png"></imagedata>
+                   </imageobject>
+                </mediaobject>
+             </figure>
+           <para>The differences are:</para>
+              <itemizedlist>
+                 <listitem>
+                    <para><property moreinfo="none">Client Type:</property> Now only support Java Proxy.</para>
+                 </listitem>
+               </itemizedlist>
+           <para>Click <property moreinfo="none">Finish</property> button.</para>
+        </listitem>     
+     </itemizedlist>
+     <para>After the Web Service Client has been created, the following may occur depending on the options you selected:</para>
+     <itemizedlist>
+        <listitem>
+           <para> the generated web service and client codes</para>
+        </listitem>
+        <listitem>
+           <para>a client sample class.</para>
+             <figure float="0">
+                <title>Client Sample Class</title>
+                <mediaobject>
+                   <imageobject>
+                      <imagedata fileref="images/jbossws_client_3.png" scale="80"></imagedata>
+                   </imageobject>
+                </mediaobject>
+             </figure>
+        </listitem>
+     </itemizedlist>
+     <para>JBoss WS use a Java class to test Web Service. A client sample class will be generated, you may run this client as a java application to call a web service.</para>
+</chapter>
+
+    
+<chapter id="preference" revisionflag="added" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/ws/docs/reference/en/modules/preference.xml">
+<title>JBoss WS and development environment</title>
+ <section id="jbosswspreference">
+   <title>JBossWS Preferences</title>
+
+<para>In this section you <diffmk:wrapper diffmk:change="added">will</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">get to </diffmk:wrapper>know how JBossWS preferences can be modified during the development process.</para>
+
+       <para>JBossWS preferences can be set <diffmk:wrapper diffmk:change="changed">on </diffmk:wrapper>the JBossWS preference page. Click on <emphasis><property moreinfo="none">Window &gt; Preferences &gt; JBoss Tools &gt; Web &gt; JBossWS <diffmk:wrapper diffmk:change="changed">Preferences</diffmk:wrapper></property>.</emphasis></para>
+   
+       <para>On this page you can manage the JBossWS Runtime. Use the appropriate buttons to <property moreinfo="none">Add</property> more runtimes or to <property moreinfo="none">Remove</property> those that are not needed.</para>
+   
+       <figure float="0">
+           <title>JBossWS Preferences Page</title>
+           <mediaobject> 
+               <imageobject>
+                   <imagedata fileref="images/Jbossws_preference.png"></imagedata>
+               </imageobject>
+           </mediaobject>
+       </figure>
+       
+       <para>Clicking on <emphasis><property moreinfo="none">Add</property></emphasis> or <emphasis><property moreinfo="none">Edit</property></emphasis> button <diffmk:wrapper diffmk:change="deleted">you </diffmk:wrapper>will <diffmk:wrapper diffmk:change="changed">open </diffmk:wrapper>the form where you can configure a new JbossWS runtime and change the path <diffmk:wrapper diffmk:change="changed">to </diffmk:wrapper>JBossWS runtime home folder, 
+           modify <diffmk:wrapper diffmk:change="added">the </diffmk:wrapper>name and version of <diffmk:wrapper diffmk:change="changed">the </diffmk:wrapper>existing JBossWS runtime settings. Press <property moreinfo="none">Finish</property> to apply the changes.</para>
+       
+       <figure float="0">
+           <title>Edit JBossWS Runtime</title>
+           <mediaobject> 
+               <imageobject>
+                   <imagedata fileref="images/Jbossws_preference_new.png"></imagedata>
+               </imageobject>
+           </mediaobject>
+       </figure>
+  </section>
+  <section id="serverruntime">
+    <title>Default Server and Runtime</title>
+    <para>Open
+        <emphasis><property moreinfo="none">Window &gt; Preferences &gt; Web Services &gt; Server and Runtime</property></emphasis>. <diffmk:wrapper diffmk:change="changed">On </diffmk:wrapper>this page, you can <diffmk:wrapper diffmk:change="added">specify a</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">set </diffmk:wrapper>default server and runtime.</para>
+    <para>For ease of use, the better way is to set runtime <diffmk:wrapper diffmk:change="changed">to </diffmk:wrapper>JBoss WS.</para>
+    <para>After <diffmk:wrapper diffmk:change="deleted">set </diffmk:wrapper>server and <diffmk:wrapper diffmk:change="added">runtime are</diffmk:wrapper><diffmk:wrapper diffmk:change="deleted">runtime, </diffmk:wrapper><diffmk:wrapper diffmk:change="added">specified, </diffmk:wrapper>click <diffmk:wrapper diffmk:change="added">on the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Aply</diffmk:wrapper></property> button to save the <diffmk:wrapper diffmk:change="changed">values.</diffmk:wrapper></para>
+    <figure float="0">
+      <title></title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/jbossws_server_runtime.png"></imagedata>
+        </imageobject>
+      </mediaobject>
+     </figure>
+  </section>
+</chapter>
+
+</book>
