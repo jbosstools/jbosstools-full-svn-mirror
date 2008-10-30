@@ -90,7 +90,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 	static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
 	private XulRunnerEditor xulRunnerEditor;
-	private nsIDOMDocument domDocument;
 	private nsIDOMEventTarget documentEventTarget;
 	private nsIDOMElement contentArea;
 	private nsIDOMNode headNode;
@@ -454,19 +453,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 
 	public nsIDOMDocument getDomDocument() {
-		if (domDocument == null) {
-			domDocument = xulRunnerEditor.getDOMDocument();
-		}
-		return domDocument;
+			return xulRunnerEditor.getDOMDocument();
 	}
 	
-	/**
-	 * @param domDocument the domDocument to set
-	 */
-	protected void setDomDocument(nsIDOMDocument domDocument) {
-		
-		this.domDocument = domDocument;
-	}
 
 	public nsIDOMElement getContentArea() {
 		return contentArea;
@@ -582,7 +571,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.DRAGGESTUREEVENT, getContentAreaEventListener(), false);
 				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.DRAGOVEREVENT, getContentAreaEventListener(), false);
 				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.DBLCLICK, getContentAreaEventListener(), false);
-				documentEventTarget = (nsIDOMEventTarget) getDomDocument().queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
+				documentEventTarget = (nsIDOMEventTarget) xulRunnerEditor.getDOMDocument().queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
 				documentEventTarget.addEventListener(MozillaDomEventListener.KEYPRESS, getContentAreaEventListener(), false);
 			} else {
 				//baseEventListener = new MozillaBaseEventListener();
@@ -604,7 +593,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.DRAGOVEREVENT, getContentAreaEventListener(), false);
 			getContentAreaEventTarget().removeEventListener(MozillaDomEventListener.DBLCLICK, getContentAreaEventListener(), false);
 		
-			if (domDocument != null && documentEventTarget != null) {
+			if (xulRunnerEditor.getDOMDocument() != null && documentEventTarget != null) {
 				documentEventTarget.removeEventListener(MozillaDomEventListener.KEYPRESS, getContentAreaEventListener(), false); 
 			}
 			getContentAreaEventListener().setVisualEditor(null);
@@ -729,7 +718,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		addSelectionListener();
 		xulRunnerEditor.addResizerListener();
 		controller.reinit();
-		setDomDocument(xulRunnerEditor.getDOMDocument());
 
 	}
 	
