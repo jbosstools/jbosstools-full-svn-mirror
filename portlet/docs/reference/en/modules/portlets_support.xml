@@ -216,14 +216,13 @@
                 </imageobject>
             </mediaobject>
         </figure>
-    </section>
-
-    <para>With this document you&apos;ve learnt how to get started with <property>JBoss
+        <para>With this document you&apos;ve learnt how to get started with <property>JBoss
             Portal</property> using <property>JBoss Tools</property> suite of Eclipse plugins. The
-        above chapters walked you through the steps on how to organize a web project with portlets
-        which includes a sample staff and deploy it onto the <property>JBoss Portal</property>.</para>
-
-    <para>If you still have questions or suggestions you are always welcome on our <ulink
+            above chapters walked you through the steps on how to organize a web project with portlets
+            which includes a sample staff and deploy it onto the <property>JBoss Portal</property>.</para>
+        
+        <para>If you still have questions or suggestions you are always welcome on our <ulink
             url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
-        >Forum</ulink>. Your feedback will be very much appreciated.</para>
+            >Forum</ulink>. Your feedback will be very much appreciated.</para>
+    </section>
 </chapter>

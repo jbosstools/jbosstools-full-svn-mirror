@@ -7,7 +7,7 @@
         Tools</property>, you should first have a Web Project pointed to the JBoss Portal Runtime.
         Thus, this chapter is intended to give you a detail look at how you can get it.</para>
 
-    <section id="creating _project_with_jbossportal">
+    <section id="creating_project_with_jbossportal">
         <title>Creating a Dynamic Web Project</title>
 
         <para>To create a Dynamic Web Project, go to <emphasis>
