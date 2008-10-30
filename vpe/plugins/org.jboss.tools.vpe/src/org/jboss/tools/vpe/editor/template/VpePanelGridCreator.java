@@ -370,6 +370,9 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 							rci = 0;
 					}
 					for (int j = 0; j < tableSize; j++) {
+					    	if (i*tableSize+j >= childrenCount) {
+					    	    	break;
+					    	}
 						nsIDOMElement visualCell = visualDocument
 								.createElement(HTML.TAG_TD);
 						if (columnClasses.size() > 0) {
