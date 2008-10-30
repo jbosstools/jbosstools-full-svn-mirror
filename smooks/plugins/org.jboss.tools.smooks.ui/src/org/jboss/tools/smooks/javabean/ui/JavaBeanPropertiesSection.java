@@ -11,6 +11,7 @@
 package org.jboss.tools.smooks.javabean.ui;
 
 import org.eclipse.gef.EditPart;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -89,19 +90,21 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 	}
 
 	private JavaBeanModel getJavaBeanModel() {
-		IStructuredSelection selection = (IStructuredSelection) this
-				.getSelection();
-		Object obj = selection.getFirstElement();
-		if (obj == null)
-			return null;
-		if (obj instanceof EditPart) {
-			Object model = ((EditPart) obj).getModel();
-			if (model instanceof LineConnectionModel) {
-				AbstractStructuredDataModel target = (AbstractStructuredDataModel) ((LineConnectionModel) model)
-						.getTarget();
-				Object referenceObj = target.getReferenceEntityModel();
-				if (referenceObj instanceof JavaBeanModel) {
-					return (JavaBeanModel) referenceObj;
+		ISelection s = (ISelection) this.getSelection();
+		if (s instanceof IStructuredSelection) {
+			IStructuredSelection selection = (IStructuredSelection)s;
+			Object obj =  selection.getFirstElement();
+			if (obj == null)
+				return null;
+			if (obj instanceof EditPart) {
+				Object model = ((EditPart) obj).getModel();
+				if (model instanceof LineConnectionModel) {
+					AbstractStructuredDataModel target = (AbstractStructuredDataModel) ((LineConnectionModel) model)
+							.getTarget();
+					Object referenceObj = target.getReferenceEntityModel();
+					if (referenceObj instanceof JavaBeanModel) {
+						return (JavaBeanModel) referenceObj;
+					}
 				}
 			}
 		}

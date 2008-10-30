@@ -17,6 +17,8 @@ import java.util.List;
 import javax.swing.text.html.HTMLDocument.HTMLReader.TagAction;
 
 import org.eclipse.emf.ecore.xml.type.AnyType;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.smooks.analyzer.AbstractAnalyzer;
 import org.jboss.tools.smooks.analyzer.DesignTimeAnalyzeResult;
 import org.jboss.tools.smooks.analyzer.MappingModel;
@@ -395,9 +397,89 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		}
 		return null;
 	}
+	
+	private void checkRootNodeConnected(
+			SmooksConfigurationFileGenerateContext context) {
+		GraphRootModel root = context.getGraphicalRootModel();
+		List sourceList = root.loadSourceModelList();
+		List targetList = root.loadTargetModelList();
+
+		AbstractXMLObject rootSource = null;
+		JavaBeanModel rootTarget = null;
+		boolean needCheck = false;
+
+		for (Iterator iterator = sourceList.iterator(); iterator.hasNext();) {
+			AbstractStructuredDataModel sourcegm = (AbstractStructuredDataModel) iterator
+					.next();
+			if (sourcegm instanceof IConnectableModel) {
+				if (!((IConnectableModel) sourcegm).getModelSourceConnections()
+						.isEmpty()
+						|| !((IConnectableModel) sourcegm)
+								.getModelTargetConnections().isEmpty()) {
+					needCheck = true;
+					break;
+				}
+			}
+		}
+
+		if (needCheck) {
+			for (Iterator iterator = sourceList.iterator(); iterator.hasNext();) {
+				AbstractStructuredDataModel sourceGraphModel = (AbstractStructuredDataModel) iterator
+						.next();
+				AbstractXMLObject source = (AbstractXMLObject) sourceGraphModel
+						.getReferenceEntityModel();
+				if (source.getParent().getClass() == DocumentObject.class ) {
+					rootSource = source;
+					break;
+				}
+			}
+
+			for (Iterator iterator = targetList.iterator(); iterator.hasNext();) {
+				AbstractStructuredDataModel targetGraphModel = (AbstractStructuredDataModel) iterator
+						.next();
+				JavaBeanModel target = (JavaBeanModel) targetGraphModel
+						.getReferenceEntityModel();
+				if (target.isRoot()) {
+					rootTarget = target;
+					break;
+				}
+			}
+			if (rootSource != null && rootTarget != null) {
+				AbstractStructuredDataModel rootSourceGraphModel = UIUtils
+						.findGraphModel(root, rootSource);
+				AbstractStructuredDataModel rootTargetGraphModel = UIUtils
+						.findGraphModel(root, rootTarget);
+				if (rootSourceGraphModel instanceof IConnectableModel
+						&& rootTargetGraphModel instanceof IConnectableModel) {
+					if (((IConnectableModel) rootSourceGraphModel)
+							.isSourceConnectWith((IConnectableModel) rootTargetGraphModel)) {
+						// do nothing
+					} else {
+						// ask user if they want to connect the root model
+						Shell displayParent = context.getShell();
+						boolean connectAuto = MessageDialog
+								.openQuestion(
+										displayParent,
+										"Connection Question",
+										"The root models don't be connected , it will make some errors with the generation config file contents.\nDo you wan to connect them?");
+						if (connectAuto) {
+							// connect root model
+							LineConnectionModel connectionModel = new LineConnectionModel();
+							connectionModel
+									.setSource((IConnectableModel) rootSourceGraphModel);
+							connectionModel
+									.setTarget((IConnectableModel) rootTargetGraphModel);
+							connectionModel.connect();
+						}
+					}
+				}
+			}
+		}
+	}
 
 	public DesignTimeAnalyzeResult[] analyzeGraphModel(
 			SmooksConfigurationFileGenerateContext context) {
+		checkRootNodeConnected(context);
 		List<DesignTimeAnalyzeResult> typeCheckResults = UIUtils
 				.checkTargetJavaModelType(context);
 		List<DesignTimeAnalyzeResult> connectionCheckResults = UIUtils

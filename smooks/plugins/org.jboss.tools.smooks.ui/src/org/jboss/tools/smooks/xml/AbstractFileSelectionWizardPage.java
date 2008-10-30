@@ -10,9 +10,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.IWizard;
-import org.eclipse.jface.wizard.IWizardNode;
-import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -28,7 +25,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.INewWizard;
 
 /**
  * 
@@ -44,6 +40,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	protected Button fileSystemBrowseButton;
 	protected boolean reasourceLoaded = false;
 	private Button workspaceBrowseButton;
+	private String filePath = null;
 
 	public AbstractFileSelectionWizardPage(String pageName) {
 		super(pageName);
@@ -52,7 +49,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 
 	public Object getReturnValue() {
 		try {
-			returnObject = this.loadedTheObject(fileText.getText());
+			returnObject = this.loadedTheObject(filePath);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,7 +57,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	}
 	
 	public String getFilePath(){
-		return fileText.getText();
+		return filePath;
 	}
 	/*
 	 * (non-Javadoc)
@@ -109,6 +106,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	protected void hookFileTextModifyListener() {
 		final ModifyListener modifyListener = new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
+				filePath = fileText.getText();
 				changeWizardPageStatus();
 			}
 		};

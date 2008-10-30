@@ -786,10 +786,11 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		} else {
 			rootModel = new JavaBeanModel(null, rootClassName);
 		}
+		rootModel.setBeanClassString(SmooksModelUtils.getParmaText("beanClass", current));
 		setSelectorIsUsed(rootClassName);
 		buildChildrenOfTargetInputModel(listType, rootModel, false,
 				rootIsError, current, loader);
-		List list = new ArrayList();
+		List<JavaBeanModel> list = new ArrayList<JavaBeanModel>();
 		list.add(rootModel);
 		return list;
 	}
@@ -834,6 +835,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			selector = selector.substring(2, selector.length() - 1);
 			ResourceConfigType resourceConfig = findResourceConfigTypeWithSelector(
 					selector, listType);
+			model.setBeanClassString(SmooksModelUtils.getParmaText("beanClass", resourceConfig));
 			if (resourceConfig != null) {
 				this.buildChildrenOfTargetInputModel(listType, model, false,
 						false, resourceConfig, classLoader);

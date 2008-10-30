@@ -135,6 +135,7 @@ import org.jboss.tools.smooks.ui.gef.tools.MappingPanelDropTargetListener;
 import org.jboss.tools.smooks.ui.gef.tools.TargetTreeDropTargetListener;
 import org.jboss.tools.smooks.ui.gef.util.GraphicsConstants;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
+import org.jboss.tools.smooks.ui.wizards.SmooksConfigFileNewWizard;
 import org.jboss.tools.smooks.ui.wizards.TransformDataSelectionWizard;
 import org.jboss.tools.smooks.utils.SmooksGraphConstants;
 import org.jboss.tools.smooks.utils.UIUtils;
@@ -271,8 +272,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		SashForm sashForm = new SashForm(mainComposite, SWT.VERTICAL);
 		GridData sashFormLd = new GridData(GridData.FILL_BOTH);
 		sashForm.setLayoutData(sashFormLd);
-//		sashForm.
-//		sashForm.setSashWidth(1);
+		// sashForm.
+		// sashForm.setSashWidth(1);
 
 		designTimeAnalyzeResultRegion = toolkit.createComposite(sashForm);
 		GridLayout ngl = new GridLayout();
@@ -282,7 +283,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 		SashForm mappingMainComposite = new SashForm(sashForm, SWT.NONE);
 		// under the eclipse3.3
-//		mappingMainComposite.setSashWidth(1);
+		// mappingMainComposite.setSashWidth(1);
 		GridData sgd = new GridData(GridData.FILL_BOTH);
 		section.setLayoutData(sgd);
 		{
@@ -649,9 +650,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.ui.forms.editor.FormPage#doSave(org.eclipse.core.runtime.
-	 * IProgressMonitor)
+	 * @see org.eclipse.ui.forms.editor.FormPage#doSave(org.eclipse.core.runtime.
+	 *      IProgressMonitor)
 	 */
 	@Override
 	public void doSave(IProgressMonitor monitor) {
@@ -714,13 +714,19 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		context.setDataMappingRootModel(this.rootModel);
 		context.setSmooksConfigFile(((IFileEditorInput) getEditorInput())
 				.getFile());
-		
-		context.setSourceViewerLabelProvider((LabelProvider)sourceViewer.getLabelProvider());
-		context.setSourceViewerContentProvider((ITreeContentProvider)sourceViewer.getContentProvider());
-		
-		context.setTargetViewerLabelProvider((LabelProvider)targetViewer.getLabelProvider());
-		context.setTargetViewerContentProvider((ITreeContentProvider)targetViewer.getContentProvider());
-		
+
+		context.setSourceViewerLabelProvider((LabelProvider) sourceViewer
+				.getLabelProvider());
+		context
+				.setSourceViewerContentProvider((ITreeContentProvider) sourceViewer
+						.getContentProvider());
+
+		context.setTargetViewerLabelProvider((LabelProvider) targetViewer
+				.getLabelProvider());
+		context
+				.setTargetViewerContentProvider((ITreeContentProvider) targetViewer
+						.getContentProvider());
+
 		context.setShell(getSite().getShell());
 	}
 
@@ -967,9 +973,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.ui.forms.editor.FormPage#init(org.eclipse.ui.IEditorSite,
-	 * org.eclipse.ui.IEditorInput)
+	 * @see org.eclipse.ui.forms.editor.FormPage#init(org.eclipse.ui.IEditorSite,
+	 *      org.eclipse.ui.IEditorInput)
 	 */
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
@@ -1001,7 +1006,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			throwable = e;
 		}
 		if (throwable != null) {
-			((SmooksFormEditor) getEditor()).setOnlyShowTextEditor(true,throwable);
+			((SmooksFormEditor) getEditor()).setOnlyShowTextEditor(true,
+					throwable);
 		}
 	}
 
@@ -1053,12 +1059,24 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				try {
 					if (viewer == this.sourceViewer) {
 						this.createSourceGraphModels();
+						this.getSmooksConfigurationFileGenerateContext()
+								.getProperties()
+								.setProperty(
+										SmooksConfigFileNewWizard.PRO_SOURCE_DATA_PATH,
+										cw.getStructuredDataSourcePath());
 						sourceDataTypeID = typeID;
 					}
 					if (viewer == this.targetViewer) {
 						this.createTargetGraphModels();
 						targetDataTypeID = typeID;
+						this.getSmooksConfigurationFileGenerateContext()
+						.getProperties()
+						.setProperty(
+								SmooksConfigFileNewWizard.PRO_TARGET_DATA_PATH,
+								cw.getStructuredDataSourcePath());
 					}
+					commandStackChanged = true;
+					firePropertyChange(PROP_DIRTY);
 				} catch (Exception e) {
 					MessageDialog.openError(getSite().getShell(), "Error",
 							"a error occurs during filling Data into the viewer:\n"
@@ -1103,9 +1121,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * org.eclipse.ui.forms.events.IHyperlinkListener#linkActivated(org.
-		 * eclipse.ui.forms.events.HyperlinkEvent)
+		 * @see org.eclipse.ui.forms.events.IHyperlinkListener#linkActivated(org.
+		 *      eclipse.ui.forms.events.HyperlinkEvent)
 		 */
 		public void linkActivated(HyperlinkEvent e) {
 			showCreationWizard(viewer);
@@ -1114,9 +1131,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * org.eclipse.ui.forms.events.IHyperlinkListener#linkEntered(org.eclipse
-		 * .ui.forms.events.HyperlinkEvent)
+		 * @see org.eclipse.ui.forms.events.IHyperlinkListener#linkEntered(org.eclipse
+		 *      .ui.forms.events.HyperlinkEvent)
 		 */
 		public void linkEntered(HyperlinkEvent e) {
 
@@ -1125,9 +1141,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * org.eclipse.ui.forms.events.IHyperlinkListener#linkExited(org.eclipse
-		 * .ui.forms.events.HyperlinkEvent)
+		 * @see org.eclipse.ui.forms.events.IHyperlinkListener#linkExited(org.eclipse
+		 *      .ui.forms.events.HyperlinkEvent)
 		 */
 		public void linkExited(HyperlinkEvent e) {
 
@@ -1159,9 +1174,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets
-		 * .Event)
+		 * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets
+		 *      .Event)
 		 */
 		public void handleEvent(Event event) {
 			TreeItem item = (TreeItem) event.item;
@@ -1194,9 +1208,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * org.eclipse.swt.events.PaintListener#paintControl(org.eclipse.swt
-		 * .events.PaintEvent)
+		 * @see org.eclipse.swt.events.PaintListener#paintControl(org.eclipse.swt
+		 *      .events.PaintEvent)
 		 */
 		public void paintControl(PaintEvent e) {
 			Tree tree = (Tree) e.getSource();
@@ -1289,7 +1302,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 						SWT.NONE);
 				Menu menu = new Menu(getSite().getShell(), SWT.POP_UP);
 				List<ResolveCommand> list = result.getResolveProblem();
-				for (Iterator<ResolveCommand> iterator2 = list.iterator(); iterator2.hasNext();) {
+				for (Iterator<ResolveCommand> iterator2 = list.iterator(); iterator2
+						.hasNext();) {
 					final ResolveCommand resolveCommand = (ResolveCommand) iterator2
 							.next();
 					MenuItem item = new MenuItem(menu, SWT.NONE);
