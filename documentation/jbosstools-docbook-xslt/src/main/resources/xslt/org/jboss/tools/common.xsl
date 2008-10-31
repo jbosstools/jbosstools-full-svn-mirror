@@ -119,14 +119,21 @@
       </a> 
     </span> 
   </xsl:template> 
-  <!-- XHTML and PDF -->
+
+<!-- XHTML and PDF -->
   
   <xsl:template match="//diffmk:wrapper">
-         	<span class="diffmkwrapper">
-  			<xsl:value-of select="."/> 
-  		</span>
+ <xsl:choose>
+  <xsl:when test="@diffmk:change='deleted'">
+    <xsl:text> </xsl:text>
+   </xsl:when>
+   <xsl:otherwise>
+   <span class="diffmkwrapper">
+    <xsl:value-of select="."/> 
+   </span>
+  </xsl:otherwise>
+ </xsl:choose>
   </xsl:template>
-  
   <!--xsl:template match="//node()[@diffmk:change]">
   	<xsl:choose>
   		 <xsl:when test="local-name()='note' or local-name()='tip' or local-name()='important' or local-name()='warning' or local-name()='caution'"> 
