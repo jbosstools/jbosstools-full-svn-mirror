@@ -9,7 +9,16 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jdocbook</packaging>
 	<name>Exadel_Studio_Migration_Guide</name>
-
+	
+	<profiles>
+		<profile>
+			<id>diffmk</id>
+			<properties>
+			<master>master_output.xml</master>
+			</properties>
+		</profile>
+	</profiles>
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -37,7 +46,7 @@
 					</dependency>
 				</dependencies>
 				<configuration>
-					<sourceDocumentName>master.xml</sourceDocumentName>
+					<sourceDocumentName>${master}</sourceDocumentName>
 					<sourceDirectory>${pom.basedir}/en</sourceDirectory>
 					<imageResource>
 						<directory>${pom.basedir}/en</directory>
@@ -101,6 +110,7 @@
 	<properties>
 		<stylesdir>../../../documentation/jbosstools-docbook-xslt/src/main/resources/</stylesdir>
 		<cssdir>../../../documentation/jbosstools-jdocbook-style/src/main/com/css/</cssdir>
+		<master>master.xml</master>
 		<translation>en-US</translation>
 	</properties> 
 
