@@ -57,7 +57,7 @@ public class SeamBigProjectTest extends TestCase {
 	TestProjectProvider provider;
 
 	protected void setUp() throws Exception {
-		provider = new TestProjectProvider(BUNDLE,"/projects/SeamWebWarTestProject" , "SeamWebWarTestProject", true);
+		provider = new TestProjectProvider(BUNDLE,"/projects/bigProject" , "bigProject", true);
 		project = provider.getProject();
 		IFolder folder = project.getFolder(new Path("src/action/p"));
 		File template = getTemplateFile();
