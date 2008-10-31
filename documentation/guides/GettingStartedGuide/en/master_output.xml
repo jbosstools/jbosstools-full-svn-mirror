@@ -1,0 +1,2809 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.docbook.org/xml/4.3/docbookx.dtd"
+[
+<!ENTITY getting_started SYSTEM "modules/getting_started.xml">
+<!ENTITY  manage SYSTEM "modules/manage.xml">
+<!ENTITY first_seam  SYSTEM "modules/first_seam.xml">
+<!ENTITY jsp_application  SYSTEM "modules/jsp_application.xml">
+<!ENTITY rad_jsf_application  SYSTEM "modules/rad_jsf_application.xml">
+<!ENTITY gsg_faq  SYSTEM "modules/gsg_faq.xml">
+<!ENTITY further_reading  SYSTEM "modules/further_reading.xml">
+
+<!ENTITY seamlink "../../seam/html_single/index.html">
+<!ENTITY aslink "../../as/html_single/index.html">
+<!ENTITY esblink "../../esb_ref_guide/html_single/index.html">
+<!ENTITY gsglink "../../GettingStartedGuide/html_single/index.html">
+<!ENTITY hibernatelink "../../hibernatetools/html_single/index.html">
+<!ENTITY jbpmlink "../../jbpm/html_single/index.html">
+<!ENTITY jsflink "../../jsf/html_single/index.html">
+<!ENTITY jsfreflink "../../jsf_tools_ref_guide/html_single/index.html">
+<!ENTITY jsftutoriallink "../../jsf_tools_tutorial/html_single/index.html">
+<!ENTITY strutsreflink "../../struts_tools_ref_guide/html_single/index.html">
+<!ENTITY strutstutoriallink "../../struts_tools_tutorial/html_single/index.html">                            
+<!ENTITY jbossportallink "../../jboss_portal_tools_ref_guide/html_single/index.html"> 
+<!ENTITY migrationlink "../../Exadel-migration/html_single/index.html">                         
+<!ENTITY wslink "../../ws_ref_guide/html_single/index.html">
+]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
+ <bookinfo>
+  <title>Getting Started with JBoss Developer Studio</title>
+  <pubdate>April 2008</pubdate>
+  <copyright>
+   <year>2007</year>
+   <year>2008</year>
+   <holder>JBoss, a division of Red Hat Inc.</holder>
+  </copyright>
+  <releaseinfo>Version: 1.1.0.GA</releaseinfo>
+ </bookinfo>
+ <toc></toc> 
+
+<chapter id="getting_started" xreflabel="getting_started">
+ <?dbhtml filename="getting_started.html"?>
+ <chapterinfo>
+  <keywordset>
+   <keyword>JBoss Developer Studio</keyword>
+   <keyword>Eclipse</keyword>
+   <keyword>Java</keyword>
+   <keyword>JBoss</keyword>
+  </keywordset>
+ </chapterinfo>
+ <title>Getting Started with JBoss Developer Studio</title>
+
+ <section id="intro1">
+  <title>What is JBDS?</title>
+  <para><property>JBoss Developer Studio</property> is a set of eclipse-based development tools that
+   are pre-configured for JBoss Enterprise Middleware Platforms and Red Hat Enterprise Linux.
+   Developers are not required to use <property>JBoss Developer Studio</property> to develop on
+   JBoss Enterprise Middleware and/or Red Hat Linux. But, many find these pre-configured tools offer
+   significant time-savings and value, making them more productive and speeding time to deployment.</para>
+  <para>This guide covers the first steps to get started working with <property>JBoss Developer
+    Studio</property>. You will learn how to install and configure necessary software for your OS
+   (currently Linux, Microsoft Windows or Mac OSX).</para>
+  <para>Thus this guide will provide you with detailed info on how to start JDK, JBDS and JBoss
+   Tools.</para>
+ </section>
+
+ <section id="ConfigJavaEnvironment">
+  <?dbhtml filename="ConfigJavaEnvironment.html"?>
+  <title>Configuring Your Java Environment</title>
+  <para>You must have a working installation of JDK 5 before you install <property>JBoss Developer
+    Studio</property>. Currently it will only fully work with a 32-bit JVM, not a 64-bit JVM. On a
+   64-bit JVM the visual editor fails to launch because of feature of OS architecture. Thus in this
+   guide we will show you how to install a 32-bit Sun JDK 5.0 on a Linux Platform and Microsoft
+   Windows Platform.</para>
+
+  <section id="InstallJDK50onLinux">
+   <title>Installing and Configuring 32-bit Sun JDK 5.0 on Linux</title>
+   <para>To install 32-bit Sun JDK 5.0 on Linux and configure it, you should follow the next steps:</para>
+   <itemizedlist>
+    <listitem>
+     <para>Download the <ulink url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0
+       (Java 2 Development Kit)</ulink> from Sun&apos;s website. Choose &quot;JDK 5.0 Update
+      &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) for
+      download and then select &quot;Red Hat Package Manager in self-extracting&quot; file
+      for Linux. Read the instructions on Sun&apos;s website for installing the JDK.</para>
+    </listitem>
+    <listitem>
+     <para>If you don&apos;t want to use SysV service scripts you can install the
+      &quot;self-extracting file&quot; for Linux instead of choosing the &quot;RPM in
+      self-extracting&quot; file. In that case you can skip the next step mentioned here. But it
+      is recommended to use the SysV service scripts for production servers.</para>
+    </listitem>
+    <listitem>
+     <para>Download and install the appropriate -compat RPM from JPackage <ulink  url="ftp://jpackage.hmdc.harvard.edu/JPackage/1.7/generic/RPMS.non-free/">here</ulink>.
+      Please ensure you choose a matching version of the -compat package to the JDK you've
+      installed.</para>
+    </listitem>
+    <listitem>
+     <para>Create an environment variable that points to the JDK installation directory and call it
+      JAVA_HOME. Add <emphasis>
+       <property>$JAVA_HOME/bin</property>
+      </emphasis> to the system path to be able to run java from the command line. You can do this
+      by adding the following lines to the .bashrc file in your home directory.</para>
+     <programlisting><![CDATA[#In this example /usr/java/jdk1.5.0_11 is the JDK installation directory.
+export JAVA_HOME=/usr/java/jdk1.5.0_11
+export PATH=$PATH:$JAVA_HOME/bin]]></programlisting>
+    </listitem>
+   </itemizedlist>
+
+   <note>
+    <title>Note:</title>
+
+       <para><diffmk:wrapper diffmk:change="changed">﻿If you have JDK already installed and added in your system path, you should add
+      <emphasis>$JAVA_HOME/bin</emphasis> before the old <emphasis>$PATH</emphasis> (not after it)
+     so that the new version of JDK can be found first, i. e. <emphasis>
+      <emphasis>export PATH=$JAVA_HOME/bin:$PATH</emphasis>
+     </emphasis> This way, the machine will pick up the new JVM first. You only need to run
+     "alternative" as a safe guard for the right JVM.</diffmk:wrapper></para>
+   </note>
+
+   <para>Set this variable for your account doing the installation and also for the user account
+    that will run the server.</para>
+   <itemizedlist>
+    <listitem>
+     <para>If you have more than one version of JVM installed on your machine, make sure you are
+      using the JDK 1.5 installation as the default java and javac. You can do this using the
+      alternatives system. The alternatives system allows different versions of Java from different
+      sources to co-exist on your system.</para>
+    </listitem>
+   </itemizedlist>
+   <section id="SelectAlternativesforJava">
+    <title>Select alternatives for java, javac and java_sdk_1.5.0</title>
+    <itemizedlist>
+     <listitem>
+      <para>As a root user, type the following command at the shell prompt and you should see
+       something like this:</para>
+     </listitem>
+    </itemizedlist>
+    <programlisting><![CDATA[[root@vsr ~]$ /usr/sbin/alternatives --config java
+There are 2 programs that provide 'java'.
+Selection    Command
+-----------------------------------------------
+   1           /usr/lib/jvm/jre-1.4.2-gcj/bin/java
+*+ 2           /usr/lib/jvm/jre-1.5.0-sun/bin/java
+Enter to keep the current selection[+], or type selection number:]]></programlisting>
+    <para>Make sure the Sun version [jre-1.5.0-sun in this case] is selected (marked with a
+     &apos;+&apos; in the output), or select it by entering its number as prompted.</para>
+    <itemizedlist>
+     <listitem>
+      <para>Repeat the same for javac and java_sdk_1.5.0.</para>
+     </listitem>
+    </itemizedlist>
+    <programlisting><![CDATA[[root@vsr ~]$ /usr/sbin/alternatives --config javac
+There is 1 program that provides 'javac'.
+	Selection   Command
+-----------------------------------------------
+*+ 1           /usr/lib/jvm/java-1.5.0-sun/bin/javac
+Enter to keep the current selection[+], or type selection number:
+
+[root@vsr ~]$ /usr/sbin/alternatives --config java_sdk_1.5.0
+There is 1 program that provide 'java_sdk_1.5.0'.
+	Selection   Command
+-----------------------------------------------
+*+ 1           /usr/lib/jvm/java-1.5.0-sun
+Enter to keep the current selection[+], or type selection number:]]></programlisting>
+    <para>You should verify that java, javac and java_sdk_1.5.0 all point to the same manufacturer
+     and version.</para>
+    <note>
+     <title>Note:</title>
+     <para>You can always override this step by setting the JAVA_HOME environment variable as
+      explained in the previous step.</para>
+    </note>
+    <itemizedlist>
+     <listitem>
+      <para>Make sure that the java executable is in your path and that you are using an appropriate
+       version. To verify your Java environment, type &quot;java -version&quot; at the shell
+       prompt and you should see something like this:</para>
+     </listitem>
+    </itemizedlist>
+    <programlisting><![CDATA[[root@vsr ~]$ java -version
+java version "1.5.0_11"
+Java(TM) 2 Runtime Environment, Standard Edition (build 1.5.0_11-b03)
+Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></programlisting>
+   </section>
+
+  </section>
+  <section id="InstallJDK50onWindows">
+   <title>Installing and Configuring 32-bit Sun JDK 5.0 on Microsoft Windows</title>
+
+   <para>To install and configure 32-bit Sun JDK 5.0 on Microsoft Windows, follow these steps:</para>
+   <itemizedlist>
+    <listitem>
+     <para>Download the <ulink url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0
+       (Java 2 Development Kit)</ulink> from Sun&apos;s website. Choose &quot;JDK 5.0 Update
+      &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) for
+      download and then select your Windows Platform options to perform the installation.</para>
+    </listitem>
+    <listitem>
+     <para>Create an environment variable called JAVA_HOME that points to the JDK installation
+      directory, for example:
+      <literallayout>
+       <emphasis>C:\Program Files\Java\jdk1.5.0_11\</emphasis>
+      </literallayout></para>
+    </listitem>
+   </itemizedlist>
+
+   <para>In order to run java from the command line, add the <emphasis>jre\bin</emphasis> directory
+    to your path, for example:</para>
+   <para>
+    <emphasis>C:\Program Files\Java\jdk1.5.0_11\jre\bin</emphasis>
+   </para>
+   <para>To do this, open the <emphasis>
+     <property>Control Panel</property>
+    </emphasis> from the <emphasis>
+     <property>Start</property>
+    </emphasis> menu, switch to Classic View if necessary, open the System Control Panel applet (<emphasis>
+     <property>System</property>
+    </emphasis>), select the <emphasis>
+     <property>Advanced</property>
+    </emphasis> Tab, and click on the <emphasis>
+     <property>Environment Variables</property>
+    </emphasis> button.</para>
+   <para>Now, when 32-bit Sun JDK 5.0 has been successfully installed, we can pass on to the next
+    step.</para>
+  </section>
+
+ </section>
+
+ <section id="InstallingJBDS">
+  <?dbhtml filename="InstallingRHDS.html"?>
+  <title>JBoss Developer Studio Installation</title>
+
+  <para>This chapter will provide you with detailed information on how to install <property>JBoss
+    Developer Studio</property>.</para>
+
+  <para>JBDS comes with a simple installer, bundled with tested/pre-configured versions of Eclipse,
+   WTP, JBossEAP, Seam, and SpringIDE. Thus, to start perform the next steps:</para>
+
+  <itemizedlist>
+   <listitem>
+    <para>First of all you need the appropriate installation file for your platform from 
+     <ulink  url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">Red Hat
+     website</ulink>.</para>
+   </listitem>
+   <listitem>
+    <para>Then run in console:</para>
+    <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-linux-gtk-1.1.0.GA.jar
+]]></programlisting>
+   </listitem>
+   <listitem>
+    <para>Follow the instructions presented by the installation wizard</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure>
+   <title>JBoss Developer Studio Installation Wizard</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_1.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+  <itemizedlist>
+   <listitem>
+    <para>Provide the installation path</para>
+   </listitem>
+   <listitem>
+    <para>Select Java VM</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure>
+   <title>Select Java VM</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_2.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+  <tip>
+   <title>Tip:</title>
+   <para>By selecting <emphasis>
+     <property>Default Java VM</property>
+    </emphasis> you set default Java VM of your system (to verify your Java environment, type
+    &quot;java -version&quot; in console).</para>
+  </tip>
+
+  <para>Selecting <emphasis>
+    <property>Specific Java VM</property>
+   </emphasis> you can provide the path to non-default Java VM.</para>
+
+  <note>
+   <title>Note:</title>
+   <para>JBoss Developer Studio needs Java 5 and &quot;gij&quot; isn&apos;t available on
+    every platform.</para>
+  </note>
+
+  <itemizedlist>
+   <listitem>
+    <para>Installation process includes <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application
+      Platform</ulink>. Select <emphasis>
+      <property>Yes</property>
+     </emphasis> to use it in JBoss Developer Studio.</para>
+   </listitem>
+  </itemizedlist>
+
+  <para/>
+
+  <figure>
+   <title>JBoss Enterprise Application Platform Installing</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_3.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+  <para/>
+  <note>
+   <title>Note:</title>
+   <para>The installer installs JBoss Enterprise Application Platform for running your applications
+    if you select this option during the installation process. If you want to use a different server
+    than ours, you can change the setting in JBoss Developer Studio.</para>
+  </note>
+
+  <itemizedlist>
+   <listitem>
+    <para>Check your installation paths and see the components to install. If you'd like to change
+     something, press <emphasis>
+      <property>Previous</property>
+     </emphasis> button. Click <emphasis>
+      <property>Next</property>
+     </emphasis> to start installation. </para>
+   </listitem>
+  </itemizedlist>
+
+  <para/>
+
+  <figure>
+   <title>Summary Information</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_4.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+ </section>
+
+ <section id="jbds_jbosstools">
+
+  <title>JBoss Developer Studio and JBoss Tools</title>
+
+  <para>This section uncovers the points on the differences between <property>JBoss Developer
+   Studio</property> and <property>JBoss Tools</property> and provides the steps on <property>JBoss
+    Tools</property> installation as well.</para>
+
+  <section id="WhatDifferenceBetweenJBDSAndJBossTools">
+   <title>What is the difference?</title>
+
+   <para><property>JBoss Tools</property> is what went into our <property>JBoss Developer
+    Studio</property> which comes as an easy-to-install Eclipse based IDE fully configured and ready
+    to run with the bundled <property>JBoss Enterprise Application Platform</property>.</para>
+
+   <para>In short <property>JBoss Tools</property> are just a set of Eclipse plugins and
+     <property>JBoss Developer Studio</property> adds:</para>
+   <itemizedlist>
+    <listitem>
+     <para>An installer</para>
+    </listitem>
+    <listitem>
+     <para>Eclipse and Web Tools preconfigured</para>
+    </listitem>
+    <listitem>
+     <para>JBoss EAP with JBoss AS and Seam preconfigured</para>
+    </listitem>
+    <listitem>
+     <para>3rd party plugins bundled and configured</para>
+    </listitem>
+    <listitem>
+     <para>Access to RHEL and Red Hat Network</para>
+    </listitem>
+    <listitem>
+     <para>Access to the JBoss/Red Hat supported software</para>
+    </listitem>
+   </itemizedlist>
+   <para> For additional information see <ulink url="http://www.jboss.com/products/devstudio"
+     >JBoss.com</ulink></para>
+  </section>
+
+  <section id="JBossToolsInstall">
+   <title>JBoss Tools Installation</title>
+   <para>Here, let&apos;s consider the installation of the <property>JBoss Tools</property>
+    modules.</para>
+   <para><property>JBoss Tools</property> is an umbrella project for the JBoss developed plugins
+    that will make it into <property>JBoss Developer Studio</property>. The JBoss Tools modules are:</para>
+   <itemizedlist>
+    <listitem>
+     <para>JBoss AS Tools</para>
+    </listitem>
+    <listitem>
+     <para>Seam Tools</para>
+    </listitem>
+    <listitem>
+     <para>Hibernate Tools</para>
+    </listitem>
+    <listitem>
+     <para>Visual Page Editor</para>
+    </listitem>
+    <listitem>
+     <para>JST Tools</para>
+    </listitem>
+    <listitem>
+     <para>JBPM Tools</para>
+    </listitem>
+   </itemizedlist>
+
+   <para>To install the JBoss Tools plugins for Eclipse, you need the following:</para>
+
+   <itemizedlist>
+    <listitem>
+     <para>Get Eclipse and Web Tools</para>
+    </listitem>
+   </itemizedlist>
+   <para>The currant version of JBoss Tools (3.0.0.beta1) targets at Eclipse 3.4/Ganymede and WTP
+    3.0.</para>
+
+   <tip>
+    <title>Tip:</title>
+    <para>We recommend you do not use Eclipse.org update site to go from Eclipse 3.3 to Eclipse 3.4.
+     Instead we suggest that you download the full binary from <ulink url="http://www.eclipse.org/downloads/">here</ulink>.</para>
+   </tip>
+
+   <para>If you can only use Eclipse 3.3 use <ulink url="http://www.jboss.org/tools/download/index.html#stable">JBoss Tools 2.1.2</ulink>, but
+    JBoss Tools 2.x will not have any of the new features.</para>
+
+   <note>
+    <title>Note:</title>
+    <para>Remember to choose the download that matches your OS and use Java 5 when you run
+    it.</para>
+   </note>
+
+   <itemizedlist>
+    <listitem>
+     <para>Get the <ulink url="http://download.jboss.org/jbosstools/builds/nightly/latestBuild.html"
+       >latest JBoss Tools build</ulink></para>
+    </listitem>
+   </itemizedlist>
+
+   <para>Some of our newer plugins, like TPTP and BIRT, need additional drivers. On the left side of
+    the download page you can find all of the required drivers for chosen build and their versions.</para>
+   <para>Instead of downloading the nightly build version manually, it&apos;s also possible to
+    get the latest release of <property>JBoss Tools</property> from one of our update sites: <itemizedlist>
+     <listitem>
+      <para>Stable Updates: <ulink url="http://download.jboss.org/jbosstools/updates/stable"
+        >http://download.jboss.org/jbosstools/updates/stable</ulink></para>
+     </listitem>
+     <listitem>
+      <para> Development Updates: <ulink url="http://download.jboss.org/jbosstools/updates/development"
+        >http://download.jboss.org/jbosstools/updates/development</ulink></para>
+     </listitem>
+    </itemizedlist>
+   </para>
+
+   <itemizedlist>
+    <listitem>
+     <para>Finally, install the build</para>
+    </listitem>
+   </itemizedlist>
+
+   <para>Unzip the file(s) directly into your Eclipse <emphasis>
+     <property>plugins/features</property>
+    </emphasis> directory and it will be readily available. It might be necessary to start Eclipse
+    with eclipse -clean to make sure it starts clean and rereads the new list of plugins.</para>
+
+   <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read
+    about dependencies between standalone plug-ins.</para>
+  </section>
+
+ </section>
+
+ <section id="Welcome">
+  <title>Welcome to JBoss Developer Studio</title>
+  <para>In this section we'll show you how to work with the welcome page of the <property>JBoss
+    Developer Studio</property>.</para>
+  <para>The welcome page is the first page you see when you first launch <property>JBoss Developer
+    Studio</property>. </para>
+
+  <figure>
+   <title>Welcome to JBoss Developer Studio</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_5.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+  <para>With the help of its page you will be able:</para>
+  <itemizedlist>
+   <listitem>
+    <para>to get quick access to Getting Started Documentation (guides, tutorials and
+    viewlets)</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure>
+   <title>Getting Started Documentation</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_6.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+  <itemizedlist>
+   <listitem>
+    <para>to create new Seam projects, jBPM Process, JSF or Struts projects using JBDS
+    wizards</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure>
+   <title>Create New...</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_7.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+  <itemizedlist>
+   <listitem>
+    <para>to get short description of perspectives that JBDS offers for more productive
+    development</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure>
+   <title>Perspectives</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_8.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+  <itemizedlist>
+   <listitem>
+    <para>to visit JBoss Developer Studio web resources.</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure>
+   <title>Web Resources</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_9.png" scale="90"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+  <para>Start work with <property>JBoss Developer Studio</property> by clicking on <emphasis>
+    <property>Workbench</property>
+   </emphasis> button or simply close the Welcome page.</para>
+
+ </section>
+
+ <section id="Upgrading">
+  <?dbhtml filename="Upgrading.html"?>
+  <title>Upgrading</title>
+  <para>To upgrade, just uninstall your current version and install the new one.</para>
+ </section>
+
+ <section id="Uninstalling">
+  <?dbhtml filename="Uninstalling.html"?>
+  <title>Uninstalling</title>
+  <itemizedlist>
+   <listitem>
+    <para>Make sure <property>JBoss Developer Studio</property> is not running</para>
+   </listitem>
+   <listitem>
+    <para>Uninstall your current version of <property>JBoss Developer Studio</property> by running
+     Uninstaller</para>
+   </listitem>
+  </itemizedlist>
+ </section>
+
+ <section id="Support">
+  <?dbhtml filename="Support.html"?>
+  <title>Support</title>
+  <para>If you have comments or questions, you can discuss them at our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
+    Developer Studio Forum</ulink>.</para>
+  <para>When writing to the forum for questions, please include the following information:</para>
+  <orderedlist>
+   <listitem>
+    <para>JBoss Developer Studio version</para>
+   </listitem>
+   <listitem>
+    <para>Exact error message</para>
+   </listitem>
+   <listitem>
+    <para>Steps to reproduce the issue</para>
+   </listitem>
+  </orderedlist>
+
+  <para><property>JBDS</property> subscribers can get necessary support on our <ulink url="https://network.jboss.com/jbossnetwork/login.html">Support Portal</ulink>.</para>
+ </section>
+
+
+ <section id="OtherRelevantResourcesOnTheTopic33">
+  <?dbhtml filename="OtherRelevantResourcesOnTheTopic33.html"?>
+  <title>Other relevant resources on the topic</title>
+  <para>JBDS on JBoss: <ulink url="http://labs.jboss.com/rhdevstudio/">JBoss Developer
+   Studio</ulink></para>
+  <para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
+   Forum</ulink></para>
+  <para>Subscription: <ulink url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">JBDS
+   Subscription</ulink></para>
+
+  <para>The latest documentation builds are available <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
+ </section>
+
+</chapter>
+ 
+<chapter diffmk:change="added" id="manage" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/manage.xml" xreflabel="manage">
+    <?dbhtml filename="manage.html"?>
+    <chapterinfo diffmk:change="added">
+        <keywordset>
+            <keyword>JBoss Developer Studio</keyword>
+            <keyword>Eclipse</keyword>
+            <keyword>Deploy</keyword>
+            <keyword>Deployment</keyword>
+            <keyword>JBoss</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>Manage JBoss AS from JBoss Developer Studio</title>
+
+    <para><diffmk:wrapper diffmk:change="added">In this chapter we'll focus more on how to operate the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss
+        AS</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> from </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+    <para><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> ships with </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss EAP
+        v.4.2</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> bundled. When you followed the default installation of </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss
+            Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed">, you should already have a JBoss 4.2 Server installed and
+        defined. To run JBoss AS 4.2 you need JDK 1.5, JDK 6 is not formally supported yet, although
+        you may be able to start the server with it.</diffmk:wrapper></para>
+
+    <section id="JBossbundled">
+        
+        <title>How to Manage the JBoss AS Bundled in JBDS</title>
+        <para><diffmk:wrapper diffmk:change="added">This section covers the basics of working with the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Server</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+            supported directly by </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBDS</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> via bundled AS plug-in. To read more
+            about AS plug-in, refer to the </diffmk:wrapper><ulink url="../../as/html_single/index.html">Server Manager guide</ulink>.</para>
+
+        <section id="StartingServer">
+            
+            <title><diffmk:wrapper diffmk:change="changed">Starting JBoss Server</diffmk:wrapper></title>
+            <para>Starting <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss Server</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> is quite simple. </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss
+                    Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> allows you to control its behaviour with the help of
+                a special toolbar: where you could start it in a regular or debug mode, stop it or
+                restart it.</diffmk:wrapper></para>
+
+            <itemizedlist>
+                <listitem>
+                    <para><diffmk:wrapper diffmk:change="changed">To launch the server click the green-with-white-arrow icon on the
+                            </diffmk:wrapper><property moreinfo="none">JBoss Server View </property><diffmk:wrapper diffmk:change="changed">or right click server name in
+                        this view and select </diffmk:wrapper><emphasis>
+                            <property moreinfo="none">Start</property>
+                        </emphasis>. If this view is not open, select <emphasis>
+                            <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Window &gt; Show View &gt; Other &gt; Server
+                                &gt; JBoss Server View</diffmk:wrapper></property>
+                        </emphasis></para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Starting from Icon</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_1.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <figure float="0">
+                <title>Starting from JBoss Server View</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_2.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <para><diffmk:wrapper diffmk:change="added">While launching, server output is written to the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Console
+                view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">:</diffmk:wrapper></para>
+
+            <figure float="0">
+                <title>Console Output</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_3.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>When the server is started you should see <emphasis>
+                    <property moreinfo="none">Started</property>
+                </emphasis> right to its name in <property moreinfo="none">JBoss Server View</property><diffmk:wrapper diffmk:change="changed"> (column
+                "Status").</diffmk:wrapper></para>
+            <figure float="0">
+                <title>Server is Started</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_4.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>To see event log after the server is started, expand <property moreinfo="none"><diffmk:wrapper diffmk:change="added">Event
+                Log</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> branch beneath </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Server View</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed">:</diffmk:wrapper></para>
+            <figure float="0">
+                <title>Event Log</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_5.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+        </section>
+
+        <section id="StoppingJBoss">
+            
+            <title>Stopping JBoss Server</title>
+            <para>To stop the server, click the <emphasis>
+                    <property moreinfo="none">Stop</property>
+                </emphasis><diffmk:wrapper diffmk:change="added"> icon in </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Server view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> or right click the server
+                name and press </diffmk:wrapper><emphasis>
+                    <property moreinfo="none">Stop</property>
+                </emphasis>.</para>
+            <figure float="0">
+                <title>Stopping Server</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_6.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>When the server is stopped you will see <emphasis>
+                    <property moreinfo="none">Stopped</property>
+                </emphasis> next to its name in the Status column.</para>
+        </section>
+        
+            
+            <title>Server Container Preferences</title>
+            <para><diffmk:wrapper diffmk:change="added">You can control how </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> interacts with server containers in the
+                </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Server editor</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. Double-click the server to open it in the editor.</diffmk:wrapper></para>
+            
+            <figure float="0">
+                <title>Server Overview</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_8.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            
+            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Here you can specify some common settings: host name, server
+                name, runtime as well as settings related to the publishing, timeouts and server ports.</diffmk:wrapper></para>
+         
+    </section>
+    <section id="JBossInstances">
+        
+        <title>How to Use Your Own JBoss AS Instance with JBDS</title>
+        <para><diffmk:wrapper diffmk:change="changed">Although </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> works closely with </diffmk:wrapper><property diffmk:change="added" moreinfo="none">JBoss EAP 4.2</property><diffmk:wrapper diffmk:change="changed">
+            we do not ultimately tie you to any particular server for deployment. There are some
+            servers that Studio supports directly (via the bundled Eclipse WTP plug-ins). In this
+            section we discuss how to manage self-installed JBoss AS. Suppose you want to deploy the
+            application to </diffmk:wrapper><property moreinfo="none">JBoss 4.2.1 server</property><diffmk:wrapper diffmk:change="changed">. First of all you need to install
+                it.</diffmk:wrapper></para>
+        <section id="JBossInstalling">
+            
+            <title>JBoss AS Installation</title>
+            <itemizedlist>
+                <listitem>
+                    <para>Download the binary package of <property moreinfo="none">JBoss 4.2.1</property><diffmk:wrapper diffmk:change="changed"> and save
+                        it on your computer: </diffmk:wrapper><ulink url="http://labs.jboss.com/jbossas/downloads">http://labs.jboss.com/jbossas/downloads</ulink></para>
+                </listitem>
+            </itemizedlist>
+            <para>It does not matter where on your system you install JBoss server.</para>
+            
+            <note>
+                <title>Note:</title>
+                <para><diffmk:wrapper diffmk:change="changed">The installation of JBoss server into a directory that has a name containing
+                    spaces provokes problems in some situations with Sun-based VMs. Try to avoid
+                    using installation folders that have spaces in their names.</diffmk:wrapper></para>
+            </note>
+            
+            <para><diffmk:wrapper diffmk:change="changed">There is no requirement for root access to run JBoss Server on UNIX/Linux systems
+                because none of the default ports are within the 0-1023 privileged port range.</diffmk:wrapper></para>
+            <itemizedlist>
+                <listitem>
+                    <para><diffmk:wrapper diffmk:change="changed">After you have the binary archive you want to install, use the JDK jar
+                        tool (or any other ZIP extraction tool) to extract the jboss-4.2.1.zip
+                        archive contents into a location of your choice. The jboss-4.2.1.tgz archive
+                        is a gzipped tar file that requires a gnutar compatible tar which can handle
+                        the long pathnames in the archive. The extraction process will create a
+                        jboss-4.2.1 directory. </diffmk:wrapper></para>
+                </listitem>
+            </itemizedlist>
+        </section>
+        
+        <section id="AddingJBossServer">
+            
+            <title><diffmk:wrapper diffmk:change="changed">Adding and configuring JBoss Server</diffmk:wrapper></title>
+            <para><diffmk:wrapper diffmk:change="added">Now we should add just installed server into server manager in </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Developer
+                Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+            <itemizedlist>
+                <listitem>
+                    <para>Open the JBoss Server View by selecting <emphasis>
+                        <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Window &gt; Show View &gt; Other &gt; Server
+                            &gt; JBoss Server View</diffmk:wrapper></property>
+                    </emphasis>. You will see JBoss Server view.</para>
+                </listitem>
+                <listitem>
+                    <para>Right click anywhere in this view and select <emphasis>
+                        <property moreinfo="none">New Server</property>
+                    </emphasis>.</para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                        <property moreinfo="none">JBoss, a division of Red Hat &gt; JBoss v4.2</property>
+                    </emphasis> and click the <emphasis>
+                        <property moreinfo="none">Installed Runtimes</property>
+                    </emphasis> button to select a new installed runtime.</para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Selecting Server Type</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_9.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            
+            <itemizedlist>
+                <listitem>
+                    <para>Click <emphasis>
+                        <property moreinfo="none">Add</property>
+                    </emphasis><diffmk:wrapper diffmk:change="changed"> button to add a new JBoss runtime.</diffmk:wrapper></para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                        <property moreinfo="none">JBoss, a division of Red Hat &gt; JBoss v4.2</property>
+                    </emphasis> and press <emphasis>
+                        <property moreinfo="none">Next</property>
+                    </emphasis>.</para>
+                </listitem>
+            </itemizedlist>
+            
+            <figure float="0">
+                <title>Installed Runtimes</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_10.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            
+            
+            
+            <itemizedlist>
+                <listitem>
+                    <para><diffmk:wrapper diffmk:change="changed">In the next step make JBoss Developer Studio to know where you have
+                        installed the server and define JRE.</diffmk:wrapper></para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Defining JBoss Runtime</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_11.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <note>
+                <title>Note:</title>
+                <para><diffmk:wrapper diffmk:change="changed">When adding a new server you will need to specify what JRE to use. It is
+                    important to set this value to a full JDK, not JRE. Again, you need a full JDK
+                    to run Web applications, JRE will not be enough.</diffmk:wrapper></para>
+            </note>
+            <itemizedlist>
+                <listitem>
+                    <para><diffmk:wrapper diffmk:change="changed">In the following window leave all settings default or give your name to a
+                        new jboss server and press </diffmk:wrapper><emphasis>
+                            <property moreinfo="none">Finish</property>
+                        </emphasis>.</para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Adding New Runtime</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_12.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>A new runtime will now appear in the <emphasis>
+                <property moreinfo="none">Preferences &gt; Server &gt; Installed Runtimes</property>
+            </emphasis> dialog.</para>
+            <figure float="0">
+                <title>Runtime is Added</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_13.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            
+            <itemizedlist>
+                <listitem>
+                    <para>Click <emphasis>
+                        <property moreinfo="none">OK</property>
+                    </emphasis><diffmk:wrapper diffmk:change="changed">. Then select a new added runtime in Server runtime drop down
+                        list and click </diffmk:wrapper><emphasis>
+                            <property moreinfo="none">Next</property>
+                        </emphasis> button twice.</para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Choosing Runtime</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_14.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <itemizedlist>
+                <listitem>
+                    <para>In the next dialog verify a <property moreinfo="none">JBoss</property><diffmk:wrapper diffmk:change="changed"> runtime information
+                        and if something is unfair go back and correct it.</diffmk:wrapper></para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Configuring Projects</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_15.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <itemizedlist>
+                <listitem>
+                    <para><diffmk:wrapper diffmk:change="changed">In the last wizard's dialog modify the projects that are
+                        configured on the server and click </diffmk:wrapper><emphasis>
+                            <property moreinfo="none">Finish</property>
+                        </emphasis>.</para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Configuring Projects</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_16.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>A new JBoss server should now appear in JBoss Server View.</para>
+            <figure float="0">
+                <title>New JBoss Server</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_17.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>Now, we are ready to create the first web application.</para>
+        </section>
+        
+    </section>
+    </chapter>
+<chapter id="jsp_application" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/jsp_application.xml" xreflabel="jsp_application">
+	<?dbhtml filename="jsp_application.html"?>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Developer Studio</keyword>
+			<keyword>JSP</keyword>
+			<keyword>JBoss</keyword>
+		</keywordset>
+	</chapterinfo>
+	<title>Developing a simple JSP web application</title>
+
+	<note>
+		<title>Note:</title>
+		<para>We highly recommend developing in <property moreinfo="none">Seam</property>. This chapter is for users
+			who for some reason cannot use Seam.</para>
+	</note>
+
+	<para>In this chapter you'll find out how to create a simple <ulink url="http://java.sun.com/products/jsp/">JSP</ulink><diffmk:wrapper diffmk:change="added"> application using the
+			</diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. The application will show a classic
+		"Hello World!" on the page.</diffmk:wrapper></para>
+	<para><diffmk:wrapper diffmk:change="added">We'll assume that you have already launched </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Developer
+		Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> and also that the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Web Development</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> perspective is the
+		current perspective. If not, make it active by selecting </diffmk:wrapper><emphasis>
+			<property moreinfo="none">Window &gt; Open Perspective &gt; Web Development</property>
+		</emphasis> from the menu bar or by selecting <emphasis>
+			<property moreinfo="none">Window &gt; Open Perspective &gt; Other...</property>
+		</emphasis> from the menu bar and then selecting Web Development from the Select Perspective
+		dialog box.</para>
+
+	<section id="SettingUpTheProject">
+		<?dbhtml filename="SettingUpTheProject.html"?>
+		<title>Setting Up the Project</title>
+		<para><diffmk:wrapper diffmk:change="changed">We are going to start with the creating a Dynamic Web Project with a minimal
+			structure, i.e. with just required facets. Thus this section will perform you all
+			necessary steps on how to do this.</diffmk:wrapper></para>
+		<itemizedlist>
+			<listitem>
+				<para>Go to the menu bar and select <emphasis>
+						<property moreinfo="none"><diffmk:wrapper diffmk:change="changed">File &gt; New &gt; Other...</diffmk:wrapper></property>
+					</emphasis></para>
+			</listitem>
+			<listitem>
+				<para>Select <emphasis>
+						<property moreinfo="none">Web &gt; Dynamic Web Project</property>
+					</emphasis> in the New Project dialog box</para>
+			</listitem>
+			<listitem>
+				<para>Click <emphasis>
+						<property moreinfo="none">Next</property>
+					</emphasis>
+				</para>
+			</listitem>
+			<listitem>
+				<para>Enter "jspHello" as a project name</para>
+			</listitem>
+			<listitem>
+				<para><diffmk:wrapper diffmk:change="added">Then select </diffmk:wrapper><emphasis diffmk:change="added">
+						<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Minimal Configuration</diffmk:wrapper></property>
+					</emphasis><diffmk:wrapper diffmk:change="added"> from the list of possible configurations and click </diffmk:wrapper><emphasis>
+						<property moreinfo="none">Finish</property>
+					</emphasis></para>
+			</listitem>
+		</itemizedlist>
+		<figure float="0">
+			<title>Create New Web Project</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/jsp_application/jsp_application_1.png"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<para><diffmk:wrapper diffmk:change="added">The </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">jspHello</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> node should appear in the upper-left </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Package Explorer</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+			view.</diffmk:wrapper></para>
+		<figure float="0">
+			<title>New Web Project</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/jsp_application/jsp_application_2.png"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</section>
+
+	<section id="CreatingJSPPage">
+		
+		<title>Creating JSP Page</title>
+		<para>This section covers all the points how to create, edit and then preview JSP page.</para>
+		<para><diffmk:wrapper diffmk:change="added">In our simple application we need to create only one JSP page which displays a
+				</diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">"Hello World!"</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> message.</diffmk:wrapper></para>
+		<itemizedlist>
+			<listitem>
+				<para>Right click <emphasis><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">WebContent &gt; New &gt;
+						JSP</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed">. </diffmk:wrapper></emphasis></para>
+			</listitem>
+			<listitem>
+				<para>Type "hello.jsp" for a file name and click the <emphasis>
+						<property moreinfo="none">Next</property>
+					</emphasis> button.</para>
+			</listitem>
+		</itemizedlist>
+		<para>In the next window you can choose a template for your jsp page and see its preview.</para>
+		<itemizedlist>
+			<listitem>
+				<para>Select <emphasis>
+						<property moreinfo="none">New JSP File (xhtml)</property>
+					</emphasis> template and click <emphasis>
+						<property moreinfo="none">Finish</property>
+					</emphasis> button.</para>
+			</listitem>
+		</itemizedlist>
+		<figure float="0">
+			<title>Create JSP Page</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/jsp_application/jsp_application_3.png"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para><diffmk:wrapper diffmk:change="added">Our </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">hello.jsp</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> page will now appear in 
+			</diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Project Explorer</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.
+		</diffmk:wrapper></para>
+		<section id="EditingJSPPage">
+			<?dbhtml filename="EditingJSPPage.html"?>
+			<title>Editing a JSP Page</title>
+			<para><diffmk:wrapper diffmk:change="added">Let's now make a little change so that a jsp page displays
+					</diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">"Hello World!"</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> message.</diffmk:wrapper></para>
+			<itemizedlist>
+				<listitem>
+					<para>Insert this line inside the <emphasis role="bold">
+							<property moreinfo="none">&lt;body&gt;</property>
+						</emphasis><emphasis role="bold">
+							<property moreinfo="none">&lt;/body&gt;</property>
+						</emphasis> tag: </para>
+				</listitem>
+			</itemizedlist>
+			<programlisting format="linespecific" role="XML"><![CDATA[<% System.out.println("Hello World!"); %>]]>
+</programlisting>
+
+			<para>Notice that content assist functionality is always available when you are typing:</para>
+			<figure float="0">
+				<title>Content Assist in JSP Page</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/jsp_application/jsp_application_4.png"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para><diffmk:wrapper diffmk:change="added">After changes made your </diffmk:wrapper><emphasis diffmk:change="added">
+					<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">hello.jsp</diffmk:wrapper></property>
+				</emphasis><diffmk:wrapper diffmk:change="added"> page should look like this:</diffmk:wrapper></para>
+			<figure float="0">
+				<title>Hello.jsp Page</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/jsp_application/jsp_application_5.png"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+
+			<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">This line will actually output </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">"Hello
+				World!"</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> message in the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Console</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. To make the
+				message displayed in the Browser, just replace this line with the simple
+					</diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Hello World!</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+		</section>
+
+		<section id="WebXML">
+			<?dbhtml filename="WebXML.html"?>
+			<title>web.xml file</title>
+			<para><diffmk:wrapper diffmk:change="added">When you are creating web project the wizard creates the </diffmk:wrapper><emphasis diffmk:change="added">
+					<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">web.xml</diffmk:wrapper></property>
+				</emphasis><diffmk:wrapper diffmk:change="added"> for you automatically. The </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">web.xml file editor</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+				provided by </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> is available in two modes:
+					</diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Tree</diffmk:wrapper></property> and <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Source</diffmk:wrapper></property>.</para>
+			<figure float="0">
+				<title>Web.xml in Design and Source Mode</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/jsp_application/jsp_application_6.png" scale="90"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para><diffmk:wrapper diffmk:change="added">Both modes are fully synchronized. Let's add mapping to our </diffmk:wrapper><emphasis diffmk:change="added">
+					<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">hello.jsp</diffmk:wrapper></property>
+				</emphasis><diffmk:wrapper diffmk:change="added"> page in </diffmk:wrapper><emphasis diffmk:change="added">
+					<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">web.xml</diffmk:wrapper></property>
+				</emphasis><diffmk:wrapper diffmk:change="added"> file.</diffmk:wrapper></para>
+			<itemizedlist>
+				<listitem>
+					<para>Switch to <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Source</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed"> tab.</diffmk:wrapper></para>
+				</listitem>
+				<listitem>
+					<para>Add the next code into <emphasis role="bold">
+							<property moreinfo="none">&lt;welcome-file-list&gt;</property>
+						</emphasis>:</para>
+				</listitem>
+			</itemizedlist>
+			<programlisting format="linespecific" role="XML"><![CDATA[<welcome-file>hello.jsp</welcome-file>
+]]></programlisting>
+			<para><diffmk:wrapper diffmk:change="added">If you come back to </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Tree</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> mode you will see that the changes
+				made are automatically reflected in that mode.</diffmk:wrapper></para>
+			<para>Actually you don't really need to do any configurations right now.</para>
+		</section>
+
+		<section id="DeployTheProject">
+			<?dbhtml filename="DeployTheProject.html"?>
+			<title>Deploying the project</title>
+			<para><diffmk:wrapper diffmk:change="added">While creating any web project you could experience a pain writing ant scripts and
+				managing the packaging even when writing the most trivial web applications. With
+					</diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> you are saved from such a pain. All
+				you need is to start </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Server</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> and launch your application
+				in your favorite browser.</diffmk:wrapper></para>
+			<para><diffmk:wrapper diffmk:change="added">You can also create a war archive with </diffmk:wrapper><ulink diffmk:change="added" url="../../as/html_single/index.html#Project_archivesView"><diffmk:wrapper diffmk:change="added">JBDS's Archive Tools</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">
+				and export it to any web server.</diffmk:wrapper></para>
+			<section id="WarConfig">
+				<?dbhtml filename="WarConfig.html"?>
+				<title>WAR Config</title>
+				<para>Project archives managing is available through <ulink diffmk:change="added" url="../../as/html_single/index.html#Project_archivesView"><diffmk:wrapper diffmk:change="added">Project Archives view</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+				<itemizedlist>
+					<listitem>
+						<para>Select <emphasis>
+								<property moreinfo="none">Window &gt; Show view &gt; Other &gt; JBoss
+									Tools &gt; Project archives</property>
+							</emphasis> from menu bar</para>
+					</listitem>
+					<listitem>
+						<para>Select a project in Package Explorer you want to be archived</para>
+					</listitem>
+				</itemizedlist>
+				<para><diffmk:wrapper diffmk:change="added">In </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Project Archives</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> you will see available archive types
+					for the project:</diffmk:wrapper></para>
+				<figure float="0">
+					<title>Project Archives</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/jsp_application/jsp_application_8.png"></imagedata>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<itemizedlist>
+					<listitem>
+						<para>Click, for example, <emphasis>
+								<property moreinfo="none">WAR</property>
+							</emphasis> option to create war archive</para>
+					</listitem>
+				</itemizedlist>
+				<para><diffmk:wrapper diffmk:change="added">In the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">New WAR</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> dialog you can see automatically selected
+					default values.</diffmk:wrapper></para>
+				<figure float="0">
+					<title>New WAR Archive</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/jsp_application/jsp_application_9.png"></imagedata>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<itemizedlist>
+					<listitem>
+						<para>Click <emphasis>
+								<property moreinfo="none">Next</property>
+							</emphasis> to see a stub archive configuration for your project: <figure float="0">
+								<title>Stub Archive Configuration</title>
+								<mediaobject>
+									<imageobject>
+										<imagedata fileref="images/jsp_application/jsp_application_10.png"></imagedata>
+									</imageobject>
+								</mediaobject>
+							</figure>
+						</para>
+					</listitem>
+					<listitem>
+						<para>Click <emphasis>
+								<property moreinfo="none">Finish</property><diffmk:wrapper diffmk:change="changed">. </diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="changed"> The
+							</diffmk:wrapper><emphasis>.war</emphasis><diffmk:wrapper diffmk:change="added"> file will appear in </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Package
+							Explorer</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> and also in </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Project Archives</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+							view as structure tree: </diffmk:wrapper><figure float="0">
+								<title>Archive is Created</title>
+								<mediaobject>
+									<imageobject>
+										<imagedata fileref="images/jsp_application/jsp_application_11.png"></imagedata>
+									</imageobject>
+								</mediaobject>
+							</figure>
+							<figure float="0">
+								<title>Archive in Project Archives View</title>
+								<mediaobject>
+									<imageobject>
+										<imagedata fileref="images/jsp_application/jsp_application_12.png"></imagedata>
+									</imageobject>
+								</mediaobject>
+							</figure>
+						</para>
+					</listitem>
+				</itemizedlist>
+				<para><diffmk:wrapper diffmk:change="added">Via </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Project Archives</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> view you could now edit your
+					archive, add new folders, publish to server, and so on:</diffmk:wrapper></para>
+				<figure float="0">
+					<title>Configure Archive</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/jsp_application/jsp_application_13.png"></imagedata>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</section>
+
+			<section id="AutoRedeploy">
+				<?dbhtml filename="AutoRedeploy.html"?>
+				<title>Auto redeploy</title>
+				<para><diffmk:wrapper diffmk:change="added">When you are creating a web application and register it on </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss
+						Server</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> it is automatically deployed into
+					</diffmk:wrapper><emphasis>/deploy</emphasis><diffmk:wrapper diffmk:change="added"> directory of the server. JBDS comes with the
+					feature of auto-redeploy. It means that you don't need to restart
+						</diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Server</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. Any changes made in the application in
+					exploded format will trigger a redeployment on the server.</diffmk:wrapper></para>
+			</section>
+		</section>
+
+		<section id="Previewtab">
+			<?dbhtml filename="Previewtab.html"?>
+			<title>JSP Page Preview</title>
+			<para><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBDS</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> comes with JSP design-time preview features. When
+				designing JSP pages you can easily preview how they will look during runtime. You
+				can even </diffmk:wrapper><ulink diffmk:change="added" url="../../jsf/html_single/index.html#el_exp_para"><diffmk:wrapper diffmk:change="added">attach your stylesheet to the
+					Preview</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+			<itemizedlist>
+				<listitem>
+					<para><diffmk:wrapper diffmk:change="added">Make a little change to </diffmk:wrapper><emphasis diffmk:change="added">
+							<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">hello.jsp</diffmk:wrapper></property>
+						</emphasis><diffmk:wrapper diffmk:change="added"> page, e.g. put this code snippet:</diffmk:wrapper></para>
+				</listitem>
+			</itemizedlist>
+			<programlisting format="linespecific" role="XML"><![CDATA[<%= new java.util.Date() %>
+]]></programlisting>
+			<itemizedlist>
+				<listitem>
+					<para>Click <emphasis>
+							<property moreinfo="none">Save</property>
+						</emphasis> button.</para>
+				</listitem>
+				<listitem>
+					<para><diffmk:wrapper diffmk:change="added">Switch to Preview page by clicking </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Preview</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> tab at the
+						bottom of the page. You will see how the page will look at runtime.</diffmk:wrapper></para>
+				</listitem>
+			</itemizedlist>
+			<!--		<figure>
+			<title>Preview Page</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/jsp_application/jsp_application_14.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+-->
+		</section>
+		<section id="LaunchingTheProject">
+			<?dbhtml filename="LaunchingTheProject.html"?>
+			<title>Launch JSP Project</title>
+			<para><diffmk:wrapper diffmk:change="added">Let's now launch our project on server. We'll use
+					</diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Server</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> that is shipped with </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Developer
+					Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. You can do it by performing one of the following actions:</diffmk:wrapper></para>
+			<itemizedlist>
+				<listitem>
+					<para><diffmk:wrapper diffmk:change="added">Start JBoss Server from </diffmk:wrapper><ulink diffmk:change="added" url="../../as/html_single/index.html#JBossServerView"><diffmk:wrapper diffmk:change="added">JBoss
+							Server view</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> by clicking the Start icon.</diffmk:wrapper></para>
+				</listitem>
+			</itemizedlist>
+			<figure float="0">
+				<title>Starting Server</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/jsp_application/jsp_application_15.png"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<itemizedlist>
+				<listitem>
+					<para>Click the Run icon or right click your project folder and select <emphasis>
+							<property moreinfo="none">Run As &gt; Run on Server</property><diffmk:wrapper diffmk:change="added">. </diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> If you
+						haven't made any changes in </diffmk:wrapper><emphasis diffmk:change="added">
+							<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">web.xml</diffmk:wrapper></property>
+						</emphasis><diffmk:wrapper diffmk:change="added"> file or cleared it out you can launch the application by right
+						clicking the </diffmk:wrapper><emphasis diffmk:change="added">
+							<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">hello.jsp</diffmk:wrapper></property>
+						</emphasis><diffmk:wrapper diffmk:change="changed"> page and selecting </diffmk:wrapper><emphasis>
+							<property moreinfo="none">Run on the Server</property><diffmk:wrapper diffmk:change="changed">. </diffmk:wrapper></emphasis></para>
+				</listitem>
+			</itemizedlist>
+			<figure float="0">
+				<title>Run Project</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/jsp_application/jsp_application_16.png"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para><diffmk:wrapper diffmk:change="changed">You should see the next page in a Browser :</diffmk:wrapper></para>
+			<figure float="0">
+				<title>Running Project</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/jsp_application/jsp_application_17.png"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Thus with the help of this chapter you've learnt how to organize a Dynamic
+				Web Project with a minimal configuration, add any staff to it (in our case it's
+				just one jsp page) and deploy and run it on the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Server</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+				shipped with </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBDS</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.
+			</diffmk:wrapper></para>
+		</section>
+
+		</section>
+</chapter>
+
+ 
+<chapter id="rad_jsf_application" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/rad_jsf_application.xml" xreflabel="rad_jsf_application">
+    <?dbhtml filename="rad_jsf_application.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Developer Studio</keyword>
+            <keyword>JSF</keyword>
+            <keyword>JBoss</keyword>
+            <keyword>RAD</keyword>
+        </keywordset>
+    </chapterinfo>
+    <title>RAD development of a simple JSF application</title>
+
+    <note>
+        <title>Note:</title>
+        <para>We highly recommend developing in <property moreinfo="none">Seam</property>. This chapter is for users
+            who for some reason cannot use <property moreinfo="none">Seam</property>.</para>
+    </note>
+
+    <para>In this chapter you will see how to create a simple JSF application being based on
+            <property moreinfo="none">"RAD"</property> philosophy. We will create the familiar
+        Guess Number application. The scenario is the following. You are asked to guess a number
+        between 0 and 100. If the guess is correct, a success page is displayed with a link to play
+        again. If the guess is incorrect, a message is printed notifying that a smaller or a larger
+        number should be entered and the game continues.</para>
+    <para>We'll show you how to create such an application from scratch, along the way
+        demonstrating powerful features of JBoss Developer Studio such as project templating, Visual
+        Page Editor, code completion and others. You will design the JSF application and then run
+        the application from inside JBoss Developer Studio using the bundled JBoss server.</para>
+
+    <section id="SettingUpTheProject12">
+        <?dbhtml filename="SettingUpTheProject12.html"?>
+        <title>Setting up the project</title>
+        <para>First, you should create a JSF 1.2 project using an integrated JBDS's new
+            project wizard and predefined templates. Follow the next steps:</para>
+        <itemizedlist>
+            <listitem>
+                <para>In Web Projects View (if it is not open select <emphasis>
+                        <property moreinfo="none">Window &gt; Show View &gt; Others &gt; JBoss Tools Web
+                            &gt; Web Projects View</property>) </emphasis> click <emphasis>
+                        <property moreinfo="none">Create New JSF Project</property>
+                    </emphasis> button. <figure float="0">
+                        <title>Create New JSF Project</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/rad_jsf_application/rad_jsf_application_1.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure></para>
+            </listitem>
+
+            <listitem>
+                <para>Put <property moreinfo="none">GuessNumber</property> as a project name, in JSF Environment
+                    drop down list choose <property moreinfo="none">JSF 1.2</property></para>
+            </listitem>
+            <listitem>
+                <para>Leave everything else as it is and click <emphasis>
+                        <property moreinfo="none">Finish</property>
+                    </emphasis></para>
+            </listitem>
+        </itemizedlist>
+        <para>Our project will appear in Project Explorer and Web Projects Views. As you can see
+            JBoss Developer Studio has created for us the whole skeleton for the project with all
+            needed libraries, faces-config.xml and web.xml files.</para>
+        <figure float="0">
+            <title>New JSF Project</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_2.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>As the project has been set up, new JSP pages should be created now.</para>
+    </section>
+    <section id="CreatingJSPPages">
+        <?dbhtml filename="CreatingJSPPages.html"?>
+        <title>Creating JSP Pages</title>
+
+        <para>Here, we are going to add two pages to our application. The first page is
+            inputnumber.jsp. It prompts you to enter a number. If the guess is incorrect, the same
+            page will be redisplayed with a message indicating whether a smaller or a larger number
+            should be tried. The second page is success.jsp. This page will be shown after you guess
+            the number correctly. From this page you also have the option to play the game again.</para>
+
+        <para>Now, we will guide you through the steps on how to do this.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Open <emphasis>
+                        <property moreinfo="none">faces-config.xml</property>
+                    </emphasis> file</para>
+            </listitem>
+            <listitem>
+                <para>Right click anywhere on the diagram mode</para>
+            </listitem>
+            <listitem>
+                <para>From the context menu select <emphasis>
+                        <property moreinfo="none">New View</property>
+                    </emphasis></para>
+            </listitem>
+        </itemizedlist>
+        <figure float="0">
+            <title>Create New View</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_3.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <itemizedlist>
+
+            <listitem>
+                <para>Type <emphasis>
+                        <property moreinfo="none">pages/inputnumber</property>
+                    </emphasis> as the value for <emphasis>
+                        <property moreinfo="none">From-view-id</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Leave everything else as is and click <emphasis>
+                        <property moreinfo="none">Finish</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>In the same way create another jsf view. Type <emphasis>
+                        <property moreinfo="none">pages/success</property>
+                    </emphasis> as the value for <emphasis>
+                        <property moreinfo="none">From-view-id</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Select <emphasis>
+                        <property moreinfo="none">File &gt; Save</property>
+                    </emphasis></para>
+            </listitem>
+        </itemizedlist>
+        <para>On the diagram you will see two created views.</para>
+        <figure float="0">
+            <title>New Views</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_4.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
+
+    <section id="CreatingTransition">
+        <?dbhtml filename="CreatingTransition.html"?>
+        <title>Creating Transition between two views</title>
+        <para>Then, we should create connection between jsp pages.</para>
+        <itemizedlist>
+            <listitem>
+                <para>In the diagram, select the <emphasis>
+                        <property moreinfo="none">Create New Connection</property>
+                    </emphasis> icon third from the top along the upper left side of the diagram to
+                    get an arrow cursor with a two-pronged plug at the arrow's bottom <figure float="0">
+                        <title>Create Connection</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/rad_jsf_application/rad_jsf_application_5.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                </para>
+            </listitem>
+            <listitem>
+                <para>Click on the <emphasis>
+                        <property moreinfo="none">pages/inputnumber</property>
+                    </emphasis> page icon and then click on the <emphasis>
+                        <property moreinfo="none">pages/success</property>
+                    </emphasis> page icon</para>
+            </listitem>
+        </itemizedlist>
+        <para>A transition should appear between the two icons of views.</para>
+        <figure float="0">
+            <title>Created Connection</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_6.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <itemizedlist>
+            <listitem>
+                <para>Select <emphasis>
+                        <property moreinfo="none">File &gt; Save</property>
+                    </emphasis> from the menu bar</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+
+    <section id="CreatingResourceFile">
+        <?dbhtml filename="CreatingResourceFile.html"?>
+        <title>Creating Resource File</title>
+        <para>A resource file is just a file with a <emphasis>.properties</emphasis> extension for
+            collecting text messages in one central place. JBoss Developer Studio allows you to
+            create quickly a resource file. The messages stored in resource file can be displayed to
+            you on a Web page during application execution. </para>
+        <para>With resource file first, you don't hard code anything into the JSP pages.
+            And second, it makes it easier to translate your application to other languages. All you
+            have to do is to translate all your messages to the other language and save them in a
+            new properties file with a name that ends with the appropriate ISO-639 language code.</para>
+        <para>It is a good idea to keep your resources inside the <emphasis>
+                <property moreinfo="none">JavaSource</property>
+            </emphasis> folder, where you keep your .java files. Every time you build the project,
+            all <emphasis>.properties</emphasis> files will then be copied to the
+            <emphasis>classes</emphasis> folder by default.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Right click <emphasis>
+                        <property moreinfo="none">JavaSource</property>
+                    </emphasis> folder and select <emphasis>
+                        <property moreinfo="none">New &gt; Folder</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Type <emphasis>
+                        <property moreinfo="none">game</property>
+                    </emphasis> for Folder name and click <emphasis>
+                        <property moreinfo="none">Finish</property>
+                    </emphasis></para>
+            </listitem>
+        </itemizedlist>
+        <para>Your resource file and java bean will be stored in this folder.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Right click on <emphasis>
+                        <property moreinfo="none">game folder</property>
+                    </emphasis> and select <emphasis>
+                        <property moreinfo="none">New &gt; Properties File</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Type <emphasis>
+                        <property moreinfo="none">messages</property>
+                    </emphasis> as the value for "name" attribute and click <emphasis>
+                        <property moreinfo="none">Finish</property>
+                    </emphasis></para>
+            </listitem>
+        </itemizedlist>
+        <para>JBoss Developer Studio will automatically open
+            <property moreinfo="none">messages.properties</property> file for editing.</para>
+        <figure float="0">
+            <title>Messages.properties File</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_7.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <itemizedlist>
+            <listitem>
+                <para>Click <emphasis>
+                        <property moreinfo="none">Add</property>
+                    </emphasis> button for adding new attribute to your resource file</para>
+            </listitem>
+            <listitem>
+                <para>Type <emphasis role="italic">
+                        <property moreinfo="none">how_to_play</property>
+                    </emphasis> for "name" and <emphasis role="italic">
+                        <property moreinfo="none">Please pick a number between 0 and 100.</property>
+                    </emphasis> for value</para>
+            </listitem>
+            <listitem>
+                <para>Click <emphasis>
+                        <property moreinfo="none">Finish</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>In such a way add the next properties:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting format="linespecific" role="JAVA"><![CDATA[makeguess_button=Make Guess
+trayagain_button=Play Again?
+success_text=How cool.. You have guessed the number, {0} is correct! 
+tryagain_smaller=Oops..incorrect guess. Please try a smaller number.
+tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
+]]></programlisting>
+        <itemizedlist>
+            <listitem>
+                <para>Click <emphasis>
+                        <property moreinfo="none">File &gt; Save</property>
+                    </emphasis> from the menu bar</para>
+            </listitem>
+        </itemizedlist>
+        <para>Your .properties file should now look like follows:</para>
+        <figure float="0">
+            <title>Properties are Added</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_8.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para><emphasis>
+            <property moreinfo="none">Up</property></emphasis>
+            and <emphasis>
+                <property moreinfo="none">Down</property>
+            </emphasis> buttons allow you to move you attribute on the list. For delete the attribute, choose it and press <emphasis>
+                <property moreinfo="none">Delete</property></emphasis> button.</para>
+        <para>If you want to change a value or a name of your attribute, click on it and than on <emphasis>
+            <property moreinfo="none">Edit</property></emphasis> button.</para>
+    </section>
+
+    <section id="CreatingJavaBean">
+        <?dbhtml filename="CreatingJavaBean.html"?>
+        <title>Creating Java Bean</title>
+        <para>In this section you'll see how to create a Java bean that will hold business
+            logic of our application.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Right click <emphasis>
+                        <property moreinfo="none">game folder</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Select <emphasis>
+                        <property moreinfo="none">New &gt; Class</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Type <emphasis>
+                        <property moreinfo="none">NumberBean</property>
+                    </emphasis> for bean name</para>
+            </listitem>
+        </itemizedlist>
+        <para>A java bean is created.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Declare the variable of your entered number:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting format="linespecific" role="JAVA"><![CDATA[Integer userNumber;
+]]></programlisting>
+        <para>JBDS allows to quickly generate getters and setters for java bean.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Right click <emphasis>
+                        <property moreinfo="none">NumberBean.java</property>
+                    </emphasis> in Package Explorer</para>
+            </listitem>
+            <listitem>
+                <para>Select <emphasis>
+                        <property moreinfo="none">Source &gt; Generate Getters and Setters...</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Check <emphasis>
+                        <property moreinfo="none">userNumber</property>
+                    </emphasis> box and click <emphasis>
+                        <property moreinfo="none">OK</property>
+                    </emphasis>
+                    <figure float="0">
+                        <title>Generate Getters and Setters</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/rad_jsf_application/rad_jsf_application_9.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                </para>
+            </listitem>
+            <listitem>
+                <para>Add the declaration of the second variable</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting format="linespecific" role="JAVA"><![CDATA[int randomNumber;
+]]></programlisting>
+        <itemizedlist>
+            <listitem>
+                <para>.. other bean methods:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting format="linespecific" role="JAVA"><![CDATA[public NumberBean () 
+{
+    randomNumber = (int)(Math.random()*100);
+    System.out.println ( "Random number: "+randomNumber);
+  }
+  public String playagain () 
+  {
+    FacesContext context = FacesContext.getCurrentInstance();
+    HttpSession session = 
+        (HttpSession) context.getExternalContext().getSession(false);
+    session.invalidate();
+    return "playagain"; 
+  }
+  public String checkGuess () 
+  {
+     
+    // if guessed, return 'success' for navigation
+    if ( userNumber.intValue() == randomNumber ) 
+    {
+      return "success";
+    }
+else 
+   {
+      FacesContext context = FacesContext.getCurrentInstance();
+      ResourceBundle bundle = ResourceBundle.getBundle("game.messages", 
+      context.getViewRoot().getLocale());
+      String msg = "";
+      // if number bigger, get appropriate message
+      if ( userNumber.intValue() > randomNumber ) 
+         msg = bundle.getString("tryagain_smaller");
+      else // if number smaller, get appropriate message
+         msg = bundle.getString("tryagain_bigger");      
+      // add message to be displayed on the page via <h:messages> tag
+      context.addMessage (null, new FacesMessage(msg)); 
+      // return 'tryagain' for navigation
+      return "tryagain";
+    }
+  }
+]]></programlisting>
+        <itemizedlist>
+            <listitem>
+                <para>And the import declarations:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting format="linespecific" role="JAVA"><![CDATA[import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import javax.faces.application.FacesMessage;
+import java.util.Locale;
+import java.util.ResourceBundle;
+]]></programlisting>
+        <para>The whole java bean should look as follows:</para>
+        <programlisting format="linespecific" role="JAVA"><![CDATA[import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import javax.faces.application.FacesMessage;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+public class NumberBean 
+{
+  Integer userNumber; 
+  int randomNumber; // random number generated by application
+public Integer getUserNumber () 
+  {
+    return userNumber;
+  }
+  public void setUserNumber (Integer value)
+  {
+     this.userNumber = value;
+  }
+  
+  // constructor, generates random number
+  public NumberBean () 
+  {
+    randomNumber = (int)(Math.random()*100);
+    System.out.println ( 
+   "Random number: " + randomNumber);
+  }
+  
+  public String playagain () 
+  {
+    FacesContext context = FacesContext.getCurrentInstance();
+    HttpSession session = 
+        (HttpSession) context.getExternalContext().getSession(false);
+    session.invalidate();
+    return "playagain"; 
+  }
+  
+  // check if user guessed the number
+  public String checkGuess () 
+  {
+    // if guessed, return 'success' for navigation
+    if ( userNumber.intValue() == randomNumber )
+    {
+      return "success";
+    }
+    // incorrect guess
+    else 
+   {
+      // get a reference to properties file to retrieve messages
+      FacesContext context = FacesContext.getCurrentInstance();
+      ResourceBundle bundle = 
+          ResourceBundle.getBundle("game.messages", 
+          context.getViewRoot().getLocale());
+      String msg = "";
+      // if number is bigger, get appropriate message
+      if ( userNumber.intValue() > randomNumber ) 
+         msg = bundle.getString("tryagain_smaller");
+      else // if number smaller, get appropriate message
+         msg = bundle.getString("tryagain_bigger");
+      
+      // add message to be displayed on the page via <h:messages> tag
+      context.addMessage (null, new FacesMessage(msg)); 
+      // return 'tryagain' for navigation
+      return "tryagain";
+    }
+  }
+}
+]]></programlisting>
+    </section>
+
+    <section id="EditingFacesConfig">
+        <?dbhtml filename="EditingFacesConfig.html"?>
+        <title>Editing faces-config.xml File</title>
+        <para>In this section you know about faces-config.xml file.</para>
+        <para>This file holds two navigation rules and defines the backing bean used.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Open faces-config.xml file in a source mode</para>
+            </listitem>
+            <listitem>
+                <para>Add here one more navigation rule and a managed bean declarations that the
+                    content of the file looks like this:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting format="linespecific" role="XML"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="1.2" xmlns="http://java.sun.com/xml/ns/javaee
+xmlns:xi="http://www.w3.org/2001/XInclude"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+        http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2_.xsd">
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+      <from-outcome>playagain</from-outcome> 
+      <to-view-id>/pages/inputnumber.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/pages/inputnumber.jsp</from-view-id>
+    <navigation-case>
+      <from-outcome>success</from-outcome> 
+      <to-view-id>/pages/success.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <managed-bean>
+    <managed-bean-name>NumberBean</managed-bean-name>
+    <managed-bean-class>game.NumberBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+                 
+</faces-config>
+]]></programlisting>
+        <para>The first navigation rule states that from any page (<property moreinfo="none">*</property> stands for
+            any page) an outcome of playagain will take you to <emphasis>
+                <property moreinfo="none">/pages/inputnumber.jsp</property>
+            </emphasis>. Outcome values are returned from backing bean methods in this example. The
+            second navigation rule states that if you are at the page <emphasis>
+                <property moreinfo="none">/pages/inputnumber.jsp</property>
+            </emphasis>, and the outcome is success, then navigate to the <emphasis>
+                <property moreinfo="none">/pages/success.jsp</property>
+            </emphasis> page. </para>
+    </section>
+    <section id="EditingTheJSPViewFiles2">
+        <?dbhtml filename="EditingTheJSPViewFiles2.html"?>
+        <title>Editing the JSP View Files</title>
+        <para>Now, we will continue editing the JSP files for our two "views" using
+            Visual Page Editor.</para>
+        <section id="EditingInputjsp">
+            <?dbhtml filename="EditingInputjsp.html"?>
+            <title>Editing inputnumber.jsp page</title>
+            <para>First, let's dwell on how to edit inputnumber.jsp.</para>
+            <para>On this page we will have an output text component displaying a message, a text
+                field for user's number entering and a button for input submission.</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Open inputnumber.jsp by double-clicking on the <emphasis>
+                            <property moreinfo="none">/pages/inputnumber. jsp</property>
+                        </emphasis> icon</para>
+                </listitem>
+            </itemizedlist>
+            <para>The Visual Page Editor will open in a screen split between source code along the
+                top and a WYSIWIG view along the bottom. You can see that some JSF code will be
+                already generated as we choose a template when creating the page.</para>
+            <para>At the beginning it's necessary to create a <emphasis role="bold">
+                    <property moreinfo="none">&lt;h:form&gt;</property>
+                </emphasis> component where all others components are put.</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Place the mouse cursor inside <emphasis role="bold">
+                            <property moreinfo="none">&lt;f:view&gt;</property>
+                        </emphasis><emphasis role="bold">
+                            <property moreinfo="none">&lt;/f:view&gt;</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>Go to JBoss Tools Palette and expand JSF HTML folder by selecting
+                    it</para>
+                </listitem>
+                <listitem>
+                    <para>Click on <emphasis role="bold">
+                            <property moreinfo="none">&lt;h:form&gt;</property>
+                        </emphasis> tag <figure float="0">
+                            <title>Insert h:form</title>
+                            <mediaobject>
+                                <imageobject>
+                                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_10.png"></imagedata>
+                                </imageobject>
+                            </mediaobject>
+                        </figure>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>In the dialog Insert Tag select <emphasis>
+                            <property moreinfo="none">id</property>
+                        </emphasis> and click on this line below the value header. A blinking cursor
+                        will appear in a input text field inviting to enter a value of id <figure float="0">
+                            <title>Define Id of Form</title>
+                            <mediaobject>
+                                <imageobject>
+                                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_11.png"></imagedata>
+                                </imageobject>
+                            </mediaobject>
+                        </figure>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Type <emphasis>
+                            <property moreinfo="none">inputNumbers</property>
+                        </emphasis> and click <emphasis>
+                            <property moreinfo="none">Finish</property>
+                        </emphasis></para>
+                </listitem>
+            </itemizedlist>
+            <para>In source view you can see the declaration of a form.</para>
+            <figure float="0">
+                <title>Created Form</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_12.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>First let's declare the properties file in inputnumber.jsp page using the
+                loadBundle JSF tag.</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Put this declaration on the top of a page, right after the first two
+                        lines:</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting format="linespecific" role="XML"><![CDATA[<f:loadBundle basename="game.messages" var="msg"/>
+]]></programlisting>
+            <para>As always JBDS provides code assist:</para>
+            <figure float="0">
+                <title>Code Assist</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_13.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <itemizedlist>
+                <listitem>
+                    <para>Switch to Visual tab, so it could be possible to work with the editor
+                        completely in its WYSIWYG mode</para>
+                </listitem>
+                <listitem>
+                    <para>Click on <emphasis>
+                            <property moreinfo="none">outputText</property>, </emphasis> drag the cursor over to the
+                        editor, and drop it inside the blue box in the editor</para>
+                </listitem>
+
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none">value</property>
+                        </emphasis> and click on this line below "value"
+                    header</para>
+                </listitem>
+                <listitem>
+                    <para>Click <property moreinfo="none">...</property> button next to the value field</para>
+                </listitem>
+            </itemizedlist>
+            <para>JBDS will nicely propose you to choose within available values:</para>
+            <figure float="0">
+                <title>Choose Value</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_14.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <itemizedlist>
+                <listitem>
+                    <para>Expand <emphasis>
+                            <property moreinfo="none">Resource Bundles &gt; msg</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none">how_to_play</property>
+                        </emphasis> value and click <emphasis>
+                            <property moreinfo="none">Ok</property>. </emphasis> Then click <emphasis>
+                            <property moreinfo="none">Finish</property>
+                        </emphasis>
+                        <figure float="0">
+                            <title>Selecting Value</title>
+                            <mediaobject>
+                                <imageobject>
+                                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_15.png"></imagedata>
+                                </imageobject>
+                            </mediaobject>
+                        </figure>
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <para>The text will appear on the page:</para>
+            <figure float="0">
+                <title>Created OutputText Component</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_16.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <itemizedlist>
+                <listitem>
+                    <para>Switch to Source mode and insert <emphasis role="bold">
+                            <property moreinfo="none">&lt;br/&gt;</property>
+                        </emphasis> tag after <emphasis role="bold">
+                            <property moreinfo="none">&lt;h:outputText&gt;</property>
+                        </emphasis> component to make a new line.</para>
+                </listitem>
+                <listitem>
+                    <para>Click <emphasis>
+                            <property moreinfo="none">Save</property>
+                        </emphasis> button.</para>
+                </listitem>
+                <listitem>
+                    <para>On the Palette click on <emphasis>
+                            <property moreinfo="none">inputText</property>, </emphasis> drag the cursor over to the
+                        editor, and drop it inside the editor after the text.</para>
+                </listitem>
+                <listitem>
+                    <para>Switch to a Source mode and insert <emphasis role="bold">
+                            <property moreinfo="none">&lt;br/&gt;</property>
+                        </emphasis> tag after <emphasis role="bold">
+                            <property moreinfo="none">&lt;h:outputText&gt;</property>
+                        </emphasis> component to make a new line</para>
+                </listitem>
+                <listitem>
+                    <para>Click <emphasis>
+                            <property moreinfo="none">Save</property>
+                        </emphasis> button</para>
+                </listitem>
+                <listitem>
+                    <para>On the Palette click on <emphasis>
+                            <property moreinfo="none">inputText</property>, </emphasis> drag the cursor over to the
+                        editor, and drop it inside the editor after the text</para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none">value</property>
+                        </emphasis> and click on this line below "value"
+                    header</para>
+                </listitem>
+                <listitem>
+                    <para>Click <property moreinfo="none">...</property> button next to the value field</para>
+                </listitem>
+                <listitem>
+                    <para>Expand <emphasis>
+                            <property moreinfo="none">Managed Beans &gt; NumberBean</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none">userNumber</property>
+                        </emphasis> value and click <emphasis>
+                            <property moreinfo="none">Ok</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>Switch <emphasis>
+                            <property moreinfo="none">Advanced</property>
+                        </emphasis> tab</para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none">id</property>
+                        </emphasis> and click on this line below "value"
+                    header</para>
+                </listitem>
+                <listitem>
+                    <para>Type <emphasis>
+                            <property moreinfo="none">userNumber</property>
+                        </emphasis> in text field</para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none">required</property>
+                        </emphasis> and click on this line below "value"
+                    header</para>
+                </listitem>
+                <listitem>
+                    <para>Click <property moreinfo="none">...</property> button next to the value field</para>
+                </listitem>
+                <listitem>
+                    <para>Expand <emphasis>
+                            <property moreinfo="none">Enumeration</property>
+                        </emphasis> and select <emphasis>
+                            <property moreinfo="none">true</property>
+                        </emphasis> as a value</para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Add "required" Attribute</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_17.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <itemizedlist>
+                <listitem>
+                    <para>Click <emphasis>
+                            <property moreinfo="none">Ok</property>, </emphasis> then click <emphasis>
+                            <property moreinfo="none">Finish</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>Go to Source mode</para>
+                </listitem>
+                <listitem>
+                    <para>Add the validation attribute to <emphasis role="bold">
+                            <property moreinfo="none">&lt;f:validateLongRange&gt;</property>
+                        </emphasis> for user input validation</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting format="linespecific" role="XML"><![CDATA[<h:inputText id="userNumber" value="#{NumberBean.userNumber}" required="true">
+           <f:validateLongRange minimum="0" maximum="100"/>
+</h:inputText>
+]]></programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Click <emphasis>
+                            <property moreinfo="none">Save</property>
+                        </emphasis> button</para>
+                </listitem>
+                <listitem>
+                    <para>Again select <emphasis>
+                            <property moreinfo="none">Visual</property>
+                        </emphasis> mode</para>
+                </listitem>
+                <listitem>
+                    <para>On the Palette, click on <emphasis>
+                            <property moreinfo="none">commandButton</property>, </emphasis> drag the cursor over to
+                        the editor, and drop it inside the editor after the inputText
+                    component.</para>
+                </listitem>
+                <listitem>
+                    <para>In the editing dialog select <emphasis>
+                            <property moreinfo="none">value</property>
+                        </emphasis> and click on this line below "value"
+                    header</para>
+                </listitem>
+                <listitem>
+                    <para>Click <property moreinfo="none">...</property> button next to the value field</para>
+                </listitem>
+                <listitem>
+                    <para>Expand <emphasis>
+                            <property moreinfo="none">Resource Bundles &gt; msg</property>
+                        </emphasis> and select <emphasis>
+                            <property moreinfo="none">makeguess_button</property>
+                        </emphasis> as a value</para>
+                </listitem>
+                <listitem>
+                    <para>Click <emphasis>
+                            <property moreinfo="none">Ok</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none">action</property>
+                        </emphasis> and click on this line below "value"
+                    header</para>
+                </listitem>
+                <listitem>
+                    <para>Type <emphasis>
+                            <property moreinfo="none">NumberBean.checkGuess</property>
+                        </emphasis> in text field</para>
+                </listitem>
+                <listitem>
+                    <para>Click <emphasis>
+                            <property moreinfo="none">Finish</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>In Source mode add <emphasis role="bold">
+                            <property moreinfo="none">&lt;br/&gt;</property>
+                        </emphasis> tags between <emphasis role="bold">
+                            <property moreinfo="none">&lt;outputText&gt;</property>
+                        </emphasis>, <emphasis role="bold">
+                            <property moreinfo="none">&lt;inputText&gt;</property>
+                        </emphasis> and <emphasis role="bold">
+                            <property moreinfo="none">&lt;commandButton&gt;</property>
+                        </emphasis> components to place them on different lines</para>
+                </listitem>
+            </itemizedlist>
+            <para>inputnumber.jsp page should look like this:</para>
+            <programlisting format="linespecific" role="XML"><![CDATA[<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+<f:loadBundle basename="game.messages" var="msg"/>
+
+<html>
+ <f:view>
+     <h:form id="inputNumbers">
+      <h:outputText value="#{msg.how_to_play}"/>
+      <br/>
+      <h:messages style="color: blue"/>
+      <br/>
+      <h:inputText id="userNumber" value="#{NumberBean.userNumber}" required="true">
+           <f:validateLongRange minimum="0" maximum="100"/>
+      </h:inputText>
+     <br/><br/>
+     <h:commandButton value=
+             "#{msg.makeguess_button}" action="#{NumberBean.checkGuess}"/>  
+   </h:form>
+ </f:view>
+</html>
+]]></programlisting>
+        </section>
+        <section id="EditingSuccessJsp">
+            <?dbhtml filename="EditingSuccessJsp.html"?>
+            <title>Editing success.jsp page</title>
+            <para>In the same way like inputnumber.jsp, edit success.jsp page. Its whole source
+                should be the next:</para>
+            <programlisting format="linespecific" role="XML"><![CDATA[<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+<f:loadBundle basename="game.messages" var="msg"/>
+
+<html>
+ <f:view>
+   <h:form id="result">
+     <h:outputFormat value="#{msg.success_text}">
+       <f:param value="#{NumberBean.userNumber}"/>
+     </h:outputFormat>
+     <br/><br/>
+     <h:commandButton value=
+             "#{msg.trayagain_button}" action="#{NumberBean.playagain}"/>
+   </h:form>
+ </f:view>
+</html>
+]]></programlisting>
+            <para>Again you can use code assist provided by JBDS when editing jsp page:</para>
+            <figure float="0">
+                <title>Code Assist for &lt;f:param&gt;</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_18.png" scale="80"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>This page, success.jsp, is shown if you correctly guessed the number. The
+                    <emphasis role="bold">
+                    <property moreinfo="none">&lt;h:outputFormat&gt;</property>
+                </emphasis> tag will get the value of success_text from the properties file. The {0}
+                in success_text will be substituted for by the value of the value attribute within
+                the <emphasis role="bold">
+                    <property moreinfo="none">&lt;f:param&gt;</property>
+                </emphasis> tag during runtime.</para>
+            <para>At the end, you have a button which allows you to replay the game. The action
+                value references a backing bean method. In this case, the method only terminates the
+                current session so that when you are shown the first page, the input text box is
+                clear and a new random number is generated.</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Switch to Preview mode to see how this page will look in a browser:</para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Success.jsp in Preview Mode</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_19.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+        </section>
+    </section>
+    <section id="CreatingIndexjsp">
+        <?dbhtml filename="CreatingIndexjsp.html"?>
+        <title>Creating index.jsp page</title>
+        <para>Now you know how to create index.jsp page.</para>
+        <para>The index.jsp page is the entry point of our application. It's just
+            forwarding to inputnumber.jsp page.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Right click <emphasis>
+                        <property moreinfo="none">WebContent &gt; New &gt; JSP File</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Type <emphasis>
+                        <property moreinfo="none">index</property>
+                    </emphasis> for name field and choose <emphasis>
+                        <property moreinfo="none">JSPRedirect</property>
+                    </emphasis> as a template</para>
+            </listitem>
+            <listitem>
+                <para>Click <emphasis>
+                        <property moreinfo="none">Finish</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>The source for this page should be like the following:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting format="linespecific" role="XML"><![CDATA[<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+ <body>
+  <jsp:forward page="/pages/inputnumber.jsf" />
+ </body>
+</html>
+
+]]></programlisting>
+        <para>Note the <emphasis>.jsf</emphasis> extension of a page. It means that we trigger the
+            JSF controller servlet to handle the page according the servlet mapping in the
+            faces-config.xml file.</para>
+    </section>
+    <section id="RunningTheApplication33">
+        <?dbhtml filename="RunningTheApplication33.html"?>
+        <title>Running the Application</title>
+        <para>Finally, we have all the pieces needed to run the application.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Start up JBoss server by clicking on the <emphasis>
+                        <property moreinfo="none">Start</property>
+                    </emphasis> icon in JBoss Server view. (If JBoss is already running, stop it by
+                    clicking on the red icon and then start it again. After the messages in the
+                    Console tabbed view stop scrolling, JBoss is available)</para>
+            </listitem>
+            <listitem>
+                <para>Right-click on project <emphasis>
+                        <property moreinfo="none">Run AS &gt; Run on Server</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Play with the application by entering correct as well as incorrect
+                values</para>
+            </listitem>
+        </itemizedlist>
+        <figure float="0">
+            <title>You are Asked to Enter a Number Between 0 and 100</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_20.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <figure float="0">
+            <title>Your Input is Validated and an Error Message is Displayed if Invalid Input was
+                Entered</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_21.png" scale="90"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <figure float="0">
+            <title>After You Enter a Guess, the Application Tells You Whether a Smaller or a Larger
+                Number Should be Tried</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_22.png" scale="90"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <figure float="0">
+            <title>Your Guess is Correct</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_23.png" scale="90"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
+</chapter>
+ 
+ 
+
+<chapter diffmk:change="added" id="gsg_faq" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/gsg_faq.xml" xreflabel="gsg_faq">
+    <?dbhtml filename="gsg_faq.html"?>
+    <chapterinfo diffmk:change="added">
+        <keywordset diffmk:change="added">
+            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio</diffmk:wrapper></keyword>
+            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">Eclipse</diffmk:wrapper></keyword>
+            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">Java</diffmk:wrapper></keyword>
+            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss</diffmk:wrapper></keyword>
+        </keywordset>
+    </chapterinfo>
+    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">FAQ</diffmk:wrapper></title>
+
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">For more information on </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> features, refer to the
+        following FAQ to get the answers on the most "popular" questions.</diffmk:wrapper></para>
+
+    <section diffmk:change="added" id="question_1">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">What should I do if Visual Page Editor does not start under Linux</diffmk:wrapper></title>
+
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Linux users may need to do the following to get the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Visual Page
+            Editor</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> to work correctly on their machines.</diffmk:wrapper></para>
+
+        <orderedlist continuation="restarts" diffmk:change="added" inheritnum="ignore">
+            <listitem diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">On Red Hat based Linux distributions install the xpLib.i386 package</diffmk:wrapper></para>
+            </listitem>
+            <listitem diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Type</diffmk:wrapper></para>
+                <programlisting diffmk:change="added" format="linespecific" role="JAVA"><diffmk:wrapper diffmk:change="added"><![CDATA[ln -s libstdc++.so.5.0.7 libstdc++.so.5
+]]></diffmk:wrapper></programlisting>
+            </listitem>
+            <listitem diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">and/or use</diffmk:wrapper></para>
+                <programlisting diffmk:change="added" format="linespecific" role="JAVA"><diffmk:wrapper diffmk:change="added"><![CDATA[yum install libXp
+]]></diffmk:wrapper></programlisting>
+            </listitem>
+            <listitem diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Open the JBDS perspective. If you see the Help view open, close it and restart
+                    JBDS</diffmk:wrapper></para>
+            </listitem>
+            <listitem diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If none of these work, do the following:</diffmk:wrapper></para>
+                <itemizedlist diffmk:change="added">
+                    <listitem diffmk:change="added">
+                        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Clear the Eclipse log file,
+                                </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">&lt;workspace&gt;\.metadata\.log</diffmk:wrapper></emphasis></para>
+                    </listitem>
+                    <listitem diffmk:change="added">
+                        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Start Eclipse with the -debug option:</diffmk:wrapper></para>
+                        <programlisting diffmk:change="added" format="linespecific" role="JAVA"><diffmk:wrapper diffmk:change="added"><![CDATA[eclipse -debug
+]]></diffmk:wrapper></programlisting>
+                    </listitem>
+                    <listitem diffmk:change="added">
+                        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Post the Eclipse log file
+                                (</diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">&lt;workspace&gt;\.metadata\.log</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">) on
+                            the forums.</diffmk:wrapper></para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+        </orderedlist>
+    </section>
+
+    <section diffmk:change="added" id="question_2">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Do I need to have JBoss Server installed to run JBoss Developer Studio?</diffmk:wrapper></title>
+
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">No. </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> already comes bundled with JBoss
+            Server. We bundle it together so that you don't need to download any additional
+            software and can test your application in a Web browser right away.</diffmk:wrapper></para>
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If you want to use a different JBoss server installation, after </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+            is installed open Servers View (select </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Window &gt; Show View
+                    &gt; Others &gt; Server &gt; Servers</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">),</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> then
+            right click on this </diffmk:wrapper><emphasis diffmk:change="added">
+                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">view &gt; New &gt; Server</diffmk:wrapper></property>
+            </emphasis><diffmk:wrapper diffmk:change="added"> and follow the wizards steps to point to another Jboss Server installation.</diffmk:wrapper></para>
+        <para diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> works with any servlet container, not just JBoss. For more
+            information on deployment, please see the Deploying Your Application section.</diffmk:wrapper></para>
+    </section>
+    
+    <section diffmk:change="added" id="question_3">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">I have an existing Seam 1.2.1 project. Can I migrate/import the
+            project to a JBDS Seam project?</diffmk:wrapper></title>
+ 
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">We highly recommend you to create Seam 1.2.1 project using the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBDS</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. In other case try
+        to do manually:</diffmk:wrapper></para>
+        
+        <itemizedlist diffmk:change="added">
+            <listitem diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Create a Seam Web project to get the JBoss tools structure</diffmk:wrapper></para>
+            </listitem>
+        </itemizedlist>
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Then from your Seam 1.2.1 seam-gen project start doing the following:</diffmk:wrapper></para>
+        <itemizedlist diffmk:change="added">
+            <listitem diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Copy </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">src</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> to </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">src</diffmk:wrapper></property></para>
+            </listitem>
+            <listitem diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Copy </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> to </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Web content</diffmk:wrapper></property></para>
+            </listitem>
+            <listitem diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Copy resources individual files to where they are in the seam web project
+                etc.</diffmk:wrapper></para>
+            </listitem>
+        </itemizedlist>
+        
+    </section>
+    <section diffmk:change="added" id="questio_4">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">I have an existing Struts or JSF project. Can I open the project
+            in JBDS?</diffmk:wrapper></title>
+        
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Yes. From main menu select </diffmk:wrapper><emphasis diffmk:change="added">
+                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">File &gt; Import &gt; Other &gt; JSF Project (or Struts
+                    Project)</diffmk:wrapper></property>
+        </emphasis><diffmk:wrapper diffmk:change="added"> and follow wizards steps.</diffmk:wrapper></para>
+        
+    </section>
+    
+    <section diffmk:change="added" id="question_5">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Can I import a .war file?</diffmk:wrapper></title>
+
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Yes. Select </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">File &gt; Import &gt; Web &gt; WAR
+                file</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">, </diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> then follow importing steps.</diffmk:wrapper></para>
+    </section>
+    
+    <section diffmk:change="added" id="question_6">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Is it possible to increase the performance of Eclipse after
+            installing your product?</diffmk:wrapper></title>
+        
+        <para diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> preconfigures eclipse via the eclipse.ini file to allocate
+            extra memory, but if you for some reason need more memory then by default, you can
+            manually make adjustments in this file. For example:</diffmk:wrapper></para>
+        <programlisting diffmk:change="added" format="linespecific" role="XML">
+                <diffmk:wrapper diffmk:change="added"><![CDATA[-vmargs -Xms128m -Xmx512m -XX:MaxPermSize=128m
+]]></diffmk:wrapper></programlisting>
+        </section>
+
+        <section diffmk:change="added" id="question_7">
+            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">How can I add my own tag library to the JBoss Tools
+                Palette?</diffmk:wrapper></title>
+        
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">See </diffmk:wrapper><ulink diffmk:change="added" url="../../jsf/html_single/index.html#AddingCustomJSFTagsToTheRedHatPalette7433"><diffmk:wrapper diffmk:change="added">Adding Tag
+                Libraries</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> in Visual Web Tools Guide.</diffmk:wrapper></para>
+    </section>
+
+    <section diffmk:change="added" id="question_8">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">How to get Code Assist for Seam specific resources in an externally generated
+            project?</diffmk:wrapper></title>
+
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">To get Code Assist for Seam specific resources in an externally generated project, you
+            should enable Seam features in Project Preferences. Right click an imported project and
+            navigate </diffmk:wrapper><emphasis diffmk:change="added">
+                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Properties &gt; Seam Settings</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> Check </diffmk:wrapper><emphasis diffmk:change="added">
+                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Seam support</diffmk:wrapper></property>
+            </emphasis><diffmk:wrapper diffmk:change="added"> box to enable all available </diffmk:wrapper><ulink diffmk:change="added" url="../../seam/html_single/index.html#project_pref"><diffmk:wrapper diffmk:change="added">Seam
+                Settings</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+    </section>
+
+    <section diffmk:change="added" id="question_9">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">How to import an example Seam project from jboss-eap directory?</diffmk:wrapper></title>
+
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">To import an example Seam project from </diffmk:wrapper><emphasis diffmk:change="added">
+                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">jboss-eap</diffmk:wrapper></property>
+            </emphasis><diffmk:wrapper diffmk:change="added"> into your working directory, you should perform the following steps:</diffmk:wrapper></para>
+
+        <itemizedlist diffmk:change="added">
+            <listitem diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Go to </diffmk:wrapper><emphasis diffmk:change="added">
+                        <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">New &gt; Other &gt; Java Project from Existing Buildfile</diffmk:wrapper></property>
+                    </emphasis></para>
+            </listitem>
+
+            <listitem diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Point to the </diffmk:wrapper><emphasis diffmk:change="added">
+                        <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">build.xml</diffmk:wrapper></property>
+                    </emphasis><diffmk:wrapper diffmk:change="added"> of any chosen project by pressing </diffmk:wrapper><emphasis diffmk:change="added">
+                        <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Browse</diffmk:wrapper></property>
+                    </emphasis><diffmk:wrapper diffmk:change="added"> button</diffmk:wrapper></para>
+            </listitem>
+
+            <listitem diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Hit </diffmk:wrapper><emphasis diffmk:change="added">
+                        <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Finish</diffmk:wrapper></property>
+                    </emphasis><diffmk:wrapper diffmk:change="added"> to open the project</diffmk:wrapper></para>
+            </listitem>
+        </itemizedlist>
+
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">As these seam examples are non WTP projects, next you should enable Seam support for
+            them. To do that, right click the project and go to </diffmk:wrapper><emphasis diffmk:change="added">
+                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Properties &gt; Seam Settings</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></emphasis></para>
+    </section>
+
+</chapter>
+
+ 
+<chapter diffmk:change="added" id="further_reading" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/further_reading.xml" xreflabel="further_reading">
+  <?dbhtml filename="further_reading.html"?>
+  <chapterinfo>
+    <keywordset>
+      <keyword>JBoss Developer Studio</keyword>
+      <keyword>Eclipse</keyword>
+      <keyword>Deploy</keyword>
+      <keyword>Deployment</keyword>
+      <keyword>JBoss</keyword>
+    </keywordset>
+  </chapterinfo>
+
+  <title>Further Reading</title>
+
+  <para>
+    <emphasis role="bold">JSF Tools Reference Guide</emphasis>
+    <ulink url="../../jsf_tools_ref_guide/html_single/index.html">(html)</ulink>
+
+  </para>
+  <para> From this guide you'll discover all peculiarities of work at a JSF project. You'll
+    learn all shades that cover the process of project creation and take a closer look at the JSF
+    configuration file. Also you'll get to know managed beans and how to work with them and
+    find out, how to create and register a custom converter, custom validator and referenced beans
+    in a JSF project. </para>
+
+<itemizedlist diffmk:change="added">
+  <listitem diffmk:change="added">
+  <para>
+    <emphasis role="bold">JSF Tools Tutorial</emphasis>
+    <ulink url="../../jsf_tools_tutorial/html_single/index.html">(html)</ulink>
+  </para>
+  <para> This tutorial will describe how to deal with classic/old style of JSF development and how
+    to create a simple JSF application using the JBoss Developer Studio. </para>
+  </listitem>
+  
+  <listitem diffmk:change="added"> <para>
+    <emphasis role="bold">Struts Tools Reference Guide</emphasis>
+    <ulink url="../../struts_tools_ref_guide/html_single/index.html">(html)</ulink>
+  </para>
+  <para> In Struts Tools Reference Guide you will learn how to create and work with a new struts
+    project. This guide also provides information about graphical editor for struts configuration
+    files, tiles files, and struts validation files. </para>
+  </listitem>
+
+<listitem diffmk:change="added">
+  <para>
+    <emphasis role="bold">Struts Tools Tutorial</emphasis>
+    <ulink url="../../struts_tools_tutorial/html_single/index.html">(html)</ulink>
+  </para>
+  <para><diffmk:wrapper diffmk:change="changed"> This tutorial will describe the classical style of Struts development, and will
+  step-by-step show you how to create a simple Struts application in JBoss Developer Studio.</diffmk:wrapper></para>
+</listitem>
+
+<listitem diffmk:change="added">
+  <para>
+    <emphasis role="bold">Seam Dev Tools Reference Guide</emphasis>
+    <ulink url="../../seam/html_single/index.html">(html)</ulink>
+  </para>
+  <para> This guide helps you to understand what Seam is and how to install Seam plug-in into
+    Eclipse. It tells you the necessary steps to start working with Seam Framework and assists in a
+    simple Seam Project creation. Also you will learn how to create and run the CRUD Database
+    Application with Seam as well as find out what Seam Editors Features and Seam Components are. </para>
+   </listitem>
+      
+    <listitem diffmk:change="added">
+  <para>
+    <emphasis role="bold">Visual Web Tools Reference Guide</emphasis>
+    <ulink url="../../jsf/html_single/index.html">(html)</ulink>
+  </para>
+    </listitem>
+      
+    <listitem diffmk:change="added">
+  <para>
+    <emphasis role="bold">JBoss Server Manager Reference Guide</emphasis>
+    <ulink url="../../as/html_single/index.html">(html)</ulink>
+  </para>
+  <para> This guide covers the basics of working with the JBoss server manager. You will read how to
+    install runtimes and servers and quickly learn how to configure, start, stop the server and know
+    how deployment and archiving process. You will find out how to manage installed JBoss Servers
+    via JBoss AS Perspective. You will also read how to deploy modules onto the server. </para>
+    </listitem>
+      
+    <listitem diffmk:change="added">
+  <para>
+    <emphasis role="bold">jBPM Tools Reference Guide</emphasis>
+    <ulink url="../../jbpm/html_single/index.html">(html)</ulink>
+  </para>
+  <para>With jBPM Tools Reference Guide we'll help you to facilitate a cross-product
+    learning and know how you can speed your development using special editors and visual designers.
+    We'll also guide you through the steps on how to create a simple process and test it
+    within jBPM jPDL perspective.</para>
+    </listitem>
+  
+  <listitem diffmk:change="added">
+  <para>
+    <emphasis role="bold">Hibernate Tools Reference Guide</emphasis>
+    <ulink url="../../hibernatetools/html_single/index.html">(html)</ulink>
+  </para>
+  <para>Throughout this guide you will learn how to install and use Hibernate Tools bath via Ant and
+    through Eclipse. We'll supply you with the information on how to create mapping files,
+    configuration file as well as a file for controlling reverse engineering by using specific
+    wizards that Hibernate tooling provides. Also you will know about Code Generation and
+    peculiarities of work within Hibernate Console Perspective.</para>
+  </listitem>
+
+    <listitem diffmk:change="added">
+      <para>
+    <emphasis role="bold">ESB Editor Reference Guide</emphasis>
+    <ulink url="../../esb_ref_guide/html_single/index.html">(html)</ulink>
+  </para>
+  <para><diffmk:wrapper diffmk:change="changed">This guide provides you with the information on ESB Editor which allows you to develop ESB
+  file.</diffmk:wrapper></para>
+    </listitem>
+      
+    <listitem diffmk:change="added">
+  <para diffmk:change="added">
+    <emphasis diffmk:change="added" role="bold"><diffmk:wrapper diffmk:change="added">JBoss Portal Tools Reference Guide</diffmk:wrapper></emphasis>
+    <ulink diffmk:change="added" url="../../jboss_portal_tools_ref_guide/html_single/index.html"><diffmk:wrapper diffmk:change="added">(html)</diffmk:wrapper></ulink>
+  </para>
+  <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The guide gives a detail look at how you can easily build a Portlet Web Application with
+  JBoss Tools and deploy it onto JBoss Portal.</diffmk:wrapper></para>
+    </listitem>
+      
+    <listitem diffmk:change="added">
+      <para diffmk:change="added">
+    <emphasis diffmk:change="added" role="bold"><diffmk:wrapper diffmk:change="added">JBoss WS User Guide</diffmk:wrapper></emphasis>
+    <ulink diffmk:change="added" url="../../ws_ref_guide/html_single/index.html"><diffmk:wrapper diffmk:change="added">(html)</diffmk:wrapper></ulink>
+  </para>
+  <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">This guide gives you practical help on JBossWS usage.</diffmk:wrapper></para>
+    </listitem>
+      
+    <listitem diffmk:change="added"> 
+  <para>
+    <emphasis role="bold">Exadel Studio Migration Guide</emphasis>
+    <ulink url="../../Exadel-migration/html_single/index.html">(html)</ulink>
+  </para>
+  <para>This document is intended to help you to migrate an existing Exadel JSF or Struts projects
+    from Exadel Studio into JBoss Developer Studio. </para>
+    </listitem>
+      
+</itemizedlist>
+</chapter>
+ 
+
+</book>

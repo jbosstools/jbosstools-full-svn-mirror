@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.docbook.org/xml/4.3/docbookx.dtd"
+
+[<!ENTITY introduction SYSTEM "modules/introduction.xml">
+<!ENTITY esb_support SYSTEM "modules/esb_support.xml">
+<!ENTITY esb_editor SYSTEM "modules/esb_editor.xml">
+
+<!ENTITY seamlink "../../seam/html_single/index.html">
+<!ENTITY aslink "../../as/html_single/index.html">
+<!ENTITY esblink "../../esb_ref_guide/html_single/index.html">
+<!ENTITY gsglink "../../GettingStartedGuide/html_single/index.html">
+<!ENTITY hibernatelink "../../hibernatetools/html_single/index.html">
+<!ENTITY jbpmlink "../../jbpm/html_single/index.html">
+<!ENTITY jsflink "../../jsf/html_single/index.html">
+<!ENTITY jsfreflink "../../jsf_tools_ref_guide/html_single/index.html">
+<!ENTITY jsftutoriallink "../../jsf_tools_tutorial/html_single/index.html">
+<!ENTITY strutsreflink "../../struts_tools_ref_guide/html_single/index.html">
+<!ENTITY strutstutoriallink "../../struts_tools_tutorial/html_single/index.html">                         
+
+]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
+    
+    <bookinfo>
+        <title>ESB Tools Reference Guide</title>
+        <author><firstname>Svetlana</firstname><surname>Mukhina</surname><email>smukhina@exadel.com</email></author> 
+        <author><firstname>Tatyana</firstname><surname>Romanovich</surname></author>  
+        
+        <pubdate>April 2008</pubdate>
+        <copyright>
+            <year>2007</year>
+            <year>2008</year>
+            <holder>JBoss, a division of Red Hat Inc.</holder>
+        </copyright>
+        <releaseinfo><diffmk:wrapper diffmk:change="changed">
+            Version: 3.0.0.beta1
+        </diffmk:wrapper></releaseinfo>
+    
+<abstract diffmk:change="added">
+   <title diffmk:change="added"></title>
+       <para diffmk:change="added">
+           <ulink diffmk:change="added" url="http://download.jboss.org/jbosstools/nightly-docs/en/esb_ref_guide/pdf/ESB_Reference_Guide.pdf"><diffmk:wrapper diffmk:change="added">PDF version</diffmk:wrapper></ulink>
+       </para>
+</abstract>
+
+</bookinfo>
+    <toc></toc>  
+    
+	
+<chapter id="introduction" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/esb/docs/esb_ref_guide/en/modules/introduction.xml">
+    <?dbhtml filename="introduction.html"?>
+
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Developer Studio</keyword>
+            <keyword>Eclipse</keyword>
+            <keyword>Java</keyword>
+            <keyword>JBoss</keyword>
+            <keyword>JBoss Tools</keyword>
+            <keyword>JBDS</keyword>
+            <keyword>ESB</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>Introduction</title>
+
+    <section>
+
+        <title>What is ESB?</title>
+
+        <para><diffmk:wrapper diffmk:change="changed">ESB (Enterprise Service Bus) - an abstraction layer on top of an implementation of an
+            enterprise messaging system that provides the features with which Service Oriented
+            Architectures may be implemented.</diffmk:wrapper></para>
+        <para><diffmk:wrapper diffmk:change="changed">If you want to develop applications using ESB technology JBoss ESB also meet your
+            needs. The JBoss Tools provide ESB editor and all necessary wizards for creating ESB
+            file.</diffmk:wrapper></para>
+        <para><diffmk:wrapper diffmk:change="changed">In this guide we provide you with the information on ESB Editor which allows you to
+            develop ESB file much faster and with far fewer errors so sparing your time.</diffmk:wrapper></para>
+
+    </section>
+
+    <section>
+        <title>Other relevant resources on the topic</title>
+
+        <para>You can find a set of benefits and other extra information on:</para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <ulink url="http://www.jboss.org/jbossesb">JBoss ESB</ulink>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <ulink url="http://wiki.jboss.org/wiki/JBossESB">JBoss Wiki</ulink>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <ulink url="http://www.jboss.org/jbossesb/docs/index.html"><diffmk:wrapper diffmk:change="changed">JBoss ESB
+                        Documentation Library</diffmk:wrapper></ulink>
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para><diffmk:wrapper diffmk:change="added">The latest </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Tools/JBoss Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> documentation
+            builds are available </diffmk:wrapper><ulink url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
+
+    </section>
+</chapter>
+
+    
+<chapter id="esb_support" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/esb/docs/esb_ref_guide/en/modules/esb_support.xml">
+        <?dbhtml filename="esb_support.html"?>
+        <chapterinfo>
+                <keywordset>
+                        <keyword>JBoss Developer Studio</keyword>
+                        <keyword>Eclipse</keyword>
+                        <keyword>ESB</keyword>
+                        <keyword>Java</keyword>
+                        <keyword>JBoss</keyword>
+                </keywordset>
+        </chapterinfo>
+
+        <title>ESB Support</title>
+
+        <para><diffmk:wrapper diffmk:change="added">In this section we will focus on all concepts that </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Tools</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+                integrates for working with JBoss ESB.</diffmk:wrapper></para>
+
+        <section>
+                <title><diffmk:wrapper diffmk:change="changed">ESB Tools Installation</diffmk:wrapper></title>
+
+                <para><diffmk:wrapper diffmk:change="changed">This chapter will provide you with the information on how to install
+                        JBoss ESB plugin into Eclipse.</diffmk:wrapper></para>
+
+                <para><diffmk:wrapper diffmk:change="changed">ESB Tools come as one module of JBoss Tools project. Since ESB Tools have a
+                        dependence on other JBoss Tools modules we recommend you to install a bundle
+                        of all </diffmk:wrapper><ulink url="http://labs.jboss.com/tools/download/index.html"><diffmk:wrapper diffmk:change="changed">JBoss
+                                Tools plug-ins</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="changed"> installation instruction on which you can find on
+                        JBoss Wiki in </diffmk:wrapper><ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">InstallingJBossTools</ulink> section.</para>
+        </section>
+
+        <section>
+                <title>Creating a ESB File</title>
+                <para><diffmk:wrapper diffmk:change="changed">In this chapter we suggest a step-by-step walk-through of creating your own
+                        simple file. Let's try to organize a new ESB file.</diffmk:wrapper></para>
+
+                <para>We will show you how to use the Creation wizard for creating a new ESB file.</para>
+
+                <para>At first you should open any project. Select <emphasis>
+                                <property moreinfo="none">File &gt;New &gt; Other...</property>
+                        </emphasis><diffmk:wrapper diffmk:change="changed"> in the main menu bar or context menu for selected project and
+                        then </diffmk:wrapper><emphasis>
+                                <property moreinfo="none">ESB &gt; ESB File</property>
+                        </emphasis> in the New dialog:</para>
+
+                <figure float="0">
+                        <title>New Dialog</title>
+                        <mediaobject>
+                                <imageobject>
+                                        <imagedata fileref="images/esb_support/01_create_esb.png"></imagedata>
+                                </imageobject>
+                        </mediaobject>
+                </figure>
+
+                <para> Clicking <emphasis>
+                                <property moreinfo="none">Next</property>
+                        </emphasis><diffmk:wrapper diffmk:change="changed"> brings us to the wizard page where it's necessary to
+                        specify the folder, name and version for the file. We choose, for example, </diffmk:wrapper><emphasis>
+                                <property moreinfo="none">jboss-esb.xml</property>
+                        </emphasis><diffmk:wrapper diffmk:change="changed"> as the name and accept the selected projects folder and default
+                        version.</diffmk:wrapper></para>
+                <figure float="0">
+                        <title>Folder, Name and Version</title>
+                        <mediaobject>
+                                <imageobject>
+                                        <imagedata fileref="images/esb_support/02_create_esb.png"></imagedata>
+                                </imageobject>
+                        </mediaobject>
+                </figure>
+
+                <para><diffmk:wrapper diffmk:change="changed">Thus, our file will be created in the selected projects folder by default. If
+                        you want to change the folder for your future file click </diffmk:wrapper><emphasis>
+                                <property moreinfo="none">Browse...</property>
+                        </emphasis> button to set needed folder or simply type it.</para>
+
+                <para>Clicking on <emphasis>
+                                <property moreinfo="none">Finish</property>
+                        </emphasis><diffmk:wrapper diffmk:change="changed"> results in the file being generated. The wizard creates one xml
+                        file.</diffmk:wrapper></para>
+
+        </section>
+
+</chapter>
+
+    
+<chapter id="esb_editor" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/esb/docs/esb_ref_guide/en/modules/esb_editor.xml" xreflabel="esb_editor">
+    <?dbhtml filename="esbEditor.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss ESB</keyword>
+            <keyword>Editor</keyword>
+            <keyword>ESB</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>ESB Editor</title>
+
+    <para><diffmk:wrapper diffmk:change="added"> ESB editor has lots of useful features, they are described in details in this chapter. In
+        addition you'll get to know with how </diffmk:wrapper><property diffmk:change="added" moreinfo="none">ESB Editor</property><diffmk:wrapper diffmk:change="added"> uses combined
+        visual and source editing of esb files.</diffmk:wrapper></para>
+
+    
+
+        <title>ESB File Editor</title>
+        <para><property moreinfo="none">ESB File Editor</property><diffmk:wrapper diffmk:change="changed"> is a powerful and customizable tool. ESB File
+            Editor allows developing an application using ESB technology.</diffmk:wrapper></para>
+
+        <para>ESB file editor has two tabs: Tree and Source.</para>
+
+        <para><diffmk:wrapper diffmk:change="changed">You can switch to Tree. The Tree view for the editor displays all ESB artifacts in a
+            tree format. By selecting any node you can see and edit its properties which will appear
+            in the right-hand area. For example, a Provider:</diffmk:wrapper></para>
+        <figure float="0">
+            <title>Tree View</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/esb_editor/01_esb_tree_view.png" scale="90"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para><diffmk:wrapper diffmk:change="added">You can easily switch from Tree to Source by selecting the Source tab at the bottom of
+            the editor and work in </diffmk:wrapper><property diffmk:change="added" moreinfo="none">Source view</property>.</para>
+
+        <figure float="0" id="sourceView">
+            <title>Source View</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/esb_editor/02_esb_source_view.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para><diffmk:wrapper diffmk:change="added">The Source view for the editor displays a text content of the ESB file. It is always
+            synchronized with </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Tree view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">, so any changes made in one of the
+            views will immediately appear in the other.</diffmk:wrapper></para>
+
+        <para>No matter what view you select, you get full integration with <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Outline
+            view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. For example, you can work in the Source view with the help of the
+            Outline view. The Outline view shows a tree structure of the ESB file. Simply select any
+            element in the </diffmk:wrapper><property diffmk:change="added" moreinfo="none">Outline view</property><diffmk:wrapper diffmk:change="added"> and it will jump to the same place in
+            the Source editor, so you can navigate through the source code with Outline view.</diffmk:wrapper></para>
+        <figure float="0">
+            <title>Outline View</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/esb_editor/03_esb_outline_view.png" scale="70"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para><diffmk:wrapper diffmk:change="changed">Adding, editing or deleting of some artifacts operations are available right in the
+                </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Tree view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed"> . Right-click any node and select one of the
+            available actions in the context menu. For example, you can easily add a new Provider:</diffmk:wrapper></para>
+        <para></para>
+        <figure float="0">
+            <title><diffmk:wrapper diffmk:change="changed">Adding New Provider</diffmk:wrapper></title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/esb_editor/04_esb_add_provider.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para><diffmk:wrapper diffmk:change="changed">You can easily add a new Service too:</diffmk:wrapper></para>
+        <figure float="0">
+            <title><diffmk:wrapper diffmk:change="changed">Adding New Service</diffmk:wrapper></title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/esb_editor/05_esb_add_service.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>The same way you can create a listener for service and other elements of ESB:</para>
+        <figure float="0">
+            <title><diffmk:wrapper diffmk:change="changed">Adding New Listener for Service</diffmk:wrapper></title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/esb_editor/06_esb_add_listener.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>The same actions can be done in the right part of <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Tree view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed"> tab
+            (Form editor) using </diffmk:wrapper><property moreinfo="none">Add</property>, <property moreinfo="none">Edit</property><diffmk:wrapper diffmk:change="changed"> and
+                </diffmk:wrapper><property moreinfo="none">Remove</property> buttons.</para>
+
+
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">In order to add a new generic Action to your ESB XML file you should select the
+            Actions node under the Services, then right-click and choose </diffmk:wrapper><emphasis diffmk:change="added">
+                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">New &gt; Generic Action</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. </diffmk:wrapper></emphasis></para>
+
+        <figure diffmk:change="added" float="0">
+            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Adding New Action in the Tree View</diffmk:wrapper></title>
+            <mediaobject diffmk:change="added">
+                <imageobject diffmk:change="added">
+                    <imagedata diffmk:change="added" fileref="images/esb_editor/11_esb_editor.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Or instead make use of </diffmk:wrapper><emphasis diffmk:change="added">
+                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Add...</diffmk:wrapper></property>
+            </emphasis><diffmk:wrapper diffmk:change="added"> button in the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Form editor</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> on the left.</diffmk:wrapper></para>
+        <figure diffmk:change="added" float="0">
+            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Adding New Action in the Form Editor</diffmk:wrapper></title>
+            <mediaobject diffmk:change="added">
+                <imageobject diffmk:change="added">
+                    <imagedata diffmk:change="added" fileref="images/esb_editor/12_esb_editor.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">As you can see on the bath figures above, the context menu will also prompt you to
+            insert one of the Actions that are supplied out-of-the-box with </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss
+            ESB</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. After choosing one an appeared </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">New Action wizard</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+            will ask you to fill out a name field and other fields specific for each Action
+            property. For example, for </diffmk:wrapper><emphasis diffmk:change="added">
+                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Content Based Router</diffmk:wrapper></property>
+            </emphasis><diffmk:wrapper diffmk:change="added"> Action the wizard looks as follows:</diffmk:wrapper></para>
+
+        <figure diffmk:change="added" float="0">
+            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">New Action Wizard</diffmk:wrapper></title>
+            <mediaobject diffmk:change="added">
+                <imageobject diffmk:change="added">
+                    <imagedata diffmk:change="added" fileref="images/esb_editor/13_esb_editor.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">After confirming creating the Action you can see it in the Tree under the </diffmk:wrapper><emphasis diffmk:change="added">
+                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Actions</diffmk:wrapper></property>
+            </emphasis><diffmk:wrapper diffmk:change="added"> node and preview as well as edit its settings in the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Form
+            editor</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> on the left.</diffmk:wrapper></para>
+
+        <figure diffmk:change="added" float="0">
+            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Form Editor for Content Based Router</diffmk:wrapper></title>
+            <mediaobject diffmk:change="added">
+                <imageobject diffmk:change="added">
+                    <imagedata diffmk:change="added" fileref="images/esb_editor/14_esb_editor.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">ESB editor</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> can recognize some specific objects. On the figure you
+            can see </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">org.jboss.soa.esb.actions.ContentBasedRouter</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> in the </diffmk:wrapper><emphasis diffmk:change="added">
+                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Class</diffmk:wrapper></property>
+            </emphasis><diffmk:wrapper diffmk:change="added"> section.</diffmk:wrapper></para>
+
+    <section id="esb_editors_features">
+
+        <title>ESB Editors Features</title>
+        <para><diffmk:wrapper diffmk:change="changed">JBoss ESB tooling has powerful editor features that help you easily make use of
+            content and code assist.</diffmk:wrapper></para>
+
+        <section id="ESBsyntaxvalidation84">
+
+            <title>ESB syntax validation</title>
+            <para><diffmk:wrapper diffmk:change="added">When working in </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss ESB editor</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> you are constantly provided
+                with feedback and contextual error checking as you type. In the Source viewer, if at
+                any point a tag is incorrect or incomplete, an error will be indicated next to the
+                line and also in the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Problems view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> below.</diffmk:wrapper></para>
+        </section>
+
+        <section id="ESBSupportXMLSchema">
+            <title>Support for XML Schema</title>
+
+            <para><diffmk:wrapper diffmk:change="changed">JBoss ESB Framework fully </diffmk:wrapper><link linkend="sourceView"><diffmk:wrapper diffmk:change="changed">supports XML files based on
+                    schemas as well as DTDs</diffmk:wrapper></link>.</para>
+        </section>
+
+        
+
+        <section id="ESBContentAssist">
+
+            <title>Content Assist for ESB XML file</title>
+
+            <para>When you work with any ESB XML file <property moreinfo="none">Content Assist</property><diffmk:wrapper diffmk:change="changed"> is
+                available to help you. It provides pop-up tip to help you complete your code
+                statements. It allows you to write your code faster and with more accuracy. Content
+                assist is always available in the Source mode. Simply type </diffmk:wrapper><emphasis>
+                    <property moreinfo="none">Ctrl-Space</property>
+                </emphasis> to see what is available.</para>
+
+            <para>Content Assist for ESB XML file:</para>
+            <figure float="0">
+                <title>Content Assist for ESB XML file</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/esb_editor/08_esb_features.png" scale="80"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <para>Content Assist for attributes:</para>
+            <figure float="0">
+                <title>Content Assist for attributes:</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/esb_editor/09_esb_features.png" scale="80"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            
+        </section>
+
+        <section id="FullControlOverSourceFiles-SynchronizedSourcAndVisualEditing">
+
+            <title>Synchronized Source and Visual Editing</title>
+
+            <para><diffmk:wrapper diffmk:change="changed">ESB file can be edited in either source or extra visual modes at the same time.</diffmk:wrapper></para>
+
+            <para><diffmk:wrapper diffmk:change="changed">JBoss Tools provide you two different editors to speed your development: a
+                graphical view (</diffmk:wrapper><property moreinfo="none">Tree</property><diffmk:wrapper diffmk:change="changed">) and source (</diffmk:wrapper><property moreinfo="none">Source</property><diffmk:wrapper diffmk:change="changed">).
+                At the same time, you always have full control over esb source file. Any changes you
+                make in the source view will immediately appear in the tree view. Both views are
+                synchronized, you can edit the file in any view.</diffmk:wrapper></para>
+
+            <figure float="0">
+                <title>Two Views are Synchronized</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/esb_editor/10_esb_features.png" scale="70"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>The last chapter covers capabilities on how you can use ESB editor.</para>
+            
+            <para><diffmk:wrapper diffmk:change="changed">In summary, this reference supplies you with all necessary information on the
+                functionality that JBoss ESB Editor provides for work with JBoss ESB.</diffmk:wrapper></para>
+        </section>
+    </section>
+</chapter>
+ 
+
+</book>

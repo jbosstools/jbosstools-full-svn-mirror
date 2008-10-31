@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="viewerInitor" name="viewerInitor" schema="schema/viewerInitor.exsd"/>
+   <extension-point id="analyzer" name="analyzer" schema="schema/analyzer.exsd"/>
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.jboss.org/tools/smooks/graphicalInformation" 
+       class = "org.jboss.tools.smooks.graphical.GraphicalPackage"
+       genModel = "model/graphical.genmodel" /> 
+  </extension>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Smooks Form Editor"
+            extensions="smooks"
+            icon="icons/sample.gif"
+            class="org.jboss.tools.smooks.ui.editors.SmooksFormEditor"
+            id="org.jboss.tools.smooks.ui.editors.SmooksFormEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertySections">
+      <propertySections
+            contributorId="org.jboss.tools.smooks.ui.editors.SmooksFormEditor">
+         <propertySection
+               class="org.jboss.tools.smooks.ui.ConnectionPropertySection"
+               id="org.jboss.tools.smooks.ui.connection.propertyTab.Section"
+               tab="org.jboss.tools.smooks.ui.connection.propertyTab">
+            <input
+                  type="org.jboss.tools.smooks.ui.gef.model.LineConnectionModel">
+            </input>
+         </propertySection>
+      </propertySections>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="org.jboss.tools.smooks.ui.editors.SmooksFormEditor"
+            typeMapper="org.jboss.tools.smooks.ui.SmooksGraphPropertyTypeMapper">
+         <propertyCategory
+               category="connection"></propertyCategory>
+      </propertyContributor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="org.jboss.tools.smooks.ui.editors.SmooksFormEditor">
+         <propertyTab
+               category="connection"
+               id="org.jboss.tools.smooks.ui.connection.propertyTab"
+               label="Mapping Properties">
+         </propertyTab>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.jboss.tools.smooks.ui.wizards"
+            name="Smooks">
+      </category>
+      <wizard
+            category="org.jboss.tools.smooks.ui.wizards"
+            class="org.jboss.tools.smooks.ui.wizards.SmooksConfigFileNewWizard"
+            icon="icons/full/obj16/esb16.png"
+            id="org.jboss.tools.smooks.ui.wizards.SmooksConfigFileNewWizard"
+            name="Smooks Configuration File">
+      </wizard>
+   </extension>
+   
+      <extension
+         point="org.jboss.tools.smooks.ui.viewerInitor">
+      <viewerInitor
+            contentProvider="org.jboss.tools.smooks.xml.ui.XMLStructuredDataContentProvider"
+            creationWizard="org.jboss.tools.smooks.xml.ui.XMLStructuredDataWizard"
+            description="XML data type comes from any .xml file."
+            labelProvider="org.jboss.tools.smooks.xml.ui.XMLStructuredDataLabelProvider"
+            name="XML Data Type"
+            typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
+      </viewerInitor>
+   </extension>
+   <extension
+         point="org.jboss.tools.smooks.ui.analyzer">
+      <mappingAnalyzer
+            class="org.jboss.tools.smooks.xml2xml.XML2XMLAnalyzer"
+            name="XML2XML Analyzer"
+            typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
+         <targetSourceType
+               id="org.jboss.tools.smooks.xml.viewerInitor.xml"
+               name="XML">
+         </targetSourceType>
+      </mappingAnalyzer>
+   </extension>
+   <extension
+         point="org.jboss.tools.smooks.ui.viewerInitor">
+      <viewerInitor
+            contentProvider="org.jboss.tools.smooks.javabean.model.BeanContentProvider"
+            creationWizard="org.jboss.tools.smooks.javabean.ui.NewJavaBeanStrucutredDataWizard"
+            description="This data type can get from any Java .class."
+            labelProvider="org.jboss.tools.smooks.javabean.model.BeanlabelProvider"
+            name="JavaBean Data Type"
+            typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+      </viewerInitor>
+   </extension>
+  <extension
+        point="org.jboss.tools.smooks.ui.analyzer">
+     <mappingAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           name="JavaBean Analyzer"
+           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+        <targetSourceType
+              id="org.jboss.tools.smooks.ui.viewerInitor.javabean"
+              name="java2java">
+        </targetSourceType>
+     </mappingAnalyzer>
+     <sourceModelAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           level="0"
+           name="JavaBean SourceModel Analyzer"
+           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+     </sourceModelAnalyzer>
+     <targetModelAnalyzer
+           class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
+           level="0"
+           name="JavaBean TargetModel Analyzer"
+           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+     </targetModelAnalyzer>
+  </extension>
+  
+  <extension
+         point="org.jboss.tools.smooks.ui.analyzer">
+      <mappingAnalyzer
+            class="org.jboss.tools.smooks.java2xml.analyzer.Java2XMLAnalyzer"
+            name="Java Bean"
+            typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+         <targetSourceType
+               id="org.jboss.tools.smooks.xml.viewerInitor.xml"
+               name="XML">
+         </targetSourceType>
+      </mappingAnalyzer>
+   </extension>
+   
+   <extension
+         point="org.jboss.tools.smooks.ui.analyzer">
+      <mappingAnalyzer
+            class="org.jboss.tools.smooks.xml2java.analyzer.XML2JavaAnalyzer"
+            name="XML2Java"
+            typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
+         <targetSourceType
+               id="org.jboss.tools.smooks.ui.viewerInitor.javabean"
+               name="JavaBean">
+         </targetSourceType>
+      </mappingAnalyzer>
+      <sourceModelAnalyzer
+            class="org.jboss.tools.smooks.xml2java.analyzer.XMLSourceModelAnalyzer"
+            name="XML Source"
+            typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
+      </sourceModelAnalyzer>
+      <targetModelAnalyzer
+            class="org.jboss.tools.smooks.xml2java.analyzer.XMLTargetModelAnalyzer"
+            name="XML Target"
+            typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
+      </targetModelAnalyzer>
+   </extension>
+</plugin>
