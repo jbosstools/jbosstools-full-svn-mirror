@@ -1,8 +1,0 @@
-Compile on Linux
-1) Set variable JAVA_HOME and MOZ_HOME in file dnd.mk.
-2) make -f dnd.mk
-
-Compile on Windows
-1) Replace the path 
-(C:\projects\mozilla\mozilla-source-1.6\obj-i586-pc-msvc-JBoss\dist\) in the
-file vpednd.vcproj with a path to your mozilla.
