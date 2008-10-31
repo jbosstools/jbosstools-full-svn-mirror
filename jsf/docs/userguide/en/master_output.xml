@@ -2532,7 +2532,7 @@
             </section>
         </section>
     </section>
-    <section id="RichFacesSupport" role="updated">
+    <section id="RichFacesSupport">
         <?dbhtml filename="RichFacesSupport.html"?>
         <title>RichFaces Support</title>
         <para><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss Developer Studio</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> comes with a tight integration with </diffmk:wrapper><ulink url="http://labs.jboss.com/jbossrichfaces/"><diffmk:wrapper diffmk:change="changed">RichFaces component framework</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.

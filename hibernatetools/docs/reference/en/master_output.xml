@@ -537,7 +537,7 @@
       </emphasis> for the basis of a Console configuration.</para>
   </section>
 
-  <section id="console_conf" role="updated">
+  <section id="console_conf">
     <title>Creating a Hibernate Console Configuration</title>
 
     <para>A Console configuration describes how the <property moreinfo="none">Hibernate plugin</property> should
@@ -2141,7 +2141,7 @@
     </section>
   </section>
 
-  <section diffmk:change="added" id="dali_integration" role="new">
+  <section diffmk:change="added" id="dali_integration">
     <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Hibernate support for Dali plugins in Eclipse WTP</diffmk:wrapper></title>
 
     <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Starting from 3.0.0 Alpha1 version of </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Tools</diffmk:wrapper></property> <diffmk:wrapper diffmk:change="added">Hibernate plugins

@@ -576,7 +576,7 @@
         <para>Now, let's get to know with both of the <property moreinfo="none">JBoss Server
             View</property> parts.</para>
 
-        <section role="updated">
+        <section>
             <title>Top Part of the JBoss Server View</title>
             <para>In the top part of the <property moreinfo="none">JBoss Server View</property> all declared servers
                 are represented as well as their current states, that is, whether they are started
@@ -1701,7 +1701,7 @@
 </chapter>
 
     
-<chapter id="tptp_support" role="new" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/as/docs/reference/en/modules/tptp_support.xml">
+<chapter id="tptp_support" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/as/docs/reference/en/modules/tptp_support.xml">
     <title>TPTP Support</title>
     <para>This chapter provides an overview on how to enable TPTP Profiling for <property moreinfo="none">JBoss
         AS</property> adapters in <property moreinfo="none">JBoss Tools</property>.</para>
