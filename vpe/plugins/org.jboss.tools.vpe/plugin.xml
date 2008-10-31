@@ -11,6 +11,7 @@
 
    <extension point="org.jboss.tools.common.model.keys">
       <keys path="help/keys-vpe.properties"/>
+      <keys path="help/keys-vpe-attrs.properties"/>
    </extension>
    <!-- extension
          point="org.jboss.tools.vpe.templates">
