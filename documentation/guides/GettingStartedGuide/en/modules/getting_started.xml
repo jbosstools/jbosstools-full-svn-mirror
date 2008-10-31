@@ -350,7 +350,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      >JBoss.com</ulink></para>
   </section>
 
-  <section id="JBossToolsInstall" role="updated">
+  <section id="JBossToolsInstall">
    <title>JBoss Tools Installation</title>
    <para>Here, let&apos;s consider the installation of the <property>JBoss Tools</property>
     modules.</para>
