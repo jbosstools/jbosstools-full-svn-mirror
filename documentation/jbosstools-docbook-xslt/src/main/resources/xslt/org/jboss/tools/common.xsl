@@ -101,6 +101,11 @@
               <xsl:value-of select="@revisionflag"/> 
             </xsl:attribute>
         </xsl:when>
+	<xsl:when test="@diffmk:change='added' or @diffmk:change='changed'"> 
+            <xsl:attribute name="class"> 
+              <xsl:value-of select="@diffmk:change"/> 
+            </xsl:attribute>
+        </xsl:when>
         </xsl:choose> 
         
         <!-- * if $autotoc.label.in.hyperlink is non-zero, then output the label --> 
@@ -122,9 +127,19 @@
   <!-- XHTML and PDF -->
   
   <xsl:template match="//diffmk:wrapper">
-         	<span class="diffmkwrapper">
-  			<xsl:value-of select="."/> 
-  		</span>
+	<xsl:choose>
+		<xsl:when test="@diffmk:change='deleted'">
+				<xsl:text> </xsl:text>
+		 </xsl:when>
+		<xsl:when test="parent::node()[local-name()='title']">
+				<xsl:value-of select="."/>
+		 </xsl:when>
+		 <xsl:otherwise>
+			<span class="diffmkwrapper">
+				<xsl:value-of select="."/> 
+			</span>
+		</xsl:otherwise>
+	</xsl:choose>
   </xsl:template>
   
   <!--xsl:template match="//node()[@diffmk:change]">
@@ -223,11 +238,11 @@
   </xsl:element>
   
   	<xsl:choose> 
-		  <xsl:when test="../@role='new' or ../@revisionflag='added'"> 
+		  <xsl:when test="../@role='new' or ../@revisionflag='added' or ../@diffmk:change='added'"> 
 			<img src="images/new.png" alt="new" class="img_marker" />
 		  </xsl:when> 
 		<!-- For mkdiff compatibility-->
-		<xsl:when test="../@role='updated' or ../@revisionflag='changed'"> 
+		<xsl:when test="../@role='updated' or ../@revisionflag='changed' or ../@diffmk:change='changed'"> 
 			<img src="images/updated.png" alt="updated" class="img_marker" />
 		</xsl:when>
 	</xsl:choose> 
@@ -291,11 +306,11 @@
     <xsl:copy-of select="$title"/>
   </xsl:element>
  	<xsl:choose> 
-		  <xsl:when test="../@role='new' or ../@revisionflag='added'"> 
+		  <xsl:when test="../@role='new' or ../@revisionflag='added' or ../@diffmk:change='added'"> 
 			<img src="images/new.png" alt="new" class="img_marker" />
 		  </xsl:when> 
 		<!-- For mkdiff compatibility-->
-		<xsl:when test="../@role='updated' or ../@revisionflag='changed'"> 
+		<xsl:when test="../@role='updated' or ../@revisionflag='changed' or ../@diffmk:change='changed'"> 
 			<img src="images/updated.png" alt="updated" class="img_marker" />
 		</xsl:when>
 	</xsl:choose>
