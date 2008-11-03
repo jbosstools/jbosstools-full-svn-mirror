@@ -271,6 +271,7 @@
         <xsd:attribute name="icon" type="vpe:VPE-BOOLEAN" use="optional"/>
         <xsd:attribute name="background-color" type="xsd:string" use="optional"/>
         <xsd:attribute name="border" type="xsd:string" use="optional"/>
+        <xsd:attribute name="style" type="xsd:string" use="optional"/>
     </xsd:complexType>
 <!--  -->
     <xsd:complexType name="TAGLIB"/>
