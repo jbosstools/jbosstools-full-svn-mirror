@@ -76,7 +76,7 @@
       <wizard
             category="org.jboss.tools.smooks.ui.wizards"
             class="org.jboss.tools.smooks.ui.wizards.SmooksConfigFileNewWizard"
-            icon="icons/full/obj16/esb16.png"
+            icon="icons/sample.gif"
             id="org.jboss.tools.smooks.ui.wizards.SmooksConfigFileNewWizard"
             name="Smooks Configuration File">
       </wizard>
@@ -89,7 +89,7 @@
             creationWizard="org.jboss.tools.smooks.xml.ui.XMLStructuredDataWizard"
             description="XML data type comes from any .xml file."
             labelProvider="org.jboss.tools.smooks.xml.ui.XMLStructuredDataLabelProvider"
-            name="XML Data Type"
+            name="XML"
             typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
       </viewerInitor>
    </extension>
@@ -112,7 +112,7 @@
             creationWizard="org.jboss.tools.smooks.javabean.ui.NewJavaBeanStrucutredDataWizard"
             description="This data type can get from any Java .class."
             labelProvider="org.jboss.tools.smooks.javabean.model.BeanlabelProvider"
-            name="JavaBean Data Type"
+            name="Java"
             typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
       </viewerInitor>
    </extension>
@@ -120,7 +120,7 @@
         point="org.jboss.tools.smooks.ui.analyzer">
      <mappingAnalyzer
            class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
-           name="JavaBean Analyzer"
+           name="Java"
            typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
         <targetSourceType
               id="org.jboss.tools.smooks.ui.viewerInitor.javabean"
@@ -130,13 +130,13 @@
      <sourceModelAnalyzer
            class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
            level="0"
-           name="JavaBean SourceModel Analyzer"
+           name="Java"
            typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
      </sourceModelAnalyzer>
      <targetModelAnalyzer
            class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
            level="0"
-           name="JavaBean TargetModel Analyzer"
+           name="Java"
            typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
      </targetModelAnalyzer>
   </extension>
@@ -145,7 +145,7 @@
          point="org.jboss.tools.smooks.ui.analyzer">
       <mappingAnalyzer
             class="org.jboss.tools.smooks.java2xml.analyzer.Java2XMLAnalyzer"
-            name="Java Bean"
+            name="Java"
             typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
          <targetSourceType
                id="org.jboss.tools.smooks.xml.viewerInitor.xml"
@@ -167,12 +167,12 @@
       </mappingAnalyzer>
       <sourceModelAnalyzer
             class="org.jboss.tools.smooks.xml2java.analyzer.XMLSourceModelAnalyzer"
-            name="XML Source"
+            name="XML"
             typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
       </sourceModelAnalyzer>
        <targetModelAnalyzer
             class="org.jboss.tools.smooks.xml2java.analyzer.XMLTargetModelAnalyzer"
-            name="XML Target"
+            name="XML"
             typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
       </targetModelAnalyzer>
    </extension>
