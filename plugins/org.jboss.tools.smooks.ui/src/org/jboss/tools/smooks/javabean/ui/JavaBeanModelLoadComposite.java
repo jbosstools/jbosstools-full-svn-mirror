@@ -170,11 +170,11 @@ public class JavaBeanModelLoadComposite extends Composite implements
 			// rootJavaBean = (JavaBeanModel) list.get(0);
 			try {
 				ProjectClassLoader loader = new ProjectClassLoader(javaProject);
-				Class clazz = loader.loadClass(this.classText.getText());
+				Class clazz = loader.loadClass(classFullName);
 				rootJavaBean = JavaBeanModelFactory
 						.getJavaBeanModelWithLazyLoad(clazz);
 			} catch (Exception e) {
-
+				// ignore
 			}
 		}
 		// if (rootJavaBean != null)

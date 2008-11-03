@@ -167,7 +167,7 @@ public class UIUtils {
 					String instanceName = ((JavaBeanModel) refObj)
 							.getBeanClassString();
 					Class instanceClazz = null;
-					if(((JavaBeanModel) refObj).isPrimitive()) {
+					if(((JavaBeanModel) refObj).isPrimitive() || ((JavaBeanModel) refObj).isArray()) {
 						// TODO process primitive type
 						continue;
 					}
