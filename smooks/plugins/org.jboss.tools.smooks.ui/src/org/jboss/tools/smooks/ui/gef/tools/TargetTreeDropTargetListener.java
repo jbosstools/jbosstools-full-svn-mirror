@@ -10,11 +10,12 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.gef.tools;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.Tool;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.dnd.TemplateTransfer;
-import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
@@ -22,8 +23,8 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.TreeItem;
+import org.jboss.tools.smooks.ui.gef.commandprocessor.CommandProcessorFactory;
 import org.jboss.tools.smooks.ui.gef.commands.CreateConnectionCommand;
-import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 
 /**
  * @author Dart Peng
@@ -105,11 +106,17 @@ public class TargetTreeDropTargetListener extends DropTargetAdapter {
 				Object target = item.getData();
 				if (source != null && target != null) {
 					source = tool.findTheEditPart(source, this.getGraphicalViewer()).getModel();
-					target = tool.findTheEditPart(target, this.getGraphicalViewer()).getModel();
+					EditPart targetEditPart = tool.findTheEditPart(target, this.getGraphicalViewer());
+					target = targetEditPart.getModel();
 					CreateConnectionCommand command = new CreateConnectionCommand();
 					command.setSource(source);
 					command.setTarget(target);
 					CommandStack stack = getGraphicalViewer().getEditDomain().getCommandStack();
+					try {
+						CommandProcessorFactory.getInstance().processGEFCommand(command, targetEditPart);
+					} catch (CoreException e) {
+						// ignore
+					}
 					stack.execute(command);
 				}
 			}

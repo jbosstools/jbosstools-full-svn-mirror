@@ -3,6 +3,7 @@ package org.jboss.tools.smooks.ui.gef.policy;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
@@ -12,6 +13,7 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.GraphicalNodeEditPolicy;
 import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.ReconnectRequest;
+import org.jboss.tools.smooks.ui.gef.commandprocessor.CommandProcessorFactory;
 import org.jboss.tools.smooks.ui.gef.commands.CreateConnectionCommand;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 
@@ -22,12 +24,16 @@ public class CustomGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 
 		CreateConnectionCommand command = (CreateConnectionCommand) request
 				.getStartCommand();
-		if (command == null){
-			System.out.println("COMMAND IS NULL ");
+		if (command == null) {
 			return null;
 		}
-		System.out.println("create final step");
 		command.setTarget(getHost().getModel());
+		try {
+			CommandProcessorFactory.getInstance().processGEFCommand(command,
+					getHost());
+		} catch (CoreException e) {
+			// ignore
+		}
 		return command;
 	}
 
@@ -55,6 +61,12 @@ public class CustomGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 		CreateConnectionCommand command = new CreateConnectionCommand();
 		command.setSource(getHost().getModel());
 		request.setStartCommand(command);
+		try {
+			CommandProcessorFactory.getInstance().processGEFCommand(command,
+					getHost());
+		} catch (CoreException e) {
+			// ignore
+		}
 		return command;
 	}
 
@@ -63,7 +75,8 @@ public class CustomGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 		Object model = request.getExtendedData().get("Model");
 		EditPartViewer viewer = this.getHost().getViewer();
 		EditPart target = findTheEditPart(model, (GraphicalViewer) viewer);
-		if(target == null) return null;
+		if (target == null)
+			return null;
 		return target instanceof NodeEditPart ? ((NodeEditPart) target)
 				.getTargetConnectionAnchor(request) : null;
 	}

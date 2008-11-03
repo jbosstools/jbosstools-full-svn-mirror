@@ -52,6 +52,10 @@ public class SmooksFormEditor extends FormEditor implements
 		ITabbedPropertySheetPageContributor {
 
 	SmooksGraphicalFormPage graphicalPage = null;
+	public SmooksGraphicalFormPage getGraphicalPage() {
+		return graphicalPage;
+	}
+
 	private TabbedPropertySheetPage tabbedPropertySheetPage;
 	private SmooksNormalContentEditFormPage normalPage;
 	public static final String EDITOR_ID = "org.jboss.tools.smooks.ui.editors.SmooksFormEditor";

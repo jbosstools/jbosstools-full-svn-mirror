@@ -1,7 +1,6 @@
 package org.jboss.tools.smooks.ui.gef.commandprocessor;
 
-import org.eclipse.gef.GraphicalEditPart;
-import org.eclipse.gef.requests.CreateRequest;
+import org.eclipse.gef.commands.Command;
 
 /**
  * 
@@ -10,6 +9,8 @@ import org.eclipse.gef.requests.CreateRequest;
  * @CreateTime Jul 22, 2008
  */
 public interface ICommandProcessor {
-	public Object getNewModel(CreateRequest request,
-			GraphicalEditPart rootEditPart);
+	public void processGEFCommand(Command gefCommand);
+
+	public void processEMFCommand(
+			org.eclipse.emf.common.command.Command emfCommand);
 }

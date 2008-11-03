@@ -22,15 +22,23 @@ public class SmooksExtensionPointConstants {
 	
 	public static final String EXTENTION_POINT_ANALYZER = "org.jboss.tools.smooks.ui.analyzer";
 	
+	public static final String EXTENTION_POINT_COMMAND_PROCESSOR = "org.jboss.tools.smooks.ui.commandProcessor";
+	
 	public static final String EXTENTION_POINT_ELEMENT_SOURCEMODEL_ANALYZER = "sourceModelAnalyzer";
 	
 	public static final String EXTENTION_POINT_ELEMENT_TARGETMODEL_ANALYZER = "targetModelAnalyzer";
 	
 	public static final String EXTENTION_POINT_ELEMENT_MAPPINGANALYZER = "mappingAnalyzer";
 	
+	public static final String EXTENTION_POINT_ELEMENT_COMMAND_PROCESSOR = "commandProcessor";
+
 	public static final String EXTENTION_POINT_ELEMENT_TARGETSOURCETYPE = "targetSourceType";
 
 	public static final String EXTENTION_POINT_ATTRIBUTE_CLASS = "class";
+	
+	public static final String EXTENTION_POINT_ATTRIBUTE_SOURCEID = "sourceId";
+	
+	public static final String EXTENTION_POINT_ATTRIBUTE_TARGETID = "targetId";
 
 	public static final String EXTENTION_POINT_ATTRIBUTE_TYPE_ID = "typeID";
 	
