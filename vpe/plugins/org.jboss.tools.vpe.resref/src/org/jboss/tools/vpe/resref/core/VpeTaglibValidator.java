@@ -44,10 +44,18 @@ public class VpeTaglibValidator extends DefaultWizardDataValidator {
 			return;
 		} 
 	 	String uriStr = (String) data.get("location"); //$NON-NLS-1$
+	 	String prefix = (String) data.get("prefix");//$NON-NLS-1$
+	    String nameStrt = "[A-Za-z_]|[^\\x00-\\x7F]"; //$NON-NLS-1$
+	    String nameChar = "[A-Za-z0-9_.-]|[^\\x00-\\x7F]"; //$NON-NLS-1$
+	    String name = '(' + nameStrt + ')'+'(' + nameChar + ")*"; //$NON-NLS-1$
+	    
 	 	try {
 	 		new URI(uriStr);
 	 	}catch (URISyntaxException ex) {
 	 		message = NLS.bind(WebUIMessages.INCORRECT_URI,uriStr);
+	 	}
+	 	if((prefix!=null)&&(!prefix.matches(name))){
+	 		message = NLS.bind(WebUIMessages.INCORRECT_PREFIX,prefix);
 	 	}
 	}
 }
