@@ -163,6 +163,22 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	protected Hyperlink sourceLink = null;
 	protected Hyperlink targetLink = null;
 	protected String sourceDataTypeID = null;
+	public String getSourceDataTypeID() {
+		return sourceDataTypeID;
+	}
+
+	public void setSourceDataTypeID(String sourceDataTypeID) {
+		this.sourceDataTypeID = sourceDataTypeID;
+	}
+
+	public String getTargetDataTypeID() {
+		return targetDataTypeID;
+	}
+
+	public void setTargetDataTypeID(String targetDataTypeID) {
+		this.targetDataTypeID = targetDataTypeID;
+	}
+
 	protected String targetDataTypeID = null;
 	protected SmooksFileBuilder smooksFileBuilder = null;
 	protected GraphicalInformationSaver graphicalInformationSaver = null;

@@ -10,15 +10,12 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.javabean.commandprocessor;
 
-import org.eclipse.gef.DefaultEditDomain;
-import org.eclipse.gef.GraphicalEditPart;
-import org.eclipse.gef.GraphicalViewer;
-import org.eclipse.gef.requests.CreateRequest;
-import org.eclipse.jface.window.Window;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IEditorPart;
-import org.jboss.tools.smooks.javabean.ui.JavaBeanModelCreationDialog;
+import org.eclipse.emf.common.command.Command;
+import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.ui.gef.commandprocessor.ICommandProcessor;
+import org.jboss.tools.smooks.ui.gef.commands.CreateConnectionCommand;
+import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
+import org.jboss.tools.smooks.ui.gef.model.PropertyModel;
 import org.jboss.tools.smooks.utils.UIUtils;
 
 /**
@@ -28,27 +25,49 @@ import org.jboss.tools.smooks.utils.UIUtils;
  */
 public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.jboss.tools.smooks.ui.gef.commandprocessor.ICommandProcessor#getNewModel
-	 * (java.lang.Object, java.lang.Object, org.eclipse.gef.GraphicalEditPart)
-	 */
-	public Object getNewModel(CreateRequest request,
-			GraphicalEditPart rootEditPart) {
-		DefaultEditDomain domain = (DefaultEditDomain) ((GraphicalViewer) rootEditPart
-				.getViewer()).getEditDomain();
-		// rootEditPart.getg
-		IEditorPart editorPart = domain.getEditorPart();
-		Shell shell = editorPart.getSite().getShell();
-		JavaBeanModelCreationDialog dialog = new JavaBeanModelCreationDialog(
-				shell, UIUtils
-						.getJavaProjectFromEditorPart(editorPart));
-		if(dialog.open() == Window.OK){
-			return dialog.getCheckedJavaBeanModel();
+	public void processEMFCommand(Command emfCommand) {
+	}
+
+	public void processGEFCommand(org.eclipse.gef.commands.Command gefCommand) {
+		if (CreateConnectionCommand.class.isAssignableFrom(gefCommand
+				.getClass())) {
+			CreateConnectionCommand command = (CreateConnectionCommand) gefCommand;
+			if (command.getSource() != null && command.getTarget() != null) {
+				Object m = command.getTarget();
+				if (m instanceof AbstractStructuredDataModel) {
+					Object t = ((AbstractStructuredDataModel)m).getReferenceEntityModel();
+					if (!UIUtils.isInstanceCreatingConnection(t)) {
+						if (t instanceof JavaBeanModel) {
+							Class clazz = ((JavaBeanModel) t).getBeanClass();
+							if (clazz != null && clazz != String.class) {
+								PropertyModel property = new PropertyModel();
+								property.setName("type");
+								property.setValue(getTypeString(clazz));
+								command.addPropertyModel(property);
+							}
+						}
+					}
+				}
+			}
 		}
-		return null;
+	}
+
+	public static String getTypeString(Class clazz) {
+		if(clazz.isPrimitive()){
+			return getPrimitiveTypeString(clazz);
+		}
+		String name = clazz.getSimpleName();
+		return name;
+	}
+	
+	public static String getPrimitiveTypeString(Class clazz){
+		String name = clazz.getName();
+		if("int".equalsIgnoreCase(name)) return "Integer";
+		if("double".equalsIgnoreCase(name)) return "Double";
+		if("float".equalsIgnoreCase(name)) return "Float";
+		if("long".equalsIgnoreCase(name)) return "Long";
+		if("boolean".equalsIgnoreCase(name)) return "Boolean";
+		return "";
 	}
 
 }

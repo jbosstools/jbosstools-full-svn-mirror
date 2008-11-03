@@ -3,6 +3,7 @@
 <plugin>
    <extension-point id="viewerInitor" name="viewerInitor" schema="schema/viewerInitor.exsd"/>
    <extension-point id="analyzer" name="analyzer" schema="schema/analyzer.exsd"/>
+   <extension-point id="commandProcessor" name="commandProcessor" schema="schema/commandProcessor.exsd"/>
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
        uri = "http://www.jboss.org/tools/smooks/graphicalInformation" 
@@ -175,5 +176,18 @@
             name="XML"
             typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
       </targetModelAnalyzer>
+   </extension>
+   <extension
+         point="org.jboss.tools.smooks.ui.commandProcessor">
+      <commandProcessor
+            class="org.jboss.tools.smooks.javabean.commandprocessor.JavaBeanModelCommandProcessor"
+            sourceId="org.jboss.tools.smooks.ui.viewerInitor.javabean"
+            targetId="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+      </commandProcessor>
+      <commandProcessor
+            class="org.jboss.tools.smooks.javabean.commandprocessor.JavaBeanModelCommandProcessor"
+            sourceId="org.jboss.tools.smooks.xml.viewerInitor.xml"
+            targetId="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+      </commandProcessor>
    </extension>
 </plugin>

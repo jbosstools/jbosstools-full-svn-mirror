@@ -35,6 +35,7 @@ import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
 import org.jboss.tools.smooks.ui.gef.model.TargetModel;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
+import org.jboss.tools.smooks.xml.model.TagObject;
 
 /**
  * 
@@ -48,6 +49,28 @@ public class UIUtils {
 		fill.marginHeight = marginH;
 		fill.marginWidth = marginW;
 		return fill;
+	}
+
+	public static boolean isInstanceCreatingConnection(
+			LineConnectionModel connection) {
+		AbstractStructuredDataModel sourceModel = (AbstractStructuredDataModel) connection
+				.getSource();
+		Object referenceObj = sourceModel.getReferenceEntityModel();
+		return isInstanceCreatingConnection(referenceObj);
+	}
+	
+	public static boolean isInstanceCreatingConnection(
+			Object targetModel) {
+		Object referenceObj = targetModel;
+		if (referenceObj != null){
+			if(referenceObj instanceof JavaBeanModel){
+				return !((JavaBeanModel)referenceObj).isPrimitive();
+			}
+			if(referenceObj instanceof TagObject){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static void createJavaModelConnectionErrorResolveCommand(
@@ -167,7 +190,8 @@ public class UIUtils {
 					String instanceName = ((JavaBeanModel) refObj)
 							.getBeanClassString();
 					Class instanceClazz = null;
-					if(((JavaBeanModel) refObj).isPrimitive() || ((JavaBeanModel) refObj).isArray()) {
+					if (((JavaBeanModel) refObj).isPrimitive()
+							|| ((JavaBeanModel) refObj).isArray()) {
 						// TODO process primitive type
 						continue;
 					}
@@ -183,7 +207,8 @@ public class UIUtils {
 						DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
 						result.setErrorMessage("The instance class of \""
 								+ ((JavaBeanModel) refObj).getName()
-								+ "\" can't be loaded. Instance name is \"" + instanceName + "\"");
+								+ "\" can't be loaded. Instance name is \""
+								+ instanceName + "\"");
 						JavaModelResolveCommand command = new JavaModelResolveCommand(
 								context);
 						command
@@ -191,17 +216,18 @@ public class UIUtils {
 										+ ((JavaBeanModel) refObj)
 												.getBeanClass()
 												.getCanonicalName() + "\"");
-						command.setInstanceName(((JavaBeanModel) refObj).getBeanClass().getCanonicalName());
+						command.setInstanceName(((JavaBeanModel) refObj)
+								.getBeanClass().getCanonicalName());
 						command.setJavaBean((JavaBeanModel) refObj);
 						result.addResolveCommand(command);
 						resultList.add(result);
 					}
 					if (instanceClazz != null && instanceClazz.isInterface()) {
 						DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
-						result
-								.setErrorMessage("Java model \""
-										+ ((JavaBeanModel) refObj).getName()
-										+ "\" can't be instanced. Instance name is \"" + instanceName + "\"");
+						result.setErrorMessage("Java model \""
+								+ ((JavaBeanModel) refObj).getName()
+								+ "\" can't be instanced. Instance name is \""
+								+ instanceName + "\"");
 						if (List.class.isAssignableFrom(instanceClazz)) {
 							JavaModelResolveCommand command = new JavaModelResolveCommand(
 									context);

@@ -51,6 +51,7 @@ import org.jboss.tools.smooks.ui.SmooksUIActivator;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
 import org.jboss.tools.smooks.ui.gef.model.PropertyModel;
+import org.jboss.tools.smooks.utils.UIUtils;
 
 /**
  * @author Dart Peng
@@ -60,13 +61,19 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 
 	private static final String PRO_TYPE = "type";
 
-	private Text beanClassText;
+	private Text instanceClassText;
 
 	private boolean lock = false;
 
 	protected String beanClassType;
 
 	protected String instanceClass;
+
+	private Text classTypeText;
+
+	private Composite typeComposite;
+
+	private Composite instanceClassComposite;
 
 	@Override
 	public void createControls(Composite parent,
@@ -91,42 +98,44 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 
 		factory.createLabel(controlComposite, "Target instance class name : ");
 
-		Composite beanCom = factory.createComposite(controlComposite);
+		instanceClassComposite = factory.createComposite(controlComposite);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		beanCom.setLayoutData(gd);
+		instanceClassComposite.setLayoutData(gd);
 		GridLayout beanLayout = new GridLayout();
 		beanLayout.numColumns = 2;
-		beanCom.setLayout(beanLayout);
+		instanceClassComposite.setLayout(beanLayout);
 
-		beanClassText = factory.createText(beanCom, "");
+		instanceClassText = factory.createText(instanceClassComposite, "");
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.grabExcessHorizontalSpace = true;
-		beanClassText.setLayoutData(gd);
-		beanClassText.setEnabled(false);
+		instanceClassText.setLayoutData(gd);
 
-		Button button1 = factory.createButton(beanCom, "Browse", SWT.NONE);
+		Button button1 = factory.createButton(instanceClassComposite, "Browse",
+				SWT.NONE);
 		button1.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				openJavaTypeDialog(beanClassText);
+				openJavaTypeDialog(instanceClassText);
 			}
 
 		});
 
 		factory.createLabel(controlComposite, "Mapping Type : ");
-		Composite typeCom = factory.createComposite(controlComposite);
+		typeComposite = factory.createComposite(controlComposite);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		typeCom.setLayoutData(gd);
+		typeComposite.setLayoutData(gd);
 		GridLayout typeLayout = new GridLayout();
 		typeLayout.numColumns = 2;
-		typeCom.setLayout(typeLayout);
+		typeComposite.setLayout(typeLayout);
 
-		final Text text = factory.createText(typeCom, "");
-		text.addModifyListener(new ModifyListener() {
+		classTypeText = factory.createText(typeComposite, "");
+		classTypeText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
-				beanClassType = text.getText();
+				if (isLock())
+					return;
+				beanClassType = classTypeText.getText();
 				PropertyModel pro = getTypePropertyModel();
 				if (pro != null) {
 					pro.setValue(beanClassType);
@@ -138,8 +147,8 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 		});
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.grabExcessHorizontalSpace = true;
-		text.setLayoutData(gd);
-		Composite buttonCom = factory.createComposite(typeCom);
+		classTypeText.setLayoutData(gd);
+		Composite buttonCom = factory.createComposite(typeComposite);
 		GridLayout buttonLayout = new GridLayout();
 		buttonLayout.numColumns = 2;
 		buttonCom.setLayout(buttonLayout);
@@ -149,7 +158,7 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				openJavaTypeDialog(text);
+				openJavaTypeDialog(classTypeText);
 			}
 
 		});
@@ -242,13 +251,13 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 	}
 
 	private void hookBeanClasText() {
-		beanClassText.addModifyListener(new ModifyListener() {
+		instanceClassText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent arg0) {
 				JavaBeanModel model = getTargetJavaBeanModel();
 				if (model != null) {
-					model.setBeanClassString(beanClassText.getText());
-					instanceClass = beanClassText.getText();
+					model.setBeanClassString(instanceClassText.getText());
+					instanceClass = instanceClassText.getText();
 					if (isLock())
 						return;
 					fireDirty();
@@ -331,16 +340,54 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 
 	public void refresh() {
 		super.refresh();
+		lockEventFire();
 
 		JavaBeanModel model = getTargetJavaBeanModel();
-		if (model != null) {
-			if (!beanClassText.getEnabled())
-				beanClassText.setEnabled(true);
-			String className = model.getBeanClassString();
-			lockEventFire();
-			beanClassText.setText(className);
-			unLockEventFire();
+		String type = getTypeProperty(getLineConnectionModel());
+		if (type == null)
+			type = "";
+		LineConnectionModel connection = getLineConnectionModel();
+		if(connection == null){
+			instanceClassComposite.setEnabled(false);
+			typeComposite.setEnabled(false);
+			return;
 		}
+		if (UIUtils.isInstanceCreatingConnection(connection)) {
+			if (model != null) {
+				// if (!instanceClassComposite.getEnabled())
+				instanceClassComposite.setEnabled(true);
+//				classTypeText.setEnabled(false);
+				String className = model.getBeanClassString();
+				lockEventFire();
+				this.classTypeText.setText("");
+				typeComposite.setEnabled(false);
+				instanceClassText.setText(className);
+				unLockEventFire();
+			}
+		} else {
+			if (type != null) {
+				typeComposite.setEnabled(true);
+				lockEventFire();
+				instanceClassText.setText("");
+				instanceClassComposite.setEnabled(false);
+				this.classTypeText.setText(type);
+				unLockEventFire();
+			}
+		}
+		unLockEventFire();
+	}
+
+	private String getTypeProperty(LineConnectionModel connection) {
+		if(connection == null) return null;
+		Object[] properties = connection.getPropertyArray();
+		if(properties == null) return null;
+		for (int i = 0; i < properties.length; i++) {
+			PropertyModel pro = (PropertyModel) properties[i];
+			if ("type".equalsIgnoreCase(pro.getName())) {
+				return pro.getValue();
+			}
+		}
+		return null;
 	}
 
 	private void unLockEventFire() {

@@ -87,7 +87,7 @@ public class JavaBeanModel implements IValidatable {
 	}
 
 	public String getBeanClassString() {
-		if(beanClassString != null){
+		if(beanClassString != null && beanClassString.length() != 0){
 			return this.beanClassString;
 		}
 		Class clazz = this.getBeanClass();

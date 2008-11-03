@@ -68,6 +68,7 @@ public class NewJavaBeanStrucutredDataWizard extends Wizard implements
 	}
 
 	public Object getTreeViewerInputContents() {
+		if(result == null) return null;
 		List<Object> list = new ArrayList<Object>();
 		list.add(result);
 		return list;

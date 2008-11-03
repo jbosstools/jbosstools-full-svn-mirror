@@ -2,20 +2,17 @@ package org.jboss.tools.smooks.ui.gef.policy;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
-import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gef.requests.CreateRequest;
-import org.jboss.tools.smooks.ui.gef.commands.CommandMappingFactory;
 import org.jboss.tools.smooks.ui.gef.commands.ICommandMappingFactory;
 
 
 
 /**
- * @deprecated
  * @author Dart
  *
  */
@@ -26,18 +23,18 @@ public class RootGraphicsXYLayoutEditPolicy extends XYLayoutEditPolicy {
 	/**
 	 * @return the mappingFactory
 	 */
-	public ICommandMappingFactory getMappingFactory() {
-		if (mappingFactory == null)
-			mappingFactory = createMappingFactory();
-		return mappingFactory;
-	}
+//	public ICommandMappingFactory getMappingFactory() {
+//		if (mappingFactory == null)
+//			mappingFactory = createMappingFactory();
+//		return mappingFactory;
+//	}
 
 	/**
 	 * @return the mappingFactory
 	 */
-	public ICommandMappingFactory createMappingFactory() {
-		return new CommandMappingFactory();
-	}
+//	public ICommandMappingFactory createMappingFactory() {
+//		return new CommandMappingFactory();
+//	}
 
 	protected Command createAddCommand(EditPart child, Object constraint) {
 		return null;
@@ -70,12 +67,12 @@ public class RootGraphicsXYLayoutEditPolicy extends XYLayoutEditPolicy {
 	}
 
 	protected Command getCreateCommand(CreateRequest request) {
-		GraphicalEditPart rootEditPart = (GraphicalEditPart) this.getHost();
-		ICommandMappingFactory factory = getMappingFactory();
-		if (factory != null) {
-			return factory.createCreationStructuredModelCommand(request,
-					rootEditPart);
-		}
+//		GraphicalEditPart rootEditPart = (GraphicalEditPart) this.getHost();
+//		ICommandMappingFactory factory = getMappingFactory();
+//		if (factory != null) {
+//			return factory.createCreationStructuredModelCommand(request,
+//					rootEditPart);
+//		}
 		return null;
 	}
 

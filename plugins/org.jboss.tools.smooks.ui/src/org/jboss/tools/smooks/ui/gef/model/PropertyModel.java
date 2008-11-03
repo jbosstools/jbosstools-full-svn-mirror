@@ -34,6 +34,35 @@ public class PropertyModel extends AbstractStructuredDataModel {
 		return value;
 	}
 
+	public boolean isSameProperty(PropertyModel model) {
+		if (this.name == null)
+			return false;
+		return this.name.equals(model.getName());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this.name == null)
+			return false;
+		if (obj instanceof PropertyModel) {
+			String name = ((PropertyModel) obj).getName();
+			if (!this.name.equals(name)) {
+				return false;
+			}
+			String value = ((PropertyModel) obj).getValue();
+			if (value == null) {
+				if (this.value == null)
+					return true;
+				return false;
+			}
+
+			if (this.value.equals(value)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void setValue(String value) {
 		String oldValue = this.value;
 		this.value = value;
