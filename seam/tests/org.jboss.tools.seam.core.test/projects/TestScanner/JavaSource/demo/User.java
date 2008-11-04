@@ -12,9 +12,19 @@ package demo;
 
 import javax.persistence.Entity;
 
-import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.*;
 import org.jboss.seam.Component;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Create;
+import org.jboss.seam.annotations.Destroy;
+import org.jboss.seam.annotations.Factory;
+import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Install;
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Out;
+import org.jboss.seam.annotations.Role;
+import org.jboss.seam.annotations.Roles;
+import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.Unwrap;
 
 /**
  * Created by JBoss Developer Studio
@@ -24,6 +34,12 @@ import org.jboss.seam.Component;
 @Scope(ScopeType.APPLICATION)
 @Entity
 @Install(precedence=Install.FRAMEWORK)
+@Role(name="roleName1", scope=ScopeType.SESSION)
+@Roles({
+	@Role(name="roleName2", scope=ScopeType.SESSION),
+	@Role(name="roleName3", scope=ScopeType.SESSION),
+	@Role(name="roleName4", scope=ScopeType.SESSION)
+})
 
 public class User {
 	
