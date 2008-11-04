@@ -93,16 +93,16 @@ public final class HTML {
 	public static final String ATTR_SCOPE = "scope"; //$NON-NLS-1$
 	public static final String ATTR_SPAN = "span"; //$NON-NLS-1$
 
-	public static final String VALUE_TOP_ALIGN = "top"; //$NON-NLS-1$
-	public static final String VALUE_RIGHT_ALIGN = "right"; //$NON-NLS-1$
-	public static final String VALUE_MIDDLE_ALIGN = "middle"; //$NON-NLS-1$
-	public static final String VALUE_TEXT_TYPE = "text"; //$NON-NLS-1$
-	public static final String VALUE_PASSWORD_TYPE = "password"; //$NON-NLS-1$
-	public static final String VALUE_IMAGE_TYPE = "image"; //$NON-NLS-1$
-	public static final String VALUE_RADIOBUTTON_TYPE = "radiobutton"; //$NON-NLS-1$
-	public static final String VALUE_CHECKBOX_TYPE = "checkbox"; //$NON-NLS-1$
-	public static final String VALUE_HIDDEN_TYPE = "hidden"; //$NON-NLS-1$
-	public static final String VALUE_BUTTON_TYPE = "button"; //$NON-NLS-1$
+	public static final String VALUE_ALIGN_TOP = "top"; //$NON-NLS-1$
+	public static final String VALUE_ALIGN_RIGHT = "right"; //$NON-NLS-1$
+	public static final String VALUE_ALIGN_MIDDLE = "middle"; //$NON-NLS-1$
+	public static final String VALUE_TYPE_TEXT = "text"; //$NON-NLS-1$
+	public static final String VALUE_TYPE_PASSWORD = "password"; //$NON-NLS-1$
+	public static final String VALUE_TYPE_IMAGE = "image"; //$NON-NLS-1$
+	public static final String VALUE_TYPE_RADIOBUTTON = "radiobutton"; //$NON-NLS-1$
+	public static final String VALUE_TYPE_CHECKBOX = "checkbox"; //$NON-NLS-1$
+	public static final String VALUE_TYPE_HIDDEN = "hidden"; //$NON-NLS-1$
+	public static final String VALUE_TYPE_BUTTON= "button"; //$NON-NLS-1$
 	public static final String VALUE_ALIGN_CENTER = "center"; //$NON-NLS-1$
 
 	public static final String STYLE_PARAMETER_WIDTH = "width"; //$NON-NLS-1$
