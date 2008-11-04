@@ -16,6 +16,7 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -47,7 +48,7 @@ public class SeamValidatorsTest extends AbstractResourceMarkerTest {
 	}
 
 	protected void setUp() throws Exception {
-		IResource project = ResourcesPlugin.getWorkspace().getRoot().findMember("SeamWebWarTestProject");
+		IProject project = (IProject)ResourcesPlugin.getWorkspace().getRoot().findMember("SeamWebWarTestProject");
 		if(project == null) {
 			ProjectImportTestSetup setup = new ProjectImportTestSetup(
 					this,
@@ -57,6 +58,7 @@ public class SeamValidatorsTest extends AbstractResourceMarkerTest {
 			project = setup.importProject();
 		}
 		this.project = project.getProject();
+		project.build(IncrementalProjectBuilder.CLEAN_BUILD, null);
 		JobUtils.waitForIdle();
 	}
 
@@ -847,7 +849,6 @@ public class SeamValidatorsTest extends AbstractResourceMarkerTest {
 	}
 	
 	private void refreshProject(IProject project){
-		JobUtils.delay(1000);
 		JobUtils.waitForIdle();
 		JobUtils.delay(1500);
 	}
