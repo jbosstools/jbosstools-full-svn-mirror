@@ -18,9 +18,10 @@ import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jface.text.BadLocationException;
 import org.jboss.tools.common.test.util.TestProjectProvider;
 import org.jboss.tools.seam.core.BeanType;
 import org.jboss.tools.seam.core.BijectedAttributeType;
@@ -44,12 +45,14 @@ import org.jboss.tools.seam.core.event.ISeamValueMap;
 import org.jboss.tools.seam.core.event.ISeamValueMapEntry;
 import org.jboss.tools.seam.core.event.ISeamValueString;
 import org.jboss.tools.seam.internal.core.SeamProject;
+import org.jboss.tools.seam.internal.core.el.SeamELCompletionEngine;
 import org.jboss.tools.seam.internal.core.el.SeamPromptingProvider;
 import org.jboss.tools.seam.internal.core.scanner.IFileScanner;
 import org.jboss.tools.seam.internal.core.scanner.LoadedDeclarations;
 import org.jboss.tools.seam.internal.core.scanner.lib.ClassPath;
 import org.jboss.tools.seam.internal.core.scanner.lib.LibraryScanner;
 import org.jboss.tools.test.util.JUnitUtils;
+import org.jboss.tools.test.util.JobUtils;
 import org.jboss.tools.test.util.ResourcesUtils;
 
 public class ScannerTest extends TestCase {
@@ -66,9 +69,8 @@ public class ScannerTest extends TestCase {
 		provider = new TestProjectProvider("org.jboss.tools.seam.core.test",
 				null,"TestScanner" ,true);
 		project = provider.getProject();
-		project.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 		this.project.build(IncrementalProjectBuilder.FULL_BUILD, null);
-		//EditorTestHelper.joinBackgroundActivities();
+		JobUtils.waitForIdle();
 	}
 
 	private ISeamProject getSeamProject() {
@@ -460,19 +462,6 @@ public class ScannerTest extends TestCase {
 			String actualValue = valueObject.getValue().getValue();
 			assertTrue("Property " + propertyName + " has value " + actualValue + " rather than " + expectedValue, expectedValue.equals(actualValue));
 		}
-		
-	}
-	
-	public void testPromptingProvider() {
-		ISeamProject seamProject = getSeamProject();
-		SeamPromptingProvider pp = new SeamPromptingProvider();
-		Properties properties = new Properties();
-		properties.put("seamProject", seamProject);
-		List list = pp.getList(null, SeamPromptingProvider.VARIABLES, "", properties);
-		assertTrue("Prompting has to contain 'myUser' variable", list.contains("myUser"));
-		
-		list = pp.getList(null, SeamPromptingProvider.MEMBERS, "#{myUser.", properties);
-		assertTrue("Prompting has to contain 'payment' property for '#{myUser.' seed", list.contains("payment"));
 	}
 
 	public void testInnerClass_JBIDE_1374() {
