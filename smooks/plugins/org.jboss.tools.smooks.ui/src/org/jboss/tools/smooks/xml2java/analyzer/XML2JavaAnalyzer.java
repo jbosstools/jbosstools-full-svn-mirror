@@ -16,6 +16,7 @@ import java.util.List;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.TagAction;
 
+import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -37,6 +38,7 @@ import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
+import org.jboss.tools.smooks.ui.gef.model.PropertyModel;
 import org.jboss.tools.smooks.ui.gef.model.SourceModel;
 import org.jboss.tools.smooks.ui.gef.model.TreeItemRelationModel;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
@@ -168,8 +170,11 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 						(AbstractXMLObject) sourceModel
 								.getReferenceEntityModel(), source);
 			}
-			SmooksModelUtils.addBindingTypeToParamType(bindingsParam, child
-					.getName(), selector, null, null);
+			AnyType binding = SmooksModelUtils.addBindingTypeToParamType(
+					bindingsParam, child.getName(), selector, null, null);
+			// add connection's properties on the "binding" element
+			UIUtils.assignConnectionPropertyToBinding(connection, binding,
+					new String[] { "property", "selector" });
 			if (isComplex) {
 				processLineConnection(connection, context, listType,
 						(SourceModel) sourceModel, selector);
@@ -306,7 +311,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 					JavaBeanModel childBean = JavaBeanAnalyzer
 							.findTheChildJavaBeanModel(property, targetJavaBean);
 					processXMLSelector(configList, config, sourceRoot,
-							childBean, list, selectorStr);
+							childBean, list, selectorStr, binding);
 				}
 			}
 		}
@@ -315,7 +320,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 	protected void processXMLSelector(MappingResourceConfigList configList,
 			ResourceConfigType resourceConfig, AbstractXMLObject root,
 			JavaBeanModel targetBean, SmooksResourceListType listType,
-			String selector) {
+			String selector, AnyType currentBinding) {
 		if (isReferenceSelector(selector)) {
 			ResourceConfigType resourceConfig1 = this
 					.findResourceConfigTypeWithSelector(selector, listType);
@@ -330,6 +335,10 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 					selector, root);
 			if (source != null) {
 				MappingModel mapping = new MappingModel(source, targetBean);
+				UIUtils.assignBindingPropertyToMappingModel(currentBinding,
+						mapping, new Object[] {
+								SmooksModelUtils.ATTRIBUTE_PROPERTY,
+								SmooksModelUtils.ATTRIBUTE_SELECTOR });
 				configList.getMappingModelList().add(mapping);
 				configList.addResourceConfig(resourceConfig);
 				this.setSelectorIsUsed(selector);
@@ -397,7 +406,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		}
 		return null;
 	}
-	
+
 	private void checkRootNodeConnected(
 			SmooksConfigurationFileGenerateContext context) {
 		GraphRootModel root = context.getGraphicalRootModel();
@@ -428,7 +437,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 						.next();
 				AbstractXMLObject source = (AbstractXMLObject) sourceGraphModel
 						.getReferenceEntityModel();
-				if (source.getParent().getClass() == DocumentObject.class ) {
+				if (source.getParent().getClass() == DocumentObject.class) {
 					rootSource = source;
 					break;
 				}

@@ -261,8 +261,6 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 										.next();
 								if (connectionIsUsed(childConnection))
 									continue;
-								Object[] properties = childConnection
-										.getPropertyArray();
 								JavaBeanModel jbean = (JavaBeanModel) child
 										.getReferenceEntityModel();
 								String currentSelectorName = getSelectorString(
@@ -275,16 +273,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 										.addBindingTypeToParamType(
 												bindingsParam, jbean.getName(),
 												currentSelectorName, null, null);
-								for (int i = 0; i < properties.length; i++) {
-									PropertyModel property = (PropertyModel) properties[i];
-									String pname = property.getName();
-									String pvalue = property.getValue();
-									binding.getAnyAttribute().add(
-											ExtendedMetaData.INSTANCE
-													.demandFeature(null, pname,
-															false), pvalue);
-								}
-
+								UIUtils.assignConnectionPropertyToBinding(childConnection, binding,
+										new String[] { "property", "selector" });
 								if (!jbean.isPrimitive()) {
 									analyzeStructuredDataModel(
 											resourceList,
@@ -575,20 +565,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			}
 			if (sourceModel != null) {
 				MappingModel model = new MappingModel(sourceModel, targetModel);
-				FeatureMap it = binding.getAnyAttribute();
-				for (int i = 0; i < it.size(); i++) {
-					EStructuralFeature feature = it.getEStructuralFeature(i);
-					if (feature.equals(SmooksModelUtils.ATTRIBUTE_PROPERTY)
-							|| feature
-									.equals(SmooksModelUtils.ATTRIBUTE_SELECTOR))
-						continue;
-					String pname = feature.getName();
-					String pvalue = it.get(feature, false).toString();
-					PropertyModel pmodel = new PropertyModel();
-					pmodel.setName(pname);
-					pmodel.setValue(pvalue);
-					model.getProperties().add(pmodel);
-				}
+				UIUtils.assignBindingPropertyToMappingModel(binding, model, new Object[] {
+						SmooksModelUtils.ATTRIBUTE_PROPERTY,
+						SmooksModelUtils.ATTRIBUTE_SELECTOR });
 				mappingModelList.add(model);
 			}
 		}
