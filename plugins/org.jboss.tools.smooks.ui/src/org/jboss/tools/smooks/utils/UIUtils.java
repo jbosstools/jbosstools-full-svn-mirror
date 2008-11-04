@@ -9,6 +9,10 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.ExtendedMetaData;
+import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -24,15 +28,18 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.jboss.tools.smooks.analyzer.CompositeResolveCommand;
 import org.jboss.tools.smooks.analyzer.DesignTimeAnalyzeResult;
+import org.jboss.tools.smooks.analyzer.MappingModel;
 import org.jboss.tools.smooks.javabean.analyzer.JavaModelConnectionResolveCommand;
 import org.jboss.tools.smooks.javabean.analyzer.JavaModelResolveCommand;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
+import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
 import org.jboss.tools.smooks.ui.ViewerInitorStore;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
+import org.jboss.tools.smooks.ui.gef.model.PropertyModel;
 import org.jboss.tools.smooks.ui.gef.model.TargetModel;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.jboss.tools.smooks.xml.model.TagObject;
@@ -51,6 +58,55 @@ public class UIUtils {
 		return fill;
 	}
 
+	public static void  assignConnectionPropertyToBinding(
+			LineConnectionModel connection, AnyType binding,
+			String[] ignorePropertiesName) {
+		Object[] bindingPros = connection.getPropertyArray();
+		for (int i = 0; i < bindingPros.length; i++) {
+			PropertyModel property = (PropertyModel) bindingPros[i];
+			boolean ignore = false;
+			String pname = property.getName();
+			for (int j = 0; j < ignorePropertiesName.length; j++) {
+				String ignoreName = ignorePropertiesName[j];
+				if(pname.equals(ignoreName)){
+					ignore = true;
+					break;
+				}
+			}
+			if(ignore) continue;
+			String pvalue = property.getValue();
+			binding.getAnyAttribute()
+					.add(
+							ExtendedMetaData.INSTANCE.demandFeature(null,
+									pname, false), pvalue);
+		}
+	}
+
+	public static void assignBindingPropertyToMappingModel(AnyType binding, MappingModel model,
+			Object[] ignoreProperties) {
+		FeatureMap it = binding.getAnyAttribute();
+		for (int i = 0; i < it.size(); i++) {
+			EStructuralFeature feature = it.getEStructuralFeature(i);
+			boolean ignore = false;
+			for (int j = 0; j < ignoreProperties.length; j++) {
+				Object ignoreProperty = ignoreProperties[j];
+				if (feature.equals(ignoreProperty)) {
+					ignore = true;
+					break;
+				}
+			}
+			if (ignore) {
+				continue;
+			}
+			String pname = feature.getName();
+			String pvalue = it.get(feature, false).toString();
+			PropertyModel pmodel = new PropertyModel();
+			pmodel.setName(pname);
+			pmodel.setValue(pvalue);
+			model.getProperties().add(pmodel);
+		}
+	}
+
 	public static boolean isInstanceCreatingConnection(
 			LineConnectionModel connection) {
 		AbstractStructuredDataModel sourceModel = (AbstractStructuredDataModel) connection
@@ -58,15 +114,14 @@ public class UIUtils {
 		Object referenceObj = sourceModel.getReferenceEntityModel();
 		return isInstanceCreatingConnection(referenceObj);
 	}
-	
-	public static boolean isInstanceCreatingConnection(
-			Object targetModel) {
+
+	public static boolean isInstanceCreatingConnection(Object targetModel) {
 		Object referenceObj = targetModel;
-		if (referenceObj != null){
-			if(referenceObj instanceof JavaBeanModel){
-				return !((JavaBeanModel)referenceObj).isPrimitive();
+		if (referenceObj != null) {
+			if (referenceObj instanceof JavaBeanModel) {
+				return !((JavaBeanModel) referenceObj).isPrimitive();
 			}
-			if(referenceObj instanceof TagObject){
+			if (referenceObj instanceof TagObject) {
 				return true;
 			}
 		}
