@@ -51,6 +51,22 @@ public class SmooksModelUtils {
 		return binding;
 	}
 	
+	public static List<Object> getBindingListFromResourceConfigType(
+			ResourceConfigType resourceConfig) {
+		List<ParamType> paramList = resourceConfig.getParam();
+		for (Iterator<ParamType> iterator = paramList.iterator(); iterator.hasNext();) {
+			ParamType param =   iterator.next();
+			if ("bindings".equals(param.getName())) {
+				if (param.eContents().isEmpty())
+					continue;
+				List<Object> bindingList = (List<Object>) param.getMixed().get(
+						SmooksModelUtils.ELEMENT_BINDING, false);
+				return bindingList;
+			}
+		}
+		return null;
+	}
+	
 	public static String getTransformType(ResourceConfigType resourceConfig){
 		ParamType typeParam = null;
 		if(isTransformTypeResourceConfig(resourceConfig)){
