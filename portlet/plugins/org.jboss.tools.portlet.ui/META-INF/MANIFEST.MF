@@ -4,7 +4,7 @@ Bundle-Name: JBoss Portlet
 Bundle-SymbolicName: org.jboss.tools.portlet.ui;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jboss.tools.portlet.ui.PortletUIActivator
-Bundle-Vendor: Red Hat, Inc.
+Bundle-Vendor: JBoss, a division of Red Hat
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.wst.common.project.facet.ui,
