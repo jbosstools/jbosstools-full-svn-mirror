@@ -401,7 +401,7 @@ public class KeyEventManager implements IKeyEventHandler {
 
 		if ((sourceElement != null) && (attributeName != null)) {
 			sourceElement.setAttribute(attributeName, value != null ? value
-					: ""); //$NON-NLS-1$
+					: EMPTY_STRING);
 
 			return sourceElement.getAttributeNode(attributeName);
 		}
