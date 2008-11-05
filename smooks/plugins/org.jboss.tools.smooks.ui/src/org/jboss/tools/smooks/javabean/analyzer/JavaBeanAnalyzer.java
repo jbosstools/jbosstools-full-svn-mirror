@@ -690,6 +690,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	public Object buildSourceInputObjects(GraphInformations graphInfo,
 			SmooksResourceListType listType, IFile sourceFile)
 			throws InvocationTargetException {
+		UIUtils.checkSelector(listType);
 		return this.buildSourceInputObjects(graphInfo, listType, sourceFile,
 				null);
 	}
@@ -697,6 +698,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	public Object buildTargetInputObjects(GraphInformations graphInfo,
 			SmooksResourceListType listType, IFile sourceFile)
 			throws InvocationTargetException {
+		UIUtils.checkSelector(listType);
 		return this.buildTargetInputObjects(graphInfo, listType, sourceFile,
 				null);
 	}
