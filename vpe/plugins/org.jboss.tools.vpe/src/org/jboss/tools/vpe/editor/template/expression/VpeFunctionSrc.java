@@ -15,7 +15,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.text.IDocument;
@@ -27,16 +26,13 @@ import org.jboss.tools.common.kb.AttributeValueDescriptor;
 import org.jboss.tools.common.kb.KbException;
 import org.jboss.tools.common.kb.ParamList;
 import org.jboss.tools.common.kb.wtp.WtpKbConnector;
-import org.jboss.tools.common.model.XModel;
-import org.jboss.tools.common.model.project.IModelNature;
-import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.resref.core.ResourceReference;
-import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.jst.web.tld.IFilePathEncoder;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
 import org.jboss.tools.vpe.editor.util.ElService;
+import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.w3c.dom.Node;
 
 public class VpeFunctionSrc extends VpeFunction {
@@ -90,7 +86,7 @@ public class VpeFunctionSrc extends VpeFunction {
 	if (input instanceof ILocationProvider) {
 	    imgPath = inputPath.append(tagValue);
 	} else {
-	    IPath basePath = tagPath.isAbsolute() ? getRootPath(input)
+	    IPath basePath = tagPath.isAbsolute() ? VpeStyleUtil.getRootPath(input)
 		    : inputPath;
 	    if (basePath != null) {
 		imgPath = basePath.append(tagPath);
@@ -151,31 +147,6 @@ public class VpeFunctionSrc extends VpeFunction {
 	    inputPath = inputPath.removeLastSegments(1);
 	}
 	return inputPath;
-    }
-
-    protected IPath getRootPath(IEditorInput input) {
-	IPath rootPath = null;
-	if (input instanceof IFileEditorInput) {
-	    IProject project = ((IFileEditorInput) input).getFile()
-		    .getProject();
-	    if (project != null && project.isOpen()) {
-		IModelNature modelNature = EclipseResourceUtil
-			.getModelNature(project);
-		if (modelNature != null) {
-		    XModel model = modelNature.getModel();
-		    String rootPathStr = WebProject.getInstance(model)
-			    .getWebRootLocation();
-		    if (rootPathStr != null) {
-			rootPath = new Path(rootPathStr);
-		    } else {
-			rootPath = project.getLocation();
-		    }
-		} else {
-		    rootPath = project.getLocation();
-		}
-	    }
-	}
-	return rootPath;
     }
 
     protected String getUnresolved() {

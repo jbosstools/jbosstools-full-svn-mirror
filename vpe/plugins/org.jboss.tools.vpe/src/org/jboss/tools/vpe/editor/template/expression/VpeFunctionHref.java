@@ -19,6 +19,7 @@ import org.eclipse.ui.editors.text.ILocationProvider;
 import org.w3c.dom.Node;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 
 public class VpeFunctionHref extends VpeFunctionSrc {
     @Override
@@ -64,7 +65,7 @@ public class VpeFunctionHref extends VpeFunctionSrc {
 	    imgPath = inputPath.append(tagValue);
 	} else {
 	    IPath basePath = tagPath.isAbsolute()
-	    		? getRootPath(input)
+	    		? VpeStyleUtil.getRootPath(input)
 	    		: inputPath;
 	    if (basePath != null) {
 		imgPath = basePath.append(tagPath);
