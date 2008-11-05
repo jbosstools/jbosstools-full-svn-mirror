@@ -61,11 +61,31 @@ public class HtmlTextTemplate extends VpeAbstractTemplate {
 	
 		NodeData result;
 		VpeNodeMapping nodeMapping = domMapping.getNearNodeMapping(node);
+		
+		nsIDOMNode textNode;		
 		if(node.getNodeType()==nsIDOMNode.ELEMENT_NODE) {
-			result = new NodeData(nodeMapping.getSourceNode(),node.getFirstChild(),true);		
+			textNode = node.getFirstChild();
 		} else {
-			result = new NodeData(nodeMapping.getSourceNode(),node,true);
+			textNode = node;
 		}
+		
+		String sourceNodeValue=null;
+		if((nodeMapping.getSourceNode()!=null) &&
+				(nodeMapping.getSourceNode().getNodeType()==Node.TEXT_NODE)) {
+			sourceNodeValue=nodeMapping.getSourceNode().getNodeValue();
+		}
+		String visualNodeValue=null;
+		if((textNode!=null)&&
+				(textNode.getNodeType()==nsIDOMNode.TEXT_NODE)) {
+			visualNodeValue = textNode.getNodeValue();
+		}
+		
+		boolean editable =false;
+		if(sourceNodeValue!=null && visualNodeValue!=null) {
+			editable =sourceNodeValue.trim().equals(visualNodeValue.trim());
+		}
+				
+		result = new NodeData(nodeMapping.getSourceNode(),textNode,editable);
 		return result;
 	}
 
