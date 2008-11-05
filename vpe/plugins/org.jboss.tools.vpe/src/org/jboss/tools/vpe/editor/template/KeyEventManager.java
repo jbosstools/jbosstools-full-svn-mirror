@@ -24,10 +24,8 @@ import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
-import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMNode;
-import org.mozilla.interfaces.nsISelection;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -55,17 +53,11 @@ public class KeyEventManager implements IKeyEventHandler {
 	 */
 	private VpePageContext pageContext;
 	
-	/**
-	 * selection controller
-	 */
-	private VpeSelectionController selectionController;
-	
 	public KeyEventManager(StructuredTextEditor sourceEditor,
 			VpeDomMapping domMapping, VpePageContext pageContext, VpeSelectionController selectionController) {
 		this.sourceEditor = sourceEditor;
 		this.domMapping = domMapping;
 		this.pageContext = pageContext;
-		setSelectionController(selectionController);
 	}
 
 	final public boolean handleKeyPress(nsIDOMKeyEvent keyEvent) {
@@ -101,11 +93,11 @@ public class KeyEventManager implements IKeyEventHandler {
 
 		} else if ((keyCode == nsIDOMKeyEvent.DOM_VK_BACK_SPACE)
 				&& (!keyEvent.getShiftKey())) {
-			return handleLeftDelete(keyEvent);
+			return handleDelete(keyEvent,ST.DELETE_PREVIOUS);
 
 		} else if ((keyCode == nsIDOMKeyEvent.DOM_VK_DELETE)
 				&& (!keyEvent.getShiftKey())) {
-			return handleRightDelete(keyEvent);
+			return handleDelete(keyEvent,ST.DELETE_NEXT);
 
 		} else if ((keyCode == nsIDOMKeyEvent.DOM_VK_PAGE_UP)
 				&& (!keyEvent.getShiftKey())) {
@@ -204,7 +196,6 @@ public class KeyEventManager implements IKeyEventHandler {
 
 		return true;
 	}
-
 	/**
 	 * Default implementation of a handling of a pressing the "delete" event
 	 * 
@@ -212,9 +203,10 @@ public class KeyEventManager implements IKeyEventHandler {
 	 * 
 	 * @param keyEvent
 	 *            - event
+	 * @param deleteDirection - direction of deleted Text
 	 * @return whether handled event
 	 */
-	protected boolean handleRightDelete(nsIDOMKeyEvent keyEvent) {
+	private boolean handleDelete(nsIDOMKeyEvent keyEvent, int delete) {
 
 		VpeNodeMapping selectedNodeMapping = SelectionUtil
 				.getNodeMappingBySourceSelection(getSourceEditor(),
@@ -262,9 +254,7 @@ public class KeyEventManager implements IKeyEventHandler {
 			}
 			// if template can't give necessary information
 			else {
-
 				editable = false;
-
 			}
 		}
 		// if node is simple text
@@ -273,91 +263,11 @@ public class KeyEventManager implements IKeyEventHandler {
 		}
 
 		if (editable) {
-
-			sourceEditor.getTextViewer().getTextWidget().invokeAction(
-					ST.DELETE_NEXT);
-
+				sourceEditor.getTextViewer().getTextWidget().invokeAction(
+						delete);
 		}
 
 		return true;
-
-	}
-
-	/**
-	 * Default handling of a pressing the "backspace" event
-	 * 
-	 * Override this method to handle the "backspace" event
-	 * 
-	 * @param keyEvent
-	 *            - event
-	 * @return whether handled event
-	 */
-	protected boolean handleLeftDelete(nsIDOMKeyEvent keyEvent) {
-		VpeNodeMapping selectedNodeMapping = SelectionUtil
-				.getNodeMappingBySourceSelection(getSourceEditor(),
-						getDomMapping());
-
-		if (selectedNodeMapping == null)
-			return false;
-
-		boolean editable = false;
-
-		// if selected node is element
-		if (selectedNodeMapping instanceof VpeElementMapping) {
-
-			VpeElementMapping elementMapping = (VpeElementMapping) selectedNodeMapping;
-
-			VpeElementData elementData = elementMapping.getElementData();
-
-			VpeTemplate template = elementMapping.getTemplate();
-
-			nsIDOMNode visualNode = SelectionUtil
-					.getLastSelectedNode(getPageContext());
-
-			NodeData nodeData = template.getNodeData(visualNode, elementData,
-					domMapping);
-
-			if (nodeData != null) {
-				editable = nodeData.isEditable();
-
-				if (editable && nodeData.getType() == NodeData.ATTRIBUTE
-						&& nodeData.getSourceNode() == null) {
-
-					Node newNode = createAttribute(
-							(Element) selectedNodeMapping.getSourceNode(),
-							((AttributeData) nodeData).getAttributeName(),
-							EMPTY_STRING);
-
-					nodeData.setSourceNode(newNode);
-
-					SelectionUtil.setSourceSelection(pageContext, newNode, 0);
-
-					return true;
-
-				}
-
-			}
-			// if template can't give necessary information
-			else {
-
-				editable = false;
-
-			}
-		}
-		// if node is simple text
-		else {
-			editable = true;
-		}
-
-		if (editable) {
-
-			sourceEditor.getTextViewer().getTextWidget().invokeAction(
-					ST.DELETE_PREVIOUS);
-
-		}
-
-		return true;
-
 	}
 
 	/**
@@ -497,19 +407,5 @@ public class KeyEventManager implements IKeyEventHandler {
 		}
 		return null;
 
-	}
-
-	/**
-	 * @return the selectionController
-	 */
-	private VpeSelectionController getSelectionController() {
-		return selectionController;
-	}
-
-	/**
-	 * @param selectionController the selectionController to set
-	 */
-	private void setSelectionController(VpeSelectionController selectionController) {
-		this.selectionController = selectionController;
 	}
 }
