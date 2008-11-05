@@ -100,4 +100,7 @@ public class VpeUIMessages extends NLS {
 	public static String HIDE;
 	public static String TAG_FOR_DISPLAY;
 	public static String STYLE;
+	public static String MAX_SOURCE_PANE;
+	public static String MAX_VISUAL_PANE;
+	public static String RESTORE_PREVIOUS_LOCATION;
 }

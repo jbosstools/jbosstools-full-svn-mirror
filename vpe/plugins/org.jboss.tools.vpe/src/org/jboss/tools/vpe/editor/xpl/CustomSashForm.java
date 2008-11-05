@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Sash;
+import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 /**
  * A SashForm that allows move to/from max controls on sash.
@@ -64,10 +65,10 @@ public class CustomSashForm extends SashForm {
 		NO_MAX_DOWN = NO_MAX_RIGHT;	// Custom style bit for not allow max down
 
 
-	private static final int NO_WEIGHT = -1;	
+	private static final int NO_WEIGHT = -1;
 	private static final int NO_ARROW = -1;
-	private final static String LAYOUT_RATIO = "layout ratio";
-	private final static String WEIGHTS = "weights";
+	private final static String WEIGHTS = "weights"; //$NON-NLS-1$
+
 	private static class SashInfo {
 		public Sash sash;
 		public boolean enabled;	// Whether this sashinfo is enabled (i.e. if there is more than one, this will be disabled).
@@ -95,7 +96,7 @@ public class CustomSashForm extends SashForm {
 	protected boolean sashBorders[];	// Whether cooresponding control needs a sash border
 							
 	protected boolean noMaxUp, noMaxDown;
-	protected List customSashFormListeners = null;
+	protected List<ICustomSashFormListener> customSashFormListeners = null;
 	protected PropertyChangeSupport listeners = new PropertyChangeSupport(this);
 	
 	protected static final int 
@@ -293,11 +294,11 @@ public class CustomSashForm extends SashForm {
 				 * @see org.eclipse.swt.events.ControlAdapter#controlMoved(ControlEvent)
 				 */
 				public void controlMoved(ControlEvent e) {
-					if(e.widget instanceof Sash){
-					Sash s = (Sash) e.widget;
-					String text = s.getToolTipText();
+//					if(e.widget instanceof Sash){
+//					Sash s = (Sash) e.widget;
+//					String text = s.getToolTipText();
 //					 if(text.equalsIgnoreCase(anotherString))
-					}
+//					}
 					recomputeSashInfo();
 				}
 				
@@ -336,7 +337,7 @@ public class CustomSashForm extends SashForm {
 						int loc = vertical ? x : y;
 						int locIndex = vertical ? X_INDEX : Y_INDEX;
 						int sizeIndex = vertical ? WIDTH_INDEX : HEIGHT_INDEX;
-						if (locs[locIndex] <= loc && loc <= locs[locIndex]+locs[sizeIndex]) {					
+						if (locs[locIndex] <= loc && loc <= locs[locIndex]+locs[sizeIndex]) {
 							if (currentSashInfo.cursorOver == NO_ARROW) {
 								currentSashInfo.sash.setCursor(Cursors.ARROW);
 							}
@@ -346,11 +347,13 @@ public class CustomSashForm extends SashForm {
 								switch (locs[ARROW_TYPE_INDEX]) {
 									case UP_ARROW:
 									case DOWN_ARROW:
-										currentSashInfo.sash.setToolTipText("Restore Previous Location"); 
+										currentSashInfo.sash.setToolTipText(VpeUIMessages.RESTORE_PREVIOUS_LOCATION);
 										break;
 									case UP_MAX_ARROW:
+										currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_VISUAL_PANE);
+										break;
 									case DOWN_MAX_ARROW:
-										currentSashInfo.sash.setToolTipText("Maximize Pane"); 
+										currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_SOURCE_PANE);
 										break;
 								}
 							}
@@ -366,7 +369,7 @@ public class CustomSashForm extends SashForm {
 				}
 				
 			});
-			
+
 			// Need to know when we leave so that we can clear the cursor feedback if set.
 			newSash.addMouseTrackListener(new MouseTrackAdapter() {
 				/**
@@ -496,7 +499,7 @@ public class CustomSashForm extends SashForm {
 		} else {
 			addArrows = new int[2];
 			drawArrows = new int[2];	
-			// TODO: SashForm as changed the folllwing is a temporary kludge
+			// TODO: SashForm as changed the following is a temporary kludge
 			Rectangle sashBounds = currentSashInfo.sash.getBounds();
 			Rectangle clientArea = getClientArea();
 			final int DRAG_MINIMUM = 20; // TODO: kludge see SashForm.DRAG_MINIMUM 
@@ -910,20 +913,21 @@ public class CustomSashForm extends SashForm {
 	 * @since 1.2.0
 	 */
 	public void addCustomSashFormListener(ICustomSashFormListener listener){
-		if(customSashFormListeners==null)
-			customSashFormListeners = new ArrayList();
+		if (customSashFormListeners == null) {
+			customSashFormListeners = new ArrayList<ICustomSashFormListener>();
+		}
 		customSashFormListeners.add(listener);
 	}
 	
 	/**
 	 * Removes the custom sashform listener.
-	 * 
+	 *
 	 * @param listener
-	 * 
+	 *
 	 * @since 1.2.0
 	 */
 	public void removeCustomSashFormListener(ICustomSashFormListener listener){
-		if(customSashFormListeners!=null){
+		if (customSashFormListeners != null) {
 			customSashFormListeners.remove(listener);
 		}
 	}
@@ -934,7 +938,7 @@ public class CustomSashForm extends SashForm {
 			if(weights!=null && weights.length==2){
 				int firstControlWeight = weights[0];
 				int secondControlWeight = weights[1];
-				for (Iterator listenerItr = customSashFormListeners.iterator(); listenerItr.hasNext();) {
+				for (Iterator<ICustomSashFormListener> listenerItr = customSashFormListeners.iterator(); listenerItr.hasNext();) {
 					ICustomSashFormListener listener = (ICustomSashFormListener) listenerItr.next();
 					listener.dividerMoved(firstControlWeight, secondControlWeight);
 				}
