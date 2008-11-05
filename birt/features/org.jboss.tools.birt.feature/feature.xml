@@ -3,7 +3,7 @@
       id="org.jboss.tools.birt.feature"
       label="JBoss BIRT Integration"
       version="1.0.0"
-      provider-name="RedHat, Inc."
+      provider-name="JBoss, a division of Red Hat"
       plugin="org.jboss.tools.birt.oda.ui">
 
    <description url="http://www.example.com/description">
