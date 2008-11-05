@@ -32,6 +32,9 @@ import org.jboss.tools.smooks.analyzer.MappingModel;
 import org.jboss.tools.smooks.javabean.analyzer.JavaModelConnectionResolveCommand;
 import org.jboss.tools.smooks.javabean.analyzer.JavaModelResolveCommand;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
+import org.jboss.tools.smooks.model.AbstractResourceConfig;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
 import org.jboss.tools.smooks.ui.ViewerInitorStore;
@@ -51,6 +54,9 @@ import org.jboss.tools.smooks.xml.model.TagObject;
  */
 public class UIUtils {
 
+	public static final String[] SELECTORE_SPLITER = new String[] { ":", "\\",
+			"/" };
+
 	public static FillLayout createFillLayout(int marginW, int marginH) {
 		FillLayout fill = new FillLayout();
 		fill.marginHeight = marginH;
@@ -58,7 +64,46 @@ public class UIUtils {
 		return fill;
 	}
 
-	public static void  assignConnectionPropertyToBinding(
+	public static void checkSelector(String selector)
+			throws InvocationTargetException {
+		if (selector == null)
+			return;
+		for (int i = 0; i < SELECTORE_SPLITER.length; i++) {
+			String splitString = SELECTORE_SPLITER[i];
+			if (selector.indexOf(splitString) != -1) {
+				throw new InvocationTargetException(new Exception(
+						"The Selector string dosen't support \"" + splitString
+								+ "\" character"));
+			}
+		}
+	}
+
+	public static void checkSelector(SmooksResourceListType listType)
+			throws InvocationTargetException {
+		List<AbstractResourceConfig> lists = listType
+				.getAbstractResourceConfig();
+		for (Iterator<AbstractResourceConfig> iterator = lists.iterator(); iterator
+				.hasNext();) {
+			ResourceConfigType resourceConfig = (ResourceConfigType) iterator
+					.next();
+			String selector = resourceConfig.getSelector();
+			UIUtils.checkSelector(selector);
+			List<Object> list = SmooksModelUtils
+					.getBindingListFromResourceConfigType(resourceConfig);
+			if (list == null)
+				continue;
+			for (Iterator<Object> iterator2 = list.iterator(); iterator2
+					.hasNext();) {
+				AnyType binding = (AnyType) iterator2.next();
+				String bindingMessage = SmooksModelUtils
+						.getAttributeValueFromAnyType(binding,
+								SmooksModelUtils.ATTRIBUTE_SELECTOR);
+				UIUtils.checkSelector(bindingMessage);
+			}
+		}
+	}
+
+	public static void assignConnectionPropertyToBinding(
 			LineConnectionModel connection, AnyType binding,
 			String[] ignorePropertiesName) {
 		Object[] bindingPros = connection.getPropertyArray();
@@ -68,12 +113,13 @@ public class UIUtils {
 			String pname = property.getName();
 			for (int j = 0; j < ignorePropertiesName.length; j++) {
 				String ignoreName = ignorePropertiesName[j];
-				if(pname.equals(ignoreName)){
+				if (pname.equals(ignoreName)) {
 					ignore = true;
 					break;
 				}
 			}
-			if(ignore) continue;
+			if (ignore)
+				continue;
 			String pvalue = property.getValue();
 			binding.getAnyAttribute()
 					.add(
@@ -82,8 +128,8 @@ public class UIUtils {
 		}
 	}
 
-	public static void assignBindingPropertyToMappingModel(AnyType binding, MappingModel model,
-			Object[] ignoreProperties) {
+	public static void assignBindingPropertyToMappingModel(AnyType binding,
+			MappingModel model, Object[] ignoreProperties) {
 		FeatureMap it = binding.getAnyAttribute();
 		for (int i = 0; i < it.size(); i++) {
 			EStructuralFeature feature = it.getEStructuralFeature(i);
