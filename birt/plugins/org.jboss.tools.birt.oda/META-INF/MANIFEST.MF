@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.jboss.tools.birt.oda;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-ClassPath: .
 Bundle-Activator: org.jboss.tools.birt.oda.Activator
-Bundle-Vendor: RedHat, Inc.
+Bundle-Vendor: JBoss, a division of Red Hat
 Bundle-Localization: plugin
 Export-Package: org.jboss.tools.birt.oda,
  org.jboss.tools.birt.oda.impl
