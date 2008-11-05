@@ -3,7 +3,7 @@
       id="org.jboss.tools.portlet.feature"
       label="JBoss Portlet"
       version="1.0.0"
-      provider-name="Red Hat, Inc."
+      provider-name="JBoss, a division of Red Hat"
       plugin="org.jboss.tools.portlet.ui">
 
    <description url="http://www.example.com/description">
