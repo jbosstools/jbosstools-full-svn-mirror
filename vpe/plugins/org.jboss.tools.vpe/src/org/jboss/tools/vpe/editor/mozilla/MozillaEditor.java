@@ -792,47 +792,4 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		return editor;
 	}
 	
-	/**
-	 * 
-	 * @param menu
-	 */
-	private void addInvisibleTagsSupportToMenu(Menu menu) {
-
-		// create menu item
-		MenuItem menuItem = new MenuItem(menu, SWT.PUSH);
-
-		// get default value of flag
-		boolean showInvisibleTags = Constants.YES_STRING
-				.equals(VpePreference.SHOW_INVISIBLE_TAGS.getValue());
-
-		// set text
-		menuItem.setText((showInvisibleTags ? VpeUIMessages.HIDE
-				: VpeUIMessages.SHOW)
-				+ Constants.WHITE_SPACE + VpeUIMessages.NON_VISUAL_TAGS);
-
-		// add listener
-		menuItem.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				MenuItem selectedItem = (MenuItem) e.widget;
-
-				// get current value of flag
-				boolean showInvisibleTags = !controller.getVisualBuilder()
-						.isShowInvisibleTags();
-
-				// change text
-				selectedItem
-						.setText((showInvisibleTags ? VpeUIMessages.HIDE
-								: VpeUIMessages.SHOW)
-								+ Constants.WHITE_SPACE
-								+ VpeUIMessages.NON_VISUAL_TAGS);
-
-				// change flag
-				controller.getVisualBuilder().setShowInvisibleTags(
-						showInvisibleTags);
-				// update vpe
-				controller.visualRefresh();
-			}
-		});
-	}
 }
