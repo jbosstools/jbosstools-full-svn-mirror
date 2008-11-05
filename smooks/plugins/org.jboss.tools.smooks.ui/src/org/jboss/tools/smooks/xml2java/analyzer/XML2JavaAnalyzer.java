@@ -273,11 +273,6 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			MappingResourceConfigList configList, SmooksResourceListType list,
 			ResourceConfigType config, AbstractXMLObject sourceRoot,
 			JavaBeanModel targetJavaBean) {
-		String selector = config.getSelector();
-		String beanID = SmooksModelUtils.getParmaText(
-				SmooksModelConstants.BEAN_ID, config);
-		String beanClass = SmooksModelUtils.getParmaText(
-				SmooksModelConstants.BEAN_CLASS, config);
 
 		MappingModel mapping = new MappingModel(sourceRoot, targetJavaBean);
 		configList.getMappingModelList().add(mapping);
