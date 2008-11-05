@@ -106,7 +106,10 @@ public final class HTML {
 	public static final String VALUE_ALIGN_CENTER = "center"; //$NON-NLS-1$
 
 	public static final String STYLE_PARAMETER_WIDTH = "width"; //$NON-NLS-1$
+	public static final String STYLE_PARAMETER_TOP = "top"; //$NON-NLS-1$
+	public static final String STYLE_PARAMETER_LEFT = "left"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_HEIGHT = "height"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_BACKGROUND_IMAGE = "background-image"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_MAX_HEIGHT = "max-height"; //$NON-NLS-1$	
+	public static final String STYLE_PARAMETER_ZINDEX = "z-index"; //$NON-NLS-1$	
 }
