@@ -54,6 +54,7 @@ import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
+import org.jboss.tools.smooks.ui.SmooksUIActivator;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
@@ -193,15 +194,6 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					ResourceConfigType resourceConfig = SmooksFactory.eINSTANCE
 							.createResourceConfigType();
 					resourceList.add(resourceConfig);
-					// Command addResourceConfigCommand = AddCommand
-					// .create(
-					// editingDomain,
-					// resourceList,
-					// SmooksPackage.eINSTANCE
-					// .getSmooksResourceListType_AbstractResourceConfig(),
-					// resourceConfig);
-					// addResourceConfigCommand.execute();
-					// resouceConfig.
 					resourceConfig
 							.setSelector(getSourceBeanSelectorString((AbstractStructuredDataModel) source));
 					setConnectionUsed(connection);
@@ -273,8 +265,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 										.addBindingTypeToParamType(
 												bindingsParam, jbean.getName(),
 												currentSelectorName, null, null);
-								UIUtils.assignConnectionPropertyToBinding(childConnection, binding,
-										new String[] { "property", "selector" });
+								UIUtils.assignConnectionPropertyToBinding(
+										childConnection, binding, new String[] {
+												"property", "selector" });
 								if (!jbean.isPrimitive()) {
 									analyzeStructuredDataModel(
 											resourceList,
@@ -530,7 +523,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			SmooksResourceListType resourceList,
 			ResourceConfigType resourceConfig, JavaBeanModel source,
 			JavaBeanModel target) {
-		List bindingList = this
+		List bindingList = SmooksModelUtils
 				.getBindingListFromResourceConfigType(resourceConfig);
 		if (bindingList == null)
 			return;
@@ -565,9 +558,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			}
 			if (sourceModel != null) {
 				MappingModel model = new MappingModel(sourceModel, targetModel);
-				UIUtils.assignBindingPropertyToMappingModel(binding, model, new Object[] {
-						SmooksModelUtils.ATTRIBUTE_PROPERTY,
-						SmooksModelUtils.ATTRIBUTE_SELECTOR });
+				UIUtils.assignBindingPropertyToMappingModel(binding, model,
+						new Object[] { SmooksModelUtils.ATTRIBUTE_PROPERTY,
+								SmooksModelUtils.ATTRIBUTE_SELECTOR });
 				mappingModelList.add(model);
 			}
 		}
@@ -783,7 +776,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			ResourceConfigType currentResourceConfigType,
 			ClassLoader classLoader) {
 		if (currentResourceConfigType != null) {
-			List bindingList = getBindingListFromResourceConfigType(currentResourceConfigType);
+			List bindingList = SmooksModelUtils
+					.getBindingListFromResourceConfigType(currentResourceConfigType);
 			if (bindingList == null)
 				return;
 			for (Iterator iterator = bindingList.iterator(); iterator.hasNext();) {
@@ -826,28 +820,28 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		}
 	}
 
-	protected List getBindingListFromResourceConfigType(
-			ResourceConfigType resourceConfig) {
-		List paramList = resourceConfig.getParam();
-		for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
-			ParamType param = (ParamType) iterator.next();
-			if ("bindings".equals(param.getName())) {
-				if (param.eContents().isEmpty())
-					continue;
-				List bindingList = (List) param.getMixed().get(
-						SmooksModelUtils.ELEMENT_BINDING, false);
-				return bindingList;
-			}
-		}
-		return null;
-	}
+	// protected List getBindingListFromResourceConfigType(
+	// ResourceConfigType resourceConfig) {
+	// List paramList = resourceConfig.getParam();
+	// for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
+	// ParamType param = (ParamType) iterator.next();
+	// if ("bindings".equals(param.getName())) {
+	// if (param.eContents().isEmpty())
+	// continue;
+	// List bindingList = (List) param.getMixed().get(
+	// SmooksModelUtils.ELEMENT_BINDING, false);
+	// return bindingList;
+	// }
+	// }
+	// return null;
+	// }
 
 	protected void buildSourceInputProperties(SmooksResourceListType listType,
 			JavaBeanModel beanModel, boolean rootIsWarning,
 			boolean rootIsError, ResourceConfigType currentResourceConfigType,
 			ClassLoader classLoader) {
 		if (currentResourceConfigType != null) {
-			List bindingList = this
+			List bindingList = SmooksModelUtils
 					.getBindingListFromResourceConfigType(currentResourceConfigType);
 			if (bindingList == null)
 				return;
