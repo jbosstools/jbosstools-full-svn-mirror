@@ -190,4 +190,11 @@
             targetId="org.jboss.tools.smooks.ui.viewerInitor.javabean">
       </commandProcessor>
    </extension>
+   
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.jboss.tools.smooks.ui.SmooksListenerRegister">
+      </startup>
+   </extension>
 </plugin>
