@@ -53,7 +53,7 @@ public class JavaModelConnectionResolveCommand extends ResolveCommand {
 	@Override
 	public void execute() throws Exception {
 		SmooksConfigurationFileGenerateContext context = getContext();
-		if(context == null) throw new RuntimeException("Smooks generated context is NULL");
+		if(context == null) throw new RuntimeException(Messages.getString("JavaModelConnectionResolveCommand.SmooksContextIsNull")); //$NON-NLS-1$
 		if(sourceModel != null && targetModel != null){
 			LineConnectionModel connectionModel = new LineConnectionModel();
 			connectionModel

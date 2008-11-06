@@ -72,13 +72,17 @@ import org.jboss.tools.smooks.utils.UIUtils;
 public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		ISourceModelAnalyzer, ITargetModelAnalyzer {
 
-	public static final String BEANPOPULATOR = "org.milyn.javabean.BeanPopulator";
+	public static final String BEANPOPULATOR = "org.milyn.javabean.BeanPopulator"; //$NON-NLS-1$
 
-	public static final String PRO_CLASS_NAME = "__pro_class_name_";
+	public static final String PRO_CLASS_NAME = "__pro_class_name_"; //$NON-NLS-1$
 
-	public static final Object PRO_PROJECT_NAME = "__pro_project_name_";
+	public static final Object PRO_PROJECT_NAME = "__pro_project_name_"; //$NON-NLS-1$
 
-	public static final String SPACE_STRING = " ";
+	public static final String SPACE_STRING = " "; //$NON-NLS-1$
+
+	public static final String COMPLEX_PRIX_START = "${"; //$NON-NLS-1$
+	
+	public static final String COMPLEX_PRIX_END = "}"; //$NON-NLS-1$
 
 	private static final int TARGET_DATA = 1;
 
@@ -205,11 +209,11 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 					ParamType beanIdParam = SmooksFactory.eINSTANCE
 							.createParamType();
-					beanIdParam.setName("beanId");
+					beanIdParam.setName(SmooksModelUtils.BEAN_ID);
 					if (beanId == null)
 						beanId = targetJavaBean.getName();
-					if (beanId.startsWith("${")) {
-						beanId = beanId.substring(2, beanId.indexOf("}"));
+					if (beanId.startsWith(COMPLEX_PRIX_START)) {
+						beanId = beanId.substring(2, beanId.indexOf(COMPLEX_PRIX_END));
 					}
 					SmooksModelUtils
 							.appendTextToSmooksType(beanIdParam, beanId);
@@ -217,14 +221,14 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 					ParamType beanClassParam = SmooksFactory.eINSTANCE
 							.createParamType();
-					beanClassParam.setName("beanClass");
+					beanClassParam.setName(SmooksModelUtils.BEAN_CLASS);
 					SmooksModelUtils.appendTextToSmooksType(beanClassParam,
 							targetJavaBean.getBeanClassString());
 					resourceConfig.getParam().add(beanClassParam);
 
 					ParamType bindingsParam = SmooksFactory.eINSTANCE
 							.createParamType();
-					bindingsParam.setName("bindings");
+					bindingsParam.setName(SmooksModelUtils.BINDINGS);
 					resourceConfig.getParam().add(bindingsParam);
 
 					// to dispatch the target's children (Order processing)
@@ -267,7 +271,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 												currentSelectorName, null, null);
 								UIUtils.assignConnectionPropertyToBinding(
 										childConnection, binding, new String[] {
-												"property", "selector" });
+												"property", "selector" }); //$NON-NLS-1$ //$NON-NLS-2$
 								if (!jbean.isPrimitive()) {
 									analyzeStructuredDataModel(
 											resourceList,
@@ -304,9 +308,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		if (sourcebean.getParent() == currentRootModel
 				.getReferenceEntityModel()) {
 			if (!currentbean.isPrimitive()) {
-				return "${" + currentbean.getName() + "}";
+				return COMPLEX_PRIX_START + currentbean.getName() + COMPLEX_PRIX_END;
 			} else {
-				return rootbean.getBeanClassString() + " "
+				return rootbean.getBeanClassString() + SPACE_STRING
 						+ sourcebean.getName();
 			}
 		} else {
@@ -319,7 +323,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				JavaBeanModel jbm = (JavaBeanModel) parent
 						.getReferenceEntityModel();
 				if (jbm != null)
-					returnString = jbm.getName() + " " + returnString;
+					returnString = jbm.getName() + SPACE_STRING + returnString;
 
 				JavaBeanModel jb = ((JavaBeanModel) parent
 						.getReferenceEntityModel()).getParent();
@@ -330,7 +334,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			if (returnString.equals(sourcebean.getName())) {
 				returnString = ((JavaBeanModel) parent
 						.getReferenceEntityModel()).getBeanClassString()
-						+ " " + returnString;
+						+ SPACE_STRING + returnString;
 			}
 			return returnString;
 		}
@@ -417,8 +421,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						boolean connectAuto = MessageDialog
 								.openQuestion(
 										displayParent,
-										"Connection Question",
-										"The root models don't be connected , it will make some errors with the generation config file contents.\nDo you wan to connect them?");
+										Messages.getString("JavaBeanAnalyzer.ConnectionQuestion"), //$NON-NLS-1$
+										Messages.getString("JavaBeanAnalyzer.ConnectRootQuestion")); //$NON-NLS-1$
 						if (connectAuto) {
 							// connect root model
 							LineConnectionModel connectionModel = new LineConnectionModel();
@@ -490,7 +494,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						targetName = targetClazz.getName();
 					}
 					String beanClass = SmooksModelUtils.getParmaText(
-							"beanClass", rc);
+							SmooksModelUtils.BEAN_CLASS, rc);
 					if (targetName != null
 							&& targetName.trim().equals(beanClass)) {
 						setSelectorIsUsed(sourceName);
@@ -509,7 +513,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	}
 
 	protected boolean isReferenceSelector(String selector) {
-		return (selector.startsWith("${") && selector.endsWith("}"));
+		return (selector.startsWith(COMPLEX_PRIX_START) && selector.endsWith(COMPLEX_PRIX_END));
 	}
 
 	protected String getBeanIdWithRawSelectorString(String selector) {
@@ -568,7 +572,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 	protected JavaBeanModel findModelWithSelectorString(String selector,
 			JavaBeanModel parentModel) {
-		String[] s = selector.trim().split(" ");
+		String[] s = selector.trim().split(SPACE_STRING);
 		String pname = parentModel.getName();
 		Class clazz = parentModel.getBeanClass();
 		JavaBeanModel current = parentModel;
@@ -590,12 +594,12 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	}
 
 	private String getDataSourceClass(GraphInformations info, int dataMode) {
-		String key = "sourceDataPath";
+		String key = "sourceDataPath"; //$NON-NLS-1$
 		if (dataMode == SOURCE_DATA) {
-			key = "sourceDataPath";
+			key = "sourceDataPath"; //$NON-NLS-1$
 		}
 		if (dataMode == TARGET_DATA) {
-			key = "targetDataPath";
+			key = "targetDataPath"; //$NON-NLS-1$
 		}
 
 		Params params = info.getParams();
@@ -660,7 +664,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		} else {
 			model = new JavaBeanModel(null, rootClassName);
 			model.setRootClassModel(true);
-			model.setError("Can't find the class : " + rootClassName);
+			model.setError(Messages.getString("JavaBeanAnalyzer.ClassNotExist") + rootClassName); //$NON-NLS-1$
 			model.setProperties(new ArrayList());
 			isError = true;
 		}
@@ -679,8 +683,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	private void setCollectionsInstanceClassName(JavaBeanModel model,
 			ResourceConfigType resourceConfig) {
 		if (Collection.class.isAssignableFrom(model.getBeanClass())) {
-			String instanceName = SmooksModelUtils.getParmaText("beanClass",
-					resourceConfig);
+			String instanceName = SmooksModelUtils.getParmaText(
+					SmooksModelUtils.BEAN_CLASS, resourceConfig);
 			if (instanceName != null) {
 				model.setBeanClassString(instanceName);
 			}
@@ -742,7 +746,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			return null;
 		Class rootClass = null;
 		if (rootClassName == null) {
-			rootClassName = SmooksModelUtils.getParmaText("beanClass", current);
+			rootClassName = SmooksModelUtils.getParmaText(
+					SmooksModelUtils.BEAN_CLASS, current);
 		}
 		if (rootClassName != null && loader != null) {
 			try {
@@ -762,7 +767,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		}
 		if (current != null) {
 			rootModel.setBeanClassString(SmooksModelUtils.getParmaText(
-					"beanClass", current));
+					SmooksModelUtils.BEAN_CLASS, current));
 			setSelectorIsUsed(rootClassName);
 			buildChildrenOfTargetInputModel(listType, rootModel, false,
 					rootIsError, current, loader);
@@ -806,15 +811,15 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		if (model == null) {
 			model = new JavaBeanModel(null, property);
 			parentModel.addProperty(model);
-			model.setError("don't exist");
+			model.setError(Messages.getString("JavaBeanAnalyzer.DontExist")); //$NON-NLS-1$
 		}
 
 		if (isReferenceSelector(selector)) {
 			selector = selector.substring(2, selector.length() - 1);
 			ResourceConfigType resourceConfig = findResourceConfigTypeWithSelector(
 					selector, listType);
-			model.setBeanClassString(SmooksModelUtils.getParmaText("beanClass",
-					resourceConfig));
+			model.setBeanClassString(SmooksModelUtils.getParmaText(
+					SmooksModelUtils.BEAN_CLASS, resourceConfig));
 			if (resourceConfig != null) {
 				this.buildChildrenOfTargetInputModel(listType, model, false,
 						false, resourceConfig, classLoader);
@@ -827,7 +832,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	// List paramList = resourceConfig.getParam();
 	// for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
 	// ParamType param = (ParamType) iterator.next();
-	// if ("bindings".equals(param.getName())) {
+	// if (SmooksModelUtils.BINDINGS.equals(param.getName())) {
 	// if (param.eContents().isEmpty())
 	// continue;
 	// List bindingList = (List) param.getMixed().get(
@@ -883,7 +888,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	protected void analyzeBindingSelector(String selector,
 			JavaBeanModel currentModel, SmooksResourceListType listType,
 			ClassLoader classLoader) {
-		if (selector.startsWith("${") && selector.endsWith("}")) {
+		if (selector.startsWith(COMPLEX_PRIX_START) && selector.endsWith(COMPLEX_PRIX_END)) {
 			// should get the bean properties
 			// memory out???
 			currentModel.getProperties();
@@ -909,7 +914,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				// something wrong
 				if (model == null) {
 					model = new JavaBeanModel(null, referenceSelector);
-					model.setError("don't exist");
+					model.setError(Messages.getString("JavaBeanAnalyzer.DontExist")); //$NON-NLS-1$
 					model.setProperties(new ArrayList());
 					setCollectionsInstanceClassName(model, resourceConfig);
 				}
@@ -938,7 +943,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						} else {
 							pm = new JavaBeanModel(null, property);
 							pm.setProperties(new ArrayList());
-							pm.setError("don't exist");
+							pm.setError(Messages.getString("JavaBeanAnalyzer.DontExist")); //$NON-NLS-1$
 							currentParent.addProperty(pm);
 						}
 						currentParent = pm;
@@ -954,7 +959,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		List list = config.getParam();
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			ParamType p = (ParamType) iterator.next();
-			if ("beanId".equals(p.getName())) {
+			if (SmooksModelUtils.BEAN_ID.equals(p.getName())) {
 				return SmooksModelUtils.getAnyTypeText(p);
 			}
 
