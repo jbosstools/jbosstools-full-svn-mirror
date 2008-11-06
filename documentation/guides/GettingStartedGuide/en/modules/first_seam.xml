@@ -82,7 +82,7 @@
           <property>Modify...</property>
         </emphasis> to configure your custom facets pattern.</para>
 
-      <para>On the hole appeared dialog allows to select the "features" you want to use in your
+      <para>On the whole appeared dialog allows to select the "features" you want to use in your
         project. Doing this <property>JBoss Developer Studio</property> setups the appropriate
         tooling for your project. Since JBoss Seam integrates all popular Java EE frameworks, you
         can select any combination of technologies from the list. Here, for the default
@@ -137,9 +137,8 @@
         setup window.</para>
       <itemizedlist>
         <listitem>
-          <para>Check <emphasis><property>Server Supplied JSF Implementation</property>.
-            </emphasis>We will use <ulink url="&seamlink;#addJSFCapab">JSF
-            implementation</ulink> that comes with JBoss server</para>
+          <para>Check <emphasis><property>Server Supplied JSF Implementation</property></emphasis>.
+            We will use <ulink url="&seamlink;#addJSFCapab">JSF implementation</ulink> that comes with JBoss server</para>
         </listitem>
         <listitem>
           <para>Click <emphasis>
