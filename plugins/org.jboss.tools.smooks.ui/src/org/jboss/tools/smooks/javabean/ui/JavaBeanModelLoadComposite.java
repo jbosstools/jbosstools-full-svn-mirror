@@ -74,7 +74,7 @@ public class JavaBeanModelLoadComposite extends Composite implements
 			// this.runnableContext = new
 			// ProgressMonitorDialog(parent.getShell());
 			if (this.runnableContext == null)
-				throw new Exception("Can't init IRunnableContent");
+				throw new Exception(Messages.getString("JavaBeanModelLoadComposite.InitRunnableContextException")); //$NON-NLS-1$
 		}
 
 		if (project != null) {
@@ -100,7 +100,7 @@ public class JavaBeanModelLoadComposite extends Composite implements
 		com.setLayout(layout);
 
 		Label classLabel = new Label(com, SWT.NULL);
-		classLabel.setText("Class Name:");
+		classLabel.setText(Messages.getString("JavaBeanModelLoadComposite.ClassNameText")); //$NON-NLS-1$
 
 		Composite classTextContainer = new Composite(com, SWT.NONE);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -124,7 +124,7 @@ public class JavaBeanModelLoadComposite extends Composite implements
 
 			classBrowseButton = new Button(classTextContainer, SWT.NONE);
 			classBrowseButton.addSelectionListener(this);
-			classBrowseButton.setText("Browse...");
+			classBrowseButton.setText(Messages.getString("JavaBeanModelLoadComposite.Browse")); //$NON-NLS-1$
 		}
 		return com;
 	}
@@ -194,8 +194,8 @@ public class JavaBeanModelLoadComposite extends Composite implements
 		try {
 			dialog = JavaUI.createTypeDialog(this.getShell(), runnableContext,
 					scope, IJavaElementSearchConstants.CONSIDER_CLASSES, false);
-			dialog.setMessage("Source Java Bean:");
-			dialog.setTitle("Search java bean");
+			dialog.setMessage(Messages.getString("JavaBeanModelLoadComposite.SourceJavaBean")); //$NON-NLS-1$
+			dialog.setTitle(Messages.getString("JavaBeanModelLoadComposite.SearchJavaType")); //$NON-NLS-1$
 
 			if (dialog.open() == Window.OK) {
 				Object[] results = dialog.getResult();
@@ -207,7 +207,7 @@ public class JavaBeanModelLoadComposite extends Composite implements
 							|| packageFullName.length() <= 0) {
 						classText.setText(((IType) result).getElementName());
 					} else {
-						classText.setText(packageFullName + "."
+						classText.setText(packageFullName + "." //$NON-NLS-1$
 								+ ((IType) result).getElementName());
 					}
 				}

@@ -53,7 +53,7 @@ public class SmooksResourceChangeListener implements IResourceChangeListener {
 
 	private void deleteFile(IPath path) {
 		final IPath path1 = path;
-		WorkspaceJob job = new WorkspaceJob("Delete file") {
+		WorkspaceJob job = new WorkspaceJob("Delete file") { //$NON-NLS-1$
 
 			public IStatus runInWorkspace(IProgressMonitor monitor)
 					throws CoreException {
@@ -71,7 +71,7 @@ public class SmooksResourceChangeListener implements IResourceChangeListener {
 	private void newFile(IPath path, IPath newPath) {
 		final IPath path1 = path;
 		final IPath newPath1 = newPath;
-		WorkspaceJob job = new WorkspaceJob("New file and delete old file") {
+		WorkspaceJob job = new WorkspaceJob("New file and delete old file") { //$NON-NLS-1$
 			public IStatus runInWorkspace(IProgressMonitor monitor)
 					throws CoreException {
 				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
@@ -81,9 +81,9 @@ public class SmooksResourceChangeListener implements IResourceChangeListener {
 							.getFile(newPath1);
 					if (newFile.exists()) {
 						if (MessageDialog.openQuestion(new Shell(Display
-								.getDefault()), "Cover", "File "
+								.getDefault()), Messages.getString("SmooksResourceChangeListener.CoverFile"), Messages.getString("SmooksResourceChangeListener.ConverFileMsg1") //$NON-NLS-1$ //$NON-NLS-2$
 								+ newFile.getFullPath()
-								+ " was exsiting , Cover the file?")) {
+								+ Messages.getString("SmooksResourceChangeListener.ConverFileMsg2"))) { //$NON-NLS-1$
 							newFile.setContents(file.getContents(), true, true,
 									monitor);
 						}
@@ -106,7 +106,7 @@ public class SmooksResourceChangeListener implements IResourceChangeListener {
 		public boolean visit(IResourceDelta delta) {
 			IResource res = delta.getResource();
 			String fileExtension = res.getFileExtension();
-			if (!"smooks".equals(fileExtension)) {
+			if (!Messages.getString("SmooksResourceChangeListener.SmooksFileExtensionName").equals(fileExtension)) { //$NON-NLS-1$
 				return true;
 			}
 			int flags = delta.getFlags();
@@ -114,25 +114,25 @@ public class SmooksResourceChangeListener implements IResourceChangeListener {
 			case IResourceDelta.ADDED:
 				if (flags == IResourceDelta.MOVED_FROM) {
 					IPath path = delta.getMovedFromPath();
-					String fileName = "";
+					String fileName = ""; //$NON-NLS-1$
 					if (path != null) {
 						fileName = path.lastSegment();
-						int dotIndex = fileName.lastIndexOf(".");
+						int dotIndex = fileName.lastIndexOf("."); //$NON-NLS-1$
 						if (dotIndex != -1) {
 							fileExtension = fileName.substring(dotIndex + 1,
 									fileName.length());
 						}
-						if (!"smooks".equals(fileExtension)) {
+						if (!Messages.getString("SmooksResourceChangeListener.SmooksFileExtensionName").equals(fileExtension)) { //$NON-NLS-1$
 							return true;
 						}
-						fileName += ".graph";
+						fileName += Messages.getString("SmooksResourceChangeListener.SmooksGraphFileExtensionName"); //$NON-NLS-1$
 						path = path.removeLastSegments(1);
 						path = path.append(fileName);
 					}
 
 					IPath newPath = res.getFullPath();
 					fileName = newPath.lastSegment();
-					fileName += ".graph";
+					fileName += Messages.getString("SmooksResourceChangeListener.SmooksGraphFileExtensionName"); //$NON-NLS-1$
 					newPath = newPath.removeLastSegments(1).append(fileName);
 					newFile(path, newPath);
 				}
@@ -158,7 +158,7 @@ public class SmooksResourceChangeListener implements IResourceChangeListener {
 				}
 				IPath path = res.getFullPath();
 				String fileName = path.lastSegment();
-				fileName += ".graph";
+				fileName += Messages.getString("SmooksResourceChangeListener.SmooksGraphFileExtensionName"); //$NON-NLS-1$
 				path = path.removeLastSegments(1).append(fileName);
 				deleteFile(path);
 				break;

@@ -68,7 +68,7 @@ public class ConnectionPropertySection extends AbstractSmooksPropertySection {
 		pgd.grabExcessVerticalSpace = true;
 		rootParent.setLayoutData(pgd);
 		Section section = factory.createSection(parent, Section.TITLE_BAR);
-		section.setText("Mapping Properties");
+		section.setText(Messages.getString("ConnectionPropertySection.ConnectionPropertiesSecionText")); //$NON-NLS-1$
 
 		Composite mainComposite = factory.createComposite(section);
 
@@ -76,7 +76,7 @@ public class ConnectionPropertySection extends AbstractSmooksPropertySection {
 		gridLayout.numColumns = 2;
 		mainComposite.setLayout(gridLayout);
 		tableViewer = new TableViewer(mainComposite);
-		tableViewer.setColumnProperties(new String[] { "name", "value" });
+		tableViewer.setColumnProperties(new String[] { "name", "value" }); //$NON-NLS-1$ //$NON-NLS-2$
 		tableViewer.setCellEditors(new CellEditor[] {
 				new TextCellEditor(tableViewer.getTable()),
 				new TextCellEditor(tableViewer.getTable()) });
@@ -89,9 +89,9 @@ public class ConnectionPropertySection extends AbstractSmooksPropertySection {
 
 			public Object getValue(Object element, String property) {
 				if (element instanceof PropertyModel) {
-					if (property.equals("name"))
+					if (property.equals("name")) //$NON-NLS-1$
 						return ((PropertyModel) element).getName();
-					if (property.equals("value"))
+					if (property.equals("value")) //$NON-NLS-1$
 						return ((PropertyModel) element).getValue();
 				}
 				return element;
@@ -104,11 +104,11 @@ public class ConnectionPropertySection extends AbstractSmooksPropertySection {
 
 				}
 				if (element instanceof PropertyModel && value instanceof String) {
-					if (property.equals("name")) {
+					if (property.equals("name")) { //$NON-NLS-1$
 						((PropertyModel) element).setName((String) value);
 						fireDirty();
 					}
-					if (property.equals("value")) {
+					if (property.equals("value")) { //$NON-NLS-1$
 						((PropertyModel) element).setValue((String) value);
 						fireDirty();
 					}
@@ -157,11 +157,11 @@ public class ConnectionPropertySection extends AbstractSmooksPropertySection {
 
 		});
 		nameColumn.getColumn().setWidth(100);
-		nameColumn.getColumn().setText("Name");
+		nameColumn.getColumn().setText(Messages.getString("ConnectionPropertySection.NameColumnText")); //$NON-NLS-1$
 		TableViewerColumn valueColumn = new TableViewerColumn(tableViewer,
 				SWT.NONE);
 		valueColumn.getColumn().setWidth(100);
-		valueColumn.getColumn().setText("Value");
+		valueColumn.getColumn().setText(Messages.getString("ConnectionPropertySection.ValueColumnText")); //$NON-NLS-1$
 		valueColumn.setLabelProvider(new CellLabelProvider() {
 
 			public void update(ViewerCell cell) {
@@ -182,7 +182,7 @@ public class ConnectionPropertySection extends AbstractSmooksPropertySection {
 		GridLayout gl = new GridLayout();
 		buttonComposite.setLayout(gl);
 
-		Button button1 = factory.createButton(buttonComposite, "New  ",
+		Button button1 = factory.createButton(buttonComposite, Messages.getString("ConnectionPropertySection.NewButtonText"), //$NON-NLS-1$
 				SWT.NONE);
 		button1.addSelectionListener(new SelectionListener() {
 
@@ -192,8 +192,8 @@ public class ConnectionPropertySection extends AbstractSmooksPropertySection {
 
 			public void widgetSelected(SelectionEvent e) {
 				PropertyModel model = new PropertyModel();
-				model.setName("property");
-				model.setValue("value");
+				model.setName("property"); //$NON-NLS-1$
+				model.setValue("value"); //$NON-NLS-1$
 
 				Object editPart = ((IStructuredSelection) getSelection())
 						.getFirstElement();
@@ -214,7 +214,7 @@ public class ConnectionPropertySection extends AbstractSmooksPropertySection {
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		button1.setLayoutData(gd);
 
-		Button button2 = factory.createButton(buttonComposite, "Delete  ",
+		Button button2 = factory.createButton(buttonComposite, Messages.getString("ConnectionPropertySection.DeleteButtonText"), //$NON-NLS-1$
 				SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		button2.setLayoutData(gd);

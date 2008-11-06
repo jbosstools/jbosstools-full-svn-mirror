@@ -38,7 +38,7 @@ public class JavaBeanModel implements IValidatable {
 
 	private Object error = null;
 
-	private String name = "";
+	private String name = ""; //$NON-NLS-1$
 
 	private Class typeRef = null;
 
@@ -92,11 +92,11 @@ public class JavaBeanModel implements IValidatable {
 		}
 		Class clazz = this.getBeanClass();
 		if (clazz == null)
-			return "<null>";
+			return "<null>"; //$NON-NLS-1$
 
 		if (clazz.isArray()) {
 			String s = clazz.getComponentType().getName();
-			return s + "[]";
+			return s + "[]"; //$NON-NLS-1$
 		}
 
 		return clazz.getName();
@@ -301,7 +301,7 @@ public class JavaBeanModel implements IValidatable {
 
 			for (int i = 0; i < pds.length; i++) {
 				PropertyDescriptor pd = pds[i];
-				if ("class".equals(pd.getName()))
+				if ("class".equals(pd.getName())) //$NON-NLS-1$
 					continue;
 				JavaBeanModel jbm = new JavaBeanModel(pd.getPropertyType(), pd
 						.getName(), pd, beanClass, this.lazyLoadProperties);
@@ -356,16 +356,16 @@ public class JavaBeanModel implements IValidatable {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		StringBuffer buffer = new StringBuffer("JavaBean Name : " + name);
+		StringBuffer buffer = new StringBuffer(Messages.getString("JavaBeanModel.JavaBeanName") + name); //$NON-NLS-1$
 		if (beanClass != null)
-			buffer.append(";Class : " + this.beanClass.getName());
+			buffer.append(Messages.getString("JavaBeanModel.ClassIs") + this.beanClass.getName()); //$NON-NLS-1$
 		if (this.properties != null) {
-			buffer.append("\n");
+			buffer.append("\n"); //$NON-NLS-1$
 			for (Iterator iterator = properties.iterator(); iterator.hasNext();) {
 				JavaBeanModel child = (JavaBeanModel) iterator.next();
-				buffer.append("\t");
+				buffer.append("\t"); //$NON-NLS-1$
 				buffer.append(child.toString());
-				buffer.append("\n");
+				buffer.append("\n"); //$NON-NLS-1$
 			}
 		}
 		return buffer.toString();
