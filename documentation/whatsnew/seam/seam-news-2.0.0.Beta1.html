@@ -18,26 +18,9 @@
   <tr>
     <td colspan="2">
       <hr/>
-      <h3>Wizards</h3>
+      <h3>General</h3>
 	<hr/>
     </td>
-  </tr>
-  <tr>
-    <td valign="top" align="right">
-       <a name="itemnam2e" id="itemname2"></a><b>Uppercase warning</b>
-    </td>
-    <td width="70%" valign="top">
-    <p>The Seam wizard now warns if you create a project with first uppercase letter because of a tricky <a href="https://jira.jboss.org/jira/browse/JBIDE-2190">set of bugs</a> in JBoss AS/Seam/JSF could cause deployment to fail.</p   
-    <p><img src="../images/seamfacet_warning.png"/></p>  
-
-    </td>
-  </tr>
-
-  <tr>
-    <td colspan="2"><hr />
-    </td>
-  </tr>
-
   <tr>
     <td valign="top" align="right">
        <a name="itemnam2e" id="itemname2"></a><b>(Basic) Seam 2.1 support</b>
@@ -58,8 +41,9 @@
        <a name="itemnam2e" id="itemname2"></a><b>Seam 2.0 no longer marked as Technology Preview</b>
     </td>
     <td width="70%" valign="top">
-    <p>Seam 2.0 is now fully supported in JBDS thus we do no longer need to mark the support technology preview.</p>  
+    <p>Seam 2.0 is no longer a technology preview, it is fully supported.</p>  
     </td>
+  </tr>
   </tr>
 
   <tr>
@@ -69,13 +53,35 @@
 
   <tr>
     <td valign="top" align="right">
-       <a name="itemnam2e" id="itemname2"></a><b>Less aggressive scanning</b>
+       <a name="itemnam2e" id="itemname2"></a><b>More efficient scanning</b>
     </td>
     <td width="70%" valign="top">
     <p>Previous releases scanned all folders of a project for Seam resources, sometime causing unwanted sideeffects (duplicate components, out of sync resources etc.).</p>
     <p>Seam now only scans Java source directories, project classpath and WTP projects WEB-INF directory.</p>
     <p>Besides stopping giving bad errors/warnings it should also give a decent speed up for large projects since only a smaller focused set of resources will be scanned.</p>
     
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Wizards</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Selective Generate Entities</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>.</p>
+
+    <p>Seam Generate Entities now allow you to select which catalog/schemas/tables you want to reverse engineer.</p>
+
+    <p><img src="../images/selective_seam_generate_entities.png"/></p>    
+
     </td>
   </tr>
 
@@ -103,6 +109,26 @@
 
   <tr>
     <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Uppercase warning</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>The Seam wizard now warns if you create a project with first uppercase letter because of a tricky <a href="https://jira.jboss.org/jira/browse/JBIDE-2190">set of bugs</a> in JBoss AS/Seam/JSF could cause deployment to fail.</p   
+    <p><img src="../images/seamfacet_warning.png"/></p>  
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Editors</h3>
+	<hr/>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td valign="top" align="right">
        <a name="itemnam2e" id="itemname2"></a><b>Enhanced pages.xml editor</b>
     </td>
     <td width="70%" valign="top">
@@ -121,26 +147,6 @@
     </td>
   </tr>
 
-  <tr>
-    <td valign="top" align="right">
-       <a name="itemnam2e" id="itemname2"></a><b>Selective Generate Entities</b>
-    </td>
-    <td width="70%" valign="top">
-    <p>.</p>
-
-    <p>Seam Generate Entities now allow you to select which catalog/schemas/tables you want to reverse engineer.</p>
-
-    <p><img src="../images/selective_seam_generate_entities.png"/></p>    
-
-    </td>
-  </tr>
-
-
-
-  <tr>
-    <td colspan="2"><hr />
-    </td>
-  </tr>
 
   <tr>
     <td valign="top" align="right">
