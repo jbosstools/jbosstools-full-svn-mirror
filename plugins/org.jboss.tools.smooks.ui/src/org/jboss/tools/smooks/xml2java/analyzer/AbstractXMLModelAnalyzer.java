@@ -18,6 +18,8 @@ import java.util.List;
 
 import org.dom4j.DocumentException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
 import org.jboss.tools.smooks.analyzer.ISourceModelAnalyzer;
 import org.jboss.tools.smooks.analyzer.ITargetModelAnalyzer;
 import org.jboss.tools.smooks.graphical.GraphInformations;
@@ -31,11 +33,16 @@ import org.jboss.tools.smooks.xml.model.XMLObjectAnalyzer;
  * @author Dart Peng<br>
  *         Date : Sep 23, 2008
  */
-public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer , ITargetModelAnalyzer {
+public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
+		ITargetModelAnalyzer {
+
+	public static final String FILE_PRIX = "File:/";
+
+	public static final String WORKSPACE_PRIX = "Workspace:/";
 
 	private String parmaKey = "";
-	
-	public AbstractXMLModelAnalyzer(String paramKey){
+
+	public AbstractXMLModelAnalyzer(String paramKey) {
 		this.parmaKey = paramKey;
 	}
 
@@ -56,10 +63,29 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer , ITargetM
 			}
 		}
 		if (path == null) {
-			// TODO tell user the filepath can't find or not ?
 			return null;
-//			throw new InvocationTargetException(new Exception(
-//					"xml file path can't find in the graphInfo file"));
+			// throw new InvocationTargetException(new Exception(
+			// "xml file can't be found in the .graph file."));
+		}
+		int index = path.indexOf(FILE_PRIX);
+		if (index != -1) {
+			path = path.substring(index + FILE_PRIX.length(), path.length());
+		} else {
+			index = path.indexOf(WORKSPACE_PRIX);
+			if (index != -1) {
+				path = path.substring(index + WORKSPACE_PRIX.length(), path
+						.length());
+				Path wpath = new Path(path);
+				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
+						wpath);
+				if (file.exists()) {
+					path = file.getLocation().toOSString();
+				} else {
+					throw new InvocationTargetException(new Exception("file dosen't exist" + path + " on the workspace."));
+				}
+			}else{
+				throw new InvocationTargetException(new Exception("Illegal file path : " + path + "."));
+			}
 		}
 		XMLObjectAnalyzer objectBuilder = new XMLObjectAnalyzer();
 		try {
@@ -76,6 +102,6 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer , ITargetM
 	public Object buildTargetInputObjects(GraphInformations graphInfo,
 			SmooksResourceListType listType, IFile sourceFile)
 			throws InvocationTargetException {
-		return buildSourceInputObjects(graphInfo,listType,sourceFile);
+		return buildSourceInputObjects(graphInfo, listType, sourceFile);
 	}
 }
