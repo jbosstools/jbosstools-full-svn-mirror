@@ -46,11 +46,11 @@ public class JavaBeanConfigWizardPage extends WizardPage implements
 	}
 
 	public JavaBeanConfigWizardPage(IJavaProject selection) {
-		super("beansearchwizardpage");
+		super("beansearchwizardpage"); //$NON-NLS-1$
 		this.project = selection;
 		setPageComplete(true);
-		setTitle("JavaBean Class selection page");
-		setDescription("Select the JavaBean class");
+		setTitle(Messages.getString("JavaBeanConfigWizardPage.JavaBeanSelectionDialogTitle")); //$NON-NLS-1$
+		setDescription(Messages.getString("JavaBeanConfigWizardPage.JavaBeanSelectionDialogDesc")); //$NON-NLS-1$
 	}
 	
 	protected void initilize() {
@@ -111,7 +111,7 @@ public class JavaBeanConfigWizardPage extends WizardPage implements
 	protected void updatePage() {
 		String error = null;
 		if (project == null) {
-			error = "Please select a Java project.";
+			error = Messages.getString("JavaBeanConfigWizardPage.JavaBeanSelectionDialogErrorMsg"); //$NON-NLS-1$
 		}
 		setPageComplete(error == null);
 		this.setErrorMessage(error);

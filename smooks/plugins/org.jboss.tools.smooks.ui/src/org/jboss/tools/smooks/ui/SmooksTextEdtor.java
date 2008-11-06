@@ -44,7 +44,7 @@ public class SmooksTextEdtor extends TextEditor {
 		gd.horizontalSpan = 2;
 		noticeLabel.setLayoutData(gd);
 		noticeLabel
-				.setText("Because there occurs some error during parse/load the Smooks configuration file , the graphical editor can't be opened.Error : ");
+				.setText(Messages.getString("SmooksTextEdtor.NotifyTitleMessage")); //$NON-NLS-1$
 
 		GridLayout gl = new GridLayout();
 		gl.numColumns = 2;
@@ -58,7 +58,7 @@ public class SmooksTextEdtor extends TextEditor {
 
 	    Label messageLabel = new Label(errorComposite, SWT.NONE);
 	    String errorMessage = error.getLocalizedMessage();
-	    if(errorMessage == null ) errorMessage = "unknown error happen";
+	    if(errorMessage == null ) errorMessage = Messages.getString("SmooksTextEdtor.UnKnownErrorMessage"); //$NON-NLS-1$
 		messageLabel.setText(errorMessage);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		messageLabel.setLayoutData(gd);
