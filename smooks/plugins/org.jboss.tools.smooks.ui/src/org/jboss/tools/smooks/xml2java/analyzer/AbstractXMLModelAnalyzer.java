@@ -45,6 +45,30 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 	public AbstractXMLModelAnalyzer(String paramKey) {
 		this.parmaKey = paramKey;
 	}
+	
+	public static String parseFilePath(String path) throws InvocationTargetException{
+		int index = path.indexOf(FILE_PRIX);
+		if (index != -1) {
+			path = path.substring(index + FILE_PRIX.length(), path.length());
+		} else {
+			index = path.indexOf(WORKSPACE_PRIX);
+			if (index != -1) {
+				path = path.substring(index + WORKSPACE_PRIX.length(), path
+						.length());
+				Path wpath = new Path(path);
+				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
+						wpath);
+				if (file.exists()) {
+					path = file.getLocation().toOSString();
+				} else {
+					throw new InvocationTargetException(new Exception("file dosen't exist" + path + " on the workspace."));
+				}
+			}else{
+				throw new InvocationTargetException(new Exception("Illegal file path : " + path + "."));
+			}
+		}
+		return path;
+	}
 
 	public Object buildSourceInputObjects(GraphInformations graphInfo,
 			SmooksResourceListType listType, IFile sourceFile)
@@ -67,26 +91,7 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 			// throw new InvocationTargetException(new Exception(
 			// "xml file can't be found in the .graph file."));
 		}
-		int index = path.indexOf(FILE_PRIX);
-		if (index != -1) {
-			path = path.substring(index + FILE_PRIX.length(), path.length());
-		} else {
-			index = path.indexOf(WORKSPACE_PRIX);
-			if (index != -1) {
-				path = path.substring(index + WORKSPACE_PRIX.length(), path
-						.length());
-				Path wpath = new Path(path);
-				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
-						wpath);
-				if (file.exists()) {
-					path = file.getLocation().toOSString();
-				} else {
-					throw new InvocationTargetException(new Exception("file dosen't exist" + path + " on the workspace."));
-				}
-			}else{
-				throw new InvocationTargetException(new Exception("Illegal file path : " + path + "."));
-			}
-		}
+		path = parseFilePath(path);
 		XMLObjectAnalyzer objectBuilder = new XMLObjectAnalyzer();
 		try {
 			FileInputStream stream = new FileInputStream(path);
