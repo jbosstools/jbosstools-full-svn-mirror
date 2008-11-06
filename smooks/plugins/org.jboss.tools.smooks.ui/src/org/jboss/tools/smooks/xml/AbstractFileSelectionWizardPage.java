@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jboss.tools.smooks.xml2java.analyzer.AbstractXMLModelAnalyzer;
 
 /**
  * 
@@ -153,7 +154,8 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		// dialog.setInitialSelections(selectedResources);
 		if (files.length > 0) {
 			IFile file = files[0];
-			String s = file.getLocation().toOSString();
+			String s = file.getFullPath().toPortableString();
+			s = AbstractXMLModelAnalyzer.WORKSPACE_PRIX + s;
 			relationT.setText(s);
 		}
 	}
@@ -276,6 +278,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		FileDialog dialog = new FileDialog(this.getShell());
 		String path = dialog.open();
 		if (path != null) {
+			path = AbstractXMLModelAnalyzer.FILE_PRIX + path;
 			relationText.setText(path);
 		} 
 	}
@@ -286,10 +289,10 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		if (text == null || "".equals(text))
 			error = "Please Select a file";
 		
-		File tempFile = new File(text);
-		if(!tempFile.exists()){
-			error = "Can't find the file , please select another one.";
-		}
+//		File tempFile = new File(text);
+//		if(!tempFile.exists()){
+//			error = "Can't find the file , please select another one.";
+//		}
 		
 //		if (!reasourceLoaded) {
 //			error = "Resource must be loaded";
