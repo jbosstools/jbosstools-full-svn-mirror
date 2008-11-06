@@ -60,13 +60,13 @@ public class SmooksFileBuilder {
 
 		if (analyzer == null) {
 			throw new SmooksAnalyzerException(
-					"can't find the Analyzer for sourceID : "
+					Messages.getString("SmooksFileBuilder.NullAnalyzer1") //$NON-NLS-1$
 							+ context.getSourceDataTypeID()
-							+ " and the targetID : "
+							+ Messages.getString("SmooksFileBuilder.NullAnalyzer2") //$NON-NLS-1$
 							+ context.getTargetDataTypeID());
 		}
 		if (smooksResource == null) {
-			throw new SmooksAnalyzerException("SmooksResource is NULL");
+			throw new SmooksAnalyzerException(Messages.getString("SmooksFileBuilder.ResourceIsNull")); //$NON-NLS-1$
 		}
 		DocumentRoot documentRoot = (DocumentRoot) smooksResource.getContents()
 				.get(0);

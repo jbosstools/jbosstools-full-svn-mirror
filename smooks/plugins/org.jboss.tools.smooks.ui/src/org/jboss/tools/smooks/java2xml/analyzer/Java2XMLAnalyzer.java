@@ -58,7 +58,7 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 		// TODO will modify soon
 		if(true){
 			Shell shell = context.getShell();
-			MessageDialog.openWarning(shell, "Warning", "The java2xml can't be generate to config file currently.");
+			MessageDialog.openWarning(shell, Messages.getString("Java2XMLAnalyzer.Warning"), Messages.getString("Java2XMLAnalyzer.CantGenerateConfig")); //$NON-NLS-1$ //$NON-NLS-2$
 			return;
 		}
 		
@@ -77,7 +77,7 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 		}
 
 		if (root == null)
-			throw new SmooksAnalyzerException("can't find the root element");
+			throw new SmooksAnalyzerException(Messages.getString("Java2XMLAnalyzer.CantFindRoot")); //$NON-NLS-1$
 		Document document = DocumentHelper.createDocument();
 		Element rootElement = generateXMLContents(rootModel, root);
 		document.setRootElement(rootElement);
@@ -156,7 +156,7 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType, Object sourceObject,
 			Object targetObject) {
-		throw new RuntimeException("The Smooks editor doesn't support to parse the Java2XML config file currently.");
+		throw new RuntimeException(Messages.getString("Java2XMLAnalyzer.DontSupportJ2X")); //$NON-NLS-1$
 	}
 
 	protected String getTheJavaBeanString(JavaBeanModel currentModel) {
@@ -165,11 +165,11 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 		while (parent != null ) {
 			String pn = parent.getName();
 			if (pn != null) {
-				name = parent.getName() + "." + name;
+				name = parent.getName() + "." + name; //$NON-NLS-1$
 			}
 			parent = parent.getParent();
 		}
-		return "${" + name + "}";
+		return "${" + name + "}"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	public DesignTimeAnalyzeResult[] analyzeGraphModel(

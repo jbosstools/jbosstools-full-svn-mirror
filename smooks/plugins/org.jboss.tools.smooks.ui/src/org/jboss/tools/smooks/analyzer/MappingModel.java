@@ -40,13 +40,13 @@ public class MappingModel {
 	public String toString(){
 		StringBuffer buffer = new StringBuffer();
 		if(source != null)
-			buffer.append("Source : " + source);
+			buffer.append(Messages.getString("MappingModel.Source") + source); //$NON-NLS-1$
 		else
-			buffer.append("Source is NULL ");
+			buffer.append(Messages.getString("MappingModel.SourceIsNull")); //$NON-NLS-1$
 		if(target != null)
-			buffer.append(";Target : " + target);
+			buffer.append(Messages.getString("MappingModel.Target") + target); //$NON-NLS-1$
 		else
-			buffer.append(";Target is NULL ");
+			buffer.append(Messages.getString("MappingModel.TargetIsNull")); //$NON-NLS-1$
 		return buffer.toString();
 	}
 
