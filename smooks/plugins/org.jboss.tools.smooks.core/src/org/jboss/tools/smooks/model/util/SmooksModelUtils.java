@@ -30,7 +30,6 @@ import org.jboss.tools.smooks.model.SmooksPackage;
  */
 
 public class SmooksModelUtils {
-	
 	public static final String BEAN_CLASS = "beanClass";
 	
 	public static final String BEAN_ID = "beanId";
