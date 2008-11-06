@@ -227,7 +227,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			visualElements.setCaption(caption);
 		}
 
-		if (true || sourceElements.hasTableHeader()) {
+		if (sourceElements.hasTableHeader()) {
 			section = visualDocument.createElement(HTML.TAG_THEAD);
 			row = visualDocument.createElement(HTML.TAG_TR);
 			section.appendChild(row);
@@ -247,7 +247,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			visualElements.setTableHeader(section);
 		}
 
-		if (true || sourceElements.hasTableFooter()) {
+		if (sourceElements.hasTableFooter()) {
 			section = visualDocument.createElement(HTML.TAG_TFOOT);
 			row = visualDocument.createElement(HTML.TAG_TR);
 			section.appendChild(row);
@@ -265,7 +265,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			visualElements.setTableFooter(section);
 		}
 
-		if (true || sourceElements.hasColumnsHeader()) {
+		if (sourceElements.hasColumnsHeader()) {
 			section = visualDocument.createElement(HTML.TAG_THEAD);
 			row = visualDocument.createElement(HTML.TAG_TR);
 			section.appendChild(row);
@@ -274,7 +274,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			visualElements.setColumnsHeader(section);
 		}
 
-		if (true || sourceElements.hasColumnsFooter()) {
+		if (sourceElements.hasColumnsFooter()) {
 			section = visualDocument.createElement(HTML.TAG_TFOOT);
 			row = visualDocument.createElement(HTML.TAG_TR);
 			section.appendChild(row);
@@ -283,7 +283,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			visualElements.setColumnsFooter(section);
 		}
 
-		if (true || sourceElements.hasBodySection()) {
+		if (sourceElements.hasBodySection()) {
 			section = visualDocument.createElement(HTML.TAG_TBODY);
 			row = visualDocument.createElement(HTML.TAG_TR);
 			section.appendChild(row);
