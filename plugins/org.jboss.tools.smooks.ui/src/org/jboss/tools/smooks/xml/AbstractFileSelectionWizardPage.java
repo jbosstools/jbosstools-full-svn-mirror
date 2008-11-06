@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jboss.tools.smooks.utils.UIUtils;
 import org.jboss.tools.smooks.xml2java.analyzer.AbstractXMLModelAnalyzer;
 
 /**
@@ -50,9 +51,11 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 
 	public Object getReturnValue() {
 		try {
-			returnObject = this.loadedTheObject(filePath);
+			String path = getFilePath();
+			path = AbstractXMLModelAnalyzer.parseFilePath(path);
+			returnObject = this.loadedTheObject(path);
 		} catch (Exception e) {
-			e.printStackTrace();
+			UIUtils.showErrorDialog(getShell(), UIUtils.createErrorStatus(e));
 		}
 		return returnObject;
 	}
