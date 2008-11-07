@@ -28,6 +28,7 @@ import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
+import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
 import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.ResourceConfigType;
@@ -116,7 +117,7 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 		ParamType typeParam = SmooksFactory.eINSTANCE.createParamType();
 		typeParam.setName(SmooksModelConstants.STREAM_FILTER_TYPE);
 		transformType.getParam().add(typeParam);
-		
+
 		return transformType;
 	}
 
@@ -178,7 +179,7 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 	private void setTransformType(String type) {
 		if (this.transformType != null) {
 			SmooksModelUtils.setTransformType(transformType, type);
-			((SmooksFormEditor)getEditor()).fireEditorDirty(true);
+			((SmooksFormEditor) getEditor()).fireEditorDirty(true);
 		}
 	}
 

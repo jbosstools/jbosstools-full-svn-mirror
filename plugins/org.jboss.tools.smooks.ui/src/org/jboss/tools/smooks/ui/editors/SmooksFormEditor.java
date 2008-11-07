@@ -34,6 +34,7 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
+import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelBuilder;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
 import org.jboss.tools.smooks.model.DocumentRoot;
@@ -52,6 +53,7 @@ public class SmooksFormEditor extends FormEditor implements
 		ITabbedPropertySheetPageContributor {
 
 	SmooksGraphicalFormPage graphicalPage = null;
+
 	public SmooksGraphicalFormPage getGraphicalPage() {
 		return graphicalPage;
 	}
@@ -98,12 +100,17 @@ public class SmooksFormEditor extends FormEditor implements
 					"Mapping");
 			int index = this.addPage(this.graphicalPage);
 			this.setPageText(index, "Graph");
-			normalPage = new SmooksNormalContentEditFormPage(this, "configuration",
-					"Configuration", null);
+			normalPage = new SmooksNormalContentEditFormPage(this,
+					"configuration", "Configuration", null);
 			index = this.addPage(normalPage);
 			setPageText(index, "Configuration");
 			// Set a default NormalPacakge to Normal Page
-			this.refreshNormalPage(Collections.EMPTY_LIST);
+			MappingResourceConfigList mappingResourceConfig = graphicalPage
+					.getMappingResourceConfigList();
+			if (mappingResourceConfig != null) {
+				refreshNormalPage(mappingResourceConfig
+						.getRelationgResourceConfigList());
+			}
 			if (onlyShowTextEditor) {
 				removeGraphicalFormPage();
 			}
@@ -210,8 +217,8 @@ public class SmooksFormEditor extends FormEditor implements
 
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		if(onlyShowTextEditor){
-			if(textEdtior != null){
+		if (onlyShowTextEditor) {
+			if (textEdtior != null) {
 				textEdtior.doSave(monitor);
 				fireEditorDirty(false);
 				return;
@@ -228,8 +235,8 @@ public class SmooksFormEditor extends FormEditor implements
 
 	@Override
 	public void doSaveAs() {
-		if(onlyShowTextEditor){
-			if(textEdtior != null){
+		if (onlyShowTextEditor) {
+			if (textEdtior != null) {
 				textEdtior.doSaveAs();
 			}
 		}
