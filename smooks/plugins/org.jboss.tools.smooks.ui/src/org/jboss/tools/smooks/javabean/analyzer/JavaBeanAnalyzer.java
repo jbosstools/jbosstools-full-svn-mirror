@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.javabean.analyzer;
 
+import java.awt.event.InvocationEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -81,7 +82,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	public static final String SPACE_STRING = " "; //$NON-NLS-1$
 
 	public static final String COMPLEX_PRIX_START = "${"; //$NON-NLS-1$
-	
+
 	public static final String COMPLEX_PRIX_END = "}"; //$NON-NLS-1$
 
 	private static final int TARGET_DATA = 1;
@@ -213,7 +214,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					if (beanId == null)
 						beanId = targetJavaBean.getName();
 					if (beanId.startsWith(COMPLEX_PRIX_START)) {
-						beanId = beanId.substring(2, beanId.indexOf(COMPLEX_PRIX_END));
+						beanId = beanId.substring(2, beanId
+								.indexOf(COMPLEX_PRIX_END));
 					}
 					SmooksModelUtils
 							.appendTextToSmooksType(beanIdParam, beanId);
@@ -308,7 +310,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		if (sourcebean.getParent() == currentRootModel
 				.getReferenceEntityModel()) {
 			if (!currentbean.isPrimitive()) {
-				return COMPLEX_PRIX_START + currentbean.getName() + COMPLEX_PRIX_END;
+				return COMPLEX_PRIX_START + currentbean.getName()
+						+ COMPLEX_PRIX_END;
 			} else {
 				return rootbean.getBeanClassString() + SPACE_STRING
 						+ sourcebean.getName();
@@ -421,8 +424,10 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						boolean connectAuto = MessageDialog
 								.openQuestion(
 										displayParent,
-										Messages.getString("JavaBeanAnalyzer.ConnectionQuestion"), //$NON-NLS-1$
-										Messages.getString("JavaBeanAnalyzer.ConnectRootQuestion")); //$NON-NLS-1$
+										Messages
+												.getString("JavaBeanAnalyzer.ConnectionQuestion"), //$NON-NLS-1$
+										Messages
+												.getString("JavaBeanAnalyzer.ConnectRootQuestion")); //$NON-NLS-1$
 						if (connectAuto) {
 							// connect root model
 							LineConnectionModel connectionModel = new LineConnectionModel();
@@ -469,7 +474,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		}
 		if (!(sourceObject instanceof JavaBeanModel)
 				|| !(targetObject instanceof JavaBeanModel)) {
-			return MappingResourceConfigList.createEmptyList();
+			throw new RuntimeException(
+					"Can't load the source/target data from Smooks configuration file.");
+			// return MappingResourceConfigList.createEmptyList();
 		}
 		MappingResourceConfigList resourceConfigList = new MappingResourceConfigList();
 		JavaBeanModel source = (JavaBeanModel) sourceObject;
@@ -513,7 +520,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	}
 
 	protected boolean isReferenceSelector(String selector) {
-		return (selector.startsWith(COMPLEX_PRIX_START) && selector.endsWith(COMPLEX_PRIX_END));
+		return (selector.startsWith(COMPLEX_PRIX_START) && selector
+				.endsWith(COMPLEX_PRIX_END));
 	}
 
 	protected String getBeanIdWithRawSelectorString(String selector) {
@@ -537,11 +545,16 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					binding, SmooksModelUtils.ATTRIBUTE_PROPERTY);
 			String selector = SmooksModelUtils.getAttributeValueFromAnyType(
 					binding, SmooksModelUtils.ATTRIBUTE_SELECTOR);
-			JavaBeanModel targetModel = findTheChildJavaBeanModel(property,
-					target);
+			JavaBeanModel childTargetModel = findTheChildJavaBeanModel(
+					property, target);
 			JavaBeanModel sourceModel = null;
-			if (targetModel == null)
-				continue;
+			if (childTargetModel == null) {
+				// TODO if can't find the child node , throw exception
+				// MODIFY by Dart 2008.11.07
+				throw new RuntimeException("There isn't any child property named \""
+						+ property + "\" of \"" + target.getName()
+						+ "\" JavaBean model");
+			}
 			if (isReferenceSelector(selector)) {
 				ResourceConfigType rc = this
 						.findResourceConfigTypeWithSelector(selector,
@@ -554,14 +567,15 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						mappingResourceConfigList.addResourceConfig(rc);
 						analyzeMappingModelFromResourceConfig(mappingModelList,
 								mappingResourceConfigList, resourceList, rc,
-								sourceModel, targetModel);
+								sourceModel, childTargetModel);
 					}
 				}
 			} else {
 				sourceModel = findModelWithSelectorString(selector, source);
 			}
 			if (sourceModel != null) {
-				MappingModel model = new MappingModel(sourceModel, targetModel);
+				MappingModel model = new MappingModel(sourceModel,
+						childTargetModel);
 				UIUtils.assignBindingPropertyToMappingModel(binding, model,
 						new Object[] { SmooksModelUtils.ATTRIBUTE_PROPERTY,
 								SmooksModelUtils.ATTRIBUTE_SELECTOR });
@@ -573,19 +587,29 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	protected JavaBeanModel findModelWithSelectorString(String selector,
 			JavaBeanModel parentModel) {
 		String[] s = selector.trim().split(SPACE_STRING);
-		String pname = parentModel.getName();
+		String parentName = parentModel.getName();
 		Class clazz = parentModel.getBeanClass();
 		JavaBeanModel current = parentModel;
-		if (clazz != null)
-			pname = clazz.getName();
+		if (clazz != null){
+			parentName = clazz.getName();
+		}else{
+			// TODO if can't find the class, throw exception
+			// MODIFY by Dart 08.11.07
+			throw new RuntimeException("JavaBean \"" + parentModel.getName()+ "\" can't load its class.");
+		}
 		if (s != null) {
 			for (int i = 0; i < s.length; i++) {
-				String p = s[i];
-				if (p.equals(pname))
+				String childName = s[i];
+				if (childName.equals(parentName))
 					continue;
-				JavaBeanModel child = findTheChildJavaBeanModel(p, current);
-				if (child == null)
-					return null;
+				JavaBeanModel child = findTheChildJavaBeanModel(childName, current);
+				if (child == null){
+					// TODO if can't find the child node , throw exception
+					// MODIFY by Dart 2008.11.07
+					throw new RuntimeException("There isn't any child property named \""
+							+ childName + "\" of \"" + parentModel.getName()
+							+ "\" JavaBean model");
+				}
 				current = child;
 			}
 			return current;
@@ -664,7 +688,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		} else {
 			model = new JavaBeanModel(null, rootClassName);
 			model.setRootClassModel(true);
-			model.setError(Messages.getString("JavaBeanAnalyzer.ClassNotExist") + rootClassName); //$NON-NLS-1$
+			model
+					.setError(Messages
+							.getString("JavaBeanAnalyzer.ClassNotExist") + rootClassName); //$NON-NLS-1$
 			model.setProperties(new ArrayList());
 			isError = true;
 		}
@@ -888,7 +914,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	protected void analyzeBindingSelector(String selector,
 			JavaBeanModel currentModel, SmooksResourceListType listType,
 			ClassLoader classLoader) {
-		if (selector.startsWith(COMPLEX_PRIX_START) && selector.endsWith(COMPLEX_PRIX_END)) {
+		if (selector.startsWith(COMPLEX_PRIX_START)
+				&& selector.endsWith(COMPLEX_PRIX_END)) {
 			// should get the bean properties
 			// memory out???
 			currentModel.getProperties();
@@ -914,7 +941,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				// something wrong
 				if (model == null) {
 					model = new JavaBeanModel(null, referenceSelector);
-					model.setError(Messages.getString("JavaBeanAnalyzer.DontExist")); //$NON-NLS-1$
+					model.setError(Messages
+							.getString("JavaBeanAnalyzer.DontExist")); //$NON-NLS-1$
 					model.setProperties(new ArrayList());
 					setCollectionsInstanceClassName(model, resourceConfig);
 				}
@@ -943,7 +971,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						} else {
 							pm = new JavaBeanModel(null, property);
 							pm.setProperties(new ArrayList());
-							pm.setError(Messages.getString("JavaBeanAnalyzer.DontExist")); //$NON-NLS-1$
+							pm.setError(Messages
+									.getString("JavaBeanAnalyzer.DontExist")); //$NON-NLS-1$
 							currentParent.addProperty(pm);
 						}
 						currentParent = pm;
