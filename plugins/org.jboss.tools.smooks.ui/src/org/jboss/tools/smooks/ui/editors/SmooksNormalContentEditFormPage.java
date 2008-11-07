@@ -91,7 +91,7 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 		GridLayout gridLayout = UIUtils.createGeneralFormEditorLayout(1);
 		resourceBlock.createContent(managedForm);
 		Composite rootMainControl = form.getBody();
-		form.setText("Normal Page");
+		form.setText("Configuration Page");
 		createSmooksTypeGUI(rootMainControl, tool);
 		form.getBody().setLayout(gridLayout);
 		form.pack();

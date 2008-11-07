@@ -221,19 +221,33 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		}
 		if (!(sourceObject instanceof AbstractXMLObject)
 				|| !(targetObject instanceof JavaBeanModel)) {
-			return MappingResourceConfigList.createEmptyList();
+			// TODO if the type of input source/target data is illegal , throw
+			// exceptions.
+			// MODIFY by Dart 2008.11.07
+			throw new RuntimeException(
+					"Can't load the source/target data from Smooks configuration file.");
+			// return MappingResourceConfigList.createEmptyList();
 		}
 		AbstractXMLObject sourceRoot = (AbstractXMLObject) sourceObject;
 		JavaBeanModel sourceTarget = (JavaBeanModel) targetObject;
 
 		ResourceConfigType rootResourceConfig = findFirstMappingResourceConfig(listType);
 		// if can't find the root , return null
-		if (rootResourceConfig == null)
-			return null;
+		if (rootResourceConfig == null) {
+			// TODO if can't find the org.milyn.javabean.BeanPopulator , throw
+			// exception
+			// MODIFY by Dart 2008.11.07
+//			throw new RuntimeException("Can't parse the config file.");
+			 return null;
+		}
 		String xmlName = rootResourceConfig.getSelector();
 		AbstractXMLObject source = findXMLObjectByName(xmlName, sourceRoot);
-		if (source == null)
-			return MappingResourceConfigList.createEmptyList();
+		if (source == null) {
+			// TODO if can't find the root , throw exception
+			// MODIFY by Dart 2008.11.07
+			throw new RuntimeException("Can't find the root node.");
+			// return MappingResourceConfigList.createEmptyList();
+		}
 
 		MappingResourceConfigList rcl = new MappingResourceConfigList();
 		this.createMappingResourceConfigList(rcl, listType, rootResourceConfig,
@@ -323,11 +337,21 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			if (newSelector == null)
 				return;
 			AbstractXMLObject newRoot = findXMLObjectByName(newSelector, root);
+			if (newRoot == null) {
+				// TODO If can't find the element , throw exception
+				// MODIFY by Dart , 2008.11.07
+				throw new RuntimeException("Can't find the \""+ newSelector + "\" node.");
+			}
 			createMappingResourceConfigList(configList, listType,
 					resourceConfig1, newRoot, targetBean);
 		} else {
 			AbstractXMLObject source = findXMLObjectWithSelectorString(
 					selector, root);
+			if (source == null) {
+				// TODO If can't find the element , throw exception
+				// MODIFY by Dart , 2008.11.07
+				throw new RuntimeException("Can't find the \""+ selector + "\" node.");
+			}
 			if (source != null) {
 				MappingModel mapping = new MappingModel(source, targetBean);
 				UIUtils.assignBindingPropertyToMappingModel(currentBinding,

@@ -98,10 +98,10 @@ public class SmooksFormEditor extends FormEditor implements
 					"Mapping");
 			int index = this.addPage(this.graphicalPage);
 			this.setPageText(index, "Graph");
-			normalPage = new SmooksNormalContentEditFormPage(this, "normal",
-					"Normal Edition", null);
+			normalPage = new SmooksNormalContentEditFormPage(this, "configuration",
+					"Configuration", null);
 			index = this.addPage(normalPage);
-			setPageText(index, "Normal");
+			setPageText(index, "Configuration");
 			// Set a default NormalPacakge to Normal Page
 			this.refreshNormalPage(Collections.EMPTY_LIST);
 			if (onlyShowTextEditor) {
