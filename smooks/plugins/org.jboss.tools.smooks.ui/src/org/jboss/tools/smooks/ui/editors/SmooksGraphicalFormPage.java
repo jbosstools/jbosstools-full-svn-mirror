@@ -192,6 +192,11 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	private List selectionChangeListener = new ArrayList();
 	private ISelection selection;
 	protected MappingResourceConfigList mappingResourceConfigList;
+	
+	public MappingResourceConfigList getMappingResourceConfigList() {
+		return mappingResourceConfigList;
+	}
+
 	protected AdapterFactoryEditingDomain editingDomain;
 	private boolean canSaveFile = true;
 
@@ -1012,9 +1017,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		try {
 			this.initTransformViewerModel((IEditorSite) getSite(),
 					getEditorInput());
-			if (mappingResourceConfigList != null)
-				callParentRefillNormalModelInfor(mappingResourceConfigList
-						.getRelationgResourceConfigList());
+//			if (mappingResourceConfigList != null)
+//				callParentRefillNormalModelInfor(mappingResourceConfigList
+//						.getRelationgResourceConfigList());
 		} catch (IOWrappedException ex) {
 			MessageDialog.openWarning(getSite().getShell(), "Waring",
 					"Exceptions occurd during parsing Smooks file, no worries");

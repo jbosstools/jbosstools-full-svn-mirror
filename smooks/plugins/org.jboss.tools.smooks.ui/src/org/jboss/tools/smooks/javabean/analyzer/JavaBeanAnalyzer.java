@@ -474,9 +474,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		}
 		if (!(sourceObject instanceof JavaBeanModel)
 				|| !(targetObject instanceof JavaBeanModel)) {
-			throw new RuntimeException(
-					"Can't load the source/target data from Smooks configuration file.");
-			// return MappingResourceConfigList.createEmptyList();
+//			throw new RuntimeException(
+//					"[JavaBeanAnalyzer]Can't load the source/target data from Smooks configuration file.");
+			 return MappingResourceConfigList.createEmptyList();
 		}
 		MappingResourceConfigList resourceConfigList = new MappingResourceConfigList();
 		JavaBeanModel source = (JavaBeanModel) sourceObject;
@@ -551,7 +551,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			if (childTargetModel == null) {
 				// TODO if can't find the child node , throw exception
 				// MODIFY by Dart 2008.11.07
-				throw new RuntimeException("There isn't any child property named \""
+				throw new RuntimeException("[JavaBeanAnalyzer]There isn't any child property named \""
 						+ property + "\" of \"" + target.getName()
 						+ "\" JavaBean model");
 			}
@@ -595,7 +595,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		}else{
 			// TODO if can't find the class, throw exception
 			// MODIFY by Dart 08.11.07
-			throw new RuntimeException("JavaBean \"" + parentModel.getName()+ "\" can't load its class.");
+			throw new RuntimeException("[JavaBeanAnalyzer]JavaBean \"" + parentModel.getName()+ "\" can't load its class.");
 		}
 		if (s != null) {
 			for (int i = 0; i < s.length; i++) {
@@ -606,7 +606,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				if (child == null){
 					// TODO if can't find the child node , throw exception
 					// MODIFY by Dart 2008.11.07
-					throw new RuntimeException("There isn't any child property named \""
+					throw new RuntimeException("[JavaBeanAnalyzer]There isn't any child property named \""
 							+ childName + "\" of \"" + parentModel.getName()
 							+ "\" JavaBean model");
 				}

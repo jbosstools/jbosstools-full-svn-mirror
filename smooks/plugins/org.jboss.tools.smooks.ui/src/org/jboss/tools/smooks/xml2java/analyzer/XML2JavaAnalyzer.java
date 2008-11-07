@@ -224,9 +224,9 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			// TODO if the type of input source/target data is illegal , throw
 			// exceptions.
 			// MODIFY by Dart 2008.11.07
-			throw new RuntimeException(
-					"Can't load the source/target data from Smooks configuration file.");
-			// return MappingResourceConfigList.createEmptyList();
+//			throw new RuntimeException(
+//					"[XMLBeanAnalyzer]Can't load the source/target data from Smooks configuration file.");
+			 return MappingResourceConfigList.createEmptyList();
 		}
 		AbstractXMLObject sourceRoot = (AbstractXMLObject) sourceObject;
 		JavaBeanModel sourceTarget = (JavaBeanModel) targetObject;
@@ -245,7 +245,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		if (source == null) {
 			// TODO if can't find the root , throw exception
 			// MODIFY by Dart 2008.11.07
-			throw new RuntimeException("Can't find the root node.");
+			throw new RuntimeException("[XML2JavaAnalyzer]Can't find the root node.");
 			// return MappingResourceConfigList.createEmptyList();
 		}
 
@@ -340,7 +340,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			if (newRoot == null) {
 				// TODO If can't find the element , throw exception
 				// MODIFY by Dart , 2008.11.07
-				throw new RuntimeException("Can't find the \""+ newSelector + "\" node.");
+				throw new RuntimeException("[XML2JavaAnalyzer]Can't find the \""+ newSelector + "\" node.");
 			}
 			createMappingResourceConfigList(configList, listType,
 					resourceConfig1, newRoot, targetBean);
@@ -350,7 +350,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			if (source == null) {
 				// TODO If can't find the element , throw exception
 				// MODIFY by Dart , 2008.11.07
-				throw new RuntimeException("Can't find the \""+ selector + "\" node.");
+				throw new RuntimeException("[XML2JavaAnalyzer]Can't find the \""+ selector + "\" node.");
 			}
 			if (source != null) {
 				MappingModel mapping = new MappingModel(source, targetBean);

@@ -42,6 +42,7 @@ public class JavaBeanConfigWizardPage extends WizardPage implements
 	private JavaBeanModelLoadComposite javaPropertySelectComposite;
 	
 	public JavaBeanModel getJavaBeanModel(){
+		if(javaPropertySelectComposite == null) return null;
 		return javaPropertySelectComposite.getCheckedJavaBeanModel();
 	}
 

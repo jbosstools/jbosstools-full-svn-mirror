@@ -52,6 +52,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	public Object getReturnValue() {
 		try {
 			String path = getFilePath();
+			if(path == null) return null;
 			path = AbstractXMLModelAnalyzer.parseFilePath(path);
 			returnObject = this.loadedTheObject(path);
 		} catch (Exception e) {

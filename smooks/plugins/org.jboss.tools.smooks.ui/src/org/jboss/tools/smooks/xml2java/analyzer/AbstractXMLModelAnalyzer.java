@@ -45,8 +45,9 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 	public AbstractXMLModelAnalyzer(String paramKey) {
 		this.parmaKey = paramKey;
 	}
-	
-	public static String parseFilePath(String path) throws InvocationTargetException{
+
+	public static String parseFilePath(String path)
+			throws InvocationTargetException {
 		int index = path.indexOf(FILE_PRIX);
 		if (index != -1) {
 			path = path.substring(index + FILE_PRIX.length(), path.length());
@@ -61,10 +62,12 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 				if (file.exists()) {
 					path = file.getLocation().toOSString();
 				} else {
-					throw new InvocationTargetException(new Exception("file dosen't exist" + path + " on the workspace."));
+					throw new InvocationTargetException(new Exception(
+							"file dosen't exist" + path + " on the workspace."));
 				}
-			}else{
-				throw new InvocationTargetException(new Exception("Illegal file path : " + path + "."));
+			} else {
+				throw new InvocationTargetException(new Exception(
+						"Illegal file path : " + path + "."));
 			}
 		}
 		return path;
@@ -87,9 +90,9 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 			}
 		}
 		if (path == null) {
-			return null;
-			// throw new InvocationTargetException(new Exception(
-			// "xml file can't be found in the .graph file."));
+			 return null;
+//			throw new InvocationTargetException(new Exception(
+//					"xml file can't be found in the .graph file."));
 		}
 		path = parseFilePath(path);
 		XMLObjectAnalyzer objectBuilder = new XMLObjectAnalyzer();
