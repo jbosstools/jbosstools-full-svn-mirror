@@ -79,7 +79,6 @@ public abstract class ComponentContentTest extends VpeTest {
 
 		TestUtil.waitForJobs();
 
-		TestUtil.delay(2000);
 		VpeController controller = getVpeController((JSPMultiPageEditor) editor);
 
 		// get xml test file
