@@ -45,12 +45,6 @@ public class CustomSashForm extends SashForm {
 
 	public static final String copyright = "(c) Copyright IBM Corporation 2002."; //$NON-NLS-1$
 	
-	//added by estherbin
-	//fix http://jira.jboss.com/jira/browse/JBIDE-2337
-	/**
-	 * Determine is hidden or not.
-	 */
-	private boolean isHidden = false;
 	/**
 	 * Custom style bits. They set whether max to one side of the other
 	 * is not permitted. For example, if NO_MAX_UP, then there will be only
@@ -229,6 +223,7 @@ public class CustomSashForm extends SashForm {
 	/**
 	 * @see org.eclipse.swt.widgets.Composite#layout(boolean)
 	 */
+	@Override
 	public void layout(boolean changed) {
 		super.layout(changed);
 
@@ -375,6 +370,7 @@ public class CustomSashForm extends SashForm {
 				/**
 				 * @see org.eclipse.swt.events.MouseTrackAdapter#mouseExit(MouseEvent)
 				 */
+				@Override
 				public void mouseExit(MouseEvent e) {
 					if (currentSashInfo.cursorOver != NO_ARROW) {
 						// Undo the cursor.
@@ -391,6 +387,7 @@ public class CustomSashForm extends SashForm {
 				/**
 				 * @see org.eclipse.swt.events.MouseAdapter#mouseDown(MouseEvent)
 				 */
+				@Override
 				public void mouseDown(MouseEvent e) {
 					inMouseClick = true;
 					// If we're within a button, then redraw to wipe out stipple and get button push effect.
@@ -412,6 +409,7 @@ public class CustomSashForm extends SashForm {
 				/**
 				 * @see org.eclipse.swt.events.MouseListener#mouseDown(MouseEvent)
 				 */
+				@Override
 				public void mouseUp(MouseEvent e) {
 					// See if within one of the arrows.
 					inMouseClick = false;	// No longer in down click					
@@ -511,9 +509,7 @@ public class CustomSashForm extends SashForm {
 				drawArrows[1] = DOWN_ARROW;	
 				currentSashInfo.sashBorderLeft = false;
 				currentSashInfo.sashBorderRight = sashBorders != null ? sashBorders[1] : false;
-				//added by estherbin
-				//fix http://jira.jboss.com/jira/browse/JBIDE-2337
-				this.isHidden = true;
+
 			} else if (weights[1] == 0 || (currentSashInfo.weight != NO_WEIGHT && sashBounds.y+sashBounds.height >= clientArea.height-DRAG_MINIMUM)) {
 				// Slammed to the bottom
 				addArrows[0] = UP_ARROW;
@@ -522,9 +518,6 @@ public class CustomSashForm extends SashForm {
 				drawArrows[1] = UP_MAX_ARROW;
 				currentSashInfo.sashBorderLeft = sashBorders != null ? sashBorders[0] : false;
 				currentSashInfo.sashBorderRight = false;
-				//added by estherbin
-				//fix http://jira.jboss.com/jira/browse/JBIDE-2337
-				this.isHidden = true;
 			} else {
 				// Not slammed
 				addArrows[0] = UP_MAX_ARROW;
@@ -534,9 +527,6 @@ public class CustomSashForm extends SashForm {
 				currentSashInfo.weight = NO_WEIGHT;	// Since we are in the middle, there is no weight. We've could of been dragged here.
 				currentSashInfo.sashBorderLeft = sashBorders != null ? sashBorders[0] : false;
 				currentSashInfo.sashBorderRight = sashBorders != null ? sashBorders[1] : false;	
-				//added by estherbin
-				//fix http://jira.jboss.com/jira/browse/JBIDE-2337
-				this.isHidden=false;
 			}
 		}
 		getNewSashArray(currentSashInfo, addArrows, drawArrows);
@@ -666,17 +656,6 @@ public class CustomSashForm extends SashForm {
 				y+=tSize;
 		}		
 	}
-	//added by estherbin
-	//fix http://jira.jboss.com/jira/browse/JBIDE-2337
-	/**
-	 * Determine is hidden or not.
-	 * @return <code>true</code> if hidden otherwise <code>false</code>
-	 */
-	
-	public boolean isHidden(){
-		return this.isHidden;
-	}
-
 	protected void drawSashBorder(GC gc, Sash sash, boolean leftBorder) {
 		gc.setForeground(borderColor);
 		if (getOrientation() == SWT.VERTICAL) {

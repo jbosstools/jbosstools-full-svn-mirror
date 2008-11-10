@@ -548,7 +548,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 							&& !controller.isVisualEditorVisible()) {
 						controller.setVisualEditorVisible(true);
 						if (!controller.isSynced())
-							controller.rebuildDom();
+							controller.visualRefresh();
 					}
 				}
 			}
@@ -772,12 +772,14 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		}
 	}
 
+	@Override
 	public void setFocus() {
 		if (activeEditor != null) {
 			activeEditor.setFocus();
 		}
 	}
 
+	@Override
 	public void dispose() {
 		if (optionsObject != null) {
 			optionsObject.getModel().removeModelTreeListener(listener);
@@ -881,6 +883,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		public void partOpened(IWorkbenchPart part) {
 		}
 
+		@Override
 		public void shellActivated(ShellEvent e) {
 			e.widget.getDisplay().asyncExec(new Runnable() {
 				public void run() {
@@ -898,9 +901,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				try {
 					if (sourceEditor != null) {
 						if (visualEditor != null)
-						//added by estherbin
 						//fix http://jira.jboss.com/jira/browse/JBIDE-2337
-						if ((visualEditor.getController() != null) && !container.isHidden()) {
+						if ((visualEditor.getController() != null) && (visualEditor.getController().isVisualEditorVisible())) {
 							visualEditor.getController().refreshTemplates();
 						}
 						sourceEditor.safelySanityCheckState(getEditorInput());
@@ -916,7 +918,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			IContextService contextService = (IContextService) workbench
 					.getAdapter(IContextService.class);
 			fContextActivation = contextService
-					.activateContext(VPE_EDITOR_CONTEXT); //$NON-NLS-1$
+					.activateContext(VPE_EDITOR_CONTEXT);
 			IHandlerService handlerService = (IHandlerService) workbench
 					.getService(IHandlerService.class);
 			if (handlerService != null) {

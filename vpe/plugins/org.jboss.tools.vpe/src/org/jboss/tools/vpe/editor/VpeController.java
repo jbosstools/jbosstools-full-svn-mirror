@@ -481,12 +481,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	public void notifyChanged(final INodeNotifier notifier,
 			final int eventType, final Object feature, final Object oldValue,
 			final Object newValue, final int pos) {
-
 		if (!visualEditorVisible) {
-			synced = false;
+			setSynced(false);
 			return;
 		}
-
 		// start job when we modify file in ui thread, without this code
 		// changes will be applied with 1 second delay
 		Display display = null;
@@ -1676,8 +1674,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 	
 	public void visualRefresh() {
+
 		if (!visualEditorVisible) {
-			synced = false;
+			setSynced(false);
 			return;
 		}
 		if (uiJob != null && uiJob.getState() != Job.NONE) {
@@ -1703,7 +1702,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 								IProgressMonitor.UNKNOWN);
 						visualRefreshImpl();
 						monitor.done();
-						synced=true;
+						setSynced(true);
 					} catch (VpeDisposeException exc) {
 						// just ignore this exception
 					} catch (NullPointerException ex) {
@@ -3237,19 +3236,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	public void setSynced(boolean synced) {
 		this.synced = synced;
-	}
-
-	public void rebuildDom() {
-		if (visualBuilder == null)
-			return;
-		IDOMModel sourceModel = (IDOMModel) getModel();
-		if (sourceModel != null) {
-			IDOMDocument sourceDocument = sourceModel.getDocument();
-			visualBuilder.rebuildDom(sourceDocument);
-		} else {
-			visualBuilder.rebuildDom(null);
-		}
-		synced = true;
 	}
 
 	/**
