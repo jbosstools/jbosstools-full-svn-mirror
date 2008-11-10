@@ -481,7 +481,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	public void notifyChanged(final INodeNotifier notifier,
 			final int eventType, final Object feature, final Object oldValue,
 			final Object newValue, final int pos) {
-		if (!visualEditorVisible) {
+		if (!isVisualEditorVisible()) {
 			setSynced(false);
 			return;
 		}
@@ -1675,7 +1675,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	
 	public void visualRefresh() {
 
-		if (!visualEditorVisible) {
+		if (!isVisualEditorVisible()) {
 			setSynced(false);
 			return;
 		}
