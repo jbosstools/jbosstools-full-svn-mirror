@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.javabean.analyzer;
 
-import java.awt.event.InvocationEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,10 +21,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.ExtendedMetaData;
-import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -34,7 +30,6 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.jboss.tools.smooks.analyzer.CompositeResolveCommand;
 import org.jboss.tools.smooks.analyzer.DesignTimeAnalyzeResult;
 import org.jboss.tools.smooks.analyzer.IMappingAnalyzer;
 import org.jboss.tools.smooks.analyzer.ISourceModelAnalyzer;
@@ -55,12 +50,10 @@ import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
-import org.jboss.tools.smooks.ui.SmooksUIActivator;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
-import org.jboss.tools.smooks.ui.gef.model.PropertyModel;
 import org.jboss.tools.smooks.ui.gef.model.TreeItemRelationModel;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.jboss.tools.smooks.utils.ProjectClassLoader;
@@ -474,9 +467,10 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		}
 		if (!(sourceObject instanceof JavaBeanModel)
 				|| !(targetObject instanceof JavaBeanModel)) {
-//			throw new RuntimeException(
-//					"[JavaBeanAnalyzer]Can't load the source/target data from Smooks configuration file.");
-			 return MappingResourceConfigList.createEmptyList();
+			// throw new RuntimeException(
+			// "[JavaBeanAnalyzer]Can't load the source/target data from Smooks configuration file."
+			// );
+			return MappingResourceConfigList.createEmptyList();
 		}
 		MappingResourceConfigList resourceConfigList = new MappingResourceConfigList();
 		JavaBeanModel source = (JavaBeanModel) sourceObject;
@@ -487,7 +481,13 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			ResourceConfigType rc = (ResourceConfigType) iterator.next();
 			ResourceType rt = rc.getResource();
 			// find the first BeanPopulator resource config , this is the root.
-			if (rt != null && BEANPOPULATOR.equals(rt.getValue())) {
+			String resourceClazz = null;
+			if (rt != null) {
+				resourceClazz = rt.getValue();
+			}
+			if (resourceClazz != null)
+				resourceClazz = resourceClazz.trim();
+			if (rt != null && BEANPOPULATOR.equals(resourceClazz)) {
 				String sourceName = source.getName();
 				Class sourceClazz = source.getBeanClass();
 				if (sourceClazz != null) {
@@ -551,9 +551,10 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			if (childTargetModel == null) {
 				// TODO if can't find the child node , throw exception
 				// MODIFY by Dart 2008.11.07
-				throw new RuntimeException("[JavaBeanAnalyzer]There isn't any child property named \""
-						+ property + "\" of \"" + target.getName()
-						+ "\" JavaBean model");
+				throw new RuntimeException(
+						"[JavaBeanAnalyzer]There isn't any child property named \""
+								+ property + "\" of \"" + target.getName()
+								+ "\" JavaBean model");
 			}
 			if (isReferenceSelector(selector)) {
 				ResourceConfigType rc = this
@@ -590,25 +591,29 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		String parentName = parentModel.getName();
 		Class clazz = parentModel.getBeanClass();
 		JavaBeanModel current = parentModel;
-		if (clazz != null){
+		if (clazz != null) {
 			parentName = clazz.getName();
-		}else{
+		} else {
 			// TODO if can't find the class, throw exception
 			// MODIFY by Dart 08.11.07
-			throw new RuntimeException("[JavaBeanAnalyzer]JavaBean \"" + parentModel.getName()+ "\" can't load its class.");
+			throw new RuntimeException("[JavaBeanAnalyzer]JavaBean \""
+					+ parentModel.getName() + "\" can't load its class.");
 		}
 		if (s != null) {
 			for (int i = 0; i < s.length; i++) {
 				String childName = s[i];
 				if (childName.equals(parentName))
 					continue;
-				JavaBeanModel child = findTheChildJavaBeanModel(childName, current);
-				if (child == null){
+				JavaBeanModel child = findTheChildJavaBeanModel(childName,
+						current);
+				if (child == null) {
 					// TODO if can't find the child node , throw exception
 					// MODIFY by Dart 2008.11.07
-					throw new RuntimeException("[JavaBeanAnalyzer]There isn't any child property named \""
-							+ childName + "\" of \"" + parentModel.getName()
-							+ "\" JavaBean model");
+					throw new RuntimeException(
+							"[JavaBeanAnalyzer]There isn't any child property named \""
+									+ childName + "\" of \""
+									+ parentModel.getName()
+									+ "\" JavaBean model");
 				}
 				current = child;
 			}
@@ -654,6 +659,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				if (resourceType == null)
 					continue;
 				String resource = resourceType.getValue();
+				if (resource != null)
+					resource = resource.trim();
 				if (BEANPOPULATOR.equals(resource)) {
 					// create root beanmodel
 					rootClassName = rc.getSelector();
@@ -757,6 +764,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				if (resourceType == null)
 					continue;
 				String resource = resourceType.getValue();
+				if (resource != null)
+					resource = resource.trim();
 				if (BEANPOPULATOR.equals(resource)) {
 					// create root beanmodel
 					current = rc;
@@ -835,6 +844,10 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		JavaBeanModel model = this.findTheChildJavaBeanModel(property,
 				parentModel);
 		if (model == null) {
+			// TODO if the model can't be found , throw exception
+			if (true)
+				throw new RuntimeException("Can't find the \"" + property
+						+ "\" from \"" + parentModel.getName() + "\" model");
 			model = new JavaBeanModel(null, property);
 			parentModel.addProperty(model);
 			model.setError(Messages.getString("JavaBeanAnalyzer.DontExist")); //$NON-NLS-1$
@@ -844,8 +857,14 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			selector = selector.substring(2, selector.length() - 1);
 			ResourceConfigType resourceConfig = findResourceConfigTypeWithSelector(
 					selector, listType);
-			model.setBeanClassString(SmooksModelUtils.getParmaText(
-					SmooksModelUtils.BEAN_CLASS, resourceConfig));
+			if (resourceConfig == null) {
+				throw new RuntimeException(
+						"Can't find some ResourceConfig element in the config file.Maybe some ResourceConfig element miss <param name = \"beanId\">"
+								+ selector + "</param>");
+			}
+			String beanClassText = SmooksModelUtils.getParmaText(
+					SmooksModelUtils.BEAN_CLASS, resourceConfig);
+			model.setBeanClassString(beanClassText);
 			if (resourceConfig != null) {
 				this.buildChildrenOfTargetInputModel(listType, model, false,
 						false, resourceConfig, classLoader);
@@ -914,6 +933,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	protected void analyzeBindingSelector(String selector,
 			JavaBeanModel currentModel, SmooksResourceListType listType,
 			ClassLoader classLoader) {
+		if (selector != null) {
+			selector = selector.trim();
+		}
 		if (selector.startsWith(COMPLEX_PRIX_START)
 				&& selector.endsWith(COMPLEX_PRIX_END)) {
 			// should get the bean properties

@@ -54,7 +54,7 @@ import org.jboss.tools.smooks.xml.model.TagObject;
  */
 public class UIUtils {
 
-	public static final String[] SELECTORE_SPLITER = new String[] { ":", "\\",
+	public static final String[] SELECTORE_SPLITER = new String[] {  "\\",
 			"/" };
 
 	public static FillLayout createFillLayout(int marginW, int marginH) {

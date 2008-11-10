@@ -24,16 +24,17 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.forms.editor.FormEditor;
+import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
+import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelBuilder;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
@@ -52,7 +53,9 @@ import org.jboss.tools.smooks.utils.UIUtils;
 public class SmooksFormEditor extends FormEditor implements
 		ITabbedPropertySheetPageContributor {
 
-	SmooksGraphicalFormPage graphicalPage = null;
+	private StructuredTextEditor xmlTextEditor;
+
+	private SmooksGraphicalFormPage graphicalPage = null;
 
 	public SmooksGraphicalFormPage getGraphicalPage() {
 		return graphicalPage;
@@ -92,25 +95,39 @@ public class SmooksFormEditor extends FormEditor implements
 		return forceDirty || super.isDirty();
 	}
 
+	private void createGraphicalEditor() throws PartInitException {
+		graphicalPage = new SmooksGraphicalFormPage(this, "graph", "Mapping");
+		int index = this.addPage(this.graphicalPage);
+		this.setPageText(index, "Graph");
+	}
+
+	private void createConfigurationEditor() throws PartInitException {
+		normalPage = new SmooksNormalContentEditFormPage(this, "configuration",
+				"Configuration", null);
+		int index = this.addPage(normalPage);
+		setPageText(index, "Configuration");
+		// Set a default NormalPacakge to Normal Page
+		MappingResourceConfigList mappingResourceConfig = graphicalPage
+				.getMappingResourceConfigList();
+		if (mappingResourceConfig != null) {
+			refreshNormalPage(mappingResourceConfig
+					.getRelationgResourceConfigList());
+		}
+	}
+
+	private void createXMLTextEditor() throws PartInitException {
+		this.xmlTextEditor = new StructuredTextEditor();
+		xmlTextEditor.setEditorPart(this);
+		int index = this.addPage(xmlTextEditor, getEditorInput());
+		this.setPageText(index, "Source");
+	}
+
 	@Override
 	protected void addPages() {
-
 		try {
-			graphicalPage = new SmooksGraphicalFormPage(this, "graph",
-					"Mapping");
-			int index = this.addPage(this.graphicalPage);
-			this.setPageText(index, "Graph");
-			normalPage = new SmooksNormalContentEditFormPage(this,
-					"configuration", "Configuration", null);
-			index = this.addPage(normalPage);
-			setPageText(index, "Configuration");
-			// Set a default NormalPacakge to Normal Page
-			MappingResourceConfigList mappingResourceConfig = graphicalPage
-					.getMappingResourceConfigList();
-			if (mappingResourceConfig != null) {
-				refreshNormalPage(mappingResourceConfig
-						.getRelationgResourceConfigList());
-			}
+			createGraphicalEditor();
+			createConfigurationEditor();
+			createXMLTextEditor();
 			if (onlyShowTextEditor) {
 				removeGraphicalFormPage();
 			}
@@ -247,11 +264,24 @@ public class SmooksFormEditor extends FormEditor implements
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+
+	@Override
+	protected IEditorSite createSite(IEditorPart editor) {
+		return super.createSite(editor);
+	}
 
 	public Object getAdapter(Class adapter) {
-		if (adapter == IPropertySheetPage.class) {
+		if(adapter == IPropertySheetPage.class){
+			System.out.println();
+		}
+		if (adapter == IPropertySheetPage.class && this.getActiveEditor() == graphicalPage) {
 			tabbedPropertySheetPage = new TabbedPropertySheetPage(this);
 			return tabbedPropertySheetPage;
+		}
+		if (adapter == IContentOutlinePage.class && this.getActiveEditor() == xmlTextEditor){
+			return super.getAdapter(adapter);
+		}else{
 		}
 		return super.getAdapter(adapter);
 	}
