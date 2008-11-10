@@ -77,19 +77,10 @@
         </mediaobject>
       </figure>
 
-      <para>All settings are already specified here, you can just modify the Configuration. Chose needed
-        one from the list of already predefined configurations or click on the <emphasis>
-          <property>Modify...</property>
-        </emphasis> to configure your custom facets pattern.</para>
+      <para>All settings are already specified here, you can just modify the Configuration. Click on the <emphasis>
+        <property>Modify...</property></emphasis> button to configure your custom facets pattern:</para>
 
-      <para>On the whole appeared dialog allows to select the "features" you want to use in your
-        project. Doing this <property>JBoss Developer Studio</property> setups the appropriate
-        tooling for your project. Since JBoss Seam integrates all popular Java EE frameworks, you
-        can select any combination of technologies from the list. Here, for the default
-        configuration, Dynamic Web Module, Java, JavaServer Faces (JSF), and Seam Facet are already
-        selected for a typical database-driven web application. The default project facets should
-        suffice.</para>
-
+      
       <figure id="ProjectFacetsSpecifyingScreen">
         <title>Project Facets Specifying</title>
         <mediaobject>
@@ -99,7 +90,15 @@
         </mediaobject>
       </figure>
 
-      <para>In the <property>Project Facets wizard</property> form you can also bring up server
+      <para>On the whole the dialog allows to select the "features" you want to use in your
+        project. Doing this <property>JBoss Developer Studio</property> setups the appropriate
+        tooling for your project. Since JBoss Seam integrates all popular Java EE frameworks, you
+        can select any combination of technologies from the list. Here, for the default
+        configuration, Dynamic Web Module, Java, JavaServer Faces (JSF), and Seam Facet are already
+        selected for a typical database-driven web application. The default project facets should
+        suffice.</para>
+
+      <para>In the <property>Project Facets</property> form you can also bring up server
         runtimes panel by clicking <property> Runtimes</property> tab on the right corner. This
         panel shows available server runtimes.</para>
 
