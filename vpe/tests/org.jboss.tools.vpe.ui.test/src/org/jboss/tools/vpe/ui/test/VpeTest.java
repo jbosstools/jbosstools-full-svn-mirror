@@ -13,24 +13,33 @@
 package org.jboss.tools.vpe.ui.test;
 
 
+import java.util.Collection;
+import java.util.Map;
+
 import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.ILogListener;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.jboss.tools.common.model.util.ClassLoaderUtil;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
+import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
+import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
+import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 
 /**
@@ -76,7 +85,8 @@ public class VpeTest extends TestCase implements ILogListener {
      * 
      * @see TestCase#setUp()
      */
-    protected void setUp() throws Exception {
+    @Override
+	protected void setUp() throws Exception {
         super.setUp();
 
         Platform.addLogListener(this);
@@ -94,7 +104,8 @@ public class VpeTest extends TestCase implements ILogListener {
      * 
      * @see TestCase#tearDown()
      */
-    protected void tearDown() throws Exception {
+    @Override
+	protected void tearDown() throws Exception {
 
         super.tearDown();
 
@@ -286,5 +297,55 @@ public class VpeTest extends TestCase implements ILogListener {
     protected void setCheckWarning(boolean checkWarning) {
         this.checkWarning = checkWarning;
     }
+    /**
+     * Compares source nodes selection and visual selection
+     * @param VPE Editor part
+     */
+    protected void checkSourceSelection(JSPMultiPageEditor part) {
+		// get controller
+		VpeController controller = getVpeController(part);
+		assertNotNull(controller);
 
+		// get dommapping
+		VpeDomMapping domMapping = controller.getDomMapping();
+
+		assertNotNull(domMapping);
+
+		// get source map
+		Map<Node, VpeNodeMapping> sourceMap = domMapping.getSourceMap();
+		assertNotNull(sourceMap);
+
+		// get collection of VpeNodeMapping
+		Collection<VpeNodeMapping> mappings = sourceMap.values();
+		assertNotNull(mappings);
+
+		// get editor control
+		StyledText styledText = part.getSourceEditor().getTextViewer()
+				.getTextWidget();
+		assertNotNull(styledText);
+
+		// get xulrunner editor
+		XulRunnerEditor xulRunnerEditor = controller.getXulRunnerEditor();
+		assertNotNull(xulRunnerEditor);
+
+		for (VpeNodeMapping nodeMapping : mappings) {
+
+			/**
+			 * exclude out DomDocument ( it is added to mapping specially ) and
+			 * nodes without visual representation
+			 */
+			if (!(nodeMapping.getSourceNode() instanceof IDOMDocument)
+					&& (nodeMapping.getVisualNode() != null)) {
+
+				SelectionUtil.setSourceSelection(controller.getPageContext(),
+						nodeMapping.getSourceNode(), 0, 0);
+
+				TestUtil.delay(50);
+
+				assertNotNull(xulRunnerEditor.getLastSelectedNode());
+				assertEquals(nodeMapping.getVisualNode(), xulRunnerEditor
+						.getLastSelectedNode());
+			}
+		}
+    }
 }

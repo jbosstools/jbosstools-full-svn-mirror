@@ -23,6 +23,7 @@ import org.jboss.tools.common.resref.ui.ResourceReferencesTableProvider;
  */
 public class TaglibReferencesComposite extends VpeResourceReferencesComposite {
 
+	@Override
 	protected String getEntity() {
 		return (file != null) ? "VPETLDReference" : "VPETLDReferenceExt"; //$NON-NLS-1$ //$NON-NLS-2$
 	}

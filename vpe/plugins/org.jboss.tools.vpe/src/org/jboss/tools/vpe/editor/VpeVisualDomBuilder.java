@@ -414,6 +414,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		boolean registerFlag = isCurrentMainDocument();
 
 		// reads and dispatch events
+		getPageContext().processDisplayEvents();
 		// JBIDE-675, checks if editor was disposed or not
 		if (getPageContext().getSourceBuilder() == null
 				|| includeDocuments == null) {
