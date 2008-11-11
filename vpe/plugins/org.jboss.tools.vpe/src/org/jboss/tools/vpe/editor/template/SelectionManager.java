@@ -393,45 +393,6 @@ public class SelectionManager implements ISelectionManager {
 
 	}
 
-	/**
-	 * 
-	 * @deprecated
-	 * Restore cursor position in visual document for by source position
-	 * 
-	 * @param visualNode
-	 * @param focusOffcetInSourceDocument
-	 */
-	private void restoreVisualCursorPositionForTextNode(nsIDOMNode visualNode,
-			int focusOffcetInSourceDocument, IStructuredModel model) {
-
-		if (visualNode == null)
-			return;
-
-		nsIDOMNode targetVisualNode = visualNode.getFirstChild();
-
-		if (targetVisualNode == null
-				|| targetVisualNode.getNodeType() != nsIDOMNode.TEXT_NODE) {
-			return;
-		}
-
-		IndexedRegion targetSourceNode = (IndexedRegion) SelectionUtil
-				.getSourceNodeByPosition(model, focusOffcetInSourceDocument);
-		// should be a text node
-		if (((Node) targetSourceNode).getNodeType() != Node.TEXT_NODE) {
-			return;
-		}
-		int offcetReferenceToSourceNode = focusOffcetInSourceDocument
-				- targetSourceNode.getStartOffset();
-
-		int visualNodeOffcet = TextUtil.visualPosition(
-				((Node) targetSourceNode).getNodeValue(),
-				offcetReferenceToSourceNode);
-
-		selectionController.getSelection(
-				nsISelectionController.SELECTION_NORMAL).collapse(
-				targetVisualNode, visualNodeOffcet);
-
-	}
 
 	protected VpePageContext getPageContext() {
 		return pageContext;

@@ -127,6 +127,7 @@ import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
+import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.menu.NodeActionManager;
 import org.jboss.tools.vpe.editor.menu.BaseActionManager.MyMenuManager;
 import org.jboss.tools.vpe.editor.mozilla.EditorDomEventListener;
@@ -147,6 +148,7 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateListener;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
+import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeDndUtil;
@@ -167,6 +169,7 @@ import org.mozilla.interfaces.nsIDOMMutationEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIFile;
 import org.mozilla.interfaces.nsISelection;
+import org.mozilla.interfaces.nsISelectionController;
 import org.mozilla.interfaces.nsISelectionListener;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsISupportsCString;
@@ -216,6 +219,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	private static final int AROUND_MENU = 1;
 	private static final int BEFORE_MENU = 2;
 	private static final int AFTER_MENU = 3;
+	
+	private static final int LEFT_BUTTON = 0;
 
 	private CSSReferenceList cssReferenceListListener;
 	private TaglibReferenceList taglibReferenceListListener;
@@ -1042,7 +1047,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			try {
 				mouseUpSelectionReasonFlag = (reason & nsISelectionListener.MOUSEUP_REASON) > 0;
 				if (mouseUpSelectionReasonFlag
-						|| reason == nsISelectionListener.NO_REASON
+						// commited by Dzmitrovich - experimental
+						// TODO check selection and if are appear errors then
+						// uncommented next code
+						// || reason == nsISelectionListener.NO_REASON
 						|| reason == nsISelectionListener.KEYPRESS_REASON
 						|| reason == nsISelectionListener.SELECTALL_REASON
 						|| (reason & nsISelectionListener.MOUSEDOWN_REASON) > 0) {
@@ -1058,6 +1066,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					 * Checking if the node is of text type was removed
 					 * to allow <select> node to be selected on the first click.
 					 */
+					
 					if (node != null) {
 						selectionManager.setSelection(selection);
 					}
@@ -1130,8 +1139,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			// }
 			// }
 
+			
+			// selection will be set only if press left button
+			if (mouseEvent.getButton() == LEFT_BUTTON)
+				selectionManager.setSelection(mouseEvent);
 
-			selectionManager.setSelection(mouseEvent);
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -1394,9 +1406,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				if (!topLevelFlag) {
 					manager.add(new VpeAction("Select This Tag", node) { //$NON-NLS-1$
 								public void run() {
-									selectionBuilder.setVisualSelection(
-											actionNode, 0, actionNode, 0,
-											false, true);
+									SelectionUtil.setSourceSelection(
+											pageContext, actionNode);
 
 								}
 							});
@@ -1431,19 +1442,40 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 		IContributionItem[] items = manager.getItems();
 
+		// fixed for JBIDE-3072
+		// add "insert arround",
 		for (int i = 0; i < items.length; i++) {
 			if (items[i] instanceof MenuManager) {
 				MenuManager mm = (MenuManager) items[i];
+				int type = 0;
+				Point region = null;
 				if (NodeActionManager.INSERT_AROUND_MENU.equals(mm
 						.getMenuText())) {
-					listenContextMenu(mm, (IndexedRegion) node, AROUND_MENU);
+					type = AROUND_MENU;
+
+					// if node is text then allow to wrap only selected text
+					if (node.getNodeType() == Node.TEXT_NODE) {
+
+						region = SelectionUtil
+								.getSourceSelectionRange(sourceEditor);
+					}
+					// else wrap all tag
+					else {
+						region = NodesManagingUtil.getNodeRange(node);
+					}
+
 				} else if (NodeActionManager.INSERT_BEFORE_MENU.equals(mm
 						.getMenuText())) {
-					listenContextMenu(mm, (IndexedRegion) node, BEFORE_MENU);
+					type = BEFORE_MENU;
+					region = new Point(NodesManagingUtil
+							.getStartOffsetNode(node), 0);
 				} else if (NodeActionManager.INSERT_AFTER_MENU.equals(mm
 						.getMenuText())) {
-					listenContextMenu(mm, (IndexedRegion) node, AFTER_MENU);
+					type = AFTER_MENU;
+					region = new Point(
+							NodesManagingUtil.getEndOffsetNode(node), 0);
 				}
+				listenContextMenu(mm, region, type);
 			}
 		}
 
@@ -1620,36 +1652,45 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	 */
 	public void onShowContextMenu(long contextFlags, nsIDOMEvent event,
 			nsIDOMNode node) {
-		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(event);
+		
+		//FIXED FOR JBIDE-3072 by sdzmitrovich 
+		
+		// nsIDOMNode visualNode = VisualDomUtil.getTargetNode(event);
+		// if (visualNode != null) {
+		Node selectedSourceNode = null;
 
-		if (visualNode != null) {
-			Node selectedSourceNode = null;
-			selectedSourceNode = selectionBuilder
-					.setContextMenuSelection(visualNode);
-			if (selectedSourceNode != null) {
+		VpeNodeMapping nodeMapping = SelectionUtil
+				.getNodeMappingBySourceSelection(sourceEditor, domMapping);
 
-				MenuManager menuManager = new MenuManager("#popup"); //$NON-NLS-1$
-				final Menu contextMenu = menuManager
-						.createContextMenu(visualEditor.getControl());
-				contextMenu.addMenuListener(new MenuListener() {
-					Menu menu = contextMenu;
+		if (nodeMapping != null)
+			selectedSourceNode = nodeMapping.getSourceNode();
 
-					public void menuHidden(MenuEvent e) {
-						Display.getCurrent().asyncExec(new Runnable() {
-							public void run() {
-								menu.dispose();
-							}
-						});
-					}
+		// selectedSourceNode = selectionBuilder
+		// .setContextMenuSelection(visualNode);
+		if (selectedSourceNode != null) {
 
-					public void menuShown(MenuEvent e) {
-					}
-				});
-				createMenuForNode(selectedSourceNode, menuManager, true);
+			MenuManager menuManager = new MenuManager("#popup"); //$NON-NLS-1$
+			final Menu contextMenu = menuManager.createContextMenu(visualEditor
+					.getControl());
+			contextMenu.addMenuListener(new MenuListener() {
+				Menu menu = contextMenu;
 
-				contextMenu.setVisible(true);
+				public void menuHidden(MenuEvent e) {
+					Display.getCurrent().asyncExec(new Runnable() {
+						public void run() {
+							menu.dispose();
+						}
+					});
+				}
 
-			}
+				public void menuShown(MenuEvent e) {
+				}
+			});
+			createMenuForNode(selectedSourceNode, menuManager, true);
+
+			contextMenu.setVisible(true);
+
+			// }
 		}
 	}
 
@@ -2110,7 +2151,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 	}
 
-	private void listenContextMenu(MenuManager manager, IndexedRegion region,
+	private void listenContextMenu(MenuManager manager, Point region,
 			int type) {
 		MenuManager mm = new MyMenuManager("From Palette", true); //$NON-NLS-1$
 		manager.add(mm);
@@ -2119,11 +2160,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	class VpeMenuListener implements IMenuListener {
 		private MenuManager manager;
-		private IndexedRegion region;
+		private Point region;
 		private int type;
 		private boolean loaded = false;
 
-		public VpeMenuListener(MenuManager manager, IndexedRegion region,
+		public VpeMenuListener(MenuManager manager, Point region,
 				int type) {
 			this.manager = manager;
 			this.region = region;
@@ -2134,13 +2175,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			if (loaded)
 				return;
 			loaded = true;
-			fillContextMenuFromPalette(manager, region, type);
+			fillContextMenuFromPalette(manager, region , type);
 			manager.getParent().update(true);
 		}
 	}
 
 	private MenuManager fillContextMenuFromPalette(MenuManager manager,
-			IndexedRegion region, int type) {
+			Point region, int type) {
 		XModelObject model = ModelUtilities.getPreferenceModel().getByPath(
 				"%Palette%"); //$NON-NLS-1$
 
@@ -2155,7 +2196,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		return manager;
 	}
 
-	private void fillPaletteFolder(MenuManager menu, IndexedRegion region,
+	private void fillPaletteFolder(MenuManager menu, Point region,
 			XModelObject folder, int type) {
 		XModelObject[] groups = folder.getChildren();
 		for (int i = 0; i < groups.length; i++) {
@@ -2167,7 +2208,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 	}
 
-	private void fillPaletteGroup(MenuManager menu, IndexedRegion region,
+	private void fillPaletteGroup(MenuManager menu, Point region,
 			XModelObject group, int type) {
 		XModelObject[] items = group.getChildren();
 		String endText;
@@ -2181,7 +2222,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 	}
 
-	private void createInsertAction(MenuManager menu, IndexedRegion region,
+	private void createInsertAction(MenuManager menu, Point region,
 			XModelObject item, int type) {
 
 		XModelObject parent = item.getParent();
@@ -2200,10 +2241,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	class InsertAction extends Action {
 		private XModelObject item;
 		private int type;
-		private IndexedRegion region;
+		private Point region;
 
-		public InsertAction(String title, IndexedRegion region,
-				XModelObject item, int type) {
+		public InsertAction(String title, Point region, XModelObject item,
+				int type) {
 			super(title);
 			this.item = item;
 			this.type = type;
@@ -2212,72 +2253,55 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 		public void run() {
 
-				String tagName = item.getAttributeValue("name"); //$NON-NLS-1$
+			String tagName = item.getAttributeValue("name"); //$NON-NLS-1$
 
-				XModelObject parent = item.getParent();
-				String uri = (parent == null) ? "" : parent.getAttributeValue(URIConstants.LIBRARY_URI); //$NON-NLS-1$
-				String libraryVersion = (parent == null) ? "" : parent.getAttributeValue(URIConstants.LIBRARY_VERSION); //$NON-NLS-1$
-				String defaultPrefix = (parent == null) ? "" : parent.getAttributeValue(URIConstants.DEFAULT_PREFIX); //$NON-NLS-1$
-				
-				/*
-				 * Fixes https://jira.jboss.org/jira/browse/JBIDE-1363.
-				 * Fixes https://jira.jboss.org/jira/browse/JBIDE-2442.
-				 * author: dmaliarevich
-				 * StructuredSelectionProvider from source view is used 
-				 * instead of VpeSelectionProvider.
-				 * It helps automatically update selection range
-				 * after taglib insertion.
-				 */
-				StructuredTextViewer structuredTextViewer = null;
-				structuredTextViewer = getSourceEditor().getTextViewer();
-				int offset = 0;
-				int length = 0;
-				
-				String startText = "" + item.getAttributeValue("start text"); //$NON-NLS-1$ //$NON-NLS-2$
-				String endText = "" + item.getAttributeValue("end text"); //$NON-NLS-1$ //$NON-NLS-2$
-				if (type == AROUND_MENU) {
-					/*
-					 * In this case node was already selected correctly.
-					 */
-				} else if (type == BEFORE_MENU) {
-					offset = region.getStartOffset();
-					length = 0;
-					structuredTextViewer.setSelectedRange(offset, length);
-					structuredTextViewer.revealRange(offset, length);
-				} else if (type == AFTER_MENU) {
-					offset = region.getEndOffset();
-					length = 0;
-					structuredTextViewer.setSelectedRange(offset, length);
-					structuredTextViewer.revealRange(offset, length);
-				}
-				
-				/*
-				 * Gets source editor's selection provider 
-				 * with updated text selection.
-				 */
-				ISelectionProvider selProvider = getSourceEditor().getSelectionProvider();
+			XModelObject parent = item.getParent();
+			String uri = (parent == null) ? "" : parent.getAttributeValue(URIConstants.LIBRARY_URI); //$NON-NLS-1$
+			String libraryVersion = (parent == null) ? "" : parent.getAttributeValue(URIConstants.LIBRARY_VERSION); //$NON-NLS-1$
+			String defaultPrefix = (parent == null) ? "" : parent.getAttributeValue(URIConstants.DEFAULT_PREFIX); //$NON-NLS-1$
 
-				Properties p = new Properties();
-				p.setProperty("tag name", tagName); //$NON-NLS-1$
-				p.setProperty("start text", startText); //$NON-NLS-1$
-				p.setProperty("end text", endText); //$NON-NLS-1$
-				p
-						.setProperty(
-								"automatically reformat tag body", "" + item.getAttributeValue("automatically reformat tag body")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				p.setProperty(URIConstants.LIBRARY_URI, uri);
-				p.setProperty(URIConstants.LIBRARY_VERSION, libraryVersion);
-				String addTaglib = item.getParent().getAttributeValue(
-						TLDToPaletteHelper.ADD_TAGLIB);
-				p.setProperty(URIConstants.DEFAULT_PREFIX, defaultPrefix);
-				p.setProperty(PaletteInsertHelper.PROPOPERTY_ADD_TAGLIB,
-						addTaglib);
-				/*
-				 * Added by Dzmitry Sakovich Fix for JBIDE-1626
-				 */
-				// if(((Node)region).getNodeType() == Node.ELEMENT_NODE)
-				p.put("selectionProvider", selProvider); //$NON-NLS-1$
-				PaletteInsertHelper.insertIntoEditor(sourceEditor
-						.getTextViewer(), p);
+			/*
+			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-1363. Fixes
+			 * https://jira.jboss.org/jira/browse/JBIDE-2442. author:
+			 * dmaliarevich StructuredSelectionProvider from source view is used
+			 * instead of VpeSelectionProvider. It helps automatically update
+			 * selection range after taglib insertion.
+			 */
+
+			String startText = "" + item.getAttributeValue("start text"); //$NON-NLS-1$ //$NON-NLS-2$
+			String endText = "" + item.getAttributeValue("end text"); //$NON-NLS-1$ //$NON-NLS-2$
+		
+			//set source selection
+			SelectionUtil.setSourceSelection(pageContext, region.x, region.y);
+			
+
+			/*
+			 * Gets source editor's selection provider with updated text
+			 * selection.
+			 */
+			ISelectionProvider selProvider = getSourceEditor()
+					.getSelectionProvider();
+
+			Properties p = new Properties();
+			p.setProperty("tag name", tagName); //$NON-NLS-1$
+			p.setProperty("start text", startText); //$NON-NLS-1$
+			p.setProperty("end text", endText); //$NON-NLS-1$
+			p
+					.setProperty(
+							"automatically reformat tag body", "" + item.getAttributeValue("automatically reformat tag body")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			p.setProperty(URIConstants.LIBRARY_URI, uri);
+			p.setProperty(URIConstants.LIBRARY_VERSION, libraryVersion);
+			String addTaglib = item.getParent().getAttributeValue(
+					TLDToPaletteHelper.ADD_TAGLIB);
+			p.setProperty(URIConstants.DEFAULT_PREFIX, defaultPrefix);
+			p.setProperty(PaletteInsertHelper.PROPOPERTY_ADD_TAGLIB, addTaglib);
+			/*
+			 * Added by Dzmitry Sakovich Fix for JBIDE-1626
+			 */
+			// if(((Node)region).getNodeType() == Node.ELEMENT_NODE)
+			p.put("selectionProvider", selProvider); //$NON-NLS-1$
+			PaletteInsertHelper.insertIntoEditor(sourceEditor.getTextViewer(),
+					p);
 
 		}
 

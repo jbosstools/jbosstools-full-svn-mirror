@@ -11,6 +11,7 @@
 
 package org.jboss.tools.vpe.editor.util;
 
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
@@ -110,6 +111,17 @@ public class NodesManagingUtil {
 	}
 
 	/**
+	 * 
+	 * @param node
+	 * @return
+	 */
+	public static Point getNodeRange(Node node) {
+
+		return new Point(getStartOffsetNode(node), getNodeLength(node));
+
+	}
+
+	/**
 	 * if position belong to node return true
 	 * 
 	 * @param node
@@ -147,7 +159,7 @@ public class NodesManagingUtil {
 		return locale;
 
 	}
-	
+
 	/**
 	 * 
 	 * @param pageContext

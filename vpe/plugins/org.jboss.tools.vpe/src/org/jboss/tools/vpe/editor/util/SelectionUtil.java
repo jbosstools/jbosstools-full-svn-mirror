@@ -35,7 +35,6 @@ import org.w3c.dom.Node;
  */
 public class SelectionUtil {
 
-
 	/**
 	 * get selected visual node from nsISelection
 	 * 
@@ -62,9 +61,10 @@ public class SelectionUtil {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * select node completely
+	 * 
 	 * @param pageContext
 	 * @param node
 	 */
@@ -92,12 +92,16 @@ public class SelectionUtil {
 
 		int start = NodesManagingUtil.getStartOffsetNode(node);
 
-		pageContext.getSourceBuilder().getStructuredTextViewer().setSelectedRange(start + offset, length);
-		pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(
-				start + offset, length);
+		setSourceSelection(pageContext, start + offset, length);
 
 	}
 
+	/**
+	 * 
+	 * @param pageContext
+	 * @param node
+	 * @param offset
+	 */
 	public static void setSourceSelection(VpePageContext pageContext,
 			Node node, int offset) {
 
@@ -105,6 +109,22 @@ public class SelectionUtil {
 
 		pageContext.getSourceBuilder().getStructuredTextViewer()
 				.getTextWidget().setSelection(start + offset);
+
+	}
+
+	/**
+	 * 
+	 * @param pageContext
+	 * @param offset
+	 * @param length
+	 */
+	public static void setSourceSelection(VpePageContext pageContext,
+			int offset, int length) {
+
+		pageContext.getSourceBuilder().getStructuredTextViewer()
+				.setSelectedRange(offset, length);
+		pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(
+				offset, length);
 
 	}
 
@@ -185,12 +205,14 @@ public class SelectionUtil {
 		nsIDOMNode focusedNode = getSelectedNode(selection);
 		// gets visual selection range
 		Point sourceRange = new Point(0, 0);
-		//converts to source selection
-        if (sourceNode != null) {
-            sourceRange.x = TextUtil.sourcePosition(sourceNode.getNodeValue(), focusedNode.getNodeValue(), selection.getFocusOffset());
-            sourceRange.y = TextUtil.sourcePosition(sourceNode.getNodeValue(), focusedNode.getNodeValue(), selection.getAnchorOffset())
-                    - sourceRange.x;
-        }
+		// converts to source selection
+		if (sourceNode != null) {
+			sourceRange.x = TextUtil.sourcePosition(sourceNode.getNodeValue(),
+					focusedNode.getNodeValue(), selection.getFocusOffset());
+			sourceRange.y = TextUtil.sourcePosition(sourceNode.getNodeValue(),
+					focusedNode.getNodeValue(), selection.getAnchorOffset())
+					- sourceRange.x;
+		}
 		return sourceRange;
 	}
 
@@ -270,7 +292,7 @@ public class SelectionUtil {
 
 		return null;
 	}
-	
+
 	/**
 	 * 
 	 * @param selectionController
