@@ -34,7 +34,6 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
-import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelBuilder;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
@@ -53,7 +52,7 @@ import org.jboss.tools.smooks.utils.UIUtils;
 public class SmooksFormEditor extends FormEditor implements
 		ITabbedPropertySheetPageContributor {
 
-	private StructuredTextEditor xmlTextEditor;
+	private SmooksTextEdtor xmlTextEditor;
 
 	private SmooksGraphicalFormPage graphicalPage = null;
 
@@ -109,6 +108,7 @@ public class SmooksFormEditor extends FormEditor implements
 		// Set a default NormalPacakge to Normal Page
 		MappingResourceConfigList mappingResourceConfig = graphicalPage
 				.getMappingResourceConfigList();
+		normalPage.setDisableGUI(this.showTextEditorReason != null);
 		if (mappingResourceConfig != null) {
 			refreshNormalPage(mappingResourceConfig
 					.getRelationgResourceConfigList());
@@ -116,7 +116,7 @@ public class SmooksFormEditor extends FormEditor implements
 	}
 
 	private void createXMLTextEditor() throws PartInitException {
-		this.xmlTextEditor = new StructuredTextEditor();
+		this.xmlTextEditor = new SmooksTextEdtor(this.showTextEditorReason);
 		xmlTextEditor.setEditorPart(this);
 		int index = this.addPage(xmlTextEditor, getEditorInput());
 		this.setPageText(index, "Source");
@@ -128,17 +128,20 @@ public class SmooksFormEditor extends FormEditor implements
 			createGraphicalEditor();
 			createConfigurationEditor();
 			createXMLTextEditor();
-			if (onlyShowTextEditor) {
-				removeGraphicalFormPage();
-			}
+			assosiateEditors();
+			if (showTextEditorReason != null)
+				this.setActiveEditor(xmlTextEditor);
 		} catch (Exception e) {
 			UIUtils.showErrorDialog(getSite().getShell(), UIUtils
 					.createErrorStatus(e));
 		}
 	}
+	
+	protected void assosiateEditors(){
+		xmlTextEditor.addSaveListener(graphicalPage);
+	}
 
-	public void setOnlyShowTextEditor(boolean onlyShowTextEditor,
-			Throwable reason) {
+	public void setParseException(boolean onlyShowTextEditor, Throwable reason) {
 		this.onlyShowTextEditor = onlyShowTextEditor;
 		this.showTextEditorReason = reason;
 	}
@@ -234,15 +237,12 @@ public class SmooksFormEditor extends FormEditor implements
 
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		if (onlyShowTextEditor) {
-			if (textEdtior != null) {
-				textEdtior.doSave(monitor);
-				fireEditorDirty(false);
-				return;
-			}
-		}
-		graphicalPage.doSave(monitor);
-		fireEditorDirty(false);
+		this.graphicalPage.doSave(monitor);
+//		IEditorPart activeEditor = this.getEditor(this.getCurrentPage());
+//		if (activeEditor != normalPage && activeEditor != null) {
+//			activeEditor.doSave(monitor);
+//			fireEditorDirty(false);
+//		}
 	}
 
 	public void fireEditorDirty(boolean dirty) {
@@ -252,19 +252,12 @@ public class SmooksFormEditor extends FormEditor implements
 
 	@Override
 	public void doSaveAs() {
-		if (onlyShowTextEditor) {
-			if (textEdtior != null) {
-				textEdtior.doSaveAs();
-			}
-		}
 	}
 
 	@Override
 	public boolean isSaveAsAllowed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
-	
 
 	@Override
 	protected IEditorSite createSite(IEditorPart editor) {
@@ -272,16 +265,18 @@ public class SmooksFormEditor extends FormEditor implements
 	}
 
 	public Object getAdapter(Class adapter) {
-		if(adapter == IPropertySheetPage.class){
+		if (adapter == IPropertySheetPage.class) {
 			System.out.println();
 		}
-		if (adapter == IPropertySheetPage.class && this.getActiveEditor() == graphicalPage) {
+		if (adapter == IPropertySheetPage.class
+				&& this.getActiveEditor() == graphicalPage) {
 			tabbedPropertySheetPage = new TabbedPropertySheetPage(this);
 			return tabbedPropertySheetPage;
 		}
-		if (adapter == IContentOutlinePage.class && this.getActiveEditor() == xmlTextEditor){
+		if (adapter == IContentOutlinePage.class
+				&& this.getActiveEditor() == xmlTextEditor) {
 			return super.getAdapter(adapter);
-		}else{
+		} else {
 		}
 		return super.getAdapter(adapter);
 	}
