@@ -59,6 +59,19 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 
 	private List hidenResourceConfigs;
 
+	private boolean disableGUI = false;
+
+	public boolean isDisableGUI() {
+		return disableGUI;
+	}
+
+	public void setDisableGUI(boolean disableGUI) {
+		this.disableGUI = disableGUI;
+		setGUIStates();
+	}
+
+	private Section parseTypeSection;
+
 	public SmooksNormalContentEditFormPage(FormEditor editor, String id,
 			String title, NormalSmooksModelPackage modelPacakge) {
 		super(editor, id, title);
@@ -98,6 +111,18 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 		form.pack();
 		this.initTransformTypeResourceConfig();
 		resourceBlock.initViewers(transformType);
+		
+		setGUIStates();
+	}
+
+	public void setGUIStates() {
+		if(resourceBlock != null){
+			resourceBlock.setSectionStates(!disableGUI);
+		}
+		
+		if(this.parseTypeSection != null && !parseTypeSection.isDisposed()){
+			parseTypeSection.setEnabled(!disableGUI);
+		}
 	}
 
 	private ResourceConfigType createTransformType() {
@@ -151,12 +176,12 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 
 	protected void createSmooksTypeGUI(Composite mainComposite, FormToolkit tool) {
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		Section section = tool.createSection(mainComposite, Section.TITLE_BAR
+		parseTypeSection = tool.createSection(mainComposite, Section.TITLE_BAR
 				| Section.DESCRIPTION | Section.TWISTIE);
-		section.setLayoutData(gd);
-		Composite typeSelectComposite = tool.createComposite(section);
-		section.setClient(typeSelectComposite);
-		section.setText("Smooks Parse Type");
+		parseTypeSection.setLayoutData(gd);
+		Composite typeSelectComposite = tool.createComposite(parseTypeSection);
+		parseTypeSection.setClient(typeSelectComposite);
+		parseTypeSection.setText("Smooks Parse Type");
 		GridLayout layout1 = new GridLayout();
 		typeSelectComposite.setLayout(layout1);
 

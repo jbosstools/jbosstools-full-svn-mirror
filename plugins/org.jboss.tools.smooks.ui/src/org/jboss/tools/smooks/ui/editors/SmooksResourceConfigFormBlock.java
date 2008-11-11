@@ -86,6 +86,8 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 
 	private Button downButton;
 
+	private Section configurationSection;
+
 	public SmooksResourceConfigFormBlock() {
 		super();
 	}
@@ -213,14 +215,14 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 
 	protected void createDataTypeGUI(Composite rootMainControl,
 			FormToolkit tool, final IManagedForm managedForm) {
-		Section section = tool.createSection(rootMainControl, Section.TITLE_BAR
+		configurationSection = tool.createSection(rootMainControl, Section.TITLE_BAR
 				| Section.DESCRIPTION);
-		section.setText("Data Type");
-		sectionPart = new SectionPart(section);
+		configurationSection.setText("Data Type");
+		sectionPart = new SectionPart(configurationSection);
 		managedForm.addPart(sectionPart);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		Composite dataTypeComposite = tool.createComposite(section);
-		section.setClient(dataTypeComposite);
+		Composite dataTypeComposite = tool.createComposite(configurationSection);
+		configurationSection.setClient(dataTypeComposite);
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
 		layout.marginHeight = 0;
@@ -262,6 +264,12 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 		downButton.setLayoutData(gd);
 
 		hookButtons();
+	}
+	
+	public void setSectionStates(boolean state){
+		if(configurationSection != null && !configurationSection.isDisposed()){
+			configurationSection.setEnabled(state);
+		}
 	}
 
 	private void hookButtons() {
