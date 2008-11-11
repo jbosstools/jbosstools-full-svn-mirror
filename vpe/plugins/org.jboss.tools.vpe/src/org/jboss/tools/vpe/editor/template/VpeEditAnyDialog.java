@@ -30,8 +30,8 @@ import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.outline.cssdialog.CSSStyleDialog;
 import org.jboss.tools.jst.jsp.outline.cssdialog.common.Constants;
-import org.jboss.tools.jst.jsp.outline.cssdialog.common.MessageUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
+
 /**
  * Class which presents dialog for any template
  * @author mareshkau
@@ -108,7 +108,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 	
 		Button button = new Button(composite, SWT.PUSH);
 		button.setLayoutData(new GridData());
-		button.setToolTipText(MessageUtil.getString("BACKGROUND_COLOR_TIP")); //$NON-NLS-1$
+		button.setToolTipText(VpeUIMessages.BACKGROUND_COLOR_TIP);
 		ImageDescriptor colorDesc = JspEditorPlugin
 			.getImageDescriptor(Constants.IMAGE_COLORLARGE_FILE_LOCATION);
 		Image im = colorDesc.createImage();

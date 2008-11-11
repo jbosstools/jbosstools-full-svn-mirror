@@ -103,4 +103,5 @@ public class VpeUIMessages extends NLS {
 	public static String MAX_SOURCE_PANE;
 	public static String MAX_VISUAL_PANE;
 	public static String RESTORE_PREVIOUS_LOCATION;
+	public static String BACKGROUND_COLOR_TIP;
 }
