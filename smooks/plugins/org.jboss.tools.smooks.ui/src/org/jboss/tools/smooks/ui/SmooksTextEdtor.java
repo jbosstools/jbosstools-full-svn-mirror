@@ -18,13 +18,15 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.smooks.ui.editors.ISaveListener;
 import org.jboss.tools.smooks.ui.editors.SaveResult;
+import org.jboss.tools.smooks.ui.editors.SmooksGraphicalFormPage;
 import org.jboss.tools.smooks.utils.SmooksGraphConstants;
 
 /**
  * @author Dart
  * 
  */
-public class SmooksTextEdtor extends StructuredTextEditor {
+public class SmooksTextEdtor extends StructuredTextEditor implements
+		IAnalyzeListener {
 
 	private List<ISaveListener> saveListenerList = new ArrayList<ISaveListener>();
 
@@ -34,7 +36,7 @@ public class SmooksTextEdtor extends StructuredTextEditor {
 
 	public SmooksTextEdtor(Throwable error) {
 		super();
-		this.setErrorMessage(error);
+		this.setErrorThrowable(error);
 	}
 
 	public SmooksTextEdtor() {
@@ -45,19 +47,21 @@ public class SmooksTextEdtor extends StructuredTextEditor {
 		if (listener != null)
 			this.saveListenerList.add(listener);
 	}
-	
-	public void removeSaveListener(ISaveListener listener){
+
+	public void removeSaveListener(ISaveListener listener) {
 		if (listener != null)
 			this.saveListenerList.remove(listener);
 	}
-	
-	public void cleanSaveListenerList(){
+
+	public void cleanSaveListenerList() {
 		saveListenerList.clear();
 	}
 
-	public void setErrorMessage(Throwable error) {
-		if (error == null)
+	public void setErrorThrowable(Throwable error) {
+		if (error == null) {
+			setErrorMessage(null);
 			return;
+		}
 		this.error = error;
 		while (this.error != null
 				&& this.error instanceof InvocationTargetException) {
@@ -65,36 +69,73 @@ public class SmooksTextEdtor extends StructuredTextEditor {
 					.getTargetException();
 		}
 		String errorMessage = null;
-		if (error != null)
-			errorMessage = error.getLocalizedMessage();
+		if (this.error != null)
+			errorMessage = this.error.getLocalizedMessage();
 		if (errorMessage == null)
 			errorMessage = Messages
 					.getString("SmooksTextEdtor.UnKnownErrorMessage"); //$NON-NLS-1$
-		if (messageLabel != null)
-			messageLabel.setText(errorMessage);
+		setErrorMessage(errorMessage);
 	}
 
 	public void setErrorMessage(String message) {
+		boolean flag = false;
+		if (errorComposite == null || errorComposite.isDisposed()
+				|| messageLabel == null || messageLabel.isDisposed()) {
+			return;
+		}
 		if (message == null) {
 			GridData gd = new GridData();
-			gd.exclude = true;
-			this.errorComposite.setLayoutData(gd);
+			if (flag) {
+				for (int i = 70; i >= 0; i--) {
+					gd.heightHint = i;
+					if (gd.heightHint <= 0) {
+						gd.heightHint = 0;
+						errorComposite.setVisible(false);
+						gd.exclude = true;
+					}
+					this.errorComposite.setLayoutData(gd);
+					Composite parent = errorComposite.getParent();
+					parent.layout();
+				}
+			} else {
+				gd.heightHint = 0;
+				errorComposite.setVisible(false);
+				gd.exclude = true;
+				this.errorComposite.setLayoutData(gd);
+				Composite parent = errorComposite.getParent();
+				parent.layout();
+			}
 		} else {
 			GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-			errorComposite.setLayoutData(gd);
+			errorComposite.setVisible(true);
 			messageLabel.setText(message);
+			if (flag) {
+				for (int i = 0; i < 70; i++) {
+					gd.heightHint = i;
+					errorComposite.setLayoutData(gd);
+					Composite parent = errorComposite.getParent();
+					parent.layout();
+				}
+			} else {
+				errorComposite.setLayoutData(gd);
+				Composite parent = errorComposite.getParent();
+				parent.layout();
+			}
+
 		}
 	}
 
 	public void doSave(IProgressMonitor monitor) {
 		SaveResult result = new SaveResult();
 		result.setSourceEdtior(this);
-		for (Iterator<ISaveListener> iterator = saveListenerList.iterator(); iterator.hasNext();) {
+		for (Iterator<ISaveListener> iterator = saveListenerList.iterator(); iterator
+				.hasNext();) {
 			ISaveListener l = (ISaveListener) iterator.next();
 			l.preSave(result);
 		}
 		super.doSave(monitor);
-		for (Iterator<ISaveListener> iterator = saveListenerList.iterator(); iterator.hasNext();) {
+		for (Iterator<ISaveListener> iterator = saveListenerList.iterator(); iterator
+				.hasNext();) {
 			ISaveListener l = (ISaveListener) iterator.next();
 			l.endSave(result);
 		}
@@ -146,5 +187,11 @@ public class SmooksTextEdtor extends StructuredTextEditor {
 		textComposite.setLayoutData(gd);
 		textComposite.setLayout(new FillLayout());
 		super.createPartControl(textComposite);
+	}
+
+	public void endAnalyze(AnalyzeResult result) {
+		if (result.getSourceEdtior() instanceof SmooksGraphicalFormPage) {
+			setErrorThrowable(result.getError());
+		}
 	}
 }
