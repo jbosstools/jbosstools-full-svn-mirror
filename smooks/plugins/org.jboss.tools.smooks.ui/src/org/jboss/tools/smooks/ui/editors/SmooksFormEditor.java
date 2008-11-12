@@ -139,6 +139,8 @@ public class SmooksFormEditor extends FormEditor implements
 	
 	protected void assosiateEditors(){
 		xmlTextEditor.addSaveListener(graphicalPage);
+		graphicalPage.addAnalyzeListener(xmlTextEditor);
+		graphicalPage.addAnalyzeListener(normalPage);
 	}
 
 	public void setParseException(boolean onlyShowTextEditor, Throwable reason) {
@@ -214,7 +216,7 @@ public class SmooksFormEditor extends FormEditor implements
 	}
 
 	public void refreshNormalPage(List resourceHidenConfigs) {
-		NormalSmooksModelPackage modelPackage = createSmooksModelPackage();
+		NormalSmooksModelPackage modelPackage = createNewSmooksModelPackage();
 		if (modelPackage != null) {
 			modelPackage.setHidenSmooksElements(resourceHidenConfigs);
 		}
@@ -223,7 +225,7 @@ public class SmooksFormEditor extends FormEditor implements
 		}
 	}
 
-	protected NormalSmooksModelPackage createSmooksModelPackage() {
+	public NormalSmooksModelPackage createNewSmooksModelPackage() {
 		NormalSmooksModelBuilder builder = NormalSmooksModelBuilder
 				.getInstance();
 		if (smooksResource.getContents().isEmpty())

@@ -73,7 +73,7 @@ public class UIUtils {
 			if (selector.indexOf(splitString) != -1) {
 				throw new InvocationTargetException(new Exception(
 						"The Selector string dosen't support \"" + splitString
-								+ "\" character"));
+								+ "\" character. Selector is \"" + selector + "\""));
 			}
 		}
 	}

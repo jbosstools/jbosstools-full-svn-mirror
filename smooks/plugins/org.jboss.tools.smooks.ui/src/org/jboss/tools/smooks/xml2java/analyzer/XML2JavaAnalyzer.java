@@ -419,6 +419,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			if (rt == null)
 				continue;
 			String value = rt.getValue();
+			if(value != null) value = value.trim();
 			if (SmooksModelConstants.BEAN_POPULATOR.equals(value)) {
 				return resource;
 			}
