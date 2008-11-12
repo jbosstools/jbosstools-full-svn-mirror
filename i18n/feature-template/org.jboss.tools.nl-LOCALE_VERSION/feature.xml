@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<feature
+	id="${feature}.nl-${locale}"
+	label="JBoss Tools Language Pack for ${featurename} in ${localename}"
+	provider-name="%providerName"
+	version="${PLUGIN_VERSION}">
+	<copyright>
+		%copyright
+	</copyright>
+	<license url="%licenseURL">
+		%license
+	</license>
+	<description>JBoss Tools Language Pack for ${featurename} in ${localename}</description>
+	<url>
+		<update label="JBossTools Update Site" url="http://download.jboss.org/jbosstools/updates/stable"/>
+		<discovery label="JBossTools Development Update Site" url="http://download.jboss.org/updates/development"/>
+	</url>
+	<requires>
+		<import feature="${feature}" />
+	</requires>
+	${plugins}
+</feature>

@@ -1,0 +1,441 @@
+<?xml version="1.0"?>
+
+<project name="org.jboss.tools.translations" default="debug" basedir="." xmlns:artifact="urn:maven-artifact-ant">
+
+	<path id="jbtdir" path="..">
+	</path>
+	<property name="jbt.srcdir" value="${toString:jbtdir}" />
+
+	<property file="i18n.properties" />
+	<property name="meta.dtd" value="${jbt.srcdir}/common/plugins/org.jboss.tools.common.model/resources/meta/meta.dtd" />
+	<property name="meta.xpath" value="//@displayName | //XModelAttribute/@name | //XModelAttribute/@default | //Constraint/value/@name" />
+
+	<!-- Target locations: -->
+	<property name="target.dir" location="target" />
+	<property name="potdir" value="${target.dir}${file.separator}pot" />
+	<property name="propdir" value="${target.dir}${file.separator}prop" />
+	<property name="jardir" value="${target.dir}${file.separator}jars" />
+	<property name="zipdir" value="${target.dir}${file.separator}zips" />
+
+	<!-- Fetch Maven Ant Tasks jar: -->
+	<!-- 2.0.9 is not yet in the jboss maven repo -->
+	<property name="maven.version" value="2.0.8" />
+	<property name="maven-artifact-ant.bootstrap.jar" location="${target.dir}/lib/maven-ant-tasks-${maven.version}.jar" />
+	<property name="remoteRepo" value="" />
+
+	<target name="-check-get-maven-artifact-ant">
+		<available property="-get-maven-artifact-ant-done" file="${maven-artifact-ant.bootstrap.jar}" />
+	</target>
+
+	<target name="-get-maven-artifact-ant" depends="-check-get-maven-artifact-ant" unless="-get-maven-artifact-ant-done">
+		<mkdir dir="${target.dir}/lib" />
+		<get src="http://repository.jboss.com/maven2/org/apache/maven/maven-ant-tasks/${maven.version}/maven-ant-tasks-${maven.version}.jar" dest="${maven-artifact-ant.bootstrap.jar}" />
+	</target>
+
+	<!-- Define the Ant-Contrib and Tennera Ant Gettext tasks, using Maven 
+	to resolve dependencies: -->
+	<target name="initTaskDefs" depends="-get-maven-artifact-ant">
+		<path id="maven-ant-tasks.classpath" path="${maven-artifact-ant.bootstrap.jar}" />
+		<typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant" classpathref="maven-ant-tasks.classpath" />
+
+		<!-- This would be used if we wanted to keep maven's repo out of ${user.home}
+	    <artifact:localRepository id="local.repository" path="${basedir}/target/local-repo" layout="default"/>
+
+    	<property name="deploy.repository.url" value="${basedir}/target/deployment-repo" />
+    	<artifact:remoteRepository id="deploy.repository" url="file://localhost/${deploy.repository.url}" layout="default"/>
+		-->
+
+		<!-- Maven dependencies  -->
+		<artifact:pom file="pom.xml" id="maven.project" />
+		<artifact:dependencies pathId="dependency.classpath" useScope="runtime" type="jar">
+			<pom refid="maven.project" />
+		</artifact:dependencies>
+
+		<!-- pick up the "for" task from ant-contrib -->
+		<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="dependency.classpath" />
+
+		<!-- xpath task -->
+		<taskdef resource="net/uworks/andariel/andariel.properties" classpathref="dependency.classpath" />
+
+		<!-- ant-gettext tasks -->
+		<taskdef name="prop2pot" classname="org.fedorahosted.tennera.antgettext.Prop2PotTask" classpathref="dependency.classpath" />
+		<taskdef name="pot2en" classname="org.fedorahosted.tennera.antgettext.Pot2EnTask" classpathref="dependency.classpath" />
+		<taskdef name="po2prop" classname="org.fedorahosted.tennera.antgettext.Po2PropTask" classpathref="dependency.classpath" />
+		<taskdef name="xpath2pot" classname="org.fedorahosted.tennera.antgettext.XPath2PotTask" classpathref="dependency.classpath" />
+	</target>
+
+
+	<target name="init" depends="checkver,initTaskDefs">
+	</target>
+
+	<target name="debug" depends="init">
+		<echo message="jbt.srcdir=${jbt.srcdir}">
+		</echo>
+		<!-- get the source compile classpath in a printable form -->
+		<pathconvert pathsep="${line.separator}|   |__ " property="echo.dependency.classpath" refid="dependency.classpath">
+		</pathconvert>
+		<echo message="|__ dependency.classpath path" />
+		<echo message="|   |" />
+		<echo message="|   |__ ${echo.dependency.classpath}" />
+		<!--
+-->
+	</target>
+
+	<target name="clean" description="Remove generated files">
+		<delete dir="${potdir}" />
+		<delete dir="po/en" />
+		<delete dir="po/qps" />
+		<delete dir="po/en_AA" />
+		<delete dir="${propdir}" />
+		<delete dir="${jardir}" />
+		<delete dir="${zipdir}" />
+	</target>
+
+	<target name="prop2pot" description="Extract translation templates (POT) from the JBoss Tools English properties files" depends="init">
+		<delete dir="${potdir}" />
+		<mkdir dir="${potdir}" />
+		<for param="srcdir">
+			<path>
+				<!-- paths under jbt.srcdir look like: ${module}/plugins/${plugin}/{src,main,...} -->
+				<dirset dir="${jbt.srcdir}" includes="*/plugins/*/*" excludes="${srcexcludes}" />
+			</path>
+			<sequential>
+				<!-- work out srcdir's path relative to the jbosstools source tree
+				 -->
+				<propertyregex override="true" property="relativesrcdir" 
+					input="@{srcdir}" regexp="^${jbt.srcdir}${file.separator}(.*)" select="\1" />
+				<checkprop propname="relativesrcdir"/>
+				<propertyregex override="true" property="plugin" 
+					input="@{srcdir}" 
+					regexp="^${jbt.srcdir}${file.separator}[^/\\]+${file.separator}plugins${file.separator}([^/\\]+)${file.separator}.*" 
+					select="\1" />
+				<checkprop propname="plugin"/>
+				<!--
+				<echo message="extracting strings from @{srcdir} -> ${potdir}/${relativesrcdir}"/>
+-->
+				<prop2pot srcDir="@{srcdir}" dstDir="${potdir}/${relativesrcdir}" />
+				<xpath2pot srcDir="@{srcdir}" target="${potdir}/${relativesrcdir}/${plugin}_meta.pot" includes="**/*.meta" xpath="${meta.xpath}" pathprefix="${relativesrcdir}/">
+					<dtd publicId="-//Red Hat, Inc.//DTD Meta 1.0//EN" location="${meta.dtd}" />
+				</xpath2pot>
+			</sequential>
+		</for>
+	</target>
+
+	<!-- autogenerated "translations" -->
+	<target name="en" depends="init" description="Generate English PO files from POT files">
+		<delete dir="po/en" />
+		<mkdir dir="po/en" />
+		<pot2en srcDir="${potdir}" dstDir="po/en" />
+	</target>
+	<target name="qps" depends="init" description="Generate Pseudo-translation PO files for qps locale from POT files">
+		<delete dir="po/qps" />
+		<mkdir dir="po/qps" />
+		<pot2en srcDir="${potdir}" dstDir="po/qps" pseudo="true" />
+	</target>
+
+	<target name="en_AA" depends="init" description="Generate Pseudo-translation PO files for en_AA locale from POT files">
+		<delete dir="po/en_AA" />
+		<mkdir dir="po/en_AA" />
+		<pot2en srcDir="${potdir}" dstDir="po/en_AA" pseudo="true" />
+	</target>
+
+	<target name="po2prop" depends="init" description="Generate Java properties files from translated PO files">
+		<delete dir="${propdir}" />
+		<mkdir dir="${propdir}" />
+		<!-- for each locale in po/* -->
+		<for param="locale" list="${locales}">
+			<sequential>
+				<po2prop srcDir="po/@{locale}" dstDir="${propdir}/@{locale}" locale="@{locale}" />
+			</sequential>
+		</for>
+	</target>
+
+	<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+          macrodef: checkprop checks that specified property has been set
+         = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+	<macrodef name="checkprop">
+		<attribute name="propname" />
+		<sequential>
+			<if>
+				<!-- TODO fail on empty value -->
+				<not>
+					<isset property="@{propname}"/>
+				</not>
+				<then>
+					<fail message="property '@{propname}' is not set"/>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<!-- = = = = = = = = = = = = = = = = =
+          macrodef: processplugins        
+         = = = = = = = = = = = = = = = = = -->
+	<macrodef name="processplugins">
+		<attribute name="rootdir" />
+		<attribute name="task" />
+		<sequential>
+			<for param="plugindir">
+				<path>
+					<dirset dir="@{rootdir}" includes="*/*/plugins/*">
+					</dirset>
+				</path>
+				<sequential>
+					<propertyregex override="true" property="locale" 
+    					input="@{plugindir}" 
+    					regexp="^@{rootdir}${file.separator}([^/\\]+)${file.separator}.*" 
+    					select="\1" />
+					<checkprop propname="locale"/>
+					<propertyregex override="true" property="module" 
+    					input="@{plugindir}" 
+    					regexp="^@{rootdir}${file.separator}[^/\\]+${file.separator}([^/\\]+).*" 
+    					select="\1" />
+					<checkprop propname="module"/>
+					<propertyregex override="true" property="plugin" 
+    					input="@{plugindir}" 
+    					regexp="^@{rootdir}${file.separator}[^/\\]+${file.separator}[^/\\]+${file.separator}plugins${file.separator}(.*)" 
+    					select="\1" />
+					<checkprop propname="plugin"/>
+					<propertycopy override="true" property="localename" from="NAME_${locale}"/>
+					<!--
+    				<echo message="@{plugindir} contains ${locale} props for plugin ${plugin} in module ${module}"/>
+    				-->
+					<antcall target="@{task}">
+						<param name="plugindir" value="@{plugindir}"/>
+					</antcall>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
+	<target name="manifests" depends="init" description="Generate fragment plugin manifests for langpack plugins">
+		<delete dir="${propdir}" includes="*/*/plugins/*/META-INF/MANIFEST.MF"/>
+		<processplugins rootdir="${propdir}" task="manifest" />
+	</target>
+
+	<target name="manifest">
+		<!-- NB don't depend on initTaskDefs here, or ant loads the 
+		classes over and over until it exhausts memory -->
+		<checkprop propname="plugindir"/>
+		<checkprop propname="plugin"/>
+		<checkprop propname="locale"/>
+		<checkprop propname="localename"/>
+		<checkprop propname="PLUGIN_VERSION"/>
+		<checkprop propname="PLUGIN_VENDOR"/>
+<!-- TODO specify exact versions of host plugins? -->
+		<copy overwrite="true" file="plugin-template.mf" tofile="${plugindir}/META-INF/MANIFEST.MF">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</copy>
+		<!-- only for debugging:
+		<concat><filelist files="${plugindir}/META-INF/MANIFEST.MF"></filelist></concat>
+-->
+	</target>
+
+	<target name="fragments" depends="init" description="Generate fragment plugin jars to contain translations" >
+		<delete dir="${jardir}" />
+		<mkdir dir="${jardir}/plugins" />
+		<processplugins rootdir="${propdir}" task="fragment" />
+	</target>
+
+	<target name="fragment">
+		<!-- NB don't depend on initTaskDefs here, or ant loads the 
+		classes over and over until it exhausts memory -->
+		<checkprop propname="plugindir"/>
+		<checkprop propname="plugin"/>
+		<checkprop propname="locale"/>
+		<checkprop propname="localename"/>
+		<checkprop propname="PLUGIN_VERSION"/>
+		<checkprop propname="PLUGIN_VENDOR"/>
+		<property name="jar" value="${jardir}/plugins/${plugin}.nl-${locale}_${PLUGIN_VERSION}.jar" />
+		<!--
+		<echo message="Jarring up ${jar} from directory ${plugindir}"/>
+-->
+		<!-- we exclude "*" because we only want about.properties and 
+		plugin.properties from the top-level -->
+		<jar 
+			destfile="${jar}" 
+			update="no" 
+			basedir="${plugindir}"
+			excludes="*"
+			duplicate="fail" 
+			manifest="${plugindir}/META-INF/MANIFEST.MF">
+			<!-- todo consider an inline manifest -->
+			<include name="about.properties"/>
+			<!-- NB features contain feature.properties but all are currently empty -->
+			<include name="plugin.properties"/>
+			<!-- FIXME too many source paths, see https://jira.jboss.org/jira/browse/JBIDE-2972 -->
+			<!-- next two are Maven style, not currently used in JBT: 
+			<fileset erroronmissingdir="false" dir="${plugindir}/src/main/java"/>
+			<fileset erroronmissingdir="false" dir="${plugindir}/src/main/resources"/>
+			-->
+			<fileset erroronmissingdir="false" dir="${plugindir}/src/main" excludes="java,resources"/>
+			<fileset erroronmissingdir="false" dir="${plugindir}/src" excludes="main"/>
+			<fileset erroronmissingdir="false" dir="${plugindir}/jbosscore"/>
+			<fileset erroronmissingdir="false" dir="${plugindir}/jbossui"/>
+			<fileset erroronmissingdir="false" dir="${plugindir}/resources"/>
+			<!-- <fileset dir="${plugindir}/templates"/> -->
+			<fileset erroronmissingdir="false" dir="${plugindir}/template-src"/>
+			<!-- TODO identify and list unincluded directories -->
+		</jar>
+	</target>
+
+	<target name="features" depends="init" 
+		description="Generate langpack feature manifests (one per locale) for each JBT feature, and corresponding site.xml">
+		<delete dir="${propdir}/features" />
+		<mkdir dir="${propdir}/features" />
+		<delete dir="${jardir}/features" />
+		<mkdir dir="${jardir}/features" />
+		<var name="temp.file.sitefeatures" unset="true" />
+		<tempfile property="temp.file.sitefeatures" destdir="${target.dir}" prefix="site" suffix=".tmp" createfile="true" deleteonexit="false" />
+		<sequential>
+			<for param="featurexml">
+				<path>
+					<fileset dir="${jbt.srcdir}" includes="*/features/*/feature.xml"/>
+				</path>
+				<sequential>
+					<propertyregex override="true" property="module" 
+    					input="@{featurexml}" 
+    					regexp="^${jbt.srcdir}${file.separator}([^/\\]+).*" 
+    					select="\1" />
+					<checkprop propname="module"/>
+					<propertyregex override="true" property="feature" 
+    					input="@{featurexml}" 
+    					regexp="^${jbt.srcdir}${file.separator}[^/\\]+${file.separator}features${file.separator}([^/\\]+)${file.separator}feature.xml" 
+    					select="\1" />
+					<checkprop propname="feature"/>
+					<var name="featurename" value="${feature}" />
+					<var name="jarsize" value="0" />
+					<echo message="Processing feature ${feature} in module ${module}"/>
+						<for param="locale" list="${locales}">
+							<sequential>
+								<var name="locale" value="@{locale}" />
+								<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
+								
+								<xpath 
+									file="@{featurexml}" 
+									expression="/feature/plugin/@id" 
+									delimiter=" "
+									outputproperty="feature.${feature}.plugins"/>
+								<propertycopy override="true" property="plugins" from="feature.${feature}.plugins"/>
+								
+								
+								<var name="temp.file.featureplugins" unset="true" />
+								<tempfile property="temp.file.featureplugins" destdir="${target.dir}" prefix="plugins" suffix=".tmp" createfile="true" deleteonexit="true" />
+								<for param="plugin" list="${plugins}" delimiter=" ">
+									<sequential>
+										<if>
+											<available file="${jardir}/plugins/@{plugin}.nl-${locale}_${PLUGIN_VERSION}.jar" />
+											<then>
+												<echo append="true" file="${temp.file.featureplugins}"
+													message="&lt;plugin 
+													id=&quot;@{plugin}.nl-${locale}&quot; 
+													fragment=&quot;true&quot; unpack=&quot;false&quot; 
+													version=&quot;${PLUGIN_VERSION}&quot; /&gt;" />
+											</then>
+										</if>
+									</sequential>
+								</for>
+								<var name="plugins" unset="true" />
+								<loadfile property="plugins"  srcFile="${temp.file.featureplugins}"/>
+								<delete file="${temp.file.featureplugins}"/>
+
+								
+								<echo append="true" file="${temp.file.sitefeatures}"
+									message="&lt;feature url=&quot;features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar&quot; 
+								      id=&quot;${feature}.nl-@{locale}&quot; version=&quot;${PLUGIN_VERSION}&quot;&gt;
+								      &lt;category name=&quot;JBoss Tools Localization (${localename})&quot;/&gt;
+								   &lt;/feature&gt;" />
+								<!--
+								   <feature url="features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
+								      id="${feature}.nl-@{locale}" version="${PLUGIN_VERSION}">
+								      <category name="JBoss Tools Localization"/>
+								   </feature>
+								-->
+										
+
+								
+								<!-- TODO download-size="${jarsize}" install-size="${jarsize}" -->
+								<copy overwrite="true" 
+									todir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}">
+									<filterchain>
+										<expandproperties/>
+									</filterchain>
+									<!-- TODO rename to FEATURE.nl-LOCALE_VERSION -->
+									<fileset dir="feature-template/org.jboss.tools.nl-LOCALE_VERSION" />
+									<!--
+									features/org.*.nl-${locale}_${PLUGIN_VERSION}/
+										license.html
+										feature.properties
+										feature.xml
+									-->
+								</copy>
+								<jar destfile="${jardir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
+									basedir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}" />
+<!--
+								<delete dir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}" />
+-->
+							</sequential>
+						</for>
+				</sequential>
+			</for>
+		</sequential>
+		<for param="locale" list="${locales}">
+			<sequential>
+				<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
+				<echo append="true" file="${temp.file.sitefeatures}"
+					message="&lt;category-def name=&quot;JBoss Tools Localization (${localename})&quot; label=&quot;JBoss Tools Localization (${localename})&quot;/&gt;" />
+			</sequential>
+		</for>
+		
+		<!--
+   <category-def name="JBoss Tools Localization (${localename})" label="JBoss Tools Localization (${localename})"/>
+		-->
+		
+		
+		<var name="features" unset="true" />
+		<loadfile property="features"  srcFile="${temp.file.sitefeatures}"/>
+		<!--
+		<delete file="${temp.file.sitefeatures}"/>
+		-->
+
+		<copy overwrite="true" tofile="${jardir}/site.xml" file="site-template.xml">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</copy>
+	</target>
+	
+	<target name="zips" depends="init">
+		<delete dir="${zipdir}" />
+		<mkdir dir="${zipdir}" />
+		<for param="locale" list="${locales}">
+			<sequential>
+				<zip
+					destfile="${zipdir}/jbosstools-nls-@{locale}_${LANGPACK_VERSION}.zip"
+					compress="false" 
+					whenempty="fail"
+					basedir="${jardir}" >
+					<include name="plugins/*.nl-@{locale}_${PLUGIN_VERSION}.jar" />
+					<include name="features/*.nl-@{locale}_${PLUGIN_VERSION}.jar/" />
+					<!--
+					-->
+				</zip>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="all" depends="clean, prop2pot, en, qps, en_AA, po2prop, manifests, fragments, features, zips" 
+	description="Runs all targets in an appropriate order"/>
+
+	
+	<!-- Test for a class from Ant 1.7.1 (needed for the jar task's erroronmissingdir feature --> 
+	<available property="Ant-1.7.1-or-later"
+	               classname="org.apache.tools.ant.input.SecureInputHandler"/>
+
+	<target name="checkver" unless="Ant-1.7.1-or-later">
+		<fail message="Incorrect version of ant: ${ant.version} but required: 1.7.1"/>
+	</target>
+
+</project>
