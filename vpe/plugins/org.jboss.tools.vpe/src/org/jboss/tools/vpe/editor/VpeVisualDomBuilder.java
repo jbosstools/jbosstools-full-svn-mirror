@@ -523,16 +523,17 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					&& (data.getNodesData() != null)
 					&& (data.getNodesData().size() > 0)) {
 
-				if (template instanceof IEditableTemplate) {
-					final IEditableTemplate editableTemplate = (IEditableTemplate) template;
+				Element sourceElement = (Element) sourceNode;
 
-					for (org.jboss.tools.vpe.editor.mapping.NodeData nodeData : data
-							.getNodesData()) {
-						Attr attr = editableTemplate
-								.getOutputAttributeNode((Element) sourceNode);
-						if (attr != null) {
-							nodeData.setSourceNode(attr);
-						}
+				for (org.jboss.tools.vpe.editor.mapping.NodeData nodeData : data
+						.getNodesData()) {
+
+					if (nodeData.getSourceNode() != null) {
+
+						Attr attr = sourceElement.getAttributeNode(nodeData
+								.getSourceNode().getNodeName());
+						nodeData.setSourceNode(attr);
+						nodeData.setEditable(false);
 					}
 				}
 

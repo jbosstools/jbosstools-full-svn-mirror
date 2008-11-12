@@ -1348,8 +1348,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						/*
 						 *  Edward
 						 */
-						sourceSelectionChanged(true);
-						visualSelectionController.setCaretEnabled(true);
+					// commented by sdzmitrovich because cursor disappear after
+					// trying to edit of read-only elements
+					// TODO check editing and if are appear errors then
+					// uncommented next code
+					// sourceSelectionChanged(true);
+					// visualSelectionController.setCaretEnabled(true);
+						
 					} finally {
 						switcher.stopActiveEditor();
 					}

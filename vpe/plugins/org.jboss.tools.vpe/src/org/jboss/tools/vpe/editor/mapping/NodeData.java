@@ -24,9 +24,9 @@ import org.w3c.dom.Node;
  */
 public class NodeData {
 
-	public static int NODE = 0;
+	final public static int NODE = 0;
 
-	public static int ATTRIBUTE = 1;
+	final public static int ATTRIBUTE = 1;
 
 	/**
 	 * source presentation of attribute
