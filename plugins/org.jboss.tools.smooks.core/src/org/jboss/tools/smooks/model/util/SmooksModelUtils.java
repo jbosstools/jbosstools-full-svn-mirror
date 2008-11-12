@@ -74,6 +74,7 @@ public class SmooksModelUtils {
 	
 	public static String getTransformType(ResourceConfigType resourceConfig){
 		ParamType typeParam = null;
+		if(resourceConfig == null) return "";
 		if(isTransformTypeResourceConfig(resourceConfig)){
 			List paramList = resourceConfig.getParam();
 			for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
