@@ -34,6 +34,8 @@ public class DeleteElementCommand extends Command {
     private NodeWrapper child;
     private ContainerWrapper parent;
     
+    private List<DeleteElementCommand> embeddedCommands;
+    
     private List<NodeWrapper> incomingElementWrappers = new ArrayList<NodeWrapper>();
     private List<NodeWrapper> outgoingElementWrappers = new ArrayList<NodeWrapper>();
     private List<ConnectionWrapper> incomingConnections = new ArrayList<ConnectionWrapper>();
@@ -56,8 +58,32 @@ public class DeleteElementCommand extends Command {
     		connection.disconnect();
     	}
     }
+    
+    private void initializeEmbeddedCommands() {
+    	embeddedCommands = new ArrayList<DeleteElementCommand>();
+    	ContainerWrapper container = (ContainerWrapper)child;
+    	List<NodeWrapper> children = container.getElements();
+    	for (NodeWrapper w : children) {
+    		DeleteElementCommand c = new DeleteElementCommand();
+    		c.setParent(container);
+    		c.setChild(w);
+    		embeddedCommands.add(c);
+    	}
+    }
+    
+    private void executeEmbeddedCommands() {
+    	if (embeddedCommands == null) {
+    		initializeEmbeddedCommands();
+    	}
+    	for (DeleteElementCommand c : embeddedCommands) {
+    		c.execute();
+    	}
+    }
 
     public void execute() {
+    	if (child instanceof ContainerWrapper) {
+    		executeEmbeddedCommands();
+    	}
         deleteConnections(child);
         parent.removeElement(child);
     }
@@ -86,10 +112,19 @@ public class DeleteElementCommand extends Command {
     public void setParent(ContainerWrapper parent) {
         this.parent = parent;
     }
+    
+    private void undoEmbeddedCommands() {
+        for (DeleteElementCommand c : embeddedCommands) {
+        	c.undo();
+        }
+    }
 
     public void undo() {
         parent.addElement(child);
         restoreConnections();
+        if (child instanceof ContainerWrapper) {
+        	undoEmbeddedCommands();
+        }
     }
 
 }
