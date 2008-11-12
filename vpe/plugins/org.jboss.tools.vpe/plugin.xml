@@ -13,6 +13,7 @@
       <keys path="help/keys-vpe.properties"/>
       <keys path="help/keys-vpe-attrs.properties"/>
       <keys path="help/keys-vpe-menu.properties"/>
+      <keys path="help/keys-vpe-lists.properties"/>
    </extension>
    <!-- extension
          point="org.jboss.tools.vpe.templates">
