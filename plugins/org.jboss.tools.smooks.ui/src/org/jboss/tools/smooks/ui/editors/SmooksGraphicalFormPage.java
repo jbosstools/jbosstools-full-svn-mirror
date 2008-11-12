@@ -75,7 +75,6 @@ import org.eclipse.swt.events.TreeListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -121,6 +120,8 @@ import org.jboss.tools.smooks.model.DocumentRoot;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
+import org.jboss.tools.smooks.ui.AnalyzeResult;
+import org.jboss.tools.smooks.ui.IAnalyzeListener;
 import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
 import org.jboss.tools.smooks.ui.IViewerInitor;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
@@ -129,7 +130,6 @@ import org.jboss.tools.smooks.ui.gef.editparts.SmooksEditPartFactory;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
-import org.jboss.tools.smooks.ui.gef.model.RootModel;
 import org.jboss.tools.smooks.ui.gef.model.SourceModel;
 import org.jboss.tools.smooks.ui.gef.model.TargetModel;
 import org.jboss.tools.smooks.ui.gef.model.TreeItemRelationModel;
@@ -149,6 +149,8 @@ import org.jboss.tools.smooks.utils.UIUtils;
 public class SmooksGraphicalFormPage extends FormPage implements
 		ISelectionChangedListener, ISelectionProvider,
 		org.eclipse.emf.common.command.CommandStackListener, ISaveListener {
+
+	private List<IAnalyzeListener> analyzeListenerList = new ArrayList<IAnalyzeListener>();
 
 	protected boolean disableMappingGUI = false;
 
@@ -190,7 +192,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	protected Resource smooksResource = null;
 	protected Object sourceTreeViewerInputModel = null;
 	protected Object targetTreeViewerInputModel = null;
-	protected List<MappingModel> initConnectionList = null;
+	protected List<MappingModel> mappingModelList = null;
 	protected boolean commandStackChanged = false;
 	protected ActionRegistry actionRegistry;
 
@@ -264,15 +266,29 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			list = SmooksFactory.eINSTANCE.createSmooksResourceListType();
 			doc.setSmooksResourceList(list);
 		}
-
 	}
 
-	private void callParentRefillNormalModelInfor(List hidenResourceConfigs) {
-		SmooksFormEditor editor = (SmooksFormEditor) getEditor();
-		editor.refreshNormalPage(hidenResourceConfigs);
+	public void addAnalyzeListener(IAnalyzeListener listener) {
+		if (listener != null) {
+			analyzeListenerList.add(listener);
+		}
 	}
 
-	// protected void notifyParentEditorTransformNormal
+	public void removeAnalyzeListener(IAnalyzeListener listener) {
+		if (listener != null) {
+			analyzeListenerList.remove(listener);
+		}
+	}
+
+	public void cleanAnalyzeListenerList() {
+		analyzeListenerList.clear();
+	}
+
+	@Override
+	public void dispose() {
+		cleanAnalyzeListenerList();
+		super.dispose();
+	}
 
 	@Override
 	protected void createFormContent(IManagedForm managedForm) {
@@ -452,10 +468,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			this.getSmooksResource().unload();
 			this.initTransformViewerModel((IEditorSite) getSite(),
 					getEditorInput());
-		} catch (IOWrappedException ex) {
-			MessageDialog.openWarning(getSite().getShell(), "Waring",
-					"Exceptions occurd during parsing Smooks file, no worries");
-		} catch (Throwable e) {
+		}  catch (Throwable e) {
 			throwable = e;
 		}
 		if (throwable == null) {
@@ -470,12 +483,14 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				initTargetTreeViewer();
 				expandTargetConnectionModel();
 			}
-			
 			this.redrawMappingPanel();
+			notifyAnalyzeListeners(null);
 		} else {
 			cleanMappingPanel();
 			this.disableMappingGUI = true;
-			mappingGUISection.setEnabled(false);
+			if (mappingGUISection != null)
+				mappingGUISection.setEnabled(false);
+			this.notifyAnalyzeListeners(throwable);
 		}
 	}
 
@@ -483,45 +498,6 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		if (this.disableMappingGUI) {
 			mappingGUISection.setEnabled(false);
 		}
-	}
-
-	protected void createOtherSmooksGUI(Composite parent, FormToolkit tool) {
-		Composite mainComposite = tool.createComposite(parent);
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
-		gridLayout.marginHeight = 0;
-		gridLayout.marginWidth = 0;
-		mainComposite.setLayout(gridLayout);
-
-		createSmooksTypeGUI(mainComposite, tool);
-	}
-
-	protected void createSmooksTypeGUI(Composite mainComposite, FormToolkit tool) {
-		Composite typeSelectComposite = tool.createComposite(mainComposite);
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 2;
-		typeSelectComposite.setLayoutData(gd);
-		GridLayout layout = new GridLayout();
-		layout.numColumns = 3;
-		typeSelectComposite.setLayout(layout);
-
-		Label label = tool.createLabel(typeSelectComposite,
-				"Smooks Parse Type : ");
-		gd = new GridData();
-		gd.horizontalSpan = 3;
-
-		label.setLayoutData(gd);
-		createTypeSelectRadioButton(typeSelectComposite, tool, "SAX")
-				.setSelection(true);
-		createTypeSelectRadioButton(typeSelectComposite, tool, "DOM");
-		createTypeSelectRadioButton(typeSelectComposite, tool, "SAX/DOM");
-
-	}
-
-	private Button createTypeSelectRadioButton(Composite parent,
-			FormToolkit tool, String labelName) {
-		Button button = tool.createButton(parent, labelName, SWT.RADIO);
-		return button;
 	}
 
 	protected SmooksFileBuilder createSmooksFileBulder() {
@@ -559,13 +535,13 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	}
 
 	protected void expandConnectionModel(TreeViewer viewer, boolean isSource) {
-		if (initConnectionList == null || initConnectionList.isEmpty())
+		if (mappingModelList == null || mappingModelList.isEmpty())
 			return;
 		ITreeContentProvider provider = (ITreeContentProvider) viewer
 				.getContentProvider();
 		if (provider == null)
 			return;
-		for (Iterator iterator = initConnectionList.iterator(); iterator
+		for (Iterator iterator = mappingModelList.iterator(); iterator
 				.hasNext();) {
 			MappingModel connection = (MappingModel) iterator.next();
 			Object currentModel = connection.getTarget();
@@ -624,14 +600,11 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		}
 	}
 
-	protected void initViewerInitor() {
-
-	}
-
 	protected void createSourceGraphModels() {
+		clearExsitingGraphModels(SourceModel.class);
+		if(sourceViewer == null) return;
 		Tree tree = sourceViewer.getTree();
 		TreeItem[] items = tree.getItems();
-		clearExsitingGraphModels(SourceModel.class);
 		createGraphModels(items, SourceModel.class);
 	}
 
@@ -660,9 +633,13 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	}
 
 	/**
+	 * Remove GEF models from the root , and remove all associated connection
+	 * model.
+	 * <p>
+	 * If the param is SourceModel.class , it will remove the SourceModel and
+	 * the their connections.Same with TargetModel.class param
 	 * 
-	 * @param clazz
-	 *            SourceModel/TargetModel
+	 * @param class SourceModel.class | TargetModel.class
 	 */
 	private void clearExsitingGraphModels(Class<? extends Object> clazz) {
 		if (rootModel != null) {
@@ -680,9 +657,10 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	}
 
 	protected void createTargetGraphModels() {
+		clearExsitingGraphModels(TargetModel.class);
+		if(targetViewer == null) return;
 		Tree tree = targetViewer.getTree();
 		TreeItem[] items = tree.getItems();
-		clearExsitingGraphModels(TargetModel.class);
 		createGraphModels(items, TargetModel.class);
 	}
 
@@ -782,6 +760,13 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		return context;
 	}
 
+	/**
+	 * Init the Smooks context. The context will be used by IAnalyzer to save or
+	 * parse the Smooks configuration file.
+	 * <p>
+	 * 
+	 * @param context
+	 */
 	protected void initSmooksConfigurationFileGenerateContext(
 			SmooksConfigurationFileGenerateContext context) {
 		context.setSourceDataTypeID(this.sourceDataTypeID);
@@ -870,7 +855,11 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				});
 	}
 
+	/**
+	 * 
+	 */
 	protected void createConnectionModels() {
+		if(rootModel == null) return;
 		List children = this.rootModel.getChildren();
 		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
 			TreeItemRelationModel source = (TreeItemRelationModel) iterator
@@ -897,9 +886,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			TreeItemRelationModel target) {
 		Object sourceReferModel = source.getReferenceEntityModel();
 		Object targetReferModel = target.getReferenceEntityModel();
-		if (initConnectionList == null)
+		if (mappingModelList == null)
 			return null;
-		for (Iterator iterator = initConnectionList.iterator(); iterator
+		for (Iterator iterator = mappingModelList.iterator(); iterator
 				.hasNext();) {
 			MappingModel mapping = (MappingModel) iterator.next();
 			Object s = mapping.getSource();
@@ -979,7 +968,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 							sourceTreeViewerInputModel,
 							targetTreeViewerInputModel);
 			if (mappingResourceConfigList != null) {
-				initConnectionList = mappingResourceConfigList
+				mappingModelList = mappingResourceConfigList
 						.getMappingModelList();
 			}
 		}
@@ -1084,6 +1073,26 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		if (throwable != null) {
 			this.disableMappingGUI = true;
 			((SmooksFormEditor) getEditor()).setParseException(true, throwable);
+			this.notifyAnalyzeListeners(throwable);
+		}
+	}
+
+	/**
+	 * 
+	 * @param error
+	 *            . The exception occurs when analyze the smooks config file.
+	 *            <p>
+	 *            If the param is NULL means that there doesn't occur exception
+	 *            during analyze config file.
+	 */
+	protected void notifyAnalyzeListeners(Throwable error) {
+		AnalyzeResult result = new AnalyzeResult();
+		result.setSourceEdtior(this);
+		result.setError(error);
+		for (Iterator<IAnalyzeListener> iterator = this.analyzeListenerList
+				.iterator(); iterator.hasNext();) {
+			IAnalyzeListener listener = (IAnalyzeListener) iterator.next();
+			listener.endAnalyze(result);
 		}
 	}
 
@@ -1167,9 +1176,15 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		}
 	}
 
+	/**
+	 * Clean the source and target treeviewer , and remove all items on the
+	 * graphical panel (middle panel).
+	 */
 	public void cleanMappingPanel() {
-		sourceViewer.setInput(Collections.EMPTY_LIST);
-		targetViewer.setInput(Collections.EMPTY_LIST);
+		if (sourceViewer != null && targetViewer != null) {
+			sourceViewer.setInput(Collections.EMPTY_LIST);
+			targetViewer.setInput(Collections.EMPTY_LIST);
+		}
 		clearExsitingGraphModels(SourceModel.class);
 		clearExsitingGraphModels(TargetModel.class);
 	}
@@ -1318,7 +1333,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				// System.out.println("Block a event fire !!");
 				return;
 			}
-			rootModel.firePropertyChange(RootModel.P_REFRESH_PANEL, null,
+			rootModel.firePropertyChange(AbstractStructuredDataModel.P_REFRESH_PANEL, null,
 					new Object());
 		}
 

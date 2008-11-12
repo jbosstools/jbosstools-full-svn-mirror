@@ -494,6 +494,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					sourceName = sourceClazz.getName();
 				}
 				String selector = rc.getSelector();
+				if(selector != null){
+					selector = selector.trim();
+				}
 				if (sourceName.equals(selector)) {
 					String targetName = target.getName();
 					Class targetClazz = target.getBeanClass();
@@ -543,8 +546,14 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			AnyType binding = (AnyType) iterator.next();
 			String property = SmooksModelUtils.getAttributeValueFromAnyType(
 					binding, SmooksModelUtils.ATTRIBUTE_PROPERTY);
+			if(property != null){
+				property = property.trim();
+			}
 			String selector = SmooksModelUtils.getAttributeValueFromAnyType(
 					binding, SmooksModelUtils.ATTRIBUTE_SELECTOR);
+			if(selector != null){
+				selector = selector.trim();
+			}
 			JavaBeanModel childTargetModel = findTheChildJavaBeanModel(
 					property, target);
 			JavaBeanModel sourceModel = null;
@@ -674,8 +683,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		}
 		if (rootClassName == null) {
 			return null;
+		} else {
+			rootClassName = rootClassName.trim();
 		}
-
 		boolean isWarning = false;
 		boolean isError = false;
 		Class clazz = null;
@@ -686,8 +696,13 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			}
 
 			clazz = classLoader.loadClass(rootClassName);
-		} catch (Exception e) {
-			// ignore
+		} catch (ClassNotFoundException e) {
+			// TODO if can't find the class throws exception
+			// MODIFY by Dart 2008.11.12
+			throw new RuntimeException("Can't find the class : \""
+					+ rootClassName + "\" to create the JavaBean model");
+		} catch (JavaModelException e) {
+			e.printStackTrace();
 		}
 		JavaBeanModel model = null;
 		if (clazz != null) {
@@ -788,7 +803,10 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			try {
 				rootClass = loader.loadClass(rootClassName);
 			} catch (ClassNotFoundException e) {
-				// ignore
+				// TODO if can't find the class throws exception
+				// MODIFY by Dart 2008.11.12
+				throw new RuntimeException("Can't find the class : \""
+						+ rootClassName + "\" to create the JavaBean model");
 			}
 		}
 		boolean rootIsError = false;
@@ -949,16 +967,22 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				JavaBeanModel model = findTheChildJavaBeanModel(
 						referenceSelector, currentModel);
 				// try to test the selector is can be loaded by classloader??
-				Class clazz = null;
-				try {
-					if (classLoader != null) {
-						clazz = classLoader.loadClass(referenceSelector);
-						if (clazz != null && model == null)
-							model = JavaBeanModelFactory
-									.getJavaBeanModelWithLazyLoad(clazz);
+				if (model == null) {
+					Class clazz = null;
+					try {
+						if (classLoader != null) {
+							clazz = classLoader.loadClass(referenceSelector);
+							if (clazz != null && model == null)
+								model = JavaBeanModelFactory
+										.getJavaBeanModelWithLazyLoad(clazz);
+						}
+					} catch (ClassNotFoundException e) {
+						// TODO if can't find the class throws exception
+						// MODIFY by Dart 2008.11.12
+						throw new RuntimeException("Can't find the class : \""
+								+ referenceSelector
+								+ "\" to create the JavaBean model");
 					}
-				} catch (Exception e) {
-					// ignore
 				}
 				// something wrong
 				if (model == null) {
@@ -968,6 +992,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					model.setProperties(new ArrayList());
 					setCollectionsInstanceClassName(model, resourceConfig);
 				}
+				// if there occurs error so we need to add the child node by
+				// hand , if no , don't care that.
 				if (currentModel.getError() != null) {
 					currentModel.addProperty(model);
 				}

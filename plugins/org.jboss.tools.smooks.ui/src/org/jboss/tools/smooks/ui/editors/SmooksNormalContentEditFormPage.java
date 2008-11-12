@@ -36,12 +36,15 @@ import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksPackage;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
+import org.jboss.tools.smooks.ui.AnalyzeResult;
+import org.jboss.tools.smooks.ui.IAnalyzeListener;
 import org.jboss.tools.smooks.utils.UIUtils;
 
 /**
  * @author Dart Peng Date : 2008-9-9
  */
-public class SmooksNormalContentEditFormPage extends FormPage {
+public class SmooksNormalContentEditFormPage extends FormPage implements
+		IAnalyzeListener {
 
 	protected NormalSmooksModelPackage modelPackage = null;
 
@@ -111,16 +114,16 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 		form.pack();
 		this.initTransformTypeResourceConfig();
 		resourceBlock.initViewers(transformType);
-		
+
 		setGUIStates();
 	}
 
 	public void setGUIStates() {
-		if(resourceBlock != null){
+		if (resourceBlock != null) {
 			resourceBlock.setSectionStates(!disableGUI);
 		}
-		
-		if(this.parseTypeSection != null && !parseTypeSection.isDisposed()){
+
+		if (this.parseTypeSection != null && !parseTypeSection.isDisposed()) {
 			parseTypeSection.setEnabled(!disableGUI);
 		}
 	}
@@ -147,6 +150,12 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 	}
 
 	protected void initTransformTypeResourceConfig() {
+		if (saxButton != null)
+			saxButton.setSelection(false);
+		if (domButton != null)
+			domButton.setSelection(false);
+		if (saxdomButton != null)
+			saxdomButton.setSelection(false);
 		if (this.getModelPackage() != null) {
 			List list = modelPackage.getSmooksResourceList()
 					.getAbstractResourceConfig();
@@ -162,13 +171,16 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 			if (transformType != null) {
 				String type = SmooksModelUtils.getTransformType(transformType);
 				if (SmooksModelConstants.SAX.equals(type)) {
-					saxButton.setSelection(true);
+					if (saxButton != null)
+						saxButton.setSelection(true);
 				}
 				if (SmooksModelConstants.DOM.equals(type)) {
-					domButton.setSelection(true);
+					if (domButton != null)
+						domButton.setSelection(true);
 				}
 				if ("SAX/DOM".equals(type)) {
-					saxdomButton.setSelection(true);
+					if (saxdomButton != null)
+						saxdomButton.setSelection(true);
 				}
 			}
 		}
@@ -257,5 +269,30 @@ public class SmooksNormalContentEditFormPage extends FormPage {
 		this.modelPackage = modelPackage;
 		if (resourceBlock != null)
 			this.resourceBlock.setModelPackage(this.modelPackage);
+	}
+
+	public void endAnalyze(AnalyzeResult result) {
+		if (result.getError() == null) {
+			disableGUI = false;
+			SmooksFormEditor parentEditor = (SmooksFormEditor) getEditor();
+			NormalSmooksModelPackage pa = parentEditor
+					.createNewSmooksModelPackage();
+			SmooksGraphicalFormPage graphicalEditor = (SmooksGraphicalFormPage) result
+					.getSourceEdtior();
+			MappingResourceConfigList rclist = graphicalEditor
+					.getMappingResourceConfigList();
+			if (rclist != null) {
+				pa.setHidenSmooksElements(rclist
+						.getRelationgResourceConfigList());
+			}
+			setModelPackage(pa);
+		} else {
+			setModelPackage(null);
+			disableGUI = true;
+		}
+		initTransformTypeResourceConfig();
+		if (resourceBlock != null)
+			this.resourceBlock.initViewers(transformType);
+		setGUIStates();
 	}
 }

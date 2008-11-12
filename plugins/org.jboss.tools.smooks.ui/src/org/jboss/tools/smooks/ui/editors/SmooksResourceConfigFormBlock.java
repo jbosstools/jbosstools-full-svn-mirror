@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.editors;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,6 +48,7 @@ import org.jboss.tools.smooks.analyzer.NormalSmooksModelBuilder;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.BeanPopulatorWarrper;
 import org.jboss.tools.smooks.ui.DateTypeWarrper;
@@ -106,13 +108,20 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 
 	public void setModelPackage(NormalSmooksModelPackage modelPackage) {
 		this.modelPackage = modelPackage;
+		// if (this.dateTypeViewer != null) {
+		// if (this.modelPackage != null) {
+		// dateTypeViewer.setInput(this.modelPackage
+		// .getSmooksResourceList().getAbstractResourceConfig());
+		// }
+		// }
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ui.forms.MasterDetailsBlock#createMasterPart(org.eclipse.ui.forms.IManagedForm,
-	 *      org.eclipse.swt.widgets.Composite)
+	 * @see
+	 * org.eclipse.ui.forms.MasterDetailsBlock#createMasterPart(org.eclipse.
+	 * ui.forms.IManagedForm, org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
 	protected void createMasterPart(IManagedForm managedForm, Composite parent) {
@@ -125,7 +134,9 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ui.forms.MasterDetailsBlock#createToolBarActions(org.eclipse.ui.forms.IManagedForm)
+	 * @see
+	 * org.eclipse.ui.forms.MasterDetailsBlock#createToolBarActions(org.eclipse
+	 * .ui.forms.IManagedForm)
 	 */
 	@Override
 	protected void createToolBarActions(IManagedForm managedForm) {
@@ -135,7 +146,9 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.ui.forms.MasterDetailsBlock#registerPages(org.eclipse.ui.forms.DetailsPart)
+	 * @see
+	 * org.eclipse.ui.forms.MasterDetailsBlock#registerPages(org.eclipse.ui.
+	 * forms.DetailsPart)
 	 */
 	@Override
 	protected void registerPages(DetailsPart detailsPart) {
@@ -193,6 +206,7 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 					return false;
 				if (modelPackage != null) {
 					List hidenList = modelPackage.getHidenSmooksElements();
+					if(hidenList == null) return false;
 					for (Iterator iterator = hidenList.iterator(); iterator
 							.hasNext();) {
 						Object object = (Object) iterator.next();
@@ -208,20 +222,34 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 	public void initViewers(ResourceConfigType transformType) {
 		this.transformType = transformType;
 		if (this.getModelPackage() != null) {
-			dateTypeViewer.setInput(modelPackage.getSmooksResourceList()
-					.getAbstractResourceConfig());
+			if (dateTypeViewer != null) {
+				SmooksResourceListType tea = modelPackage
+						.getSmooksResourceList();
+				if(tea != null){
+					dateTypeViewer.setInput(tea.getAbstractResourceConfig());
+				}
+				
+			}
+		} else {
+			if (dateTypeViewer != null) {
+				dateTypeViewer.setInput(Collections.EMPTY_LIST);
+				SelectionChangedEvent event = new SelectionChangedEvent(
+						dateTypeViewer, new StructuredSelection(new Object()));
+				selectionChanged(event);
+			}
 		}
 	}
 
 	protected void createDataTypeGUI(Composite rootMainControl,
 			FormToolkit tool, final IManagedForm managedForm) {
-		configurationSection = tool.createSection(rootMainControl, Section.TITLE_BAR
-				| Section.DESCRIPTION);
+		configurationSection = tool.createSection(rootMainControl,
+				Section.TITLE_BAR | Section.DESCRIPTION);
 		configurationSection.setText("Data Type");
 		sectionPart = new SectionPart(configurationSection);
 		managedForm.addPart(sectionPart);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		Composite dataTypeComposite = tool.createComposite(configurationSection);
+		Composite dataTypeComposite = tool
+				.createComposite(configurationSection);
 		configurationSection.setClient(dataTypeComposite);
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
@@ -265,9 +293,9 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 
 		hookButtons();
 	}
-	
-	public void setSectionStates(boolean state){
-		if(configurationSection != null && !configurationSection.isDisposed()){
+
+	public void setSectionStates(boolean state) {
+		if (configurationSection != null && !configurationSection.isDisposed()) {
 			configurationSection.setEnabled(state);
 		}
 	}
