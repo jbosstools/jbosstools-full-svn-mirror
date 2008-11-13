@@ -11,17 +11,15 @@
 
 package org.jboss.tools.vpe.editor.util;
 
-import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 
 /**
  * @author Evgenij Stherbin
  *
  */
-@SuppressWarnings("restriction")
+
 public class ResourceUtil {
     /**
      * Gets the bundle value.
@@ -34,26 +32,11 @@ public class ResourceUtil {
      * 
      * @return the bundle value
      */
-    public static String getBundleValue(VpePageContext pageContext, String value, int offset) {
+    public static String getBundleValue(VpePageContext pageContext, String value) {
         BundleMap bundle = pageContext.getBundle();
-        return bundle.getBundleValue(value, offset);
+        return bundle.getBundleValue(value);
 
     }
-
-    /**
-     * get bundle.
-     * 
-     * @param pageContext the page context
-     * @param attr the attr
-     * 
-     * @return the bundle value
-     */
-    public static String getBundleValue(VpePageContext pageContext, Attr attr) {
-        return getBundleValue(pageContext, attr.getNodeValue(), ((IDOMAttr) attr).getValueRegionStartOffset());
-    }
-    
-    
-
     /**
      * get bundle.
      * 
@@ -63,11 +46,7 @@ public class ResourceUtil {
      * @return the bundle value
      */
     public static String getBundleValue(VpePageContext pageContext, Node attr) {
-        if(attr instanceof IDOMAttr){
-            return getBundleValue(pageContext, attr.getNodeValue(), ((IDOMAttr) attr).getValueRegionStartOffset());
-        }else{
-            return getBundleValue(pageContext,attr.getNodeValue(),0);
-        }
+            return getBundleValue(pageContext,attr.getNodeValue());
     }
 
 }

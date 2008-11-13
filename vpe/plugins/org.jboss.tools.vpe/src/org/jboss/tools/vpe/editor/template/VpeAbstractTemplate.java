@@ -1462,30 +1462,6 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
      */
     public void afterTemplateCreated(VpePageContext pageContext, nsIDOMElement source, nsIDOMDocument visualDocument) {
 
-//        final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
-//
-//        if ((file != null) && ElService.getInstance().isAvailable(file)) {
-//            final nsIDOMNamedNodeMap nodeMap = source.getAttributes();
-//            for (int i = 0; i < nodeMap.getLength(); i++) {
-//                nsIDOMNode n = nodeMap.item(i);
-//
-//                source.setAttribute(n.getNodeName(), ElService.getInstance().replaceEl(file, n.getNodeValue()));
-//          
-//            }
-////            if(source.getNodeName().equalsIgnoreCase("img")){
-////                source.setAttribute("src", ElService.getInstance().replaceEl(file, source.getAttribute("src")));
-////            }
-//            if ((source.getChildNodes() != null) && source.getChildNodes().getLength() > 0) {
-//                for (int j = 0; j < source.getChildNodes().getLength(); j++) {
-//                    if (source.getChildNodes().item(j).getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-//                        afterTemplateCreated(pageContext, (nsIDOMElement) source.getChildNodes().item(j).queryInterface(
-//                                nsIDOMElement.NS_IDOMELEMENT_IID), visualDocument);
-//                    }
-//                }
-//            }   
-//         }
-//
-//        System.err.println("Hello world4");
     }
 
     public void beforeTemplateCreated(VpePageContext pageContext, Node sourceNode, nsIDOMDocument domDocument) {
@@ -1500,13 +1476,6 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
                 sourceNode.setNodeValue(
                         ElService.getInstance().replaceElAndResources(pageContext, sourceNode));
             }
-            /*
-            else if (sourceNode.getFirstChild() instanceof Text) {
-                sourceNode.getFirstChild().setNodeValue(ElService.getInstance().replaceElAndResources(pageContext, sourceNode.getFirstChild()));
-            } else if ((sourceNode.getFirstChild() != null) && (sourceNode.getFirstChild().getFirstChild() instanceof Text)) {
-                sourceNode.getFirstChild().getFirstChild().setNodeValue(ElService.getInstance().replaceElAndResources(pageContext,sourceNode.getFirstChild().getFirstChild()));
-            }
-            */
             final NamedNodeMap nodeMap = sourceNode.getAttributes();  
             
             if ((nodeMap != null) && (nodeMap.getLength() > 0)) {

@@ -353,7 +353,7 @@ public class BundleMap {
 		return is;
 	}
 	
-	public String getBundleValue(String name, int offset){
+	public String getBundleValue(String name){
 		if(isShowBundleUsageAsEL) return name;
 		List<ELInstance> is = parseJSFExpression(name);
 		if(is == null) return null;
@@ -367,7 +367,7 @@ public class BundleMap {
 				ELInvocationExpression expr = (ELInvocationExpression)i.getExpression();
 				String[] values = getCall(expr);
 				if(values != null) {
-					String value = (values == null) ? null : getBundleValue(values[0], values[1], offset);
+					String value = (values == null) ? null : getBundleValue(values[0], values[1]);
 					if(value != null) {
 						sb.append(value);
 						index = i.getEndPosition();
@@ -405,11 +405,9 @@ public class BundleMap {
 		return null;
 	}
 	
-	private String getBundleValue(String prefix, String propertyName, int offset) {
+	private String getBundleValue(String prefix, String propertyName) {
 		BundleEntry entry = getBundle(prefix);
 		if(entry != null) {
-		    //Added by estherbin fix JBIDE-2010 (issue with resources). 
-			if(offset!=0 && (entry.offset > offset))return null;
 			String name = prefix + "." + propertyName;
 			try{
 				String value = (String)entry.bundle.getObject(propertyName);

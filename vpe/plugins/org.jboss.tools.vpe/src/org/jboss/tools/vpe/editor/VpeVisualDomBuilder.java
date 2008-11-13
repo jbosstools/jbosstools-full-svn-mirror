@@ -55,7 +55,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
-import org.jboss.tools.vpe.editor.template.IEditableTemplate;
+import org.jboss.tools.vpe.editor.proxy.VpeProxyUtil;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
@@ -413,7 +413,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 		boolean registerFlag = isCurrentMainDocument();
 
-		// reads and dispatch events
+		// reads and dispatch events, this code prevent eclipse
+		//from sleeping during processing big pages
 		getPageContext().processDisplayEvents();
 		// JBIDE-675, checks if editor was disposed or not
 		if (getPageContext().getSourceBuilder() == null
@@ -421,8 +422,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 			throw new VpeDisposeException();
 		}
-		//getPageContext().processDisplayEvents();
-
 		// check source node can be changed and link can be a null in this case
 		// we shouldn't process this node
 		if (sourceNode == null
@@ -444,18 +443,20 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 			if (ElService.getInstance().isCloneableNode(getPageContext(),
 					sourceNode)) {
-				sourceNodeClone = (sourceNode).cloneNode(true);
-				if(sourceNodeClone instanceof Element){
-				   ((Element)sourceNodeClone).setAttribute(PARENT,""); //$NON-NLS-1$
-				    Attr a = ((Element)sourceNodeClone).getAttributeNode(PARENT);
-				    a.setUserData(PARENT, sourceNode.getParentNode(),null);
-				    
-				    //added by estherbin fix https://jira.jboss.org/jira/browse/JBIDE-1605 issue.          
-                    sourceNodeClone.setUserData(SRC_NODE, sourceNode,null);
-				    
-				}
-				template.beforeTemplateCreated(getPageContext(),
-						sourceNodeClone, getVisualDocument());
+				
+				sourceNodeClone = VpeProxyUtil.createProxyForELExpressionNode(getPageContext(),
+					sourceNode);
+//				if(sourceNodeClone instanceof Element){
+//				   ((Element)sourceNodeClone).setAttribute(PARENT,""); //$NON-NLS-1$
+//				    Attr a = ((Element)sourceNodeClone).getAttributeNode(PARENT);
+//				    a.setUserData(PARENT, sourceNode.getParentNode(),null);
+//				    
+//				    //added by estherbin fix https://jira.jboss.org/jira/browse/JBIDE-1605 issue.          
+//                    sourceNodeClone.setUserData(SRC_NODE, sourceNode,null);
+//				    
+//				}
+//				template.beforeTemplateCreated(getPageContext(),
+//						sourceNodeClone, getVisualDocument());
 				creationData = template.create(getPageContext(),
 						sourceNodeClone, getVisualDocument());
 			} else {
@@ -518,7 +519,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		if (registerFlag) {
 
 			final VpeElementData data = creationData.getElementData();
-
+			
 			if ((sourceNodeClone != null) && (data != null)
 					&& (data.getNodesData() != null)
 					&& (data.getNodesData().size() > 0)) {
@@ -971,19 +972,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return sourceNode;
 	}
 
-	// private void updateComment(Node sourceNode) {
-	// VpeNodeMapping mapping = domMapping.getNodeMapping(sourceNode);
-	// if (mapping != null
-	// && mapping.getType() == VpeNodeMapping.COMMENT_MAPPING) {
-	// nsIDOMNodeList visualNodes = mapping.getVisualNode()
-	// .getChildNodes();
-	//
-	// if (visualNodes.getLength() > 0) {
-	// visualNodes.item(0).setNodeValue(sourceNode.getNodeValue());
-	// }
-	// }
-	// }
-
 	private void updateElement(Node sourceNode) {
 		VpeElementMapping elementMapping = null;
 		VpeNodeMapping nodeMapping = domMapping.getNodeMapping(sourceNode);
@@ -1075,31 +1063,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return null;
 	}
 
-	// public void setText(Node sourceText) {
-	// Node sourceParent = sourceText.getParentNode();
-	// if (sourceParent != null && sourceParent.getLocalName() != null) {
-	// String sourceParentName = sourceParent.getLocalName();
-	// if (HTML.TAG_TEXTAREA.equalsIgnoreCase(sourceParentName)
-	// || HTML.TAG_OPTION.equalsIgnoreCase(sourceParentName)) {
-	// updateNode(sourceText.getParentNode());
-	// return;
-	// }
-	// }
-	// nsIDOMNode visualText = domMapping.getVisualNode(sourceText);
-	// if (visualText != null) {
-	// String visualValue = TextUtil.visualText(sourceText.getNodeValue());
-	// visualText.setNodeValue(visualValue);
-	// }else {
-	// VpeNodeMapping nodeMapping = domMapping
-	// .getNodeMapping(sourceParent);
-	// if (nodeMapping != null
-	// && nodeMapping.getType() == VpeNodeMapping.ELEMENT_MAPPING) {
-	// VpeTemplate template = ((VpeElementMapping) nodeMapping)
-	// .getTemplate();
-	// if (template != null) {
-	// if (!template.containsText()) {
-	// return;
-	// }
 	public boolean setText(Node sourceText) {
 		Node sourceParent = sourceText.getParentNode();
 		if (sourceParent != null && sourceParent.getLocalName() != null) {
@@ -2244,60 +2207,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		includeDocuments.clear();
 	}
 
-	// protected Map createXmlns(Element sourceNode) {
-	// NamedNodeMap attrs = ((Element) sourceNode).getAttributes();
-	// if (attrs != null) {
-	// Map xmlnsMap = new HashMap();
-	// for (int i = 0; i < attrs.getLength(); i++) {
-	// addTaglib(sourceNode, xmlnsMap, attrs.item(i).getNodeName(),
-	// true);
-	// }
-	// if (xmlnsMap.size() > 0) {
-	// return xmlnsMap;
-	// }
-	// }
-	// return null;
-	// }
-
-	// private void setXmlnsAttribute(VpeElementMapping elementMapping,
-	// String name, String value) {
-	// Element sourceElement = (Element) elementMapping.getSourceNode();
-	// if (sourceElement != null) {
-	// Map xmlnsMap = elementMapping.getXmlnsMap();
-	// if (xmlnsMap == null)
-	// xmlnsMap = new HashMap();
-	// addTaglib(sourceElement, xmlnsMap, name, true);
-	// elementMapping.setXmlnsMap(xmlnsMap.size() > 0 ? xmlnsMap : null);
-	// }
-	// }
-
-	// private void removeXmlnsAttribute(VpeElementMapping elementMapping,
-	// String name) {
-	// Element sourceElement = (Element) elementMapping.getSourceNode();
-	// if (sourceElement != null) {
-	// Map xmlnsMap = elementMapping.getXmlnsMap();
-	// if (xmlnsMap != null) {
-	// Object id = xmlnsMap.remove(name);
-	// if (id != null) {
-	// pageContext.setTaglib(((Integer) id).intValue(), null,
-	// null, true);
-	// elementMapping.setXmlnsMap(xmlnsMap.size() > 0 ? xmlnsMap
-	// : null);
-	// }
-	// }
-	// }
-	// }
-	//
-	// private void addTaglib(Element sourceElement, Map xmlnsMap,
-	// String attrName, boolean ns) {
-	// Attr attr = sourceElement.getAttributeNode(attrName);
-	// if (ATTR_XMLNS.equals(attr.getPrefix())) {
-	// xmlnsMap.put(attr.getNodeName(), Integer.valueOf(attr.hashCode()));
-	// pageContext.setTaglib(attr.hashCode(), attr.getNodeValue(), attr
-	// .getLocalName(), ns);
-	// }
-	// }
-
 	/**
 	 * @return the dnd
 	 */
@@ -2379,64 +2288,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return isFacelet;
 	}
 
-	/**
-	 * Create a visual element for text node
-	 * 
-	 * @param sourceNode
-	 * @param registerFlag
-	 * @return a visual element for text node
-	 */
-
-	// protected nsIDOMNode createTextNode(Node sourceNode, boolean
-	// registerFlag) {
-	// String sourceText = sourceNode.getNodeValue();
-	// if(sourceText!=null){
-	// final IFile file =
-	// getPageContext().getVisualBuilder().getCurrentIncludeInfo().getFile();
-	//        
-	// sourceText = ElService.getInstance().replaceEl(file, sourceText);
-	// }
-	// /*
-	// * Max Areshkau this code causes very slow work of visual editor
-	// * when we editing in big files txt nodes.For example exmployee.xhtml
-	// * from JBIDE1105
-	// *
-	// * Denis Maliarevich:
-	// * To fix JBIDE-2003 and JBIDE-2042
-	// * this code should be uncommented.
-	// */
-	// if (sourceText.trim().length() <= 0) {
-	// if (registerFlag) {
-	// registerNodes(new VpeNodeMapping(sourceNode, null));
-	// }
-	// return null;
-	// }
-	//
-	// if (faceletFile) {
-	// Matcher matcher_EL = REGEX_EL.matcher(sourceText);
-	// if (matcher_EL.find()) {
-	// BundleMap bundle = pageContext.getBundle();
-	// int offset = pageContext.getVisualBuilder()
-	// .getCurrentMainIncludeOffset();
-	// if (offset == -1)
-	// offset = ((IndexedRegion) sourceNode).getStartOffset();
-	// String jsfValue = bundle.getBundleValue(sourceText, offset);
-	// sourceText = jsfValue;
-	// }
-	// }
-	// String visualText = TextUtil.visualText(sourceText);
-	//
-	// nsIDOMNode visualNewTextNode = visualDocument
-	// .createTextNode(visualText);
-	// nsIDOMElement element = visualDocument.createElement(HTML.TAG_SPAN);
-	//    element.setAttribute(HTML.ATTR_STYLE, ""); //$NON-NLS-1$
-	// element.appendChild(visualNewTextNode);
-	// if (registerFlag) {
-	// registerNodes(new VpeNodeMapping(sourceNode, element));
-	// }
-	//
-	// return element;
-	// }
 	/**
 	 * @return the xulRunnerEditor
 	 */

@@ -10,20 +10,16 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template.expression;
 
-import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
-import org.w3c.dom.Node;
-
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.w3c.dom.Node;
 
 public class VpeFunctionJsfValue extends VpeFunction {
 
 	public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 		String value = getParameter(0).exec(pageContext, sourceNode).stringValue();
 		BundleMap bundle = pageContext.getBundle();
-		int offset = pageContext.getVisualBuilder().getCurrentMainIncludeOffset();
-		if (offset == -1) offset = ((IndexedRegion)sourceNode).getStartOffset();
-		String jsfValue = bundle.getBundleValue(value, offset);
+		String jsfValue = bundle.getBundleValue(value);
 		return new VpeValue(jsfValue != null ? jsfValue : value);
 	}
 

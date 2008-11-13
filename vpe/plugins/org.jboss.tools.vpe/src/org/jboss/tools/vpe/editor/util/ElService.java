@@ -85,9 +85,8 @@ public final class ElService implements IELService {
      * 
      * @return the string
      * 
-     * @see IELService#getReplacedElValue(IFile, String)
+     * @see IELService#replaceEl(IFile, String)
      */
-    //@Deprecated
     public String replaceEl(IFile resourceFile, String resourceString) {
      //   Assert.isNotNull(resourceString);
         if ((resourceString == null) || (resourceFile == null)) {
@@ -161,22 +160,6 @@ public final class ElService implements IELService {
      */
     public boolean isInResourcesBundle(VpePageContext pageContext, Node sourceNode) {
         boolean rst = findInResourcesBundle(pageContext, sourceNode);
-
-//        if (!rst && (sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
-//            for (int i = 0; i < sourceNode.getChildNodes().getLength(); i++) {
-//                final Node node = sourceNode.getChildNodes().item(i);
-//                
-//                if (node.getNodeType() == Node.ELEMENT_NODE) {
-//                    if((rst = findInResourcesBundle(pageContext, node))){
-//                        break;
-//                    }
-//                    
-//
-//                }
-//
-//            }
-//        }
-
         return rst;
     }
 
@@ -197,7 +180,7 @@ public final class ElService implements IELService {
                 textValue = sourceNode.getNodeValue();
 
                 if ((textValue != null) && TextUtil.isContainsEl(textValue)) {
-                    final String newValue = bundleMap.getBundleValue(textValue, 0);
+                    final String newValue = bundleMap.getBundleValue(textValue);
 
                     if (!textValue.equals(newValue)) {
                         rst = true;
@@ -217,7 +200,7 @@ public final class ElService implements IELService {
                         final String value = attr.getValue();
 
                         if (value != null && TextUtil.isContainsEl(value)) {
-                            final String value2 = bundleMap.getBundleValue(value, 0);
+                            final String value2 = bundleMap.getBundleValue(value);
 
                             if (!value2.equals(value)) {
                                 rst = true;
@@ -243,20 +226,6 @@ public final class ElService implements IELService {
      */
     private boolean isAvailableForNode(Node sourceNode, IFile resourceFile) {
         boolean rst = findForNode(sourceNode, resourceFile);
-
-//        if (!rst && (sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
-//            for (int i = 0; i < sourceNode.getChildNodes().getLength(); i++) {
-//                final Node node = sourceNode.getChildNodes().item(i);
-//
-//                if (node.getNodeType() == Node.ELEMENT_NODE) {
-//                    if((rst = findForNode((Element) node, resourceFile))){
-//                        break;
-//                    }
-//                }
-//
-//            }
-//        }
-
         return rst;
     }
 
@@ -379,7 +348,7 @@ public final class ElService implements IELService {
         return rst;
 
     }
-
+    
     public String replaceElAndResources(VpePageContext pageContext, Node attributeNode) {
    
         
@@ -401,10 +370,7 @@ public final class ElService implements IELService {
 
         return rst;
     }
-    
-//    private String replaceResourceBundle(VpePageContext context,Attr attributeNode){
-//        
-//    }
+
     
     
     private boolean equalsExppression(String value, String expression) {
