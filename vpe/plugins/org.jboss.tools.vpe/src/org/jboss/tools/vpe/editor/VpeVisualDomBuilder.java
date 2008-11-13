@@ -265,17 +265,17 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			nsIDOMNode visualContainer) {
 
 		nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer);
-
-		// Fix for JBIDE-1097
-		try {
-			if (visualNewNode != null) {
-				nsIDOMHTMLInputElement iDOMInputElement = (nsIDOMHTMLInputElement) visualNewNode
-						.queryInterface(nsIDOMHTMLInputElement.NS_IDOMHTMLINPUTELEMENT_IID);
-				iDOMInputElement.setReadOnly(true);
-			}
-		} catch (XPCOMException ex) {
-			// just ignore this exception
-		}
+// Commented as fix for JBIDE-3012.	
+//		// Fix for JBIDE-1097
+//		try {
+//			if (visualNewNode != null) {
+//				nsIDOMHTMLInputElement iDOMInputElement = (nsIDOMHTMLInputElement) visualNewNode
+//						.queryInterface(nsIDOMHTMLInputElement.NS_IDOMHTMLINPUTELEMENT_IID);
+//				iDOMInputElement.setReadOnly(true);
+//			}
+//		} catch (XPCOMException ex) {
+//			// just ignore this exception
+//		}
 		if (visualNewNode != null) {
 			if (visualNextNode == null) {
 				visualContainer.appendChild(visualNewNode);
