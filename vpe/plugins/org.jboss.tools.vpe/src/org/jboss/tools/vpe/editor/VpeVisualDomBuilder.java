@@ -524,15 +524,18 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					&& (data.getNodesData() != null)
 					&& (data.getNodesData().size() > 0)) {
 
-				Element sourceElement = (Element) sourceNode;
-
 				for (org.jboss.tools.vpe.editor.mapping.NodeData nodeData : data
 						.getNodesData()) {
 
 					if (nodeData.getSourceNode() != null) {
-
-						Attr attr = sourceElement.getAttributeNode(nodeData
+						Node attr = null;
+						if(sourceNode.getAttributes()!=null) {
+							attr =	sourceNode.getAttributes().getNamedItem(nodeData
 								.getSourceNode().getNodeName());
+						} else {
+							//Text node haven't child nodes, but it's  node.
+							attr = sourceNode;
+						}
 						nodeData.setSourceNode(attr);
 						nodeData.setEditable(false);
 					}

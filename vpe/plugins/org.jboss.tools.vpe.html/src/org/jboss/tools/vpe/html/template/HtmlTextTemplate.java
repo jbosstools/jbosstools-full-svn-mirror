@@ -13,9 +13,7 @@ package org.jboss.tools.vpe.html.template;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.NodeData;
-import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
-import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -48,30 +46,12 @@ public class HtmlTextTemplate extends VpeAbstractTemplate {
 	    //TODO Max Areshkau think may be we shouldn't use span
 	    nsIDOMElement element = visualDocument.createElement(HTML.TAG_SPAN);
 	    element.appendChild(visualNewTextNode);
-		
-	    return new VpeCreationData(element);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.vpe.editor.template.VpeAbstractTemplate#getNodeData(org.mozilla.interfaces.nsIDOMNode, org.jboss.tools.vpe.editor.mapping.VpeElementData, org.jboss.tools.vpe.editor.mapping.VpeDomMapping)
-	 */
-	@Override
-	public NodeData getNodeData(nsIDOMNode node, VpeElementData elementData,
-			VpeDomMapping domMapping) {
-	
-		NodeData result;
-		VpeNodeMapping nodeMapping = domMapping.getNearNodeMapping(node);
-		
-		nsIDOMNode textNode;		
-		if(node.getNodeType()==nsIDOMNode.ELEMENT_NODE) {
-			textNode = node.getFirstChild();
-		} else {
-			textNode = node;
-		}
-				
-		result = new NodeData(nodeMapping.getSourceNode(),textNode,true);
-		return result;
-	}
-
-	
+	    
+	    VpeElementData textElementData = new VpeElementData();
+	    NodeData nodeData = new NodeData(sourceNode, visualNewTextNode);
+	    textElementData.addNodeData(nodeData);
+	    VpeCreationData result = new VpeCreationData(element);
+	    result.setElementData(textElementData);
+	    return result;
+	}	
 }
