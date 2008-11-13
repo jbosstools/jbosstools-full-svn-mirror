@@ -156,7 +156,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	private List<DesignTimeAnalyzeResult> analyzeResultList = new ArrayList<DesignTimeAnalyzeResult>();
 
-	private static final String REFERENCE_MODEL = "__reference_model";
+	private static final String REFERENCE_MODEL = "__reference_model"; //$NON-NLS-1$
 	protected SmooksConfigurationFileGenerateContext smooksConfigurationFileGenerateContext;
 	protected IViewerInitor sourceViewerInitor;
 	protected IViewerInitor targetViewerInitor;
@@ -301,11 +301,11 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		gridLayout.horizontalSpacing = 0;
 		form.getBody().setLayout(gridLayout);
 		Composite rootMainControl = form.getBody();
-		form.setText("Data Mapping Page");
+		form.setText(Messages.getString("SmooksGraphicalFormPage.MappingPageFormTitle")); //$NON-NLS-1$
 		mappingGUISection = this.createPageSectionHeader(rootMainControl,
 				Section.TITLE_BAR | Section.DESCRIPTION,
-				"Mapping Graph Edit Panel",
-				"Edit the source and target assosiation");
+				Messages.getString("SmooksGraphicalFormPage.MappingSectionTitle"), //$NON-NLS-1$
+				Messages.getString("SmooksGraphicalFormPage.MappingSectionDescription")); //$NON-NLS-1$
 
 		Composite mainComposite = toolkit.createComposite(mappingGUISection);
 		mappingGUISection.setClient(mainComposite);
@@ -401,7 +401,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			underToolPanel.setLayoutData(sgd1);
 			{
 				sourceLink = toolkit.createHyperlink(underToolPanel,
-						"Source Select", SWT.NONE);
+						Messages.getString("SmooksGraphicalFormPage.SourceSelectLinkText"), SWT.NONE); //$NON-NLS-1$
 				sourceLink.addHyperlinkListener(new DataSelectLinkListener(
 						sourceViewer));
 			}
@@ -419,7 +419,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			}
 			{
 				targetLink = toolkit.createHyperlink(underToolPanel,
-						"Target Select", SWT.NONE);
+						Messages.getString("SmooksGraphicalFormPage.TargetSelectLinkText"), SWT.NONE); //$NON-NLS-1$
 				GridData label2LData = new GridData();
 				label2LData.horizontalAlignment = GridData.END;
 				targetLink.setLayoutData(label2LData);
@@ -713,9 +713,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			boolean cleanError = MessageDialog
 					.openQuestion(
 							getSite().getShell(),
-							"Clean all the errors please",
-							"There occurs some errors on the graphical design , please clean all errors .\n"
-									+ "Click \"Yes\" to return . If you don't care that , click \"No\" to save file.");
+							Messages.getString("SmooksGraphicalFormPage.CleanErrorsDialogTitle"), //$NON-NLS-1$
+							Messages.getString("SmooksGraphicalFormPage.CleanErrorsDialogContents1") //$NON-NLS-1$
+									+ Messages.getString("SmooksGraphicalFormPage.CleanErrorsDialogContents2")); //$NON-NLS-1$
 			if (cleanError)
 				return;
 		}
@@ -746,8 +746,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			exp = e;
 		}
 		if (exp != null) {
-			ErrorDialog.openError(getSite().getShell(), "Save Error",
-					"Some errors occurs during saving the file.", UIUtils
+			ErrorDialog.openError(getSite().getShell(), Messages.getString("SmooksGraphicalFormPage.SaveErrorDlgTitle"), //$NON-NLS-1$
+					Messages.getString("SmooksGraphicalFormPage.SaveErrorDlgContent"), UIUtils //$NON-NLS-1$
 							.createErrorStatus(exp));
 		}
 		super.doSave(monitor);
@@ -1065,8 +1065,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			// callParentRefillNormalModelInfor(mappingResourceConfigList
 			// .getRelationgResourceConfigList());
 		} catch (IOWrappedException ex) {
-			MessageDialog.openWarning(getSite().getShell(), "Waring",
-					"Exceptions occurd during parsing Smooks file, no worries");
+			MessageDialog.openWarning(getSite().getShell(), "Waring", //$NON-NLS-1$
+					"Exceptions occurd during parsing Smooks file, no worries"); //$NON-NLS-1$
 		} catch (Throwable e) {
 			throwable = e;
 		}
@@ -1134,8 +1134,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				if (!MessageDialog
 						.openQuestion(
 								getSite().getShell(),
-								"Changed Data ?",
-								"Do you want to change the data ? If you do so , all connections will be losted")) {
+								Messages.getString("SmooksGraphicalFormPage.ReselectViewerContentDlgTitle"), //$NON-NLS-1$
+								Messages.getString("SmooksGraphicalFormPage.ReselectViewerContentDlgContent"))) { //$NON-NLS-1$
 					return;
 				}
 			}
@@ -1165,13 +1165,13 @@ public class SmooksGraphicalFormPage extends FormPage implements
 					commandStackChanged = true;
 					firePropertyChange(PROP_DIRTY);
 				} catch (Exception e) {
-					MessageDialog.openError(getSite().getShell(), "Error",
-							"a error occurs during filling Data into the viewer:\n"
+					MessageDialog.openError(getSite().getShell(), Messages.getString("SmooksGraphicalFormPage.FillViewerErrorTitle"), //$NON-NLS-1$
+							Messages.getString("SmooksGraphicalFormPage.FillViewerErrorContent") //$NON-NLS-1$
 									+ e.toString());
 				}
 			} else {
-				MessageDialog.openError(getSite().getShell(), "Error",
-						"a error occurs during filling Data into the viewer");
+				MessageDialog.openError(getSite().getShell(), Messages.getString("SmooksGraphicalFormPage.FillViewerErrorTitle"), //$NON-NLS-1$
+						Messages.getString("SmooksGraphicalFormPage.FillViewerErrorContent")); //$NON-NLS-1$
 			}
 		}
 	}

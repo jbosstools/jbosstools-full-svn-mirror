@@ -20,8 +20,8 @@ public class XMLStructuredDataWizardPage extends
 	}
 
 	private void setPageText() {
-		this.setTitle("Select xml file");
-		this.setDescription("Select a .xml file to be the source/target data");
+		this.setTitle(Messages.getString("XMLStructuredDataWizardPage.XMLDataWizardPageTitle")); //$NON-NLS-1$
+		this.setDescription(Messages.getString("XMLStructuredDataWizardPage.XMLDataWizardPageDescription")); //$NON-NLS-1$
 
 	}
 

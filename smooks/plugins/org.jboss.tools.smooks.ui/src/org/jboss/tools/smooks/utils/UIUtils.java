@@ -54,8 +54,8 @@ import org.jboss.tools.smooks.xml.model.TagObject;
  */
 public class UIUtils {
 
-	public static final String[] SELECTORE_SPLITER = new String[] {  "\\",
-			"/" };
+	public static final String[] SELECTORE_SPLITER = new String[] {  "\\", //$NON-NLS-1$
+			"/" }; //$NON-NLS-1$
 
 	public static FillLayout createFillLayout(int marginW, int marginH) {
 		FillLayout fill = new FillLayout();
@@ -72,8 +72,8 @@ public class UIUtils {
 			String splitString = SELECTORE_SPLITER[i];
 			if (selector.indexOf(splitString) != -1) {
 				throw new InvocationTargetException(new Exception(
-						"The Selector string dosen't support \"" + splitString
-								+ "\" character. Selector is \"" + selector + "\""));
+						Messages.getString("UIUtils.SelectorCheckErrorMessage1") + splitString //$NON-NLS-1$
+								+ Messages.getString("UIUtils.SelectorCheckErrorMessage2") + selector + "\"")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 	}
@@ -186,10 +186,10 @@ public class UIUtils {
 		CompositeResolveCommand compositeCommand = new CompositeResolveCommand(
 				context);
 		compositeCommand
-				.setResolveDescription("Connect all needed connections");
+				.setResolveDescription(Messages.getString("UIUtils.ConnectAllConnections")); //$NON-NLS-1$
 		disconnectCommand
-				.setResolveDescription("Disconnect all connections of the current \""
-						+ currentNode.getName() + "\"node");
+				.setResolveDescription(Messages.getString("UIUtils.DisconnectAllConnections") //$NON-NLS-1$
+						+ currentNode.getName() + Messages.getString("UIUtils.Node")); //$NON-NLS-1$
 		AbstractStructuredDataModel targetNode = UIUtils.findGraphModel(root,
 				currentNode);
 		if (targetNode instanceof IConnectableModel) {
@@ -214,10 +214,10 @@ public class UIUtils {
 				if (tempMap.get(sourceParentNode) == null) {
 					JavaModelConnectionResolveCommand connectParent = new JavaModelConnectionResolveCommand(
 							context);
-					connectParent.setResolveDescription("Connect the \""
+					connectParent.setResolveDescription(Messages.getString("UIUtils.ConnectNode1") //$NON-NLS-1$
 							+ context.getSourceViewerLabelProvider().getText(
-									sourceParent) + "\" to the \""
-							+ parentNode.getName() + "\"");
+									sourceParent) + Messages.getString("UIUtils.ConnectNode2") //$NON-NLS-1$
+							+ parentNode.getName() + "\""); //$NON-NLS-1$
 					connectParent.setSourceModel(sourceParentNode);
 					connectParent.setTargetModel(targetParentNode);
 					result.addResolveCommand(connectParent);
@@ -259,11 +259,11 @@ public class UIUtils {
 					if (pgm != null && pgm instanceof IConnectableModel) {
 						if (((IConnectableModel) pgm)
 								.getModelTargetConnections().isEmpty()) {
-							String errorMessage = "The parent of Java node \""
+							String errorMessage = Messages.getString("UIUtils.ParentNodeConnectErrorMessage1") //$NON-NLS-1$
 									+ javaModel.getName()
-									+ "\" : \""
+									+ "\" : \"" //$NON-NLS-1$
 									+ parent.getName()
-									+ "\" doesn't be connected by any source node";
+									+ Messages.getString("UIUtils.ParentNodeConnectErrorMessage2"); //$NON-NLS-1$
 							DesignTimeAnalyzeResult dr = new DesignTimeAnalyzeResult();
 							dr.setErrorMessage(errorMessage);
 							createJavaModelConnectionErrorResolveCommand(dr,
@@ -296,7 +296,7 @@ public class UIUtils {
 						// TODO process primitive type
 						continue;
 					}
-					String errorMessage = "";
+					String errorMessage = ""; //$NON-NLS-1$
 					try {
 						ClassLoader loader = newProjectClassLoader(context
 								.getSmooksConfigFile());
@@ -306,17 +306,17 @@ public class UIUtils {
 					}
 					if (instanceClazz == null) {
 						DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
-						result.setErrorMessage("The instance class of \""
+						result.setErrorMessage(Messages.getString("UIUtils.InstanceLoadedErrorMessage1") //$NON-NLS-1$
 								+ ((JavaBeanModel) refObj).getName()
-								+ "\" can't be loaded. Instance name is \""
-								+ instanceName + "\"");
+								+ Messages.getString("UIUtils.InstanceLoadedErrorMessage2") //$NON-NLS-1$
+								+ instanceName + "\""); //$NON-NLS-1$
 						JavaModelResolveCommand command = new JavaModelResolveCommand(
 								context);
 						command
-								.setResolveDescription("Change the instance class to \""
+								.setResolveDescription(Messages.getString("UIUtils.InstanceLoadedResolveMessage1") //$NON-NLS-1$
 										+ ((JavaBeanModel) refObj)
 												.getBeanClass()
-												.getCanonicalName() + "\"");
+												.getCanonicalName() + "\""); //$NON-NLS-1$
 						command.setInstanceName(((JavaBeanModel) refObj)
 								.getBeanClass().getCanonicalName());
 						command.setJavaBean((JavaBeanModel) refObj);
@@ -325,16 +325,16 @@ public class UIUtils {
 					}
 					if (instanceClazz != null && instanceClazz.isInterface()) {
 						DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
-						result.setErrorMessage("Java model \""
+						result.setErrorMessage(Messages.getString("UIUtils.JavaModelLoadedErrorMessage1") //$NON-NLS-1$
 								+ ((JavaBeanModel) refObj).getName()
-								+ "\" can't be instanced. Instance name is \""
-								+ instanceName + "\"");
+								+ Messages.getString("UIUtils.JavaModelLoadedErrorMessage2") //$NON-NLS-1$
+								+ instanceName + "\""); //$NON-NLS-1$
 						if (List.class.isAssignableFrom(instanceClazz)) {
 							JavaModelResolveCommand command = new JavaModelResolveCommand(
 									context);
 							command
-									.setResolveDescription("Change the instance class to \"java.util.ArrayList\"");
-							command.setInstanceName("java.util.ArrayList");
+									.setResolveDescription(Messages.getString("UIUtils.InstanceClassResolveMessage1")); //$NON-NLS-1$
+							command.setInstanceName(Messages.getString("UIUtils.InstanceClassResolveMessage2")); //$NON-NLS-1$
 							command.setJavaBean((JavaBeanModel) refObj);
 							result.addResolveCommand(command);
 						}
@@ -365,11 +365,11 @@ public class UIUtils {
 	}
 
 	public static void showErrorDialog(Shell shell, Status status) {
-		ErrorDialog.openError(shell, "Error", "error", status);
+		ErrorDialog.openError(shell, "Error", "error", status); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	public static Status createErrorStatus(Throwable throwable) {
-		return createErrorStatus(throwable, "Error");
+		return createErrorStatus(throwable, "Error"); //$NON-NLS-1$
 	}
 
 	public static FillLayout createFormCompositeFillLayout() {

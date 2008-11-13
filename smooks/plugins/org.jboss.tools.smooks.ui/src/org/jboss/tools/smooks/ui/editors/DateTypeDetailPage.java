@@ -45,17 +45,17 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
 		parent.setLayout(layout);
-		this.formToolKit.createLabel(parent, "Format :");
+		this.formToolKit.createLabel(parent, Messages.getString("DateTypeDetailPage.DateTypeFormatText")); //$NON-NLS-1$
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		formatText = this.formToolKit.createText(parent, "");
+		formatText = this.formToolKit.createText(parent, ""); //$NON-NLS-1$
 		formatText.setLayoutData(gd);
 
-		this.formToolKit.createLabel(parent, "Locale-Language :");
+		this.formToolKit.createLabel(parent, Messages.getString("DateTypeDetailPage.DateTypeLocaleLanguageText")); //$NON-NLS-1$
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		localeLangaugeCombo = new Combo(parent, SWT.FLAT);
 		localeLangaugeCombo.setLayoutData(gd);
 
-		this.formToolKit.createLabel(parent, "Locale-Contry :");
+		this.formToolKit.createLabel(parent, Messages.getString("DateTypeDetailPage.DateTypeLocaleContryText")); //$NON-NLS-1$
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		localeContryCombo = new Combo(parent, SWT.FLAT);
 		localeContryCombo.setLayoutData(gd);
@@ -66,12 +66,12 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 	@Override
 	protected void initSectionUI() {
 		if(this.resourceConfigList != null){
-			String formate = SmooksModelUtils.getParmaText("format", resourceConfigList);
-			String locallang = SmooksModelUtils.getParmaText("Locale-Language", resourceConfigList);
-			String localcontry = SmooksModelUtils.getParmaText("Locale-Contry", resourceConfigList);
-			if(formate == null) formate = "";
-			if(locallang == null) locallang = "";
-			if(localcontry == null) localcontry = "";
+			String formate = SmooksModelUtils.getParmaText("format", resourceConfigList); //$NON-NLS-1$
+			String locallang = SmooksModelUtils.getParmaText("Locale-Language", resourceConfigList); //$NON-NLS-1$
+			String localcontry = SmooksModelUtils.getParmaText("Locale-Contry", resourceConfigList); //$NON-NLS-1$
+			if(formate == null) formate = ""; //$NON-NLS-1$
+			if(locallang == null) locallang = ""; //$NON-NLS-1$
+			if(localcontry == null) localcontry = ""; //$NON-NLS-1$
 			
 			
 			formatText.setText(formate);

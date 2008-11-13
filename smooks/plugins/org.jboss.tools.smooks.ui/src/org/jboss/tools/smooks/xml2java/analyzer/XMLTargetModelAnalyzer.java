@@ -18,7 +18,7 @@ package org.jboss.tools.smooks.xml2java.analyzer;
 public class XMLTargetModelAnalyzer extends AbstractXMLModelAnalyzer{
 
 	public XMLTargetModelAnalyzer() {
-		super("targetDataPath");
+		super("targetDataPath"); //$NON-NLS-1$
 	}
 	
 }

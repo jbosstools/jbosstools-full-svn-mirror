@@ -43,9 +43,9 @@ import org.jboss.tools.smooks.ui.editors.TypeIDSelectionWizardPage;
 
 public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 		ISmooksDataCreationAddtionWizard {
-	public static final String PRO_SOURCE_DATA_PATH = "sourceDataPath";
+	public static final String PRO_SOURCE_DATA_PATH = "sourceDataPath"; //$NON-NLS-1$
 
-	public static final String PRO_TARGET_DATA_PATH = "targetDataPath";
+	public static final String PRO_TARGET_DATA_PATH = "targetDataPath"; //$NON-NLS-1$
 
 	private SmooksConfigFileNewWizardPage page;
 	private TypeIDSelectionWizardPage typeIDPage;
@@ -64,7 +64,7 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 	public SmooksConfigFileNewWizard() {
 		super();
 		setNeedsProgressMonitor(true);
-		super.setWindowTitle("New Smooks Configuration File");
+		super.setWindowTitle(Messages.getString("SmooksConfigFileNewWizard.NewConfigFileWizardTitle")); //$NON-NLS-1$
 		setDefaultPageImageDescriptor(ModelUIImages
 				.getImageDescriptor(ModelUIImages.WIZARD_NEW_PROJECT));
 	}
@@ -73,11 +73,11 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 	 * Adding the page to the wizard.
 	 */
 	public void addPages() {
-		page = new SmooksConfigFileNewWizardPage("newSmooksFile1",
+		page = new SmooksConfigFileNewWizardPage("newSmooksFile1", //$NON-NLS-1$
 				getSelection());
 		addPage(page);
 		// TODO don't use the WizardSelectionPage
-		typeIDPage = new TypeIDSelectionWizardPage("", false);
+		typeIDPage = new TypeIDSelectionWizardPage("", false); //$NON-NLS-1$
 		typeIDPage.setSelection(selection);
 		addPage(typeIDPage);
 	}
@@ -108,7 +108,7 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 			return false;
 		} catch (InvocationTargetException e) {
 			Throwable realException = e.getTargetException();
-			MessageDialog.openError(getShell(), "Error", realException
+			MessageDialog.openError(getShell(), Messages.getString("SmooksConfigFileNewWizard.ErrorTitle"), realException //$NON-NLS-1$
 					.getMessage());
 			return false;
 		}
@@ -143,7 +143,7 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 				file);
 
 		monitor.worked(1);
-		monitor.setTaskName("Opening file for editing...");
+		monitor.setTaskName("Opening file for editing..."); //$NON-NLS-1$
 		getShell().getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				IWorkbenchPage page = PlatformUI.getWorkbench()
@@ -207,13 +207,13 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 	 */
 
 	private InputStream openContentStream() {
-		String contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-				+ "     <smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.0.xsd\"/>";
+		String contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
+				+ "     <smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.0.xsd\"/>"; //$NON-NLS-1$
 		return new ByteArrayInputStream(contents.getBytes());
 	}
 
 	private void throwCoreException(String message) throws CoreException {
-		IStatus status = new Status(IStatus.ERROR, "org.jboss.tools.smooks.ui",
+		IStatus status = new Status(IStatus.ERROR, "org.jboss.tools.smooks.ui", //$NON-NLS-1$
 				IStatus.OK, message, null);
 		throw new CoreException(status);
 	}
@@ -233,12 +233,12 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 
 	public void addSourceWizardPage(IWizardPage page) {
 		sourceCreationPages.add(page);
-		page.setTitle("Source Data Selection");
+		page.setTitle(Messages.getString("SmooksConfigFileNewWizard.SourceDataTypeSelectionTitle")); //$NON-NLS-1$
 	}
 
 	public void addTargetWizardPage(IWizardPage page) {
 		targetCreationPages.add(page);
-		page.setTitle("Target Data Selection");
+		page.setTitle(Messages.getString("SmooksConfigFileNewWizard.TargetDataTypeSelectionTitle")); //$NON-NLS-1$
 	}
 
 	public void clearSourceWizardPages() {

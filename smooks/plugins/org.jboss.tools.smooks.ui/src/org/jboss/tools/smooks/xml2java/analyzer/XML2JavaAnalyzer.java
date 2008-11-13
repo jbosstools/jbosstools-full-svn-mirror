@@ -245,7 +245,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		if (source == null) {
 			// TODO if can't find the root , throw exception
 			// MODIFY by Dart 2008.11.07
-			throw new RuntimeException("[XML2JavaAnalyzer]Can't find the root node.");
+			throw new RuntimeException(Messages.getString("XML2JavaAnalyzer.CantFindRootNodeErrorMessage")); //$NON-NLS-1$
 			// return MappingResourceConfigList.createEmptyList();
 		}
 
@@ -340,7 +340,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			if (newRoot == null) {
 				// TODO If can't find the element , throw exception
 				// MODIFY by Dart , 2008.11.07
-				throw new RuntimeException("[XML2JavaAnalyzer]Can't find the \""+ newSelector + "\" node.");
+				throw new RuntimeException(Messages.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage1")+ newSelector + Messages.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage2")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			createMappingResourceConfigList(configList, listType,
 					resourceConfig1, newRoot, targetBean);
@@ -350,7 +350,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			if (source == null) {
 				// TODO If can't find the element , throw exception
 				// MODIFY by Dart , 2008.11.07
-				throw new RuntimeException("[XML2JavaAnalyzer]Can't find the \""+ selector + "\" node.");
+				throw new RuntimeException(Messages.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage1")+ selector + Messages.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage2")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			if (source != null) {
 				MappingModel mapping = new MappingModel(source, targetBean);
@@ -489,8 +489,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 						boolean connectAuto = MessageDialog
 								.openQuestion(
 										displayParent,
-										"Connection Question",
-										"The root models don't be connected , it will make some errors with the generation config file contents.\nDo you wan to connect them?");
+										Messages.getString("XML2JavaAnalyzer.ConnectQDlgTitle"), //$NON-NLS-1$
+										Messages.getString("XML2JavaAnalyzer.ConnectQDlgContent")); //$NON-NLS-1$
 						if (connectAuto) {
 							// connect root model
 							LineConnectionModel connectionModel = new LineConnectionModel();

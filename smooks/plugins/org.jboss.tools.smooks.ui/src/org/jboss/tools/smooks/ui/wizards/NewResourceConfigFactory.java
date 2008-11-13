@@ -89,7 +89,7 @@ public class NewResourceConfigFactory implements INewResourceConfigFactory {
 //			config.setSelector(SmooksModelConstants.AT_DOCUMENT);
 			ResourceType resource = SmooksFactory.eINSTANCE
 					.createResourceType();
-			resource.setValue("/");
+			resource.setValue("/"); //$NON-NLS-1$
 			config.setResource(resource);
 			
 			return config;
@@ -100,15 +100,15 @@ public class NewResourceConfigFactory implements INewResourceConfigFactory {
 	public NewResourceConfigKey[] getAllIDs() {
 		NewResourceConfigKey bean = new NewResourceConfigKey();
 		bean.setId(SmooksModelConstants.BEAN_POPULATOR);
-		bean.setName("BeanPopulator");
+		bean.setName("BeanPopulator"); //$NON-NLS-1$
 
 		NewResourceConfigKey date = new NewResourceConfigKey();
 		date.setId(SmooksModelConstants.DATE_DECODER);
-		date.setName("Date Decoder");
+		date.setName("Date Decoder"); //$NON-NLS-1$
 
 		NewResourceConfigKey documentFile = new NewResourceConfigKey();
 		documentFile.setId(SmooksModelConstants.AT_DOCUMENT);
-		documentFile.setName("Document");
+		documentFile.setName("Document"); //$NON-NLS-1$
 		return new NewResourceConfigKey[] { bean, date ,documentFile };
 	}
 

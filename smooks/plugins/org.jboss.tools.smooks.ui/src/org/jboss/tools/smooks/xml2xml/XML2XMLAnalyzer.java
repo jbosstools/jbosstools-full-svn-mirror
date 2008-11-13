@@ -31,8 +31,8 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 			SmooksConfigurationFileGenerateContext context)
 			throws SmooksAnalyzerException {
 		Shell shell = context.getShell();
-		MessageDialog.openWarning(shell, "Warning",
-				"The xml2xml can't be generate to config file currently.");
+		MessageDialog.openWarning(shell, Messages.getString("XML2XMLAnalyzer.WarningDlgTitle"), //$NON-NLS-1$
+				Messages.getString("XML2XMLAnalyzer.XML2XMLGenerateErrorMessage")); //$NON-NLS-1$
 		return;
 	}
 
@@ -47,7 +47,7 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType, Object sourceObject,
 			Object targetObject) {
-		throw new RuntimeException("The Smooks editor doesn't support to parse the XML2XML config file currently.");
+		throw new RuntimeException(Messages.getString("XML2XMLAnalyzer.XML2XMLParseErrorMessage")); //$NON-NLS-1$
 	}
 
 	public DesignTimeAnalyzeResult[] analyzeGraphModel(

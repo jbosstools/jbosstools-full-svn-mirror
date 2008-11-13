@@ -154,7 +154,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 
 	protected void openWorkSpaceSelection(Text relationT) {
 		IFile[] files = WorkspaceResourceDialog.openFileSelection(getShell(),
-				"", "", false, null, Collections.EMPTY_LIST);
+				"", "", false, null, Collections.EMPTY_LIST); //$NON-NLS-1$ //$NON-NLS-2$
 		// dialog.setInitialSelections(selectedResources);
 		if (files.length > 0) {
 			IFile file = files[0];
@@ -174,7 +174,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		xsdComposite.setLayout(xsdLayout);
 
 		Label nfileLanel = new Label(xsdComposite, SWT.NONE);
-		nfileLanel.setText("XML File Path :");
+		nfileLanel.setText(Messages.getString("AbstractFileSelectionWizardPage.XMLFilePathLabelText")); //$NON-NLS-1$
 		fileTextComposite = new Composite(xsdComposite, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.grabExcessHorizontalSpace = true;
@@ -223,10 +223,10 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		browseButtonComposite.setLayout(bg);
 
 		fileSystemBrowseButton = new Button(browseButtonComposite, SWT.NONE);
-		fileSystemBrowseButton.setText("Browse File System...");
+		fileSystemBrowseButton.setText(Messages.getString("AbstractFileSelectionWizardPage.BrowseFileSystemButtonText")); //$NON-NLS-1$
 
 		workspaceBrowseButton = new Button(browseButtonComposite, SWT.NONE);
-		workspaceBrowseButton.setText("Browse workspace file..");
+		workspaceBrowseButton.setText(Messages.getString("AbstractFileSelectionWizardPage.BrowseWorkspaceButtonText")); //$NON-NLS-1$
 		gd = new GridData();
 		gd.horizontalAlignment = GridData.END;
 		workspaceBrowseButton.setLayoutData(gd);
@@ -290,8 +290,8 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	protected void changeWizardPageStatus() {
 		String text = this.fileText.getText();
 		String error = null;
-		if (text == null || "".equals(text))
-			error = "Please Select a file";
+		if (text == null || "".equals(text)) //$NON-NLS-1$
+			error = Messages.getString("AbstractFileSelectionWizardPage.Errormessage"); //$NON-NLS-1$
 		
 //		File tempFile = new File(text);
 //		if(!tempFile.exists()){

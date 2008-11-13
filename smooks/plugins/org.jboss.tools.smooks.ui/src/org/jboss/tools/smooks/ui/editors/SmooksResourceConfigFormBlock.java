@@ -173,25 +173,25 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 						String selector = ((ResourceConfigType) element)
 								.getSelector();
 						if (selector == null)
-							selector = "<NULL>";
-						return "BeanPopulator : " + selector;
+							selector = Messages.getString("SmooksResourceConfigFormBlock.NULLString"); //$NON-NLS-1$
+						return Messages.getString("SmooksResourceConfigFormBlock.BeanPopulator") + selector; //$NON-NLS-1$
 					}
 					if (NormalSmooksModelBuilder
 							.isDateConfig((ResourceConfigType) element)) {
-						return "Date Type";
+						return Messages.getString("SmooksResourceConfigFormBlock.DateType"); //$NON-NLS-1$
 					}
 					if (SmooksModelUtils
 							.isFilePathResourceConfig((ResourceConfigType) element)) {
 						String selector = ((ResourceConfigType) element)
 								.getSelector();
 						if (selector == null)
-							selector = "<NULL>";
-						return "Template File :" + selector;
+							selector = Messages.getString("SmooksResourceConfigFormBlock.NULLString"); //$NON-NLS-1$
+						return Messages.getString("SmooksResourceConfigFormBlock.TemplateFile") + selector; //$NON-NLS-1$
 					}
 					String s = ((ResourceConfigType) element).getSelector();
 					if (s == null)
-						s = "<NULL>";
-					return "UnKnown ResourceConfig - " + s;
+						s = Messages.getString("SmooksResourceConfigFormBlock.NULLString"); //$NON-NLS-1$
+					return Messages.getString("SmooksResourceConfigFormBlock.UnknownResourceConfig") + s; //$NON-NLS-1$
 				}
 				return super.getText(element);
 			}
@@ -244,7 +244,7 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 			FormToolkit tool, final IManagedForm managedForm) {
 		configurationSection = tool.createSection(rootMainControl,
 				Section.TITLE_BAR | Section.DESCRIPTION);
-		configurationSection.setText("Data Type");
+		configurationSection.setText(Messages.getString("SmooksResourceConfigFormBlock.DateType")); //$NON-NLS-1$
 		sectionPart = new SectionPart(configurationSection);
 		managedForm.addPart(sectionPart);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -277,18 +277,18 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 		GridLayout buttonLayout = new GridLayout();
 		buttonComposite.setLayout(buttonLayout);
 
-		addButton = tool.createButton(buttonComposite, "New", SWT.NONE);
+		addButton = tool.createButton(buttonComposite, Messages.getString("SmooksResourceConfigFormBlock.NewButton"), SWT.NONE); //$NON-NLS-1$
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		addButton.setLayoutData(gd);
 
-		removeButton = tool.createButton(buttonComposite, "Delete", SWT.NONE);
+		removeButton = tool.createButton(buttonComposite, Messages.getString("SmooksResourceConfigFormBlock.DeleteButton"), SWT.NONE); //$NON-NLS-1$
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		removeButton.setLayoutData(gd);
 
-		upButton = tool.createButton(buttonComposite, "Up", SWT.NONE);
+		upButton = tool.createButton(buttonComposite, Messages.getString("SmooksResourceConfigFormBlock.UpButton"), SWT.NONE); //$NON-NLS-1$
 		upButton.setLayoutData(gd);
 
-		downButton = tool.createButton(buttonComposite, "Down", SWT.NONE);
+		downButton = tool.createButton(buttonComposite, Messages.getString("SmooksResourceConfigFormBlock.DownButton"), SWT.NONE); //$NON-NLS-1$
 		downButton.setLayoutData(gd);
 
 		hookButtons();

@@ -41,7 +41,7 @@ public class TypeIDSelectionWizard extends Wizard implements INewWizard {
 	
 	public void addPages(){
 		if(page == null){
-			page = new TypeIDSelectionWizardPage("TypeID Selection",false);
+			page = new TypeIDSelectionWizardPage(Messages.getString("TypeIDSelectionWizard.TypeIDSelection"),false); //$NON-NLS-1$
 			page.setSelection(selection);
 			this.addPage(page);
 		}

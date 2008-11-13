@@ -37,14 +37,14 @@ public class NewResourceConfigWizardPage extends WizardPage implements ISelectio
 	
 	public NewResourceConfigWizardPage(String pageName, String title,
 			ImageDescriptor titleImage) {
-		super(pageName, "Select New ResourceConfig Type", titleImage);
-		setDescription("Select the ResourceConfig type to add into the config file");
+		super(pageName, Messages.getString("NewResourceConfigWizardPage.NewConfigWizardPageTitle"), titleImage); //$NON-NLS-1$
+		setDescription(Messages.getString("NewResourceConfigWizardPage.NewConfigWizardPageDescription")); //$NON-NLS-1$
 	}
 
 	public NewResourceConfigWizardPage(String pageName) {
 		super(pageName);
-		setTitle("Select New ResourceConfig Type");
-		setDescription("Select the ResourceConfig type to add into the config file");
+		setTitle(Messages.getString("NewResourceConfigWizardPage.NewConfigWizardPageTitle")); //$NON-NLS-1$
+		setDescription(Messages.getString("NewResourceConfigWizardPage.NewConfigWizardPageDescription")); //$NON-NLS-1$
 	}
 
 	/* (non-Javadoc)
@@ -68,7 +68,7 @@ public class NewResourceConfigWizardPage extends WizardPage implements ISelectio
 	protected void validatePageFinish(){
 		String error = null;
 		if(selectedKey == null){
-			error = "Please select one key";
+			error = Messages.getString("NewResourceConfigWizardPage.NewConfigWizardPageErrorMessage1"); //$NON-NLS-1$
 		}
 		
 		setErrorMessage(error);
