@@ -82,7 +82,7 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 				IStructuredSelection selection = (IStructuredSelection) event
 						.getSelection();
 				IWizardNode node = (IWizardNode) selection.getFirstElement();
-				desLabel.setText("");
+				desLabel.setText(""); //$NON-NLS-1$
 				if (node != null) {
 					setSelectedNode(node);
 					if(node instanceof TransformSelectWizardNode){
@@ -156,8 +156,8 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 	public TransformDataWizardSelectionPage(String pageName) {
 		super(pageName);
 
-		setDescription("Select the transform data type");
-		setTitle("Data Type Selection");
+		setDescription(Messages.getString("TransformDataWizardSelectionPage.TransformDataWizardDescription")); //$NON-NLS-1$
+		setTitle(Messages.getString("TransformDataWizardSelectionPage.TransformDataWizardTitle")); //$NON-NLS-1$
 
 	}
 

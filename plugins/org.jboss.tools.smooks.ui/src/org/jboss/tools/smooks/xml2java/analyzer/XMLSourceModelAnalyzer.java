@@ -24,7 +24,7 @@ import org.jboss.tools.smooks.utils.UIUtils;
 public class XMLSourceModelAnalyzer extends AbstractXMLModelAnalyzer {
 
 	public XMLSourceModelAnalyzer() {
-		super("sourceDataPath");
+		super("sourceDataPath"); //$NON-NLS-1$
 	}
 
 	@Override

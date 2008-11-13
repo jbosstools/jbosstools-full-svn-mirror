@@ -108,7 +108,7 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 		GridLayout gridLayout = UIUtils.createGeneralFormEditorLayout(1);
 		resourceBlock.createContent(managedForm);
 		Composite rootMainControl = form.getBody();
-		form.setText("Configuration Page");
+		form.setText(Messages.getString("SmooksNormalContentEditFormPage.ConfigurationPageText")); //$NON-NLS-1$
 		createSmooksTypeGUI(rootMainControl, tool);
 		form.getBody().setLayout(gridLayout);
 		form.pack();
@@ -178,7 +178,7 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 					if (domButton != null)
 						domButton.setSelection(true);
 				}
-				if ("SAX/DOM".equals(type)) {
+				if ("SAX/DOM".equals(type)) { //$NON-NLS-1$
 					if (saxdomButton != null)
 						saxdomButton.setSelection(true);
 				}
@@ -193,7 +193,7 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 		parseTypeSection.setLayoutData(gd);
 		Composite typeSelectComposite = tool.createComposite(parseTypeSection);
 		parseTypeSection.setClient(typeSelectComposite);
-		parseTypeSection.setText("Smooks Parse Type");
+		parseTypeSection.setText(Messages.getString("SmooksNormalContentEditFormPage.SmooksParseType")); //$NON-NLS-1$
 		GridLayout layout1 = new GridLayout();
 		typeSelectComposite.setLayout(layout1);
 

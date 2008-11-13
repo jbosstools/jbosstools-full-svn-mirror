@@ -36,11 +36,11 @@ import org.jboss.tools.smooks.xml.model.XMLObjectAnalyzer;
 public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 		ITargetModelAnalyzer {
 
-	public static final String FILE_PRIX = "File:/";
+	public static final String FILE_PRIX = "File:/"; //$NON-NLS-1$
 
-	public static final String WORKSPACE_PRIX = "Workspace:/";
+	public static final String WORKSPACE_PRIX = "Workspace:/"; //$NON-NLS-1$
 
-	private String parmaKey = "";
+	private String parmaKey = ""; //$NON-NLS-1$
 
 	public AbstractXMLModelAnalyzer(String paramKey) {
 		this.parmaKey = paramKey;
@@ -63,11 +63,11 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 					path = file.getLocation().toOSString();
 				} else {
 					throw new InvocationTargetException(new Exception(
-							"file dosen't exist" + path + " on the workspace."));
+							Messages.getString("AbstractXMLModelAnalyzer.FileDosentExistErrorMessage1") + path + Messages.getString("AbstractXMLModelAnalyzer.FileDosentExistErrorMessage2"))); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			} else {
 				throw new InvocationTargetException(new Exception(
-						"Illegal file path : " + path + "."));
+						Messages.getString("AbstractXMLModelAnalyzer.IllegalPathErrorMessage1") + path + ".")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 		return path;

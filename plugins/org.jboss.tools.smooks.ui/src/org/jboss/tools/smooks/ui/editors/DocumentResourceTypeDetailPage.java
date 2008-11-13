@@ -42,8 +42,8 @@ public class DocumentResourceTypeDetailPage extends AbstractSmooksModelDetailPag
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
 		parent.setLayout(layout);
-		this.formToolKit.createLabel(parent, "Selector :");
-		selectorText = formToolKit.createText(parent, "");
+		this.formToolKit.createLabel(parent, Messages.getString("DocumentResourceTypeDetailPage.Selector")); //$NON-NLS-1$
+		selectorText = formToolKit.createText(parent, ""); //$NON-NLS-1$
 		selectorText.addModifyListener(new ModifyListener(){
 
 			public void modifyText(ModifyEvent e) {
@@ -55,12 +55,12 @@ public class DocumentResourceTypeDetailPage extends AbstractSmooksModelDetailPag
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		selectorText.setLayoutData(gd);
 		
-		this.formToolKit.createLabel(parent, "Document Path:");
+		this.formToolKit.createLabel(parent, Messages.getString("DocumentResourceTypeDetailPage.DocPath")); //$NON-NLS-1$
 		Composite fileCom = formToolKit.createComposite(parent);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		fileCom.setLayoutData(gd);
 		fileCom.setLayout(layout);
-		text = formToolKit.createText(fileCom, "");
+		text = formToolKit.createText(fileCom, ""); //$NON-NLS-1$
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.grabExcessHorizontalSpace = true;
 		text.setLayoutData(gd);
@@ -72,7 +72,7 @@ public class DocumentResourceTypeDetailPage extends AbstractSmooksModelDetailPag
 		});
 		
 		
-		Button browseButton = formToolKit.createButton(fileCom, "Browse...", SWT.NONE);
+		Button browseButton = formToolKit.createButton(fileCom, Messages.getString("DocumentResourceTypeDetailPage.BrowseFile"), SWT.NONE); //$NON-NLS-1$
 		browseButton.addSelectionListener(new SelectionAdapter(){
 
 			public void widgetSelected(SelectionEvent e) {
@@ -94,7 +94,7 @@ public class DocumentResourceTypeDetailPage extends AbstractSmooksModelDetailPag
 	protected void browseFileSystem(){
 		IFile[] files = WorkspaceResourceDialog.openFileSelection(this.parentEditor.getSite()
 				.getShell(),
-				"", "", false, null, Collections.EMPTY_LIST);
+				"", "", false, null, Collections.EMPTY_LIST); //$NON-NLS-1$ //$NON-NLS-2$
 		// dialog.setInitialSelections(selectedResources);
 		if (files.length > 0) {
 			IFile file = files[0];
@@ -122,7 +122,7 @@ public class DocumentResourceTypeDetailPage extends AbstractSmooksModelDetailPag
 			ResourceType resource = resourceConfigList.getResource();
 			if(resource != null){
 				String path = resource.getValue();
-				if(path == null) path = "";
+				if(path == null) path = ""; //$NON-NLS-1$
 				text.setText(path);
 			}
 		}

@@ -105,8 +105,8 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 	public TypeIDSelectionWizardPage(String pageName, boolean showDataSelectPage) {
 		super(pageName);
 		this.showDataSelectPage = showDataSelectPage;
-		setTitle("Select Source/Target Data Type");
-		setDescription("Select the data type for source/target data");
+		setTitle(Messages.getString("TypeIDSelectionWizardPage.TypeIDSelectionWizardPageTitle")); //$NON-NLS-1$
+		setDescription(Messages.getString("TypeIDSelectionWizardPage.TypeIDSelectionWizardPageDescription")); //$NON-NLS-1$
 	}
 
 	@Override
@@ -207,10 +207,10 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		mainComposite.setLayout(gl);
 		sourceList = AnalyzerFactory.getInstance().getRegistrySourceIDList();
 		Label sl = new Label(mainComposite, SWT.NONE);
-		sl.setText("Source Data Type ID List : ");
+		sl.setText(Messages.getString("TypeIDSelectionWizardPage.SourceTypeIDTitle")); //$NON-NLS-1$
 
 		Label tl = new Label(mainComposite, SWT.NONE);
-		tl.setText("Target Data Type ID List : ");
+		tl.setText(Messages.getString("TypeIDSelectionWizardPage.TargetTypeIDTitle")); //$NON-NLS-1$
 		
 		Composite sourceBorder = new Composite(mainComposite,SWT.NONE);
 		sourceBorder.setBackground(ColorConstants.black);
@@ -237,7 +237,7 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		initViewer();
 
 		sourceDataLink = new Hyperlink(mainComposite, SWT.NONE);
-		sourceDataLink.setText("Source Model Select:Empty");
+		sourceDataLink.setText("Source Model Select:Empty"); //$NON-NLS-1$
 		sourceDataLink.addHyperlinkListener(new IHyperlinkListener() {
 
 			public void linkActivated(HyperlinkEvent e) {
@@ -256,7 +256,7 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		// TODO don't show this
 		sourceDataLink.setVisible(false);
 		targetDataLink = new Hyperlink(mainComposite, SWT.NONE);
-		targetDataLink.setText("Target Model Select:Empty");
+		targetDataLink.setText("Target Model Select:Empty"); //$NON-NLS-1$
 		targetDataLink.addHyperlinkListener(new IHyperlinkListener() {
 
 			public void linkActivated(HyperlinkEvent e) {
@@ -308,8 +308,8 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 						.getTreeViewerInputContents();
 			}
 		} else {
-			MessageDialog.openInformation(getShell(), "Info",
-					"Please select the data type first");
+			MessageDialog.openInformation(getShell(), "Info", //$NON-NLS-1$
+					Messages.getString("TypeIDSelectionWizardPage.WarningMessage")); //$NON-NLS-1$
 		}
 
 		return null;
@@ -428,7 +428,7 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		});
 		TableColumn nameColumn = new TableColumn(viewer.getTable(), SWT.NONE);
 		nameColumn.setWidth(250);
-		nameColumn.setText("Name");
+		nameColumn.setText(Messages.getString("TypeIDSelectionWizardPage.NameColumn")); //$NON-NLS-1$
 		viewer.setContentProvider(new TypeIDContentProvider());
 		viewer.setLabelProvider(new TypeIDLabelProvider());
 		return viewer;
@@ -469,7 +469,7 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 					// return ((DataTypeID) element).getId();
 				}
 			}
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 
 	}

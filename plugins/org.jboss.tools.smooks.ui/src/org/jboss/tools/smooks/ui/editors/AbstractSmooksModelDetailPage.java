@@ -60,7 +60,7 @@ public abstract class AbstractSmooksModelDetailPage implements IDetailsPage {
 		parent.setLayout(new FillLayout());
 		Section section = formToolKit.createSection(parent, Section.DESCRIPTION
 				| Section.TITLE_BAR);
-		section.setText("Details Information");
+		section.setText(Messages.getString("AbstractSmooksModelDetailPage.DetailSectionTitle")); //$NON-NLS-1$
 
 		Composite client = formToolKit.createComposite(section);
 		section.setLayout(new FillLayout());
