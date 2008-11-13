@@ -62,7 +62,7 @@ public class VpeNodeInvocationHandler implements InvocationHandler {
         	return result;
         }
         final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
-        return  ElService.getInstance().replaceEl(file, toReplace);
+        return  ElService.getInstance().replaceEl(file, result);
 	}
 
 }
