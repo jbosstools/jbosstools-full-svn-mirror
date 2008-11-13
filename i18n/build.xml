@@ -69,16 +69,13 @@
 	</target>
 
 	<target name="debug" depends="init">
-		<echo message="jbt.srcdir=${jbt.srcdir}">
-		</echo>
+		<echo message="jbt.srcdir=${jbt.srcdir}"/>
 		<!-- get the source compile classpath in a printable form -->
 		<pathconvert pathsep="${line.separator}|   |__ " property="echo.dependency.classpath" refid="dependency.classpath">
 		</pathconvert>
 		<echo message="|__ dependency.classpath path" />
 		<echo message="|   |" />
 		<echo message="|   |__ ${echo.dependency.classpath}" />
-		<!--
--->
 	</target>
 
 	<target name="clean" description="Remove generated files">
@@ -89,6 +86,7 @@
 		<delete dir="${propdir}" />
 		<delete dir="${jardir}" />
 		<delete dir="${zipdir}" />
+		<delete dir="${target.dir}" includes="*.tmp" />
 	</target>
 
 	<target name="prop2pot" description="Extract translation templates (POT) from the JBoss Tools English properties files" depends="init">
@@ -110,9 +108,7 @@
 					regexp="^${jbt.srcdir}${file.separator}[^/\\]+${file.separator}plugins${file.separator}([^/\\]+)${file.separator}.*" 
 					select="\1" />
 				<checkprop propname="plugin"/>
-				<!--
-				<echo message="extracting strings from @{srcdir} -> ${potdir}/${relativesrcdir}"/>
--->
+				<echo level="verbose" message="extracting strings from @{srcdir} -> ${potdir}/${relativesrcdir}"/>
 				<prop2pot srcDir="@{srcdir}" dstDir="${potdir}/${relativesrcdir}" />
 				<xpath2pot srcDir="@{srcdir}" target="${potdir}/${relativesrcdir}/${plugin}_meta.pot" includes="**/*.meta" xpath="${meta.xpath}" pathprefix="${relativesrcdir}/">
 					<dtd publicId="-//Red Hat, Inc.//DTD Meta 1.0//EN" location="${meta.dtd}" />
@@ -197,9 +193,7 @@
     					select="\1" />
 					<checkprop propname="plugin"/>
 					<propertycopy override="true" property="localename" from="NAME_${locale}"/>
-					<!--
-    				<echo message="@{plugindir} contains ${locale} props for plugin ${plugin} in module ${module}"/>
-    				-->
+    				<echo level="verbose" message="@{plugindir} contains ${locale} props for plugin ${plugin} in module ${module}"/>
 					<antcall target="@{task}">
 						<param name="plugindir" value="@{plugindir}"/>
 					</antcall>
@@ -249,9 +243,7 @@
 		<checkprop propname="PLUGIN_VERSION"/>
 		<checkprop propname="PLUGIN_VENDOR"/>
 		<property name="jar" value="${jardir}/plugins/${plugin}.nl-${locale}_${PLUGIN_VERSION}.jar" />
-		<!--
-		<echo message="Jarring up ${jar} from directory ${plugindir}"/>
--->
+		<echo level="verbose" message="Jarring up ${jar} from directory ${plugindir}"/>
 		<!-- we exclude "*" because we only want about.properties and 
 		plugin.properties from the top-level -->
 		<jar 
@@ -307,7 +299,7 @@
 					<checkprop propname="feature"/>
 					<var name="featurename" value="${feature}" />
 					<var name="jarsize" value="0" />
-					<echo message="Processing feature ${feature} in module ${module}"/>
+					<echo level="verbose" message="Processing feature ${feature} in module ${module}"/>
 						<for param="locale" list="${locales}">
 							<sequential>
 								<var name="locale" value="@{locale}" />
@@ -347,14 +339,12 @@
 								      id=&quot;${feature}.nl-@{locale}&quot; version=&quot;${PLUGIN_VERSION}&quot;&gt;
 								      &lt;category name=&quot;JBoss Tools Localization (${localename})&quot;/&gt;
 								   &lt;/feature&gt;" />
-								<!--
+								<!-- demunged, that looks like:
 								   <feature url="features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
 								      id="${feature}.nl-@{locale}" version="${PLUGIN_VERSION}">
 								      <category name="JBoss Tools Localization"/>
 								   </feature>
 								-->
-										
-
 								
 								<!-- TODO download-size="${jarsize}" install-size="${jarsize}" -->
 								<copy overwrite="true" 
@@ -364,18 +354,11 @@
 									</filterchain>
 									<!-- TODO rename to FEATURE.nl-LOCALE_VERSION -->
 									<fileset dir="feature-template/org.jboss.tools.nl-LOCALE_VERSION" />
-									<!--
-									features/org.*.nl-${locale}_${PLUGIN_VERSION}/
-										license.html
-										feature.properties
-										feature.xml
-									-->
 								</copy>
 								<jar destfile="${jardir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
 									basedir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}" />
-<!--
+								<!-- might want to keep around for debugging: -->
 								<delete dir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}" />
--->
 							</sequential>
 						</for>
 				</sequential>
@@ -386,19 +369,19 @@
 				<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
 				<echo append="true" file="${temp.file.sitefeatures}"
 					message="&lt;category-def name=&quot;JBoss Tools Localization (${localename})&quot; label=&quot;JBoss Tools Localization (${localename})&quot;/&gt;" />
+				<!-- demunged, that looks like:
+				   <category-def 
+				   		name="JBoss Tools Localization (${localename})" 
+				   		label="JBoss Tools Localization (${localename})"/>
+				-->
 			</sequential>
 		</for>
 		
-		<!--
-   <category-def name="JBoss Tools Localization (${localename})" label="JBoss Tools Localization (${localename})"/>
-		-->
 		
 		
 		<var name="features" unset="true" />
 		<loadfile property="features"  srcFile="${temp.file.sitefeatures}"/>
-		<!--
 		<delete file="${temp.file.sitefeatures}"/>
-		-->
 
 		<copy overwrite="true" tofile="${jardir}/site.xml" file="site-template.xml">
 			<filterchain>
