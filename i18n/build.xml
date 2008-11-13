@@ -7,8 +7,6 @@
 	<property name="jbt.srcdir" value="${toString:jbtdir}" />
 
 	<property file="i18n.properties" />
-	<property name="meta.dtd" value="${jbt.srcdir}/common/plugins/org.jboss.tools.common.model/resources/meta/meta.dtd" />
-	<property name="meta.xpath" value="//@displayName | //XModelAttribute/@name | //XModelAttribute/@default | //Constraint/value/@name" />
 
 	<!-- Target locations: -->
 	<property name="target.dir" location="target" />
@@ -110,9 +108,6 @@
 				<checkprop propname="plugin"/>
 				<echo level="verbose" message="extracting strings from @{srcdir} -> ${potdir}/${relativesrcdir}"/>
 				<prop2pot srcDir="@{srcdir}" dstDir="${potdir}/${relativesrcdir}" />
-				<xpath2pot srcDir="@{srcdir}" target="${potdir}/${relativesrcdir}/${plugin}_meta.pot" includes="**/*.meta" xpath="${meta.xpath}" pathprefix="${relativesrcdir}/">
-					<dtd publicId="-//Red Hat, Inc.//DTD Meta 1.0//EN" location="${meta.dtd}" />
-				</xpath2pot>
 			</sequential>
 		</for>
 	</target>
@@ -202,11 +197,15 @@
 		</sequential>
 	</macrodef>
 
+	<!-- Processes the generated props directory, one plugin at a time, 
+		 generating manifests -->
 	<target name="manifests" depends="init" description="Generate fragment plugin manifests for langpack plugins">
 		<delete dir="${propdir}" includes="*/*/plugins/*/META-INF/MANIFEST.MF"/>
 		<processplugins rootdir="${propdir}" task="manifest" />
 	</target>
 
+	
+	<!-- Generates the manifest for one plugin.  Called by processplugins. -->
 	<target name="manifest">
 		<!-- NB don't depend on initTaskDefs here, or ant loads the 
 		classes over and over until it exhausts memory -->
@@ -216,23 +215,25 @@
 		<checkprop propname="localename"/>
 		<checkprop propname="PLUGIN_VERSION"/>
 		<checkprop propname="PLUGIN_VENDOR"/>
-<!-- TODO specify exact versions of host plugins? -->
 		<copy overwrite="true" file="plugin-template.mf" tofile="${plugindir}/META-INF/MANIFEST.MF">
 			<filterchain>
 				<expandproperties/>
 			</filterchain>
 		</copy>
-		<!-- only for debugging:
+		<!-- for debug output:
 		<concat><filelist files="${plugindir}/META-INF/MANIFEST.MF"></filelist></concat>
 -->
 	</target>
 
+	<!-- Processes the generated props directory, one plugin at a time, 
+		 generating plugin jars from the props and manifest -->
 	<target name="fragments" depends="init" description="Generate fragment plugin jars to contain translations" >
 		<delete dir="${jardir}" />
 		<mkdir dir="${jardir}/plugins" />
 		<processplugins rootdir="${propdir}" task="fragment" />
 	</target>
 
+	<!-- Jars up one fragment plugin.  Called by processplugins. -->
 	<target name="fragment">
 		<!-- NB don't depend on initTaskDefs here, or ant loads the 
 		classes over and over until it exhausts memory -->
@@ -349,11 +350,10 @@
 								<!-- TODO download-size="${jarsize}" install-size="${jarsize}" -->
 								<copy overwrite="true" 
 									todir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}">
+									<fileset dir="feature-template/FEATURE.nl-LOCALE_VERSION" />
 									<filterchain>
 										<expandproperties/>
 									</filterchain>
-									<!-- TODO rename to FEATURE.nl-LOCALE_VERSION -->
-									<fileset dir="feature-template/org.jboss.tools.nl-LOCALE_VERSION" />
 								</copy>
 								<jar destfile="${jardir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
 									basedir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}" />
@@ -364,6 +364,10 @@
 				</sequential>
 			</for>
 		</sequential>
+		<!--
+		Generate a list of features for each locale, so that the update 
+		site can have a category for each locale:
+		-->
 		<for param="locale" list="${locales}">
 			<sequential>
 				<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
@@ -378,11 +382,12 @@
 		</for>
 		
 		
-		
+		<!-- Read in the above list of features -->
 		<var name="features" unset="true" />
 		<loadfile property="features"  srcFile="${temp.file.sitefeatures}"/>
 		<delete file="${temp.file.sitefeatures}"/>
 
+		<!-- And create the feature from the template, filling in the list of features -->
 		<copy overwrite="true" tofile="${jardir}/site.xml" file="site-template.xml">
 			<filterchain>
 				<expandproperties/>
@@ -390,7 +395,7 @@
 		</copy>
 	</target>
 	
-	<target name="zips" depends="init">
+	<target name="zips" depends="init" description="Generate zip files containing langpacks, one zip per locale">
 		<delete dir="${zipdir}" />
 		<mkdir dir="${zipdir}" />
 		<for param="locale" list="${locales}">
@@ -402,8 +407,6 @@
 					basedir="${jardir}" >
 					<include name="plugins/*.nl-@{locale}_${PLUGIN_VERSION}.jar" />
 					<include name="features/*.nl-@{locale}_${PLUGIN_VERSION}.jar/" />
-					<!--
-					-->
 				</zip>
 			</sequential>
 		</for>
