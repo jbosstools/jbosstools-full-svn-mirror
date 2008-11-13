@@ -313,9 +313,14 @@ public final class ElService implements IELService {
         boolean rst = false;
 
         for (ResourceReference ref : references) {
-            if (value.contains(ref.getLocation())) {
-                rst = true;
-            }
+
+        	//FIXED FOR JBIDE-3149 by sdzmitrovich
+			if (equalsExppression(value, ref.getLocation()))
+				return true;
+
+//            if (value.contains(ref.getLocation())) {
+//                rst = true;
+//            }
         }
         return rst;
     }
@@ -402,5 +407,17 @@ public final class ElService implements IELService {
 //    }
     
     
+    private boolean equalsExppression(String value, String expression) {
+
+		final String dollarEl = String.valueOf(DOLLAR_PREFIX) + expression
+				+ String.valueOf(SUFFIX);
+		final String sharpEl = String.valueOf(SHARP_PREFIX) + expression
+				+ String.valueOf(SUFFIX);
+
+		if (value.contains(dollarEl) || value.contains(sharpEl)) {
+			return true;
+		}
+		return false;
+	}
 
 }
