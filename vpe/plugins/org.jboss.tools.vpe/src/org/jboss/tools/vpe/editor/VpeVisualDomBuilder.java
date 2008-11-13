@@ -446,19 +446,19 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				
 				sourceNodeClone = VpeProxyUtil.createProxyForELExpressionNode(getPageContext(),
 					sourceNode);
-//				if(sourceNodeClone instanceof Element){
-//				   ((Element)sourceNodeClone).setAttribute(PARENT,""); //$NON-NLS-1$
-//				    Attr a = ((Element)sourceNodeClone).getAttributeNode(PARENT);
-//				    a.setUserData(PARENT, sourceNode.getParentNode(),null);
-//				    
-//				    //added by estherbin fix https://jira.jboss.org/jira/browse/JBIDE-1605 issue.          
-//                    sourceNodeClone.setUserData(SRC_NODE, sourceNode,null);
-//				    
-//				}
-//				template.beforeTemplateCreated(getPageContext(),
-//						sourceNodeClone, getVisualDocument());
+				try {
 				creationData = template.create(getPageContext(),
 						sourceNodeClone, getVisualDocument());
+				//Fix for JBIDE-3144, we use proxy and some template can 
+				//try to cast for not supported interface
+				} catch(ClassCastException ex) {
+					VpePlugin.reportProblem(ex);
+					sourceNodeClone = null;
+					//then we create template without using proxy
+					creationData = template.create(getPageContext(), sourceNode,
+							getVisualDocument());
+				}
+				
 			} else {
 				creationData = template.create(getPageContext(), sourceNode,
 						getVisualDocument());

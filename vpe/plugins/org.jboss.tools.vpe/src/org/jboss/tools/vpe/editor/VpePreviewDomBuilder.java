@@ -37,8 +37,6 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 
 	boolean rebuildFlag = false;
 	
-//	private static final String YES_STRING   = "yes";
-	
 	/**
 	 * 
 	 * @param domMapping
@@ -77,8 +75,19 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 		          if (ElService.getInstance().isCloneableNode(getPageContext(),  sourceNode)) {
                     final Node sourceNodeClone =  VpeProxyUtil.createProxyForELExpressionNode(getPageContext(),
         					sourceNode);
-                    creationData = template.create(getPageContext(), sourceNodeClone, getVisualDocument());
-                } else {
+    				try {
+    					creationData = template.create(getPageContext(),
+    							sourceNodeClone, getVisualDocument());
+    					//Fix for JBIDE-3144, we use proxy and some template can 
+    					//try to cast for not supported interface
+    					} catch(ClassCastException ex) {
+    						VpePlugin.reportProblem(ex);
+    						//then we create template without using proxy
+    						creationData = template.create(getPageContext(), sourceNode,
+    								getVisualDocument());
+    					}
+                
+		          } else {
                     creationData = template.create(getPageContext(), sourceNode, getVisualDocument());
                 }
 			}catch (XPCOMException ex) {
