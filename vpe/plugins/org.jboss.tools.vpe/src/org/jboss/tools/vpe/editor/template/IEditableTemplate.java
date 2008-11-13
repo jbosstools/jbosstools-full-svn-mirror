@@ -18,6 +18,7 @@ import org.w3c.dom.Element;
  * The Interface IEditableTemplate.
  * 
  * @author Evgenij Stherbin
+ * @deprecated
  */
 public interface IEditableTemplate {
     

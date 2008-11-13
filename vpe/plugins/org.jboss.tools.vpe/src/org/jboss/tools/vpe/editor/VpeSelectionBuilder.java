@@ -22,11 +22,10 @@ import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
-import org.jboss.tools.vpe.editor.template.ISelectionManager;
 import org.jboss.tools.vpe.editor.template.VpePseudoContentCreator;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.util.HTML;
-import org.jboss.tools.vpe.editor.util.TemplateManagingUtil;
+import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
@@ -79,9 +78,9 @@ public class VpeSelectionBuilder {
 	
 	public void setSelection(nsISelection selection) {
 		
-		VpeTemplate vpeTemplate = TemplateManagingUtil
-				.getTemplateByVisualSelection(visualBuilder.getPageContext(),
-						TemplateManagingUtil.getSelectedNode(selection));
+//		VpeTemplate vpeTemplate = SelectionUtil
+//				.getTemplateByVisualSelection(visualBuilder.getPageContext(),
+//						SelectionUtil.getSelectedNode(selection));
 //		if (vpeTemplate instanceof ITemplateSelectionManager) {
 //			((ITemplateSelectionManager) vpeTemplate).setSelection(
 //					visualBuilder.getPageContext(), selection);

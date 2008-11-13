@@ -44,12 +44,10 @@ import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectedNodeInfo;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelectionBuilder;
-import org.jboss.tools.vpe.editor.template.IKeyEventHandler;
 import org.jboss.tools.vpe.editor.template.VpeHtmlTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.util.FlatIterator;
 import org.jboss.tools.vpe.editor.util.HTML;
-import org.jboss.tools.vpe.editor.util.TemplateManagingUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -171,8 +169,8 @@ public class VpeVisualKeyHandler {
 		boolean shiftKey = keyEvent.getShiftKey();
 		
 		// get template of selected element
-		VpeTemplate template = TemplateManagingUtil
-				.getTemplateByVisualSelection(pageContext,getSelectedNode());
+//		VpeTemplate template = TemplateManagingUtil
+//				.getTemplateByVisualSelection(pageContext,getSelectedNode());
 		
 		// if template an handle keyEvent than pass control to him. And if
 		// template handled event return true
