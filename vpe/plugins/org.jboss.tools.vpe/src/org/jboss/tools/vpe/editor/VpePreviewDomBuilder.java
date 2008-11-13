@@ -18,6 +18,7 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
+import org.jboss.tools.vpe.editor.proxy.VpeProxyUtil;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
@@ -58,17 +59,9 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 	 */
 	@Override
 	protected nsIDOMNode createNode(Node sourceNode, nsIDOMNode visualOldContainer) {
-//		boolean registerFlag = isCurrentMainDocument();
-//		switch (sourceNode.getNodeType()) {
-//		case Node.ELEMENT_NODE:
-//			Map xmlnsMap = createXmlns((Element)sourceNode);
-			Set ifDependencySet = new HashSet();
+
+			Set<?> ifDependencySet = new HashSet();
 			
-			/*
-			 * Setting current visual node was added
-			 * to fix h:dataTable content visibility on Preview tab.
-			 * http://jira.jboss.com/jira/browse/JBIDE-2059
-			 */
 		    if(sourceNode==null||(
 		    		sourceNode.getNodeType()!=Node.TEXT_NODE
 		    		&&sourceNode.getNodeType()!=Node.ELEMENT_NODE
@@ -82,8 +75,8 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			//FIX FOR JBIDE-1568, added by Max Areshkau
 			try {
 		          if (ElService.getInstance().isCloneableNode(getPageContext(),  sourceNode)) {
-                    final Node sourceNodeClone =  sourceNode.cloneNode(true);
-                    template.beforeTemplateCreated(getPageContext(), sourceNodeClone, getVisualDocument());
+                    final Node sourceNodeClone =  VpeProxyUtil.createProxyForELExpressionNode(getPageContext(),
+        					sourceNode);
                     creationData = template.create(getPageContext(), sourceNodeClone, getVisualDocument());
                 } else {
                     creationData = template.create(getPageContext(), sourceNode, getVisualDocument());
@@ -101,9 +94,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			
 				setTooltip((Element)sourceNode, (nsIDOMElement)visualNewNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
 			}
-//			if (!isCurrentMainDocument() && visualNewElement != null) {
-//				setReadOnlyElement(visualNewElement);
-//			}
+
 			
 			if (template.isChildren()) {
 				List<?> childrenInfoList = creationData.getChildrenInfoList();
@@ -124,19 +115,6 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			getPageContext().setCurrentVisualNode(null);
 			
 			return visualNewNode;
-//		case Node.TEXT_NODE:
-//			return createTextNode(sourceNode, registerFlag);
-//		case Node.COMMENT_NODE:
-//			if(!YES_STRING.equals(VpePreference.SHOW_COMMENTS.getValue())) {
-//				return null;
-//			}
-//			nsIDOMElement visualNewComment = createComment(sourceNode);
-//			if (registerFlag) {
-//				registerNodes(new VpeNodeMapping(sourceNode, visualNewComment));
-//			}
-//			return visualNewComment;
-//		}
-//		return null;
 	}
 
 }

@@ -20,7 +20,6 @@ import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
-import org.jboss.tools.vpe.editor.util.IVpeTemplateAdvice;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -30,7 +29,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 
-public interface VpeTemplate extends IVpeTemplateAdvice {
+public interface VpeTemplate {
 
 	/**
 	 * Initiates template after its creating

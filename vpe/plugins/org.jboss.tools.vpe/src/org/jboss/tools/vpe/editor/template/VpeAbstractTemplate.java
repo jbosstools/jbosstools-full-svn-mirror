@@ -14,14 +14,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
-import org.eclipse.wst.xml.core.internal.document.TextImpl;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
@@ -37,17 +35,14 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.resize.VpeResizer;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
 import org.jboss.tools.vpe.editor.util.Constants;
-import org.jboss.tools.vpe.editor.util.ElService;
 import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMText;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
@@ -1452,49 +1447,6 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		return false;
 	}
 	
-    
-    /**
-     * After template created.
-     * 
-     * @param visualDocument the visual document
-     * @param sourceNode the source node
-     * @param pageContext the page context
-     */
-    public void afterTemplateCreated(VpePageContext pageContext, nsIDOMElement source, nsIDOMDocument visualDocument) {
-
-    }
-
-    public void beforeTemplateCreated(VpePageContext pageContext, Node sourceNode, nsIDOMDocument domDocument) {
-        IFile file = null;
-        //Fix for JBIDE-3030
-        if(pageContext.getVisualBuilder().getCurrentIncludeInfo()!=null) {
-        	file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
-        }
-        if ((file != null)) {
-          //  Node first((Element
-            if (sourceNode.getNodeType() == Node.TEXT_NODE) {
-                sourceNode.setNodeValue(
-                        ElService.getInstance().replaceElAndResources(pageContext, sourceNode));
-            }
-            final NamedNodeMap nodeMap = sourceNode.getAttributes();  
-            
-            if ((nodeMap != null) && (nodeMap.getLength() > 0)) {
-                for (int i = 0; i < nodeMap.getLength(); i++) {
-                    final Attr n = (Attr) nodeMap.item(i);
-
-                    n.setValue(ElService.getInstance().replaceElAndResources(pageContext,n));
-
-                }
-                if ((sourceNode.getChildNodes() != null) && (sourceNode.getChildNodes().getLength() > 0)) {
-                    for (int j = 0; j < sourceNode.getChildNodes().getLength(); j++) {
-                        beforeTemplateCreated(pageContext, sourceNode.getChildNodes().item(j), domDocument);
-                    }
-                }
-            }
-        
-        }
-    }
-
 	public boolean isInvisible() {
 		return invisible;
 	}
