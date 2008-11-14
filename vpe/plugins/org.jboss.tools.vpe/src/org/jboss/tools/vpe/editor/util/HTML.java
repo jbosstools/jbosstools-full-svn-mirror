@@ -93,6 +93,12 @@ public final class HTML {
 	public static final String ATTR_SCOPE = "scope"; //$NON-NLS-1$
 	public static final String ATTR_SPAN = "span"; //$NON-NLS-1$
 
+	/**Use this constant if you have to span a column to entire row.*/
+	/* While in HTML 4.01 standard "colspan='0'" should be used for this purpose,
+	 * it will not work with documents without DOCTYPE. It is the reason
+	 * why the value '100' is used.*/
+	public static final String VALUE_COLSPAN_ALL = "100"; //$NON-NLS-1$
+	
 	public static final String VALUE_ALIGN_TOP = "top"; //$NON-NLS-1$
 	public static final String VALUE_ALIGN_RIGHT = "right"; //$NON-NLS-1$
 	public static final String VALUE_ALIGN_MIDDLE = "middle"; //$NON-NLS-1$
