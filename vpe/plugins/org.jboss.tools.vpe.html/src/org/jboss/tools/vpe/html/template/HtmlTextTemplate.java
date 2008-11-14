@@ -43,7 +43,7 @@ public class HtmlTextTemplate extends VpeAbstractTemplate {
 
 	    nsIDOMNode visualNewTextNode = visualDocument
 	        .createTextNode(visualText);
-	    //TODO Max Areshkau think may be we shouldn't use span
+	    //Max Areshkau without this span, we can't select text element
 	    nsIDOMElement element = visualDocument.createElement(HTML.TAG_SPAN);
 	    element.appendChild(visualNewTextNode);
 	    

@@ -437,23 +437,23 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				sourceNode, ifDependencySet);
 
 		VpeCreationData creationData = null;
-		Node sourceNodeClone = null;
+		Node sourceNodeProxy = null;
 		// FIX FOR JBIDE-1568, added by Max Areshkau
 		try {
 
-			if (ElService.getInstance().isCloneableNode(getPageContext(),
+			if (ElService.getInstance().isELNode(getPageContext(),
 					sourceNode)) {
 				
-				sourceNodeClone = VpeProxyUtil.createProxyForELExpressionNode(getPageContext(),
+				sourceNodeProxy = VpeProxyUtil.createProxyForELExpressionNode(getPageContext(),
 					sourceNode);
 				try {
 				creationData = template.create(getPageContext(),
-						sourceNodeClone, getVisualDocument());
+						sourceNodeProxy, getVisualDocument());
 				//Fix for JBIDE-3144, we use proxy and some template can 
 				//try to cast for not supported interface
 				} catch(ClassCastException ex) {
 					VpePlugin.reportProblem(ex);
-					sourceNodeClone = null;
+					sourceNodeProxy = null;
 					//then we create template without using proxy
 					creationData = template.create(getPageContext(), sourceNode,
 							getVisualDocument());
@@ -520,7 +520,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 			final VpeElementData data = creationData.getElementData();
 			
-			if ((sourceNodeClone != null) && (data != null)
+			if ((sourceNodeProxy != null) && (data != null)
 					&& (data.getNodesData() != null)
 					&& (data.getNodesData().size() > 0)) {
 

@@ -138,7 +138,7 @@ public final class ElService implements IELService {
      * 
      * @return true, if is cloneable node
      */
-    public boolean isCloneableNode(VpePageContext pageContext,Node sourceNode) {
+    public boolean isELNode(VpePageContext pageContext,Node sourceNode) {
         boolean rst = false;
         // fix for JBIDE-3030
         if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null) {
@@ -187,9 +187,6 @@ public final class ElService implements IELService {
                     }
                 }
             }
-//            }else if ((sourceNode.getFirstChild() != null) && (sourceNode.getFirstChild().getNodeType() == Node.TEXT_NODE)) {
-//                textValue = sourceNode.getFirstChild().getNodeValue();
-//            }
 
             if (!rst) {
                 final NamedNodeMap nodeMap = sourceNode.getAttributes();
@@ -237,19 +234,10 @@ public final class ElService implements IELService {
      */
     private boolean findForNode(Node sourceNode, IFile resourceFile) {
         boolean rst = false;
-        final NamedNodeMap nodeMap = sourceNode.getAttributes();
         final ResourceReference[] references = getAllResources(resourceFile);
-        //ELReferenceList.getInstance().getAllResources(resourceFile);
         String textValue = null;
         
-        if (sourceNode.getNodeType() == Node.TEXT_NODE/*
-                                                       * sourceNode.getFirstChild
-                                                       * () != null &&
-                                                       * sourceNode
-                                                       * .getFirstChild
-                                                       * ().getNodeType() ==
-                                                       * Node.TEXT_NODE
-                                                       */) {
+        if (sourceNode.getNodeType() == Node.TEXT_NODE) {
             textValue = sourceNode.getNodeValue();
             if (textValue != null) {
                 if (isInReferenceResourcesList(references, textValue)) {
@@ -257,12 +245,12 @@ public final class ElService implements IELService {
                 }
             }
         }
-
+        final NamedNodeMap nodeMap = sourceNode.getAttributes();
         if ((nodeMap != null) && (nodeMap.getLength() > 0)) {
             for (int i = 0; i < nodeMap.getLength(); i++) {
                 if (isInReferenceResourcesList(references, ((Attr) nodeMap.item(i)).getValue())) {
-                    rst = true;
-                    break;
+                    return true;
+                   
                 }
             }
         }
@@ -286,10 +274,6 @@ public final class ElService implements IELService {
         	//FIXED FOR JBIDE-3149 by sdzmitrovich
 			if (equalsExppression(value, ref.getLocation()))
 				return true;
-
-//            if (value.contains(ref.getLocation())) {
-//                rst = true;
-//            }
         }
         return rst;
     }
@@ -331,20 +315,14 @@ public final class ElService implements IELService {
         int size = (gResources == null ? 0 : gResources.length);
         size += (elResources == null ? 0 : elResources.length);
         rst = new ResourceReference[size];
-        int counter = 0;
+
         if ((gResources != null) && (gResources.length > 0)) {
-            for (ResourceReference r : gResources) {
-                rst[counter] = r;
-                counter++;
-            }
+        	System.arraycopy(gResources, 0,  rst,0, gResources.length);
         }
         if ((elResources != null) && (elResources.length > 0)) {
-            for (ResourceReference r : elResources) {
-                rst[counter] = r;
-                counter++;
-            }
+        	System.arraycopy(elResources, 0, rst,  gResources==null?0:gResources.length, elResources.length);
         }
-
+        
         return rst;
 
     }

@@ -14,8 +14,6 @@ package org.jboss.tools.vpe.editor.util;
 
 import org.eclipse.core.resources.IFile;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 
@@ -36,7 +34,6 @@ public interface IELService {
      * 
      * @return string where el values was substituted.
      */
-    //@Deprecated
     String replaceEl(IFile resourceFile, String resourceString);
 
     /**
@@ -71,14 +68,15 @@ public interface IELService {
     boolean isAvailable(IFile resourceFile);
 
     /**
-     * Checks if is cloneable node.
+     * Checks if is node contains el expressions which should be replaced
+     * from el or from resource bundles.
      * 
      * @param sourceNode the source node
      * @param pageContext the page context
      * 
      * @return true, if is cloneable node
      */
-    public boolean isCloneableNode(VpePageContext pageContext, Node sourceNode);
+    public boolean isELNode(VpePageContext pageContext, Node sourceNode);
     
     
     /**

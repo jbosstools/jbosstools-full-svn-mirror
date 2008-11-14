@@ -52,12 +52,18 @@ public class VpeNodeInvocationHandler implements InvocationHandler {
 		}
  		return result;
 	}
-	
-	protected String replaceEL(String toReplace) {
+	/**
+	 * Replaced string with el value
+	 * @param toReplace
+	 * @return
+	 */
+	private String replaceEL(String toReplace) {
+		
 		String result = toReplace;
-       
-        //fix for JBIDE-3030
+
 		result = ResourceUtil.getBundleValue(pageContext, toReplace);
+
+		//fix for JBIDE-3030
         if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null) {
         	return result;
         }

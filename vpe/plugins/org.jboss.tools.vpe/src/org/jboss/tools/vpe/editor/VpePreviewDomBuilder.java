@@ -72,12 +72,12 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			
 			//FIX FOR JBIDE-1568, added by Max Areshkau
 			try {
-		          if (ElService.getInstance().isCloneableNode(getPageContext(),  sourceNode)) {
-                    final Node sourceNodeClone =  VpeProxyUtil.createProxyForELExpressionNode(getPageContext(),
+		          if (ElService.getInstance().isELNode(getPageContext(),  sourceNode)) {
+                    final Node sourceNodeProxy =  VpeProxyUtil.createProxyForELExpressionNode(getPageContext(),
         					sourceNode);
     				try {
     					creationData = template.create(getPageContext(),
-    							sourceNodeClone, getVisualDocument());
+    							sourceNodeProxy, getVisualDocument());
     					//Fix for JBIDE-3144, we use proxy and some template can 
     					//try to cast for not supported interface
     					} catch(ClassCastException ex) {
