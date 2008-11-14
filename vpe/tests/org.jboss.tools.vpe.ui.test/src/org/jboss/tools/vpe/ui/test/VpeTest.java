@@ -34,10 +34,12 @@ import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
+import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -343,7 +345,18 @@ public class VpeTest extends TestCase implements ILogListener {
 				TestUtil.delay(50);
 
 				assertNotNull(xulRunnerEditor.getLastSelectedNode());
-				assertEquals(nodeMapping.getVisualNode(), xulRunnerEditor
+				
+				nsIDOMNode sample;
+				if (nodeMapping.getSourceNode().getNodeType() == Node.TEXT_NODE
+						&& ((VpeElementMapping) nodeMapping).getElementData() != null) {
+
+					sample = ((VpeElementMapping) nodeMapping).getElementData().getNodesData().get(0).getVisualNode();
+				}
+				else {
+					sample = nodeMapping.getVisualNode();
+				}
+				
+				assertEquals(sample, xulRunnerEditor
 						.getLastSelectedNode());
 			}
 		}
