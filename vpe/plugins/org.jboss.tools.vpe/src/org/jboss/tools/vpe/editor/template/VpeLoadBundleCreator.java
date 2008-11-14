@@ -61,9 +61,7 @@ public class VpeLoadBundleCreator extends VpeAbstractCreator {
 		String var = sourceElement.getAttribute(ATTR_VAR);
 		BundleMap bundle = pageContext.getBundle();
 		if (basename != null && basename.length() > 0 && var != null && var.length() > 0) {
-			int offset = pageContext.getVisualBuilder().getCurrentMainIncludeOffset();
-			if (offset == -1) offset = ((IndexedRegion)sourceElement).getStartOffset();
-			bundle.changeBundle(sourceElement.hashCode(), var, basename, offset);
+			bundle.changeBundle(sourceElement.hashCode(), var, basename);
 		} else {
 			bundle.removeBundle(sourceElement.hashCode());
 		}

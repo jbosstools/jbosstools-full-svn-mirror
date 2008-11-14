@@ -39,9 +39,7 @@ import org.jboss.tools.common.el.core.model.ELInstance;
 import org.jboss.tools.common.el.core.model.ELInvocationExpression;
 import org.jboss.tools.common.el.core.model.ELModel;
 import org.jboss.tools.common.el.core.model.ELPropertyInvocation;
-import org.jboss.tools.common.el.core.model.ELUtil;
 import org.jboss.tools.common.el.core.parser.ELParser;
-import org.jboss.tools.common.el.core.parser.ELParserFactory;
 import org.jboss.tools.common.el.core.parser.ELParserUtil;
 import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
@@ -96,7 +94,7 @@ public class BundleMap {
 			String prefix = map.get(uri).toString();
 			int hash = (prefix + ":" + uri).hashCode();
 			removeBundle(hash);
-			addBundle(hash, prefix, uri, -1000, true);
+			addBundle(hash, prefix, uri, true);
 		}
 	}
 	
@@ -259,9 +257,9 @@ public class BundleMap {
 		removeBundle(hashCode, true);
 	}
 	
-	private void addBundle(int hashCode, String prefix, String uri, int offset, boolean refresh) {
+	private void addBundle(int hashCode, String prefix, String uri,boolean refresh) {
 		ResourceBundle bundle = getBundleByUrl(uri);
-		BundleEntry entry = new BundleEntry(bundle, uri, prefix, hashCode, offset);
+		BundleEntry entry = new BundleEntry(bundle, uri, prefix, hashCode);
 		if(bundle!=null) {
 			BundleEntry[] newBundles = new BundleEntry[bundles.length + 1];
 			System.arraycopy(bundles, 0, newBundles, 0, bundles.length);
@@ -271,14 +269,14 @@ public class BundleMap {
 		if(refresh)refreshUsedKeys();
 	}
 	
-	public void changeBundle(int hashCode, String prefix, String uri, int offset){
+	public void changeBundle(int hashCode, String prefix, String uri){
 		removeBundle(hashCode, false);
-		addBundle(hashCode, prefix, uri, offset, true);
+		addBundle(hashCode, prefix, uri, true);
 	}
 	
-	private void changeBundleWithoutRefresh(int hashCode, String prefix, String uri, int offset){
+	private void changeBundleWithoutRefresh(int hashCode, String prefix, String uri){
 		removeBundle(hashCode, false);
-		addBundle(hashCode, prefix, uri, offset, false);
+		addBundle(hashCode, prefix, uri, false);
 	}
 
 	private BundleEntry getBundle(String prefix) {
@@ -286,9 +284,7 @@ public class BundleMap {
 		BundleEntry lastBundle = null;
 		for (int i = 0; i < bundles.length; i++) {
 			if (prefix.equals(bundles[i].prefix)){
-				if (lastBundle == null || lastBundle.offset > bundles[i].offset) {
-					lastBundle = bundles[i];
-				}
+				lastBundle = bundles[i];
 			}
 		}
 		return lastBundle;
@@ -306,7 +302,7 @@ public class BundleMap {
 			
 			for(int i=0; i<array.length;i++){
 				key = (UsedKey)array[i];
-				changeBundleWithoutRefresh(key.hashCode, key.prefix, key.uri, key.offset);
+				changeBundleWithoutRefresh(key.hashCode, key.prefix, key.uri);
 			}
 			refreshUsedKeys();
 		}
@@ -412,7 +408,7 @@ public class BundleMap {
 			try{
 				String value = (String)entry.bundle.getObject(propertyName);
 				if(!usedKeys.containsKey(name))
-					usedKeys.put(name, new UsedKey(entry.uri, prefix, propertyName, value, entry.hashCode, entry.offset));
+					usedKeys.put(name, new UsedKey(entry.uri, prefix, propertyName, value, entry.hashCode));
 				return value;
 			}catch(MissingResourceException ex){
 				return null;
@@ -466,15 +462,13 @@ public class BundleMap {
 		public String uri;
 		public String prefix;
 		public int hashCode;
-		public int offset;
 		
-		public BundleEntry(ResourceBundle bundle, String uri, String prefix, int hashCode, int offset){
+		public BundleEntry(ResourceBundle bundle, String uri, String prefix, int hashCode){
 			this.bundle = bundle;
 			this.uri = uri;
 			this.prefix = prefix;
 			this.hashCode = hashCode;
-			this.offset = offset;
-		}
+			}
 	}
 	
 	class UsedKey{
@@ -483,15 +477,14 @@ public class BundleMap {
 		public String prefix;
 		public String key;
 		public String value;
-		public int offset;
 		
-		public UsedKey(String uri, String prefix, String key, String value, int hashCode, int offset){
+		public UsedKey(String uri, String prefix, String key, String value, int hashCode){
 			this.uri = uri;
 			this.prefix = prefix;
 			this.key = key;
 			this.value = value;
 			this.hashCode = hashCode;
-			this.offset = offset;
+
 		}
 	}
 	
