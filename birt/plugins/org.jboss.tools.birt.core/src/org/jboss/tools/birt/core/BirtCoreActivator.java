@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.dialogs.IOverwriteQuery;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.wizards.datatransfer.FileSystemStructureProvider;
@@ -29,7 +30,7 @@ import org.osgi.framework.BundleContext;
 public class BirtCoreActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jboss.tools.birt.core";
+	public static final String PLUGIN_ID = "org.jboss.tools.birt.core"; //$NON-NLS-1$
 
 	public static final IOverwriteQuery OVERWRITE_ALL_QUERY = new IOverwriteQuery()
     {
@@ -42,11 +43,11 @@ public class BirtCoreActivator extends AbstractUIPlugin {
 	private static BirtCoreActivator plugin;
 	
 	// The facet id
-	public static final String JBOSS_BIRT__FACET_ID = "jboss.birt";
+	public static final String JBOSS_BIRT__FACET_ID = "jboss.birt"; //$NON-NLS-1$
 
-	public static final String BIRT_FACET_ID = "birt.runtime";
+	public static final String BIRT_FACET_ID = "birt.runtime"; //$NON-NLS-1$
 
-	public static final String SEAM_FACET_ID = "jst.seam";
+	public static final String SEAM_FACET_ID = "jst.seam"; //$NON-NLS-1$
 
 	
 	/**
@@ -85,12 +86,12 @@ public class BirtCoreActivator extends AbstractUIPlugin {
 	public static void copyPlugin(IProject project,String pluginId, String destination, IProgressMonitor monitor) {
 		IResource destResource = project.findMember(destination);
 		if (!destResource.exists()) {
-			IStatus status = new Status(IStatus.WARNING,BirtCoreActivator.PLUGIN_ID,"The " + destination + " folder doesn't exist");
+			IStatus status = new Status(IStatus.WARNING,BirtCoreActivator.PLUGIN_ID,NLS.bind(Messages.BirtCoreActivator_The_folder_doesnt_exists, destination));
 			BirtCoreActivator.getDefault().getLog().log(status);
 			return;
 		}
 		if (destResource.getType() != IResource.FOLDER ) {
-			IStatus status = new Status(IStatus.WARNING,BirtCoreActivator.PLUGIN_ID,"The " + destination + " resource is not a folder");
+			IStatus status = new Status(IStatus.WARNING,BirtCoreActivator.PLUGIN_ID,NLS.bind(Messages.BirtCoreActivator_The_resource_is_not_folder, destination));
 			BirtCoreActivator.getDefault().getLog().log(status);
 			return;
 		}
@@ -102,7 +103,7 @@ public class BirtCoreActivator extends AbstractUIPlugin {
 			File file = null;
 			List<File> filesToImport = new ArrayList<File>();
 			if (bundleFile.isDirectory()) {
-				URL url = bundle.getEntry("/");
+				URL url = bundle.getEntry("/"); //$NON-NLS-1$
 				String fileName = FileLocator.toFileURL(url).getFile();
 				file = new File(fileName);
 				filesToImport.addAll(Arrays.asList(file.listFiles()));

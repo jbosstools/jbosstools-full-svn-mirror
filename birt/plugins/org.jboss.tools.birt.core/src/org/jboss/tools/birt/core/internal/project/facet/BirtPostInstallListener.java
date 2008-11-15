@@ -35,6 +35,7 @@ import org.eclipse.jst.javaee.web.Servlet;
 import org.eclipse.jst.javaee.web.ServletMapping;
 import org.eclipse.jst.javaee.web.WebApp;
 import org.eclipse.jst.javaee.web.WebFactory;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.wizards.datatransfer.FileSystemStructureProvider;
 import org.eclipse.ui.wizards.datatransfer.ImportOperation;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
@@ -45,11 +46,12 @@ import org.eclipse.wst.common.project.facet.core.events.IFacetedProjectEvent;
 import org.eclipse.wst.common.project.facet.core.events.IFacetedProjectListener;
 import org.eclipse.wst.common.project.facet.core.events.IProjectFacetActionEvent;
 import org.jboss.tools.birt.core.BirtCoreActivator;
+import org.jboss.tools.birt.core.Messages;
 import org.osgi.framework.Bundle;
 
 public class BirtPostInstallListener implements IFacetedProjectListener {
 
-	private static final String JBossBirtCorePluginId = "org.jboss.tools.birt.core";
+	private static final String JBossBirtCorePluginId = "org.jboss.tools.birt.core"; //$NON-NLS-1$
 	private String configFolder;
 
 	public void handleEvent(IFacetedProjectEvent event) {
@@ -83,7 +85,7 @@ public class BirtPostInstallListener implements IFacetedProjectListener {
 				configFolder = dataModel
 						.getStringProperty("IJ2EEFacetInstallDataModelProperties.CONFIG_FOLDER"); //$NON-NLS-1$
 				if (configFolder == null) {
-					String message = BirtWTPMessages.BIRTErrors_wrong_webcontent;
+					String message = ""; //$NON-NLS-1$
 					Logger.log(Logger.ERROR, message);
 					return;
 				}
@@ -93,12 +95,12 @@ public class BirtPostInstallListener implements IFacetedProjectListener {
 		}
 		if (isJBossBirtProject || isBirtProject) {
 			String configIniString = configFolder
-					+ "/WEB-INF/platform/configuration/config.ini";
+					+ "/WEB-INF/platform/configuration/config.ini"; //$NON-NLS-1$
 			IProject project = facetedProject.getProject();
 			IResource configFile = project
 					.findMember(new Path(configIniString));
 			if (!configFile.exists()) {
-				String message = "The config.ini file doesn't exist";
+				String message = Messages.BirtPostInstallListener_The_config_ini_file_doesnt_exist;
 				Logger.log(Logger.ERROR, message);
 				return;
 			}
@@ -109,13 +111,13 @@ public class BirtPostInstallListener implements IFacetedProjectListener {
 				URL url = configFile.getLocation().toFile().toURL();
 				inputStream = url.openStream();
 				properties.load(inputStream);
-				String bootDelegation = "org.osgi.framework.bootdelegation";
-				String loader = "osgi.parentClassloader";
+				String bootDelegation = "org.osgi.framework.bootdelegation"; //$NON-NLS-1$
+				String loader = "osgi.parentClassloader"; //$NON-NLS-1$
 				properties
 						.put(
 								bootDelegation,
-								"org.hibernate,org.hibernate.type,org.hibernate.metadata,org.hibernate.ejb, javax.persistence");
-				properties.put(loader, "fwk");
+								"org.hibernate,org.hibernate.type,org.hibernate.metadata,org.hibernate.ejb, javax.persistence"); //$NON-NLS-1$
+				properties.put(loader, "fwk"); //$NON-NLS-1$
 				// FIXME
 				// String compatibility = "osgi.compatibility.bootdelegation";
 				// properties.put(compatibility,"false");
@@ -146,29 +148,28 @@ public class BirtPostInstallListener implements IFacetedProjectListener {
 
 		}
 		if (isBirtProject && !isJBossBirtProject) {
-			String platformFolder = configFolder + "/WEB-INF/platform/plugins";
+			String platformFolder = configFolder + "/WEB-INF/platform/plugins"; //$NON-NLS-1$
 			IProject project = facetedProject.getProject();
 			IProgressMonitor monitor = new NullProgressMonitor();
-			BirtCoreActivator.copyPlugin(project, "org.jboss.tools.birt.oda",
+			BirtCoreActivator.copyPlugin(project, "org.jboss.tools.birt.oda", //$NON-NLS-1$
 					platformFolder, monitor);
 		}
 		if (isSeamProject && (isBirtProject || isJBossBirtProject)) {
 			IProject project = facetedProject.getProject();
-			String libFolder = configFolder + "/WEB-INF/lib";
+			String libFolder = configFolder + "/WEB-INF/lib"; //$NON-NLS-1$
 			IResource destResource = project.findMember(libFolder);
 			if (destResource.getType() != IResource.FOLDER) {
 				IStatus status = new Status(IStatus.WARNING,
-						BirtCoreActivator.PLUGIN_ID, "The " + libFolder
-								+ " resource is not a folder");
+						BirtCoreActivator.PLUGIN_ID, NLS.bind(Messages.BirtPostInstallListener_The_resource_is_not_a_folder,libFolder));
 				BirtCoreActivator.getDefault().getLog().log(status);
 				return;
 			}
 			IFolder folder = (IFolder) destResource;
 			Bundle bundle = Platform.getBundle(JBossBirtCorePluginId);
 			URL entryComponent = bundle
-					.getEntry("/resources/jboss-seam-birt.jar");
+					.getEntry("/resources/jboss-seam-birt.jar"); //$NON-NLS-1$
 			URL entryServlet = bundle
-					.getEntry("/resources/jboss-birt-servlet.jar");
+					.getEntry("/resources/jboss-birt-servlet.jar"); //$NON-NLS-1$
 			try {
 				copyEntry(entryComponent, folder);
 				copyEntry(entryServlet, folder);
@@ -176,7 +177,7 @@ public class BirtPostInstallListener implements IFacetedProjectListener {
 			} catch (Exception e) {
 				IStatus status = new Status(IStatus.WARNING,
 						BirtCoreActivator.PLUGIN_ID,
-						"Error while creating JBoss BIRT artifacts", e);
+						Messages.BirtPostInstallListener_Error_while_creating_JBoss_BIRT_artifacts, e);
 				BirtCoreActivator.getDefault().getLog().log(status);
 			} finally {
 				configFolder = null;
@@ -209,8 +210,8 @@ public class BirtPostInstallListener implements IFacetedProjectListener {
 					return;
 				}
 				WebApp webApp = (WebApp) modelObject;
-				String servletClass = "org.jboss.tools.birt.servlet.JBossBirtServlet";
-				String servletName = "JBoss BIRT Servlet";
+				String servletClass = "org.jboss.tools.birt.servlet.JBossBirtServlet"; //$NON-NLS-1$
+				String servletName = "JBoss BIRT Servlet"; //$NON-NLS-1$
 				List servlets = webApp.getServlets();
 				boolean added = false;
 				for (Iterator iterator = servlets.iterator(); iterator
@@ -230,7 +231,7 @@ public class BirtPostInstallListener implements IFacetedProjectListener {
 				}
 				
 				String name = servletName;
-				String value="/embed";
+				String value="/embed"; //$NON-NLS-1$
 				List servletMappings = webApp.getServletMappings();
 				added = false;
 				for (Iterator iterator = servletMappings.iterator(); iterator.hasNext();) {

@@ -33,6 +33,7 @@ import org.eclipse.wst.common.componentcore.datamodel.FacetInstallDataModelProvi
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
 import org.jboss.tools.birt.core.BirtCoreActivator;
+import org.jboss.tools.birt.core.Messages;
 import org.osgi.framework.Bundle;
 
 public class JBossBirtFacetInstallDelegate extends BirtFacetInstallDelegate {
@@ -45,8 +46,8 @@ public class JBossBirtFacetInstallDelegate extends BirtFacetInstallDelegate {
 		IDataModel masterDataModel = (IDataModel) facetDataModel
 				.getProperty(FacetInstallDataModelProvider.MASTER_PROJECT_DM);
 		String configFolder = BirtWizardUtil.getConfigFolder(masterDataModel);
-		String platformFolder = configFolder + "/WEB-INF/platform/plugins";
-		BirtCoreActivator.copyPlugin(project,"org.jboss.tools.birt.oda",platformFolder,monitor);
+		String platformFolder = configFolder + "/WEB-INF/platform/plugins"; //$NON-NLS-1$
+		BirtCoreActivator.copyPlugin(project,"org.jboss.tools.birt.oda",platformFolder,monitor); //$NON-NLS-1$
 		//copyPlugin(project,"org.hibernate.eclipse",platformFolder,monitor);
 		//copyPlugin(project,"org.eclipse.ui.console",platformFolder,monitor);
 		//copyPlugin(project,"org.eclipse.jface",platformFolder,monitor);
