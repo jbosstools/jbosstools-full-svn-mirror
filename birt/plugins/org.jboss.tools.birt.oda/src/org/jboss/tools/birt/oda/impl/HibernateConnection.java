@@ -17,6 +17,7 @@ import org.eclipse.datatools.connectivity.oda.IDataSetMetaData;
 import org.eclipse.datatools.connectivity.oda.IQuery;
 import org.eclipse.datatools.connectivity.oda.OdaException;
 import org.jboss.tools.birt.oda.IOdaFactory;
+import org.jboss.tools.birt.oda.Messages;
 import org.osgi.framework.Bundle;
 
 /**
@@ -51,7 +52,7 @@ public class HibernateConnection implements IConnection {
 	 */
 	public void setAppContext(Object context) throws OdaException {
 		if (!(context instanceof Map)) {
-			throw new OdaException("Invalid AppContext");
+			throw new OdaException(Messages.HibernateConnection_Invalid_AppContext);
 		}
 		this.appContext = (Map) context;
 	}

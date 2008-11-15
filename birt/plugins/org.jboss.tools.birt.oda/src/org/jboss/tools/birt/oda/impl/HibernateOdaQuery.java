@@ -20,6 +20,7 @@ import org.eclipse.datatools.connectivity.oda.IResultSet;
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
 import org.eclipse.datatools.connectivity.oda.SortSpec;
+import org.jboss.tools.birt.oda.Messages;
 
 /**
  * Implementation class of IQuery for an ODA runtime driver.
@@ -150,7 +151,7 @@ public class HibernateOdaQuery implements IQuery {
 	
 	private void setParameter(int parameterId,int type,Object value) {
 		List<Parameter> parameters = parameterMetaData.getParameters();
-		String parameterName = "parameter" + parameterId;
+		String parameterName = "parameter" + parameterId; //$NON-NLS-1$
 		if (parameters.size() < parameterId) {
 			Parameter parameter = new Parameter(type, parameterName,
 					value);

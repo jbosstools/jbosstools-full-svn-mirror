@@ -23,9 +23,11 @@ import javax.naming.InitialContext;
 
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
+import org.eclipse.osgi.util.NLS;
 import org.hibernate.SessionFactory;
 import org.jboss.tools.birt.oda.Activator;
 import org.jboss.tools.birt.oda.IOdaFactory;
+import org.jboss.tools.birt.oda.Messages;
 
 /**
  * 
@@ -64,14 +66,14 @@ public class ReflectServerOdaFactory implements IOdaFactory {
 			InitialContext ctx = null;
 			try {
 				ctx = new InitialContext();
-				Object obj = ctx.lookup("java:/" + configurationName);
+				Object obj = ctx.lookup("java:/" + configurationName); //$NON-NLS-1$
 				sessionFactory = obj;
 				SessionFactory sf = (SessionFactory) obj;
 				System.out.println(sf);
 			} catch (Exception e) {
 					e.printStackTrace();
 				throw new OdaException(
-				"Cannot create Hibernate session factory");
+				Messages.ReflectServerOdaFactory_Cannot_create_Hibernate_session_factory);
 			}
 			
 		}
@@ -91,7 +93,7 @@ public class ReflectServerOdaFactory implements IOdaFactory {
 			return false;
 		boolean isClosed = true;
 		try {
-			Method method = sessionFactory.getClass().getMethod("isClosed", new Class[0]);
+			Method method = sessionFactory.getClass().getMethod("isClosed", new Class[0]); //$NON-NLS-1$
 			if (method != null) {
 				Object closed = method.invoke(sessionFactory, new Object[0]);
 				isClosed = ((Boolean) closed).booleanValue();
@@ -119,12 +121,12 @@ public class ReflectServerOdaFactory implements IOdaFactory {
 			session = openSession();
 			Object query = createQuery(session, queryText);
 			if (maxRows > 0) {
-				Method setFirstResult = query.getClass().getMethod("setFirstResult", new Class[] {Integer.TYPE});
+				Method setFirstResult = query.getClass().getMethod("setFirstResult", new Class[] {Integer.TYPE}); //$NON-NLS-1$
 				setFirstResult.invoke(query, new Object[] {INTZERO});
-				Method setMaxResults = query.getClass().getMethod("setMaxResults", new Class[] {Integer.TYPE});
+				Method setMaxResults = query.getClass().getMethod("setMaxResults", new Class[] {Integer.TYPE}); //$NON-NLS-1$
 				setMaxResults.invoke(query, new Object[] {new Integer(maxRows)});
 			}
-			Method getReturnTypes = query.getClass().getMethod("getReturnTypes", emptyClassArg);
+			Method getReturnTypes = query.getClass().getMethod("getReturnTypes", emptyClassArg); //$NON-NLS-1$
 			Object returnType = getReturnTypes.invoke(query, emptyObjectArg);
 			Object[] qryReturnTypes = (Object[]) returnType;			
 			if (checkEntityType(qryReturnTypes)) {
@@ -141,7 +143,7 @@ public class ReflectServerOdaFactory implements IOdaFactory {
 						} else {
 							arColsType.add(DataTypes.UNKNOWN);
 							arCols.add(props[x]);
-							arColClass.add("java.lang.String");
+							arColClass.add("java.lang.String"); //$NON-NLS-1$
 						}
 					}
 				}
@@ -153,9 +155,7 @@ public class ReflectServerOdaFactory implements IOdaFactory {
 						arColsType.add(typeName);
 						arCols.add(props[t]);
 					} else {
-						throw new OdaException("'"
-								+ typeName
-								+ "' is not a valid type.");
+						throw new OdaException(NLS.bind(Messages.ReflectServerOdaFactory_The_type_is_not_valid, typeName));
 					}
 				}
 			}
@@ -180,7 +180,7 @@ public class ReflectServerOdaFactory implements IOdaFactory {
 	private void closeSession(Object session) {
 		if (session != null) {
 			try {
-				Method close = session.getClass().getMethod("close", emptyClassArg);
+				Method close = session.getClass().getMethod("close", emptyClassArg); //$NON-NLS-1$
 				close.invoke(session, emptyObjectArg);
 				session = null;
 			} catch (Exception e) {
@@ -191,7 +191,7 @@ public class ReflectServerOdaFactory implements IOdaFactory {
 
 	private boolean checkEntityType(Object[] qryReturnTypes) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		Object first = qryReturnTypes[0];
-		Method isEntityType = first.getClass().getMethod("isEntityType", emptyClassArg);
+		Method isEntityType = first.getClass().getMethod("isEntityType", emptyClassArg); //$NON-NLS-1$
 		Object ret = isEntityType.invoke(first, emptyObjectArg);
 		boolean isEntity = ((Boolean)ret).booleanValue();
 		return qryReturnTypes.length > 0 && isEntity;
@@ -200,7 +200,7 @@ public class ReflectServerOdaFactory implements IOdaFactory {
 	private Object createQuery(Object session, String queryText)
 			throws NoSuchMethodException, IllegalAccessException,
 			InvocationTargetException {
-		Method createQuery = session.getClass().getMethod("createQuery", new Class[] {String.class});
+		Method createQuery = session.getClass().getMethod("createQuery", new Class[] {String.class}); //$NON-NLS-1$
 		Object query = createQuery.invoke(session, new Object[] {queryText});
 		return query;
 	}
@@ -208,17 +208,17 @@ public class ReflectServerOdaFactory implements IOdaFactory {
 	private Object openSession() throws NoSuchMethodException,
 			IllegalAccessException, InvocationTargetException {
 		Object session;
-		Method openSession = sessionFactory.getClass().getMethod("openSession", emptyClassArg);
+		Method openSession = sessionFactory.getClass().getMethod("openSession", emptyClassArg); //$NON-NLS-1$
 		session = openSession.invoke(sessionFactory, emptyObjectArg);
 		return session;
 	}
 
 	private static String[] extractColumns(final String query) {
-        int fromPosition = query.toLowerCase().indexOf("from");
-        int selectPosition = query.toLowerCase().indexOf("select");
+        int fromPosition = query.toLowerCase().indexOf("from"); //$NON-NLS-1$
+        int selectPosition = query.toLowerCase().indexOf("select"); //$NON-NLS-1$
         if (selectPosition >= 0) {
             String columns = query.substring(selectPosition + 6, fromPosition);
-            StringTokenizer st = new StringTokenizer(columns, ",");
+            StringTokenizer st = new StringTokenizer(columns, ","); //$NON-NLS-1$
             List columnList = new ArrayList();
             while (st.hasMoreTokens()) {
                 columnList.add(st.nextToken().trim());
@@ -230,14 +230,14 @@ public class ReflectServerOdaFactory implements IOdaFactory {
     }
 	
 	private String getReturnTypeName(Object returnType) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		Method getName = returnType.getClass().getMethod("getName", emptyClassArg);
+		Method getName = returnType.getClass().getMethod("getName", emptyClassArg); //$NON-NLS-1$
 		Object name = getName.invoke(returnType, emptyObjectArg);
 		return (String) name;
 	}
 
 	private  String[] getHibernateProp(String className) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 		Object classMetadata = getClassMetadata(className);
-		Method getPropertyNames = classMetadata.getClass().getMethod("getPropertyNames", emptyClassArg);
+		Method getPropertyNames = classMetadata.getClass().getMethod("getPropertyNames", emptyClassArg); //$NON-NLS-1$
 		String[] properties = (String[]) getPropertyNames.invoke(classMetadata, emptyObjectArg);
         return properties;
     }
@@ -245,7 +245,7 @@ public class ReflectServerOdaFactory implements IOdaFactory {
 	private Object getClassMetadata(String className)
 			throws NoSuchMethodException, IllegalAccessException,
 			InvocationTargetException {
-		Method getClassMetadata = sessionFactory.getClass().getMethod("getClassMetadata", new Class[] {String.class});
+		Method getClassMetadata = sessionFactory.getClass().getMethod("getClassMetadata", new Class[] {String.class}); //$NON-NLS-1$
 		Object classMetadata = getClassMetadata.invoke(sessionFactory, new Object[] {className});
 		return classMetadata;
 	} 
@@ -253,7 +253,7 @@ public class ReflectServerOdaFactory implements IOdaFactory {
 	private Object getClassMetadata(Class clazz) throws NoSuchMethodException,
 			IllegalAccessException, InvocationTargetException {
 		Method getClassMetadata = sessionFactory.getClass().getMethod(
-				"getClassMetadata", new Class[] { Class.class });
+				"getClassMetadata", new Class[] { Class.class }); //$NON-NLS-1$
 		Object classMetadata = getClassMetadata.invoke(sessionFactory,
 				new Object[] { clazz });
 		return classMetadata;
@@ -261,7 +261,7 @@ public class ReflectServerOdaFactory implements IOdaFactory {
 	
 	private String getHibernatePropTypes(String className, String property) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
 		Object classMetadata = getClassMetadata(className);
-		Method getPropertyType = classMetadata.getClass().getMethod("getPropertyType", new Class[] {String.class});
+		Method getPropertyType = classMetadata.getClass().getMethod("getPropertyType", new Class[] {String.class}); //$NON-NLS-1$
 		Object type = getPropertyType.invoke(classMetadata, new Object[] {property});
 		return getReturnTypeName(type);
     }
@@ -275,10 +275,10 @@ public class ReflectServerOdaFactory implements IOdaFactory {
 		try {
 			session = openSession();
 			Object q = createQuery(session,queryText);
-			Method list = q.getClass().getMethod("list", emptyClassArg);
+			Method list = q.getClass().getMethod("list", emptyClassArg); //$NON-NLS-1$
 			result = (List) list.invoke(q, emptyObjectArg);
 			iterator = result.iterator();
-			Method getReturnTypes = q.getClass().getMethod("getReturnTypes", emptyClassArg);
+			Method getReturnTypes = q.getClass().getMethod("getReturnTypes", emptyClassArg); //$NON-NLS-1$
 			this.queryReturnTypes = (Object[]) getReturnTypes.invoke(q, emptyObjectArg);
 		} catch (Exception e) {
 			throw new OdaException(e.getLocalizedMessage());
@@ -304,12 +304,12 @@ public class ReflectServerOdaFactory implements IOdaFactory {
 				if (metadata == null) {
 					metadata = getClassMetadata(obj.getClass());
 				} 
-				String className = "org.hibernate.EntityMode";
+				String className = "org.hibernate.EntityMode"; //$NON-NLS-1$
 				Class pojo = Activator.classForName(className, getClass());
-				Field pojoField = pojo.getField("POJO");
+				Field pojoField = pojo.getField("POJO"); //$NON-NLS-1$
 				Object POJO = pojoField.get(null);
 				Class[] parameterTypes = new Class[] {Object.class,String.class, POJO.getClass()};
-				Method getPropertyValue = metadata.getClass().getMethod("getPropertyValue", parameterTypes);
+				Method getPropertyValue = metadata.getClass().getMethod("getPropertyValue", parameterTypes); //$NON-NLS-1$
 				Object[] args = new Object[] {obj,getMetaData().getColumnName(rstcol),POJO};
 				value = getPropertyValue.invoke(metadata, args);
 			} else {

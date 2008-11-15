@@ -24,10 +24,10 @@ import org.jboss.tools.birt.oda.impl.HibernateResultSetMetaData;
  */
 public interface IOdaFactory {
 
-	public static final String MAX_ROWS = "maxRows";
-	public static final String CONFIGURATION = "configuration";
-	public static final String JNDI_NAME = "jndiName";
-	public static final String ORG_HIBERNATE_ECLIPSE_BUNDLE_ID = "org.hibernate.eclipse";
+	public static final String MAX_ROWS = "maxRows"; //$NON-NLS-1$
+	public static final String CONFIGURATION = "configuration"; //$NON-NLS-1$
+	public static final String JNDI_NAME = "jndiName"; //$NON-NLS-1$
+	public static final String ORG_HIBERNATE_ECLIPSE_BUNDLE_ID = "org.hibernate.eclipse"; //$NON-NLS-1$
 	
 	void close();
 	boolean isOpen();

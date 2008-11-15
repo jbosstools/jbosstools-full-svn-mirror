@@ -24,6 +24,8 @@ import org.eclipse.datatools.connectivity.oda.IClob;
 import org.eclipse.datatools.connectivity.oda.IResultSet;
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
+import org.eclipse.osgi.util.NLS;
+import org.jboss.tools.birt.oda.Messages;
 
 /**
  * Implementation class of IResultSet for an ODA runtime driver.
@@ -37,7 +39,7 @@ public class HibernateResultSet implements IResultSet {
 	private int rowNumber = -1;
 	private boolean wasNull;
 	
-	private static DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");	
+	private static DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");	 //$NON-NLS-1$
 
 	public HibernateResultSet(HibernateOdaQuery query) throws OdaException {
 		this.query = query;
@@ -154,7 +156,7 @@ public class HibernateResultSet implements IResultSet {
 			else if (rObj instanceof Short)
 				result = ((Short) rObj).intValue();
 			else
-				throw new RuntimeException("The " + rObj.getClass() + " data type is not valid.");
+				throw new RuntimeException(NLS.bind(Messages.HibernateResultSet_The_data_type_is_not_valid, rObj.getClass())); 
 		}
 
 		return result;
@@ -372,7 +374,7 @@ public class HibernateResultSet implements IResultSet {
 
 	private void testFetchStarted() throws OdaException {
 		if (rowNumber < 0)
-			throw new OdaException("Cursor has not been initialized");
+			throw new OdaException(Messages.HibernateResultSet_Cursor_has_not_been_initialized);
 	}
 
 }

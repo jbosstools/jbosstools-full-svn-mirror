@@ -10,6 +10,7 @@ import org.eclipse.datatools.connectivity.oda.OdaException;
 import org.hibernate.SessionFactory;
 import org.hibernate.ejb.EntityManagerImpl;
 import org.jboss.tools.birt.oda.IOdaFactory;
+import org.jboss.tools.birt.oda.Messages;
 
 public class ServerOdaFactory extends AbstractOdaFactory {
 
@@ -30,15 +31,15 @@ public class ServerOdaFactory extends AbstractOdaFactory {
 		String jndiName = properties.getProperty(JNDI_NAME);
 		String configurationName = properties.getProperty(CONFIGURATION);
 		if (configurationName != null) {
-			int index = configurationName.indexOf("-ejb");
+			int index = configurationName.indexOf("-ejb"); //$NON-NLS-1$
 			if (index > 0) {
 				configurationName = configurationName.substring(0, index);
 			}
 		}
 		if (jndiName == null || jndiName.length() <= 0) {
-			jndiName = "java:/" + configurationName;
+			jndiName = "java:/" + configurationName; //$NON-NLS-1$
 		}
-		String entityFactoryName = "java:/" + configurationName + "EntityManagerFactory";
+		String entityFactoryName = "java:/" + configurationName + "EntityManagerFactory"; //$NON-NLS-1$ //$NON-NLS-2$
 		
 		if (sessionFactory == null) {
 			InitialContext ctx = null;
@@ -83,7 +84,7 @@ public class ServerOdaFactory extends AbstractOdaFactory {
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new OdaException(
-						"Cannot create Hibernate session factory");
+						Messages.ServerOdaFactory_Cannot_create_Hibernate_session_factory);
 			}
 		}
 		return sessionFactory;

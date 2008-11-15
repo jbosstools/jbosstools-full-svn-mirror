@@ -15,6 +15,7 @@ import org.eclipse.datatools.connectivity.oda.OdaException;
 import org.eclipse.datatools.connectivity.oda.util.manifest.DataTypeMapping;
 import org.eclipse.datatools.connectivity.oda.util.manifest.ExtensionManifest;
 import org.eclipse.datatools.connectivity.oda.util.manifest.ManifestExplorer;
+import org.jboss.tools.birt.oda.Messages;
 
 /**
  * Implementation class of IDriver for an ODA runtime driver.
@@ -86,7 +87,7 @@ public class HibernateDriver implements IDriver
                                 .getDataTypeMapping( nativeDataTypeCode );
         if( typeMapping != null )
             return typeMapping.getNativeType();
-        return "Non-defined"; 
+        return Messages.HibernateDriver_Non_defined; 
     }
 
 }

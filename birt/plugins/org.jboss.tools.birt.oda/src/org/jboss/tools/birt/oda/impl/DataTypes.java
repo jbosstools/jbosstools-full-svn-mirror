@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import  org.eclipse.datatools.connectivity.oda.OdaException;
+import org.eclipse.osgi.util.NLS;
+import org.jboss.tools.birt.oda.Messages;
 
 /**
  * This class hosts the information of data types that are supported by flat
@@ -25,7 +27,7 @@ import  org.eclipse.datatools.connectivity.oda.OdaException;
 public final class DataTypes
 {
 
-	public static final String UNKNOWN = "UNKNOWN";
+	public static final String UNKNOWN = "UNKNOWN"; //$NON-NLS-1$
 	public static final int INT = Types.INTEGER;
 	public static final int LONG = Types.INTEGER;
 	public static final int SHORT = Types.INTEGER;
@@ -55,7 +57,7 @@ public final class DataTypes
 		typeStringIntPair.put( "BIGDECIMAL", new Integer( BIGDECIMAL ) ); //$NON-NLS-1$
         typeStringIntPair.put( "BIG_DECIMAL", new Integer( BIGDECIMAL ) ); //$NON-NLS-1$
         typeStringIntPair.put( "BIG_INTEGER", new Integer( INT ) ); //$NON-NLS-1$
-		typeStringIntPair.put( "NULL", new Integer ( NULL ) );
+		typeStringIntPair.put( "NULL", new Integer ( NULL ) ); //$NON-NLS-1$
 		typeStringIntPair.put( UNKNOWN, new Integer ( STRING ) );
         
 	}
@@ -72,12 +74,12 @@ public final class DataTypes
 	public static int getType( String typeName ) throws OdaException
 	{
 		String name = typeName.trim( ).toUpperCase( );
-        while (name.indexOf(".") > 0) {
-            name = name.substring(name.indexOf(".")+1);
+        while (name.indexOf(".") > 0) { //$NON-NLS-1$
+            name = name.substring(name.indexOf(".")+1); //$NON-NLS-1$
         }
 		if ( typeStringIntPair.containsKey( name ) )
 			return ( (Integer) typeStringIntPair.get( name ) ).intValue( );
-		throw new OdaException( "Invalid type name : " + typeName); 
+		throw new OdaException( NLS.bind(Messages.DataTypes_Invalid_type_name, typeName)); 
 	}
 
 	/**
@@ -93,8 +95,8 @@ public final class DataTypes
         if (valid) {
             return true;
         }
-        while (name.indexOf(".") > 0) {
-            name = name.substring(name.indexOf(".")+1);
+        while (name.indexOf(".") > 0) { //$NON-NLS-1$
+            name = name.substring(name.indexOf(".")+1); //$NON-NLS-1$
         }
         return typeStringIntPair.containsKey( name );
 	}

@@ -13,6 +13,7 @@ import org.eclipse.datatools.connectivity.oda.IConnection;
 import org.eclipse.datatools.connectivity.oda.IDataSetMetaData;
 import org.eclipse.datatools.connectivity.oda.IResultSet;
 import org.eclipse.datatools.connectivity.oda.OdaException;
+import org.jboss.tools.birt.oda.Messages;
 
 /**
  * Implementation class of IDataSetMetaData for an ODA runtime driver.
@@ -65,7 +66,7 @@ public class HibernateDataSetMetaData implements IDataSetMetaData
 	 */
 	public String getDataSourceProductName() throws OdaException
 	{
-		return "Hibernate Data Source";
+		return Messages.HibernateDataSetMetaData_Hibernate_Data_Source;
 	}
 
 	/*

@@ -13,11 +13,13 @@ package org.jboss.tools.birt.oda.impl;
 import java.util.Properties;
 
 import org.eclipse.datatools.connectivity.oda.OdaException;
+import org.eclipse.osgi.util.NLS;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.jboss.tools.birt.oda.IOdaFactory;
+import org.jboss.tools.birt.oda.Messages;
 
 /**
  * 
@@ -59,7 +61,7 @@ public class ConsoleConfigurationOdaFactory extends AbstractOdaFactory {
 				throw new OdaException(e.getLocalizedMessage());
 			}
         } else {
-        	throw new OdaException("Invalid configuration '" + configurationName + "'");
+        	throw new OdaException(NLS.bind(Messages.ConsoleConfigurationOdaFactory_Invalid_configuration, configurationName));
         }
 		return sessionFactory;
 	}

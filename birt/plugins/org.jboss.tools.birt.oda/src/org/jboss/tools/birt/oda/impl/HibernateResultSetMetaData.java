@@ -13,6 +13,8 @@ import java.util.StringTokenizer;
 
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
+import org.eclipse.osgi.util.NLS;
+import org.jboss.tools.birt.oda.Messages;
 
 /**
  * Implementation class of IResultSetMetaData for an ODA runtime driver.
@@ -32,7 +34,7 @@ public class HibernateResultSetMetaData implements IResultSetMetaData
 			throws OdaException
 	{
 		if ( cName == null )
-			throw new OdaException( "Argument cannot be null" );
+			throw new OdaException( Messages.HibernateResultSetMetaData_Argument_cannot_be_null );
 		this.columnName = cName;
 		this.columnType = cType;
 		this.columnLabel = cLabel;
@@ -54,8 +56,8 @@ public class HibernateResultSetMetaData implements IResultSetMetaData
 	{
 		assertIndexValid( index );
         String name = this.columnName[index - 1].trim( );
-        if (name.indexOf(" ") > 0) {
-            StringTokenizer tokenizer = new StringTokenizer(name," ");
+        if (name.indexOf(" ") > 0) { //$NON-NLS-1$
+            StringTokenizer tokenizer = new StringTokenizer(name," "); //$NON-NLS-1$
             String prettyName = null;
             while (tokenizer.hasMoreTokens()) {
                 prettyName = tokenizer.nextToken();
@@ -151,7 +153,7 @@ public class HibernateResultSetMetaData implements IResultSetMetaData
 	private void assertIndexValid( int index ) throws OdaException
 	{
 		if ( index > getColumnCount( ) || index < 1 )
-			throw new OdaException( "Invalid index " + index );
+			throw new OdaException( NLS.bind(Messages.HibernateResultSetMetaData_Invalid_index, new Integer(index).toString()) );
 	}
     
 	public String getColumnClass( int index ) throws OdaException

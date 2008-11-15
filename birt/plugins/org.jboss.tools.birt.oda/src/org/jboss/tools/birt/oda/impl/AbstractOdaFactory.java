@@ -9,6 +9,7 @@ import java.util.StringTokenizer;
 import org.eclipse.datatools.connectivity.oda.IParameterMetaData;
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
+import org.eclipse.osgi.util.NLS;
 import org.hibernate.EntityMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -19,6 +20,7 @@ import org.hibernate.impl.SessionFactoryImpl;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.type.Type;
 import org.jboss.tools.birt.oda.IOdaFactory;
+import org.jboss.tools.birt.oda.Messages;
 
 public abstract class AbstractOdaFactory implements IOdaFactory {
 
@@ -81,7 +83,7 @@ public abstract class AbstractOdaFactory implements IOdaFactory {
 							//throw new OdaException("Data Type is Not Valid");
 							arColsType.add(DataTypes.UNKNOWN);
 							arCols.add(props[x]);
-							arColClass.add("java.lang.String");
+							arColClass.add("java.lang.String"); //$NON-NLS-1$
 						}
 					}
 				}
@@ -92,9 +94,7 @@ public abstract class AbstractOdaFactory implements IOdaFactory {
 						arColsType.add(qryReturnTypes[t].getName());
 						arCols.add(props[t]);
 					} else {
-						throw new OdaException("'"
-								+ qryReturnTypes[t].getName()
-								+ "' is not a valid type.");
+						throw new OdaException(NLS.bind(Messages.AbstractOdaFactory_The_type_is_not_valid,qryReturnTypes[t].getName()));
 					}
 				}
 	
@@ -120,11 +120,11 @@ public abstract class AbstractOdaFactory implements IOdaFactory {
 	}
 
 	private static String[] extractColumns(final String query) {
-	    int fromPosition = query.toLowerCase().indexOf("from");
-	    int selectPosition = query.toLowerCase().indexOf("select");
+	    int fromPosition = query.toLowerCase().indexOf("from"); //$NON-NLS-1$
+	    int selectPosition = query.toLowerCase().indexOf("select"); //$NON-NLS-1$
 	    if (selectPosition >= 0) {
 	        String columns = query.substring(selectPosition + 6, fromPosition);
-	        StringTokenizer st = new StringTokenizer(columns, ",");
+	        StringTokenizer st = new StringTokenizer(columns, ","); //$NON-NLS-1$
 	        List columnList = new ArrayList();
 	        while (st.hasMoreTokens()) {
 	            columnList.add(st.nextToken().trim());
