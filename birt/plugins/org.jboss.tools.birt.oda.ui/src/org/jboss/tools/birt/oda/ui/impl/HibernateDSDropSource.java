@@ -78,8 +78,8 @@ public class HibernateDSDropSource implements DropTargetListener {
 	}
 
 	private String getShortName(String name) {
-		while (name.indexOf(".") > -1)
-			name = name.substring(name.indexOf(".") + 1);
+		while (name.indexOf(".") > -1) //$NON-NLS-1$
+			name = name.substring(name.indexOf(".") + 1); //$NON-NLS-1$
 		return name;
 	}
 

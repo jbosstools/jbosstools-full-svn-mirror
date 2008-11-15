@@ -17,6 +17,7 @@ import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -36,6 +37,7 @@ import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.jboss.tools.birt.oda.IOdaFactory;
 import org.jboss.tools.birt.oda.ui.Activator;
+import org.jboss.tools.birt.oda.ui.Messages;
 
 /**
  * Helper class for Hibernate wizard and property page
@@ -45,7 +47,7 @@ import org.jboss.tools.birt.oda.ui.Activator;
  */
 public class HibernateSelectionPageHelper {
 
-	private static final String DEFAULT_MAX_ROWS = "100";
+	private static final String DEFAULT_MAX_ROWS = "100"; //$NON-NLS-1$
 	private WizardPage wizardPage;
 	private PreferencePage propertyPage;
 	private Combo configurationCombo;
@@ -73,7 +75,7 @@ public class HibernateSelectionPageHelper {
 		GridData gridData;
 
 		Label configurationLabel = new Label(composite, SWT.RIGHT);
-		configurationLabel.setText("Configuration:");
+		configurationLabel.setText(Messages.HibernateSelectionPageHelper_Configuration);
 
 		configurationCombo = new Combo(composite, SWT.NONE);
 		gridData = new GridData();
@@ -83,7 +85,7 @@ public class HibernateSelectionPageHelper {
 		configurationCombo.setLayoutData(gridData);
 		
 		Label jndiLabel = new Label(composite, SWT.RIGHT);
-		jndiLabel.setText("JNDI URL:");
+		jndiLabel.setText(Messages.HibernateSelectionPageHelper_JNDI_URL);
 		
 		jndiSessionFactoryName = new Text(composite,SWT.BORDER);
 		gridData = new GridData();
@@ -101,7 +103,7 @@ public class HibernateSelectionPageHelper {
 		configurationCombo.setItems(configurationNames);
 
 		Label maxFetchLabel = new Label(composite, SWT.NONE);
-		maxFetchLabel.setText("Max results:");
+		maxFetchLabel.setText(Messages.HibernateSelectionPageHelper_Max_results);
 
 		maxRows = new Text(composite, SWT.BORDER);
 		maxRows.setLayoutData(gridData);
@@ -119,7 +121,7 @@ public class HibernateSelectionPageHelper {
 
 		new Label(composite, SWT.NONE);
 		testButton = new Button(composite, SWT.PUSH);
-		testButton.setText("Test Connection...");
+		testButton.setText(Messages.HibernateSelectionPageHelper_Test_connection);
 
 		testButton.setLayoutData(new GridData(GridData.CENTER));
 		testButton.addSelectionListener(new SelectionAdapter() {
@@ -139,11 +141,11 @@ public class HibernateSelectionPageHelper {
 		if (jndiName == null || jndiName.length() <= 0) {
 			String configurationName = configurationCombo.getText();
 			if (configurationName != null && configurationName.length() > 0) {
-				int index = configurationName.indexOf("-ejb");
+				int index = configurationName.indexOf("-ejb"); //$NON-NLS-1$
 				if (index > 0) {
 					configurationName = configurationName.substring(0,index);
 				}
-				jndiSessionFactoryName.setText("java:/" + configurationName);
+				jndiSessionFactoryName.setText("java:/" + configurationName); //$NON-NLS-1$
 			}
 		}
 	}
@@ -164,11 +166,11 @@ public class HibernateSelectionPageHelper {
 
 	private void validateData() {
 		if (configurationCombo.getText().trim().length() > 0) {
-			setMessage("Edit the selected data source");
+			setMessage(Messages.HibernateSelectionPageHelper_Edit_the_selected_data_source);
 			testButton.setEnabled(true);
 			setPageComplete(true);
 		} else {
-			setMessage("Configuration must not be empty",
+			setMessage(Messages.HibernateSelectionPageHelper_Configuration_must_not_be_empty,
 					IMessageProvider.ERROR);
 			testButton.setEnabled(false);
 			setPageComplete(false);
@@ -198,7 +200,7 @@ public class HibernateSelectionPageHelper {
 		ConsoleConfiguration[] configurations = KnownConfigurations
 				.getInstance().getConfigurations();
 		ConsoleConfiguration consoleConfiguration = null;
-		String title = "Test connection";
+		String title = Messages.HibernateSelectionPageHelper_Test_connection1;
 		for (int i = 0; i < configurations.length; i++) {
 			if (configurations[i].getName().equals(configurationName)) {
 				consoleConfiguration = configurations[i];
@@ -215,7 +217,7 @@ public class HibernateSelectionPageHelper {
 					sessionFactory = consoleConfiguration.getSessionFactory();
 				}
 				MessageDialog.openInformation(getShell(), title,
-						"Connection successfull.");
+						Messages.HibernateSelectionPageHelper_Connection_successfull);
 			} catch (HibernateException e) {
 				String message = e.getLocalizedMessage();
 				IStatus status = new Status(Status.ERROR, Activator.PLUGIN_ID,
@@ -225,7 +227,7 @@ public class HibernateSelectionPageHelper {
 			}
 		} else {
 			MessageDialog.openConfirm(getShell(), title,
-					"Invalid configuration '" + configurationName + "'.");
+					NLS.bind(Messages.HibernateSelectionPageHelper_Invalid_configuration, configurationName));
 
 		}
 

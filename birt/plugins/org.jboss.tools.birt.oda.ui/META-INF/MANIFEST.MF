@@ -4,7 +4,7 @@ Bundle-Name: %plugin.name
 Bundle-SymbolicName: org.jboss.tools.birt.oda.ui;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jboss.tools.birt.oda.ui.Activator
-Bundle-Vendor: JBoss, a division of Red Hat
+Bundle-Vendor: %BundleVendor
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

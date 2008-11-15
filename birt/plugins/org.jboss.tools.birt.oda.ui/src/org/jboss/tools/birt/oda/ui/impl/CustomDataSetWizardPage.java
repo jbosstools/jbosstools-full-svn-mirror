@@ -50,6 +50,7 @@ import org.eclipse.jface.text.source.LineNumberRulerColumn;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.KeyEvent;
@@ -94,6 +95,7 @@ import org.hibernate.type.Type;
 import org.jboss.tools.birt.oda.IOdaFactory;
 import org.jboss.tools.birt.oda.impl.HibernateDriver;
 import org.jboss.tools.birt.oda.ui.Activator;
+import org.jboss.tools.birt.oda.ui.Messages;
 
 /**
  * Hibernate data set designer page
@@ -102,7 +104,7 @@ import org.jboss.tools.birt.oda.ui.Activator;
  */
 public class CustomDataSetWizardPage extends DataSetWizardPage {
 
-	private static String DEFAULT_MESSAGE = "Define the query text for the data set";
+	private static String DEFAULT_MESSAGE = Messages.CustomDataSetWizardPage_Define_the_query_text_for_the_data_set;
 
 	private StyledText styledText;
 
@@ -323,7 +325,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 		SourceViewerConfiguration svc = new HQLSourceViewerConfiguration(editor);
 		sourceViewer.configure(svc);
 		testButton = new Button(composite, SWT.NONE);
-		testButton.setText("Test query ...");
+		testButton.setText(Messages.CustomDataSetWizardPage_Test_query);
 		testButton.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent e) {
@@ -335,11 +337,11 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 	}
 
 	private void testQuery() {
-		String title = "Test query";
+		String title = Messages.CustomDataSetWizardPage_Test_query1;
 		ConsoleConfiguration configuration = getInternalConsoleConfiguration();
 		if (configuration == null || configuration.getSessionFactory() == null) {
 			MessageDialog.openConfirm(getShell(), title,
-					"Invalid configuration '" + getConfigurationName() + "'.");
+					NLS.bind(Messages.CustomDataSetWizardPage_Invalid_configuration, getConfigurationName()));
 		}
 		try {
 			//session = configuration.getSessionFactory().openSession();
@@ -350,9 +352,9 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 			//q.setMaxResults(1);
 			//q.list();
 			MessageDialog.openInformation(getShell(), title,
-					"The query is valid.");
+					Messages.CustomDataSetWizardPage_The_query_is_valid);
 		} catch (Exception e) {
-			String message = "The query is not valid.";
+			String message = Messages.CustomDataSetWizardPage_The_query_is_not_valid;
 			IStatus status = new Status(Status.ERROR, Activator.PLUGIN_ID, e
 					.getLocalizedMessage(), e);
 			Activator.getDefault().getLog().log(status);
@@ -372,7 +374,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 		for (int i = 0; i < translators.length; i++) {
 			QueryTranslator translator = translators[i];
 			if(translator.isManipulationStatement()) {
-				str.append(HibernateConsoleMessages.DynamicSQLPreviewView_manipulation_of + i + ":"); //$NON-NLS-1$
+				str.append("Manipulation of" + i + ":"); //$NON-NLS-1$ //$NON-NLS-2$
 				Iterator iterator = translator.getQuerySpaces().iterator();
 				while ( iterator.hasNext() ) {
 					Object qspace = iterator.next();
@@ -438,7 +440,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 		composite.setLayoutData(data);
 
 		Label dataSourceLabel = new Label(composite, SWT.LEFT);
-		dataSourceLabel.setText("Available Items");
+		dataSourceLabel.setText(Messages.CustomDataSetWizardPage_Avaliable_Items);
 		data = new GridData();
 		dataSourceLabel.setLayoutData(data);
 
@@ -506,11 +508,11 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 	private String getInitialQueryString() {
 		DataSetDesign dataSetDesign = getInitializationDesign();
 		if (dataSetDesign == null)
-			return ""; // nothing to initialize
+			return ""; // nothing to initialize //$NON-NLS-1$
 
 		String queryText = dataSetDesign.getQueryText();
 		if (queryText == null) {
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 		return queryText;
 	}
@@ -578,7 +580,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 		if (isValid)
 			setMessage(DEFAULT_MESSAGE);
 		else
-			setMessage("Requires input value.", ERROR);
+			setMessage(Messages.CustomDataSetWizardPage_Requires_input_value, ERROR);
 
 		if (testButton != null) {
 			testButton.setEnabled(isValid);
@@ -731,7 +733,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 			ParameterDefinition paramDef = (ParameterDefinition) paramDesign
 					.getParameterDefinitions().get(0);
 			if (paramDef != null)
-				paramDef.setDefaultScalarValue("dummy default value");
+				paramDef.setDefaultScalarValue("dummy default value"); //$NON-NLS-1$
 		}
 	}
 

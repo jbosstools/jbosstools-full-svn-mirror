@@ -12,6 +12,7 @@ import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
+import org.jboss.tools.birt.oda.ui.Messages;
 
 
 /**
@@ -39,17 +40,17 @@ class TextMenuManager
 		manager.add( separator );
 		separator = new Separator( "select" );//$NON-NLS-1$
 		manager.add( separator );
-		manager.appendToGroup( "undo", getAction( "undo", viewer, "Undo", ITextOperationTarget.UNDO ) );
-		manager.appendToGroup( "undo", getAction( "redo", viewer, "Redo", ITextOperationTarget.REDO ) );
-		manager.appendToGroup( "copy", getAction( "cut", viewer, "Cut", ITextOperationTarget.CUT ) );
-		manager.appendToGroup( "copy", getAction( "copy", viewer, "Copy", ITextOperationTarget.COPY ) );//$NON-NLS-1$
-		manager.appendToGroup( "copy", getAction( "paste", viewer, "Paste", ITextOperationTarget.PASTE ) );//$NON-NLS-1$
-		manager.appendToGroup( "select", getAction( "selectall", viewer, "Select all", ITextOperationTarget.SELECT_ALL ) );//$NON-NLS-1$
+		manager.appendToGroup( "undo", getAction( "undo", viewer, Messages.TextMenuManager_Undo, ITextOperationTarget.UNDO ) ); //$NON-NLS-1$ //$NON-NLS-2$
+		manager.appendToGroup( "undo", getAction( "redo", viewer, Messages.TextMenuManager_Redo, ITextOperationTarget.REDO ) ); //$NON-NLS-1$ //$NON-NLS-2$
+		manager.appendToGroup( "copy", getAction( "cut", viewer, Messages.TextMenuManager_Cut, ITextOperationTarget.CUT ) ); //$NON-NLS-1$ //$NON-NLS-2$
+		manager.appendToGroup( "copy", getAction( "copy", viewer, Messages.TextMenuManager_Copy, ITextOperationTarget.COPY ) );//$NON-NLS-1$ //$NON-NLS-2$
+		manager.appendToGroup( "copy", getAction( "paste", viewer, Messages.TextMenuManager_Paste, ITextOperationTarget.PASTE ) );//$NON-NLS-1$ //$NON-NLS-2$
+		manager.appendToGroup( "select", getAction( "selectall", viewer, Messages.TextMenuManager_Select_all, ITextOperationTarget.SELECT_ALL ) );//$NON-NLS-1$ //$NON-NLS-2$
 
-		manager.add( new Separator("hql") );
-		manager.appendToGroup( "hql", getAction("contentAssist", viewer, "Content Assist",13));
-		manager.appendToGroup( "hql", getAction("contentTip", viewer, "Content Tip",14));
-		manager.appendToGroup( "hql", getAction("format", viewer, "Format HQL source",15));
+		manager.add( new Separator("hql") ); //$NON-NLS-1$
+		manager.appendToGroup( "hql", getAction("contentAssist", viewer, Messages.TextMenuManager_Content_Assist,13)); //$NON-NLS-1$ //$NON-NLS-2$
+		manager.appendToGroup( "hql", getAction("contentTip", viewer, Messages.TextMenuManager_Content_Tip,14)); //$NON-NLS-1$ //$NON-NLS-2$
+		manager.appendToGroup( "hql", getAction("format", viewer, Messages.TextMenuManager_Format_HQL_source,15)); //$NON-NLS-1$ //$NON-NLS-2$
 		
 		manager.addMenuListener( new IMenuListener( ) {
 
