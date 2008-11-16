@@ -37,7 +37,6 @@ public abstract class AbstractElementFigure extends Panel implements ElementFigu
     public AbstractElementFigure() {
         add(label);
         customizeFigure();
-        setSize(80, 40);
     }
     
     public void setIcon(Image icon) {
