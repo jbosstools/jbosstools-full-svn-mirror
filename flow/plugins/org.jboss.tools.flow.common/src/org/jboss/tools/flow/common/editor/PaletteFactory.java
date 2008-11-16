@@ -33,7 +33,7 @@ import org.eclipse.gef.palette.ToolEntry;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
-public abstract class PaletteFactory {
+public class PaletteFactory {
     
     public PaletteRoot createPalette() {
         PaletteRoot palette = new PaletteRoot();
@@ -71,6 +71,8 @@ public abstract class PaletteFactory {
         return drawer;
     }
     
-    protected abstract List<PaletteEntry> createComponentEntries();
+    protected List<PaletteEntry> createComponentEntries() {
+    	return new ArrayList<PaletteEntry>();
+    }
     
 }
