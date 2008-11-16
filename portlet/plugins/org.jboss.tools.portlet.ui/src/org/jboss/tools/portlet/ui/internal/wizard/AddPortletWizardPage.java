@@ -47,6 +47,7 @@ import org.eclipse.wst.common.frameworks.internal.datamodel.ui.DataModelWizardPa
 import org.eclipse.wst.common.frameworks.internal.plugin.WTPCommonPlugin;
 import org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties;
 import org.jboss.tools.portlet.ui.IPortletUIConstants;
+import org.jboss.tools.portlet.ui.Messages;
 
 /**
  * Portlet Wizard Setting Page
@@ -99,21 +100,21 @@ public class AddPortletWizardPage extends DataModelWizardPage {
 		if (isJSFPortlet()) {
 			List<String[]> initParamList = new ArrayList<String[]>();
 			String[] arrayString = new String[3];
-			arrayString[0]="javax.portlet.faces.defaultViewId.view";
-			arrayString[1]="/jsf/view.jsp";
-			arrayString[2]="";
+			arrayString[0]="javax.portlet.faces.defaultViewId.view"; //$NON-NLS-1$
+			arrayString[1]="/jsf/view.jsp"; //$NON-NLS-1$
+			arrayString[2]=""; //$NON-NLS-1$
 			initParamList.add(arrayString);
 			
 			arrayString = new String[3];
-			arrayString[0]="javax.portlet.faces.defaultViewId.edit";
-			arrayString[1]="/jsf/edit.jsp";
-			arrayString[2]="";
+			arrayString[0]="javax.portlet.faces.defaultViewId.edit"; //$NON-NLS-1$
+			arrayString[1]="/jsf/edit.jsp"; //$NON-NLS-1$
+			arrayString[2]=""; //$NON-NLS-1$
 			initParamList.add(arrayString);
 			
 			arrayString = new String[3];
-			arrayString[0]="javax.portlet.faces.defaultViewId.help";
-			arrayString[1]="/jsf/help.jsp";
-			arrayString[2]="";
+			arrayString[0]="javax.portlet.faces.defaultViewId.help"; //$NON-NLS-1$
+			arrayString[1]="/jsf/help.jsp"; //$NON-NLS-1$
+			arrayString[2]=""; //$NON-NLS-1$
 			initParamList.add(arrayString);
 			
 			initSection.setInput(initParamList);
@@ -122,9 +123,9 @@ public class AddPortletWizardPage extends DataModelWizardPage {
 		if (isSeamPortlet()) {
 			List<String[]> initParamList = new ArrayList<String[]>();
 			String[] arrayString = new String[3];
-			arrayString[0]="javax.portlet.faces.defaultViewId.view";
-			arrayString[1]="/home.xhtml";
-			arrayString[2]="";
+			arrayString[0]="javax.portlet.faces.defaultViewId.view"; //$NON-NLS-1$
+			arrayString[1]="/home.xhtml"; //$NON-NLS-1$
+			arrayString[2]=""; //$NON-NLS-1$
 			initParamList.add(arrayString);
 			
 			initSection.setInput(initParamList);
@@ -148,18 +149,18 @@ public class AddPortletWizardPage extends DataModelWizardPage {
 		Group composite = new Group(parent,SWT.NULL);
 		composite.setLayout(new GridLayout(3,false));
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
-		composite.setText("Portlet Modes");
+		composite.setText(Messages.AddPortletWizardPage_Portlet_Modes);
 		
 		Button viewModeButton = new Button(composite,SWT.CHECK);
-		viewModeButton.setText("View");
+		viewModeButton.setText(Messages.AddPortletWizardPage_View);
 		synchHelper.synchCheckbox(viewModeButton, INewPortletClassDataModelProperties.VIEW_MODE, null);
 		
 		Button editModeButton = new Button(composite,SWT.CHECK);
-		editModeButton.setText("Edit");
+		editModeButton.setText(Messages.AddPortletWizardPage_Edit);
 		synchHelper.synchCheckbox(editModeButton, INewPortletClassDataModelProperties.EDIT_MODE, null);
 
 		Button helpModeButton = new Button(composite,SWT.CHECK);
-		helpModeButton.setText("Help");
+		helpModeButton.setText(Messages.AddPortletWizardPage_Help);
 		synchHelper.synchCheckbox(helpModeButton, INewPortletClassDataModelProperties.HELP_MODE, null);
 
 	}

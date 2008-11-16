@@ -13,6 +13,7 @@ import org.eclipse.wst.common.componentcore.internal.util.IModuleConstants;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModelProvider;
 import org.jboss.tools.portlet.ui.IPortletUIConstants;
+import org.jboss.tools.portlet.ui.Messages;
 import org.jboss.tools.portlet.ui.PortletUIActivator;
 
 /**
@@ -20,7 +21,7 @@ import org.jboss.tools.portlet.ui.PortletUIActivator;
  */
 public class NewPortletWizard extends NewWebArtifactWizard {
 	
-	protected static final String PAGE_FOUR = "pageFour";
+	protected static final String PAGE_FOUR = "pageFour"; //$NON-NLS-1$
 	
 	public NewPortletWizard() {
 	    this(null);
@@ -37,7 +38,7 @@ public class NewPortletWizard extends NewWebArtifactWizard {
 
 	@Override
 	protected ImageDescriptor getImage() {
-		return PortletUIActivator.imageDescriptorFromPlugin(PortletUIActivator.PLUGIN_ID, "/icons/portlet_wiz.gif");
+		return PortletUIActivator.imageDescriptorFromPlugin(PortletUIActivator.PLUGIN_ID, "/icons/portlet_wiz.gif"); //$NON-NLS-1$
 	}
 	
 	@Override
@@ -53,7 +54,7 @@ public class NewPortletWizard extends NewWebArtifactWizard {
 		NewPortletClassOptionsWizardPage page2 = new NewPortletClassOptionsWizardPage(
 				getDataModel(), 
 				PAGE_TWO,
-				"Specify modifiers, interfaces to implement and method stubs to generate.",
+				Messages.NewPortletWizard_Specify_modifiers_interfaces_to_implement_and_method_stubs_to_generate,
 				IPortletUIConstants.NEW_PORTLET_WIZARD_PAGE_TITLE);
 		//page3.setInfopopID(IWebUIContextIds.WEBEDITOR_SERVLET_PAGE_ADD_SERVLET_WIZARD_3);
 		addPage(page2);

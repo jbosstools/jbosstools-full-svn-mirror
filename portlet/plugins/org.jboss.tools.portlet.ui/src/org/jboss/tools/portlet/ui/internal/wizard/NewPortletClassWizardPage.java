@@ -46,6 +46,7 @@ import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.FacetedProjectFramework;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.ui.Messages;
 import org.jboss.tools.portlet.ui.MultiSelectFilteredFileSelectionDialog;
 import org.jboss.tools.portlet.ui.internal.wizard.xpl.NewJavaClassWizardPageEx;
 
@@ -92,7 +93,7 @@ public class NewPortletClassWizardPage extends NewJavaClassWizardPageEx {
 	}
 	
 	protected String getUseExistingCheckboxText() {
-		return "Use an existing Portlet class";
+		return Messages.NewPortletClassWizardPage_Use_an_existing_Portlet_class;
 	}
 	
 	
@@ -120,8 +121,8 @@ public class NewPortletClassWizardPage extends NewJavaClassWizardPageEx {
 		IProject project = (IProject) model.getProperty(PROJECT);
 		MultiSelectFilteredFileSelectionDialog ms = new MultiSelectFilteredFileSelectionDialog(
 				getShell(),
-				"New Portlet",
-				"Choose a portlet class:", 
+				Messages.NewPortletClassWizardPage_New_Portlet,
+				Messages.NewPortletClassWizardPage_Choose_a_portlet_class, 
 				new String[0], 
 				false, 
 				project);

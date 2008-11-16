@@ -23,39 +23,39 @@ public interface INewPortletClassDataModelProperties extends
 	
 	static final String TITLE = "NewPortletClassDataModel.TITLE"; //$NON-NLS-1$
 
-	static final String VIEW_MODE = "NewPortletClassDataModel.VIEW_MODE";
+	static final String VIEW_MODE = "NewPortletClassDataModel.VIEW_MODE"; //$NON-NLS-1$
 	
-	static final String EDIT_MODE = "NewPortletClassDataModel.EDIT_MODE";
+	static final String EDIT_MODE = "NewPortletClassDataModel.EDIT_MODE"; //$NON-NLS-1$
 	
-	static final String HELP_MODE = "NewPortletClassDataModel.HELP_MODE";
+	static final String HELP_MODE = "NewPortletClassDataModel.HELP_MODE"; //$NON-NLS-1$
 	
-	static final String INSTANCE_NAME = "NewPortletClassDataModel.INSTANCE_NAME";
+	static final String INSTANCE_NAME = "NewPortletClassDataModel.INSTANCE_NAME"; //$NON-NLS-1$
 	
-	static final String WINDOW_NAME = "NewPortletClassDataModel.WINDOW_NAME";
+	static final String WINDOW_NAME = "NewPortletClassDataModel.WINDOW_NAME"; //$NON-NLS-1$
 	
-	static final String PAGE_NAME = "NewPortletClassDataModel.PAGE_NAME";
+	static final String PAGE_NAME = "NewPortletClassDataModel.PAGE_NAME"; //$NON-NLS-1$
 	
-	static final String PARENT_PORTAL = "NewPortletClassDataModel.PARENT_PORTAL";
+	static final String PARENT_PORTAL = "NewPortletClassDataModel.PARENT_PORTAL"; //$NON-NLS-1$
 	
-	static final String PAGE_REGION = "NewPortletClassDataModel.PAGE_REGION";
+	static final String PAGE_REGION = "NewPortletClassDataModel.PAGE_REGION"; //$NON-NLS-1$
 	
-	static final String PORTLET_HEIGHT = "NewPortletClassDataModel.PORTLET_HEIGHT";
+	static final String PORTLET_HEIGHT = "NewPortletClassDataModel.PORTLET_HEIGHT"; //$NON-NLS-1$
 	
-	static final String INITIAL_WINDOW_STATE = "NewPortletClassDataModel.INITIAL_WINDOW_STATE";
+	static final String INITIAL_WINDOW_STATE = "NewPortletClassDataModel.INITIAL_WINDOW_STATE"; //$NON-NLS-1$
 	
-	static final String IF_EXISTS = "NewPortletClassDataModel.IF_EXISTS";
+	static final String IF_EXISTS = "NewPortletClassDataModel.IF_EXISTS"; //$NON-NLS-1$
 	
-	static final String ADD_PORTLET = "NewPortletClassDataModel.ADD_PORTLET";
+	static final String ADD_PORTLET = "NewPortletClassDataModel.ADD_PORTLET"; //$NON-NLS-1$
 	
-	static final String ADD_JBOSS_APP = "NewPortletClassDataModel.ADD_JBOSS_APP";
+	static final String ADD_JBOSS_APP = "NewPortletClassDataModel.ADD_JBOSS_APP"; //$NON-NLS-1$
 	
-	static final String ADD_JBOSS_PORTLET = "NewPortletClassDataModel.ADD_JBOSS_PORTLET";
+	static final String ADD_JBOSS_PORTLET = "NewPortletClassDataModel.ADD_JBOSS_PORTLET"; //$NON-NLS-1$
 	
-	static final String JBOSS_APP = "NewPortletClassDataModel.JBOSS_APP";
+	static final String JBOSS_APP = "NewPortletClassDataModel.JBOSS_APP"; //$NON-NLS-1$
 	
-	static final String IS_JSF_PORTLET = "NewPortletClassDataModel.IS_JSF_PORTLET";
+	static final String IS_JSF_PORTLET = "NewPortletClassDataModel.IS_JSF_PORTLET"; //$NON-NLS-1$
 	
-	static final String IS_SEAM_PORTLET = "NewPortletClassDataModel.IS_SEAM_PORTLET";
+	static final String IS_SEAM_PORTLET = "NewPortletClassDataModel.IS_SEAM_PORTLET"; //$NON-NLS-1$
 	
-	static final String COPY_JSF_TEMPLATES = "NewPortletClassDataModel.COPY_JSF_TEMPLATES";
+	static final String COPY_JSF_TEMPLATES = "NewPortletClassDataModel.COPY_JSF_TEMPLATES"; //$NON-NLS-1$
 }

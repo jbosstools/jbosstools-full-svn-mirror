@@ -46,6 +46,7 @@ import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.FacetedProjectFramework;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.ui.IPortletUIConstants;
+import org.jboss.tools.portlet.ui.Messages;
 import org.jboss.tools.portlet.ui.MultiSelectFilteredFileSelectionDialog;
 
 /**
@@ -131,14 +132,14 @@ public class NewJSFPortletClassWizardPage extends NewJavaClassWizardPage {
 		MultiSelectFilteredFileSelectionDialog ms = null;
 		if (model.getBooleanProperty(IS_JSF_PORTLET)) {
 			ms = new MultiSelectFilteredFileSelectionDialog(
-					getShell(), "New JSF Portlet",
-					"Choose a JSF portlet class:", new String[0], false,
+					getShell(), Messages.NewJSFPortletClassWizardPage_New_JSF_Portlet,
+					Messages.NewJSFPortletClassWizardPage_Choose_a_JSF_portlet_class, new String[0], false,
 					project);
 		}
 		if (model.getBooleanProperty(IS_SEAM_PORTLET)) {
 			ms = new MultiSelectFilteredFileSelectionDialog(
-					getShell(), "New Seam Portlet",
-					"Choose a Seam portlet class:", new String[0], false,
+					getShell(), Messages.NewJSFPortletClassWizardPage_New_Seam_Portlet,
+					Messages.NewJSFPortletClassWizardPage_Choose_a_Seam_portlet_class, new String[0], false,
 					project);
 		}
 		IContainer root = component.getRootFolder().getUnderlyingFolder();

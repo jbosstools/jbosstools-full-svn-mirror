@@ -49,10 +49,6 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import org.eclipse.ui.part.PageBook;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 
-/**
- * Insert the type's description here.
- * Creation date: (7/30/2001 11:16:36 AM)
- */
 public class MultiSelectFilteredFileSelectionDialog extends
 		FilteredFileSelectionDialog implements SelectionListener {
 	
@@ -131,7 +127,7 @@ public class MultiSelectFilteredFileSelectionDialog extends
 		
 		//StatusInfo currStatus = new StatusInfo();
 		//currStatus.setOK();
-		Status currStatus = new Status(Status.OK, PortletCoreActivator.PLUGIN_ID, Status.OK, "", null);
+		Status currStatus = new Status(Status.OK, PortletCoreActivator.PLUGIN_ID, Status.OK, "", null); //$NON-NLS-1$
 		
 		updateStatus(currStatus);
 		fElementRenderer = new TypeRenderer();
@@ -457,7 +453,7 @@ public class MultiSelectFilteredFileSelectionDialog extends
 	public int open() {
 
 		if (fIT == null || fIT.length == 0) {
-			MessageDialog.openInformation(getShell(), WebAppEditResourceHandler.getString("Empty_List_1"), "No portlets exist to add");
+			MessageDialog.openInformation(getShell(), WebAppEditResourceHandler.getString("Empty_List_1"), Messages.No_portlets_exist_to_add); //$NON-NLS-1$
 			return CANCEL;
 		}
 

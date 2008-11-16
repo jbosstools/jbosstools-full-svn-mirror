@@ -26,7 +26,7 @@ import org.osgi.framework.BundleContext;
 public class PortletUIActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jboss.tools.portlet.ui";
+	public static final String PLUGIN_ID = "org.jboss.tools.portlet.ui"; //$NON-NLS-1$
 
 	// The shared instance
 	private static PortletUIActivator plugin;
@@ -70,7 +70,7 @@ public class PortletUIActivator extends AbstractUIPlugin {
 				IPortletConstants.CONFIG_PATH);
 
 		if (!portletVirtualFile.getUnderlyingFile().exists()) {
-			log(new RuntimeException("The portlet.xml file doesn't exist"));
+			log(new RuntimeException(Messages.PortletUIActivator_The_portlet_xml_file_doesnt_exist));
 			return null;
 		}
 
@@ -90,7 +90,7 @@ public class PortletUIActivator extends AbstractUIPlugin {
 
 	public static boolean isPortletProject(IDataModel model) {
 		String projectName = model.getStringProperty(PROJECT_NAME);
-		if(projectName != null && !"".equals(projectName.trim())){
+		if(projectName != null && !"".equals(projectName.trim())){ //$NON-NLS-1$
 			IProject project = ProjectUtilities.getProject(projectName);
 			try {
 				IFacetedProject facetedProject = ProjectFacetsManager.create(project);

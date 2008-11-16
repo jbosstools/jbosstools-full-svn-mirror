@@ -62,6 +62,7 @@ import org.eclipse.wst.xml.core.internal.provisional.format.FormatProcessorXML;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 import org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties;
+import org.jboss.tools.portlet.ui.Messages;
 import org.jboss.tools.portlet.ui.PortletUIActivator;
 import org.jboss.tools.portlet.ui.internal.wizard.action.xpl.AddWebClassOperationEx;
 import org.osgi.framework.Bundle;
@@ -186,9 +187,9 @@ public class AddPortletOperation extends AddWebClassOperationEx {
 			Element element = document.getDocumentElement();
 			
 			String name = model.getStringProperty(NAME);
-			Element portlet = addNode(document,element,"portlet",null);
-			addNode(document,portlet,"portlet-name",name);
-			addNode(document,portlet,"header-content",null);
+			Element portlet = addNode(document,element,"portlet",null); //$NON-NLS-1$
+			addNode(document,portlet,"portlet-name",name); //$NON-NLS-1$
+			addNode(document,portlet,"header-content",null); //$NON-NLS-1$
 			
 			domModel.save();
 		} catch (Exception e) {
@@ -209,14 +210,14 @@ public class AddPortletOperation extends AddWebClassOperationEx {
 	private void copyJSFTemplates(IDataModel model) throws Exception  {
 		IProject project = getTargetProject();
 		IVirtualComponent component = ComponentCore.createComponent(project);
-		IVirtualFolder jsfFolder = component.getRootFolder().getFolder("jsf");
+		IVirtualFolder jsfFolder = component.getRootFolder().getFolder("jsf"); //$NON-NLS-1$
 		if (!jsfFolder.exists()) {
 			jsfFolder.create(IResource.FORCE, new NullProgressMonitor());
 		}
 		IContainer folder = jsfFolder.getUnderlyingFolder();
 
 		Bundle bundle = Platform.getBundle(PortletUIActivator.PLUGIN_ID);
-		URL jsfURL = bundle.getEntry("/resources/jsf");
+		URL jsfURL = bundle.getEntry("/resources/jsf"); //$NON-NLS-1$
 		String jsfFolderName = FileLocator.toFileURL(jsfURL).getFile();
 		File source = new File(jsfFolderName);
 		File[] files = source.listFiles(new FileFilter() {
@@ -258,10 +259,10 @@ public class AddPortletOperation extends AddWebClassOperationEx {
 			Document document = domModel.getDocument();
 			Element element = document.getDocumentElement();
 			
-			NodeList appNameNodes = element.getElementsByTagName("app-name");
+			NodeList appNameNodes = element.getElementsByTagName("app-name"); //$NON-NLS-1$
 			if (appNameNodes.getLength() <= 0) {
 				String appName = model.getStringProperty(JBOSS_APP);
-				addNode(document, element, "app-name", appName);
+				addNode(document, element, "app-name", appName); //$NON-NLS-1$
 				domModel.save();
 			}
 		} catch (Exception e) {
@@ -312,27 +313,27 @@ public class AddPortletOperation extends AddWebClassOperationEx {
 			Document document = domModel.getDocument();
 			Element element = document.getDocumentElement();
 			
-			Element deployment = document.createElement("deployment");
+			Element deployment = document.createElement("deployment"); //$NON-NLS-1$
 			element.appendChild(deployment);
 			
-			addNode(document,deployment,"parent-ref",parent);
-			addNode(document,deployment,"if-exists",ifExists);
+			addNode(document,deployment,"parent-ref",parent); //$NON-NLS-1$
+			addNode(document,deployment,"if-exists",ifExists); //$NON-NLS-1$
 			
 			Element page = null;
 			if (pageName != null && pageName.trim().length() > 0) {
-				page = addNode(document,deployment,"page",null);
-				addNode(document,page,"page-name",pageName);
+				page = addNode(document,deployment,"page",null); //$NON-NLS-1$
+				addNode(document,page,"page-name",pageName); //$NON-NLS-1$
 			} else {
 				page=deployment;
 			}
 			
-			Element window = addNode(document,page,"window",null);
+			Element window = addNode(document,page,"window",null); //$NON-NLS-1$
 			
-			addNode(document,window,"window-name",windowName);
-			addNode(document,window,"instance-ref",instanceId);
-			addNode(document,window,"region",region);
-			addNode(document,window,"height",height);
-			addNode(document,window,"initial-window-state",initialWindowState);
+			addNode(document,window,"window-name",windowName); //$NON-NLS-1$
+			addNode(document,window,"instance-ref",instanceId); //$NON-NLS-1$
+			addNode(document,window,"region",region); //$NON-NLS-1$
+			addNode(document,window,"height",height); //$NON-NLS-1$
+			addNode(document,window,"initial-window-state",initialWindowState); //$NON-NLS-1$
 			
 			domModel.save();
 		} catch (Exception e) {
@@ -377,12 +378,12 @@ public class AddPortletOperation extends AddWebClassOperationEx {
 			Document document = domModel.getDocument();
 			Element element = document.getDocumentElement();
 			
-			Element deployment = document.createElement("deployment");
+			Element deployment = document.createElement("deployment"); //$NON-NLS-1$
 			element.appendChild(deployment);
 			
-			Element instance = addNode(document,deployment,"instance",null);
-			addNode(document,instance,"instance-id",instanceId);
-			addNode(document,instance,"portlet-ref",name);
+			Element instance = addNode(document,deployment,"instance",null); //$NON-NLS-1$
+			addNode(document,instance,"instance-id",instanceId); //$NON-NLS-1$
+			addNode(document,instance,"portlet-ref",name); //$NON-NLS-1$
 			domModel.save();
 		} catch (Exception e) {
 			PortletCoreActivator.getDefault().log(e);
@@ -418,22 +419,22 @@ public class AddPortletOperation extends AddWebClassOperationEx {
 			Document document = domModel.getDocument();
 			Element element = document.getDocumentElement();
 			
-			Element portlet = document.createElement("portlet");
+			Element portlet = document.createElement("portlet"); //$NON-NLS-1$
 			element.appendChild(portlet);
 			// description
 			if (description != null && description.trim().length() > 0) {
-				addNode(document,portlet,"description",description);
+				addNode(document,portlet,"description",description); //$NON-NLS-1$
 			}
 			
 			// portlet-name
-			addNode(document,portlet,"portlet-name",name);
+			addNode(document,portlet,"portlet-name",name); //$NON-NLS-1$
 			
 			// display-name
 			if (displayName != null && displayName.trim().length() > 0) {
-				addNode(document,portlet,"display-name",displayName);
+				addNode(document,portlet,"display-name",displayName); //$NON-NLS-1$
 			}
 			// portlet-class
-			addNode(document,portlet,"portlet-class",className);
+			addNode(document,portlet,"portlet-class",className); //$NON-NLS-1$
 			
 			// init-param
 			List initParamList = (List) aModel.getProperty(INIT_PARAM);
@@ -441,31 +442,31 @@ public class AddPortletOperation extends AddWebClassOperationEx {
 				for (Iterator iterator = initParamList.iterator(); iterator
 						.hasNext();) {
 					String[] arrayString = (String[]) iterator.next();
-					Element initParam = addNode(document,portlet,"init-param",null);
-					addNode(document,initParam,"name",arrayString[0]);
-					addNode(document,initParam,"value",arrayString[1]);
+					Element initParam = addNode(document,portlet,"init-param",null); //$NON-NLS-1$
+					addNode(document,initParam,"name",arrayString[0]); //$NON-NLS-1$
+					addNode(document,initParam,"value",arrayString[1]); //$NON-NLS-1$
 					if (arrayString[2] != null && arrayString[2].length() > 0) {
-						addNode(document,initParam,"description",arrayString[2]);
+						addNode(document,initParam,"description",arrayString[2]); //$NON-NLS-1$
 					}
 				}
 			}
 			// supports
-			Element supports = addNode(document,portlet,"supports",null);
+			Element supports = addNode(document,portlet,"supports",null); //$NON-NLS-1$
 			
-			addNode(document,supports,"mime-type","text/html");
+			addNode(document,supports,"mime-type","text/html"); //$NON-NLS-1$ //$NON-NLS-2$
 			if (aModel.getBooleanProperty(VIEW_MODE)) {
-				addNode(document,supports,"portlet-mode","VIEW");
+				addNode(document,supports,"portlet-mode","VIEW"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			if (aModel.getBooleanProperty(EDIT_MODE)) {
-				addNode(document,supports,"portlet-mode","EDIT");
+				addNode(document,supports,"portlet-mode","EDIT"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			if (aModel.getBooleanProperty(HELP_MODE)) {
-				addNode(document,supports,"portlet-mode","HELP");
+				addNode(document,supports,"portlet-mode","HELP"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			
 			// portlet-info
-			Element portletInfo = addNode(document,portlet,"portlet-info",null);
-			addNode(document,portletInfo,"title", title);
+			Element portletInfo = addNode(document,portlet,"portlet-info",null); //$NON-NLS-1$
+			addNode(document,portletInfo,"title", title); //$NON-NLS-1$
 			
 			domModel.save();
 			

@@ -75,6 +75,7 @@ import org.eclipse.wst.common.frameworks.internal.datamodel.ui.DataModelWizardPa
 import org.eclipse.wst.common.frameworks.internal.plugin.WTPCommonPlugin;
 import org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties;
 import org.jboss.tools.portlet.ui.IPortletUIConstants;
+import org.jboss.tools.portlet.ui.Messages;
 
 /**
  * JBoss Portlet Wizard Setting Page
@@ -142,7 +143,7 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		ifExistsLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
 		final Combo ifExistsCombo = new Combo(composite,SWT.READ_ONLY);
 		ifExistsCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));		
-		ifExistsCombo.setItems(new String[] {"overwrite","keep"});
+		ifExistsCombo.setItems(new String[] {"overwrite","keep"}); //$NON-NLS-1$ //$NON-NLS-2$
 		synchHelper.synchCombo(ifExistsCombo, IF_EXISTS, null);
 		
 		// instance name
@@ -199,7 +200,7 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		initialWindowStateLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
 		final Combo initialWindowStateCombo = new Combo(composite,SWT.READ_ONLY);
 		initialWindowStateCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));		
-		initialWindowStateCombo.setItems(new String[] {"maximized","minimized","normal"});
+		initialWindowStateCombo.setItems(new String[] {"maximized","minimized","normal"}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		synchHelper.synchCombo(initialWindowStateCombo, INITIAL_WINDOW_STATE, null);
 		
 		addPortlet.addSelectionListener(new SelectionAdapter() {

@@ -20,6 +20,7 @@ import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.frameworks.internal.datamodel.ui.DataModelSynchHelper;
 import org.eclipse.wst.common.project.facet.ui.AbstractFacetWizardPage;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.ui.Messages;
 import org.jboss.tools.portlet.ui.PortletUIActivator;
 
 /**
@@ -38,9 +39,9 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 	private Button deployButton;
 
 	public JSFPortletFacetInstallPage() {
-		super("JSFPortletProjectConfigurationWizardPage");
-		setTitle("JBoss JSF Portlet Capabilities");
-		setDescription("Add JBoss JSF Portlet capabilities to this Web Project");
+		super("JSFPortletProjectConfigurationWizardPage"); //$NON-NLS-1$
+		setTitle(Messages.JSFPortletFacetInstallPage_JBoss_JSF_Portlet_Capabilities);
+		setDescription(Messages.JSFPortletFacetInstallPage_Add_JBoss_JSF_Portlet_capabilities_to_this_Web_Project);
 		// ImageDescriptor imageDesc = getDefaultPageImageDescriptor( );
 		// if ( imageDesc != null )
 		// setImageDescriptor( imageDesc );
@@ -50,7 +51,7 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 			jsfSection = dialogSettings
 					.addNewSection(IPortletConstants.JSF_SECTION);
 			deployJars = true;
-			portletbridgeRuntime = "";
+			portletbridgeRuntime = ""; //$NON-NLS-1$
 			jsfSection.put(IPortletConstants.PORTLET_BRIDGE_RUNTIME,
 					portletbridgeRuntime);
 		} else {
@@ -58,7 +59,7 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 			portletbridgeRuntime = jsfSection
 					.get(IPortletConstants.PORTLET_BRIDGE_RUNTIME);
 			if (portletbridgeRuntime == null) {
-				portletbridgeRuntime = "";
+				portletbridgeRuntime = ""; //$NON-NLS-1$
 				jsfSection.put(IPortletConstants.PORTLET_BRIDGE_RUNTIME,
 						portletbridgeRuntime);
 			}
@@ -78,7 +79,7 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 
 	private void createButton(Composite composite) {
 		deployButton = new Button(composite, SWT.CHECK);
-		deployButton.setText("Deploy jars to WEB-INF/lib");
+		deployButton.setText(Messages.JSFPortletFacetInstallPage_Deploy_jars);
 		deployButton.setSelection(deployJars);
 		deployButton.addSelectionListener(new SelectionAdapter() {
 
@@ -98,7 +99,7 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 	private void addFolderGroup(Composite composite) {
 		// folder
 		Label folderLabel = new Label(composite, SWT.LEFT);
-		folderLabel.setText("Portletbridge Runtime");
+		folderLabel.setText(Messages.JSFPortletFacetInstallPage_Portletbridge_Runtime);
 		folderLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
 
 		folderText = new Text(composite, SWT.SINGLE | SWT.BORDER);
@@ -116,7 +117,7 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 		});
 
 		folderButton = new Button(composite, SWT.PUSH);
-		folderButton.setText("Browse...");
+		folderButton.setText(Messages.JSFPortletFacetInstallPage_Browse);
 		folderButton
 				.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
 		folderButton.addSelectionListener(new SelectionAdapter() {
@@ -132,7 +133,7 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 		String folderString = folderText.getText();
 		folderString = folderString.trim();
 		if (folderString.length() <= 0) {
-			setErrorMessage("Portletbridge Runtime directory is required.");
+			setErrorMessage(Messages.JSFPortletFacetInstallPage_Portletbridge_Runtime_directory_is_required);
 			setPageComplete(false);
 			return;
 		}
@@ -144,7 +145,7 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 		String[] fileList = folder.list(new FilenameFilter() {
 
 			public boolean accept(File dir, String name) {
-				if (name.startsWith("portletbridge") || name.endsWith(".jar")) {
+				if (name.startsWith("portletbridge") || name.endsWith(".jar")) { //$NON-NLS-1$ //$NON-NLS-2$
 					return true;
 				}
 				return false;
@@ -161,14 +162,14 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 	}
 
 	private void setInvalidPortletbridgeRuntime() {
-		setErrorMessage("Invalid Portletbridge Runtime directory.");
+		setErrorMessage(Messages.JSFPortletFacetInstallPage_Invalid_Portletbridge_Runtime_directory);
 		setPageComplete(false);
 	}
 
 	protected void handleFolderButtonPressed() {
 		String lastPath = folderText.getText();
 		DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.MULTI);
-		dialog.setText("Select Portletbridge Runtime");
+		dialog.setText(Messages.JSFPortletFacetInstallPage_Select_Portletbridge_Runtime);
 		dialog.setFilterPath(lastPath);
 		String res = dialog.open();
 		if (res == null) {

@@ -41,6 +41,7 @@ import org.eclipse.wst.common.frameworks.datamodel.IDataModelProvider;
 import org.eclipse.wst.common.frameworks.internal.plugin.WTPCommonPlugin;
 import org.jboss.tools.portlet.operations.AddPortletOperation;
 import org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties;
+import org.jboss.tools.portlet.ui.Messages;
 
 /**
  * 
@@ -53,13 +54,13 @@ public class NewPortletClassDataModelProvider extends
 	/**
 	 * The fully qualified default portlet superclass: GenericPortlet.
 	 */
-	private final static String PORTLET_SUPERCLASS = "javax.portlet.GenericPortlet";
+	private final static String PORTLET_SUPERCLASS = "javax.portlet.GenericPortlet"; //$NON-NLS-1$
 	
 	/**
 	 * String array of the default, minimum required fully qualified Portlet
 	 * interfaces
 	 */
-	private final static String QUALIFIED_PORTLET = "javax.portlet.Portlet";
+	private final static String QUALIFIED_PORTLET = "javax.portlet.Portlet"; //$NON-NLS-1$
 	private final static String[] PORTLET_INTERFACES = { QUALIFIED_PORTLET }; 
 
 	private final static String ANNOTATED_TEMPLATE_DEFAULT = "portlet.javajet"; //$NON-NLS-1$
@@ -238,46 +239,46 @@ public class NewPortletClassDataModelProvider extends
 			return Boolean.FALSE;
 		
 		if (propertyName.equals(INSTANCE_NAME)) {
-			return getPortletPrefix() + "Instance";
+			return getPortletPrefix() + "Instance"; //$NON-NLS-1$
 		}
 		if (propertyName.equals(WINDOW_NAME)) {
-			return getPortletPrefix() + "Window";
+			return getPortletPrefix() + "Window"; //$NON-NLS-1$
 		}
 		if (propertyName.equals(PAGE_NAME)) {
 			if (isSeamPortlet) {
-				return "SeamPortlet";
+				return "SeamPortlet"; //$NON-NLS-1$
 			}
 			if (isJSFPortlet) {
-				return "JSFPortlet";
+				return "JSFPortlet"; //$NON-NLS-1$
 			}
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 		if (propertyName.equals(PORTLET_HEIGHT)) {
-			return "1";
+			return "1"; //$NON-NLS-1$
 		}
 		if (propertyName.equals(INITIAL_WINDOW_STATE)) {
-			return "maximized";
+			return "maximized"; //$NON-NLS-1$
 		}
 		if (propertyName.equals(JBOSS_APP)) {
 			if (isSeamPortlet) {
-				return "seamPortletApp";
+				return "seamPortletApp"; //$NON-NLS-1$
 			}
 			if (isJSFPortlet) {
-				return "riPortletApp";
+				return "riPortletApp"; //$NON-NLS-1$
 			}
-			return "portletApp";
+			return "portletApp"; //$NON-NLS-1$
 		}
 		if (propertyName.equals(PAGE_REGION)) {
-			return "center";
+			return "center"; //$NON-NLS-1$
 		}
 		if (propertyName.equals(PARENT_PORTAL)) {
 			if (isSeamPortlet || isJSFPortlet) {
-				return "default";
+				return "default"; //$NON-NLS-1$
 			}
-			return "default.default";
+			return "default.default"; //$NON-NLS-1$
 		}
 		if (propertyName.equals(IF_EXISTS)) {
-			return "overwrite";
+			return "overwrite"; //$NON-NLS-1$
 		}
 		if (propertyName.equals(INewJavaClassDataModelProperties.JAVA_SOURCE_FOLDER)) {
 			return getSourceFolder();
@@ -333,9 +334,9 @@ public class NewPortletClassDataModelProvider extends
 	private String getPortletPrefix() {
 		String prefix = null;
 		if (isSeamPortlet) {
-			prefix = "SeamPortlet";
+			prefix = "SeamPortlet"; //$NON-NLS-1$
 		} else if (isJSFPortlet) {
-			prefix = "JSFPortlet";
+			prefix = "JSFPortlet"; //$NON-NLS-1$
 		} else {
 			prefix = (String) getDefaultProperty(NAME);
 		}

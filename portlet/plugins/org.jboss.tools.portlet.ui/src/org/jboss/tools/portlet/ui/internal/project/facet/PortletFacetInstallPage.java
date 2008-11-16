@@ -9,6 +9,7 @@ import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.frameworks.internal.datamodel.ui.DataModelWizardPage;
 import org.eclipse.wst.common.project.facet.ui.IFacetWizardPage;
 import org.eclipse.wst.common.project.facet.ui.IWizardContext;
+import org.jboss.tools.portlet.ui.Messages;
 import org.jboss.tools.portlet.ui.PortletUIActivator;
 
 /**
@@ -21,9 +22,9 @@ public class PortletFacetInstallPage extends DataModelWizardPage implements
 
 	public PortletFacetInstallPage() {
 		super(DataModelFactory.createDataModel(new AbstractDataModelProvider() {
-		}), "jboss.portal.facet.install.page");
-		setTitle("JBoss Portlet Capabilities");
-		setDescription("Add JBoss Portlet capabilities to this Web Project");
+		}), "jboss.portal.facet.install.page"); //$NON-NLS-1$
+		setTitle(Messages.PortletFacetInstallPage_JBoss_Portlet_Capabilities);
+		setDescription(Messages.PortletFacetInstallPage_Add_JBoss_Portlet_capabilities_to_this_Web_Project);
 		dialogSettings = PortletUIActivator.getDefault().getDialogSettings();
 	}
 

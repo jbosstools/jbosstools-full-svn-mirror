@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: JBoss Portlet
+Bundle-Name: %BundleName
 Bundle-SymbolicName: org.jboss.tools.portlet.ui;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jboss.tools.portlet.ui.PortletUIActivator
-Bundle-Vendor: JBoss, a division of Red Hat
+Bundle-Vendor: %BundleVendor
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.wst.common.project.facet.ui,
@@ -29,3 +29,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide,
  org.eclipse.ui.views
 Bundle-ActivationPolicy: lazy
+Bundle-Localization: plugin

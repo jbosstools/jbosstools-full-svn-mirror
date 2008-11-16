@@ -5,15 +5,15 @@ package org.jboss.tools.portlet.ui;
  */
 public interface IPortletUIConstants {
 
-	static final String NEW_PORTLET_WIZARD_PAGE_TITLE = "Create Portlet";
-	static final String ADD_PORTLET_WIZARD_PAGE_DESC = "Enter portlet deployment descriptor specific information.";
+	static final String NEW_PORTLET_WIZARD_PAGE_TITLE = Messages.IPortletUIConstants_Create_Portlet;
+	static final String ADD_PORTLET_WIZARD_PAGE_DESC = Messages.IPortletUIConstants_Enter_portlet_deployment_descriptor_specific_information;
 	
-	static final String ADD_JBOSS_PORTLET_WIZARD_PAGE_TITLE = "Create Portlet";
-	static final String ADD_JBOSS_JSF_PORTLET_WIZARD_PAGE_TITLE = "Create JBoss JSF Portlet";
-	static final String ADD_JBOSS_PORTLET_WIZARD_PAGE_DESC = "Enter JBoss portlet specific information";
+	static final String ADD_JBOSS_PORTLET_WIZARD_PAGE_TITLE = Messages.IPortletUIConstants_Create_Portlet;
+	static final String ADD_JBOSS_JSF_PORTLET_WIZARD_PAGE_TITLE = Messages.IPortletUIConstants_Create_JBoss_JSF_Portlet;
+	static final String ADD_JBOSS_PORTLET_WIZARD_PAGE_DESC = Messages.IPortletUIConstants_Enter_JBoss_portlet_specific_information;
 
-	static final String DISPLAY_NAME_LABEL = "Display name:";
-	static final String TITLE_LABEL = "Title:";
+	static final String DISPLAY_NAME_LABEL = Messages.IPortletUIConstants_Display_name;
+	static final String TITLE_LABEL = Messages.IPortletUIConstants_Title;
 
 	static final String QUALIFIED_PORTLET = "javax.portlet.Portlet"; //$NON-NLS-1$
 	static final String QUALIFIED_GENERIC_PORTLET = "javax.portlet.GenericServlet"; //$NON-NLS-1$
@@ -52,27 +52,27 @@ public interface IPortletUIConstants {
 	static final String RENDER_SIGNATURE = "(Ljavax/portlet/RenderRequest;Ljavax/portlet/RenderResponse;)V"; //$NON-NLS-1$
 	static final String PROCESS_ACTION_SIGNATURE = "(Ljavax/portlet/ActionRequest;Ljavax/portlet/ActionResponse;)V"; //$NON-NLS-1$
 	
-	static final String ADD_PORTLET_LABEL = "Create Portlet Instance";
-	static final String INSTANCE_NAME_LABEL = "Instance Name:";
-	static final String WINDOW_NAME_LABEL = "Window Name:";
-	static final String PAGE_NAME_LABEL = "Page Name:";
-	static final String PARENT_PORTAL_LABEL = "Parent Reference:";
-	static final String PAGE_REGION_LABEL = "Region:";
-	static final String PORTLET_HEIGHT_LABEL = "Height:";
-	static final String INITIAL_WINDOW_STATE_LABEL = "Initial Window State:";
-	static final String IF_EXISTS_LABEL = "If Exists:";
-	static final String NEW_JBOSS_JSF_PORTLET_WIZARD_PAGE_DESC = "Specify class file information";
-	static final String JBOSS_JSF_PORTLET_CLASS = "javax.portlet.faces.GenericFacesPortlet";
-	static final String JBOSS_JSF_PORTLET_NAME = "riPortlet";
-	static final String JBOSS_SEAM_PORTLET_NAME = "seamPortlet";
-	static final String JBOSS_JSF_DISPLAY_PORTLET_NAME = "JBoss JSF Portlet";
-	static final String JBOSS_JSF_PORTLET_TITLE = "JBoss JSF Portlet";
-	static final String JBOSS_SEAM_DISPLAY_PORTLET_NAME = "JBoss Seam Portlet";
-	static final String JBOSS_SEAM_PORTLET_TITLE = "JBoss Seam Portlet";
-	static final String JBOSS_APP_LABEL = "JBoss Application Name:";
-	static final String ADD_JBOSS_APP_LABEL = "Create JBoss Application";
-	static final String ADD_JBOSS_PORTLET_LABEL = "Add the jboss-portlet.xml file";
-	static final String COPY_JSF_TEMPLATES_LABEL = "Copy JSF Templates";
+	static final String ADD_PORTLET_LABEL = Messages.IPortletUIConstants_Create_portlet_instance;
+	static final String INSTANCE_NAME_LABEL = Messages.IPortletUIConstants_Inastance_name;
+	static final String WINDOW_NAME_LABEL = Messages.IPortletUIConstants_Window_name;
+	static final String PAGE_NAME_LABEL = Messages.IPortletUIConstants_Page_name;
+	static final String PARENT_PORTAL_LABEL = Messages.IPortletUIConstants_Parent_Reference;
+	static final String PAGE_REGION_LABEL = Messages.IPortletUIConstants_Region;
+	static final String PORTLET_HEIGHT_LABEL = Messages.IPortletUIConstants_Height;
+	static final String INITIAL_WINDOW_STATE_LABEL = Messages.IPortletUIConstants_Initial_Window_State;
+	static final String IF_EXISTS_LABEL = Messages.IPortletUIConstants_If_Exists;
+	static final String NEW_JBOSS_JSF_PORTLET_WIZARD_PAGE_DESC = Messages.IPortletUIConstants_Specify_class_file_information;
+	static final String JBOSS_JSF_PORTLET_CLASS = "javax.portlet.faces.GenericFacesPortlet"; //$NON-NLS-1$
+	static final String JBOSS_JSF_PORTLET_NAME = "riPortlet"; //$NON-NLS-1$
+	static final String JBOSS_SEAM_PORTLET_NAME = "seamPortlet"; //$NON-NLS-1$
+	static final String JBOSS_JSF_DISPLAY_PORTLET_NAME = Messages.IPortletUIConstants_JBoss_JSF_Portlet;
+	static final String JBOSS_JSF_PORTLET_TITLE = Messages.IPortletUIConstants_JBoss_JSF_Portlet;
+	static final String JBOSS_SEAM_DISPLAY_PORTLET_NAME = Messages.IPortletUIConstants_JBoss_Seam_Portlet;
+	static final String JBOSS_SEAM_PORTLET_TITLE = Messages.IPortletUIConstants_JBoss_Seam_Portlet;
+	static final String JBOSS_APP_LABEL = Messages.IPortletUIConstants_JBoss_Application_Name;
+	static final String ADD_JBOSS_APP_LABEL = Messages.IPortletUIConstants_Create_JBoss_Application;
+	static final String ADD_JBOSS_PORTLET_LABEL = Messages.IPortletUIConstants_Add_the_jboss_portlet_xml_file;
+	static final String COPY_JSF_TEMPLATES_LABEL = Messages.IPortletUIConstants_Copy_JSF_Templates;
 	
 	
 }

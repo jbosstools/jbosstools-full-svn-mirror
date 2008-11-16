@@ -17,6 +17,7 @@ import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModelProvider;
 import org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties;
 import org.jboss.tools.portlet.ui.IPortletUIConstants;
+import org.jboss.tools.portlet.ui.Messages;
 import org.jboss.tools.portlet.ui.PortletUIActivator;
 
 /**
@@ -43,7 +44,7 @@ public class NewJSFPortletWizard extends NewWebArtifactWizard {
 
 	@Override
 	protected ImageDescriptor getImage() {
-		return PortletUIActivator.imageDescriptorFromPlugin(PortletUIActivator.PLUGIN_ID, "/icons/portlet_wiz.gif");
+		return PortletUIActivator.imageDescriptorFromPlugin(PortletUIActivator.PLUGIN_ID, "/icons/portlet_wiz.gif"); //$NON-NLS-1$
 	}
 	
 	@Override

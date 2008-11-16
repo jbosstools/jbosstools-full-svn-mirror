@@ -21,25 +21,25 @@
   <!-- New Java Portlet wizard -->
   <extension point="org.eclipse.ui.newWizards">
     <category id="org.jboss.tools.portlet" 
-    	name="Portlet" 
+    	name="%Portlet_category" 
     	parentCategory="org.jboss.tools.jst.web">
     </category>
     <wizard
 		id="org.jboss.tools.portlet.ui.wizard.NewJavaPortletWizard"
-		name="Java Portlet"
+		name="%Java_portlet_wizard_name"
 		class="org.jboss.tools.portlet.ui.internal.wizard.NewPortletWizard"
 		category="org.jboss.tools.jst.web/org.jboss.tools.portlet"
 		icon="icons/portlet_wiz.gif">
-		<description>Create a new Java Portlet</description>
+		<description>%Portlet_wizard_description</description>
 		<selection class="org.eclipse.core.resources.IResource" />
 	</wizard>
 	<wizard
 		id="org.jboss.tools.portlet.ui.wizard.NewJSFPortletWizard"
-		name="JBoss JSF/Seam Portlet"
+		name="%JSFSeam_portlet_wizard_name"
 		class="org.jboss.tools.portlet.ui.internal.wizard.NewJSFPortletWizard"
 		category="org.jboss.tools.jst.web/org.jboss.tools.portlet"
 		icon="icons/portlet_wiz.gif">
-		<description>Create a new JBoss JSF Portlet</description>
+		<description>%JSFSeam_portlet_wizard_description</description>
 		<selection class="org.eclipse.core.resources.IResource" />
 	</wizard>
 	<!--
