@@ -24,18 +24,4 @@ public class DefaultEditPartFactory implements EditPartFactory {
         return result;
     }
     
-//    private EditPart createEditPart(Object element) {
-//    	if (element instanceof Flow) {
-//    		return new RootEditPart();
-//    	} else if (element instanceof Container) {
-//    		return new ContainerEditPart();
-//    	} else if (element instanceof Connection) {
-//    		return new ConnectionEditPart();
-//    	} else if (element instanceof Node) {
-//    		return ElementRegistry.createEditPart((Node)element);
-//    	} else  {
-//    		return null;
-//    	}
-//    }
-    
 }
