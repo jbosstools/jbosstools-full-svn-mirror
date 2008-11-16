@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.jboss.ide.eclipse.as.classpath.core.jee.AbstractClasspathContainer;
 import org.jboss.ide.eclipse.as.classpath.core.jee.AbstractClasspathContainerInitializer;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.core.Messages;
 
 /**
  * @author snjeza
@@ -24,7 +25,7 @@ public class Portlet10LibrariesContainerInitializer extends
 		AbstractClasspathContainerInitializer {
 
 	public String getDescription(IPath containerPath, IJavaProject project) {
-		return "JBoss Portlet Classpath Container Initializer v1.0";
+		return Messages.Portlet10LibrariesContainerInitializer_JBoss_Portlet_Classpath_Container_Initializer_v1_0;
 	}
 
 	@Override
@@ -39,10 +40,8 @@ public class Portlet10LibrariesContainerInitializer extends
 
 	private class Portlet10ClasspathContainer extends BasePortletClasspathContainer {
 
-		public final static String DESCRIPTION = "JBoss Portlet Libraries v1.0";
-
 		public Portlet10ClasspathContainer(IPath path) {
-			super(path, DESCRIPTION, SUFFIX);
+			super(path, Messages.Portlet10LibrariesContainerInitializer_1, SUFFIX);
 		}
 
 		@Override

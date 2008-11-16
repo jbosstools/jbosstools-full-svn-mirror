@@ -15,13 +15,14 @@ import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.JavaCore;
 import org.jboss.ide.eclipse.as.classpath.core.jee.AbstractClasspathContainer;
 import org.jboss.ide.eclipse.as.classpath.core.xpl.ClasspathDecorations;
+import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 
 public abstract class BasePortletClasspathContainer extends AbstractClasspathContainer {
-		private static final String PORTLET_FOLDER = "portlet";
+		private static final String PORTLET_FOLDER = "portlet"; //$NON-NLS-1$
 		public final static String SUFFIX = PORTLET_FOLDER;//$NON-NLS-1$
-		public final static String PREFIX = "org.jboss.tools.portlet.core";
-		private static final String RESOURCES_FOLDER = "resources";
+		public final static String PREFIX = "org.jboss.tools.portlet.core"; //$NON-NLS-1$
+		private static final String RESOURCES_FOLDER = "resources"; //$NON-NLS-1$
 
 		public BasePortletClasspathContainer(IPath path, String description,String suffix) {
 			super(path, description, suffix);
@@ -31,11 +32,11 @@ public abstract class BasePortletClasspathContainer extends AbstractClasspathCon
 		protected String getBaseDir() {
 			try {
 				URL installURL = FileLocator.toFileURL(PortletCoreActivator
-						.getDefault().getBundle().getEntry("/"));
+						.getDefault().getBundle().getEntry("/")); //$NON-NLS-1$
 				return installURL.getFile().toString();
 			} catch (IOException e) {
 				PortletCoreActivator
-						.log(e, "Error loading classpath container");
+						.log(e, Messages.BasePortletClasspathContainer_Error_loading_classpath_container);
 			}
 			return null;
 		}
@@ -50,7 +51,7 @@ public abstract class BasePortletClasspathContainer extends AbstractClasspathCon
 
 			String version = getPortletVersion();
 			File libDir = new File(baseDir
-					+ "/" + RESOURCES_FOLDER + "/" + PORTLET_FOLDER + "/" + version);//$NON-NLS-1$ //$NON-NLS-2$
+					+ "/" + RESOURCES_FOLDER + "/" + PORTLET_FOLDER + "/" + version);//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 			File[] jars = libDir.listFiles(new FileFilter() {
 				public boolean accept(File file) {

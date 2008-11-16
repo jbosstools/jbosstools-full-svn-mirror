@@ -25,6 +25,7 @@ import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.IDelegate;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 
 /**
@@ -47,7 +48,7 @@ public class PortletFacetInstallDelegate implements IDelegate {
 			throws CoreException {
 
 		if (monitor != null) {
-			monitor.beginTask("", 1);
+			monitor.beginTask("", 1); //$NON-NLS-1$
 		}
 		try {
 			IDataModel config = null;
@@ -57,7 +58,7 @@ public class PortletFacetInstallDelegate implements IDelegate {
 			} else {
 				throw new CoreException(
 						PortletCoreActivator
-								.getStatus("Internal Error creating JBoss Portlet Facet.  Missing configuration."));
+								.getStatus(Messages.PortletFacetInstallDelegate_Missing_configuration));
 			}
 
 			// check whether web.xml is available for update
@@ -66,11 +67,11 @@ public class PortletFacetInstallDelegate implements IDelegate {
 			if (provider == null) {
 				throw new CoreException(
 						PortletCoreActivator
-								.getStatus("Cannot configure web module for JBoss Portlet Facet"));
+								.getStatus(Messages.PortletFacetInstallDelegate_Cannot_configure_web_module_for_JBoss_Portlet_Facet));
 			} else if (!(provider.validateEdit(null, null).isOK())) {
 				if (!(provider.validateEdit(null, null).isOK())) {
 					throw new CoreException(PortletCoreActivator
-							.getStatus("The web.xml file is not updateable"));
+							.getStatus(Messages.PortletFacetInstallDelegate_The_web_xml_file_is_not_updateable));
 				}
 			}
 
@@ -121,7 +122,7 @@ public class PortletFacetInstallDelegate implements IDelegate {
 			op.run(monitor);
 		} catch (CoreException e) {
 			PortletCoreActivator.log(e,
-					"Exception occured while creating portlet.xml");
+					Messages.PortletFacetInstallDelegate_Exception_occured_while_creating_portlet_xml);
 		}
 	}
 }

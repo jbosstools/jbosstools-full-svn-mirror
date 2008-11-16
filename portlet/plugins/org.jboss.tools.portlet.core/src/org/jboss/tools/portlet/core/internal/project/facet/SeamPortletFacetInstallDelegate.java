@@ -49,6 +49,7 @@ import org.jboss.tools.portlet.core.IJBossWebUtil;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.JBossWebUtil;
 import org.jboss.tools.portlet.core.JBossWebUtil25;
+import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 
 /**
@@ -71,7 +72,7 @@ public class SeamPortletFacetInstallDelegate implements IDelegate {
 			throws CoreException {
 
 		if (monitor != null) {
-			monitor.beginTask("", 1);
+			monitor.beginTask("", 1); //$NON-NLS-1$
 		}
 		try {
 			IDataModel config = null;
@@ -81,7 +82,7 @@ public class SeamPortletFacetInstallDelegate implements IDelegate {
 			} else {
 				throw new CoreException(
 						PortletCoreActivator
-								.getStatus("Internal Error creating JBoss Seam Portlet Facet.  Missing configuration."));
+								.getStatus(Messages.SeamPortletFacetInstallDelegate_Missing_configuration));
 			}
 
 			// check whether web.xml is available for update
@@ -90,11 +91,11 @@ public class SeamPortletFacetInstallDelegate implements IDelegate {
 			if (provider == null) {
 				throw new CoreException(
 						PortletCoreActivator
-								.getStatus("Cannot configure web module for JBoss Seam Portlet Facet"));
+								.getStatus(Messages.SeamPortletFacetInstallDelegate_Cannot_configure_web_module_for_JBoss_Seam_Portlet_Facet));
 			} else if (!(provider.validateEdit(null, null).isOK())) {
 				if (!(provider.validateEdit(null, null).isOK())) {
 					throw new CoreException(PortletCoreActivator
-							.getStatus("The web.xml file is not updateable"));
+							.getStatus(Messages.SeamPortletFacetInstallDelegate_The_web_xml_file_is_not_updateable));
 				}
 			}
 
@@ -130,15 +131,15 @@ public class SeamPortletFacetInstallDelegate implements IDelegate {
 				} else {
 					util = new JBossWebUtil();
 				}
-				String name = "org.jboss.portletbridge.ExceptionHandler";
-				String value = "org.jboss.portletbridge.SeamExceptionHandlerImpl";
+				String name = "org.jboss.portletbridge.ExceptionHandler"; //$NON-NLS-1$
+				String value = "org.jboss.portletbridge.SeamExceptionHandlerImpl"; //$NON-NLS-1$
 				String description = null;
 				util.configureContextParam(project, monitor, name, value,
 						description);
 
 				// FIXME optional for Seam portlets version 2.1.x and up
-				name = "javax.faces.LIFECYCLE_ID";
-				value = "SEAM_PORTLET";
+				name = "javax.faces.LIFECYCLE_ID"; //$NON-NLS-1$
+				value = "SEAM_PORTLET"; //$NON-NLS-1$
 				util.configureContextParam(project, monitor, name, value,
 						description);
 			}

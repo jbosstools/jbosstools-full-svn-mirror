@@ -14,6 +14,7 @@ import java.util.Set;
 
 import org.eclipse.wst.common.componentcore.datamodel.FacetInstallDataModelProvider;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.core.Messages;
 
 /**
  * @author snjeza
@@ -31,7 +32,7 @@ public class JSFPortletFacetInstallDataModelProvider extends
 			return Boolean.TRUE;
 		}
 		if (propertyName.equals(IPortletConstants.PORTLET_BRIDGE_RUNTIME)) {
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 		return super.getDefaultProperty(propertyName);
 	}

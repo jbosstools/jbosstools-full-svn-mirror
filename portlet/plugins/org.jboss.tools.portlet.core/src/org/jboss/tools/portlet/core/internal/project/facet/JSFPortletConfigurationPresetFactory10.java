@@ -26,6 +26,7 @@ import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
 import org.eclipse.wst.common.project.facet.core.PresetDefinition;
 import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.core.Messages;
 
 /**
  * @author <a href="mailto:kosta@bea.com">Konstantin Komissarchik</a>
@@ -45,8 +46,8 @@ implements IPresetFactory {
 				.getProjectFacetVersion(WebFacetUtils.WEB_FACET);
 		final IProjectFacet PORTLET_FACET = ProjectFacetsManager.getProjectFacet(IPortletConstants.PORTLET_FACET_ID);
 		final IProjectFacetVersion portletFacetVersion = PORTLET_FACET.getVersion(IPortletConstants.PORTLET_FACET_VERSION_10);
-		final IProjectFacet JSF_FACET = ProjectFacetsManager.getProjectFacet("jst.jsf");
-		final IProjectFacetVersion jsfFacetVersion = JSF_FACET.getVersion("1.2");
+		final IProjectFacet JSF_FACET = ProjectFacetsManager.getProjectFacet("jst.jsf"); //$NON-NLS-1$
+		final IProjectFacetVersion jsfFacetVersion = JSF_FACET.getVersion("1.2"); //$NON-NLS-1$
 		if (webFacetVersion != null
 				&& webFacetVersion.compareTo(WebFacetUtils.WEB_23) >= 0 &&
 				portletFacetVersion != null) {
@@ -60,8 +61,8 @@ implements IPresetFactory {
 			facets.add(JavaFacetUtils.JAVA_50);
 			facets.add(portletFacetVersion);
 			facets.add(jsfFacetVersion);
-			return new PresetDefinition("JBoss JSF Portlet Project v1.0",
-					"JBoss JSF Portlet Project v1.0", facets);
+			return new PresetDefinition(Messages.JSFPortletConfigurationPresetFactory10_JBoss_JSF_Portlet_Project_v1_0,
+					Messages.JSFPortletConfigurationPresetFactory10_JBoss_JSF_Portlet_Project_v1_0, facets);
 		}
 		return null;
 	}

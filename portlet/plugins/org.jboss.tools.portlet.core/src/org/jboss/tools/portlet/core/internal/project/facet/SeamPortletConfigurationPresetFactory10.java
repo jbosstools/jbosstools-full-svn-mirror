@@ -26,6 +26,7 @@ import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
 import org.eclipse.wst.common.project.facet.core.PresetDefinition;
 import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.core.Messages;
 
 /**
  * @author <a href="mailto:kosta@bea.com">Konstantin Komissarchik</a>
@@ -45,10 +46,10 @@ implements IPresetFactory {
 				.getProjectFacetVersion(WebFacetUtils.WEB_FACET);
 		final IProjectFacet PORTLET_FACET = ProjectFacetsManager.getProjectFacet(IPortletConstants.PORTLET_FACET_ID);
 		final IProjectFacetVersion portletFacetVersion = PORTLET_FACET.getVersion(IPortletConstants.PORTLET_FACET_VERSION_10);
-		final IProjectFacet JSF_FACET = ProjectFacetsManager.getProjectFacet("jst.jsf");
-		final IProjectFacetVersion jsfFacetVersion = JSF_FACET.getVersion("1.2");
-		final IProjectFacet SEAM_FACET = ProjectFacetsManager.getProjectFacet("jst.seam");
-		final IProjectFacetVersion seamFacetVersion = SEAM_FACET.getVersion("2.0");
+		final IProjectFacet JSF_FACET = ProjectFacetsManager.getProjectFacet("jst.jsf"); //$NON-NLS-1$
+		final IProjectFacetVersion jsfFacetVersion = JSF_FACET.getVersion("1.2"); //$NON-NLS-1$
+		final IProjectFacet SEAM_FACET = ProjectFacetsManager.getProjectFacet("jst.seam"); //$NON-NLS-1$
+		final IProjectFacetVersion seamFacetVersion = SEAM_FACET.getVersion("2.0"); //$NON-NLS-1$
 		if (webFacetVersion != null
 				&& webFacetVersion.compareTo(WebFacetUtils.WEB_23) >= 0 &&
 				portletFacetVersion != null) {
@@ -63,8 +64,8 @@ implements IPresetFactory {
 			facets.add(portletFacetVersion);
 			facets.add(jsfFacetVersion);
 			facets.add(seamFacetVersion);
-			return new PresetDefinition("JBoss Seam Portlet Project v1.0",
-					"JBoss Seam Portlet Project v1.0", facets);
+			return new PresetDefinition(Messages.SeamPortletConfigurationPresetFactory10_JBoss_Seam_Portlet_Project_v1_0,
+					Messages.SeamPortletConfigurationPresetFactory10_JBoss_Seam_Portlet_Project_v1_0, facets);
 		}
 		return null;
 	}

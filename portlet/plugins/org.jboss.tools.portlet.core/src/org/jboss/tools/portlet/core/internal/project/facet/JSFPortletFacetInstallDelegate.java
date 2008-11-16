@@ -51,6 +51,7 @@ import org.jboss.tools.portlet.core.IJBossWebUtil;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.JBossWebUtil;
 import org.jboss.tools.portlet.core.JBossWebUtil25;
+import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 
 /**
@@ -59,8 +60,8 @@ import org.jboss.tools.portlet.core.PortletCoreActivator;
  */
 public class JSFPortletFacetInstallDelegate implements IDelegate {
 
-	private static final String ORG_JBOSS_PORTLET_STATE_MANAGER = "org.jboss.portletbridge.application.PortletStateManager";
-	private static final String ORG_JBOSS_PORTLET_VIEW_HANDLER = "org.jboss.portletbridge.application.PortletViewHandler";
+	private static final String ORG_JBOSS_PORTLET_STATE_MANAGER = "org.jboss.portletbridge.application.PortletStateManager"; //$NON-NLS-1$
+	private static final String ORG_JBOSS_PORTLET_VIEW_HANDLER = "org.jboss.portletbridge.application.PortletViewHandler"; //$NON-NLS-1$
 
 	/*
 	 * (non-Javadoc)
@@ -76,7 +77,7 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 			throws CoreException {
 
 		if (monitor != null) {
-			monitor.beginTask("", 1);
+			monitor.beginTask("", 1); //$NON-NLS-1$
 		}
 		try {
 			IDataModel config = null;
@@ -86,7 +87,7 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 			} else {
 				throw new CoreException(
 						PortletCoreActivator
-								.getStatus("Internal Error creating JBoss JSF Portlet Facet.  Missing configuration."));
+								.getStatus(Messages.JSFPortletFacetInstallDelegate_Missing_configuration));
 			}
 
 			// check whether web.xml is available for update
@@ -95,11 +96,11 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 			if (provider == null) {
 				throw new CoreException(
 						PortletCoreActivator
-								.getStatus("Cannot configure web module for JBoss JSF Portlet Facet"));
+								.getStatus(Messages.JSFPortletFacetInstallDelegate_Cannot_configure_web_module_for_JBoss_JSF_Portlet_Facet));
 			} else if (!(provider.validateEdit(null, null).isOK())) {
 				if (!(provider.validateEdit(null, null).isOK())) {
 					throw new CoreException(PortletCoreActivator
-							.getStatus("The web.xml file is not updateable"));
+							.getStatus(Messages.JSFPortletFacetInstallDelegate_The_web_xml_file_is_not_updateable));
 				}
 			}
 
@@ -222,37 +223,37 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 				} else {
 					util = new JBossWebUtil();
 				}
-				String name = "org.ajax4jsf.VIEW_HANDLERS";
-				String value = "org.jboss.portletbridge.application.FaceletPortletViewHandler";
+				String name = "org.ajax4jsf.VIEW_HANDLERS"; //$NON-NLS-1$
+				String value = "org.jboss.portletbridge.application.FaceletPortletViewHandler"; //$NON-NLS-1$
 				String description = null;
 				util.configureContextParam(project, monitor, name, value,
 						description);
 
-				name = "javax.portlet.faces.renderPolicy";
-				value = "ALWAYS_DELEGATE";
+				name = "javax.portlet.faces.renderPolicy"; //$NON-NLS-1$
+				value = "ALWAYS_DELEGATE"; //$NON-NLS-1$
 				util.configureContextParam(project, monitor, name, value,
 						description);
 
 				// RichFaces settings
 
-				name = "org.richfaces.LoadStyleStrategy";
-				value = "NONE";
+				name = "org.richfaces.LoadStyleStrategy"; //$NON-NLS-1$
+				value = "NONE"; //$NON-NLS-1$
 				util.configureContextParam(project, monitor, name, value,
 						description);
 
-				name = "org.richfaces.LoadScriptStrategy";
-				value = "NONE";
+				name = "org.richfaces.LoadScriptStrategy"; //$NON-NLS-1$
+				value = "NONE"; //$NON-NLS-1$
 				util.configureContextParam(project, monitor, name, value,
 						description);
 
-				name = "org.ajax4jsf.RESOURCE_URI_PREFIX";
-				value = "rfRes";
+				name = "org.ajax4jsf.RESOURCE_URI_PREFIX"; //$NON-NLS-1$
+				value = "rfRes"; //$NON-NLS-1$
 				util.configureContextParam(project, monitor, name, value,
 						description);
 
-				String displayName = "Ajax4jsf Filter";
-				String filterName = "ajax4jsf";
-				String className = "org.ajax4jsf.Filter";
+				String displayName = "Ajax4jsf Filter"; //$NON-NLS-1$
+				String filterName = "ajax4jsf"; //$NON-NLS-1$
+				String className = "org.ajax4jsf.Filter"; //$NON-NLS-1$
 				util.configureFilter(project, monitor, filterName, className,
 						displayName, description);
 
@@ -260,7 +261,7 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 						.getModelObject());
 				if (servletName == null) {
 					RuntimeException e = new RuntimeException(
-							"Cannot find the JSF servlet");
+							Messages.JSFPortletFacetInstallDelegate_Cannot_find_the_JSF_servlet);
 					PortletCoreActivator.log(e);
 					throw e;
 				}
@@ -290,7 +291,7 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 						String[] fileList = pbFolder.list(new FilenameFilter() {
 
 							public boolean accept(File dir, String name) {
-								if (name.startsWith("portletbridge") || name.endsWith(".jar")) {
+								if (name.startsWith("portletbridge") || name.endsWith(".jar")) { //$NON-NLS-1$ //$NON-NLS-2$
 									return true;
 								}
 								return false;
@@ -321,7 +322,7 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 				}
 			} catch (Exception e) {
 				PortletCoreActivator
-						.log(e, "Error loading classpath container");
+						.log(e, Messages.JSFPortletFacetInstallDelegate_Error_loading_classpath_container);
 			}
 		} else {
 			IPath containerPath = new Path(

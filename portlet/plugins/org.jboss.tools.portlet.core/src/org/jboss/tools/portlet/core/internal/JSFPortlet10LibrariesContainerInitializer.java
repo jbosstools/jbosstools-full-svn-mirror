@@ -28,6 +28,7 @@ import org.jboss.ide.eclipse.as.classpath.core.jee.AbstractClasspathContainer;
 import org.jboss.ide.eclipse.as.classpath.core.jee.AbstractClasspathContainerInitializer;
 import org.jboss.ide.eclipse.as.classpath.core.xpl.ClasspathDecorations;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 
 /**
@@ -38,7 +39,7 @@ public class JSFPortlet10LibrariesContainerInitializer extends
 		AbstractClasspathContainerInitializer {
 
 	public String getDescription(IPath containerPath, IJavaProject project) {
-		return "JBoss JSF Portlet Classpath Container Initializer v1.0";
+		return Messages.JSFPortlet10LibrariesContainerInitializer_JBossJSF_Portlet_Classpath_Container_Initializer_v1_0;
 	}
 
 	@Override
@@ -54,22 +55,21 @@ public class JSFPortlet10LibrariesContainerInitializer extends
 	private class JSFPortlet10ClasspathContainer extends AbstractClasspathContainer {
 		
 		public final static String SUFFIX = PortletCoreActivator.JSFPORTLET_FOLDER;//$NON-NLS-1$
-		public final static String PREFIX = "org.jboss.tools.portlet.core";
-		public final static String DESCRIPTION = "JBoss JSF Portlet Libraries v1.0";
+		public final static String PREFIX = "org.jboss.tools.portlet.core"; //$NON-NLS-1$
 
 		public JSFPortlet10ClasspathContainer(IPath path) {
-			super(path, DESCRIPTION, SUFFIX);
+			super(path, Messages.JSFPortlet10LibrariesContainerInitializer_JBoss_JSF_Portlet_Libraries_v1_0, SUFFIX);
 		}
 
 		@Override
 		protected String getBaseDir() {
 			try {
 				URL installURL = FileLocator.toFileURL(PortletCoreActivator
-						.getDefault().getBundle().getEntry("/"));
+						.getDefault().getBundle().getEntry("/")); //$NON-NLS-1$
 				return installURL.getFile().toString();
 			} catch (IOException e) {
 				PortletCoreActivator
-						.log(e, "Error loading classpath container");
+						.log(e, Messages.JSFPortlet10LibrariesContainerInitializer_Error_loading_classpath_container);
 			}
 			return null;
 		}

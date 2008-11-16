@@ -28,11 +28,12 @@ import org.eclipse.wst.common.project.facet.core.events.IFacetedProjectEvent;
 import org.eclipse.wst.common.project.facet.core.events.IFacetedProjectListener;
 import org.eclipse.wst.common.project.facet.core.events.IProjectFacetActionEvent;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 
 public class PortletPostInstallListener implements IFacetedProjectListener {
 
-	private static final String SEAM_FACET_ID = "jst.seam";
+	private static final String SEAM_FACET_ID = "jst.seam"; //$NON-NLS-1$
 	private static final IOverwriteQuery OVERWRITE_NONE_QUERY = new IOverwriteQuery()
     {
       public String queryOverwrite(String pathString)
@@ -69,7 +70,7 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 				portletbridgeRuntime = dataModel
 						.getStringProperty(IPortletConstants.PORTLET_BRIDGE_RUNTIME);
 				if (portletbridgeRuntime == null) {
-					PortletCoreActivator.log(null, "Invalid Portletbridge Runtime.");
+					PortletCoreActivator.log(null, Messages.PortletPostInstallListener_Invalid_Portletbridge_Runtime);
 					return;
 				}
 			} catch (Exception e) {
@@ -80,21 +81,21 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 		if (isJSFPortlet) {
 			File portletbridgeHome = new File(portletbridgeRuntime);
 			if (!portletbridgeHome.exists()) {
-				PortletCoreActivator.log(null, "Cannot find Portletbridge Runtime.");
+				PortletCoreActivator.log(null, Messages.PortletPostInstallListener_Cannot_find_Portletbridge_Runtime);
 				return;
 			}
 			if (!portletbridgeHome.isDirectory()) {
-				PortletCoreActivator.log(null, "Invalid Portletbridge Runtime.");
+				PortletCoreActivator.log(null, Messages.PortletPostInstallListener_Invalid_Portletbridge_Runtime);
 				return;
 			}
-			File examplesHome = new File(portletbridgeHome,"examples");
+			File examplesHome = new File(portletbridgeHome,"examples"); //$NON-NLS-1$
 			if (!examplesHome.exists() || !examplesHome.isDirectory()) {
-				PortletCoreActivator.log(null, "Cannot find the examples directory.");
+				PortletCoreActivator.log(null, Messages.PortletPostInstallListener_Cannot_find_the_examples_directory);
 				return;
 			}
-			File richFacesPortletZip = new File(examplesHome,"RichFacesPortlet.war");
+			File richFacesPortletZip = new File(examplesHome,"RichFacesPortlet.war"); //$NON-NLS-1$
 			if (!richFacesPortletZip.exists() || !richFacesPortletZip.isFile()) {
-				PortletCoreActivator.log(null, "Cannot find the RichFacesPortlet.war file.");
+				PortletCoreActivator.log(null, Messages.PortletPostInstallListener_Cannot_find_the_RichFacesPortlet_war_file);
 				return;
 			}
 			try {
@@ -132,17 +133,17 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 		Enumeration<? extends ZipEntry> entries = zipFile.entries();
 		while (entries.hasMoreElements()) {
 			ZipEntry entry = entries.nextElement();
-			if (entry.getName().endsWith(".jar")) {
-				if (entry.getName().startsWith("WEB-INF/lib/richfaces")) {
+			if (entry.getName().endsWith(".jar")) { //$NON-NLS-1$
+				if (entry.getName().startsWith("WEB-INF/lib/richfaces")) { //$NON-NLS-1$
 					list.add(entry);
 				}
 				if (!isSeamProject) {
 					if (entry.getName().startsWith(
-							"WEB-INF/lib/commons-beanutils")
+							"WEB-INF/lib/commons-beanutils") //$NON-NLS-1$
 							|| entry.getName().startsWith(
-									"WEB-INF/lib/commons-digester")
+									"WEB-INF/lib/commons-digester") //$NON-NLS-1$
 							|| entry.getName().startsWith(
-									"WEB-INF/lib/jsf-facelets")) {
+									"WEB-INF/lib/jsf-facelets")) { //$NON-NLS-1$
 						list.add(entry);
 					}
 				}

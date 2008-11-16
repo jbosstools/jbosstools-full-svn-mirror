@@ -30,9 +30,9 @@ import org.osgi.framework.BundleContext;
 public class PortletCoreActivator extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jboss.tools.portlet.core";
-	public static final String RESOURCES_FOLDER = "resources";
-	public static final String JSFPORTLET_FOLDER = "jsfportlet";
+	public static final String PLUGIN_ID = "org.jboss.tools.portlet.core"; //$NON-NLS-1$
+	public static final String RESOURCES_FOLDER = "resources"; //$NON-NLS-1$
+	public static final String JSFPORTLET_FOLDER = "jsfportlet"; //$NON-NLS-1$
 
 	public static final IOverwriteQuery OVERWRITE_ALL_QUERY = new IOverwriteQuery() {
 		public String queryOverwrite(String pathString) {
@@ -105,34 +105,34 @@ public class PortletCoreActivator extends Plugin {
 				.getRootFolder().getUnderlyingFolder().getRawLocation().append(
 						new Path(IPortletConstants.CONFIG_PATH));
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //$NON-NLS-1$
 
 		if (IPortletConstants.PORTLET_FACET_VERSION_20.equals(versionString)) {
 			buffer
-					.append("<portlet-app xmlns=\"http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd\"");
-			buffer.append("\n\t");
+					.append("<portlet-app xmlns=\"http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd\""); //$NON-NLS-1$
+			buffer.append("\n\t"); //$NON-NLS-1$
 			buffer
-					.append("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" ");
-			buffer.append("\n\t");
+					.append("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "); //$NON-NLS-1$
+			buffer.append("\n\t"); //$NON-NLS-1$
 			buffer
-					.append("xsi:schemaLocation=\"http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd\" ");
-			buffer.append("\n\t");
-			buffer.append("version=\"2.0\">");
+					.append("xsi:schemaLocation=\"http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd\" "); //$NON-NLS-1$
+			buffer.append("\n\t"); //$NON-NLS-1$
+			buffer.append("version=\"2.0\">"); //$NON-NLS-1$
 		} else {
 			buffer
-					.append("<portlet-app xmlns=\"http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd\"");
-			buffer.append("\n\t");
+					.append("<portlet-app xmlns=\"http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd\""); //$NON-NLS-1$
+			buffer.append("\n\t"); //$NON-NLS-1$
 			buffer
-					.append("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
-			buffer.append("\n\t");
+					.append("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""); //$NON-NLS-1$
+			buffer.append("\n\t"); //$NON-NLS-1$
 			buffer
-					.append("xsi:schemaLocation=\"http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd\"");
-			buffer.append("\n\t");
-			buffer.append("version=\"1.0\">");
+					.append("xsi:schemaLocation=\"http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd\""); //$NON-NLS-1$
+			buffer.append("\n\t"); //$NON-NLS-1$
+			buffer.append("version=\"1.0\">"); //$NON-NLS-1$
 		}
-		buffer.append("\n\n");
-		buffer.append("</portlet-app>");
-		buffer.append("\n");
+		buffer.append("\n\n"); //$NON-NLS-1$
+		buffer.append("</portlet-app>"); //$NON-NLS-1$
+		buffer.append("\n"); //$NON-NLS-1$
 		OutputStream outputStream = null;
 		try {
 			IPath directory = portletXmlPath.removeLastSegments(1);
@@ -171,16 +171,16 @@ public class PortletCoreActivator extends Plugin {
 			throws CoreException, UnsupportedEncodingException {
 
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		buffer.append("<!DOCTYPE deployments PUBLIC \n");
-		buffer.append("\"-//JBoss Portal//DTD Portlet Instances 2.6//EN\"\n");
+		buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //$NON-NLS-1$
+		buffer.append("<!DOCTYPE deployments PUBLIC \n"); //$NON-NLS-1$
+		buffer.append("\"-//JBoss Portal//DTD Portlet Instances 2.6//EN\"\n"); //$NON-NLS-1$
 		buffer
-				.append("\"http://www.jboss.org/portal/dtd/portlet-instances_2_6.dtd\">");
-		buffer.append("<deployments>");
-		buffer.append("</deployments>");
+				.append("\"http://www.jboss.org/portal/dtd/portlet-instances_2_6.dtd\">"); //$NON-NLS-1$
+		buffer.append("<deployments>"); //$NON-NLS-1$
+		buffer.append("</deployments>"); //$NON-NLS-1$
 
 		ByteArrayInputStream source = new ByteArrayInputStream(buffer
-				.toString().getBytes("UTF8"));
+				.toString().getBytes("UTF8")); //$NON-NLS-1$
 		file.create(source, true, new NullProgressMonitor());
 	}
 
@@ -188,16 +188,16 @@ public class PortletCoreActivator extends Plugin {
 			throws CoreException, UnsupportedEncodingException {
 
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		buffer.append("<!DOCTYPE deployments PUBLIC \n");
-		buffer.append("\"-//JBoss Portal//DTD Portal Object 2.6//EN\"\n");
+		buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //$NON-NLS-1$
+		buffer.append("<!DOCTYPE deployments PUBLIC \n"); //$NON-NLS-1$
+		buffer.append("\"-//JBoss Portal//DTD Portal Object 2.6//EN\"\n"); //$NON-NLS-1$
 		buffer
-				.append("\"http://www.jboss.org/portal/dtd/portal-object_2_6.dtd\">");
-		buffer.append("<deployments>");
-		buffer.append("</deployments>");
+				.append("\"http://www.jboss.org/portal/dtd/portal-object_2_6.dtd\">"); //$NON-NLS-1$
+		buffer.append("<deployments>"); //$NON-NLS-1$
+		buffer.append("</deployments>"); //$NON-NLS-1$
 
 		ByteArrayInputStream source = new ByteArrayInputStream(buffer
-				.toString().getBytes("UTF8"));
+				.toString().getBytes("UTF8")); //$NON-NLS-1$
 		file.create(source, true, new NullProgressMonitor());
 	}
 
@@ -205,15 +205,15 @@ public class PortletCoreActivator extends Plugin {
 			throws CoreException, UnsupportedEncodingException {
 
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		buffer.append("<!DOCTYPE jboss-app PUBLIC \n");
-		buffer.append("\"-//JBoss Portal//DTD JBoss Web Application 2.6//EN\"\n");
-		buffer.append("\"http://www.jboss.org/portal/dtd/jboss-app_2_6.dtd\">");
-		buffer.append("<jboss-app>");
-		buffer.append("</jboss-app>");
+		buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //$NON-NLS-1$
+		buffer.append("<!DOCTYPE jboss-app PUBLIC \n"); //$NON-NLS-1$
+		buffer.append("\"-//JBoss Portal//DTD JBoss Web Application 2.6//EN\"\n"); //$NON-NLS-1$
+		buffer.append("\"http://www.jboss.org/portal/dtd/jboss-app_2_6.dtd\">"); //$NON-NLS-1$
+		buffer.append("<jboss-app>"); //$NON-NLS-1$
+		buffer.append("</jboss-app>"); //$NON-NLS-1$
 
 		ByteArrayInputStream source = new ByteArrayInputStream(buffer
-				.toString().getBytes("UTF8"));
+				.toString().getBytes("UTF8")); //$NON-NLS-1$
 		file.create(source, true, new NullProgressMonitor());
 	}
 	
@@ -221,16 +221,16 @@ public class PortletCoreActivator extends Plugin {
 			throws CoreException, UnsupportedEncodingException {
 
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		buffer.append("<!DOCTYPE portlet-app PUBLIC \n");
+		buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //$NON-NLS-1$
+		buffer.append("<!DOCTYPE portlet-app PUBLIC \n"); //$NON-NLS-1$
 		buffer
-				.append("\"-//JBoss Portal//DTD JBoss Portlet 2.6//EN\"\n");
-		buffer.append("\"http://www.jboss.org/portal/dtd/jboss-portlet_2_6.dtd\">");
-		buffer.append("<portlet-app>");
-		buffer.append("</portlet-app>");
+				.append("\"-//JBoss Portal//DTD JBoss Portlet 2.6//EN\"\n"); //$NON-NLS-1$
+		buffer.append("\"http://www.jboss.org/portal/dtd/jboss-portlet_2_6.dtd\">"); //$NON-NLS-1$
+		buffer.append("<portlet-app>"); //$NON-NLS-1$
+		buffer.append("</portlet-app>"); //$NON-NLS-1$
 
 		ByteArrayInputStream source = new ByteArrayInputStream(buffer
-				.toString().getBytes("UTF8"));
+				.toString().getBytes("UTF8")); //$NON-NLS-1$
 		file.create(source, true, new NullProgressMonitor());
 	}
 	

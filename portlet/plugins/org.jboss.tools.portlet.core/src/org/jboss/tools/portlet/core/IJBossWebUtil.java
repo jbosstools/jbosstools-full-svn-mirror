@@ -5,9 +5,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 public interface IJBossWebUtil {
 
-	static final Object JSF_SERVLET_CLASS = "javax.faces.webapp.FacesServlet";
-	static final String WEB_INF_FACES_CONFIG_XML = "/WEB-INF/faces-config.xml";
-	static final String JAVAX_FACES_CONFIG_FILES = "javax.faces.CONFIG_FILES";
+	static final Object JSF_SERVLET_CLASS = "javax.faces.webapp.FacesServlet"; //$NON-NLS-1$
+	static final String WEB_INF_FACES_CONFIG_XML = "/WEB-INF/faces-config.xml"; //$NON-NLS-1$
+	static final String JAVAX_FACES_CONFIG_FILES = "javax.faces.CONFIG_FILES"; //$NON-NLS-1$
 
 	void configureContextParam( IProject project,
 			 IProgressMonitor monitor,String name, String value,String description);

@@ -26,6 +26,7 @@ import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
 import org.eclipse.wst.common.project.facet.core.PresetDefinition;
 import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.core.Messages;
 
 /**
  * @author <a href="mailto:kosta@bea.com">Konstantin Komissarchik</a>
@@ -53,8 +54,8 @@ implements IPresetFactory {
 			facets.add(portletFacetVersion10);
 			facets.add(webFacetVersion);
 			facets.add(JavaFacetUtils.JAVA_50);
-			return new PresetDefinition("Portlet Project v1.0",
-					"Portlet Project v1.0", facets);
+			return new PresetDefinition(Messages.PortletConfigurationPresetFactory10_Portlet_Project_v1_0,
+					Messages.PortletConfigurationPresetFactory10_Portlet_Project_v1_0, facets);
 		}
 		return null;
 	}

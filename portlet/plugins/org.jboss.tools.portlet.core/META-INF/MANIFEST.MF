@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Portlet Core Plug-in
+Bundle-Name: %BundleName
 Bundle-SymbolicName: org.jboss.tools.portlet.core;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jboss.tools.portlet.core.PortletCoreActivator
-Bundle-Vendor: JBoss, a division of Red Hat
+Bundle-Vendor: %BundleVendor
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.wst.common.project.facet.core,
  org.eclipse.core.resources,
@@ -24,3 +24,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.portlet.core,
  org.jboss.tools.portlet.core.internal,
  org.jboss.tools.portlet.core.internal.project.facet
+Bundle-Localization: plugin
