@@ -14,6 +14,7 @@ public class EllipseElementFigure extends AbstractElementFigure {
         ellipse = new Ellipse();
         add(ellipse, 0);
         ellipse.setBounds(getBounds());
+        setSize(40, 40);
     }
     
     public void setColor(Color color) {
