@@ -31,6 +31,7 @@ public class RoundedRectangleElementFigure extends AbstractElementFigure {
         add(rectangle, 0);
         rectangle.setBounds(getBounds());
         setSelected(false);
+        setSize(80, 40);
     }
     
     public void setColor(Color color) {
