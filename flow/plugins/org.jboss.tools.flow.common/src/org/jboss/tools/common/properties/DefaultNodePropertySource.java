@@ -28,7 +28,7 @@ public class DefaultNodePropertySource implements IPropertySource {
 	}
 	public Object getPropertyValue(Object id) {
 		if (NAME.equals(id)) {
-			return wrapper.getName();
+			return wrapper.getName() != null ? wrapper.getName() : "";
 		}
 		return null;
 	}
