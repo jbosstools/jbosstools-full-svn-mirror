@@ -39,6 +39,13 @@
  </bookinfo>
  <toc/> 
 
+<abstract>
+   <title/>
+       <para>
+           <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/GettingStartedGuide/pdf/Getting_Started_Guide.pdf">PDF version</ulink>
+       </para>
+</abstract>
+
  &getting_started;
  &manage; 
  &first_seam; 
