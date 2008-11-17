@@ -172,7 +172,7 @@ documentElement.scrollTop
 #feedback-state{
   font-weight: bold;
   height: 20px;
-  width: 100%;
+  width: 508px;
   line-height: 20px;
   overflow: hidden;
 }
@@ -207,7 +207,7 @@ documentElement.scrollTop
     color: #415973;
 }
 
-#feedback-message{
+#message{
     width: 200px;
     height: 150px;
     padding: 2px;
@@ -219,7 +219,7 @@ documentElement.scrollTop
 	color: #415973;
 }
 
-.feedback-textbox, #feedback-message{
+.feedback-textbox, #message{
 	background-color:#FFFFFF;
 	border:1px solid #A5ACB2;
 	padding:2px 1px 3px 5px;
