@@ -363,6 +363,11 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		switch (type) {
 		case VISUALSOURCE_MODE:
 			selectionBar.showBar(showSelectionBar);
+			/*
+			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-3140
+			 * author Denis Maliarevich.
+			 */
+			container.setMaximizedControl(null);
 			if (sourceContent != null)
 				sourceContent.setVisible(true);
 			if (visualContent != null)
@@ -387,6 +392,11 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			selectionBar.showBar(showSelectionBar);
 			if (sourceContent != null) {
 				sourceContent.setVisible(true);
+				/*
+				 * Fixes https://jira.jboss.org/jira/browse/JBIDE-3140
+				 * author Denis Maliarevich.
+				 */
+				container.setMaximizedControl(sourceContent);
 				
 				//Added by Max Areshkau
 				//was fixed bug(border which drawed by iflasher doesn't hide on MACOS when we swith
@@ -396,28 +406,37 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 //				visualEditor.getController().visualRefresh();
 //				}
 			}
-			if (visualContent != null)
-				visualContent.setVisible(false);
-			if (previewContent != null) {
-				previewContent.setVisible(false);
-			}
+			/*
+			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-3140
+			 * author Denis Maliarevich.
+			 */
+//			if (visualContent != null)
+//				visualContent.setVisible(false);
+//			if (previewContent != null) {
+//				previewContent.setVisible(false);
+//			}
 			break;
 
 		case PREVIEW_MODE:
 			if (selectionBar != null) {
 				selectionBar.showBar("no");
 			}
-			if (sourceContent != null) {
-				sourceContent.setVisible(false);
-			}
-
-			if (visualContent != null) {
-				visualContent.setVisible(false);
-			}
+			/*
+			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-3140
+			 * author Denis Maliarevich.
+			 */
+//			if (sourceContent != null) {
+//				sourceContent.setVisible(false);
+//			}
+//
+//			if (visualContent != null) {
+//				visualContent.setVisible(false);
+//			}
 
 			if (previewContent != null) {
 				previewWebBrowser.rebuildDom();
 				previewContent.setVisible(true);
+				container.setMaximizedControl(previewContent);
 			}
 			break;
 		}
