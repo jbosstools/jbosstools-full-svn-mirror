@@ -97,11 +97,15 @@
          </propertySection>
          <propertySection
                class="org.jboss.tools.smooks.javabean.ui.JavaBeanPropertiesSection"
+               filter="org.jboss.tools.smooks.javabean.ui.JavaBeanPropertiesSectonFilter"
                id="org.jboss.tools.smooks.ui.javabean.propertyTab.Section"
                tab="org.jboss.tools.smooks.ui.javabean.propertyTab">
-            <input
-                  type="org.jboss.tools.smooks.ui.gef.model.LineConnectionModel">
-            </input>
+         </propertySection>
+         <propertySection
+               class="org.jboss.tools.smooks.xml.ui.XMLPropertiesSection"
+               filter="org.jboss.tools.smooks.xml.ui.XMLPropertiesSectionFilter"
+               id="org.jboss.tools.smooks.ui.xml.propertySection"
+               tab="org.jboss.tools.smooks.ui.xml.propertyTab">
          </propertySection>
       </propertySections>
    </extension>
@@ -127,6 +131,11 @@
                category="connection"
                id="org.jboss.tools.smooks.ui.javabean.propertyTab"
                label="JavaBean Properties">
+         </propertyTab>
+         <propertyTab
+               category="connection"
+               id="org.jboss.tools.smooks.ui.xml.propertyTab"
+               label="XML Properties">
          </propertyTab>
       </propertyTabs>
    </extension>
@@ -268,5 +277,17 @@
             name="Smooks Configuration File"
             priority="normal">
       </content-type>
+   </extension>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            adaptable="false"
+            class="org.jboss.tools.smooks.xml.ui.XMLStructuredDataLabelDecorator"
+            id="org.jboss.tools.smooks.ui.xml.decorator"
+            label="Smooks XML Data Viewer Decorator"
+            lightweight="false"
+            objectClass="org.jboss.tools.smooks.xml.model.TagObject"
+            state="true">
+      </decorator>
    </extension>
 </plugin>

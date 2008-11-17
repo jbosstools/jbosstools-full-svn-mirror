@@ -117,6 +117,13 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 
 		setGUIStates();
 	}
+	
+	
+
+	@Override
+	public boolean isDirty() {
+		return false;
+	}
 
 	public void setGUIStates() {
 		if (resourceBlock != null) {

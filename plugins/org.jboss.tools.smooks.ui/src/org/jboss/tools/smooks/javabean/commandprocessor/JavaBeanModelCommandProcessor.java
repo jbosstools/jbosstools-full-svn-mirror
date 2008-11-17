@@ -34,9 +34,11 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 			CreateConnectionCommand command = (CreateConnectionCommand) gefCommand;
 			if (command.getSource() != null && command.getTarget() != null) {
 				Object m = command.getTarget();
-				if (m instanceof AbstractStructuredDataModel) {
+				Object s = command.getSource();
+				if (m instanceof AbstractStructuredDataModel && s instanceof AbstractStructuredDataModel) {
+					Object source = ((AbstractStructuredDataModel)s).getReferenceEntityModel();
 					Object t = ((AbstractStructuredDataModel)m).getReferenceEntityModel();
-					if (!UIUtils.isInstanceCreatingConnection(t)) {
+					if (!UIUtils.isInstanceCreatingConnection(source,t)) {
 						if (t instanceof JavaBeanModel) {
 							Class clazz = ((JavaBeanModel) t).getBeanClass();
 							if (clazz != null && clazz != String.class) {

@@ -10,6 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.xml2java.analyzer;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -114,6 +117,17 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		// addResourceConfigType(listType, resourceConfigType);
 		// set the selector string value
 		resourceConfigType.setSelector(source.getName());
+
+		// add the properties of connection
+		List<PropertyModel> propertyList = connection.getProperties();
+		for (Iterator<PropertyModel> iterator = propertyList.iterator(); iterator.hasNext();) {
+			PropertyModel propertyModel = (PropertyModel) iterator.next();
+			if (propertyModel.getName().equals("selector-namespace")) {
+				resourceConfigType.setSelectorNamespace(propertyModel
+						.getValue());
+				break;
+			}
+		}
 		// create a resource and add it to resourceConfig
 		ResourceType resourceType = SmooksFactory.eINSTANCE
 				.createResourceType();
@@ -224,9 +238,10 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			// TODO if the type of input source/target data is illegal , throw
 			// exceptions.
 			// MODIFY by Dart 2008.11.07
-//			throw new RuntimeException(
-//					"[XMLBeanAnalyzer]Can't load the source/target data from Smooks configuration file.");
-			 return MappingResourceConfigList.createEmptyList();
+			// throw new RuntimeException(
+			// "[XMLBeanAnalyzer]Can't load the source/target data from Smooks configuration file."
+			// );
+			return MappingResourceConfigList.createEmptyList();
 		}
 		AbstractXMLObject sourceRoot = (AbstractXMLObject) sourceObject;
 		JavaBeanModel sourceTarget = (JavaBeanModel) targetObject;
@@ -237,15 +252,16 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			// TODO if can't find the org.milyn.javabean.BeanPopulator , throw
 			// exception
 			// MODIFY by Dart 2008.11.07
-//			throw new RuntimeException("Can't parse the config file.");
-			 return null;
+			// throw new RuntimeException("Can't parse the config file.");
+			return null;
 		}
 		String xmlName = rootResourceConfig.getSelector();
 		AbstractXMLObject source = findXMLObjectByName(xmlName, sourceRoot);
 		if (source == null) {
 			// TODO if can't find the root , throw exception
 			// MODIFY by Dart 2008.11.07
-			throw new RuntimeException(Messages.getString("XML2JavaAnalyzer.CantFindRootNodeErrorMessage")); //$NON-NLS-1$
+			throw new RuntimeException(Messages
+					.getString("XML2JavaAnalyzer.CantFindRootNodeErrorMessage")); //$NON-NLS-1$
 			// return MappingResourceConfigList.createEmptyList();
 		}
 
@@ -290,6 +306,21 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 
 		MappingModel mapping = new MappingModel(sourceRoot, targetJavaBean);
 		configList.getMappingModelList().add(mapping);
+		String namespace = config.getSelectorNamespace();
+		if(namespace != null){
+			PropertyModel np = new PropertyModel();
+			np.setName("selector-namespace");
+			np.setValue(namespace);
+			mapping.getProperties().add(np);
+		}
+//		String targetProfile = config.getTargetProfile();
+//		if(targetProfile != null){
+//			PropertyModel np = new PropertyModel();
+//			np.setName("targetProfile");
+//			np.setValue(targetProfile);
+//			mapping.getProperties().add(np);
+//		}
+		
 		configList.addResourceConfig(config);
 		this.setSelectorIsUsed(config.getSelector());
 
@@ -340,7 +371,9 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			if (newRoot == null) {
 				// TODO If can't find the element , throw exception
 				// MODIFY by Dart , 2008.11.07
-				throw new RuntimeException(Messages.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage1")+ newSelector + Messages.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage2")); //$NON-NLS-1$ //$NON-NLS-2$
+				throw new RuntimeException(
+						Messages
+								.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage1") + newSelector + Messages.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage2")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			createMappingResourceConfigList(configList, listType,
 					resourceConfig1, newRoot, targetBean);
@@ -350,7 +383,9 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			if (source == null) {
 				// TODO If can't find the element , throw exception
 				// MODIFY by Dart , 2008.11.07
-				throw new RuntimeException(Messages.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage1")+ selector + Messages.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage2")); //$NON-NLS-1$ //$NON-NLS-2$
+				throw new RuntimeException(
+						Messages
+								.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage1") + selector + Messages.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage2")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			if (source != null) {
 				MappingModel mapping = new MappingModel(source, targetBean);
@@ -419,7 +454,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			if (rt == null)
 				continue;
 			String value = rt.getValue();
-			if(value != null) value = value.trim();
+			if (value != null)
+				value = value.trim();
 			if (SmooksModelConstants.BEAN_POPULATOR.equals(value)) {
 				return resource;
 			}
@@ -489,8 +525,10 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 						boolean connectAuto = MessageDialog
 								.openQuestion(
 										displayParent,
-										Messages.getString("XML2JavaAnalyzer.ConnectQDlgTitle"), //$NON-NLS-1$
-										Messages.getString("XML2JavaAnalyzer.ConnectQDlgContent")); //$NON-NLS-1$
+										Messages
+												.getString("XML2JavaAnalyzer.ConnectQDlgTitle"), //$NON-NLS-1$
+										Messages
+												.getString("XML2JavaAnalyzer.ConnectQDlgContent")); //$NON-NLS-1$
 						if (connectAuto) {
 							// connect root model
 							LineConnectionModel connectionModel = new LineConnectionModel();

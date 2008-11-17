@@ -136,8 +136,8 @@ public class SmooksFormEditor extends FormEditor implements
 					.createErrorStatus(e));
 		}
 	}
-	
-	protected void assosiateEditors(){
+
+	protected void assosiateEditors() {
 		xmlTextEditor.addSaveListener(graphicalPage);
 		graphicalPage.addAnalyzeListener(xmlTextEditor);
 		graphicalPage.addAnalyzeListener(normalPage);
@@ -240,11 +240,12 @@ public class SmooksFormEditor extends FormEditor implements
 	@Override
 	public void doSave(IProgressMonitor monitor) {
 		this.graphicalPage.doSave(monitor);
-//		IEditorPart activeEditor = this.getEditor(this.getCurrentPage());
-//		if (activeEditor != normalPage && activeEditor != null) {
-//			activeEditor.doSave(monitor);
-//			fireEditorDirty(false);
-//		}
+		fireEditorDirty(false);
+		// IEditorPart activeEditor = this.getEditor(this.getCurrentPage());
+		// if (activeEditor != normalPage && activeEditor != null) {
+		// activeEditor.doSave(monitor);
+		// fireEditorDirty(false);
+		// }
 	}
 
 	public void fireEditorDirty(boolean dirty) {
@@ -268,10 +269,6 @@ public class SmooksFormEditor extends FormEditor implements
 
 	public Object getAdapter(Class adapter) {
 		if (adapter == IPropertySheetPage.class) {
-			System.out.println();
-		}
-		if (adapter == IPropertySheetPage.class
-				&& this.getActiveEditor() == graphicalPage) {
 			tabbedPropertySheetPage = new TabbedPropertySheetPage(this);
 			return tabbedPropertySheetPage;
 		}

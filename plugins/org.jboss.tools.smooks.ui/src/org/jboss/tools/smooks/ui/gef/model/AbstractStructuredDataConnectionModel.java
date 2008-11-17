@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class AbstractStructuredDataConnectionModel implements PropertyChangeListener {
@@ -78,7 +79,7 @@ public class AbstractStructuredDataConnectionModel implements PropertyChangeList
 		return  properties.toArray();
 	}
 
-	protected List<PropertyModel> getProperties() {
+	public List<PropertyModel> getProperties() {
 		return properties;
 	}
 
@@ -90,6 +91,19 @@ public class AbstractStructuredDataConnectionModel implements PropertyChangeList
 		this.getProperties().add(property);
 		property.addPropertyChangeListener(this);
 		support.firePropertyChange(CONNECTION_PROPERTY_CHANGE, null, property);
+	}
+	
+	public void removePropertyModel(String propertyName){
+		List<PropertyModel> list= this.getProperties();
+		for (Iterator<PropertyModel> iterator = list.iterator(); iterator.hasNext();) {
+			PropertyModel propertyModel = (PropertyModel) iterator.next();
+			if(propertyModel.getName().equals(propertyName)){
+				list.remove(propertyModel);
+				support.firePropertyChange(CONNECTION_PROPERTY_CHANGE, propertyModel, null);
+				break;
+			}
+		}
+		
 	}
 	
 	public void removePropertyModel(PropertyModel property){
