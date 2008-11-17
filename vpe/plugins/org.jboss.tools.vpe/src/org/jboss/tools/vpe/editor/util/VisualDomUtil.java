@@ -12,7 +12,6 @@ package org.jboss.tools.vpe.editor.util;
 
 import org.eclipse.swt.graphics.Point;
 import org.mozilla.interfaces.nsIDOMEvent;
-import org.mozilla.interfaces.nsIDOMEventTarget;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNSRange;
 import org.mozilla.interfaces.nsIDOMNSUIEvent;
@@ -100,6 +99,26 @@ public class VisualDomUtil {
 		nsIDOMNSRange domNSRange = (nsIDOMNSRange) range.queryInterface(nsIDOMNSRange.NS_IDOMNSRANGE_IID);
 		boolean inRange = domNSRange.isPointInRange(parent, offset);
 		return inRange;
+	}
+	
+	/**
+	 * Appends all children of the {@code node} to its parent at the point before the {@code node}
+	 * and removes the {@code node} from the list of its parent's children.
+	 * 
+	 * @param node should be not null
+	 */
+	public static void replaceNodeByItsChildren(nsIDOMNode node) {
+		final nsIDOMNodeList subTableContainerChildren = node.getChildNodes();
+		final nsIDOMNode containerParent = node.getParentNode();
+		if (subTableContainerChildren != null) {
+			final int length = (int) subTableContainerChildren.getLength();
+			for (int i = 0; i < length; i++) {
+				final nsIDOMNode child = subTableContainerChildren.item(i);
+				node.removeChild(child);
+				containerParent.insertBefore(child, node);
+			}
+		}
+		containerParent.removeChild(node);
 	}
 	
 }

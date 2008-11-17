@@ -23,9 +23,6 @@ import org.w3c.dom.Node;
  *
  */
 public class VpeClassUtil {
-	/**
-	 * 
-	 */
 	private static final String CLASSES_DELIMITER = ","; //$NON-NLS-1$
 
 	/**
