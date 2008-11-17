@@ -33,8 +33,7 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 	
 	//The shared instance.
 	private static VpePlugin plugin;
-	//Resource bundle.
-//	private ResourceBundle resourceBundle;
+
 	
 	/**
 	 * The constructor.
