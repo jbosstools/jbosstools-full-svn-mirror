@@ -20,6 +20,7 @@ import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jst.jsp.core.internal.modelhandler.TagModelLoader;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Shell;
@@ -45,6 +46,8 @@ import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
 import org.jboss.tools.smooks.ui.gef.model.PropertyModel;
 import org.jboss.tools.smooks.ui.gef.model.TargetModel;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
+import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
+import org.jboss.tools.smooks.xml.model.DocumentObject;
 import org.jboss.tools.smooks.xml.model.TagObject;
 
 /**
@@ -54,7 +57,7 @@ import org.jboss.tools.smooks.xml.model.TagObject;
  */
 public class UIUtils {
 
-	public static final String[] SELECTORE_SPLITER = new String[] {  "\\", //$NON-NLS-1$
+	public static final String[] SELECTORE_SPLITER = new String[] { "\\", //$NON-NLS-1$
 			"/" }; //$NON-NLS-1$
 
 	public static FillLayout createFillLayout(int marginW, int marginH) {
@@ -64,6 +67,20 @@ public class UIUtils {
 		return fill;
 	}
 
+	public static AbstractXMLObject getRootTagXMLObject(AbstractXMLObject xmlObj) {
+		AbstractXMLObject parent = xmlObj.getParent();
+		while (true) {
+			AbstractXMLObject p = parent.getParent();
+			if (p == null)
+				break;
+			parent = p;
+		}
+		if (parent instanceof DocumentObject) {
+			parent = ((DocumentObject) parent).getRootTag();
+		}
+		return parent;
+	}
+
 	public static void checkSelector(String selector)
 			throws InvocationTargetException {
 		if (selector == null)
@@ -71,9 +88,12 @@ public class UIUtils {
 		for (int i = 0; i < SELECTORE_SPLITER.length; i++) {
 			String splitString = SELECTORE_SPLITER[i];
 			if (selector.indexOf(splitString) != -1) {
-				throw new InvocationTargetException(new Exception(
-						Messages.getString("UIUtils.SelectorCheckErrorMessage1") + splitString //$NON-NLS-1$
-								+ Messages.getString("UIUtils.SelectorCheckErrorMessage2") + selector + "\"")); //$NON-NLS-1$ //$NON-NLS-2$
+				throw new InvocationTargetException(
+						new Exception(
+								Messages
+										.getString("UIUtils.SelectorCheckErrorMessage1") + splitString //$NON-NLS-1$
+										+ Messages
+												.getString("UIUtils.SelectorCheckErrorMessage2") + selector + "\"")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 	}
@@ -157,18 +177,23 @@ public class UIUtils {
 			LineConnectionModel connection) {
 		AbstractStructuredDataModel sourceModel = (AbstractStructuredDataModel) connection
 				.getSource();
-		Object referenceObj = sourceModel.getReferenceEntityModel();
-		return isInstanceCreatingConnection(referenceObj);
+		AbstractStructuredDataModel targetModel = (AbstractStructuredDataModel) connection
+				.getTarget();
+		Object target = targetModel.getReferenceEntityModel();
+		Object source = sourceModel.getReferenceEntityModel();
+		return isInstanceCreatingConnection(source, target);
 	}
 
-	public static boolean isInstanceCreatingConnection(Object targetModel) {
-		Object referenceObj = targetModel;
-		if (referenceObj != null) {
-			if (referenceObj instanceof JavaBeanModel) {
-				return !((JavaBeanModel) referenceObj).isPrimitive();
-			}
-			if (referenceObj instanceof TagObject) {
-				return true;
+	public static boolean isInstanceCreatingConnection(Object sourceModel,
+			Object targetModel) {
+		if (targetModel != null) {
+			if (targetModel instanceof JavaBeanModel) {
+				if (sourceModel instanceof TagObject) {
+					return !((JavaBeanModel) targetModel).isPrimitive();
+				}
+				if (sourceModel instanceof JavaBeanModel) {
+					return !((JavaBeanModel) targetModel).isPrimitive();
+				}
 			}
 		}
 		return false;
@@ -185,11 +210,11 @@ public class UIUtils {
 				context);
 		CompositeResolveCommand compositeCommand = new CompositeResolveCommand(
 				context);
-		compositeCommand
-				.setResolveDescription(Messages.getString("UIUtils.ConnectAllConnections")); //$NON-NLS-1$
-		disconnectCommand
-				.setResolveDescription(Messages.getString("UIUtils.DisconnectAllConnections") //$NON-NLS-1$
-						+ currentNode.getName() + Messages.getString("UIUtils.Node")); //$NON-NLS-1$
+		compositeCommand.setResolveDescription(Messages
+				.getString("UIUtils.ConnectAllConnections")); //$NON-NLS-1$
+		disconnectCommand.setResolveDescription(Messages
+				.getString("UIUtils.DisconnectAllConnections") //$NON-NLS-1$
+				+ currentNode.getName() + Messages.getString("UIUtils.Node")); //$NON-NLS-1$
 		AbstractStructuredDataModel targetNode = UIUtils.findGraphModel(root,
 				currentNode);
 		if (targetNode instanceof IConnectableModel) {
@@ -214,9 +239,11 @@ public class UIUtils {
 				if (tempMap.get(sourceParentNode) == null) {
 					JavaModelConnectionResolveCommand connectParent = new JavaModelConnectionResolveCommand(
 							context);
-					connectParent.setResolveDescription(Messages.getString("UIUtils.ConnectNode1") //$NON-NLS-1$
+					connectParent.setResolveDescription(Messages
+							.getString("UIUtils.ConnectNode1") //$NON-NLS-1$
 							+ context.getSourceViewerLabelProvider().getText(
-									sourceParent) + Messages.getString("UIUtils.ConnectNode2") //$NON-NLS-1$
+									sourceParent)
+							+ Messages.getString("UIUtils.ConnectNode2") //$NON-NLS-1$
 							+ parentNode.getName() + "\""); //$NON-NLS-1$
 					connectParent.setSourceModel(sourceParentNode);
 					connectParent.setTargetModel(targetParentNode);
@@ -259,11 +286,13 @@ public class UIUtils {
 					if (pgm != null && pgm instanceof IConnectableModel) {
 						if (((IConnectableModel) pgm)
 								.getModelTargetConnections().isEmpty()) {
-							String errorMessage = Messages.getString("UIUtils.ParentNodeConnectErrorMessage1") //$NON-NLS-1$
+							String errorMessage = Messages
+									.getString("UIUtils.ParentNodeConnectErrorMessage1") //$NON-NLS-1$
 									+ javaModel.getName()
 									+ "\" : \"" //$NON-NLS-1$
 									+ parent.getName()
-									+ Messages.getString("UIUtils.ParentNodeConnectErrorMessage2"); //$NON-NLS-1$
+									+ Messages
+											.getString("UIUtils.ParentNodeConnectErrorMessage2"); //$NON-NLS-1$
 							DesignTimeAnalyzeResult dr = new DesignTimeAnalyzeResult();
 							dr.setErrorMessage(errorMessage);
 							createJavaModelConnectionErrorResolveCommand(dr,
@@ -306,14 +335,18 @@ public class UIUtils {
 					}
 					if (instanceClazz == null) {
 						DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
-						result.setErrorMessage(Messages.getString("UIUtils.InstanceLoadedErrorMessage1") //$NON-NLS-1$
-								+ ((JavaBeanModel) refObj).getName()
-								+ Messages.getString("UIUtils.InstanceLoadedErrorMessage2") //$NON-NLS-1$
-								+ instanceName + "\""); //$NON-NLS-1$
+						result
+								.setErrorMessage(Messages
+										.getString("UIUtils.InstanceLoadedErrorMessage1") //$NON-NLS-1$
+										+ ((JavaBeanModel) refObj).getName()
+										+ Messages
+												.getString("UIUtils.InstanceLoadedErrorMessage2") //$NON-NLS-1$
+										+ instanceName + "\""); //$NON-NLS-1$
 						JavaModelResolveCommand command = new JavaModelResolveCommand(
 								context);
 						command
-								.setResolveDescription(Messages.getString("UIUtils.InstanceLoadedResolveMessage1") //$NON-NLS-1$
+								.setResolveDescription(Messages
+										.getString("UIUtils.InstanceLoadedResolveMessage1") //$NON-NLS-1$
 										+ ((JavaBeanModel) refObj)
 												.getBeanClass()
 												.getCanonicalName() + "\""); //$NON-NLS-1$
@@ -325,16 +358,22 @@ public class UIUtils {
 					}
 					if (instanceClazz != null && instanceClazz.isInterface()) {
 						DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
-						result.setErrorMessage(Messages.getString("UIUtils.JavaModelLoadedErrorMessage1") //$NON-NLS-1$
-								+ ((JavaBeanModel) refObj).getName()
-								+ Messages.getString("UIUtils.JavaModelLoadedErrorMessage2") //$NON-NLS-1$
-								+ instanceName + "\""); //$NON-NLS-1$
+						result
+								.setErrorMessage(Messages
+										.getString("UIUtils.JavaModelLoadedErrorMessage1") //$NON-NLS-1$
+										+ ((JavaBeanModel) refObj).getName()
+										+ Messages
+												.getString("UIUtils.JavaModelLoadedErrorMessage2") //$NON-NLS-1$
+										+ instanceName + "\""); //$NON-NLS-1$
 						if (List.class.isAssignableFrom(instanceClazz)) {
 							JavaModelResolveCommand command = new JavaModelResolveCommand(
 									context);
 							command
-									.setResolveDescription(Messages.getString("UIUtils.InstanceClassResolveMessage1")); //$NON-NLS-1$
-							command.setInstanceName(Messages.getString("UIUtils.InstanceClassResolveMessage2")); //$NON-NLS-1$
+									.setResolveDescription(Messages
+											.getString("UIUtils.InstanceClassResolveMessage1")); //$NON-NLS-1$
+							command
+									.setInstanceName(Messages
+											.getString("UIUtils.InstanceClassResolveMessage2")); //$NON-NLS-1$
 							command.setJavaBean((JavaBeanModel) refObj);
 							result.addResolveCommand(command);
 						}
@@ -481,7 +520,9 @@ public class UIUtils {
 				.getTreeCotentProvider(dataTypeID);
 		if (tprovider == null)
 			return false;
-		viewer.setLabelProvider(new DecoratingLabelProvider(lprovider, null));
+		viewer.setLabelProvider(new DecoratingLabelProvider(lprovider,
+				SmooksUIActivator.getDefault().getWorkbench()
+						.getDecoratorManager().getLabelDecorator()));
 		viewer.setContentProvider(tprovider);
 		return true;
 	}

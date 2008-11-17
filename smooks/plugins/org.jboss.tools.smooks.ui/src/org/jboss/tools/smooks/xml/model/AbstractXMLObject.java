@@ -23,6 +23,16 @@ public class AbstractXMLObject {
 	
 	protected String name;
 	
+	public String getNamespaceURL() {
+		return namespaceURL;
+	}
+
+	public void setNamespaceURL(String namespaceURL) {
+		this.namespaceURL = namespaceURL;
+	}
+
+	protected String namespaceURL = null;
+	
 	protected List<AbstractXMLObject> children = new ArrayList<AbstractXMLObject>();
 
 	public String getName() {

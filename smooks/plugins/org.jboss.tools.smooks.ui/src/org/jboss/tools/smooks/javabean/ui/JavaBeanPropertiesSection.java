@@ -48,6 +48,7 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.ui.AbstractSmooksPropertySection;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
+import org.jboss.tools.smooks.ui.gef.editparts.AbstractStructuredDataEditPart;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
 import org.jboss.tools.smooks.ui.gef.model.PropertyModel;
@@ -62,8 +63,6 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 	private static final String PRO_TYPE = "type"; //$NON-NLS-1$
 
 	private Text instanceClassText;
-
-	private boolean lock = false;
 
 	protected String beanClassType;
 
@@ -81,13 +80,8 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 		super.createControls(parent, tabbedPropertySheetPage);
 		TabbedPropertySheetWidgetFactory factory = tabbedPropertySheetPage
 				.getWidgetFactory();
-		Composite main = factory.createComposite(parent);
-		FillLayout fill = new FillLayout();
-		fill.marginHeight = 8;
-		fill.marginWidth = 8;
-		main.setLayout(fill);
 
-		Section section = factory.createSection(main, Section.TITLE_BAR);
+		Section section = createRootSection(factory, parent);
 		section.setText(Messages.getString("JavaBeanPropertiesSection.JavaBeanProperties")); //$NON-NLS-1$
 		Composite controlComposite = factory.createComposite(section);
 		section.setClient(controlComposite);
@@ -298,41 +292,13 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 		}
 		return null;
 	}
-
-	private JavaBeanModel getTargetJavaBeanModel() {
-		ISelection s = (ISelection) this.getSelection();
-		if (s instanceof IStructuredSelection) {
-			IStructuredSelection selection = (IStructuredSelection) s;
-			Object obj = selection.getFirstElement();
-			if (obj == null)
-				return null;
-			if (obj instanceof EditPart) {
-				Object model = ((EditPart) obj).getModel();
-				if (model instanceof LineConnectionModel) {
-					AbstractStructuredDataModel target = (AbstractStructuredDataModel) ((LineConnectionModel) model)
-							.getTarget();
-					Object referenceObj = target.getReferenceEntityModel();
-					if (referenceObj instanceof JavaBeanModel) {
-						return (JavaBeanModel) referenceObj;
-					}
-				}
-			}
-		}
-		return null;
-	}
-
-	private LineConnectionModel getLineConnectionModel() {
-		ISelection s = (ISelection) this.getSelection();
-		if (s instanceof IStructuredSelection) {
-			IStructuredSelection selection = (IStructuredSelection) s;
-			Object obj = selection.getFirstElement();
-			if (obj == null)
-				return null;
-			if (obj instanceof EditPart) {
-				Object model = ((EditPart) obj).getModel();
-				if (model instanceof LineConnectionModel) {
-					return (LineConnectionModel) model;
-				}
+	protected JavaBeanModel getTargetJavaBeanModel() {
+		LineConnectionModel connection = getLineConnectionModel();
+		if(connection != null){
+			AbstractStructuredDataModel t = (AbstractStructuredDataModel)connection.getTarget();
+			Object target = t.getReferenceEntityModel();
+			if(target != null && target instanceof JavaBeanModel){
+				return (JavaBeanModel)target;
 			}
 		}
 		return null;
@@ -389,13 +355,4 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 		}
 		return null;
 	}
-
-	private void unLockEventFire() {
-		lock = false;
-	}
-
-	private void lockEventFire() {
-		lock = true;
-	}
-
 }

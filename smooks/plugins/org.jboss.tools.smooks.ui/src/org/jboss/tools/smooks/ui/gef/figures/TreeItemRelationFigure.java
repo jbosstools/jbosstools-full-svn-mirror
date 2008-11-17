@@ -45,21 +45,25 @@ public class TreeItemRelationFigure extends RectangleFigure {
 		graphics.popState();
 	}
 
-
 	public void caculateLocationY() {
-		if (treeItem != null) {
+		if (treeItem != null && !treeItem.isDisposed()) {
 			int y = this.collapsedParentItemLocation(treeItem);
 			Tree tree = treeItem.getParent();
 			int height = tree.getItemHeight();
-			this.setLocation(new Point(0, y + height/2));
+			this.setLocation(new Point(0, y + height / 2));
 		}
 	}
 
 	protected int collapsedParentItemLocation(TreeItem item) {
-		int y = item.getBounds().y;
-		if (y == 0) {
-			if (item.getParentItem() != null)
-				return this.collapsedParentItemLocation(item.getParentItem());
+		int y = 0;
+		if (item != null && !item.isDisposed()) {
+			y = item.getBounds().y;
+			if (y == 0) {
+				if (item.getParentItem() != null)
+					return this.collapsedParentItemLocation(item
+							.getParentItem());
+			}
+			return y;
 		}
 		return y;
 	}

@@ -64,7 +64,7 @@ public class XMLObjectAnalyzer {
 		}
 		tag.setName(element.getName());
 		fillProperties(element, tag);
-
+		tag.setNamespaceURL(element.getNamespaceURI());
 		List list = element.elements();
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			Element childElement = (Element) iterator.next();
@@ -79,8 +79,8 @@ public class XMLObjectAnalyzer {
 	}
 
 	protected boolean hasSameNameProperty(String proName, TagObject tag) {
-		List pros = tag.getProperties();
-		for (Iterator iterator = pros.iterator(); iterator.hasNext();) {
+		List<TagPropertyObject> pros = tag.getProperties();
+		for (Iterator<TagPropertyObject> iterator = pros.iterator(); iterator.hasNext();) {
 			TagPropertyObject tp = (TagPropertyObject) iterator.next();
 			if (tp.getName().equals(proName))
 				return true;
@@ -97,7 +97,7 @@ public class XMLObjectAnalyzer {
 			}
 			TagPropertyObject pro = new TagPropertyObject();
 			pro.setName(attr.getName());
-
+			pro.setNamespaceURL(attr.getNamespaceURI());
 			tag.addProperty(pro);
 		}
 	}
