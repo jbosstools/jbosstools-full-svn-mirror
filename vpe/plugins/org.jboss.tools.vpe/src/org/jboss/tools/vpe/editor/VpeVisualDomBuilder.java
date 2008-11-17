@@ -23,8 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Path;
@@ -102,10 +100,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     public static final String PARENT = "PARENT"; //$NON-NLS-1$
     public static final String VPE_USER_TOGGLE_ID = "vpe-user-toggle-id"; //$NON-NLS-1$
 	public static final String VPE_USER_TOGGLE_LOOKUP_PARENT = "vpe-user-toggle-lookup-parent"; //$NON-NLS-1$
-
-	/** REGEX_EL */
-	private static final Pattern REGEX_EL = Pattern.compile(
-			"[\\$|\\#]\\{.*\\}", Pattern.MULTILINE + Pattern.DOTALL); //$NON-NLS-1$
 
 	private static final String PSEUDO_ELEMENT = "br"; //$NON-NLS-1$
 	private static final String PSEUDO_ELEMENT_ATTR = "vpe:pseudo-element"; //$NON-NLS-1$

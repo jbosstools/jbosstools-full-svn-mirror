@@ -134,6 +134,7 @@ public class VpeCopyCreator extends VpeAbstractCreator {
 
 	private void addAttributes(Element sourceElement,
 			nsIDOMElement visualElement, VpePageContext pageContext) {
+										
 		NamedNodeMap sourceAttributes = sourceElement.getAttributes();
 		if (sourceAttributes == null) {
 			return;
@@ -142,8 +143,8 @@ public class VpeCopyCreator extends VpeAbstractCreator {
 		for (int i = 0; i < len; i++) {
 			Attr sourceAttr = (Attr) sourceAttributes.item(i);
 			String name = sourceAttr.getName();
-
-			String value = sourceAttr.getValue();
+			//mareshkau, here we should have access to modified value fix for jbide-3144
+			String value = sourceElement.getAttribute(name);
 
 			if (isAttribute(name)) {
 				visualElement.setAttribute(name, value);
