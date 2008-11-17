@@ -26,26 +26,39 @@ import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
  * 
  */
 public class AbstractSmooksPropertySection extends AbstractPropertySection {
-	
+
 	protected boolean lock = false;
-	
+
 	protected void fireDirty() {
+		SmooksGraphicalFormPage page = this.getGraphicalEditor();
+		if (page != null) {
+			SmooksFormEditor editor = (SmooksFormEditor) ((SmooksGraphicalFormPage) page)
+					.getEditor();
+			editor.fireEditorDirty(true);
+		}
+	}
+
+	public SmooksGraphicalFormPage getGraphicalEditor() {
 		IStructuredSelection selection = (IStructuredSelection) this
 				.getSelection();
 		Object obj = selection.getFirstElement();
 		if (obj == null)
-			return;
+			return null;
 		if (obj instanceof GraphicalEditPart) {
-			GraphicalViewer viewer  = (GraphicalViewer) ((GraphicalEditPart)obj).getViewer();
-			IEditorPart part = ((DefaultEditDomain)viewer.getEditDomain()).getEditorPart();
-			if(part instanceof SmooksGraphicalFormPage){
-				SmooksFormEditor editor = (SmooksFormEditor)((SmooksGraphicalFormPage)part).getEditor();
-				editor.fireEditorDirty(true);
+			GraphicalViewer viewer = (GraphicalViewer) ((GraphicalEditPart) obj)
+					.getViewer();
+			IEditorPart part = ((DefaultEditDomain) viewer.getEditDomain())
+					.getEditorPart();
+			if (part instanceof SmooksGraphicalFormPage) {
+				return (SmooksGraphicalFormPage) part;
 			}
 		}
+
+		return null;
 	}
-	
-	protected Section createRootSection(TabbedPropertySheetWidgetFactory factory , Composite parent){
+
+	protected Section createRootSection(
+			TabbedPropertySheetWidgetFactory factory, Composite parent) {
 		Composite main = factory.createComposite(parent);
 		FillLayout fill = new FillLayout();
 		fill.marginHeight = 8;
@@ -70,11 +83,11 @@ public class AbstractSmooksPropertySection extends AbstractPropertySection {
 		}
 		return null;
 	}
-	
+
 	public boolean isLock() {
 		return lock;
 	}
-	
+
 	protected void unLockEventFire() {
 		lock = false;
 	}
@@ -82,7 +95,5 @@ public class AbstractSmooksPropertySection extends AbstractPropertySection {
 	protected void lockEventFire() {
 		lock = true;
 	}
-
-
 
 }

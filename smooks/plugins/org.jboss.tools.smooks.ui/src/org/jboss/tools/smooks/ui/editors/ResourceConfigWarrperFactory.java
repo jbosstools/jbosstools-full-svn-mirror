@@ -48,7 +48,9 @@ public class ResourceConfigWarrperFactory {
 		ResourceType resource = type.getResource();
 		if (resource == null)
 			return false;
-		if (SmooksModelConstants.BEAN_POPULATOR.equals(resource.getValue())) {
+		String value = resource.getValue();
+		if(value != null) value = value.trim();
+		if (SmooksModelConstants.BEAN_POPULATOR.equals(value)) {
 			return true;
 		}
 		return false;
@@ -58,7 +60,9 @@ public class ResourceConfigWarrperFactory {
 		ResourceType resource = type.getResource();
 		if (resource == null)
 			return false;
-		if (SmooksModelConstants.DATE_DECODER.equals(resource.getValue())) {
+		String value = resource.getValue();
+		if(value != null) value = value.trim();
+		if (SmooksModelConstants.DATE_DECODER.equals(value)) {
 			return true;
 		}
 		return false;

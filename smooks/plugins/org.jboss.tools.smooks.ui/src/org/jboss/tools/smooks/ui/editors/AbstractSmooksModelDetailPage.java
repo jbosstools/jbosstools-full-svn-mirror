@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.editors;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -21,6 +22,7 @@ import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.ui.ResourceConfigWarrper;
 
 /**
@@ -154,6 +156,25 @@ public abstract class AbstractSmooksModelDetailPage implements IDetailsPage {
 	 */
 	public boolean setFormInput(Object input) {
 		return false;
+	}
+	
+	public SmooksResourceListType getSmooksResourceList(){
+		if(resourceConfigList != null){
+			EObject parent = resourceConfigList.eContainer();
+			while(parent != null){
+				EObject temp = parent.eContainer();
+				if(temp == null){
+					break;
+				}
+				parent = temp;
+				if(parent instanceof SmooksResourceListType){
+					break;
+				}
+			}
+			return (SmooksResourceListType) parent;
+		}
+		
+		return null;
 	}
 
 	/*

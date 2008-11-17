@@ -12,6 +12,8 @@ package org.jboss.tools.smooks.ui.editors;
 
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
@@ -28,6 +30,7 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 	private Text formatText;
 	private Combo localeLangaugeCombo;
 	private Combo localeContryCombo;
+	private Text selectorText;
 
 	public DateTypeDetailPage(SmooksFormEditor parentEditor,
 			EditingDomain domain) {
@@ -45,8 +48,14 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
 		parent.setLayout(layout);
-		this.formToolKit.createLabel(parent, Messages.getString("DateTypeDetailPage.DateTypeFormatText")); //$NON-NLS-1$
+		
+		this.formToolKit.createLabel(parent, "Name :");
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		selectorText = this.formToolKit.createText(parent, ""); //$NON-NLS-1$
+		selectorText.setLayoutData(gd);
+		
+		this.formToolKit.createLabel(parent, Messages.getString("DateTypeDetailPage.DateTypeFormatText")); //$NON-NLS-1$
+		gd = new GridData(GridData.FILL_HORIZONTAL);
 		formatText = this.formToolKit.createText(parent, ""); //$NON-NLS-1$
 		formatText.setLayoutData(gd);
 
@@ -61,6 +70,83 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 		localeContryCombo.setLayoutData(gd);
 
 		formToolKit.paintBordersFor(parent);
+		
+		hookControls();
+	}
+
+	private void hookControls() {
+		selectorText.addModifyListener(new ModifyListener(){
+			public void modifyText(ModifyEvent e) {
+				setSelector();
+			}
+		});
+		
+		formatText.addModifyListener(new ModifyListener(){
+
+			public void modifyText(ModifyEvent e) {
+				setFormat();
+			}
+			
+		});
+		
+		localeContryCombo.addModifyListener(new ModifyListener(){
+
+			public void modifyText(ModifyEvent e) {
+				setLocalContry();
+			}
+			
+		});
+		
+		localeLangaugeCombo.addModifyListener(new ModifyListener(){
+
+			public void modifyText(ModifyEvent e) {
+				setLocalLang();
+			}
+			
+		});
+	}
+	
+	protected void setFormat() {
+		String format = formatText.getText();
+		if(format == null) format = "";
+		SmooksModelUtils.setParamText("format", format, resourceConfigList);
+		this.parentEditor.fireEditorDirty(true);
+	}
+
+	protected void setLocalLang() {
+		String ll = localeLangaugeCombo.getText();
+		if(ll == null) ll = "";
+		SmooksModelUtils.setParamText("locale-language", ll, resourceConfigList);
+		this.parentEditor.fireEditorDirty(true);
+	}
+
+	protected void setLocalContry() {
+		String lc = localeContryCombo.getText();
+		if(lc == null) lc = "";
+		SmooksModelUtils.setParamText("locale-country", lc, resourceConfigList);
+		this.parentEditor.fireEditorDirty(true);
+	}
+
+	protected void setSelector() {
+		String text = selectorText.getText();
+		if(text == null || text.length() == 0){
+			resourceConfigList.setSelector("");
+			this.parentEditor.fireEditorDirty(true);
+			return;
+		}
+		text = "decorat:"+text;
+		if(this.resourceConfigList != null){
+			resourceConfigList.setSelector(text);
+			this.parentEditor.fireEditorDirty(true);
+		}
+	}
+
+	private String getSelectorName(String selector){
+		if(selector == null) return "";
+		if(selector.indexOf(":") != -1){
+			return selector.substring(selector.indexOf(":") + 1,selector.length());
+		}
+		return selector;
 	}
 
 	@Override
@@ -68,12 +154,14 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 		if(this.resourceConfigList != null){
 			String formate = SmooksModelUtils.getParmaText("format", resourceConfigList); //$NON-NLS-1$
 			String locallang = SmooksModelUtils.getParmaText("Locale-Language", resourceConfigList); //$NON-NLS-1$
-			String localcontry = SmooksModelUtils.getParmaText("Locale-Contry", resourceConfigList); //$NON-NLS-1$
+			String localcontry = SmooksModelUtils.getParmaText("locale-country", resourceConfigList); //$NON-NLS-1$
 			if(formate == null) formate = ""; //$NON-NLS-1$
 			if(locallang == null) locallang = ""; //$NON-NLS-1$
 			if(localcontry == null) localcontry = ""; //$NON-NLS-1$
 			
-			
+			String selector = resourceConfigList.getSelector();
+			selector = getSelectorName(selector);
+			selectorText.setText(selector);
 			formatText.setText(formate);
 			localeContryCombo.setText(localcontry);
 			localeLangaugeCombo.setText(locallang);
