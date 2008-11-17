@@ -40,7 +40,11 @@ public class TreeItemRelationFigure extends RectangleFigure {
 		graphics.pushState();
 
 		graphics.setForegroundColor(ColorConstants.red);
-		graphics.drawText(treeItem.getText(), getBounds().getTopLeft());
+		if (!treeItem.isDisposed()) {
+			String text = treeItem.getText();
+			if (text != null)
+				graphics.drawText(text, getBounds().getTopLeft());
+		}
 
 		graphics.popState();
 	}

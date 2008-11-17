@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.ResourceType;
+import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksPackage;
 
 /**
@@ -30,11 +31,11 @@ import org.jboss.tools.smooks.model.SmooksPackage;
 
 public class SmooksModelUtils {
 	public static final String BEAN_CLASS = "beanClass";
-	
+
 	public static final String BEAN_ID = "beanId";
-	
+
 	public static final String BINDINGS = "bindings";
-	
+
 	public static EStructuralFeature ATTRIBUTE_PROPERTY = ExtendedMetaData.INSTANCE
 			.demandFeature(null, "property", false);
 
@@ -54,12 +55,13 @@ public class SmooksModelUtils {
 		param.getMixed().add(ELEMENT_BINDING, binding);
 		return binding;
 	}
-	
+
 	public static List<Object> getBindingListFromResourceConfigType(
 			ResourceConfigType resourceConfig) {
 		List<ParamType> paramList = resourceConfig.getParam();
-		for (Iterator<ParamType> iterator = paramList.iterator(); iterator.hasNext();) {
-			ParamType param =   iterator.next();
+		for (Iterator<ParamType> iterator = paramList.iterator(); iterator
+				.hasNext();) {
+			ParamType param = iterator.next();
 			if ("bindings".equals(param.getName())) {
 				if (param.eContents().isEmpty())
 					continue;
@@ -70,20 +72,22 @@ public class SmooksModelUtils {
 		}
 		return null;
 	}
-	
-	public static String getTransformType(ResourceConfigType resourceConfig){
+
+	public static String getTransformType(ResourceConfigType resourceConfig) {
 		ParamType typeParam = null;
-		if(resourceConfig == null) return "";
-		if(isTransformTypeResourceConfig(resourceConfig)){
+		if (resourceConfig == null)
+			return "";
+		if (isTransformTypeResourceConfig(resourceConfig)) {
 			List paramList = resourceConfig.getParam();
 			for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
 				ParamType param = (ParamType) iterator.next();
-				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(param.getName())) {
+				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(param
+						.getName())) {
 					typeParam = param;
 					break;
 				}
 			}
-			if(typeParam != null){
+			if (typeParam != null) {
 				return SmooksModelUtils.getAnyTypeText(typeParam);
 			}
 		}
@@ -92,28 +96,31 @@ public class SmooksModelUtils {
 
 	public static void setTransformType(ResourceConfigType resourceConfig,
 			String type) {
-		if(type == null) type = "";
+		if (type == null)
+			type = "";
 		if (isTransformTypeResourceConfig(resourceConfig)) {
 			List paramList = resourceConfig.getParam();
 			for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
 				ParamType param = (ParamType) iterator.next();
-				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(param.getName())) {
+				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(param
+						.getName())) {
 					cleanTextToSmooksType(param);
 					setTextToSmooksType(param, type);
 				}
 			}
 		}
 	}
-	
-	public static boolean isFilePathResourceConfig(ResourceConfigType resourceConfig){
+
+	public static boolean isFilePathResourceConfig(
+			ResourceConfigType resourceConfig) {
 		ResourceType resource = resourceConfig.getResource();
-		if(resource != null){
+		if (resource != null) {
 			String value = resource.getValue();
-			if(value != null){
-				if(value.startsWith("\\")){
+			if (value != null) {
+				if (value.startsWith("\\")) {
 					return true;
 				}
-				if(value.startsWith("/")){
+				if (value.startsWith("/")) {
 					return true;
 				}
 			}
@@ -142,12 +149,31 @@ public class SmooksModelUtils {
 		}
 	}
 
+	public static void setParamText(String paramName, String value,
+			ResourceConfigType resourceConfigType) {
+		List<ParamType> list = resourceConfigType.getParam();
+		ParamType param = null;
+		for (Iterator<ParamType> iterator = list.iterator(); iterator.hasNext();) {
+			ParamType paramType = (ParamType) iterator.next();
+			if (paramType.getName().equalsIgnoreCase(paramName)) {
+				param = paramType;
+				break;
+			}
+		}
+		if (param == null) {
+			param = SmooksFactory.eINSTANCE.createParamType();
+			resourceConfigType.getParam().add(param);
+		}
+		param.setName(paramName);
+		setTextToSmooksType(param, value);
+	}
+
 	public static String getParmaText(String paramName,
 			ResourceConfigType resourceConfigType) {
 		List plist = resourceConfigType.getParam();
 		for (Iterator iterator = plist.iterator(); iterator.hasNext();) {
 			ParamType p = (ParamType) iterator.next();
-			if (paramName.equals(p.getName())) {
+			if (paramName.equalsIgnoreCase(p.getName())) {
 				return getAnyTypeText(p);
 			}
 		}

@@ -26,29 +26,29 @@ import org.jboss.tools.smooks.ui.gef.policy.DeleteConnectionEditPolicy;
 import org.jboss.tools.smooks.ui.gef.util.GraphicsConstants;
 
 public class StructuredDataConnectionEditPart extends
-		AbstractConnectionEditPart  implements PropertyChangeListener{
+		AbstractConnectionEditPart implements PropertyChangeListener {
 
 	public StructuredDataConnectionEditPart() {
 		super();
 	}
-	
+
 	public void activate() {
 		super.activate();
 		Object model = getModel();
-		if(model instanceof AbstractStructuredDataConnectionModel){
-			((AbstractStructuredDataConnectionModel)model).addPropertyChangeListener(this);
+		if (model instanceof AbstractStructuredDataConnectionModel) {
+			((AbstractStructuredDataConnectionModel) model)
+					.addPropertyChangeListener(this);
 		}
 	}
 
 	public void deactivate() {
 		Object model = getModel();
-		if(model instanceof AbstractStructuredDataConnectionModel){
-			((AbstractStructuredDataConnectionModel)model).removePropertyChangeListener(this);
+		if (model instanceof AbstractStructuredDataConnectionModel) {
+			((AbstractStructuredDataConnectionModel) model)
+					.removePropertyChangeListener(this);
 		}
 		super.deactivate();
 	}
-
-
 
 	/*
 	 * (non-Javadoc)
@@ -174,15 +174,21 @@ public class StructuredDataConnectionEditPart extends
 		Tree targetTree = null;
 		if (source instanceof TreeItemRelationModel) {
 			TreeItem item = ((TreeItemRelationModel) source).getTreeItem();
-			item.setData(TreeItemRelationModel.PRO_TREE_ITEM_SELECTION_STATUS,
-					new Boolean(selected));
-			sourceTree = item.getParent();
+			if (!item.isDisposed()) {
+				item.setData(
+						TreeItemRelationModel.PRO_TREE_ITEM_SELECTION_STATUS,
+						new Boolean(selected));
+				sourceTree = item.getParent();
+			}
 		}
 		if (target instanceof TreeItemRelationModel) {
 			TreeItem item = ((TreeItemRelationModel) target).getTreeItem();
-			item.setData(TreeItemRelationModel.PRO_TREE_ITEM_SELECTION_STATUS,
-					new Boolean(selected));
-			targetTree = item.getParent();
+			if (!item.isDisposed()) {
+				item.setData(
+						TreeItemRelationModel.PRO_TREE_ITEM_SELECTION_STATUS,
+						new Boolean(selected));
+				targetTree = item.getParent();
+			}
 		}
 		refreshTree(sourceTree);
 		refreshTree(targetTree);
@@ -211,6 +217,6 @@ public class StructuredDataConnectionEditPart extends
 	}
 
 	public void propertyChange(PropertyChangeEvent evt) {
-		
+
 	}
 }
