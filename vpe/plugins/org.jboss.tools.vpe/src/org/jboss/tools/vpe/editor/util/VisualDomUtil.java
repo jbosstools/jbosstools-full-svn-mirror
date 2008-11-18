@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor.util;
 
 import org.eclipse.swt.graphics.Point;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNSRange;
@@ -19,6 +20,7 @@ import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsIDOMRange;
 import org.mozilla.interfaces.nsISelection;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 
@@ -121,4 +123,33 @@ public class VisualDomUtil {
 		containerParent.removeChild(node);
 	}
 	
+    /**
+     * Sets the style of the attribute of the element to the value.
+     * If the sub-attribute is present already, it replaces its value.
+     * <P/>
+     * Example: {@code <element attributeName="subAttributeName : subAttributeValue;">}
+     * <P/>
+     * Should be used mainly to set HTML STYLE attribute:
+     *  {@code setSubAttribute(div, "STYLE", "width", "100%")} 
+     */
+	public static void setSubAttribute(nsIDOMElement element,
+			String attributeName, String subAttributeName,
+			String subAttributeValue) {
+		String attributeValue = element.getAttribute(attributeName);
+		if (attributeValue == null) {
+		    attributeValue = new String();
+		} else {// remove old sub-attribute from the attributeValue
+		    attributeValue = VpeStyleUtil.deleteFromString(attributeValue, 
+		    		subAttributeName, Constants.SEMICOLON);
+		}
+		if (attributeValue.length() > 0) {
+		    if (!attributeValue.endsWith(Constants.SEMICOLON))
+			attributeValue += Constants.SEMICOLON;
+		}
+
+		attributeValue += subAttributeName + Constants.COLON
+			+ subAttributeValue + Constants.SEMICOLON;
+
+		element.setAttribute(attributeName, attributeValue);
+	}
 }

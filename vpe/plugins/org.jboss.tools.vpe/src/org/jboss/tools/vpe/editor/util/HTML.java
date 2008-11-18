@@ -113,6 +113,8 @@ public final class HTML {
 	public static final String VALUE_ALIGN_CENTER = "center"; //$NON-NLS-1$
 	public static final String VALUE_CLEAR_BOTH = "both"; //$NON-NLS-1$
 
+	public static final String STYLE_PARAMETER_DISPLAY = "display"; //$NON-NLS-1$
+	public static final String STYLE_VALUE_NONE = "none"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_WIDTH = "width"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_TOP = "top"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_LEFT = "left"; //$NON-NLS-1$
