@@ -63,6 +63,9 @@
 		<taskdef name="pot2en" classname="org.fedorahosted.tennera.antgettext.Pot2EnTask" classpathref="dependency.classpath" />
 		<taskdef name="po2prop" classname="org.fedorahosted.tennera.antgettext.Po2PropTask" classpathref="dependency.classpath" />
 		<taskdef name="xpath2pot" classname="org.fedorahosted.tennera.antgettext.XPath2PotTask" classpathref="dependency.classpath" />
+		<typedef name="unbundlemapper" 
+			classname="org.fedorahosted.tennera.antgettext.UnBundleNameMapper" 
+			classpathref="dependency.classpath" /> 
 	</target>
 
 
@@ -114,12 +117,14 @@
 		<mkdir dir="${potdir}" />
 		<!-- paths under jbt.srcdir look like: ${module}/plugins/${plugin}/{src,main,...} -->
 		<prop2pot srcDir="${jbt.srcdir}" dstDir="${potdir}" includes="*/plugins/*/src/**/*.properties">
+			<!-- rename to pluginID-org.jboss.ide.*.pot -->
 			<chainedmapper>
 				<!-- rename -> "pluginID dash pathRelativeToSrc" -->
-				<regexpmapper from="^.*/plugins/(.*)/src/(.*)" to="\1-\2" />
-				<!-- rename org/jboss/ide/*.properties -> org.jboss.ide.*.pot -->
+				<regexpmapper handledirsep="true" from="^.*/plugins/(.*)/src/(.*)" to="\1-\2" />
+				<!-- rename org/jboss/ide/*.properties -> pluginID-org.jboss.ide.*.pot -->
 				<packagemapper from="*.properties" to="*.pot" />
-				<!-- rename -> pluginID/org.jboss.ide.*.pot -->
+				<!-- rename -> pluginID/org.jboss.ide.*.pot: 
+				-->
 				<!--<regexpmapper from="([^-]+)-(.*)" to="\1/\2"/>-->
 				
 				<!-- Silly idea: Replace plugin id in package names with ~
@@ -164,12 +169,58 @@
 	<target name="po2prop" depends="init" description="Generate Java properties files from translated PO files">
 		<delete dir="${propdir}" />
 		<mkdir dir="${propdir}" />
-		<!-- for each locale in po/* -->
+		<po2prop srcDir="po" dstDir="${propdir}" failonnull="true">
+			<unbundlemapper directoryPerLocale="true" />
+<!--
+			
+			<scriptmapper language="groovy" classpathref="dependency.classpath">
+				<![CDATA[
+// 7 seconds on hot run
+				// map locale/pluginID-org.jboss.ide.*.po -> locale/pluginID/org/jboss/ide/*.properties
+                static def exp
+				if (exp == null)
+				{
+					println "null"
+					exp = /^([^\/\\]+[\/\\][^-]+)-(.*)[.]po$$/
+				}
+				def m = source =~ exp
+				if (m.matches())
+				{
+					def localeAndPlugin = m[0][1]
+					def resource = m[0][2].replace '.' '/'
+					self.addMappedName localeAndPlugin+"/"+resource+".properties";
+				}
+
+				]]>
+			</scriptmapper>
+			-->
+		</po2prop>
+<!--
 		<for param="locale" list="${locales}">
 			<sequential>
-				<po2prop srcDir="po/@{locale}" dstDir="${propdir}/@{locale}" locale="@{locale}" />
+				<for param="plugindir">
+					<path>
+						<dirset dir="po/@{locale}" includes="*" />
+					</path>
+					<sequential>
+						<po2prop srcDir="@{plugindir}" dstDir="${propdir}/@{locale}" locale="@{locale}" failonnull="true">
+							<chainedmapper>
+								<filtermapper>
+								  <replacestring from="${file.separator}" to="-"/>
+								</filtermapper>
+
+								<unpackagemapper from="*.po" to="*.properties" />
+								<filtermapper>
+								  <replacestring from="/" to="-"/>
+								</filtermapper>
+							</chainedmapper>
+						</po2prop>
+					</sequential>
+				</for>
 			</sequential>
-		</for>
+		</for>	
+-->
+	
 	</target>
 
 	<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
