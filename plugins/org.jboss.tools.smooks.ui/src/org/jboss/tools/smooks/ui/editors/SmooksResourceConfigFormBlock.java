@@ -178,7 +178,16 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 					}
 					if (NormalSmooksModelBuilder
 							.isDateConfig((ResourceConfigType) element)) {
-						return Messages.getString("SmooksResourceConfigFormBlock.DateType"); //$NON-NLS-1$
+						String name = Messages.getString("SmooksResourceConfigFormBlock.DateType"); //$NON-NLS-1$
+						String selector = ((ResourceConfigType) element).getSelector();
+						if(selector == null){
+							return name;
+						}
+						selector = selector.trim();
+						if(selector.indexOf(":") != -1){
+							selector = selector.substring(selector.indexOf(":") + 1, selector.length());
+						}
+						return name + "(" + selector + ")";
 					}
 					if (SmooksModelUtils
 							.isFilePathResourceConfig((ResourceConfigType) element)) {
