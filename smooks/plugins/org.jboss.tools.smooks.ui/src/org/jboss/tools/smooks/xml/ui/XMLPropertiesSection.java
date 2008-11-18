@@ -111,6 +111,7 @@ public class XMLPropertiesSection extends AbstractSmooksPropertySection {
 						if (propertyModel.getName()
 								.equals(SELECTOR_NAMESPACE)) {
 							if (propertyModel.getValue().equals(namespace)) {
+								checkButton.setEnabled(true);
 								lockEventFire();
 								checkButton.setSelection(true);
 								unLockEventFire();
@@ -118,6 +119,8 @@ public class XMLPropertiesSection extends AbstractSmooksPropertySection {
 						}
 					}
 				}
+			}else{
+				checkButton.setEnabled(false);
 			}
 		}
 	}
