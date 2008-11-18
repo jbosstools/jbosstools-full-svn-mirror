@@ -25,7 +25,7 @@
         <releaseinfo>
             Version: 3.0.0.beta1
         </releaseinfo>
-    </bookinfo>
+  
 
 <abstract>
    <title/>
@@ -35,8 +35,10 @@
 </abstract>
 
     
-    <toc/>  
-    
+    </bookinfo>
+ <toc/> 
+
+  
     &introduction;
     &birt_support;
     &birt_designer;

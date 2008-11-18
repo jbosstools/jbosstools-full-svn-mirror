@@ -36,17 +36,20 @@
    <holder>JBoss, a division of Red Hat Inc.</holder>
   </copyright>
   <releaseinfo>Version: 2.0.0.Beta1</releaseinfo>
- </bookinfo>
- <toc/> 
-
-<abstract>
+ <abstract>
    <title/>
        <para>
            <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/GettingStartedGuide/pdf/Getting_Started_Guide.pdf">PDF version</ulink>
        </para>
 </abstract>
 
- &getting_started;
+ 
+</bookinfo>
+ <toc/> 
+
+
+
+&getting_started;
  &manage; 
  &first_seam; 
  &jsp_application;
