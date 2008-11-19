@@ -170,7 +170,7 @@
 		<attribute name="propname" />
 		<sequential>
 			<if>
-				<!-- TODO fail on empty value -->
+				<!-- FIXME fail on empty value -->
 				<not>
 					<isset property="@{propname}"/>
 				</not>
@@ -218,12 +218,12 @@
 		 generating manifests -->
 	<target name="manifests" depends="init" description="Generate fragment plugin manifests for langpack plugins">
 		<delete dir="target/manifests" />
-		<processlocaleplugins rootdir="${propdir}" task="manifest" />
+		<processlocaleplugins rootdir="${propdir}" task="-manifest" />
 	</target>
 
 	
 	<!-- Generates the manifests (one per locale) for one plugin.  Called by processlocaleplugins. -->
-	<target name="manifest">
+	<target name="-manifest">
 		<!-- NB don't depend on initTaskDefs here, or ant loads the 
 		classes over and over until it exhausts memory -->
 		<checkprop propname="plugindir"/>
@@ -232,6 +232,7 @@
 		<checkprop propname="PLUGIN_VENDOR"/>
 		<for param="locale" list="${locales}">
 			<sequential>
+				<!-- FIXME -->
 				<var name="locale" value="@{locale}" />
 				<propertycopy override="true" property="localename" from="NAME_${locale}"/>
 				<checkprop propname="localename"/>
@@ -252,11 +253,11 @@
 	<target name="fragments" depends="init" description="Generate fragment plugin jars to contain translations" >
 		<delete dir="${jardir}" />
 		<mkdir dir="${jardir}/plugins" />
-		<processlocaleplugins rootdir="${propdir}" task="fragment" />
+		<processlocaleplugins rootdir="${propdir}" task="-fragment" />
 	</target>
 
 	<!-- Jars up one fragment plugin.  Called by processlocaleplugins. -->
-	<target name="fragment">
+	<target name="-fragment">
 		<!-- NB don't depend on initTaskDefs here, or ant loads the 
 		classes over and over until it exhausts memory -->
 		<checkprop propname="plugindir"/>
@@ -266,10 +267,12 @@
 		
 		<for param="locale" list="${locales}">
 			<sequential>
+				<!-- FIXME -->
 				<var name="__locale" value="@{locale}" />
 				<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
 				<checkprop propname="localename"/>
 
+				<!-- FIXME -->
 				<var name="jar" value="${jardir}/plugins/${plugin}.nl-@{locale}_${PLUGIN_VERSION}.jar" />
 				<echo level="verbose" message="Jarring up ${jar} from directory ${plugindir}"/>
 				<jar 
@@ -291,6 +294,7 @@
 		<mkdir dir="${propdir}/features" />
 		<delete dir="${jardir}/features" />
 		<mkdir dir="${jardir}/features" />
+		<!-- FIXME -->
 		<var name="temp.file.sitefeatures" unset="true" />
 		<tempfile property="temp.file.sitefeatures" destdir="${target.dir}" prefix="site" suffix=".tmp" createfile="true" deleteonexit="false" />
 		<sequential>
@@ -310,11 +314,13 @@
     					regexp="^${jbt.srcdir}${file.separator}[^/\\]+${file.separator}features${file.separator}([^/\\]+)${file.separator}feature.xml" 
     					select="\1" />
 					<checkprop propname="feature"/>
+					<!-- FIXME -->
 					<var name="featurename" value="${feature}" />
 					<var name="jarsize" value="0" />
 					<echo level="verbose" message="Processing feature ${feature} in module ${module}"/>
 						<for param="locale" list="${locales}">
 							<sequential>
+								<!-- FIXME -->
 								<var name="locale" value="@{locale}" />
 								<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
 								
@@ -326,6 +332,7 @@
 								<propertycopy override="true" property="plugins" from="feature.${feature}.plugins"/>
 								
 								
+								<!-- FIXME -->
 								<var name="temp.file.featureplugins" unset="true" />
 								<tempfile property="temp.file.featureplugins" destdir="${target.dir}" prefix="plugins" suffix=".tmp" createfile="true" deleteonexit="true" />
 								<for param="plugin" list="${plugins}" delimiter=" ">
@@ -342,6 +349,7 @@
 										</if>
 									</sequential>
 								</for>
+								<!-- FIXME -->
 								<var name="plugins" unset="true" />
 								<loadfile property="plugins"  srcFile="${temp.file.featureplugins}"/>
 								<delete file="${temp.file.featureplugins}"/>
@@ -359,7 +367,7 @@
 								   </feature>
 								-->
 								
-								<!-- TODO download-size="${jarsize}" install-size="${jarsize}" -->
+								<!-- FIXME download-size="${jarsize}" install-size="${jarsize}" -->
 								<copy overwrite="true" 
 									todir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}">
 									<fileset dir="feature-template/FEATURE.nl-LOCALE_VERSION" />
@@ -395,6 +403,7 @@
 		
 		
 		<!-- Read in the above list of features -->
+		<!-- FIXME -->
 		<var name="features" unset="true" />
 		<loadfile property="features"  srcFile="${temp.file.sitefeatures}"/>
 		<delete file="${temp.file.sitefeatures}"/>
@@ -407,9 +416,9 @@
 		</copy>
 	</target>
 	
-	<target name="p2">
+	<target name="p2" description="Generate metadata for Eclipse 3.4's update manager (P2)" >
 		<!-- Generate P2 metadata so that update manager won't take forever.
-			http://wiki.eclipse.org/Equinox_p2_Metadata_Generator /home/sflaniga/apps/eclipse-ganymede/eclipse/eclipse
+			http://wiki.eclipse.org/Equinox_p2_Metadata_Generator
 		 -->
 		
 		<exec executable="eclipse">
