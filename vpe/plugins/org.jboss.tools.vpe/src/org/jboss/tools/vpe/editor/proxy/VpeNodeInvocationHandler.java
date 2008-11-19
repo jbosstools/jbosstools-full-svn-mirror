@@ -17,6 +17,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.util.ElService;
 import org.jboss.tools.vpe.editor.util.ResourceUtil;
 import org.w3c.dom.Attr;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 /**
@@ -49,6 +50,8 @@ public class VpeNodeInvocationHandler implements InvocationHandler {
 		} else if(result instanceof Attr) {
 			result = VpeProxyUtil.createProxyForELExpressionNode(pageContext,
 						(Node)result);
+		} else if(result instanceof NamedNodeMap) {
+			result = VpeProxyUtil.createProxyForNamedNodeMap(pageContext, (NamedNodeMap)result);
 		}
  		return result;
 	}

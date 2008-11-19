@@ -16,6 +16,7 @@ import java.util.List;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 /**
@@ -46,6 +47,15 @@ public class VpeProxyUtil {
 		proxy = (Node) Proxy.newProxyInstance(Node.class.getClassLoader(),
 				  interfaceses.toArray(new Class[0]),
 				  new VpeNodeInvocationHandler(pageContext,sourceNode));
+
+		return proxy;
+	}
+	
+	public static NamedNodeMap createProxyForNamedNodeMap(VpePageContext pageContext,
+			NamedNodeMap namedNodeMap) {
+		NamedNodeMap proxy =(NamedNodeMap)Proxy.newProxyInstance(NamedNodeMap.class.getClassLoader(),
+				 new Class[]  {NamedNodeMap.class},
+				  new VpeNamedNodeMapInvocationHandler(pageContext,namedNodeMap));
 
 		return proxy;
 	}
