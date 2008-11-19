@@ -9,7 +9,7 @@
 
 	<!-- Target locations: -->
 	<property name="target.dir" location="target" />
-	<property name="potdir" value="${target.dir}${file.separator}pot" />
+	<property name="podir" value="${basedir}${file.separator}po" />
 	<property name="propdir" value="${target.dir}${file.separator}prop" />
 	<property name="jardir" value="${target.dir}${file.separator}jars" />
 	<property name="zipdir" value="${target.dir}${file.separator}zips" />
@@ -83,144 +83,84 @@
 	</target>
 
 	<target name="clean" description="Remove generated files">
-		<delete dir="${potdir}" />
+		<!-- obsolete dirs -->
+		<delete dir="target/pot" />
 		<delete dir="po/en" />
 		<delete dir="po/qps" />
 		<delete dir="po/en_AA" />
+		
+		<delete dir="${podir}" includes="**/*.pot,**/en.po,**/qps.po,**/en_AA.po" />
 		<delete dir="${propdir}" />
+		<delete dir="target/manifests" />
 		<delete dir="${jardir}" />
 		<delete dir="${zipdir}" />
 		<delete dir="${target.dir}" includes="*.tmp" />
 	</target>
-	
-<!-- This is fairly neat, but doesn't preserve the plugin ID...
-	<target name="__prop2pot" depends="init"
+		
+	<target name="prop2pot" depends="init"
 		description="Extract translation templates (POT) from the JBoss Tools English properties files">
-		<mkdir dir="${potdir}" />
-		<for param="srcdir">
+		<for param="moduledir" >
 			<path>
-				paths under jbt.srcdir look like: ${module}/plugins/${plugin}/{src,main,...} 
-				<dirset dir="${jbt.srcdir}" includes="*/plugins/*/*" excludes="${srcexcludes}" />
+				<dirset dir="${jbt.srcdir}" includes="*" excludes="i18n,.*" />
 			</path>
 			<sequential>
-				<echo level="verbose" message="Extracting strings from @{srcdir}"/>
-				<prop2pot srcDir="@{srcdir}" dstDir="${potdir}">
-					<packagemapper from="*.properties" to="*.pot" />
+				<!-- FIXME create BundleNameMapper -->
+				<propertyregex override="true" property="module" 
+					input="@{moduledir}"  
+					regexp="^${jbt.srcdir}${file.separator}([^/\\]+).*" 
+					select="\1" />
+				<checkprop propname="module"/>
+				<echo message="module=${module}" />
+				
+				<!-- paths under jbt.srcdir look like: ${module}/plugins/${plugin}/{src,main,...} -->
+				<!-- FIXME includes should be just plugins/*/src/**/*.properties.  
+				See https://jira.jboss.org/jira/browse/JBIDE-2972  includes="plugins/*/*/**/*.properties" -->
+				<prop2pot srcDir="@{moduledir}" dstDir="${podir}/${module}" includes="plugins/*/src/**/*.properties" >
+					<!-- next two are Maven style, not currently used in JBT: --> 
+<!--
+					<fileset erroronmissingdir="false" dir="${plugindir}/src/main/java"/>
+					<fileset erroronmissingdir="false" dir="${plugindir}/src/main/resources"/>
+					 
+					<fileset erroronmissingdir="false" dir="${plugindir}/src/main" excludes="java,resources"/>
+					<fileset erroronmissingdir="false" dir="${plugindir}/src" excludes="main"/>
+					<fileset erroronmissingdir="false" dir="${plugindir}/jbosscore"/>
+					<fileset erroronmissingdir="false" dir="${plugindir}/jbossui"/>
+					<fileset erroronmissingdir="false" dir="${plugindir}/resources"/>
+					<fileset erroronmissingdir="false" dir="${plugindir}/template-src"/>
+					//<fileset dir="${plugindir}/templates"/>  
+-->
+					<!-- rename to pluginID-org.jboss.ide.*/org.jboss.ide.*.pot -->
+					<chainedmapper>
+						<regexpmapper handledirsep="true" from="^plugins/([^/]+)/[^/]+/(.*)[.]properties$$" to="\1-\2~\2.pot" />
+						<filtermapper>
+							<!-- org/jboss/ide/* -> org.jboss.ide.* -->
+							<replacestring from="${file.separator}" to="."/>
+							<replacestring from="~" to="/"/>
+						</filtermapper>
+					</chainedmapper>
 				</prop2pot>
 			</sequential>
 		</for>
 	</target>
--->
-	
-	<target name="prop2pot" depends="init"
-		description="Extract translation templates (POT) from the JBoss Tools English properties files">
-		<mkdir dir="${potdir}" />
-		<!-- paths under jbt.srcdir look like: ${module}/plugins/${plugin}/{src,main,...} -->
-		<prop2pot srcDir="${jbt.srcdir}" dstDir="${potdir}" includes="*/plugins/*/src/**/*.properties">
-			<!-- rename to pluginID-org.jboss.ide.*.pot -->
-			<chainedmapper>
-				<!-- rename -> "pluginID dash pathRelativeToSrc" -->
-				<regexpmapper handledirsep="true" from="^.*/plugins/(.*)/src/(.*)" to="\1-\2" />
-				<!-- rename org/jboss/ide/*.properties -> pluginID-org.jboss.ide.*.pot -->
-				<packagemapper from="*.properties" to="*.pot" />
-				<!-- rename -> pluginID/org.jboss.ide.*.pot: 
-				-->
-				<!--<regexpmapper from="([^-]+)-(.*)" to="\1/\2"/>-->
-				
-				<!-- Silly idea: Replace plugin id in package names with ~
-				<scriptmapper language="groovy" classpathref="dependency.classpath">
-					//self.addMappedName source.toUpperCase()
-					def m = source =~ /^([^-]+)-(.*)$$/
-					if (m.matches())
-					{
-						def plugin = m[0][1]
-						def resource = m[0][2]
-						def regex2 = plugin+"(.*)"
-						def m2 = resource =~ regex2
-						if(m2.matches())
-							self.addMappedName plugin+"-~"+m2[0][1]
-						else
-							self.addMappedName plugin+"-"+resource
-					}
-				</scriptmapper>
-				-->
-			</chainedmapper>
-		</prop2pot>
-	</target>
 
 	<!-- autogenerated "translations" -->
 	<target name="en" depends="init" description="Generate English PO files from POT files">
-		<delete dir="po/en" />
-		<mkdir dir="po/en" />
-		<pot2en srcDir="${potdir}" dstDir="po/en" />
+		<pot2en srcDir="${podir}" locale="en" />
 	</target>
 	<target name="qps" depends="init" description="Generate Pseudo-translation PO files for qps locale from POT files">
-		<delete dir="po/qps" />
-		<mkdir dir="po/qps" />
-		<pot2en srcDir="${potdir}" dstDir="po/qps" pseudo="true" />
+		<pot2en srcDir="${podir}" locale="qps" pseudo="true" />
 	</target>
 
 	<target name="en_AA" depends="init" description="Generate Pseudo-translation PO files for en_AA locale from POT files">
-		<delete dir="po/en_AA" />
-		<mkdir dir="po/en_AA" />
-		<pot2en srcDir="${potdir}" dstDir="po/en_AA" pseudo="true" />
+		<pot2en srcDir="${podir}" locale="en_AA" pseudo="true" />
 	</target>
 
 	<target name="po2prop" depends="init" description="Generate Java properties files from translated PO files">
 		<delete dir="${propdir}" />
 		<mkdir dir="${propdir}" />
 		<po2prop srcDir="po" dstDir="${propdir}" failonnull="true">
-			<unbundlemapper directoryPerLocale="true" />
-<!--
-			
-			<scriptmapper language="groovy" classpathref="dependency.classpath">
-				<![CDATA[
-// 7 seconds on hot run
-				// map locale/pluginID-org.jboss.ide.*.po -> locale/pluginID/org/jboss/ide/*.properties
-                static def exp
-				if (exp == null)
-				{
-					println "null"
-					exp = /^([^\/\\]+[\/\\][^-]+)-(.*)[.]po$$/
-				}
-				def m = source =~ exp
-				if (m.matches())
-				{
-					def localeAndPlugin = m[0][1]
-					def resource = m[0][2].replace '.' '/'
-					self.addMappedName localeAndPlugin+"/"+resource+".properties";
-				}
-
-				]]>
-			</scriptmapper>
-			-->
-		</po2prop>
-<!--
-		<for param="locale" list="${locales}">
-			<sequential>
-				<for param="plugindir">
-					<path>
-						<dirset dir="po/@{locale}" includes="*" />
-					</path>
-					<sequential>
-						<po2prop srcDir="@{plugindir}" dstDir="${propdir}/@{locale}" locale="@{locale}" failonnull="true">
-							<chainedmapper>
-								<filtermapper>
-								  <replacestring from="${file.separator}" to="-"/>
-								</filtermapper>
-
-								<unpackagemapper from="*.po" to="*.properties" />
-								<filtermapper>
-								  <replacestring from="/" to="-"/>
-								</filtermapper>
-							</chainedmapper>
-						</po2prop>
-					</sequential>
-				</for>
-			</sequential>
-		</for>	
--->
-	
+			<unbundlemapper />
+		</po2prop>	
 	</target>
 
 	<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -250,29 +190,23 @@
 		<sequential>
 			<for param="plugindir">
 				<path>
-					<dirset dir="@{rootdir}" includes="*/*/plugins/*" />
+					<dirset dir="@{rootdir}" includes="*/*" />
 				</path>
 				<sequential>
 					<!-- FIXME -->
-					<propertyregex override="true" property="locale" 
-    					input="@{plugindir}" 
-    					regexp="^@{rootdir}${file.separator}([^/\\]+)${file.separator}.*" 
-    					select="\1" />
-					<checkprop propname="locale"/>
 					<propertyregex override="true" property="module" 
     					input="@{plugindir}" 
-    					regexp="^@{rootdir}${file.separator}[^/\\]+${file.separator}([^/\\]+).*" 
+    					regexp="^@{rootdir}[/\\]([^/\\]+).*" 
     					select="\1" />
 					<checkprop propname="module"/>
 					<propertyregex override="true" property="plugin" 
     					input="@{plugindir}" 
-    					regexp="^@{rootdir}${file.separator}[^/\\]+${file.separator}[^/\\]+${file.separator}plugins${file.separator}(.*)" 
+    					regexp="^@{rootdir}[/\\][^/\\]+[/\\]([^/\\]+).*" 
     					select="\1" />
 					<checkprop propname="plugin"/>
-					<propertycopy override="true" property="localename" from="NAME_${locale}"/>
-    				<echo level="verbose" message="@{plugindir} contains ${locale} props for plugin ${plugin} in module ${module}"/>
+    				<echo level="verbose" message="@{plugindir} contains props for plugin ${plugin} in module ${module}"/>
 					<antcall target="@{task}">
-						<param name="plugin" value="@{plugin}"/>
+						<param name="plugin" value="${plugin}"/>
 						<param name="plugindir" value="@{plugindir}"/>
 					</antcall>
 				</sequential>
@@ -283,29 +217,34 @@
 	<!-- Processes the generated props directory, one plugin at a time, 
 		 generating manifests -->
 	<target name="manifests" depends="init" description="Generate fragment plugin manifests for langpack plugins">
-		<delete dir="${propdir}" includes="*/*/plugins/*/META-INF/MANIFEST.MF"/>
+		<delete dir="target/manifests" />
 		<processlocaleplugins rootdir="${propdir}" task="manifest" />
 	</target>
 
 	
-	<!-- Generates the manifest for one plugin.  Called by processlocaleplugins. -->
+	<!-- Generates the manifests (one per locale) for one plugin.  Called by processlocaleplugins. -->
 	<target name="manifest">
 		<!-- NB don't depend on initTaskDefs here, or ant loads the 
 		classes over and over until it exhausts memory -->
 		<checkprop propname="plugindir"/>
 		<checkprop propname="plugin"/>
-		<checkprop propname="locale"/>
-		<checkprop propname="localename"/>
 		<checkprop propname="PLUGIN_VERSION"/>
 		<checkprop propname="PLUGIN_VENDOR"/>
-		<copy overwrite="true" file="plugin-template.mf" tofile="${plugindir}/META-INF/MANIFEST.MF">
-			<filterchain>
-				<expandproperties/>
-			</filterchain>
-		</copy>
-		<!-- for debug output:
-		<concat><filelist files="${plugindir}/META-INF/MANIFEST.MF"></filelist></concat>
+		<for param="locale" list="${locales}">
+			<sequential>
+				<var name="locale" value="@{locale}" />
+				<propertycopy override="true" property="localename" from="NAME_${locale}"/>
+				<checkprop propname="localename"/>
+				<copy overwrite="true" file="plugin-template.mf" tofile="target/manifests/${plugin}/${locale}">
+					<filterchain>
+						<expandproperties/>
+					</filterchain>
+				</copy>
+<!-- for debug output:
+				<concat><filelist files="target/manifests/${plugin}/${locale}"></filelist></concat>
 -->
+			</sequential>
+		</for>
 	</target>
 
 	<!-- Processes the generated props directory, one plugin at a time, 
@@ -322,39 +261,28 @@
 		classes over and over until it exhausts memory -->
 		<checkprop propname="plugindir"/>
 		<checkprop propname="plugin"/>
-		<checkprop propname="locale"/>
-		<checkprop propname="localename"/>
 		<checkprop propname="PLUGIN_VERSION"/>
 		<checkprop propname="PLUGIN_VENDOR"/>
-		<property name="jar" value="${jardir}/plugins/${plugin}.nl-${locale}_${PLUGIN_VERSION}.jar" />
-		<echo level="verbose" message="Jarring up ${jar} from directory ${plugindir}"/>
-		<!-- we exclude "*" because we only want about.properties and 
-		plugin.properties from the top-level -->
-		<jar 
-			destfile="${jar}" 
-			update="no" 
-			basedir="${plugindir}"
-			excludes="*"
-			duplicate="fail" 
-			manifest="${plugindir}/META-INF/MANIFEST.MF">
-			<!-- todo consider an inline manifest -->
-			<include name="about.properties"/>
-			<!-- NB features contain feature.properties but all are currently empty -->
-			<include name="plugin.properties"/>
-			<!-- FIXME too many source paths, see https://jira.jboss.org/jira/browse/JBIDE-2972 -->
-			<!-- next two are Maven style, not currently used in JBT: 
-			<fileset erroronmissingdir="false" dir="${plugindir}/src/main/java"/>
-			<fileset erroronmissingdir="false" dir="${plugindir}/src/main/resources"/>
-			-->
-			<fileset erroronmissingdir="false" dir="${plugindir}/src/main" excludes="java,resources"/>
-			<fileset erroronmissingdir="false" dir="${plugindir}/src" excludes="main"/>
-			<fileset erroronmissingdir="false" dir="${plugindir}/jbosscore"/>
-			<fileset erroronmissingdir="false" dir="${plugindir}/jbossui"/>
-			<fileset erroronmissingdir="false" dir="${plugindir}/resources"/>
-			<!-- <fileset dir="${plugindir}/templates"/> -->
-			<fileset erroronmissingdir="false" dir="${plugindir}/template-src"/>
-			<!-- TODO identify and list unincluded directories -->
-		</jar>
+		
+		<for param="locale" list="${locales}">
+			<sequential>
+				<var name="__locale" value="@{locale}" />
+				<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
+				<checkprop propname="localename"/>
+
+				<var name="jar" value="${jardir}/plugins/${plugin}.nl-@{locale}_${PLUGIN_VERSION}.jar" />
+				<echo level="verbose" message="Jarring up ${jar} from directory ${plugindir}"/>
+				<jar 
+					destfile="${jar}" 
+					update="no" 
+					basedir="${plugindir}"
+					duplicate="fail" 
+					includes="**/*_@{locale}.properties"
+					manifest="target/manifests/${plugin}/@{locale}">
+				</jar>
+			</sequential>
+		</for>
+		
 	</target>
 
 	<target name="features" depends="init" 
@@ -527,6 +455,8 @@
 			</sequential>
 		</for>
 	</target>
+
+	<target name="most" depends="clean, prop2pot, en, qps, en_AA, po2prop, manifests, fragments, features" /> 
 
 	<target name="all" depends="clean, prop2pot, en, qps, en_AA, po2prop, manifests, fragments, features, p2, zips" 
 	description="Runs all targets in an appropriate order"/>
