@@ -66,7 +66,7 @@ public class VpeNodeInvocationHandler implements InvocationHandler {
 
 		result = ResourceUtil.getBundleValue(pageContext, toReplace);
 
-		//fix for JBIDE-3030
+		//mareshkau,fix for JBIDE-3030, el doesn't works for external files.
         if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null) {
         	return result;
         }
