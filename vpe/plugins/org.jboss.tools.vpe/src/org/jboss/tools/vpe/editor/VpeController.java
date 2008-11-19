@@ -1626,6 +1626,24 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						}
 					});
 		}
+		
+		if (VpeDebug.VISUAL_CONTEXTMENU_DUMP_SELECTED_ELEMENT) {
+			manager.add(new Action("Dump Selected Element") { //$NON-NLS-1$
+						public void run() {
+
+							VpeNodeMapping nodeMapping = SelectionUtil
+									.getNodeMappingBySourceSelection(
+											sourceEditor, domMapping);
+
+							if (nodeMapping != null) {
+
+								DOMTreeDumper dumper = new DOMTreeDumper(
+										VpeDebug.VISUAL_DUMP_PRINT_HASH);
+								dumper.dumpNode(nodeMapping.getVisualNode());
+							}
+						}
+					});
+		}
 
 		if (VpeDebug.VISUAL_CONTEXTMENU_DUMP_MAPPING) {
 			manager.add(new Action("Dump Mapping") { //$NON-NLS-1$

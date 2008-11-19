@@ -28,6 +28,7 @@ public class VpeDebug {
 	public static final boolean VISUAL_ADD_PSEUDO_ELEMENT;
 
 	public static final boolean VISUAL_CONTEXTMENU_DUMP_SOURCE;
+	public static final boolean VISUAL_CONTEXTMENU_DUMP_SELECTED_ELEMENT;
 	public static final boolean VISUAL_CONTEXTMENU_DUMP_MAPPING;
 	public static final boolean VISUAL_DUMP_PRINT_HASH;
 
@@ -53,6 +54,7 @@ public class VpeDebug {
 		VISUAL_ADD_PSEUDO_ELEMENT = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/add_pseudo_element")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		VISUAL_CONTEXTMENU_DUMP_SOURCE = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/contextmenu/dump_source")); //$NON-NLS-1$ //$NON-NLS-2$
+		VISUAL_CONTEXTMENU_DUMP_SELECTED_ELEMENT = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/contextmenu/dump_selected_element")); //$NON-NLS-1$ //$NON-NLS-2$
 		VISUAL_CONTEXTMENU_DUMP_MAPPING = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/contextmenu/dump_mapping")); //$NON-NLS-1$ //$NON-NLS-2$
 		VISUAL_DUMP_PRINT_HASH = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/dump_print_hash")); //$NON-NLS-1$ //$NON-NLS-2$
 

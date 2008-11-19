@@ -136,7 +136,7 @@ public class DOMTreeDumper {
      * 
      * @param node the node
      */
-    private void dumpNode(nsIDOMNode node) {
+    public void dumpNode(nsIDOMNode node) {
         dumpNode(node, false);
     }
 
