@@ -23,6 +23,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Path;
@@ -406,9 +408,18 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 		boolean registerFlag = isCurrentMainDocument();
 
-		// reads and dispatch events, this code prevent eclipse
-		//from sleeping during processing big pages
-		getPageContext().processDisplayEvents();
+		//it's check for initialization visualController,
+		//if we trying to process some event when controller
+		//hasn't been initialized, it's causes 
+		//org.eclipse.ui.PartInitException: Warning: Detected recursive 
+		//attempt by part org.jboss.tools.jst.jsp.jspeditor.HTMLTextEditor to create itself 
+		//(this is probably, but not necessarily, a bug)
+
+		if(visualEditor.getController().getSelectionManager()!=null) {
+			// reads and dispatch events, this code prevent eclipse
+			//from sleeping during processing big pages
+			getPageContext().processDisplayEvents();
+		}
 		// JBIDE-675, checks if editor was disposed or not
 		if (getPageContext().getSourceBuilder() == null
 				|| includeDocuments == null) {

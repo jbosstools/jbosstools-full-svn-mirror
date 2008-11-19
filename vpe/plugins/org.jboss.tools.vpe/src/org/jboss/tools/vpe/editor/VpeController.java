@@ -3391,5 +3391,12 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	private void setVpeUpdateDelayTime(int vpeUpdateDelayTime) {
 		this.vpeUpdateDelayTime = vpeUpdateDelayTime;
 	}
+
+	/**
+	 * @return the selectionManager
+	 */
+	public ISelectionManager getSelectionManager() {
+		return selectionManager;
+	}
 	
 }
