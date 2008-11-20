@@ -33,6 +33,8 @@ public class PortletCoreActivator extends Plugin {
 	public static final String PLUGIN_ID = "org.jboss.tools.portlet.core"; //$NON-NLS-1$
 	public static final String RESOURCES_FOLDER = "resources"; //$NON-NLS-1$
 	public static final String JSFPORTLET_FOLDER = "jsfportlet"; //$NON-NLS-1$
+	public static final String CHECK_RUNTIMES = "checkRuntimes"; //$NON-NLS-1$
+	public static final boolean DEFAULT_CHECK_RUNTIMES = true;
 
 	public static final IOverwriteQuery OVERWRITE_ALL_QUERY = new IOverwriteQuery() {
 		public String queryOverwrite(String pathString) {

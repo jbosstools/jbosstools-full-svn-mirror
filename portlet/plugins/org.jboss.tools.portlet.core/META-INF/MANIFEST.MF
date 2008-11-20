@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jst.common.frameworks,
  org.eclipse.ui.ide,
  org.eclipse.jem,
- org.eclipse.jst.jsf.facesconfig
+ org.eclipse.jst.jsf.facesconfig,
+ org.eclipse.wst.server.core
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.portlet.core,
  org.jboss.tools.portlet.core.internal,
