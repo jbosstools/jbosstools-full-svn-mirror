@@ -6,12 +6,13 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.osgi.util.NLS;
 import org.osgi.framework.Bundle;
 
 public class XULRunnerInitializer {
 
-	private static final String XULRUNNER_PATH = "org.eclipse.swt.browser.XULRunnerPath";
-	private static final String XULRUNNER_ENTRY = "/xulrunner";
+	private static final String XULRUNNER_PATH = "org.eclipse.swt.browser.XULRunnerPath"; //$NON-NLS-1$
+	private static final String XULRUNNER_ENTRY = "/xulrunner"; //$NON-NLS-1$
 
 	static {
 		String xulrunnerPath = System.getProperty(XULRUNNER_PATH);
@@ -22,20 +23,20 @@ public class XULRunnerInitializer {
 			}
 		}
 		if (xulrunnerPath == null) {
-			String XULRUNNER_BUNDLE = (new StringBuffer("org.mozilla.xulrunner"))
-					.append(".")
+			String XULRUNNER_BUNDLE = (new StringBuffer("org.mozilla.xulrunner")) //$NON-NLS-1$
+					.append(".") //$NON-NLS-1$
 					.append(Platform.getWS())
-					.append(".")
+					.append(".") //$NON-NLS-1$
 					.append(Platform.getOS())
-					.append(Platform.OS_MACOSX.equals(Platform.getOS()) ? "" : (new StringBuffer(".")).append(Platform.getOSArch()).toString())
+					.append(Platform.OS_MACOSX.equals(Platform.getOS()) ? "" : (new StringBuffer(".")).append(Platform.getOSArch()).toString()) //$NON-NLS-1$ //$NON-NLS-2$
 					.toString();
 			Bundle xulRunnerBundle = Platform.getBundle(XULRUNNER_BUNDLE);
 			if (xulRunnerBundle == null) {
-				System.out.println("Bundle " + XULRUNNER_BUNDLE + " is not found.");
+				System.out.println(NLS.bind(Messages.XULRunnerInitializer_Bundle_is_not_found, XULRUNNER_BUNDLE )); //$NON-NLS-2$
 			} else {
 				URL url = xulRunnerBundle.getEntry(XULRUNNER_ENTRY);
 				if (url == null) {
-					System.out.println("Bundle " + XULRUNNER_BUNDLE + " doesn't contain " + XULRUNNER_ENTRY);
+					System.out.println(NLS.bind(Messages.XULRunnerInitializer_Bundle_doesnt_contain, new Object[] {XULRUNNER_BUNDLE,XULRUNNER_ENTRY})); //$NON-NLS-2$
 				} else {
 					File xulrunnerFile;
 					try {
@@ -45,7 +46,7 @@ public class XULRunnerInitializer {
 						xulrunnerPath = xulrunnerFile.getAbsolutePath();
 						System.setProperty(XULRUNNER_PATH, xulrunnerPath);
 					} catch (IOException ioe) {
-						System.out.println("Cannot get path to XULRunner from bundle " + XULRUNNER_BUNDLE);
+						System.out.println(NLS.bind(Messages.XULRunnerInitializer_Cannot_get_path_to_XULRunner_from_bundle,XULRUNNER_BUNDLE));
 						ioe.printStackTrace();
 					}
 				}
