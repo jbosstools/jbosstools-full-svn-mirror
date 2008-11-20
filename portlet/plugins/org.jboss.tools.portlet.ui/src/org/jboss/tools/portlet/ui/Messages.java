@@ -4,6 +4,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jboss.tools.portlet.ui.messages"; //$NON-NLS-1$
+	public static String JBossPortletPreferencePage_Check_Runtimes_for_Portlet_Components;
 	public static String AddPortletWizardPage_Edit;
 	public static String AddPortletWizardPage_Help;
 	public static String AddPortletWizardPage_Portlet_Modes;

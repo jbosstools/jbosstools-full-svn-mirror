@@ -53,6 +53,16 @@
 		<selection class="org.eclipse.core.resources.IResource" />
 	</wizard>
 	-->
+	
   </extension>
-  
+   
+   <extension
+        point="org.eclipse.ui.preferencePages">
+     <page
+           category="org.jboss.tools.common.model.ui.MainPreferencePage"
+           class="org.jboss.tools.portlet.ui.internal.preferences.JBossPortletPreferencePage"
+           id="org.jboss.tools.portlet.core.ui.JBossPortletPreferencePage"
+           name="%JBoss_Portlet"/>
+      </extension>
+    
 </plugin>
