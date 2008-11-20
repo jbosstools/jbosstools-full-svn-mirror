@@ -74,7 +74,7 @@
       <editor
             name="Smooks Form Editor"
             extensions="smooks"
-            icon="icons/sample.gif"
+            icon="icons/smooks-sm.gif"
             class="org.jboss.tools.smooks.ui.editors.SmooksFormEditor"
             id="org.jboss.tools.smooks.ui.editors.SmooksFormEditor">
              <contentTypeBinding
@@ -148,7 +148,7 @@
       <wizard
             category="org.jboss.tools.smooks.ui.wizards"
             class="org.jboss.tools.smooks.ui.wizards.SmooksConfigFileNewWizard"
-            icon="icons/sample.gif"
+            icon="icons/smooks-sm.gif"
             id="org.jboss.tools.smooks.ui.wizards.SmooksConfigFileNewWizard"
             name="Smooks Configuration File">
       </wizard>

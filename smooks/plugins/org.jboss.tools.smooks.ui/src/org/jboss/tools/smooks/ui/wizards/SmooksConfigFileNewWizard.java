@@ -25,9 +25,9 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
-import org.jboss.tools.common.model.ui.ModelUIImages;
 import org.jboss.tools.smooks.graphical.util.GraphicalInformationSaver;
 import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
+import org.jboss.tools.smooks.ui.SmooksUIActivator;
 import org.jboss.tools.smooks.ui.editors.SmooksFileEditorInput;
 import org.jboss.tools.smooks.ui.editors.SmooksFormEditor;
 import org.jboss.tools.smooks.ui.editors.TypeIDSelectionWizardPage;
@@ -65,8 +65,7 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 		super();
 		setNeedsProgressMonitor(true);
 		super.setWindowTitle(Messages.getString("SmooksConfigFileNewWizard.NewConfigFileWizardTitle")); //$NON-NLS-1$
-		setDefaultPageImageDescriptor(ModelUIImages
-				.getImageDescriptor(ModelUIImages.WIZARD_NEW_PROJECT));
+		setDefaultPageImageDescriptor(SmooksUIActivator.getImageDescriptor("icons/smooks-wiz.gif"));
 	}
 
 	/**
