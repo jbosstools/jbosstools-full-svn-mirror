@@ -1813,7 +1813,7 @@
 	<vpe:tag name="table" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy
-				attrs="style,class,width,border,frame,rules,cellspacing,cellpadding,align,bgcolor,background" />
+				attrs="style,class,width,border,bordercolor,frame,rules,cellspacing,cellpadding,align,bgcolor,background" />
 			<vpe:resize>
 				<vpe:width width-attr="style.width" />
 				<vpe:height height-attr="style.height" />
