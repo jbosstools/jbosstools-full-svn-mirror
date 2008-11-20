@@ -22,7 +22,6 @@ import java.util.List;
  */
 public class JavaBeanModelFactory {
 	
-	
 	private static final List PRIMITIVE_CLASSES = new ArrayList();
 	static{
 		PRIMITIVE_CLASSES.add(Integer.class);
@@ -34,7 +33,9 @@ public class JavaBeanModelFactory {
 		PRIMITIVE_CLASSES.add(Character.class);
 		PRIMITIVE_CLASSES.add(BigInteger.class);
 		PRIMITIVE_CLASSES.add(BigDecimal.class);
+		PRIMITIVE_CLASSES.add(Boolean.class);
 		PRIMITIVE_CLASSES.add(Byte.class);
+		PRIMITIVE_CLASSES.add(java.util.Calendar.class);
 	}
 	
 	/**

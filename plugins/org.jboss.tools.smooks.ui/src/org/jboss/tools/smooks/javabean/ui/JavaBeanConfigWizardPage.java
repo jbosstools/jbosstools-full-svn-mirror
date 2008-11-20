@@ -10,10 +10,11 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.javabean.ui;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.wizard.IWizardNode;
-import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -41,9 +42,10 @@ public class JavaBeanConfigWizardPage extends WizardPage implements
 
 	private JavaBeanModelLoadComposite javaPropertySelectComposite;
 	
-	public JavaBeanModel getJavaBeanModel(){
-		if(javaPropertySelectComposite == null) return null;
-		return javaPropertySelectComposite.getCheckedJavaBeanModel();
+
+	public List<JavaBeanModel> getJavaBeanModelList() {
+		if(javaPropertySelectComposite == null) return Collections.EMPTY_LIST;
+		return javaPropertySelectComposite.getJavabeanList();
 	}
 
 	public JavaBeanConfigWizardPage(IJavaProject selection) {

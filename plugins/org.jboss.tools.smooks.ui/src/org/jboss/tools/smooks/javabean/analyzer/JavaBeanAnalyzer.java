@@ -125,6 +125,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	}
 
 	protected void setSelectorIsUsed(String selector) {
+		if (selector == null)
+			return;
 		userdResourceTypeMap.put(selector, new Object());
 	}
 
@@ -137,6 +139,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	}
 
 	protected boolean isSelectorIsUsed(String resourceType) {
+		if (resourceType == null)
+			return false;
 		return (userdResourceTypeMap.get(resourceType) != null);
 	}
 
@@ -494,7 +498,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					sourceName = sourceClazz.getName();
 				}
 				String selector = rc.getSelector();
-				if(selector != null){
+				if (selector != null) {
 					selector = selector.trim();
 				}
 				if (sourceName.equals(selector)) {
@@ -546,12 +550,12 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			AnyType binding = (AnyType) iterator.next();
 			String property = SmooksModelUtils.getAttributeValueFromAnyType(
 					binding, SmooksModelUtils.ATTRIBUTE_PROPERTY);
-			if(property != null){
+			if (property != null) {
 				property = property.trim();
 			}
 			String selector = SmooksModelUtils.getAttributeValueFromAnyType(
 					binding, SmooksModelUtils.ATTRIBUTE_SELECTOR);
-			if(selector != null){
+			if (selector != null) {
 				selector = selector.trim();
 			}
 			JavaBeanModel childTargetModel = findTheChildJavaBeanModel(
@@ -788,45 +792,83 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				}
 			}
 		}
+		List<JavaBeanModel> list = new ArrayList<JavaBeanModel>();
 		if (current == null) {
-			rootClassName = this.getDataSourceClass(graphInfo, TARGET_DATA);
+			// rootClassName = this.getDataSourceClass(graphInfo, TARGET_DATA);
+			// TODO if there isn't any BeanPopulater throws exception
+			// MODIFY by Dart 2008.11.17
+			String classString = getDataSourceClass(graphInfo, TARGET_DATA);
+			if (classString != null && loader != null) {
+				try {
+					String[] classes = classString.split(";");
+					if (classes != null) {
+						for (int i = 0; i < classes.length; i++) {
+							String clazzName = classes[i];
+							list.add(JavaBeanModelFactory
+									.getJavaBeanModelWithLazyLoad(loader
+											.loadClass(clazzName)));
+						}
+						return list;
+					}
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
+			throw new RuntimeException(
+					"Can't load Java bean model form the config file.");
 		}
 		// if can't load the source from GraphicalInformation , return NULL
 		if (current == null && rootClassName == null)
-			return null;
-		Class rootClass = null;
-		if (rootClassName == null) {
+			return list;
+		int startIndex = resourceConfigList.indexOf(current);
+		for (int i = startIndex; i < resourceConfigList.size(); i++) {
+			ResourceConfigType resourceConfig = (ResourceConfigType) resourceConfigList
+					.get(i);
+			ResourceType resourceType = resourceConfig.getResource();
+			String selector = resourceConfig.getSelector();
+			if (selector != null)
+				selector = selector.trim();
+			if (isSelectorIsUsed(selector))
+				continue;
+			if (resourceType == null)
+				continue;
+			String resource = resourceType.getValue();
+			if (resource != null)
+				resource = resource.trim();
+			if (!BEANPOPULATOR.equals(resource)) {
+				continue;
+			}
+			Class rootClass = null;
 			rootClassName = SmooksModelUtils.getParmaText(
-					SmooksModelUtils.BEAN_CLASS, current);
-		}
-		if (rootClassName != null && loader != null) {
-			try {
-				rootClass = loader.loadClass(rootClassName);
-			} catch (ClassNotFoundException e) {
-				// TODO if can't find the class throws exception
-				// MODIFY by Dart 2008.11.12
-				throw new RuntimeException("Can't find the class : \""
-						+ rootClassName + "\" to create the JavaBean model");
+					SmooksModelUtils.BEAN_CLASS, resourceConfig);
+			if (rootClassName != null && loader != null) {
+				try {
+					rootClass = loader.loadClass(rootClassName);
+				} catch (ClassNotFoundException e) {
+					// TODO if can't find the class throws exception
+					// MODIFY by Dart 2008.11.12
+					throw new RuntimeException("Can't find the class : \""
+							+ rootClassName + "\" to create the JavaBean model");
+				}
+			}
+			boolean rootIsError = false;
+			JavaBeanModel rootModel = null;
+			if (rootClass != null) {
+				rootModel = JavaBeanModelFactory
+						.getJavaBeanModelWithLazyLoad(rootClass);
+			} else {
+				rootModel = new JavaBeanModel(null, rootClassName);
+				rootIsError = true;
+			}
+			if (resourceConfig != null) {
+				rootModel.setBeanClassString(SmooksModelUtils.getParmaText(
+						SmooksModelUtils.BEAN_CLASS, resourceConfig));
+				setSelectorIsUsed(selector);
+				buildChildrenOfTargetInputModel(listType, rootModel, false,
+						rootIsError, resourceConfig, loader);
+				list.add(rootModel);
 			}
 		}
-		boolean rootIsError = false;
-		JavaBeanModel rootModel = null;
-		if (rootClass != null) {
-			rootModel = JavaBeanModelFactory
-					.getJavaBeanModelWithLazyLoad(rootClass);
-		} else {
-			rootModel = new JavaBeanModel(null, rootClassName);
-			rootIsError = true;
-		}
-		if (current != null) {
-			rootModel.setBeanClassString(SmooksModelUtils.getParmaText(
-					SmooksModelUtils.BEAN_CLASS, current));
-			setSelectorIsUsed(rootClassName);
-			buildChildrenOfTargetInputModel(listType, rootModel, false,
-					rootIsError, current, loader);
-		}
-		List<JavaBeanModel> list = new ArrayList<JavaBeanModel>();
-		list.add(rootModel);
 		return list;
 	}
 
@@ -848,8 +890,11 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				String selector = SmooksModelUtils
 						.getAttributeValueFromAnyType(binding,
 								SmooksModelUtils.ATTRIBUTE_SELECTOR);
-				processBindingPropertyFromTargetModel(listType, property,
-						selector, beanModel, classLoader);
+				if (selector != null)
+					selector = selector.trim();
+				if (!isSelectorIsUsed(selector))
+					processBindingPropertyFromTargetModel(listType, property,
+							selector, beanModel, classLoader);
 			}
 		}
 
@@ -870,7 +915,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			parentModel.addProperty(model);
 			model.setError(Messages.getString("JavaBeanAnalyzer.DontExist")); //$NON-NLS-1$
 		}
-
+		if (isSelectorIsUsed(selector))
+			return;
 		if (isReferenceSelector(selector)) {
 			selector = selector.substring(2, selector.length() - 1);
 			ResourceConfigType resourceConfig = findResourceConfigTypeWithSelector(
@@ -879,6 +925,11 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				throw new RuntimeException(
 						"Can't find some ResourceConfig element in the config file.Maybe some ResourceConfig element miss <param name = \"beanId\">"
 								+ selector + "</param>");
+			}
+			String resourceConfigSelector = resourceConfig.getSelector();
+			if (resourceConfigSelector != null) {
+				resourceConfigSelector = resourceConfigSelector.trim();
+				setSelectorIsUsed(resourceConfigSelector);
 			}
 			String beanClassText = SmooksModelUtils.getParmaText(
 					SmooksModelUtils.BEAN_CLASS, resourceConfig);
