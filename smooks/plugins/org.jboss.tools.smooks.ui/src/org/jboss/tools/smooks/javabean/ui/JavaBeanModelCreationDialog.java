@@ -55,9 +55,7 @@ public class JavaBeanModelCreationDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected void okPressed() {
-		returnModel = jc.getCheckedJavaBeanModel();
 		super.okPressed();
-//		returnModel = jc.getCheckedJavaBeanModel();
 	}
 
 	/*

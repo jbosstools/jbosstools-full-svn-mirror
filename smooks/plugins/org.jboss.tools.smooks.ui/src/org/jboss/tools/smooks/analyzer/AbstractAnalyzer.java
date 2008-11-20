@@ -72,12 +72,14 @@ public abstract class AbstractAnalyzer implements IMappingAnalyzer {
 	
 	
 	protected void setSelectorIsUsed(String selector) {
+		if(selector != null) selector = selector.trim();
 		userdResourceTypeMap.put(selector, new Object());
 	}
 
 
-	protected boolean isSelectorIsUsed(String resourceType) {
-		return (userdResourceTypeMap.get(resourceType) != null);
+	protected boolean isSelectorIsUsed(String selector) {
+		if(selector != null) selector = selector.trim();
+		return (userdResourceTypeMap.get(selector) != null);
 	}
 	
 	protected void addResourceConfigType(SmooksResourceListType resourceList,
@@ -126,6 +128,7 @@ public abstract class AbstractAnalyzer implements IMappingAnalyzer {
 	
 	protected ResourceConfigType findResourceConfigTypeWithSelector(
 			String selector, SmooksResourceListType listType) {
+		if(selector != null) selector = selector.trim();
 		if (isReferenceSelector(selector)) {
 			selector = this.getBeanIdWithRawSelectorString(selector);
 		}

@@ -50,6 +50,7 @@ import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
 import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
 import org.eclipse.gef.ui.parts.SelectionSynchronizer;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -59,6 +60,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -126,6 +128,7 @@ import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
 import org.jboss.tools.smooks.ui.IViewerInitor;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
 import org.jboss.tools.smooks.ui.StructuredDataCreationWizardDailog;
+import org.jboss.tools.smooks.ui.ViewerInitorStore;
 import org.jboss.tools.smooks.ui.gef.editparts.SmooksEditPartFactory;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
@@ -149,6 +152,8 @@ import org.jboss.tools.smooks.utils.UIUtils;
 public class SmooksGraphicalFormPage extends FormPage implements
 		ISelectionChangedListener, ISelectionProvider,
 		org.eclipse.emf.common.command.CommandStackListener, ISaveListener {
+
+	private final String[] REQUIRED_SOURCE_SELECT_TYPE = new String[] { "org.jboss.tools.smooks.xml.viewerInitor.xml" };
 
 	private List<IAnalyzeListener> analyzeListenerList = new ArrayList<IAnalyzeListener>();
 
@@ -301,11 +306,16 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		gridLayout.horizontalSpacing = 0;
 		form.getBody().setLayout(gridLayout);
 		Composite rootMainControl = form.getBody();
-		form.setText(Messages.getString("SmooksGraphicalFormPage.MappingPageFormTitle")); //$NON-NLS-1$
-		mappingGUISection = this.createPageSectionHeader(rootMainControl,
-				Section.TITLE_BAR | Section.DESCRIPTION,
-				Messages.getString("SmooksGraphicalFormPage.MappingSectionTitle"), //$NON-NLS-1$
-				Messages.getString("SmooksGraphicalFormPage.MappingSectionDescription")); //$NON-NLS-1$
+		form.setText(Messages
+				.getString("SmooksGraphicalFormPage.MappingPageFormTitle")); //$NON-NLS-1$
+		mappingGUISection = this
+				.createPageSectionHeader(
+						rootMainControl,
+						Section.TITLE_BAR | Section.DESCRIPTION,
+						Messages
+								.getString("SmooksGraphicalFormPage.MappingSectionTitle"), //$NON-NLS-1$
+						Messages
+								.getString("SmooksGraphicalFormPage.MappingSectionDescription")); //$NON-NLS-1$
 
 		Composite mainComposite = toolkit.createComposite(mappingGUISection);
 		mappingGUISection.setClient(mainComposite);
@@ -400,8 +410,11 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			underToolPanel.setLayout(underLayout);
 			underToolPanel.setLayoutData(sgd1);
 			{
-				sourceLink = toolkit.createHyperlink(underToolPanel,
-						Messages.getString("SmooksGraphicalFormPage.SourceSelectLinkText"), SWT.NONE); //$NON-NLS-1$
+				sourceLink = toolkit
+						.createHyperlink(
+								underToolPanel,
+								Messages
+										.getString("SmooksGraphicalFormPage.SourceSelectLinkText"), SWT.NONE); //$NON-NLS-1$
 				sourceLink.addHyperlinkListener(new DataSelectLinkListener(
 						sourceViewer));
 			}
@@ -418,8 +431,11 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				composite1.setLayout(composite1Layout);
 			}
 			{
-				targetLink = toolkit.createHyperlink(underToolPanel,
-						Messages.getString("SmooksGraphicalFormPage.TargetSelectLinkText"), SWT.NONE); //$NON-NLS-1$
+				targetLink = toolkit
+						.createHyperlink(
+								underToolPanel,
+								Messages
+										.getString("SmooksGraphicalFormPage.TargetSelectLinkText"), SWT.NONE); //$NON-NLS-1$
 				GridData label2LData = new GridData();
 				label2LData.horizontalAlignment = GridData.END;
 				targetLink.setLayoutData(label2LData);
@@ -468,7 +484,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			this.getSmooksResource().unload();
 			this.initTransformViewerModel((IEditorSite) getSite(),
 					getEditorInput());
-		}  catch (Throwable e) {
+		} catch (Throwable e) {
 			throwable = e;
 		}
 		if (throwable == null) {
@@ -602,7 +618,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	protected void createSourceGraphModels() {
 		clearExsitingGraphModels(SourceModel.class);
-		if(sourceViewer == null) return;
+		if (sourceViewer == null)
+			return;
 		Tree tree = sourceViewer.getTree();
 		TreeItem[] items = tree.getItems();
 		createGraphModels(items, SourceModel.class);
@@ -658,7 +675,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	protected void createTargetGraphModels() {
 		clearExsitingGraphModels(TargetModel.class);
-		if(targetViewer == null) return;
+		if (targetViewer == null)
+			return;
 		Tree tree = targetViewer.getTree();
 		TreeItem[] items = tree.getItems();
 		createGraphModels(items, TargetModel.class);
@@ -713,9 +731,12 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			boolean cleanError = MessageDialog
 					.openQuestion(
 							getSite().getShell(),
-							Messages.getString("SmooksGraphicalFormPage.CleanErrorsDialogTitle"), //$NON-NLS-1$
-							Messages.getString("SmooksGraphicalFormPage.CleanErrorsDialogContents1") //$NON-NLS-1$
-									+ Messages.getString("SmooksGraphicalFormPage.CleanErrorsDialogContents2")); //$NON-NLS-1$
+							Messages
+									.getString("SmooksGraphicalFormPage.CleanErrorsDialogTitle"), //$NON-NLS-1$
+							Messages
+									.getString("SmooksGraphicalFormPage.CleanErrorsDialogContents1") //$NON-NLS-1$
+									+ Messages
+											.getString("SmooksGraphicalFormPage.CleanErrorsDialogContents2")); //$NON-NLS-1$
 			if (cleanError)
 				return;
 		}
@@ -746,9 +767,14 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			exp = e;
 		}
 		if (exp != null) {
-			ErrorDialog.openError(getSite().getShell(), Messages.getString("SmooksGraphicalFormPage.SaveErrorDlgTitle"), //$NON-NLS-1$
-					Messages.getString("SmooksGraphicalFormPage.SaveErrorDlgContent"), UIUtils //$NON-NLS-1$
-							.createErrorStatus(exp));
+			ErrorDialog
+					.openError(
+							getSite().getShell(),
+							Messages
+									.getString("SmooksGraphicalFormPage.SaveErrorDlgTitle"), //$NON-NLS-1$
+							Messages
+									.getString("SmooksGraphicalFormPage.SaveErrorDlgContent"), UIUtils //$NON-NLS-1$
+									.createErrorStatus(exp));
 		}
 		super.doSave(monitor);
 		commandStackChanged = false;
@@ -859,7 +885,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	 * 
 	 */
 	protected void createConnectionModels() {
-		if(rootModel == null) return;
+		if (rootModel == null)
+			return;
 		List children = this.rootModel.getChildren();
 		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
 			TreeItemRelationModel source = (TreeItemRelationModel) iterator
@@ -996,16 +1023,19 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			if (dialog.open() == org.eclipse.jface.dialogs.Dialog.OK) {
 				sourceDataTypeID = wizard.getSourceDataTypeID();
 				targetDataTypeID = wizard.getTargetDataTypeID();
-				sourceTreeViewerInputModel = wizard
-						.getSourceTreeViewerInputContents();
-				targetTreeViewerInputModel = wizard
-						.getTargetTreeViewerInputContents();
-				this.getSmooksConfigurationFileGenerateContext()
-						.setSourceDataTypeID(sourceDataTypeID);
-				this.getSmooksConfigurationFileGenerateContext()
-						.setTargetDataTypeID(targetDataTypeID);
+				// sourceTreeViewerInputModel = wizard
+				// .getSourceTreeViewerInputContents();
+				// targetTreeViewerInputModel = wizard
+				// .getTargetTreeViewerInputContents();
+				SmooksConfigurationFileGenerateContext context = getSmooksConfigurationFileGenerateContext();
+				context.setSourceDataTypeID(sourceDataTypeID);
+				context.setTargetDataTypeID(targetDataTypeID);
+				sourceTreeViewerInputModel = selectSourceDataSource(
+						sourceDataTypeID, context);
+				targetTreeViewerInputModel = selectTargetDataSource(
+						targetDataTypeID, context);
 				graphicalInformationSaver.doSave(new NullProgressMonitor(),
-						getSmooksConfigurationFileGenerateContext());
+						context);
 			}
 		}
 		smooksResource = this.getSmooksResource();
@@ -1017,6 +1047,51 @@ public class SmooksGraphicalFormPage extends FormPage implements
 					.getContents().get(0)).getSmooksResourceList();
 			this.analyzeGraphicalModel(listType, graph, file);
 		}
+	}
+
+	private boolean requiredSelectDataSource(String typeID) {
+		for (int i = 0; i < this.REQUIRED_SOURCE_SELECT_TYPE.length; i++) {
+			String s = REQUIRED_SOURCE_SELECT_TYPE[i];
+			if (s.equals(typeID))
+				return true;
+		}
+		return false;
+	}
+
+	private Object selectTargetDataSource(String typeID,
+			SmooksConfigurationFileGenerateContext context) {
+		if (requiredSelectDataSource(typeID)) {
+			IStructuredDataCreationWizard wizard1 = ViewerInitorStore
+					.getInstance().getStructuredDataCreationWizard(
+							typeID);
+			WizardDialog dialog1 = new WizardDialog(getSite().getShell(),
+					wizard1);
+			((Wizard) wizard1).setWindowTitle("Target Data Selection");
+			if (dialog1.open() == Dialog.OK) {
+				context.getProperties().put("targetDataPath",
+						wizard1.getStructuredDataSourcePath());
+			}
+			return wizard1.getTreeViewerInputContents();
+		}
+		return null;
+	}
+
+	private Object selectSourceDataSource(String typeID,
+			SmooksConfigurationFileGenerateContext context) {
+		if (requiredSelectDataSource(typeID)) {
+			IStructuredDataCreationWizard wizard1 = ViewerInitorStore
+					.getInstance().getStructuredDataCreationWizard(
+							typeID);
+			WizardDialog dialog1 = new WizardDialog(getSite().getShell(),
+					wizard1);
+			((Wizard) wizard1).setWindowTitle("Source Data Selection");
+			if (dialog1.open() == Dialog.OK) {
+				context.getProperties().put("sourceDataPath",
+						wizard1.getStructuredDataSourcePath());
+			}
+			return wizard1.getTreeViewerInputContents();
+		}
+		return null;
 	}
 
 	protected void initSmooksContext(GraphInformations graph,
@@ -1134,8 +1209,10 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				if (!MessageDialog
 						.openQuestion(
 								getSite().getShell(),
-								Messages.getString("SmooksGraphicalFormPage.ReselectViewerContentDlgTitle"), //$NON-NLS-1$
-								Messages.getString("SmooksGraphicalFormPage.ReselectViewerContentDlgContent"))) { //$NON-NLS-1$
+								Messages
+										.getString("SmooksGraphicalFormPage.ReselectViewerContentDlgTitle"), //$NON-NLS-1$
+								Messages
+										.getString("SmooksGraphicalFormPage.ReselectViewerContentDlgContent"))) { //$NON-NLS-1$
 					return;
 				}
 			}
@@ -1165,13 +1242,23 @@ public class SmooksGraphicalFormPage extends FormPage implements
 					commandStackChanged = true;
 					firePropertyChange(PROP_DIRTY);
 				} catch (Exception e) {
-					MessageDialog.openError(getSite().getShell(), Messages.getString("SmooksGraphicalFormPage.FillViewerErrorTitle"), //$NON-NLS-1$
-							Messages.getString("SmooksGraphicalFormPage.FillViewerErrorContent") //$NON-NLS-1$
-									+ e.toString());
+					MessageDialog
+							.openError(
+									getSite().getShell(),
+									Messages
+											.getString("SmooksGraphicalFormPage.FillViewerErrorTitle"), //$NON-NLS-1$
+									Messages
+											.getString("SmooksGraphicalFormPage.FillViewerErrorContent") //$NON-NLS-1$
+											+ e.toString());
 				}
 			} else {
-				MessageDialog.openError(getSite().getShell(), Messages.getString("SmooksGraphicalFormPage.FillViewerErrorTitle"), //$NON-NLS-1$
-						Messages.getString("SmooksGraphicalFormPage.FillViewerErrorContent")); //$NON-NLS-1$
+				MessageDialog
+						.openError(
+								getSite().getShell(),
+								Messages
+										.getString("SmooksGraphicalFormPage.FillViewerErrorTitle"), //$NON-NLS-1$
+								Messages
+										.getString("SmooksGraphicalFormPage.FillViewerErrorContent")); //$NON-NLS-1$
 			}
 		}
 	}
@@ -1333,7 +1420,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				// System.out.println("Block a event fire !!");
 				return;
 			}
-			rootModel.firePropertyChange(AbstractStructuredDataModel.P_REFRESH_PANEL, null,
+			rootModel.firePropertyChange(
+					AbstractStructuredDataModel.P_REFRESH_PANEL, null,
 					new Object());
 		}
 

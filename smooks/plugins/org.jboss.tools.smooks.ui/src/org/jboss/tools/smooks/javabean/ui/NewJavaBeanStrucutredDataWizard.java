@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.javabean.ui;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -63,15 +63,14 @@ public class NewJavaBeanStrucutredDataWizard extends Wizard implements
 	 */
 	@Override
 	public boolean performFinish() {
-		result = page.getJavaBeanModel();
+		result = page.getJavaBeanModelList();
 		return true;
 	}
 
 	public Object getTreeViewerInputContents() {
-		if(result == null) return null;
-		List<Object> list = new ArrayList<Object>();
-		list.add(result);
-		return list;
+		if (result == null)
+			return null;
+		return result;
 	}
 
 	public void init(IEditorSite site, IEditorInput input) {
@@ -117,12 +116,16 @@ public class NewJavaBeanStrucutredDataWizard extends Wizard implements
 	}
 
 	public String getStructuredDataSourcePath() {
-		JavaBeanModel model = page.getJavaBeanModel();
-		if (model != null) {
-			Class clazz = model.getBeanClass();
-			if (clazz != null)
-				return clazz.getName();
+		List<JavaBeanModel> list = page.getJavaBeanModelList();
+		StringBuffer buffer = new StringBuffer();
+		for (Iterator<JavaBeanModel> iterator = list.iterator(); iterator
+				.hasNext(); buffer.append(";")) {
+			JavaBeanModel javaBeanModel = (JavaBeanModel) iterator.next();
+			Class clazz = javaBeanModel.getBeanClass();
+			if (clazz != null) {
+				buffer.append(clazz.getName());
+			}
 		}
-		return null;
+		return buffer.toString();
 	}
 }

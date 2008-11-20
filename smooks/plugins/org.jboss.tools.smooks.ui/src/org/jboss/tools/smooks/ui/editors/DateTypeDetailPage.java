@@ -27,6 +27,7 @@ import org.jboss.tools.smooks.model.util.SmooksModelUtils;
  */
 public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 
+	private static final String DECODER = "decoder";
 	private Text formatText;
 	private Combo localeLangaugeCombo;
 	private Combo localeContryCombo;
@@ -134,7 +135,7 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 			this.parentEditor.fireEditorDirty(true);
 			return;
 		}
-		text = "decorat:"+text;
+		text = DECODER+ ":" + text;
 		if(this.resourceConfigList != null){
 			resourceConfigList.setSelector(text);
 			this.parentEditor.fireEditorDirty(true);
@@ -153,7 +154,7 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 	protected void initSectionUI() {
 		if(this.resourceConfigList != null){
 			String formate = SmooksModelUtils.getParmaText("format", resourceConfigList); //$NON-NLS-1$
-			String locallang = SmooksModelUtils.getParmaText("Locale-Language", resourceConfigList); //$NON-NLS-1$
+			String locallang = SmooksModelUtils.getParmaText("locale-language", resourceConfigList); //$NON-NLS-1$
 			String localcontry = SmooksModelUtils.getParmaText("locale-country", resourceConfigList); //$NON-NLS-1$
 			if(formate == null) formate = ""; //$NON-NLS-1$
 			if(locallang == null) locallang = ""; //$NON-NLS-1$
