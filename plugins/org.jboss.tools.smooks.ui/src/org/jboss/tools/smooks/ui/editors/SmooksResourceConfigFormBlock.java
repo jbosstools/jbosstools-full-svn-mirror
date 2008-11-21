@@ -213,6 +213,9 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 					Object element) {
 				if (element == transformType)
 					return false;
+				if(!(element instanceof ResourceConfigType)){
+					return false;
+				}
 				if (modelPackage != null) {
 					List hidenList = modelPackage.getHidenSmooksElements();
 					if(hidenList == null) return false;

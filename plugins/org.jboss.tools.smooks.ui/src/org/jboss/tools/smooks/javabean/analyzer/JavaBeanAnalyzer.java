@@ -863,7 +863,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			if (resourceConfig != null) {
 				rootModel.setBeanClassString(SmooksModelUtils.getParmaText(
 						SmooksModelUtils.BEAN_CLASS, resourceConfig));
-				setSelectorIsUsed(selector);
+//				setSelectorIsUsed(selector);
 				buildChildrenOfTargetInputModel(listType, rootModel, false,
 						rootIsError, resourceConfig, loader);
 				list.add(rootModel);

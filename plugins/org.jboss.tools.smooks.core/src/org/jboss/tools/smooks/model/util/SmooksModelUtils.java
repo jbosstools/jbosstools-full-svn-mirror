@@ -81,8 +81,9 @@ public class SmooksModelUtils {
 			List paramList = resourceConfig.getParam();
 			for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
 				ParamType param = (ParamType) iterator.next();
-				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(param
-						.getName())) {
+				String name = param.getName();
+				if(name != null) name = name.trim();
+				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(name)) {
 					typeParam = param;
 					break;
 				}
@@ -131,6 +132,7 @@ public class SmooksModelUtils {
 	public static boolean isTransformTypeResourceConfig(
 			ResourceConfigType resourceConfig) {
 		String selector = resourceConfig.getSelector();
+		if(selector != null) selector = selector.trim();
 		if (!SmooksModelConstants.GLOBAL_PARAMETERS.equals(selector)) {
 			return false;
 		}
@@ -141,7 +143,9 @@ public class SmooksModelUtils {
 			List paramList = resourceConfig.getParam();
 			for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
 				ParamType p = (ParamType) iterator.next();
-				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(p.getName())) {
+				String paramName = p.getName();
+				if(paramName != null) paramName = paramName.trim();
+				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(paramName)) {
 					return true;
 				}
 			}

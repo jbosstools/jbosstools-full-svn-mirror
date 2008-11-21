@@ -62,8 +62,11 @@ public class ResourceConfigWarrperFactory {
 			return false;
 		String value = resource.getValue();
 		if(value != null) value = value.trim();
-		if (SmooksModelConstants.DATE_DECODER.equals(value)) {
-			return true;
+		for (int i = 0; i < SmooksModelConstants.DECODER_CLASSES.length; i++) {
+			String decoderClass = SmooksModelConstants.DECODER_CLASSES[i];
+			if(decoderClass.equals(value)){
+				return true;
+			}
 		}
 		return false;
 	}

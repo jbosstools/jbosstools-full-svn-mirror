@@ -23,9 +23,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.jboss.tools.smooks.model.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.ResourceType;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
+import org.jboss.tools.smooks.model.util.SmooksModelConstants;
 
 /**
  * @author Dart
@@ -73,12 +75,13 @@ public class DecoraterSelectionDialog extends Dialog implements
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
 
 			public void doubleClick(DoubleClickEvent event) {
-				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+				IStructuredSelection selection = (IStructuredSelection) event
+						.getSelection();
 				Object obj = selection.getFirstElement();
 				if (obj == null) {
 					return;
 				}
-				if(obj instanceof Decorater){
+				if (obj instanceof Decorater) {
 					okPressed();
 				}
 			}
@@ -89,11 +92,13 @@ public class DecoraterSelectionDialog extends Dialog implements
 
 	private void initViewer(TreeViewer viewer) {
 		if (resourceList != null) {
-			List allList = new ArrayList();
-			List dateDecoraterList = new ArrayList();
+			List<Object> allList = new ArrayList<Object>();
+			List<Decorater> dateDecoraterList = new ArrayList<Decorater>();
 			allList.add(dateDecoraterList);
-			List list = resourceList.getAbstractResourceConfig();
-			for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			List<AbstractResourceConfig> list = resourceList
+					.getAbstractResourceConfig();
+			for (Iterator<AbstractResourceConfig> iterator = list.iterator(); iterator
+					.hasNext();) {
 				ResourceConfigType config = (ResourceConfigType) iterator
 						.next();
 				String selector = config.getSelector();
@@ -102,18 +107,21 @@ public class DecoraterSelectionDialog extends Dialog implements
 					String selector1 = selector.substring(0, selector
 							.indexOf(":"));
 					selector1 = selector1.trim();
-					String selector2 = selector.substring(selector
-							.indexOf(":") + 1 , selector.length());
+					String selector2 = selector.substring(
+							selector.indexOf(":") + 1, selector.length());
 					selector2 = selector2.trim();
-					if (selector1.equals("decorat")) {
+					if (selector1.equals("decoder")) {
 						ResourceType resource = config.getResource();
 						if (resource != null) {
 							String value = resource.getValue();
-							if(value != null) value = value.trim();
-							if ("org.milyn.javabean.decoders.DateDecoder"
-									.equals(value)) {
-								dateDecoraterList.add(new DateDecorater(
-										selector2));
+							if (value != null)
+								value = value.trim();
+							for (int i = 0; i < SmooksModelConstants.DECODER_CLASSES.length; i++) {
+								String decoderClass = SmooksModelConstants.DECODER_CLASSES[i];
+								if (decoderClass.equals(value)) {
+									dateDecoraterList.add(new DateDecorater(
+											selector2));
+								}
 							}
 						}
 					}
@@ -154,7 +162,7 @@ public class DecoraterSelectionDialog extends Dialog implements
 		} else {
 			if (obj instanceof Decorater) {
 				this.setSelectedDecorater((Decorater) obj);
-			}else{
+			} else {
 				setSelectedDecorater(null);
 			}
 		}

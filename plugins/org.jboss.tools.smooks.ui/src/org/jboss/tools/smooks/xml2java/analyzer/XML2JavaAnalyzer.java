@@ -412,16 +412,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			np.setValue(namespace);
 			mapping.getProperties().add(np);
 		}
-		// String targetProfile = config.getTargetProfile();
-		// if(targetProfile != null){
-		// PropertyModel np = new PropertyModel();
-		// np.setName("targetProfile");
-		// np.setValue(targetProfile);
-		// mapping.getProperties().add(np);
-		// }
 
 		configList.addResourceConfig(config);
-		this.setSelectorIsUsed(config.getSelector());
 
 		List<ParamType> paramList = config.getParam();
 		ParamType bindingParam = null;
@@ -449,7 +441,6 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 									SmooksModelUtils.ATTRIBUTE_SELECTOR);
 					JavaBeanModel childBean = JavaBeanAnalyzer
 							.findTheChildJavaBeanModel(property, targetJavaBean);
-					// PENGXUE
 					processXMLSelector(configList, config, sourceRoot,
 							childBean, list, selectorStr, binding);
 				}
@@ -476,6 +467,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 						Messages
 								.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage1") + newSelector + Messages.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage2")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
+			this.setSelectorIsUsed(resourceConfig1.getSelector());
 			createMappingResourceConfigList(configList, listType,
 					resourceConfig1, newRoot, targetBean);
 		} else {

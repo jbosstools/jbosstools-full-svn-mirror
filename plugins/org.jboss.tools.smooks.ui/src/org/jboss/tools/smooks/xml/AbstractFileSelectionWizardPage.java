@@ -154,7 +154,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 
 	protected void openWorkSpaceSelection(Text relationT) {
 		IFile[] files = WorkspaceResourceDialog.openFileSelection(getShell(),
-				"", "", false, null, Collections.EMPTY_LIST); //$NON-NLS-1$ //$NON-NLS-2$
+				"Select Files", "", false, null, Collections.EMPTY_LIST); //$NON-NLS-1$ //$NON-NLS-2$
 		// dialog.setInitialSelections(selectedResources);
 		if (files.length > 0) {
 			IFile file = files[0];

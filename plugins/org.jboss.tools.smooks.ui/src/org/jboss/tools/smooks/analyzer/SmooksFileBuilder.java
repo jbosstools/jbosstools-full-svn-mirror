@@ -58,15 +58,9 @@ public class SmooksFileBuilder {
 		IMappingAnalyzer analyzer = factory.getMappingAnalyzer(context
 				.getSourceDataTypeID(), context.getTargetDataTypeID());
 
-		if (analyzer == null) {
-			throw new SmooksAnalyzerException(
-					Messages.getString("SmooksFileBuilder.NullAnalyzer1") //$NON-NLS-1$
-							+ context.getSourceDataTypeID()
-							+ Messages.getString("SmooksFileBuilder.NullAnalyzer2") //$NON-NLS-1$
-							+ context.getTargetDataTypeID());
-		}
 		if (smooksResource == null) {
-			throw new SmooksAnalyzerException(Messages.getString("SmooksFileBuilder.ResourceIsNull")); //$NON-NLS-1$
+			throw new SmooksAnalyzerException(Messages
+					.getString("SmooksFileBuilder.ResourceIsNull")); //$NON-NLS-1$
 		}
 		DocumentRoot documentRoot = (DocumentRoot) smooksResource.getContents()
 				.get(0);
@@ -86,9 +80,9 @@ public class SmooksFileBuilder {
 		context.setGeneratorResourceList(new ArrayList());
 		context.setSmooksResourceListModel(listType);
 		context.setDomain(domain);
+		if (analyzer != null)
+			analyzer.analyzeMappingGraphModel(context);
 
-		analyzer.analyzeMappingGraphModel(context);
-		
 		insertResoureConfig(listType, context.getGeneratorResourceList());
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -182,54 +176,58 @@ public class SmooksFileBuilder {
 	protected void initSmooksParseStyle(
 			SmooksConfigurationFileGenerateContext context,
 			SmooksResourceListType resourceList) {
-//		String type = context.getSmooksType();
-//		if (type == null)
-//			return;
-//		ResourceConfigType config = null;
-//		if (resourceList.getAbstractResourceConfig().size() < 1) {
-//		} else {
-//			config = (ResourceConfigType) resourceList
-//					.getAbstractResourceConfig().get(0);
-//			String selector = config.getSelector();
-//			if (!SmooksModelConstants.GLOBAL_PARAMETERS.equals(selector)) {
-//				config = null;
-//			} else {
-//				if (config.getParam().isEmpty()) {
-//					config = null;
-//				} else {
-//					ParamType param = config.getParam().get(0);
-//					if (!SmooksModelConstants.STREAM_FILTER_TYPE.equals(param
-//							.getName())) {
-//						config = null;
-//					}
-//				}
-//			}
-//		}
-//		ParamType param = null;
-//		if (config == null) {
-//			config = SmooksFactory.eINSTANCE.createResourceConfigType();
-//			AddCommand.create(domain, resourceList, SmooksPackage.eINSTANCE.getSmooksResourceListType_AbstractResourceConfig(), config).execute();
-//			MoveCommand.create(domain, resourceList, SmooksPackage.eINSTANCE.getSmooksResourceListType_AbstractResourceConfig(), config, 0);
-//			config.setSelector(SmooksModelConstants.GLOBAL_PARAMETERS);
-//			param = SmooksFactory.eINSTANCE.createParamType();
-//			param.setName(SmooksModelConstants.STREAM_FILTER_TYPE);
-//			config.getParam().add(param);
-//		}else{
-//			List paramList = config.getParam();
-//			for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
-//				ParamType p = (ParamType) iterator.next();
-//				if(SmooksModelConstants.STREAM_FILTER_TYPE.equals(p.getName())){
-//					param = p;
-//					break;
-//				}
-//			}
-//			if(param == null){
-//				param = SmooksFactory.eINSTANCE.createParamType();
-//				param.setName(SmooksModelConstants.STREAM_FILTER_TYPE);
-//				config.getParam().add(param);
-//			}
-//		}
-//		SmooksModelUtils.cleanTextToSmooksType(param);
-//		SmooksModelUtils.appendTextToSmooksType(param, context.getSmooksType());
+		// String type = context.getSmooksType();
+		// if (type == null)
+		// return;
+		// ResourceConfigType config = null;
+		// if (resourceList.getAbstractResourceConfig().size() < 1) {
+		// } else {
+		// config = (ResourceConfigType) resourceList
+		// .getAbstractResourceConfig().get(0);
+		// String selector = config.getSelector();
+		// if (!SmooksModelConstants.GLOBAL_PARAMETERS.equals(selector)) {
+		// config = null;
+		// } else {
+		// if (config.getParam().isEmpty()) {
+		// config = null;
+		// } else {
+		// ParamType param = config.getParam().get(0);
+		// if (!SmooksModelConstants.STREAM_FILTER_TYPE.equals(param
+		// .getName())) {
+		// config = null;
+		// }
+		// }
+		// }
+		// }
+		// ParamType param = null;
+		// if (config == null) {
+		// config = SmooksFactory.eINSTANCE.createResourceConfigType();
+		// AddCommand.create(domain, resourceList, SmooksPackage.eINSTANCE.
+		// getSmooksResourceListType_AbstractResourceConfig(),
+		// config).execute();
+		// MoveCommand.create(domain, resourceList, SmooksPackage.eINSTANCE.
+		// getSmooksResourceListType_AbstractResourceConfig(), config, 0);
+		// config.setSelector(SmooksModelConstants.GLOBAL_PARAMETERS);
+		// param = SmooksFactory.eINSTANCE.createParamType();
+		// param.setName(SmooksModelConstants.STREAM_FILTER_TYPE);
+		// config.getParam().add(param);
+		// }else{
+		// List paramList = config.getParam();
+		// for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
+		// ParamType p = (ParamType) iterator.next();
+		// if(SmooksModelConstants.STREAM_FILTER_TYPE.equals(p.getName())){
+		// param = p;
+		// break;
+		// }
+		// }
+		// if(param == null){
+		// param = SmooksFactory.eINSTANCE.createParamType();
+		// param.setName(SmooksModelConstants.STREAM_FILTER_TYPE);
+		// config.getParam().add(param);
+		// }
+		// }
+		// SmooksModelUtils.cleanTextToSmooksType(param);
+		// SmooksModelUtils.appendTextToSmooksType(param,
+		// context.getSmooksType());
 	}
 }
