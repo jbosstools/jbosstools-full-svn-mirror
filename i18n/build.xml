@@ -165,7 +165,7 @@
 		<attribute name="propname" />
 		<sequential>
 			<if>
-				<!-- FIXME fail on empty value -->
+				<!-- TODO fail on empty value -->
 				<not>
 					<isset property="@{propname}"/>
 				</not>
@@ -179,7 +179,6 @@
 	<!-- Processes the generated props directory, one plugin at a time, 
 		 generating manifests and jars -->
 	<target name="plugins" depends="init" description="Generate fragment manifests and jars for langpack plugins">
-		<delete dir="target/manifests" />
 		<delete dir="${jardir}/plugins" />
 		<mkdir dir="${jardir}/plugins" />
 		<for param="plugindir">
@@ -188,55 +187,50 @@
 			</path>
 			<sequential>
 				<echo message="@{plugindir}" />
-				<!-- FIXME -->
+				<!-- TODO avoid property override if possible -->
 				<propertyregex override="true" property="plugin" 
 					input="@{plugindir}" 
 					regexp="^${propdir}[/\\][^/\\]+[/\\]([^/\\]+).*" 
 					select="\1" />
 				<checkprop propname="plugin"/>
 				<echo level="verbose" message="@{plugindir} contains props for plugin ${plugin}"/>
-				<antcall target="-jar">
-					<param name="plugin" value="${plugin}"/>
-					<param name="plugindir" value="@{plugindir}"/>
-				</antcall>
+				<checkprop propname="PLUGIN_VERSION"/>
+				<checkprop propname="PLUGIN_VENDOR"/>
+				
+				<for param="locale" list="${locales}">
+					<sequential>
+						<!-- TODO avoid property override if possible -->
+						<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
+						<checkprop propname="localename"/>
+
+						<!-- Jars up one fragment plugin.   -->
+						<jar 
+							destfile="${jardir}/plugins/${plugin}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
+							update="no" 
+							basedir="@{plugindir}"
+							duplicate="fail" 
+							includes="**/*_@{locale}.properties">
+							<manifest>
+								<attribute name="Manifest-Version" 
+									value="1.0"/>
+								<attribute name="Created-By" 
+									value="JBoss Tools i18n (build.xml)"/>
+								<attribute name="Bundle-Name" 
+									value="${plugin} ${localename} NLS Support"/>
+								<attribute name="Bundle-SymbolicName" 
+									value="${plugin}.nl_@{locale} ;singleton=true"/>
+								<attribute name="Bundle-Version" 
+									value="${PLUGIN_VERSION}"/>
+								<attribute name="Bundle-Vendor" 
+									value="${PLUGIN_VENDOR}"/>
+								<attribute name="Fragment-Host" 
+										value="${plugin};bundle-version=&quot;[0.0.0,9.9.9)&quot;"/>
+							</manifest>
+						</jar>
+					</sequential>
+				</for>
 			</sequential>
 		</for>
-	</target>
-
-	<!-- Jars up one fragment plugin.   -->
-	<target name="-jar">
-		<!-- NB don't depend on initTaskDefs here, or ant loads the 
-		classes over and over until it exhausts memory -->
-		<checkprop propname="plugindir"/>
-		<checkprop propname="plugin"/>
-		<checkprop propname="PLUGIN_VERSION"/>
-		<checkprop propname="PLUGIN_VENDOR"/>
-		
-		<for param="locale" list="${locales}">
-			<sequential>
-				<!-- FIXME -->
-				<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
-				<checkprop propname="localename"/>
-
-				<jar 
-					destfile="${jardir}/plugins/${plugin}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
-					update="no" 
-					basedir="${plugindir}"
-					duplicate="fail" 
-					includes="**/*_@{locale}.properties">
-					<manifest>
-						<attribute name="Manifest-Version" value="1.0"/>
-						<attribute name="Created-By" value="JBoss Tools i18n (build.xml)"/>
-						<attribute name="Bundle-Name" value="${plugin} ${localename} NLS Support"/>
-						<attribute name="Bundle-SymbolicName" value="${plugin}.nl_@{locale} ;singleton=true"/>
-						<attribute name="Bundle-Version" value="${PLUGIN_VERSION}"/>
-						<attribute name="Bundle-Vendor" value="${PLUGIN_VENDOR}"/>
-						<attribute name="Fragment-Host" value="${plugin};bundle-version=&quot;[0.0.0,9.9.9)&quot;"/>
-					</manifest>
-				</jar>
-			</sequential>
-		</for>
-		
 	</target>
 
 	<target name="features" depends="init" 
@@ -258,7 +252,7 @@
 					<fileset dir="${jbt.srcdir}" includes="*/features/*/feature.xml"/>
 				</path>
 				<sequential>
-					<!-- FIXME -->
+					<!-- TODO avoid property override if possible -->
 					<propertyregex 
 						override="true" 
 						property="feature" 
@@ -266,27 +260,25 @@
     					regexp="^${jbt.srcdir}[/\\][^/\\]+[/\\]features[/\\]([^/\\]+)[/\\]feature.xml" 
     					select="\1" />
 					<checkprop propname="feature"/>
-					<!-- FIXME -->
-					<var name="jarsize" value="0" />
 					<echo level="verbose" message="Processing feature ${feature}"/>
 					<for param="locale" list="${locales}">
 						<sequential>
-							<!-- FIXME -->
-							<var name="locale" value="@{locale}" />
+							<!-- TODO avoid property override if possible -->
 							<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
 							
+							<!-- TODO remove third-party dependency -->
 							<xpath 
 								file="@{featurexml}" 
 								expression="/feature/plugin/@id" 
 								delimiter=" "
 								outputproperty="feature.${feature}.plugins"/>
+							<!-- TODO avoid property override if possible -->
 							<propertycopy 
 								override="true" 
 								property="plugins" 
 								from="feature.${feature}.plugins"/>
 							
-							
-							<!-- FIXME -->
+							<!-- FIXME var temp.file.featureplugins (list of plugins in feature-locale) -->
 							<var name="temp.file.featureplugins" unset="true" />
 							<tempfile 
 								property="temp.file.featureplugins" 
@@ -299,20 +291,20 @@
 								<sequential>
 									<if>
 										<available 
-											file="${jardir}/plugins/@{plugin}.nl-${locale}_${PLUGIN_VERSION}.jar" />
+											file="${jardir}/plugins/@{plugin}.nl-@{locale}_${PLUGIN_VERSION}.jar" />
 										<then>
 											<echo 
 												append="true" 
 												file="${temp.file.featureplugins}"
 												message="&lt;plugin 
-												id=&quot;@{plugin}.nl-${locale}&quot; 
+												id=&quot;@{plugin}.nl-@{locale}&quot; 
 												fragment=&quot;true&quot; unpack=&quot;false&quot; 
 												version=&quot;${PLUGIN_VERSION}&quot; /&gt;" />
 										</then>
 									</if>
 								</sequential>
 							</for>
-							<!-- FIXME -->
+							<!-- FIXME var plugins (loading list of plugins in feature-locale) -->
 							<var name="plugins" unset="true" />
 							<loadfile property="plugins"  srcFile="${temp.file.featureplugins}"/>
 							<delete file="${temp.file.featureplugins}"/>
@@ -326,11 +318,11 @@
 							<!-- demunged, that looks like:
 							   <feature url="features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
 							      id="${feature}.nl-@{locale}" version="${PLUGIN_VERSION}">
-							      <category name="JBoss Tools Localization"/>
+							      <category name="JBoss Tools Localization (${localename})"/>
 							   </feature>
 							-->
 							
-							<!-- FIXME download-size="${jarsize}" install-size="${jarsize}" -->
+							<!-- TODO add download-size="${jarsize}" install-size="${jarsize}" -->
 							<copy overwrite="true" 
 								todir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}">
 								<fileset dir="feature-template/FEATURE.nl-LOCALE_VERSION" />
@@ -353,6 +345,7 @@
 		-->
 		<for param="locale" list="${locales}">
 			<sequential>
+				<!-- TODO avoid property override if possible -->
 				<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
 				<echo append="true" file="${temp.file.sitefeatures}"
 					message="&lt;category-def name=&quot;JBoss Tools Localization (${localename})&quot; label=&quot;JBoss Tools Localization (${localename})&quot;/&gt;" />
@@ -366,7 +359,7 @@
 		
 		
 		<!-- Read in the above list of features -->
-		<!-- FIXME -->
+		<!-- FIXME var features (loading list of features) -->
 		<var name="features" unset="true" />
 		<loadfile property="features"  srcFile="${temp.file.sitefeatures}"/>
 		<delete file="${temp.file.sitefeatures}"/>
