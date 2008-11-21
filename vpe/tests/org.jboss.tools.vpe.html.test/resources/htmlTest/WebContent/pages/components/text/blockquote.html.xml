@@ -1,0 +1,9 @@
+<tests>
+	<test id="blockquote">
+		<BLOCKQUOTE ID="blockquote" STYLE="color: red;" CLASS="blockquoteClass">
+			<SPAN>
+				Some Text
+			</SPAN>
+		</BLOCKQUOTE>
+	</test>
+</tests>

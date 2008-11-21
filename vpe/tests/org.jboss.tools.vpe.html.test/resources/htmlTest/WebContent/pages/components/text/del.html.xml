@@ -1,0 +1,9 @@
+<tests>
+	<test id="del">
+		<DEL STYLE="color: red;" ID="del" CLASS="delClass">
+			<SPAN>
+				Some Text
+			</SPAN>
+		</DEL>
+	</test>
+</tests>

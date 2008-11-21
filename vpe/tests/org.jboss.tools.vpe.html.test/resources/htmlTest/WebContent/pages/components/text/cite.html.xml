@@ -1,0 +1,9 @@
+<tests>
+	<test id="cite">
+		<CITE STYLE="color: red;" ID="cite" CLASS="citeClass">
+			<SPAN>
+				some text
+			</SPAN>
+		</CITE>
+	</test>
+</tests>

@@ -1,0 +1,10 @@
+<tests>
+	<test id="b">
+		<BIG STYLE="color: red;" ID="big" CLASS="bigClass">
+			<SPAN>
+				big
+				text
+			</SPAN>
+		</BIG>
+	</test>
+</tests>

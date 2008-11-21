@@ -28,16 +28,19 @@ import org.jboss.tools.vpe.ui.test.VpeTestSetup;
  */
 
 public class HtmlAllTests {
-
+	
+	// import project name
+	public static final String IMPORT_PROJECT_NAME = "htmlTest"; //$NON-NLS-1$
+	
 	public static Test suite() {
 
-		TestSuite suite = new TestSuite("Tests for Vpe Jsf components"); // $NON-NLS-1$
+		TestSuite suite = new TestSuite("Tests for Vpe Jsf components"); //$NON-NLS-1$
 		// $JUnit-BEGIN$
 		suite.addTestSuite(HtmlComponentTest.class);
 		
 		List<ImportBean> projectToImport = new ArrayList<ImportBean>();
 		ImportBean importBean = new ImportBean();
-		importBean.setImportProjectName(HtmlComponentTest.IMPORT_PROJECT_NAME);
+		importBean.setImportProjectName(IMPORT_PROJECT_NAME);
  		importBean.setImportProjectPath(HtmlTestPlugin.getPluginResourcePath());
  		projectToImport.add(importBean);
 		return new VpeTestSetup(suite,projectToImport);

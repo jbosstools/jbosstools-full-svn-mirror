@@ -1,0 +1,39 @@
+<tests>
+	<test id="code">
+		<CODE ID="" CLASS="codeClass" STYLE="color: red; -moz-user-modify: read-write;">
+			<SPAN>
+				function checkParent (src, dest) {
+</SPAN>
+			<BR STYLE="-moz-user-modify: read-write;" />
+
+			<SPAN>
+				while (src != null) {
+</SPAN>
+			<BR STYLE="-moz-user-modify: read-write;" />
+
+			<SPAN>
+				if (src.tagName == dest) return src
+</SPAN>
+			<BR STYLE="-moz-user-modify: read-write;" />
+
+			<SPAN>
+				src = src.parentElement
+</SPAN>
+			<BR STYLE="-moz-user-modify: read-write;" />
+
+			<SPAN>
+				}
+</SPAN>
+			<BR STYLE="-moz-user-modify: read-write;" />
+
+			<SPAN>
+				return null
+</SPAN>
+			<BR STYLE="-moz-user-modify: read-write;" />
+
+			<SPAN>
+				}
+</SPAN>
+		</CODE>
+	</test>
+</tests>

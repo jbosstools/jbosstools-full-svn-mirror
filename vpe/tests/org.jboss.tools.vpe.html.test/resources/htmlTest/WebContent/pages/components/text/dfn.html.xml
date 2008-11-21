@@ -1,0 +1,9 @@
+<tests>
+	<test id="dfn">
+		<DFN STYLE="color: red;" ID="dfn" CLASS="dfnClass">
+			<SPAN>
+				Some Text
+			</SPAN>
+		</DFN>
+	</test>
+</tests>
