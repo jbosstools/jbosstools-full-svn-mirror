@@ -266,6 +266,18 @@
 							<!-- TODO avoid property override if possible -->
 							<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
 							
+							<echo append="true" file="${temp.file.sitefeatures}"
+								message="&lt;feature url=&quot;features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar&quot; 
+							      id=&quot;${feature}.nl-@{locale}&quot; version=&quot;${PLUGIN_VERSION}&quot;&gt;
+							      &lt;category name=&quot;JBoss Tools Localization (${localename})&quot;/&gt;
+							   &lt;/feature&gt;" />
+							<!-- demunged, that looks like:
+							   <feature url="features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
+							      id="${feature}.nl-@{locale}" version="${PLUGIN_VERSION}">
+							      <category name="JBoss Tools Localization (${localename})"/>
+							   </feature>
+							-->
+							
 							<!-- TODO remove third-party dependency -->
 							<xpath 
 								file="@{featurexml}" 
@@ -309,20 +321,10 @@
 							<loadfile property="plugins"  srcFile="${temp.file.featureplugins}"/>
 							<delete file="${temp.file.featureplugins}"/>
 
-							
-							<echo append="true" file="${temp.file.sitefeatures}"
-								message="&lt;feature url=&quot;features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar&quot; 
-							      id=&quot;${feature}.nl-@{locale}&quot; version=&quot;${PLUGIN_VERSION}&quot;&gt;
-							      &lt;category name=&quot;JBoss Tools Localization (${localename})&quot;/&gt;
-							   &lt;/feature&gt;" />
-							<!-- demunged, that looks like:
-							   <feature url="features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
-							      id="${feature}.nl-@{locale}" version="${PLUGIN_VERSION}">
-							      <category name="JBoss Tools Localization (${localename})"/>
-							   </feature>
-							-->
-							
 							<!-- TODO add download-size="${jarsize}" install-size="${jarsize}" -->
+							<!-- TODO avoid these vars if possible -->
+							<var name="featurename" value="${feature}" />
+							<var name="locale" value="@{locale}" />
 							<copy overwrite="true" 
 								todir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}">
 								<fileset dir="feature-template/FEATURE.nl-LOCALE_VERSION" />
