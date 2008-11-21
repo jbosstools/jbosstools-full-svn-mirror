@@ -32,17 +32,19 @@ public class NormalSmooksModelBuilder {
 
 	public NormalSmooksModelPackage buildNormalSmooksModelPackage(
 			SmooksResourceListType list) {
-		NormalSmooksModelPackage modelPackage = new NormalSmooksModelPackage(list);
+		NormalSmooksModelPackage modelPackage = new NormalSmooksModelPackage(
+				list);
 		if (list != null) {
 			List resourceConfigList = list.getAbstractResourceConfig();
 			for (Iterator iterator = resourceConfigList.iterator(); iterator
 					.hasNext();) {
-				ResourceConfigType resourceConfig = (ResourceConfigType) iterator
-						.next();
-				this.processResouceConfig(resourceConfig, modelPackage);
+				Object resourceConfig = iterator.next();
+				if (resourceConfig instanceof ResourceConfigType) {
+					this.processResouceConfig((ResourceConfigType)resourceConfig, modelPackage);
+				}
 			}
-			if(resourceConfigList.isEmpty()){
-				
+			if (resourceConfigList.isEmpty()) {
+
 			}
 		}
 		return modelPackage;
@@ -50,15 +52,15 @@ public class NormalSmooksModelBuilder {
 
 	protected void processResouceConfig(ResourceConfigType config,
 			NormalSmooksModelPackage modelPackage) {
-//		if (isBeanPopulator(config)) {
-//			modelPackage.getBeanPopulatorResourceConfigList().add(config);
-//		}
-//		if (isDateConfig(config)) {
-//			modelPackage.getDateResourceConfigList().add(config);
-//		}
-//		if (isSmooksTransformType(config)) {
-//			modelPackage.setSmooksTransformTypeResourceConfig(config);
-//		}
+		// if (isBeanPopulator(config)) {
+		// modelPackage.getBeanPopulatorResourceConfigList().add(config);
+		// }
+		// if (isDateConfig(config)) {
+		// modelPackage.getDateResourceConfigList().add(config);
+		// }
+		// if (isSmooksTransformType(config)) {
+		// modelPackage.setSmooksTransformTypeResourceConfig(config);
+		// }
 	}
 
 	public static boolean isSmooksTransformType(ResourceConfigType config) {
@@ -78,8 +80,14 @@ public class NormalSmooksModelBuilder {
 		ResourceType resource = config.getResource();
 		if (resource != null) {
 			String r = resource.getValue();
-			if (r != null)
-				return SmooksModelConstants.DATE_DECODER.equals(r.trim());
+			if (r != null) {
+				for (int i = 0; i < SmooksModelConstants.DECODER_CLASSES.length; i++) {
+					String decoder = SmooksModelConstants.DECODER_CLASSES[i];
+					if (r.trim().equals(decoder)) {
+						return true;
+					}
+				}
+			}
 		}
 		return false;
 	}

@@ -112,6 +112,8 @@ public class SmooksFormEditor extends FormEditor implements
 		if (mappingResourceConfig != null) {
 			refreshNormalPage(mappingResourceConfig
 					.getRelationgResourceConfigList());
+		}else{
+			refreshNormalPage(Collections.EMPTY_LIST);
 		}
 	}
 

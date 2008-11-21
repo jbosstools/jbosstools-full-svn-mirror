@@ -19,6 +19,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import org.jboss.tools.smooks.model.ResourceType;
+import org.jboss.tools.smooks.model.SmooksFactory;
+import org.jboss.tools.smooks.model.util.SmooksModelConstants;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 
 /**
@@ -32,6 +35,7 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 	private Combo localeLangaugeCombo;
 	private Combo localeContryCombo;
 	private Text selectorText;
+	private Combo decoderCombo;
 
 	public DateTypeDetailPage(SmooksFormEditor parentEditor,
 			EditingDomain domain) {
@@ -55,6 +59,11 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 		selectorText = this.formToolKit.createText(parent, ""); //$NON-NLS-1$
 		selectorText.setLayoutData(gd);
 		
+		this.formToolKit.createLabel(parent, "Decoder Class :");
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		decoderCombo = new Combo(parent, SWT.FLAT);
+		decoderCombo.setLayoutData(gd);
+		
 		this.formToolKit.createLabel(parent, Messages.getString("DateTypeDetailPage.DateTypeFormatText")); //$NON-NLS-1$
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		formatText = this.formToolKit.createText(parent, ""); //$NON-NLS-1$
@@ -72,10 +81,26 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 
 		formToolKit.paintBordersFor(parent);
 		
+		initComboBox();
 		hookControls();
 	}
 
+	private void initComboBox() {
+		for (int i = 0; i < SmooksModelConstants.DECODER_CLASSES.length; i++) {
+			decoderCombo.add(SmooksModelConstants.DECODER_CLASSES[i]);
+		}
+	}
+
 	private void hookControls() {
+		
+		decoderCombo.addModifyListener(new ModifyListener(){
+
+			public void modifyText(ModifyEvent e) {
+				setDecoderClass();
+			}
+			
+		});
+		
 		selectorText.addModifyListener(new ModifyListener(){
 			public void modifyText(ModifyEvent e) {
 				setSelector();
@@ -107,6 +132,24 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 		});
 	}
 	
+	protected void setDecoderClass() {
+		String text = decoderCombo.getText();
+		if(text == null) text = "";
+		if(this.resourceConfigList != null){
+			ResourceType resource = resourceConfigList.getResource();
+			if(resource == null){
+				resource = SmooksFactory.eINSTANCE.createResourceType();
+				resourceConfigList.setResource(resource);
+			}
+			if(text.trim().equals(resource.getValue())){
+				return;
+			}
+			resource.setValue(text);
+			this.parentEditor.fireEditorDirty(true);
+		}
+		
+	}
+
 	protected void setFormat() {
 		String format = formatText.getText();
 		if(format == null) format = "";
@@ -156,6 +199,12 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 			String formate = SmooksModelUtils.getParmaText("format", resourceConfigList); //$NON-NLS-1$
 			String locallang = SmooksModelUtils.getParmaText("locale-language", resourceConfigList); //$NON-NLS-1$
 			String localcontry = SmooksModelUtils.getParmaText("locale-country", resourceConfigList); //$NON-NLS-1$
+			String decoderClass = "";
+			ResourceType resource = resourceConfigList.getResource();
+			if(resource != null){
+				decoderClass = resource.getValue();
+				if(decoderClass != null) decoderClass = decoderClass.trim();
+			}
 			if(formate == null) formate = ""; //$NON-NLS-1$
 			if(locallang == null) locallang = ""; //$NON-NLS-1$
 			if(localcontry == null) localcontry = ""; //$NON-NLS-1$
@@ -166,6 +215,7 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 			formatText.setText(formate);
 			localeContryCombo.setText(localcontry);
 			localeLangaugeCombo.setText(locallang);
+			decoderCombo.setText(decoderClass);
 		}
 	}
 

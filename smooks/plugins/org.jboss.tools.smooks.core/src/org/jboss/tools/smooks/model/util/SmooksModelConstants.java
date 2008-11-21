@@ -21,6 +21,13 @@ public class SmooksModelConstants {
 	public static final String DOM = "DOM";
 	public static final String SAX_DOM = "SAX/DOM";
 	public static final String BEAN_POPULATOR = "org.milyn.javabean.BeanPopulator";
+	
+	public static final String[] DECODER_CLASSES = new String[] {
+		"org.milyn.javabean.decoders.DateDecoder",
+		"org.milyn.javabean.decoders.CalendarDecoder" };
+	/**
+	 * @deprecated
+	 */
 	public static final String DATE_DECODER = "org.milyn.javabean.decoders.DateDecoder";
 	
 	public static final String AT_DOCUMENT = "@document";
