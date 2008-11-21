@@ -218,18 +218,15 @@
 				<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
 				<checkprop propname="localename"/>
 
-				<!-- FIXME -->
-				<var name="jar" value="${jardir}/plugins/${plugin}.nl-@{locale}_${PLUGIN_VERSION}.jar" />
-				<echo level="verbose" message="Jarring up ${jar} from directory ${plugindir}"/>
 				<jar 
-					destfile="${jar}" 
+					destfile="${jardir}/plugins/${plugin}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
 					update="no" 
 					basedir="${plugindir}"
 					duplicate="fail" 
 					includes="**/*_@{locale}.properties">
 					<manifest>
 						<attribute name="Manifest-Version" value="1.0"/>
-						<attribute name="Created-By" value="JBoss Tools i18n build.xml"/>
+						<attribute name="Created-By" value="JBoss Tools i18n (build.xml)"/>
 						<attribute name="Bundle-Name" value="${plugin} ${localename} NLS Support"/>
 						<attribute name="Bundle-SymbolicName" value="${plugin}.nl_@{locale} ;singleton=true"/>
 						<attribute name="Bundle-Version" value="${PLUGIN_VERSION}"/>
@@ -248,9 +245,13 @@
 		<mkdir dir="${propdir}/features" />
 		<delete dir="${jardir}/features" />
 		<mkdir dir="${jardir}/features" />
-		<!-- FIXME -->
-		<var name="temp.file.sitefeatures" unset="true" />
-		<tempfile property="temp.file.sitefeatures" destdir="${target.dir}" prefix="site" suffix=".tmp" createfile="true" deleteonexit="false" />
+		<tempfile 
+			property="temp.file.sitefeatures" 
+			destdir="${target.dir}" 
+			prefix="site" 
+			suffix=".tmp" 
+			createfile="true" 
+			deleteonexit="false" />
 		<sequential>
 			<for param="featurexml">
 				<path>
@@ -258,78 +259,91 @@
 				</path>
 				<sequential>
 					<!-- FIXME -->
-					<propertyregex override="true" property="feature" 
+					<propertyregex 
+						override="true" 
+						property="feature" 
     					input="@{featurexml}" 
-    					regexp="^${jbt.srcdir}${file.separator}[^/\\]+${file.separator}features${file.separator}([^/\\]+)${file.separator}feature.xml" 
+    					regexp="^${jbt.srcdir}[/\\][^/\\]+[/\\]features[/\\]([^/\\]+)[/\\]feature.xml" 
     					select="\1" />
 					<checkprop propname="feature"/>
 					<!-- FIXME -->
-					<var name="featurename" value="${feature}" />
 					<var name="jarsize" value="0" />
 					<echo level="verbose" message="Processing feature ${feature}"/>
-						<for param="locale" list="${locales}">
-							<sequential>
-								<!-- FIXME -->
-								<var name="locale" value="@{locale}" />
-								<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
-								
-								<xpath 
-									file="@{featurexml}" 
-									expression="/feature/plugin/@id" 
-									delimiter=" "
-									outputproperty="feature.${feature}.plugins"/>
-								<propertycopy override="true" property="plugins" from="feature.${feature}.plugins"/>
-								
-								
-								<!-- FIXME -->
-								<var name="temp.file.featureplugins" unset="true" />
-								<tempfile property="temp.file.featureplugins" destdir="${target.dir}" prefix="plugins" suffix=".tmp" createfile="true" deleteonexit="true" />
-								<for param="plugin" list="${plugins}" delimiter=" ">
-									<sequential>
-										<if>
-											<available file="${jardir}/plugins/@{plugin}.nl-${locale}_${PLUGIN_VERSION}.jar" />
-											<then>
-												<echo append="true" file="${temp.file.featureplugins}"
-													message="&lt;plugin 
-													id=&quot;@{plugin}.nl-${locale}&quot; 
-													fragment=&quot;true&quot; unpack=&quot;false&quot; 
-													version=&quot;${PLUGIN_VERSION}&quot; /&gt;" />
-											</then>
-										</if>
-									</sequential>
-								</for>
-								<!-- FIXME -->
-								<var name="plugins" unset="true" />
-								<loadfile property="plugins"  srcFile="${temp.file.featureplugins}"/>
-								<delete file="${temp.file.featureplugins}"/>
+					<for param="locale" list="${locales}">
+						<sequential>
+							<!-- FIXME -->
+							<var name="locale" value="@{locale}" />
+							<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
+							
+							<xpath 
+								file="@{featurexml}" 
+								expression="/feature/plugin/@id" 
+								delimiter=" "
+								outputproperty="feature.${feature}.plugins"/>
+							<propertycopy 
+								override="true" 
+								property="plugins" 
+								from="feature.${feature}.plugins"/>
+							
+							
+							<!-- FIXME -->
+							<var name="temp.file.featureplugins" unset="true" />
+							<tempfile 
+								property="temp.file.featureplugins" 
+								destdir="${target.dir}" 
+								prefix="plugins" 
+								suffix=".tmp" 
+								createfile="true" 
+								deleteonexit="true" />
+							<for param="plugin" list="${plugins}" delimiter=" ">
+								<sequential>
+									<if>
+										<available 
+											file="${jardir}/plugins/@{plugin}.nl-${locale}_${PLUGIN_VERSION}.jar" />
+										<then>
+											<echo 
+												append="true" 
+												file="${temp.file.featureplugins}"
+												message="&lt;plugin 
+												id=&quot;@{plugin}.nl-${locale}&quot; 
+												fragment=&quot;true&quot; unpack=&quot;false&quot; 
+												version=&quot;${PLUGIN_VERSION}&quot; /&gt;" />
+										</then>
+									</if>
+								</sequential>
+							</for>
+							<!-- FIXME -->
+							<var name="plugins" unset="true" />
+							<loadfile property="plugins"  srcFile="${temp.file.featureplugins}"/>
+							<delete file="${temp.file.featureplugins}"/>
 
-								
-								<echo append="true" file="${temp.file.sitefeatures}"
-									message="&lt;feature url=&quot;features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar&quot; 
-								      id=&quot;${feature}.nl-@{locale}&quot; version=&quot;${PLUGIN_VERSION}&quot;&gt;
-								      &lt;category name=&quot;JBoss Tools Localization (${localename})&quot;/&gt;
-								   &lt;/feature&gt;" />
-								<!-- demunged, that looks like:
-								   <feature url="features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
-								      id="${feature}.nl-@{locale}" version="${PLUGIN_VERSION}">
-								      <category name="JBoss Tools Localization"/>
-								   </feature>
-								-->
-								
-								<!-- FIXME download-size="${jarsize}" install-size="${jarsize}" -->
-								<copy overwrite="true" 
-									todir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}">
-									<fileset dir="feature-template/FEATURE.nl-LOCALE_VERSION" />
-									<filterchain>
-										<expandproperties/>
-									</filterchain>
-								</copy>
-								<jar destfile="${jardir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
-									basedir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}" />
-								<!-- might want to keep around for debugging: -->
-								<delete dir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}" />
-							</sequential>
-						</for>
+							
+							<echo append="true" file="${temp.file.sitefeatures}"
+								message="&lt;feature url=&quot;features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar&quot; 
+							      id=&quot;${feature}.nl-@{locale}&quot; version=&quot;${PLUGIN_VERSION}&quot;&gt;
+							      &lt;category name=&quot;JBoss Tools Localization (${localename})&quot;/&gt;
+							   &lt;/feature&gt;" />
+							<!-- demunged, that looks like:
+							   <feature url="features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
+							      id="${feature}.nl-@{locale}" version="${PLUGIN_VERSION}">
+							      <category name="JBoss Tools Localization"/>
+							   </feature>
+							-->
+							
+							<!-- FIXME download-size="${jarsize}" install-size="${jarsize}" -->
+							<copy overwrite="true" 
+								todir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}">
+								<fileset dir="feature-template/FEATURE.nl-LOCALE_VERSION" />
+								<filterchain>
+									<expandproperties/>
+								</filterchain>
+							</copy>
+							<jar destfile="${jardir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
+								basedir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}" />
+							<!-- might want to keep around for debugging: -->
+							<delete dir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}" />
+						</sequential>
+					</for>
 				</sequential>
 			</for>
 		</sequential>
