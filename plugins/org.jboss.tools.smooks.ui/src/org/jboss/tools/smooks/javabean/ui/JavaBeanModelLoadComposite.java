@@ -11,10 +11,12 @@
 package org.jboss.tools.smooks.javabean.ui;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.search.IJavaSearchScope;
 import org.eclipse.jdt.internal.corext.util.JavaModelUtil;
 import org.eclipse.jdt.internal.ui.search.JavaSearchScopeFactory;
@@ -65,6 +67,8 @@ public class JavaBeanModelLoadComposite extends Composite implements
 	protected JavaBeanModel currentRootJavaBeanModel = null;
 	protected JavaBeanModel returnJavaBeanModel = null;
 
+	private List<IJavaBeanSelectionListener> selectionListenerList = new ArrayList<IJavaBeanSelectionListener>();
+
 	protected ProjectClassLoader loader = null;
 	private TableViewer listViewer;
 
@@ -101,6 +105,15 @@ public class JavaBeanModelLoadComposite extends Composite implements
 
 	public List<JavaBeanModel> getJavabeanList() {
 		return javabeanList;
+	}
+
+	public void addJavaBeanSelectionListener(IJavaBeanSelectionListener listener) {
+		this.selectionListenerList.add(listener);
+	}
+
+	public void removeJavaBeanSelectionListener(
+			IJavaBeanSelectionListener listener) {
+		this.selectionListenerList.remove(listener);
 	}
 
 	public void setJavabeanList(List<JavaBeanModel> javabeanList) {
@@ -181,8 +194,8 @@ public class JavaBeanModelLoadComposite extends Composite implements
 			@Override
 			public Image getImage(Object element) {
 				if (element instanceof JavaBeanModel) {
-					return SmooksUIActivator.getDefault().getImageRegistry().get(
-							JavaImageConstants.IMAGE_JAVA_OBJECT);
+					return SmooksUIActivator.getDefault().getImageRegistry()
+							.get(JavaImageConstants.IMAGE_JAVA_OBJECT);
 				}
 				return super.getImage(element);
 			}
@@ -205,13 +218,13 @@ public class JavaBeanModelLoadComposite extends Composite implements
 		GridLayout buttonAreaLayout = new GridLayout();
 		buttonArea.setLayout(buttonAreaLayout);
 
-		Button addButton = new Button(buttonArea, SWT.BORDER);
+		Button addButton = new Button(buttonArea, SWT.NONE);
 		addButton.setText("Add");
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		addButton.setLayoutData(gd);
 		addButton.addSelectionListener(this);
 
-		Button removeButton = new Button(buttonArea, SWT.BORDER);
+		Button removeButton = new Button(buttonArea, SWT.NONE);
 		removeButton.setText("Remove");
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		removeButton.setLayoutData(gd);
@@ -250,6 +263,7 @@ public class JavaBeanModelLoadComposite extends Composite implements
 		IJavaSearchScope scope = JavaSearchScopeFactory.getInstance()
 				.createJavaProjectSearchScope(javaProject, true);
 		SelectionDialog dialog;
+		Exception exception = null;
 		try {
 			dialog = JavaUI.createTypeDialog(this.getShell(), runnableContext,
 					scope, IJavaElementSearchConstants.CONSIDER_CLASSES, false);
@@ -287,9 +301,16 @@ public class JavaBeanModelLoadComposite extends Composite implements
 					}
 				}
 			}
-		} catch (Exception e) {
-			// this.setErrorMessage("Error occurs!please see log file");
-			e.printStackTrace();
+		} catch (Exception e){
+			exception = e;
+		}
+		if (exception != null) {
+			for (Iterator<IJavaBeanSelectionListener> iterator = this.selectionListenerList
+					.iterator(); iterator.hasNext();) {
+				IJavaBeanSelectionListener l = (IJavaBeanSelectionListener) iterator
+						.next();
+				l.exceptionOccur(exception);
+			}
 		}
 
 	}

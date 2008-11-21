@@ -30,7 +30,7 @@ import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
  * @CreateTime Jul 21, 2008
  */
 public class JavaBeanConfigWizardPage extends WizardPage implements
-		SelectionListener {
+		SelectionListener ,IJavaBeanSelectionListener {
 	
 	TreeViewer treeViewer;
 
@@ -73,7 +73,7 @@ public class JavaBeanConfigWizardPage extends WizardPage implements
 		try {
 			javaPropertySelectComposite = new JavaBeanModelLoadComposite(
 					parent, SWT.NONE, getContainer(), project);
-
+			javaPropertySelectComposite.addJavaBeanSelectionListener(this);
 //			Button button = new Button(cc, SWT.BORDER);
 //
 //			final TreeViewer vi = new TreeViewer(cc, SWT.NONE);
@@ -135,6 +135,10 @@ public class JavaBeanConfigWizardPage extends WizardPage implements
 
 	public void widgetSelected(SelectionEvent arg0) {
 
+	}
+
+	public void exceptionOccur(Exception e) {
+		this.setErrorMessage(e.toString());
 	}
 
 }
