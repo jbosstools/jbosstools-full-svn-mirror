@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Created-By: JBoss Tools localization build.xml
-Bundle-Name: ${plugin} ${localename} NLS Support
-Bundle-SymbolicName: ${plugin}.nl_${locale} ;singleton=true
-Bundle-Version: ${PLUGIN_VERSION}
-Bundle-Vendor: ${PLUGIN_VENDOR}
-Fragment-Host: ${plugin};bundle-version="[0.0.0,9.9.9)"
