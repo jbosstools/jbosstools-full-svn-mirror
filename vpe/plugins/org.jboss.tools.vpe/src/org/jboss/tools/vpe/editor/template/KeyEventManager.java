@@ -22,6 +22,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
+import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
@@ -52,9 +53,10 @@ public class KeyEventManager implements IKeyEventHandler {
 	 * page context
 	 */
 	private VpePageContext pageContext;
-	
+
 	public KeyEventManager(StructuredTextEditor sourceEditor,
-			VpeDomMapping domMapping, VpePageContext pageContext, VpeSelectionController selectionController) {
+			VpeDomMapping domMapping, VpePageContext pageContext,
+			VpeSelectionController selectionController) {
 		this.sourceEditor = sourceEditor;
 		this.domMapping = domMapping;
 		this.pageContext = pageContext;
@@ -93,11 +95,11 @@ public class KeyEventManager implements IKeyEventHandler {
 
 		} else if ((keyCode == nsIDOMKeyEvent.DOM_VK_BACK_SPACE)
 				&& (!keyEvent.getShiftKey())) {
-			return handleDelete(keyEvent,ST.DELETE_PREVIOUS);
+			return handleDelete(keyEvent, ST.DELETE_PREVIOUS);
 
 		} else if ((keyCode == nsIDOMKeyEvent.DOM_VK_DELETE)
 				&& (!keyEvent.getShiftKey())) {
-			return handleDelete(keyEvent,ST.DELETE_NEXT);
+			return handleDelete(keyEvent, ST.DELETE_NEXT);
 
 		} else if ((keyCode == nsIDOMKeyEvent.DOM_VK_PAGE_UP)
 				&& (!keyEvent.getShiftKey())) {
@@ -196,6 +198,7 @@ public class KeyEventManager implements IKeyEventHandler {
 
 		return true;
 	}
+
 	/**
 	 * Default implementation of a handling of a pressing the "delete" event
 	 * 
@@ -203,7 +206,8 @@ public class KeyEventManager implements IKeyEventHandler {
 	 * 
 	 * @param keyEvent
 	 *            - event
-	 * @param deleteDirection - direction of deleted Text
+	 * @param deleteDirection
+	 *            - direction of deleted Text
 	 * @return whether handled event
 	 */
 	private boolean handleDelete(nsIDOMKeyEvent keyEvent, int delete) {
@@ -233,9 +237,9 @@ public class KeyEventManager implements IKeyEventHandler {
 					domMapping);
 
 			if (nodeData != null) {
-				editable = nodeData.isEditable();
 
-				if (editable && nodeData.getType() == NodeData.ATTRIBUTE
+				if (nodeData.isEditable()
+						&& nodeData.getType() == NodeData.ATTRIBUTE
 						&& nodeData.getSourceNode() == null) {
 
 					Node newNode = createAttribute(
@@ -251,10 +255,21 @@ public class KeyEventManager implements IKeyEventHandler {
 
 				}
 
+				editable = nodeData.isEditable()
+						&& !isBorderPosition(
+								nodeData.getSourceNode(),
+								SelectionUtil
+										.getSourceSelectionRange(getSourceEditor()),
+								delete);
+
 			}
 			// if template can't give necessary information
 			else {
-				editable = false;
+
+				if (delete == ST.DELETE_NEXT)
+					editable = true;
+				else
+					editable = false;
 			}
 		}
 		// if node is simple text
@@ -263,8 +278,7 @@ public class KeyEventManager implements IKeyEventHandler {
 		}
 
 		if (editable) {
-				sourceEditor.getTextViewer().getTextWidget().invokeAction(
-						delete);
+			sourceEditor.getTextViewer().getTextWidget().invokeAction(delete);
 		}
 
 		return true;
@@ -407,5 +421,21 @@ public class KeyEventManager implements IKeyEventHandler {
 		}
 		return null;
 
+	}
+
+	private boolean isBorderPosition(Node node, Point selectionRange, int delete) {
+
+		if (selectionRange.y == 0) {
+
+			if (delete == ST.DELETE_PREVIOUS) {
+
+				return NodesManagingUtil.getStartOffsetNode(node) == selectionRange.x;
+
+			}
+			if (delete == ST.DELETE_NEXT) {
+				return NodesManagingUtil.getEndOffsetNode(node) == selectionRange.x;
+			}
+		}
+		return false;
 	}
 }
