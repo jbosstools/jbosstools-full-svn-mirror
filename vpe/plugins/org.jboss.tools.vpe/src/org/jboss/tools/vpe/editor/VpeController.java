@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -148,6 +149,7 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateListener;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
+import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
@@ -1341,7 +1343,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					/*
 					 *  JBIDE-2670	
 					 */
-					keyEvent.stopPropagation();
+					keyEvent.preventDefault();
 					switcher
 							.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
 					try {
@@ -1352,8 +1354,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					// trying to edit of read-only elements
 					// TODO check editing and if are appear errors then
 					// uncommented next code
-					// sourceSelectionChanged(true);
-					// visualSelectionController.setCaretEnabled(true);
+//					 sourceSelectionChanged(true);
+//					 visualSelectionController.setCaretEnabled(true);
 						
 					} finally {
 						switcher.stopActiveEditor();
@@ -1639,6 +1641,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 								DOMTreeDumper dumper = new DOMTreeDumper(
 										VpeDebug.VISUAL_DUMP_PRINT_HASH);
+								List<String> ignoredAttributes = new ArrayList<String>();
+								ignoredAttributes.add(HTML.ATTR_TITLE);
+								dumper.setIgnoredAttributes(ignoredAttributes);
 								dumper.dumpNode(nodeMapping.getVisualNode());
 							}
 						}

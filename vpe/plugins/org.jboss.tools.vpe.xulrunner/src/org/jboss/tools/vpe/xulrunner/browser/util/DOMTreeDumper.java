@@ -14,6 +14,7 @@ package org.jboss.tools.vpe.xulrunner.browser.util;
 
 
 import java.io.PrintStream;
+import java.util.List;
 
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -51,6 +52,8 @@ public class DOMTreeDumper {
             "LINK", //$NON-NLS-1$
             "META", //$NON-NLS-1$
             "PARAM" }; //$NON-NLS-1$
+    
+    private List<String> ignoredAttributes = null;
 
     /**
      * The Constructor.
@@ -165,8 +168,12 @@ public class DOMTreeDumper {
             }
             ps.print("<" + name); //$NON-NLS-1$
             dumpAttributes(node);
-            ps.print(">"); //$NON-NLS-1$
-
+            
+            if (endTagForbidden(name)) {
+				ps.print("/>"); //$NON-NLS-1$
+			} else {
+				ps.print(">"); //$NON-NLS-1$
+			}
             printHashCode(node);
 
             dumpChildren(node);
@@ -180,11 +187,15 @@ public class DOMTreeDumper {
 
         case nsIDOMNode.ATTRIBUTE_NODE:
             nsIDOMAttr attr = (nsIDOMAttr) node.queryInterface(nsIDOMAttr.NS_IDOMATTR_IID);
-            if (attr.getSpecified()) {
-                ps.print(" " + attr.getName().toUpperCase() + "=\"" + attr.getValue() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            } else {
-                ps.print(" " + attr.getName().toUpperCase()); //$NON-NLS-1$
-            }
+          
+            if (!(ignoredAttributes != null && listContains(ignoredAttributes,
+					attr.getName())))
+				if (attr.getSpecified()) {
+					ps
+							.print(" " + attr.getName().toUpperCase() + "=\"" + attr.getValue() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				} else {
+					ps.print(" " + attr.getName().toUpperCase()); //$NON-NLS-1$
+				}
             break;
 
         case nsIDOMNode.TEXT_NODE:
@@ -299,6 +310,16 @@ public class DOMTreeDumper {
         }
         return false;
     }
+    
+    private boolean listContains(List<String> list, String string) {
+
+		for (String listString : list) {
+			if (string.equalsIgnoreCase(listString))
+				return true;
+		}
+		return false;
+
+	}
 
     /**
      * Prints the hash code.
@@ -310,4 +331,12 @@ public class DOMTreeDumper {
             ps.print("(" + o.hashCode() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
+
+	public List<String> getIgnoredAttributes() {
+		return ignoredAttributes;
+	}
+
+	public void setIgnoredAttributes(List<String> ignoredAttributes) {
+		this.ignoredAttributes = ignoredAttributes;
+	}
 }

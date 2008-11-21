@@ -104,7 +104,9 @@ public class NodesManagingUtil {
 	 */
 	public static int getEndOffsetNode(Node node) {
 
-		if (node instanceof IndexedRegion) {
+		if (node instanceof IDOMAttr) {
+			return getStartOffsetNode(node) + getNodeLength(node);
+		} else if (node instanceof IndexedRegion) {
 			return ((IndexedRegion) node).getEndOffset();
 		}
 		return 0;
