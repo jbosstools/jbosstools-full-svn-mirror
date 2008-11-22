@@ -19,6 +19,7 @@
 
    <url>
       <update label="%updateSiteName" url="http://download.jboss.org/jbosstools/updates/stable"/>
+      <discovery label="%birtUpdateSiteName" url="http://download.eclipse.org/birt/update-site/2.3"/>
    </url>
    
    <plugin
