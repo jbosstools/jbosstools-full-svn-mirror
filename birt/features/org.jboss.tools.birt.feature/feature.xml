@@ -24,8 +24,8 @@
    </url>
 
    <requires>
-      <import feature="org.eclipse.birt" version="2.3.1.v20080630-7N7Y7AAYdlIXLgz-SLsyMQ21x2fI"/>
-      <import feature="org.eclipse.birt.integration.wtp" version="2.3.1.v20080630-4518s733I3J5E"/>
+      <import feature="org.eclipse.birt" version="2.3.1"/>
+      <import feature="org.jboss.tools.birt.integration.wtp.feature"/>
    </requires>
 
    <plugin
