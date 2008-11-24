@@ -1,0 +1,27 @@
+<tests>
+	<test id="dl">
+		<DL ID="dl" CLASS="dlClass" DIR="ltr"
+			STYLE="color: red; -moz-user-modify: read-only;">
+			<DT STYLE="-moz-user-modify: read-write;">
+				<SPAN>
+					some term 1
+</SPAN>
+			</DT>
+			<DD STYLE="-moz-user-modify: read-write;">
+				<SPAN>
+					some definition 1
+</SPAN>
+			</DD>
+			<DT STYLE="-moz-user-modify: read-write;">
+				<SPAN>
+					some term 2
+</SPAN>
+			</DT>
+			<DD STYLE="-moz-user-modify: read-write;">
+				<SPAN>
+					some definition 2
+</SPAN>
+			</DD>
+		</DL>
+	</test>
+</tests>

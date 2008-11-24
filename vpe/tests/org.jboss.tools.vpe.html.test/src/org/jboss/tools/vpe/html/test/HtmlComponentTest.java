@@ -45,7 +45,7 @@ public class HtmlComponentTest extends VpeTest {
 
 	public void testLists() throws Throwable {
 		performTestForVpeComponent((IFile) TestUtil.getComponentPath(
-				"components/block/lists.html", IMPORT_PROJECT_NAME)); //$NON-NLS-1$
+				"components/block/li.html", IMPORT_PROJECT_NAME)); //$NON-NLS-1$
 	}
 
 	public void testSpan() throws Throwable {

@@ -26,6 +26,43 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 	}
 
 	/*
+	 * 
+	 * test for block html tags
+	 */
+
+	public void testDd() throws Throwable {
+		performContentTest("components/block/dd.html"); //$NON-NLS-1$
+	}
+
+	public void testDiv() throws Throwable {
+		performContentTest("components/block/div.html"); //$NON-NLS-1$
+	}
+
+	public void testDl() throws Throwable {
+		performContentTest("components/block/dl.html"); //$NON-NLS-1$
+	}
+
+	public void testDt() throws Throwable {
+		performContentTest("components/block/dt.html"); //$NON-NLS-1$
+	}
+
+	public void testLi() throws Throwable {
+		performContentTest("components/block/li.html"); //$NON-NLS-1$
+	}
+
+	public void testOl() throws Throwable {
+		performContentTest("components/block/ol.html"); //$NON-NLS-1$
+	}
+
+	public void testSpan() throws Throwable {
+		performContentTest("components/block/span.html"); //$NON-NLS-1$
+	}
+
+	public void testUl() throws Throwable {
+		performContentTest("components/block/ul.html"); //$NON-NLS-1$
+	}
+
+	/*
 	 * test for text html tags
 	 */
 
