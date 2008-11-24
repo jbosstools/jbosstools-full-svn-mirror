@@ -27,6 +27,7 @@ import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsISelectionController;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -53,6 +54,17 @@ public class KeyEventManager implements IKeyEventHandler {
 	 * page context
 	 */
 	private VpePageContext pageContext;
+	
+	
+	private VpeSelectionController selectionController;
+	/**
+	 * 
+	 * 
+	 * @param sourceEditor
+	 * @param domMapping
+	 * @param pageContext
+	 * @param selectionController
+	 */
 
 	public KeyEventManager(StructuredTextEditor sourceEditor,
 			VpeDomMapping domMapping, VpePageContext pageContext,
@@ -60,6 +72,7 @@ public class KeyEventManager implements IKeyEventHandler {
 		this.sourceEditor = sourceEditor;
 		this.domMapping = domMapping;
 		this.pageContext = pageContext;
+		this.selectionController = selectionController;
 	}
 
 	final public boolean handleKeyPress(nsIDOMKeyEvent keyEvent) {
@@ -320,6 +333,9 @@ public class KeyEventManager implements IKeyEventHandler {
 	 * @return whether handled event
 	 */
 	protected boolean handleDown(nsIDOMKeyEvent keyEvent) {
+		selectionController.lineMove(true, false);
+		keyEvent.stopPropagation();
+		keyEvent.preventDefault();
 		return false;
 	}
 
@@ -346,6 +362,9 @@ public class KeyEventManager implements IKeyEventHandler {
 	 * @return whether handled event
 	 */
 	protected boolean handleUp(nsIDOMKeyEvent keyEvent) {
+		selectionController.lineMove(false, false);
+		keyEvent.stopPropagation();
+		keyEvent.preventDefault();
 		return false;
 	}
 
