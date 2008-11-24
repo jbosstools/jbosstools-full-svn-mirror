@@ -62,9 +62,9 @@ public class VpeSelectionController {
 	 */
 	public void lineMove(boolean forward, boolean extend) {
 		//mareshkau, hack for JBIDE-3209
-		selectionController.characterMove(true, false);
-		selectionController.characterMove(false, false);
-		selectionController.lineMove(forward, extend);
+		getSelectionController().characterMove(forward, extend);
+//		selectionController.characterMove(false, false);
+//		selectionController.lineMove(forward, extend);
 	}
 
 	/**
