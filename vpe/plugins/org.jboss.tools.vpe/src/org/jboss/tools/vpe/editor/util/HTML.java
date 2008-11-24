@@ -122,5 +122,7 @@ public final class HTML {
 	public static final String STYLE_PARAMETER_BACKGROUND_IMAGE = "background-image"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_MAX_HEIGHT = "max-height"; //$NON-NLS-1$	
 	public static final String STYLE_PARAMETER_ZINDEX = "z-index"; //$NON-NLS-1$	
-	public static final String STYLE_PARAMETER_CLEAR = "clear"; //$NON-NLS-1$	
+	public static final String STYLE_PARAMETER_CLEAR = "clear"; //$NON-NLS-1$
+	public static final String STYLE_PARAMETER_TABLE_LAYOUT = "table-layout"; //$NON-NLS-1$
+	public static final String STYLE_VALUE_FIXED = "fixed"; //$NON-NLS-1$
 }
