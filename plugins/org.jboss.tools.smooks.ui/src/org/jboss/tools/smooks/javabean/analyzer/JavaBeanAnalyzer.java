@@ -863,7 +863,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			if (resourceConfig != null) {
 				rootModel.setBeanClassString(SmooksModelUtils.getParmaText(
 						SmooksModelUtils.BEAN_CLASS, resourceConfig));
-//				setSelectorIsUsed(selector);
+				// setSelectorIsUsed(selector);
 				buildChildrenOfTargetInputModel(listType, rootModel, false,
 						rootIsError, resourceConfig, loader);
 				list.add(rootModel);
@@ -892,9 +892,15 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 								SmooksModelUtils.ATTRIBUTE_SELECTOR);
 				if (selector != null)
 					selector = selector.trim();
-				if (!isSelectorIsUsed(selector))
+				String tempSelector = selector;
+				if (isReferenceSelector(selector)) {
+					tempSelector = tempSelector.substring(2,
+							selector.length() - 1);
+				}
+				if (!isSelectorIsUsed(tempSelector)) {
 					processBindingPropertyFromTargetModel(listType, property,
 							selector, beanModel, classLoader);
+				}
 			}
 		}
 
@@ -988,8 +994,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		ResourceConfigType resourceConfig = null;
 		for (Iterator iterator = rl.iterator(); iterator.hasNext();) {
 			ResourceConfigType rct = (ResourceConfigType) iterator.next();
-			if (this.isSelectorIsUsed(rct.getSelector()))
-				continue;
+//			if (this.isSelectorIsUsed(rct.getSelector()))
+//				continue;
 			String beanId = getBeanIDFromParam(rct);
 			if (selector.equals(beanId)) {
 				resourceConfig = rct;

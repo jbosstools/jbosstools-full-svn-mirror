@@ -72,7 +72,7 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            name="Smooks Form Editor"
+            name="Smooks Editor"
             extensions="smooks"
             icon="icons/smooks-sm.gif"
             class="org.jboss.tools.smooks.ui.editors.SmooksFormEditor"
