@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Properties;
 
 import org.jboss.tools.common.model.XModelObject;
-import org.jboss.tools.common.model.util.NamespaceMapping;
 import org.jboss.tools.seam.core.ISeamElement;
 import org.jboss.tools.seam.core.ISeamXmlComponentDeclaration;
 import org.jboss.tools.seam.core.IValueInfo;
@@ -216,11 +215,7 @@ public class SeamXmlComponentDeclaration extends SeamPropertiesDeclaration
 				className = XMLScanner.getImpliedClassName(c, source);
 				isClassNameGuessed = true;
 			} else {
-				XModelObject f = c;
-				while(f != null && f.getFileType() != XModelObject.FILE) f = f.getParent();
-				NamespaceMapping nm = NamespaceMapping.load(f);
-				SeamProject sp = (SeamProject)context.get("seamProject");
-				className = XMLScanner.getDefaultClassName(c, nm, sp == null ? null : sp.getNamespaces());
+				className = XMLScanner.getDefaultClassName(c);
 				isClassNameGuessed = true;
 			}
 		}
