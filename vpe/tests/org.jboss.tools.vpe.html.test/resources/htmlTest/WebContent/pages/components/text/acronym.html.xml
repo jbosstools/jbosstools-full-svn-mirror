@@ -1,7 +1,10 @@
 <tests>
 	<test id="acronym">
-		<SPAN>
-			acronym
-		</SPAN>
+		<ACRONYM ID="acronym" CLASS="acronymClass"
+			STYLE="color: red; -moz-user-modify: read-write;" DIR="ltr">
+			<SPAN>
+				acronym
+</SPAN>
+		</ACRONYM>
 	</test>
 </tests>

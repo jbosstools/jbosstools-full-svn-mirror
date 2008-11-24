@@ -37,6 +37,7 @@ public class HtmlAllTests {
 		TestSuite suite = new TestSuite("Tests for Vpe Jsf components"); //$NON-NLS-1$
 		// $JUnit-BEGIN$
 		suite.addTestSuite(HtmlComponentTest.class);
+		suite.addTestSuite(HtmlComponentContentTest.class);
 		
 		List<ImportBean> projectToImport = new ArrayList<ImportBean>();
 		ImportBean importBean = new ImportBean();

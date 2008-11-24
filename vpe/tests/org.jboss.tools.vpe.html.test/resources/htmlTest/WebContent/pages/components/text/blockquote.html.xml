@@ -1,9 +1,9 @@
 <tests>
 	<test id="blockquote">
-		<BLOCKQUOTE ID="blockquote" STYLE="color: red;" CLASS="blockquoteClass">
-			<SPAN>
-				Some Text
-			</SPAN>
-		</BLOCKQUOTE>
+		<BLOCKQUOTE ID="blockquote" CLASS="blockquoteClass" STYLE="color: red; -moz-user-modify: read-write;" DIR="ltr">
+<SPAN>
+Some Text
+</SPAN>
+</BLOCKQUOTE>
 	</test>
 </tests>

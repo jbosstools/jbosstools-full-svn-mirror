@@ -1,7 +1,9 @@
 <tests>
-	<test id="hr">
-		<HR SIZE="20"
-			STYLE="background: red none repeat scroll 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"
-			CLASS="hrClass" ID="hr" />
+	<test id="i">
+		<I ID="i" CLASS="iClass" STYLE="color: red; -moz-user-modify: read-write;" DIR="ltr">
+<SPAN>
+Some Text
+</SPAN>
+</I>
 	</test>
 </tests>

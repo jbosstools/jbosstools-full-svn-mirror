@@ -1,6 +1,6 @@
 <tests>
 	<test id="code">
-		<CODE ID="" CLASS="codeClass" STYLE="color: red; -moz-user-modify: read-write;">
+		<CODE ID="code" CLASS="codeClass" STYLE="color: red; -moz-user-modify: read-write;">
 			<SPAN>
 				function checkParent (src, dest) {
 </SPAN>

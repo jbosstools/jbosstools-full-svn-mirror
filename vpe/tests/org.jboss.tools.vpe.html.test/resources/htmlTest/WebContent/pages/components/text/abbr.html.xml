@@ -1,9 +1,9 @@
 <tests>
 	<test id="abbr">
-		<ABBR ID="color:red" CLASS="abbrClass" STYLE="color: red;">
-			<SPAN>
-				abbreviation
-			</SPAN>
-		</ABBR>
+		<ABBR ID="abbr" CLASS="abbrClass" STYLE="color: red; -moz-user-modify: read-write;" DIR="ltr">
+<SPAN>
+abbreviation
+</SPAN>
+</ABBR>
 	</test>
 </tests>

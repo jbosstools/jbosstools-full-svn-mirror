@@ -1,9 +1,9 @@
 <tests>
 	<test id="em">
-		<EM ID="em" CLASS="emClass" STYLE="color: red; -moz-user-modify: read-write;">
-			<SPAN>
-				Some Text
-			</SPAN>
-		</EM>
+		<EM ID="em" CLASS="emClass" STYLE="color: red; -moz-user-modify: read-write;" DIR="ltr">
+<SPAN>
+Some Text
+</SPAN>
+</EM>
 	</test>
 </tests>

@@ -1,5 +1,5 @@
 <tests>
 	<test id="br">
-		<BR STYLE="color: red;" ID="br" CLASS="brClass" />
+		<BR CLEAR="none" ID="br" CLASS="brClass" STYLE="color: red; -moz-user-modify: read-write;"/>
 	</test>
 </tests>

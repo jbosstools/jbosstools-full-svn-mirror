@@ -10,9 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.html.test;
 
-import org.eclipse.core.resources.IFile;
 import org.jboss.tools.vpe.ui.test.ComponentContentTest;
-import org.jboss.tools.vpe.ui.test.TestUtil;
 
 /**
  * Class for testing all jsf components
@@ -32,105 +30,105 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 	 */
 
 	public void testAbbr() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/abbr.html"); //$NON-NLS-1$
 	}
 
 	public void testAcronym() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/acronym.html"); //$NON-NLS-1$
 	}
 
 	public void testB() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/b.html"); //$NON-NLS-1$
 	}
 
 	public void testBig() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/big.html"); //$NON-NLS-1$
 	}
 
 	public void testBlockquote() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/blockquote.html"); //$NON-NLS-1$
 	}
 
 	public void testBr() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/br.html"); //$NON-NLS-1$
 	}
 
 	public void testCite() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/cite.html"); //$NON-NLS-1$
 	}
 
 	public void testCode() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/code.html"); //$NON-NLS-1$
 	}
 
 	public void testDel() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/del.html"); //$NON-NLS-1$
 	}
 
 	public void testDfn() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/dfn.html"); //$NON-NLS-1$
 	}
 
 	public void testEm() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/em.html"); //$NON-NLS-1$
 	}
 
 	public void testHr() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/hr.html"); //$NON-NLS-1$
 	}
 
 	public void testI() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/i.html"); //$NON-NLS-1$
 	}
 
 	public void testIns() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/ins.html"); //$NON-NLS-1$
 	}
 
 	public void testKbd() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/kbd.html"); //$NON-NLS-1$
 	}
 
 	public void testP() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/p.html"); //$NON-NLS-1$
 	}
 
 	public void testPre() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/pre.html"); //$NON-NLS-1$
 	}
 
 	public void testQ() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/q.html"); //$NON-NLS-1$
 	}
 
 	public void testSamp() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/samp.html"); //$NON-NLS-1$
 	}
 
 	public void testSmall() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/small.html"); //$NON-NLS-1$
 	}
 
 	public void testStrong() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/strong.html"); //$NON-NLS-1$
 	}
 
 	public void testSub() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/sub.html"); //$NON-NLS-1$
 	}
 
 	public void testSup() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/sup.html"); //$NON-NLS-1$
 	}
 
 	public void testTt() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/tt.html"); //$NON-NLS-1$
 	}
 
 	public void testVar() throws Throwable {
-		fail( "it is necessary to add body of the test");
+		performContentTest("components/text/var.html"); //$NON-NLS-1$
 	}
-	
+
 	protected String getTestProjectName() {
 		return HtmlAllTests.IMPORT_PROJECT_NAME;
 	}
