@@ -1403,8 +1403,16 @@
 	</vpe:tag>
 
 	<vpe:tag name="object" case-sensitive="no">
-		<vpe:template children="no" modify="no" />
-	</vpe:tag>
+	<!--		<vpe:template children="no" modify="no" />-->
+	<vpe:template children="yes" modify="no">
+		<vpe:copy
+			attrs="align,classid,code,codebase,codetype,data,height,hspace,type,vspace,width" />
+		<vpe:drop container="yes">
+			<vpe:container-child tag-name="param" />
+			<vpe:container-child tag-name="object" />
+		</vpe:drop>
+	</vpe:template>
+</vpe:tag>
 
 	<vpe:tag name="ol" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
