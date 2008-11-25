@@ -8,7 +8,7 @@ import org.eclipse.swt.graphics.Color;
 
 public class EllipseElementFigure extends AbstractElementFigure {
 
-    private Ellipse ellipse;
+    protected Ellipse ellipse;
     
     protected void customizeFigure() {
         ellipse = new Ellipse();
