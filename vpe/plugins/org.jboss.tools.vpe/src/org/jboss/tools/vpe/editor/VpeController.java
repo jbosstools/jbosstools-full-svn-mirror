@@ -329,7 +329,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				sourceEditor, visualSelectionController);
 
 		keyEventHandler = new KeyEventManager(sourceEditor, domMapping,
-				pageContext,visualSelectionController);
+				pageContext);
 
 		// glory
 		ISelectionProvider provider = sourceEditor.getSelectionProvider();
@@ -3350,7 +3350,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					sourceEditor, visualSelectionController);
 	
 			keyEventHandler = new KeyEventManager(sourceEditor, domMapping,
-					pageContext,visualSelectionController);
+					pageContext);
 			//restore selection in visula part
 			sourceSelectionChanged();
 		}finally {

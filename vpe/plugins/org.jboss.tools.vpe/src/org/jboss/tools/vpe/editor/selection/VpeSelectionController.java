@@ -11,6 +11,7 @@
 ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.selection;
 
+
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionController;
 
@@ -55,18 +56,6 @@ public class VpeSelectionController {
 	
 		getSelectionController().setSelectionFlags(selectionFlags);
 	}
-	/**
-	 * @see nsISelectionController.lineMove()
-	 * @param forward
-	 * @param extend
-	 */
-	public void lineMove(boolean forward, boolean extend) {
-		//mareshkau, hack for JBIDE-3209
-		getSelectionController().characterMove(forward, extend);
-//		selectionController.characterMove(false, false);
-//		selectionController.lineMove(forward, extend);
-	}
-
 	/**
 	 * @return the selectionController
 	 */
