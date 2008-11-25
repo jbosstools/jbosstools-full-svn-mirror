@@ -725,4 +725,22 @@ public class VpeStyleUtil {
 		}
 	}
 
+
+    /**
+     * If the {@code size} ends with a digit, adds {@code "px"} to it.
+     * 
+     * @param size non-null value of a size attribute (e.g. {@code width}).
+     */
+    public static String addPxIfNecessary(final String size) {
+    	final String trimmed = size.trim();
+    	int length = trimmed.length();
+    	if (length > 0) {
+    		final char lastChar = trimmed.charAt(length - 1);
+    		if (Character.isDigit(lastChar)) {
+    			return trimmed + PX_STRING;
+    		}
+    	}
+
+    	return size;
+    }
 }
