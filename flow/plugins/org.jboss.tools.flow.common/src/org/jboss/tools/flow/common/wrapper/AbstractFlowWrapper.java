@@ -62,6 +62,7 @@ public abstract class AbstractFlowWrapper extends AbstractWrapper implements Flo
     public void localAddElement(NodeWrapper element) {
         elementMap.put(element.getId(), element);
         elementList.add(element);
+        element.setParent(this);
     }
     
     public boolean acceptsElement(NodeWrapper element) {
