@@ -33,6 +33,7 @@ public abstract class AbstractContainerWrapper extends AbstractNodeWrapper imple
     
     public void localAddElement(NodeWrapper element) {
         elements.add(element);
+        element.setParent(this);
     }
     
     protected abstract void internalAddElement(NodeWrapper element);
