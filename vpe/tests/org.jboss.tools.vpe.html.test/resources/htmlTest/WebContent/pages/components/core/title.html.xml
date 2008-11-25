@@ -1,0 +1,7 @@
+<tests>
+	<test id="title">
+		<H1 STYLE="-moz-user-modify: read-write;" >
+			title
+		</H1>
+	</test>
+</tests>

@@ -1,0 +1,18 @@
+<tests>
+	<test id="html">
+		<DIV STYLE="-moz-user-modify: read-write;">
+			<DIV STYLE="display: none; -moz-user-modify: read-only;">
+				<BR VPE:PSEUDO-ELEMENT="yes"
+					STYLE="font-style: italic; color: green; -moz-user-modify: read-only;" />
+
+			</DIV>
+			<DIV STYLE="">
+				<H1 STYLE="-moz-user-modify: read-write;">
+					<SPAN>
+						html
+					</SPAN>
+				</H1>
+			</DIV>
+		</DIV>
+	</test>
+</tests>

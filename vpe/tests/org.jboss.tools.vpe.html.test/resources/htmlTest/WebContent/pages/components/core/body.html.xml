@@ -1,0 +1,11 @@
+<tests>
+	<test id="body">
+		<DIV STYLE="" >
+			<H1 STYLE="-moz-user-modify: read-write;">
+				<SPAN>
+					body
+			</SPAN>
+			</H1>
+		</DIV>
+	</test>
+</tests>
