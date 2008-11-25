@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.draw2d.geometry.Point;
-import org.jboss.tools.flow.common.model.Element;
 
 /**
  * A connection between two model elements.
@@ -31,20 +30,11 @@ public abstract class AbstractConnectionWrapper extends AbstractWrapper implemen
     
 	private static final long serialVersionUID = 1L;
 	
-    private Element element;
 	private NodeWrapper source;
     private NodeWrapper target;
     private transient List<Point> bendpoints = new ArrayList<Point>();
     private transient List<ModelListener> listeners = new ArrayList<ModelListener>();
         
-    public void setElement(Element element) {
-        this.element = element;
-    }
-
-    public Element getElement() {
-        return element;
-    }
-
     public void localSetSource(NodeWrapper source) {
     	this.source = source;
     }
