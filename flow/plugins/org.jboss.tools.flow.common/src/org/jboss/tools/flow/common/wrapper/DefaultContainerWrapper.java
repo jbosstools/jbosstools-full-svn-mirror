@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.ui.views.properties.IPropertySource;
-import org.jboss.tools.common.properties.DefaultContainerPropertySource;
 import org.jboss.tools.flow.common.model.Connection;
 import org.jboss.tools.flow.common.model.Container;
 import org.jboss.tools.flow.common.model.Flow;
 import org.jboss.tools.flow.common.model.Node;
+import org.jboss.tools.flow.common.properties.DefaultContainerPropertySource;
 import org.jboss.tools.flow.common.strategy.AcceptsElementStrategy;
 import org.jboss.tools.flow.common.strategy.AcceptsIncomingConnectionStrategy;
 import org.jboss.tools.flow.common.strategy.AcceptsOutgoingConnectionStrategy;

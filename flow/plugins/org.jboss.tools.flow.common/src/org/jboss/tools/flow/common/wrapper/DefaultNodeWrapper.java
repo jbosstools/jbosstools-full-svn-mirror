@@ -2,9 +2,9 @@ package org.jboss.tools.flow.common.wrapper;
 
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.ui.views.properties.IPropertySource;
-import org.jboss.tools.common.properties.DefaultNodePropertySource;
 import org.jboss.tools.flow.common.model.Connection;
 import org.jboss.tools.flow.common.model.Node;
+import org.jboss.tools.flow.common.properties.DefaultNodePropertySource;
 import org.jboss.tools.flow.common.strategy.AcceptsIncomingConnectionStrategy;
 import org.jboss.tools.flow.common.strategy.AcceptsOutgoingConnectionStrategy;
 

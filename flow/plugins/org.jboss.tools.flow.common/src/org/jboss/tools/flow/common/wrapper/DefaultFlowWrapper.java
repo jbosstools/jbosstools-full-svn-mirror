@@ -1,10 +1,10 @@
 package org.jboss.tools.flow.common.wrapper;
 
 import org.eclipse.ui.views.properties.IPropertySource;
-import org.jboss.tools.common.properties.DefaultFlowPropertySource;
 import org.jboss.tools.flow.common.model.DefaultFlow;
 import org.jboss.tools.flow.common.model.Flow;
 import org.jboss.tools.flow.common.model.Node;
+import org.jboss.tools.flow.common.properties.DefaultFlowPropertySource;
 import org.jboss.tools.flow.common.strategy.AcceptsElementStrategy;
 
 public class DefaultFlowWrapper extends AbstractFlowWrapper {
