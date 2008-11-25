@@ -10,65 +10,6 @@
        class = "org.jboss.tools.smooks.graphical.GraphicalPackage"
        genModel = "model/graphical.genmodel" /> 
   </extension>
-  	<extension
-		point="org.eclipse.wst.sse.ui.adapterFactoryDescription">
-		<adapterFactoryDescription
-			class="org.eclipse.wst.xml.ui.internal.registry.AdapterFactoryProviderForXML">
-			<contentType id="org.eclipse.core.runtime.xml" />
-			<contentType id="org.jboss.tools.smooks.ui.smooks.contentType" />
-		</adapterFactoryDescription>
-	</extension>
-  	<extension point="org.eclipse.wst.sse.ui.editorConfiguration">
-		<sourceViewerConfiguration
-			class="org.eclipse.wst.xml.ui.StructuredTextViewerConfigurationXML"
-			target="org.eclipse.core.runtime.xml, org.jboss.tools.smooks.ui.smooks.contentType" />
-		<contentOutlineConfiguration
-			class="org.eclipse.wst.xml.ui.views.contentoutline.XMLContentOutlineConfiguration"
-			target="org.eclipse.core.runtime.xml, org.jboss.tools.smooks.ui.smooks.contentType" />
-		<propertySheetConfiguration
-			class="org.eclipse.wst.xml.ui.views.properties.XMLPropertySheetConfiguration"
-			target="org.eclipse.core.runtime.xml, org.jboss.tools.smooks.ui.smooks.contentType" />
-		<documentationTextHover
-        	class="org.eclipse.wst.xml.ui.internal.taginfo.XMLTagInfoHoverProcessor"
-        	target="org.eclipse.wst.xml.XML_DEFAULT">
-  		</documentationTextHover>
-  		<doubleClickStrategy
-        	class="org.eclipse.wst.xml.ui.internal.doubleclick.XMLDoubleClickStrategy"
-        	target="org.eclipse.wst.xml.XML_DEFAULT">
-  		</doubleClickStrategy>
-		<provisionalConfiguration
-			type="sourceeditingtexttools"
-			class="org.eclipse.wst.xml.ui.internal.provisional.XMLSourceEditingTextTools"
-			target="org.eclipse.core.runtime.xml, org.jboss.tools.smooks.ui.smooks.contentType" />
-		<provisionalConfiguration
-			type="characterpairmatcher"
-			class="org.eclipse.wst.xml.ui.internal.text.XMLDocumentRegionEdgeMatcher"
-			target="org.eclipse.core.runtime.xml, org.jboss.tools.smooks.ui.smooks.contentType" />
-		<provisionalConfiguration
-			type="structuredtextfoldingprovider"
-			class="org.eclipse.wst.xml.ui.internal.projection.StructuredTextFoldingProviderXML"
-			target="org.eclipse.core.runtime.xml, org.jboss.tools.smooks.ui.smooks.contentType" />
-		<provisionalConfiguration
-			type="org.eclipse.jface.text.quickassist.IQuickAssistProcessor"
-			class="org.eclipse.wst.xml.ui.internal.correction.XMLQuickAssistProcessor"
-			target="org.eclipse.wst.xml.XML_DEFAULT" />
-		<provisionalConfiguration
-			type="autoeditstrategy"
-			class="org.eclipse.wst.xml.ui.internal.autoedit.StructuredAutoEditStrategyXML"
-			target="org.eclipse.wst.xml.XML_DEFAULT" />
-		<provisionalDefinition
-			type="preferencepages"
-			value="org.eclipse.wst.xml.ui.preferences.xml.xml, org.eclipse.wst.sse.ui.preferences.xml.source, org.eclipse.wst.sse.ui.preferences.xml.templates, org.eclipse.wst.sse.ui.preferences.xml.colors"
-			target="org.eclipse.core.runtime.xml, org.jboss.tools.smooks.ui.smooks.contentType" />
-		<provisionalDefinition
-			type="spellingregions"
-			value="XML_COMMENT_TEXT, XML_CONTENT, XML_DEFAULT"
-			target="org.eclipse.core.runtime.xml, org.jboss.tools.smooks.ui.smooks.contentType" />
-		<provisionalDefinition
-			type="activecontexts"
-			value="org.eclipse.core.runtime.xml, org.eclipse.wst.xml.navigation, org.eclipse.wst.xml.cleanup, org.eclipse.wst.xml.comments, org.eclipse.wst.xml.selection, org.eclipse.wst.xml.dependencies, org.eclipse.wst.xml.grammar, org.eclipse.wst.xml.expand, org.eclipse.wst.xml.occurrences"
-        	target="org.eclipse.core.runtime.xml" />
-	</extension>
    <extension
          point="org.eclipse.ui.editors">
       <editor
