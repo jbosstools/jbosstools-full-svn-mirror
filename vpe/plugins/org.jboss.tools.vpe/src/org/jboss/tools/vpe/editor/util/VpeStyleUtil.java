@@ -483,7 +483,15 @@ public class VpeStyleUtil {
 					startPathIndex + 1);
 			String filePath = urls[i].substring(startPathIndex + 1,
 					endPathIndex);
-
+			
+			try {
+			URL url = new URL(filePath);
+			//with url all ok
+			continue;
+			} catch (MalformedURLException e) {
+				//ignore, continue work with url
+			}
+			
 			if (filePath.indexOf(FILE_PROTOCOL) != -1) {
 				continue;
 			}

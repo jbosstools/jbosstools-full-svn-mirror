@@ -84,7 +84,6 @@ public class VpeLinkCreator extends VpeAbstractCreator {
 			pageContext.getVisualBuilder().removeLinkNodeFromHead(linkNode);
 			visualNodeMap.remove(this);
 		}
-		//MozillaSupports.release(linkNode);
     }
 
     public void refreshElement(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {

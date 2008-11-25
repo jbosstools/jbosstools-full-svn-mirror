@@ -24,10 +24,9 @@ public class VpeStyleCreator extends VpeAbstractCreator {
 
 	public VpeStyleCreator(Element element, VpeDependencyMap dependencyMap,
 			boolean caseSensitive) {
-		// this.caseSensitive = caseSensitive;
-		// build(element, dependencyMap);
 	}
 
+	@Override
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument, nsIDOMElement visualElement,
 			Map visualNodeMap) {
@@ -45,6 +44,7 @@ public class VpeStyleCreator extends VpeAbstractCreator {
 		return null;
 	}
 
+	@Override
 	public void removeElement(VpePageContext pageContext,
 			Element sourceElement, Map visualNodeMap) {
 
@@ -57,6 +57,7 @@ public class VpeStyleCreator extends VpeAbstractCreator {
 
 	}
 
+	@Override
 	public void refreshElement(VpePageContext pageContext,
 			Element sourceElement, Map visualNodeMap) {
 		nsIDOMNode oldStyleNode = (nsIDOMNode) visualNodeMap.get(this);
