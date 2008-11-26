@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="org.jboss.tools.translations" default="debug" basedir="." xmlns:artifact="urn:maven-artifact-ant">
+<project name="JBoss Tools i18n" default="debug" basedir="." xmlns:artifact="urn:maven-artifact-ant">
 
 	<path id="jbtdir" path=".." />
 	<property name="jbt.srcdir" value="${toString:jbtdir}" />
@@ -140,6 +140,23 @@
 		<pot2en srcDir="po" dstDir="target/po" locale="en_AA" pseudo="true" />
 	</target>
 
+	<target name="msgmerge">
+		<apply executable="msgmerge" failonerror="true" failifexecutionfails="true" dest="po">
+			<arg value="--quiet"/>
+			<arg value="--update"/>
+			<targetfile />
+			<srcfile />
+			
+			<fileset dir="po" includes="**/*.po" />
+<!-- Only for testing:
+			<fileset dir="target/po" includes="**/*.po" />
+-->
+			<!-- Turns module/org.jboss.package-org.jboss.Messages/*.po into 
+				 module/org.jboss.package-org.jboss.Messages/org.jboss.Messages.pot -->
+			<mapper type="regexp" from="^(.*[/\\][^-]+-([^/\\]+))[/\\][^/\\]+[.]po$$" to="\1/\2.pot" />
+		</apply>
+	</target>
+	
 	<target name="po2prop" depends="init" description="Generate Java properties files from translated PO files">
 		<delete dir="${propdir}" />
 		<mkdir dir="${propdir}" />
@@ -393,10 +410,12 @@
 		</exec>
 	</target>
 	
-	<target name="most" depends="clean, prop2pot, en, qps, en_AA, po2prop, plugins, features" 
+	<target name="po" depends="en, qps, en_AA"/>
+	
+	<target name="most" depends="clean, prop2pot, po, po2prop, plugins, features" 
 		description="Generates langpacks and metadata" /> 
 
-	<target name="all" depends="clean, prop2pot, en, qps, en_AA, po2prop, plugins, features, p2" 
+	<target name="all" depends="clean, prop2pot, po, po2prop, plugins, features, p2" 
 		description="Runs all targets in an appropriate order"/>
 
 	
