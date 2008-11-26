@@ -15,7 +15,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,7 +40,15 @@ import org.w3c.dom.NodeList;
  * 
  */
 public class TestDomUtil {
-
+	/**
+	 * Attributes names that will be skipped in attribute comparison.
+	 */
+	public static final Set<String> skippedAtributes = new HashSet<String>();
+	static {
+		// Add here all attributes names to be skipped (IN UPPER CASE!)		
+		skippedAtributes.addAll(Arrays.asList("DIR"));//$NON-NLS-1$
+	}
+	
 	final public static String ID_ATTRIBUTE = "id"; //$NON-NLS-1$
 
 	final public static String ILLEGAL_ATTRIBUTES = "illegalAttributes"; //$NON-NLS-1$
@@ -207,6 +218,12 @@ public class TestDomUtil {
 		for (int i = 0; i < modelAttributes.getLength(); i++) {
 			Attr modelAttr = (Attr) modelAttributes.item(i);
 			String name = modelAttr.getName();
+
+			if ( name != null 
+					&& skippedAtributes.contains(name.toUpperCase()) ) {
+				// if the attribute have to be skipped, do it
+				continue;
+			}
 
 			// if there are limitation of attributes
 			if (ILLEGAL_ATTRIBUTES.equals(name)) {
