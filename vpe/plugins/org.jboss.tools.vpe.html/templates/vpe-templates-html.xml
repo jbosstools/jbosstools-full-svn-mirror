@@ -1929,21 +1929,21 @@
 	</vpe:tag>
 
 	<vpe:tag name="textarea" case-sensitive="no">
-		<vpe:template children="yes" modify="no">
-			<vpe:copy attrs="id,style,class,rows,cols" />
-			<vpe:resize>
+		 <vpe:template children="no" modify="yes"
+		 		 class="org.jboss.tools.vpe.html.template.HtmlTextareaTemplate">
+		 	<vpe:resize>
 				<vpe:width width-attr="style.width" />
 				<vpe:height height-attr="style.height" />
 			</vpe:resize>
-			<vpe:dnd>
+			<!-- vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes">
 					<vpe:container-child tag-name="#text" />
 				</vpe:drop>
-			</vpe:dnd>
+			</vpe:dnd-->
 			<vpe:textFormatting use-default-formats="yes">
-			</vpe:textFormatting>
-		</vpe:template>
+			</vpe:textFormatting>			
+		 </vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="tfoot" case-sensitive="no">
