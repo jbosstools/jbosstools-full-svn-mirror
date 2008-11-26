@@ -1420,7 +1420,7 @@
 	<vpe:tag name="object" case-sensitive="no">
 	<vpe:template children="yes" modify="no">
 		<vpe:copy
-			attrs="align,classid,code,codebase,codetype,data,height,hspace,type,vspace,width" />
+			attrs="align,classid,code,codebase,codetype,data,height,hspace,type,vspace,width,class,id,dir" />
 		<vpe:drop container="yes">
 			<vpe:container-child tag-name="param" />
 			<vpe:container-child tag-name="object" />
