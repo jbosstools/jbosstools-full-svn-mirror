@@ -220,26 +220,32 @@
 		<delete dir="${jardir}/plugins" />
 		<mkdir dir="${jardir}/plugins" />
 		<!-- for each plugin directory -->
-		<for param="plugindir">
+		<for param="pluginsrcdir">
 			<path>
-				<dirset dir="${propdir}" includes="*/*" />
+				<dirset dir="${jbt.srcdir}" includes="*/plugins/*" />
 			</path>
 			<sequential>
-				<echo message="@{plugindir}" />
+				<echo message="@{pluginsrcdir}" />
 				<!-- TODO avoid property override if possible -->
 				<!-- work out the plugin ID -->
+				<var name="module" unset="true" />
+				<propertyregex override="true" property="module" 
+					input="@{pluginsrcdir}" 
+					regexp="^${jbt.srcdir}[/\\]([^/\\]+)[/\\].*" 
+					select="\1" />
+				<checkprop name="module"/>
 				<var name="plugin" unset="true" />
 				<propertyregex override="true" property="plugin" 
-					input="@{plugindir}" 
-					regexp="^${propdir}[/\\][^/\\]+[/\\]([^/\\]+).*" 
+					input="@{pluginsrcdir}" 
+					regexp="^${jbt.srcdir}[/\\][^/\\]+[/\\]plugins[/\\]([^/\\]+).*" 
 					select="\1" />
 				<checkprop name="plugin"/>
-				<echo level="verbose" message="@{plugindir} contains props for plugin ${plugin}"/>
+				<echo level="verbose" message="@{pluginsrcdir} contains source for plugin ${plugin} in module ${module}"/>
 				
 				<!-- making sure these values are available to -plugin -->
 				<checkprop name="PLUGIN_VERSION"/>
 				<checkprop name="PLUGIN_VENDOR"/>
-				<var name="plugindir" value="@{plugindir}" />
+				<var name="plugindir" value="${propdir}/${module}/${plugin}" />
 				<foreachlocale task="-plugin"/>
 			</sequential>
 		</for>
@@ -247,14 +253,14 @@
 	
 	<target name="-plugin" >
 		<!-- Jars up one fragment plugin.   -->
+		<echo message="${plugindir}"/>
 		<jar 
 			destfile="${jardir}/plugins/${plugin}.nl-${locale}_${PLUGIN_VERSION}.jar" 
 			filesonly="true"
 			update="false" 
 			whenmanifestonly="create"
-			basedir="${plugindir}"
-			duplicate="fail" 
-			includes="**/*_${locale}.properties">
+			duplicate="fail">
+			<fileset dir="${plugindir}" includes="**/*_${locale}.properties" erroronmissingdir="false"/>
 			<manifest>
 				<attribute name="Manifest-Version" 
 					value="1.0"/>
@@ -346,13 +352,13 @@
 		<!-- create langpack feature element for site.xml -->
 		<!-- ugly -->
 		<echo append="true" file="${temp.file.sitefeatures}"
-			message="&lt;feature url=&quot;features/${feature}.nl-${locale}_${PLUGIN_VERSION}.jar&quot; 
-		      id=&quot;${feature}.nl-${locale}&quot; version=&quot;${PLUGIN_VERSION}&quot;&gt;
+			message="&lt;feature url=&quot;features/${feature}.nl-${locale}_${FEATURE_VERSION}.jar&quot; 
+		      id=&quot;${feature}.nl-${locale}&quot; version=&quot;${FEATURE_VERSION}&quot;&gt;
 		      &lt;category name=&quot;${locale}&quot;/&gt;
 		   &lt;/feature&gt;" />
 		<!-- demunged, that looks like:
-		   <feature url="features/${feature}.nl-${locale}_${PLUGIN_VERSION}.jar" 
-		      id="${feature}.nl-${locale}" version="${PLUGIN_VERSION}">
+		   <feature url="features/${feature}.nl-${locale}_${FEATURE_VERSION}.jar" 
+		      id="${feature}.nl-${locale}" version="${FEATURE_VERSION}">
 		      <category name="${locale}"/>
 		   </feature>
 		-->
@@ -360,11 +366,12 @@
 		<xslt 
 			style="feature.xsl"
 			in="${featurexml}" 
-			out="${propdir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}/feature.xml" 
+			out="${propdir}/features/${feature}.nl-${locale}_${FEATURE_VERSION}/feature.xml" 
 		>
-			<param name="feature" expression="${feature}" />
 			<param name="locale" expression="${locale}" />
 			<param name="localename" expression="${localename}" />
+			<param name="feature" expression="${feature}" />
+			<param name="featureversion" expression="${FEATURE_VERSION}" />
 			<param name="pluginversion" expression="${PLUGIN_VERSION}" />
 		</xslt>
 

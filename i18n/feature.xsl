@@ -5,8 +5,9 @@
 
     <xsl:param name="feature">FEATURE</xsl:param>
     <xsl:param name="locale">LOCALE</xsl:param>
-    <xsl:param name="localename">LOCNAME</xsl:param>
-    <xsl:param name="pluginversion">VERSION</xsl:param>
+    <xsl:param name="localename">LOCALE_NAME</xsl:param>
+    <xsl:param name="featureversion">FEATURE_VERSION</xsl:param>
+    <xsl:param name="pluginversion">PLUGIN_VERSION</xsl:param>
 
 	<xsl:template match="/feature">
 		<feature provider-name="%providerName">
@@ -22,7 +23,7 @@
 			<xsl:attribute name="label">JBoss Tools Language Pack for <xsl:value-of select="@label" /> in <xsl:value-of select="$localename" />
 			</xsl:attribute>
 			<xsl:attribute name="version">
-				<xsl:value-of select="$pluginversion" />
+				<xsl:value-of select="$featureversion" />
 			</xsl:attribute>
 			<copyright>
 				%copyright
