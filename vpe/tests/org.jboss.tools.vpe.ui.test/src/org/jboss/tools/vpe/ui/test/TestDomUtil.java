@@ -219,9 +219,9 @@ public class TestDomUtil {
 			Attr modelAttr = (Attr) modelAttributes.item(i);
 			String name = modelAttr.getName();
 
+			// if the attribute has to be skipped, then do it
 			if ( name != null 
 					&& skippedAtributes.contains(name.toUpperCase()) ) {
-				// if the attribute have to be skipped, do it
 				continue;
 			}
 
