@@ -73,6 +73,10 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 	public void testAddress() throws Throwable {
 		performContentTest("components/core/address.html"); //$NON-NLS-1$
 	}
+	
+	public void testArea() throws Throwable {
+		performInvisibleTagTest("components/core/area.html","area"); //$NON-NLS-1$ //$NON-NLS-2$
+	}
 
 	public void testBody() throws Throwable {
 		performContentTest("components/core/body.html"); //$NON-NLS-1$
@@ -124,6 +128,10 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 
 	public void testObject() throws Throwable {
 		performContentTest("components/core/object.html"); //$NON-NLS-1$
+	}
+	
+	public void testParam() throws Throwable {
+		performInvisibleTagTest("components/core/param.html","param"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	public void testStyle() throws Throwable {
@@ -356,6 +364,55 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 
 	public void testVar() throws Throwable {
 		performContentTest("components/text/var.html"); //$NON-NLS-1$
+	}
+
+	
+	/*
+	 * test for other html tags
+	 */
+	
+	public void testBaseFont() throws Throwable {
+		performContentTest("components/other/basefont.html"); //$NON-NLS-1$
+	}
+	
+	public void testBdo() throws Throwable {
+		performContentTest("components/other/bdo.html"); //$NON-NLS-1$
+	}
+	
+	public void testBgsound() throws Throwable {
+		performContentTest("components/other/bgsound.html"); //$NON-NLS-1$
+	}
+
+	public void testCenter() throws Throwable {
+		performContentTest("components/other/center.html"); //$NON-NLS-1$
+	}
+	
+	public void testEmbed() throws Throwable {
+		performContentTest("components/other/embed.html"); //$NON-NLS-1$
+	}
+	
+	public void testFont() throws Throwable {
+		performContentTest("components/other/font.html"); //$NON-NLS-1$
+	}
+	
+	public void testMarquee() throws Throwable {
+		performContentTest("components/other/marquee.html"); //$NON-NLS-1$
+	}
+	
+	public void testNobr() throws Throwable {
+		performContentTest("components/other/nobr.html"); //$NON-NLS-1$
+	}
+	
+	public void testNoembed() throws Throwable {
+		performInvisibleTagTest("components/other/noembed.html", "noembed"); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+	
+	public void testWbr() throws Throwable {
+		performContentTest("components/other/wbr.html"); //$NON-NLS-1$
+	}
+	
+	public void testXmp() throws Throwable {
+		performContentTest("components/other/xmp.xhtml"); //$NON-NLS-1$
 	}
 
 	protected String getTestProjectName() {

@@ -1,0 +1,9 @@
+<tests>
+	<test id="bdo">
+		<BDO DIR="rtl" STYLE="-moz-user-modify: read-write;" >
+			<SPAN>
+				some text
+			</SPAN>
+		</BDO>
+	</test>
+</tests>
