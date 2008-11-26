@@ -5,7 +5,9 @@
 [<!ENTITY intro SYSTEM "modules/intro.xml">
 <!ENTITY installation SYSTEM "modules/installation.xml">
 <!ENTITY starting_project SYSTEM "modules/starting_project.xml">
-<!ENTITY portlets_support SYSTEM "modules/portlets_support.xml">
+<!ENTITY jsf_portlet SYSTEM "modules/jsf_portlet.xml">
+<!ENTITY seam_portlet SYSTEM "modules/seam_portlet.xml">
+<!ENTITY portlets_to_nonWTP_projects SYSTEM "modules/portlets_to_nonWTP_projects.xml">
 
 <!ENTITY seamlink "../../seam/html_single/index.html">
 <!ENTITY aslink "../../as/html_single/index.html">
@@ -54,6 +56,8 @@
     &intro;
     &installation;
     &starting_project;
-    &portlets_support;
+    &jsf_portlet;
+    &seam_portlet;
+    &portlets_to_nonWTP_projects;
     
 </book>    
