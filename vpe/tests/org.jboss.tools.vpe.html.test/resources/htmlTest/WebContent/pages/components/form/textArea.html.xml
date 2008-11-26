@@ -1,0 +1,8 @@
+<tests>
+	<test id="textArea">
+		<TEXTAREA COLS="10" ROWS="2" ID="textArea" CLASS="textAreaClass"
+			STYLE="color: red; -moz-user-modify: read-only;">
+				value
+		</TEXTAREA>
+	</test>
+</tests>

@@ -67,9 +67,9 @@ public class HtmlComponentTest extends VpeTest {
 				"components/core/address.html", IMPORT_PROJECT_NAME)); //$NON-NLS-1$
 	}
 
-	public void testBasic() throws Throwable {
+	public void testBody() throws Throwable {
 		performTestForVpeComponent((IFile) TestUtil.getComponentPath(
-				"components/core/basic.html", IMPORT_PROJECT_NAME)); //$NON-NLS-1$
+				"components/core/body.html", IMPORT_PROJECT_NAME)); //$NON-NLS-1$
 	}
 
 	public void testImg() throws Throwable {

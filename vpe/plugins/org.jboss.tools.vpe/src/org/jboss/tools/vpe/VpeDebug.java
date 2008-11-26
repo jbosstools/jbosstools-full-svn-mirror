@@ -10,7 +10,11 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.core.runtime.Platform;
+import org.jboss.tools.vpe.editor.util.Constants;
 
 public class VpeDebug {
 	public static final boolean PRINT_SOURCE_MUTATION_EVENT;
@@ -33,6 +37,8 @@ public class VpeDebug {
 	public static final boolean VISUAL_DUMP_PRINT_HASH;
 
 	public static final boolean VISUAL_CONTEXTMENU_TEST;
+	
+	public static final List<String> VISUAL_DUMP_IGNORED_ATTRIBUTES ;
 
 	// usePrintStackTrace = false - The exception is sent on our site 
 	// usePrintStackTrace = true - The exception is printed through printStackTrace 
@@ -57,9 +63,16 @@ public class VpeDebug {
 		VISUAL_CONTEXTMENU_DUMP_SELECTED_ELEMENT = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/contextmenu/dump_selected_element")); //$NON-NLS-1$ //$NON-NLS-2$
 		VISUAL_CONTEXTMENU_DUMP_MAPPING = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/contextmenu/dump_mapping")); //$NON-NLS-1$ //$NON-NLS-2$
 		VISUAL_DUMP_PRINT_HASH = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/dump_print_hash")); //$NON-NLS-1$ //$NON-NLS-2$
-
+		VISUAL_DUMP_IGNORED_ATTRIBUTES = Platform
+				.getDebugOption(VpePlugin.PLUGIN_ID
+						+ "/debug/visual/ignored_attributes") != null ? Arrays
+				.asList(Platform.getDebugOption(
+						VpePlugin.PLUGIN_ID
+								+ "/debug/visual/ignored_attributes").split(
+						Constants.COMMA)) : null; 
 		VISUAL_CONTEXTMENU_TEST = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/contextmenu/show_test")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		USE_PRINT_STACK_TRACE = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/use_PrintStackTrace")); //$NON-NLS-1$ //$NON-NLS-2$
+		
 	}
 }

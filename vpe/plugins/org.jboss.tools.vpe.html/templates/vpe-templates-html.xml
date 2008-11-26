@@ -808,11 +808,17 @@
 	</vpe:tag>
 
 	<vpe:tag name="frame" case-sensitive="no">
-		<vpe:template children="yes" modify="no" />
+		<vpe:template children="no" modify="no">
+			<frame src="{src(@src)}" bordercolor="{@bordercolor}"
+				frameborder="{@frameborder}" name="{@name}" noresize="{@noresize}"
+				scrolling="{@scrolling}" />
+		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="frameset" case-sensitive="no">
-		<vpe:template children="yes" modify="no" />
+		<vpe:template children="yes" modify="no" >
+			<vpe:copy attrs="border,bordercolor,cols,frameborder,framespacing,rows" />
+		</vpe:template>
 	</vpe:tag>
 	
 	<vpe:tag name="h1" case-sensitive="no">
@@ -1078,6 +1084,9 @@
 
 	<vpe:tag name="iframe" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
+			<iframe src="{src(@src)}" align="{@align}" frameborder="{@frameborder}"
+				height="{@height}" hspace="{@hspace}" name="{@name}" scrolling="{@scrolling}"
+				vspace="{@vspace}" width="{@width}" />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 			</vpe:dnd>
@@ -1172,7 +1181,9 @@
 		</vpe:if>
 		<vpe:if test="@type='image'">
 			<vpe:template children="no" modify="no">
-				<img src="{@src}" width="20" height="20" />
+				<!--				<img src="{@src}" width="20" height="20" />-->
+				<input type="image" value="{@value}" class="{@class}" style="{@style}"
+					size="{@size}" disabled="{@disabled}" width="{@width}" height="{@height}" border="{@border}" dir="{@dir}" src="{src(@src)}" />
 			</vpe:template>
 		</vpe:if>
 		<vpe:template children="no" modify="no">
@@ -1395,7 +1406,9 @@
 	</vpe:tag>
 
 	<vpe:tag name="noframes" case-sensitive="no">
-		<vpe:template children="yes" modify="no" />
+		<vpe:template children="yes" modify="no" >
+			<vpe:copy />
+		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="noscript" case-sensitive="no">
@@ -1403,7 +1416,6 @@
 	</vpe:tag>
 
 	<vpe:tag name="object" case-sensitive="no">
-	<!--		<vpe:template children="no" modify="no" />-->
 	<vpe:template children="yes" modify="no">
 		<vpe:copy
 			attrs="align,classid,code,codebase,codetype,data,height,hspace,type,vspace,width" />

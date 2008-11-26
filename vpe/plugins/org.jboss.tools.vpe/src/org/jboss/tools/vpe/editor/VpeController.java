@@ -1623,6 +1623,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						public void run() {
 							DOMTreeDumper dumper = new DOMTreeDumper(
 									VpeDebug.VISUAL_DUMP_PRINT_HASH);
+							dumper.setIgnoredAttributes(VpeDebug.VISUAL_DUMP_IGNORED_ATTRIBUTES);
 							dumper.dumpToStream(System.out, visualEditor
 									.getDomDocument());
 						}
@@ -1641,9 +1642,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 								DOMTreeDumper dumper = new DOMTreeDumper(
 										VpeDebug.VISUAL_DUMP_PRINT_HASH);
-								List<String> ignoredAttributes = new ArrayList<String>();
-								ignoredAttributes.add(HTML.ATTR_TITLE);
-								dumper.setIgnoredAttributes(ignoredAttributes);
+								dumper.setIgnoredAttributes(VpeDebug.VISUAL_DUMP_IGNORED_ATTRIBUTES);
 								dumper.dumpNode(nodeMapping.getVisualNode());
 							}
 						}

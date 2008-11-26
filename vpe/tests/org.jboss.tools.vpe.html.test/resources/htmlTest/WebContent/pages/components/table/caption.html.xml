@@ -1,0 +1,10 @@
+<tests>
+	<test id="caption">
+		<CAPTION ID="caption" CLASS="captionClass" DIR="ltr"
+			STYLE="color: red; -moz-user-modify: read-write;">
+			<SPAN>
+				caption of a table
+</SPAN>
+		</CAPTION>
+	</test>
+</tests>

@@ -1,0 +1,36 @@
+<tests>
+	<test id="select">
+		<SELECT CLASS="selectClass" DIR="ltr" ID="select" SIZE="10"
+			DISABLED="disabled" STYLE="color: red; -moz-user-modify: read-write;">
+			<OPTGROUP LABEL="color" STYLE="-moz-user-modify: read-only;">
+				<OPTION VALUE="c1" STYLE="-moz-user-modify: read-write;">
+					<SPAN>
+						orange
+</SPAN>
+				</OPTION>
+				<OPTION VALUE="c2" STYLE="-moz-user-modify: read-write;">
+					<SPAN>
+						lemon
+</SPAN>
+				</OPTION>
+			</OPTGROUP>
+			<OPTGROUP LABEL="tone" STYLE="-moz-user-modify: read-only;">
+				<OPTION VALUE="s1" STYLE="-moz-user-modify: read-write;">
+					<SPAN>
+						light
+</SPAN>
+				</OPTION>
+				<OPTION VALUE="s2" STYLE="-moz-user-modify: read-write;">
+					<SPAN>
+						normal
+</SPAN>
+				</OPTION>
+				<OPTION VALUE="s3" STYLE="-moz-user-modify: read-write;">
+					<SPAN>
+						deep
+</SPAN>
+				</OPTION>
+			</OPTGROUP>
+		</SELECT>
+	</test>
+</tests>
