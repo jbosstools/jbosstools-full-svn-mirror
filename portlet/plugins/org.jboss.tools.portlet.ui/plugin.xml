@@ -2,14 +2,12 @@
 <?eclipse version="3.2"?>
 <plugin>
    
-   <!--
    <extension 
         point="org.eclipse.wst.common.project.facet.ui.wizardPages">
     <wizard-pages action="jboss.portlet.install">
         <page class="org.jboss.tools.portlet.ui.internal.project.facet.PortletFacetInstallPage"/>
     </wizard-pages>
   </extension> 
-  -->
   
   <extension 
         point="org.eclipse.wst.common.project.facet.ui.wizardPages">

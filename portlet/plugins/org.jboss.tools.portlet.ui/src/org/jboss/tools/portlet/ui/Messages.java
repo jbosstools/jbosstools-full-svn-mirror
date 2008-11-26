@@ -48,8 +48,12 @@ public class Messages extends NLS {
 	public static String JSFPortletFacetInstallPage_Portletbridge_Runtime;
 	public static String JSFPortletFacetInstallPage_Portletbridge_Runtime_directory_is_required;
 	public static String JSFPortletFacetInstallPage_Select_Portletbridge_Runtime;
+	public static String PortletFacetInstallPage_Add;
 	public static String PortletFacetInstallPage_Add_JBoss_Portlet_capabilities_to_this_Web_Project;
+	public static String PortletFacetInstallPage_Enable_implementation_library;
 	public static String PortletFacetInstallPage_JBoss_Portlet_Capabilities;
+	public static String PortletFacetInstallPage_User_Library;
+	public static String PortletFacetInstallPage_You_have_to_choose_an_user_library;
 	public static String PortletUIActivator_The_portlet_xml_file_doesnt_exist;
 	static {
 		// initialize resource bundle
