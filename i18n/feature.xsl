@@ -12,6 +12,13 @@
 		<feature provider-name="%providerName">
 			<xsl:attribute name="id"><xsl:value-of select="$feature" />-<xsl:value-of select="$locale" />
 			</xsl:attribute>
+			<!-- NB A few feature labels (eg org.jboss.tools.birt.feature) 
+			use %featureName, which is then replicated in the langpack 
+			feature (bad). 
+			TODO change affected feature manifests to inline those feature 
+			names (since they shouldn't be translated anyway) or use @id 
+			here, not @label.
+			 -->
 			<xsl:attribute name="label">JBoss Tools Language Pack for <xsl:value-of select="@label" /> in <xsl:value-of select="$localename" />
 			</xsl:attribute>
 			<xsl:attribute name="version">

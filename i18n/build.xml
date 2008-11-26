@@ -50,13 +50,6 @@
 		<!-- pick up the "for" task from ant-contrib -->
 		<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="dependency.classpath" />
 
-<!--    xpath and groovy tasks currently unused: 
-		<taskdef resource="net/uworks/andariel/andariel.properties" classpathref="dependency.classpath" />
-		
-		<taskdef name="groovy"
-		         classname="org.codehaus.groovy.ant.Groovy"
-		         classpathref="dependency.classpath"/>
--->
 		<!-- ant-gettext tasks -->
 		<taskdef name="prop2pot" classname="org.fedorahosted.tennera.antgettext.Prop2PotTask" classpathref="dependency.classpath" />
 		<taskdef name="pot2en" classname="org.fedorahosted.tennera.antgettext.Pot2EnTask" classpathref="dependency.classpath" />
@@ -103,11 +96,11 @@
 	<target name="prop2pot" depends="init"
 		description="Extract translation templates (POT) from the JBoss Tools English properties files">
 		<!-- paths under jbt.srcdir look like: ${module}/plugins/${plugin}/{src,main,...} -->
-		<!-- TODO includes should be just plugins/*/src/**/*.properties.  
-		See https://jira.jboss.org/jira/browse/JBIDE-2972  includes="plugins/*/*/**/*.properties" -->
+		<!-- TODO properties *should* be found in exactly one place, but aren't.  
+		See https://jira.jboss.org/jira/browse/JBIDE-2972 -->
 		<prop2pot srcDir="${jbt.srcdir}" dstDir="po" includes="*/plugins/*/src/**/*.properties" >
 			<!-- next two are Maven style, not currently used in JBT: --> 
-<!--
+<!-- These filesets were used in a <jar> call, not supported by <prop2pot>
 			<fileset erroronmissingdir="false" dir="${plugindir}/src/main/java"/>
 			<fileset erroronmissingdir="false" dir="${plugindir}/src/main/resources"/>
 			 
@@ -162,25 +155,54 @@
           macrodef: checkprop checks that specified property has been set
          = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 	<macrodef name="checkprop">
-		<attribute name="propname" />
+		<attribute name="name" />
 		<sequential>
 			<if>
-				<!-- TODO fail on empty value -->
 				<not>
-					<isset property="@{propname}"/>
+					<isset property="@{name}"/>
 				</not>
 				<then>
-					<fail message="property '@{propname}' is not set"/>
+					<fail message="property '@{name}' is not set"/>
 				</then>
 			</if>
+			<if>
+				<length string="${@{name}}" length="0"/>
+				<then>
+					<fail message="property '@{name}' has an empty value"/>
+				</then>
+			</if>		
 		</sequential>
 	</macrodef>
+	
+	<!-- = = = = = = = = = = = = = = = = =
+          macrodef: foreachlocale          
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="foreachlocale">
+      <attribute name="task" />
+      <sequential>
+		<!-- for each configured locale (in i18n.properties) -->
+		<for param="locale" list="${locales}">
+			<sequential>
+		    	<antcall target="@{task}" inheritall="true">
+		    	    <param name="locale" value="@{locale}"/>
+		    	    <param name="localename" value="${NAME_@{locale}}"/>
+		    		
+		    		<!-- Having these task-specific params is ugly, but
+		    		 otherwise <var>s don't get passed through: -->
+		    	    <param name="plugindir" value="${plugindir}"/>
+		    	    <param name="featurexml" value="${featurexml}"/>
+		    	</antcall>
+	    	</sequential>
+		</for>
+      </sequential>
+    </macrodef>
 	
 	<!-- Processes the generated props directory, one plugin at a time, 
 		 generating manifests and jars -->
 	<target name="plugins" depends="init" description="Generate fragment manifests and jars for langpack plugins">
 		<delete dir="${jardir}/plugins" />
 		<mkdir dir="${jardir}/plugins" />
+		<!-- for each plugin directory -->
 		<for param="plugindir">
 			<path>
 				<dirset dir="${propdir}" includes="*/*" />
@@ -188,49 +210,51 @@
 			<sequential>
 				<echo message="@{plugindir}" />
 				<!-- TODO avoid property override if possible -->
+				<!-- work out the plugin ID -->
+				<var name="plugin" unset="true" />
 				<propertyregex override="true" property="plugin" 
 					input="@{plugindir}" 
 					regexp="^${propdir}[/\\][^/\\]+[/\\]([^/\\]+).*" 
 					select="\1" />
-				<checkprop propname="plugin"/>
+				<checkprop name="plugin"/>
 				<echo level="verbose" message="@{plugindir} contains props for plugin ${plugin}"/>
-				<checkprop propname="PLUGIN_VERSION"/>
-				<checkprop propname="PLUGIN_VENDOR"/>
 				
-				<for param="locale" list="${locales}">
-					<sequential>
-						<!-- TODO avoid property override if possible -->
-						<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
-						<checkprop propname="localename"/>
-
-						<!-- Jars up one fragment plugin.   -->
-						<jar 
-							destfile="${jardir}/plugins/${plugin}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
-							update="no" 
-							basedir="@{plugindir}"
-							duplicate="fail" 
-							includes="**/*_@{locale}.properties">
-							<manifest>
-								<attribute name="Manifest-Version" 
-									value="1.0"/>
-								<attribute name="Created-By" 
-									value="JBoss Tools i18n (build.xml)"/>
-								<attribute name="Bundle-Name" 
-									value="${plugin} ${localename} NLS Support"/>
-								<attribute name="Bundle-SymbolicName" 
-									value="${plugin}.nl_@{locale} ;singleton=true"/>
-								<attribute name="Bundle-Version" 
-									value="${PLUGIN_VERSION}"/>
-								<attribute name="Bundle-Vendor" 
-									value="${PLUGIN_VENDOR}"/>
-								<attribute name="Fragment-Host" 
-									value="${plugin}"/>
-							</manifest>
-						</jar>
-					</sequential>
-				</for>
+				<!-- making sure these values are available to -plugin -->
+				<checkprop name="PLUGIN_VERSION"/>
+				<checkprop name="PLUGIN_VENDOR"/>
+				<var name="plugindir" value="@{plugindir}" />
+				<foreachlocale task="-plugin"/>
 			</sequential>
 		</for>
+	</target>
+	
+	<target name="-plugin" >
+		<!-- Jars up one fragment plugin.   -->
+		<jar 
+			destfile="${jardir}/plugins/${plugin}.nl-${locale}_${PLUGIN_VERSION}.jar" 
+			filesonly="true"
+			update="false" 
+			whenmanifestonly="create"
+			basedir="${plugindir}"
+			duplicate="fail" 
+			includes="**/*_${locale}.properties">
+			<manifest>
+				<attribute name="Manifest-Version" 
+					value="1.0"/>
+				<attribute name="Created-By" 
+					value="JBoss Tools i18n (build.xml)"/>
+				<attribute name="Bundle-Name" 
+					value="${plugin} ${localename} NLS Support"/>
+				<attribute name="Bundle-SymbolicName" 
+					value="${plugin}.nl_${locale} ;singleton=true"/>
+				<attribute name="Bundle-Version" 
+					value="${PLUGIN_VERSION}"/>
+				<attribute name="Bundle-Vendor" 
+					value="${PLUGIN_VENDOR}"/>
+				<attribute name="Fragment-Host" 
+					value="${plugin}"/>
+			</manifest>
+		</jar>
 	</target>
 
 	<target name="features" depends="init" 
@@ -246,84 +270,36 @@
 			suffix=".tmp" 
 			createfile="true" 
 			deleteonexit="false" />
-		<sequential>
-			<for param="featurexml">
-				<path>
-					<fileset dir="${jbt.srcdir}" includes="*/features/*/feature.xml"/>
-				</path>
-				<sequential>
-					<!-- TODO avoid property override if possible -->
-					<propertyregex 
-						override="true" 
-						property="feature" 
-    					input="@{featurexml}" 
-    					regexp="^${jbt.srcdir}[/\\][^/\\]+[/\\]features[/\\]([^/\\]+)[/\\]feature.xml" 
-    					select="\1" />
-					<checkprop propname="feature"/>
-					<echo level="verbose" message="Processing feature ${feature}"/>
-					<for param="locale" list="${locales}">
-						<sequential>
-							<!-- TODO avoid property override if possible -->
-							<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
-							<!-- TODO use a macro for this -->
-							<echo append="true" file="${temp.file.sitefeatures}"
-								message="&lt;feature url=&quot;features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar&quot; 
-							      id=&quot;${feature}.nl-@{locale}&quot; version=&quot;${PLUGIN_VERSION}&quot;&gt;
-							      &lt;category name=&quot;@{locale}&quot;/&gt;
-							   &lt;/feature&gt;" />
-							<!-- demunged, that looks like:
-							   <feature url="features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
-							      id="${feature}.nl-@{locale}" version="${PLUGIN_VERSION}">
-							      <category name="@{locale}"/>
-							   </feature>
-							-->
-							<!-- Process feature.xml with <xslt> -->		
-							<!-- consider: using groovy instead to eliminate empty plugin fragments -->
-							<xslt 
-								style="feature.xsl"
-								in="@{featurexml}" 
-								out="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}/feature.xml" 
-							>
-								<param name="feature" expression="${feature}" />
-								<param name="locale" expression="@{locale}" />
-								<param name="localename" expression="${localename}" />
-								<param name="pluginversion" expression="${PLUGIN_VERSION}" />
-							</xslt>
-
-							<copy overwrite="true" 
-								todir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}">
-								<fileset dir="feature-template/FEATURE.nl-LOCALE_VERSION" />
-							</copy>
-							<jar destfile="${jardir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}.jar" 
-								basedir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}" />
-							<!-- might want to keep around for debugging: -->
-							<delete dir="${propdir}/features/${feature}.nl-@{locale}_${PLUGIN_VERSION}" />
-						</sequential>
-					</for>
-				</sequential>
-			</for>
-		</sequential>
-		<!--
-		Generate a list of features for each locale, so that the update 
-		site can have a category for each locale:
-		-->
-		<for param="locale" list="${locales}">
+		<!-- for each feature manifest -->
+		<for param="featurexml">
+			<path>
+				<fileset dir="${jbt.srcdir}" includes="*/features/*/feature.xml"/>
+			</path>
 			<sequential>
 				<!-- TODO avoid property override if possible -->
-				<propertycopy override="true" property="localename" from="NAME_@{locale}"/>
-				<echo append="true" file="${temp.file.sitefeatures}"
-					message="&lt;category-def name=&quot;@{locale}&quot; label=&quot;JBoss Tools Localization (${localename})&quot;/&gt;" />
-				<!-- demunged, that looks like:
-				   <category-def 
-				   		name="@{locale}" 
-				   		label="JBoss Tools Localization (${localename})"/>
-				-->
+				<!-- work out the feature ID -->
+				<var name="feature" unset="true" />
+				<propertyregex 
+					override="true" 
+					property="feature" 
+					input="@{featurexml}" 
+					regexp="^${jbt.srcdir}[/\\][^/\\]+[/\\]features[/\\]([^/\\]+)[/\\]feature.xml" 
+					select="\1" />
+				<checkprop name="feature"/>
+				<echo level="verbose" message="Processing feature ${feature}"/>
+				
+				<!-- making sure this value is available to -feature -->
+				<var name="featurexml" value="@{featurexml}" />
+				<foreachlocale task="-feature"/>
 			</sequential>
 		</for>
+
+		<foreachlocale task="-categorydef"/>
 		
-		
-		<!-- Read in the above list of features -->
-		<!-- FIXME var features (loading list of features) -->
+		<!-- Read in the list of <feature>s and <category-def>s created by 
+			 the targets -categorydef and -feature -->
+		<!-- TODO this is an ugly way to build XML 
+			 (see also the <echo>s in above-mentioned targets)  -->
 		<var name="features" unset="true" />
 		<loadfile property="features"  srcFile="${temp.file.sitefeatures}"/>
 		<delete file="${temp.file.sitefeatures}"/>
@@ -334,6 +310,55 @@
 				<expandproperties/>
 			</filterchain>
 		</copy>
+	</target>
+	
+	<!-- Create a <category-def> for ${locale} for site.xml -->
+	<target name="-categorydef">
+		<!-- ugly -->
+		<echo append="true" file="${temp.file.sitefeatures}"
+			message="&lt;category-def name=&quot;${locale}&quot; label=&quot;JBoss Tools Localization (${localename})&quot;/&gt;" />
+		<!-- demunged, that looks like:
+		   <category-def 
+		   		name="${locale}" 
+		   		label="JBoss Tools Localization (${localename})"/>
+		-->
+	</target>
+	
+	<!-- Create feature jar including manifest.  Also create a <feature> for site.xml -->
+	<target name="-feature">
+		<!-- create langpack feature element for site.xml -->
+		<!-- ugly -->
+		<echo append="true" file="${temp.file.sitefeatures}"
+			message="&lt;feature url=&quot;features/${feature}.nl-${locale}_${PLUGIN_VERSION}.jar&quot; 
+		      id=&quot;${feature}.nl-${locale}&quot; version=&quot;${PLUGIN_VERSION}&quot;&gt;
+		      &lt;category name=&quot;${locale}&quot;/&gt;
+		   &lt;/feature&gt;" />
+		<!-- demunged, that looks like:
+		   <feature url="features/${feature}.nl-${locale}_${PLUGIN_VERSION}.jar" 
+		      id="${feature}.nl-${locale}" version="${PLUGIN_VERSION}">
+		      <category name="${locale}"/>
+		   </feature>
+		-->
+		<!-- Process feature.xml with <xslt> -->		
+		<xslt 
+			style="feature.xsl"
+			in="${featurexml}" 
+			out="${propdir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}/feature.xml" 
+		>
+			<param name="feature" expression="${feature}" />
+			<param name="locale" expression="${locale}" />
+			<param name="localename" expression="${localename}" />
+			<param name="pluginversion" expression="${PLUGIN_VERSION}" />
+		</xslt>
+
+		<copy overwrite="true" 
+			todir="${propdir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}">
+			<fileset dir="feature-template/FEATURE.nl-LOCALE_VERSION" />
+		</copy>
+		<jar destfile="${jardir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}.jar" 
+			basedir="${propdir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}" />
+		<!-- might want to keep around for debugging: -->
+		<delete dir="${propdir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}" />
 	</target>
 	
 	<target name="p2" description="Generate metadata for Eclipse 3.4's update manager (P2)" >

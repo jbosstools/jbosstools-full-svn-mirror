@@ -35,17 +35,5 @@
             <!-- 1.0b3 is not in the central/jboss maven repos -->
             <version>1.0b2</version>
         </dependency>
-<!-- 
-        <dependency>
-            <groupId>net.uworks</groupId>
-            <artifactId>andariel</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>1.5.6</version>
-        </dependency>
--->
     </dependencies>
 </project>
