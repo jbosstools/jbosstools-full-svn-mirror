@@ -73,12 +73,11 @@
                             <para>Create JSF/Seam Portlet wizard</para>
                         </entry>
                         <entry>
-                            <para>This wizard creates a JSF/Seam portlet that uses JBoss Portlet
-                                Bridge</para>
+                            <para>This wizard allows to create JSF/Seam portlets</para>
                         </entry>
                         <entry>
-                            <link linkend="adding_JsfSeam_portlet">Adding JSF/Seam Portlet to a
-                                project</link>
+                            <link linkend="jsf_portlet">Creating JSF Portlet</link>
+                            <link linkend="seam_portlet">Creating Seam Portlet</link>
                         </entry>
                     </row>
 
