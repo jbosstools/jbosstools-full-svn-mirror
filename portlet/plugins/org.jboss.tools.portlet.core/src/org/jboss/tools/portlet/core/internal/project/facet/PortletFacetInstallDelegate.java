@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jst.j2ee.model.IModelProvider;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.IDelegate;
@@ -76,21 +77,10 @@ public class PortletFacetInstallDelegate implements IDelegate {
 			}
 
 			IJavaProject javaProject = JavaCore.create(project);	
-			
-			IPath containerPath = null;
-			//if (IPortletConstants.PORTLET_FACET_VERSION_10.equals(fv.getVersionString())) {
-				containerPath = new Path(IPortletConstants.PORTLET_CONTAINER_10_ID);
-			//} else {
-				containerPath = new Path(IPortletConstants.PORTLET_CONTAINER_20_ID);
-			//}
-			
-			IClasspathEntry entry = JavaCore.newContainerEntry(containerPath, true);
-			IClasspathEntry[] entries = javaProject.getRawClasspath();
-			IClasspathEntry[] newEntries = new IClasspathEntry[entries.length + 1];
-			System.arraycopy( entries, 0, newEntries, 0, entries.length );
-			newEntries[entries.length] = entry;
-			javaProject.setRawClasspath(newEntries, monitor);
-			
+			boolean enableImplementationLibrary = config.getBooleanProperty(IPortletConstants.ENABLE_IMPLEMENTATION_LIBRARY);
+			if (enableImplementationLibrary) {
+				setClasspath(monitor, javaProject, config);
+			}
 			
 			createPortletXml(project, fv, config, monitor);
 
@@ -103,6 +93,49 @@ public class PortletFacetInstallDelegate implements IDelegate {
 				monitor.done();
 			}
 		}
+	}
+
+	private void setClasspath(final IProgressMonitor monitor,
+			IJavaProject javaProject, IDataModel config) throws CoreException {
+		boolean deployPortletJars = config.getBooleanProperty(IPortletConstants.DEPLOY_PORTLET_JARS);
+		if (deployPortletJars) {
+			copyLibraries(monitor,javaProject,config);
+		} else {
+			String implementationLibrary = config.getStringProperty(IPortletConstants.IMPLEMENTATION_LIBRARY);
+			if (IPortletConstants.LIBRARY_PROVIDED_BY_JBOSS_TOOLS.equals(implementationLibrary)) {
+				IPath containerPath = new Path(IPortletConstants.PORTLET_CONTAINER_20_ID);
+				setContainerPath(monitor, javaProject, containerPath);
+			} else if (IPortletConstants.LIBRARIES_PROVIDED_BY_SERVER_RUNTIME.equals(implementationLibrary)) {
+				IPath containerPath = new Path(IPortletConstants.PORTLET_RUNTIME_CONTAINER_ID);
+				setContainerPath(monitor, javaProject, containerPath);
+			} else {
+				String libraryName = config.getStringProperty(IPortletConstants.USER_LIBRARY_NAME);
+				if (libraryName != null && libraryName.trim().length() > 0) {
+					IPath containerPath = new Path(JavaCore.USER_LIBRARY_CONTAINER_ID + "/" + libraryName); //$NON-NLS-1$
+					setContainerPath(monitor, javaProject, containerPath);
+				} else {
+					PortletCoreActivator.log(null, Messages.PortletFacetInstallDelegate_User_library_name_is_invalid);
+				}
+			    // user library	
+				//JavaCore.getCla
+			}
+		
+		}
+	}
+
+	private void copyLibraries(IProgressMonitor monitor,
+			IJavaProject javaProject, IDataModel config) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void setContainerPath(IProgressMonitor monitor, IJavaProject javaProject,IPath containerPath) throws CoreException {
+		IClasspathEntry entry = JavaCore.newContainerEntry(containerPath, true);
+		IClasspathEntry[] entries = javaProject.getRawClasspath();
+		IClasspathEntry[] newEntries = new IClasspathEntry[entries.length + 1];
+		System.arraycopy( entries, 0, newEntries, 0, entries.length );
+		newEntries[entries.length] = entry;
+		javaProject.setRawClasspath(newEntries, monitor);
 	}
 
 	private void createPortletXml(final IProject project,

@@ -10,8 +10,11 @@
  ************************************************************************************/
 package org.jboss.tools.portlet.core.internal.project.facet;
 
+import java.util.Set;
+
 import org.eclipse.wst.common.componentcore.datamodel.FacetInstallDataModelProvider;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.core.Messages;
 
 /**
  * @author snjeza
@@ -25,7 +28,30 @@ public class PortletFacetInstallDataModelProvider extends
 		if(propertyName.equals(FACET_ID)){
 			return IPortletConstants.PORTLET_FACET_ID;
 		}
+		if (propertyName.equals(IPortletConstants.DEPLOY_PORTLET_JARS)) {
+			return Boolean.FALSE;
+		}
+		if (propertyName.equals(IPortletConstants.ENABLE_IMPLEMENTATION_LIBRARY)) {
+			return Boolean.TRUE;
+		}
+		if (propertyName.equals(IPortletConstants.USER_LIBRARY_NAME)) {
+			return ""; //$NON-NLS-1$
+		}
+		if (propertyName.equals(IPortletConstants.IMPLEMENTATION_LIBRARY)) {
+			return IPortletConstants.LIBRARY_PROVIDED_BY_JBOSS_TOOLS;
+		}
 		return super.getDefaultProperty(propertyName);
+	}
+	
+	@Override
+	public Set<String> getPropertyNames() {
+		Set<String> propertyNames = super.getPropertyNames();
+		propertyNames.add(IPortletConstants.DEPLOY_PORTLET_JARS);
+		propertyNames.add(IPortletConstants.ENABLE_IMPLEMENTATION_LIBRARY);
+		propertyNames.add(IPortletConstants.USER_LIBRARY_NAME);
+		propertyNames.add(IPortletConstants.IMPLEMENTATION_LIBRARY);
+		
+		return propertyNames;
 	}
 
 }

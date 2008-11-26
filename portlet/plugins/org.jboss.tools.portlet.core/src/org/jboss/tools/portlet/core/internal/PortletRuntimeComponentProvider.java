@@ -12,21 +12,12 @@ import org.eclipse.wst.common.project.facet.core.runtime.IRuntimeComponentVersio
 import org.eclipse.wst.common.project.facet.core.runtime.RuntimeManager;
 import org.eclipse.wst.server.core.IRuntime;
 import org.eclipse.wst.server.core.internal.facets.RuntimeFacetComponentProviderDelegate;
+import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 
 public class PortletRuntimeComponentProvider extends
 		RuntimeFacetComponentProviderDelegate {
-
-	private static final String SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_SAR = "server/default/deploy/jboss-portal.sar"; //$NON-NLS-1$
-
-	private static final String SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL = "server/default/deploy/simple-portal"; //$NON-NLS-1$
-
-	private static final String LIB = "lib"; //$NON-NLS-1$
-
-	private static final String JAR = ".jar"; //$NON-NLS-1$
-
-	private static final String PORTLET_API = "portlet-api"; //$NON-NLS-1$
 
 	private static final IRuntimeComponentType PORTAL_TYPE = RuntimeManager
 			.getRuntimeComponentType("org.jboss.tools.portlet.core.runtime.component"); //$NON-NLS-1$
@@ -52,20 +43,20 @@ public class PortletRuntimeComponentProvider extends
 			return true;
 		}
 		// JBoss Portal server
-		if (exists(location, SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_SAR)) {
+		if (exists(location, IPortletConstants.SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_SAR)) {
 			return true;
 		}
 		// JBoss portletcontainer
-		if (exists(location,SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL)) {
+		if (exists(location,IPortletConstants.SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL)) {
 			return true;
 		}
 		// Tomcat portletcontainer
-		File tomcatLib = new File(location,LIB);
+		File tomcatLib = new File(location,IPortletConstants.TOMCAT_LIB);
 		if (tomcatLib.exists() && tomcatLib.isDirectory()) {
 			String[] files = tomcatLib.list(new FilenameFilter() {
 
 				public boolean accept(File dir, String name) {
-					if (name.startsWith(PORTLET_API) && name.endsWith(JAR)) {
+					if (name.startsWith(IPortletConstants.PORTLET_API) && name.endsWith(IPortletConstants.JAR)) {
 						return true;
 					}
 					return false;
