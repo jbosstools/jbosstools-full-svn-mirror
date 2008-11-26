@@ -1402,7 +1402,9 @@
 	</vpe:tag>
 
 	<vpe:tag name="nobr" case-sensitive="no">
-		<vpe:template children="no" modify="no" />
+		<vpe:template children="yes" modify="no" >
+			<vpe:copy />
+		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="noframes" case-sensitive="no">
@@ -1422,9 +1424,17 @@
 		<vpe:drop container="yes">
 			<vpe:container-child tag-name="param" />
 			<vpe:container-child tag-name="object" />
+			<vpe:container-child tag-name="embed" />
 		</vpe:drop>
 	</vpe:template>
-</vpe:tag>
+	</vpe:tag>
+	
+	<vpe:tag name="embed" case-sensitive="no">
+	<vpe:template children="yes" modify="no">
+		<vpe:copy
+			attrs="align,height,hidden,hspace,pluginspage,src,type,vspace,width" />
+	</vpe:template>
+	</vpe:tag>
 
 	<vpe:tag name="ol" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
@@ -2124,5 +2134,29 @@
 		 <vpe:template children="no" modify="yes"
 		 		 class="org.jboss.tools.vpe.html.template.HtmlTextTemplate">
 		 </vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="marquee" case-sensitive="no">
+	<vpe:template children="yes" modify="no">
+		<vpe:copy
+			attrs="behavior,bgcolor,direction,height,hspace,loop,scrollamount,scrolldelay,truespeed,vspace,width" />
+	</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="noembed" case-sensitive="no">
+	<vpe:template children="no" modify="no">
+	</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="wbr" case-sensitive="no">
+	<vpe:template children="no" modify="no">
+		<vpe:copy />
+	</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="xmp" case-sensitive="no">
+	<vpe:template children="yes" modify="no">
+		<vpe:copy />
+	</vpe:template>
 	</vpe:tag>
 </vpe:templates>

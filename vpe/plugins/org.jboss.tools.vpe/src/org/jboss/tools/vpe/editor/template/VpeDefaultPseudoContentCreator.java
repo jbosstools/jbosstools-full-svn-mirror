@@ -33,6 +33,7 @@ public class VpeDefaultPseudoContentCreator extends VpePseudoContentCreator {
 		withoutPseudoContentSet.add("td"); //$NON-NLS-1$
 		withoutPseudoContentSet.add("br"); //$NON-NLS-1$
 		withoutPseudoContentSet.add("nobr"); //$NON-NLS-1$
+		withoutPseudoContentSet.add("xmp"); //$NON-NLS-1$
 		withoutPseudoContentSet.add("input"); //$NON-NLS-1$
 		withoutPseudoContentSet.add("textarea"); //$NON-NLS-1$
 		withoutPseudoContentSet.add("select"); //$NON-NLS-1$
