@@ -88,7 +88,11 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 	private AdapterFactoryEditingDomain editingDomain;
 
-	private HashMap userdResourceTypeMap = new HashMap();
+	private HashMap userdSelectorString = new HashMap();
+	
+	private HashMap<String,JavaBeanModel> javaBeanModelCatch = new HashMap<String,JavaBeanModel>();
+
+	private HashMap<ResourceConfigType, Object> usedResourceConfigMap = new HashMap<ResourceConfigType, Object>();
 
 	private HashMap usedBeanIDMap = new HashMap();
 
@@ -104,6 +108,25 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		editingDomain = new AdapterFactoryEditingDomain(adapterFactory,
 				createCommandStack(), new HashMap<Resource, Boolean>());
 	}
+
+	protected boolean resourceConfigIsUsed(ResourceConfigType config) {
+		return (usedResourceConfigMap.get(config) != null);
+	}
+	
+	protected void registeSourceJavaBeanWithResourceConfig(ResourceConfigType config,JavaBeanModel model){
+		javaBeanModelCatch.put(config.getSelector(), model);
+	}
+	
+	protected JavaBeanModel loadJavaBeanWithResourceConfig(ResourceConfigType config){
+		return javaBeanModelCatch.get(config.getSelector());
+	}
+
+	protected void setResourceConfigUsed(ResourceConfigType config) {
+		if (!usedResourceConfigMap.containsValue(config))
+			usedResourceConfigMap.put(config, new Object());
+	}
+	
+	
 
 	protected CommandStack createCommandStack() {
 		return new BasicCommandStack();
@@ -127,7 +150,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	protected void setSelectorIsUsed(String selector) {
 		if (selector == null)
 			return;
-		userdResourceTypeMap.put(selector, new Object());
+		userdSelectorString.put(selector, new Object());
 	}
 
 	protected boolean beanIDIsUsed(String beanID) {
@@ -141,7 +164,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	protected boolean isSelectorIsUsed(String resourceType) {
 		if (resourceType == null)
 			return false;
-		return (userdResourceTypeMap.get(resourceType) != null);
+		return (userdSelectorString.get(resourceType) != null);
 	}
 
 	private boolean connectionIsUsed(Object connection) {
@@ -250,13 +273,13 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 							// how dispatch more than one connection???
 							List<Object> targetConnectionModelList = ((IConnectableModel) child)
 									.getModelTargetConnections();
-							for (Iterator iterator3 = targetConnectionModelList
+							for (Iterator<Object> iterator3 = targetConnectionModelList
 									.iterator(); iterator3.hasNext();) {
 								LineConnectionModel childConnection = (LineConnectionModel) iterator3
 										.next();
 								if (connectionIsUsed(childConnection))
 									continue;
-								JavaBeanModel jbean = (JavaBeanModel) child
+								JavaBeanModel childTargetJavaBean = (JavaBeanModel) child
 										.getReferenceEntityModel();
 								String currentSelectorName = getSelectorString(
 										(AbstractStructuredDataModel) childConnection
@@ -266,12 +289,13 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 										(AbstractStructuredDataModel) source);
 								AnyType binding = SmooksModelUtils
 										.addBindingTypeToParamType(
-												bindingsParam, jbean.getName(),
+												bindingsParam,
+												childTargetJavaBean.getName(),
 												currentSelectorName, null, null);
 								UIUtils.assignConnectionPropertyToBinding(
 										childConnection, binding, new String[] {
 												"property", "selector" }); //$NON-NLS-1$ //$NON-NLS-2$
-								if (!jbean.isPrimitive()) {
+								if (!childTargetJavaBean.isPrimitive()) {
 									analyzeStructuredDataModel(
 											resourceList,
 											root,
@@ -289,6 +313,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	}
 
 	/**
+	 * TODO change the method name to be "getTheBindingPropertySelectorString"
 	 * 
 	 * @param target
 	 * @param source
@@ -304,11 +329,16 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				.getReferenceEntityModel();
 		JavaBeanModel currentbean = (JavaBeanModel) target
 				.getReferenceEntityModel();
-		if (sourcebean.getParent() == currentRootModel
-				.getReferenceEntityModel()) {
+		if (sourcebean.getParent() == rootbean || sourcebean == rootbean) {
 			if (!currentbean.isPrimitive()) {
-				return COMPLEX_PRIX_START + currentbean.getName()
-						+ COMPLEX_PRIX_END;
+				String currentbeanName = currentbean.getName();
+				if (currentbeanName.length() > 1) {
+					char firstChar = currentbeanName.charAt(0);
+					currentbeanName = currentbeanName.substring(1);
+					currentbeanName = new String(new char[] { firstChar })
+							+ currentbeanName;
+				}
+				return COMPLEX_PRIX_START + currentbeanName + COMPLEX_PRIX_END;
 			} else {
 				return rootbean.getBeanClassString() + SPACE_STRING
 						+ sourcebean.getName();
@@ -511,7 +541,6 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 							SmooksModelUtils.BEAN_CLASS, rc);
 					if (targetName != null
 							&& targetName.trim().equals(beanClass)) {
-						setSelectorIsUsed(sourceName);
 						// create the first connection
 						mappingModelList.add(new MappingModel(source, target));
 						resourceConfigList.addResourceConfig(rc);
@@ -542,11 +571,15 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			SmooksResourceListType resourceList,
 			ResourceConfigType resourceConfig, JavaBeanModel source,
 			JavaBeanModel target) {
-		List bindingList = SmooksModelUtils
+		List<Object> bindingList = SmooksModelUtils
 				.getBindingListFromResourceConfigType(resourceConfig);
 		if (bindingList == null)
 			return;
-		for (Iterator iterator = bindingList.iterator(); iterator.hasNext();) {
+		
+		setResourceConfigUsed(resourceConfig);
+		registeSourceJavaBeanWithResourceConfig(resourceConfig, source);
+		for (Iterator<Object> iterator = bindingList.iterator(); iterator
+				.hasNext();) {
 			AnyType binding = (AnyType) iterator.next();
 			String property = SmooksModelUtils.getAttributeValueFromAnyType(
 					binding, SmooksModelUtils.ATTRIBUTE_PROPERTY);
@@ -570,14 +603,11 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 								+ "\" JavaBean model");
 			}
 			if (isReferenceSelector(selector)) {
-				ResourceConfigType rc = this
-						.findResourceConfigTypeWithSelector(selector,
-								resourceList);
-				if (rc != null) {
-					String newSelector = rc.getSelector();
-					sourceModel = findTheChildJavaBeanModel(newSelector, source);
+				ResourceConfigType rc = this.findResourceConfigTypeWithBeanId(
+						selector, resourceList);
+				if (rc != null && !resourceConfigIsUsed(rc)) {
+					sourceModel = findModelWithResourceConfig(rc, source);
 					if (sourceModel != null) {
-						setSelectorIsUsed(newSelector);
 						mappingResourceConfigList.addResourceConfig(rc);
 						analyzeMappingModelFromResourceConfig(mappingModelList,
 								mappingResourceConfigList, resourceList, rc,
@@ -596,6 +626,15 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				mappingModelList.add(model);
 			}
 		}
+	}
+	
+	protected JavaBeanModel findModelWithResourceConfig(ResourceConfigType config,JavaBeanModel parentModel){
+		String newSelector = config.getSelector();
+		JavaBeanModel model = findTheChildJavaBeanModel(newSelector, parentModel);
+		if(model == null){
+			model = loadJavaBeanWithResourceConfig(config);
+		}
+		return model;
 	}
 
 	protected JavaBeanModel findModelWithSelectorString(String selector,
@@ -925,7 +964,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			return;
 		if (isReferenceSelector(selector)) {
 			selector = selector.substring(2, selector.length() - 1);
-			ResourceConfigType resourceConfig = findResourceConfigTypeWithSelector(
+			ResourceConfigType resourceConfig = findResourceConfigTypeWithBeanId(
 					selector, listType);
 			if (resourceConfig == null) {
 				throw new RuntimeException(
@@ -985,7 +1024,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		}
 	}
 
-	protected ResourceConfigType findResourceConfigTypeWithSelector(
+	protected ResourceConfigType findResourceConfigTypeWithBeanId(
 			String selector, SmooksResourceListType listType) {
 		if (isReferenceSelector(selector)) {
 			selector = this.getBeanIdWithRawSelectorString(selector);
@@ -994,8 +1033,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		ResourceConfigType resourceConfig = null;
 		for (Iterator iterator = rl.iterator(); iterator.hasNext();) {
 			ResourceConfigType rct = (ResourceConfigType) iterator.next();
-//			if (this.isSelectorIsUsed(rct.getSelector()))
-//				continue;
+			// if (this.isSelectorIsUsed(rct.getSelector()))
+			// continue;
 			String beanId = getBeanIDFromParam(rct);
 			if (selector.equals(beanId)) {
 				resourceConfig = rct;
@@ -1017,7 +1056,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			// memory out???
 			currentModel.getProperties();
 			selector = this.getBeanIdWithRawSelectorString(selector);
-			ResourceConfigType resourceConfig = findResourceConfigTypeWithSelector(
+			ResourceConfigType resourceConfig = findResourceConfigTypeWithBeanId(
 					selector, listType);
 			if (resourceConfig != null) {
 				String referenceSelector = resourceConfig.getSelector();

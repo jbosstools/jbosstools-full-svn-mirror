@@ -36,7 +36,8 @@ public class MappingResourceConfigList {
 	}
 
 	public void addResourceConfig(ResourceConfigType resourceConfig) {
-		this.getRelationgResourceConfigList().add(resourceConfig);
+		if (!this.getRelationgResourceConfigList().contains(resourceConfig))
+			this.getRelationgResourceConfigList().add(resourceConfig);
 	}
 
 	public void removeResourceConfig(ResourceConfigType resourceConfig) {
