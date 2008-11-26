@@ -597,6 +597,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			element.setAttribute(VpeStyleUtil.PARAMETR_BACKGROND,
 					backgroundValue);
 		}
+		//fix for jbide-3209		
+		if(element.hasAttribute(HTML.ATTR_DIR)) {
+			element.removeAttribute(HTML.ATTR_DIR);
+		}
 	}
 
 	protected void addChildren(VpeTemplate containerTemplate,
