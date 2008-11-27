@@ -1309,14 +1309,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 								&& (binding.getParameterizedCommand() != null)
 								&& (binding.getParameterizedCommand()
 										.getCommand() != null)) {
-
 							keyBindingPressed = true;
-
-							if (ContentAssistCommandAdapter.CONTENT_PROPOSAL_COMMAND
-									.equals(binding.getParameterizedCommand()
-											.getCommand().getId())) {
-								keyboardEvent.type = SWT.NONE;
-							}
 						}
 					}
 				}
@@ -1344,9 +1337,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					 *  JBIDE-2670	
 					 */
 					keyEvent.preventDefault();
-					switcher
-							.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
-					try {
+//					switcher
+//							.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
+//					try {
 						/*
 						 *  Edward
 						 */
@@ -1357,9 +1350,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 //					 sourceSelectionChanged(true);
 //					 visualSelectionController.setCaretEnabled(true);
 						
-					} finally {
-						switcher.stopActiveEditor();
-					}
+//					} finally {
+//						switcher.stopActiveEditor();
+//					}
 				}
 			}
 		
