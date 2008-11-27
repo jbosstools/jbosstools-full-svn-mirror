@@ -102,10 +102,11 @@ public class PortletFacetInstallDelegate implements IDelegate {
 			copyLibraries(monitor,javaProject,config);
 		} else {
 			String implementationLibrary = config.getStringProperty(IPortletConstants.IMPLEMENTATION_LIBRARY);
-			if (IPortletConstants.LIBRARY_PROVIDED_BY_JBOSS_TOOLS.equals(implementationLibrary)) {
+			/*if (IPortletConstants.LIBRARY_PROVIDED_BY_JBOSS_TOOLS.equals(implementationLibrary)) {
 				IPath containerPath = new Path(IPortletConstants.PORTLET_CONTAINER_20_ID);
 				setContainerPath(monitor, javaProject, containerPath);
-			} else if (IPortletConstants.LIBRARIES_PROVIDED_BY_SERVER_RUNTIME.equals(implementationLibrary)) {
+			} else*/ 
+			if (IPortletConstants.LIBRARIES_PROVIDED_BY_SERVER_RUNTIME.equals(implementationLibrary)) {
 				IPath containerPath = new Path(IPortletConstants.PORTLET_RUNTIME_CONTAINER_ID);
 				setContainerPath(monitor, javaProject, containerPath);
 			} else {

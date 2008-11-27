@@ -63,7 +63,7 @@ public interface IPortletConstants {
 	
 	static final String USER_LIBRARY = Messages.IPortletConstants_User_library;
 	
-	static final String LIBRARY_PROVIDED_BY_JBOSS_TOOLS = Messages.IPortletConstants_Library_provided_by_JBoss_Tools;
+	//static final String LIBRARY_PROVIDED_BY_JBOSS_TOOLS = Messages.IPortletConstants_Library_provided_by_JBoss_Tools;
 	
 	static final String LIBRARIES_PROVIDED_BY_SERVER_RUNTIME = Messages.IPortletConstants_Libraries_provided_by_server_runtime;
 

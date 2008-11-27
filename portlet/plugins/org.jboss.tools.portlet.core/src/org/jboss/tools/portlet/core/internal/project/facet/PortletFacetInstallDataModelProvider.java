@@ -15,6 +15,7 @@ import java.util.Set;
 import org.eclipse.wst.common.componentcore.datamodel.FacetInstallDataModelProvider;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.Messages;
+import org.jboss.tools.portlet.core.PortletCoreActivator;
 
 /**
  * @author snjeza
@@ -38,7 +39,15 @@ public class PortletFacetInstallDataModelProvider extends
 			return ""; //$NON-NLS-1$
 		}
 		if (propertyName.equals(IPortletConstants.IMPLEMENTATION_LIBRARY)) {
-			return IPortletConstants.LIBRARY_PROVIDED_BY_JBOSS_TOOLS;
+			boolean checkRuntimes = PortletCoreActivator.getDefault()
+					.getPluginPreferences().getBoolean(
+							PortletCoreActivator.CHECK_RUNTIMES);
+			if (checkRuntimes) {
+				return IPortletConstants.LIBRARIES_PROVIDED_BY_SERVER_RUNTIME;
+			} else {
+				return IPortletConstants.USER_LIBRARY;
+			}
+			//return IPortletConstants.LIBRARY_PROVIDED_BY_JBOSS_TOOLS;
 		}
 		return super.getDefaultProperty(propertyName);
 	}
