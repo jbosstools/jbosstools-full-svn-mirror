@@ -90,7 +90,8 @@ public class PortletFacetInstallPage extends DataModelWizardPage implements
 		if (checkRuntimes) {
 			implementationLibrary = IPortletConstants.LIBRARIES_PROVIDED_BY_SERVER_RUNTIME;
 		} else {
-			implementationLibrary = IPortletConstants.LIBRARY_PROVIDED_BY_JBOSS_TOOLS;
+			//implementationLibrary = IPortletConstants.LIBRARY_PROVIDED_BY_JBOSS_TOOLS;
+			implementationLibrary = IPortletConstants.USER_LIBRARY;
 		}
 		return implementationLibrary;
 	}
@@ -132,7 +133,7 @@ public class PortletFacetInstallPage extends DataModelWizardPage implements
 				});
 		implementationLibraryCombo = new Combo(composite, SWT.READ_ONLY);
 		implementationLibraryCombo.add(IPortletConstants.USER_LIBRARY);
-		implementationLibraryCombo.add(IPortletConstants.LIBRARY_PROVIDED_BY_JBOSS_TOOLS);
+		//implementationLibraryCombo.add(IPortletConstants.LIBRARY_PROVIDED_BY_JBOSS_TOOLS);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		implementationLibraryCombo.setLayoutData(gd);
 		boolean checkRuntimes = PortletCoreActivator.getDefault()
@@ -143,13 +144,15 @@ public class PortletFacetInstallPage extends DataModelWizardPage implements
 					.add(IPortletConstants.LIBRARIES_PROVIDED_BY_SERVER_RUNTIME);
 			implementationLibraryCombo.setText(implementationLibrary);
 		} else {
-			if (IPortletConstants.LIBRARIES_PROVIDED_BY_SERVER_RUNTIME
-					.equals(implementationLibrary)) {
+			//if (IPortletConstants.LIBRARIES_PROVIDED_BY_SERVER_RUNTIME
+			//		.equals(implementationLibrary)) {
+				//implementationLibraryCombo
+				//		.setText(IPortletConstants.LIBRARY_PROVIDED_BY_JBOSS_TOOLS);
 				implementationLibraryCombo
-						.setText(IPortletConstants.LIBRARY_PROVIDED_BY_JBOSS_TOOLS);
-			} else {
-				implementationLibraryCombo.setText(implementationLibrary);
-			}
+						.setText(IPortletConstants.USER_LIBRARY);
+			//} else {
+			//	implementationLibraryCombo.setText(implementationLibrary);
+			//}
 		}
 		model.setProperty(IPortletConstants.IMPLEMENTATION_LIBRARY,
 				implementationLibraryCombo
