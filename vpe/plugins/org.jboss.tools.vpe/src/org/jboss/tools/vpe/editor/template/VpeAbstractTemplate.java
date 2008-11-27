@@ -1006,7 +1006,10 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
 			Element sourceElement, nsIDOMDocument visualDocument,
 			nsIDOMElement visualNode, Object data, String name, String value) {
-		return false;
+		
+		// FIXED https://jira.jboss.org/jira/browse/JBIDE-3268 by sdzmitrovich,
+		// changed default value to true
+		return true;
 	}
 
 	/**
