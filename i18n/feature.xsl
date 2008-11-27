@@ -11,7 +11,7 @@
 
 	<xsl:template match="/feature">
 		<feature provider-name="%providerName">
-			<xsl:attribute name="id"><xsl:value-of select="$feature" />-<xsl:value-of select="$locale" />
+			<xsl:attribute name="id"><xsl:value-of select="$feature" />.nl-<xsl:value-of select="$locale" />
 			</xsl:attribute>
 			<!-- NB A few feature labels (eg org.jboss.tools.birt.feature) 
 			use %featureName, which is then replicated in the langpack 

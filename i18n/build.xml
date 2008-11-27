@@ -269,7 +269,7 @@
 				<attribute name="Bundle-Name" 
 					value="${plugin} ${localename} NLS Support"/>
 				<attribute name="Bundle-SymbolicName" 
-					value="${plugin}.nl_${locale} ;singleton=true"/>
+					value="${plugin}.nl-${locale} ;singleton=true"/>
 				<attribute name="Bundle-Version" 
 					value="${PLUGIN_VERSION}"/>
 				<attribute name="Bundle-Vendor" 
@@ -381,8 +381,9 @@
 		</copy>
 		<jar destfile="${jardir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}.jar" 
 			basedir="${propdir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}" />
-		<!-- might want to keep around for debugging: -->
+		<!-- might want to keep around for debugging: 
 		<delete dir="${propdir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}" />
+		-->
 	</target>
 	
 	<target name="p2" description="Generate metadata for Eclipse 3.4's update manager (P2)" >
