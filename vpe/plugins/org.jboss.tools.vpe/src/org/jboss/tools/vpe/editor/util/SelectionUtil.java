@@ -16,6 +16,7 @@ import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.core.StructuredModelManager;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
+import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
@@ -162,11 +163,23 @@ public class SelectionUtil {
 
 	public static Node getSourceNodeByPosition(IStructuredModel model,
 			int position) {
-
+		//if we state at the end of text node, model will return
+		//for us next node or null if on page exists only text node,
+		//but we still in the end of text node, so we should check
+		//this situation
+		
 		// get source node by position
-		Node node = (Node) model.getIndexedRegion(position);
+		//see jbide-3163
+		IndexedRegion node =  model.getIndexedRegion(position);
+		if(node==null && position>=1) {
+			node =  model.getIndexedRegion(position-1);
+		}else if((node!=null) &&(((Node)node).getNodeType()!=Node.TEXT_NODE)
+				&& (node.getStartOffset()==position)
+				&& (position>=1)) {
+			node = model.getIndexedRegion(position-1);
+		}
 
-		return node;
+		return (Node)node;
 	}
 
 	/**
