@@ -89,8 +89,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	private AdapterFactoryEditingDomain editingDomain;
 
 	private HashMap userdSelectorString = new HashMap();
-	
-	private HashMap<String,JavaBeanModel> javaBeanModelCatch = new HashMap<String,JavaBeanModel>();
+
+	private HashMap<String, JavaBeanModel> javaBeanModelCatch = new HashMap<String, JavaBeanModel>();
 
 	private HashMap<ResourceConfigType, Object> usedResourceConfigMap = new HashMap<ResourceConfigType, Object>();
 
@@ -112,12 +112,14 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	protected boolean resourceConfigIsUsed(ResourceConfigType config) {
 		return (usedResourceConfigMap.get(config) != null);
 	}
-	
-	protected void registeSourceJavaBeanWithResourceConfig(ResourceConfigType config,JavaBeanModel model){
+
+	protected void registeSourceJavaBeanWithResourceConfig(
+			ResourceConfigType config, JavaBeanModel model) {
 		javaBeanModelCatch.put(config.getSelector(), model);
 	}
-	
-	protected JavaBeanModel loadJavaBeanWithResourceConfig(ResourceConfigType config){
+
+	protected JavaBeanModel loadJavaBeanWithResourceConfig(
+			ResourceConfigType config) {
 		return javaBeanModelCatch.get(config.getSelector());
 	}
 
@@ -125,8 +127,6 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		if (!usedResourceConfigMap.containsValue(config))
 			usedResourceConfigMap.put(config, new Object());
 	}
-	
-	
 
 	protected CommandStack createCommandStack() {
 		return new BasicCommandStack();
@@ -329,7 +329,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				.getReferenceEntityModel();
 		JavaBeanModel currentbean = (JavaBeanModel) target
 				.getReferenceEntityModel();
-		if (sourcebean.getParent() == rootbean || sourcebean == rootbean) {
+		if (sourcebean.getParent() == rootbean
+				|| sourcebean.getParent() == null) {
 			if (!currentbean.isPrimitive()) {
 				String currentbeanName = currentbean.getName();
 				if (currentbeanName.length() > 1) {
@@ -374,6 +375,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			AbstractStructuredDataModel sourceModel) {
 		JavaBeanModel source = (JavaBeanModel) sourceModel
 				.getReferenceEntityModel();
+		if (source.getParent() == null) {
+			return source.getBeanClassString();
+		}
 		if (source.getBeanClass().isArray()) {
 			return source.getName();
 		}
@@ -575,7 +579,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				.getBindingListFromResourceConfigType(resourceConfig);
 		if (bindingList == null)
 			return;
-		
+
 		setResourceConfigUsed(resourceConfig);
 		registeSourceJavaBeanWithResourceConfig(resourceConfig, source);
 		for (Iterator<Object> iterator = bindingList.iterator(); iterator
@@ -627,11 +631,13 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			}
 		}
 	}
-	
-	protected JavaBeanModel findModelWithResourceConfig(ResourceConfigType config,JavaBeanModel parentModel){
+
+	protected JavaBeanModel findModelWithResourceConfig(
+			ResourceConfigType config, JavaBeanModel parentModel) {
 		String newSelector = config.getSelector();
-		JavaBeanModel model = findTheChildJavaBeanModel(newSelector, parentModel);
-		if(model == null){
+		JavaBeanModel model = findTheChildJavaBeanModel(newSelector,
+				parentModel);
+		if (model == null) {
 			model = loadJavaBeanWithResourceConfig(config);
 		}
 		return model;

@@ -97,6 +97,7 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
+import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
@@ -308,6 +309,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		Composite rootMainControl = form.getBody();
 		form.setText(Messages
 				.getString("SmooksGraphicalFormPage.MappingPageFormTitle")); //$NON-NLS-1$
+
+		createErrorMessageLinkGUI(toolkit, rootMainControl);
+
 		mappingGUISection = this
 				.createPageSectionHeader(
 						rootMainControl,
@@ -319,7 +323,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 		Composite mainComposite = toolkit.createComposite(mappingGUISection);
 		mappingGUISection.setClient(mainComposite);
-
+		GridData mapgd = new GridData(GridData.FILL_HORIZONTAL);
+		mappingGUISection.setLayoutData(mapgd);
 		GridLayout mainLayout = new GridLayout();
 		mainComposite.setLayout(mainLayout);
 
@@ -328,12 +333,6 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		sashForm.setLayoutData(sashFormLd);
 		// sashForm.
 		// sashForm.setSashWidth(1);
-
-		designTimeAnalyzeResultRegion = toolkit.createComposite(sashForm);
-		GridLayout ngl = new GridLayout();
-		ngl.numColumns = 2;
-		ngl.marginWidth = 0;
-		designTimeAnalyzeResultRegion.setLayout(ngl);
 
 		SashForm mappingMainComposite = new SashForm(sashForm, SWT.NONE);
 		// under the eclipse3.3
@@ -462,7 +461,6 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 		toolkit.paintBordersFor(rootMainControl);
 		form.pack();
-		sashForm.setWeights(new int[] { 8, 100 });
 		if (initSourceTreeViewerProviders()) {
 			initSourceTreeViewer();
 			expandSourceConnectionModel();
@@ -474,6 +472,24 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		this.hookGraphicalViewer();
 		this.initGraphicalViewer();
 		initMappingGUIStates();
+	}
+
+	protected void createErrorMessageLinkGUI(FormToolkit toolkit,
+			Composite parent) {
+
+		Section secion = this.createPageSectionHeader(parent, Section.TITLE_BAR
+				| Section.DESCRIPTION, "Problems",
+				"Click \"Fix\" link to fix those errors");
+
+		designTimeAnalyzeResultRegion = toolkit.createComposite(secion);
+		GridData gd = new GridData(GridData.FILL_BOTH);
+		GridLayout ngl = new GridLayout();
+		ngl.numColumns = 2;
+		ngl.marginWidth = 0;
+		secion.setLayout(new FillLayout());
+		designTimeAnalyzeResultRegion.setLayoutData(gd);
+		designTimeAnalyzeResultRegion.setLayout(ngl);
+		secion.setClient(designTimeAnalyzeResultRegion);
 	}
 
 	public void refreshAllGUI() {
@@ -1062,8 +1078,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			SmooksConfigurationFileGenerateContext context) {
 		if (requiredSelectDataSource(typeID)) {
 			IStructuredDataCreationWizard wizard1 = ViewerInitorStore
-					.getInstance().getStructuredDataCreationWizard(
-							typeID);
+					.getInstance().getStructuredDataCreationWizard(typeID);
 			WizardDialog dialog1 = new WizardDialog(getSite().getShell(),
 					wizard1);
 			((Wizard) wizard1).setWindowTitle("Target Data Selection");
@@ -1080,8 +1095,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			SmooksConfigurationFileGenerateContext context) {
 		if (requiredSelectDataSource(typeID)) {
 			IStructuredDataCreationWizard wizard1 = ViewerInitorStore
-					.getInstance().getStructuredDataCreationWizard(
-							typeID);
+					.getInstance().getStructuredDataCreationWizard(typeID);
 			WizardDialog dialog1 = new WizardDialog(getSite().getShell(),
 					wizard1);
 			((Wizard) wizard1).setWindowTitle("Source Data Selection");
@@ -1497,9 +1511,18 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				imageLabel.setImage(SmooksUIActivator.getDefault()
 						.getImageRegistry().get(
 								SmooksGraphConstants.IMAGE_ERROR));
-				Label notifyLabel = new Label(designTimeAnalyzeResultRegion,
-						SWT.NONE);
-				Menu menu = new Menu(getSite().getShell(), SWT.POP_UP);
+
+				Composite fixComposite = new Composite(
+						designTimeAnalyzeResultRegion, SWT.NONE);
+				GridLayout gl = new GridLayout();
+				gl.numColumns = 2;
+				gl.marginHeight = 0;
+				gl.marginWidth = 0 ;
+				fixComposite.setLayout(gl);
+				Label notifyLabel = new Label(fixComposite, SWT.NONE);
+				Hyperlink fixLink = getManagedForm().getToolkit()
+						.createHyperlink(fixComposite, "Fix it", SWT.NONE);
+				final Menu menu = new Menu(getSite().getShell(), SWT.POP_UP);
 				List<ResolveCommand> list = result.getResolveProblem();
 				for (Iterator<ResolveCommand> iterator2 = list.iterator(); iterator2
 						.hasNext();) {
@@ -1528,12 +1551,37 @@ public class SmooksGraphicalFormPage extends FormPage implements
 					item.setText(resolveCommand.getResolveDescription());
 					item.setImage(resolveCommand.getImage());
 				}
+				fixLink.addHyperlinkListener(new IHyperlinkListener(){
+
+					public void linkActivated(HyperlinkEvent e) {
+						menu.setLocation(getSite().getShell().getDisplay().getCursorLocation());
+						menu.setVisible(true);
+					}
+
+					public void linkEntered(HyperlinkEvent e) {
+					}
+
+					public void linkExited(HyperlinkEvent e) {
+					}
+					
+				});
 				notifyLabel.setMenu(menu);
 				GridData nlgd = new GridData(GridData.FILL_HORIZONTAL);
 				notifyLabel.setLayoutData(nlgd);
+				nlgd = new GridData(GridData.FILL_HORIZONTAL);
+				fixComposite.setLayoutData(nlgd);
 				notifyLabel.setText(result.getErrorMessage());
-
 			}
+		}
+		// GridData gd = new GridData(GridData.FILL_BOTH);
+
+		if (analyzeResultList.size() == 0) {
+			// gd.widthHint = 0;
+		}
+		try {
+			// designTimeAnalyzeResultRegion.setLayoutData(gd);
+			designTimeAnalyzeResultRegion.getParent().getParent().layout();
+		} finally {
 		}
 	}
 
