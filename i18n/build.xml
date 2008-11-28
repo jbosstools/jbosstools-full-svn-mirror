@@ -107,8 +107,8 @@
 			regexpmapper below) 
 		-->
 		<prop2pot srcDir="${jbt.srcdir}" dstDir="po" 
-			includes="*/plugins/*/plugin.properties,*/plugins/*/src/**/*.properties,*/plugins/*/jbosscore/**/*.properties,*/plugins/*/jbossui/**/*.properties,*/plugins/*/resources/**/*.properties,*/plugins/*/template-src/**/*.properties" >
-			<!-- we need to include properties from the following base directories:
+			includesfile="prop2potincludes.txt">
+			<!-- we currently need to include properties from the following base directories:
 				src/main
 				src
 				jbosscore
@@ -120,10 +120,12 @@
 			-->			
 			<chainedmapper>
 				<!-- rename to module~pluginID-org.jboss.ide.*~org.jboss.ide.*.pot -->
+				
+				<!-- from/to params are defined in i18n.properties -->
 				<regexpmapper 
 					handledirsep="true" 
-					from="^([^/]+)/plugins/([^/]+)/(?:src/main/resources/|src/main/|[^/]+/|)(.*)[.]properties$$" 
-					to="\1~\2-\3~\3.pot" />
+					from="${prop2pot_regex_from}" 
+					to="${prop2pot_regex_to}" />
 				<filtermapper>
 					<!-- org/jboss/ide/* -> org.jboss.ide.* -->
 					<replacestring from="${file.separator}" to="."/>
