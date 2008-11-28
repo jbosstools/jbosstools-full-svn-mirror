@@ -138,7 +138,8 @@
   <XActionItem kind="list">
    <XActionItem kind="list" name="CreateActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport, 
+     key=VPEElReferenceAddItem"
      displayName="Add El Reference..." kind="action" name="AddItem">
      <EntityData EntityName="VPEElReference">
       <AttributeData AttributeName="location"/>
@@ -149,7 +150,8 @@
    </XActionItem>
    <XActionItem kind="list" name="EditActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport,
+     key=VPEElReferenceEditItem"
      displayName="Edit El Reference..." kind="action" name="EditItem">
      <EntityData EntityName="VPEElReference">
       <AttributeData AttributeName="location"/>
@@ -161,61 +163,6 @@
   </XActionItem>
   <XDependencies/>
  </XModelEntity>
- 
- <XModelEntity ImplementingClass="%Regular%" name="VPEElReferenceExt">
- 
- 
-  <XChildrenEntities/>
-  <XEntityRenderer>
-   <ICONS>
-    <ICON info="action.empty" type="main"/>
-   </ICONS>
-  </XEntityRenderer>
-  <XModelAttributes>
-   <XModelAttribute name="location" xmlname="location"/>
-   <XModelAttribute PROPERTIES="border=true"
-    default="Folder: Any Page at the Same Folder" name="scope" xmlname="scope">
-    <Constraint loader="ListString">
-     <value name="Page: Only This Page"/>
-     <value name="Folder: Any Page at the Same Folder"/>
-    </Constraint>
-    <Editor name="RadioArray"/>
-   </XModelAttribute>
-   <XModelAttribute name="prefix">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-  </XModelAttributes>
-  <XActionItem kind="list">
-   <XActionItem kind="list" name="CreateActions">
-    <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
-     displayName="Add El Reference..." kind="action" name="AddItem">
-     <EntityData EntityName="VPEElReferenceExt">
-      <AttributeData AttributeName="location"/>
-      <AttributeData AttributeName="scope" Mandatory="no"/>
-      <AttributeData AttributeName="prefix" Mandatory="no"/>
-     </EntityData>
-    </XActionItem>
-   </XActionItem>
-   <XActionItem kind="list" name="EditActions">
-    <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
-     displayName="Edit El Reference..." kind="action" name="EditItem">
-     <EntityData EntityName="VPEElReference">
-      <AttributeData AttributeName="location"/>
-      <AttributeData AttributeName="scope" Mandatory="no"/>
-      <AttributeData AttributeName="prefix" Mandatory="no"/>
-     </EntityData>
-    </XActionItem>
-   </XActionItem>
-  </XActionItem>
-  <XDependencies/>
- </XModelEntity>
- <!--  -->
- 
- 
- 
  
  
   <!--  Added by estherbin https://jira.jboss.org/jira/browse/JBIDE-2594 -->
@@ -228,59 +175,11 @@
    </ICONS>
   </XEntityRenderer>
   <XModelAttributes>
-   <XModelAttribute name="location" xmlname="location">
-    <Constraint loader="ListString">
-     <value name="Global: For all projects in workspace"/>
-    </Constraint>
-    <Editor/>
-   </XModelAttribute>
-   <XModelAttribute name="prefix">
-    <Constraint/>
-    <Editor/>
-   </XModelAttribute>
-  </XModelAttributes>
-  <XActionItem kind="list">
-   <XActionItem kind="list" name="CreateActions">
-    <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
-     displayName="Add El Reference..." kind="action" name="AddItem">
-     <EntityData EntityName="VPEGlobalElReference">
-      <AttributeData AttributeName="location" Mandatory="no"/>
-      <!--AttributeData AttributeName="scope" Mandatory="no"/-->
-      <AttributeData AttributeName="prefix" Mandatory="no"/>
-     </EntityData>
-    </XActionItem>
-   </XActionItem>
-   <XActionItem kind="list" name="EditActions">
-    <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
-     displayName="Edit El Reference..." kind="action" name="EditItem">
-     <EntityData EntityName="VPEGlobalElReference">
-      <AttributeData AttributeName="location"/>
-      <!--AttributeData AttributeName="scope" Mandatory="no"/-->
-      <AttributeData AttributeName="prefix" Mandatory="no"/>
-     </EntityData>
-    </XActionItem>
-   </XActionItem>
-  </XActionItem>
-  <XDependencies/>
- </XModelEntity>
- 
- <XModelEntity ImplementingClass="%Regular%" name="VPEGlobalElReferenceExt">
- 
- 
-  <XChildrenEntities/>
-  <XEntityRenderer>
-   <ICONS>
-    <ICON info="action.empty" type="main"/>
-   </ICONS>
-  </XEntityRenderer>
-  <XModelAttributes>
-   <XModelAttribute name="location" xmlname="location">
+  <XModelAttribute name="location" xmlname="location">
       <Constraint/>
   	  <Editor/>
    </XModelAttribute>
-   <XModelAttribute PROPERTIES="border=true"
+	<XModelAttribute PROPERTIES="border=true"
     default="Folder: Any Page at the Same Folder" name="scope" xmlname="scope">
     <Constraint loader="ListString">
      <value name="Global: For all projects in workspace"/>
@@ -295,9 +194,10 @@
   <XActionItem kind="list">
    <XActionItem kind="list" name="CreateActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport,
+     key=VPEGlobalElReferenceAddItem"
      displayName="Add El Reference..." kind="action" name="AddItem">
-     <EntityData EntityName="VPEGlobalElReferenceExt">
+     <EntityData EntityName="VPEGlobalElReference">
       <AttributeData AttributeName="location"/>
       <AttributeData AttributeName="scope" Mandatory="no"/>
       <AttributeData AttributeName="prefix" Mandatory="no"/>
@@ -306,9 +206,10 @@
    </XActionItem>
    <XActionItem kind="list" name="EditActions">
     <XActionItem HandlerClassName="%SpecialWizard%" ICON="action.empty"
-     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
+     PROPERTIES="support=org.jboss.tools.vpe.resref.core.VpeELReferenceSupport,
+     key=VPEGlobalElReferenceEditItem"
      displayName="Edit El Reference..." kind="action" name="EditItem">
-     <EntityData EntityName="VPEGlobalElReferenceExt">
+     <EntityData EntityName="VPEGlobalElReference">
       <AttributeData AttributeName="location"/>
       <AttributeData AttributeName="scope" Mandatory="no"/>
       <AttributeData AttributeName="prefix" Mandatory="no"/>
@@ -318,10 +219,7 @@
   </XActionItem>
   <XDependencies/>
  </XModelEntity>
- <!--  -->
- 
- 
- 
+  
  
  <XModelEntity ImplementingClass="%Regular%" name="VPEFolderReference">
   <XChildrenEntities/>

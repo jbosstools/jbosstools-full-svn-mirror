@@ -3119,7 +3119,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			// synced = false;
 			return;
 		}
-		// TODO Max Areshkau Adjust this code, now we haven's source mode
+
 		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
 			if (toolbarFormatControllerManager != null)
 				toolbarFormatControllerManager.selectionChanged();

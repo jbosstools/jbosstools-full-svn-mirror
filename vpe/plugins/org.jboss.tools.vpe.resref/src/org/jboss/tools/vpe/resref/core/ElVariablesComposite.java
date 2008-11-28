@@ -34,7 +34,7 @@ public class ElVariablesComposite extends AbstractResourceReferencesComposite {
      */
     @Override
     protected String getEntity() {
-        return (file != null) ? "VPEElReference" : "VPEElReferenceExt";  //$NON-NLS-1$//$NON-NLS-2$
+        return  "VPEElReference"; 
     }
 
     /**c
