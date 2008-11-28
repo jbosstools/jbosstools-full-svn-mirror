@@ -119,7 +119,7 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 	}
 
 	public void testLink() throws Throwable {
-		fail("it is necessary to add body of the test"); //$NON-NLS-1$
+		performInvisibleTagTest("components/core/link.html", "link"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	public void testMap() throws Throwable {
@@ -135,11 +135,11 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 	}
 
 	public void testStyle() throws Throwable {
-		fail("it is necessary to add body of the test"); //$NON-NLS-1$
+	    performInvisibleTagTest("components/core/style.html", "style"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	public void testTitle() throws Throwable {
-		performContentTest("components/core/title.html"); //$NON-NLS-1$
+		performInvisibleTagTest("components/core/title.html", "title"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/*
