@@ -340,7 +340,7 @@ public class VpeTest extends TestCase implements ILogListener {
 					&& (nodeMapping.getVisualNode() != null)) {
 
 				SelectionUtil.setSourceSelection(controller.getPageContext(),
-						nodeMapping.getSourceNode(), 0, 0);
+						nodeMapping.getSourceNode(), 1, 0);
 
 				TestUtil.delay(50);
 

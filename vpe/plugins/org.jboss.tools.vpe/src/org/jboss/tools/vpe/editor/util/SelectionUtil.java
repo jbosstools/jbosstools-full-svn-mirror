@@ -171,12 +171,18 @@ public class SelectionUtil {
 		// get source node by position
 		//see jbide-3163
 		IndexedRegion node =  model.getIndexedRegion(position);
+		IndexedRegion possbleNode = position>=1?model.getIndexedRegion(position-1):null;
 		if(node==null && position>=1) {
-			node =  model.getIndexedRegion(position-1);
+			node =  possbleNode;
 		}else if((node!=null) &&(((Node)node).getNodeType()!=Node.TEXT_NODE)
 				&& (node.getStartOffset()==position)
 				&& (position>=1)) {
-			node = model.getIndexedRegion(position-1);
+			//check for such situation #text<h1></h1>
+			node = possbleNode;
+		}else if((node!=null) &&(((Node)node).getNodeType()!=Node.TEXT_NODE)
+				&& (possbleNode!=null)
+				&&  ((Node)possbleNode).getNodeType()==Node.TEXT_NODE){
+			node = possbleNode;
 		}
 
 		return (Node)node;
