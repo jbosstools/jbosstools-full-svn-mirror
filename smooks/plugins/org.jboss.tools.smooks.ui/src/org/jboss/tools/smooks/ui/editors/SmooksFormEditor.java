@@ -112,7 +112,7 @@ public class SmooksFormEditor extends FormEditor implements
 		if (mappingResourceConfig != null) {
 			refreshNormalPage(mappingResourceConfig
 					.getRelationgResourceConfigList());
-		}else{
+		} else {
 			refreshNormalPage(Collections.EMPTY_LIST);
 		}
 	}
@@ -241,13 +241,14 @@ public class SmooksFormEditor extends FormEditor implements
 
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		this.graphicalPage.doSave(monitor);
-		fireEditorDirty(false);
-		// IEditorPart activeEditor = this.getEditor(this.getCurrentPage());
-		// if (activeEditor != normalPage && activeEditor != null) {
-		// activeEditor.doSave(monitor);
-		// fireEditorDirty(false);
-		// }
+		IEditorPart activeEditor = this.getEditor(this.getCurrentPage());
+		if (activeEditor != normalPage && activeEditor != null) {
+			activeEditor.doSave(monitor);
+			fireEditorDirty(false);
+		}
+		if(activeEditor == null){
+			this.graphicalPage.doSave(monitor);
+		}
 	}
 
 	public void fireEditorDirty(boolean dirty) {
