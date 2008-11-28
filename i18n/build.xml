@@ -95,28 +95,34 @@
 		
 	<target name="prop2pot" depends="init"
 		description="Extract translation templates (POT) from the JBoss Tools English properties files">
-		<!-- paths under jbt.srcdir look like: ${module}/plugins/${plugin}/{src,main,...} -->
-		<!-- TODO properties *should* be found in exactly one place, but aren't.  
-		See https://jira.jboss.org/jira/browse/JBIDE-2972 -->
-		<prop2pot srcDir="${jbt.srcdir}" dstDir="po" includes="*/plugins/*/src/**/*.properties" >
-			<!-- next two are Maven style, not currently used in JBT: --> 
-<!-- These filesets were used in a <jar> call, not supported by <prop2pot>
-			<fileset erroronmissingdir="false" dir="${plugindir}/src/main/java"/>
-			<fileset erroronmissingdir="false" dir="${plugindir}/src/main/resources"/>
-			 
-			<fileset erroronmissingdir="false" dir="${plugindir}/src/main" excludes="java,resources"/>
-			<fileset erroronmissingdir="false" dir="${plugindir}/src" excludes="main"/>
-			<fileset erroronmissingdir="false" dir="${plugindir}/jbosscore"/>
-			<fileset erroronmissingdir="false" dir="${plugindir}/jbossui"/>
-			<fileset erroronmissingdir="false" dir="${plugindir}/resources"/>
-			<fileset erroronmissingdir="false" dir="${plugindir}/template-src"/>
-			//<fileset dir="${plugindir}/templates"/>  
--->
+		<!-- 
+			Paths under jbt.srcdir look like: ${module}/plugins/${plugin}/{src,src/main,jbosscore,...}
+			TODO the includes and the related regex are too complicated,
+			because we have to look in too many directories to find properties files.
+			See https://jira.jboss.org/jira/browse/JBIDE-2972
+			We can't simply say */plugins/*/*/**/*.properties lest we pick 
+			up bin directories, etc.
+		
+			NB Leaving out */features/*/feature.properties (also affects
+			regexpmapper below) 
+		-->
+		<prop2pot srcDir="${jbt.srcdir}" dstDir="po" 
+			includes="*/plugins/*/plugin.properties,*/plugins/*/src/**/*.properties,*/plugins/*/jbosscore/**/*.properties,*/plugins/*/jbossui/**/*.properties,*/plugins/*/resources/**/*.properties,*/plugins/*/template-src/**/*.properties" >
+			<!-- we need to include properties from the following base directories:
+				src/main
+				src
+				jbosscore
+				jbossui
+				resources
+				template-src (but *not* templates)
+				NB Maven conventions would also require:
+				src/main/resources
+			-->			
 			<chainedmapper>
 				<!-- rename to module~pluginID-org.jboss.ide.*~org.jboss.ide.*.pot -->
 				<regexpmapper 
 					handledirsep="true" 
-					from="^([^/]+)/plugins/([^/]+)/[^/]+/(.*)[.]properties$$" 
+					from="^([^/]+)/plugins/([^/]+)/(?:src/main/resources/|src/main/|[^/]+/|)(.*)[.]properties$$" 
 					to="\1~\2-\3~\3.pot" />
 				<filtermapper>
 					<!-- org/jboss/ide/* -> org.jboss.ide.* -->
