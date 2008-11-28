@@ -115,7 +115,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	private MozillaEditor visualEditor;
 	private XulRunnerEditor xulRunnerEditor;
-	private nsIDOMDocument visualDocument;
+
 	// JBIDE-2170 Sergey Dzmitrovich
 	// private nsIDOMElement visualContentArea;
 	private VpePageContext pageContext;
@@ -178,7 +178,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		super(domMapping, sorceAdapter, templateManager);
 		this.visualEditor = visualEditor;
 		xulRunnerEditor = visualEditor.getXulRunnerEditor();
-		this.visualDocument = visualEditor.getDomDocument();
+
 		// this.visualContentArea = visualEditor.getContentArea();
 		this.dnd = new VpeDnD();
 		this.pageContext = pageContext;
@@ -308,24 +308,24 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 		if (block) {
 			if (YES_STRING.equals(VpePreference.USE_DETAIL_BORDER.getValue())) {
-				border = visualDocument.createElement(HTML.TAG_TABLE);
+				border = getVisualDocument().createElement(HTML.TAG_TABLE);
 				border.setAttribute(ATRIBUTE_CELLSPACING, ZERO_STRING);
 				border.setAttribute(ATRIBUTE_CELLPADDING, ZERO_STRING);
 
-				nsIDOMElement tr1 = visualDocument.createElement(HTML.TAG_TR);
+				nsIDOMElement tr1 = getVisualDocument().createElement(HTML.TAG_TR);
 				border.appendChild(tr1);
-				nsIDOMElement td1 = visualDocument.createElement(HTML.TAG_TD);
+				nsIDOMElement td1 = getVisualDocument().createElement(HTML.TAG_TD);
 				td1.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
 						DOTTED_BORDER_STYLE_FOR_TD);
-				nsIDOMText text = visualDocument.createTextNode(sourceNode
+				nsIDOMText text = getVisualDocument().createTextNode(sourceNode
 						.getNodeName());
 				td1.appendChild(text);
 				tr1.appendChild(td1);
-				nsIDOMElement tr2 = visualDocument.createElement(HTML.TAG_TR);
+				nsIDOMElement tr2 = getVisualDocument().createElement(HTML.TAG_TR);
 				border.appendChild(tr2);
-				nsIDOMElement td2 = visualDocument.createElement(HTML.TAG_TD);
+				nsIDOMElement td2 = getVisualDocument().createElement(HTML.TAG_TD);
 				tr2.appendChild(td2);
-				nsIDOMElement p = visualDocument.createElement(HTML.TAG_P);
+				nsIDOMElement p = getVisualDocument().createElement(HTML.TAG_P);
 				p.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
 						DOTTED_BORDER_STYLE);
 				td2.appendChild(p);
@@ -333,15 +333,15 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				p.appendChild(visualNode);
 
 			} else {
-				border = visualDocument.createElement(HTML.TAG_TABLE);
+				border = getVisualDocument().createElement(HTML.TAG_TABLE);
 				border.setAttribute(ATRIBUTE_CELLSPACING, ZERO_STRING);
 				border.setAttribute(ATRIBUTE_CELLPADDING, ZERO_STRING);
 
-				nsIDOMElement tr2 = visualDocument.createElement(HTML.TAG_TR);
+				nsIDOMElement tr2 = getVisualDocument().createElement(HTML.TAG_TR);
 				border.appendChild(tr2);
-				nsIDOMElement td2 = visualDocument.createElement(HTML.TAG_TD);
+				nsIDOMElement td2 = getVisualDocument().createElement(HTML.TAG_TD);
 				tr2.appendChild(td2);
-				nsIDOMElement p = visualDocument.createElement(HTML.TAG_P);
+				nsIDOMElement p = getVisualDocument().createElement(HTML.TAG_P);
 				p.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
 						DOTTED_BORDER_STYLE);
 				td2.appendChild(p);
@@ -349,15 +349,15 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				p.appendChild(visualNode);
 			}
 		} else {
-			border = visualDocument.createElement(HTML.TAG_SPAN);
+			border = getVisualDocument().createElement(HTML.TAG_SPAN);
 			border.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
 					DOTTED_BORDER_STYLE);
 			if (YES_STRING.equals(VpePreference.USE_DETAIL_BORDER.getValue())) {
-				nsIDOMElement name = visualDocument
+				nsIDOMElement name = getVisualDocument()
 						.createElement(HTML.TAG_SPAN);
 				name.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE,
 						DOTTED_BORDER_STYLE_FOR_SPAN);
-				nsIDOMText text = visualDocument.createTextNode(sourceNode
+				nsIDOMText text = getVisualDocument().createTextNode(sourceNode
 						.getNodeName());
 				name.appendChild(text);
 				border.appendChild(name);
@@ -562,13 +562,13 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 						childrenInfoList);
 			}
 		} else if(sourceNode.getNodeType() == Node.ELEMENT_NODE&&visualNewNode != null && isShowInvisibleTags()){
-			nsIDOMElement span =  visualDocument.createElement(HTML.TAG_SPAN);
+			nsIDOMElement span =  getVisualDocument().createElement(HTML.TAG_SPAN);
 			span.appendChild(visualNewNode);
 			addChildren(template, sourceNode,span);
 			visualNewNode= span;
 		}
 		getPageContext().setCurrentVisualNode(visualOldContainer);
-		template.validate(getPageContext(), sourceNode, visualDocument,
+		template.validate(getPageContext(), sourceNode, getVisualDocument(),
 				creationData);
 		getPageContext().setCurrentVisualNode(null);
 
@@ -681,7 +681,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		if (visualContainer != null) {
 
 			// wrap node to span
-			wrapper = visualDocument.createElement(HTML.TAG_SPAN);
+			wrapper = getVisualDocument().createElement(HTML.TAG_SPAN);
 			wrapper.appendChild(visualContainer);
 
 			// add all invisible tags to wrapper
@@ -722,11 +722,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	// /////////////////////////////////////////////////////////////////////////
 	public nsIDOMNode addStyleNodeToHead(String styleText) {
-		nsIDOMNode newStyle = visualDocument
+		nsIDOMNode newStyle = getVisualDocument()
 				.createElement(VpeStyleUtil.ATTRIBUTE_STYLE);
 
 		if (styleText != null) {
-			nsIDOMText newText = visualDocument.createTextNode(styleText);
+			nsIDOMText newText = getVisualDocument().createTextNode(styleText);
 			newStyle.appendChild(newText);
 		}
 		getHeadNode().appendChild(newStyle);
@@ -735,11 +735,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	public nsIDOMNode replaceStyleNodeToHead(nsIDOMNode oldStyleNode,
 			String styleText) {
-		nsIDOMElement newStyle = visualDocument
+		nsIDOMElement newStyle = getVisualDocument()
 				.createElement(VpeStyleUtil.ATTRIBUTE_STYLE);
 
 		if (styleText != null) {
-			nsIDOMNode newText = visualDocument.createTextNode(styleText);
+			nsIDOMNode newText = getVisualDocument().createTextNode(styleText);
 			newStyle.appendChild(newText);
 		}
 
@@ -879,12 +879,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			Node sourceContainer, nsIDOMNode visualContainer) {
 		if (containerTemplate != null) {
 			containerTemplate.setPseudoContent(pageContext, sourceContainer,
-					visualContainer, visualDocument);
+					visualContainer, getVisualDocument());
 		} else {
 			try {
 				VpeDefaultPseudoContentCreator.getInstance().setPseudoContent(
 						pageContext, sourceContainer, visualContainer,
-						visualDocument);
+						getVisualDocument());
 			} catch (VpeExpressionException ex) {
 				VpeExpressionException exception = new VpeExpressionException(
 						"Error for source node" + sourceContainer.toString(), ex); //$NON-NLS-1$
@@ -904,7 +904,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				System.out.println("-------------------- addPseudoElement: " //$NON-NLS-1$
 						+ visualParent.getNodeName());
 			}
-			nsIDOMElement visualPseudoElement = visualDocument
+			nsIDOMElement visualPseudoElement = getVisualDocument()
 					.createElement(PSEUDO_ELEMENT);
 			visualPseudoElement.setAttribute(PSEUDO_ELEMENT_ATTR, YES_STRING);
 			visualParent.appendChild(visualPseudoElement);
@@ -1123,7 +1123,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				if (elementMapping.getBorder() != null) {
 					updateElement(sourceElement);
 				} else if (template.isRecreateAtAttrChange(pageContext,
-						sourceElement, visualDocument,
+						sourceElement, getVisualDocument(),
 						(nsIDOMElement) elementMapping.getVisualNode(),
 						elementMapping.getData(), name, value)) {
 					updateElement(sourceElement);
@@ -1154,7 +1154,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					}
 					// setXmlnsAttribute(elementMapping, name, value);
 					template.setAttribute(pageContext, sourceElement,
-							visualDocument, visualElement, elementMapping
+							getVisualDocument(), visualElement, elementMapping
 									.getData(), name, value);
 					resetTooltip(sourceElement, visualElement);
 				}
@@ -1295,7 +1295,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			} else {
 				VpeTemplate template = elementMapping.getTemplate();
 				if (template.isRecreateAtAttrChange(pageContext, sourceElement,
-						visualDocument, (nsIDOMElement) elementMapping
+						getVisualDocument(), (nsIDOMElement) elementMapping
 								.getVisualNode(), elementMapping.getData(),
 						name, null)) {
 					updateElement(sourceElement);
@@ -1398,7 +1398,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			 * vpe="ATTR_VPE_INLINE_LINK_VALUE">file content</style> It is
 			 * LinkReplacer
 			 */
-			linkNode = visualDocument.createElement(HTML.TAG_STYLE);
+			linkNode = getVisualDocument().createElement(HTML.TAG_STYLE);
 			linkNode.setAttribute(ATTR_VPE, ATTR_VPE_INLINE_LINK_VALUE);
 
 			/* Copy links attributes into our <style> */
@@ -1421,7 +1421,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 						styleForParse, href_val);
 
 				in.close();
-				nsIDOMText textNode = visualDocument
+				nsIDOMText textNode = getVisualDocument()
 						.createTextNode(styleForParse);
 				linkNode.appendChild(textNode);
 				return linkNode;
@@ -1440,7 +1440,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			}
 		}
 
-		linkNode = visualDocument.createElement(HTML.TAG_LINK);
+		linkNode = getVisualDocument().createElement(HTML.TAG_LINK);
 		linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_REL, rel_val);
 		linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_HREF, href_val);
 		linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_EXT, ext_val);
@@ -1547,7 +1547,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					.getTagDescription(
 							pageContext,
 							(Element) nodeMapping.getSourceNode(),
-							visualDocument,
+							getVisualDocument(),
 							(nsIDOMElement) nodeMapping.getVisualNode()
 									.queryInterface(
 											nsIDOMElement.NS_IDOMELEMENT_IID),
@@ -1563,7 +1563,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				.getNodeMapping(element);
 		if (elementMapping != null) {
 			elementMapping.getTemplate().resize(pageContext,
-					(Element) elementMapping.getSourceNode(), visualDocument,
+					(Element) elementMapping.getSourceNode(), getVisualDocument(),
 					element, elementMapping.getData(), resizerConstrains, top,
 					left, width, height);
 		}
@@ -1590,7 +1590,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					&& elementMapping.getSourceNode() instanceof Element) {
 				return elementMapping.getTemplate().canInnerDrag(pageContext,
 						(Element) elementMapping.getSourceNode(),
-						visualDocument, visualDragElement,
+						getVisualDocument(), visualDragElement,
 						elementMapping.getData());
 			}
 		}
@@ -2231,7 +2231,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 *            the dnd to set
 	 */
 	public void setDnd(VpeDnD dnd) {
-
 		this.dnd = dnd;
 	}
 
@@ -2254,15 +2253,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 * @return the visualDocument
 	 */
 	protected nsIDOMDocument getVisualDocument() {
-		return visualDocument;
-	}
-
-	/**
-	 * @param visualDocument
-	 *            the visualDocument to set
-	 */
-	protected void setVisualDocument(nsIDOMDocument visualDocument) {
-		this.visualDocument = visualDocument;
+		return visualEditor.getDomDocument();
 	}
 
 	/**
@@ -2336,12 +2327,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 * @return
 	 */
 	public nsIDOMNode createInvisbleElementLabel(Node sourceNode) {
-		nsIDOMElement span = visualDocument.createElement(HTML.TAG_SPAN);
+		nsIDOMElement span = getVisualDocument().createElement(HTML.TAG_SPAN);
 
 		span.setAttribute(HTML.TAG_STYLE,
 				"border: 1px dashed GREY; color: GREY; font-size: 12px;"); //$NON-NLS-1$
 
-		nsIDOMText text = visualDocument.createTextNode(sourceNode
+		nsIDOMText text = getVisualDocument().createTextNode(sourceNode
 				.getNodeName());
 
 		span.appendChild(text);

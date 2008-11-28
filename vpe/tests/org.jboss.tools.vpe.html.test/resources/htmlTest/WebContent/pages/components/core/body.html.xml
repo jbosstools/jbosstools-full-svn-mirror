@@ -1,10 +1,10 @@
 <tests>
 	<test id="body">
-		<DIV STYLE="" >
+		<DIV ID="body">
 			<H1 STYLE="-moz-user-modify: read-write;">
 				<SPAN>
 					body
-			</SPAN>
+				</SPAN>
 			</H1>
 		</DIV>
 	</test>

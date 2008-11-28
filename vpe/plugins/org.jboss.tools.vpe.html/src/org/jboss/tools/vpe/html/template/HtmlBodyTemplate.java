@@ -19,103 +19,89 @@ import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 /**
- * 
  * @author ezheleznyakov@exadel.com
- * 
  */
 public class HtmlBodyTemplate extends VpeAbstractTemplate {
 
-	private nsIDOMElement bodyOld;
-	private static String STYLE_FOR_DIV = ""; //$NON-NLS-1$
-	private static String ID = "id"; //$NON-NLS-1$
-
-	/**
-	 * 
-	 */
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument) {
+		final nsIDOMElement body = getBody(visualDocument.getDocumentElement());
 
-		goToTree(visualDocument.getDocumentElement());
-
-		nsIDOMNamedNodeMap attrsMap = bodyOld.getAttributes();
+		nsIDOMNamedNodeMap attrsMap = body.getAttributes();
 		long len = attrsMap.getLength();
 		int j = 0;
 		for (int i = 0; i < len; i++) {
 			nsIDOMNode attr = attrsMap.item(j);
-			if (ID.equalsIgnoreCase(attr.getNodeName())) {
+			if (HTML.ATTR_ID.equalsIgnoreCase(attr.getNodeName())) {
 				j++;
-				continue;
+			} else {
+				body.removeAttribute(attr.getNodeName());
 			}
-			bodyOld.removeAttribute(attr.getNodeName());
 		}
 
-		for (int i = 0; i < sourceNode.getAttributes().getLength(); i++) {
-			String name = sourceNode.getAttributes().item(i).getNodeName();
-			if(ID.equalsIgnoreCase(name))
-				continue;
-			String value = sourceNode.getAttributes().item(i).getNodeValue();
-			// all full path for 'url'
-			if (VpeStyleUtil.ATTRIBUTE_STYLE.equalsIgnoreCase(name))
-				value = VpeStyleUtil.addFullPathIntoURLValue(value, pageContext
-						.getEditPart().getEditorInput());
-			if (VpeStyleUtil.PARAMETR_BACKGROND.equalsIgnoreCase(name))
-				value = VpeStyleUtil.addFullPathIntoBackgroundValue(value,
-						pageContext.getEditPart().getEditorInput());
-			//FIX FOR JBIDE-1568, added by Max Areshkau
-			try{
-				bodyOld.setAttribute(name, value);
-			}catch(XPCOMException ex ) {
-				//jsut ignore it
-			}
-			
+		final nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
+		final NamedNodeMap sourceNodeAttributes = sourceNode.getAttributes();
+		for (int i = 0; i < sourceNodeAttributes.getLength(); i++) {
+			final Node sourceNodeAttribute = sourceNodeAttributes.item(i);
+			final String name = sourceNodeAttribute.getNodeName();
+			String value = sourceNodeAttribute.getNodeValue();
+			if(HTML.ATTR_ID.equalsIgnoreCase(name)) {
+				div.setAttribute(HTML.ATTR_ID, value);
+			} else {
+				// all full path for 'url'
+				if (VpeStyleUtil.ATTRIBUTE_STYLE.equalsIgnoreCase(name))
+					value = VpeStyleUtil.addFullPathIntoURLValue(value, pageContext
+							.getEditPart().getEditorInput());
+				if (VpeStyleUtil.PARAMETR_BACKGROND.equalsIgnoreCase(name))
+					value = VpeStyleUtil.addFullPathIntoBackgroundValue(value,
+							pageContext.getEditPart().getEditorInput());
+				//FIX FOR JBIDE-1568, added by Max Areshkau
+				try{
+					body.setAttribute(name, value);
+				}catch(XPCOMException ex ) {
+					//jsut ignore it
+				}
+			}			
 		}
-
-		nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
-		div.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, STYLE_FOR_DIV);
 
 		return new VpeCreationData(div);
 	}
 
 	/**
+	 * Finds {@code BODY}-element
 	 * 
-	 * @param node
+	 * @param node a visual node
+	 * @return the nearest child of {@code node} named {@code 'BODY'}
 	 */
-	private void goToTree(nsIDOMNode node) {
+	private nsIDOMElement getBody(nsIDOMNode node) {
 
-		for (int i = 0; i < node.getChildNodes().getLength(); i++)
-			if (HTML.TAG_BODY.equalsIgnoreCase(node.getChildNodes().item(i)
-					.getNodeName()))
-				bodyOld = (nsIDOMElement) node.getChildNodes().item(i)
+		final nsIDOMNodeList nodeChildren = node.getChildNodes();
+		for (int i = 0; i < nodeChildren.getLength(); i++) {
+			final nsIDOMNode nodeChild = nodeChildren.item(i);
+			if (HTML.TAG_BODY.equalsIgnoreCase(nodeChild
+					.getNodeName())) {
+				return (nsIDOMElement) nodeChild
 						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-			else
-				goToTree(node.getChildNodes().item(i));
+			} else {
+				nsIDOMElement body = getBody(nodeChild);
+				if (body != null) {
+					return body;
+				}
+			}
+		}
+		
+		return null;
 	}
 
 	/**
-	 * Checks, whether it is necessary to re-create an element at change of
-	 * attribute
-	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param visualDocument
-	 *            The document of the visual tree.
-	 * @param visualNode
-	 *            The current node of the visual tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
-	 * @param name
-	 *            Attribute name
-	 * @param value
-	 *            Attribute value
-	 * @return <code>true</code> if it is required to re-create an element at
-	 *         a modification of attribute, <code>false</code> otherwise.
+	 * {@inheritDoc}
 	 */
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
 			Element sourceElement, nsIDOMDocument visualDocument,
