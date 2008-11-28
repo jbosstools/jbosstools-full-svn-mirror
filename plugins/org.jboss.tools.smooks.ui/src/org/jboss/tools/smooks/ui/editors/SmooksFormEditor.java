@@ -67,7 +67,7 @@ public class SmooksFormEditor extends FormEditor implements
 	private AdapterFactoryEditingDomain editingDomain;
 	private Resource smooksResource;
 
-	private SmooksTextEdtor textEdtior = null;
+	// private SmooksTextEdtor textEdtior = null;
 
 	private boolean forceDirty = false;
 	private boolean onlyShowTextEditor = false;
@@ -150,19 +150,22 @@ public class SmooksFormEditor extends FormEditor implements
 		this.showTextEditorReason = reason;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void removeGraphicalFormPage() {
 		int count = this.getPageCount();
-		try {
-			if (textEdtior == null) {
-				textEdtior = new SmooksTextEdtor(showTextEditorReason);
-				this.addPage(textEdtior, getEditorInput());
-				for (int i = 0; i < count; i++) {
-					this.removePage(0);
-				}
-			}
-		} catch (PartInitException e) {
-			e.printStackTrace();
-		}
+		// try {
+		// if (textEdtior == null) {
+		// textEdtior = new SmooksTextEdtor(showTextEditorReason);
+		// this.addPage(textEdtior, getEditorInput());
+		// for (int i = 0; i < count; i++) {
+		// this.removePage(0);
+		// }
+		// }
+		// } catch (PartInitException e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	/*
@@ -241,13 +244,14 @@ public class SmooksFormEditor extends FormEditor implements
 
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		IEditorPart activeEditor = this.getEditor(this.getCurrentPage());
-		if (activeEditor != normalPage && activeEditor != null) {
-			activeEditor.doSave(monitor);
+		int index = this.getCurrentPage();
+		if (index == 2) {
+			this.xmlTextEditor.doSave(monitor);
 			fireEditorDirty(false);
-		}
-		if(activeEditor == null){
+		} else {
+
 			this.graphicalPage.doSave(monitor);
+			fireEditorDirty(false);
 		}
 	}
 
