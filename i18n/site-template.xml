@@ -3,5 +3,5 @@
    <description url="http://www.jboss.org/tools">
       This is the development update site for JBoss Tools Localization. You will find the latest development release of JBossTools here.
    </description>
-   ${features}
+${site.contents}
 </site>

@@ -78,7 +78,7 @@
 		<delete dir="po" includes="**/*.pot" />
 	</target>
 
-	<target name="clean" description="Remove generated files">
+	<target name="clean" description="Remove generated files (except pot)">
 		<!-- obsolete dirs -->
 		<delete dir="target/pot" />
 		<delete dir="po/en" />
@@ -234,7 +234,7 @@
 			</path>
 			<sequential>
 				<echo message="@{pluginsrcdir}" />
-				<!-- TODO avoid property override if possible -->
+				<!-- TODO avoid property overrides if possible -->
 				<!-- work out the plugin ID -->
 				<var name="module" unset="true" />
 				<propertyregex override="true" property="module" 
@@ -261,7 +261,6 @@
 	
 	<target name="-plugin" >
 		<!-- Jars up one fragment plugin.   -->
-		<echo message="${plugindir}"/>
 		<jar 
 			destfile="${jardir}/plugins/${plugin}.nl-${locale}_${PLUGIN_VERSION}.jar" 
 			filesonly="true"
@@ -295,7 +294,7 @@
 		<delete dir="${jardir}/features" />
 		<mkdir dir="${jardir}/features" />
 		<tempfile 
-			property="temp.file.sitefeatures" 
+			property="temp.file.site.contents" 
 			destdir="${target.dir}" 
 			prefix="site" 
 			suffix=".tmp" 
@@ -327,14 +326,14 @@
 
 		<foreachlocale task="-categorydef"/>
 		
+		<!-- Shouldn't need this, just being safe: -->
+		<var name="site.contents" unset="true" />
 		<!-- Read in the list of <feature>s and <category-def>s created by 
 			 the targets -categorydef and -feature -->
-		<!-- TODO this is an ugly way to build XML 
-			 (see also the <echo>s in above-mentioned targets)  -->
-		<var name="features" unset="true" />
-		<loadfile property="features"  srcFile="${temp.file.sitefeatures}"/>
-		<delete file="${temp.file.sitefeatures}"/>
-
+		<loadfile property="site.contents"  srcFile="${temp.file.site.contents}"/>
+		<!--
+		<delete file="${temp.file.site.contents}"/>
+		-->
 		<!-- And create the feature from the template, filling in the list of features -->
 		<copy overwrite="true" tofile="${jardir}/site.xml" file="site-template.xml">
 			<filterchain>
@@ -343,33 +342,16 @@
 		</copy>
 	</target>
 	
-	<!-- Create a <category-def> for ${locale} for site.xml -->
-	<target name="-categorydef">
-		<!-- ugly -->
-		<echo append="true" file="${temp.file.sitefeatures}"
-			message="&lt;category-def name=&quot;${locale}&quot; label=&quot;JBoss Tools Localization (${localename})&quot;/&gt;" />
-		<!-- demunged, that looks like:
-		   <category-def 
-		   		name="${locale}" 
-		   		label="JBoss Tools Localization (${localename})"/>
-		-->
-	</target>
-	
 	<!-- Create feature jar including manifest.  Also create a <feature> for site.xml -->
 	<target name="-feature">
-		<!-- create langpack feature element for site.xml -->
-		<!-- ugly -->
-		<echo append="true" file="${temp.file.sitefeatures}"
-			message="&lt;feature url=&quot;features/${feature}.nl-${locale}_${FEATURE_VERSION}.jar&quot; 
-		      id=&quot;${feature}.nl-${locale}&quot; version=&quot;${FEATURE_VERSION}&quot;&gt;
-		      &lt;category name=&quot;${locale}&quot;/&gt;
-		   &lt;/feature&gt;" />
-		<!-- demunged, that looks like:
-		   <feature url="features/${feature}.nl-${locale}_${FEATURE_VERSION}.jar" 
-		      id="${feature}.nl-${locale}" version="${FEATURE_VERSION}">
-		      <category name="${locale}"/>
-		   </feature>
-		-->
+		<!-- create langpack <feature> to go into site.xml -->
+		<echo append="true" file="${temp.file.site.contents}"><![CDATA[
+			<feature 
+				url="features/${feature}.nl-${locale}_${FEATURE_VERSION}.jar" 
+				id="${feature}.nl-${locale}"
+				version="${FEATURE_VERSION}">
+				<category name="${locale}"/>
+			</feature>]]></echo>
 		<!-- Process feature.xml with <xslt> -->		
 		<xslt 
 			style="feature.xsl"
@@ -390,8 +372,16 @@
 		<jar destfile="${jardir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}.jar" 
 			basedir="${propdir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}" />
 		<!-- might want to keep around for debugging: 
-		<delete dir="${propdir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}" />
 		-->
+		<delete dir="${propdir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}" />
+	</target>
+	
+	<!-- Create a <category-def> for ${locale} to go into site.xml -->
+	<target name="-categorydef">
+		<echo append="true" file="${temp.file.site.contents}"><![CDATA[
+			<category-def 
+	   			name="${locale}" 
+		   		label="JBoss Tools Localization (${localename})"/>]]></echo>
 	</target>
 	
 	<target name="p2" description="Generate metadata for Eclipse 3.4's update manager (P2)" >
