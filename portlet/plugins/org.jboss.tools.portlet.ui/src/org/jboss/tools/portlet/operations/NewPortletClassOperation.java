@@ -53,4 +53,9 @@ public class NewPortletClassOperation extends NewWebClassOperation {
 		emitter.addVariable(PortletUIActivator.PLUGIN_ID, PortletUIActivator.PLUGIN_ID);
 		return emitter.generate(monitor, new Object[] { tempModel });
 	}
+
+	@Override
+	protected Object getTemplateImplementation() {
+		return null;
+	}
 }
