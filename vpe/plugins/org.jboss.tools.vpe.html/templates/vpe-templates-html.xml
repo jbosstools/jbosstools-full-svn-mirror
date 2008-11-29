@@ -799,7 +799,7 @@
 	<vpe:tag name="form" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class,align,dir" />
-			<div />
+			<form />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />

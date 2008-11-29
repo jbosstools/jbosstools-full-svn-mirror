@@ -59,6 +59,7 @@ public final class HTML {
 	public static final String TAG_LABEL = "LABEL"; //$NON-NLS-1$
 	public static final String TAG_A = "A"; //$NON-NLS-1$
 	public static final String TAG_H1 = "H1"; //$NON-NLS-1$
+	public static final String TAG_FORM = "FORM"; //$NON-NLS-1$
 
 	public static final String ATTR_ID = "ID"; //$NON-NLS-1$
 	public static final String ATTR_TYPE = "TYPE"; //$NON-NLS-1$
