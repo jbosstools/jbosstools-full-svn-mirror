@@ -17,6 +17,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.jboss.tools.tests.ImportBean;
+import org.jboss.tools.vpe.html.test.jbide.JBIDE3280Test;
 import org.jboss.tools.vpe.ui.test.VpeTestSetup;
 
 
@@ -36,6 +37,7 @@ public class HtmlAllTests {
 
 		TestSuite suite = new TestSuite("Tests for Vpe Jsf components"); //$NON-NLS-1$
 		// $JUnit-BEGIN$
+		suite.addTestSuite(JBIDE3280Test.class);
 		suite.addTestSuite(HtmlComponentTest.class);
 		suite.addTestSuite(HtmlComponentContentTest.class);
 		

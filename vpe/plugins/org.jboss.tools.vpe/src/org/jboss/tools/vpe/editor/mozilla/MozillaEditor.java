@@ -86,7 +86,7 @@ import org.mozilla.interfaces.nsIPlaintextEditor;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
 	protected static final String INIT_URL = /*"file://" +*/ (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath(); //$NON-NLS-1$ //$NON-NLS-2$
-	private static final String CONTENT_AREA_ID = "__content__area__"; //$NON-NLS-1$
+	public static final String CONTENT_AREA_ID = "__content__area__"; //$NON-NLS-1$
 
 	static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
 	private XulRunnerEditor xulRunnerEditor;
