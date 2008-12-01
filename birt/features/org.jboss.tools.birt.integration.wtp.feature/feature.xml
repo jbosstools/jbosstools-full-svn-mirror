@@ -22,6 +22,11 @@
       <discovery label="%birtUpdateSiteName" url="http://download.eclipse.org/birt/update-site/2.3"/>
    </url>
 
+   <requires>
+      <import feature="org.eclipse.birt" version="2.3.1"/>
+      <import feature="org.eclipse.birt.integration.wtp" version="2.3.1"/>
+   </requires>
+
    <plugin
          id="org.eclipse.birt.integration.wtp.ui"
          download-size="0"
