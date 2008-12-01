@@ -71,11 +71,6 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	private nsIWebBrowser webBrowser = null;
 	private long chrome_flags = nsIWebBrowserChrome.CHROME_ALL;
 	
-	/**
-	 * used to indicate that xulrunner was loaded
-	 */
-	private static  boolean XULRUNNER_LOADING_INDICATOR=false;
-
 	static {
 		XULRUNNER_BUNDLE = (new StringBuffer("org.mozilla.xulrunner")) // $NON-NLS-1$
 			.append(".").append(Platform.getWS()) // $NON-NLS-1$
@@ -104,14 +99,13 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
             setup.setProperty(nsIWebBrowserSetup.SETUP_IS_CHROME_WRAPPER, 1);
     
             // JBIDE-1329 Solution was contributed by Snjezana Peco
-            // webBrowser.addWebBrowserListener(this,
-            //	nsIWebProgressListener.NS_IWEBPROGRESSLISTENER_IID);
+//             webBrowser.addWebBrowserListener(this,
+//            	nsIWebProgressListener.NS_IWEBPROGRESSLISTENER_IID);
             nsIServiceManager serviceManager = mozilla.getServiceManager();
             nsIWebProgress webProgress = (nsIWebProgress) serviceManager
     		.getServiceByContractID("@mozilla.org/docloaderservice;1", // $NON-NLS-1$
     			nsIWebProgress.NS_IWEBPROGRESS_IID);
-            webProgress.addProgressListener(this, nsIWebProgress.NOTIFY_ALL);
-            
+            webProgress.addProgressListener(this, nsIWebProgress.NOTIFY_STATE_WINDOW);
             webBrowser.addWebBrowserListener(this,
     		nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
         }
@@ -170,6 +164,14 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	 * Decorate Widget.dispose()
 	 */
 	public void dispose() {
+		//added by mareshkau, here we remove listener.
+		//if we hasn't do it, listener will be continue work even after close browser
+        nsIServiceManager serviceManager = mozilla.getServiceManager();
+        nsIWebProgress webProgress = (nsIWebProgress) serviceManager
+		.getServiceByContractID("@mozilla.org/docloaderservice;1", // $NON-NLS-1$
+			nsIWebProgress.NS_IWEBPROGRESS_IID);
+        webProgress.removeProgressListener(this);
+        
 		browser.dispose();
 		browser = null;
 	}

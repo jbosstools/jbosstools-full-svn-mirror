@@ -293,6 +293,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 					}
 					// if only refresh page
 					else {
+						
 						MozillaEditor.this.onReloadWindow();
 						setRefreshPage(false);
 					}
@@ -429,7 +430,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			controller=null;
 		}
 		if (xulRunnerEditor != null) {
-			xulRunnerEditor.getBrowser().dispose();
+			xulRunnerEditor.dispose();
 			xulRunnerEditor = null;
 		}
 
@@ -501,8 +502,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		}
 
 		nsIDOMNode root = xulRunnerEditor.getDOMDocument().getDocumentElement();
+		
 		headNode = findHeadNode(root);
-
 
 		return area;
 	}
@@ -710,7 +711,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 * 
 	 */
 	private void onReloadWindow() {
-
+	//mareshkau, fix for jbide-3205
+	if(getController()!=null&&getController().isVisualEditorVisible()){
 		removeDomEventListeners();
 		xulRunnerEditor.removeResizerListener();
 		contentArea = findContentArea();
@@ -718,7 +720,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		addSelectionListener();
 		xulRunnerEditor.addResizerListener();
 		controller.reinit();
-
+		}
 	}
 	
 	/**
