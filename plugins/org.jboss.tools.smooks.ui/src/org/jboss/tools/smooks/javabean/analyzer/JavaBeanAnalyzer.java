@@ -200,61 +200,21 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						.hasNext();) {
 					LineConnectionModel connection = (LineConnectionModel) iterator
 							.next();
-					if (connectionIsUsed(connection))
-						continue;
 					Object source = connection.getSource();
 					Object target = connection.getTarget();
-					if (target != dataModel) {
-						continue;
-					}
+
 					// create the first smooks resource fragment
 
 					JavaBeanModel sourceJavaBean = (JavaBeanModel) ((AbstractStructuredDataModel) source)
 							.getReferenceEntityModel();
 					JavaBeanModel targetJavaBean = (JavaBeanModel) ((AbstractStructuredDataModel) target)
 							.getReferenceEntityModel();
-					String sourceClassName = sourceJavaBean.getBeanClass()
-							.getName();
-
-					ResourceConfigType resourceConfig = SmooksFactory.eINSTANCE
-							.createResourceConfigType();
-					resourceList.add(resourceConfig);
-					resourceConfig
-							.setSelector(getSourceBeanSelectorString((AbstractStructuredDataModel) source));
-					setConnectionUsed(connection);
-
-					ResourceType resource = SmooksFactory.eINSTANCE
-							.createResourceType();
-					resource.setValue(BEANPOPULATOR);
-					resourceConfig.setResource(resource);
-
-					ParamType beanIdParam = SmooksFactory.eINSTANCE
-							.createParamType();
-					beanIdParam.setName(SmooksModelUtils.BEAN_ID);
-					if (beanId == null)
-						beanId = targetJavaBean.getName();
-					if (beanId.startsWith(COMPLEX_PRIX_START)) {
-						beanId = beanId.substring(2, beanId
-								.indexOf(COMPLEX_PRIX_END));
+					ResourceConfigType resourceConfig = analyzeMajorConnectionsToCreateResourceConfig(
+							connection, resourceList, beanId);
+					if (resourceConfig == null) {
+						continue;
 					}
-					SmooksModelUtils
-							.appendTextToSmooksType(beanIdParam, beanId);
-					resourceConfig.getParam().add(beanIdParam);
-
-					ParamType beanClassParam = SmooksFactory.eINSTANCE
-							.createParamType();
-					beanClassParam.setName(SmooksModelUtils.BEAN_CLASS);
-					SmooksModelUtils.appendTextToSmooksType(beanClassParam,
-							targetJavaBean.getBeanClassString());
-					resourceConfig.getParam().add(beanClassParam);
-
-					ParamType bindingsParam = SmooksFactory.eINSTANCE
-							.createParamType();
-					bindingsParam.setName(SmooksModelUtils.BINDINGS);
-					resourceConfig.getParam().add(bindingsParam);
-
 					// to dispatch the target's children (Order processing)
-
 					List children = targetJavaBean.getProperties();
 					for (Iterator iterator2 = children.iterator(); iterator2
 							.hasNext();) {
@@ -277,32 +237,11 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 									.iterator(); iterator3.hasNext();) {
 								LineConnectionModel childConnection = (LineConnectionModel) iterator3
 										.next();
-								if (connectionIsUsed(childConnection))
-									continue;
-								JavaBeanModel childTargetJavaBean = (JavaBeanModel) child
-										.getReferenceEntityModel();
-								String currentSelectorName = getSelectorString(
-										(AbstractStructuredDataModel) childConnection
-												.getTarget(),
-										(AbstractStructuredDataModel) childConnection
-												.getSource(),
-										(AbstractStructuredDataModel) source);
-								AnyType binding = SmooksModelUtils
-										.addBindingTypeToParamType(
-												bindingsParam,
-												childTargetJavaBean.getName(),
-												currentSelectorName, null, null);
-								UIUtils.assignConnectionPropertyToBinding(
-										childConnection, binding, new String[] {
-												"property", "selector" }); //$NON-NLS-1$ //$NON-NLS-2$
-								if (!childTargetJavaBean.isPrimitive()) {
-									analyzeStructuredDataModel(
-											resourceList,
-											root,
-											(AbstractStructuredDataModel) child,
-											resourceConfig, currentSelectorName);
-								}
-								this.setConnectionUsed(childConnection);
+								analyzeChildrenConnectionsToCreateBindingType(childConnection,
+										child,
+										(AbstractStructuredDataModel) source,
+										resourceConfig, root, resourceList,
+										getBindingsParamType(resourceConfig));
 							}
 						}
 
@@ -310,6 +249,99 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				}
 			}
 		}
+	}
+
+	private ResourceConfigType analyzeMajorConnectionsToCreateResourceConfig(
+			LineConnectionModel connection, List resourceList, String beanId) {
+		if (connectionIsUsed(connection))
+			return null;
+		Object source = connection.getSource();
+		Object target = connection.getTarget();
+
+		// create the first smooks resource fragment
+
+		JavaBeanModel sourceJavaBean = (JavaBeanModel) ((AbstractStructuredDataModel) source)
+				.getReferenceEntityModel();
+		JavaBeanModel targetJavaBean = (JavaBeanModel) ((AbstractStructuredDataModel) target)
+				.getReferenceEntityModel();
+		String sourceClassName = sourceJavaBean.getBeanClass().getName();
+
+		ResourceConfigType resourceConfig = SmooksFactory.eINSTANCE
+				.createResourceConfigType();
+		resourceList.add(resourceConfig);
+		resourceConfig
+				.setSelector(getSourceBeanSelectorString((AbstractStructuredDataModel) source));
+		setConnectionUsed(connection);
+
+		ResourceType resource = SmooksFactory.eINSTANCE.createResourceType();
+		resource.setValue(BEANPOPULATOR);
+		resourceConfig.setResource(resource);
+
+		ParamType beanIdParam = SmooksFactory.eINSTANCE.createParamType();
+		beanIdParam.setName(SmooksModelUtils.BEAN_ID);
+		if (beanId == null)
+			beanId = targetJavaBean.getName();
+		if (beanId.startsWith(COMPLEX_PRIX_START)) {
+			beanId = beanId.substring(2, beanId.indexOf(COMPLEX_PRIX_END));
+		}
+		SmooksModelUtils.appendTextToSmooksType(beanIdParam, beanId);
+		resourceConfig.getParam().add(beanIdParam);
+
+		ParamType beanClassParam = SmooksFactory.eINSTANCE.createParamType();
+		beanClassParam.setName(SmooksModelUtils.BEAN_CLASS);
+		SmooksModelUtils.appendTextToSmooksType(beanClassParam, targetJavaBean
+				.getBeanClassString());
+		resourceConfig.getParam().add(beanClassParam);
+
+		ParamType bindingsParam = SmooksFactory.eINSTANCE.createParamType();
+		bindingsParam.setName(SmooksModelUtils.BINDINGS);
+		resourceConfig.getParam().add(bindingsParam);
+		return resourceConfig;
+	}
+
+	private ParamType getBindingsParamType(ResourceConfigType config) {
+		List<ParamType> list = config.getParam();
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			ParamType paramType = (ParamType) iterator.next();
+			String name = paramType.getName();
+			if (name != null)
+				name = name.trim();
+			if (SmooksModelUtils.BINDINGS.equals(name)) {
+				return paramType;
+			}
+		}
+		return null;
+	}
+
+	private void analyzeChildrenConnectionsToCreateBindingType(
+			LineConnectionModel childConnection,
+			AbstractStructuredDataModel child,
+			AbstractStructuredDataModel source,
+			ResourceConfigType resourceConfig,
+			AbstractStructuredDataModel root, List resourceList,
+			ParamType bindingsParam) {
+		if (connectionIsUsed(childConnection))
+			return;
+		JavaBeanModel childTargetJavaBean = (JavaBeanModel) child
+				.getReferenceEntityModel();
+		String currentSelectorName = getSelectorString(
+				(AbstractStructuredDataModel) childConnection.getTarget(),
+				(AbstractStructuredDataModel) childConnection.getSource(),
+				(AbstractStructuredDataModel) source);
+		String propertyName = childTargetJavaBean.getName();
+		JavaBeanModel targetParent = childTargetJavaBean.getParent();
+		if (targetParent.isList() || targetParent.isArray())
+			propertyName = null;
+		AnyType binding = SmooksModelUtils.addBindingTypeToParamType(
+				bindingsParam, propertyName, currentSelectorName, null, null);
+		UIUtils.assignConnectionPropertyToBinding(childConnection, binding,
+				new String[] { "property", "selector" }); //$NON-NLS-1$ //$NON-NLS-2$
+		if (!childTargetJavaBean.isPrimitive()) {
+			analyzeStructuredDataModel(resourceList, root,
+					(AbstractStructuredDataModel) child, resourceConfig,
+					currentSelectorName);
+		}
+		this.setConnectionUsed(childConnection);
 	}
 
 	/**
