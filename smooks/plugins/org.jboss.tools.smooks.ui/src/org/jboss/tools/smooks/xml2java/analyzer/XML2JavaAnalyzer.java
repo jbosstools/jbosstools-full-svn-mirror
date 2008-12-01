@@ -175,9 +175,9 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		List properties = javaBean.getProperties();
 		for (Iterator iterator = properties.iterator(); iterator.hasNext();) {
 			boolean isComplex = true;
-			JavaBeanModel child = (JavaBeanModel) iterator.next();
+			JavaBeanModel targetJavaChild = (JavaBeanModel) iterator.next();
 			AbstractStructuredDataModel graphModel = UIUtils.findGraphModel(
-					context.getGraphicalRootModel(), child);
+					context.getGraphicalRootModel(), targetJavaChild);
 			LineConnectionModel connection = UIUtils
 					.getFirstTargetModelViaConnection(graphModel);
 			if (connection == null)
@@ -185,19 +185,24 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			AbstractStructuredDataModel sourceModel = (AbstractStructuredDataModel) connection
 					.getSource();
 
-			if (child.isPrimitive() || child.getProperties().isEmpty()) {
+			if (targetJavaChild.isPrimitive() || targetJavaChild.getProperties().isEmpty()) {
 				isComplex = false;
 			}
 			String resourceConfigSelector = parentSelector;
-			String selector = getSelectorID(child);
+			String selector = getSelectorID(targetJavaChild);
 			if (!isComplex) {
 				selector = getSelectorIDViaXMLObject(
 						(AbstractXMLObject) sourceModel
 								.getReferenceEntityModel(), source,
 						resourceConfigSelector);
 			}
+			String propertyName = targetJavaChild.getName();
+			// if the parent bean is Array or List , the binding property name should be set NULL
+			if(javaBean.isArray() || javaBean.isList()){
+				propertyName = null;
+			}
 			AnyType binding = SmooksModelUtils.addBindingTypeToParamType(
-					bindingsParam, child.getName(), selector, null, null);
+					bindingsParam, propertyName , selector, null, null);
 			// add connection's properties on the "binding" element
 			UIUtils.assignConnectionPropertyToBinding(connection, binding,
 					new String[] { "property", "selector" });
