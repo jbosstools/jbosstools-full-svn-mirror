@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.jboss.tools.vpe_feature"
-      label="Vpe_feature Feature"
+      label="JBoss Tools Visual Page Editor"
       version="2.0.0">
 
    <description url="http://www.jboss.org/tools">
-      JBossTools Visual Page Editor Feature
+      Provides a visual page editor for xml based documents. Specific support for xhtml with HTML and JSF/Facelets support.
    </description>
 
    <copyright>
