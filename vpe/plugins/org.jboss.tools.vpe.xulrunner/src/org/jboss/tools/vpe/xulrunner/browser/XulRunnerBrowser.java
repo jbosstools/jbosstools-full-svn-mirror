@@ -105,7 +105,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
             nsIWebProgress webProgress = (nsIWebProgress) serviceManager
     		.getServiceByContractID("@mozilla.org/docloaderservice;1", // $NON-NLS-1$
     			nsIWebProgress.NS_IWEBPROGRESS_IID);
-            webProgress.addProgressListener(this, nsIWebProgress.NOTIFY_STATE_WINDOW);
+            webProgress.addProgressListener(this, nsIWebProgress.NOTIFY_STATE_ALL);
             webBrowser.addWebBrowserListener(this,
     		nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
         }

@@ -711,8 +711,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 * 
 	 */
 	private void onReloadWindow() {
-	//mareshkau, fix for jbide-3205
-	if(getController()!=null&&getController().isVisualEditorVisible()){
 		removeDomEventListeners();
 		xulRunnerEditor.removeResizerListener();
 		contentArea = findContentArea();
@@ -720,7 +718,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		addSelectionListener();
 		xulRunnerEditor.addResizerListener();
 		controller.reinit();
-		}
 	}
 	
 	/**
