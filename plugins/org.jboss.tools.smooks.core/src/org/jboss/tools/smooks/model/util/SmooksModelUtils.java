@@ -30,6 +30,9 @@ import org.jboss.tools.smooks.model.SmooksPackage;
  */
 
 public class SmooksModelUtils {
+	
+	public static final String TYPE_XSL = "xsl";
+	
 	public static final String BEAN_CLASS = "beanClass";
 
 	public static final String BEAN_ID = "beanId";
@@ -72,6 +75,41 @@ public class SmooksModelUtils {
 		}
 		return null;
 	}
+	
+	public static boolean isBeanPopulatorResource(ResourceConfigType type) {
+		ResourceType resource = type.getResource();
+		if (resource == null)
+			return false;
+		String value = resource.getStringValue();
+		if(value != null) value = value.trim();
+		if (SmooksModelConstants.BEAN_POPULATOR.equals(value)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean isInnerFileContents(ResourceConfigType resourceConfig){
+		ResourceType resource = resourceConfig.getResource();
+		if(resource == null) return false;
+		String type = resource.getType();
+		if(type != null) type = type.trim();
+		return TYPE_XSL.equals(type);
+	}
+
+	public static boolean isDateTypeSelector(ResourceConfigType type) {
+		ResourceType resource = type.getResource();
+		if (resource == null)
+			return false;
+		String value = resource.getStringValue();
+		if(value != null) value = value.trim();
+		for (int i = 0; i < SmooksModelConstants.DECODER_CLASSES.length; i++) {
+			String decoderClass = SmooksModelConstants.DECODER_CLASSES[i];
+			if(decoderClass.equals(value)){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public static String getTransformType(ResourceConfigType resourceConfig) {
 		ParamType typeParam = null;
@@ -82,7 +120,8 @@ public class SmooksModelUtils {
 			for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
 				ParamType param = (ParamType) iterator.next();
 				String name = param.getName();
-				if(name != null) name = name.trim();
+				if (name != null)
+					name = name.trim();
 				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(name)) {
 					typeParam = param;
 					break;
@@ -106,7 +145,7 @@ public class SmooksModelUtils {
 				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(param
 						.getName())) {
 					cleanTextToSmooksType(param);
-					setTextToSmooksType(param, type);
+					setTextToAnyType(param, type);
 				}
 			}
 		}
@@ -116,7 +155,7 @@ public class SmooksModelUtils {
 			ResourceConfigType resourceConfig) {
 		ResourceType resource = resourceConfig.getResource();
 		if (resource != null) {
-			String value = resource.getValue();
+			String value = resource.getStringValue();
 			if (value != null) {
 				if (value.startsWith("\\")) {
 					return true;
@@ -132,7 +171,8 @@ public class SmooksModelUtils {
 	public static boolean isTransformTypeResourceConfig(
 			ResourceConfigType resourceConfig) {
 		String selector = resourceConfig.getSelector();
-		if(selector != null) selector = selector.trim();
+		if (selector != null)
+			selector = selector.trim();
 		if (!SmooksModelConstants.GLOBAL_PARAMETERS.equals(selector)) {
 			return false;
 		}
@@ -144,7 +184,8 @@ public class SmooksModelUtils {
 			for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
 				ParamType p = (ParamType) iterator.next();
 				String paramName = p.getName();
-				if(paramName != null) paramName = paramName.trim();
+				if (paramName != null)
+					paramName = paramName.trim();
 				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(paramName)) {
 					return true;
 				}
@@ -169,7 +210,7 @@ public class SmooksModelUtils {
 			resourceConfigType.getParam().add(param);
 		}
 		param.setName(paramName);
-		setTextToSmooksType(param, value);
+		setTextToAnyType(param, value);
 	}
 
 	public static String getParmaText(String paramName,
@@ -193,6 +234,18 @@ public class SmooksModelUtils {
 	public static String getAnyTypeText(AnyType anyType) {
 		Object value = anyType.getMixed().get(
 				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, true);
+		if (value != null) {
+			if (value instanceof List && !((List) value).isEmpty()) {
+				return ((List) value).get(0).toString().trim();
+			}
+			// return value.toString();
+		}
+		return null;
+	}
+
+	public static String getAnyTypeCDATA(AnyType anyType) {
+		Object value = anyType.getMixed().get(
+				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, true);
 		if (value != null) {
 			if (value instanceof List && !((List) value).isEmpty()) {
 				return ((List) value).get(0).toString().trim();
@@ -228,14 +281,32 @@ public class SmooksModelUtils {
 				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, text);
 	}
 
-	public static void setTextToSmooksType(AnyType smooksModel, String text) {
+	public static void appendCDATAToSmooksType(AnyType smooksModel, String text) {
+		smooksModel.getMixed().add(
+				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, text);
+	}
+
+	public static void setTextToAnyType(AnyType smooksModel, String text) {
 		cleanTextToSmooksType(smooksModel);
 		appendTextToSmooksType(smooksModel, text);
+	}
+
+	public static void setCDATAToAnyType(AnyType smooksModel, String text) {
+		cleanCDATAToSmooksType(smooksModel);
+		appendCDATAToSmooksType(smooksModel, text);
 	}
 
 	public static void cleanTextToSmooksType(AnyType smooksModel) {
 		Object obj = smooksModel.getMixed().get(
 				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, true);
+		if (obj instanceof List) {
+			((List) obj).clear();
+		}
+	}
+
+	public static void cleanCDATAToSmooksType(AnyType smooksModel) {
+		Object obj = smooksModel.getMixed().get(
+				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, true);
 		if (obj instanceof List) {
 			((List) obj).clear();
 		}

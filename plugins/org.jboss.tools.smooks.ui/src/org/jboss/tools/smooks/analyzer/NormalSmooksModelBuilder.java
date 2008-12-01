@@ -79,7 +79,7 @@ public class NormalSmooksModelBuilder {
 			return false;
 		ResourceType resource = config.getResource();
 		if (resource != null) {
-			String r = resource.getValue();
+			String r = resource.getStringValue();
 			if (r != null) {
 				for (int i = 0; i < SmooksModelConstants.DECODER_CLASSES.length; i++) {
 					String decoder = SmooksModelConstants.DECODER_CLASSES[i];
@@ -97,7 +97,7 @@ public class NormalSmooksModelBuilder {
 			return false;
 		ResourceType resource = config.getResource();
 		if (resource != null) {
-			String resourceString = resource.getValue();
+			String resourceString = resource.getStringValue();
 			if (resourceString != null)
 				return SmooksModelConstants.BEAN_POPULATOR
 						.equals(resourceString.trim());

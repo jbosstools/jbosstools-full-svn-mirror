@@ -10,10 +10,18 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecore.xml.type.AnyType;
-
-import org.jboss.tools.smooks.model.*;
+import org.jboss.tools.smooks.model.AbstractResourceConfig;
+import org.jboss.tools.smooks.model.ConditionType;
+import org.jboss.tools.smooks.model.DocumentRoot;
+import org.jboss.tools.smooks.model.ImportType;
+import org.jboss.tools.smooks.model.ParamType;
+import org.jboss.tools.smooks.model.ProfileType;
+import org.jboss.tools.smooks.model.ProfilesType;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.ResourceType;
+import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,7 +33,7 @@ import org.jboss.tools.smooks.model.*;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.jboss.tools.smooks.model.SmooksPackage
+ * @see smooks.SmooksPackage
  * @generated
  */
 public class SmooksSwitch<T> {
@@ -143,6 +151,7 @@ public class SmooksSwitch<T> {
 			case SmooksPackage.RESOURCE_TYPE: {
 				ResourceType resourceType = (ResourceType)theEObject;
 				T result = caseResourceType(resourceType);
+				if (result == null) result = caseAnyType(resourceType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

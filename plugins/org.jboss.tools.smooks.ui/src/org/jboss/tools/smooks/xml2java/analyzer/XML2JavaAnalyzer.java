@@ -141,7 +141,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		// create a resource and add it to resourceConfig
 		ResourceType resourceType = SmooksFactory.eINSTANCE
 				.createResourceType();
-		resourceType.setValue(SmooksModelConstants.BEAN_POPULATOR);
+		resourceType.setStringValue(SmooksModelConstants.BEAN_POPULATOR);
 		resourceConfigType.setResource(resourceType);
 
 		// create param for resourceConfig
@@ -287,7 +287,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			ResourceType resource = resourceConfig.getResource();
 			if (resource == null)
 				continue;
-			String populator = resource.getValue();
+			String populator = resource.getStringValue();
 			if (populator != null)
 				populator = populator.trim();
 			if (!JavaBeanAnalyzer.BEANPOPULATOR.equals(populator))
@@ -565,7 +565,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			ResourceType rt = resource.getResource();
 			if (rt == null)
 				continue;
-			String value = rt.getValue();
+			String value = rt.getStringValue();
 			if (value != null)
 				value = value.trim();
 			if (SmooksModelConstants.BEAN_POPULATOR.equals(value)) {

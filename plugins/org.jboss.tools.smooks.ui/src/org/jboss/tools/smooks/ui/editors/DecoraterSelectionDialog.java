@@ -113,7 +113,7 @@ public class DecoraterSelectionDialog extends Dialog implements
 					if (selector1.equals("decoder")) {
 						ResourceType resource = config.getResource();
 						if (resource != null) {
-							String value = resource.getValue();
+							String value = resource.getStringValue();
 							if (value != null)
 								value = value.trim();
 							for (int i = 0; i < SmooksModelConstants.DECODER_CLASSES.length; i++) {

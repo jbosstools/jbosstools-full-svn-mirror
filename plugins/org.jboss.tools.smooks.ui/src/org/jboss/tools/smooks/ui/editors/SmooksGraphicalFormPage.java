@@ -1517,7 +1517,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				GridLayout gl = new GridLayout();
 				gl.numColumns = 2;
 				gl.marginHeight = 0;
-				gl.marginWidth = 0 ;
+				gl.marginWidth = 0;
 				fixComposite.setLayout(gl);
 				Label notifyLabel = new Label(fixComposite, SWT.NONE);
 				Hyperlink fixLink = getManagedForm().getToolkit()
@@ -1551,10 +1551,11 @@ public class SmooksGraphicalFormPage extends FormPage implements
 					item.setText(resolveCommand.getResolveDescription());
 					item.setImage(resolveCommand.getImage());
 				}
-				fixLink.addHyperlinkListener(new IHyperlinkListener(){
+				fixLink.addHyperlinkListener(new IHyperlinkListener() {
 
 					public void linkActivated(HyperlinkEvent e) {
-						menu.setLocation(getSite().getShell().getDisplay().getCursorLocation());
+						menu.setLocation(getSite().getShell().getDisplay()
+								.getCursorLocation());
 						menu.setVisible(true);
 					}
 
@@ -1563,7 +1564,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 					public void linkExited(HyperlinkEvent e) {
 					}
-					
+
 				});
 				notifyLabel.setMenu(menu);
 				GridData nlgd = new GridData(GridData.FILL_HORIZONTAL);
@@ -1593,6 +1594,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		try {
 			IMappingAnalyzer analyzer = AnalyzerFactory.getInstance()
 					.getMappingAnalyzer(sourceDataTypeID, targetDataTypeID);
+			if (analyzer == null)
+				return;
 			SmooksConfigurationFileGenerateContext context = this
 					.createContext();
 			this.initSmooksConfigurationFileGenerateContext(context);

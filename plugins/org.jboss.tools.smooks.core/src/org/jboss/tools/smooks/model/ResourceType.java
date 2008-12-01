@@ -8,6 +8,8 @@ package org.jboss.tools.smooks.model;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.emf.ecore.xml.type.AnyType;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Resource Type</b></em>'.
@@ -20,43 +22,15 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.jboss.tools.smooks.model.ResourceType#getValue <em>Value</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.ResourceType#getType <em>Type</em>}</li>
+ *   <li>{@link smooks.ResourceType#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.SmooksPackage#getResourceType()
- * @model extendedMetaData="name='resource_._type' kind='simple'"
+ * @see smooks.SmooksPackage#getResourceType()
+ * @model extendedMetaData="name='resource_._type' kind='mixed'"
  * @generated
  */
-public interface ResourceType extends EObject {
-	/**
-	 * Returns the value of the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Value</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Value</em>' attribute.
-	 * @see #setValue(String)
-	 * @see org.jboss.tools.smooks.model.SmooksPackage#getResourceType_Value()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="name=':0' kind='simple'"
-	 * @generated
-	 */
-	String getValue();
-
-	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.ResourceType#getValue <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Value</em>' attribute.
-	 * @see #getValue()
-	 * @generated
-	 */
-	void setValue(String value);
-
+public interface ResourceType extends EObject, AnyType {
 	/**
 	 * Returns the value of the '<em><b>Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -67,7 +41,7 @@ public interface ResourceType extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' attribute.
 	 * @see #setType(String)
-	 * @see org.jboss.tools.smooks.model.SmooksPackage#getResourceType_Type()
+	 * @see smooks.SmooksPackage#getResourceType_Type()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='type'"
 	 * @generated
@@ -75,7 +49,7 @@ public interface ResourceType extends EObject {
 	String getType();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.ResourceType#getType <em>Type</em>}' attribute.
+	 * Sets the value of the '{@link smooks.ResourceType#getType <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type</em>' attribute.
@@ -83,5 +57,13 @@ public interface ResourceType extends EObject {
 	 * @generated
 	 */
 	void setType(String value);
+	
+	String getStringValue();
+	
+	void setStringValue(String value);
+	
+	String getCDATAValue();
+	
+	void setCDATAValue(String value);
 
 } // ResourceType

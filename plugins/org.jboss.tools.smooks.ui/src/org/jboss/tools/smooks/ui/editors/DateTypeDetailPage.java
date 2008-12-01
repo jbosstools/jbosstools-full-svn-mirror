@@ -135,16 +135,16 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 	protected void setDecoderClass() {
 		String text = decoderCombo.getText();
 		if(text == null) text = "";
-		if(this.resourceConfigList != null){
-			ResourceType resource = resourceConfigList.getResource();
+		if(this.resourceConfig != null){
+			ResourceType resource = resourceConfig.getResource();
 			if(resource == null){
 				resource = SmooksFactory.eINSTANCE.createResourceType();
-				resourceConfigList.setResource(resource);
+				resourceConfig.setResource(resource);
 			}
-			if(text.trim().equals(resource.getValue())){
+			if(text.trim().equals(resource.getStringValue())){
 				return;
 			}
-			resource.setValue(text);
+			resource.setStringValue(text);
 			this.parentEditor.fireEditorDirty(true);
 		}
 		
@@ -153,34 +153,34 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 	protected void setFormat() {
 		String format = formatText.getText();
 		if(format == null) format = "";
-		SmooksModelUtils.setParamText("format", format, resourceConfigList);
+		SmooksModelUtils.setParamText("format", format, resourceConfig);
 		this.parentEditor.fireEditorDirty(true);
 	}
 
 	protected void setLocalLang() {
 		String ll = localeLangaugeCombo.getText();
 		if(ll == null) ll = "";
-		SmooksModelUtils.setParamText("locale-language", ll, resourceConfigList);
+		SmooksModelUtils.setParamText("locale-language", ll, resourceConfig);
 		this.parentEditor.fireEditorDirty(true);
 	}
 
 	protected void setLocalContry() {
 		String lc = localeContryCombo.getText();
 		if(lc == null) lc = "";
-		SmooksModelUtils.setParamText("locale-country", lc, resourceConfigList);
+		SmooksModelUtils.setParamText("locale-country", lc, resourceConfig);
 		this.parentEditor.fireEditorDirty(true);
 	}
 
 	protected void setSelector() {
 		String text = selectorText.getText();
 		if(text == null || text.length() == 0){
-			resourceConfigList.setSelector("");
+			resourceConfig.setSelector("");
 			this.parentEditor.fireEditorDirty(true);
 			return;
 		}
 		text = DECODER+ ":" + text;
-		if(this.resourceConfigList != null){
-			resourceConfigList.setSelector(text);
+		if(this.resourceConfig != null){
+			resourceConfig.setSelector(text);
 			this.parentEditor.fireEditorDirty(true);
 		}
 	}
@@ -195,21 +195,21 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 
 	@Override
 	protected void initSectionUI() {
-		if(this.resourceConfigList != null){
-			String formate = SmooksModelUtils.getParmaText("format", resourceConfigList); //$NON-NLS-1$
-			String locallang = SmooksModelUtils.getParmaText("locale-language", resourceConfigList); //$NON-NLS-1$
-			String localcontry = SmooksModelUtils.getParmaText("locale-country", resourceConfigList); //$NON-NLS-1$
+		if(this.resourceConfig != null){
+			String formate = SmooksModelUtils.getParmaText("format", resourceConfig); //$NON-NLS-1$
+			String locallang = SmooksModelUtils.getParmaText("locale-language", resourceConfig); //$NON-NLS-1$
+			String localcontry = SmooksModelUtils.getParmaText("locale-country", resourceConfig); //$NON-NLS-1$
 			String decoderClass = "";
-			ResourceType resource = resourceConfigList.getResource();
+			ResourceType resource = resourceConfig.getResource();
 			if(resource != null){
-				decoderClass = resource.getValue();
+				decoderClass = resource.getStringValue();
 				if(decoderClass != null) decoderClass = decoderClass.trim();
 			}
 			if(formate == null) formate = ""; //$NON-NLS-1$
 			if(locallang == null) locallang = ""; //$NON-NLS-1$
 			if(localcontry == null) localcontry = ""; //$NON-NLS-1$
 			
-			String selector = resourceConfigList.getSelector();
+			String selector = resourceConfig.getSelector();
 			selector = getSelectorName(selector);
 			selectorText.setText(selector);
 			formatText.setText(formate);

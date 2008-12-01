@@ -40,7 +40,7 @@ public abstract class AbstractSmooksModelDetailPage implements IDetailsPage {
 
 	protected ResourceConfigType oldResourceConfigList;
 
-	protected ResourceConfigType resourceConfigList;
+	protected ResourceConfigType resourceConfig;
 	
 	protected IManagedForm managedForm ;
 
@@ -120,8 +120,8 @@ public abstract class AbstractSmooksModelDetailPage implements IDetailsPage {
 	 * @see org.eclipse.ui.forms.IFormPart#isStale()
 	 */
 	public boolean isStale() {
-		if (oldResourceConfigList != resourceConfigList) {
-			oldResourceConfigList = resourceConfigList;
+		if (oldResourceConfigList != resourceConfig) {
+			oldResourceConfigList = resourceConfig;
 			return true;
 		}
 		return false;
@@ -159,8 +159,8 @@ public abstract class AbstractSmooksModelDetailPage implements IDetailsPage {
 	}
 	
 	public SmooksResourceListType getSmooksResourceList(){
-		if(resourceConfigList != null){
-			EObject parent = resourceConfigList.eContainer();
+		if(resourceConfig != null){
+			EObject parent = resourceConfig.eContainer();
 			while(parent != null){
 				EObject temp = parent.eContainer();
 				if(temp == null){
@@ -190,10 +190,10 @@ public abstract class AbstractSmooksModelDetailPage implements IDetailsPage {
 			Object obj = ((IStructuredSelection) selection)
 			.getFirstElement();
 			if(obj instanceof ResourceConfigType){
-				resourceConfigList = (ResourceConfigType)obj;
+				resourceConfig = (ResourceConfigType)obj;
 			}
 			if(obj instanceof ResourceConfigWarrper){
-				resourceConfigList = ((ResourceConfigWarrper)obj).getResourceConfig();
+				resourceConfig = ((ResourceConfigWarrper)obj).getResourceConfig();
 			}
 			refresh();
 		}
@@ -224,11 +224,11 @@ public abstract class AbstractSmooksModelDetailPage implements IDetailsPage {
 	}
 
 	protected ResourceConfigType getResourceConfigList() {
-		return resourceConfigList;
+		return resourceConfig;
 	}
 
 	protected void setResourceConfigList(ResourceConfigType resourceConfigList) {
-		this.resourceConfigList = resourceConfigList;
+		this.resourceConfig = resourceConfigList;
 	}
 
 	protected EditingDomain getDomain() {
