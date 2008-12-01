@@ -46,7 +46,7 @@ public class NewResourceConfigFactory implements INewResourceConfigFactory {
 			ResourceType resource = SmooksFactory.eINSTANCE
 					.createResourceType();
 			config.setResource(resource);
-			resource.setValue(SmooksModelConstants.BEAN_POPULATOR);
+			resource.setStringValue(SmooksModelConstants.BEAN_POPULATOR);
 
 			ParamType idParmType = SmooksFactory.eINSTANCE.createParamType();
 			ParamType classParmType = SmooksFactory.eINSTANCE.createParamType();
@@ -67,7 +67,7 @@ public class NewResourceConfigFactory implements INewResourceConfigFactory {
 					.createResourceType();
 			config.setResource(resource);
 
-			resource.setValue(SmooksModelConstants.DATE_DECODER);
+			resource.setStringValue(SmooksModelConstants.DATE_DECODER);
 
 			ParamType formate = SmooksFactory.eINSTANCE.createParamType();
 			ParamType language = SmooksFactory.eINSTANCE.createParamType();
@@ -89,7 +89,7 @@ public class NewResourceConfigFactory implements INewResourceConfigFactory {
 //			config.setSelector(SmooksModelConstants.AT_DOCUMENT);
 			ResourceType resource = SmooksFactory.eINSTANCE
 					.createResourceType();
-			resource.setValue("/"); //$NON-NLS-1$
+			resource.setStringValue("/"); //$NON-NLS-1$
 			config.setResource(resource);
 			
 			return config;

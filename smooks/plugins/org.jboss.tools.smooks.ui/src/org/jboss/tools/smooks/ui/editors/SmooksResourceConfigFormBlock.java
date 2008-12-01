@@ -424,7 +424,11 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 						.getSmooksResourceList(), SmooksPackage.eINSTANCE
 						.getSmooksResourceListType_AbstractResourceConfig(),
 						config);
+				try{
 				domain.getCommandStack().execute(command);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 				dateTypeViewer.refresh();
 			}
 		}

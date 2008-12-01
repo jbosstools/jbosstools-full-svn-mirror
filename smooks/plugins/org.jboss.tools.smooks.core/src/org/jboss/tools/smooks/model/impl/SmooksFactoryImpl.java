@@ -9,12 +9,19 @@ package org.jboss.tools.smooks.model.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.jboss.tools.smooks.model.*;
+import org.jboss.tools.smooks.model.ConditionType;
+import org.jboss.tools.smooks.model.DocumentRoot;
+import org.jboss.tools.smooks.model.ImportType;
+import org.jboss.tools.smooks.model.ParamType;
+import org.jboss.tools.smooks.model.ProfileType;
+import org.jboss.tools.smooks.model.ProfilesType;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.ResourceType;
+import org.jboss.tools.smooks.model.SmooksFactory;
+import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 
 /**
  * <!-- begin-user-doc -->

@@ -217,19 +217,19 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 	}
 
 	private void configControls() {
-		if (resourceConfigList != null) {
+		if (resourceConfig != null) {
 			String selector = "";
-			selector = resourceConfigList.getSelector();
+			selector = resourceConfig.getSelector();
 			if (selector == null)
 				selector = "";
 			selectorText.setText(selector);
 
 			String beanClass = SmooksModelUtils.getParmaText("beanClass",
-					resourceConfigList);
+					resourceConfig);
 			if (beanClass == null)
 				beanClass = "";
 			String beanId = SmooksModelUtils.getParmaText("beanId",
-					resourceConfigList);
+					resourceConfig);
 			if (beanId == null)
 				beanId = "";
 
@@ -244,7 +244,7 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 		String beanIdStr = beanIDText.getText();
 		if (beanIdStr == null)
 			return;
-		List paramList = resourceConfigList.getParam();
+		List paramList = resourceConfig.getParam();
 		ParamType beanId = null;
 		for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
 			ParamType param = (ParamType) iterator.next();
@@ -257,11 +257,11 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 		if (beanId == null) {
 			beanId = SmooksFactory.eINSTANCE.createParamType();
 			beanId.setName(SmooksModelConstants.BEAN_ID);
-			AddCommand.create(domain, resourceConfigList,
+			AddCommand.create(domain, resourceConfig,
 					SmooksPackage.eINSTANCE.getResourceConfigType_Param(),
 					beanId).execute();
 		}
-		SmooksModelUtils.setTextToSmooksType(beanId, beanIdStr);
+		SmooksModelUtils.setTextToAnyType(beanId, beanIdStr);
 		this.parentEditor.fireEditorDirty(true);
 	}
 
@@ -271,7 +271,7 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 		String beanClassStr = beanClassText.getText();
 		if (beanClassStr == null)
 			return;
-		List paramList = resourceConfigList.getParam();
+		List paramList = resourceConfig.getParam();
 		ParamType beanClass = null;
 		for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
 			ParamType param = (ParamType) iterator.next();
@@ -284,11 +284,11 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 		if (beanClass == null) {
 			beanClass = SmooksFactory.eINSTANCE.createParamType();
 			beanClass.setName(SmooksModelConstants.BEAN_CLASS);
-			AddCommand.create(domain, resourceConfigList,
+			AddCommand.create(domain, resourceConfig,
 					SmooksPackage.eINSTANCE.getResourceConfigType_Param(),
 					beanClass).execute();
 		}
-		SmooksModelUtils.setTextToSmooksType(beanClass, beanClassStr);
+		SmooksModelUtils.setTextToAnyType(beanClass, beanClassStr);
 		this.parentEditor.fireEditorDirty(true);
 	}
 
@@ -298,7 +298,7 @@ public class BeanPopulatorDetailPage extends AbstractSmooksModelDetailPage {
 		String selector = selectorText.getText();
 		if (selector != null) {
 			Command command = SetCommand.create(this.getDomain(),
-					resourceConfigList, SmooksPackage.eINSTANCE
+					resourceConfig, SmooksPackage.eINSTANCE
 							.getResourceConfigType_Selector(), selector);
 			getDomain().getCommandStack().execute(command);
 		}

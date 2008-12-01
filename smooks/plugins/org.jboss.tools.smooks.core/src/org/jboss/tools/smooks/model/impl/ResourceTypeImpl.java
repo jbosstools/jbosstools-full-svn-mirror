@@ -11,10 +11,12 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+
+import org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl;
 
 import org.jboss.tools.smooks.model.ResourceType;
 import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,34 +25,13 @@ import org.jboss.tools.smooks.model.SmooksPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.jboss.tools.smooks.model.impl.ResourceTypeImpl#getValue <em>Value</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.impl.ResourceTypeImpl#getType <em>Type</em>}</li>
+ *   <li>{@link smooks.impl.ResourceTypeImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
-	/**
-	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getValue()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String VALUE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getValue()
-	 * @generated
-	 * @ordered
-	 */
-	protected String value = VALUE_EDEFAULT;
-
+public class ResourceTypeImpl extends AnyTypeImpl implements ResourceType {
 	/**
 	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -70,6 +51,8 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
 	 * @ordered
 	 */
 	protected String type = TYPE_EDEFAULT;
+	
+	protected String value = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -88,27 +71,6 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
 	@Override
 	protected EClass eStaticClass() {
 		return SmooksPackage.Literals.RESOURCE_TYPE;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getValue() {
-		return value;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setValue(String newValue) {
-		String oldValue = value;
-		value = newValue;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SmooksPackage.RESOURCE_TYPE__VALUE, oldValue, value));
 	}
 
 	/**
@@ -140,8 +102,6 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case SmooksPackage.RESOURCE_TYPE__VALUE:
-				return getValue();
 			case SmooksPackage.RESOURCE_TYPE__TYPE:
 				return getType();
 		}
@@ -156,9 +116,6 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case SmooksPackage.RESOURCE_TYPE__VALUE:
-				setValue((String)newValue);
-				return;
 			case SmooksPackage.RESOURCE_TYPE__TYPE:
 				setType((String)newValue);
 				return;
@@ -174,9 +131,6 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case SmooksPackage.RESOURCE_TYPE__VALUE:
-				setValue(VALUE_EDEFAULT);
-				return;
 			case SmooksPackage.RESOURCE_TYPE__TYPE:
 				setType(TYPE_EDEFAULT);
 				return;
@@ -192,8 +146,6 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case SmooksPackage.RESOURCE_TYPE__VALUE:
-				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 			case SmooksPackage.RESOURCE_TYPE__TYPE:
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 		}
@@ -210,12 +162,26 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (value: ");
-		result.append(value);
-		result.append(", type: ");
+		result.append(" (type: ");
 		result.append(type);
 		result.append(')');
 		return result.toString();
+	}
+
+	public String getStringValue() {
+		return SmooksModelUtils.getAnyTypeText(this);
+	}
+
+	public void setStringValue(String value) {
+		SmooksModelUtils.setTextToAnyType(this, value);
+	}
+
+	public String getCDATAValue() {
+		return SmooksModelUtils.getAnyTypeCDATA(this);
+	}
+
+	public void setCDATAValue(String value) {
+		SmooksModelUtils.setCDATAToAnyType(this, value);
 	}
 
 } //ResourceTypeImpl

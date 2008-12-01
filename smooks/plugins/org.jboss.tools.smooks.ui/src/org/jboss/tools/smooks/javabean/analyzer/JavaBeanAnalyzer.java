@@ -274,7 +274,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		setConnectionUsed(connection);
 
 		ResourceType resource = SmooksFactory.eINSTANCE.createResourceType();
-		resource.setValue(BEANPOPULATOR);
+		resource.setStringValue(BEANPOPULATOR);
 		resourceConfig.setResource(resource);
 
 		ParamType beanIdParam = SmooksFactory.eINSTANCE.createParamType();
@@ -553,7 +553,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			// find the first BeanPopulator resource config , this is the root.
 			String resourceClazz = null;
 			if (rt != null) {
-				resourceClazz = rt.getValue();
+				resourceClazz = rt.getStringValue();
 			}
 			if (resourceClazz != null)
 				resourceClazz = resourceClazz.trim();
@@ -748,7 +748,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				ResourceType resourceType = rc.getResource();
 				if (resourceType == null)
 					continue;
-				String resource = resourceType.getValue();
+				String resource = resourceType.getStringValue();
 				if (resource != null)
 					resource = resource.trim();
 				if (BEANPOPULATOR.equals(resource)) {
@@ -859,7 +859,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				ResourceType resourceType = rc.getResource();
 				if (resourceType == null)
 					continue;
-				String resource = resourceType.getValue();
+				String resource = resourceType.getStringValue();
 				if (resource != null)
 					resource = resource.trim();
 				if (BEANPOPULATOR.equals(resource)) {
@@ -909,7 +909,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				continue;
 			if (resourceType == null)
 				continue;
-			String resource = resourceType.getValue();
+			String resource = resourceType.getStringValue();
 			if (resource != null)
 				resource = resource.trim();
 			if (!BEANPOPULATOR.equals(resource)) {

@@ -26,48 +26,21 @@ import org.jboss.tools.smooks.ui.ResourceConfigWarrper;
  */
 public class ResourceConfigWarrperFactory {
 
-
 	public static ResourceConfigWarrper createResourceConfigWarrper(
 			ResourceConfigType type) {
-		if (isBeanPopulatorResource(type)) {
+		if (SmooksModelUtils.isBeanPopulatorResource(type)) {
 			BeanPopulatorWarrper p = new BeanPopulatorWarrper(type);
 			return p;
 		}
-		if(isDateTypeSelector(type)){
+		if(SmooksModelUtils.isDateTypeSelector(type)){
 			DateTypeWarrper warrper = new DateTypeWarrper(type);
 			return warrper;
 		}
-		if(SmooksModelUtils.isFilePathResourceConfig(type)){
+		if(SmooksModelUtils.isFilePathResourceConfig(type) || SmooksModelUtils.isInnerFileContents(type)){
 			DocumentSelectionWarrper warrper = new DocumentSelectionWarrper(type);
 			return warrper;
 		}
 		return null;
 	}
 
-	public static boolean isBeanPopulatorResource(ResourceConfigType type) {
-		ResourceType resource = type.getResource();
-		if (resource == null)
-			return false;
-		String value = resource.getValue();
-		if(value != null) value = value.trim();
-		if (SmooksModelConstants.BEAN_POPULATOR.equals(value)) {
-			return true;
-		}
-		return false;
-	}
-
-	public static boolean isDateTypeSelector(ResourceConfigType type) {
-		ResourceType resource = type.getResource();
-		if (resource == null)
-			return false;
-		String value = resource.getValue();
-		if(value != null) value = value.trim();
-		for (int i = 0; i < SmooksModelConstants.DECODER_CLASSES.length; i++) {
-			String decoderClass = SmooksModelConstants.DECODER_CLASSES[i];
-			if(decoderClass.equals(value)){
-				return true;
-			}
-		}
-		return false;
-	}
 }

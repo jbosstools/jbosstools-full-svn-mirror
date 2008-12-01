@@ -10,11 +10,8 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
-
 import org.jboss.tools.smooks.model.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.ConditionType;
 import org.jboss.tools.smooks.model.DocumentRoot;
@@ -116,7 +113,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.jboss.tools.smooks.model.SmooksPackage#eNS_URI
+	 * @see smooks.SmooksPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
@@ -505,17 +502,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getResourceType_Value() {
-		return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getResourceType_Type() {
-		return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -653,7 +641,6 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		createEAttribute(resourceConfigTypeEClass, RESOURCE_CONFIG_TYPE__TARGET_PROFILE);
 
 		resourceTypeEClass = createEClass(RESOURCE_TYPE);
-		createEAttribute(resourceTypeEClass, RESOURCE_TYPE__VALUE);
 		createEAttribute(resourceTypeEClass, RESOURCE_TYPE__TYPE);
 
 		smooksResourceListTypeEClass = createEClass(SMOOKS_RESOURCE_LIST_TYPE);
@@ -699,13 +686,14 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		importTypeEClass.getESuperTypes().add(this.getAbstractResourceConfig());
 		paramTypeEClass.getESuperTypes().add(theXMLTypePackage.getAnyType());
 		resourceConfigTypeEClass.getESuperTypes().add(this.getAbstractResourceConfig());
+		resourceTypeEClass.getESuperTypes().add(theXMLTypePackage.getAnyType());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(abstractResourceConfigEClass, AbstractResourceConfig.class, "AbstractResourceConfig", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(conditionTypeEClass, ConditionType.class, "ConditionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getConditionType_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, ConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getConditionType_Evaluator(), theXMLTypePackage.getString(), "evaluator", null, 1, 1, ConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConditionType_Evaluator(), theXMLTypePackage.getString(), "evaluator", "org.milyn.javabean.expression.BeanMapExpressionEvaluator", 0, 1, ConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -745,7 +733,6 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		initEAttribute(getResourceConfigType_TargetProfile(), theXMLTypePackage.getString(), "targetProfile", null, 0, 1, ResourceConfigType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(resourceTypeEClass, ResourceType.class, "ResourceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getResourceType_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, ResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getResourceType_Type(), theXMLTypePackage.getString(), "type", null, 0, 1, ResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(smooksResourceListTypeEClass, SmooksResourceListType.class, "SmooksResourceListType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1037,14 +1024,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		   source, 
 		   new String[] {
 			 "name", "resource_._type",
-			 "kind", "simple"
-		   });		
-		addAnnotation
-		  (getResourceType_Value(), 
-		   source, 
-		   new String[] {
-			 "name", ":0",
-			 "kind", "simple"
+			 "kind", "mixed"
 		   });		
 		addAnnotation
 		  (getResourceType_Type(), 

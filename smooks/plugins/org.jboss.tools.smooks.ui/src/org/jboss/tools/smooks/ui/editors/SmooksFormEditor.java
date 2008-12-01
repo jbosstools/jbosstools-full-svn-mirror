@@ -38,6 +38,7 @@ import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelBuilder;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
 import org.jboss.tools.smooks.model.DocumentRoot;
+import org.jboss.tools.smooks.model.ResourceType;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.provider.SmooksItemProviderAdapterFactory;
