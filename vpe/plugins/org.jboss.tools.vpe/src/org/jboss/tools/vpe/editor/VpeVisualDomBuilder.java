@@ -1480,6 +1480,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 
 	private void cleanHead() {
+		//Fix for JBIDE-3205, mareshkau
+		if(getHeadNode()==null) {
+			return;
+		}
 		nsIDOMNodeList children = getHeadNode().getChildNodes();
 		long len = children.getLength();
 		for (long i = len - 1; i >= 0; i--) {
@@ -1512,6 +1516,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				}
 			}
 		}
+		
 	}
 
 	private class PseudoInfo {
