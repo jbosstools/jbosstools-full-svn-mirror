@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="introduction">
+    <?dbhtml filename="introduction.html"?>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Tools</keyword>
+			<keyword>Smooks</keyword>
+			<keyword>JBDS</keyword>
+		</keywordset>
+	</chapterinfo>
+	<title>Introduction</title>
+	<sect1>
+		<title>What is Smooks?</title>
+		<para>Smooks is a Java Framework/Engine for processing XML and
+			non XML data (CSV, EDI, Java, JSON etc).</para>
+		<para></para>
+		<para>In this guide we provide you with the information on ESB
+			Editor which allows you to
+			develop ESB file much faster and with far
+			fewer errors so sparing your time.
+		</para>
+	</sect1>
+	<sect1>
+		<title>What is Smooks dev tools?</title>
+		<para>Smooks dev tools is a set of graphical tools for editing
+			Smooks configuration file base on Eclipse</para>
+	</sect1>
+</chapter>

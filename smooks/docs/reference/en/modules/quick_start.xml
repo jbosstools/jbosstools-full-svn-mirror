@@ -1,16 +1,349 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="intro" xreflabel="intro">
-    <?dbhtml filename="intro.html"?>
-    <chapterinfo>
-        <keywordset>
-            <keyword>JBoss Tools</keyword>
-            <keyword>Seam</keyword>
-            <keyword>JBDS</keyword>
-        </keywordset>
-    </chapterinfo>
+<chapter id="quickstart" xreflabel="Quick Start">
+    <?dbhtml filename="quick_start.html"?>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Tools</keyword>
+			<keyword>Smooks</keyword>
+			<keyword>JBDS</keyword>
+			<keyword>java</keyword>
+		</keywordset>
+	</chapterinfo>
+	<title>Quick Start</title>
+	<sect1>
+		<title>Java-to-Java Quick Start</title>
+		<sect2>
+			<title>Smooks configuration file wizard</title>
+			<para>First , select the Java project what you created first to
+				create Smooks configuration file and right-click , select : “New” ->
+				“Other...” , find the “Smooks Configuration File” wizard. Click
+				“Next” button.
+		</para>
+			<figure>
+				<title>To select Smooks Configuration File wizard</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/common/new_wizard.png" scale="90" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>First wizard page is file path creation page. Select the
+				“src” to be the file's container , and type
+				“smooks-newconfig.smooks”
+				to be the file's name. Click “Next”.</para>
+			<figure>
+				<title>Choose the configuration file container and type the
+					file's name</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/common/input_file_name.png"
+							scale="90" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>The second wizard page is the transform data type choose
+				page.</para>
+			<figure>
+				<title>Select Data Type</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/common/data_type_selection.png"
+							scale="90" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+		</sect2>
+		<sect2>
+			<title>Smooks form editor</title>
+			<para>When the wizard finish to create a new Smooks configuration
+				file , the Smooks editor will be opened automatically. We will see a
+				“Form Editor”.
+		</para>
+			<figure>
+				<title>Smooks form editor</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/common/form_editor.png"
+							scale="90" />
+					</imageobject>
+				</mediaobject>
+			</figure>
 
-    <title>Quick Start</title>
+			<para>
+				This editor contains several parts:
+				<orderedlist numeration="loweralpha" inheritnum="inherit">
+					<listitem>
+						Notify message display
+						area. If there are any errors ,
+						this
+						area will
+						display them.(You will
+						see a empty area , because now
+						there
+						aren't
+						any errors)
+					</listitem>
+					<listitem>
+						Source data
+						tree. The tree will display the
+						structured of
+						transform source
+						data.
+					</listitem>
 
-    <section>
-    </section>
+					<listitem>
+						Target data tree. The tree
+						will display the structured of
+						transform
+						source
+						target.
+					</listitem>
+
+					<listitem>
+						Mapping
+						graphical area. Show the data
+						mapping lines.
+					</listitem>
+
+					<listitem>
+						Source/Target data
+						selection links. Click the
+						link ,
+						there
+						will
+						open a data
+						selection
+						wizard to help user to choose
+						the
+						source/target
+						data.
+					</listitem>
+				</orderedlist>
+			</para>
+		</sect2>
+		<sect2>
+			<title>Choose the source/target data
+		</title>
+			<para>Click the data selection links to choose the transform
+				data. You will see a wizard , and there are two items on it :
+				XML,Java.
+		</para>
+			<figure>
+				<title>Data type wizard</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/common/data_type_wizard.png"
+							scale="90" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Select the “JavaBean Data Type” and click “Next” , you
+				will see a java class selection page :
+		</para>
+			<figure>
+				<title>JavaBean data selection wizard</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/java2java/java_data_selection_wizard.png"
+							scale="90" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>After you confirm the java class , click “Finish” , you
+				will find , the structured of the class was be display on the Source
+				data tree. Please do the same operation for the target data link.
+			</para>
+			<figure>
+				<title>Display structure of the transform data</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/java2java/java_data_display.png"
+							scale="90" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+		</sect2>
+		<sect2>
+			<title>Mapping</title>
+			<para>
+				As you see , the source/target data tree display the structure
+				of the
+				java class. How to mapping it?</para>
+			<para>
+				First , we should know what is
+				we
+				want to transform:
+				<orderedlist numeration="loweralpha" inheritnum="inherit">
+					<listitem>
+						Bind the “customerName” property of the
+						Order#header to
+						the
+						“customerName” property of LineOrder.
+					</listitem>
+					<listitem>
+						Bind the
+						“customerNumber” property of the Order#header to
+						the
+						“customerId”
+						property of LineOrder.
+					</listitem>
+					<listitem>
+						Bind the “price” property of the OrderItem
+						to
+						the
+						“unitPrice” property of
+						LineItem.
+					</listitem>
+					<listitem>
+						Bind the “productId”
+						property
+						of the OrderItem to the
+						“productCode”
+						property of LineItem.
+					</listitem>
+					<listitem>
+						Bind the
+						“quantity” property of the OrderItem to the
+						“unitQuantity”
+						property of
+						LineItem.
+					</listitem>
+				</orderedlist>
+			</para>
+			<para>
+				Make sense ? OK, let's select the “customerName”
+				item of the
+				“header”
+				item on the source data tree and start to drag
+				it. When the
+				drag item
+				cross into the Mapping graphical area , we will
+				see a
+				connection
+				line. Drop the item onto the “customerName” of the
+				“LineOrder” on the
+				target data view.
+				Now there will open a dialog to
+				ask you that do you want to connect the
+				root node:
+		</para>
+			<figure>
+				<title>A dialog to ask user to connect the root nodes</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/java2java/connect_rootnode.png"
+							scale="90" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>
+				Please click “Yes” to connect the root node , if you don't ,
+				this dialog
+				will open again when you connect other nodes. Please
+				remember that :
+				The root nodes of the source data and target data
+				MUST
+				be connected.
+				(Not only Java-to-Java , the same as XML-to-Java).
+
+			</para>
+			<para>
+				Now let's do the same operation with the “customerNumber” ,
+				that
+				is the
+				what we want to see :
+		
+		</para>
+			<figure>
+				<title>Correctly mapping editor</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/java2java/java_connection1.png"
+							scale="90" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Next , we are going to try to bind the properties of the
+				“OrderItem” to the properties of the “LineItem”. 
+		</para>
+			<para>Select the “price” and drag it onto the “unitPrice” of
+				the
+				other side tree viewer. The notify message display area will show
+				an
+				error :
+		</para>
+			<figure>
+				<title>Connection Error 1</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/java2java/connection_error1.png"
+							scale="90" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>How to deal with the error ?</para>
+			<para>Please click the “Fix it” link , you will see a menu and
+				there will show several resolves on the menu (Sorry , can't get the
+				captures when the menu opened ).
+		</para>
+			<para>
+				Select the first resolve : 'Connect the “OrderItem” to the
+				“LineItem” ' ,
+				then you will find that the “OrderItem” was connected
+				with the
+				“LineItem”.
+		</para>
+			<para>But the notify message area still show some other errors:
+			</para>
+			<figure>
+				<title>Connection Error 2</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/java2java/connection_error2.png"
+							scale="90" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>OK,Deal it with the fire error ---- Click “Fix it” link
+				and select the first resolve item. The “orderItems” was connected
+				with the “lineItems”.
+		</para>
+			<para>
+				Why there will occur error? We will find that , if we only
+				connect the
+				property node without to connect the parent node of the
+				property ,
+				the “connection error” will happen. We can say that the
+				connection of
+				the “price to unitPrice” is the “Binding Connection” ,
+				but there need
+				a “Instance Creation Connection” ---- the connection
+				of
+				the
+				“OrderItem to LineItem”.</para>
+			<para>
+				After that , connect the quantity to
+				the
+				unitQuantity ; connect
+				the
+				productId to the productCode:
+		</para>
+			<figure>
+				<title>Complete mapping</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/java2java/correct_editor.png"
+							scale="90" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Now , we should save the file.</para>
+			<para>OK,Let run the test class : example.Main (Please make
+				sure
+				that the Smooks engine load the correct configuration file)
+			</para>
+			<para>Success!
+		</para>
+		</sect2>
+	</sect1>
 </chapter>
