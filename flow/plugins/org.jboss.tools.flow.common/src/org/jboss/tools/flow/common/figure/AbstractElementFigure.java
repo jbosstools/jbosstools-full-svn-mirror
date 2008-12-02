@@ -18,9 +18,11 @@ package org.jboss.tools.flow.common.figure;
 
 import org.eclipse.draw2d.ChopboxAnchor;
 import org.eclipse.draw2d.ConnectionAnchor;
+import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.Panel;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 
@@ -80,6 +82,13 @@ public abstract class AbstractElementFigure extends Panel implements ElementFigu
 
     public ConnectionAnchor getTargetConnectionAnchor() {
         return new ChopboxAnchor(this);
+    }
+    
+    public void paint(Graphics g) {
+    	int saved = g.getAntialias();
+    	g.setAntialias(SWT.ON);
+    	super.paint(g);
+    	g.setAntialias(saved);
     }
     
 }
