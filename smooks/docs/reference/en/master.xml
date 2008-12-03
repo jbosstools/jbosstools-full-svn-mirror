@@ -4,7 +4,9 @@
 
 [
 <!ENTITY introduction SYSTEM "modules/introduction.xml">    
-<!ENTITY quickstart SYSTEM "modules/quick_start.xml">                     
+<!ENTITY quickstart SYSTEM "modules/quick_start.xml">
+<!ENTITY smooksformeditor_graphicaltab SYSTEM "modules/smooksformeditor_graphicalpage.xml"> 
+<!ENTITY smooksformeditor_configurationtab SYSTEM "modules/smooksformeditor_configurationpage.xml"> 
 ]>
 <book>
 
@@ -35,7 +37,9 @@
 
 
 	</bookinfo>
-	<toc />
+	<toc/>
 	&introduction;
 	&quickstart;
+	&smooksformeditor_graphicaltab;
+	&smooksformeditor_configurationtab;
 </book>    
