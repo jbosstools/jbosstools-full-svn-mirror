@@ -14,15 +14,85 @@
 		<para>Smooks is a Java Framework/Engine for processing XML and
 			non XML data (CSV, EDI, Java, JSON etc).</para>
 		<para></para>
-		<para>In this guide we provide you with the information on ESB
-			Editor which allows you to
-			develop ESB file much faster and with far
-			fewer errors so sparing your time.
+		<para>
+			<orderedlist numeration="Upperroman" inheritnum="inherit">
+				<listitem>Transformation:Perform a wide range
+					of Data
+					Transforms. Supports many different Source and Result types
+					-
+					XML/CSV/EDI/Java/JSON to XML/CSV/EDI/Java/JSON.
+					</listitem>
+				<listitem>
+					Java Binding:
+					Bind into a Java Object Model from any data
+					source (CSV, EDI, XML,
+					Java, JSON etc). 
+					</listitem>
+
+				<listitem>
+					Huge Message
+					Processing:
+					Process huge messages (GBs) -
+					Split, Transform and Route message fragments
+					to JMS, File, Database
+					etc destinations. Route multiple message
+					formats to multiple
+					destinations in a single pass over a message.
+				</listitem>
+
+				<listitem>
+					<bold>Message
+						Enrichment:</bold>
+					Enrich a message with data from a
+					Database, or other Datasources.
+				</listitem>
+
+				<listitem>
+					Combine : Combine the above features in different ways
+					e.g.
+					add Message Enrichment as part of a Splitting and Routing
+					process.
+				</listitem>
+			</orderedlist>
+		</para>
+		<figure>
+			<title>SmooKs</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/common/smooks-usecase.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			More informations about Smooks , please visit here :
+			<link>http://www.smooks.org</link>
 		</para>
 	</sect1>
 	<sect1>
 		<title>What is Smooks dev tools?</title>
 		<para>Smooks dev tools is a set of graphical tools for editing
-			Smooks configuration file base on Eclipse</para>
+			Smooks configuration file base on Eclipse.</para>
+		<figure>
+			<title>Smooks form editor</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/common/form_editor.png" scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</sect1>
+	<sect1>
+		<title>How to install Smooks dev tools?</title>
+		<para>The Smooks dev tools was contained by JBossTools since 3.0.0
+			beta1 version. You can download the JBossTools form :
+			.</para>
+		<para>
+			Smooks dev tools(JBossTools) need the latest Eclipse and other
+			required plug-ins(GEF,EMF,etc.),
+			User can download the latest IDE for Java EE developers from this site(
+			<link>http://www.eclipse.org/downloads/
+			</link>) for installing JBossTools.
+		</para>
 	</sect1>
 </chapter>
