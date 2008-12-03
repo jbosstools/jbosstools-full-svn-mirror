@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="quickstart" xreflabel="Quick Start">
+<chapter id="quickstart" xreflabel="Smooks dev tools">
     <?dbhtml filename="quick_start.html"?>
 	<chapterinfo>
 		<keywordset>
@@ -9,9 +9,38 @@
 			<keyword>java</keyword>
 		</keywordset>
 	</chapterinfo>
-	<title>Quick Start</title>
+	<title>Smooks dev tools</title>
 	<sect1>
-		<title>Java-to-Java Quick Start</title>
+		<title>Quick Start</title>
+		<para>
+			This "Quick Start" will show how to use the Smooks tools to
+			create/edit the Smooks configuration file for Java2Java
+			data
+			transformation.</para>
+		<para>
+			This chapter should give the readers a brief understanding of
+			the Smooks
+			dev tools.
+		</para>
+		<sect2>
+			<title>Download Smooks Java-to-Java example</title>
+			<para>
+				Visit
+				<ulink
+					url="http://www.smooks.org/documentation/documentation-smooks-1-1-x/examples/example---java-to-java">here</ulink>
+				to download the "java-to-java" example project.
+			</para>
+			<tip>
+				<title>Tip:</title>
+				<para>
+					The example projects is Maven project, we suggest user to
+					create a
+					new eclipse Java project, Copy the example codes and .jars
+					from the
+					example project and paste them to the eclipse Java project.
+				</para>
+			</tip>
+		</sect2>
 		<sect2>
 			<title>Smooks configuration file wizard</title>
 			<para>First , select the Java project what you created first to
