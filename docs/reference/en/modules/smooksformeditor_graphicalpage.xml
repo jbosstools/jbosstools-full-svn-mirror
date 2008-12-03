@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="smooksformeditor_graphicaltab" xreflabel="Smooks Graphical Editor Page">
+    <?dbhtml filename="smooks_form_editor_graphicaltab.html"?>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Tools</keyword>
+			<keyword>Smooks</keyword>
+			<keyword>JBDS</keyword>
+		</keywordset>
+	</chapterinfo>
+	<title>Smooks Graphical Editor Page</title>
+	<para>
+		Smooks Graphical Editor Page is one tab of the Smooks Form
+		Editor.
+	</para>
+	<figure>
+		<title>Graphical Editor</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/java2java/correct_editor.png"
+					scale="90" />
+			</imageobject>
+		</mediaobject>
+	</figure>
+	<para>
+		This graphical editor could allow user to do drug/drop operations
+		with the nodes of transform data to mapping the source data to target
+		data.
+	</para>
+	<para>
+		When user save the graphical editor , a Smooks configuration file
+		will be generate.
+	</para>
+	<section>
+		<title>Introduce the areas of graphical editor</title>
+		<para>
+			Please read the
+			<link linkend="quickstart_formeditor">"Quick Start/Smooks Form Editor"</link>
+		</para>
+	</section>
+	<section>
+		<title>Load source/target data</title>
+		<para>
+			Click the links under the data viewer , the data type selection
+			wizard
+			page will be shown.
+		</para>
+		<figure>
+			<title>Data type selection wizard page</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/common/data_type_wizard.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			There are a sets of transform data type on the wizard page,select one
+			type and click
+			<property>Next</property>
+			, the data source selection wizard page will be shown.
+			<tip>
+				<title>Note</title>
+				<para>
+					For different data type, the data source selection wizard are
+					different too. </para>
+			</tip>
+		</para>
+		<figure>
+			<title>Java data source selection wizard page</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/java2java/java_data_selection_wizard.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<figure>
+			<title>XML file path selection wizard page</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/xml2java/xml_filepath_selection_wizard.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			When finish the data selection(file path selection) , Click
+			<property>Finish</property>
+			, the data viewer will display the selected data structure.
+		</para>
+	</section>
+	<section>
+		<title>User the graphical editor to mapping</title>
+		<para>
+			Please read the
+			<link linkend="quickstart_mapping">"Quick Start/Mapping"</link>
+		</para>
+	</section>
+	<section>
+		<title>Error messages</title>
+		<para>
+			When user do any mapping operaions , the Smooks tools will
+			validate
+			the "Mapping Logic" , If there is any errors about the
+			"Mapping Logic"
+			,Some error messages will be shown on the
+			<link linkend="quickstart_formeditor">"Error
+				message area"</link>.
+		</para>
+		<para>
+			Please read the
+			<link linkend="quickstart_mapping">"Quick Start/Mapping"</link>
+			to find how to fix the errors.
+		</para>
+	</section>
+</chapter>
