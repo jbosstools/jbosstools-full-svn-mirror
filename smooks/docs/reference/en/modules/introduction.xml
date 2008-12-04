@@ -71,7 +71,7 @@
 	</sect1>
 	<sect1>
 		<title>What is Smooks dev tools?</title>
-		<para>Smooks dev tools is a set of graphical tools for editing
+		<para>Smooks dev tools is a sets of graphical tools for editing
 			Smooks configuration file base on Eclipse.</para>
 		<figure>
 			<title>Smooks form editor</title>
@@ -85,20 +85,24 @@
 	<sect1>
 		<title>How to install Smooks dev tools?</title>
 		<para>
-			The Smooks dev tools was contained in the JBossTools since 3.0.0
-			beta1 version. You can download the JBossTools form :
+			The Smooks dev tools was included by the JBossTools since 3.0.0
+			beta1
+			version. You can download the JBossTools from :
 			<link>http://www.jboss.org/tools/download/index.html
 			</link>
 			.
 		</para>
 		<para>
-			Smooks dev tools(JBossTools) need the latest Eclipse and other
-			required plug-ins(GEF,EMF,etc.),
-			User can download the latest IDE for
-			Java EE developers from this site(
-			<link>http://www.eclipse.org/downloads/
+			Smooks dev tools(JBossTools) run with the latest Eclipse and
+			other
+			required plug-ins(GEF,EMF,etc.).</para>
+		<para>
+			User should download the latest IDE for
+			Java EE developers from this
+			<link linkend="http://www.eclipse.org/downloads/">site
 			</link>
-			) for installing JBossTools.
+			. It contains many plug-ins ( GEF,EMF,etc. ) required by Smooks dev
+			tools.
 		</para>
 	</sect1>
 </chapter>
