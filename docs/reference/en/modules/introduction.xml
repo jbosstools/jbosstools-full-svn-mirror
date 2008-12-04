@@ -84,15 +84,21 @@
 	</sect1>
 	<sect1>
 		<title>How to install Smooks dev tools?</title>
-		<para>The Smooks dev tools was contained by JBossTools since 3.0.0
+		<para>
+			The Smooks dev tools was contained in the JBossTools since 3.0.0
 			beta1 version. You can download the JBossTools form :
-			.</para>
+			<link>http://www.jboss.org/tools/download/index.html
+			</link>
+			.
+		</para>
 		<para>
 			Smooks dev tools(JBossTools) need the latest Eclipse and other
 			required plug-ins(GEF,EMF,etc.),
-			User can download the latest IDE for Java EE developers from this site(
+			User can download the latest IDE for
+			Java EE developers from this site(
 			<link>http://www.eclipse.org/downloads/
-			</link>) for installing JBossTools.
+			</link>
+			) for installing JBossTools.
 		</para>
 	</sect1>
 </chapter>
