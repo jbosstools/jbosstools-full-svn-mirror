@@ -60,7 +60,8 @@
 
       <para>After startup, you see the welcome page. You could read how to work with welcome pages
         in <link linkend="Welcome">previous</link> chapter. Now select <property>Create
-        New...</property> icon and then press on <property>Create Seam Project</property> link.</para>
+          New...</property> icon and then press on <property>Create Seam Project</property>
+        link.</para>
 
       <para>The <property>New Seam Project wizard</property> is started. You need to enter a name
         (e.g., &quot;workshop&quot;) and a location directory for your new project. The
@@ -77,10 +78,12 @@
         </mediaobject>
       </figure>
 
-      <para>All settings are already specified here, you can just modify the Configuration. Click on the <emphasis>
-        <property>Modify...</property></emphasis> button to configure your custom facets pattern:</para>
+      <para>All settings are already specified here, you can just modify the Configuration. Click on
+        the <emphasis>
+          <property>Modify...</property>
+        </emphasis> button to configure your custom facets pattern:</para>
 
-      
+
       <figure id="ProjectFacetsSpecifyingScreen">
         <title>Project Facets Specifying</title>
         <mediaobject>
@@ -90,17 +93,16 @@
         </mediaobject>
       </figure>
 
-      <para>On the whole the dialog allows to select the "features" you want to use in your
-        project. Doing this <property>JBoss Developer Studio</property> setups the appropriate
-        tooling for your project. Since JBoss Seam integrates all popular Java EE frameworks, you
-        can select any combination of technologies from the list. Here, for the default
-        configuration, Dynamic Web Module, Java, JavaServer Faces (JSF), and Seam Facet are already
-        selected for a typical database-driven web application. The default project facets should
-        suffice.</para>
+      <para>On the whole the dialog allows to select the "features" you want to use in your project.
+        Doing this <property>JBoss Developer Studio</property> setups the appropriate tooling for
+        your project. Since JBoss Seam integrates all popular Java EE frameworks, you can select any
+        combination of technologies from the list. Here, for the default configuration, Dynamic Web
+        Module, Java, JavaServer Faces (JSF), and Seam Facet are already selected for a typical
+        database-driven web application. The default project facets should suffice.</para>
 
-      <para>In the <property>Project Facets</property> form you can also bring up server
-        runtimes panel by clicking <property> Runtimes</property> tab on the right corner. This
-        panel shows available server runtimes.</para>
+      <para>In the <property>Project Facets</property> form you can also bring up server runtimes
+        panel by clicking <property> Runtimes</property> tab on the right corner. This panel shows
+        available server runtimes.</para>
 
       <figure>
         <title>Runtimes Selecting</title>
@@ -110,13 +112,13 @@
           </imageobject>
         </mediaobject>
       </figure>
-    
+
       <para>Click on <emphasis>
-        <property>Ok</property>
-      </emphasis> and then <emphasis>
-        <property>Next</property>
-      </emphasis> to proceed further.</para>
-      
+          <property>Ok</property>
+        </emphasis> and then <emphasis>
+          <property>Next</property>
+        </emphasis> to proceed further.</para>
+
       <para>A dynamic web application contains both web pages and Java code. The wizard will ask you
         where you want to put those files. You can just leave the default values or choose another
         folder.</para>
@@ -136,8 +138,10 @@
         setup window.</para>
       <itemizedlist>
         <listitem>
-          <para>Check <emphasis><property>Server Supplied JSF Implementation</property></emphasis>.
-            We will use <ulink url="&seamlink;#addJSFCapab">JSF implementation</ulink> that comes with JBoss server</para>
+          <para>Check <emphasis>
+              <property>Server Supplied JSF Implementation</property>
+            </emphasis>. We will use <ulink url="&seamlink;#addJSFCapab">JSF
+              implementation</ulink> that comes with JBoss server</para>
         </listitem>
         <listitem>
           <para>Click <emphasis>
@@ -156,7 +160,7 @@
       </figure>
 
       <para>Next wizard step needs more settings that previous. Let's start with
-        <property>General</property> section.</para>
+          <property>General</property> section.</para>
       <para>Leave the default Seam runtime and check a WAR deployment.</para>
 
       <figure>
@@ -172,7 +176,8 @@
           Profile</property> needs to be edited so that the new project works properly with the
         external HSQLDB server. By default the project wizard tries to use the JBoss embedded
         HSQLDB, but the tutorial uses an external database to replicate a more real world
-        development scenario. Click on <property>Edit</property> to modify the Connection Profile.</para>
+        development scenario. Click on <property>Edit</property> to modify the Connection
+        Profile.</para>
 
       <figure>
         <title>DataBase Setting</title>
@@ -203,7 +208,7 @@
 
       <para>The proper Driver JAR File should be listed under <property>Driver File(s)</property>.
         Select the hsqldb.jar file found in the database/lib directory and click on
-        <property>Ok</property>.</para>
+          <property>Ok</property>.</para>
 
       <figure>
         <title>Driver Details</title>
@@ -427,7 +432,8 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
           <property>MyAction.myAction()</property> logic.</para>
       <para>To run the test case, right click on <property>MyActionTest.xml</property> and click <emphasis>
           <property>Run As > TestNG Suite</property>
-        </emphasis> or use the <property>Run As...</property> toolbar shortcut as shown below.</para>
+        </emphasis> or use the <property>Run As...</property> toolbar shortcut as shown
+        below.</para>
 
       <figure>
         <title>TestNG Running</title>
@@ -540,7 +546,8 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
     <title>Declarative Security</title>
 
     <para>In this section you will see how it’s easy to secure the facelets and facelet components
-      in Seam. Let’s go ahead and secure the action button, then we will secure the entire page.</para>
+      in Seam. Let’s go ahead and secure the action button, then we will secure the entire
+      page.</para>
 
     <section id="edit_login">
       <title>Edit Login Authentication Logic</title>
@@ -602,7 +609,8 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         components is easy but securing pages is pretty simple as well. </para>
       <para>Open <emphasis>
           <property>WebContent/WEB-INF/pages.xml</property>
-        </emphasis>. Then add this markup directly underneath the &lt;pages&gt; element:</para>
+        </emphasis>. Then add this markup directly underneath the &lt;pages&gt;
+        element:</para>
 
       <programlisting><![CDATA[<page view-id="/myAction.xhtml" login-required="true"/>]]></programlisting>
 
@@ -620,9 +628,9 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       </figure>
 
       <para>Thus, if you enter login credentials for the
-        <property>&quot;admin&quot;</property> user, you will be re-directed to the secured
-        page and secured component. If you enter different login credentials, page access will be
-        granted, but the secured component will not be displayed.</para>
+          <property>&quot;admin&quot;</property> user, you will be re-directed to the
+        secured page and secured component. If you enter different login credentials, page access
+        will be granted, but the secured component will not be displayed.</para>
 
       <para>Congratulations! You have secured your new action both at the facelet component and page
         level. You also added custom authentication logic to the login action.</para>
@@ -646,7 +654,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
             > Other > Database Development</property>.</emphasis></para>
       <para>In the Data Source Explorer, expand a <property>Databases</property> node and select a
           <property>Default</property> database. Right click on it, select
-        <property>Connect</property> from the context menu.</para>
+          <property>Connect</property> from the context menu.</para>
 
       <figure>
         <title>Data Source Explorer</title>
@@ -713,18 +721,35 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
     <section id="reverse_engineer_crud">
       <title>Reverse Engineer CRUD from a Running Database</title>
 
-      <para>In JBoss Developer Studio, switch to Seam perspective and click on
-            <emphasis><property>File > New > Seam Generate Entities</property>.</emphasis></para>
+      <para>In <property>JBoss Developer Studio</property>, switch to <property>Seam
+          perspective</property>, and then right-click the project and select
+            <emphasis><property>New > Seam Generate Entities</property>.</emphasis></para>
 
-      <para>In the Seam Generate Entities wizard, select &quot;workshop&quot; project using
-        the <property>Browse</property> button. There is no need to change something more, click on
-          <property>Finish</property>.</para>
+      <para>&quot;workshop&quot; project in the <property>Seam Generate Entities
+          wizard</property> will be selected automatically. There is no need to change something
+        more, click <emphasis>
+          <property>Next</property>
+        </emphasis> to proceed further.</para>
 
       <figure>
         <title>Generate Seam Entities</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam34.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>On the next page use the <emphasis>
+          <property>Include</property>
+        </emphasis> button to include all the tables from the database and click <emphasis>
+          <property>Finish</property>.</emphasis></para>
+
+      <figure>
+        <title>Selecting Tables</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam34a.png"/>
           </imageobject>
         </mediaobject>
       </figure>
@@ -800,7 +825,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       </figure>
 
       <para>Right click on the <property>Session Factory</property> and select <property>HQL
-        Editor</property>. This will open a JPA query scratch pad window.</para>
+          Editor</property>. This will open a JPA query scratch pad window.</para>
 
       <para>Write your query and click on the &quot;Hibernate Dynamic SQL Preview&quot; tab.
         You should see the SQL that will be executed if this JPA query is run.</para>
@@ -880,7 +905,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
 
       <para>In the Hibernate Configurations view, select &quot;workshop&quot; project and
         expand the <property>Configuration</property> node. Select the
-        <property>Customers</property> entity, right click on it, choose <property>Open Mapping
+          <property>Customers</property> entity, right click on it, choose <property>Open Mapping
           Diagram</property>.</para>
 
       <figure>
@@ -963,7 +988,8 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         </mediaobject>
       </figure>
 
-      <para>The end result is an edit page that has better form labels and a new RichFaces control.</para>
+      <para>The end result is an edit page that has better form labels and a new RichFaces
+        control.</para>
 
       <figure>
         <title>The Result Page</title>
