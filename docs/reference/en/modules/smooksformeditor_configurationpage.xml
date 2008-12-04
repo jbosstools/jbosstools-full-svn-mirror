@@ -107,7 +107,7 @@
 		<para>There are several resource type on the list. Select the
 			"Date
 			Decoder" and click "Finish" button , a new "Date Decoder" item
-			is
+			was
 			added and shown on the resource type list.
 		</para>
 		<para>
@@ -128,7 +128,7 @@
 			</orderedlist>
 		</para>
 		<para>
-			User can modify the parameters of the "Date Decoder" item on the
+			User can modify the parameters of the "Date Decoder" item with the
 			left detail page.
 		</para>
 		<figure>
@@ -142,7 +142,7 @@
 		</figure>
 		<para>
 			When user defined new "Date Decoder" , they can use the
-			<link linkend="graphicalpage_propertiesview"> "JavaBean Properties" GUI</link>
+			<link linkend="graphicalpage_propertiesview"> "JavaBean Properties"</link>  GUI
 			to set the them to
 			be the "Java type".
 		</para>

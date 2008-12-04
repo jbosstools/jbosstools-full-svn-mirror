@@ -28,8 +28,9 @@
 		data.
 	</para>
 	<para>
-		When user save the graphical editor , a Smooks configuration file
-		will be generate.
+		When user save the graphical editor the correct Smooks
+		configuration file contents
+		will be generated.
 	</para>
 	<section>
 		<title>Introduce the areas of graphical editor</title>
@@ -102,9 +103,10 @@
 		<para>
 			When user do any mapping operaions , the Smooks tools will
 			validate
-			the "Mapping Logic" , If there is any errors about the
-			"Mapping Logic"
-			,Some error messages will be shown on the
+			the file contents with "Mapping Logic" , If there is any errors of
+			the configuration file contents
+			,error messages will be shown on
+			the
 			<link linkend="quickstart_formeditor">"Error
 				message area"</link>
 			.
@@ -126,8 +128,8 @@
 			the properties viewer will be opened. 
 		</para>
 		<para>
-			When user select the connection lines , the properties viewer
-			will show a sets of sections GUI for editing the properties of the
+			When user select on the connection lines , the properties viewer
+			will show a sets of section GUI for editing the properties of the
 			connection line.
 		</para>
 		<tip>
