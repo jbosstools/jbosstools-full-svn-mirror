@@ -7,6 +7,7 @@
 <!ENTITY quickstart SYSTEM "modules/quick_start.xml">
 <!ENTITY smooksformeditor_graphicaltab SYSTEM "modules/smooksformeditor_graphicalpage.xml"> 
 <!ENTITY smooksformeditor_configurationtab SYSTEM "modules/smooksformeditor_configurationpage.xml"> 
+<!ENTITY smooksformeditor_sourcetab SYSTEM "modules/smooksformeditor_sourcepage.xml"> 
 ]>
 <book>
 
@@ -42,4 +43,5 @@
 	&quickstart;
 	&smooksformeditor_graphicaltab;
 	&smooksformeditor_configurationtab;
+	&smooksformeditor_sourcetab;
 </book>    
