@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="introduction">
-    <?dbhtml filename="introduction.html"?>
+	<?dbhtml filename="introduction.html"?>
 	<chapterinfo>
 		<keywordset>
 			<keyword>JBoss Tools</keyword>
@@ -11,52 +11,34 @@
 	<title>Introduction</title>
 	<sect1>
 		<title>What is Smooks?</title>
-		<para>Smooks is a Java Framework/Engine for processing XML and
-			non XML data (CSV, EDI, Java, JSON etc).</para>
+		<para>Smooks is a Java Framework/Engine for processing XML and  non XML data (CSV, EDI, Java, JSON etc).</para>
 		<para></para>
 		<para>
 			<orderedlist numeration="Upperroman" inheritnum="inherit">
-				<listitem>Transformation:Perform a wide range
-					of Data
-					Transforms. Supports many different Source and Result types
-					-
-					XML/CSV/EDI/Java/JSON to XML/CSV/EDI/Java/JSON.
-					</listitem>
-				<listitem>
-					Java Binding:
-					Bind into a Java Object Model from any data
-					source (CSV, EDI, XML,
-					Java, JSON etc). 
-					</listitem>
-
-				<listitem>
-					Huge Message
-					Processing:
-					Process huge messages (GBs) -
-					Split, Transform and Route message fragments
-					to JMS, File, Database
-					etc destinations. Route multiple message
-					formats to multiple
-					destinations in a single pass over a message.
+				<listitem><para>Transformation: Perform a wide range of Data Transforms. Supports many different Source and Result types -XML/CSV/EDI/Java/JSON to XML/CSV/EDI/Java/JSON.</para>
 				</listitem>
-
 				<listitem>
-					<bold>Message
-						Enrichment:</bold>
-					Enrich a message with data from a
-					Database, or other Datasources.
+					<para>Java Binding: Bind into a Java Object Model from any data source (CSV, EDI, XML, Java, JSON etc). </para>
 				</listitem>
-
+				
 				<listitem>
-					Combine : Combine the above features in different ways
-					e.g.
-					add Message Enrichment as part of a Splitting and Routing
-					process.
+					<para>Huge Message Processing: Process huge messages (GBs) - Split, Transform and Route message fragments to JMS, File, Database etc destinations. Route multiple message formats to multiple destinations in a single pass over a message.
+					</para>				
+				</listitem>
+				
+				<listitem>
+					<para>Message Enrichment: Enrich a message with data from a Database, or other Datasources.
+					</para>				
+				</listitem>
+				
+				<listitem>
+					<para>Combine: Combine the above features in different ways e.g. add Message Enrichment as part of a Splitting and Routing process.
+					</para>				
 				</listitem>
 			</orderedlist>
 		</para>
 		<figure>
-			<title>SmooKs</title>
+			<title>Smooks</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/common/smooks-usecase.png"
@@ -64,15 +46,13 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>
-			More informations about Smooks , please visit here :
-			<link>http://www.smooks.org</link>
+		<para>  For More informations about Smooks, please visit Smooks official site:
+			<ulink url="http://www.smooks.org">Smooks official site</ulink> 
 		</para>
 	</sect1>
 	<sect1>
 		<title>What is Smooks dev tools?</title>
-		<para>Smooks dev tools is a sets of graphical tools for editing
-			Smooks configuration file base on Eclipse.</para>
+		<para>Smooks dev tools is a sets of graphical tools for editing  Smooks configuration file base on Eclipse.</para>
 		<figure>
 			<title>Smooks form editor</title>
 			<mediaobject>
@@ -84,25 +64,15 @@
 	</sect1>
 	<sect1>
 		<title>How to install Smooks dev tools?</title>
-		<para>
-			The Smooks dev tools was included by the JBossTools since 3.0.0
-			beta1
-			version. You can download the JBossTools from :
+		<para>  The Smooks dev tools was included by the JBossTools since 3.0.0  beta1  version. You can download the JBossTools from:
 			<link>http://www.jboss.org/tools/download/index.html
 			</link>
 			.
 		</para>
-		<para>
-			Smooks dev tools(JBossTools) run with the latest Eclipse and
-			other
-			required plug-ins(GEF,EMF,etc.).</para>
-		<para>
-			User should download the latest IDE for
-			Java EE developers from this
+		<para>  Smooks dev tools(JBossTools) run with the latest Eclipse and  other  required plug-ins(GEF,EMF,etc.).</para>
+		<para>  User should download the latest IDE for  Java EE developers from this
 			<link linkend="http://www.eclipse.org/downloads/">site
-			</link>
-			. It contains many plug-ins ( GEF,EMF,etc. ) required by Smooks dev
-			tools.
+			</link>. It contains many plug-ins ( GEF,EMF,etc. ) required by Smooks dev  tools.
 		</para>
 	</sect1>
 </chapter>

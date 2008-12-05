@@ -34,17 +34,13 @@
 	</para>
 	<section>
 		<title>Introduce the areas of graphical editor</title>
-		<para>
-			Please read the
+		<para>  Please read the
 			<link linkend="quickstart_formeditor">"Quick Start/Smooks Form Editor"</link>
 		</para>
 	</section>
 	<section>
 		<title>Load source/target data</title>
-		<para>
-			Click the links under the data viewer , the data type selection
-			wizard
-			page will be shown.
+		<para>  Click the links under the data viewer, the data type selection  wizard  page will be shown.
 		</para>
 		<figure>
 			<title>Data type selection wizard page</title>
@@ -55,9 +51,7 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>
-			There are a sets of transform data type on the wizard page,select one
-			type and click
+		<para>  There are a sets of transform data type on the wizard page,select one  type and click
 			<property>Next</property>
 			, the data source selection wizard page will be shown.
 			<tip>
@@ -85,50 +79,37 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>
-			When finish the data selection(file path selection) , Click
+		<para>  When finish the data selection(file path selection), Click
 			<property>Finish</property>
 			, the data viewer will display the selected data structure.
 		</para>
 	</section>
 	<section>
 		<title>User the graphical editor to mapping</title>
-		<para>
-			Please read the
+		<para>  Please read the
 			<link linkend="quickstart_mapping">"Quick Start/Mapping"</link>
 		</para>
 	</section>
 	<section>
 		<title>Error messages</title>
-		<para>
-			When user do any mapping operaions , the Smooks tools will
-			validate
-			the file contents with "Mapping Logic" , If there is any errors of
-			the configuration file contents
-			,error messages will be shown on
-			the
+		<para>  When user do any mapping operations, the Smooks tools will  validate  the file contents with "Mapping Logic", If there is any errors of  the configuration file contents
+			,error messages will be shown on  the
 			<link linkend="quickstart_formeditor">"Error
 				message area"</link>
 			.
 		</para>
-		<para>
-			Please read the
-			<link linkend="quickstart_mapping">"Quick Start/Mapping"</link>
-			to find how to fix the errors.
+		<para>  Please read the
+			<link linkend="quickstart_mapping">"Quick Start/Mapping"</link>  to find how to fix the errors.
 		</para>
 	</section>
 	<section id="graphicalpage_propertiesview">
 		<title>Properties Viewer</title>
-		<para>
-			User can edit the properties of the "connection lines" with the
-			properties viewer.
+		<para>  User can edit the properties of the "connection lines" with the  properties viewer.
+		</para>
+		<para>  Select the menu: "Window -> Show View -> Other -> Properties",  the properties viewer will be opened. 
 		</para>
 		<para>
-			Select the menu : "Window -> Show View -> Other -> Properties" ,
-			the properties viewer will be opened. 
-		</para>
-		<para>
-			When user select on the connection lines , the properties viewer
+			When user select on the connection lines, the properties viewer
 			will show a sets of section GUI for editing the properties of the
 			connection line.
 		</para>
@@ -142,17 +123,17 @@
 			</para>
 			<para>
 				If the source data type of the selected connection line was
-				"XML" ,The properties viewer will show a "XML Properties" section
+				"XML",The properties viewer will show a "XML Properties" section
 				GUI.
 			</para>
 			<para>
 				But the source data type of the selected connection line was
-				"Java" ,
-				the "XML Properties" section GUI dosen't display.
+				"Java",
+				the "XML Properties" section GUI doesn't display.
 			</para>
 			<para>
 				It means that if the source/target data type of the selected
-				connection line was different , the properties viewer will show
+				connection line was different, the properties viewer will show
 				different GUI.
 			</para>
 		</tip>
