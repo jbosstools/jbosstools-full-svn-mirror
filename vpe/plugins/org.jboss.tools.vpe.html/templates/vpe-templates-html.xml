@@ -1855,7 +1855,7 @@
 						value="{src(@background)}" />
 				</vpe:copy>
 				<vpe:resize>
-					<vpe:width width-attr="width"
+					<vpe:width width-attr="style.width"
 						disable-absolute-position="yes" />
 					<vpe:height height-attr="style.height"
 						tag-xpath="tr" test="{hasinparents('tr')}"
@@ -1899,7 +1899,7 @@
 			<vpe:copy
 				attrs="id,style,class,rowspan,colspan,headers,abbr,scope,axis,align,char,charoff,valign,width,height,bgcolor,dir" />
 			<vpe:resize>
-				<vpe:width width-attr="width"
+				<vpe:width width-attr="style.width"
 					disable-absolute-position="yes" />
 				<vpe:height height-attr="style.height" tag-xpath="tr"
 					test="{hasinparents('tr')}" disable-absolute-position="yes" />
