@@ -23,3 +23,4 @@ Require-Bundle: org.eclipse.ui,
 Eclipse-LazyStart: true
 Bundle-ClassPath: .
 Export-Package: org.jboss.tools.vpe.ui.test
+Bundle-Vendor: JBoss, a division of Red Hat
