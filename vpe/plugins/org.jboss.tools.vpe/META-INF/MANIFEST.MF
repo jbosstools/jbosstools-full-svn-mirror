@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Eclipse-LazyStart: true
-Bundle-Name: Visual Page Editor
+Bundle-Name: %pluginName
 Bundle-ClassPath: vpe.jar
 Bundle-Activator: org.jboss.tools.vpe.VpePlugin
 Bundle-Vendor: %providerName
