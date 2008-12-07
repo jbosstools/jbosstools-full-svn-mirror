@@ -6,4 +6,4 @@ Bundle-Version: 1.0.0
 Bundle-Vendor: %BundleVendor
 Fragment-Host: org.eclipse.swt
 Require-Bundle: org.eclipse.core.runtime
-Bundle-Localization: plugin
+Bundle-Localization: fragment
