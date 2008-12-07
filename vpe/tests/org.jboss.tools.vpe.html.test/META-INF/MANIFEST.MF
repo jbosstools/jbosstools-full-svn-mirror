@@ -19,3 +19,4 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.vpe.ui.test
 Eclipse-LazyStart: true
 Bundle-ClassPath: html-test.jar
+Bundle-Vendor: JBoss, a division of Red Hat
