@@ -4,7 +4,7 @@ Bundle-Name: Tests Plug-in
 Bundle-SymbolicName: org.jboss.tools.vpe.test;singleton:=true
 Bundle-Version: 2.0.0
 Bundle-Activator: org.jboss.tools.vpe.test.VpeTestPlugin
-Bundle-Vendor: RedHat
+Bundle-Vendor: JBoss, a division of Red Hat
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.junit,
