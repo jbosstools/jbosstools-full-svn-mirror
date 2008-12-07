@@ -14,4 +14,4 @@ Export-Package: org.jboss.tools.vpe.xulrunner;uses:="org.eclipse.jface.resource,
  org.jboss.tools.vpe.xulrunner.browser.util,
  org.jboss.tools.vpe.xulrunner.editor
 Bundle-ClassPath: .
-Bundle-Vendor: Red Hat, Inc.
+Bundle-Vendor: JBoss, a division of Red Hat
