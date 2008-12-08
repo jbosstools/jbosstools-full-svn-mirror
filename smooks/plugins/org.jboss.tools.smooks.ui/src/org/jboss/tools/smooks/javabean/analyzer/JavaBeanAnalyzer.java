@@ -891,8 +891,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					throw new RuntimeException(e);
 				}
 			}
-			throw new RuntimeException(
-					"Can't load Java bean model form the config file.");
+//			throw new RuntimeException(
+//					"Can't load Java bean model form the config file.");
 		}
 		// if can't load the source from GraphicalInformation , return NULL
 		if (current == null && rootClassName == null)
@@ -924,8 +924,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				} catch (ClassNotFoundException e) {
 					// TODO if can't find the class throws exception
 					// MODIFY by Dart 2008.11.12
-					throw new RuntimeException("Can't find the class : \""
-							+ rootClassName + "\" to create the JavaBean model");
+//					throw new RuntimeException("Can't find the class : \""
+//							+ rootClassName + "\" to create the JavaBean model");
 				}
 			}
 			boolean rootIsError = false;
