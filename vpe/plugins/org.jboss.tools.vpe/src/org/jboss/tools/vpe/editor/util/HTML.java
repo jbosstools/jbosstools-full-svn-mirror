@@ -38,6 +38,7 @@ public final class HTML {
 	public static final String TAG_TD = "TD"; //$NON-NLS-1$
 	public static final String TAG_DL = "DL"; //$NON-NLS-1$
 	public static final String TAG_DT = "DT"; //$NON-NLS-1$
+	public static final String TAG_DD = "DD"; //$NON-NLS-1$
 	public static final String TAG_COL = "COL"; //$NON-NLS-1$
 	public static final String TAG_COLS = "COLS"; //$NON-NLS-1$
 	public static final String TAG_COLGROUP = "COLGROUP"; //$NON-NLS-1$
@@ -93,6 +94,7 @@ public final class HTML {
 	public static final String ATTR_READONLY = "readonly"; //$NON-NLS-1$
 	public static final String ATTR_SCOPE = "scope"; //$NON-NLS-1$
 	public static final String ATTR_SPAN = "span"; //$NON-NLS-1$
+	public static final String ATTR_BACKGROUND = "background"; //$NON-NLS-1$
 
 	/**Use this constant if you have to span a column to entire row.*/
 	/* While in HTML 4.01 standard "colspan='0'" should be used for this purpose,
@@ -102,6 +104,7 @@ public final class HTML {
 	
 	public static final String VALUE_ALIGN_TOP = "top"; //$NON-NLS-1$
 	public static final String VALUE_ALIGN_RIGHT = "right"; //$NON-NLS-1$
+	public static final String VALUE_ALIGN_LEFT = "left"; //$NON-NLS-1$
 	public static final String VALUE_ALIGN_MIDDLE = "middle"; //$NON-NLS-1$
 	public static final String VALUE_CLASS_DELIMITER = " "; //$NON-NLS-1$
 	public static final String VALUE_TYPE_TEXT = "text"; //$NON-NLS-1$
@@ -121,9 +124,12 @@ public final class HTML {
 	public static final String STYLE_PARAMETER_LEFT = "left"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_HEIGHT = "height"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_BACKGROUND_IMAGE = "background-image"; //$NON-NLS-1$
+	public static final String STYLE_PARAMETER_BORDER_WIDTH = "border-width"; //$NON-NLS-1$
+	public static final String STYLE_PARAMETER_BORDER_STYLE = "border-style"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_MAX_HEIGHT = "max-height"; //$NON-NLS-1$	
 	public static final String STYLE_PARAMETER_ZINDEX = "z-index"; //$NON-NLS-1$	
 	public static final String STYLE_PARAMETER_CLEAR = "clear"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_TABLE_LAYOUT = "table-layout"; //$NON-NLS-1$
 	public static final String STYLE_VALUE_FIXED = "fixed"; //$NON-NLS-1$
+	public static final String STYLE_VALUE_MIDDLE = "middle"; //$NON-NLS-1$
 }
