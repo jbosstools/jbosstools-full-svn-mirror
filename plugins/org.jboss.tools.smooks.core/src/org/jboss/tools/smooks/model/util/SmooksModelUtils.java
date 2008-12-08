@@ -33,6 +33,8 @@ public class SmooksModelUtils {
 	
 	public static final String TYPE_XSL = "xsl";
 	
+	public static final String[] TEMPLATE_TYPES = new String[] { "xsl","ftl" };
+	
 	public static final String BEAN_CLASS = "beanClass";
 
 	public static final String BEAN_ID = "beanId";
@@ -93,7 +95,11 @@ public class SmooksModelUtils {
 		if(resource == null) return false;
 		String type = resource.getType();
 		if(type != null) type = type.trim();
-		return TYPE_XSL.equals(type);
+		for (int i = 0; i < TEMPLATE_TYPES.length; i++) {
+			String type1 = TEMPLATE_TYPES[i];
+			if(type1.equalsIgnoreCase(type)) return true;
+		}
+		return false;
 	}
 
 	public static boolean isDateTypeSelector(ResourceConfigType type) {

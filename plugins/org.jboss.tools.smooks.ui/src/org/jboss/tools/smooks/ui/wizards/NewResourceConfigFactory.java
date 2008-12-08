@@ -46,18 +46,18 @@ public class NewResourceConfigFactory implements INewResourceConfigFactory {
 			ResourceType resource = SmooksFactory.eINSTANCE
 					.createResourceType();
 			config.setResource(resource);
-			resource.setStringValue(SmooksModelConstants.BEAN_POPULATOR);
-
-			ParamType idParmType = SmooksFactory.eINSTANCE.createParamType();
-			ParamType classParmType = SmooksFactory.eINSTANCE.createParamType();
-			ParamType bindingParmType = SmooksFactory.eINSTANCE
-					.createParamType();
-			idParmType.setName(SmooksModelConstants.BEAN_ID);
-			classParmType.setName(SmooksModelConstants.BEAN_CLASS);
-
-			config.getParam().add(idParmType);
-			config.getParam().add(classParmType);
-			config.getParam().add(bindingParmType);
+//			resource.setStringValue(SmooksModelConstants.BEAN_POPULATOR);
+//
+//			ParamType idParmType = SmooksFactory.eINSTANCE.createParamType();
+//			ParamType classParmType = SmooksFactory.eINSTANCE.createParamType();
+//			ParamType bindingParmType = SmooksFactory.eINSTANCE
+//					.createParamType();
+//			idParmType.setName(SmooksModelConstants.BEAN_ID);
+//			classParmType.setName(SmooksModelConstants.BEAN_CLASS);
+//
+//			config.getParam().add(idParmType);
+//			config.getParam().add(classParmType);
+//			config.getParam().add(bindingParmType);
 			return config;
 		}
 		if (SmooksModelConstants.DATE_DECODER.equals(key.getId())) {
@@ -100,7 +100,7 @@ public class NewResourceConfigFactory implements INewResourceConfigFactory {
 	public NewResourceConfigKey[] getAllIDs() {
 		NewResourceConfigKey bean = new NewResourceConfigKey();
 		bean.setId(SmooksModelConstants.BEAN_POPULATOR);
-		bean.setName("BeanPopulator"); //$NON-NLS-1$
+		bean.setName("ResourceConfig Type"); //$NON-NLS-1$
 
 		NewResourceConfigKey date = new NewResourceConfigKey();
 		date.setId(SmooksModelConstants.DATE_DECODER);

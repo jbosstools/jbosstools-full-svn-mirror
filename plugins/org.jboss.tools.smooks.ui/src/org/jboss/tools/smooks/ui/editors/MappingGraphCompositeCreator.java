@@ -40,6 +40,7 @@ import org.jboss.tools.smooks.ui.gef.tools.TargetTreeDropTargetListener;
 
 
 /**
+ * @deprecated
  * @author Dart Peng
  * @Date Aug 5, 2008
  */

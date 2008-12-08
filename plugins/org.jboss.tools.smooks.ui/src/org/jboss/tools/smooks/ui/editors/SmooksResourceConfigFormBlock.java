@@ -152,11 +152,10 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 	 */
 	@Override
 	protected void registerPages(DetailsPart detailsPart) {
-		detailsPart.registerPage(BeanPopulatorWarrper.class,
-				new BeanPopulatorDetailPage(getParentEditor(), getDomain()));
+		detailsPart.registerPage(NormalResourceConfigWarpper.class,
+				new NormalResourceConfigDetailPage(getParentEditor(), getDomain()));
 		detailsPart.registerPage(DateTypeWarrper.class, new DateTypeDetailPage(
 				getParentEditor(), getDomain()));
-
 		detailsPart.registerPage(DocumentSelectionWarrper.class,
 				new DocumentResourceTypeDetailPage(getParentEditor(),
 						getDomain()));
@@ -164,48 +163,7 @@ public class SmooksResourceConfigFormBlock extends MasterDetailsBlock implements
 
 	protected void configDateTypeViewer() {
 		dateTypeViewer.setContentProvider(new DateTypeContentProvider());
-		dateTypeViewer.setLabelProvider(new LabelProvider() {
-
-			public String getText(Object element) {
-				if (element instanceof ResourceConfigType) {
-					if (NormalSmooksModelBuilder
-							.isBeanPopulator((ResourceConfigType) element)) {
-						String selector = ((ResourceConfigType) element)
-								.getSelector();
-						if (selector == null)
-							selector = Messages.getString("SmooksResourceConfigFormBlock.NULLString"); //$NON-NLS-1$
-						return Messages.getString("SmooksResourceConfigFormBlock.BeanPopulator") + selector; //$NON-NLS-1$
-					}
-					if (NormalSmooksModelBuilder
-							.isDateConfig((ResourceConfigType) element)) {
-						String name = Messages.getString("SmooksResourceConfigFormBlock.DateType"); //$NON-NLS-1$
-						String selector = ((ResourceConfigType) element).getSelector();
-						if(selector == null){
-							return name;
-						}
-						selector = selector.trim();
-						if(selector.indexOf(":") != -1){
-							selector = selector.substring(selector.indexOf(":") + 1, selector.length());
-						}
-						return name + "(" + selector + ")";
-					}
-					if (SmooksModelUtils
-							.isFilePathResourceConfig((ResourceConfigType) element)) {
-						String selector = ((ResourceConfigType) element)
-								.getSelector();
-						if (selector == null)
-							selector = Messages.getString("SmooksResourceConfigFormBlock.NULLString"); //$NON-NLS-1$
-						return Messages.getString("SmooksResourceConfigFormBlock.TemplateFile") + selector; //$NON-NLS-1$
-					}
-					String s = ((ResourceConfigType) element).getSelector();
-					if (s == null)
-						s = Messages.getString("SmooksResourceConfigFormBlock.NULLString"); //$NON-NLS-1$
-					return Messages.getString("SmooksResourceConfigFormBlock.UnknownResourceConfig") + s; //$NON-NLS-1$
-				}
-				return super.getText(element);
-			}
-
-		});
+		dateTypeViewer.setLabelProvider(new ConfigurationViewerLabelProvider());
 		// don't display the first ResourceConfig element;because it will be
 		// "show" with Smooks TransformData Type GUI
 		dateTypeViewer.setFilters(new ViewerFilter[] { new ViewerFilter() {

@@ -3,14 +3,19 @@
  */
 package org.jboss.tools.smooks.ui.editors;
 
+import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -19,19 +24,27 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
+import org.eclipse.ui.forms.events.IHyperlinkListener;
+import org.eclipse.ui.forms.widgets.Hyperlink;
+import org.eclipse.ui.ide.IDE;
+import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.ResourceType;
 import org.jboss.tools.smooks.model.SmooksPackage;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
+import org.jboss.tools.smooks.ui.SmooksUIActivator;
+import org.jboss.tools.smooks.utils.UIUtils;
 
 /**
  * @author dart
  * 
  */
 public class DocumentResourceTypeDetailPage extends
-		AbstractSmooksModelDetailPage {
+		AbstractSmooksModelDetailPage implements ParamaterChangeLitener {
 
 	private static final int INNER = 0;
 	private static final int EXTERNAL = 1;
@@ -42,6 +55,13 @@ public class DocumentResourceTypeDetailPage extends
 	private Text innerContentText;
 	private Button browseButton;
 	private boolean isInit = true;
+	private Combo typeCombo;
+	//
+	// private static final String PARAM_NAME_PRO = "__param_name_pro";
+	//
+	// private static final String PARAM_VALUE_PRO = "__param_value_pro";
+
+	private ParamaterTableViewerCreator creator;
 
 	public DocumentResourceTypeDetailPage(SmooksFormEditor parentEditor,
 			EditingDomain domain) {
@@ -49,9 +69,44 @@ public class DocumentResourceTypeDetailPage extends
 	}
 
 	protected void createExternlaSelectionGUI(Composite parent) {
+		Hyperlink link = formToolKit.createHyperlink(parent, Messages
+				.getString("DocumentResourceTypeDetailPage.DocPath"), SWT.NONE);
+		link.addHyperlinkListener(new IHyperlinkListener() {
 
-		this.formToolKit.createLabel(parent, Messages
-				.getString("DocumentResourceTypeDetailPage.DocPath")); //$NON-NLS-1$
+			public void linkActivated(HyperlinkEvent e) {
+				if (!externalCheckButton.getSelection())
+					return;
+				String path = text.getText();
+				if (path == null)
+					return;
+				Path p = new Path(path);
+				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+				IResource resource = root.findMember(p);
+				if (resource != null && resource.exists()
+						&& resource instanceof IFile) {
+					try {
+						IDE.openEditor(SmooksUIActivator.getDefault()
+								.getWorkbench().getActiveWorkbenchWindow()
+								.getActivePage(), (IFile) resource);
+					} catch (PartInitException e1) {
+						UIUtils.showErrorDialog(parentEditor.getSite()
+								.getShell(), UIUtils.createErrorStatus(e1));
+					}
+				} else {
+					MessageDialog.openError(parentEditor.getSite().getShell(),
+							"Error", "Can't open the editor , because the \""
+									+ path + "\" dosen't exist or isn't file.");
+				}
+			}
+
+			public void linkEntered(HyperlinkEvent e) {
+
+			}
+
+			public void linkExited(HyperlinkEvent e) {
+			}
+		});
+
 		Composite fileCom = formToolKit.createComposite(parent);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		fileCom.setLayoutData(gd);
@@ -81,10 +136,16 @@ public class DocumentResourceTypeDetailPage extends
 				super.widgetSelected(e);
 				browseFileSystem();
 			}
-
 		});
 		formToolKit.paintBordersFor(fileCom);
 
+	}
+
+	private void initTypeCombo() {
+		for (int i = 0; i < SmooksModelUtils.TEMPLATE_TYPES.length; i++) {
+			String type = SmooksModelUtils.TEMPLATE_TYPES[i];
+			typeCombo.add(type);
+		}
 	}
 
 	protected void handleRadioButtons() {
@@ -127,6 +188,19 @@ public class DocumentResourceTypeDetailPage extends
 		});
 		selectorText.setLayoutData(gd);
 
+		formToolKit.createLabel(parent, "Type :");
+		typeCombo = new Combo(parent, SWT.FLAT);
+		initTypeCombo();
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		typeCombo.setLayoutData(gd);
+		typeCombo.addModifyListener(new ModifyListener() {
+
+			public void modifyText(ModifyEvent e) {
+				resetResourceType();
+			}
+
+		});
+
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		externalCheckButton = formToolKit.createButton(parent,
@@ -146,7 +220,10 @@ public class DocumentResourceTypeDetailPage extends
 
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
-		formToolKit.createSeparator(parent, SWT.HORIZONTAL).setLayoutData(gd);
+		// formToolKit.createSeparator(parent,
+		// SWT.HORIZONTAL).setLayoutData(gd);
+
+		createParamerTable(parent);
 
 		formToolKit.paintBordersFor(parent);
 
@@ -154,15 +231,56 @@ public class DocumentResourceTypeDetailPage extends
 
 	}
 
+	protected void resetResourceType() {
+		String type = typeCombo.getText();
+		if (type == null)
+			return;
+		if (type != null) {
+			type = type.trim();
+		}
+
+		ResourceType resource = resourceConfig.getResource();
+		if (resource != null) {
+			resource.setType(type);
+			parentEditor.fireEditorDirty(true);
+		}
+	}
+
+	protected void createParamerTable(Composite parent) {
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		formToolKit.createLabel(parent, "Paramater List : ").setLayoutData(gd);
+		creator = new ParamaterTableViewerCreator(
+				parent, formToolKit, SWT.NONE);
+		creator.addParamaterListener(this);
+	}
+
+
 	protected void createInnerContentsGUI(Composite parent) {
 		GridData gd = new GridData(GridData.BEGINNING);
 		gd.verticalAlignment = GridData.BEGINNING;
-		formToolKit.createLabel(parent, "File Contents").setLayoutData(gd);
+		// formToolKit.createLabel(parent, "File Contents :").setLayoutData(gd);
 		innerContentText = formToolKit.createText(parent, "", SWT.MULTI
 				| SWT.V_SCROLL | SWT.H_SCROLL);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.heightHint = 200;
+		gd.horizontalSpan = 2;
 		innerContentText.setLayoutData(gd);
+		innerContentText.addModifyListener(new ModifyListener() {
+
+			public void modifyText(ModifyEvent e) {
+				resetCDATA();
+			}
+
+		});
+	}
+
+	private void resetCDATA() {
+		String text = innerContentText.getText();
+		if (text == null)
+			text = "";
+		SmooksModelUtils.setCDATAToAnyType(this.resourceConfig.getResource(),
+				text);
+		parentEditor.fireEditorDirty(true);
 	}
 
 	protected void resetSelector(String selector) {
@@ -227,8 +345,13 @@ public class DocumentResourceTypeDetailPage extends
 				selectorText.setText(selector);
 			ResourceType resource = resourceConfig.getResource();
 			if (resource != null) {
+				String type = resource.getType();
+				if (type != null) {
+					typeCombo.setText(type);
+				}
 				if (isInit) {
-
+					creator.setInput(resourceConfig);
+					creator.setResourceConfig(resourceConfig);
 					if (SmooksModelUtils.isInnerFileContents(resourceConfig)) {
 						String cdata = resource.getCDATAValue();
 						if (cdata == null)
@@ -281,4 +404,15 @@ public class DocumentResourceTypeDetailPage extends
 		return -1;
 	}
 
+	public void paramaterAdded(ParamType param) {
+		parentEditor.fireEditorDirty(true);
+	}
+
+	public void paramaterChanged(ParamType param) {
+		parentEditor.fireEditorDirty(true);
+	}
+
+	public void paramaterRemoved(Collection<ParamType> params) {
+		parentEditor.fireEditorDirty(true);
+	}
 }

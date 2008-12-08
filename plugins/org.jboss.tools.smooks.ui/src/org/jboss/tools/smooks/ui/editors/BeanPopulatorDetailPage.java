@@ -48,6 +48,7 @@ import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
 
 /**
+ * @deprecated
  * @author Dart Peng<br>
  *         Date : Sep 11, 2008
  */

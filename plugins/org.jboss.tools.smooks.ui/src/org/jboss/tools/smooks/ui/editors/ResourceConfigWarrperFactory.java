@@ -11,8 +11,6 @@
 package org.jboss.tools.smooks.ui.editors;
 
 import org.jboss.tools.smooks.model.ResourceConfigType;
-import org.jboss.tools.smooks.model.ResourceType;
-import org.jboss.tools.smooks.model.util.SmooksModelConstants;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.BeanPopulatorWarrper;
 import org.jboss.tools.smooks.ui.DateTypeWarrper;
@@ -28,10 +26,10 @@ public class ResourceConfigWarrperFactory {
 
 	public static ResourceConfigWarrper createResourceConfigWarrper(
 			ResourceConfigType type) {
-		if (SmooksModelUtils.isBeanPopulatorResource(type)) {
-			BeanPopulatorWarrper p = new BeanPopulatorWarrper(type);
-			return p;
-		}
+//		if (SmooksModelUtils.isBeanPopulatorResource(type)) {
+//			BeanPopulatorWarrper p = new BeanPopulatorWarrper(type);
+//			return p;
+//		}
 		if(SmooksModelUtils.isDateTypeSelector(type)){
 			DateTypeWarrper warrper = new DateTypeWarrper(type);
 			return warrper;
@@ -40,7 +38,7 @@ public class ResourceConfigWarrperFactory {
 			DocumentSelectionWarrper warrper = new DocumentSelectionWarrper(type);
 			return warrper;
 		}
-		return null;
+		return new NormalResourceConfigWarpper(type);
 	}
 
 }
