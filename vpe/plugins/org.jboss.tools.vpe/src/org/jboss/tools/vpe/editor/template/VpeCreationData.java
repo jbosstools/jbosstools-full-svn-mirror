@@ -34,6 +34,12 @@ public class VpeCreationData {
 	public VpeCreationData(nsIDOMNode node) {
 		this.node = node;
 	}
+	
+	public VpeCreationData(nsIDOMNode node, boolean initializeChildren) {
+		this.node = node;
+		if (initializeChildren)
+			this.childrenInfoList = new ArrayList<VpeChildrenInfo>();
+	} 
 
 	public nsIDOMNode getNode() {
 		return node;
