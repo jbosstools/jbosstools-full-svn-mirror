@@ -314,10 +314,21 @@
       <para>Now let's examine the project and its structure. Go back to the Package Explorer view in
         JBoss Developer Studio.</para>
 
-      <para>It seems like it's not much for project but this shell application contains a login
+      <para>It seems like it&apos;s not much for project but this shell application contains a login
         screen with default login logic, a menu template that can be further modified, and other
         layout templates.</para>
 
+      <para>It&apos;s important to note that the business logic will reside in the <emphasis>
+          <property>src/hot</property>
+        </emphasis> folder, by default. And, the package naming conventions that were used in <property>New Seam
+        project wizard</property> could have been changed to something different from <emphasis>
+          <property>org.domain.workshop.session</property>.
+        </emphasis> Also, notice that there is a default <property>Authenticator. java</property>
+        file. This is where custom security logic can be added. Seam has a nice declarative security
+        model that we will explore in a bit more detail later on. The <emphasis>
+          <property>src/main</property>
+        </emphasis> folder is a model directory. It stores the project&apos;s JPA entity beans.</para>
+      
       <figure>
         <title>Project Structure</title>
         <mediaobject>
@@ -326,17 +337,8 @@
           </imageobject>
         </mediaobject>
       </figure>
-
-      <para>It’s important to note that the business logic will reside in the <emphasis>
-          <property>src/action</property>
-        </emphasis> folder, by default. And, the package naming conventions that were used in Seam
-        project setup wizard could have been changed to something different from <emphasis>
-          <property>org.domain.workshop.session</property>
-        </emphasis>. Also, notice that there is a default <property>Authenticator. java</property>
-        file. This is where custom security logic can be added. Seam has a nice declarative security
-        model that we will explore in a bit more detail later on. The <emphasis>
-          <property>src/model</property>
-        </emphasis> folder will store the project’s JPA entity beans. The view tier of the
+        
+        <para>The view tier of the
         application is also important. Seam uses facelets and there is a built-in facelets GUI
         editor that has some nice WYSIWYG and component drag/drop functionality. Try this out by
         opening <property>home.xhtml</property> from <property>WebContent</property> folder.</para>
