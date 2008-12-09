@@ -107,6 +107,7 @@ public final class HTML {
 	public static final String VALUE_ALIGN_LEFT = "left"; //$NON-NLS-1$
 	public static final String VALUE_ALIGN_MIDDLE = "middle"; //$NON-NLS-1$
 	public static final String VALUE_CLASS_DELIMITER = " "; //$NON-NLS-1$
+	public static final String VALUE_STYLE_DELIMITER = ";"; //$NON-NLS-1$
 	public static final String VALUE_TYPE_TEXT = "text"; //$NON-NLS-1$
 	public static final String VALUE_TYPE_PASSWORD = "password"; //$NON-NLS-1$
 	public static final String VALUE_TYPE_IMAGE = "image"; //$NON-NLS-1$

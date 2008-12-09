@@ -188,18 +188,19 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		nsIDOMElement row = null;
 		nsIDOMElement caption = null;
 
-		/*
-		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944 author: Denis
-		 * Maliarevich Any text which is placed outside of the tags will be
-		 * displayed above the table.
-		 */
-		String redundantText = REDUNDANT_TEXT_SEPARATOR;
-		for (int i = 0; i < sourceElements.getRedundantTextNodesCount(); i++) {
-			Node node = sourceElements.getRedundantTextNode(i);
-			redundantText += node.getNodeValue();
-			redundantText += REDUNDANT_TEXT_SEPARATOR;
-		}
-		div.appendChild(visualDocument.createTextNode(redundantText));
+// Fix https://jira.jboss.org/jira/browse/JBIDE-3223
+//		/*
+//		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944 author: Denis
+//		 * Maliarevich Any text which is placed outside of the tags will be
+//		 * displayed above the table.
+//		 */
+//		String redundantText = REDUNDANT_TEXT_SEPARATOR;
+//		for (int i = 0; i < sourceElements.getRedundantTextNodesCount(); i++) {
+//			Node node = sourceElements.getRedundantTextNode(i);
+//			redundantText += node.getNodeValue();
+//			redundantText += REDUNDANT_TEXT_SEPARATOR;
+//		}
+//		div.appendChild(visualDocument.createTextNode(redundantText));
 		div.appendChild(outterTable);
 
 		if (true || sourceElements.hasTableCaption()) {
