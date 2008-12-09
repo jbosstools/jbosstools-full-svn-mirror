@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   
+   <extension 
+        point="org.eclipse.wst.common.project.facet.ui.wizardPages">
+    <wizard-pages action="jboss.portlet.install">
+        <page class="org.jboss.tools.portlet.ui.internal.project.facet.PortletFacetInstallPage"/>
+    </wizard-pages>
+  </extension> 
+  
+  <extension 
+        point="org.eclipse.wst.common.project.facet.ui.wizardPages">
+    <wizard-pages action="jboss.jsfportlet.install">
+        <page class="org.jboss.tools.portlet.ui.internal.project.facet.JSFPortletFacetInstallPage"/>
+    </wizard-pages>
+  </extension> 
+  
+  <!-- New Java Portlet wizard -->
+  <extension point="org.eclipse.ui.newWizards">
+    <category id="org.jboss.tools.portlet" 
+    	name="%Portlet_category" 
+    	parentCategory="org.jboss.tools.jst.web">
+    </category>
+    <wizard
+		id="org.jboss.tools.portlet.ui.wizard.NewJavaPortletWizard"
+		name="%Java_portlet_wizard_name"
+		class="org.jboss.tools.portlet.ui.internal.wizard.NewPortletWizard"
+		category="org.jboss.tools.jst.web/org.jboss.tools.portlet"
+		icon="icons/portlet_wiz.gif">
+		<description>%Portlet_wizard_description</description>
+		<selection class="org.eclipse.core.resources.IResource" />
+	</wizard>
+	<wizard
+		id="org.jboss.tools.portlet.ui.wizard.NewJSFPortletWizard"
+		name="%JSFSeam_portlet_wizard_name"
+		class="org.jboss.tools.portlet.ui.internal.wizard.NewJSFPortletWizard"
+		category="org.jboss.tools.jst.web/org.jboss.tools.portlet"
+		icon="icons/portlet_wiz.gif">
+		<description>%JSFSeam_portlet_wizard_description</description>
+		<selection class="org.eclipse.core.resources.IResource" />
+	</wizard>
+	<!--
+	<wizard
+		id="org.jboss.tools.portlet.ui.wizard.NewSeamPortletWizard"
+		name="JBoss Seam Portlet"
+		class="org.jboss.tools.portlet.ui.internal.wizard.NewSeamPortletWizard"
+		category="org.jboss.tools.jst.web/org.jboss.tools.portlet"
+		icon="icons/portlet_wiz.gif">
+		<description>Create a new JBoss Seam Portlet</description>
+		<selection class="org.eclipse.core.resources.IResource" />
+	</wizard>
+	-->
+	
+  </extension>
+   
+   <extension
+        point="org.eclipse.ui.preferencePages">
+     <page
+           category="org.jboss.tools.common.model.ui.MainPreferencePage"
+           class="org.jboss.tools.portlet.ui.internal.preferences.JBossPortletPreferencePage"
+           id="org.jboss.tools.portlet.core.ui.JBossPortletPreferencePage"
+           name="%JBoss_Portlet"/>
+      </extension>
+    
+</plugin>

@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eclipse Sourceprovider Plug-in
+Bundle-SymbolicName: org.jboss.tools.labs.pde.sourceprovider;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.jboss.tools.labs.pde.sourceprovider.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.debug.core,
+ org.eclipse.debug.ui
+Eclipse-LazyStart: true
+Bundle-Vendor: Rob Stryker
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="seamuc">
+  <title>Seam project creation/development usecases</title>
+
+  <para>This covers usecases for creation, tests and deploy of projects
+  artifacts.</para>
+
+  <para>Codecompletion and navigation is not covered.</para>
+
+  <section>
+    <title>Overall Seam interaction</title>
+
+    <para>The following scenario should be as smooth as possible and work for
+    both WAR and EAR.</para>
+
+    <itemizedlist>
+      <listitem>
+        <para><emphasis role="bold">New Seam Web Project</emphasis></para>
+
+        <para>Ask user the minimal set of questions to make this work.</para>
+
+        <para>Sensible defaults should be used to minimize the need for users
+        to do anything</para>
+
+        <para>After finish is pressed one or more eclipse projects are created
+        and linked together correctly.</para>
+
+        <para>The project(s) should after this be deployable to an already
+        chosen server and testable! (for both EAR and WAR)</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis role="bold">Run tests</emphasis></para>
+
+        <para>There won't be any tests initially, but the initial setup should
+        be ready.</para>
+
+        <para>This should run the microcontainer/embedded jboss just as
+        seam-gen does.</para>
+
+        <para>Remember that the driver jar(s) needs to be available to this
+        project for the database related applications to run.</para>
+
+        <para>It also needs custom persistence.xml and other files to work
+        correctly. See seam-gen for the differences.</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis role="bold">Deploy and run project</emphasis></para>
+
+        <para>Run &gt; Run As ... &gt; Run On Server should deploy to already
+        chosen server and show the main page.</para>
+
+        <para>If you choose Run On Server while having a .xhtml file
+        open/selected the browser should optimally open the corresponding
+        resource (e.g. login.xhtml -&gt; login.seam)</para>
+
+        <para></para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis role="bold">Debug </emphasis></para>
+
+        <para>Debug &gt; Debug As ... &gt; Debug On Server should deploy to
+        already chosen server and show the main page.</para>
+
+        <para>Go to browser and click login, fill in user and password with
+        "max"/"max", click Login</para>
+
+        <para>Page should should show "max" as logged in, click Logout, page
+        should now show max is logged out.</para>
+
+        <para>Put a breakpoint in Authenticator.java on the line with
+        log.info("authenticating #0", identity.getUsername());</para>
+
+        <para>Go to browser and click login, fill in user and password with
+        "max"/"max", click Login</para>
+
+        <para>Eclipse should now stop at the breakpoint with the source
+        already loaded and configured (no need to add project src to the
+        launch config)</para>
+
+        <para>Change the method to only let users with different user/password
+        in and put a message about the error:</para>
+
+        <para></para>
+
+        <programlisting>public boolean authenticate()
+    {
+        log.info("authenticating #0", identity.getUsername());
+        if(identity.getUsername().equals(identity.getPassword())) {
+         FacesMessages.instance().add("sorry - password and username need to be different.");
+         return false;
+        }
+        identity.addRole("admin");
+        return true;
+    }</programlisting>
+
+        <para>Press save, and eclipse's hotswap should be in effect.</para>
+
+        <para>Click continue and the browser should complain that the user
+        could not log in and show the message "Sorry - password and username
+        need to be different." plus a Login Failed message.</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis role="bold">Edit an xhtml or another "web resource"
+        like html, css etc. and save, refresh browser should work
+        instantly</emphasis></para>
+
+        <para>Edit login.xhtml, add some text in the main paragraph. Save, go
+        to browser and press refresh - changes should be there.</para>
+
+        <para>On save the file should be instantly available so users does not
+        have to wait for it. (WTP has a 5 second default delay; can we make
+        that better ?)</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis role="bold">Edit or add a java class should be
+        available after clicking "Restart app"</emphasis></para>
+
+        <para>Restart App should *not* require restart of the application
+        server; just the application.(With seam hotdeploy (requires Seam
+        1.2.1) classes in META-INF/dev is automatically hotdeployed)</para>
+
+        <para>JBoss allows touching of descriptors to trigger restart. See
+        seam-gen on how it is done technically.</para>
+
+        <para>Old exadel studio had a "touch web.xml" file; not sure if that
+        still works ? (I couldn't see a difference)</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis role="bold">New Action</emphasis></para>
+
+        <para><emphasis>Run new Action</emphasis></para>
+
+        <para><table>
+            <title></title>
+
+            <tgroup cols="3">
+              <tbody>
+                <row>
+                  <entry>Seam Project</entry>
+
+                  <entry>default based on selection</entry>
+
+                  <entry></entry>
+                </row>
+
+                <row>
+                  <entry>Component Name</entry>
+
+                  <entry>Enter ping</entry>
+
+                  <entry>ping</entry>
+                </row>
+
+                <row>
+                  <entry>Local Interface</entry>
+
+                  <entry>Default based on component name</entry>
+
+                  <entry>PingBean</entry>
+                </row>
+
+                <row>
+                  <entry>Method</entry>
+
+                  <entry>default based on component name</entry>
+
+                  <entry>ping</entry>
+                </row>
+
+                <row>
+                  <entry>Page</entry>
+
+                  <entry>default based on component name</entry>
+
+                  <entry>ping</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table></para>
+
+        <para></para>
+
+        <para>Clicking finish should generate a class called PingBean.java
+        with @Name("ping") and corresponding ping.xhtml and
+        PingTest.java.</para>
+
+        <para>The generated PingBeanTest.java should be in the action folder
+        (suggestion: WAR -&gt; src/action, EAR -&gt; ejb project src),
+        ping.xhtml in WebContent and the PingTest.java + related testng files
+        in the test src/ folder (suggestion project-test -&gt;
+        src/test).</para>
+
+        <para>Click the "Restart Application" button (today only "Touch
+        web.xml" is there for wars so need something for ear's too)</para>
+
+        <para>Go to browser and go to the page called /ping.seam and you
+        should have a button which when clicked sends you to a page with a
+        messag containing "Ping!".</para>
+
+        <para>If Seam hotdeploy is enabled you should be able to go directly
+        to "Go to browser" skipping the restart app.</para>
+
+        <para>Running the TestNG test should also just work and show a
+        greenbar.</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis role="bold">New Form</emphasis></para>
+
+        <para>Run New Form.<table>
+            <title></title>
+
+            <tgroup cols="3">
+              <tbody>
+                <row>
+                  <entry>Seam Project</entry>
+
+                  <entry>default based on selection</entry>
+
+                  <entry></entry>
+                </row>
+
+                <row>
+                  <entry>Component Name</entry>
+
+                  <entry>Enter form</entry>
+
+                  <entry>form</entry>
+                </row>
+
+                <row>
+                  <entry>Local Interface</entry>
+
+                  <entry>Default based on component name</entry>
+
+                  <entry>IForm</entry>
+                </row>
+
+                <row>
+                  <entry>Bean name:</entry>
+
+                  <entry>Default based on component name</entry>
+
+                  <entry>FormBean</entry>
+                </row>
+
+                <row>
+                  <entry>Method</entry>
+
+                  <entry>default based on component name</entry>
+
+                  <entry>form</entry>
+                </row>
+
+                <row>
+                  <entry>Page</entry>
+
+                  <entry>default based on component name</entry>
+
+                  <entry>form</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table></para>
+
+        <para>Clicking finish should generate a class called PingBean.java
+        with @Name("ping") and corresponding ping.xhtml and
+        PingTest.java.</para>
+
+        <para>The generated PingBeanTest.java should be in the action folder
+        (suggestion: WAR -&gt; src/action, EAR -&gt; ejb project src),
+        ping.xhtml in WebContent and the PingTest.java + related testng files
+        in the test src/ folder (suggestion project-test -&gt;
+        src/test).</para>
+
+        <para>Click the "Restart Application" button (today only "Touch
+        web.xml" is there for wars so need something for ear's too)</para>
+
+        <para>Go to browser and go to the page called /ping.seam and you
+        should have a button which when clicked sends you to a page with a
+        messag containing "Ping!".</para>
+
+        <para>If Seam hotdeploy is enabled you should be able to go directly
+        to "Go to browser" skipping the restart app.</para>
+
+        <para>Running the TestNG test should also just work and show a
+        greenbar.</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
+    <title>Seam New Project</title>
+
+    <para>New Seam Web Project should be as quickly done as possible and when
+    it is done the user should be asked to go to the Seam perspective (or the
+    JEE perspective should have Seam relevant views added).</para>
+
+    <para>(I am not sure if we should have a dedicated wizard that just shows
+    the minimal set of options and does not provide all the WTP options,
+    ...but we should work with both so using the normal wizard is probably the
+    best start)</para>
+
+    <para>There should be support for two types of projects: EAR and WAR. Each
+    setup would require more than one project to work in eclipse and it would
+    probably make sense to define a working set that defines the Seam Project.
+    e.g. working set called "SeamPhoto" for a project called "SeamPhoto" and
+    the corresponding projects would be named "seamphoto", "seamphoto.ejb",
+    "seamphoto.ear", "seamphoto.test" (this names are *defaults* and our code
+    should not depend on the naming pattern to figure out what kind a project
+    is)</para>
+
+    <para>The best way to see what should go where is to use seam-gen to
+    generate two projects, one for war and the other for ear - when built
+    exploded-archives will contain the .ear/.war/.jar with the libs needed in
+    the various places. the only thing not done by seam-gen is the seperation
+    of the test code/libs.</para>
+
+    <para>I've added a projectexample dir next to this document that has an
+    working EAR project structure including test project. Note this layout is
+    just an example of what works - I have e.g. not verifed that all relevant
+    libs are included, just that it runs with the basic setup.</para>
+
+    <section>
+      <title>War</title>
+
+      <para>A WAR project can only use Seam JavaBean and JPA Entity bean
+      components; it cannot use EJB3 Session beans etc. This means that Action
+      generation should by default generate JavaBean components and not EJB3
+      components when it is run against a WAR project.</para>
+
+      <para>A WAR project can in Seam 1.2.1.GA (not Seam 1.2.0.EAP) support
+      hotdeployment of classes put in WEB-INF/classes/dev (see seam-gen for
+      details), action classes are normally put there.</para>
+
+      <para>To run unittests we probably need a &lt;projectname&gt;-test
+      project that depends on the war project and contains the jars/resources
+      to run tests.</para>
+    </section>
+
+    <section>
+      <title>Ear</title>
+
+      <para>An EAR project can use the whole range of Seam components,
+      including EJB3 Session beans. Action's should by default generate EJB3
+      components</para>
+
+      <para>To run unittests we probably need a &lt;projectname&gt;-test
+      project that depends on the war project and contains the jars/resources
+      to run tests.</para>
+
+      <para>Both the war, utility-jar and test project should be marked as a
+      Seam project.</para>
+    </section>
+
+    <section>
+      <title>Exploded Deployment</title>
+
+      <para>JBoss exploded deployment works by having the archives exploded
+      (meaning unzipped) into the deploy directory.</para>
+
+      <para>We need to make sure this actually works - also with how WTP
+      deploys the EAR's. e.g. does WTP/our adapter deploy the WAR just like
+      seam-gen projects does ?</para>
+
+      <para></para>
+
+      <para>e.g. the EAR contains the WAR and JAR:</para>
+
+      <para>This will work:</para>
+
+      <programlisting>myproject.ear/
+  META-INF/application.xml
+  myproject.war/
+      WEB-INF/web.xml
+  myproject.jar/
+      META-INF/persistence.xml
+</programlisting>
+
+      <para>This will probably not work (all projects side-by-side):</para>
+
+      <programlisting>myproject.ear/
+  META-INF/application.xml
+myproject.war/
+  WEB-INF/web.xml
+myproject.jar/
+  META-INF/persistence.xml
+</programlisting>
+
+      <para></para>
+
+      <section>
+        <title>Hot-restart/touch</title>
+
+        <para>Doing hot restart is just a matter of touching the descriptors.
+        This is from seam-gen:</para>
+
+        <para>For EAR:</para>
+
+        <programlisting>&lt;target name="restart" depends="explode" description="Restart the exploded archive"&gt;
+  &lt;touch file="${ear.deploy.dir}/META-INF/application.xml"/&gt;
+&lt;/target&gt;</programlisting>
+
+        <para>For WAR:</para>
+
+        <programlisting>&lt;target name="restart" depends="explode" description="Restart the exploded archive"&gt;
+  &lt;touch file="${war.deploy.dir}/WEB-INF/web.xml"/&gt;
+&lt;/target&gt;</programlisting>
+      </section>
+    </section>
+
+    <section>
+      <title>Libraries/Runtime environment</title>
+
+      <para>A project should be associated with a Seam runtime which defines
+      what version (1.2 or 2.0) the IDE should assume for the project + the
+      set of core libraries for seam (just derived from the homedir). Exactly
+      like one does for JDK runtimes.</para>
+    </section>
+
+    <section>
+      <title>End Result</title>
+
+      <para>No warnings or errors in the project from any of our
+      validators.</para>
+    </section>
+  </section>
+
+  <section>
+    <title>Seam Generate Entities</title>
+
+    <para>Generate entities is in seam-gen is always reverse engineering from
+    the database and based on that a set of JPA entities are created and
+    corresponding CRUD pages and action classes generated. See seam-gen for
+    the details.</para>
+
+    <para>We should have a Generate Entities that allows exactly this, but
+    optimally also allows you to use your existing JPA entities as the basis
+    of the CRUD generation. Hibernate Tools can handle this today if it is
+    just told not to do reverse engineering; it will then just use all the
+    entities it can find on the classpath.</para>
+
+    <para>If we create a Hibernate Tools code generation users will have it
+    available in the Run &gt; Hibernate Code Generation and be able to run it
+    repeatedly.</para>
+
+    <para>Next to this document is a hsqldb folder with a hsqldb with data
+    that can be used with Seam Generate Entities to have a fully working
+    application.</para>
+
+    <para></para>
+  </section>
+</chapter>

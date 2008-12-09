@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="PMD checking" default="create-report" basedir=".">
+
+	<property file ="${basedir}/build.properties"/>
+
+	<path id="pmd.classpath">
+	    <pathelement location="${build}"/>
+	    <fileset dir="${pmd.home}/lib">
+	        <include name="*.jar"/>
+	    </fileset>
+	</path>
+
+	<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath"/>
+
+	<target name="create-report">
+		<mkdir dir="${basedir}/${build.dir}"/>
+	    <pmd rulesetfiles="${rulesets.filenames}">
+	        <formatter type="html" toFile="${basedir}/${build.dir}/pmd_report.html" toConsole="true"/>
+	    	<formatter type="xml" toFile="${basedir}/${build.dir}/pmd_report.xml" toConsole="true"/>
+	    	<formatter type="summaryhtml" toFile="${basedir}/${build.dir}/pmd_summary_report.html" toConsole="true"/>
+	    	<formatter type="text" toFile="${basedir}/${build.dir}/pmd_report.txt" toConsole="true"/>
+	        <fileset dir="${check.plugins.home}">
+	            <include name="org.jboss.*/**/*.java"/>
+	        	<include name="org.hibernate.*/**/*.java"/>
+	        </fileset>
+	    </pmd>
+	</target>
+</project>

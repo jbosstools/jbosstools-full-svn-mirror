@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="setup-software">
+	<title>Software</title>
+	<para>
+		Operations Systems
+		<itemizedlist>
+			<listitem>
+				<para>Windows 2000, XP or Vista</para>
+			</listitem>
+			<listitem>
+				<para>RHEL 5 Server or Desktop</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		Java Runtime Environments (JRE)
+		<itemizedlist>
+			<listitem>
+				<para>Java SE 5</para>
+			</listitem>
+			<listitem>
+				<para>Java SE 6</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		Eclipse
+		<itemizedlist>
+			<listitem>
+				<para>Web Tools All In one Edition (win32 and linux-gtk)</para>
+			</listitem>
+			<listitem>
+				<para>Test NG (TBD: What version)</para>
+			</listitem>
+			<listitem>
+				<para>Spring IDE (TBD: What version)</para>
+			</listitem>
+			<listitem>
+				<para>
+					SVN Team Plugin (TBD: Which one: subversive or subclipse)
+				</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		JBoss
+		<itemizedlist>
+			<listitem>
+				<para>JBoss AS 4.2.3</para>
+			</listitem>
+			<listitem>
+				<para>JBoss Seam 1.2.1.GA + patch</para>
+			</listitem>
+			<listitem>
+				<para>JBoss Seam 2.0.1.GA</para>
+			</listitem>
+			<listitem>
+				<para>JBoss Seam 2.1.0.A1</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+</sect1>

@@ -1,0 +1,6 @@
+<tests>
+	<test id="spacer">
+		<IMG WIDTH="1" HEIGHT="5"
+			SRC="/.*resources/spacer/spacer.gif/" />
+	</test>
+</tests>

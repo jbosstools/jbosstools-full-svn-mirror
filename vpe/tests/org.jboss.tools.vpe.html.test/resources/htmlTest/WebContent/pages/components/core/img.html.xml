@@ -1,0 +1,6 @@
+<tests>
+	<test id="img">
+		<IMG WIDTH="100" VSPACE="10" HSPACE="20" HEIGHT="100" BORDER="10" ALIGN="top" ALT="img" ID="img" CLASS="imgClass" DIR="ltr" ISMAP="ismap" STYLE="color: red;" SRC="/.*htmlTest/WebContent/pages/components/core/img/image.jpeg/"/>
+
+	</test>
+</tests>

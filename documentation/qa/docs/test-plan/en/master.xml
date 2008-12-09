@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+"../../resources/support/docbook-dtd/docbookx.dtd"
+
+[
+ <!ENTITY introduction      		SYSTEM "modules/introduction.xml">
+ <!ENTITY scope             		SYSTEM "modules/scope.xml"> 
+ <!ENTITY test-environments 		SYSTEM "modules/test-environments.xml">
+ <!ENTITY testcases         		SYSTEM "modules/testcases.xml">
+ <!ENTITY testcases-core    		SYSTEM "modules/testcases-core.xml">
+ <!ENTITY testcases-freemaker    	SYSTEM "modules/testcases-freemaker.xml">
+ <!ENTITY testcases-hibernatetools	SYSTEM "modules/testcases-hibernatetools.xml">
+ <!ENTITY testcases-jst				SYSTEM "modules/testcases-jst.xml">
+ <!ENTITY testcases-jsf				SYSTEM "modules/testcases-jsf.xml">
+ <!ENTITY testcases-struts			SYSTEM "modules/testcases-struts.xml">
+ <!ENTITY testcases-shale			SYSTEM "modules/testcases-shale.xml">
+ <!ENTITY testcases-seam			SYSTEM "modules/testcases-seam.xml">
+ <!ENTITY testcases-vpe				SYSTEM "modules/testcases-vpe.xml">
+ <!ENTITY testcases-seam    		SYSTEM "modules/testcases-seam.xml">
+ <!ENTITY reqs-mapping      		SYSTEM "modules/reqs-mapping.xml">
+ <!ENTITY testcases-documentation	SYSTEM "modules/testcases-documentation.xml">
+]>
+
+<book>
+
+	<bookinfo>
+		<title>JBoss Tools Test Plan</title>
+		<copyright>
+			<year>2007</year>
+			<holder>Red Hat</holder>
+		</copyright>
+		<releaseinfo></releaseinfo>
+	</bookinfo>
+
+
+	<toc />
+	&introduction;
+	&scope;
+	&test-environments;
+	&testcases;
+	&reqs-mapping;
+
+</book>

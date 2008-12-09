@@ -1,0 +1,11 @@
+<tests>
+	<test id="option">
+		<OPTION ID="option" CLASS="optionClass" DIR="ltr" DISABLED="disabled"
+			SELECTED="selected" STYLE="color: red; -moz-user-modify: read-write;"
+			VALUE="c1">
+			<SPAN>
+				orange
+			</SPAN>
+		</OPTION>
+	</test>
+</tests>

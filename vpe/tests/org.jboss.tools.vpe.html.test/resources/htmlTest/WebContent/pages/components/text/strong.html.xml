@@ -1,0 +1,10 @@
+<tests>
+	<test id="strong">
+		<STRONG ID="strong" CLASS="strongClass" STYLE="color: red; -moz-user-modify: read-write;" DIR="ltr">
+<SPAN>
+Some
+strong text
+</SPAN>
+</STRONG>
+	</test>
+</tests>

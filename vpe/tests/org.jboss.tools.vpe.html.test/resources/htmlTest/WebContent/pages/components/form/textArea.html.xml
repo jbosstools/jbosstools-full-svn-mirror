@@ -1,0 +1,8 @@
+<tests>
+	<test id="textArea">
+		<TEXTAREA COLS="10" ROWS="2" ID="textArea" CLASS="textAreaClass"
+				DIR="ltr" STYLE="color: red;" DISABLED="disabled">
+			value
+		</TEXTAREA>
+	</test>
+</tests>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+
+[
+
+ <!ENTITY testing-areas         	SYSTEM "modules/testing-areas.xml">
+ <!ENTITY testing-techniques    	SYSTEM "modules/testing-techniques.xml">
+ <!ENTITY testing-methodology    	SYSTEM "modules/testing-methodology.xml">
+
+ <!ENTITY setup-prerequisites		SYSTEM "modules/setup-prerequisites.xml">
+ <!ENTITY setup-hardware			SYSTEM "modules/setup-hardware.xml">
+ <!ENTITY setup-software			SYSTEM "modules/setup-software.xml">
+ <!ENTITY setup-team				SYSTEM "modules/setup-team.xml">
+
+]>
+
+<book> 
+
+	<bookinfo>
+		<title>JBoss Tools Test Strategy</title>
+		<copyright>
+			<year>2007</year>
+			<holder>Red Hat</holder>
+		</copyright>
+		<releaseinfo></releaseinfo>
+	</bookinfo>
+
+
+	<toc />
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="modules/introduction.xml"/> 
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="modules/scope.xml"/> 
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="modules/testing.xml"/> 
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="modules/setup.xml"/> 
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="modules/release.xml"/> 
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="modules/schedule.xml"/> 
+
+
+
+</book>

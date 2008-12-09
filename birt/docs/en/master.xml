@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.docbook.org/xml/4.3/docbookx.dtd"
+
+[
+<!ENTITY introduction SYSTEM "modules/introduction.xml">
+<!ENTITY birt_support SYSTEM "modules/birt_support.xml">
+<!ENTITY birt_designer SYSTEM "modules/birt_designer.xml">
+
+                    
+
+]>
+<book>
+    <bookinfo>
+        <title>Birt Plugin Reference Guide</title>
+
+        <author><firstname>Anastasiya</firstname><surname>Bogachuk</surname><email>abogachuk@exadel.com</email></author> 
+  
+        
+        <pubdate>August 2008</pubdate>
+        <copyright>
+                     <year>2008</year>
+            <holder>JBoss, a division of Red Hat Inc.</holder>
+        </copyright>
+        <releaseinfo>
+            Version: 3.0.0.beta1
+        </releaseinfo>
+  
+
+<abstract>
+   <title/>
+       <para>
+           <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/jboss_birt_plugin_ref_guide/pdf/Birt_Reference_Guide.pdf">PDF version</ulink>
+       </para>
+</abstract>
+
+    
+    </bookinfo>
+ <toc/> 
+
+  
+    &introduction;
+    &birt_support;
+    &birt_designer;
+    
+
+</book>    

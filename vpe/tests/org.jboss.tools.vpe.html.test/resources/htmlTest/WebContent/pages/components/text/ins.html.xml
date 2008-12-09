@@ -1,0 +1,9 @@
+<tests>
+	<test id="ins">
+		<INS ID="ins" CLASS="insClass" STYLE="color: red; -moz-user-modify: read-only;">
+<SPAN>
+New Text
+</SPAN>
+</INS>
+	</test>
+</tests>

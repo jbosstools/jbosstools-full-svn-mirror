@@ -1,0 +1,12 @@
+<tests>
+	<test id="span">
+
+		<SPAN STYLE="color: red; -moz-user-modify: read-write;" CLASS="spanClass"
+			DIR="ltr" ID="span">
+			<SPAN>
+				S
+</SPAN>
+		</SPAN>
+
+	</test>
+</tests>

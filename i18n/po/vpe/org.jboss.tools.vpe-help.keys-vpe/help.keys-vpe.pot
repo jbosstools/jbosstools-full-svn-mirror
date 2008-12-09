@@ -1,0 +1,211 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: VpeCssReferencesDialog.WindowTitle
+#, java-format
+msgctxt "VpeCssReferencesDialog.WindowTitle"
+msgid "References to CSS Files"
+msgstr ""
+
+#. 
+#: VpeCssReferencesDialog.Title
+#, java-format
+msgctxt "VpeCssReferencesDialog.Title"
+msgid "Visual Page Editor"
+msgstr ""
+
+#. 
+#: VPECSSReference.location
+#, java-format
+msgctxt "VPECSSReference.location"
+msgid "CSS File Path"
+msgstr ""
+
+#: VPECSSReference_AddItem.Title
+#, java-format
+msgctxt "VPECSSReference_AddItem.Title"
+msgid "Add References to CSS File"
+msgstr ""
+
+#. 
+#: VPECSSReference_EditItem.Title
+#, java-format
+msgctxt "VPECSSReference_EditItem.Title"
+msgid "Edit Existing References to CSS File"
+msgstr ""
+
+#: VPETLDReference_AddItem.Title
+#, java-format
+msgctxt "VPETLDReference_AddItem.Title"
+msgid "Add TLD Item"
+msgstr ""
+
+#. 
+#: VPETLDReference_EditItem.Title
+#, java-format
+msgctxt "VPETLDReference_EditItem.Title"
+msgid "Edit TLD Item"
+msgstr ""
+
+#: VPEElReference_AddItem.Title
+#, java-format
+msgctxt "VPEElReference_AddItem.Title"
+msgid "Add El Item"
+msgstr ""
+
+#. 
+#: VPEElReference_EditItem.Title
+#, java-format
+msgctxt "VPEElReference_EditItem.Title"
+msgid "Edit EL Item"
+msgstr ""
+
+#: VpeImageReferencesDialog.WindowTitle
+#, java-format
+msgctxt "VpeImageReferencesDialog.WindowTitle"
+msgid "References to Images Files"
+msgstr ""
+
+#. 
+#: VpeImageReferencesDialog.Title
+#, java-format
+msgctxt "VpeImageReferencesDialog.Title"
+msgid "Visual Page Editor"
+msgstr ""
+
+#. 
+#: VPEImageReference.location
+#, java-format
+msgctxt "VPEImageReference.location"
+msgid "Path to Folder"
+msgstr ""
+
+#: VPETLDReference.location
+#, java-format
+msgctxt "VPETLDReference.location"
+msgid "URI"
+msgstr ""
+
+#. 
+#: VPETLDReferenceExt.location
+#, java-format
+msgctxt "VPETLDReferenceExt.location"
+msgid "URI"
+msgstr ""
+
+#: VPEElReference.location
+#, java-format
+msgctxt "VPEElReference.location"
+msgid "El Value"
+msgstr ""
+
+#. 
+#: VPEElReference.prefix
+#, java-format
+msgctxt "VPEElReference.prefix"
+msgid "Value"
+msgstr ""
+
+#: VPEElReferenceExt.location
+#, java-format
+msgctxt "VPEElReferenceExt.location"
+msgid "El Value"
+msgstr ""
+
+#. 
+#: VPEElReferenceExt.prefix
+#, java-format
+msgctxt "VPEElReferenceExt.prefix"
+msgid "Value"
+msgstr ""
+
+#: VPEGlobalElReference.location
+#, java-format
+msgctxt "VPEGlobalElReference.location"
+msgid "El Value"
+msgstr ""
+
+#. 
+#: VPEGlobalElReference.prefix
+#, java-format
+msgctxt "VPEGlobalElReference.prefix"
+msgid "Value"
+msgstr ""
+
+#. 
+#: VPEGlobalElReference_AddItem.Title
+#, java-format
+msgctxt "VPEGlobalElReference_AddItem.Title"
+msgid "Add El Item"
+msgstr ""
+
+#. 
+#: VPEGlobalElReference_EditItem.Title
+#, java-format
+msgctxt "VPEGlobalElReference_EditItem.Title"
+msgid "Edit EL Item"
+msgstr ""
+
+#: VPEGlobalElReferenceExt.location
+#, java-format
+msgctxt "VPEGlobalElReferenceExt.location"
+msgid "El Value"
+msgstr ""
+
+#. 
+#: VPEGlobalElReferenceExt.prefix
+#, java-format
+msgctxt "VPEGlobalElReferenceExt.prefix"
+msgid "Value"
+msgstr ""
+
+#. 
+#: VPEGlobalElReferenceExt_AddItem.Title
+#, java-format
+msgctxt "VPEGlobalElReferenceExt_AddItem.Title"
+msgid "Add El Item"
+msgstr ""
+
+#. 
+#: VPEGlobalElReferenceExt_EditItem.Title
+#, java-format
+msgctxt "VPEGlobalElReferenceExt_EditItem.Title"
+msgid "Edit EL Item"
+msgstr ""
+
+#: VpeResourcesDialog.WindowTitle
+#, java-format
+msgctxt "VpeResourcesDialog.WindowTitle"
+msgid "References to Resources"
+msgstr ""
+
+#. 
+#: VpeResourcesDialog.Title
+#, java-format
+msgctxt "VpeResourcesDialog.Title"
+msgid "Page Design Options"
+msgstr ""
+
+#: VPEFolderReference.location
+#, java-format
+msgctxt "VPEFolderReference.location"
+msgid "Path"
+msgstr ""
+

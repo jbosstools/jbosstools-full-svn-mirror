@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<chapter id="setup">
+	<title>Setup Testing</title>
+	<para>TBD</para>
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+		href="setup-prerequisites.xml" />
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+		href="setup-hardware.xml" />
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+		href="setup-software.xml" />
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+		href="setup-team.xml" />
+</chapter>

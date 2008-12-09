@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Docbook Xml Visual Editor Plug-in
+Bundle-SymbolicName: org.jboss.tools.vpe.docbook;singleton:=true
+Bundle-Version: 1.0.0
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.jboss.tools.jst.jsp,
+ org.jboss.tools.vpe
+Eclipse-LazyStart: true

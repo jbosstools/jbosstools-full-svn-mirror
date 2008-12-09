@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension point="org.jboss.tools.common.model.meta">
+      <meta path="meta/jsf.meta">
+      </meta>
+      <meta path="meta/jsfcapabilities.meta">
+      </meta>
+      <meta path="meta/jsfprojects.meta">
+      </meta>
+      <meta path="meta/jsfwizards.meta">
+      </meta>
+   </extension>
+   <extension point="org.jboss.tools.common.model.keys">
+      <keys path="help/keys-jsf.properties"/>
+      <keys path="help/keys-jsf-attrs.properties"/>
+      <keys path="help/keys-jsf-menu.properties"/>
+      <keys path="help/keys-jsf-lists.properties"/>
+   </extension>
+   <extension id="jsfnature" point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run class="org.jboss.tools.jsf.project.JSFNature">
+         </run>
+         <library name="$nl$/"/>         
+      </runtime>
+   </extension>
+
+   <extension point="org.jboss.tools.common.model.jspAdopt">
+      <jspAdopt class="org.jboss.tools.jsf.model.handlers.JSPAdopt"/>
+   </extension>
+   
+   
+   	<extension
+		point="org.eclipse.wst.xml.core.catalogContributions">
+		<catalogContribution id="default">
+		</catalogContribution>
+	</extension>
+	
+   <extension
+         point="org.eclipse.ltk.core.refactoring.renameParticipants">
+      <renameParticipant
+            class="org.jboss.tools.jsf.model.handlers.bean.JSFRenameFieldParticipant"
+            id="org.jboss.tools.jsf.model.handlers.bean.JSFRenameFieldParticipant"
+            name="jsf-RenameFieldParticipant">
+         <enablement>
+            <with variable="affectedNatures">
+               <iterate operator="or">
+                  <equals value="org.jboss.tools.jsf.jsfnature"/>
+               </iterate>
+            </with>
+            <with variable="element">
+                <or>
+                   <instanceof value="org.eclipse.jdt.core.IField"/>
+                   <instanceof value="org.jboss.tools.jsf.model.impl.ManagedPropertyObjectImpl"/>
+                </or>
+            </with>
+         </enablement>
+      </renameParticipant>
+
+      <renameParticipant
+            class="org.jboss.tools.jsf.model.handlers.refactoring.JSFRenameFacesConfigParticipant"
+            id="org.jboss.tools.jsf.model.handlers.refactoring.JSFRenameFacesConfigParticipant"
+            name="jsf-RenameFacesConfigParticipant">
+         <enablement>
+            <with variable="affectedNatures">
+               <iterate operator="or">
+                  <equals value="org.jboss.tools.jsf.jsfnature"/>
+               </iterate>
+            </with>
+            <with variable="element">
+                <or>
+                   <instanceof value="org.eclipse.core.resources.IFile"/>
+                </or>
+            </with>
+         </enablement>
+      </renameParticipant>
+
+      <renameParticipant
+            class="org.jboss.tools.jsf.model.handlers.refactoring.JSFRenamePageParticipant"
+            id="org.jboss.tools.jsf.model.handlers.refactoring.JSFRenamePageParticipant"
+            name="jsf-RenamePageParticipant">
+         <enablement>
+            <with variable="affectedNatures">
+               <iterate operator="or">
+                  <equals value="org.jboss.tools.jsf.jsfnature"/>
+               </iterate>
+            </with>
+            <with variable="element">
+                <or>
+                   <instanceof value="org.eclipse.core.resources.IFile"/>
+                   <instanceof value="org.jboss.tools.common.model.filesystems.impl.FileAnyImpl"/>
+                </or>
+            </with>
+         </enablement>
+      </renameParticipant>
+
+      <renameParticipant
+            class="org.jboss.tools.jsf.model.handlers.refactoring.JSFRenameFolderParticipant"
+            id="org.jboss.tools.jsf.model.handlers.refactoring.JSFRenameFolderParticipant"
+            name="jsf-RenameFolderParticipant">
+         <enablement>
+            <with variable="affectedNatures">
+               <iterate operator="or">
+                  <equals value="org.jboss.tools.jsf.jsfnature"/>
+               </iterate>
+            </with>
+            <with variable="element">
+                <or>
+                   <instanceof value="org.eclipse.core.resources.IFolder"/>
+                   <instanceof value="org.jboss.tools.common.model.filesystems.impl.FolderImpl"/>
+                </or>
+            </with>
+         </enablement>
+      </renameParticipant>
+
+   </extension>
+
+   <extension
+         point="org.eclipse.ltk.core.refactoring.moveParticipants">
+      <moveParticipant
+            class="org.jboss.tools.jsf.model.handlers.refactoring.JSFMovePageParticipant"
+            id="org.jboss.tools.jsf.model.handlers.refactoring.JSFMovePageParticipant"
+            name="jsf-MovePageParticipant">
+         <enablement>
+            <with variable="affectedNatures">
+               <iterate operator="or">
+                  <equals value="org.jboss.tools.jsf.jsfnature"/>
+               </iterate>
+            </with>
+            <with variable="element">
+               <instanceof value="org.eclipse.core.resources.IFile"/>
+            </with>
+         </enablement>
+      </moveParticipant>
+   </extension>
+
+   <extension
+         point="org.jboss.tools.common.model.resourceMapping">
+      <mapping
+          loader="org.jboss.tools.jsf.model.FacesConfigLoader"
+          priority="0"
+          kind="image"
+          paths="/jsf/"
+      />
+   </extension>
+
+   <extension point="org.jboss.tools.common.model.classes">
+		<xclass id="org.jboss.tools.jsf.model.AuxEntityRecognizer"
+			class="org.jboss.tools.jsf.model.AuxEntityRecognizer"/>
+		<xclass id="org.jboss.tools.jsf.model.FacesConfigFilteredTreeConstraint"
+			class="org.jboss.tools.jsf.model.FacesConfigFilteredTreeConstraint"/>
+		<xclass id="org.jboss.tools.jsf.model.FacesConfigLoader"
+			class="org.jboss.tools.jsf.model.FacesConfigLoader"/>
+		<xclass id="org.jboss.tools.jsf.model.FacesProcessImpl"
+			class="org.jboss.tools.jsf.model.FacesProcessImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.FileFacesConfigImpl"
+			class="org.jboss.tools.jsf.model.FileFacesConfigImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.JSFCommentObjectImpl"
+			class="org.jboss.tools.jsf.model.JSFCommentObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.JSFEntityRecognizer"
+			class="org.jboss.tools.jsf.model.JSFEntityRecognizer"/>
+		<xclass id="org.jboss.tools.jsf.model.ReferenceGroupImpl"
+			class="org.jboss.tools.jsf.model.ReferenceGroupImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.ReferenceObjectImpl"
+			class="org.jboss.tools.jsf.model.ReferenceObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.AddCaseToGroupHandler"
+			class="org.jboss.tools.jsf.model.handlers.AddCaseToGroupHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.AddNavigationCaseHandler"
+			class="org.jboss.tools.jsf.model.handlers.AddNavigationCaseHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.AddNavigationRuleHandler"
+			class="org.jboss.tools.jsf.model.handlers.AddNavigationRuleHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.AddRuleToGroupHandler"
+			class="org.jboss.tools.jsf.model.handlers.AddRuleToGroupHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.AutolayoutTransitionHandler"
+			class="org.jboss.tools.jsf.model.handlers.AutolayoutTransitionHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.ChangeContentKindHandler"
+			class="org.jboss.tools.jsf.model.handlers.ChangeContentKindHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.ChangeValueKindHandler"
+			class="org.jboss.tools.jsf.model.handlers.ChangeValueKindHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.CreateCommentHandler"
+			class="org.jboss.tools.jsf.model.handlers.CreateCommentHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.DeleteFacesConfigHandler"
+			class="org.jboss.tools.jsf.model.handlers.DeleteFacesConfigHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.DeleteGroupHandler"
+			class="org.jboss.tools.jsf.model.handlers.DeleteGroupHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.DeleteManagedBeanHandler"
+			class="org.jboss.tools.jsf.model.handlers.DeleteManagedBeanHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.DeleteOutputHandler" 
+			class="org.jboss.tools.jsf.model.handlers.DeleteOutputHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.DeleteRuleHandler"
+			class="org.jboss.tools.jsf.model.handlers.DeleteRuleHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.DiagramPasteHandler"
+			class="org.jboss.tools.jsf.model.handlers.DiagramPasteHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.DiscardConfigHandler"
+			class="org.jboss.tools.jsf.model.handlers.DiscardConfigHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.FacesConfigAdopt"
+			class="org.jboss.tools.jsf.model.handlers.FacesConfigAdopt"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.GroupAdopt"
+			class="org.jboss.tools.jsf.model.handlers.GroupAdopt"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.HiddenLinksHandler"
+			class="org.jboss.tools.jsf.model.handlers.HiddenLinksHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.JSFGroupRegirectHandler"
+			class="org.jboss.tools.jsf.model.handlers.JSFGroupRegirectHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.JSFItemRegirectHandler"
+			class="org.jboss.tools.jsf.model.handlers.JSFItemRegirectHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.JSFProcessRegirectHandler"
+			class="org.jboss.tools.jsf.model.handlers.JSFProcessRegirectHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.JSPAdopt"
+			class="org.jboss.tools.jsf.model.handlers.JSPAdopt"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.RemoveJSFNatureContribution"
+			class="org.jboss.tools.jsf.model.handlers.RemoveJSFNatureContribution"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.ModifyLinkHandler"
+			class="org.jboss.tools.jsf.model.handlers.ModifyLinkHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.OpenPageHandler"
+			class="org.jboss.tools.jsf.model.handlers.OpenPageHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.OutputMoveHandler"
+			class="org.jboss.tools.jsf.model.handlers.OutputMoveHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.ProcessAdopt"
+			class="org.jboss.tools.jsf.model.handlers.ProcessAdopt"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.ProcessPasteHandler"
+			class="org.jboss.tools.jsf.model.handlers.ProcessPasteHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.RenameFacesConfigHandler"
+			class="org.jboss.tools.jsf.model.handlers.RenameFacesConfigHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.SelectOnDiagramHandler"
+			class="org.jboss.tools.jsf.model.handlers.SelectOnDiagramHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.SetApplicationHandler"
+			class="org.jboss.tools.jsf.model.handlers.SetApplicationHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.SetFactoryHandler"
+			class="org.jboss.tools.jsf.model.handlers.SetFactoryHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.bean.AddManagedPropertySafeHandler"
+			class="org.jboss.tools.jsf.model.handlers.bean.AddManagedPropertySafeHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.bean.DeleteManagedPropertyHandler"
+			class="org.jboss.tools.jsf.model.handlers.bean.DeleteManagedPropertyHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.bean.RenameManagedBeanHandler"
+			class="org.jboss.tools.jsf.model.handlers.bean.RenameManagedBeanHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.bean.RenameManagedPropertyHandler"
+			class="org.jboss.tools.jsf.model.handlers.bean.RenameManagedPropertyHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.run.RunOnServerHandler"
+			class="org.jboss.tools.jsf.model.handlers.run.RunOnServerHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.tile.TilesFileRegistration"
+			class="org.jboss.tools.jsf.model.handlers.tile.TilesFileRegistration"/>
+		<xclass id="org.jboss.tools.jsf.model.helpers.pages.FilePathEncoder"
+			class="org.jboss.tools.jsf.model.helpers.pages.FilePathEncoder"/>
+		<xclass id="org.jboss.tools.jsf.model.helpers.pages.PagesTree"
+			class="org.jboss.tools.jsf.model.helpers.pages.PagesTree"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.ApplicationObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.ApplicationObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.AttributeObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.AttributeObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.ComponentObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.ComponentObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.ConverterObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.ConverterObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.EntriesObject"
+			class="org.jboss.tools.jsf.model.impl.EntriesObject"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.ExtensionObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.ExtensionObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.FacetObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.FacetObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.FactoryObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.FactoryObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.LifecycleObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.LifecycleObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.ListEntryObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.ListEntryObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.ManagedBeanObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.ManagedBeanObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.ManagedPropertyObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.ManagedPropertyObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.MapEntryObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.MapEntryObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.MessageBundleObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.MessageBundleObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.NavigationCaseObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.NavigationCaseObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.NavigationRuleObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.NavigationRuleObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.NavigationRulesObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.NavigationRulesObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.PhaseListenerObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.PhaseListenerObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.PropertyObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.PropertyObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.ReferencedBeanObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.ReferencedBeanObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.RenderKitObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.RenderKitObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.RendererObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.RendererObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.SupportedComponentClassObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.SupportedComponentClassObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.SupportedComponentTypeObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.SupportedComponentTypeObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.SupportedLocaleObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.SupportedLocaleObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.impl.ValidatorObjectImpl"
+			class="org.jboss.tools.jsf.model.impl.ValidatorObjectImpl"/>
+		<xclass id="org.jboss.tools.jsf.model.pv.JSFProjectBean"
+			class="org.jboss.tools.jsf.model.pv.JSFProjectBean"/>
+		<xclass id="org.jboss.tools.jsf.model.pv.JSFProjectBeanMember"
+			class="org.jboss.tools.jsf.model.pv.JSFProjectBeanMember"/>
+		<xclass id="org.jboss.tools.jsf.model.pv.JSFProjectBeans"
+			class="org.jboss.tools.jsf.model.pv.JSFProjectBeans"/>
+		<xclass id="org.jboss.tools.jsf.model.pv.JSFProjectConfiguration"
+			class="org.jboss.tools.jsf.model.pv.JSFProjectConfiguration"/>
+		<xclass id="org.jboss.tools.jsf.model.pv.JSFProjectResourceBundles"
+			class="org.jboss.tools.jsf.model.pv.JSFProjectResourceBundles"/>
+		<xclass id="org.jboss.tools.jsf.model.pv.JSFProjectTagLibs"
+			class="org.jboss.tools.jsf.model.pv.JSFProjectTagLibs"/>
+		<xclass id="org.jboss.tools.jsf.model.pv.JSFProjectTiles"
+			class="org.jboss.tools.jsf.model.pv.JSFProjectTiles"/>
+		<xclass id="org.jboss.tools.jsf.model.pv.JSFProjectsRoot"
+			class="org.jboss.tools.jsf.model.pv.JSFProjectsRoot"/>
+		<xclass id="org.jboss.tools.jsf.model.pv.JSFProjectsTree"
+			class="org.jboss.tools.jsf.model.pv.JSFProjectsTree"/>
+		<xclass id="org.jboss.tools.jsf.model.pv.JSFProjectsTreeConstraint"
+			class="org.jboss.tools.jsf.model.pv.JSFProjectsTreeConstraint"/>
+		<xclass id="org.jboss.tools.jsf.model.pv.JSFPromptingProvider"
+			class="org.jboss.tools.jsf.model.pv.JSFPromptingProvider"/>
+		<xclass id="org.jboss.tools.jsf.model.pv.handler.JSFProjectsConfigurationRedirectHandler"
+			class="org.jboss.tools.jsf.model.pv.handler.JSFProjectsConfigurationRedirectHandler"/>
+		<xclass id="org.jboss.tools.jsf.model.pv.handler.JSFProjectsRootRedirectHandler"
+			class="org.jboss.tools.jsf.model.pv.handler.JSFProjectsRootRedirectHandler"/>
+		<xclass id="org.jboss.tools.jsf.project.capabilities.JSFCapabilities"
+			class="org.jboss.tools.jsf.project.capabilities.JSFCapabilities"/>
+		<xclass id="org.jboss.tools.jsf.project.capabilities.JSFCapabilitiesLoader"
+			class="org.jboss.tools.jsf.project.capabilities.JSFCapabilitiesLoader"/>
+		<xclass id="org.jboss.tools.jsf.project.capabilities.AddJSFCapabilitiesSupport"
+			class="org.jboss.tools.jsf.project.capabilities.AddJSFCapabilitiesSupport"/>
+
+		<xclass id="org.jboss.tools.jsf.web.JSFTemplate"
+			class="org.jboss.tools.jsf.web.JSFTemplate"/>
+		<xclass id="org.jboss.tools.jsf.web.JSFWatcherContributor"
+			class="org.jboss.tools.jsf.web.JSFWatcherContributor"/>
+		<xclass id="org.jboss.tools.jsf.web.WebJSFModuleImpl"
+			class="org.jboss.tools.jsf.web.WebJSFModuleImpl"/>
+			
+		<xclass id="org.jboss.tools.jsf.model.handlers.bean.AddManagedBeanSupport"
+			class="org.jboss.tools.jsf.model.handlers.bean.AddManagedBeanSupport"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.CreateFacesConfigSupport"
+			class="org.jboss.tools.jsf.model.handlers.CreateFacesConfigSupport"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.CreateFacesConfigSupport"
+			class="org.jboss.tools.jsf.model.handlers.CreateFacesConfigSupport"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.AddViewSupport"
+			class="org.jboss.tools.jsf.model.handlers.AddViewSupport"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.AddEntrySupport"
+			class="org.jboss.tools.jsf.model.handlers.AddEntrySupport"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.ChangeToValueSupport"
+			class="org.jboss.tools.jsf.model.handlers.ChangeToValueSupport"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.RenameViewSupport"
+			class="org.jboss.tools.jsf.model.handlers.RenameViewSupport"/>
+		<xclass id="org.jboss.tools.jsf.model.handlers.bean.AddManagedPropertySupport"
+			class="org.jboss.tools.jsf.model.handlers.bean.AddManagedPropertySupport"/>
+
+		<xclass id="org.jboss.tools.jsf.model.helpers.autolayout.JSFItems"
+			class="org.jboss.tools.jsf.model.helpers.autolayout.JSFItems"/>
+
+		<xclass id="org.jboss.tools.jsf.web.JSFTemplate"
+			class="org.jboss.tools.jsf.web.JSFTemplate"/>
+   </extension>
+   <extension
+         point="org.eclipse.wst.common.project.facet.core.facets">
+      <event-handler
+            facet="jst.jsf"
+            type="PRE_INSTALL"
+            version="[1.1">
+         <delegate
+               class="org.jboss.tools.jsf.project.facet.PostInstallJsfFacetDelegate">
+         </delegate>
+      </event-handler>
+   </extension>
+
+</plugin>

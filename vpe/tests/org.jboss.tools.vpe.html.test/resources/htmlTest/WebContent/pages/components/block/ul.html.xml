@@ -1,0 +1,23 @@
+<tests>
+	<test id="ul">
+		<UL TYPE="disc" CLASS="ulClass" DIR="ltr" ID="ul"
+			STYLE="color: red; -moz-user-modify: read-write;">
+			<LI STYLE="-moz-user-modify: read-write;">
+				<SPAN>
+					text 1
+</SPAN>
+			</LI>
+			<LI STYLE="-moz-user-modify: read-write;">
+				<SPAN>
+					text 2
+</SPAN>
+			</LI>
+			<LI STYLE="-moz-user-modify: read-write;">
+				<SPAN>
+					text 3
+</SPAN>
+			</LI>
+		</UL>
+
+	</test>
+</tests>

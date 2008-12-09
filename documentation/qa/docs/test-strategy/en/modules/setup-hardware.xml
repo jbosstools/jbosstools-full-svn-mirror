@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="setup-hardware">
+	<title>Hardware</title>
+	<para>
+		This section describe hardware that should be provided to perform the
+		testing:
+		<itemizedlist>
+			<listitem><para>Automated JUnit testing host</para></listitem>
+			<listitem><para>Workstations for manual testing</para></listitem>
+		</itemizedlist>
+	</para>
+</sect1>

@@ -1,0 +1,9 @@
+<tests>
+	<test id="noframes">
+		<NOFRAMES ID="noframes" STYLE="-moz-user-modify: read-only;">
+			<SPAN>
+				your browser don't support frames
+			</SPAN>
+		</NOFRAMES>
+	</test>
+</tests>

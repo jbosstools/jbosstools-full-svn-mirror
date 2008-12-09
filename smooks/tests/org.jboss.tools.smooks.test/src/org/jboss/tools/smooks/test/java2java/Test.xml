@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ASCII"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.0.xsd">
+
+	<resource-config selector="global-parameters">
+		<param name="stream.filter.type">SAX</param>
+	</resource-config>
+
+
+	<resource-config selector="srcmodel.Order">
+		<resource>org.milyn.javabean.BeanPopulator</resource>
+		<param name="beanId">LineOrder</param>
+		<param name="beanClass">targetmodel.LineOrder</param>
+		<param name="bindings">
+			<binding property="customerId"
+				selector="header customerNumber" />
+			<binding property="customerName"
+				selector="header customerName" />
+			<binding property="lineItems" selector="${lineItems}" />
+		</param>
+	</resource-config>
+	<resource-config selector="orderItems">
+		<resource>org.milyn.javabean.BeanPopulator</resource>
+		<param name="beanId">lineItems</param>
+		<param name="beanClass">targetmodel.LineItem[]</param>
+		<param name="bindings">
+			<binding property="LineItem" selector="${LineItem}" />
+		</param>
+	</resource-config>
+	<resource-config selector="srcmodel.OrderItem">
+		<resource>org.milyn.javabean.BeanPopulator</resource>
+		<param name="beanId">LineItem</param>
+		<param name="beanClass">targetmodel.LineItem</param>
+		<param name="bindings">
+			<binding property="productCode"
+				selector="srcmodel.OrderItem productId" />
+			<binding property="unitPrice"
+				selector="srcmodel.OrderItem price" />
+			<binding property="unitPrice"
+				selector="srcmodel.OrderItem Ate" />
+			<binding property="unitQuantity"
+				selector="srcmodel.OrderItem quantity" />
+		</param>
+	</resource-config>
+
+	<resource-config selector="addtioninfo">
+		<resource>org.milyn.javabean.BeanPopulator</resource>
+		<param name="beanId">no</param>
+	</resource-config>
+
+	<resource-config selector="addtioninfo1">
+		<resource>org.milyn.javabean.BeanPopulator</resource>
+		<param name="beanId">no1</param>
+	</resource-config>
+
+	<resource-config selector="addtioninfo2">
+		<resource>org.milyn.javabean.BeanPopulator</resource>
+		<param name="beanId">no2</param>
+	</resource-config>
+
+	<resource-config selector="addtioninfo3">
+		<resource>org.milyn.javabean.BeanPopulator</resource>
+		<param name="beanId">no3</param>
+	</resource-config>
+
+	<resource-config selector="decoder:OrderDateLong">
+		<resource>org.milyn.javabean.decoders.DateDecoder</resource>
+		<param name="format">EEE MMM dd HH:mm:ss z yyyy</param>
+		<param name="locale-language">en</param>
+		<param name="locale-country">IE</param>
+	</resource-config>
+
+
+</smooks-resource-list>
