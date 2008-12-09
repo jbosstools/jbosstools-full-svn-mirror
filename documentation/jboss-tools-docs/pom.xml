@@ -28,7 +28,6 @@
 		<module>../../birt/docs</module>
 		<module>../../smooks/docs/reference</module>
 		<module>../../jbpm/docs/converter_ref</module>
-		<module>../../jbpm/docs/reference</module>
 		<module>index</module>
 	</modules>
 

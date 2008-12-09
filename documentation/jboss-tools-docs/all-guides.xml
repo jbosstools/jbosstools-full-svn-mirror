@@ -137,6 +137,19 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
+						<fileSet>
+				<directory>../../jbpm/docs/converter_ref/target/docbook/publish/en-US</directory>
+				<outputDirectory>/jboss_bpmn_convert_ref_guide</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
 			<fileSet>
 				<directory>../../jsf/docs/userguide/target/docbook/publish/en-US</directory>
 				<outputDirectory>/jsf</outputDirectory>
@@ -277,34 +290,6 @@
 			<fileSet>
 				<directory>../../smooks/docs/references/target/docbook/publish/en-US</directory>
 				<outputDirectory>/jboss_smooks_plugin_ref_guide</outputDirectory>
-				<filtered>false</filtered>
-				<lineEnding>keep</lineEnding>
-				<includes>
-					<include>**/*.*</include>
-				</includes>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet>
-			
-			<fileSet>
-				<directory>../../jbpm/docs/converter_ref/target/docbook/publish/en-US</directory>
-				<outputDirectory>/jboss_bpmn_convert_ref_guide</outputDirectory>
-				<filtered>false</filtered>
-				<lineEnding>keep</lineEnding>
-				<includes>
-					<include>**/*.*</include>
-				</includes>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet>
-			
-			<fileSet>
-				<directory>../../jbpm/docs/reference/target/docbook/publish/en-US</directory>
-				<outputDirectory>/jboss_jbpm_ref_guide</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
 				<includes>
