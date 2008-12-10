@@ -66,6 +66,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			throws SmooksAnalyzerException {
 		SmooksResourceListType listType = context.getSmooksResourceListModel();
 		GraphRootModel rootModel = context.getGraphicalRootModel();
+		if(rootModel == null) return;
 		List children = rootModel.getChildren();
 		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
 			TreeItemRelationModel dataModel = (TreeItemRelationModel) iterator
