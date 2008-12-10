@@ -10,33 +10,15 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.messages;
 
-import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-
 import org.eclipse.osgi.util.NLS;
-import org.jboss.tools.vpe.VpePlugin;
 
 public class VpeUIMessages extends NLS {
 	private static final String BUNDLE_NAME = "org.jboss.tools.vpe.messages.messages";//$NON-NLS-1$
-	private static ResourceBundle fResourceBundle;
 	static {
 		// load message values from bundle file
 		NLS.initializeMessages(BUNDLE_NAME, VpeUIMessages.class);		
 	}
 	private VpeUIMessages(){}
-	
-	public static ResourceBundle getResourceBundle() {
-		try {
-			if (fResourceBundle == null)
-				fResourceBundle = ResourceBundle.getBundle(BUNDLE_NAME, Locale.getDefault());
-		}
-		catch (MissingResourceException x) {
-			VpePlugin.getPluginLog().logError(x);
-			fResourceBundle = null;
-		}
-		return fResourceBundle;
-	}
 
 	public static String NAMESPACE_NOT_DEFINED;
 	public static String PREFERENCES;
@@ -104,4 +86,5 @@ public class VpeUIMessages extends NLS {
 	public static String MAX_VISUAL_PANE;
 	public static String RESTORE_PREVIOUS_LOCATION;
 	public static String BACKGROUND_COLOR_TIP;
+	public static String SETUP_TEMPLATE_FOR_MENU;
 }

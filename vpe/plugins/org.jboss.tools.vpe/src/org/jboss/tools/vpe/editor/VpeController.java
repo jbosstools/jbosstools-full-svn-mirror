@@ -40,6 +40,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.LineStyleEvent;
 import org.eclipse.swt.custom.LineStyleListener;
@@ -1489,7 +1490,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					&& elementMapping.getTemplate().getType() == VpeHtmlTemplate.TYPE_ANY) {
 				final VpeTemplate selectedTemplate = elementMapping
 						.getTemplate();
-				manager.add(new VpeAction("Template", node) { //$NON-NLS-1$
+				manager.add(new VpeAction(NLS.bind(VpeUIMessages.SETUP_TEMPLATE_FOR_MENU,"<" + node.getNodeName() + ">"), node) { //$NON-NLS-1$
 							public void run() {
 								boolean isCorrectNS = pageContext
 										.isCorrectNS(actionNode);
