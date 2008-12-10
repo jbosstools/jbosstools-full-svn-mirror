@@ -890,7 +890,10 @@ public class SmooksGraphicalFormPage extends FormPage implements
 						commandStackChanged = true;
 						analyzeDesignGraph();
 						updateSelectionActions();
-						getManagedForm().dirtyStateChanged();
+						IManagedForm form = getManagedForm();
+						if(form != null){
+							form.dirtyStateChanged();
+						}
 					}
 
 				});
