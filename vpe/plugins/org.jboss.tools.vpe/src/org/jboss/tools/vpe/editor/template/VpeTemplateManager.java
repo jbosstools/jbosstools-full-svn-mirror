@@ -332,7 +332,7 @@ public class VpeTemplateManager {
 	 * @param sourceNode
 	 * @return name of template
 	 */
-	private  String getTemplateName(VpePageContext pageContext, Node sourceNode) {
+	public  String getTemplateName(VpePageContext pageContext, Node sourceNode) {
 		
 		if(sourceNode==null) {
 			return null;

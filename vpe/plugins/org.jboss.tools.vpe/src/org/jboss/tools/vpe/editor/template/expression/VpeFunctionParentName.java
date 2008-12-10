@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.editor.template.expression;
 import org.w3c.dom.Node;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 /**
  *
  * @author mareshkau
@@ -25,6 +26,8 @@ public class VpeFunctionParentName extends VpeFunction {
 	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
 		Node parentNode = sourceNode.getParentNode();
 		
-		return new VpeValue(parentNode != null ? parentNode.getNodeName() : "");
+		String parentTemplateName = VpeTemplateManager.getInstance().getTemplateName(pageContext, parentNode);
+			
+		return new VpeValue(parentTemplateName != null ? parentTemplateName : "");
 	}
 }
