@@ -793,7 +793,10 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		}
 		super.doSave(monitor);
 		commandStackChanged = false;
-		getManagedForm().dirtyStateChanged();
+		IManagedForm managedForm = getManagedForm();
+		if(managedForm != null){
+			managedForm.dirtyStateChanged();
+		}
 	}
 
 	protected SmooksConfigurationFileGenerateContext createContext() {
@@ -816,18 +819,21 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		context.setDataMappingRootModel(this.rootModel);
 		context.setSmooksConfigFile(((IFileEditorInput) getEditorInput())
 				.getFile());
-
+		if(sourceViewer != null){
 		context.setSourceViewerLabelProvider((LabelProvider) sourceViewer
 				.getLabelProvider());
 		context
 				.setSourceViewerContentProvider((ITreeContentProvider) sourceViewer
 						.getContentProvider());
+		}
+		if(targetViewer != null){
 
 		context.setTargetViewerLabelProvider((LabelProvider) targetViewer
 				.getLabelProvider());
 		context
 				.setTargetViewerContentProvider((ITreeContentProvider) targetViewer
 						.getContentProvider());
+		}
 
 		context.setShell(getSite().getShell());
 	}

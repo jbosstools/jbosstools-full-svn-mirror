@@ -103,21 +103,23 @@ public class UIUtils {
 				.getAbstractResourceConfig();
 		for (Iterator<AbstractResourceConfig> iterator = lists.iterator(); iterator
 				.hasNext();) {
-			ResourceConfigType resourceConfig = (ResourceConfigType) iterator
+			AbstractResourceConfig resourceConfig = (AbstractResourceConfig) iterator
 					.next();
-			String selector = resourceConfig.getSelector();
-			UIUtils.checkSelector(selector);
-			List<Object> list = SmooksModelUtils
-					.getBindingListFromResourceConfigType(resourceConfig);
-			if (list == null)
-				continue;
-			for (Iterator<Object> iterator2 = list.iterator(); iterator2
-					.hasNext();) {
-				AnyType binding = (AnyType) iterator2.next();
-				String bindingMessage = SmooksModelUtils
-						.getAttributeValueFromAnyType(binding,
-								SmooksModelUtils.ATTRIBUTE_SELECTOR);
-				UIUtils.checkSelector(bindingMessage);
+			if (resourceConfig instanceof ResourceConfigType) {
+				String selector = ((ResourceConfigType) resourceConfig).getSelector();
+				UIUtils.checkSelector(selector);
+				List<Object> list = SmooksModelUtils
+						.getBindingListFromResourceConfigType((ResourceConfigType)resourceConfig);
+				if (list == null)
+					continue;
+				for (Iterator<Object> iterator2 = list.iterator(); iterator2
+						.hasNext();) {
+					AnyType binding = (AnyType) iterator2.next();
+					String bindingMessage = SmooksModelUtils
+							.getAttributeValueFromAnyType(binding,
+									SmooksModelUtils.ATTRIBUTE_SELECTOR);
+					UIUtils.checkSelector(bindingMessage);
+				}
 			}
 		}
 	}

@@ -134,7 +134,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 	public void analyzeGraphicalModel(AbstractStructuredDataModel root,
 			List resouceList) {
-
+		if(root == null) return;
 		List children = root.getChildren();
 		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
 			TreeItemRelationModel dataModel = (TreeItemRelationModel) iterator
