@@ -46,7 +46,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 	 * @param pageContext
 	 */
 	public VpePreviewDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, VpeTemplateManager templateManager, MozillaEditor visualEditor, VpePageContext pageContext) {
-		super(domMapping, sorceAdapter, templateManager, visualEditor, pageContext);
+		super(domMapping, sorceAdapter, visualEditor, pageContext);
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 		        return null;
 		    }
 			getPageContext().setCurrentVisualNode(visualOldContainer);
-			VpeTemplate template = templateManager.getTemplate(getPageContext(), sourceNode, ifDependencySet);
+			VpeTemplate template = getTemplateManager().getTemplate(getPageContext(), sourceNode, ifDependencySet);
 			VpeCreationData creationData;
 			
 			//FIX FOR JBIDE-1568, added by Max Areshkau
@@ -92,7 +92,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
                 }
 			}catch (XPCOMException ex) {
 				VpePlugin.getPluginLog().logError(ex);
-				VpeTemplate defTemplate = templateManager.getDefTemplate();
+				VpeTemplate defTemplate = getTemplateManager().getDefTemplate();
 				creationData = defTemplate.create(getPageContext(), sourceNode, getVisualDocument());
 			}
 			getPageContext().setCurrentVisualNode(null);

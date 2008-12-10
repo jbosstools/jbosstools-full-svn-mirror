@@ -202,7 +202,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	// private nsIPresShell presShell;
 	private VpeSelectionController visualSelectionController;
 	VpeDomMapping domMapping;
-	private VpeTemplateManager templateManager;
 	private VpeSourceDomBuilder sourceBuilder;
 	private VpeVisualDomBuilder visualBuilder;
 	/**
@@ -278,15 +277,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		this.visualEditor = visualEditor;
 		visualEditor.setController(this);
-		templateManager = VpeTemplateManager.getInstance();
 		bundle = new BundleMap();
 		bundle.init(sourceEditor);
-		pageContext = new VpePageContext(templateManager, bundle, editPart);
+		pageContext = new VpePageContext(bundle, editPart);
 		domMapping = new VpeDomMapping(pageContext);
 		sourceBuilder = new VpeSourceDomBuilder(domMapping, this,
-				templateManager, sourceEditor, pageContext);
-		visualBuilder = new VpeVisualDomBuilder(domMapping, this,
-				templateManager, visualEditor, pageContext);
+				VpeTemplateManager.getInstance(), sourceEditor, pageContext);
+		visualBuilder = new VpeVisualDomBuilder(domMapping, this, visualEditor, pageContext);
 		pageContext.setSourceDomBuilder(sourceBuilder);
 		pageContext.setVisualDomBuilder(visualBuilder);
 		IDOMModel sourceModel = (IDOMModel) getModel();
@@ -314,7 +311,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		visualBuilder.refreshExternalLinks();
 		visualBuilder.buildDom(sourceDocument);
 
-		templateManager.addTemplateListener(this);
+		VpeTemplateManager.getInstance().addTemplateListener(this);
 
 		xulRunnerEditor = visualEditor.getXulRunnerEditor();
 		// TODO Sergey Vasilyev figure out with nsIPressShell
@@ -419,10 +416,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		switcher.destroyActiveEditor();
 		switcher = null;
 
-		if (templateManager != null) {
-			templateManager.removeTemplateListener(this);
-			templateManager = null;
-		}
+	
+		VpeTemplateManager.getInstance().removeTemplateListener(this);
+
 		if (visualBuilder != null) {
 			visualBuilder.dispose();
 			visualBuilder = null;
@@ -1504,7 +1500,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 								data = editAnyData(sourceEditor, isCorrectNS,
 										data);
 								if (data != null && data.isChanged())
-									templateManager.setAnyTemplate(data);
+									VpeTemplateManager.getInstance().setAnyTemplate(data);
 							}
 						});
 
@@ -1977,9 +1973,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		if (includeList.includesRefresh()) {
 			visualRefresh();
 		}
-		if (templateManager != null) {
-			templateManager.reload();
-		}
+
+		VpeTemplateManager.getInstance().reload();
+
 		if (bundle != null) {
 			bundle.refresh();
 			if (pageContext != null) {

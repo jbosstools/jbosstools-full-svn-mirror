@@ -65,7 +65,7 @@ public class VpePageContext implements IVisualContext {
 	WtpKbConnector connector;
 	private nsIDOMNode currentVisualNode;
 	
-	public VpePageContext(VpeTemplateManager templateManager, BundleMap bundle, VpeEditorPart editPart) {
+	public VpePageContext(BundleMap bundle, VpeEditorPart editPart) {
 		this.bundle = bundle;
 		this.editPart = editPart;
 	}

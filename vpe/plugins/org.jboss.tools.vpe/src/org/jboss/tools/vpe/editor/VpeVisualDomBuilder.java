@@ -172,10 +172,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private boolean showInvisibleTags;
 
 	public VpeVisualDomBuilder(VpeDomMapping domMapping,
-			INodeAdapter sorceAdapter, VpeTemplateManager templateManager,
+			INodeAdapter sorceAdapter,
 			MozillaEditor visualEditor, VpePageContext pageContext) {
 
-		super(domMapping, sorceAdapter, templateManager);
+		super(domMapping, sorceAdapter);
 		this.visualEditor = visualEditor;
 		xulRunnerEditor = visualEditor.getXulRunnerEditor();
 
@@ -437,7 +437,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 		Set<Node> ifDependencySet = new HashSet<Node>();
 		pageContext.setCurrentVisualNode(visualOldContainer);
-		VpeTemplate template = templateManager.getTemplate(pageContext,
+		VpeTemplate template = getTemplateManager().getTemplate(pageContext,
 				sourceNode, ifDependencySet);
 
 		VpeCreationData creationData = null;
@@ -470,7 +470,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 		} catch (XPCOMException ex) {
 			VpePlugin.getPluginLog().logError(ex);
-			VpeTemplate defTemplate = templateManager.getDefTemplate();
+			VpeTemplate defTemplate = getTemplateManager().getDefTemplate();
 			creationData = defTemplate.create(getPageContext(), sourceNode,
 					getVisualDocument());
 		}
@@ -711,7 +711,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 		// get template
 		Set<Node> ifDependencySet = new HashSet<Node>();
-		VpeTemplate template = templateManager.getTemplate(pageContext, node,
+		VpeTemplate template = getTemplateManager().getTemplate(pageContext, node,
 				ifDependencySet);
 		// check if invisible tag
 		if (template.isInvisible())
@@ -892,13 +892,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			}
 		}
 
-		// if (isEmptyElement(visualContainer)) {
-		// addPseudoElementImpl(visualContainer);
-		// }
 	}
 
 	private void addPseudoElementImpl(nsIDOMNode visualParent) {
-		if (!templateManager.isWithoutPseudoElementContainer(visualParent
+		if (!getTemplateManager().isWithoutPseudoElementContainer(visualParent
 				.getNodeName())) {
 			if (VpeDebug.VISUAL_ADD_PSEUDO_ELEMENT) {
 				System.out.println("-------------------- addPseudoElement: " //$NON-NLS-1$

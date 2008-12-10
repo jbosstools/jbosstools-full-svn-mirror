@@ -173,7 +173,7 @@ public class MozillaPreview extends MozillaEditor {
 		BundleMap bundle = new BundleMap();
 		bundle.init(getSourceEditor());
 		
-		setPageContext(new VpePageContext(getTemplateManager(), bundle, getEditPart()));
+		setPageContext(new VpePageContext(bundle, getEditPart()));
 		
 		VpeDomMapping domMapping = new VpeDomMapping(getPageContext());
 		VpeSourceDomBuilder sourceBuilder = new VpeSourceDomBuilder(domMapping, null, getTemplateManager(), getSourceEditor(), getPageContext());		

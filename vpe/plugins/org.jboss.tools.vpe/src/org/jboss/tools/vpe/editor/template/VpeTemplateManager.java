@@ -21,9 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.swing.text.Style;
-
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
@@ -335,7 +332,7 @@ public class VpeTemplateManager {
 	 * @param sourceNode
 	 * @return name of template
 	 */
-	private String getTemplateName(VpePageContext pageContext, Node sourceNode) {
+	private  String getTemplateName(VpePageContext pageContext, Node sourceNode) {
 		
 		if(sourceNode==null) {
 			return null;

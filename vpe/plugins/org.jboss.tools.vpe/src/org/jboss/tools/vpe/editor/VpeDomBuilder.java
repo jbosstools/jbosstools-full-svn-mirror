@@ -24,14 +24,12 @@ import org.w3c.dom.Node;
 public class VpeDomBuilder {
 	protected VpeDomMapping domMapping;
 	
-	protected VpeTemplateManager templateManager;
 	private INodeAdapter sorceAdapter;
 	private List sourceNodes = new ArrayList();
 
-	public VpeDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, VpeTemplateManager templateManager) {
+	public VpeDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter) {
 		this.domMapping = domMapping;
 		this.sorceAdapter = sorceAdapter;
-		this.templateManager = templateManager;
 	}
 	
 	public VpeDomMapping getDomMapping ()  {
@@ -39,7 +37,7 @@ public class VpeDomBuilder {
 	}
 	
 	public VpeTemplateManager getTemplateManager ()  {
-		return templateManager;
+		return VpeTemplateManager.getInstance();
 	}
 
 	public void registerNodes(VpeNodeMapping nodeMapping) {		

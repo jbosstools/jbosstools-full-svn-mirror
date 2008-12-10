@@ -13,11 +13,18 @@ package org.jboss.tools.vpe.editor.template.expression;
 import org.w3c.dom.Node;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
-
+/**
+ *
+ * @author mareshkau
+ *
+ */
 public class VpeFunctionParentName extends VpeFunction {
-
+	/**
+	 * Returns parent node name, with changed prefix like in template*.xml File
+	 */
 	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
 		Node parentNode = sourceNode.getParentNode();
+		
 		return new VpeValue(parentNode != null ? parentNode.getNodeName() : "");
 	}
 }
