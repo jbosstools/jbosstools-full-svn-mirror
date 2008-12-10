@@ -96,6 +96,10 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 	private HashMap usedBeanIDMap = new HashMap();
 
+	private List sourceModelList = null;
+
+	private List targetModelList = null;
+
 	public JavaBeanAnalyzer() {
 
 		adapterFactory = new ComposedAdapterFactory(
@@ -134,7 +138,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 
 	public void analyzeGraphicalModel(AbstractStructuredDataModel root,
 			List resouceList) {
-		if(root == null) return;
+		if (root == null)
+			return;
 		List children = root.getChildren();
 		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
 			TreeItemRelationModel dataModel = (TreeItemRelationModel) iterator
@@ -237,8 +242,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 									.iterator(); iterator3.hasNext();) {
 								LineConnectionModel childConnection = (LineConnectionModel) iterator3
 										.next();
-								analyzeChildrenConnectionsToCreateBindingType(childConnection,
-										child,
+								analyzeChildrenConnectionsToCreateBindingType(
+										childConnection, child,
 										(AbstractStructuredDataModel) source,
 										resourceConfig, root, resourceList,
 										getBindingsParamType(resourceConfig));
@@ -526,11 +531,13 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			SmooksResourceListType listType, Object sourceObject,
 			Object targetObject) {
 		if (sourceObject instanceof List) {
+			sourceModelList = (List) sourceObject;
 			if (!((List) sourceObject).isEmpty()) {
 				sourceObject = (JavaBeanModel) ((List) sourceObject).get(0);
 			}
 		}
 		if (targetObject instanceof List) {
+			targetModelList = (List) targetObject;
 			if (!((List) targetObject).isEmpty()) {
 				targetObject = (JavaBeanModel) ((List) targetObject).get(0);
 			}
@@ -552,6 +559,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			ResourceType rt = rc.getResource();
 			// find the first BeanPopulator resource config , this is the root.
 			String resourceClazz = null;
+			if(resourceConfigIsUsed(rc)){
+				continue;
+			}
 			if (rt != null) {
 				resourceClazz = rt.getStringValue();
 			}
@@ -567,6 +577,15 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				if (selector != null) {
 					selector = selector.trim();
 				}
+				if(!sourceName.equals(selector)){
+					source = findJavaBeanModelFormList(selector, sourceModelList);
+					if(source != null){
+						sourceClazz = source.getBeanClass();
+						if (sourceClazz != null) {
+							sourceName = sourceClazz.getName();
+						}
+					}
+				}
 				if (sourceName.equals(selector)) {
 					String targetName = target.getName();
 					Class targetClazz = target.getBeanClass();
@@ -577,18 +596,42 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 							SmooksModelUtils.BEAN_CLASS, rc);
 					if (targetName != null
 							&& targetName.trim().equals(beanClass)) {
-						// create the first connection
+					} else {
+						JavaBeanModel temptarget = findJavaBeanModelFormList(
+								beanClass, targetModelList);
+						if (temptarget != null) {
+							target = temptarget;
+						}
+					}
+					if (target != null) {
 						mappingModelList.add(new MappingModel(source, target));
 						resourceConfigList.addResourceConfig(rc);
 						analyzeMappingModelFromResourceConfig(mappingModelList,
 								resourceConfigList, listType, rc, source,
 								target);
+						setResourceConfigUsed(rc);
 					}
 				}
 			}
 		}
 		resourceConfigList.setMappingModelList(mappingModelList);
 		return resourceConfigList;
+	}
+
+	private JavaBeanModel findJavaBeanModelFormList(String beanClassString,
+			List objectList) {
+		if (beanClassString == null)
+			return null;
+		for (Iterator iterator = objectList.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			if (object instanceof JavaBeanModel) {
+				if (beanClassString.equals(((JavaBeanModel) object)
+						.getBeanClassString())) {
+					return (JavaBeanModel) object;
+				}
+			}
+		}
+		return null;
 	}
 
 	protected boolean isReferenceSelector(String selector) {
@@ -612,7 +655,6 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		if (bindingList == null)
 			return;
 
-		setResourceConfigUsed(resourceConfig);
 		registeSourceJavaBeanWithResourceConfig(resourceConfig, source);
 		for (Iterator<Object> iterator = bindingList.iterator(); iterator
 				.hasNext();) {
@@ -648,6 +690,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						analyzeMappingModelFromResourceConfig(mappingModelList,
 								mappingResourceConfigList, resourceList, rc,
 								sourceModel, childTargetModel);
+						setResourceConfigUsed(rc);
 					}
 				}
 			} else {
@@ -739,12 +782,16 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		List resourceConfigList = listType.getAbstractResourceConfig();
 		String rootClassName = null;
 		ResourceConfigType current = null;
+		List<JavaBeanModel> list = new ArrayList<JavaBeanModel>();
 		for (Iterator iterator = resourceConfigList.iterator(); iterator
 				.hasNext();) {
 			AbstractResourceConfig ar = (AbstractResourceConfig) iterator
 					.next();
 			if (ar instanceof ResourceConfigType) {
 				ResourceConfigType rc = (ResourceConfigType) ar;
+				if (resourceConfigIsUsed(rc)) {
+					continue;
+				}
 				ResourceType resourceType = rc.getResource();
 				if (resourceType == null)
 					continue;
@@ -755,57 +802,62 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					// create root beanmodel
 					rootClassName = rc.getSelector();
 					current = rc;
-					break;
+					if (rootClassName == null) {
+						rootClassName = this.getDataSourceClass(graphInfo,
+								SOURCE_DATA);
+					}
+					if (rootClassName == null) {
+						return null;
+					} else {
+						rootClassName = rootClassName.trim();
+					}
+					boolean isWarning = false;
+					boolean isError = false;
+					Class clazz = null;
+					try {
+						if (classLoader == null) {
+							IProject project = sourceFile.getProject();
+							classLoader = new ProjectClassLoader(JavaCore
+									.create(project));
+						}
+
+						clazz = classLoader.loadClass(rootClassName);
+					} catch (ClassNotFoundException e) {
+						// TODO if can't find the class throws exception
+						// MODIFY by Dart 2008.11.12
+						throw new RuntimeException("Can't find the class : \""
+								+ rootClassName
+								+ "\" to create the JavaBean model");
+					} catch (JavaModelException e) {
+						e.printStackTrace();
+					}
+					JavaBeanModel model = null;
+					if (clazz != null) {
+						model = JavaBeanModelFactory
+								.getJavaBeanModelWithLazyLoad(clazz);
+					} else {
+						model = new JavaBeanModel(null, rootClassName);
+						model.setRootClassModel(true);
+						model
+								.setError(Messages
+										.getString("JavaBeanAnalyzer.ClassNotExist") + rootClassName); //$NON-NLS-1$
+						model.setProperties(new ArrayList());
+						isError = true;
+					}
+					if (model != null) {
+						setCollectionsInstanceClassName(model, current);
+						this.setSelectorIsUsed(rootClassName);
+						buildSourceInputProperties(listType, model, false,
+								isError, current, classLoader);
+						this.setResourceConfigUsed(current);
+					}
+					if (model != null) {
+						if (!modelIsInList(list, model.getBeanClassString()))
+							list.add(model);
+					}
 				}
 			}
 		}
-		if (rootClassName == null) {
-			rootClassName = this.getDataSourceClass(graphInfo, SOURCE_DATA);
-		}
-		if (rootClassName == null) {
-			return null;
-		} else {
-			rootClassName = rootClassName.trim();
-		}
-		boolean isWarning = false;
-		boolean isError = false;
-		Class clazz = null;
-		try {
-			if (classLoader == null) {
-				IProject project = sourceFile.getProject();
-				classLoader = new ProjectClassLoader(JavaCore.create(project));
-			}
-
-			clazz = classLoader.loadClass(rootClassName);
-		} catch (ClassNotFoundException e) {
-			// TODO if can't find the class throws exception
-			// MODIFY by Dart 2008.11.12
-			throw new RuntimeException("Can't find the class : \""
-					+ rootClassName + "\" to create the JavaBean model");
-		} catch (JavaModelException e) {
-			e.printStackTrace();
-		}
-		JavaBeanModel model = null;
-		if (clazz != null) {
-			model = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
-		} else {
-			model = new JavaBeanModel(null, rootClassName);
-			model.setRootClassModel(true);
-			model
-					.setError(Messages
-							.getString("JavaBeanAnalyzer.ClassNotExist") + rootClassName); //$NON-NLS-1$
-			model.setProperties(new ArrayList());
-			isError = true;
-		}
-		if (model != null) {
-			setCollectionsInstanceClassName(model, current);
-			this.setSelectorIsUsed(rootClassName);
-			buildSourceInputProperties(listType, model, false, isError,
-					current, classLoader);
-		}
-		List<JavaBeanModel> list = new ArrayList<JavaBeanModel>();
-		if (model != null)
-			list.add(model);
 		return list;
 	}
 
@@ -891,8 +943,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					throw new RuntimeException(e);
 				}
 			}
-//			throw new RuntimeException(
-//					"Can't load Java bean model form the config file.");
+			// throw new RuntimeException(
+			// "Can't load Java bean model form the config file.");
 		}
 		// if can't load the source from GraphicalInformation , return NULL
 		if (current == null && rootClassName == null)
@@ -924,8 +976,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				} catch (ClassNotFoundException e) {
 					// TODO if can't find the class throws exception
 					// MODIFY by Dart 2008.11.12
-//					throw new RuntimeException("Can't find the class : \""
-//							+ rootClassName + "\" to create the JavaBean model");
+					// throw new RuntimeException("Can't find the class : \""
+					// + rootClassName + "\" to create the JavaBean model");
 				}
 			}
 			boolean rootIsError = false;
@@ -937,6 +989,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				rootModel = new JavaBeanModel(null, rootClassName);
 				rootIsError = true;
 			}
+			if (modelIsInList(list, rootModel.getBeanClassString())) {
+				continue;
+			}
 			if (resourceConfig != null) {
 				rootModel.setBeanClassString(SmooksModelUtils.getParmaText(
 						SmooksModelUtils.BEAN_CLASS, resourceConfig));
@@ -947,6 +1002,21 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			}
 		}
 		return list;
+	}
+
+	private boolean modelIsInList(List list, String modelClassString) {
+		if (list == null || modelClassString == null)
+			return false;
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			if (object instanceof JavaBeanModel) {
+				if (modelClassString.equals(((JavaBeanModel) object)
+						.getBeanClassString())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	protected void buildChildrenOfTargetInputModel(
@@ -1096,7 +1166,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			selector = this.getBeanIdWithRawSelectorString(selector);
 			ResourceConfigType resourceConfig = findResourceConfigTypeWithBeanId(
 					selector, listType);
-			if (resourceConfig != null) {
+			if (resourceConfig != null && !resourceConfigIsUsed(resourceConfig)) {
 				String referenceSelector = resourceConfig.getSelector();
 				JavaBeanModel model = findTheChildJavaBeanModel(
 						referenceSelector, currentModel);
@@ -1133,6 +1203,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				}
 				buildSourceInputProperties(listType, model, false, true,
 						resourceConfig, classLoader);
+				setResourceConfigUsed(resourceConfig);
 			}
 		} else {
 			selector = selector.trim();

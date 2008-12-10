@@ -43,7 +43,6 @@ import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
 import org.jboss.tools.smooks.xml.model.DocumentObject;
 import org.jboss.tools.smooks.xml.model.TagObject;
 import org.jboss.tools.smooks.xml.model.TagPropertyObject;
-import org.w3c.dom.ranges.DocumentRange;
 
 /**
  * @author Dart Peng

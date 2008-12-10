@@ -56,6 +56,7 @@ import org.jboss.tools.smooks.xml.model.TagObject;
  */
 public class UIUtils {
 
+	
 	public static final String[] SELECTORE_SPLITER = new String[] { "\\", //$NON-NLS-1$
 			"/" }; //$NON-NLS-1$
 
@@ -348,11 +349,8 @@ public class UIUtils {
 						command
 								.setResolveDescription(Messages
 										.getString("UIUtils.InstanceLoadedResolveMessage1") //$NON-NLS-1$
-										+ ((JavaBeanModel) refObj)
-												.getBeanClass()
-												.getCanonicalName() + "\""); //$NON-NLS-1$
-						command.setInstanceName(((JavaBeanModel) refObj)
-								.getBeanClass().getCanonicalName());
+										+ instanceName + "\""); //$NON-NLS-1$
+						command.setInstanceName(instanceName);
 						command.setJavaBean((JavaBeanModel) refObj);
 						result.addResolveCommand(command);
 						resultList.add(result);
