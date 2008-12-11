@@ -45,6 +45,7 @@ public class HtmlTextTemplate extends VpeAbstractTemplate {
 	        .createTextNode(visualText);
 	    //Max Areshkau without this span, we can't select text element
 	    nsIDOMElement element = visualDocument.createElement(HTML.TAG_SPAN);
+	    element.setAttribute(HTML.ATTR_CLASS, HTML.CLASS_VPE_TEXT);
 	    element.appendChild(visualNewTextNode);
 	    
 	    VpeElementData textElementData = new VpeElementData();
@@ -52,6 +53,7 @@ public class HtmlTextTemplate extends VpeAbstractTemplate {
 	    textElementData.addNodeData(nodeData);
 	    VpeCreationData result = new VpeCreationData(element);
 	    result.setElementData(textElementData);
+	    
 	    return result;
 	}	
 }

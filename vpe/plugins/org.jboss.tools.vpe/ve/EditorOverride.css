@@ -333,3 +333,67 @@ a[\_moz_anonclass="mozTableRemoveRow"]:hover {
 a[\_moz_anonclass="mozTableRemoveRow"]:active {
   background-image: url("resource:/res/table-remove-row-active.gif");
 }
+
+span.vpe-text {
+	background	:inherit !important;
+	background-image:none !important;
+	border	:0px !important;
+	bottom	:inherit !important;
+	caption-side	:inherit !important;
+	clear	:inherit !important;
+	clip	:inherit !important;
+	color	:inherit !important;
+	content	:inherit !important;
+	counter-increment	:inherit !important;
+	counter-reset	:inherit !important;
+	cursor	:inherit !important;
+	direction	:inherit !important;
+	/*display	:inherit !important;*/
+	empty-cells	:inherit !important;
+	float	:inherit !important;
+	font	:inherit !important;
+	height	:inherit !important;
+	left	:inherit !important;
+	letter-spacing	:inherit !important;
+	line-height	:inherit !important;
+	list-style	:inherit !important;
+	list-style-image	:inherit !important;
+	list-style-position	:inherit !important;
+	list-style-type	:inherit !important;
+	margin	:0 !important;
+	max-height	:inherit !important;
+	max-width	:inherit !important;
+	min-height	:inherit !important;
+	min-width	:inherit !important;
+	orphans	:inherit !important;
+	outline	:none !important;           /*ccs3-modsel-162.html*/
+	/*outline-color	:inherit !important;
+	outline-width	:inherit !important;
+	outline-style	:inherit !important;*/
+	overflow	:inherit !important;
+	padding	:0 !important;
+	page	:inherit !important;
+	page-break-after	:inherit !important;
+	page-break-before	:inherit !important;
+	page-break-inside	:inherit !important;
+	/*position	:inherit !important;*/
+	quotes	:inherit !important;
+	right	:inherit !important;
+	size	:inherit !important;
+	table-layout	:inherit !important;
+	text-align	:inherit !important;
+	text-decoration	:inherit !important;
+	text-indent	:inherit !important;
+	text-transform	:inherit !important;
+	top	:inherit !important;
+	unicode-bidi	:inherit !important;
+	vertical-align	:inherit !important;
+	visibility	:inherit !important;
+	white-space	:inherit !important;
+	widows	:inherit !important;
+	width	:inherit !important;
+	word-spacing	:inherit !important;
+	z-index	:inherit !important;
+	font-size-adjust	:inherit !important;
+	opacity	:inherit !important;
+}
