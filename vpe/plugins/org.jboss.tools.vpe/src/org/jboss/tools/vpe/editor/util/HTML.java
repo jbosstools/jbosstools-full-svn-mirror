@@ -101,11 +101,13 @@ public final class HTML {
 	 * it will not work with documents without DOCTYPE. It is the reason
 	 * why the value '100' is used.*/
 	public static final String VALUE_COLSPAN_ALL = "100"; //$NON-NLS-1$
-	
+
 	public static final String VALUE_ALIGN_TOP = "top"; //$NON-NLS-1$
 	public static final String VALUE_ALIGN_RIGHT = "right"; //$NON-NLS-1$
 	public static final String VALUE_ALIGN_LEFT = "left"; //$NON-NLS-1$
+	public static final String VALUE_ALIGN_BOTTOM = "bottom"; //$NON-NLS-1$
 	public static final String VALUE_ALIGN_MIDDLE = "middle"; //$NON-NLS-1$
+	public static final String VALUE_ALIGN_CENTER = "center"; //$NON-NLS-1$
 	public static final String VALUE_CLASS_DELIMITER = " "; //$NON-NLS-1$
 	public static final String VALUE_STYLE_DELIMITER = ";"; //$NON-NLS-1$
 	public static final String VALUE_TYPE_TEXT = "text"; //$NON-NLS-1$
@@ -115,7 +117,6 @@ public final class HTML {
 	public static final String VALUE_TYPE_CHECKBOX = "checkbox"; //$NON-NLS-1$
 	public static final String VALUE_TYPE_HIDDEN = "hidden"; //$NON-NLS-1$
 	public static final String VALUE_TYPE_BUTTON= "button"; //$NON-NLS-1$
-	public static final String VALUE_ALIGN_CENTER = "center"; //$NON-NLS-1$
 	public static final String VALUE_CLEAR_BOTH = "both"; //$NON-NLS-1$
 
 	public static final String STYLE_PARAMETER_DISPLAY = "display"; //$NON-NLS-1$
