@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.jboss.tools.common.kb.wtp.TLDVersionHelper;
 import org.jboss.tools.common.model.XModel;
@@ -99,7 +100,12 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 			} else {
 				//here we getting tld version for xhtml files
 				XModel xm = null;
-				IProject project = ((IFileEditorInput)pageContext.getEditPart().getEditorInput()).getFile().getProject();
+				//fix for JBIDE-3385, mareshkau
+				final IEditorInput editorInput = pageContext.getEditPart().getEditorInput();
+				if(!(editorInput instanceof IFileEditorInput)){
+					return new VpeValue(false);
+				}
+				IProject project = ((IFileEditorInput)editorInput).getFile().getProject();
 				IModelNature mn = EclipseResourceUtil.getModelNature(project);
 				if(mn!=null) {
 					xm = mn.getModel();
