@@ -328,7 +328,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				public void completed(ProgressEvent event) {
 					loaded = true;
 					xulRunnerEditor.getBrowser().removeProgressListener(this);
-					//here we switchs xulrunner to design mode JBIDE-2505
 				}
 				
 			});
@@ -337,10 +336,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			xulRunnerEditor.setText(doctype
 					+ DocTypeUtil.getContentInitFile(new File(INIT_URL)));
 			// Wait while visual part is loaded
-			while (!loaded) {
-				if (!Display.getCurrent().readAndDispatch())
-					Display.getCurrent().sleep();
-			}
+			//commented by mareshkau, fix for jbide-3032
+//			while (!loaded) {
+//				if (!Display.getCurrent().readAndDispatch())
+//					Display.getCurrent().sleep();
+//			}
 			xulRunnerEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		}
 		catch (XulRunnerException e) {
