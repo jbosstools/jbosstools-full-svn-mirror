@@ -23,18 +23,18 @@
 		</mediaobject>
 	</figure>
 	<para>
-		This graphical editor could allow user to do drug/drop operations
+		This graphical editor could allow you to do drug/drop operations
 		with the nodes of transform data to mapping the source data to target
 		data.
 	</para>
 	<para>
-		When user save the graphical editor the correct Smooks
+		When you save the graphical editor the correct Smooks
 		configuration file contents
 		will be generated.
 	</para>
 	<section>
 		<title>Introduce the areas of graphical editor</title>
-		<para>  Please read the
+		<para>  Please, read the
 			<link linkend="quickstart_formeditor">"Quick Start/Smooks Form Editor"</link>
 		</para>
 	</section>
@@ -85,31 +85,31 @@
 		</para>
 	</section>
 	<section>
-		<title>User the graphical editor to mapping</title>
-		<para>  Please read the
+		<title>Use the graphical editor to mapping</title>
+		<para>  Please, read the
 			<link linkend="quickstart_mapping">"Quick Start/Mapping"</link>
 		</para>
 	</section>
 	<section>
 		<title>Error messages</title>
-		<para>  When user do any mapping operations, the Smooks tools will  validate  the file contents with "Mapping Logic", If there is any errors of  the configuration file contents
+		<para>  When you do any mapping operations, the Smooks tools will  validate  the file contents with "Mapping Logic", If there is any errors of  the configuration file contents
 			,error messages will be shown on  the
 			<link linkend="quickstart_formeditor">"Error
 				message area"</link>
 			.
 		</para>
-		<para>  Please read the
+		<para>  Please, read the
 			<link linkend="quickstart_mapping">"Quick Start/Mapping"</link>  to find how to fix the errors.
 		</para>
 	</section>
 	<section id="graphicalpage_propertiesview">
 		<title>Properties Viewer</title>
-		<para>  User can edit the properties of the "connection lines" with the  properties viewer.
+		<para>  You can edit the properties of the "connection lines" with the  properties viewer.
 		</para>
 		<para>  Select the menu: "Window -> Show View -> Other -> Properties",  the properties viewer will be opened. 
 		</para>
 		<para>
-			When user select on the connection lines, the properties viewer
+			When you select on the connection lines, the properties viewer
 			will show a sets of section GUI for editing the properties of the
 			connection line.
 		</para>
