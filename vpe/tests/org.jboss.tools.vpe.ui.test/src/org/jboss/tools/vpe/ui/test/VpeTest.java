@@ -32,13 +32,11 @@ import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.jboss.tools.common.model.util.ClassLoaderUtil;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.vpe.editor.VpeController;
-import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
-import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -157,29 +155,7 @@ public class VpeTest extends TestCase implements ILogListener {
         PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeAllEditors(false);
 
     }
-
-    /**
-     * get xulrunner source page.
-     * 
-     * @param part - JSPMultiPageEditor
-     * 
-     * @return nsIDOMDocument
-     */
-    protected nsIDOMDocument getVpeVisualDocument(JSPMultiPageEditor part) {
-
-        VpeEditorPart visualEditor = (VpeEditorPart) part.getVisualEditor();
-
-        VpeController vpeController = visualEditor.getController();
-
-        // get xulRunner editor
-        XulRunnerEditor xulRunnerEditor = vpeController.getXulRunnerEditor();
-
-        // get dom document
-        nsIDOMDocument document = xulRunnerEditor.getDOMDocument();
-
-        return document;
-    }
-    
+ 
     /**
 	 * 
 	 * @return source document
@@ -189,20 +165,6 @@ public class VpeTest extends TestCase implements ILogListener {
 		return controller.getSourceBuilder().getSourceDocument();
 
 	}
-
-    /**
-     * Gets visual page editor controller.
-     * 
-     * @param part the part
-     * 
-     * @return {@link VpeController}
-     */
-    protected VpeController getVpeController(JSPMultiPageEditor part) {
-
-        VpeEditorPart visualEditor = (VpeEditorPart) part.getVisualEditor();
-
-        return visualEditor.getController();
-    }
 
     /**
      * Perfoms test for some page.
@@ -305,7 +267,7 @@ public class VpeTest extends TestCase implements ILogListener {
      */
     protected void checkSourceSelection(JSPMultiPageEditor part) {
 		// get controller
-		VpeController controller = getVpeController(part);
+		VpeController controller = TestUtil.getVpeController(part);
 		assertNotNull(controller);
 
 		// get dommapping

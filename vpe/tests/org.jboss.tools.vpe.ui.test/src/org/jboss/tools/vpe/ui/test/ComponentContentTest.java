@@ -79,7 +79,7 @@ public abstract class ComponentContentTest extends VpeTest {
 
 		TestUtil.waitForJobs();
 
-		VpeController controller = getVpeController((JSPMultiPageEditor) editor);
+		VpeController controller = TestUtil.getVpeController((JSPMultiPageEditor) editor);
 
 		// get xml test file
 		File xmlTestFile = TestUtil.getComponentPath(
@@ -168,7 +168,7 @@ public abstract class ComponentContentTest extends VpeTest {
 
 		TestUtil.waitForJobs();
 
-		VpeController controller = getVpeController((JSPMultiPageEditor) editor);
+		VpeController controller = TestUtil.getVpeController((JSPMultiPageEditor) editor);
 
 		// find source element and check if it is not null
 		Element sourceELement = findSourceElementById(controller, elementId);
@@ -233,7 +233,7 @@ public abstract class ComponentContentTest extends VpeTest {
 
 		TestUtil.waitForJobs();
 
-		VpeController controller = getVpeController((JSPMultiPageEditor) editor);
+		VpeController controller = TestUtil.getVpeController((JSPMultiPageEditor) editor);
 
 		// find source element and check if it is not null
 		Element sourceELement = findSourceElementById(controller, elementId);

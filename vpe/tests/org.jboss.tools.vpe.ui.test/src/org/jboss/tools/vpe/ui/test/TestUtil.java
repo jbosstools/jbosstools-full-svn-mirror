@@ -356,6 +356,23 @@ public class TestUtil {
 		return resultOffcet;
 	}
 	
+    /**
+     * Gets visual page editor controller.
+     * 
+     * @param part the part
+     * 
+     * @return {@link VpeController}
+     */
+    public static VpeController getVpeController(JSPMultiPageEditor part) {
+
+        VpeEditorPart visualEditor = (VpeEditorPart) part.getVisualEditor();
+        while(visualEditor.getController()==null) {
+			if (!Display.getCurrent().readAndDispatch()) {
+				Display.getCurrent().sleep();
+				}
+        }
+        return visualEditor.getController();
+    }
 
     /**
      * get xulrunner source page.
@@ -366,9 +383,8 @@ public class TestUtil {
      */
     public static nsIDOMDocument getVpeVisualDocument(JSPMultiPageEditor part) {
 
-        VpeEditorPart visualEditor = (VpeEditorPart) part.getVisualEditor();
 
-        VpeController vpeController = visualEditor.getController();
+        VpeController vpeController = TestUtil.getVpeController(part);
 
         // get xulRunner editor
         XulRunnerEditor xulRunnerEditor = vpeController.getXulRunnerEditor();

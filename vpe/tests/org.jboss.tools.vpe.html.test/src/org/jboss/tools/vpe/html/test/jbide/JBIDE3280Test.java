@@ -58,7 +58,7 @@ public class JBIDE3280Test extends VpeTest {
 
 		TestUtil.waitForJobs();
 
-		VpeController controller = getVpeController((JSPMultiPageEditor) editor);
+		VpeController controller = TestUtil.getVpeController((JSPMultiPageEditor) editor);
 
 		final nsIDOMDocument oldDocument = controller.getXulRunnerEditor().getDOMDocument();
 		final String oldStyle = oldDocument

@@ -28,15 +28,11 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
@@ -58,8 +54,8 @@ import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage;
-import org.jboss.tools.vpe.editor.toolbar.VpeDropDownMenu;
 import org.jboss.tools.vpe.editor.toolbar.IVpeToolBarManager;
+import org.jboss.tools.vpe.editor.toolbar.VpeDropDownMenu;
 import org.jboss.tools.vpe.editor.toolbar.VpeToolBarManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.toolbar.format.TextFormattingToolBar;
@@ -102,7 +98,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private FormatControllerManager formatControllerManager = new FormatControllerManager();
 	private VpeController controller;
 	private Link link = null;
-	private boolean loaded;
 	private boolean isRefreshPage = false;
 	private String doctype;
 	/**
@@ -289,7 +284,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 					// if the first load page
 					if (!isRefreshPage()) {
 						super.onLoadWindow();
-						MozillaEditor.this.onLoadWindow();
+//						MozillaEditor.this.onLoadWindow();
 					}
 					// if only refresh page
 					else {
@@ -319,14 +314,13 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 					super.onDispose();
 				}
 			};
-			loaded = false;
 			xulRunnerEditor.getBrowser().addProgressListener(new ProgressListener() {
 
 				public void changed(ProgressEvent event) {
 				}
 
 				public void completed(ProgressEvent event) {
-					loaded = true;
+					MozillaEditor.this.onLoadWindow();
 					xulRunnerEditor.getBrowser().removeProgressListener(this);
 				}
 				
@@ -790,5 +784,4 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		}
 		return editor;
 	}
-	
 }
