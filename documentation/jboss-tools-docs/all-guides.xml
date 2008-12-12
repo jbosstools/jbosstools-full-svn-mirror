@@ -288,7 +288,7 @@
 			</fileSet>
 			
 			<fileSet>
-				<directory>../../smooks/docs/references/target/docbook/publish/en-US</directory>
+				<directory>../../smooks/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/jboss_smooks_plugin_ref_guide</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
