@@ -101,6 +101,7 @@ public final class HTML {
 	public static final String ATTR_SCOPE = "scope"; //$NON-NLS-1$
 	public static final String ATTR_SPAN = "span"; //$NON-NLS-1$
 	public static final String ATTR_BACKGROUND = "background"; //$NON-NLS-1$
+	public static final String ATTR_BGCOLOR = "bgcolor"; //$NON-NLS-1$
 
 	/**Use this constant if you have to span a column to entire row.*/
 	/* While in HTML 4.01 standard "colspan='0'" should be used for this purpose,
