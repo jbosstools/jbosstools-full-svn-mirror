@@ -13,11 +13,11 @@ package org.jboss.tools.vpe.dnd;
 
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeVisualCaretInfo;
-import org.jboss.tools.vpe.editor.VpeVisualInnerDropInfo;
 import org.jboss.tools.vpe.editor.mozilla.EditorDomEventListener;
 import org.jboss.tools.vpe.editor.mozilla.MozillaDropInfo;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
+import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMEventTarget;
@@ -146,15 +146,24 @@ public class VpeDnD {
 	 * @param event
 	 */
 	public void dragOver(nsIDOMEvent event, EditorDomEventListener editorDomEventListener) {
+		final nsIDOMMouseEvent mouseEvent =
+			(nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+		final XulRunnerEditor editor = ((VpeController) editorDomEventListener).getXulRunnerEditor();
+		new ScrollingSupport(editor).scroll(mouseEvent);
+		refreshCanDrop(event, editorDomEventListener);
+	}
+
+	private void refreshCanDrop(nsIDOMEvent event,
+			EditorDomEventListener editorDomEventListener) {
 		boolean canDrop = true;
-		
+
 		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 		//in this condition  early was check for xulelement
 		if (editorDomEventListener != null) {
 			if (getDragService().getCurrentSession().isDataFlavorSupported(VpeController.MODEL_FLAVOR)) {
-				
+
 				MozillaDropInfo info;
-				
+
 				if(getDragService().getCurrentSession().getSourceNode()==null){
 					//external drag 
 					  info = editorDomEventListener.canExternalDrop(mouseEvent, VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
@@ -192,13 +201,10 @@ public class VpeDnD {
             event.preventDefault();
         }
 
-       
-
 		//sets possability to drop current element here
 		getDragService().getCurrentSession().setCanDrop(canDrop);
 		mouseEvent.preventDefault();
 		mouseEvent.stopPropagation();
-		
 	}
 	/**
 	 * Drop Event handler
