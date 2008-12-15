@@ -103,6 +103,7 @@ public class SelectionManager implements ISelectionManager {
 
 				} else {
 
+					isNodeEditable = false;
 					targetSourceNode = elementMapping.getSourceNode();
 
 				}

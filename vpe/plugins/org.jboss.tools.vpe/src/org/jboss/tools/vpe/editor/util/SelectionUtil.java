@@ -192,11 +192,12 @@ public class SelectionUtil {
 		// gets visual selection range
 		Point sourceRange = new Point(0, 0);
 		// converts to source selection
-		if (sourceNode != null) {
+		if ((sourceNode != null) && (sourceNode.getNodeValue() != null)) {
 			sourceRange.x = TextUtil.sourcePosition(sourceNode.getNodeValue(),
 					focusedNode.getNodeValue(), selection.getFocusOffset());
 			sourceRange.y = TextUtil.sourcePosition(sourceNode.getNodeValue(),
-					focusedNode.getNodeValue(), selection.getAnchorOffset()) - sourceRange.x;
+					focusedNode.getNodeValue(), selection.getAnchorOffset())
+					- sourceRange.x;
 		}
 		return sourceRange;
 	}
