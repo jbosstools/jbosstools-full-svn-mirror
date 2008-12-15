@@ -29,16 +29,15 @@ import org.mozilla.interfaces.nsISelectionController;
 import org.w3c.dom.Node;
 
 /**
- * Util class for selection manupalating
- * 
+ * Utility class for selection manipulating.
+ *
  * @author S.Dzmitrovich
- * 
  */
 public class SelectionUtil {
 
 	/**
 	 * get selected visual node from nsISelection
-	 * 
+	 *
 	 * @param selection
 	 * @return
 	 */
@@ -53,7 +52,6 @@ public class SelectionUtil {
 							selection.getFocusOffset() - 1);
 				} else
 					return selection.getFocusNode();
-
 			}
 		} else {
 			nsIDOMRange range = selection.getRangeAt(0);
@@ -74,11 +72,8 @@ public class SelectionUtil {
 		int start = NodesManagingUtil.getStartOffsetNode(node);
 		int length = NodesManagingUtil.getNodeLength(node);
 
-		pageContext.getSourceBuilder().getStructuredTextViewer()
-				.setSelectedRange(start, length);
-		pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(
-				start, length);
-
+		pageContext.getSourceBuilder().getStructuredTextViewer().setSelectedRange(start, length);
+		pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(start, length);
 	}
 
 	/**
@@ -90,11 +85,8 @@ public class SelectionUtil {
 	 */
 	public static void setSourceSelection(VpePageContext pageContext,
 			Node node, int offset, int length) {
-
 		int start = NodesManagingUtil.getStartOffsetNode(node);
-
 		setSourceSelection(pageContext, start + offset, length);
-
 	}
 
 	/**
@@ -103,14 +95,9 @@ public class SelectionUtil {
 	 * @param node
 	 * @param offset
 	 */
-	public static void setSourceSelection(VpePageContext pageContext,
-			Node node, int offset) {
-
+	public static void setSourceSelection(VpePageContext pageContext, Node node, int offset) {
 		int start = NodesManagingUtil.getStartOffsetNode(node);
-
-		pageContext.getSourceBuilder().getStructuredTextViewer()
-				.getTextWidget().setSelection(start + offset);
-
+		pageContext.getSourceBuilder().getStructuredTextViewer().getTextWidget().setSelection(start + offset);
 	}
 
 	/**
@@ -119,20 +106,13 @@ public class SelectionUtil {
 	 * @param offset
 	 * @param length
 	 */
-	public static void setSourceSelection(VpePageContext pageContext,
-			int offset, int length) {
-
-		pageContext.getSourceBuilder().getStructuredTextViewer()
-				.setSelectedRange(offset, length);
-		pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(
-				offset, length);
-
+	public static void setSourceSelection(VpePageContext pageContext, int offset, int length) {
+		pageContext.getSourceBuilder().getStructuredTextViewer().setSelectedRange(offset, length);
+		pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(offset, length);
 	}
 
 	public static VpeNodeMapping getNodeMappingBySourceSelection(
-			IStructuredModel model, VpeDomMapping domMapping, int focus,
-			int anchor) {
-
+			IStructuredModel model, VpeDomMapping domMapping, int focus, int anchor) {
 		/*
 		 * implementation of IDOMModel's method getIndexedRegion(...) has one
 		 * feature : if cursor is situated at the border of elements then this
@@ -141,48 +121,43 @@ public class SelectionUtil {
 		 * border of "h:inputText" element then getIndexedRegion() return
 		 * "h:outputText" element. So for focus position we choose smaller value
 		 */
-
 		if (anchor < focus) {
+			int tmp = focus;
 			focus = anchor;
-			anchor = focus;
+			anchor = tmp;
 		}
 
 		// get source node by offset
 		Node focusNode = getSourceNodeByPosition(model, focus);
 
 		// if focus node also contain anchor point (selected only 1 element)
-		if ((focusNode != null)
-				&& NodesManagingUtil.isNodeContainsPosition(focusNode, anchor)) {
-
+		if (focusNode != null && NodesManagingUtil.isNodeContainsPosition(focusNode, anchor)) {
 			return NodesManagingUtil.getNodeMapping(domMapping, focusNode);
-
 		}
 		return null;
-
 	}
 
-	public static Node getSourceNodeByPosition(IStructuredModel model,
-			int position) {
+	public static Node getSourceNodeByPosition(IStructuredModel model, int position) {
 		//if we state at the end of text node, model will return
 		//for us next node or null if on page exists only text node,
 		//but we still in the end of text node, so we should check
 		//this situation
-		
+
 		// get source node by position
 		//see jbide-3163
-		IndexedRegion node =  model.getIndexedRegion(position);
-		IndexedRegion possbleNode = position>=1?model.getIndexedRegion(position-1):null;
-		if(node==null && position>=1) {
-			node =  possbleNode;
-		}else if((node!=null) &&(((Node)node).getNodeType()!=Node.TEXT_NODE)
-				&& (node.getStartOffset()==position)
-				&& (position>=1)) {
+		IndexedRegion node = model.getIndexedRegion(position);
+		IndexedRegion possibleNode = position >= 1 ? model.getIndexedRegion(position - 1) : null;
+		if (node == null && position >= 1) {
+			node = possibleNode;
+		} else if ((node!=null) && (((Node)node).getNodeType() != Node.TEXT_NODE)
+				&& (node.getStartOffset() == position)
+				&& (position >= 1)) {
 			//check for such situation #text<h1></h1>
-			node = possbleNode;
-		}else if((node!=null) &&(((Node)node).getNodeType()!=Node.TEXT_NODE)
-				&& (possbleNode!=null)
-				&&  ((Node)possbleNode).getNodeType()==Node.TEXT_NODE){
-			node = possbleNode;
+			node = possibleNode;
+		} else if((node != null) && (((Node)node).getNodeType() != Node.TEXT_NODE)
+				&& (possibleNode != null)
+				&&  ((Node)possibleNode).getNodeType() == Node.TEXT_NODE) {
+			node = possibleNode;
 		}
 
 		return (Node)node;
@@ -192,21 +167,15 @@ public class SelectionUtil {
 	 * Returns selection range for visual part of editor Focus offset and anchor
 	 * offset can be not equals to source focus offset and anchor offset
 	 * 
-	 * @param selection
-	 *            -selection in visual part of editor
-	 * 
+	 * @param selection the selection in visual part of editor
 	 * @return selection range for visual part of editor
 	 */
 	public static Point getVisualSelectionRange(nsISelection selection) {
-		nsIDOMNode focusedNode = getSelectedNode(selection);
-
 		Point range = new Point(0, 0);
-
+		nsIDOMNode focusedNode = getSelectedNode(selection);
 		if (focusedNode != null) {
-
 			range.x = selection.getFocusOffset();
 			range.y = selection.getAnchorOffset() - selection.getFocusOffset();
-
 		}
 		return range;
 	}
@@ -214,13 +183,11 @@ public class SelectionUtil {
 	/**
 	 * Return source editor part selection range, range returns relatively to
 	 * start of text in source, not for start of document
-	 * 
-	 * @param selection
+	 *
+	 * @param selection the selection in visual part of editor
 	 * @return source editor selection range
 	 */
-	public static Point getSourceSelectionRange(nsISelection selection,
-			Node sourceNode) {
-
+	public static Point getSourceSelectionRange(nsISelection selection, Node sourceNode) {
 		nsIDOMNode focusedNode = getSelectedNode(selection);
 		// gets visual selection range
 		Point sourceRange = new Point(0, 0);
@@ -229,24 +196,20 @@ public class SelectionUtil {
 			sourceRange.x = TextUtil.sourcePosition(sourceNode.getNodeValue(),
 					focusedNode.getNodeValue(), selection.getFocusOffset());
 			sourceRange.y = TextUtil.sourcePosition(sourceNode.getNodeValue(),
-					focusedNode.getNodeValue(), selection.getAnchorOffset())
-					- sourceRange.x;
+					focusedNode.getNodeValue(), selection.getAnchorOffset()) - sourceRange.x;
 		}
 		return sourceRange;
 	}
 
 	public static VpeNodeMapping getNodeMappingBySourceSelection(
 			StructuredTextEditor sourceEditor, VpeDomMapping domMapping) {
-
 		Point range = sourceEditor.getTextViewer().getSelectedRange();
 
 		IDocument document = sourceEditor.getTextViewer().getDocument();
 
 		IStructuredModel model = null;
-
 		try {
-			model = StructuredModelManager.getModelManager()
-					.getExistingModelForRead(document);
+			model = StructuredModelManager.getModelManager().getExistingModelForRead(document);
 
 			int anchor = range.x;
 			int focus = range.x + range.y;
@@ -260,65 +223,67 @@ public class SelectionUtil {
 			 * getIndexedRegion() return "h:outputText" element. So for focus
 			 * position we choose smaller value
 			 */
-
+			Node focusNode = null;
 			if (anchor < focus) {
+				int tmp = focus;
 				focus = anchor;
-				anchor = focus;
+				anchor = tmp;
 			}
-
-			// get source node by offset
-			Node focusNode = getSourceNodeByPosition(model, focus);
+			if (anchor == focus) {
+				// get source node by offset
+				// see JBIDE-3163
+				focusNode = getSourceNodeByPosition(model, focus);
+			} else {
+				// fixed JBIDE-3388: Incorrect selection after Copy/Cut actions
+				IndexedRegion node = model.getIndexedRegion(focus);
+				if (node != null) {
+					focusNode = (Node)node;
+				}
+			}
 
 			// if focus node also contain anchor point (selected only 1 element)
 			if ((focusNode != null)
-					&& NodesManagingUtil.isNodeContainsPosition(focusNode,
-							anchor)) {
-
+					&& NodesManagingUtil.isNodeContainsPosition(focusNode, anchor)) {
 				return NodesManagingUtil.getNodeMapping(domMapping, focusNode);
-
 			}
 		} finally {
-
 			if (model != null) {
-
 				model.releaseFromRead();
 			}
 		}
 
 		return null;
-
 	}
 
+	/**
+	 * Method is used to select the last selected node.
+	 *
+	 * @param pageContext VpePageContext object
+	 * @return nsIDOMNode the last selected node
+	 */
 	public static nsIDOMNode getLastSelectedNode(VpePageContext pageContext) {
-
-		return pageContext.getVisualBuilder().getXulRunnerEditor()
-				.getLastSelectedNode();
-
+		return pageContext.getVisualBuilder().getXulRunnerEditor().getLastSelectedNode();
 	}
 
 	/**
 	 * Returns sourceSelectionRange
-	 * 
-	 * @param sourceEditor
+	 *
+	 * @param sourceEditor StructuredTextEditor object
 	 * @return sourceSelectionRange
 	 */
-	static public Point getSourceSelectionRange(
-			StructuredTextEditor sourceEditor) {
+	public static Point getSourceSelectionRange(StructuredTextEditor sourceEditor) {
 		ITextViewer textViewer = sourceEditor.getTextViewer();
-
-		if (textViewer != null)
+		if (textViewer != null) {
 			return textViewer.getSelectedRange();
-
+		}
 		return null;
 	}
 
 	/**
 	 * 
-	 * @param selectionController
+	 * @param selectionController VpeSelectionController object
 	 */
-	static public void clearSelection(VpeSelectionController selectionController) {
-		selectionController.getSelection(
-				nsISelectionController.SELECTION_NORMAL).removeAllRanges();
+	public static void clearSelection(VpeSelectionController selectionController) {
+		selectionController.getSelection(nsISelectionController.SELECTION_NORMAL).removeAllRanges();
 	}
-
 }

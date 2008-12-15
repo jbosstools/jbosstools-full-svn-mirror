@@ -11,11 +11,11 @@
 package org.jboss.tools.vpe.editor;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
@@ -66,7 +66,6 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.fieldassist.ContentAssistCommandAdapter;
 import org.eclipse.ui.internal.keys.WorkbenchKeyboard;
 import org.eclipse.ui.keys.IBindingService;
 import org.eclipse.ui.progress.UIJob;
@@ -78,7 +77,6 @@ import org.eclipse.wst.sse.core.internal.provisional.INodeNotifier;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
-import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 import org.eclipse.wst.sse.ui.internal.view.events.INodeSelectionListener;
 import org.eclipse.wst.sse.ui.internal.view.events.ITextSelectionListener;
 import org.eclipse.wst.sse.ui.internal.view.events.NodeSelectionChangedEvent;
@@ -150,7 +148,6 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateListener;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
-import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
@@ -172,7 +169,6 @@ import org.mozilla.interfaces.nsIDOMMutationEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIFile;
 import org.mozilla.interfaces.nsISelection;
-import org.mozilla.interfaces.nsISelectionController;
 import org.mozilla.interfaces.nsISelectionListener;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsISupportsCString;
@@ -204,9 +200,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	VpeDomMapping domMapping;
 	private VpeSourceDomBuilder sourceBuilder;
 	private VpeVisualDomBuilder visualBuilder;
-	/**
-	 * @deprecated
-	 */
+	/** @deprecated */
 	private VpeSelectionBuilder selectionBuilder;
 	// private VpeVisualKeyHandler visualKeyHandler;
 	private ActiveEditorSwitcher switcher = new ActiveEditorSwitcher();
@@ -1508,12 +1502,12 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			}
 
 			manager.add(new VpeTextOperationAction(
-					"Cut", ActionFactory.CUT.getId(), (IndexedRegion) node)); //$NON-NLS-1$
+					"Cut", ActionFactory.CUT.getId(), node)); //$NON-NLS-1$
 			manager.add(new VpeTextOperationAction(
-					"Copy", ActionFactory.COPY.getId(), (IndexedRegion) node)); //$NON-NLS-1$
+					"Copy", ActionFactory.COPY.getId(), node)); //$NON-NLS-1$
 			manager
 					.add(new VpeTextOperationAction(
-							"Paste", ActionFactory.PASTE.getId(), (IndexedRegion) node)); //$NON-NLS-1$
+							"Paste", ActionFactory.PASTE.getId(), node)); //$NON-NLS-1$
 		} else if (node.getNodeType() == Node.TEXT_NODE) {
 			manager.add(new Action("Cut") { //$NON-NLS-1$
 						public void run() {
@@ -2427,19 +2421,18 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	class VpeTextOperationAction extends Action {
 		private String id;
-		private IndexedRegion region;
+		private Node region;
 
-		public VpeTextOperationAction(String name, String id,
-				IndexedRegion region) {
+		public VpeTextOperationAction(String name, String id, Node region) {
 			super(name);
 			this.id = id;
 			this.region = region;
 		}
 
 		public void run() {
-			sourceEditor.getSelectionProvider().setSelection(
-					new VpeSelection(region));
-			sourceEditor.getAction(id).run();
+			SelectionUtil.setSourceSelection(pageContext, region);
+//			sourceEditor.getSelectionProvider().setSelection(new VpeSelection(region));
+//			sourceEditor.getAction(id).run();
 		}
 	}
 
