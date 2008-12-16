@@ -82,12 +82,4 @@ public class JBIDE3280Test extends VpeTest {
 			throw getException();
 		}
 	}
-	
-	protected String dump(nsIDOMDocument document) {
-		DOMTreeDumper dumper = new DOMTreeDumper(
-				VpeDebug.VISUAL_DUMP_PRINT_HASH);
-		dumper.setIgnoredAttributes(VpeDebug.VISUAL_DUMP_IGNORED_ATTRIBUTES);
-		dumper.dumpToStream(System.out, document);
-		return null;
-	}
 }
