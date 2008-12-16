@@ -18,7 +18,7 @@ import org.mozilla.interfaces.nsIWebBrowser;
 
 /**
  * The class {@code ScrollingSupport} enables support of window 
- * scrolling of VPE editor during Drag and Drop sessions.
+ * scrolling in VPE during Drag and Drop sessions.
  * 
  * @author yradtsevich
  */
