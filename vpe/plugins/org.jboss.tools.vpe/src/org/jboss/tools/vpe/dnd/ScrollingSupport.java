@@ -17,27 +17,51 @@ import org.mozilla.interfaces.nsIEmbeddingSiteWindow;
 import org.mozilla.interfaces.nsIWebBrowser;
 
 /**
+ * The class {@code ScrollingSupport} enables support of window 
+ * scrolling of VPE editor during Drag and Drop sessions.
+ * 
  * @author yradtsevich
- *
  */
 public class ScrollingSupport {
-	private static final int SCROLLING_STEP = 10; 
-	private static final int SCROLLING_BORDERS = 20;
+	/**
+	 * The scrolling step. Every time when {@link #scroll(nsIDOMMouseEvent)} method
+	 * is called, the window is scrolled by this value
+	 */
+	private static final int SCROLLING_STEP = 10;
+	/**
+	 * Size of scrolling borders, i.e. the thickness of the area
+	 * where dragging will cause scrolling
+	 */
+	private static final int SCROLLING_BORDERS = 46;
 
-	// XXX: the value of SCROLLBAR_HEIGHT and SCROLLBAR_WIDTH
-	// should be set according to environment settings
-	private static final int SCROLLBAR_HEIGHT = 16;
-	private static final int SCROLLBAR_WIDTH = 16;
+	// TODO: the values of SCROLLBAR_HEIGHT and SCROLLBAR_WIDTH
+	// should be set according to environment's settings
+	private static final int SCROLLBAR_WIDTH = 0;
+	private static final int SCROLLBAR_HEIGHT = 0;
 
 	private final XulRunnerEditor xulRunnerEditor;
+	
+	/**
+	 * 
+	 * @param xulRunnerEditor object of current XULRunner editor 
+	 */
 	public ScrollingSupport(XulRunnerEditor xulRunnerEditor) {
 		this.xulRunnerEditor = xulRunnerEditor;
 	}
 
+	/**
+	 * Scrolls the window XULRunner if it is necessary.
+	 * <P>
+	 * If point of the {@code mouseEvent} lies inside the scrolling borders,
+	 * it scrolls the window of XULRunner by {@link #SCROLLING_STEP} in
+	 * appropriate direction.
+	 *
+	 * @param mouseEvent the mouse event
+	 */
 	public void scroll(nsIDOMMouseEvent mouseEvent) {
 		final nsIWebBrowser webBrowser = xulRunnerEditor.getWebBrowser();
 
-		Rectangle rect = getWindowBounds();
+		final Rectangle rect = getWindowBounds();
 
 		final int mouseX = mouseEvent.getClientX();
 		final int mouseY = mouseEvent.getClientY();
@@ -61,7 +85,12 @@ public class ScrollingSupport {
 		}
 	}
 	
-	public Rectangle getWindowBounds() {
+	/**
+	 * Returns {@link Rectangle} containing bounds of the {@link #xulRunnerEditor}
+	 * 
+	 * @return bounds of the {@link #xulRunnerEditor}
+	 */
+	private Rectangle getWindowBounds() {
 		nsIEmbeddingSiteWindow window = (nsIEmbeddingSiteWindow) 
 			xulRunnerEditor
 			.getWebBrowser()
