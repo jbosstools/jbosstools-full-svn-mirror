@@ -210,10 +210,15 @@ public class ElementRegistry {
 		} else if ("node".equals(type)) {
 			return createNodeEditPart(configurationElement);
 		} else if ("connection".equals(type)) {
-			return new ConnectionEditPart();
+			return createConnectionEditPart(configurationElement);
 		} else {
 			return null;
 		}
+	}
+	
+	private static EditPart createConnectionEditPart(final IConfigurationElement configurationElement) {
+		return new ConnectionEditPart() {
+		};
 	}
 	
 	private static EditPart createNodeEditPart(final IConfigurationElement configurationElement) {

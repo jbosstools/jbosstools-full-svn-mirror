@@ -23,15 +23,14 @@ import org.eclipse.swt.graphics.Color;
 
 public class RoundedRectangleElementFigure extends AbstractElementFigure {
 
-    private RoundedRectangle rectangle;
+    protected RoundedRectangle rectangle;
 
     protected void customizeFigure() {
         rectangle = new RoundedRectangle();
         rectangle.setCornerDimensions(new Dimension(25, 25));
         add(rectangle, 0);
-        rectangle.setBounds(getBounds());
+        setSize(92, 52);
         setSelected(false);
-        setSize(80, 40);
     }
     
     public void setColor(Color color) {
@@ -40,7 +39,8 @@ public class RoundedRectangleElementFigure extends AbstractElementFigure {
     
     public void setBounds(Rectangle rectangle) {
         super.setBounds(rectangle);
-        this.rectangle.setBounds(rectangle);
+        Rectangle bounds = rectangle.getCopy();
+        this.rectangle.setBounds(bounds.translate(6, 6).resize(-12, -12));
     }
     
     public void setSelected(boolean b) {

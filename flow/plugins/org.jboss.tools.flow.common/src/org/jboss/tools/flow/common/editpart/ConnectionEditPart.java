@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.AbsoluteBendpoint;
 import org.eclipse.draw2d.BendpointConnectionRouter;
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PolygonDecoration;
 import org.eclipse.draw2d.PolylineConnection;
@@ -68,6 +69,7 @@ public class ConnectionEditPart extends AbstractConnectionEditPart implements Mo
 	
     protected IFigure createFigure() {
         PolylineConnection result = new PolylineConnection();
+        result.setForegroundColor(ColorConstants.gray);
         result.setConnectionRouter(new BendpointConnectionRouter());
         result.setTargetDecoration(new PolygonDecoration());
         return result;
