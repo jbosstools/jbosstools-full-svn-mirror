@@ -233,8 +233,13 @@ public class ComponentUtil {
 				.replaceFirst(
 						"^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", Constants.EMPTY); //$NON-NLS-1$
 
-		IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo()
-				.getFile();
+		IFile file = null;
+		if (pageContext.getVisualBuilder().getCurrentIncludeInfo() != null)
+			file = pageContext.getVisualBuilder().getCurrentIncludeInfo()
+					.getFile();
+
+		if (file == null)
+			return resolvedValue;
 
 		resolvedValue = ElService.getInstance().replaceEl(file, resolvedValue);
 
