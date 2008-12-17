@@ -477,7 +477,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 
 	protected nsIDOMElement findContentArea() {
-		nsIDOMElement area = xulRunnerEditor.getDOMDocument().getDocumentElement();
+		nsIDOMElement area = null;
 		nsIDOMNodeList nodeList = xulRunnerEditor.getDOMDocument().getElementsByTagName(HTML.TAG_BODY);
 		long length = nodeList.getLength();
 		for(long i=0; i<length; i++) {
@@ -492,7 +492,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			}
 		}
 		if (area == null) {
-			return null;
+			//fix for jbide-3396, if we can't find a boody element, we should create it
+			area = xulRunnerEditor.getDOMDocument().createElement(HTML.TAG_BODY);
+			xulRunnerEditor.getDOMDocument().getDocumentElement().appendChild(area);
 		}
 
 		nsIDOMNode root = xulRunnerEditor.getDOMDocument().getDocumentElement();
