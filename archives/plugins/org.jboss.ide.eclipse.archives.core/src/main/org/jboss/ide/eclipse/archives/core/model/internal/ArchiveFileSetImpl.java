@@ -146,7 +146,8 @@ public class ArchiveFileSetImpl extends ArchiveNodeImpl implements
 					matchingMap = scanner.getMatchedMap();
 				}
 			} catch( IllegalStateException ise ) {
-				ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, ArchivesCoreMessages.CouldNotCreateScanner, ise);
+				ArchivesCore.getInstance().getLogger().log(IStatus.WARNING, 
+						NLS.bind(ArchivesCoreMessages.CouldNotCreateScanner, ise.getMessage()), ise);
 				matchingPaths = new FileWrapper[0];
 				matchingMap = new HashMap<String, ArrayList<FileWrapper>>();
 			}
