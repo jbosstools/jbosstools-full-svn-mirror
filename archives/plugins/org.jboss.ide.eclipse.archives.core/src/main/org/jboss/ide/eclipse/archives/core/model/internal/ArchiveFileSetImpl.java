@@ -27,6 +27,7 @@ import java.util.HashMap;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.osgi.util.NLS;
 import org.jboss.ide.eclipse.archives.core.ArchivesCore;
 import org.jboss.ide.eclipse.archives.core.ArchivesCoreMessages;
 import org.jboss.ide.eclipse.archives.core.model.DirectoryScannerFactory;
