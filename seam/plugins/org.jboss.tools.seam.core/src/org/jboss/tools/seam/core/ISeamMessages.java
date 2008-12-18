@@ -11,6 +11,9 @@
 package org.jboss.tools.seam.core;
 
 import java.util.Collection;
+import java.util.Map;
+
+import org.eclipse.core.resources.IResource;
 
 /**
  * @author Viacheslav Kabanovich
@@ -28,5 +31,11 @@ public interface ISeamMessages extends ISeamContextVariable {
 	 * @return collection of properties declared in resource bundles
 	 */
 	public Collection<ISeamProperty> getProperties();
+
+	/** 
+	 * 
+	 * @return map of properties and corresponding resources
+	 */
+	public Map<String, IResource> getResourcesMap();
 
 }
