@@ -267,7 +267,7 @@
 		<para>Please click the &quot;Fix it&quot; link, a menu is popped-up with several "resolve methods" on it.
 		</para>
 		<para>  Select the first resolve method: 'Connect the &quot;OrderItem&quot; to the
-			&quot;LineItem&quot; ',  then the &quot;OrderItem&quot; was connected  with the
+			&quot;LineItem&quot; ',  then the &quot;OrderItem&quot; is connected  with the
 			&quot;LineItem&quot;.
 		</para>
 		<para>But the notify message area still shows some other errors:
@@ -281,7 +281,7 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>OK, let's deal with the fire error ---- Click &quot;Fix it&quot; link  and select the first resolve method. The &quot;orderItems&quot; was connected  with the &quot;lineItems&quot;.
+		<para>OK, let's deal with the fire error ---- Click &quot;Fix it&quot; link  and select the first resolve method. The &quot;orderItems&quot; is connected  with the &quot;lineItems&quot;.
 		</para>
 		<tip>
 			<title>Tip</title>
