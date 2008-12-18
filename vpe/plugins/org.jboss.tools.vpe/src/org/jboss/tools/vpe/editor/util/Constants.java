@@ -27,4 +27,5 @@ public class Constants {
 	public static final String COMMA = ","; //$NON-NLS-1$
 	public static final String FILE_PREFIX = "file://"; //$NON-NLS-1$
 	public static final String UNDERSCORE = "_"; //$NON-NLS-1$
+	public static final String ZERO_STRING = "0"; //$NON-NLS-1$
 }
