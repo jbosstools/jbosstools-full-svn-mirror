@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>Seam tools 2.0.0.CR1 What's New</title>
+</head>
+<body>
+<h1>Seam tools 2.0.0.CR1 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../hibernate/hibernate-news-3.2.4.CR1.html">Hibernate News &gt;</a></p>
+
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Projects</h3>
+	<hr/>
+    </td>
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Up- or Down-grade of Seam versions</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>It is now possible to use the facet preferences to uprade or downgrade your projects Seam version.</p>
+    <p>The update is a "best-attempt" that will adjust the libraries, Seam facet and runtime version, but configuration files that refer to
+the old version will have to be manually updated.</p>    
+
+    <p><img src="../images/selective_seam_generate_entities.png"/></p>    
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Seam 2.1 support</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>There is now a Seam 2.1 runtime option and the components.xml editor supports the new XSD for Seam 2.1</p>
+
+    <p><img src="../images/seam_21support.png"/></p>    
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Hot Deploy of WAR in EAR</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>The WAR generated for EAR's is now configured to utilize Seam hot-deployment (WEB-INF/dev) similar to standalone WAR projects.</p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>action/model vs hot/main</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>To align with seam-gen in Seam 2.1 naming of source path's,
+action is now hot and model is now main. The reason being that hot and
+main better described what the folders are used for.</p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Open Web Browser</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>The Open Web Browser action is now directly available in the Seam perspective.</p>
+
+    <p><img src="../images/seam_openbrowser.png"/></p>    
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Validation</h3>
+	<hr/>
+    </td>
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Severity preference for EL Syntax check</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>There is now a preference for setting severity of EL Syntax check to Error, Warning or Ignore.</p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Warning for wrong Seam version</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>The valdiator now checks if the runtime matches with the
+    version referred to in components.xml, i.e. runtime is Seam 2.0,
+    but components.xml refers to Seam 2.1</p>
+
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Wizards warns against existing file</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>The various Seam action,form,etc. wizard now warns if the wizard will generate a class or page that already
+exist.</p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Project Wizards escape spaces</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>Use of project names with spaces now work since we now escapes the related package names.</p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>entity-query support</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>&lt;framework:entity-query name="postList" ...&gt; is now recognized as a EntityQuery component making code completion aware of it methods/attributes.</p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Pages Editor</h3>
+	<hr/>
+    </td>
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Delete on nodes</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>Nodes in graphical pages.xml can now be directly deleted by using the Delete key.</p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>View ID browser</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>When renaming a page node you can now browse for existing pages.</p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>OpenOn</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>EL and Page Id's can now be navigate to directly via OpenOn's from source page.</p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Code completion</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>EL references is now code completed in the source tab of pages.xml. The graphical node now also provides code completion for page id and EL expressions.
+.</p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+</table>
+
+</body>
+
+</html>
+
+
