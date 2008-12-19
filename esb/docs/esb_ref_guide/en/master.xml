@@ -18,7 +18,7 @@
 <!ENTITY strutsreflink "../../struts_tools_ref_guide/html_single/index.html">
 <!ENTITY strutstutoriallink "../../struts_tools_tutorial/html_single/index.html">                         
 
-]>
+]> 
 <book>
     
     <bookinfo>
@@ -33,7 +33,7 @@
             <holder>JBoss, a division of Red Hat Inc.</holder>
         </copyright>
         <releaseinfo>
-            Version: 3.0.0.beta1
+            Version: 3.0.0.CR1
         </releaseinfo>
     
 <abstract>
