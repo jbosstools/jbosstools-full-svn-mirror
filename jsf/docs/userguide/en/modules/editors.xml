@@ -35,7 +35,7 @@
             within your application and make use of content and code assist no matter what project
             file (jsp, xhtml, xml, css, etc...) you are working on.</para>
 
-        <section id="OpenOnSelection4Hyperlinknavigation">
+        <section id="OpenOnSelection4Hyperlinknavigation" role="updated">
 
             <title>OpenOn</title>
 
@@ -181,7 +181,7 @@
             </section>
         </section>
 
-        <section id="CodeAssistAndDynamicCodeAssist42BasedOnProjectData">
+        <section id="CodeAssistAndDynamicCodeAssist42BasedOnProjectData" role="updated">
 
             <title>Content Assist</title>
             <para><property>Content assist</property> is available when working with</para>
@@ -655,7 +655,7 @@
                 <para>Follow these steps to set what is available for code assist:</para>
                 <itemizedlist>
                     <listitem>
-                        <para>Adds code assist for JSF pre-defined objects, such as value=<emphasis
+                        <para>Adds code assist for JSF pre-defined objects, such as <![CDATA[value=]]><emphasis
                                 role="italic">
                                 <property>&quot;#{param}&quot;</property>
                             </emphasis>:</para>
@@ -787,7 +787,7 @@
 
         </section>
     </section>
-    <section id="visual_page">
+    <section id="visual_page" role="updated">
 
         <title>Visual Page Editor</title>
 
@@ -1004,7 +1004,7 @@
                 <para>The pages you are working with in <property>VPE</property> can use external
                     stylesheets. <property>VPE</property> allows you to create new style classes in
                     existing stylesheets and/or edit them as well. For these purposes <property>CSS
-                        Style Class Dialog</property> is provided.</para>
+                        Style Class Dialog</property> is provided (hot keys - CTRL+SHIT+C).</para>
                 <para>Select the element for which you need to create or edit style class and press
                     button next to <emphasis>
                         <property>styleClass</property>
