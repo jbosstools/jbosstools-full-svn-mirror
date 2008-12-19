@@ -216,6 +216,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	private Section mappingGUISection;
 
+	private Section problemSection;
+
 	public ISelection getSelection() {
 		return selection;
 	}
@@ -476,19 +478,18 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	protected void createErrorMessageLinkGUI(FormToolkit toolkit,
 			Composite parent) {
 
-		Section secion = this.createPageSectionHeader(parent, Section.TITLE_BAR
-				| Section.DESCRIPTION, "Problems",
-				"Click \"Fix\" link to fix those errors");
+		problemSection = this.createPageSectionHeader(parent, Section.TITLE_BAR
+				| Section.DESCRIPTION, "Problems", "No problems");
 
-		designTimeAnalyzeResultRegion = toolkit.createComposite(secion);
+		designTimeAnalyzeResultRegion = toolkit.createComposite(problemSection);
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		GridLayout ngl = new GridLayout();
 		ngl.numColumns = 2;
 		ngl.marginWidth = 0;
-		secion.setLayout(new FillLayout());
+		problemSection.setLayout(new FillLayout());
 		designTimeAnalyzeResultRegion.setLayoutData(gd);
 		designTimeAnalyzeResultRegion.setLayout(ngl);
-		secion.setClient(designTimeAnalyzeResultRegion);
+		problemSection.setClient(designTimeAnalyzeResultRegion);
 	}
 
 	public void refreshAllGUI() {
@@ -891,7 +892,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 						analyzeDesignGraph();
 						updateSelectionActions();
 						IManagedForm form = getManagedForm();
-						if(form != null){
+						if (form != null) {
 							form.dirtyStateChanged();
 						}
 					}
@@ -1499,11 +1500,13 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	}
 
 	protected void updateErrorMessage() {
+		boolean hasProblems = false;
 		for (Iterator<DesignTimeAnalyzeResult> iterator = this.analyzeResultList
 				.iterator(); iterator.hasNext();) {
 			DesignTimeAnalyzeResult result = (DesignTimeAnalyzeResult) iterator
 					.next();
 			if (result.getErrorMessage() != null) {
+				hasProblems = true;
 				if (canSaveFile)
 					canSaveFile = false;
 				Label imageLabel = new Label(designTimeAnalyzeResultRegion,
@@ -1583,6 +1586,12 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		}
 		try {
 			// designTimeAnalyzeResultRegion.setLayoutData(gd);
+			if (hasProblems) {
+				problemSection
+						.setDescription("Click \"Fix\" link to fix those errors");
+			} else {
+				problemSection.setDescription("No problems");
+			}
 			designTimeAnalyzeResultRegion.getParent().getParent().layout();
 		} finally {
 		}
@@ -1624,7 +1633,6 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			c = null;
 		}
 		updateErrorMessage();
-		updateWarningMessage();
 		designTimeAnalyzeResultRegion.layout(true);
 	}
 

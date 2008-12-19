@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -31,25 +30,24 @@ import org.eclipse.jface.wizard.IWizardNode;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.INewWizard;
-import org.eclipse.ui.forms.events.HyperlinkEvent;
-import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.Hyperlink;
-import org.jboss.tools.smooks.analyzer.AnalyzerFactory;
 import org.jboss.tools.smooks.analyzer.DataTypeID;
+import org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer;
 import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
 import org.jboss.tools.smooks.ui.IViewerInitor;
 import org.jboss.tools.smooks.ui.StructuredDataCreationWizardDailog;
 import org.jboss.tools.smooks.ui.ViewerInitorStore;
 import org.jboss.tools.smooks.ui.wizards.ISmooksDataCreationAddtionWizard;
 import org.jboss.tools.smooks.ui.wizards.TransformSelectWizardNode;
+import org.jboss.tools.smooks.xml2java.analyzer.XML2JavaAnalyzer;
 
 /**
  * @author Dart Peng<br>
@@ -65,13 +63,21 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 	private Object targetTreeViewerInputContents;
 
 	protected CheckboxTableViewer source;
+	
 	protected CheckboxTableViewer target;
+	
 	private List sourceList;
+	
 	private String sourceID = null;
+	
 	private String targetID = null;
+	
 	private String oldSourceID = null;
+	
 	private String oldTargetID = null;
+	
 	private IStructuredSelection selection;
+	
 	private boolean showDataSelectPage = false;
 
 	private Hyperlink sourceDataLink;
@@ -105,8 +111,10 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 	public TypeIDSelectionWizardPage(String pageName, boolean showDataSelectPage) {
 		super(pageName);
 		this.showDataSelectPage = showDataSelectPage;
-		setTitle(Messages.getString("TypeIDSelectionWizardPage.TypeIDSelectionWizardPageTitle")); //$NON-NLS-1$
-		setDescription(Messages.getString("TypeIDSelectionWizardPage.TypeIDSelectionWizardPageDescription")); //$NON-NLS-1$
+		setTitle(Messages
+				.getString("TypeIDSelectionWizardPage.TypeIDSelectionWizardPageTitle")); //$NON-NLS-1$
+		setDescription(Messages
+				.getString("TypeIDSelectionWizardPage.TypeIDSelectionWizardPageDescription")); //$NON-NLS-1$
 	}
 
 	@Override
@@ -181,8 +189,8 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 				}
 			}
 		}
-		sourceDataCreationWizard =  sourceWizard;
-		targetDataCreationWizard =  targetWizard;
+		sourceDataCreationWizard = sourceWizard;
+		targetDataCreationWizard = targetWizard;
 	}
 
 	private boolean wizardIsCreated(IWizard wizard) {
@@ -193,87 +201,127 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		}
 		return true;
 	}
+	
+	private void updateWizardPageStates(){
+		
+	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
+	 * @see
+	 * org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets
+	 * .Composite)
 	 */
 	public void createControl(Composite parent) {
 		Composite mainComposite = new Composite(parent, SWT.NONE);
-		GridLayout gl = new GridLayout();
-		gl.numColumns = 2;
-		gl.makeColumnsEqualWidth = true;
-		mainComposite.setLayout(gl);
-		sourceList = AnalyzerFactory.getInstance().getRegistrySourceIDList();
-		Label sl = new Label(mainComposite, SWT.NONE);
-		sl.setText(Messages.getString("TypeIDSelectionWizardPage.SourceTypeIDTitle")); //$NON-NLS-1$
-
-		Label tl = new Label(mainComposite, SWT.NONE);
-		tl.setText(Messages.getString("TypeIDSelectionWizardPage.TargetTypeIDTitle")); //$NON-NLS-1$
 		
-		Composite sourceBorder = new Composite(mainComposite,SWT.NONE);
-		sourceBorder.setBackground(ColorConstants.black);
-		FillLayout sbLayout = new FillLayout();
-		sbLayout.marginHeight = 1;
-		sbLayout.marginWidth = 1;
-		sourceBorder.setLayout(sbLayout);
-		source = createTableViewer(sourceBorder);
-		GridData gd = new GridData(GridData.FILL_BOTH);
-		sourceBorder.setLayoutData(gd);
+		// MODIFY by Dart 2008.12.19
+		mainComposite.setLayout(new GridLayout());
 		
-		
-		Composite targetBorder = new Composite(mainComposite,SWT.NONE);
-		targetBorder.setBackground(ColorConstants.black);
-		FillLayout tbLayout = new FillLayout();
-		tbLayout.marginHeight = 1;
-		tbLayout.marginWidth = 1;
-		targetBorder.setLayout(tbLayout);
-		target = createTableViewer(targetBorder);
-		targetBorder.setLayoutData(gd);
+		Button j2jButton = new Button(mainComposite,SWT.RADIO);
+		j2jButton.setText("Java-to-Java");
+		j2jButton.addSelectionListener(new SelectionAdapter(){
 
-		source.setInput(sourceList);
-		target.setInput(sourceList);
-		initViewer();
-
-		sourceDataLink = new Hyperlink(mainComposite, SWT.NONE);
-		sourceDataLink.setText("Source Model Select:Empty"); //$NON-NLS-1$
-		sourceDataLink.addHyperlinkListener(new IHyperlinkListener() {
-
-			public void linkActivated(HyperlinkEvent e) {
-				openSourceWizard();
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				setPageComplete(true);
+				setSourceID("org.jboss.tools.smooks.ui.viewerInitor.javabean");
+				setTargetID("org.jboss.tools.smooks.ui.viewerInitor.javabean");
+				getContainer().updateButtons();
 			}
-
-			public void linkEntered(HyperlinkEvent e) {
-
-			}
-
-			public void linkExited(HyperlinkEvent e) {
-
-			}
-
+			
 		});
-		// TODO don't show this
-		sourceDataLink.setVisible(false);
-		targetDataLink = new Hyperlink(mainComposite, SWT.NONE);
-		targetDataLink.setText("Target Model Select:Empty"); //$NON-NLS-1$
-		targetDataLink.addHyperlinkListener(new IHyperlinkListener() {
+		
+		Button x2jButton = new Button(mainComposite,SWT.RADIO);
+		x2jButton.setText("XML-to-Java");
+		x2jButton.addSelectionListener(new SelectionAdapter(){
 
-			public void linkActivated(HyperlinkEvent e) {
-				openTargetWizard();
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				setPageComplete(true);
+				setSourceID("org.jboss.tools.smooks.xml.viewerInitor.xml");
+				setTargetID("org.jboss.tools.smooks.ui.viewerInitor.javabean");
+				getContainer().updateButtons();
 			}
-
-			public void linkEntered(HyperlinkEvent e) {
-
-			}
-
-			public void linkExited(HyperlinkEvent e) {
-
-			}
-
+			
 		});
-		// TODO don't show this
-		targetDataLink.setVisible(false);
+		setPageComplete(false);
+		
+//		GridLayout gl = new GridLayout();
+//		gl.numColumns = 2;
+//		gl.makeColumnsEqualWidth = true;
+//		mainComposite.setLayout(gl);
+//		sourceList = AnalyzerFactory.getInstance().getRegistrySourceIDList();
+//		Label sl = new Label(mainComposite, SWT.NONE);
+//		sl.setText(Messages
+//				.getString("TypeIDSelectionWizardPage.SourceTypeIDTitle")); //$NON-NLS-1$
+//
+//		Label tl = new Label(mainComposite, SWT.NONE);
+//		tl.setText(Messages
+//				.getString("TypeIDSelectionWizardPage.TargetTypeIDTitle")); //$NON-NLS-1$
+//
+//		Composite sourceBorder = new Composite(mainComposite, SWT.NONE);
+//		sourceBorder.setBackground(ColorConstants.black);
+//		FillLayout sbLayout = new FillLayout();
+//		sbLayout.marginHeight = 1;
+//		sbLayout.marginWidth = 1;
+//		sourceBorder.setLayout(sbLayout);
+//		source = createTableViewer(sourceBorder);
+//		GridData gd = new GridData(GridData.FILL_BOTH);
+//		sourceBorder.setLayoutData(gd);
+//
+//		Composite targetBorder = new Composite(mainComposite, SWT.NONE);
+//		targetBorder.setBackground(ColorConstants.black);
+//		FillLayout tbLayout = new FillLayout();
+//		tbLayout.marginHeight = 1;
+//		tbLayout.marginWidth = 1;
+//		targetBorder.setLayout(tbLayout);
+//		target = createTableViewer(targetBorder);
+//		targetBorder.setLayoutData(gd);
+//
+//		source.setInput(sourceList);
+//		target.setInput(sourceList);
+//		initViewer();
+//
+//		sourceDataLink = new Hyperlink(mainComposite, SWT.NONE);
+//		sourceDataLink.setText("Source Model Select:Empty"); //$NON-NLS-1$
+//		sourceDataLink.addHyperlinkListener(new IHyperlinkListener() {
+//
+//			public void linkActivated(HyperlinkEvent e) {
+//				openSourceWizard();
+//			}
+//
+//			public void linkEntered(HyperlinkEvent e) {
+//
+//			}
+//
+//			public void linkExited(HyperlinkEvent e) {
+//
+//			}
+//
+//		});
+//		// TODO don't show this
+//		sourceDataLink.setVisible(false);
+//		targetDataLink = new Hyperlink(mainComposite, SWT.NONE);
+//		targetDataLink.setText("Target Model Select:Empty"); //$NON-NLS-1$
+//		targetDataLink.addHyperlinkListener(new IHyperlinkListener() {
+//
+//			public void linkActivated(HyperlinkEvent e) {
+//				openTargetWizard();
+//			}
+//
+//			public void linkEntered(HyperlinkEvent e) {
+//
+//			}
+//
+//			public void linkExited(HyperlinkEvent e) {
+//
+//			}
+//
+//		});
+//		// TODO don't show this
+//		targetDataLink.setVisible(false);
 
 		this.setControl(mainComposite);
 	}
@@ -308,8 +356,11 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 						.getTreeViewerInputContents();
 			}
 		} else {
-			MessageDialog.openInformation(getShell(), "Info", //$NON-NLS-1$
-					Messages.getString("TypeIDSelectionWizardPage.WarningMessage")); //$NON-NLS-1$
+			MessageDialog
+					.openInformation(getShell(),
+							"Info", //$NON-NLS-1$
+							Messages
+									.getString("TypeIDSelectionWizardPage.WarningMessage")); //$NON-NLS-1$
 		}
 
 		return null;
@@ -317,11 +368,12 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 
 	protected void openSourceWizard() {
 		sourceTreeViewerInputContents = getReturnObjectFromWizard(getSourceID());
-//		resetLinkText();
+		// resetLinkText();
 	}
-/**
- * @deprecated
- */
+
+	/**
+	 * @deprecated
+	 */
 	private void resetLinkText() {
 		// if (sourceTreeViewerInputContents != null) {
 		// sourceDataLink.setText("Source Model Select");
@@ -428,7 +480,8 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		});
 		TableColumn nameColumn = new TableColumn(viewer.getTable(), SWT.NONE);
 		nameColumn.setWidth(250);
-		nameColumn.setText(Messages.getString("TypeIDSelectionWizardPage.NameColumn")); //$NON-NLS-1$
+		nameColumn.setText(Messages
+				.getString("TypeIDSelectionWizardPage.NameColumn")); //$NON-NLS-1$
 		viewer.setContentProvider(new TypeIDContentProvider());
 		viewer.setLabelProvider(new TypeIDLabelProvider());
 		return viewer;
@@ -473,7 +526,6 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 		}
 
 	}
-
 
 	public Object getSourceTreeViewerInputContents() {
 		return sourceTreeViewerInputContents;
