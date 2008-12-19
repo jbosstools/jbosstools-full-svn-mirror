@@ -12,6 +12,29 @@
 <p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../portlet/portlet-news-1.0.0.CR1.html">Portlet Tools News &gt;</a></p>
 
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+   <tr>
+    <td colspan="2">
+      <hr>
+      <h3>Deployment</h3>
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Deploy in Workspace</b></td>
+    <td valign="top">
+      <p>All JBoss 4.x servers now default to deploying into Eclipse workspace preventing pollution off the default server deploy directory.</p>
+<p>Existing servers will still deploy where they were configured to, but you can double click a server and adjust which mode of deployment you want: In Workspace, Default Server deploy or any custom directory you would wish.</p>
+
+<p>The locations are added to the server via JMX thus it requires JMX to be enabled and if secured that you have specified username/password.</p>
+
+<p><img src="../images/as_deployoptions.png"/></p>
+    </td>
+  </tr>
+
   <tr>
     <td colspan="2">
       <hr>
@@ -19,9 +42,18 @@
   </tr>
 
   <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>JBoss 5</b></td>
+    <td valign="top">
+      <p>JBoss 5 GA is now supported. Previous versions did not take into account the new common/lib in AS 5 which made some operations fail.</p>
+    </td>
+  </tr>
+
+  <tr>
     <td colspan="2">
       <hr>
-      <h3>Servers</h3>
+      <h3>Views</h3>
       <hr>
     </td>
   </tr>
@@ -32,6 +64,7 @@
       <p>The Event Log was formerly embedded inside the Servers view; now it has its own view providing easier access and sorting.</p>
 
       <p><img src="../images/as_serverlog.png"/></p>
+
     </td>
   </tr>
 
@@ -61,6 +94,24 @@ and the related bugs.</p>
     </td>
   </tr>
 
+
+  <tr>
+    <td colspan="2">
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Show In Additons</b></td>
+    <td valign="top">
+      <p>The Show In menu on AS servers now also include easy access to Server Log and MBean Explorer</p>
+
+      <p><img src="../images/as_showin.png"/></p>
+    </td>
+  </tr>
+
   <tr>
     <td colspan="2">
       <hr>
@@ -74,62 +125,11 @@ and the related bugs.</p>
     <td valign="top">
       <p>Double clicking on a file from Servers fileset now opens up the editor automatically.</p>
 
-      <p><img src="../images/fileset_dbl_click.png"/></p>
+      <p><img src="../images/as_dblclickforedit.png"/></p>
     </td>
   </tr>
 
-  <tr>
-    <td colspan="2">
-      <hr>
-    </td>
-  </tr>
 
-  <tr>
-    <td valign="top" align="left">
-      <p align="right">
-	<b>Server created with default JDK</b></td>
-    <td valign="top">
-      <p>Previous versions created servers/runtimes with a specific JDK, now they are created to use 
-the default JDK. If you want to use a specific JDK you can go an update it in the server launch config.</p>
-
-      <p><img src="../images/as_server_default_jdk.png"/></p>
-    </td>
-  </tr>
-
-  <tr>
-    <td colspan="2">
-      <hr>
-    </td>
-  </tr>
-
-  <tr>
-    <td valign="top" align="left">
-      <p align="right">
-	<b>Deploy in Workspace</b></td>
-    <td valign="top">
-      <p>All JBoss 4.x servers now default to deploying into Eclipse workspace preventing pollution off the default server deploy directory.</p>
-<p>Existing servers will still deploy where they were configured to, but you can double click a server and adjust which mode of deployment you want: In Workspace, Default Server deploy or any custom directory you would wish.</p>
-
-<p>The locations are added to the server via JMX thus it requires JMX to be enabled and if secured that you have specified username/password.</p>
-
-      <p><img src="../images/as_server_deploy.png"/></p>
-    </td>
-  </tr>
-
-  <tr>
-    <td valign="top" align="left">
-      <p align="right">
-	<b>JMX Integration</b></td>
-    <td valign="top">
-      <p>The new JMX view/perspective is integrated into the Server view. You can navigate directly to it via Show In > JMX View.</p>
-
-      <p><img src="../images/as_show_in_jmx.png"/></p>
-
-<p>When the server is started you can browse the preconfigured JMX connection.</p>
-
-      <p><img src="../images/as_server_jmx.png"/></p>
-    </td>
-  </tr>
 
 </table>
 
