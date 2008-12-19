@@ -16,32 +16,49 @@
     </chapterinfo>
 
     <title>Introduction</title>
-    
+
     <section>
-        
+
         <title>What is BIRT?</title>
-        <para>BIRT plugin for JBoss Developer Studio is an Eclipse-based open source reporting system for web applications based on Java and J2EE. BIRT consists of two main components: a report designer based on Eclipse, and a runtime component that  can be added to your app server. BIRT also offers a charting engine that lets you add charts to your own Web application.</para>
-       <para>With the help of BIRT you can generate a great number of reports to be used in your application:</para>
-        
+        <para>BIRT plugin for JBoss Developer Studio is an Eclipse-based open source reporting
+            system for web applications based on Java and J2EE. BIRT consists of two main
+            components: a report designer based on Eclipse, and a runtime component that can be
+            added to your app server. BIRT also offers a charting engine that lets you add charts to
+            your own Web application.</para>
+        <para>With the help of BIRT you can generate a great number of reports to be used in your
+            application:</para>
+
         <itemizedlist>
-            <listitem><para>Lists</para></listitem>
-            <listitem><para>Charts</para></listitem>
-            <listitem><para>Crosstabs, or cross-tabulation,  or matrix</para></listitem>
-            <listitem><para>Letters and Documents</para></listitem>
-            <listitem><para>Compound Reports</para></listitem>       
+            <listitem>
+                <para>Lists</para>
+            </listitem>
+            <listitem>
+                <para>Charts</para>
+            </listitem>
+            <listitem>
+                <para>Crosstabs, or cross-tabulation, or matrix</para>
+            </listitem>
+            <listitem>
+                <para>Letters and Documents</para>
+            </listitem>
+            <listitem>
+                <para>Compound Reports</para>
+            </listitem>
         </itemizedlist>
-        
-        <para>In this guide we provide you with the information on BIRT Designer which allows you to create a report much faster and with far fewer errors so sparing your time.</para>
-        
+
+        <para>In this guide we provide you with the information on BIRT Designer which allows you to
+            create a report much faster and with far fewer errors so sparing your time.</para>
+
         <literallayout> </literallayout>
-        <para>You can find detailed information on the BIRT report types and anatomy here:</para>        
-        <ulink url="http://www.eclipse.org/birt/phoenix/intro/">JBoss BIRT</ulink>
-    
-        <para>All JBoss Developer Studio/JBoss Tools documentation you can find <ulink url="http://docs.jboss.org/tools/">here</ulink>.</para>
-        <para>The latest documentation builds are available <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
-        
+        <para>You can find detailed information on the BIRT report types and anatomy here: <ulink
+                url="http://www.eclipse.org/birt/phoenix/intro/">JBoss BIRT</ulink></para>
+
+
+        <para>All JBoss Developer Studio/JBoss Tools documentation you can find <ulink
+                url="http://docs.jboss.org/tools/">here</ulink>.</para>
+        <para>The latest documentation builds are available <ulink
+                url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
+
     </section>
-    
-  
-    
+
 </chapter>
