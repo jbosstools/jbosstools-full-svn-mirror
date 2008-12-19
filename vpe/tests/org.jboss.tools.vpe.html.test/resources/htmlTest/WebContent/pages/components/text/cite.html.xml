@@ -1,0 +1,10 @@
+<tests>
+	<test id="cite">
+		<CITE ID="cite" CLASS="citeClass" STYLE="color: red; -moz-user-modify: read-write;" DIR="ltr">
+<SPAN>
+some
+text
+</SPAN>
+</CITE>
+	</test>
+</tests>

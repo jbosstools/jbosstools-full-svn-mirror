@@ -1,0 +1,5 @@
+<tests>
+	<test id="bgsound">
+		<IMG SRC="/bgsound.gif" STYLE="-moz-user-modify: read-only;" />
+	</test>
+</tests>

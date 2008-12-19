@@ -1,0 +1,32 @@
+<html>
+<head>
+</head>
+
+<body>
+
+
+<h1>xmp</h1>
+<xmp id="xmp"> 
+	  while (<>) {  
+      $org=$_;  
+      s/\\["']//g;  
+      s/\/\/[^:].*//;  
+      s/\/\*.*\*\///g;  
+      if ($comment == 1) {  
+        if (s/.*\*\///) {  
+          $comment = 0;  
+        }  
+        else {  
+          next;  
+        }  
+      }  
+      if (s/\/\*.*//) {  
+        $comment = 1;  
+      }  
+      if (/^\s*#/) {  
+        next;  
+      }  
+    }
+</xmp>
+</body>
+</html>

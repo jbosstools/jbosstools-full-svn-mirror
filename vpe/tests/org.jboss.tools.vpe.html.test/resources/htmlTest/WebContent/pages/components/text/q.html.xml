@@ -1,0 +1,9 @@
+<tests>
+	<test id="q">
+		<Q ID="q" CLASS="qClass" STYLE="color: red; -moz-user-modify: read-write;" DIR="ltr">
+<SPAN>
+Some Text
+</SPAN>
+</Q>
+	</test>
+</tests>

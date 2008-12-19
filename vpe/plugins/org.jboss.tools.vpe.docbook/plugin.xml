@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.jboss.tools.vpe.templates">
+      <templates
+            name="Web Deployment Descriptor"
+            path="templates/docbook.xml"></templates>
+      <templates
+            name="XInclude"
+            path="templates/xinclude.xml">
+      </templates>
+   </extension>
+
+</plugin>
