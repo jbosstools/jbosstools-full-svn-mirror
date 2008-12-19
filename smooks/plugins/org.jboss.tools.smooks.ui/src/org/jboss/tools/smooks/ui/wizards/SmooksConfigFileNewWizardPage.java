@@ -1,5 +1,10 @@
 package org.jboss.tools.smooks.ui.wizards;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 
@@ -32,9 +37,23 @@ public class SmooksConfigFileNewWizardPage extends WizardNewFileCreationPage {
 		} else {
 			error = Messages.getString("SmooksConfigFileNewWizardPage.NewConfigFileWizardPageErrorMessage1"); //$NON-NLS-1$
 		}
-		if (error != null) {
-			this.setErrorMessage(error);
+		IPath containerPath = this.getContainerFullPath();
+		IResource container = ResourcesPlugin.getWorkspace().getRoot().findMember(containerPath);
+		IProject project = container.getProject();
+		boolean isJavaProject = false;
+		if(project != null){
+			try{
+				if(project.hasNature(JavaCore.NATURE_ID)){
+					isJavaProject = true;
+				}
+			}catch(Exception e){
+				
+			}
 		}
+		if(!isJavaProject){
+			error = "Please select a folder of Java projects.";
+		}
+		this.setErrorMessage(error);
 		return (error == null);
 	}
 }

@@ -558,7 +558,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			ResourceType rt = rc.getResource();
 			// find the first BeanPopulator resource config , this is the root.
 			String resourceClazz = null;
-			if(resourceConfigIsUsed(rc)){
+			if (resourceConfigIsUsed(rc)) {
 				continue;
 			}
 			if (rt != null) {
@@ -576,9 +576,10 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				if (selector != null) {
 					selector = selector.trim();
 				}
-				if(!sourceName.equals(selector)){
-					source = findJavaBeanModelFormList(selector, sourceModelList);
-					if(source != null){
+				if (!sourceName.equals(selector)) {
+					source = findJavaBeanModelFormList(selector,
+							sourceModelList);
+					if (source != null) {
 						sourceClazz = source.getBeanClass();
 						if (sourceClazz != null) {
 							sourceName = sourceClazz.getName();
@@ -857,6 +858,43 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				}
 			}
 		}
+		if (current == null) {
+			// rootClassName = this.getDataSourceClass(graphInfo, TARGET_DATA);
+			// TODO if there isn't any BeanPopulater throws exception
+			// MODIFY by Dart 2008.11.17
+			try{
+			if (classLoader == null) {
+				IProject project = sourceFile.getProject();
+				classLoader = new ProjectClassLoader(JavaCore.create(project));
+			}
+			String classString = getDataSourceClass(graphInfo, TARGET_DATA);
+			if (classString != null && classLoader != null) {
+					String[] classes = classString.split(";");
+					if (classes != null) {
+						for (int i = 0; i < classes.length; i++) {
+							String clazzName = classes[i];
+							list.add(JavaBeanModelFactory
+									.getJavaBeanModelWithLazyLoad(classLoader
+											.loadClass(clazzName)));
+						}
+						return list;
+					}
+			}
+			}catch (ClassNotFoundException e) {
+				// TODO if can't find the class throws exception
+				// MODIFY by Dart 2008.11.12
+				throw new RuntimeException("Can't find the class : \""
+						+ rootClassName
+						+ "\" to create the JavaBean model");
+			} catch (JavaModelException e) {
+				e.printStackTrace();
+			}
+			// throw new RuntimeException(
+			// "Can't load Java bean model form the config file.");
+		}
+		// if can't load the source from GraphicalInformation , return NULL
+		if (current == null && rootClassName == null)
+			return list;
 		return list;
 	}
 
