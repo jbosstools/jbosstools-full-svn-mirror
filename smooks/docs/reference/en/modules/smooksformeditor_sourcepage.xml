@@ -11,7 +11,7 @@
 	<title>Smooks Source Editor Page</title>
 	<section>
 		<title>XML Source Editor</title>
-		<para>  User can use this editor to edit the Smooks configuration file  directly.
+		<para>You can use this editor to edit the Smooks configuration file directly.
 		</para>
 		<figure>
 			<title>Graphical Editor</title>
@@ -25,7 +25,7 @@
 	</section>
 	<section>
 		<title>Error Messages GUI</title>
-		<para>  If the Smooks tools can't understand the configuration file or  the configuration file was illegal(XML structure isn't right for  Smooks configuration file, etc.),The error message panel will  display above the XML editor.
+		<para>If the Smooks tools can't understand the configuration file or  the configuration file is  illegal (XML structure isn't right for  Smooks configuration file, etc.), The error message panel will  be displayed above the XML editor.
 		</para>
 		<figure>
 			<title>Graphical Editor</title>
@@ -36,16 +36,16 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<tip>
-			<title>Note</title>
+		<note>
+			<title>Tip</title>
 			<para>
-				When the error message panel was displayed, other editors (
-				Graphical Editor, Configuration Editor ) will be disabled.
+				When the error message panel is displayed, other editors (
+				Graphical Editor, Configuration Editor ) are disabled.
 			</para>
 			<para>
-				User can't edit the configuration file with other editors until
-				file was right.
+				You can't edit the configuration file with other editors until
+				file becomes valid.
 			</para>
-		</tip>
+		</note>
 	</section>
 </chapter>

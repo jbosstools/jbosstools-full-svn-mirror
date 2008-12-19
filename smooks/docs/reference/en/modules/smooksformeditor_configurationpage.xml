@@ -41,7 +41,7 @@
 	<section id="configurationpage_parsetype">
 		<title>Smooks parse type</title>
 		<para>Open the "Other configuration" section, we will see there
-			is a sets of radio buttons:</para>
+			is a set of radio buttons:</para>
 		<figure>
 			<title>Smooks parse type</title>
 			<mediaobject>
@@ -71,14 +71,14 @@
 		</figure>
 		<para>
 			There are three buttons on the right side of the "File Import"
-			list. User can click those to add/edit/remove the import files.
+			list. You can click those to add/edit/remove the import files.
 		</para>
 		<tip>
 			<title>Tip</title>
 			<para>
 				If the import file dosen't exist, the image of the import file
 				will change to "Error Image".
-				If user double-click the import file in
+				If you double-click the import file in
 				the "Import File" list, the file will be open with a new default
 				editor.
 			</para>
@@ -125,7 +125,7 @@
 			</orderedlist>
 		</para>
 		<para>
-			User can modify the parameters of the "Date Decoder" item with the
+			You can modify the parameters of the "Date Decoder" item with the
 			left detail page.
 		</para>
 		<figure>
@@ -138,7 +138,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			When user defined new "Date Decoder", they can use the
+			When you defined new "Date Decoder", they can use the
 			<link linkend="graphicalpage_propertiesview"> "JavaBean Properties"</link>  GUI  to set the them to  be the "Java type".
 		</para>
 		<!--

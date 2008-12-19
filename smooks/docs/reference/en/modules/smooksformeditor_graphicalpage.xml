@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="smooksformeditor_graphicaltab" xreflabel="Smooks Graphical Editor Page">
-    <?dbhtml filename="smooks_form_editor_graphicaltab.html"?>
+	<?dbhtml filename="smooks_form_editor_graphicaltab.html"?>
 	<chapterinfo>
 		<keywordset>
 			<keyword>JBoss Tools</keyword>
@@ -9,7 +9,7 @@
 		</keywordset>
 	</chapterinfo>
 	<title>Smooks Graphical Editor Page</title>
-	<para>
+	<para> 
 		Smooks Graphical Editor Page is one tab of the Smooks Form
 		Editor.
 	</para>
@@ -23,24 +23,24 @@
 		</mediaobject>
 	</figure>
 	<para>
-		This graphical editor could allow user to do drug/drop operations
-		with the nodes of transform data to mapping the source data to target
+		This graphical editor could allow you to perform drug/drop operations
+		with the nodes of transform data to map the source data to target
 		data.
 	</para>
 	<para>
-		When user save the graphical editor the correct Smooks
-		configuration file contents
+		When you save the changes in the graphical editor the correct Smooks
+		configuration file content
 		will be generated.
 	</para>
 	<section>
-		<title>Introduce the areas of graphical editor</title>
-		<para>  Please read the
+		<title>Introducing  the areas of graphical editor</title>
+		<para>Information on the topic could be found here
 			<link linkend="quickstart_formeditor">"Quick Start/Smooks Form Editor"</link>
 		</para>
 	</section>
 	<section>
 		<title>Load source/target data</title>
-		<para>  Click the links under the data viewer, the data type selection  wizard  page will be shown.
+		<para> Click the links under the data viewer, the data type selection wizard  page will be shown.
 		</para>
 		<figure>
 			<title>Data type selection wizard page</title>
@@ -51,7 +51,7 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>  There are a sets of transform data type on the wizard page,select one  type and click
+		<para>  There are sets of transform data type on the wizard page, select one  type and click
 			<property>Next</property>
 			, the data source selection wizard page will be shown.
 			<tip>
@@ -79,61 +79,60 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>  When finish the data selection(file path selection), Click
+		<para>  When you finish the data selection (file path selection), Click
 			<property>Finish</property>
 			, the data viewer will display the selected data structure.
 		</para>
 	</section>
 	<section>
-		<title>User the graphical editor to mapping</title>
-		<para>  Please read the
+		<title>Using the graphical editor for mapping</title>
+		<para>To get information on the topic please, read the
 			<link linkend="quickstart_mapping">"Quick Start/Mapping"</link>
 		</para>
 	</section>
 	<section>
 		<title>Error messages</title>
-		<para>  When user do any mapping operations, the Smooks tools will  validate  the file contents with "Mapping Logic", If there is any errors of  the configuration file contents
-			,error messages will be shown on  the
+		<para>When you do any mapping operations, the Smooks tools  validates  the file content with "Mapping Logic", If there is any errors of  the configuration file content
+			, error messages are shown on  the
 			<link linkend="quickstart_formeditor">"Error
 				message area"</link>
 			.
 		</para>
-		<para>  Please read the
+		<para>  Please, read the
 			<link linkend="quickstart_mapping">"Quick Start/Mapping"</link>  to find how to fix the errors.
 		</para>
 	</section>
 	<section id="graphicalpage_propertiesview">
 		<title>Properties Viewer</title>
-		<para>  User can edit the properties of the "connection lines" with the  properties viewer.
+		<para>  You can edit the properties of the "connection lines" with the properties viewer.
 		</para>
-		<para>  Select the menu: "Window -> Show View -> Other -> Properties",  the properties viewer will be opened. 
+		<para>  Select the menu: "Window -> Show View -> Other -> Properties",  the properties viewer is opened. 
 		</para>
 		<para>
-			When user select on the connection lines, the properties viewer
-			will show a sets of section GUI for editing the properties of the
+			When you select on the connection lines, the properties viewer
+			will show a set of section GUI for editing the properties of the
 			connection line.
 		</para>
 		<tip>
-			<title>Note</title>
+			<title>Tip</title>
 			<para>
-				These GUI on the properties viewer will be displayed when the
+				This GUI on the properties viewer is displayed when the
 				"Smooks
-				Graphical Page" was active,if not the properties viewer will
-				display empty GUI.
+				Graphical Page" is active, if not, the properties viewer
+				displays empty GUI.
 			</para>
 			<para>
-				If the source data type of the selected connection line was
-				"XML",The properties viewer will show a "XML Properties" section
+				If the source data type of the selected connection line is
+				"XML", The properties viewer  shows a "XML Properties" section
 				GUI.
 			</para>
 			<para>
-				But the source data type of the selected connection line was
-				"Java",
-				the "XML Properties" section GUI doesn't display.
+				But if the source data type of the selected connection line is
+				"Java",	the "XML Properties" section GUI isn't 'displayed.
 			</para>
 			<para>
 				It means that if the source/target data type of the selected
-				connection line was different, the properties viewer will show
+				connection line is different, the properties viewer shows
 				different GUI.
 			</para>
 		</tip>
