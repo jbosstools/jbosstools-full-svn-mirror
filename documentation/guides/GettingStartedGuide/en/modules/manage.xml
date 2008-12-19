@@ -122,7 +122,7 @@
                     <property>Stopped</property>
                 </emphasis> next to its name in the Status column.</para>
         </section>
-        <section id="ServerPreferences" role="updated">
+        <section id="ServerPreferences">
             <?dbhtml filename="ServerPreferences.html"?>
             <title>Server Container Preferences</title>
             <para>You can control how <property>JBoss Developer Studio</property> interacts with server containers in the
