@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="smooksformeditor_sourcetab" xreflabel="Smooks Source Editor Page">
+	<?dbhtml filename="smooks_form_editor_sourcetab.html"?>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Tools</keyword>
+			<keyword>Smooks</keyword>
+			<keyword>JBDS</keyword>
+		</keywordset>
+	</chapterinfo>
+	<title>Smooks Source Editor Page</title>
+	<section>
+		<title>XML Source Editor</title>
+		<para>  User can use this editor to edit the Smooks configuration file  directly.
+		</para>
+		<figure>
+			<title>Graphical Editor</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/common/xml_source_editor.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</section>
+	<section>
+		<title>Error Messages GUI</title>
+		<para>  If the Smooks tools can't understand the configuration file or  the configuration file was illegal(XML structure isn't right for  Smooks configuration file, etc.),The error message panel will  display above the XML editor.
+		</para>
+		<figure>
+			<title>Graphical Editor</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/common/xml_source_editor_error.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<tip>
+			<title>Note</title>
+			<para>
+				When the error message panel was displayed, other editors (
+				Graphical Editor, Configuration Editor ) will be disabled.
+			</para>
+			<para>
+				User can't edit the configuration file with other editors until
+				file was right.
+			</para>
+		</tip>
+	</section>
+</chapter>

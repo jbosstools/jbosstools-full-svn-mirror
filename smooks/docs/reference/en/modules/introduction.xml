@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="introduction">
+	<?dbhtml filename="introduction.html"?>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Tools</keyword>
+			<keyword>Smooks</keyword>
+			<keyword>JBDS</keyword>
+		</keywordset>
+	</chapterinfo>
+	<title>Introduction</title>
+	<sect1>
+		<title>What is Smooks?</title>
+		<para>Smooks is a Java Framework/Engine for processing XML and  non XML data (CSV, EDI, Java, JSON etc).</para>
+		<para></para>
+		<para>
+			<orderedlist numeration="Upperroman" inheritnum="inherit">
+				<listitem><para>Transformation: Perform a wide range of Data Transforms. Supports many different Source and Result types -XML/CSV/EDI/Java/JSON to XML/CSV/EDI/Java/JSON.</para>
+				</listitem>
+				<listitem>
+					<para>Java Binding: Bind into a Java Object Model from any data source (CSV, EDI, XML, Java, JSON etc). </para>
+				</listitem>
+				
+				<listitem>
+					<para>Huge Message Processing: Process huge messages (GBs) - Split, Transform and Route message fragments to JMS, File, Database etc destinations. Route multiple message formats to multiple destinations in a single pass over a message.
+					</para>				
+				</listitem>
+				
+				<listitem>
+					<para>Message Enrichment: Enrich a message with data from a Database, or other Datasources.
+					</para>				
+				</listitem>
+				
+				<listitem>
+					<para>Combine: Combine the above features in different ways e.g. add Message Enrichment as part of a Splitting and Routing process.
+					</para>				
+				</listitem>
+			</orderedlist>
+		</para>
+		<figure>
+			<title>Smooks</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/common/smooks-usecase.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>  For More informations about Smooks, please visit Smooks official site:
+			<ulink url="http://www.smooks.org">Smooks official site</ulink> 
+		</para>
+	</sect1>
+	<sect1>
+		<title>What is Smooks dev tools?</title>
+		<para>Smooks dev tools is a sets of graphical tools for editing  Smooks configuration file base on Eclipse.</para>
+		<figure>
+			<title>Smooks form editor</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/common/form_editor.png" scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</sect1>
+	<sect1>
+		<title>How to install Smooks dev tools?</title>
+		<para>  The Smooks dev tools was included by the JBossTools since 3.0.0  beta1  version. You can download the JBossTools from:
+			<link>http://www.jboss.org/tools/download/index.html
+			</link>
+			.
+		</para>
+		<para>  Smooks dev tools(JBossTools) run with the latest Eclipse and  other  required plug-ins(GEF,EMF,etc.).</para>
+		<para>  User should download the latest IDE for  Java EE developers from this
+			<link linkend="http://www.eclipse.org/downloads/">site
+			</link>. It contains many plug-ins ( GEF,EMF,etc. ) required by Smooks dev  tools.
+		</para>
+	</sect1>
+</chapter>
