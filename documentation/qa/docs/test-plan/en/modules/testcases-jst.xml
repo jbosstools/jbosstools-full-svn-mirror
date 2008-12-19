@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="jst">
+	<title>Java Standard Tools</title>
+	<sect2>
+		<title>
+			TEST-JBIDE-JST-0001-1.0 Test Case 1 Name
+		</title>
+		<informaltable id="TEST-JBIDE-JST-0001-1.0" role="testcase" pgwide="1">
+			<tgroup cols="2" >
+				<colspec colname="names" column="1" colwidth="70pt"/>
+				<colspec colname="values" column="2"/>
+				<tbody valign="top">
+					<row>
+						<entry>Description</entry>
+						<entry>
+							TBD Test description here. 
+						</entry>
+					</row>
+					<row>
+						<entry>Param: N/A</entry>
+						<entry>
+							<para></para>
+						</entry>
+					</row>
+					<row>
+						<entry>Number</entry>
+						<entry>
+							<para>1</para>
+						</entry>
+					</row>
+					<row>
+						<entry>Type</entry>
+						
+						<entry>Manual</entry>
+					</row>
+					<row>
+						<entry>Lavel</entry>
+						<entry>Smoke/Sanity/Full</entry>
+					</row>
+					<row>
+						<entry>Environment</entry>
+						<entry>
+							<para></para>
+						</entry>
+					</row>
+					<row>
+						<entry namest="names" nameend="values">
+							<orderedlist><title>Initialize</title>
+							<listitem>EXECUTE: TBD</listitem>
+							<listitem>EXECUTE: TBD</listitem>
+							</orderedlist>
+						</entry>
+					</row>
+					<row>
+						<entry namest="names" nameend="values">
+							<orderedlist><title>Actions</title>
+								<listitem>EXECUTE: TBD</listitem>
+								<listitem>ASSERT: TBD</listitem>
+								<listitem>ASSERT: TBD</listitem>
+							</orderedlist>
+						</entry>
+					</row>
+					<row>
+						<entry namest="names" nameend="values">
+							<orderedlist><title>Finish</title>
+								<listitem>EXECUTE: TBD</listitem>
+								<listitem>EXECUTE: TBD</listitem>
+								<listitem>CEANUP: TBD</listitem>
+								<listitem>ASSERT: TBD</listitem>
+							</orderedlist>
+						</entry>
+					</row>
+					<row>
+						<entry>Requirements</entry>
+						<entry>
+							<para></para>
+						</entry>
+					</row>
+					<row>
+						<entry>Time</entry>
+						<entry>
+							<para></para>
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</informaltable>
+	</sect2>
+
+	<sect2>
+		<title>
+			TEST-JBIDE-JST-0010-1.0 Test Case 2 Name
+		</title>
+		<informaltable id="TEST-JBIDE-JST-0010-1.0" role="testcase" pgwide="1">
+			<tgroup cols="2" >
+				<colspec colname="names" column="1" colwidth="70pt"/>
+				<colspec colname="values" column="2"/>
+				<tbody valign="top">
+					<row>
+						<entry>Description</entry>
+						<entry>
+							TBD - Test description here. 
+						</entry>
+					</row>
+					<row>
+						<entry>Param: N/A</entry>
+						<entry>
+							<para></para>
+						</entry>
+					</row>
+					<row>
+						<entry>Number</entry>
+						<entry>
+							<para>1</para>
+						</entry>
+					</row>
+					<row>
+						<entry>Type</entry>
+						
+						<entry>Manual</entry>
+					</row>
+					<row>
+						<entry>Lavel</entry>
+						<entry>Smoke/Sanity/Full</entry>
+					</row>
+					<row>
+						<entry>Environment</entry>
+						<entry>
+							<para></para>
+						</entry>
+					</row>
+					<row>
+						<entry namest="names" nameend="values">
+							<orderedlist><title>Initialize</title>
+							<listitem>EXECUTE: TBD</listitem>
+							<listitem>EXECUTE: TBD</listitem>
+							</orderedlist>
+						</entry>
+					</row>
+					<row>
+						<entry namest="names" nameend="values">
+							<orderedlist><title>Actions</title>
+								<listitem>EXECUTE: TBD</listitem>
+								<listitem>ASSERT: TBD</listitem>
+								<listitem>ASSERT: TBD</listitem>
+							</orderedlist>
+						</entry>
+					</row>
+					<row>
+						<entry namest="names" nameend="values">
+							<orderedlist><title>Finish</title>
+								<listitem>EXECUTE: TBD</listitem>
+								<listitem>EXECUTE: TBD</listitem>
+								<listitem>CEANUP: TBD</listitem>
+								<listitem>ASSERT: TBD</listitem>
+							</orderedlist>
+						</entry>
+					</row>
+					<row>
+						<entry>Requirements</entry>
+						<entry>
+							<para></para>
+						</entry>
+					</row>
+					<row>
+						<entry>Time</entry>
+						<entry>
+							<para></para>
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</informaltable>
+	</sect2>
+</sect1>

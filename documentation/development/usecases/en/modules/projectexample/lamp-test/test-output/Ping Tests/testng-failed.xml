@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="5" verbose="2" name="Failed suite [Ping Tests]" junit="false" parallel="false" annotations="JDK">
+  <test name="Ping Test(failed)" junit="false" parallel="false" annotations="JDK">
+    <classes>
+      <class name="org.domain.lamp.session.PingTest">
+        <methods>
+          <include name="begin"/>
+          <include name="cleanup"/>
+          <include name="init"/>
+          <include name="end"/>
+          <include name="test"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+</suite>

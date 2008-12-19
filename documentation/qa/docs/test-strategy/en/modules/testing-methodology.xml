@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="testing-methodology">
+
+	<title>Methodology</title>
+	<para>TBD</para>
+
+	<sect2>
+		<title>Finding Issues and Feature Request</title>
+		<para>
+			To find the problems QA team must:
+			<itemizedlist>
+				<listitem>
+					<para>Browse forums related to JBoss Tools</para>
+				</listitem>
+				<listitem>
+					<para>
+						Interview developers who is using JBossTools every day
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Compare functionality from similar products
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						TBD: Complete the list
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</sect2>
+
+	<sect2>
+		<title>Reporting issues</title>
+		<para>TBD: Write good way to report issue</para>
+	</sect2>
+
+	<sect2>
+		<title>Defect rectification</title>
+		<para>TBD: Describe issue rectification process</para>
+	</sect2>
+
+	<sect2>
+		<title>Re-testing fixed issues</title>
+		<para>TBD: Describe how fixed issues should be tested</para>
+	</sect2>
+
+	<sect2>
+		<title>Daily testing activities reporting</title>
+		<para>TBD: Describe how daily activities should be reported</para>
+	</sect2>
+
+	<sect2>
+		<title>Whole testing activities reporting</title>
+		<para>TBD: Describe how finished testing phase should be reported</para>
+		
+	</sect2>
+</sect1>
