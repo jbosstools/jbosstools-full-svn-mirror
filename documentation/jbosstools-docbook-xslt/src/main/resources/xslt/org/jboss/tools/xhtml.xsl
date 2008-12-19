@@ -35,7 +35,7 @@
 				</div>
  
 
-      <!-- FEEDBACK -->
+      <!-- FEEDBACK
 								
 								
 								
@@ -77,7 +77,7 @@
 	</div>							
 								
 		
- <!-- FEEDBACK ENDS -->
+  FEEDBACK ENDS -->
 
 				<p xmlns="http://www.w3.org/1999/xhtml">
 					<xsl:attribute name="id">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="jsf_portlet" xreflabel="jsf_portlet">
+<chapter id="jsf_portlet" xreflabel="jsf_portlet" role="new">
     <?dbhtml filename="jsf_portlet.html"?>
     <title>Creating JSF Portlet</title>
 
