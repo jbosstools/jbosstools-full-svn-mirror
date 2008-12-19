@@ -1,0 +1,24 @@
+<tests>
+	<test id="progressBar">
+		<DIV
+			CLASS="rich-progress-bar-block rich-progress-bar-width rich-progress-bar-shell"
+			STYLE="height: 13px; text-align: left;">
+			<DIV CLASS="rich-progress-bar-height rich-progress-bar-uploaded null"
+				STYLE="height: 13px; width: 60%;">
+				<DIV
+					STYLE="height: 13px; font-weight: bold; position: relative; text-align: center;"> #{progressBarBean.currentValue} %
+</DIV>
+</DIV>
+<DIV>
+<SPAN STYLE="display: none; -moz-user-modify: read-only;"><BR VPE:PSEUDO-ELEMENT="yes" STYLE="font-style: italic; color: green; -moz-user-modify: read-only;"/>
+
+</SPAN>
+</DIV>
+<DIV>
+<SPAN STYLE="display: none; -moz-user-modify: read-only;"><BR VPE:PSEUDO-ELEMENT="yes" STYLE="font-style: italic; color: green; -moz-user-modify: read-only;"/>
+
+</SPAN>
+</DIV>
+</DIV>
+    </test>
+</tests>

@@ -1,0 +1,17 @@
+<tests>
+	<test id="commandButton1">
+		<input type="button" value="commandButton"/>
+	</test>
+	<test id="commandButton2">
+		<input type="button" value="commandButton1" />
+	</test>
+	<test id="commandButton3">
+		<input type="reset" value="commandButton3" />
+	</test>
+	<test id="commandButton4">
+		<input type="submit" value="commandButton4" />
+	</test>
+	<test id="commandButton5">
+		<input type="image"  SRC="/.*ve/unresolved_image.gif/" />
+	</test>
+</tests>
