@@ -27,7 +27,7 @@
     </note>
   </section>
 
-  <section id="map_file_wizard" revisionflag="added">
+  <section id="map_file_wizard">
     <title>Creating a Hibernate Mapping File</title>
 
     <para>Hibernate mapping files are used to specify how your objects are related to database
@@ -136,7 +136,7 @@
       </emphasis> for the basis of a Console configuration.</para>
   </section>
 
-  <section id="console_conf" role="updated">
+  <section id="console_conf" >
     <title>Creating a Hibernate Console Configuration</title>
 
     <para>A Console configuration describes how the <property>Hibernate plugin</property> should
@@ -1235,7 +1235,7 @@
     </section>
   </section>
 
-  <section id="map_config_struct_editor" revisionflag="added">
+  <section id="map_config_struct_editor" >
     <title>Structured Hibernate Mapping and Configuration File Editor</title>
     <para>The structured editor represents the file in the tree form. It also allows to modify the
       structure of the file and its elements with the help of tables provided on the right-hand
@@ -1566,7 +1566,7 @@
       </section>
     </section>
 
-    <section revisionflag="changed">
+    <section>
       <title>Prototyping Queries</title>
 
       <para>Queries can be prototyped by entering them in the <property>HQL</property> or
@@ -1735,7 +1735,7 @@
     </section>
   </section>
 
-  <section id="dali_integration" role="new">
+  <section id="dali_integration">
     <title>Hibernate support for Dali plugins in Eclipse WTP</title>
 
     <para>Starting from 3.0.0 Alpha1 version of <property>JBoss Tools</property> Hibernate plugins
