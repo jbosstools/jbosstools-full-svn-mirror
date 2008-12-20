@@ -410,13 +410,18 @@ public abstract class BaseActionManager {
 	protected void contributeReplaceActions(IMenuManager menu,
 			List selectedNodeList, int ic, int vc) {
 		// 'Replace With...' actions
-		//                                                                                                                   
-		IMenuManager replaceWithMenu = new MyMenuManager(XMLCommonResources
-				.getInstance().getString("_UI_MENU_REPLACE_WITH")); //$NON-NLS-1$
-		menu.add(replaceWithMenu);
+		//                        
+		//Fix for JBIDE-3428
+//		IMenuManager replaceWithMenu = new MyMenuManager(XMLCommonResources
+//				.getInstance().getString("_UI_MENU_REPLACE_WITH")); //$NON-NLS-1$
+//		menu.add(replaceWithMenu);
 
 		if (modelQuery.getEditMode() == ModelQuery.EDIT_MODE_CONSTRAINED_STRICT
 				&& selectedNodeList.size() > 0) {
+			IMenuManager replaceWithMenu = new MyMenuManager(XMLCommonResources
+					.getInstance().getString("_UI_MENU_REPLACE_WITH")); //$NON-NLS-1$
+			menu.add(replaceWithMenu);
+			
 			Node node = (Node) selectedNodeList.get(0);
 			Node parentNode = node.getParentNode();
 			if (parentNode != null
