@@ -604,22 +604,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	protected void addChildren(VpeTemplate containerTemplate,
 			Node sourceContainer, nsIDOMNode visualContainer) {
 
-		/*
-		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944 author: Denis
-		 * Maliarevich This method is called when template has no
-		 * childrenInfoList. In this case h:dataTable and h:panelGrid should
-		 * display pseudo text
-		 */
-		if (containerTemplate instanceof VpeHtmlTemplate) {
-			int type = ((VpeHtmlTemplate) containerTemplate).getType();
-			if ((VpeHtmlTemplate.TYPE_DATATABLE == type)
-					|| (VpeHtmlTemplate.TYPE_PANELGRID == type)) {
-				setPseudoContent(containerTemplate, sourceContainer,
-						visualContainer);
-				return;
-			}
-		}
-
 		NodeList sourceNodes = sourceContainer.getChildNodes();
 		int len = sourceNodes.getLength();
 		int childrenCount = 0;
