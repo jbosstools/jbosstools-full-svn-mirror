@@ -19,6 +19,7 @@ public class Constants {
 	public static final String EMPTY = ""; //$NON-NLS-1$
 	public static final String WHITE_SPACE = " "; //$NON-NLS-1$
 	public static final String YES_STRING = "yes"; //$NON-NLS-1$
+	public static final String NO_STRING = "no"; //$NON-NLS-1$
 	public static final String JSP_FILE_EXTENSION = "jsp"; //$NON-NLS-1$
 	public static final String SEMICOLON = ";"; //$NON-NLS-1$
 	public static final String COLON = ":"; //$NON-NLS-1$

@@ -24,14 +24,12 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.xml.core.internal.contentmodel.CMAttributeDeclaration;
 import org.eclipse.wst.xml.core.internal.contentmodel.CMDataType;
-import org.eclipse.wst.xml.core.internal.contentmodel.CMDocument;
 import org.eclipse.wst.xml.core.internal.contentmodel.CMElementDeclaration;
 import org.eclipse.wst.xml.core.internal.contentmodel.CMNode;
 import org.eclipse.wst.xml.core.internal.contentmodel.modelquery.ModelQuery;
 import org.eclipse.wst.xml.core.internal.contentmodel.modelquery.ModelQueryAction;
 import org.eclipse.wst.xml.core.internal.contentmodel.modelqueryimpl.ModelQueryActionHelper;
 import org.eclipse.wst.xml.core.internal.contentmodel.modelqueryimpl.ModelQueryImpl;
-import org.eclipse.wst.xml.core.internal.document.NodeImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.ui.internal.actions.MenuBuilder;
 import org.eclipse.wst.xml.ui.internal.util.XMLCommonResources;
@@ -53,10 +51,9 @@ public abstract class BaseActionManager {
 	protected static ITextNodeSplitter textNodeSplitter;
 
 	public static final String INSERT_AROUND_MENU = "Insert Around";
-
 	public static final String INSERT_BEFORE_MENU = "Insert Before";
-
 	public static final String INSERT_AFTER_MENU = "Insert After";
+	public static final String INSERT_TAG_MENU = "Insert Tag";
 
 	private ActionHelper actionHelper;
 
@@ -67,43 +64,36 @@ public abstract class BaseActionManager {
 	protected BaseActionManager(IStructuredModel model, ModelQuery modelQuery) {
 		this.model = model;
 		this.modelQuery = modelQuery;
-		actionHelper = new ActionHelper((ModelQueryImpl) modelQuery);
+		this.actionHelper = new ActionHelper((ModelQueryImpl) modelQuery);
 	}
 
-	abstract protected Action createAddAttributeAction(Element parent,
-			CMAttributeDeclaration ad);
+	abstract protected Action createAddAttributeAction(Element parent, CMAttributeDeclaration ad);
 
 	abstract protected Action createAddCDataSectionAction(Node parent, int index);
 
-	abstract protected Action createAddPCDataAction(Node parent,
-			CMDataType dataType, int index);
+	abstract protected Action createAddPCDataAction(Node parent, CMDataType dataType, int index);
 
 	abstract protected Action createAddCommentAction(Node parent, int index);
 
 	abstract protected Action createAddDoctypeAction(Document parent, int index);
 
-	abstract protected Action createAddElementAction(Node parent,
-			CMElementDeclaration ed, int index, int type);
+	abstract protected Action createAddElementAction(Node parent, CMElementDeclaration ed, int index, int type);
 
-	abstract protected Action createAddProcessingInstructionAction(Node parent,
-			int index);
+	abstract protected Action createAddProcessingInstructionAction(Node parent, int index);
 
 	abstract protected Action createAddSchemaInfoAction(Element element);
 
-	abstract protected Action createEditAttributeAction(Attr attribute,
-			CMAttributeDeclaration ad);
+	abstract protected Action createEditAttributeAction(Attr attribute, CMAttributeDeclaration ad);
 
 	abstract protected Action createEditDoctypeAction(DocumentType doctype);
 
-	abstract protected Action createEditProcessingInstructionAction(
-			ProcessingInstruction pi);
+	abstract protected Action createEditProcessingInstructionAction(ProcessingInstruction pi);
 
 	abstract protected Action createEditSchemaInfoAction(Element element);
 
 	abstract protected Action createRenameAction(Node node);
 
-	abstract protected Action createReplaceAction(Node parent, CMNode cmnode,
-			int startIndex, int endIndex);
+	abstract protected Action createReplaceAction(Node parent, CMNode cmnode, int startIndex, int endIndex);
 
 	abstract protected Action createDeleteAction(List selection);
 
@@ -161,41 +151,18 @@ public abstract class BaseActionManager {
 
 		if (selection.size() > 0) {
 			implicitlySelectedNodeList = getSelectedNodes(selection, true);
-			/*
-			 * MenuManager mm = new MenuManager("Insert Around "); mm.add(new
-			 * Action("Under construction") { public void run() {
-			 *  } });
-			 * 
-			 * menu.add(mm);
-			 */
+			if (selection.size() == 1) {
+				Node node = (Node) selection.get(0);
 
-			// contribute delete actions
-			// contributeDeleteActions(menu, implicitlySelectedNodeList, ic,
-			// vc);
-		}
+				// contribute add before actions
+				contributeAddSiblingActions(menu, node, ic, vc, true);
+			}
 
-		if (selection.size() == 1) {
-			Node node = (Node) selection.get(0);
-
-			// contribute edit actions
-			// contributeEditActions(menu, node);
-
-			// contribute add child actions
-			// contributeAddChildActions(menu, node, ic, vc);
-
-			// contribute add before actions
-			contributeAddSiblingActions(menu, node, ic, vc, true);
-		}
-
-		if (selection.size() > 0) {
 			// contribute replace actions
 			contributeReplaceActions(menu, implicitlySelectedNodeList, ic, vc);
-		}
-
-		if (selection.size() == 0) {
-			Document document = ((IDOMModel) model).getDocument();
-			// contributeAddDocumentChildActions(menu, document, ic, vc);
-			// contributeEditGrammarInformationActions(menu, document);
+		} else if (selection.size() == 0) {
+			IMenuManager addTagMenu = new MyMenuManager(INSERT_TAG_MENU, true);
+			menu.add(addTagMenu);
 		}
 	}
 
@@ -311,87 +278,82 @@ public abstract class BaseActionManager {
 
 	protected void contributeAddSiblingActions(IMenuManager menu, Node node,
 			int ic, int vc, boolean visible) {
-		IMenuManager addAroundMenu = new MyMenuManager(INSERT_AROUND_MENU,
-				visible); //$NON-NLS-1$
-		IMenuManager addBeforeMenu = new MyMenuManager(INSERT_BEFORE_MENU,
-				visible); //$NON-NLS-1$
-		IMenuManager addAfterMenu = new MyMenuManager(INSERT_AFTER_MENU,
-				visible); //$NON-NLS-1$
+		IMenuManager addAroundMenu = new MyMenuManager(INSERT_AROUND_MENU, visible);
+		IMenuManager addBeforeMenu = new MyMenuManager(INSERT_BEFORE_MENU, visible);
+		IMenuManager addAfterMenu = new MyMenuManager(INSERT_AFTER_MENU, visible);
 		menu.add(addAroundMenu);
 		menu.add(addBeforeMenu);
 		menu.add(addAfterMenu);
 
-		Node parentNode = node.getParentNode();
-		if (parentNode != null) {
-			int index = getIndex(parentNode, node);
-			if (textNodeSplitter != null)
-				index = textNodeSplitter.getSplitIndex(index);
-			if (parentNode.getNodeType() == Node.ELEMENT_NODE) {
-				Element parentElement = (Element) parentNode;
-				CMElementDeclaration parentED = modelQuery
-						.getCMElementDeclaration(parentElement);
-				if (parentED != null) {
-					// 'Add Before...' and 'Add After...' actions
-					//
-
-					List modelQueryActionList = new ArrayList();
-					modelQuery.getInsertActions(parentElement, parentED, index,
-							ic, vc, modelQueryActionList);
-					modelQueryActionList = actionHelper
-							.modifyActionList(modelQueryActionList);
-					addActionHelper(addAroundMenu, modelQueryActionList, 1);
-
-					modelQueryActionList = new ArrayList();
-					modelQuery.getInsertActions(parentElement, parentED, index,
-							ic, vc, modelQueryActionList);
-					addActionHelper(addBeforeMenu, modelQueryActionList, 2);
-
-					modelQueryActionList = new ArrayList();
-					ActionHelper helper = new ActionHelper(
-							(ModelQueryImpl) modelQuery);
-					if (textNodeSplitter != null)
-						helper.getInsertActions(parentElement, parentED, index,
-								ic, vc, modelQueryActionList);
-					else
-						helper.getInsertActions(parentElement, parentED,
-								index + 1, ic, vc, modelQueryActionList);
-					addActionHelper(addAfterMenu, modelQueryActionList, 3);
-				}
-				contributeUnconstrainedAddElementAction(addBeforeMenu,
-						parentElement, parentED, index);
-				contributeUnconstrainedAddElementAction(addAfterMenu,
-						parentElement, parentED, index + 1);
-			} else if (parentNode.getNodeType() == Node.DOCUMENT_NODE) {
-				Document document = (Document) parentNode;
-				CMDocument cmDocument = modelQuery
-						.getCorrespondingCMDocument(parentNode);
-				if (cmDocument != null) {
-					// add possible root element insertions
-					//        
-					List modelQueryActionList = new ArrayList();
-					modelQuery.getInsertActions(document, cmDocument, index,
-							ic, vc, modelQueryActionList);
-					modelQueryActionList = actionHelper
-							.modifyActionList(modelQueryActionList);
-					addActionHelper(addAroundMenu, modelQueryActionList, 1);
-
-					modelQueryActionList = new ArrayList();
-					modelQuery.getInsertActions(document, cmDocument, index,
-							ic, vc, modelQueryActionList);
-					addActionHelper(addAfterMenu, modelQueryActionList, 2);
-
-					modelQueryActionList = new ArrayList();
-					modelQuery.getInsertActions(document, cmDocument,
-							index + 1, ic, vc, modelQueryActionList);
-					addActionHelper(addAfterMenu, modelQueryActionList, 3);
-				}
-
-				contributeUnconstrainedAddElementAction(addBeforeMenu,
-						document, index);
-				contributeUnconstrainedAddElementAction(addAfterMenu, document,
-						index + 1);
-			}
-		}
+//		Node parentNode = node.getParentNode();
+//		if (parentNode != null) {
+//			int index = getIndex(parentNode, node);
+//			if (textNodeSplitter != null)
+//				index = textNodeSplitter.getSplitIndex(index);
+//			if (parentNode.getNodeType() == Node.ELEMENT_NODE) {
+//				Element parentElement = (Element) parentNode;
+//				CMElementDeclaration parentED = modelQuery
+//						.getCMElementDeclaration(parentElement);
+//				if (parentED != null) {
+//					// 'Add Before...' and 'Add After...' actions
+//					//
+//
+//					List modelQueryActionList = new ArrayList();
+//					modelQuery.getInsertActions(parentElement, parentED, index,
+//							ic, vc, modelQueryActionList);
+//					modelQueryActionList = actionHelper
+//							.modifyActionList(modelQueryActionList);
+//					addActionHelper(addAroundMenu, modelQueryActionList, 1);
+//
+//					modelQueryActionList = new ArrayList();
+//					modelQuery.getInsertActions(parentElement, parentED, index,
+//							ic, vc, modelQueryActionList);
+//					addActionHelper(addBeforeMenu, modelQueryActionList, 2);
+//
+//					modelQueryActionList = new ArrayList();
+//					ActionHelper helper = new ActionHelper(
+//							(ModelQueryImpl) modelQuery);
+//					if (textNodeSplitter != null)
+//						helper.getInsertActions(parentElement, parentED, index,
+//								ic, vc, modelQueryActionList);
+//					else
+//						helper.getInsertActions(parentElement, parentED,
+//								index + 1, ic, vc, modelQueryActionList);
+//					addActionHelper(addAfterMenu, modelQueryActionList, 3);
+//				}
+//				contributeUnconstrainedAddElementAction(addBeforeMenu,
+//						parentElement, parentED, index);
+//				contributeUnconstrainedAddElementAction(addAfterMenu,
+//						parentElement, parentED, index + 1);
+//			} else if (parentNode.getNodeType() == Node.DOCUMENT_NODE) {
+//				Document document = (Document) parentNode;
+//				CMDocument cmDocument = modelQuery
+//						.getCorrespondingCMDocument(parentNode);
+//				if (cmDocument != null) {
+//					// add possible root element insertions
+//					//        
+//					List modelQueryActionList = new ArrayList();
+//					modelQuery.getInsertActions(document, cmDocument, index,
+//							ic, vc, modelQueryActionList);
+//					modelQueryActionList = actionHelper
+//							.modifyActionList(modelQueryActionList);
+//					addActionHelper(addAroundMenu, modelQueryActionList, 1);
+//
+//					modelQueryActionList = new ArrayList();
+//					modelQuery.getInsertActions(document, cmDocument, index,
+//							ic, vc, modelQueryActionList);
+//					addActionHelper(addAfterMenu, modelQueryActionList, 2);
+//
+//					modelQueryActionList = new ArrayList();
+//					modelQuery.getInsertActions(document, cmDocument,
+//							index + 1, ic, vc, modelQueryActionList);
+//					addActionHelper(addAfterMenu, modelQueryActionList, 3);
+//				}
+//
+//				contributeUnconstrainedAddElementAction(addBeforeMenu, document, index);
+//				contributeUnconstrainedAddElementAction(addAfterMenu, document, index + 1);
+//			}
+//		}
 	}
 
 	protected void contributeAddDocumentChildActions(IMenuManager menu,
@@ -532,7 +494,8 @@ public abstract class BaseActionManager {
 			Element parentElement, CMElementDeclaration parentEd) {
 		if (isUnconstrainedActionAllowed()) {
 			if (parentEd == null
-					|| parentEd.getProperty("isInferred") == Boolean.TRUE || modelQuery.getEditMode() != ModelQuery.EDIT_MODE_CONSTRAINED_STRICT) { //$NON-NLS-1$
+					|| parentEd.getProperty("isInferred") == Boolean.TRUE
+					|| modelQuery.getEditMode() != ModelQuery.EDIT_MODE_CONSTRAINED_STRICT) { //$NON-NLS-1$
 				contributeAction(menu, createAddAttributeAction(parentElement,
 						null));
 			}
@@ -720,5 +683,4 @@ public abstract class BaseActionManager {
 			return actionList;
 		}
 	}
-
 }
