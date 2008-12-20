@@ -242,10 +242,11 @@ public class SelectionUtil {
 				}
 			}
 
-			// if focus node also contain anchor point (selected only 1 element)
-			if ((focusNode != null)
-					&& NodesManagingUtil.isNodeContainsPosition(focusNode, anchor)) {
-				return NodesManagingUtil.getNodeMapping(domMapping, focusNode);
+			// if focus node also contains anchor point (selected only 1 element)
+			if (focusNode != null) {
+//				if (NodesManagingUtil.isNodeContainsPosition(focusNode, anchor)) {
+					return NodesManagingUtil.getNodeMapping(domMapping, focusNode);
+//				}
 			}
 		} finally {
 			if (model != null) {
