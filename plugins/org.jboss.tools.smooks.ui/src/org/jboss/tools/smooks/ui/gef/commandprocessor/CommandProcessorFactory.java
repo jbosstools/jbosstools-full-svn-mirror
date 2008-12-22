@@ -18,6 +18,7 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.ui.editors.SmooksFormEditor;
 import org.jboss.tools.smooks.ui.editors.SmooksGraphicalFormPage;
+import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.jboss.tools.smooks.utils.SmooksExtensionPointConstants;
 
 /**
@@ -76,18 +77,17 @@ public class CommandProcessorFactory {
 				if(page != null){
 					String sourceId = page.getSourceDataTypeID();
 					String targetId = page.getTargetDataTypeID();
-					processGEFCommand(command, sourceId,targetId);
+					processGEFCommand(command, sourceId,targetId,page.getSmooksConfigurationFileGenerateContext());
 				}
 			}
 		}
-		
 	}
 
 	public void processGEFCommand(Command command, String sourceId,
-			String targetId) throws CoreException {
+			String targetId ,  SmooksConfigurationFileGenerateContext context) throws CoreException {
 		ICommandProcessor pro = getCommandProcessor(sourceId, targetId);
 		if (pro != null) {
-			pro.processGEFCommand(command);
+			pro.processGEFCommand(command , context);
 		}
 	}
 
