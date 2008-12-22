@@ -478,10 +478,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	protected void createErrorMessageLinkGUI(FormToolkit toolkit,
 			Composite parent) {
 
-		problemSection = this
-				.createPageSectionHeader(parent, Section.TITLE_BAR
-						| Section.EXPANDED, "Problems",
-						"No problems");
+		problemSection = this.createPageSectionHeader(parent, Section.TITLE_BAR
+				| Section.EXPANDED, "Problems", "No problems");
 		designTimeAnalyzeResultRegion = toolkit.createComposite(problemSection);
 		GridLayout ngl = new GridLayout();
 		ngl.numColumns = 2;
@@ -821,18 +819,20 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		context.setDataMappingRootModel(this.rootModel);
 		context.setSmooksConfigFile(((IFileEditorInput) getEditorInput())
 				.getFile());
-
-		context.setSourceViewerLabelProvider((LabelProvider) sourceViewer
-				.getLabelProvider());
-		context
-				.setSourceViewerContentProvider((ITreeContentProvider) sourceViewer
-						.getContentProvider());
-
+		if (sourceViewer != null) {
+			context.setSourceViewerLabelProvider((LabelProvider) sourceViewer
+					.getLabelProvider());
+			context
+					.setSourceViewerContentProvider((ITreeContentProvider) sourceViewer
+							.getContentProvider());
+		}
+		if (targetViewer != null) {
 		context.setTargetViewerLabelProvider((LabelProvider) targetViewer
 				.getLabelProvider());
 		context
 				.setTargetViewerContentProvider((ITreeContentProvider) targetViewer
 						.getContentProvider());
+		}
 
 		context.setShell(getSite().getShell());
 	}
@@ -1465,6 +1465,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	public SmooksConfigurationFileGenerateContext getSmooksConfigurationFileGenerateContext() {
 		if (smooksConfigurationFileGenerateContext == null) {
 			smooksConfigurationFileGenerateContext = createContext();
+			initSmooksConfigurationFileGenerateContext(smooksConfigurationFileGenerateContext);
 		}
 		return smooksConfigurationFileGenerateContext;
 	}
