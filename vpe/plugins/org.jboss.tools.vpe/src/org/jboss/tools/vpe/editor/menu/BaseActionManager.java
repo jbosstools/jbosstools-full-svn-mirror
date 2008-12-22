@@ -54,6 +54,9 @@ public abstract class BaseActionManager {
 	public static final String INSERT_BEFORE_MENU = "Insert Before";
 	public static final String INSERT_AFTER_MENU = "Insert After";
 	public static final String INSERT_TAG_MENU = "Insert Tag";
+	public static final String REPLACE_TAG_MENU = XMLCommonResources
+	.getInstance().getString("_UI_MENU_REPLACE_WITH"); //$NON-NLS-1$
+	
 
 	private ActionHelper actionHelper;
 
@@ -374,15 +377,11 @@ public abstract class BaseActionManager {
 		// 'Replace With...' actions
 		//                        
 		//Fix for JBIDE-3428
-//		IMenuManager replaceWithMenu = new MyMenuManager(XMLCommonResources
-//				.getInstance().getString("_UI_MENU_REPLACE_WITH")); //$NON-NLS-1$
-//		menu.add(replaceWithMenu);
+		IMenuManager replaceWithMenu = new MyMenuManager(BaseActionManager.REPLACE_TAG_MENU);
+		menu.add(replaceWithMenu);
 
 		if (modelQuery.getEditMode() == ModelQuery.EDIT_MODE_CONSTRAINED_STRICT
 				&& selectedNodeList.size() > 0) {
-			IMenuManager replaceWithMenu = new MyMenuManager(XMLCommonResources
-					.getInstance().getString("_UI_MENU_REPLACE_WITH")); //$NON-NLS-1$
-			menu.add(replaceWithMenu);
 			
 			Node node = (Node) selectedNodeList.get(0);
 			Node parentNode = node.getParentNode();

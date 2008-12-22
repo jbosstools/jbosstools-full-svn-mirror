@@ -41,6 +41,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.menu.BaseActionManager.MyMenuManager;
 import org.jboss.tools.vpe.editor.menu.action.InsertAction;
+import org.jboss.tools.vpe.editor.menu.action.ReplaceAction;
 import org.jboss.tools.vpe.editor.menu.action.VpeMenuListener;
 import org.jboss.tools.vpe.editor.menu.action.VpeTextOperationAction;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
@@ -182,6 +183,11 @@ public class MenuCreationHelper {
 				} else if (NodeActionManager.INSERT_AFTER_MENU.equals(mm.getMenuText())) {
 					type = ITextNodeSplitter.INSERT_AFTER;
 					region = new Point(NodesManagingUtil.getEndOffsetNode(node), 0);
+				} else if (NodeActionManager.REPLACE_TAG_MENU.equals(mm.getMenuText())){
+					//added by Max Areshkau, fix for JBIDE-3428
+					type = ITextNodeSplitter.REPLACE_TAG;
+					//post start and end offset of node
+					region = new Point(NodesManagingUtil.getStartOffsetNode(node),NodesManagingUtil.getNodeLength(node));
 				}
 				listenContextMenu(mm, region, type);
 			}
@@ -483,12 +489,36 @@ public class MenuCreationHelper {
 			if (type == ITextNodeSplitter.INSERT_AROUND &&
 					(endText == null || Constants.EMPTY.equals(endText))) {
 				continue;
+			} if(type ==ITextNodeSplitter.REPLACE_TAG){
+				//mareshkau, fix for JBIDE-3428, here we create replace action 
+				createReplaceAction(menu, region,items[i]);
+				continue;
 			}
+
 			createInsertAction(menu, region, items[i]);
 		}
 	}
+	/**
+	 * @author mareshkau 
+	 * Creates replace Actions for VPE context menu
+	 * 
+	 */
+	private void createReplaceAction(MenuManager menu, Point region, XModelObject item){
+		String tagName = getTagName(menu, region, item);
+		menu.add(new ReplaceAction(tagName, region, item, pageContext, sourceEditor));
+	}
+	
 
 	private void createInsertAction(MenuManager menu, Point region, XModelObject item) {
+		String tagName = getTagName(menu, region, item);
+		menu.add(new InsertAction(tagName, region, item, pageContext, sourceEditor));
+	}
+	/**
+	 * @author mareshkau
+	 * Returns tag name for insert and replace actions
+	 * @return tag name
+	 */
+	private  String getTagName(MenuManager menu, Point region, XModelObject item) {
 		XModelObject parent = item.getParent();
 		String uri = (parent == null) ? Constants.EMPTY : parent.getAttributeValue(URIConstants.LIBRARY_URI);
 		String defaultPrefix = (parent == null) ? Constants.EMPTY : parent.getAttributeValue(URIConstants.DEFAULT_PREFIX);
@@ -498,10 +528,9 @@ public class MenuCreationHelper {
 			PaletteInsertHelper.applyPrefix(texts, sourceEditor, tagName, uri, defaultPrefix);
 		}
 		tagName = texts[0];
-
-		menu.add(new InsertAction(tagName, region, item, pageContext, sourceEditor));
+		
+		return tagName;
 	}
-
 	/**
 	 * For inner usage only. Was create just for simplicity.
 	 */

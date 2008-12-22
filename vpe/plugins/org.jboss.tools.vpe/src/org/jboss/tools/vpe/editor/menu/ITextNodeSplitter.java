@@ -31,6 +31,10 @@ public interface ITextNodeSplitter {
 	 * 
 	 */
 	public static final int INSERT_AFTER = 3;
+	/**
+	 * Replace action identifier
+	 */
+	public static final int REPLACE_TAG = 4;
 
 	/**
 	 * 

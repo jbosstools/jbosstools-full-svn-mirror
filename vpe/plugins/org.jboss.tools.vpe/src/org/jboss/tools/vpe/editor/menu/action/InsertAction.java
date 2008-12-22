@@ -102,4 +102,26 @@ public class InsertAction extends Action {
 		p.put("selectionProvider", selProvider); //$NON-NLS-1$
 		PaletteInsertHelper.insertIntoEditor(sourceEditor.getTextViewer(), p);
 	}
+
+	/**
+	 * @return the region
+	 */
+	protected Point getRegion() {
+		return region;
+	}
+
+	/**
+	 * @return the pageContext
+	 */
+	protected VpePageContext getPageContext() {
+		return pageContext;
+	}
+
+	/**
+	 * @return the sourceEditor
+	 */
+	protected StructuredTextEditor getSourceEditor() {
+		return sourceEditor;
+	}
+
 }
