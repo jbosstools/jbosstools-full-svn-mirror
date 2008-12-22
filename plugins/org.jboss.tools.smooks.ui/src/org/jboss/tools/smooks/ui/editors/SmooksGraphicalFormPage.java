@@ -478,18 +478,22 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	protected void createErrorMessageLinkGUI(FormToolkit toolkit,
 			Composite parent) {
 
-		problemSection = this.createPageSectionHeader(parent, Section.TITLE_BAR
-				| Section.DESCRIPTION, "Problems", "No problems");
-
+		problemSection = this
+				.createPageSectionHeader(parent, Section.TITLE_BAR
+						| Section.EXPANDED, "Problems",
+						"No problems");
 		designTimeAnalyzeResultRegion = toolkit.createComposite(problemSection);
-		GridData gd = new GridData(GridData.FILL_BOTH);
 		GridLayout ngl = new GridLayout();
 		ngl.numColumns = 2;
 		ngl.marginWidth = 0;
 		problemSection.setLayout(new FillLayout());
-		designTimeAnalyzeResultRegion.setLayoutData(gd);
 		designTimeAnalyzeResultRegion.setLayout(ngl);
 		problemSection.setClient(designTimeAnalyzeResultRegion);
+
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.exclude = true;
+		problemSection.setLayoutData(gd);
+		problemSection.setVisible(false);
 	}
 
 	public void refreshAllGUI() {
@@ -1521,12 +1525,13 @@ public class SmooksGraphicalFormPage extends FormPage implements
 						designTimeAnalyzeResultRegion, SWT.NONE);
 				GridLayout gl = new GridLayout();
 				gl.numColumns = 2;
+				gl.makeColumnsEqualWidth = false;
 				gl.marginHeight = 0;
 				gl.marginWidth = 0;
 				fixComposite.setLayout(gl);
 				Label notifyLabel = new Label(fixComposite, SWT.NONE);
 				Hyperlink fixLink = getManagedForm().getToolkit()
-						.createHyperlink(fixComposite, "Fix it", SWT.NONE);
+						.createHyperlink(fixComposite, "(Fix it)", SWT.NONE);
 				final Menu menu = new Menu(getSite().getShell(), SWT.POP_UP);
 				List<ResolveCommand> list = result.getResolveProblem();
 				for (Iterator<ResolveCommand> iterator2 = list.iterator(); iterator2
@@ -1572,7 +1577,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 				});
 				notifyLabel.setMenu(menu);
-				GridData nlgd = new GridData(GridData.FILL_HORIZONTAL);
+				GridData nlgd = new GridData();
 				notifyLabel.setLayoutData(nlgd);
 				nlgd = new GridData(GridData.FILL_HORIZONTAL);
 				fixComposite.setLayoutData(nlgd);
@@ -1587,12 +1592,19 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		try {
 			// designTimeAnalyzeResultRegion.setLayoutData(gd);
 			if (hasProblems) {
-				problemSection
-						.setDescription("Click \"Fix\" link to fix those errors");
+				GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+				problemSection.setVisible(true);
+				problemSection.setLayoutData(gd);
 			} else {
-				problemSection.setDescription("No problems");
+				GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+				gd.exclude = true;
+				problemSection.setLayoutData(gd);
+				gd.heightHint = 0;
+				problemSection.setVisible(false);
 			}
 			designTimeAnalyzeResultRegion.getParent().getParent().layout();
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 		}
 	}
@@ -1633,7 +1645,12 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			c = null;
 		}
 		updateErrorMessage();
-		designTimeAnalyzeResultRegion.layout(true);
+		try {
+			designTimeAnalyzeResultRegion.layout(true);
+		} catch (Exception e) {
+			// ignore
+			e.printStackTrace();
+		}
 	}
 
 	/**
