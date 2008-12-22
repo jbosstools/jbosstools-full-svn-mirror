@@ -20,7 +20,7 @@ public class RelativeFolderReferenceComposite extends FolderReferenceComposite {
 	}
 
 	protected String getTitle() {
-		return "Actual Run-Time Relative Folder";
+		return Messages.ACTUAL_RUN_TIME_RELATIVE_FOLDER;
 	}
 
 }
