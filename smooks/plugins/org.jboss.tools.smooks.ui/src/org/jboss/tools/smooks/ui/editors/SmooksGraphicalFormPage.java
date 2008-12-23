@@ -1046,10 +1046,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			if (dialog.open() == org.eclipse.jface.dialogs.Dialog.OK) {
 				sourceDataTypeID = wizard.getSourceDataTypeID();
 				targetDataTypeID = wizard.getTargetDataTypeID();
-				// sourceTreeViewerInputModel = wizard
-				// .getSourceTreeViewerInputContents();
-				// targetTreeViewerInputModel = wizard
-				// .getTargetTreeViewerInputContents();
+				
 				SmooksConfigurationFileGenerateContext context = getSmooksConfigurationFileGenerateContext();
 				context.setSourceDataTypeID(sourceDataTypeID);
 				context.setTargetDataTypeID(targetDataTypeID);
