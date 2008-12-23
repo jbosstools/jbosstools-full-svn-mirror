@@ -41,6 +41,9 @@ public interface NodeWrapper extends Wrapper {
     void setParent(ContainerWrapper parent);
     ContainerWrapper getParent();
     
+    void setLabel(LabelWrapper label);
+    LabelWrapper getLabel();
+    
     List<ConnectionWrapper> getOutgoingConnections();
     List<ConnectionWrapper> getIncomingConnections();
     void addIncomingConnection(ConnectionWrapper connection);

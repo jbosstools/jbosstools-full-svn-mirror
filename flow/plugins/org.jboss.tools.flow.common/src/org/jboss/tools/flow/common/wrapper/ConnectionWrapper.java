@@ -19,4 +19,7 @@ public interface ConnectionWrapper extends Wrapper {
 	void removeBendpoint(int index);
 	List<Point> getBendpoints();
 	
+	void setLabel(LabelWrapper label);
+	LabelWrapper getLabel();
+	
 }

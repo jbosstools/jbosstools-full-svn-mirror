@@ -41,6 +41,7 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
     }
     
     private ContainerWrapper parent;
+    private LabelWrapper label;
     private transient Rectangle constraint;
     private List<ConnectionWrapper> incomingConnections = new ArrayList<ConnectionWrapper>();
     private List<ConnectionWrapper> outgoingConnections = new ArrayList<ConnectionWrapper>();
@@ -69,6 +70,14 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 
 	public ContainerWrapper getParent() {
 		return parent;
+	}
+	
+	public void setLabel(LabelWrapper label) {
+		this.label = label;
+	}
+	
+	public LabelWrapper getLabel() {
+		return label;
 	}
 
 	public List<ConnectionWrapper> getOutgoingConnections() {

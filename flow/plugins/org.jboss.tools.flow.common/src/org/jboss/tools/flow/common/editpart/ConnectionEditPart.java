@@ -36,8 +36,10 @@ import org.jboss.tools.flow.common.policy.ConnectionEditPolicy;
 import org.jboss.tools.flow.common.registry.ElementRegistry;
 import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.DefaultConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.LabelWrapper;
 import org.jboss.tools.flow.common.wrapper.ModelEvent;
 import org.jboss.tools.flow.common.wrapper.ModelListener;
+import org.jboss.tools.flow.common.wrapper.Wrapper;
 
 /**
  * Implementation of a connection EditPart.
@@ -48,6 +50,13 @@ public class ConnectionEditPart extends AbstractConnectionEditPart implements Mo
     
     public ConnectionWrapper getElementConnection() {
         return (ConnectionWrapper) getModel();
+    }
+    
+    public List<Wrapper> getModelChildren() {
+    	List<Wrapper> result = new ArrayList<Wrapper>();
+    	LabelWrapper label = getElementConnection().getLabel();
+    	if (label != null) result.add(label);
+    	return result;
     }
     
     protected void createEditPolicies() {
