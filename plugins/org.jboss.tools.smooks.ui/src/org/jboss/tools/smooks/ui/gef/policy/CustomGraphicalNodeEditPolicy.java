@@ -29,8 +29,9 @@ public class CustomGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 		}
 		command.setTarget(getHost().getModel());
 		try {
-			CommandProcessorFactory.getInstance().processGEFCommand(command,
+			boolean cando = CommandProcessorFactory.getInstance().processGEFCommand(command,
 					getHost());
+			if(!cando) return null;
 		} catch (CoreException e) {
 			// ignore
 		}
@@ -46,8 +47,7 @@ public class CustomGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 			EditPart childEditPart = (EditPart) iterator.next();
 			Object cm = childEditPart.getModel();
 			if (cm instanceof AbstractStructuredDataModel) {
-				if (((AbstractStructuredDataModel) cm)
-						.getReferenceEntityModel() == model) {
+				if (((AbstractStructuredDataModel) cm).getReferenceEntityModel() == model) {
 					resultEditPart = childEditPart;
 					break;
 				}
@@ -62,8 +62,9 @@ public class CustomGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 		command.setSource(getHost().getModel());
 		request.setStartCommand(command);
 		try {
-			CommandProcessorFactory.getInstance().processGEFCommand(command,
+			boolean cando = CommandProcessorFactory.getInstance().processGEFCommand(command,
 					getHost());
+			if(!cando) return null;
 		} catch (CoreException e) {
 			// ignore
 		}

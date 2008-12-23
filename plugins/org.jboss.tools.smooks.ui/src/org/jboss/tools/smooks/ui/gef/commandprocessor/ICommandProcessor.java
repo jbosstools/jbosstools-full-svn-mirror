@@ -10,7 +10,7 @@ import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateCont
  * @CreateTime Jul 22, 2008
  */
 public interface ICommandProcessor {
-	public void processGEFCommand(Command gefCommand , SmooksConfigurationFileGenerateContext context);
+	public boolean processGEFCommand(Command gefCommand , SmooksConfigurationFileGenerateContext context);
 
-	public void processEMFCommand(org.eclipse.emf.common.command.Command emfCommand, SmooksConfigurationFileGenerateContext context);
+	public boolean processEMFCommand(org.eclipse.emf.common.command.Command emfCommand, SmooksConfigurationFileGenerateContext context);
 }

@@ -104,8 +104,14 @@ public class UIUtils {
 				.getAbstractResourceConfig();
 		for (Iterator<AbstractResourceConfig> iterator = lists.iterator(); iterator
 				.hasNext();) {
-			ResourceConfigType resourceConfig = (ResourceConfigType) iterator
+			AbstractResourceConfig resourceConfig1 = (AbstractResourceConfig) iterator
 					.next();
+			ResourceConfigType resourceConfig = null;
+			if(resourceConfig1 instanceof ResourceConfigType){
+				resourceConfig = (ResourceConfigType)resourceConfig1;
+			}else{
+				continue;
+			}
 			String selector = resourceConfig.getSelector();
 			UIUtils.checkSelector(selector);
 			List<Object> list = SmooksModelUtils

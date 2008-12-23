@@ -71,7 +71,8 @@ public class TargetTreeDropTargetListener extends DropTargetAdapter {
 			Point p = hostViewer.getTree().toControl(
 					new Point(event.x, event.y));
 			TreeItem item = hostViewer.getTree().getItem(p);
-			if(item == null) return;
+			if (item == null)
+				return;
 			Object model = item.getData();
 
 			SmooksCustomConnectionCreationTool tool = (SmooksCustomConnectionCreationTool) this
@@ -97,7 +98,7 @@ public class TargetTreeDropTargetListener extends DropTargetAdapter {
 		try {
 			Object source = TemplateTransfer.getInstance().getTemplate();
 			SmooksCustomConnectionCreationTool tool = (SmooksCustomConnectionCreationTool) this
-			.getGraphicalViewer().getEditDomain().getActiveTool();
+					.getGraphicalViewer().getEditDomain().getActiveTool();
 			if (source == null) {
 				source = tool.getSourceModel();
 			}
@@ -105,22 +106,30 @@ public class TargetTreeDropTargetListener extends DropTargetAdapter {
 			if (item != null) {
 				Object target = item.getData();
 				if (source != null && target != null) {
-					source = tool.findTheEditPart(source, this.getGraphicalViewer()).getModel();
-					EditPart targetEditPart = tool.findTheEditPart(target, this.getGraphicalViewer());
+					source = tool.findTheEditPart(source,
+							this.getGraphicalViewer()).getModel();
+					EditPart targetEditPart = tool.findTheEditPart(target, this
+							.getGraphicalViewer());
 					target = targetEditPart.getModel();
 					CreateConnectionCommand command = new CreateConnectionCommand();
 					command.setSource(source);
 					command.setTarget(target);
-					CommandStack stack = getGraphicalViewer().getEditDomain().getCommandStack();
+					CommandStack stack = getGraphicalViewer().getEditDomain()
+							.getCommandStack();
 					try {
-						CommandProcessorFactory.getInstance().processGEFCommand(command, targetEditPart);
+						boolean cando = CommandProcessorFactory.getInstance()
+								.processGEFCommand(command, targetEditPart);
+						if (!cando)
+							return;
 					} catch (CoreException e) {
 						// ignore
 					}
 					stack.execute(command);
 				}
 			}
-		} finally {
+		}catch(Throwable t){
+			t.printStackTrace();
+		}finally {
 			Tool dt = getGraphicalViewer().getEditDomain().getDefaultTool();
 			getGraphicalViewer().getEditDomain().setActiveTool(dt);
 		}

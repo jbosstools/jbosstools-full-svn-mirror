@@ -68,7 +68,7 @@ public class CommandProcessorFactory {
 		return instance;
 	}
 	
-	public void processGEFCommand(Command command, EditPart editPart) throws CoreException {
+	public boolean processGEFCommand(Command command, EditPart editPart) throws CoreException {
 		if(editPart != null && editPart instanceof GraphicalEditPart){
 			DefaultEditDomain domain = (DefaultEditDomain)((GraphicalViewer)((GraphicalEditPart)editPart).getViewer()).getEditDomain();
 			IEditorPart pa = domain.getEditorPart();
@@ -77,18 +77,20 @@ public class CommandProcessorFactory {
 				if(page != null){
 					String sourceId = page.getSourceDataTypeID();
 					String targetId = page.getTargetDataTypeID();
-					processGEFCommand(command, sourceId,targetId,page.getSmooksConfigurationFileGenerateContext());
+					return processGEFCommand(command, sourceId,targetId,page.getSmooksConfigurationFileGenerateContext());
 				}
 			}
 		}
+		return true;
 	}
 
-	public void processGEFCommand(Command command, String sourceId,
+	public boolean processGEFCommand(Command command, String sourceId,
 			String targetId ,  SmooksConfigurationFileGenerateContext context) throws CoreException {
 		ICommandProcessor pro = getCommandProcessor(sourceId, targetId);
 		if (pro != null) {
-			pro.processGEFCommand(command , context);
+			return pro.processGEFCommand(command , context);
 		}
+		return true;
 	}
 
 	public ICommandProcessor getCommandProcessor(String sourceId,

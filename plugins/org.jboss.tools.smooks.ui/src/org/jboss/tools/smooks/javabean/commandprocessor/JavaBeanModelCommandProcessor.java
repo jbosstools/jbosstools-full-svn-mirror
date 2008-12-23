@@ -31,14 +31,55 @@ import org.jboss.tools.smooks.utils.UIUtils;
  */
 public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 
-	public void processEMFCommand(Command emfCommand,
+	public boolean processEMFCommand(Command emfCommand,
 			SmooksConfigurationFileGenerateContext context) {
+		return true;
 	}
 
-	public void processGEFCommand(org.eclipse.gef.commands.Command gefCommand,
+	private boolean checkGEFCommand(
+			org.eclipse.gef.commands.Command gefCommand,
+			SmooksConfigurationFileGenerateContext context) {
+		if (CreateConnectionCommand.class.isAssignableFrom(gefCommand
+				.getClass())) {
+			CreateConnectionCommand command = (CreateConnectionCommand) gefCommand;
+			if (command.getSource() != null && command.getTarget() != null) {
+				Object m = command.getTarget();
+				Object s = command.getSource();
+				if (m instanceof AbstractStructuredDataModel
+						&& s instanceof AbstractStructuredDataModel) {
+					Object source = ((AbstractStructuredDataModel) s)
+							.getReferenceEntityModel();
+					Object t = ((AbstractStructuredDataModel) m)
+							.getReferenceEntityModel();
+					if(source instanceof JavaBeanModel && t instanceof JavaBeanModel){
+						boolean sis = ((JavaBeanModel)source).isPrimitive();
+						boolean tis = ((JavaBeanModel)t).isPrimitive();
+						if( (sis && !tis) || (!sis && tis)){
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.ui.gef.commandprocessor.ICommandProcessor#
+	 * processGEFCommand(org.eclipse.gef.commands.Command,
+	 * org.jboss.tools.smooks
+	 * .ui.modelparser.SmooksConfigurationFileGenerateContext)
+	 */
+	public boolean processGEFCommand(
+			org.eclipse.gef.commands.Command gefCommand,
 			SmooksConfigurationFileGenerateContext context) {
 		Object source = null;
 		JavaBeanModel target = null;
+		if (!checkGEFCommand(gefCommand, context)) {
+			return false;
+		}
 		if (CreateConnectionCommand.class.isAssignableFrom(gefCommand
 				.getClass())) {
 			CreateConnectionCommand command = (CreateConnectionCommand) gefCommand;
@@ -73,6 +114,7 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 				compoundCommand.execute();
 			}
 		}
+		return true;
 	}
 
 	private void fillCreateParentLinkCommand(CompoundCommand compoundCommand,
@@ -99,6 +141,7 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 
 	private CreateConnectionCommand createParentLinkCommand(Object source,
 			JavaBeanModel target, SmooksConfigurationFileGenerateContext context) {
+		if(target == null) return null;
 		ITreeContentProvider sourceProvider = context.getSourceViewerProvider();
 		JavaBeanModel targetParent = target.getParent();
 		AbstractStructuredDataModel targetParentGraphModel = UIUtils
