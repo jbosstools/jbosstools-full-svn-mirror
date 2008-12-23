@@ -16,6 +16,9 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.text.TextUtilities;
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -68,9 +71,9 @@ import org.w3c.dom.Text;
 public class MenuCreationHelper {
 
 	public static final String CUT_ACTION = "Cut";
-	public static final String COPY_ACTION = "Copy";
+	public static final String COPY_ACTION = JFaceResources.getString("copy"); //$NON-NLS-1$
 	public static final String PASTE_ACTION = "Paste";
-	public static final String DELETE_ACTION = "Delete";
+	public static final String DELETE_ACTION = JFaceResources.getString("Delete"); //$NON-NLS-1$
 	public static final String TEST_ACTION = "Test";
 
 	private VpeDomMapping domMapping = null;
