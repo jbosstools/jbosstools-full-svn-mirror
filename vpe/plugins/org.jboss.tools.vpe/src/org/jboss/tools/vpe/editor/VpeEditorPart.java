@@ -763,11 +763,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 									VpeEditorPart.this));
 							selectionBar.setVpeController(visualEditor.getController());
 							visualEditor.getController().setSelectionBarController(selectionBar);
-							try {
-								visualEditor.getController().init(sourceEditor, visualEditor);
-							} catch (Exception e) {
-								VpePlugin.getDefault().logError(e);
-							}
+							visualEditor.getController().init(sourceEditor, visualEditor);
 						}
 					});
 			visualEditor.createPartControl(visualContent);

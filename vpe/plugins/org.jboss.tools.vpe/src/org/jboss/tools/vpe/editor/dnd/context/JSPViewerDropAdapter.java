@@ -62,13 +62,7 @@ public class JSPViewerDropAdapter extends ViewerDropAdapter {
 		dropContext.setDropTargetEvent(event);
 		if (ObjectTransfer.getInstance().isSupportedType(event.currentDataType)) {
 			Object object = null;
-			try {
-				object = ObjectTransfer.getInstance().nativeToJava(event.currentDataType);
-			} catch (Exception e) {
-				//null pointer in Linux
-				VpePlugin.getPluginLog().logError(e);
-				return null;
-			}
+			object = ObjectTransfer.getInstance().nativeToJava(event.currentDataType);
 			if (object == null) return null;
 	      	return extractDragSource(object);
 		} else if(ModelTransfer.getInstance().isSupportedType(event.currentDataType)) {

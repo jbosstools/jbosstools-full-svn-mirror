@@ -12,6 +12,15 @@ package org.jboss.tools.vpe.ui.palette;
 
 import java.io.File;
 import java.util.Properties;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IStorage;
+import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.DropTargetAdapter;
@@ -21,22 +30,12 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.views.navigator.LocalSelectionTransfer;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IStorage;
-import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.gef.EditPart;
-import org.eclipse.gef.GraphicalEditPart;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-
+import org.jboss.tools.common.model.XModelException;
 import org.jboss.tools.common.model.XModelObject;
-import org.jboss.tools.common.model.event.ActionDeclinedException;
 import org.jboss.tools.common.model.project.IModelNature;
-import org.jboss.tools.common.model.util.EclipseResourceUtil;
-
 import org.jboss.tools.common.model.ui.dnd.DnDUtil;
 import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
+import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.reporting.ProblemReportingHelper;
 import org.jboss.tools.vpe.ui.palette.model.PaletteModel;
 import org.jboss.tools.vpe.ui.palette.model.PaletteXModelObject;
@@ -128,9 +127,7 @@ public class DropTargetManager extends DropTargetAdapter {
 			try {
 				DnDUtil.paste(o, new Properties());
 				model.getXModel().saveOptions();
-			} catch (ActionDeclinedException de) {
-				PalettePlugin.getPluginLog().logError(de);
-			} catch (Exception e) {
+			} catch (XModelException e) {
 				message(e);
 			}
 		} else {

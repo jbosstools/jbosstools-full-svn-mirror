@@ -38,7 +38,6 @@ public class PaletteDragSourceListener extends DragSourceAdapter {
 	}
 
 	public void dragStart(DragSourceEvent event) {
-		try {
 			XModelTransferBuffer.getInstance().enable();
 			List list = ((PaletteViewer)viewer).getSelectedEditParts();
 			XModelObject object = (list.size() == 0) ? null : getObject(list.get(0));
@@ -49,10 +48,7 @@ public class PaletteDragSourceListener extends DragSourceAdapter {
 			Properties p = new Properties();
 			p.setProperty("isDrag", "true"); //$NON-NLS-1$ //$NON-NLS-2$
 			XActionInvoker.invoke("CopyActions.Copy", object, p); //$NON-NLS-1$
-		} catch (Exception e) {
-			PalettePlugin.getPluginLog().logError(e);
-		}
-		isDragging = true;
+			isDragging = true;
 	}
 	public void dragSetData(DragSourceEvent event) {
 		if (TextTransfer.getInstance().isSupportedType(event.dataType)) {
