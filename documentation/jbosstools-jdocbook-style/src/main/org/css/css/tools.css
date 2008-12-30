@@ -112,7 +112,6 @@ h1.title {
 display:block;
 }
 
-
 /* Feedback styles */
 
 * html div#feedback-wrapper {position: absolute;
@@ -238,3 +237,4 @@ documentElement.scrollTop
 	margin:0;
 	display: inline;
 }
+ 
