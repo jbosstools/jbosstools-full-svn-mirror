@@ -139,7 +139,7 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 	}
 
 	public void testTitle() throws Throwable {
-		performInvisibleTagTest("components/core/title.html", "title"); //$NON-NLS-1$ //$NON-NLS-2$
+		performContentTest("components/core/title.html"); //$NON-NLS-1$
 	}
 
 	/*
