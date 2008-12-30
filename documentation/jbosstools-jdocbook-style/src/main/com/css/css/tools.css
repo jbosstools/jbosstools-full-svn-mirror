@@ -157,7 +157,7 @@ documentElement.scrollTop
 
 
 #feedback-header{
-	background-color: #AAB3BD;
+	background-color: #a30000;
 	text-align: center;
 	color: white;
 	width: 100%;
@@ -212,7 +212,7 @@ documentElement.scrollTop
     font-weight: bold;
 	margin-bottom:5px;
 	text-align: right;
-    color: #415973;
+    color: #a30000;
 }
 
 #message{
