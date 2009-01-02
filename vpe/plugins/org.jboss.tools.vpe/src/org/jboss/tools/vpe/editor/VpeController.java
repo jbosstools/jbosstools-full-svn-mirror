@@ -173,7 +173,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	/** @deprecated */
 	private VpeSelectionBuilder selectionBuilder;
 	// private VpeVisualKeyHandler visualKeyHandler;
-	ActiveEditorSwitcher switcher = new ActiveEditorSwitcher();
+	private ActiveEditorSwitcher switcher = new ActiveEditorSwitcher();
 	private Attr lastRemovedAttr;
 	private String lastRemovedAttrName;
 	private boolean mouseUpSelectionReasonFlag;
@@ -1369,8 +1369,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			vpeVisualRefreshJob.schedule(delay);
 		}
 	}
-	
-public static int ii = 0;
+
 	void visualRefreshImpl() {
 		visualEditor.hideResizer();
 
@@ -1380,9 +1379,7 @@ public static int ii = 0;
 		} else {
 		    //Fix bugs JBIDE-2750
 			visualBuilder.setSelectionRectangle(null);
-			ii++;
 			visualEditor.reload();
-			ii--;
 //			IDOMModel sourceModel = (IDOMModel) getModel();
 //			if (sourceModel != null) {
 //				IDOMDocument sourceDocument = sourceModel.getDocument();
@@ -2733,6 +2730,11 @@ public static int ii = 0;
 	public ISelectionManager getSelectionManager() {
 		return selectionManager;
 	}
+
+	/**@return the switcher */
+	public ActiveEditorSwitcher getSwitcher() {
+		return switcher;
+	}
 }
 
 final class VpeVisualRefreshJob extends UIJob {
@@ -2752,13 +2754,14 @@ final class VpeVisualRefreshJob extends UIJob {
 				return Status.CANCEL_STATUS;
 			}
 			
-			// if this job is nested in another VpeVisualRefreshJob, then cancel it and run later
+			// if this job is nested in another VpeVisualRefreshJob, then cancel it and run again later
 			if (nestedLevel > 1) {
 				vpeController.scheduleNewVpeVisualRefreshJob(300L);
 				return Status.CANCEL_STATUS;
 			}
 			
-			if (!vpeController.switcher.startActiveEditor(VpeController.ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+			final VpeController.ActiveEditorSwitcher switcher = vpeController.getSwitcher();
+			if (!switcher.startActiveEditor(VpeController.ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 				return Status.CANCEL_STATUS;
 			}
 			
@@ -2770,7 +2773,7 @@ final class VpeVisualRefreshJob extends UIJob {
 			} catch (VpeDisposeException exc) {
 				// just ignore this exception
 			} catch (NullPointerException ex) {
-				if (vpeController.switcher != null) {
+				if (switcher != null) {
 					throw ex;
 				} else {
 					// class was disposed and exception result of
@@ -2779,8 +2782,8 @@ final class VpeVisualRefreshJob extends UIJob {
 					// exception
 				}
 			} finally {
-				if (vpeController.switcher != null) {
-					vpeController.switcher.stopActiveEditor();
+				if (switcher != null) {
+					switcher.stopActiveEditor();
 				}
 			}
 			return Status.OK_STATUS;
