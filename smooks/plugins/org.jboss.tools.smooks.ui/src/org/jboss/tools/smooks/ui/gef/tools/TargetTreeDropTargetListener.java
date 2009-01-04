@@ -110,26 +110,29 @@ public class TargetTreeDropTargetListener extends DropTargetAdapter {
 							this.getGraphicalViewer()).getModel();
 					EditPart targetEditPart = tool.findTheEditPart(target, this
 							.getGraphicalViewer());
-					target = targetEditPart.getModel();
-					CreateConnectionCommand command = new CreateConnectionCommand();
-					command.setSource(source);
-					command.setTarget(target);
-					CommandStack stack = getGraphicalViewer().getEditDomain()
-							.getCommandStack();
-					try {
-						boolean cando = CommandProcessorFactory.getInstance()
-								.processGEFCommand(command, targetEditPart);
-						if (!cando)
-							return;
-					} catch (CoreException e) {
-						// ignore
+					if (targetEditPart != null) {
+						target = targetEditPart.getModel();
+						CreateConnectionCommand command = new CreateConnectionCommand();
+						command.setSource(source);
+						command.setTarget(target);
+						CommandStack stack = getGraphicalViewer()
+								.getEditDomain().getCommandStack();
+						try {
+							boolean cando = CommandProcessorFactory
+									.getInstance().processGEFCommand(command,
+											targetEditPart);
+							if (!cando)
+								return;
+						} catch (CoreException e) {
+							// ignore
+						}
+						stack.execute(command);
 					}
-					stack.execute(command);
 				}
 			}
-		}catch(Throwable t){
+		} catch (Throwable t) {
 			t.printStackTrace();
-		}finally {
+		} finally {
 			Tool dt = getGraphicalViewer().getEditDomain().getDefaultTool();
 			getGraphicalViewer().getEditDomain().setActiveTool(dt);
 		}

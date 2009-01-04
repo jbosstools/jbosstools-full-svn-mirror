@@ -16,6 +16,8 @@ import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.jboss.tools.smooks.ui.gef.editparts.StructuredDataConnectionEditPart;
+import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
 
 /**
  * @author Dart Peng
@@ -23,6 +25,23 @@ import org.eclipse.draw2d.geometry.Rectangle;
  */
 public class CurveLineConnection extends PolylineConnection {
 	private double[] fBasicCenterCurve;
+	
+	
+	private StructuredDataConnectionEditPart hostEditPart;
+
+	public StructuredDataConnectionEditPart getHostEditPart() {
+		return hostEditPart;
+	}
+
+	public void setHostEditPart(StructuredDataConnectionEditPart hostEditPart) {
+		this.hostEditPart = hostEditPart;
+	}
+
+	public CurveLineConnection(StructuredDataConnectionEditPart editPart) {
+		super();
+		this.setHostEditPart(editPart);
+	}
+
 
 	private int[] getCenterCurvePoints(int startx, int starty, int endx,
 			int endy) {

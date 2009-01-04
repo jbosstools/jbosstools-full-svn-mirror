@@ -565,7 +565,7 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 					.getMappingResourceConfigList();
 			if (rclist != null) {
 				pa.setHidenSmooksElements(rclist
-						.getRelationgResourceConfigList());
+						.getGraphRenderResourceConfigList());
 			}
 			setModelPackage(pa);
 		} else {

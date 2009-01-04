@@ -10,25 +10,41 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.xml.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jboss.tools.smooks.ui.editors.TransformDataTreeViewer;
+
 /**
  * @author Dart Peng
  * @Date Jul 26, 2008
  */
-public class DocumentObject extends AbstractXMLObject {
-	TagObject rootTag;
+public class TagList extends AbstractXMLObject {
+	List<TagObject> rootTagList = new ArrayList<TagObject>();
 
-	public TagObject getRootTag() {
-		return rootTag;
+//	public TagObject getRootTag() {
+//		return rootTag;
+//	}
+	
+	public List<TagObject> getRootTagList() {
+		return rootTagList;
 	}
 
-	public void setRootTag(TagObject rootTag) {
-		this.rootTag = rootTag;
+	public void removeRootTag(TagObject rootTag){
+		rootTagList.remove(rootTag);
+		if(rootTag != null) rootTag.setParent(null);
+		support.firePropertyChange(TransformDataTreeViewer.REMOVE_CHILDREN_EVENT, rootTag, null);
+	}
+
+	public void addRootTag(TagObject rootTag) {
+		rootTagList.add(rootTag);
 		if(rootTag != null) rootTag.setParent(this);
+		support.firePropertyChange(TransformDataTreeViewer.ADD_CHILDREN_EVENT, null, rootTag);
 	}
 	
 	public String toString(){
-		if(rootTag != null)
-		return "Document : " + getName() + "\n" + getRootTag().toString();
+//		if(rootTag != null)
+//		return "Document : " + getName() + "\n" + getRootTag().toString();
 		
 		return "Docuement Object :  " +getName();
 	}

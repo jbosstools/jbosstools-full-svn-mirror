@@ -19,6 +19,16 @@ import java.util.List;
 public class TagPropertyObject extends AbstractXMLObject {
 	
 	protected String type = "string";
+	
+	protected String value = null;
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
 
 	public String getType() {
 		return type;

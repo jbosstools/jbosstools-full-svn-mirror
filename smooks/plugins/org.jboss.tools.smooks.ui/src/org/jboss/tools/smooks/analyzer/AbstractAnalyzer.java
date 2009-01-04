@@ -143,6 +143,12 @@ public abstract class AbstractAnalyzer implements IMappingAnalyzer {
 				resourceConfig = rct;
 				break;
 			}
+			String selector1 = rct.getSelector();
+			if(selector1 != null) selector1 = selector1.trim();
+			if(selector.equals(selector1)){
+				resourceConfig = rct;
+				break;
+			}
 		}
 		return resourceConfig;
 	}

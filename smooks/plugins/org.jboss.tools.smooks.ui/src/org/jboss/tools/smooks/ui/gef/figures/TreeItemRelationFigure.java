@@ -14,42 +14,55 @@ import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.jboss.tools.smooks.ui.gef.model.TreeItemRelationModel;
 
 /**
  * @author Dart Peng
  * @Date Jul 31, 2008
  */
 public class TreeItemRelationFigure extends RectangleFigure {
-	TreeItem treeItem = null;
-	int caculateY = 0;
+//	TreeItem treeItem = null;
+//	int caculateY = 0;
 
-	public TreeItem getTreeItem() {
-		return treeItem;
+//	public TreeItem getTreeItem() {
+//		return treeItem;
+//	}
+//
+//	public void setTreeItem(TreeItem treeItem) {
+//		this.treeItem = treeItem;
+//	}
+	
+	private TreeItemRelationModel model = null;
+
+	public TreeItemRelationModel getModel() {
+		return model;
 	}
 
-	public void setTreeItem(TreeItem treeItem) {
-		this.treeItem = treeItem;
+	public void setModel(TreeItemRelationModel model) {
+		this.model = model;
 	}
 
 	@Override
 	public void paint(Graphics graphics) {
 		super.paint(graphics);
-		graphics.pushState();
-
-		graphics.setForegroundColor(ColorConstants.red);
-		if (!treeItem.isDisposed()) {
-			String text = treeItem.getText();
-			if (text != null)
-				graphics.drawText(text, getBounds().getTopLeft());
-		}
-
-		graphics.popState();
+		graphics.setBackgroundColor(ColorConstants.black);
+		graphics.fillRectangle(getBounds());
+//		graphics.pushState();
+//
+//		graphics.setForegroundColor(ColorConstants.red);
+//		if (!treeItem.isDisposed()) {
+//			String text = treeItem.getText();
+//			if (text != null)
+//				graphics.drawText(text, getBounds().getTopLeft());
+//		}
+//
+//		graphics.popState();
 	}
 
 	public void caculateLocationY() {
+		TreeItem treeItem = this.getModel().getTreeItem();
 		if (treeItem != null && !treeItem.isDisposed()) {
 			int y = this.collapsedParentItemLocation(treeItem);
 			Tree tree = treeItem.getParent();

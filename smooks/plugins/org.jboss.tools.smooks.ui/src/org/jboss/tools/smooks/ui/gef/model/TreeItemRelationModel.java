@@ -38,7 +38,7 @@ public class TreeItemRelationModel extends AbstractStructuredDataModel
 	public boolean isCollapse() {
 		TreeItem item = getTreeItem();
 		int y = Integer.MAX_VALUE;
-		if (item != null) {
+		if (item != null && !item.isDisposed()) {
 			y = item.getBounds().y;
 			// for windows
 			TreeItem parentItem = item.getParentItem();

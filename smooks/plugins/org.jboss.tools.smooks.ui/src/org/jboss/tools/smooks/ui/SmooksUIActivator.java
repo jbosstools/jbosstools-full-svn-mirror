@@ -64,10 +64,23 @@ public class SmooksUIActivator extends AbstractUIPlugin {
 		reg.put(XMLImageConstants.IMAGE_XML_ELEMENT,
 				imageDescriptorFromPlugin(PLUGIN_ID,
 						"icons/full/obj16/element_obj.gif"));
+		
+		// regist java images
 		reg.put(JavaImageConstants.IMAGE_JAVA_ATTRIBUTE,
-				imageDescriptorFromPlugin(PLUGIN_ID, "icons/full/obj16/att_obj.gif"));
+				imageDescriptorFromPlugin(PLUGIN_ID, JavaImageConstants.IMAGE_JAVA_ATTRIBUTE));
 		reg.put(JavaImageConstants.IMAGE_JAVA_OBJECT,
 				imageDescriptorFromPlugin(PLUGIN_ID, "icons/full/obj16/class_obj.gif"));
+		reg.put(JavaImageConstants.IMAGE_JAVA_ARRAY,
+				imageDescriptorFromPlugin(PLUGIN_ID, JavaImageConstants.IMAGE_JAVA_ARRAY));
+		reg.put(JavaImageConstants.IMAGE_JAVA_COLLECTION,
+				imageDescriptorFromPlugin(PLUGIN_ID, JavaImageConstants.IMAGE_JAVA_COLLECTION));
+		
+		// for the xml2xml line
+		reg.put(XMLImageConstants.IMAGE_BINDING_LINE,
+				imageDescriptorFromPlugin(PLUGIN_ID,XMLImageConstants.IMAGE_BINDING_LINE));
+		
+		reg.put(XMLImageConstants.IMAGE_MAPPING_LINE,
+				imageDescriptorFromPlugin(PLUGIN_ID, XMLImageConstants.IMAGE_MAPPING_LINE));
 	}
 
 	/**

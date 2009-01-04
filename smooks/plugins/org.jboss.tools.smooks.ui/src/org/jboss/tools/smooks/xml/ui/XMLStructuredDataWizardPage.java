@@ -4,7 +4,7 @@
 package org.jboss.tools.smooks.xml.ui;
 
 import org.jboss.tools.smooks.xml.AbstractFileSelectionWizardPage;
-import org.jboss.tools.smooks.xml.model.DocumentObject;
+import org.jboss.tools.smooks.xml.model.TagList;
 import org.jboss.tools.smooks.xml.model.XMLObjectAnalyzer;
 
 /**
@@ -33,7 +33,7 @@ public class XMLStructuredDataWizardPage extends
 	@Override
 	protected Object loadedTheObject(String path) throws Exception {
 		XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();
-		DocumentObject doc = analyzer.analyze(path);
+		TagList doc = analyzer.analyze(path , null);
 		return doc;
 	}
 }

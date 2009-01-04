@@ -17,6 +17,15 @@ package org.jboss.tools.smooks.ui.gef.model;
 public class PropertyModel extends AbstractStructuredDataModel {
 	private String name;
 	private String value;
+	
+	public PropertyModel(String name,String value){
+		this.name = name;
+		this.value = value;
+	}
+	
+	public PropertyModel(){
+		
+	}
 
 	public String getName() {
 		return name;

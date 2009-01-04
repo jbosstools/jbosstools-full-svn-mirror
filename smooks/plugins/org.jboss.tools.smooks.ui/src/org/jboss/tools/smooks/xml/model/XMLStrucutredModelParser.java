@@ -30,9 +30,9 @@ public class XMLStrucutredModelParser implements IStructuredModelParser {
 	public AbstractStructuredDataModel parse(Object customModel) {
 		AbstractStructuredDataModel model = null;
 		// for AbstractXMLObject (come from xml file fragment)
-		if(customModel instanceof DocumentObject){
+		if(customModel instanceof TagList){
 			model = new StructuredDataModel();
-			model.setLabelName(((DocumentObject)customModel).getName());
+			model.setLabelName(((TagList)customModel).getName());
 		}
 		
 		if(customModel instanceof TagObject){

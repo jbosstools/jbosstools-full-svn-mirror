@@ -1,5 +1,7 @@
 package org.jboss.tools.smooks.javabean.model;
 
+import java.util.Collection;
+
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.javabean.ui.JavaImageConstants;
@@ -24,7 +26,7 @@ public class BeanlabelProvider extends LabelProvider {
 			if (name == null)
 				name = "<nonamed>";
 
-			Object error =  ((JavaBeanModel) element).getError();
+			Object error = ((JavaBeanModel) element).getError();
 			if (error != null) {
 				name = name + "    " + "<" + error.toString() + ">";
 				return name;
@@ -52,7 +54,7 @@ public class BeanlabelProvider extends LabelProvider {
 	@Override
 	public Image getImage(Object element) {
 		if (element instanceof JavaBeanModel) {
-			Object error =  ((JavaBeanModel) element).getError();
+			Object error = ((JavaBeanModel) element).getError();
 			if (error != null) {
 				return SmooksUIActivator.getDefault().getImageRegistry().get(
 						SmooksGraphConstants.IMAGE_ERROR);
@@ -60,6 +62,19 @@ public class BeanlabelProvider extends LabelProvider {
 			if (((JavaBeanModel) element).isPrimitive()) {
 				return this.getJavaAttributeImage();
 			} else {
+				Class typeRef = ((JavaBeanModel) element).getBeanClass();
+				if (typeRef != null) {
+					if (typeRef.isArray()) {
+						return SmooksUIActivator.getDefault()
+								.getImageRegistry().get(
+										JavaImageConstants.IMAGE_JAVA_ARRAY);
+					}
+					if (Collection.class.isAssignableFrom(typeRef)) {
+						return SmooksUIActivator.getDefault()
+								.getImageRegistry()
+								.get(JavaImageConstants.IMAGE_JAVA_COLLECTION);
+					}
+				}
 				return this.getJavaObjectImage();
 			}
 		}

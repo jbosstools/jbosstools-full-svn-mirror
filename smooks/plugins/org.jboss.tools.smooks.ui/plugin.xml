@@ -4,6 +4,8 @@
    <extension-point id="viewerInitor" name="viewerInitor" schema="schema/viewerInitor.exsd"/>
    <extension-point id="analyzer" name="analyzer" schema="schema/analyzer.exsd"/>
    <extension-point id="commandProcessor" name="commandProcessor" schema="schema/commandProcessor.exsd"/>
+   <extension-point id="menuActionProvider" name="menuActionProvider" schema="schema/menuActionProvider.exsd"/>
+   <extension-point id="linePaintListener" name="linePaintListener" schema="schema/linePaintListener.exsd"/>
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
        uri = "http://www.jboss.org/tools/smooks/graphicalInformation" 
@@ -48,6 +50,12 @@
                id="org.jboss.tools.smooks.ui.xml.propertySection"
                tab="org.jboss.tools.smooks.ui.xml.propertyTab">
          </propertySection>
+         <propertySection
+               class="org.jboss.tools.smooks.xml.ui.XMLNodePropertySection"
+               filter="org.jboss.tools.smooks.xml.ui.XMLNodeSectionFilter"
+               id="org.jboss.tools.smooks.ui.xmlnode.propertySection"
+               tab="org.jboss.tools.smooks.ui.xmlnode.propertyTab">
+         </propertySection>
       </propertySections>
    </extension>
    <extension
@@ -57,6 +65,9 @@
             typeMapper="org.jboss.tools.smooks.ui.SmooksGraphPropertyTypeMapper">
          <propertyCategory
                category="connection"></propertyCategory>
+         <propertyCategory
+               category="transformdata">
+         </propertyCategory>
       </propertyContributor>
    </extension>
    <extension
@@ -71,12 +82,17 @@
          <propertyTab
                category="connection"
                id="org.jboss.tools.smooks.ui.javabean.propertyTab"
-               label="JavaBean Properties">
+               label="JavaBean Connection Properties">
          </propertyTab>
          <propertyTab
                category="connection"
                id="org.jboss.tools.smooks.ui.xml.propertyTab"
-               label="XML Properties">
+               label="XML Connection Properties">
+         </propertyTab>
+         <propertyTab
+               category="transformdata"
+               id="org.jboss.tools.smooks.ui.xmlnode.propertyTab"
+               label="XML Node">
          </propertyTab>
       </propertyTabs>
    </extension>
@@ -201,6 +217,11 @@
             sourceId="org.jboss.tools.smooks.xml.viewerInitor.xml"
             targetId="org.jboss.tools.smooks.ui.viewerInitor.javabean">
       </commandProcessor>
+      <commandProcessor
+            class="org.jboss.tools.smooks.xml.model.XMLConnectionCommandProcessor"
+            sourceId="org.jboss.tools.smooks.xml.viewerInitor.xml"
+            targetId="org.jboss.tools.smooks.xml.viewerInitor.xml">
+      </commandProcessor>
    </extension>
    
    <extension
@@ -230,5 +251,20 @@
             objectClass="org.jboss.tools.smooks.xml.model.TagObject"
             state="true">
       </decorator>
+   </extension>
+   <extension
+         point="org.jboss.tools.smooks.ui.menuActionProvider">
+      <menuActionProvider
+            class="org.jboss.tools.smooks.xml.ui.XMLViewerActionProvider"
+            typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
+      </menuActionProvider>
+   </extension>
+   <extension
+         point="org.jboss.tools.smooks.ui.linePaintListener">
+      <linePaintListener
+            class="org.jboss.tools.smooks.xml.ui.XML2XMLLinePaintListener"
+            sourceId="org.jboss.tools.smooks.xml.viewerInitor.xml"
+            targetId="org.jboss.tools.smooks.xml.viewerInitor.xml">
+      </linePaintListener>
    </extension>
 </plugin>

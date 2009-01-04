@@ -46,7 +46,7 @@ import org.jboss.tools.smooks.ui.gef.model.PropertyModel;
 import org.jboss.tools.smooks.ui.gef.model.TargetModel;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
-import org.jboss.tools.smooks.xml.model.DocumentObject;
+import org.jboss.tools.smooks.xml.model.TagList;
 import org.jboss.tools.smooks.xml.model.TagObject;
 
 /**
@@ -71,13 +71,13 @@ public class UIUtils {
 		AbstractXMLObject parent = xmlObj.getParent();
 		while (true) {
 			AbstractXMLObject p = parent.getParent();
-			if (p == null)
+			if (p instanceof TagList)
 				break;
 			parent = p;
 		}
-		if (parent instanceof DocumentObject) {
-			parent = ((DocumentObject) parent).getRootTag();
-		}
+//		if (parent instanceof TagList) {
+//			parent = ((TagList) parent).getRootTag();
+//		}
 		return parent;
 	}
 

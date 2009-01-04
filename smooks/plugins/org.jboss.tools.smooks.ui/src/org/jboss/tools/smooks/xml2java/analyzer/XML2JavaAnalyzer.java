@@ -40,7 +40,7 @@ import org.jboss.tools.smooks.ui.gef.model.TreeItemRelationModel;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.jboss.tools.smooks.utils.UIUtils;
 import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
-import org.jboss.tools.smooks.xml.model.DocumentObject;
+import org.jboss.tools.smooks.xml.model.TagList;
 import org.jboss.tools.smooks.xml.model.TagObject;
 import org.jboss.tools.smooks.xml.model.TagPropertyObject;
 
@@ -81,10 +81,11 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			}
 		}
 	}
-	
-	protected String generateParentSelector(AbstractXMLObject xmlObject){
+
+	protected String generateParentSelector(AbstractXMLObject xmlObject) {
 		String selector = xmlObject.getName();
-		while(xmlObject.getParent() != null && !(xmlObject.getParent() instanceof DocumentObject)){
+		while (xmlObject.getParent() != null
+				&& !(xmlObject.getParent() instanceof TagList)) {
 			xmlObject = xmlObject.getParent();
 			selector = xmlObject.getName() + SPACE_SPLITER + selector;
 		}
@@ -184,7 +185,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			AbstractStructuredDataModel sourceModel = (AbstractStructuredDataModel) connection
 					.getSource();
 
-			if (targetJavaChild.isPrimitive() || targetJavaChild.getProperties().isEmpty()) {
+			if (targetJavaChild.isPrimitive()
+					|| targetJavaChild.getProperties().isEmpty()) {
 				isComplex = false;
 			}
 			String resourceConfigSelector = parentSelector;
@@ -196,12 +198,13 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 						resourceConfigSelector);
 			}
 			String propertyName = targetJavaChild.getName();
-			// if the parent bean is Array or List , the binding property name should be set NULL
-			if(javaBean.isArray() || javaBean.isList()){
+			// if the parent bean is Array or List , the binding property name
+			// should be set NULL
+			if (javaBean.isArray() || javaBean.isList()) {
 				propertyName = null;
 			}
 			AnyType binding = SmooksModelUtils.addBindingTypeToParamType(
-					bindingsParam, propertyName , selector, null, null);
+					bindingsParam, propertyName, selector, null, null);
 			// add connection's properties on the "binding" element
 			UIUtils.assignConnectionPropertyToBinding(connection, binding,
 					new String[] { "property", "selector" });
@@ -250,8 +253,9 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			SmooksResourceListType listType, Object sourceObject,
 			Object targetObject) {
 		JavaBeanModel tempBean = null;
-		if (sourceObject instanceof DocumentObject) {
-			sourceObject = ((DocumentObject) sourceObject).getRootTag();
+		if (sourceObject instanceof TagList
+				&& !((TagList) sourceObject).getRootTagList().isEmpty()) {
+			sourceObject = ((TagList) sourceObject).getRootTagList().get(0);
 		}
 		if (targetObject instanceof List && !((List) targetObject).isEmpty()) {
 			tempBean = (JavaBeanModel) ((List) targetObject).get(0);
@@ -459,6 +463,11 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		if (isReferenceSelector(selector)) {
 			ResourceConfigType resourceConfig1 = this
 					.findResourceConfigTypeWithSelector(selector, listType);
+			if (resourceConfig1 == null) {
+				throw new RuntimeException(
+						"Can't find some ResourceConfig element in the config file.Maybe some ResourceConfig element miss <param name = \"beanId\">"
+								+ selector + "</param>");
+			}
 			String newSelector = resourceConfig1.getSelector();
 			if (newSelector == null)
 				return;
@@ -516,7 +525,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		if (current == parent) {
 
 		} else {
-			while (!(parent.getParent() instanceof DocumentObject)) {
+			while (!(parent.getParent() instanceof TagList)) {
 				parent = parent.getParent();
 			}
 			current = parent;
@@ -604,7 +613,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 						.next();
 				AbstractXMLObject source = (AbstractXMLObject) sourceGraphModel
 						.getReferenceEntityModel();
-				if (source.getParent().getClass() == DocumentObject.class) {
+				if (source.getParent().getClass() == TagList.class) {
 					rootSource = source;
 					break;
 				}
@@ -615,7 +624,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 						.next();
 				JavaBeanModel target = (JavaBeanModel) targetGraphModel
 						.getReferenceEntityModel();
-				if (target.isRoot()) {
+				if (target.isRootClassModel()) {
 					rootTarget = target;
 					break;
 				}

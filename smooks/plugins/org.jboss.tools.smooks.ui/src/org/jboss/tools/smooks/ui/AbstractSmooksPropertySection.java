@@ -15,10 +15,8 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
-import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.ui.editors.SmooksFormEditor;
 import org.jboss.tools.smooks.ui.editors.SmooksGraphicalFormPage;
-import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
 
 /**

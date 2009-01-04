@@ -43,6 +43,8 @@ import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.util.SmooksResourceFactoryImpl;
+import org.jboss.tools.smooks.ui.AnalyzeResult;
+import org.jboss.tools.smooks.ui.IAnalyzeListener;
 import org.jboss.tools.smooks.ui.SmooksTextEdtor;
 import org.jboss.tools.smooks.utils.UIUtils;
 
@@ -51,7 +53,7 @@ import org.jboss.tools.smooks.utils.UIUtils;
  * @Date Jul 28, 2008
  */
 public class SmooksFormEditor extends FormEditor implements
-		ITabbedPropertySheetPageContributor {
+		ITabbedPropertySheetPageContributor , IAnalyzeListener{
 
 	private SmooksTextEdtor xmlTextEditor;
 
@@ -112,7 +114,7 @@ public class SmooksFormEditor extends FormEditor implements
 		normalPage.setDisableGUI(this.showTextEditorReason != null);
 		if (mappingResourceConfig != null) {
 			refreshNormalPage(mappingResourceConfig
-					.getRelationgResourceConfigList());
+					.getGraphRenderResourceConfigList());
 		} else {
 			refreshNormalPage(Collections.EMPTY_LIST);
 		}
@@ -144,6 +146,7 @@ public class SmooksFormEditor extends FormEditor implements
 		xmlTextEditor.addSaveListener(graphicalPage);
 		graphicalPage.addAnalyzeListener(xmlTextEditor);
 		graphicalPage.addAnalyzeListener(normalPage);
+		graphicalPage.addAnalyzeListener(this);
 	}
 
 	public void setParseException(boolean onlyShowTextEditor, Throwable reason) {
@@ -318,6 +321,12 @@ public class SmooksFormEditor extends FormEditor implements
 	 */
 	public void setSmooksResource(Resource smooksResource) {
 		this.smooksResource = smooksResource;
+	}
+
+	public void endAnalyze(AnalyzeResult result) {
+		if(result.getError() != null){
+			this.setActivePage(2);
+		}
 	}
 
 }

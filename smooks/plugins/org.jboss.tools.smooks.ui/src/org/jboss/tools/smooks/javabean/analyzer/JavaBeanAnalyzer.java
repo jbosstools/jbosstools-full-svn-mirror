@@ -65,6 +65,8 @@ import org.jboss.tools.smooks.utils.UIUtils;
  */
 public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		ISourceModelAnalyzer, ITargetModelAnalyzer {
+	
+	private ClassLoader currentClassLoader = null;
 
 	public static final String BEANPOPULATOR = "org.milyn.javabean.BeanPopulator"; //$NON-NLS-1$
 
@@ -175,6 +177,14 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		return (usedConnectionList.indexOf(connection) != -1);
 	}
 
+	public ClassLoader getCurrentClassLoader() {
+		return currentClassLoader;
+	}
+
+	public void setCurrentClassLoader(ClassLoader currentClassLoader) {
+		this.currentClassLoader = currentClassLoader;
+	}
+	
 	private void setConnectionUsed(Object connection) {
 		usedConnectionList.add(connection);
 	}
@@ -459,7 +469,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						.next();
 				JavaBeanModel source = (JavaBeanModel) sourceGraphModel
 						.getReferenceEntityModel();
-				if (source.isRoot()) {
+				if (source.isRootClassModel()) {
 					rootSource = source;
 					break;
 				}
@@ -470,7 +480,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						.next();
 				JavaBeanModel target = (JavaBeanModel) targetGraphModel
 						.getReferenceEntityModel();
-				if (target.isRoot()) {
+				if (target.isRootClassModel()) {
 					rootTarget = target;
 					break;
 				}
@@ -910,19 +920,19 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 	}
 
 	public Object buildSourceInputObjects(GraphInformations graphInfo,
-			SmooksResourceListType listType, IFile sourceFile)
+			SmooksResourceListType listType, IFile sourceFile , Object viewer )
 			throws InvocationTargetException {
 		UIUtils.checkSelector(listType);
 		return this.buildSourceInputObjects(graphInfo, listType, sourceFile,
-				null);
+				getCurrentClassLoader());
 	}
 
 	public Object buildTargetInputObjects(GraphInformations graphInfo,
-			SmooksResourceListType listType, IFile sourceFile)
+			SmooksResourceListType listType, IFile sourceFile , Object viewer)
 			throws InvocationTargetException {
 		UIUtils.checkSelector(listType);
 		return this.buildTargetInputObjects(graphInfo, listType, sourceFile,
-				null);
+				getCurrentClassLoader());
 	}
 
 	public Object buildTargetInputObjects(GraphInformations graphInfo,
@@ -1182,6 +1192,12 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			// continue;
 			String beanId = getBeanIDFromParam(rct);
 			if (selector.equals(beanId)) {
+				resourceConfig = rct;
+				break;
+			}
+			String selector1 = rct.getSelector();
+			if(selector1 != null) selector1 = selector1.trim();
+			if(selector.equals(selector1)){
 				resourceConfig = rct;
 				break;
 			}

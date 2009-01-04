@@ -17,12 +17,18 @@ package org.jboss.tools.smooks.utils;
 public class SmooksExtensionPointConstants {
 	/** @deprecated */
 	public static final String EXTENTION_POINT_TRANSFORM_DATATYPE_WIZARD = "org.jboss.tools.smooks.ui.transformDataWizards";
+	
+	public static final String EXTENTION_POINT_ACTION_PROVIDER = "org.jboss.tools.smooks.ui.menuActionProvider";
 
 	public static final String EXTENTION_POINT_VIEWER_INITOR = "org.jboss.tools.smooks.ui.viewerInitor";
 	
 	public static final String EXTENTION_POINT_ANALYZER = "org.jboss.tools.smooks.ui.analyzer";
 	
 	public static final String EXTENTION_POINT_COMMAND_PROCESSOR = "org.jboss.tools.smooks.ui.commandProcessor";
+	
+	public static final String EXTENTION_POINT_LINEPAINT_LISTENER = "org.jboss.tools.smooks.ui.linePaintListener";
+	
+	public static final String EXTENTION_POINT_ELEMENT_LINEPAINT_LISTENER = "linePaintListener";
 	
 	public static final String EXTENTION_POINT_ELEMENT_SOURCEMODEL_ANALYZER = "sourceModelAnalyzer";
 	
