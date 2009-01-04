@@ -1,7 +1,6 @@
 package org.jboss.tools.smooks.test.java2java;
 
 
-import java.util.Date;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>

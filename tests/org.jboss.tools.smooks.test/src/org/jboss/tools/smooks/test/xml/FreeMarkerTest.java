@@ -10,18 +10,14 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.test.xml;
 
-import java.io.IOException;
-
 import junit.framework.TestCase;
-
-import org.dom4j.DocumentException;
 
 /**
  * @author Dart Peng
  * @Date : Sep 25, 2008
  */
 public class FreeMarkerTest extends TestCase {
-	public void testParse() throws DocumentException, IOException {
+//	public void testParse() throws DocumentException, IOException {
 //		Reader reader = new InputStreamReader(FreeMarkerTest.class
 //				.getResourceAsStream("test.flt"));
 //		FreeMarkerContentReplacer replacer = new FreeMarkerContentReplacer();
@@ -34,5 +30,5 @@ public class FreeMarkerTest extends TestCase {
 //		String result = trans.transformDOM(doc);
 //		
 //		System.out.println(result);
-	}
+//	}
 }

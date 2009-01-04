@@ -16,7 +16,6 @@
 package org.jboss.tools.smooks.test.java2java;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
