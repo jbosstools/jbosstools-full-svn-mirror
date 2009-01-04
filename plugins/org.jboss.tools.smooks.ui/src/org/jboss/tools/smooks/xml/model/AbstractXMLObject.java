@@ -10,15 +10,31 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.xml.model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jboss.tools.smooks.ui.editors.TransformDataTreeViewer;
 
 /**
  * @author Dart Peng
  * @Date Jul 25, 2008
  */
-public class AbstractXMLObject {
+public class AbstractXMLObject implements IXMLNode{
 	
+	protected PropertyChangeSupport support = new PropertyChangeSupport(this);
+	
+	protected boolean canEdit = false;
+		
+	public boolean isCanEdit() {
+		return canEdit;
+	}
+
+	public void setCanEdit(boolean canEdit) {
+		this.canEdit = canEdit;
+	}
+
 	protected AbstractXMLObject parent;
 	
 	protected String name;
@@ -38,9 +54,15 @@ public class AbstractXMLObject {
 	public String getName() {
 		return name;
 	}
+	
+	public PropertyChangeListener[] getPropertyChangeListeners(){
+		return support.getPropertyChangeListeners();
+	}
 
 	public void setName(String name) {
+		String oldName = this.name;
 		this.name = name;
+		support.firePropertyChange(TransformDataTreeViewer.NODE_PROPERTY_EVENT, oldName, this.name);
 	}
 
 	public List<AbstractXMLObject> getChildren() {
@@ -63,6 +85,14 @@ public class AbstractXMLObject {
 	 */
 	public void setParent(AbstractXMLObject parent) {
 		this.parent = parent;
+	}
+
+	public void addNodePropetyChangeListener(PropertyChangeListener listener) {
+		support.addPropertyChangeListener(listener);
+	}
+
+	public void removeNodePropetyChangeListener(PropertyChangeListener listener) {
+		support.removePropertyChangeListener(listener);
 	}
 	
 	

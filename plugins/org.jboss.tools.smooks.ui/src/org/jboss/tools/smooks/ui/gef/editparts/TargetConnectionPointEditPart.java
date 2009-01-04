@@ -24,7 +24,7 @@ public class TargetConnectionPointEditPart extends ConnectionPointEditPart {
 		TargetConnectionPointFigure figure = new TargetConnectionPointFigure();
 		figure.setSize(10,10);
 		TreeItemRelationModel model = (TreeItemRelationModel)getModel();
-		figure.setTreeItem(model.getTreeItem());
+		figure.setModel(model);
 		return figure;
 	}
 

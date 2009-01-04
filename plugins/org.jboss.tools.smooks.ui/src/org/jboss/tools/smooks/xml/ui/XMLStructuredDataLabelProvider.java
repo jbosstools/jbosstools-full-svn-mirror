@@ -15,7 +15,7 @@ import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
 import org.jboss.tools.smooks.xml.XMLImageConstants;
 import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
-import org.jboss.tools.smooks.xml.model.DocumentObject;
+import org.jboss.tools.smooks.xml.model.TagList;
 import org.jboss.tools.smooks.xml.model.TagObject;
 import org.jboss.tools.smooks.xml.model.TagPropertyObject;
 
@@ -59,7 +59,7 @@ public class XMLStructuredDataLabelProvider extends LabelProvider {
 	 */
 	@Override
 	public String getText(Object element) {
-		if (element instanceof DocumentObject) {
+		if (element instanceof TagList) {
 			return "Root";
 		}
 		if (element instanceof AbstractXMLObject) {

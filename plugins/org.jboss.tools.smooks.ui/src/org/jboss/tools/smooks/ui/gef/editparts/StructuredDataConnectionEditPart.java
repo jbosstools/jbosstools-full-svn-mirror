@@ -11,13 +11,19 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
+import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.editparts.AbstractConnectionEditPart;
 import org.eclipse.gef.editpolicies.ConnectionEndpointEditPolicy;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IEditorPart;
+import org.jboss.tools.smooks.ui.editors.SmooksGraphicalFormPage;
 import org.jboss.tools.smooks.ui.gef.figures.CurveLineConnection;
+import org.jboss.tools.smooks.ui.gef.figures.ILineFigurePaintListener;
+import org.jboss.tools.smooks.ui.gef.figures.LineFigurePaintListenerManager;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataConnectionModel;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
@@ -68,15 +74,45 @@ public class StructuredDataConnectionEditPart extends
 				new DeleteConnectionEditPolicy());
 	}
 
+	private String getSourceDataTypeID() {
+		GraphicalViewer viewer = (GraphicalViewer) this.getViewer();
+		IEditorPart editor = ((DefaultEditDomain) viewer.getEditDomain())
+				.getEditorPart();
+		if (editor instanceof SmooksGraphicalFormPage) {
+			return ((SmooksGraphicalFormPage) editor).getSourceDataTypeID();
+		}
+		return null;
+	}
+
+	private String getTargetDataTypeID() {
+		GraphicalViewer viewer = (GraphicalViewer) this.getViewer();
+		IEditorPart editor = ((DefaultEditDomain) viewer.getEditDomain())
+				.getEditorPart();
+		if (editor instanceof SmooksGraphicalFormPage) {
+			return ((SmooksGraphicalFormPage) editor).getTargetDataTypeID();
+		}
+		return null;
+	}
+
 	protected IFigure createFigure() {
-		CurveLineConnection conn = new CurveLineConnection() {
-			public void paintFigure(Graphics graphics) {
-				super.paintFigure(graphics);
+		CurveLineConnection conn = new CurveLineConnection(this) {
+			public void paintClientArea(Graphics graphics) {
+				
+				String sourceid = getSourceDataTypeID();
+				String targetid = getTargetDataTypeID();
+				ILineFigurePaintListener listener = LineFigurePaintListenerManager
+						.getInstance().getPaintListener(sourceid, targetid);
+//				graphics.pushState();
+				if (listener != null) {
+					listener.drawLineAdditions(graphics,this,
+							(LineConnectionModel) getHostEditPart().getModel());
+				}
+//				graphics.popState();
+				super.paintClientArea(graphics);
 			}
 		};
 		// conn.setSmoothness(SmoothPolyLineConnection.SMOOTH_MORE);
 		Figure targetFlagFigure = new Figure() {
-
 			/*
 			 * (non-Javadoc)
 			 * 

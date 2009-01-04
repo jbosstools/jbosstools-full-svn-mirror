@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.xml2java.analyzer;
 
+import java.beans.PropertyChangeListener;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
@@ -25,8 +27,13 @@ import org.jboss.tools.smooks.analyzer.ITargetModelAnalyzer;
 import org.jboss.tools.smooks.graphical.GraphInformations;
 import org.jboss.tools.smooks.graphical.Param;
 import org.jboss.tools.smooks.graphical.Params;
+import org.jboss.tools.smooks.model.AbstractResourceConfig;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.ResourceType;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
-import org.jboss.tools.smooks.xml.model.DocumentObject;
+import org.jboss.tools.smooks.xml.model.TagList;
+import org.jboss.tools.smooks.xml.model.TagObject;
+import org.jboss.tools.smooks.xml.model.TagPropertyObject;
 import org.jboss.tools.smooks.xml.model.XMLObjectAnalyzer;
 
 /**
@@ -62,19 +69,23 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 				if (file.exists()) {
 					path = file.getLocation().toOSString();
 				} else {
-					throw new InvocationTargetException(new Exception(
-							Messages.getString("AbstractXMLModelAnalyzer.FileDosentExistErrorMessage1") + path + Messages.getString("AbstractXMLModelAnalyzer.FileDosentExistErrorMessage2"))); //$NON-NLS-1$ //$NON-NLS-2$
+					throw new InvocationTargetException(
+							new Exception(
+									Messages
+											.getString("AbstractXMLModelAnalyzer.FileDosentExistErrorMessage1") + path + Messages.getString("AbstractXMLModelAnalyzer.FileDosentExistErrorMessage2"))); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			} else {
-				throw new InvocationTargetException(new Exception(
-						Messages.getString("AbstractXMLModelAnalyzer.IllegalPathErrorMessage1") + path + ".")); //$NON-NLS-1$ //$NON-NLS-2$
+				throw new InvocationTargetException(
+						new Exception(
+								Messages
+										.getString("AbstractXMLModelAnalyzer.IllegalPathErrorMessage1") + path + ".")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 		return path;
 	}
 
 	public Object buildSourceInputObjects(GraphInformations graphInfo,
-			SmooksResourceListType listType, IFile sourceFile)
+			SmooksResourceListType listType, IFile sourceFile, Object viewer)
 			throws InvocationTargetException {
 		Params params = graphInfo.getParams();
 		String path = null;
@@ -89,27 +100,98 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 				}
 			}
 		}
-		if (path == null) {
-			 return null;
-//			throw new InvocationTargetException(new Exception(
-//					"xml file can't be found in the .graph file."));
+		TagList document = new TagList();
+		if (path != null) {
+			path = parseFilePath(path);
+			XMLObjectAnalyzer objectBuilder = new XMLObjectAnalyzer();
+			try {
+				FileInputStream stream = new FileInputStream(path);
+				document = objectBuilder.analyze(stream, null);
+				if (viewer != null && viewer instanceof PropertyChangeListener) {
+					document
+							.addNodePropetyChangeListener((PropertyChangeListener) viewer);
+				}
+				return document;
+			} catch (FileNotFoundException e) {
+				throw new InvocationTargetException(e);
+			} catch (DocumentException e) {
+				throw new InvocationTargetException(e);
+			}
+		} else {
+			String sid = graphInfo.getMappingType().getSourceTypeID();
+			String tid = graphInfo.getMappingType().getTargetTypeID();
+			if (sid.equals("org.jboss.tools.smooks.xml.viewerInitor.xml")
+					&& tid
+							.equals("org.jboss.tools.smooks.xml.viewerInitor.xml")) {
+				List list = listType.getAbstractResourceConfig();
+				for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+					AbstractResourceConfig re = (AbstractResourceConfig) iterator
+							.next();
+					if (re instanceof ResourceConfigType) {
+						ResourceConfigType config = (ResourceConfigType) re;
+						ResourceType resource = config.getResource();
+						if (resource != null) {
+							if ("xsl".equals(resource.getType())) {
+								String cdata = resource.getCDATAValue();
+								if (cdata != null) {
+									cdata = cdata.replaceAll(":", "-");
+									XMLObjectAnalyzer fragmentBuilder = new XMLObjectAnalyzer();
+									try {
+										TagObject tag = fragmentBuilder
+												.analyzeFregment(
+														new ByteArrayInputStream(
+																cdata
+																		.getBytes()),
+														new String[] { "xsl-value-of" });
+										if (tag != null) {
+											if (viewer instanceof PropertyChangeListener) {
+												document.addNodePropetyChangeListener(
+														(PropertyChangeListener) viewer);
+												hookNodes(
+														tag,
+														(PropertyChangeListener) viewer);
+												document.addRootTag(tag);
+											}
+										}
+
+									} catch (DocumentException e1) {
+										e1.printStackTrace();
+									}
+								}
+							}
+						}
+					}
+				}
+			} else {
+				throw new InvocationTargetException(new Exception(
+						"can't load xml file"));
+			}
 		}
-		path = parseFilePath(path);
-		XMLObjectAnalyzer objectBuilder = new XMLObjectAnalyzer();
-		try {
-			FileInputStream stream = new FileInputStream(path);
-			DocumentObject document = objectBuilder.analyze(stream);
-			return document;
-		} catch (FileNotFoundException e) {
-			throw new InvocationTargetException(e);
-		} catch (DocumentException e) {
-			throw new InvocationTargetException(e);
+		return document;
+	}
+
+	public static void hookNodes(TagObject tag, PropertyChangeListener viewer) {
+		tag.setCanEdit(true);
+		tag.addNodePropetyChangeListener(viewer);
+		List<TagPropertyObject> properties = tag.getProperties();
+		for (Iterator iterator = properties.iterator(); iterator.hasNext();) {
+			TagPropertyObject tagPropertyObject = (TagPropertyObject) iterator
+					.next();
+			tagPropertyObject.setCanEdit(true);
+			tagPropertyObject.addNodePropetyChangeListener(viewer);
+		}
+		List list = tag.getChildren();
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			if (object instanceof TagObject) {
+				hookNodes((TagObject) object, viewer);
+			}
 		}
 	}
 
 	public Object buildTargetInputObjects(GraphInformations graphInfo,
-			SmooksResourceListType listType, IFile sourceFile)
+			SmooksResourceListType listType, IFile sourceFile, Object viewer)
 			throws InvocationTargetException {
-		return buildSourceInputObjects(graphInfo, listType, sourceFile);
+		return buildSourceInputObjects(graphInfo, listType, sourceFile, viewer);
 	}
 }

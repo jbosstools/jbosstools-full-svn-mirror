@@ -36,7 +36,7 @@ import org.jboss.tools.smooks.ui.gef.model.TargetModel;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.jboss.tools.smooks.utils.UIUtils;
 import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
-import org.jboss.tools.smooks.xml.model.DocumentObject;
+import org.jboss.tools.smooks.xml.model.TagList;
 import org.jboss.tools.smooks.xml.model.TagObject;
 import org.jboss.tools.smooks.xml.model.TagPropertyObject;
 
@@ -142,7 +142,7 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 
 	protected TagObject findTheRootTagObject(AbstractXMLObject obj) {
 		AbstractXMLObject parent = obj.getParent();
-		if (parent instanceof DocumentObject && obj instanceof TagObject)
+		if (parent instanceof TagList && obj instanceof TagObject)
 			return (TagObject) obj;
 		return (TagObject) findTheRootTagObject(parent);
 	}

@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.javabean.commandprocessor;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
@@ -51,12 +52,25 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 							.getReferenceEntityModel();
 					Object t = ((AbstractStructuredDataModel) m)
 							.getReferenceEntityModel();
-					if(source instanceof JavaBeanModel && t instanceof JavaBeanModel){
-						boolean sis = ((JavaBeanModel)source).isPrimitive();
-						boolean tis = ((JavaBeanModel)t).isPrimitive();
-						if( (sis && !tis) || (!sis && tis)){
+					if (source instanceof JavaBeanModel
+							&& t instanceof JavaBeanModel) {
+						JavaBeanModel sourceModel = (JavaBeanModel) source;
+						JavaBeanModel targetModel = (JavaBeanModel) t;
+						boolean sis = ((JavaBeanModel) source).isPrimitive();
+						boolean tis = ((JavaBeanModel) t).isPrimitive();
+						if ((sis && !tis) || (!sis && tis)) {
 							return false;
 						}
+						Class sourceClass = sourceModel.getBeanClass();
+						Class targetClass = targetModel.getBeanClass();
+						boolean isCompositeSource = sourceClass.isArray()
+								|| Collection.class
+										.isAssignableFrom(sourceClass);
+						boolean isCompositeTarget = targetClass.isArray()
+								|| Collection.class
+										.isAssignableFrom(targetClass);
+						if(isCompositeSource != isCompositeTarget) return false;
+
 					}
 				}
 			}
@@ -141,7 +155,8 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 
 	private CreateConnectionCommand createParentLinkCommand(Object source,
 			JavaBeanModel target, SmooksConfigurationFileGenerateContext context) {
-		if(target == null) return null;
+		if (target == null)
+			return null;
 		ITreeContentProvider sourceProvider = context.getSourceViewerProvider();
 		JavaBeanModel targetParent = target.getParent();
 		AbstractStructuredDataModel targetParentGraphModel = UIUtils

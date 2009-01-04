@@ -31,17 +31,17 @@ public class MappingResourceConfigList {
 		this.mappingModelList = mappingModelList;
 	}
 
-	public List<ResourceConfigType> getRelationgResourceConfigList() {
+	public List<ResourceConfigType> getGraphRenderResourceConfigList() {
 		return relationgResourceConfigList;
 	}
 
 	public void addResourceConfig(ResourceConfigType resourceConfig) {
-		if (!this.getRelationgResourceConfigList().contains(resourceConfig))
-			this.getRelationgResourceConfigList().add(resourceConfig);
+		if (!this.getGraphRenderResourceConfigList().contains(resourceConfig))
+			this.getGraphRenderResourceConfigList().add(resourceConfig);
 	}
 
 	public void removeResourceConfig(ResourceConfigType resourceConfig) {
-		this.getRelationgResourceConfigList().remove(resourceConfig);
+		this.getGraphRenderResourceConfigList().remove(resourceConfig);
 	}
 
 	public void setRelationgResourceConfigList(

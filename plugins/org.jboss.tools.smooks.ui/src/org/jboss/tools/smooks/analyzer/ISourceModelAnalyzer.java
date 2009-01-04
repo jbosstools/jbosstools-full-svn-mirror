@@ -22,6 +22,6 @@ import org.jboss.tools.smooks.model.SmooksResourceListType;
  */
 public interface ISourceModelAnalyzer {
 	public Object buildSourceInputObjects(GraphInformations graphInfo,
-			SmooksResourceListType listType, IFile sourceFile)
+			SmooksResourceListType listType, IFile sourceFile , Object viewer )
 			throws InvocationTargetException;
 }

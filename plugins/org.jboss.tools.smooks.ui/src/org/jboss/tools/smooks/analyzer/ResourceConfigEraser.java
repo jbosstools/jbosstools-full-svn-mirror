@@ -27,7 +27,7 @@ public class ResourceConfigEraser {
 			EditingDomain domain) {
 		if (mappingResourceConfigList != null) {
 			List<ResourceConfigType> resourceConfigList = mappingResourceConfigList
-					.getRelationgResourceConfigList();
+					.getGraphRenderResourceConfigList();
 			for (Iterator iterator = resourceConfigList.iterator(); iterator
 					.hasNext();) {
 				ResourceConfigType resourceConfigType = (ResourceConfigType) iterator

@@ -23,9 +23,9 @@ public class SourceConnectionPointEditPart extends ConnectionPointEditPart {
 	@Override
 	protected IFigure createFigure() {
 		SourceConnectionPointFigure figure = new SourceConnectionPointFigure();
-		figure.setSize(10,10);
+		figure.setSize(50,50);
 		TreeItemRelationModel model = (TreeItemRelationModel)getModel();
-		figure.setTreeItem(model.getTreeItem());
+		figure.setModel(model);//(model.getTreeItem());
 		return figure;
 	}
 

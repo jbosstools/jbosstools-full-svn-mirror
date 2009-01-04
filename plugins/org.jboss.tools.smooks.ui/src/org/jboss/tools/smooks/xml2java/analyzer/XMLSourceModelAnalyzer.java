@@ -29,9 +29,9 @@ public class XMLSourceModelAnalyzer extends AbstractXMLModelAnalyzer {
 
 	@Override
 	public Object buildSourceInputObjects(GraphInformations graphInfo,
-			SmooksResourceListType listType, IFile sourceFile)
+			SmooksResourceListType listType, IFile sourceFile , Object viewer)
 			throws InvocationTargetException {
 		UIUtils.checkSelector(listType);
-		return super.buildSourceInputObjects(graphInfo, listType, sourceFile);
+		return super.buildSourceInputObjects(graphInfo, listType, sourceFile,viewer);
 	}
 }

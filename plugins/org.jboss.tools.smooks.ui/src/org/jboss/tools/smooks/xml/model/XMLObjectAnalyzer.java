@@ -27,23 +27,31 @@ import org.dom4j.io.SAXReader;
  * @Date Jul 25, 2008
  */
 public class XMLObjectAnalyzer {
-	public DocumentObject analyze(String xmlFilePath)
+	public TagList analyze(String xmlFilePath,String[] ignoreNodeNames)
 			throws FileNotFoundException, DocumentException {
 		FileInputStream stream = new FileInputStream(xmlFilePath);
-		return this.analyze(stream);
+		return this.analyze(stream,ignoreNodeNames);
 	}
 
-	public DocumentObject analyze(InputStream stream) throws DocumentException {
+	public TagList analyze(InputStream stream , String[] ignoreNodeNames) throws DocumentException {
 		SAXReader reader = new SAXReader();
 		Document doc = reader.read(stream);
 		Element rootElement = doc.getRootElement();
-		DocumentObject dco = new DocumentObject();
+		TagList dco = new TagList();
 		dco.setName("Docuement");
-		dco.setRootTag( parseElement(rootElement, null));
+		dco.addRootTag( parseElement(rootElement, null , ignoreNodeNames));
 		return dco;
 	}
+	
+	public TagObject analyzeFregment(InputStream stream,String[] ignoreNodeNames) throws DocumentException {
+		SAXReader reader = new SAXReader();
+		Document doc = reader.read(stream);
+		Element rootElement = doc.getRootElement();
+		return parseElement(rootElement, null ,ignoreNodeNames);
+	}
 
-	protected TagObject getChildTagByName(String name, TagObject tag) {
+	protected TagObject getChildTagByName(String name, TagObject tag , String[] ignoreNodeNames) {
+		if(isIgnoreNode(name, ignoreNodeNames)) return null;
 		if (tag == null)
 			return null;
 		List list = tag.getChildren();
@@ -54,21 +62,40 @@ public class XMLObjectAnalyzer {
 		}
 		return null;
 	}
+	
+	private boolean isIgnoreNode(Element element , String[] ignoreNodeNames){
+		return isIgnoreNode(element.getName(), ignoreNodeNames);
+	}
+	
+	private boolean isIgnoreNode(TagObject element , String[] ignoreNodeNames){
+		return isIgnoreNode(element.getName(), ignoreNodeNames);
+	}
+	
+	private boolean isIgnoreNode(String name , String[] ignoreNodeNames){
+		if(ignoreNodeNames == null) return false;
+		for (int i = 0; i < ignoreNodeNames.length; i++) {
+			String ignore = ignoreNodeNames[i];
+			if(ignore.trim().equalsIgnoreCase(name)) return true;
+		}
+		return false;
+	}
 
-	protected TagObject parseElement(Element element, TagObject parentTag) {
+	protected TagObject parseElement(Element element, TagObject parentTag , String[] ignoreNodeNames) {
+		if(isIgnoreNode(element, ignoreNodeNames))
+			return null;
 		boolean canAdd = false;
-		TagObject tag = getChildTagByName(element.getName(), parentTag);
+		TagObject tag = getChildTagByName(element.getName(), parentTag , ignoreNodeNames);
 		if (tag == null) {
 			tag = new TagObject();
 			canAdd = true;
 		}
 		tag.setName(element.getName());
-		fillProperties(element, tag);
+		fillProperties(element, tag ,ignoreNodeNames);
 		tag.setNamespaceURL(element.getNamespaceURI());
 		List list = element.elements();
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			Element childElement = (Element) iterator.next();
-			TagObject t = parseElement(childElement, tag);
+			TagObject t = parseElement(childElement, tag , ignoreNodeNames);
 			if (t != null)
 				tag.addChildTag(t);
 		}
@@ -88,15 +115,19 @@ public class XMLObjectAnalyzer {
 		return false;
 	}
 
-	protected void fillProperties(Element element, TagObject tag) {
+	protected void fillProperties(Element element, TagObject tag , String[] ignoreNodeNames) {
 		Iterator it = element.attributeIterator();
 		for (Iterator iterator = it; iterator.hasNext();) {
 			Attribute attr = (Attribute) iterator.next();
-			if (hasSameNameProperty(attr.getName(), tag)) {
+			String attrName = attr.getName();
+			String value = attr.getValue();
+			if(isIgnoreNode(attrName, ignoreNodeNames)) continue;
+			if (hasSameNameProperty(attrName, tag)) {
 				continue;
 			}
 			TagPropertyObject pro = new TagPropertyObject();
 			pro.setName(attr.getName());
+			pro.setValue(value);
 			pro.setNamespaceURL(attr.getNamespaceURI());
 			tag.addProperty(pro);
 		}

@@ -16,7 +16,7 @@ import java.util.List;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
-import org.jboss.tools.smooks.xml.model.DocumentObject;
+import org.jboss.tools.smooks.xml.model.TagList;
 import org.jboss.tools.smooks.xml.model.TagObject;
 
 /**
@@ -30,8 +30,8 @@ public class XMLStructuredDataContentProvider implements ITreeContentProvider {
 	 */
 	public Object[] getChildren(Object obj) {
 		// for AbstractXMLObject (come from xml file fragment)
-		if(obj instanceof DocumentObject){
-			return new Object[]{((DocumentObject)obj).getRootTag()};
+		if(obj instanceof TagList){
+			return ((TagList)obj).getRootTagList().toArray();
 		}
 		
 		if(obj instanceof TagObject){
@@ -66,7 +66,7 @@ public class XMLStructuredDataContentProvider implements ITreeContentProvider {
 	public boolean hasChildren(Object obj) {
 		
 		// for AbstractXMLObject (come from xml file fragment)
-		if(obj instanceof DocumentObject){
+		if(obj instanceof TagList){
 			return true;
 		}
 		if(obj instanceof TagObject){
@@ -84,11 +84,8 @@ public class XMLStructuredDataContentProvider implements ITreeContentProvider {
 	 *      .lang.Object)
 	 */
 	public Object[] getElements(Object arg0) {
-		if (arg0 instanceof List) {
-			return ((List) arg0).toArray();
-		}
-		if(arg0 instanceof DocumentObject){
-			return new Object[]{((DocumentObject)arg0).getRootTag()};
+		if(arg0 instanceof TagList){
+			return ((TagList)arg0).getRootTagList().toArray();
 		}
 		return new Object[] {};
 	}

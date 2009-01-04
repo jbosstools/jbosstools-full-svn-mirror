@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -30,9 +33,16 @@ import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
  */
 public class XMLPropertiesSection extends AbstractSmooksPropertySection {
 
-	private static final String SELECTOR_NAMESPACE = "selector-namespace";
+	public static final String MAPPING_TYPE = "mappingType";
+	public static final String SELECTOR_NAMESPACE = "selector-namespace";
+	
+	public static final String MAPPING = "mapping";
+	
+	public static final String BINDING = "binding";
+	
 	private Text namespaceText;
 	private Button checkButton;
+	private CCombo connectionTypeCombo;
 
 	@Override
 	public void createControls(Composite parent,
@@ -41,7 +51,7 @@ public class XMLPropertiesSection extends AbstractSmooksPropertySection {
 		TabbedPropertySheetWidgetFactory factory = tabbedPropertySheetPage
 				.getWidgetFactory();
 		Section section = createRootSection(factory, parent);
-		section.setText("XML Properties"); //$NON-NLS-1$
+		section.setText("XML Connection Properties"); //$NON-NLS-1$
 
 		section.setLayout(new FillLayout());
 
@@ -88,6 +98,44 @@ public class XMLPropertiesSection extends AbstractSmooksPropertySection {
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		namespaceText.setLayoutData(gd);
 		namespaceText.setEditable(false);
+
+		factory.createLabel(com, "Connection Type : ");
+		connectionTypeCombo = factory.createCCombo(com);// (com, "");
+		connectionTypeCombo.add("mapping");
+		connectionTypeCombo.add("binding");
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		connectionTypeCombo.setLayoutData(gd);
+		connectionTypeCombo.setEditable(false);
+		connectionTypeCombo.addModifyListener(new ModifyListener() {
+
+			public void modifyText(ModifyEvent e) {
+				if (isLock())
+					return;
+				setConnectionType();
+			}
+
+		});
+	}
+
+	private void setConnectionType() {
+		LineConnectionModel connection = getLineConnectionModel();
+		if (connection != null) {
+			PropertyModel type = null;
+			List<PropertyModel> list = connection.getProperties();
+			for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+				PropertyModel propertyModel = (PropertyModel) iterator.next();
+				if(propertyModel.getName().equals(MAPPING_TYPE)){
+					type = propertyModel;
+					break;
+				}
+			}
+			if(type == null){
+				type = new PropertyModel();
+				type.setName(MAPPING_TYPE);
+			}
+			type.setValue(connectionTypeCombo.getText().trim());
+			fireDirty();
+		}
 	}
 
 	@Override
@@ -108,8 +156,7 @@ public class XMLPropertiesSection extends AbstractSmooksPropertySection {
 							.hasNext();) {
 						PropertyModel propertyModel = (PropertyModel) iterator
 								.next();
-						if (propertyModel.getName()
-								.equals(SELECTOR_NAMESPACE)) {
+						if (propertyModel.getName().equals(SELECTOR_NAMESPACE)) {
 							if (propertyModel.getValue().equals(namespace)) {
 								checkButton.setEnabled(true);
 								lockEventFire();
@@ -117,9 +164,15 @@ public class XMLPropertiesSection extends AbstractSmooksPropertySection {
 								unLockEventFire();
 							}
 						}
+
+						if (propertyModel.getName().equals(MAPPING_TYPE)) {
+							String type = propertyModel.getValue();
+							if (type != null)
+								connectionTypeCombo.setText(type);
+						}
 					}
 				}
-			}else{
+			} else {
 				checkButton.setEnabled(false);
 			}
 		}

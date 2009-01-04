@@ -60,7 +60,7 @@ public class JavaBeanModel implements IValidatable {
 
 	private Class parentClass = null;
 
-	private boolean isRoot = false;
+//	private boolean isRoot = false;
 
 	private boolean isRootClassModel = false;
 
@@ -68,7 +68,7 @@ public class JavaBeanModel implements IValidatable {
 	 * @return the isRootClassModel
 	 */
 	public boolean isRootClassModel() {
-		return isRootClassModel;
+		return isRootClassModel || getParent() == null;
 	}
 
 	/**
@@ -79,12 +79,12 @@ public class JavaBeanModel implements IValidatable {
 		this.isRootClassModel = isRootClassModel;
 	}
 
-	/**
-	 * @return the isRoot
-	 */
-	public boolean isRoot() {
-		return isRoot;
-	}
+//	/**
+//	 * @return the isRoot
+//	 */
+//	public boolean isRoot() {
+//		return isRoot;
+//	}
 
 	public String getBeanClassString() {
 		if(beanClassString != null && beanClassString.length() != 0){
@@ -106,9 +106,7 @@ public class JavaBeanModel implements IValidatable {
 	 * @param isRoot
 	 *            the isRoot to set
 	 */
-	public void setRoot(boolean isRoot) {
-		this.isRoot = isRoot;
-	}
+//	public void setRoot(boolean isRoot) {ois
 
 	private boolean isList = false;
 
@@ -165,7 +163,7 @@ public class JavaBeanModel implements IValidatable {
 		
 		
 		if (propertyDescriptor == null)
-			isRoot = true;
+			setRootClassModel(true);
 		this.propertyDescriptor = propertyDescriptor;
 		Class beanType = beanClass;
 		if (beanClass.isArray()) {
@@ -192,9 +190,7 @@ public class JavaBeanModel implements IValidatable {
 
 		if (beanType.isPrimitive()
 				|| JavaBeanModelFactory.isPrimitiveObject(beanType)) {
-			setTypeRef(beanType);
 			this.parentClass = parentClass;
-
 			if (!isArray() && !isList())
 				setPrimitive(true);
 			return;
@@ -223,6 +219,12 @@ public class JavaBeanModel implements IValidatable {
 	}
 
 	public boolean isPrimitive() {
+		Class beanType = getBeanClass();
+		if (beanType.isPrimitive()
+				|| JavaBeanModelFactory.isPrimitiveObject(beanType)) {
+			if (!isArray() && !isList())
+				setPrimitive(true);
+		}
 		return isPrimitive;
 	}
 
@@ -240,26 +242,30 @@ public class JavaBeanModel implements IValidatable {
 		}
 		return many;
 	}
+	
+	public Class getGenericType(){
+		return componentClass;
+	}
 
 	public void setMany(boolean many) {
 		this.many = many;
 	}
 
-	public boolean isCollection() {
-		return collection;
-	}
+//	public boolean isCollection() {
+//		return collection;
+//	}
+//
+//	public void setCollection(boolean collection) {
+//		this.collection = collection;
+//	}
 
-	public void setCollection(boolean collection) {
-		this.collection = collection;
-	}
-
-	public Class getTypeRef() {
-		return typeRef;
-	}
-
-	public void setTypeRef(Class typeRef) {
-		this.typeRef = typeRef;
-	}
+//	public Class getTypeRef() {
+//		return typeRef;
+//	}
+//
+//	public void setTypeRef(Class typeRef) {
+//		this.typeRef = typeRef;
+//	}
 
 	public String getName() {
 		return name;
@@ -282,8 +288,9 @@ public class JavaBeanModel implements IValidatable {
 		
 		if (properties == null) {
 			properties = new ArrayList();
+			if(isPrimitive()) return properties;
+			
 			Class beanType = beanClass;
-
 			if (this.componentClass != null) {
 				if (isArray() || isList()) {
 					JavaBeanModel proxyModel = new JavaBeanModel(
