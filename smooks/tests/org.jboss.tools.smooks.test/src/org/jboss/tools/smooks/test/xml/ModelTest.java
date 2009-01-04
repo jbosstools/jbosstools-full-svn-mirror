@@ -51,6 +51,6 @@ public class ModelTest extends TestCase {
 		XMLObjectAnalyzer an = new XMLObjectAnalyzer();
 		InputStream aa = ModelTest.class.getClassLoader().getResourceAsStream(
 				"org/jboss/tools/smooks/test/xml/pom.xml");
-		System.out.println(an.analyze(aa).toString());
+		System.out.println(an.analyze(aa , null).toString());
 	}
 }

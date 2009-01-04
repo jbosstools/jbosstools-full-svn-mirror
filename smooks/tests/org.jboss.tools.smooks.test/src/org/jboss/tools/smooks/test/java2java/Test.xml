@@ -5,11 +5,10 @@
 		<param name="stream.filter.type">SAX</param>
 	</resource-config>
 
-
-	<resource-config selector="srcmodel.Order">
+	<resource-config selector="org.jboss.tools.smooks.test.java2java.Order">
 		<resource>org.milyn.javabean.BeanPopulator</resource>
 		<param name="beanId">LineOrder</param>
-		<param name="beanClass">targetmodel.LineOrder</param>
+		<param name="beanClass">org.jboss.tools.smooks.test.java2java.LineOrder</param>
 		<param name="bindings">
 			<binding property="customerId"
 				selector="header customerNumber" />
@@ -21,45 +20,23 @@
 	<resource-config selector="orderItems">
 		<resource>org.milyn.javabean.BeanPopulator</resource>
 		<param name="beanId">lineItems</param>
-		<param name="beanClass">targetmodel.LineItem[]</param>
+		<param name="beanClass">org.jboss.tools.smooks.test.java2java.LineItem[]</param>
 		<param name="bindings">
 			<binding property="LineItem" selector="${LineItem}" />
 		</param>
 	</resource-config>
-	<resource-config selector="srcmodel.OrderItem">
+	<resource-config selector="org.jboss.tools.smooks.test.java2java.OrderItem">
 		<resource>org.milyn.javabean.BeanPopulator</resource>
 		<param name="beanId">LineItem</param>
-		<param name="beanClass">targetmodel.LineItem</param>
+		<param name="beanClass">org.jboss.tools.smooks.test.java2java.LineItem</param>
 		<param name="bindings">
 			<binding property="productCode"
-				selector="srcmodel.OrderItem productId" />
+				selector="org.jboss.tools.smooks.test.java2java.OrderItem productId" type="Integer" />
 			<binding property="unitPrice"
-				selector="srcmodel.OrderItem price" />
-			<binding property="unitPrice"
-				selector="srcmodel.OrderItem Ate" />
+				selector="org.jboss.tools.smooks.test.java2java.OrderItem price" type="BigInteger"/>
 			<binding property="unitQuantity"
-				selector="srcmodel.OrderItem quantity" />
+				selector="org.jboss.tools.smooks.test.java2java.OrderItem quantity" type="Double" />
 		</param>
-	</resource-config>
-
-	<resource-config selector="addtioninfo">
-		<resource>org.milyn.javabean.BeanPopulator</resource>
-		<param name="beanId">no</param>
-	</resource-config>
-
-	<resource-config selector="addtioninfo1">
-		<resource>org.milyn.javabean.BeanPopulator</resource>
-		<param name="beanId">no1</param>
-	</resource-config>
-
-	<resource-config selector="addtioninfo2">
-		<resource>org.milyn.javabean.BeanPopulator</resource>
-		<param name="beanId">no2</param>
-	</resource-config>
-
-	<resource-config selector="addtioninfo3">
-		<resource>org.milyn.javabean.BeanPopulator</resource>
-		<param name="beanId">no3</param>
 	</resource-config>
 
 	<resource-config selector="decoder:OrderDateLong">
