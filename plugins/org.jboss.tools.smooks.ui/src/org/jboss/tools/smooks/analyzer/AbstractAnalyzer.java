@@ -23,6 +23,7 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.SmooksFactory;
@@ -36,10 +37,17 @@ import org.jboss.tools.smooks.model.util.SmooksModelUtils;
  * @Date Aug 20, 2008
  */
 public abstract class AbstractAnalyzer implements IMappingAnalyzer {
+
+	protected List<AbstractResourceConfig> usedResourceConfigRecordList = new ArrayList<AbstractResourceConfig>();
+
 	protected List usedConnectionList = new ArrayList();
+
 	protected AdapterFactoryEditingDomain editingDomain;
+
 	protected ComposedAdapterFactory adapterFactory;
+
 	private HashMap<String, Object> userdResourceTypeMap;
+
 	public AbstractAnalyzer() {
 		userdResourceTypeMap = new HashMap<String, Object>();
 		adapterFactory = new ComposedAdapterFactory(
@@ -69,19 +77,19 @@ public abstract class AbstractAnalyzer implements IMappingAnalyzer {
 	protected void cleanUsedConnectionList() {
 		usedConnectionList.clear();
 	}
-	
-	
+
 	protected void setSelectorIsUsed(String selector) {
-		if(selector != null) selector = selector.trim();
+		if (selector != null)
+			selector = selector.trim();
 		userdResourceTypeMap.put(selector, new Object());
 	}
 
-
 	protected boolean isSelectorIsUsed(String selector) {
-		if(selector != null) selector = selector.trim();
+		if (selector != null)
+			selector = selector.trim();
 		return (userdResourceTypeMap.get(selector) != null);
 	}
-	
+
 	protected void addResourceConfigType(SmooksResourceListType resourceList,
 			ResourceConfigType resourceConfig) {
 		Command addResourceConfigCommand = AddCommand.create(
@@ -91,7 +99,6 @@ public abstract class AbstractAnalyzer implements IMappingAnalyzer {
 		addResourceConfigCommand.execute();
 	}
 
-	
 	protected ParamType addParamTypeToResourceConfig(
 			ResourceConfigType resourceConfigType, String name, String text) {
 		ParamType paramType = SmooksFactory.eINSTANCE.createParamType();
@@ -102,8 +109,7 @@ public abstract class AbstractAnalyzer implements IMappingAnalyzer {
 		resourceConfigType.getParam().add(paramType);
 		return paramType;
 	}
-	
-	
+
 	protected String getBeanIDFromParam(ResourceConfigType config) {
 		List list = config.getParam();
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
@@ -115,7 +121,7 @@ public abstract class AbstractAnalyzer implements IMappingAnalyzer {
 		}
 		return null;
 	}
-	
+
 	protected String getBeanIdWithRawSelectorString(String selector) {
 		selector = selector.substring(2, selector.length() - 1);
 		return selector;
@@ -124,30 +130,42 @@ public abstract class AbstractAnalyzer implements IMappingAnalyzer {
 	protected boolean isReferenceSelector(String selector) {
 		return (selector.startsWith("${") && selector.endsWith("}"));
 	}
-
 	
+	/**
+	 * Find the ResourceConfig via its child param element which one's name property value is "beanId".
+	 * If can't find that , return the ResourceConfig which one's "selector" property value same as the selector
+	 * @param selector
+	 * @param listType
+	 * @return
+	 */
 	protected ResourceConfigType findResourceConfigTypeWithSelector(
 			String selector, SmooksResourceListType listType) {
-		if(selector != null) selector = selector.trim();
+		if (selector != null)
+			selector = selector.trim();
 		if (isReferenceSelector(selector)) {
 			selector = this.getBeanIdWithRawSelectorString(selector);
 		}
-		List rl = listType.getAbstractResourceConfig();
+		List<AbstractResourceConfig> rl = listType.getAbstractResourceConfig();
 		ResourceConfigType resourceConfig = null;
-		for (Iterator iterator = rl.iterator(); iterator.hasNext();) {
-			ResourceConfigType rct = (ResourceConfigType) iterator.next();
-			if (this.isSelectorIsUsed(rct.getSelector()))
-				continue;
-			String beanId = getBeanIDFromParam(rct);
-			if (selector.equals(beanId)) {
-				resourceConfig = rct;
-				break;
-			}
-			String selector1 = rct.getSelector();
-			if(selector1 != null) selector1 = selector1.trim();
-			if(selector.equals(selector1)){
-				resourceConfig = rct;
-				break;
+		for (Iterator<AbstractResourceConfig> iterator = rl.iterator(); iterator
+				.hasNext();) {
+			AbstractResourceConfig abstractResourceConfig = iterator.next();
+			if (abstractResourceConfig instanceof ResourceConfigType) {
+				ResourceConfigType rct = (ResourceConfigType) abstractResourceConfig;
+				if (isResourceConfigUsed(rct))
+					continue;
+				String beanId = getBeanIDFromParam(rct);
+				if (selector.equals(beanId)) {
+					resourceConfig = rct;
+					break;
+				}
+				String selector1 = rct.getSelector();
+				if (selector1 != null)
+					selector1 = selector1.trim();
+				if (selector.equals(selector1)) {
+					resourceConfig = rct;
+					break;
+				}
 			}
 		}
 		return resourceConfig;
@@ -166,6 +184,14 @@ public abstract class AbstractAnalyzer implements IMappingAnalyzer {
 	 */
 	public void setEditingDomain(AdapterFactoryEditingDomain editingDomain) {
 		this.editingDomain = editingDomain;
+	}
+
+	public void setResourceConfigUsed(ResourceConfigType resourceConfig) {
+		usedResourceConfigRecordList.add(resourceConfig);
+	}
+
+	public boolean isResourceConfigUsed(ResourceConfigType resourceConfig) {
+		return usedResourceConfigRecordList.indexOf(resourceConfig) != -1;
 	}
 
 }

@@ -17,6 +17,7 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.editparts.AbstractConnectionEditPart;
 import org.eclipse.gef.editpolicies.ConnectionEndpointEditPolicy;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IEditorPart;
@@ -194,11 +195,12 @@ public class StructuredDataConnectionEditPart extends
 			}
 		}
 		if (collapse) {
-			figure.setForegroundColor(GraphicsConstants.groupBorderColor);
-			figure.setLineStyle(Graphics.LINE_DOT);
+//			figure.setForegroundColor(GraphicsConstants.groupBorderColor);
+			figure.setForegroundColor(new Color(null,224,224,224));
+//			figure.setLineStyle(Graphics.LINE_DOT);
 		} else {
 			figure.setForegroundColor(GraphicsConstants.groupBorderColor);
-			figure.setLineStyle(Graphics.LINE_SOLID);
+//			figure.setLineStyle(Graphics.LINE_SOLID);
 		}
 	}
 
