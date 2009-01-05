@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.xml2java.analyzer;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,6 +25,7 @@ import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
 import org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
+import org.jboss.tools.smooks.model.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.ResourceType;
@@ -51,6 +54,10 @@ import org.jboss.tools.smooks.xml.model.TagPropertyObject;
 public class XML2JavaAnalyzer extends AbstractAnalyzer {
 
 	private static final String SPACE_SPLITER = " ";
+
+	private List<AbstractResourceConfig> usedResourceConfigList = new ArrayList<AbstractResourceConfig>();
+
+	private HashMap<String, ResourceConfigType> createdResourceConfigMap = new HashMap<String, ResourceConfigType>();
 
 	/*
 	 * (non-Javadoc)
@@ -120,9 +127,27 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 				.getReferenceEntityModel();
 		JavaBeanModel target = (JavaBeanModel) ((AbstractStructuredDataModel) targetg)
 				.getReferenceEntityModel();
+
+		// generate the beanId value:
+		if (beanID == null) {
+			beanID = getBeanID(target);
+		} else {
+			if (beanID.startsWith("${") && beanID.endsWith("}")) {
+				beanID = beanID.substring(2, beanID.length() - 1);
+			}
+		}
+		// if the resource config was created , return
+		if (beanID != null) {
+			if(isResourceConfigCreated(beanID)){
+				return;
+			}
+		}
+
 		ResourceConfigType resourceConfigType = SmooksFactory.eINSTANCE
 				.createResourceConfigType();
 		context.getGeneratorResourceList().add(resourceConfigType);
+		// registe it 
+		registeCreatedResourceConfig(beanID, resourceConfigType);
 		// addResourceConfigType(listType, resourceConfigType);
 		// set the selector string value
 		resourceConfigType.setSelector(parentSelector);
@@ -145,14 +170,6 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		resourceConfigType.setResource(resourceType);
 
 		// create param for resourceConfig
-		if (beanID == null) {
-			beanID = getBeanID(target);
-		} else {
-			if (beanID.startsWith("${") && beanID.endsWith("}")) {
-				beanID = beanID.substring(2, beanID.length() - 1);
-			}
-		}
-
 		addParamTypeToResourceConfig(resourceConfigType,
 				SmooksModelConstants.BEAN_ID, beanID);
 
@@ -295,10 +312,13 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 				populator = populator.trim();
 			if (!JavaBeanAnalyzer.BEANPOPULATOR.equals(populator))
 				continue;
-			String selector = resourceConfig.getSelector();
-			if (isSelectorIsUsed(selector))
+			// if the ResourCeconfig element was used to render , don't analyze
+			// it again.
+			if (isResourceConfigUsed(resourceConfig)) {
 				continue;
-			AbstractXMLObject source = findChildXMLObjectByName(selector,
+			}
+			String selector = resourceConfig.getSelector();
+			AbstractXMLObject source = findXMLNodeWithSelector(selector,
 					sourceRoot);
 			if (source == null) {
 				// TODO if can't find the root , throw exception
@@ -347,7 +367,53 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		return null;
 	}
 
-	public static AbstractXMLObject findChildXMLObjectByName(String selector,
+	public static AbstractXMLObject findXMLNodeWithSelector(String selector,
+			AbstractXMLObject root, boolean fromRoot, boolean includeProperty) {
+		if (fromRoot) {
+			AbstractXMLObject parent = root.getParent();
+			if (parent == null)
+				return null;
+			while (!(parent instanceof TagList)) {
+				root = parent;
+				parent = parent.getParent();
+			}
+		}
+
+		if (selector != null)
+			selector = selector.trim();
+		if (isXMLAttributeObject(selector))
+			selector = selector.substring(1);
+
+		if (selector.equalsIgnoreCase(root.getName()))
+			return root;
+		if (root instanceof TagObject) {
+			List<AbstractXMLObject> children = ((TagObject) root).getChildren();
+			List<TagPropertyObject> properties = ((TagObject) root)
+					.getProperties();
+			for (Iterator iterator = children.iterator(); iterator.hasNext();) {
+				AbstractXMLObject child = (AbstractXMLObject) iterator.next();
+				AbstractXMLObject result = findXMLNodeWithSelector(selector,
+						child, false, includeProperty);
+				if (result != null)
+					return result;
+			}
+			if (includeProperty) {
+				for (Iterator iterator = properties.iterator(); iterator
+						.hasNext();) {
+					TagPropertyObject property = (TagPropertyObject) iterator
+							.next();
+					if (selector.equalsIgnoreCase(property.getName())) {
+						return property;
+					}
+				}
+			}
+		}
+
+		return null;
+
+	}
+
+	public static AbstractXMLObject findXMLNodeWithSelector(String selector,
 			AbstractXMLObject root) {
 		if (selector == null)
 			return null;
@@ -359,60 +425,25 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		if (nameArray != null) {
 			if (nameArray.length > 1) {
 				String firstNodeName = nameArray[0];
-				root = findChildXMLObjectByName(firstNodeName, root);
+				root = findXMLNodeWithSelector(firstNodeName, root);
+				if (root == null) {
+					root = findXMLNodeWithSelector(firstNodeName, root, true,
+							false);
+				}
 				if (root == null)
 					return null;
 				for (int i = 1; i < nameArray.length; i++) {
 					String name = nameArray[i];
-					if (root instanceof TagObject) {
-						List<AbstractXMLObject> childrenTags = root
-								.getChildren();
-						for (Iterator iterator = childrenTags.iterator(); iterator
-								.hasNext();) {
-							AbstractXMLObject abstractXMLObject = (AbstractXMLObject) iterator
-									.next();
-							if (abstractXMLObject.getName().equalsIgnoreCase(
-									name)) {
-								root = abstractXMLObject;
-								break;
-							}
-						}
-					}
+					root = findXMLNodeWithSelector(name, root, false, false);
 				}
 				return root;
 			}
 		}
-		if (selector.equalsIgnoreCase(root.getName())) {
-			return root;
-		}
-		if (root instanceof TagObject) {
-			List properties = ((TagObject) root).getProperties();
-			for (Iterator iterator = properties.iterator(); iterator.hasNext();) {
-				TagPropertyObject pro = (TagPropertyObject) iterator.next();
-				if (selector.equals(pro.getName()))
-					return pro;
-			}
-			List<AbstractXMLObject> tags = ((TagObject) root).getChildren();
-			for (Iterator iterator = tags.iterator(); iterator.hasNext();) {
-				AbstractXMLObject tagChild = (AbstractXMLObject) iterator
-						.next();
-				AbstractXMLObject result = findChildXMLObjectByName(selector,
-						tagChild);
-				if (result != null)
-					return result;
-			}
-		}
-		return null;
-
+		return findXMLNodeWithSelector(selector, root, false, false);
 	}
 
-	protected void createMappingResourceConfigList(
-			MappingResourceConfigList configList, SmooksResourceListType list,
-			ResourceConfigType config, AbstractXMLObject sourceRoot,
-			JavaBeanModel targetJavaBean) {
-
-		MappingModel mapping = new MappingModel(sourceRoot, targetJavaBean);
-		configList.getMappingModelList().add(mapping);
+	protected void checkNamespaceProperty(MappingModel mapping,
+			ResourceConfigType config) {
 		String namespace = config.getSelectorNamespace();
 		if (namespace != null) {
 			PropertyModel np = new PropertyModel();
@@ -420,59 +451,87 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			np.setValue(namespace);
 			mapping.getProperties().add(np);
 		}
+	}
 
-		configList.addResourceConfig(config);
+	protected void createMappingResourceConfigList(
+			MappingResourceConfigList configList, SmooksResourceListType list,
+			ResourceConfigType processingConfig, AbstractXMLObject sourceRoot,
+			JavaBeanModel targetJavaBean) {
 
-		List<ParamType> paramList = config.getParam();
-		ParamType bindingParam = null;
-		for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
-			ParamType paramType = (ParamType) iterator.next();
-			String name = paramType.getName();
-			if (SmooksModelConstants.BINDINGS.equals(name)) {
-				bindingParam = paramType;
-				break;
-			}
+		MappingModel mapping = new MappingModel(sourceRoot, targetJavaBean);
+		configList.getMappingModelList().add(mapping);
+		checkNamespaceProperty(mapping, processingConfig);
+
+		// this ResourceConfig was used to render , so record it in the
+		// RelatingResourceConfig of MappingResourceConfigList
+		// to make it dosen't to show in the ConfigurationPage.
+		configList.addResourceConfig(processingConfig);
+
+		// Load the bindings of parameter element:
+		List<Object> bindings = SmooksModelUtils
+				.getBindingListFromResourceConfigType(processingConfig);
+		// If the resourceConfig was be used , don't to generate binding for it and return.
+		if(isResourceConfigUsed(processingConfig)){
+			return;
+		}else{
+			// when starting to process the ResourceConfig , mark it be used
+			setResourceConfigUsed(processingConfig);
 		}
+		// If the bindings isn't NULL to visit the "property" and "selector" of
+		// binding to render the graphical
+		if (bindings != null ) {
+			for (Iterator<Object> iterator = bindings.iterator(); iterator
+					.hasNext();) {
+				Object anyType = iterator.next();
+				if (!(anyType instanceof AnyType))
+					continue;
+				AnyType binding = (AnyType) anyType;
+				String property = SmooksModelUtils
+						.getAttributeValueFromAnyType(binding,
+								SmooksModelUtils.ATTRIBUTE_PROPERTY);
+				String selectorStr = SmooksModelUtils
+						.getAttributeValueFromAnyType(binding,
+								SmooksModelUtils.ATTRIBUTE_SELECTOR);
 
-		if (bindingParam != null) {
-			List bindings = (List) bindingParam.getMixed().get(
-					SmooksModelUtils.ELEMENT_BINDING, true);
-			if (bindings != null) {
-				for (Iterator iterator = bindings.iterator(); iterator
-						.hasNext();) {
-					AnyType binding = (AnyType) iterator.next();
-					String property = SmooksModelUtils
-							.getAttributeValueFromAnyType(binding,
-									SmooksModelUtils.ATTRIBUTE_PROPERTY);
-					String selectorStr = SmooksModelUtils
-							.getAttributeValueFromAnyType(binding,
-									SmooksModelUtils.ATTRIBUTE_SELECTOR);
-					JavaBeanModel childBean = JavaBeanAnalyzer
-							.findTheChildJavaBeanModel(property, targetJavaBean);
-					processXMLSelector(configList, config, sourceRoot,
-							childBean, list, selectorStr, binding);
-				}
+				JavaBeanModel childBean = JavaBeanAnalyzer
+						.findTheChildJavaBeanModel(property, targetJavaBean);
+				processXMLSelector(configList, processingConfig, sourceRoot,
+						childBean, list, selectorStr, binding);
 			}
 		}
 	}
 
+	/**
+	 * 
+	 * @param configList
+	 * @param resourceConfig
+	 * @param root
+	 * @param targetBean
+	 * @param listType
+	 * @param selector
+	 * @param currentBinding
+	 */
 	protected void processXMLSelector(MappingResourceConfigList configList,
 			ResourceConfigType resourceConfig, AbstractXMLObject root,
 			JavaBeanModel targetBean, SmooksResourceListType listType,
 			String selector, AnyType currentBinding) {
 		if (isReferenceSelector(selector)) {
-			ResourceConfigType resourceConfig1 = this
+			ResourceConfigType processingResourceConfig = this
 					.findResourceConfigTypeWithSelector(selector, listType);
-			if (resourceConfig1 == null) {
+			if (processingResourceConfig == null) {
 				throw new RuntimeException(
 						"Can't find some ResourceConfig element in the config file.Maybe some ResourceConfig element miss <param name = \"beanId\">"
 								+ selector + "</param>");
 			}
-			String newSelector = resourceConfig1.getSelector();
+			String newSelector = processingResourceConfig.getSelector();
 			if (newSelector == null)
 				return;
-			AbstractXMLObject newRoot = findChildXMLObjectByName(newSelector,
+			AbstractXMLObject newRoot = findXMLNodeWithSelector(newSelector,
 					root);
+			if (newRoot == null) {
+				newRoot = findXMLNodeWithSelector(newSelector, root, true,
+						false);
+			}
 			if (newRoot == null) {
 				// TODO If can't find the element , throw exception
 				// MODIFY by Dart , 2008.11.07
@@ -480,9 +539,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 						Messages
 								.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage1") + newSelector + Messages.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage2")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
-			this.setSelectorIsUsed(resourceConfig1.getSelector());
 			createMappingResourceConfigList(configList, listType,
-					resourceConfig1, newRoot, targetBean);
+					processingResourceConfig, newRoot, targetBean);
 		} else {
 
 			AbstractXMLObject source = findXMLObjectWithSelectorString(
@@ -516,45 +574,22 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		if (names == null)
 			return null;
 		int startIndex = 0;
-		String s = null;
+		String firstName = null;
 		if (names.length > 1)
-			s = names[0];
+			firstName = names[0];
 		else
-			s = selector;
-		AbstractXMLObject current = findChildXMLObjectByName(s, parent);
-		if (current == parent) {
-
-		} else {
-			while (!(parent.getParent() instanceof TagList)) {
-				parent = parent.getParent();
-			}
-			current = parent;
+			firstName = selector;
+		AbstractXMLObject current = findXMLNodeWithSelector(firstName, parent,
+				false, false);
+		if (current == null) {
+			current = findXMLNodeWithSelector(firstName, parent, true, false);
+		}
+		if (current == null) {
+			return null;
 		}
 		for (int i = startIndex; i < names.length; i++) {
 			String name = names[i].trim();
-			if (current instanceof TagObject && isXMLAttributeObject(name)) {
-				List properties = ((TagObject) current).getProperties();
-				name = name.substring(1);
-				for (Iterator iterator = properties.iterator(); iterator
-						.hasNext();) {
-					TagPropertyObject property = (TagPropertyObject) iterator
-							.next();
-					if (name.equalsIgnoreCase(property.getName())) {
-						current = property;
-						break;
-					}
-				}
-			} else {
-				List list = current.getChildren();
-				for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-					AbstractXMLObject child = (AbstractXMLObject) iterator
-							.next();
-					if (name.equalsIgnoreCase(child.getName())) {
-						current = child;
-						break;
-					}
-				}
-			}
+			current = findXMLNodeWithSelector(name, current, false, true);
 		}
 		return current;
 	}
@@ -675,4 +710,34 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		return typeCheckResults.toArray(new DesignTimeAnalyzeResult[] {});
 	}
 
+	public void setResourceConfigUsed(ResourceConfigType resourceConfig) {
+		usedResourceConfigList.add(resourceConfig);
+	}
+
+	public boolean isResourceConfigUsed(ResourceConfigType resourceConfig) {
+		return (usedResourceConfigList.indexOf(resourceConfig) != -1);
+	}
+
+	public void registeCreatedResourceConfig(String beanId,
+			ResourceConfigType resourceConfig) {
+		if(beanId == null) return;
+		beanId = beanId.trim().toLowerCase();
+		createdResourceConfigMap.put(beanId, resourceConfig);
+	}
+
+	public ResourceConfigType getCreatedResourceConfig(String beanId) {
+		if(beanId == null) return null;
+		beanId = beanId.trim().toLowerCase();
+		return createdResourceConfigMap.get(beanId);
+	}
+
+	public boolean isResourceConfigCreated(String beanId) {
+		if(beanId == null) return false;
+		beanId = beanId.trim().toLowerCase();
+		return getCreatedResourceConfig(beanId) != null;
+	}
+
+	public boolean isResourceConfigCreated(ResourceConfigType resourceConfig) {
+		return createdResourceConfigMap.containsValue(resourceConfig);
+	}
 }
