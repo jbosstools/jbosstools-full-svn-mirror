@@ -10,7 +10,12 @@
 ******************************************************************************/
 package org.jboss.tools.vpe.ui.test;
 
+import java.net.URL;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Platform;
 import org.jboss.tools.common.log.BaseUIPlugin;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -57,4 +62,15 @@ public class VPETestPlugin extends BaseUIPlugin {
 		return plugin;
 	}
 
+    public static String getPluginResourcePath() {
+		Bundle bundle = Platform.getBundle(PLUGIN_ID);
+		URL url = null;
+		try {
+			url = bundle == null ? null : FileLocator.resolve(bundle
+					.getEntry("/resources")); // $NON-NLS-1$
+		} catch (Exception e) {
+			url = bundle.getEntry("/resources"); // $NON-NLS-1$
+		}
+		return (url == null) ? null : url.getPath();
+	}
 }

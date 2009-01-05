@@ -12,6 +12,8 @@ package org.jboss.tools.vpe.ui.test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -19,6 +21,8 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.jboss.tools.tests.ImportBean;
+import org.jboss.tools.vpe.ui.test.jbide.Jbide3441;
 import org.osgi.framework.Bundle;
 
 /**
@@ -33,6 +37,7 @@ public class VpeAllTests {
 	public static final String TEST_SUITE_PARAM = "testSuite"; //$NON-NLS-1$
 	
 	public static final String METHOD_SUITE_NAME = "suite"; //$NON-NLS-1$
+	public static final String VPE_TEST_PROJECT_NAME = "vpeTest"; //$NON-NLS-1$
 
 	public static Test suite() {
 
@@ -40,6 +45,14 @@ public class VpeAllTests {
 		IExtensionRegistry extensionRepository = Platform
 				.getExtensionRegistry();
 
+		// Create test suite for vpeTest project related tests
+		final TestSuite vpeTestProjectSuite = new TestSuite(); 
+		vpeTestProjectSuite.addTestSuite(Jbide3441.class);
+		final ImportBean vpeTestProjectBean = new ImportBean();
+		vpeTestProjectBean.setImportProjectName(VPE_TEST_PROJECT_NAME);
+		vpeTestProjectBean.setImportProjectPath(VPETestPlugin.getPluginResourcePath());
+		result.addTest( new VpeTestSetup(vpeTestProjectSuite, Arrays.asList(vpeTestProjectBean)) );
+		
 		IExtensionPoint extensionPoint = extensionRepository
 				.getExtensionPoint(VPE_TEST_EXTENTION_POINT_ID);
 		IExtension[] extensions = extensionPoint.getExtensions();
