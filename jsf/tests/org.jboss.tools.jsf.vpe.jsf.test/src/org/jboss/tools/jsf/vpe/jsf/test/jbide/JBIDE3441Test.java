@@ -8,7 +8,7 @@
   * Contributor:
   *     Red Hat, Inc. - initial API and implementation
   ******************************************************************************/
-package org.jboss.tools.vpe.ui.test.jbide;
+package org.jboss.tools.jsf.vpe.jsf.test.jbide;
 
 import junit.framework.Assert;
 
@@ -19,10 +19,10 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
+import org.jboss.tools.jsf.vpe.jsf.test.JsfAllTests;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.ui.test.TestUtil;
-import org.jboss.tools.vpe.ui.test.VpeAllTests;
 import org.jboss.tools.vpe.ui.test.VpeTest;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -34,13 +34,13 @@ import org.mozilla.interfaces.nsIDOMNode;
  * @author yradtsevich
  *
  */
-public class Jbide3441  extends VpeTest {
+public class JBIDE3441Test  extends VpeTest {
 	private static final String TAGGED_DIV_ID = "tagged-div"; //$NON-NLS-1$
 	private static final String TAGGED_DIV_CONTENT = "tagged div content"; //$NON-NLS-1$
-	private static final String TEST_PAGE_NAME_1 = "JBIDE/JBIDE-3441-1.html"; //$NON-NLS-1$
-	private static final String TEST_PAGE_NAME_2 = "JBIDE/JBIDE-3441-2.html"; //$NON-NLS-1$
-	
-	public Jbide3441(String name) {
+	private static final String TEST_PAGE_NAME_1 = "JBIDE/3441/JBIDE-3441-1.html"; //$NON-NLS-1$
+	private static final String TEST_PAGE_NAME_2 = "JBIDE/3441/JBIDE-3441-2.html"; //$NON-NLS-1$
+
+	public JBIDE3441Test(String name) {
 		super(name);
 	}
 	
@@ -86,7 +86,7 @@ public class Jbide3441  extends VpeTest {
 	private VpeController openPageInVpe(final String pageName) throws CoreException,
 			PartInitException {
 		IFile elementPageFile = (IFile) TestUtil.getComponentPath(
-				pageName, VpeAllTests.VPE_TEST_PROJECT_NAME);
+				pageName, JsfAllTests.IMPORT_PROJECT_NAME);
 		IEditorInput input = new FileEditorInput(elementPageFile);
 
 		JSPMultiPageEditor editor = (JSPMultiPageEditor) PlatformUI.getWorkbench()
