@@ -115,7 +115,7 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 	}
 	// changed by estherbin
 	// http://jira.jboss.com/jira/browse/JBIDE-2010
-	return new Point(400, 270);
+	return new Point(400, 285);
     }
 
 }

@@ -83,7 +83,7 @@ public abstract class FolderReferenceComposite {
 	
 	public Control createControl(Composite parent) {
 		Group g = new Group(parent, SWT.SHADOW_ETCHED_IN);
-		GridData data = new GridData(GridData.FILL_BOTH);
+		GridData data = new GridData(GridData.FILL_HORIZONTAL);
 		GridLayout layout = new GridLayout(1, false);
 		g.setLayout(layout);
 		g.setLayoutData(data);
