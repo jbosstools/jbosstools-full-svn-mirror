@@ -6,12 +6,14 @@ package org.jboss.tools.smooks.test.java2java;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Dart
  * 
  */
 public class AbstractJavaBeanModel {
+	
 	private String stringProperty;
 	private Date dateProperty;
 	private Boolean booleanProperty;
@@ -21,6 +23,15 @@ public class AbstractJavaBeanModel {
 	private Float floatProperty;
 	private BigDecimal bigDecimalProperty;
 	private BigInteger bigIntegerProperty;
+	// ignore list
+	private List testList;
+	public List getTestList() {
+		return testList;
+	}
+	public void setTestList(List testList) {
+		this.testList = testList;
+	}
+	
 	public String getStringProperty() {
 		return stringProperty;
 	}

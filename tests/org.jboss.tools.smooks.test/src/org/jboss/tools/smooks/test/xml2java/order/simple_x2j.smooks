@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.0.xsd">
+	<resource-config selector="global-parameters">
+		<param name="stream.filter.type" />
+	</resource-config>
+	<resource-config selector="order">
+		<resource>org.milyn.javabean.BeanPopulator
+		</resource>
+		<param name="beanId">Order</param>
+		<param name="beanClass">org.jboss.tools.smooks.test.xml2java.order.Order</param>
+		<param name="bindings">
+			<binding property="header" selector="${header}" />
+			<binding property="orderItems" selector="${orderItems}" />
+		</param>
+	</resource-config>
+	<resource-config selector="header">
+		<resource>org.milyn.javabean.BeanPopulator
+		</resource>
+		<param name="beanId">header</param>
+		<param name="beanClass">org.jboss.tools.smooks.test.xml2java.order.Header
+		</param>
+		<param name="bindings">
+			<binding property="customerNumber" selector="header customer @number"
+				type="Long" />
+			<binding property="date" selector="header date" type="Date" />
+			<binding property="privatePerson" selector="header privatePerson"
+				type="Boolean" />
+		</param>
+	</resource-config>
+	<resource-config selector="order-items">
+		<resource>org.milyn.javabean.BeanPopulator
+		</resource>
+		<param name="beanId">orderItems</param>
+		<param name="beanClass">java.util.ArrayList</param>
+		<param name="bindings">
+			<binding selector="${OrderItem}" />
+		</param>
+	</resource-config>
+	<resource-config selector="order-item">
+		<resource>org.milyn.javabean.BeanPopulator
+		</resource>
+		<param name="beanId">OrderItem</param>
+		<param name="beanClass">org.jboss.tools.smooks.test.xml2java.order.OrderItem
+		</param>
+		<param name="bindings">
+			<binding property="price" selector="order-item price" type="Double" />
+			<binding property="productId" selector="order-item product"
+				type="Long" />
+			<binding property="quantity" selector="order-item quantity"
+				type="Integer" />
+		</param>
+	</resource-config>
+</smooks-resource-list>

@@ -88,6 +88,13 @@ public abstract class AbstractModelTestCase extends TestCase {
 	}
 
 	public AbstractModelTestCase() {
+	}
+	
+	
+
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
 		adapterFactory = new ComposedAdapterFactory(
 				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactory
@@ -102,7 +109,6 @@ public abstract class AbstractModelTestCase extends TestCase {
 
 		smooksResource = new SmooksResourceFactoryImpl().createResource(null);
 		graphResource = new XMLResourceFactoryImpl().createResource(null);
-
 		loadResources();
 	}
 
