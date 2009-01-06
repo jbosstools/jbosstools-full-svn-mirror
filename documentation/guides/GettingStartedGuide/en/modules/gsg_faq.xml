@@ -19,7 +19,7 @@
         <title>What should I do if Visual Page Editor does not start under Linux</title>
 
         <para>Linux users may need to do the following to get the <property>Visual Page
-            Editor</property> to work correctly on their machines.</para>
+                Editor</property> to work correctly on their machines.</para>
 
         <orderedlist>
             <listitem>
@@ -67,23 +67,25 @@
         <para>No. <property>JBoss Developer Studio</property> already comes bundled with JBoss
             Server. We bundle it together so that you don&apos;t need to download any additional
             software and can test your application in a Web browser right away.</para>
-        <para>If you want to use a different JBoss server installation, after <property>JBoss Developer Studio</property>
-            is installed open Servers View (select <emphasis><property>Window &gt; Show View
-                    &gt; Others &gt; Server &gt; Servers</property>),</emphasis> then
-            right click on this <emphasis>
+        <para>If you want to use a different JBoss server installation, after <property>JBoss
+                Developer Studio</property> is installed open Servers View (select
+                    <emphasis><property>Window &gt; Show View &gt; Others &gt; Server
+                    &gt; Servers</property>),</emphasis> then right click on this <emphasis>
                 <property>view &gt; New &gt; Server</property>
-            </emphasis> and follow the wizards steps to point to another Jboss Server installation.</para>
-        <para><property>JBoss Developer Studio</property> works with any servlet container, not just JBoss. For more
-            information on deployment, please see the Deploying Your Application section.</para>
+            </emphasis> and follow the wizards steps to point to another Jboss Server
+            installation.</para>
+        <para><property>JBoss Developer Studio</property> works with any servlet container, not just
+            JBoss. For more information on deployment, please see the Deploying Your Application
+            section.</para>
     </section>
-    
+
     <section id="question_3">
-        <title>I have an existing Seam 1.2.1 project. Can I migrate/import the
-            project to a JBDS Seam project?</title>
- 
-        <para>We highly recommend you to create Seam 1.2.1 project using the <property>JBDS</property>. In other case try
-        to do manually:</para>
-        
+        <title>I have an existing Seam 1.2.1 project. Can I migrate/import the project to a JBDS
+            Seam project?</title>
+
+        <para>We highly recommend you to create Seam 1.2.1 project using the
+                <property>JBDS</property>. In other case try to do manually:</para>
+
         <itemizedlist>
             <listitem>
                 <para>Create a Seam Web project to get the JBoss tools structure</para>
@@ -99,45 +101,43 @@
             </listitem>
             <listitem>
                 <para>Copy resources individual files to where they are in the seam web project
-                etc.</para>
+                    etc.</para>
             </listitem>
         </itemizedlist>
-        
+
     </section>
     <section id="questio_4">
-        <title>I have an existing Struts or JSF project. Can I open the project
-            in JBDS?</title>
-        
+        <title>I have an existing Struts or JSF project. Can I open the project in JBDS?</title>
+
         <para>Yes. From main menu select <emphasis>
                 <property>File &gt; Import &gt; Other &gt; JSF Project (or Struts
                     Project)</property>
-        </emphasis> and follow wizards steps.</para>
-        
+            </emphasis> and follow wizards steps.</para>
+
     </section>
-    
+
     <section id="question_5">
         <title>Can I import a .war file?</title>
 
         <para>Yes. Select <emphasis><property>File &gt; Import &gt; Web &gt; WAR
-                file</property>, </emphasis> then follow importing steps.</para>
+                    file</property>, </emphasis> then follow importing steps.</para>
     </section>
-    
+
     <section id="question_6">
-        <title>Is it possible to increase the performance of Eclipse after
-            installing your product?</title>
-        
-        <para><property>JBoss Developer Studio</property> preconfigures eclipse via the eclipse.ini file to allocate
-            extra memory, but if you for some reason need more memory then by default, you can
-            manually make adjustments in this file. For example:</para>
+        <title>Is it possible to increase the performance of Eclipse after installing your
+            product?</title>
+
+        <para><property>JBoss Developer Studio</property> preconfigures eclipse via the eclipse.ini
+            file to allocate extra memory, but if you for some reason need more memory then by
+            default, you can manually make adjustments in this file. For example:</para>
         <programlisting role="XML">
                 <![CDATA[-vmargs -Xms128m -Xmx512m -XX:MaxPermSize=128m
 ]]></programlisting>
-        </section>
+    </section>
 
-        <section id="question_7">
-            <title>How can I add my own tag library to the JBoss Tools
-                Palette?</title>
-        
+    <section id="question_7">
+        <title>How can I add my own tag library to the JBoss Tools Palette?</title>
+
         <para>See <ulink url="&jsflink;#AddingCustomJSFTagsToTheRedHatPalette7433">Adding Tag
                 Libraries</ulink> in Visual Web Tools Guide.</para>
     </section>
@@ -189,4 +189,15 @@
                 <property>Properties > Seam Settings</property>.</emphasis></para>
     </section>
 
+    <section id="question_10">
+        <title>Is a cross-platform project import possible for JBDS?</title>
+
+        <para>Yes. You can easily import created in Linux JSF, Struts or Seam project to Windows and
+            vice versa.</para>
+
+        <para>To do the transferring JSF, Struts or Seam project, go to <emphasis>
+                <property>Menu > Import > General > Existing Projects into Workspace</property>,</emphasis>
+            select the folder where your project stored and press <emphasis>
+                <property>Finish</property>.</emphasis></para>
+    </section>
 </chapter>
