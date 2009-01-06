@@ -1031,8 +1031,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			nsIDOMNode visualContainer = visualOldNode.getParentNode();
 			nsIDOMNode visualNextNode = visualOldNode.getNextSibling();
 			if (visualContainer != null) {
-				visualContainer.removeChild(visualOldNode);
 				addNode(sourceNode, visualNextNode, visualContainer);
+				// If add the new node after deleting the old, in some cases
+				// XULRunner will work in unexpected way (see JBIDE-3473)
+				// so it is necessary to remove the old child AFTER adding the new 
+				visualContainer.removeChild(visualOldNode);
 			}
 		} else {
 			// Max Areshkau Why we need update parent node when we update text
