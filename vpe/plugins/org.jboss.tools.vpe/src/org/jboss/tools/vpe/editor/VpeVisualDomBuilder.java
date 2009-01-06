@@ -254,6 +254,19 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	// temporary, will be change to prefference's variable
 	// private boolean borderVisible = true;
 
+	/**
+	 * Adds visual representation of {@code sourceNode} and its descendants
+	 * to {@code visualContainer}.
+	 * 
+	 * If {@code visualNextNode} is not {@code null}, then created
+	 * representation will be inserted before {@code visualNextNode}, 
+	 * otherwise it will be inserted at the end of {@code visualContainer}
+	 * 
+	 * @param sourceNode source node, cannot be {@code null} 
+	 * @param visualNextNode next visual node, can be {@code null}
+	 * @param visualContainer visual container, cannot be {@code null} 
+	 * @return {@code true} if and only if the visual representation is created and added successfully 
+	 */
 	private boolean addNode(Node sourceNode, nsIDOMNode visualNextNode,
 			nsIDOMNode visualContainer) {
 
@@ -395,11 +408,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 
 	/**
-	 * Generates visual node
+	 * Creates new visual node representing {@code sourceNode} and its descendants.
 	 * 
-	 * @param sourceNode
-	 * @param visualOldContainer
-	 * @return
+	 * @param sourceNode source node
+	 * @param visualOldContainer visual node, in which the caller plans to insert new visual node 
+	 * @return new visual node
 	 */
 	protected nsIDOMNode createNode(Node sourceNode,
 			nsIDOMNode visualOldContainer) {
@@ -601,6 +614,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 
+	/**
+	 * Adds visual representations of {@code sourceContainer}'s children 
+	 * and their descendants to {@code visualContainer}.
+	 * 
+	 * @param containerTemplate
+	 * @param sourceContainer
+	 * @param visualContainer
+	 */
 	protected void addChildren(VpeTemplate containerTemplate,
 			Node sourceContainer, nsIDOMNode visualContainer) {
 
@@ -609,7 +630,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		int childrenCount = 0;
 		for (int i = 0; i < len; i++) {
 			Node sourceNode = sourceNodes.item(i);
-			if ((addNode(sourceNode, null, visualContainer))) {
+			if (addNode(sourceNode, null, visualContainer)) {
 				if (Node.ELEMENT_NODE == sourceNode.getNodeType()) {
 				}
 				childrenCount++;
