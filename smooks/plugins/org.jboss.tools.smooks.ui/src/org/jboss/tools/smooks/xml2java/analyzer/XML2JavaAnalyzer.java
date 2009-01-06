@@ -240,20 +240,37 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 
 	protected String getSelectorIDViaXMLObject(AbstractXMLObject sourceModel,
 			AbstractXMLObject currentRoot, String resourceConfigSelector) {
+		boolean isChild = false;
 		String name = sourceModel.getName();
 		if (sourceModel instanceof TagPropertyObject) {
 			name = "@" + name;
 		}
 		AbstractXMLObject parent = sourceModel.getParent();
-		while (parent != null && parent.getName() != null) {
-			if (parent == currentRoot)
+		while (parent != null && parent.getName() != null && !(parent instanceof TagList)) {
+			if (parent == currentRoot){
+				isChild = true;
 				break;
+			}
 			name = parent.getName() + SPACE_SPLITER + name;
 			parent = parent.getParent();
 		}
 		if (resourceConfigSelector != null) {
 			name = resourceConfigSelector + SPACE_SPLITER + name;
 		}
+		// if the node is not the child of current root node , reload the name
+		if(!isChild){
+			name = sourceModel.getName();
+			if (sourceModel instanceof TagPropertyObject) {
+				name = "@" + name;
+			}
+			parent = sourceModel.getParent();
+			if(parent == null) return name;
+			while(!(parent instanceof TagList)){
+				name = name + SPACE_SPLITER + parent.getName();
+				parent = parent.getParent();
+			}
+		}
+		
 		return name;
 	}
 
@@ -528,6 +545,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 				return;
 			AbstractXMLObject newRoot = findXMLNodeWithSelector(newSelector,
 					root);
+			// find the node from the root
 			if (newRoot == null) {
 				newRoot = findXMLNodeWithSelector(newSelector, root, true,
 						false);
@@ -581,6 +599,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			firstName = selector;
 		AbstractXMLObject current = findXMLNodeWithSelector(firstName, parent,
 				false, false);
+		// if can't find the node , to search it from the root node
 		if (current == null) {
 			current = findXMLNodeWithSelector(firstName, parent, true, false);
 		}

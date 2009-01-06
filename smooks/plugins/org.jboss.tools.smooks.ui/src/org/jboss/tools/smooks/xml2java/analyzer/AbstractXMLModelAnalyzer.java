@@ -12,8 +12,10 @@ package org.jboss.tools.smooks.xml2java.analyzer;
 
 import java.beans.PropertyChangeListener;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.List;
@@ -46,6 +48,8 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 	public static final String FILE_PRIX = "File:/"; //$NON-NLS-1$
 
 	public static final String WORKSPACE_PRIX = "Workspace:/"; //$NON-NLS-1$
+
+	public static final String RESOURCE = "Resource:/";
 
 	private String parmaKey = ""; //$NON-NLS-1$
 
@@ -103,9 +107,15 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 		TagList document = new TagList();
 		if (path != null) {
 			path = parseFilePath(path);
-			XMLObjectAnalyzer objectBuilder = new XMLObjectAnalyzer();
 			try {
-				FileInputStream stream = new FileInputStream(path);
+				InputStream stream = null;
+				if (!new File(path).exists()) {
+					// maybe it's resource path:
+					stream = getClass().getResourceAsStream(path);
+				} else {
+					stream = new FileInputStream(path);
+				}
+				XMLObjectAnalyzer objectBuilder = new XMLObjectAnalyzer();
 				document = objectBuilder.analyze(stream, null);
 				if (viewer != null && viewer instanceof PropertyChangeListener) {
 					document
@@ -145,8 +155,8 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 														new String[] { "xsl-value-of" });
 										if (tag != null) {
 											if (viewer instanceof PropertyChangeListener) {
-												document.addNodePropetyChangeListener(
-														(PropertyChangeListener) viewer);
+												document
+														.addNodePropetyChangeListener((PropertyChangeListener) viewer);
 												hookNodes(
 														tag,
 														(PropertyChangeListener) viewer);

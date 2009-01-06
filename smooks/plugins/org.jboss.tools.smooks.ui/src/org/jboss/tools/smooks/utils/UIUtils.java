@@ -68,16 +68,16 @@ public class UIUtils {
 	}
 
 	public static AbstractXMLObject getRootTagXMLObject(AbstractXMLObject xmlObj) {
+		if(xmlObj == null) return null;
 		AbstractXMLObject parent = xmlObj.getParent();
+		if(parent == null) return null;
+		if(parent instanceof TagList) return xmlObj;
 		while (true) {
 			AbstractXMLObject p = parent.getParent();
 			if (p instanceof TagList)
 				break;
 			parent = p;
 		}
-//		if (parent instanceof TagList) {
-//			parent = ((TagList) parent).getRootTag();
-//		}
 		return parent;
 	}
 
