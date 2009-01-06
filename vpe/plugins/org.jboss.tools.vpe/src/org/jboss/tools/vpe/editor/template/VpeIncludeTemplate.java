@@ -20,6 +20,7 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
+import org.jboss.tools.vpe.editor.util.FaceletUtil;
 import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -118,7 +119,14 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 		VpeCreationData creationData = new VpeCreationData(visualNewElement);
 		if (children) {
 			VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualNewElement);
-			NodeList sourceChildren = sourceDocument.getChildNodes();
+			Element root = FaceletUtil.findComponentElement(sourceDocument.getDocumentElement());
+			NodeList sourceChildren=null;
+			//fix for JBIDE-3482
+			if(root==null) {
+				sourceChildren = sourceDocument.getChildNodes();
+			} else {
+				sourceChildren = root.getChildNodes();
+			}
 			int len = sourceChildren.getLength();
 			for (int i = 0; i < len; i++) {
 				childrenInfo.addSourceChild(sourceChildren.item(i));

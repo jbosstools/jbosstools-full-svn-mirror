@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.swt.graphics.Point;
@@ -37,13 +36,8 @@ import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.document.NodeImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
-import org.jboss.tools.common.model.XModel;
-import org.jboss.tools.common.model.XModelObject;
-import org.jboss.tools.common.model.project.IModelNature;
-import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
-import org.jboss.tools.jst.web.model.helpers.WebAppHelper;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.dnd.VpeDnD;
@@ -58,7 +52,6 @@ import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
 import org.jboss.tools.vpe.editor.template.VpeDefaultPseudoContentCreator;
-import org.jboss.tools.vpe.editor.template.VpeHtmlTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTagDescription;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
@@ -71,6 +64,7 @@ import org.jboss.tools.vpe.editor.util.FaceletUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
+import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.jboss.tools.vpe.resref.core.CSSReferenceList;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
@@ -124,8 +118,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	// TODO Max Areshkau JBIDE-1457
 	// boolean rebuildFlag = false;
 
-	/** faceletFile */
-	private boolean faceletFile = false;
 
 	private static final String ATTR_VPE = "vpe"; //$NON-NLS-1$
 	private static final String ATTR_VPE_INLINE_LINK_VALUE = "inlinelink"; //$NON-NLS-1$
@@ -184,11 +176,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		dropper = new VpeDnd();
 		dropper.setDndData(false, true);
 
-		if (isFacelet()) {
-			faceletFile = true;
-		} else {
-			faceletFile = false;
-		}
+//		if (isFacelet()) {
+//			faceletFile = true;
+//		} else {
+//			faceletFile = false;
+//		}
 
 		this.showInvisibleTags = Constants.YES_STRING
 				.equals(VpePreference.SHOW_INVISIBLE_TAGS.getValue());
@@ -213,11 +205,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 		pageContext.refreshConnector();
 		pageContext.installIncludeElements();
-		if (isFacelet()) {
-			Element root = FaceletUtil.getRootFaceletElement(sourceDocument);
-			if (root != null) {
+//		if (isFacelet()) {
+		Element root = FaceletUtil.findComponentElement(sourceDocument.getDocumentElement());
+		if (root != null) {
 				addNode(root, null, getContentArea());
-			}
 		} else {
 			addChildren(null, sourceDocument, getContentArea());
 		}
@@ -2264,39 +2255,39 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return visualEditor.getDomDocument();
 	}
 
-	/**
-	 * Check this file is facelet
-	 * 
-	 * @return this if file is facelet, otherwize false
-	 */
-	private boolean isFacelet() {
-		boolean isFacelet = false;
-
-		IEditorInput iEditorInput = pageContext.getEditPart().getEditorInput();
-		if (iEditorInput instanceof IFileEditorInput) {
-			IFileEditorInput iFileEditorInput = (IFileEditorInput) iEditorInput;
-
-			IFile iFile = iFileEditorInput.getFile();
-
-			IProject project = iFile.getProject();
-			IModelNature nature = EclipseResourceUtil.getModelNature(project);
-			if (nature != null) {
-				XModel model = nature.getModel();
-				XModelObject webXML = WebAppHelper.getWebApp(model);
-				XModelObject param = WebAppHelper.findWebAppContextParam(
-						webXML, "javax.faces.DEFAULT_SUFFIX"); //$NON-NLS-1$
-				if (param != null) {
-					String value = param.getAttributeValue("param-value"); //$NON-NLS-1$
-
-					if (value.length() != 0 && iFile.getName().endsWith(value)) {
-						isFacelet = true;
-					}
-				}
-			}
-		}
-
-		return isFacelet;
-	}
+//	/**
+//	 * Check this file is facelet
+//	 * 
+//	 * @return this if file is facelet, otherwize false
+//	 */
+//	private boolean isFacelet() {
+//		boolean isFacelet = false;
+//
+//		IEditorInput iEditorInput = pageContext.getEditPart().getEditorInput();
+//		if (iEditorInput instanceof IFileEditorInput) {
+//			IFileEditorInput iFileEditorInput = (IFileEditorInput) iEditorInput;
+//
+//			IFile iFile = iFileEditorInput.getFile();
+//
+//			IProject project = iFile.getProject();
+//			IModelNature nature = EclipseResourceUtil.getModelNature(project);
+//			if (nature != null) {
+//				XModel model = nature.getModel();
+//				XModelObject webXML = WebAppHelper.getWebApp(model);
+//				XModelObject param = WebAppHelper.findWebAppContextParam(
+//						webXML, "javax.faces.DEFAULT_SUFFIX"); //$NON-NLS-1$
+//				if (param != null) {
+//					String value = param.getAttributeValue("param-value"); //$NON-NLS-1$
+//
+//					if (value.length() != 0 && iFile.getName().endsWith(value)) {
+//						isFacelet = true;
+//					}
+//				}
+//			}
+//		}
+//
+//		return isFacelet;
+//	}
 
 	/**
 	 * @return the xulRunnerEditor
