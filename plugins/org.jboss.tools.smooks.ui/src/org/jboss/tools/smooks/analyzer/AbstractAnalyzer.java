@@ -152,8 +152,8 @@ public abstract class AbstractAnalyzer implements IMappingAnalyzer {
 			AbstractResourceConfig abstractResourceConfig = iterator.next();
 			if (abstractResourceConfig instanceof ResourceConfigType) {
 				ResourceConfigType rct = (ResourceConfigType) abstractResourceConfig;
-				if (isResourceConfigUsed(rct))
-					continue;
+//				if (isResourceConfigUsed(rct))
+//					continue;
 				String beanId = getBeanIDFromParam(rct);
 				if (selector.equals(beanId)) {
 					resourceConfig = rct;
