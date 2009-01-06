@@ -17,6 +17,7 @@ import junit.framework.TestCase;
  * @Date : Sep 25, 2008
  */
 public class FreeMarkerTest extends TestCase {
+	public void testNull(){}
 //	public void testParse() throws DocumentException, IOException {
 //		Reader reader = new InputStreamReader(FreeMarkerTest.class
 //				.getResourceAsStream("test.flt"));

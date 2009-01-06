@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ASCII"?>
+<GraphInformations xmlns="http://www.jboss.org/tools/smooks/graphicalInformation">
+  <mappingType targetTypeID="org.jboss.tools.smooks.ui.viewerInitor.javabean" sourceTypeID="org.jboss.tools.smooks.xml.viewerInitor.xml"/>
+  <params>
+    <param name="sourceDataPath" value="File://org/jboss/tools/smooks/test/xml2java/order/order-01.xml"/>
+  </params>
+</GraphInformations>
