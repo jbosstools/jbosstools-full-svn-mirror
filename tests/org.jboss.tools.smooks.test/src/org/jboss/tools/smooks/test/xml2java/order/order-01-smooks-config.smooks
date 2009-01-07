@@ -10,13 +10,13 @@
   <resource-config selector="order">
     <resource>org.milyn.javabean.BeanPopulator</resource>
     <param name="beanId">Order</param>
-    <param name="beanClass">example.order.Order</param>
+    <param name="beanClass">org.jboss.tools.smooks.test.xml2java.order.Order</param>
     <param name="bindings"><binding property="header" selector="${header}" selector-namespace="http://x"/><binding property="orderItems" selector="${orderItems}"/></param>
   </resource-config>
   <resource-config selector="header" selector-namespace="http://x">
     <resource>org.milyn.javabean.BeanPopulator</resource>
     <param name="beanId">header</param>
-    <param name="beanClass">example.order.Header</param>
+    <param name="beanClass">org.jboss.tools.smooks.test.xml2java.order.Header</param>
     <param name="bindings"><binding property="customerName" selector="header customer"/><binding property="customerNumber" selector="header customer @number" type="Long"/><binding property="date" selector="header date" type="OrderDateLong" selector-namespace="http://y"/><binding property="order" selector="${order}"/><binding property="privatePerson" selector="header privatePerson" type="Boolean" default="true"/></param>
   </resource-config>
   <resource-config selector="order">
@@ -28,7 +28,7 @@
   <resource-config selector="order-item">
     <resource>org.milyn.javabean.BeanPopulator</resource>
     <param name="beanId">OrderItem</param>
-    <param name="beanClass">example.order.OrderItem</param>
+    <param name="beanClass">org.jboss.tools.smooks.test.xml2java.order.OrderItem</param>
     <param name="bindings"><binding property="order" selector="${order}"/><binding property="price" selector="order-item price" type="Double"/><binding property="productId" selector="order-item product" type="Long"/><binding property="quantity" selector="order-item quantity" type="Integer"/></param>
   </resource-config>
   <resource-config selector="global-parameters">
