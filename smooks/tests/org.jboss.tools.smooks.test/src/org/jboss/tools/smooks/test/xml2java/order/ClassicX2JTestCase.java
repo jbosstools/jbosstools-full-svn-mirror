@@ -3,7 +3,6 @@
  */
 package org.jboss.tools.smooks.test.xml2java.order;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import org.jboss.tools.smooks.test.xml2java.AbstractXML2JavaTestCase;
 import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
 import org.jboss.tools.smooks.xml.model.TagList;
 import org.jboss.tools.smooks.xml.model.TagObject;
-import org.jboss.tools.smooks.xml.model.TagPropertyObject;
 
 /**
  * @author Dart
@@ -58,20 +56,6 @@ public class ClassicX2JTestCase extends AbstractXML2JavaTestCase {
 		checkTargetConnectionCount(mappingModelList);
 	}
 
-	protected void checkTargetConnectionCount(
-			List<MappingModel> mappingModelList) throws Exception {
-		HashMap map = new HashMap();
-		for (Iterator iterator = mappingModelList.iterator(); iterator
-				.hasNext();) {
-			MappingModel mappingModel = (MappingModel) iterator.next();
-			String exsit = (String) map.get(mappingModel.getTarget());
-			if (exsit != null)
-				throw new Exception(
-						"Don't allow multiple connection have same target object");
-			map.put(mappingModel.getTarget(), "Exist");
-		}
-	}
-
 	public void testSourceModel() {
 		TagList source = (TagList) getSource();
 		// check model value
@@ -89,55 +73,6 @@ public class ClassicX2JTestCase extends AbstractXML2JavaTestCase {
 		checkTagURL(tag, new String[] { "date" }, "http://x");
 		TagObject dateTag = findTag(tag, "date");
 		Assert.assertEquals("http://y", dateTag.getNamespaceURL());
-	}
-
-	public void checkXMLNodeModelValue(AbstractXMLObject tag) {
-		Assert.assertNotNull(tag.getName());
-		if (!(tag instanceof TagList))
-			Assert.assertNotNull(tag.getParent());
-		else
-			Assert.assertNull(tag.getParent());
-		if (tag instanceof TagObject) {
-			List<AbstractXMLObject> children = ((TagObject) tag).getChildren();
-			for (Iterator iterator = children.iterator(); iterator.hasNext();) {
-				AbstractXMLObject abstractXMLObject = (AbstractXMLObject) iterator
-						.next();
-				checkXMLNodeModelValue(abstractXMLObject);
-			}
-
-			List<TagPropertyObject> properties = ((TagObject) tag)
-					.getProperties();
-			for (Iterator iterator = properties.iterator(); iterator.hasNext();) {
-				TagPropertyObject tagPropertyObject = (TagPropertyObject) iterator
-						.next();
-				checkXMLNodeModelValue(tagPropertyObject);
-			}
-		}
-
-		if (tag instanceof TagList) {
-			List<TagObject> list = ((TagList) tag).getRootTagList();
-			for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-				TagObject tagObject = (TagObject) iterator.next();
-				checkXMLNodeModelValue(tagObject);
-			}
-		}
-
-	}
-
-	protected TagObject findTag(TagObject tag, String name) {
-		if (name.equalsIgnoreCase(tag.getName())) {
-			return tag;
-		}
-		List list = tag.getChildren();
-		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			Object object = (Object) iterator.next();
-			if (object instanceof TagObject) {
-				TagObject child = findTag((TagObject) object, name);
-				if (child != null)
-					return child;
-			}
-		}
-		return null;
 	}
 
 	protected void checkTagURL(TagObject tag, String[] ignoreTagName,
