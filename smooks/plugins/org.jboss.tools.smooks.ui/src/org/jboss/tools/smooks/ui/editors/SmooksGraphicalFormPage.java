@@ -128,6 +128,7 @@ import org.jboss.tools.smooks.model.DocumentRoot;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
+import org.jboss.tools.smooks.model.util.SmooksResourceFactoryImpl;
 import org.jboss.tools.smooks.ui.AnalyzeResult;
 import org.jboss.tools.smooks.ui.IAnalyzeListener;
 import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
@@ -557,6 +558,38 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		problemSection.setLayoutData(gd);
 		problemSection.setVisible(false);
 	}
+	
+	public void refreshAllGUI(InputStream stream){
+		sourceTreeViewerInputModel = null;
+		targetTreeViewerInputModel = null;
+		Throwable throwable = null;
+		try {
+			analyzeGraphicalModel(stream);
+		} catch (Throwable e) {
+			throwable = e;
+		}
+		if (throwable == null) {
+			this.disableMappingGUI = false;
+			if (mappingGUISection != null)
+				mappingGUISection.setEnabled(true);
+			if (initSourceTreeViewerProviders()) {
+				initSourceTreeViewer();
+				expandSourceConnectionModel();
+			}
+			if (initTargetTreeViewerProviders()) {
+				initTargetTreeViewer();
+				expandTargetConnectionModel();
+			}
+			this.redrawMappingPanel();
+			notifyAnalyzeListeners(null);
+		} else {
+			cleanMappingPanel();
+			this.disableMappingGUI = true;
+			if (mappingGUISection != null)
+				mappingGUISection.setEnabled(false);
+			this.notifyAnalyzeListeners(throwable);
+		}
+	}
 
 	public void refreshAllGUI() {
 		sourceTreeViewerInputModel = null;
@@ -697,7 +730,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 						if (needAdd)
 							this.rootModel.addChild(model);
 					}
-				}else{
+				} else {
 					((TreeItemRelationModel) model).setTreeItem(item);
 				}
 			}
@@ -808,13 +841,13 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			}
 		}
 	}
-	
-	private void deAssosiateGraphAndTransformModel(Object graphModel){
-		if(graph_trasform_data_map.containsValue(graphModel)){
+
+	private void deAssosiateGraphAndTransformModel(Object graphModel) {
+		if (graph_trasform_data_map.containsValue(graphModel)) {
 			Iterator it = graph_trasform_data_map.keySet().iterator();
-			while(it.hasNext()){
+			while (it.hasNext()) {
 				Object key = it.next();
-				if(graphModel == graph_trasform_data_map.get(key)){
+				if (graphModel == graph_trasform_data_map.get(key)) {
 					graph_trasform_data_map.put(key, null);
 					graph_trasform_data_map.remove(key);
 					break;
@@ -867,7 +900,18 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	 */
 	@Override
 	public boolean isDirty() {
-		return commandStackChanged || super.isDirty();
+		return commandStackChanged;
+	}
+
+	public InputStream generateSmooksContents(IProgressMonitor monitor)
+			throws SmooksAnalyzerException, IOException, CoreException {
+		SmooksFileBuilder builder = this.getSmooksFileBuilder();
+		builder.setSmooksResource(this.smooksResource);
+		SmooksConfigurationFileGenerateContext context = this
+				.getSmooksConfigurationFileGenerateContext();
+		Exception exp = null;
+		this.cleanMappingResourceConfig();
+		return builder.generateSmooksFile(context, monitor);
 	}
 
 	/*
@@ -892,16 +936,10 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			if (cleanError)
 				return;
 		}
-		SmooksFileBuilder builder = this.getSmooksFileBuilder();
-		builder.setSmooksResource(this.smooksResource);
-		SmooksConfigurationFileGenerateContext context = this
-				.getSmooksConfigurationFileGenerateContext();
-		this.initSmooksConfigurationFileGenerateContext(context);
 		Exception exp = null;
 		try {
 			// generate smooks configuration file
-			this.cleanMappingResourceConfig();
-			InputStream stream = builder.generateSmooksFile(context, monitor);
+			InputStream stream = generateSmooksContents(monitor);
 			IFile file = ((IFileEditorInput) this.getEditorInput()).getFile();
 			if (file.exists()) {
 				file.setContents(stream, IResource.FORCE, monitor);
@@ -909,7 +947,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 			// save graphical informations
 			if (this.graphicalInformationSaver != null) {
-				graphicalInformationSaver.doSave(monitor, context);
+				graphicalInformationSaver.doSave(monitor,
+						getSmooksConfigurationFileGenerateContext());
 			}
 		} catch (CoreException e) {
 			exp = e;
@@ -1174,6 +1213,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			// ignore
 		}
 		IFile file = ((IFileEditorInput) input).getFile();
+		// if the type id is null, open a dialog to select
 		if (sourceDataTypeID == null || targetDataTypeID == null) {
 			TypeIDSelectionWizard wizard = new TypeIDSelectionWizard();
 			wizard.setSourceDataTypeID(sourceDataTypeID);
@@ -1203,6 +1243,19 @@ public class SmooksGraphicalFormPage extends FormPage implements
 					.getContents().get(0)).getSmooksResourceList();
 			this.analyzeGraphicalModel(listType, graph, file);
 		}
+	}
+
+	public void analyzeGraphicalModel(InputStream stream) throws IOException, CoreException, InvocationTargetException {
+		Resource resource = new SmooksResourceFactoryImpl()
+				.createResource(null);
+		resource.load(stream, Collections.EMPTY_MAP);
+		SmooksResourceListType listType = ((DocumentRoot) resource
+				.getContents().get(0)).getSmooksResourceList();
+		GraphInformations graph = null;
+		if (graphicalInformationSaver != null)
+			graph = graphicalInformationSaver.doLoad();
+		this.analyzeGraphicalModel(listType, graph,
+				((IFileEditorInput) getEditorInput()).getFile());
 	}
 
 	private boolean requiredSelectDataSource(String typeID) {
@@ -1552,10 +1605,11 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				modelClass = SourceModel.class;
 			}
 			createGraphModels(tree.getItems(), modelClass);
-//			if (tree.getData(TreeItemRelationModel.PRO_TREE_REPAINT) != null) {
-//				// System.out.println("Block a event fire !!");
-//				return;
-//			}
+			// if (tree.getData(TreeItemRelationModel.PRO_TREE_REPAINT) != null)
+			// {
+			// // System.out.println("Block a event fire !!");
+			// return;
+			// }
 			rootModel.firePropertyChange(
 					AbstractStructuredDataModel.P_REFRESH_PANEL, null,
 					new Object());
@@ -1614,8 +1668,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	public SmooksConfigurationFileGenerateContext getSmooksConfigurationFileGenerateContext() {
 		if (smooksConfigurationFileGenerateContext == null) {
 			smooksConfigurationFileGenerateContext = createContext();
-			initSmooksConfigurationFileGenerateContext(smooksConfigurationFileGenerateContext);
 		}
+		initSmooksConfigurationFileGenerateContext(smooksConfigurationFileGenerateContext);
 		return smooksConfigurationFileGenerateContext;
 	}
 
