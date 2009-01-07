@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
@@ -54,6 +55,9 @@ public class SmooksFileBuilder {
 			SmooksConfigurationFileGenerateContext context,
 			IProgressMonitor monitor) throws SmooksAnalyzerException,
 			IOException, CoreException {
+		if(monitor == null){
+			monitor = new NullProgressMonitor();
+		}
 		AnalyzerFactory factory = AnalyzerFactory.getInstance();
 		IMappingAnalyzer analyzer = factory.getMappingAnalyzer(context
 				.getSourceDataTypeID(), context.getTargetDataTypeID());

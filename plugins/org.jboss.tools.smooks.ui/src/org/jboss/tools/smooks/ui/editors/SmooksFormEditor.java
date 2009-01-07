@@ -10,11 +10,19 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.editors;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -38,7 +46,6 @@ import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelBuilder;
 import org.jboss.tools.smooks.analyzer.NormalSmooksModelPackage;
 import org.jboss.tools.smooks.model.DocumentRoot;
-import org.jboss.tools.smooks.model.ResourceType;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.provider.SmooksItemProviderAdapterFactory;
@@ -53,7 +60,7 @@ import org.jboss.tools.smooks.utils.UIUtils;
  * @Date Jul 28, 2008
  */
 public class SmooksFormEditor extends FormEditor implements
-		ITabbedPropertySheetPageContributor , IAnalyzeListener{
+		ITabbedPropertySheetPageContributor, IAnalyzeListener {
 
 	private SmooksTextEdtor xmlTextEditor;
 
@@ -324,9 +331,61 @@ public class SmooksFormEditor extends FormEditor implements
 	}
 
 	public void endAnalyze(AnalyzeResult result) {
-		if(result.getError() != null){
+		if (result.getError() != null) {
 			this.setActivePage(2);
 		}
 	}
 
+	private boolean prettyXMLOutput = true;
+
+	@Override
+	protected void pageChange(int newPageIndex) {
+		int oldPageIndex = this.getCurrentPage();
+		if (oldPageIndex == -1 || oldPageIndex == newPageIndex) {
+			super.pageChange(newPageIndex);
+			return;
+		}
+		
+		if(!isDirty()){
+			super.pageChange(newPageIndex);
+			return;
+		}
+		
+		ByteArrayOutputStream tempStream = null;
+		XMLWriter writer = null;
+		try {
+			if (oldPageIndex == 0 && newPageIndex == 2) {
+				InputStream stream = graphicalPage.generateSmooksContents(null);
+				SAXReader reader = new SAXReader();
+				Document rootElement = reader.read(stream);
+				if (prettyXMLOutput) {
+					tempStream = new ByteArrayOutputStream();
+					OutputFormat format = OutputFormat.createPrettyPrint();
+					writer = new XMLWriter(tempStream, format);
+					writer.write(rootElement);
+				}
+				String text = null;
+				if (prettyXMLOutput) {
+					text = new String(tempStream.toByteArray());
+				} else {
+					text = rootElement.asXML();
+				}
+				xmlTextEditor.getTextViewer().getDocument().set(text);
+			}
+			if (newPageIndex == 0 && oldPageIndex == 2) {
+				String contents = xmlTextEditor.getTextViewer().getDocument().get();
+				graphicalPage.refreshAllGUI(new ByteArrayInputStream(contents.getBytes()));
+			}
+		} catch (Exception e) {
+
+		}finally{
+			try{
+				if(writer != null) writer.close();
+				if(tempStream != null) tempStream.close();
+			}catch(Exception e){
+				
+			}
+		}
+		super.pageChange(newPageIndex);
+	}
 }
