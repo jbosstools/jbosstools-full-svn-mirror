@@ -10,9 +10,14 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.util;
 
+import java.lang.ref.Reference;
+import java.lang.ref.SoftReference;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.mozilla.interfaces.nsIAccessibilityService;
+import org.mozilla.interfaces.nsIAccessible;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
@@ -22,6 +27,7 @@ import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsIDOMRange;
 import org.mozilla.interfaces.nsISelection;
+import org.mozilla.xpcom.Mozilla;
 import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -29,6 +35,8 @@ import org.w3c.dom.Node;
 
 
 public class VisualDomUtil {
+	private static final String ACCESSIBILITY_SERVICE_CONTRACT_ID = "@mozilla.org/accessibilityService;1";
+	private static Reference<nsIAccessibilityService> accessibilityServiceCache = null;
 
 	static public nsIDOMNode getAncestorNode(nsIDOMNode visualNode, String tagName){
 		if (tagName == null) return null;
@@ -206,5 +214,53 @@ public class VisualDomUtil {
 	            visualElement.setAttribute(attributeName, attributeValue);
 	    }
 	
+	}
+	
+	/**
+	 * Returns instance of {@link nsIAccessibilityService}.
+	 * 
+	 * @author yradtsevich
+	 */
+	public static nsIAccessibilityService getAccessibilityService() {
+		nsIAccessibilityService accessibilityService = null;
+		if (accessibilityServiceCache != null) {
+			// get accessibilityService from cache
+			accessibilityService = accessibilityServiceCache.get();
+		}
+		if (accessibilityService == null) {
+			accessibilityService = (nsIAccessibilityService) Mozilla.getInstance()
+				.getServiceManager()
+				.getServiceByContractID(ACCESSIBILITY_SERVICE_CONTRACT_ID,
+	        		nsIAccessibilityService.NS_IACCESSIBILITYSERVICE_IID);
+			
+			// cache accessibilityService
+			accessibilityServiceCache = new SoftReference<nsIAccessibilityService>(accessibilityService);
+		}
+		return accessibilityService;
+	}
+	
+	/**
+	 * Returns on screen bounds of the {@code node}
+	 * 
+	 * @param node cannot be {@code null}
+	 * @return bounds of the {@code node} or {@code null} if it is not accessible
+	 * 
+	 * @author yradtsevich
+	 */
+	public static Rectangle getBounds(nsIDOMNode node) {
+		Rectangle bounds = null;
+		
+		nsIAccessible accessible = getAccessibilityService().getAccessibleFor(node);
+		if (accessible != null) {
+			int[] xArray      = new int[1]; // Left hand corner of the node
+			int[] yArray      = new int[1]; // Top corner of the node
+			int[] widthArray  = new int[1]; // Width of the node
+			int[] heightArray = new int[1]; // Height of the node
+			
+			accessible.getBounds(xArray, yArray, widthArray, heightArray);
+			bounds = new Rectangle(xArray[0], yArray[0], widthArray[0], heightArray[0]);
+		}
+		
+		return bounds;
 	}
 }
