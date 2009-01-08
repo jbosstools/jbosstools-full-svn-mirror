@@ -15,16 +15,16 @@ import java.util.Properties;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.jboss.tools.common.model.ui.wizards.query.AbstractQueryWizardView;
+import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.AbsoluteFolderReferenceComposite;
 import org.jboss.tools.vpe.resref.core.CssReferencesComposite;
 import org.jboss.tools.vpe.resref.core.ElVariablesComposite;
@@ -59,26 +59,26 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
     }
 
     public Control createControl(Composite parent) {
+    
+	final TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
 
-	TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
-	tabFolder.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 	TabItem foldersTab = new TabItem(tabFolder, SWT.NONE);
 	TabItem cssTab = new TabItem(tabFolder, SWT.NONE);
 	TabItem tldTab = new TabItem(tabFolder, SWT.NONE);
 	TabItem elTab = new TabItem(tabFolder, SWT.NONE);
 	
-	Group groupControl = new Group(tabFolder, SWT.NONE);
-	groupControl.setLayout(new GridLayout(1, false));
-	groupControl.setText(Messages.ACTUAL_RUN_TIME_FOLDERS);
-	Control absControl = absFolder.createControl(groupControl);
-	Control relControl = relFolder.createControl(groupControl);
+	Composite compositeControl = new Composite(tabFolder, SWT.NONE);
+	compositeControl.setLayout(new GridLayout(1, false));
+	Control absControl = absFolder.createControl(compositeControl);
+	Control relControl = relFolder.createControl(compositeControl);
+	
 	Control cssControl = css.createControl(tabFolder);
 	Control tldControl = tld.createControl(tabFolder);
 	Control elControl = el.createControl(tabFolder);
 
 	foldersTab.setText(Messages.ACTUAL_RUN_TIME_FOLDERS);
 	foldersTab.setToolTipText(Messages.ACTUAL_RUN_TIME_FOLDERS);
-	foldersTab.setControl(groupControl);
+	foldersTab.setControl(compositeControl);
 
 	cssTab.setText(Messages.INCLUDED_CSS_FILES);
 	cssTab.setToolTipText(Messages.INCLUDED_CSS_FILES);
@@ -91,7 +91,23 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 	elTab.setText(Messages.SUBSTITUTED_EL_EXPRESSIONS);
 	elTab.setToolTipText(Messages.SUBSTITUTED_EL_EXPRESSIONS);
 	elTab.setControl(elControl);
+	
+	tabFolder.addSelectionListener(new SelectionListener(){
+		public void widgetDefaultSelected(SelectionEvent e) {}
 
+		public void widgetSelected(SelectionEvent e) {
+			String selectedTabText = tabFolder.getSelection()[0].getText();
+			if(Messages.ACTUAL_RUN_TIME_FOLDERS.equals(selectedTabText)) {
+				setMessage(VpeUIMessages.ACTUAL_RUN_TIME_FOLDERS_ABOUT);
+			}else if(Messages.INCLUDED_CSS_FILES.equals(selectedTabText)){
+				setMessage(VpeUIMessages.INCLUDED_CSS_FILES_ABOUT);
+			}else if(Messages.INCLUDED_TAG_LIBS.equals(selectedTabText)){
+				setMessage(VpeUIMessages.INCLUDED_TAG_LIBS_ABOUT);
+			}else if(Messages.SUBSTITUTED_EL_EXPRESSIONS.equals(selectedTabText)){
+				setMessage(VpeUIMessages.SUBSTITUTED_EL_EXPRESSIONS_ABOUT);
+			}
+		}});
+	setMessage(VpeUIMessages.PAGE_DESIGN_OPTIONS_ABOUT);
 	return tabFolder;
     }
 

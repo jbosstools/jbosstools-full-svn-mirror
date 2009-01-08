@@ -11,8 +11,6 @@
 
 package org.jboss.tools.vpe.resref.core;
 
-import java.util.ResourceBundle;
-
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -25,8 +23,6 @@ public final class Messages {
     /** The Constant BUNDLE_NAME. */
     private static final String BUNDLE_NAME = "org.jboss.tools.vpe.resref.core.messages";//$NON-NLS-1$
     
-    /** The f resource bundle. */
-    private static ResourceBundle fResourceBundle;
     static {
         // load message values from bundle file
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);       
