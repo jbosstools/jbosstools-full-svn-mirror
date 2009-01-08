@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.dom4j.Document;
-import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
@@ -80,7 +79,7 @@ public class SmooksFormEditor extends FormEditor implements
 	// private SmooksTextEdtor textEdtior = null;
 
 	private boolean forceDirty = false;
-//	private boolean onlyShowTextEditor = false;
+	// private boolean onlyShowTextEditor = false;
 	private Throwable showTextEditorReason = null;
 
 	private boolean allowdActiveErrorSourcePage = true;
@@ -254,21 +253,23 @@ public class SmooksFormEditor extends FormEditor implements
 
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		int index = this.getCurrentPage();
-		if (index == 2) {
-			this.xmlTextEditor.doSave(monitor);
+		IEditorPart editor = this.getActiveEditor();
+		if (editor == null) {
+			this.graphicalPage.doSave(monitor);
 			fireEditorDirty(false);
 		} else {
-
-			this.graphicalPage.doSave(monitor);
+			this.xmlTextEditor.doSave(monitor);
 			fireEditorDirty(false);
 		}
 	}
 
 	public void fireEditorDirty(boolean dirty) {
 		this.forceDirty = dirty;
-		if (graphicalPage != null) {
+		if (graphicalPage != null && !dirty) {
 			graphicalPage.setDirty(false);
+		}
+		if (xmlTextEditor != null && !dirty) {
+			xmlTextEditor.setDirty(false);
 		}
 		this.firePropertyChange(PROP_DIRTY);
 	}
@@ -333,7 +334,7 @@ public class SmooksFormEditor extends FormEditor implements
 	}
 
 	public void endAnalyze(AnalyzeResult result) {
-		if (result.getError() != null && allowdActiveErrorSourcePage ) {
+		if (result.getError() != null && allowdActiveErrorSourcePage) {
 			this.setActivePage(2);
 		}
 	}
@@ -356,7 +357,7 @@ public class SmooksFormEditor extends FormEditor implements
 		ByteArrayOutputStream tempStream = null;
 		XMLWriter writer = null;
 		try {
-			if ((oldPageIndex == 0 || oldPageIndex == 1)&& newPageIndex == 2) {
+			if ((oldPageIndex == 0 || oldPageIndex == 1) && newPageIndex == 2) {
 				if (xmlTextEditor.getErrorMessage() == null) {
 					InputStream stream = graphicalPage
 							.generateSmooksContents(null);
