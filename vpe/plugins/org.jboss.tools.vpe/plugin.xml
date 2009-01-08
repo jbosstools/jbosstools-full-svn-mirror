@@ -78,4 +78,39 @@
         point="org.jboss.tools.jst.jsp.visulaEditorImplementations"  id="org.jboss.tools.vpe.editor.VpeEditorPartFactory">
         	<visualEditorImplementation name="XulRunner Visual Editor" class="org.jboss.tools.vpe.editor.VpeEditorPartFactory"/>
   </extension>
+   <extension
+        point="org.eclipse.ui.menus">
+        <menuContribution
+              locationURI="popup:org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor.source.EditorContext?after=paste">
+             	<separator
+                    name="org.jboss.tools.insertGroup" visible="true" >
+             	</separator>
+              <dynamic
+                    class="org.jboss.tools.vpe.editor.menu.InsertContributionItem"
+                    id="org.jboss.tools.vpe.editor.menu.InsertContributionItem">
+              </dynamic>
+        </menuContribution>
+  </extension>
+  <extension
+        point="org.eclipse.ui.menus">
+        <menuContribution
+              locationURI="popup:org.jboss.tools.jst.jsp.jspeditor.HTMLTextEditor.source.EditorContext?after=paste">
+             	<separator
+                    name="org.jboss.tools.insertGroup" visible="true" >
+             	</separator>
+              <dynamic
+                    class="org.jboss.tools.vpe.editor.menu.InsertContributionItem"
+                    id="org.jboss.tools.vpe.editor.menu.InsertContributionItem">
+              </dynamic>
+        </menuContribution>
+  </extension>
+  <extension
+         point="org.eclipse.ui.commands">
+  <command 
+        id="org.jboss.tools.vpe.insert"
+        name="org.jboss.tools.vpe.insert"
+       defaultHandler="org.jboss.tools.vpe.editor.menu.InsertAction" 
+       >
+  </command>
+  </extension>
 </plugin>

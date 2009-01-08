@@ -36,6 +36,7 @@ public class InsertAction extends Action {
 
 	private VpePageContext pageContext = null;
 	private StructuredTextEditor sourceEditor = null;
+	private boolean replace= false; 
 
 	/**
 	 * Constructor.
@@ -53,6 +54,25 @@ public class InsertAction extends Action {
 		this.region = region;
 		this.pageContext = pageContext;
 		this.sourceEditor = sourceEditor;
+	}
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param title the name of the action
+	 * @param region the Point object
+	 * @param item XModelObject object
+	 * @param pageContext the VpePageContext element
+	 * @param sourceEditor the StructuredTextEditor element
+	 */
+	public InsertAction(String title, Point region, XModelObject item, VpePageContext pageContext,
+			StructuredTextEditor sourceEditor, boolean replace) {
+		super(title);
+		this.item = item;
+		this.region = region;
+		this.pageContext = pageContext;
+		this.sourceEditor = sourceEditor;
+		this.replace = replace;
 	}
 
 	/**
@@ -76,8 +96,15 @@ public class InsertAction extends Action {
 		 */
 		String startText = Constants.EMPTY + item.getAttributeValue("start text"); //$NON-NLS-1$
 		String endText = Constants.EMPTY + item.getAttributeValue("end text"); //$NON-NLS-1$
+		
+		if (this.replace) {
+			getSourceEditor().getTextViewer().getTextWidget().replaceTextRange(
+					region.x, region.y, ""); //$NON-NLS-1$
+			region.y = 0;
+		}
+
 		if (region != null) {
-			//set source selection
+			// set source selection
 			SelectionUtil.setSourceSelection(pageContext, region.x, region.y);
 		}
 

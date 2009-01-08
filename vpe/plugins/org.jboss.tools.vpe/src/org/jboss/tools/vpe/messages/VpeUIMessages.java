@@ -87,4 +87,10 @@ public class VpeUIMessages extends NLS {
 	public static String RESTORE_PREVIOUS_LOCATION;
 	public static String BACKGROUND_COLOR_TIP;
 	public static String SETUP_TEMPLATE_FOR_MENU;
+	public static String INSERT_AROUND;
+	public static String INSERT_BEFORE;
+	public static String INSERT_AFTER;
+	public static String REPLACE_WITH;
+	public static String FROM_PALETTE;
+	
 }
