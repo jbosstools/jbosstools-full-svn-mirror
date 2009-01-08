@@ -35,7 +35,7 @@ public class VpeStyleCreator extends VpeAbstractCreator {
 		String text = null;
 		if (textNode != null) {
 			text = textNode.getNodeValue();
-			text = VpeStyleUtil.addFullPathIntoURLValue(text, pageContext.getEditPart().getEditorInput());
+			text = VpeStyleUtil.addFullPathIntoURLValue(text, pageContext);
 		}
 
 		nsIDOMNode newStyle = pageContext.getVisualBuilder()

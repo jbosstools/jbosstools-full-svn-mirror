@@ -57,8 +57,8 @@ public class HtmlBodyTemplate extends VpeAbstractTemplate {
 			} else {
 				// all full path for 'url'
 				if (VpeStyleUtil.ATTRIBUTE_STYLE.equalsIgnoreCase(name))
-					value = VpeStyleUtil.addFullPathIntoURLValue(value, pageContext
-							.getEditPart().getEditorInput());
+					value = VpeStyleUtil.addFullPathIntoURLValue(value,
+							pageContext);
 				if (VpeStyleUtil.PARAMETR_BACKGROND.equalsIgnoreCase(name))
 					value = VpeStyleUtil.addFullPathIntoBackgroundValue(value,
 							pageContext.getEditPart().getEditorInput());

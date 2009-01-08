@@ -589,7 +589,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 		if (styleValue != null) {
 			styleValue = VpeStyleUtil.addFullPathIntoURLValue(styleValue,
-					pageContext.getEditPart().getEditorInput());
+					pageContext);
 			element.setAttribute(HTML.TAG_STYLE, styleValue);
 		}
 		if (backgroundValue != null) {

@@ -12,6 +12,8 @@ package org.jboss.tools.vpe.editor.util;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Map;
 
@@ -337,7 +339,7 @@ public class VpeStyleUtil {
      * @return format style string
      */
     public static String addFullPathIntoURLValue(String value,
-			IEditorInput input) {
+			VpePageContext pageContext) {
 
 		String urls[] = value.split(ATTR_URL);
 
@@ -363,22 +365,24 @@ public class VpeStyleUtil {
 
 			String filePath = urls[i].substring(startPathIndex + 1,
 					endPathIndex);
-			if (filePath.indexOf(FILE_PROTOCOL) != -1) {
-				continue;
-			}
-
-			if (!new File(filePath).isAbsolute()) {
-				filePath = getFilePath(input, filePath);
-			}
-
-			filePath = FILE_PROTOCOL + SLASH + SLASH + filePath.replace('\\', '/');
-			URL url = null;
-			try {
-				url = new URL(filePath);
-			} catch (MalformedURLException e) {
-				continue;
-			}
-			filePath = url.toString();
+//			if (filePath.indexOf(FILE_PROTOCOL) != -1) {
+//				continue;
+//			}
+//
+//			if (!new File(filePath).isAbsolute()) {
+//				filePath = getFilePath(input, filePath);
+//			}
+//
+//			filePath = FILE_PROTOCOL + SLASH + SLASH + filePath.replace('\\', '/');
+//			URL url = null;
+//			try {
+//				url = new URL(filePath);
+//			} catch (MalformedURLException e) {
+//				continue;
+//			}
+//			filePath = url.toString();
+			
+			filePath = getAbsoluteWorkspacePath(filePath, pageContext);
 
 			String firstPartValue = urls[i].substring(0, startPathIndex + 1);
 			String secondPartValue = urls[i].substring(endPathIndex, urls[i]
@@ -743,4 +747,43 @@ public class VpeStyleUtil {
 
     	return size;
     }
+    
+    /**
+     * Gets the absolute workspace path.
+     * 
+     * @param resourcePathInWorkspace the relative path in workspace
+     * 
+     * @return the absolute workspace path
+     */
+    public static String getAbsoluteWorkspacePath(
+			String resourcePathInWorkspace, VpePageContext pageContext) {
+
+		String resolvedValue = resourcePathInWorkspace
+				.replaceFirst(
+						"^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", Constants.EMPTY); //$NON-NLS-1$
+
+		IFile file = null;
+		if (pageContext.getVisualBuilder().getCurrentIncludeInfo() != null)
+			file = pageContext.getVisualBuilder().getCurrentIncludeInfo()
+					.getFile();
+
+		if (file == null)
+			return resolvedValue;
+
+		resolvedValue = ElService.getInstance().replaceEl(file, resolvedValue);
+
+		URI uri = null;
+		try {
+			uri = new URI(resolvedValue);
+		} catch (URISyntaxException e) {
+		}
+
+		if ((uri != null)
+				&& (uri.isAbsolute() || (new File(resolvedValue)).exists()))
+			return resolvedValue;
+
+		return Constants.FILE_PREFIX
+				+ FileUtil.getFile(resolvedValue, file).getLocation()
+						.toOSString();
+	}
 }
