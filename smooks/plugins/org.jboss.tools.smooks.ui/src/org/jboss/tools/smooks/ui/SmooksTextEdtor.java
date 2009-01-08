@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -35,6 +37,18 @@ public class SmooksTextEdtor extends StructuredTextEditor implements
 	private Label messageLabel;
 
 	private String errorMessage;
+
+	private boolean dirty = false;
+
+	public boolean isDirty() {
+		if (!dirty)
+			return false;
+		return super.isDirty();
+	}
+
+	public void setDirty(boolean dirty) {
+		this.dirty = dirty;
+	}
 
 	public String getErrorMessage() {
 		return errorMessage;
@@ -89,6 +103,7 @@ public class SmooksTextEdtor extends StructuredTextEditor implements
 				|| messageLabel == null || messageLabel.isDisposed()) {
 			return;
 		}
+		errorMessage = message;
 		if (message == null) {
 			GridData gd = new GridData();
 			if (flag) {
@@ -112,7 +127,6 @@ public class SmooksTextEdtor extends StructuredTextEditor implements
 				parent.layout();
 			}
 		} else {
-			errorMessage = message;
 			GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 			errorComposite.setVisible(true);
 			messageLabel.setText(message);
@@ -194,6 +208,13 @@ public class SmooksTextEdtor extends StructuredTextEditor implements
 		textComposite.setLayoutData(gd);
 		textComposite.setLayout(new FillLayout());
 		super.createPartControl(textComposite);
+
+		getTextViewer().getTextWidget().addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				setDirty(true);
+				firePropertyChange(PROP_DIRTY);
+			}
+		});
 	}
 
 	public void endAnalyze(AnalyzeResult result) {
