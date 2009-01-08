@@ -80,8 +80,10 @@ public class SmooksFormEditor extends FormEditor implements
 	// private SmooksTextEdtor textEdtior = null;
 
 	private boolean forceDirty = false;
-	private boolean onlyShowTextEditor = false;
+//	private boolean onlyShowTextEditor = false;
 	private Throwable showTextEditorReason = null;
+
+	private boolean allowdActiveErrorSourcePage = true;
 
 	public SmooksFormEditor() {
 		super();
@@ -157,7 +159,6 @@ public class SmooksFormEditor extends FormEditor implements
 	}
 
 	public void setParseException(boolean onlyShowTextEditor, Throwable reason) {
-		this.onlyShowTextEditor = onlyShowTextEditor;
 		this.showTextEditorReason = reason;
 	}
 
@@ -190,7 +191,6 @@ public class SmooksFormEditor extends FormEditor implements
 	public void init(IEditorSite site, IEditorInput input)
 			throws PartInitException {
 		super.init(site, input);
-		onlyShowTextEditor = false;
 		Throwable parsingException = null;
 		IFile file = ((IFileEditorInput) input).getFile();
 		String path = file.getLocation().toOSString();
@@ -206,7 +206,6 @@ public class SmooksFormEditor extends FormEditor implements
 			}
 
 			if (parsingException != null) {
-				onlyShowTextEditor = true;
 				showTextEditorReason = parsingException;
 				return;
 			}
@@ -268,6 +267,9 @@ public class SmooksFormEditor extends FormEditor implements
 
 	public void fireEditorDirty(boolean dirty) {
 		this.forceDirty = dirty;
+		if (graphicalPage != null) {
+			graphicalPage.setDirty(false);
+		}
 		this.firePropertyChange(PROP_DIRTY);
 	}
 
@@ -331,7 +333,7 @@ public class SmooksFormEditor extends FormEditor implements
 	}
 
 	public void endAnalyze(AnalyzeResult result) {
-		if (result.getError() != null) {
+		if (result.getError() != null && allowdActiveErrorSourcePage ) {
 			this.setActivePage(2);
 		}
 	}
@@ -345,45 +347,54 @@ public class SmooksFormEditor extends FormEditor implements
 			super.pageChange(newPageIndex);
 			return;
 		}
-		
-		if(!isDirty()){
+
+		if (!isDirty()) {
 			super.pageChange(newPageIndex);
 			return;
 		}
-		
+
 		ByteArrayOutputStream tempStream = null;
 		XMLWriter writer = null;
 		try {
-			if (oldPageIndex == 0 && newPageIndex == 2) {
-				InputStream stream = graphicalPage.generateSmooksContents(null);
-				SAXReader reader = new SAXReader();
-				Document rootElement = reader.read(stream);
-				if (prettyXMLOutput) {
-					tempStream = new ByteArrayOutputStream();
-					OutputFormat format = OutputFormat.createPrettyPrint();
-					writer = new XMLWriter(tempStream, format);
-					writer.write(rootElement);
+			if ((oldPageIndex == 0 || oldPageIndex == 1)&& newPageIndex == 2) {
+				if (xmlTextEditor.getErrorMessage() == null) {
+					InputStream stream = graphicalPage
+							.generateSmooksContents(null);
+					SAXReader reader = new SAXReader();
+					Document rootElement = reader.read(stream);
+					if (prettyXMLOutput) {
+						tempStream = new ByteArrayOutputStream();
+						OutputFormat format = OutputFormat.createPrettyPrint();
+						writer = new XMLWriter(tempStream, format);
+						writer.write(rootElement);
+					}
+					String text = null;
+					if (prettyXMLOutput) {
+						text = new String(tempStream.toByteArray());
+					} else {
+						text = rootElement.asXML();
+					}
+					xmlTextEditor.getTextViewer().getDocument().set(text);
 				}
-				String text = null;
-				if (prettyXMLOutput) {
-					text = new String(tempStream.toByteArray());
-				} else {
-					text = rootElement.asXML();
-				}
-				xmlTextEditor.getTextViewer().getDocument().set(text);
 			}
-			if (newPageIndex == 0 && oldPageIndex == 2) {
-				String contents = xmlTextEditor.getTextViewer().getDocument().get();
-				graphicalPage.refreshAllGUI(new ByteArrayInputStream(contents.getBytes()));
+			if ((newPageIndex == 0 || newPageIndex == 1) && oldPageIndex == 2) {
+				String contents = xmlTextEditor.getTextViewer().getDocument()
+						.get();
+				allowdActiveErrorSourcePage = false;
+				graphicalPage.refreshAllGUI(new ByteArrayInputStream(contents
+						.getBytes()));
+				allowdActiveErrorSourcePage = true;
 			}
 		} catch (Exception e) {
 
-		}finally{
-			try{
-				if(writer != null) writer.close();
-				if(tempStream != null) tempStream.close();
-			}catch(Exception e){
-				
+		} finally {
+			try {
+				if (writer != null)
+					writer.close();
+				if (tempStream != null)
+					tempStream.close();
+			} catch (Exception e) {
+
 			}
 		}
 		super.pageChange(newPageIndex);

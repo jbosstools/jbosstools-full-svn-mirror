@@ -892,6 +892,10 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		control.setBackground(ColorConstants.white);
 		return viewer;
 	}
+	
+	public void setDirty(boolean dirty){
+		commandStackChanged = dirty;
+	}
 
 	/*
 	 * (non-Javadoc)

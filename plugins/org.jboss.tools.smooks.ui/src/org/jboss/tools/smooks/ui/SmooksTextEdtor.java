@@ -34,6 +34,12 @@ public class SmooksTextEdtor extends StructuredTextEditor implements
 	private Composite errorComposite;
 	private Label messageLabel;
 
+	private String errorMessage;
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
 	public SmooksTextEdtor(Throwable error) {
 		super();
 		this.setErrorThrowable(error);
@@ -106,6 +112,7 @@ public class SmooksTextEdtor extends StructuredTextEditor implements
 				parent.layout();
 			}
 		} else {
+			errorMessage = message;
 			GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 			errorComposite.setVisible(true);
 			messageLabel.setText(message);
