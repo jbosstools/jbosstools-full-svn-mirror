@@ -11,29 +11,19 @@
 	</chapterinfo>
 	<title>Quick Start</title>
 	<para>
-		This "Quick Start" will show how to use the Smooks tools to
-		create/edit the Smooks configuration file for Java2Java
-		data
-		transformation.</para>
+		This "Quick Start" will show how to use the Smooks tools to create/edit the Smooks configuration file for Java2Java data transformation.</para>
 	<para>
-		This chapter should give you a brief understanding of
-		the
-		Smooks
-		dev tools.
+		This chapter should give you a brief understanding of the Smooks dev tools.
 	</para>
 	<section>
 		<title>Download Smooks Java-to-Java example</title>
 		<para>  Visit
-			<ulink
-				url="http://www.smooks.org/documentation/documentation-smooks-1-1-x/examples/example---java-to-java">here</ulink>  to download the "java-to-java" example project.
+			<ulink url="http://www.smooks.org/documentation/documentation-smooks-1-1-x/examples/example---java-to-java">here</ulink>  to download the "java-to-java" example project.
 		</para>
 		<tip>
 			<title>Tip:</title>
 			<para>
-				The example project is base on Maven, you suggest you to
-				create a new eclipse Java project and copy the example code and .jar
-				files from the example project paste them into the eclipse Java
-				project.
+				The example project is base on Maven, you suggest you to create a new eclipse Java project and copy the example code and .jar files from the example project paste them into the eclipse Java project.
 			</para>
 		</tip>
 	</section>
@@ -179,30 +169,30 @@
 		<para>How to map it?</para>
 		<para> First, you should know what to transform:
 			<orderedlist numeration="loweralpha" inheritnum="inherit">
-				  <listitem><para>Bind the &quot;customerName&quot; property of the
+				<listitem><para>Bind the &quot;customerName&quot; property of the
 					Order#header to
 					the
 					&quot;customerName&quot; property of LineOrder.</para>
 				</listitem>
-				  <listitem><para>Bind the
+				<listitem><para>Bind the
 					&quot;customerNumber&quot; property of the Order#header to
 					the
 					&quot;customerId&quot;
 					property of LineOrder.</para>
 				</listitem>
-				  <listitem><para>Bind the &quot;price&quot; property of the OrderItem
+				<listitem><para>Bind the &quot;price&quot; property of the OrderItem
 					to
 					the
 					&quot;unitPrice&quot; property of
 					LineItem.</para>
 				</listitem>
-				  <listitem><para>Bind the &quot;productId&quot;
+				<listitem><para>Bind the &quot;productId&quot;
 					property
 					of the OrderItem to the
 					&quot;productCode&quot;
 					property of LineItem.</para>
 				</listitem>
-				  <listitem><para>Bind the
+				<listitem><para>Bind the
 					&quot;quantity&quot; property of the OrderItem to the
 					&quot;unitQuantity&quot;
 					property of
@@ -288,21 +278,11 @@
 			<para>
 				Why does the occur error?</para>
 			<para> You will find that, if you only connect the property node without connecting the parent node of the property, the &quot;connection error&quot; occur</para>
-			<para>The
-				connection of
-				the &quot;price-to-unitPrice&quot; is
-				the &quot;Binding
-				Connection&quot;,
-				but it needs
-				a &quot;Instance
-				Creation
-				Connection&quot; -the
-				connection
-				of
-				the
+			<para>The connection of the &quot;price-to-unitPrice&quot; is the &quot;Binding Connection&quot;,
+				but it needs a &quot;Instance Creation Connection&quot; -the connection of the
 				&quot;OrderItem-to-LineItem&quot;.</para>
 		</tip>
-		<para>  After that, connect the quantity to  the  unitQuantity ; connect  the  productId to the productCode:
+		<para>  After that, connect the quantity to the  unitQuantity ; connect  the  productId to the productCode:
 		</para>
 		<figure>
 			<title>Complete mapping</title>

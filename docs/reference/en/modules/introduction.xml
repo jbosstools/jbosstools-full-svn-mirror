@@ -11,7 +11,7 @@
 	<title>Introduction</title>
 	<sect1>
 		<title>What is Smooks?</title>
-		<para>Smooks is a Java Framework/Engine for processing XML and  non XML data (CSV, EDI, Java, JSON etc).</para>
+		<para>Smooks is a Java Framework/Engine for processing XML and non XML data (CSV, EDI, Java, JSON etc).</para>
 		<para></para>
 		<para>
 			<orderedlist numeration="Upperroman" inheritnum="inherit">
@@ -52,7 +52,7 @@
 	</sect1>
 	<sect1>
 		<title>What is Smooks dev tools?</title>
-		<para>Smooks dev tools is a set of graphical tools for editing  Smooks configuration file base on Eclipse.</para>
+		<para>Smooks dev tools is a set of graphical tools for editing Smooks configuration file base on Eclipse.</para>
 		<figure>
 			<title>Smooks form editor</title>
 			<mediaobject>
@@ -69,10 +69,10 @@
 			</link>
 			.
 		</para>
-		<para>  Smooks dev tools (JBossTools) run with the latest Eclipse and  other  required plug-ins (GEF, EMF, etc.).</para>
-		<para>  You should download the latest IDE for  Java EE developers from this
+		<para>  Smooks dev tools (JBossTools) run with the latest Eclipse and other required plug-ins (GEF, EMF, etc.).</para>
+		<para>  You should download the latest IDE for Java EE developers from this
 			<link linkend="http://www.eclipse.org/downloads/">site
-			</link>. It contains many plug-ins ( GEF, EMF, etc. ) required by Smooks dev  tools.
+			</link>. It contains many plug-ins ( GEF, EMF, etc. ) required by Smooks dev tools.
 		</para>
 	</sect1>
 </chapter>
