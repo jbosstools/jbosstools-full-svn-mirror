@@ -586,6 +586,12 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				mappingGUISection.setEnabled(false);
 			this.notifyAnalyzeListeners(throwable);
 		}
+		
+		// show/unshow the problem panel
+		if(disableMappingGUI){
+			analyzeResultList.clear();
+			updateNotifyMessage();
+		}
 	}
 
 	public void refreshAllGUI() {
@@ -1834,10 +1840,10 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			DesignTimeAnalyzeResult[] results = analyzer
 					.analyzeGraphModel(context);
 			analyzeResultList.clear();
-			if (results == null)
-				return;
-			for (int i = 0; i < results.length; i++) {
-				analyzeResultList.add(results[i]);
+			if (results != null) {
+				for (int i = 0; i < results.length; i++) {
+					analyzeResultList.add(results[i]);
+				}
 			}
 			updateNotifyMessage();
 		} catch (CoreException e) {
