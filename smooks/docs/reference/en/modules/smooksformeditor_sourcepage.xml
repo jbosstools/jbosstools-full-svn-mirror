@@ -25,7 +25,7 @@
 	</section>
 	<section>
 		<title>Error Messages GUI</title>
-		<para>If the Smooks tools can't understand the configuration file or  the configuration file is  illegal (XML structure isn't right for  Smooks configuration file, etc.), The error message panel will  be displayed above the XML editor.
+		<para>If the Smooks tools can't understand the configuration file or the configuration file is illegal (XML structure isn't right for Smooks configuration file, etc.), The error message panel will be displayed above the XML editor.
 		</para>
 		<figure>
 			<title>Graphical Editor</title>
@@ -43,8 +43,7 @@
 				Graphical Editor, Configuration Editor ) are disabled.
 			</para>
 			<para>
-				You can't edit the configuration file with other editors until
-				file becomes valid.
+				You can't edit the configuration file with other editors until file becomes valid.
 			</para>
 		</note>
 	</section>
