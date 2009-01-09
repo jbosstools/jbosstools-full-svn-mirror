@@ -512,17 +512,14 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		try {
 			this.initTransformViewerModel((IEditorSite) getSite(),
 					getEditorInput());
-		} catch (IOWrappedException ex) {
-			MessageDialog.openWarning(getSite().getShell(), "Waring", //$NON-NLS-1$
-					"Exceptions occurd during parsing Smooks file, no worries"); //$NON-NLS-1$
 		} catch (Throwable e) {
 			throwable = e;
 		}
 		if (throwable != null) {
 			this.disableMappingGUI = true;
 			((SmooksFormEditor) getEditor()).setParseException(true, throwable);
-			this.notifyAnalyzeListeners(throwable);
 		}
+		this.notifyAnalyzeListeners(throwable);
 
 		if (initSourceTreeViewerProviders()) {
 			initSourceTreeViewer();
@@ -558,8 +555,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		problemSection.setLayoutData(gd);
 		problemSection.setVisible(false);
 	}
-	
-	public void refreshAllGUI(InputStream stream){
+
+	public void refreshAllGUI(InputStream stream) {
 		sourceTreeViewerInputModel = null;
 		targetTreeViewerInputModel = null;
 		Throwable throwable = null;
@@ -892,8 +889,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		control.setBackground(ColorConstants.white);
 		return viewer;
 	}
-	
-	public void setDirty(boolean dirty){
+
+	public void setDirty(boolean dirty) {
 		commandStackChanged = dirty;
 	}
 
@@ -913,7 +910,6 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		builder.setSmooksResource(this.smooksResource);
 		SmooksConfigurationFileGenerateContext context = this
 				.getSmooksConfigurationFileGenerateContext();
-		Exception exp = null;
 		this.cleanMappingResourceConfig();
 		return builder.generateSmooksFile(context, monitor);
 	}
@@ -1249,12 +1245,17 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		}
 	}
 
-	public void analyzeGraphicalModel(InputStream stream) throws IOException, CoreException, InvocationTargetException {
+	public void analyzeGraphicalModel(InputStream stream) throws IOException,
+			CoreException, InvocationTargetException {
 		Resource resource = new SmooksResourceFactoryImpl()
 				.createResource(null);
 		resource.load(stream, Collections.EMPTY_MAP);
 		SmooksResourceListType listType = ((DocumentRoot) resource
 				.getContents().get(0)).getSmooksResourceList();
+		if (smooksResource != null) {
+			smooksResource.getContents().clear();
+			smooksResource.getContents().add(listType.eContainer());
+		}
 		GraphInformations graph = null;
 		if (graphicalInformationSaver != null)
 			graph = graphicalInformationSaver.doLoad();

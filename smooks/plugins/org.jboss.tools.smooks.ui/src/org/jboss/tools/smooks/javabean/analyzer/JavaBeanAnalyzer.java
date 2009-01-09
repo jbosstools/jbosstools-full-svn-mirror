@@ -998,8 +998,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			return list;
 		int startIndex = resourceConfigList.indexOf(current);
 		for (int i = startIndex; i < resourceConfigList.size(); i++) {
-			ResourceConfigType resourceConfig = (ResourceConfigType) resourceConfigList
-					.get(i);
+			AbstractResourceConfig abstractRC = (AbstractResourceConfig) resourceConfigList.get(i);
+			if(!(abstractRC instanceof ResourceConfigType)) continue;
+			ResourceConfigType resourceConfig = (ResourceConfigType) abstractRC;
 			ResourceType resourceType = resourceConfig.getResource();
 			String selector = resourceConfig.getSelector();
 			if (selector != null)

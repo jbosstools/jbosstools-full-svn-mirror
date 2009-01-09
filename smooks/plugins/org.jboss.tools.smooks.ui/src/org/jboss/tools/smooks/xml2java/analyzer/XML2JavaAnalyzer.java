@@ -138,7 +138,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		}
 		// if the resource config was created , return
 		if (beanID != null) {
-			if(isResourceConfigCreated(beanID)){
+			if (isResourceConfigCreated(beanID)) {
 				return;
 			}
 		}
@@ -146,7 +146,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		ResourceConfigType resourceConfigType = SmooksFactory.eINSTANCE
 				.createResourceConfigType();
 		context.getGeneratorResourceList().add(resourceConfigType);
-		// registe it 
+		// registe it
 		registeCreatedResourceConfig(beanID, resourceConfigType);
 		// addResourceConfigType(listType, resourceConfigType);
 		// set the selector string value
@@ -246,8 +246,9 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			name = "@" + name;
 		}
 		AbstractXMLObject parent = sourceModel.getParent();
-		while (parent != null && parent.getName() != null && !(parent instanceof TagList)) {
-			if (parent == currentRoot){
+		while (parent != null && parent.getName() != null
+				&& !(parent instanceof TagList)) {
+			if (parent == currentRoot) {
 				isChild = true;
 				break;
 			}
@@ -258,19 +259,20 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			name = resourceConfigSelector + SPACE_SPLITER + name;
 		}
 		// if the node is not the child of current root node , reload the name
-		if(!isChild){
+		if (!isChild) {
 			name = sourceModel.getName();
 			if (sourceModel instanceof TagPropertyObject) {
 				name = "@" + name;
 			}
 			parent = sourceModel.getParent();
-			if(parent == null) return name;
-			while(!(parent instanceof TagList)){
+			if (parent == null)
+				return name;
+			while (!(parent instanceof TagList)) {
 				name = name + SPACE_SPLITER + parent.getName();
 				parent = parent.getParent();
 			}
 		}
-		
+
 		return name;
 	}
 
@@ -319,8 +321,10 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		List rlist = listType.getAbstractResourceConfig();
 		int startIndex = rlist.indexOf(rootResourceConfig);
 		for (int i = startIndex; i < rlist.size(); i++) {
-			ResourceConfigType resourceConfig = (ResourceConfigType) rlist
+			AbstractResourceConfig abstractRC = (AbstractResourceConfig) rlist
 					.get(i);
+			if(!(abstractRC instanceof ResourceConfigType)) continue;
+			ResourceConfigType resourceConfig = (ResourceConfigType) abstractRC;
 			ResourceType resource = resourceConfig.getResource();
 			if (resource == null)
 				continue;
@@ -487,16 +491,17 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		// Load the bindings of parameter element:
 		List<Object> bindings = SmooksModelUtils
 				.getBindingListFromResourceConfigType(processingConfig);
-		// If the resourceConfig was be used , don't to generate binding for it and return.
-		if(isResourceConfigUsed(processingConfig)){
+		// If the resourceConfig was be used , don't to generate binding for it
+		// and return.
+		if (isResourceConfigUsed(processingConfig)) {
 			return;
-		}else{
+		} else {
 			// when starting to process the ResourceConfig , mark it be used
 			setResourceConfigUsed(processingConfig);
 		}
 		// If the bindings isn't NULL to visit the "property" and "selector" of
 		// binding to render the graphical
-		if (bindings != null ) {
+		if (bindings != null) {
 			for (Iterator<Object> iterator = bindings.iterator(); iterator
 					.hasNext();) {
 				Object anyType = iterator.next();
@@ -623,7 +628,9 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			SmooksResourceListType listType) {
 		List list = listType.getAbstractResourceConfig();
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			ResourceConfigType resource = (ResourceConfigType) iterator.next();
+			AbstractResourceConfig abstractRC = (AbstractResourceConfig) iterator.next();
+			if(!(abstractRC instanceof ResourceConfigType)) continue;
+			ResourceConfigType resource = (ResourceConfigType) abstractRC;
 			ResourceType rt = resource.getResource();
 			if (rt == null)
 				continue;
@@ -739,19 +746,22 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 
 	public void registeCreatedResourceConfig(String beanId,
 			ResourceConfigType resourceConfig) {
-		if(beanId == null) return;
+		if (beanId == null)
+			return;
 		beanId = beanId.trim().toLowerCase();
 		createdResourceConfigMap.put(beanId, resourceConfig);
 	}
 
 	public ResourceConfigType getCreatedResourceConfig(String beanId) {
-		if(beanId == null) return null;
+		if (beanId == null)
+			return null;
 		beanId = beanId.trim().toLowerCase();
 		return createdResourceConfigMap.get(beanId);
 	}
 
 	public boolean isResourceConfigCreated(String beanId) {
-		if(beanId == null) return false;
+		if (beanId == null)
+			return false;
 		beanId = beanId.trim().toLowerCase();
 		return getCreatedResourceConfig(beanId) != null;
 	}

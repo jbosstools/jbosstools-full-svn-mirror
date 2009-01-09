@@ -59,6 +59,7 @@ import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksPackage;
+import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.AnalyzeResult;
@@ -563,9 +564,17 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 					.getSourceEdtior();
 			MappingResourceConfigList rclist = graphicalEditor
 					.getMappingResourceConfigList();
+			// for make sure that the SmooksResourceConfig model was the same :
 			if (rclist != null) {
-				pa.setHidenSmooksElements(rclist
-						.getGraphRenderResourceConfigList());
+				List<ResourceConfigType> renderList = rclist.getGraphRenderResourceConfigList();
+				if(renderList != null && renderList.size() > 0){
+					ResourceConfigType resourceConfig = renderList.get(0);
+					SmooksResourceListType rootList = (SmooksResourceListType) resourceConfig.eContainer();
+					if(! (rootList == pa.getSmooksResourceList())){
+						pa.setSmooksResourceList(rootList);
+					}
+				}
+				pa.setHidenSmooksElements(renderList);
 			}
 			setModelPackage(pa);
 		} else {
