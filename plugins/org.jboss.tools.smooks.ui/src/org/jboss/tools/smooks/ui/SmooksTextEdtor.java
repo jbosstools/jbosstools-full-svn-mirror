@@ -9,7 +9,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.text.DocumentEvent;
+import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ExtendedModifyEvent;
+import org.eclipse.swt.custom.ExtendedModifyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
@@ -208,12 +212,17 @@ public class SmooksTextEdtor extends StructuredTextEditor implements
 		textComposite.setLayoutData(gd);
 		textComposite.setLayout(new FillLayout());
 		super.createPartControl(textComposite);
+		getTextViewer().getDocument().addDocumentListener(new IDocumentListener(){
 
-		getTextViewer().getTextWidget().addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
+			public void documentAboutToBeChanged(DocumentEvent event) {
 				setDirty(true);
-				firePropertyChange(PROP_DIRTY);
+//				firePropertyChange(PROP_DIRTY);
 			}
+
+			public void documentChanged(DocumentEvent event) {
+				
+			}
+			
 		});
 	}
 

@@ -203,6 +203,7 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 		if (this.getModelPackage() != null) {
 			List list = modelPackage.getSmooksResourceList()
 					.getAbstractResourceConfig();
+			fileViewer.setInput(list);
 			for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 				Object sr = iterator.next();
 				if (sr instanceof ResourceConfigType) {
