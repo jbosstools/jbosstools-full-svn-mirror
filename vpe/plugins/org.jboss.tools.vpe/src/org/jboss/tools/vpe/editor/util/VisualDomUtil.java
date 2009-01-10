@@ -16,6 +16,8 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
+import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.mozilla.interfaces.nsIAccessibilityService;
 import org.mozilla.interfaces.nsIAccessible;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -33,6 +35,7 @@ import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 
 public class VisualDomUtil {
@@ -282,5 +285,29 @@ public class VisualDomUtil {
 		nsIDOMElement element = visualDocument.createElement(HTML.TAG_SPAN);
 	    element.setAttribute(HTML.ATTR_CLASS, HTML.CLASS_VPE_TEXT);
 		return element;
+	}
+
+	/**
+	 * Appends a container for {@code source}'s children
+	 * to {@code target} and adds a new object of {@link VpeChildrenInfo} 
+	 * in a way that all children will be placed in this container.
+	 * @param source source element, cannot be {@code null}
+	 * @param target target element, cannot be {@code null}
+	 * @param creationData the creation data, cannot be {@code null}
+	 * @param visualDocument the visual document, cannot be {@code null}
+	 */
+	public static void appendChildrenInsertionPoint(Element source,
+			nsIDOMElement target, VpeCreationData creationData, nsIDOMDocument visualDocument) {
+		nsIDOMElement childrenContainer = createBorderlessContainer(visualDocument);
+		target.appendChild(childrenContainer);
+		
+		VpeChildrenInfo childrenInfo = new VpeChildrenInfo(childrenContainer);
+
+		NodeList childNodes = source.getChildNodes();
+		for (int i = 0; i < childNodes.getLength(); i++) {
+			childrenInfo.addSourceChild(childNodes.item(i));
+		}
+
+		creationData.addChildrenInfo(childrenInfo);
 	}
 }
