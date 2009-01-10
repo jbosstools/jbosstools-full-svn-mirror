@@ -16,8 +16,8 @@ import org.jboss.tools.vpe.editor.mapping.NodeData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
-import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
+import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -43,9 +43,8 @@ public class HtmlTextTemplate extends VpeAbstractTemplate {
 
 	    nsIDOMNode visualNewTextNode = visualDocument
 	        .createTextNode(visualText);
-	    //Max Areshkau without this span, we can't select text element
-	    nsIDOMElement element = visualDocument.createElement(HTML.TAG_SPAN);
-	    element.setAttribute(HTML.ATTR_CLASS, HTML.CLASS_VPE_TEXT);
+	    //Max Areshkau without this container, we can't select text element
+	    nsIDOMElement element = VisualDomUtil.createBorderlessContainer(visualDocument);
 	    element.appendChild(visualNewTextNode);
 	    
 	    VpeElementData textElementData = new VpeElementData();
@@ -55,5 +54,5 @@ public class HtmlTextTemplate extends VpeAbstractTemplate {
 	    result.setElementData(textElementData);
 	    
 	    return result;
-	}	
+	}
 }

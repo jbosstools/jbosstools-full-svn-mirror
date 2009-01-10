@@ -18,6 +18,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.mozilla.interfaces.nsIAccessibilityService;
 import org.mozilla.interfaces.nsIAccessible;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
@@ -262,5 +263,24 @@ public class VisualDomUtil {
 		}
 		
 		return bounds;
+	}
+	
+	/**
+	 * Creates HTML container (element) borders of that are
+	 * complete invisible to user.
+	 * <P>
+	 * It can be used to wrap visual HTML elements and text nodes without
+	 * changing of their view in VPE.
+	 * 
+	 * @param visualDocument the visual document. It is used to create the container.
+	 * @return created borderless container   
+	 * 
+	 * @author yradtsevich
+	 */
+	public static nsIDOMElement createBorderlessContainer(
+			nsIDOMDocument visualDocument) {
+		nsIDOMElement element = visualDocument.createElement(HTML.TAG_SPAN);
+	    element.setAttribute(HTML.ATTR_CLASS, HTML.CLASS_VPE_TEXT);
+		return element;
 	}
 }
