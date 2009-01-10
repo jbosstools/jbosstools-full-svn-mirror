@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="debugging_rules" xreflabel="debugging_rules">
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Tools</keyword>
+			<keyword>Drools Tools</keyword>
+		</keywordset>
+	</chapterinfo>
+
+	<title>Debugging rules</title>
+	
+	<para>This chapter describes how to debug rules during the execution of your Drools application.</para>
+
+	<section id="creating_breakpoints">
+		<title>Creating Breakpoints</title>
+		
+		<para>At first, we&apos;ll focus on how to add
+		breakpoints in the consequences of your rules.</para>
+		
+		<para>Whenever such a breakpoint is uncounted
+			during the execution of the rules, the execution is halted. It&apos;s possible then inspect the
+			variables known at that point and use any of the default debugging actions to decide what
+			should happen next (step over, continue, etc). To inspect
+			the content of the working memory and agenda the Debug views can be used.</para>
+
+		<para>You can add/remove rule breakpoints in <emphasis>
+				<property>.drl</property>
+			</emphasis> files in two ways, similar to adding breakpoints to Java files:</para>
+
+		<itemizedlist>
+			<listitem>
+				<para>Double-click the ruler in the <property>Rule editor</property> at the line
+					where you want to add a breakpoint.</para>
+				<tip>
+					<title>Tip:</title>
+					<para>Note that rule breakpoints can only be created in the consequence of a
+						rule. Double-clicking on a line where no breakpoint is allowed will do
+						nothing.</para>
+				</tip>
+				<para>A breakpoint can be removed by double-clicking the ruler once more. </para>
+			</listitem>
+
+			<listitem>
+				<para>Right-click the ruler. Select <emphasis>
+						<property>Toggle Breakpoint</property>
+					</emphasis> action in the appeared popup menu. Clicking the action will add a
+					breakpoint at the selected line or remove it if there is one already.</para>
+			</listitem>
+		</itemizedlist>
+
+		<figure>
+			<title>Adding Breakpoints</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/debugging_rules/debugging_rules1.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<para>The <property>Debug perspective</property> contains a <property>Breakpoints
+				view</property> which can be used to see all defined breakpoints, get their
+			properties, enable/disable or remove them, etc. You can switch to it by navigating to <emphasis>
+				<property>Window > Perspective > Others > Debug</property>.</emphasis></para>
+	</section>
+
+	<section id="debugging">
+		<title>Debugging</title>
+
+		<para>Drools breakpoints are only enabled if you debug your application as a Drools
+			Application. To do this you should perform one of the actions:</para>
+
+		<itemizedlist>
+			<listitem>
+				<para>Select the main class of your application. Right click it and select <emphasis>
+						<property>Debug As > Drools Application</property>.</emphasis></para>
+			</listitem>
+		</itemizedlist>
+		<figure>
+			<title>Debugging Drools Application</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/debugging_rules/debugging_rules2.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<itemizedlist>
+			<listitem>
+				<para>Alternatively, you can also go to <emphasis>
+						<property>Debug As > Debug Configuration</property>
+					</emphasis> to open a new dialog for creating, managing and running debug
+					configurations.</para>
+
+				<para>Select the <emphasis>
+						<property>Drools Application</property>
+					</emphasis> item in the left tree and click the <emphasis>
+						<property>New launch configuration</property>
+					</emphasis> button (leftmost icon in the toolbar above the tree). This will
+					create a new configuration and already fill in some of the properties (like the
+					Project and Main class) based on main class you selected in the beginning. All
+					properties shown here are the same as any standard Java program.</para>
+			</listitem>
+		</itemizedlist>
+
+		<figure>
+			<title>New Debug Configuration</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/debugging_rules/debugging_rules3.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<tip>
+			<title>Tip:</title>
+			<para>Remember to change the name of your debug configuration to something meaningful.</para>
+		</tip>
+		
+		<para>Next
+			click the <emphasis>
+				<property>Debug</property>
+			</emphasis> button on the bottom to start debugging your application. </para>
+
+		<para>After enabling the debugging, the application starts executing and will halt if
+			any breakpoint is encountered. This can be a Drools rule breakpoint, or any other
+			standard Java breakpoint. Whenever a Drools rule breakpoint is encountered, the
+			corresponding <emphasis>
+				<property>.drl</property></emphasis> file is opened and the active line is highlighted. The Variables view
+			also contains all rule parameters and their value. You can then use the default Java
+			debug actions to decide what to do next (resume, terminate, step over, etc.). The debug
+			views can also be used to determine the contents of the working memory and agenda at
+			that time as well (you don't have to select a working memory now, the current executing
+			working memory is automatically shown).</para>
+		
+		
+	</section>
+</chapter>

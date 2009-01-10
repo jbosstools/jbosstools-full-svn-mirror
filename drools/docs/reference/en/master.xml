@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.docbook.org/xsd/4.3/docbook.xsd"
+
+[<!ENTITY introduction SYSTEM "modules/introduction.xml">
+<!ENTITY create_new_project SYSTEM "modules/create_new_project.xml">
+<!ENTITY create_new SYSTEM "modules/create_new.xml">
+<!ENTITY debugging_rules SYSTEM "modules/debugging_rules.xml">
+<!ENTITY views SYSTEM "modules/views.xml">
+<!ENTITY editors SYSTEM "modules/editors.xml">
+
+<!ENTITY seamlink "../../seam/html_single/index.html">
+<!ENTITY aslink "../../as/html_single/index.html">
+<!ENTITY esblink "../../esb_ref_guide/html_single/index.html">
+<!ENTITY gsglink "../../GettingStartedGuide/html_single/index.html">
+<!ENTITY hibernatelink "../../hibernatetools/html_single/index.html">
+<!ENTITY jbpmlink "../../jbpm/html_single/index.html">
+<!ENTITY jsflink "../../jsf/html_single/index.html">
+<!ENTITY jsfreflink "../../jsf_tools_ref_guide/html_single/index.html">
+<!ENTITY jsftutoriallink "../../jsf_tools_tutorial/html_single/index.html">
+<!ENTITY strutsreflink "../../struts_tools_ref_guide/html_single/index.html">
+<!ENTITY strutstutoriallink "../../struts_tools_tutorial/html_single/index.html">                         
+
+]>
+
+<book>
+    
+     <bookinfo>
+         <title>Drools Tools Reference Guide</title>
+
+            <author><firstname>Olga</firstname><surname>Chikvina</surname></author>    
+         
+         <pubdate>April 2008</pubdate>
+	                       <copyright>
+			             <year>2007</year>
+	                           <year>2008</year>
+	                           <holder>JBoss, a division of Red Hat Inc.</holder>
+	                       </copyright>
+          <releaseinfo>
+            Version: 3.0.0.beta1
+          </releaseinfo>
+<abstract>
+   <title/>
+       <para>
+           <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/as/pdf/AS_Reference_Guide.pdf">PDF version</ulink>
+       </para>
+</abstract>
+
+    </bookinfo>
+	
+    
+    <toc/> 
+    &introduction;
+    &create_new_project;
+    &debugging_rules;
+    &editors;
+    
+    
+</book>    

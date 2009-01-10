@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="views" xreflabel="views">
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Tools</keyword>
+            <keyword>Drools Tools</keyword>
+        </keywordset>
+    </chapterinfo>
+    
+    <title>Views</title>
+
+    <section id="working_memory_view">
+	<title>The Working Memory View</title>
+    </section>
+    
+    <section id="agenta_view">
+	<title>The Agenda View</title>
+    </section>
+
+    <section id="global_data_view">
+	<title>The Global Data View</title>
+    </section>
+
+    <section id="audit_view">
+	<title>The Audit View</title>
+    </section>
+
+    <section id="rules_view">
+	<title>The Rules View</title>
+    </section>
+
+    <section id="process_instance_view">
+	<title>The Process Instance View</title>
+    </section> 
+</chapter>
