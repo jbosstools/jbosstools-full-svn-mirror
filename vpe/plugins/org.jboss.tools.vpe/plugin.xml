@@ -104,13 +104,4 @@
               </dynamic>
         </menuContribution>
   </extension>
-  <extension
-         point="org.eclipse.ui.commands">
-  <command 
-        id="org.jboss.tools.vpe.insert"
-        name="org.jboss.tools.vpe.insert"
-       defaultHandler="org.jboss.tools.vpe.editor.menu.InsertAction" 
-       >
-  </command>
-  </extension>
 </plugin>
