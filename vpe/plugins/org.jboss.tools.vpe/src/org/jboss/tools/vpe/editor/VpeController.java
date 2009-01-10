@@ -181,11 +181,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	private boolean sourceChangeFlag;
 	private VpePageContext pageContext;
 	private BundleMap bundle;
-	private VpeEditorPart editPart;
-	private static final int AROUND_MENU = 1;
-	private static final int BEFORE_MENU = 2;
-	private static final int AFTER_MENU = 3;
-	
+	private VpeEditorPart editPart;	
 	private static final int LEFT_BUTTON = 0;
 
 	private CSSReferenceList cssReferenceListListener;
@@ -209,6 +205,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	 * when{@link #vpeVisualRefreshJob} is accessed.
 	 */
 	private final Object vpeVisualRefreshJobLock = new Object();
+	private UIJob reinitJob; 
 
 	/**
 	 * Added by Max Areshkau JBIDE-675, stores information about modification
@@ -2618,28 +2615,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	/**
-	 * @return the progressMonitor
-	 */
-	private IProgressMonitor getProgressMonitor() {
-
-		if (progressMonitor == null) {
-
-			progressMonitor = Job.getJobManager().createProgressGroup();
-		}
-
-		return progressMonitor;
-	}
-
-	/**
-	 * @param progressMonitor
-	 *            the progressMonitor to set
-	 */
-	private void setProgressMonitor(IProgressMonitor progressMonitor) {
-
-		this.progressMonitor = progressMonitor;
-	}
-
-	/**
 	 * @return the changeEvents
 	 */
 	public LinkedList<VpeEventBean> getChangeEvents() {
@@ -2650,8 +2625,26 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		return changeEvents;
 	}
+ 	
+	public void reinit(){
+		if(reinitJob!=null) {
+			reinitJob.cancel();
+		}
+		reinitJob = new UIJob(VpeUIMessages.VPE_VISUAL_REFRESH_JOB) {
 
-	public void reinit() {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				if(monitor.isCanceled()) {
+					return Status.CANCEL_STATUS;
+				}
+				reinitImpl();
+				return Status.OK_STATUS;
+			}
+		};
+		reinitJob.schedule();
+	}
+	
+	private void reinitImpl() {
 		try {
 			if(!switcher
 			.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
