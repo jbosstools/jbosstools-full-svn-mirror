@@ -181,7 +181,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	private boolean sourceChangeFlag;
 	private VpePageContext pageContext;
 	private BundleMap bundle;
-	private VpeEditorPart editPart;	
+	private VpeEditorPart editPart;
 	private static final int LEFT_BUTTON = 0;
 
 	private CSSReferenceList cssReferenceListListener;
@@ -196,15 +196,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	private XModelTreeListenerSWTSync optionsListener;
 	// Added by Max Areshkau Fix for JBIDE-1479
 	private UIJob job = null;
-	private IProgressMonitor progressMonitor;
 	private UIJob uiJob;
 	// JBIDE-675, visual refresh job
-	private VpeVisualRefreshJob vpeVisualRefreshJob;
-	/**
-	 * This variable should be used as synchronizing object 
-	 * when{@link #vpeVisualRefreshJob} is accessed.
-	 */
-	private final Object vpeVisualRefreshJobLock = new Object();
+	private UIJob visualRefreshJob;
 	private UIJob reinitJob; 
 
 	/**
@@ -362,11 +356,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			uiJob = null;
 		}
 
-		synchronized (vpeVisualRefreshJobLock) {
-			if (vpeVisualRefreshJob != null) {
-				vpeVisualRefreshJob.cancel();
-				vpeVisualRefreshJob = null;
-			}
+		if (visualRefreshJob != null) {
+			visualRefreshJob.cancel();
+			visualRefreshJob = null;
 		}
 
 		if (optionsListener != null) {
@@ -467,7 +459,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				uiJob = new UIJob(VpeUIMessages.VPE_UPDATE_JOB_TITLE) {
 					@Override
 					public IStatus runInUIThread(IProgressMonitor monitor) {
-
 						monitor.beginTask(VpeUIMessages.VPE_UPDATE_JOB_TITLE, 100);
 						while (getChangeEvents().size() > 0) {
 							monitor.worked((int) (100 / getChangeEvents().size()));
@@ -1342,28 +1333,43 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		if (uiJob != null && uiJob.getState() != Job.NONE) {
 			return;
 		}
-		synchronized (vpeVisualRefreshJobLock) {			
-			if (vpeVisualRefreshJob == null || vpeVisualRefreshJob.getState() == Job.NONE) {
-				scheduleNewVpeVisualRefreshJob(0L);
-			}
-		}
-	}
-	
-	/**
-	 * Creates a new object of {@link VpeVisualRefreshJob} and schedules this job to be run
-	 * after specified {@code delay}
-	 * 
-	 * @param delay time in milliseconds
-	 * @see UIJob#schedule(long)
-	 */
-	public void scheduleNewVpeVisualRefreshJob(long delay) {
-		synchronized (vpeVisualRefreshJobLock) {
-			if (vpeVisualRefreshJob != null) {
-				vpeVisualRefreshJob.cancel();
-			}
-			vpeVisualRefreshJob = new VpeVisualRefreshJob(VpeUIMessages.VPE_VISUAL_REFRESH_JOB, this);
-			vpeVisualRefreshJob.setPriority(Job.SHORT);
-			vpeVisualRefreshJob.schedule(delay);
+		if (visualRefreshJob == null || visualRefreshJob.getState() == Job.NONE) {
+			visualRefreshJob = new UIJob(VpeUIMessages.VPE_VISUAL_REFRESH_JOB) {
+				@Override
+				public IStatus runInUIThread(IProgressMonitor monitor) {
+					if (monitor.isCanceled()) {
+						return Status.CANCEL_STATUS;
+					}
+					if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+						return Status.CANCEL_STATUS;
+					}
+					try {
+						monitor.beginTask(VpeUIMessages.VPE_VISUAL_REFRESH_JOB, IProgressMonitor.UNKNOWN);
+						visualRefreshImpl();
+						monitor.done();
+						setSynced(true);
+					} catch (VpeDisposeException exc) {
+						// just ignore this exception
+					} catch (NullPointerException ex) {
+						if (switcher != null) {
+							throw ex;
+						} else {
+							// class was disposed and exception result of
+							// that we can't stop
+							// refresh job in time, so we just ignore this
+							// exception
+						}
+					} finally {
+						if (switcher != null) {
+							switcher.stopActiveEditor();
+						}
+					}
+					return Status.OK_STATUS;
+				}
+			};
+
+			visualRefreshJob.setPriority(Job.SHORT);
+			visualRefreshJob.schedule();
 		}
 	}
 
@@ -1385,7 +1391,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 //				visualBuilder.rebuildDom(null);
 //			}
 		}
-		
 	}
 
 	public void preLongOperation() {
@@ -1451,11 +1456,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		System.out.println();
 	}
 
-	class ActiveEditorSwitcher {
-		static final int ACTIVE_EDITOR_CANNOT = 0;
-		static final int ACTIVE_EDITOR_NONE = 1;
-		static final int ACTIVE_EDITOR_SOURCE = 2;
-		static final int ACTIVE_EDITOR_VISUAL = 3;
+	private class ActiveEditorSwitcher {
+		private static final int ACTIVE_EDITOR_CANNOT = 0;
+		private static final int ACTIVE_EDITOR_NONE = 1;
+		private static final int ACTIVE_EDITOR_SOURCE = 2;
+		private static final int ACTIVE_EDITOR_VISUAL = 3;
 
 		private int type = ACTIVE_EDITOR_CANNOT;
 
@@ -1467,7 +1472,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			type = ACTIVE_EDITOR_CANNOT;
 		}
 
-		boolean startActiveEditor(int newType) {
+		private boolean startActiveEditor(int newType) {
 			if (type == ACTIVE_EDITOR_NONE) {
 				if (newType == ACTIVE_EDITOR_SOURCE
 						&& editPart.getVisualMode() == VpeEditorPart.SOURCE_MODE) {
@@ -1480,7 +1485,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			}
 		}
 
-		void stopActiveEditor() {
+		private void stopActiveEditor() {
 			onRefresh();
 			type = ACTIVE_EDITOR_NONE;
 		}
@@ -2625,7 +2630,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		return changeEvents;
 	}
- 	
 	public void reinit(){
 		if(reinitJob!=null) {
 			reinitJob.cancel();
@@ -2643,7 +2647,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		};
 		reinitJob.schedule();
 	}
-	
+
 	private void reinitImpl() {
 		try {
 			if(!switcher
@@ -2723,65 +2727,5 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	public ISelectionManager getSelectionManager() {
 		return selectionManager;
 	}
-
-	/**@return the switcher */
-	public ActiveEditorSwitcher getSwitcher() {
-		return switcher;
-	}
-}
-
-final class VpeVisualRefreshJob extends UIJob {
-	private static int nestedLevel = 0;
-	private VpeController vpeController;
 	
-	public VpeVisualRefreshJob(String name, VpeController vpeController) {
-		super(name);
-		this.vpeController = vpeController;
-	}
-	
-	@Override
-	public IStatus runInUIThread(IProgressMonitor monitor) {
-		nestedLevel++;
-		try {
-			if (monitor.isCanceled()) {
-				return Status.CANCEL_STATUS;
-			}
-			
-			// if this job is nested in another VpeVisualRefreshJob, then cancel it and run again later
-			if (nestedLevel > 1) {
-				vpeController.scheduleNewVpeVisualRefreshJob(300L);
-				return Status.CANCEL_STATUS;
-			}
-			
-			final VpeController.ActiveEditorSwitcher switcher = vpeController.getSwitcher();
-			if (!switcher.startActiveEditor(VpeController.ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-				return Status.CANCEL_STATUS;
-			}
-			
-			try {
-				monitor.beginTask(VpeUIMessages.VPE_VISUAL_REFRESH_JOB, IProgressMonitor.UNKNOWN);
-				vpeController.visualRefreshImpl();
-				monitor.done();
-				vpeController.setSynced(true);
-			} catch (VpeDisposeException exc) {
-				// just ignore this exception
-			} catch (NullPointerException ex) {
-				if (switcher != null) {
-					throw ex;
-				} else {
-					// class was disposed and exception result of
-					// that we can't stop
-					// refresh job in time, so we just ignore this
-					// exception
-				}
-			} finally {
-				if (switcher != null) {
-					switcher.stopActiveEditor();
-				}
-			}
-			return Status.OK_STATUS;
-		} finally {
-			nestedLevel--;
-		}
-	}
 }
