@@ -2650,7 +2650,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	private void reinitImpl() {
 		try {
-			if(!switcher
+			if(switcher==null||!switcher
 			.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 				return;
 			}
@@ -2677,9 +2677,14 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					pageContext);
 			//restore selection in visula part
 			sourceSelectionChanged();
-		}finally {
-			
-			switcher.stopActiveEditor();
+		}catch(VpeDisposeException ex) {
+			//vpe vas closed when refresh job is running, so just 
+			//ignore this exception
+		}
+		finally {
+			if(switcher!=null) {
+				switcher.stopActiveEditor();
+			}
 		}
 			
 	}
