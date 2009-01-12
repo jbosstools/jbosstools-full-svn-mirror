@@ -127,7 +127,7 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 	// http://jira.jboss.com/jira/browse/JBIDE-2010
 	String os_name = System.getProperty("os.name"); //$NON-NLS-1$
 	if (os_name != null && os_name.indexOf("Windows") >= 0) { //$NON-NLS-1$
-	    return new Point(500, 230);
+	    return new Point(400, 230);
 	}
 	// changed by estherbin
 	// http://jira.jboss.com/jira/browse/JBIDE-2010
