@@ -6,7 +6,7 @@
     <format>dir</format>
   </formats>
   <includeBaseDirectory>false</includeBaseDirectory>
-	<!--
+<!--
   <moduleSets>
     <moduleSet>
       <includes>
@@ -18,7 +18,6 @@
       </binaries>
     </moduleSet>
   </moduleSets>
-
  -->
 		<fileSets>
 			<fileSet>
@@ -126,7 +125,7 @@
 			</fileSet>
 			<fileSet>
 				<directory>../../jbpm/docs/reference/target/docbook/publish/en-US</directory>
-				<outputDirectory>/jbpm</outputDirectory>
+				<outputDirectory>/jboss_jbpm_ref_guide</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
 				<includes>
@@ -276,6 +275,20 @@
 			<fileSet>
 				<directory>../../birt/docs/target/docbook/publish/en-US</directory>
 				<outputDirectory>/jboss_birt_plugin_ref_guide</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			
+			<fileSet>
+				<directory>../../drools/docs/reference/target/docbook/publish/en-US</directory>
+				<outputDirectory>/drools_tools_ref_guide</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
 				<includes>

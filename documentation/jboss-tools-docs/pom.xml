@@ -26,6 +26,7 @@
 		<module>../../ws/docs/reference</module>
 		<module>../../portlet/docs/reference</module>
 		<module>../../birt/docs</module>
+		<module>../../drools/docs/reference</module>
 		<module>../../smooks/docs/reference</module>
 		<module>../../jbpm/docs/converter_ref</module>
 
