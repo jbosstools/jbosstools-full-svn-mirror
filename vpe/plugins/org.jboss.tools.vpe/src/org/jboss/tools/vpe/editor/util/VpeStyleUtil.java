@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IEditorInput;
@@ -382,7 +383,12 @@ public class VpeStyleUtil {
 //			}
 //			filePath = url.toString();
 			
-			filePath = getAbsoluteWorkspacePath(filePath, pageContext);
+			IFile file = null;
+			if (pageContext.getVisualBuilder().getCurrentIncludeInfo() != null)
+				file = pageContext.getVisualBuilder().getCurrentIncludeInfo()
+						.getFile();
+			if (file != null)
+				filePath = processUrl(filePath, file);
 
 			String firstPartValue = urls[i].substring(0, startPathIndex + 1);
 			String secondPartValue = urls[i].substring(endPathIndex, urls[i]
@@ -488,31 +494,51 @@ public class VpeStyleUtil {
 			String filePath = urls[i].substring(startPathIndex + 1,
 					endPathIndex);
 			
+			IFile sourceFile = null;
 			try {
-			URL url = new URL(filePath);
-			//with url all ok
-			continue;
-			} catch (MalformedURLException e) {
-				//ignore, continue work with url
+				URL url1 = new URL(href_val);
+				
+				sourceFile = ResourcesPlugin.getWorkspace().getRoot()
+				.getFileForLocation(new Path( url1.getPath()));
+			} catch (MalformedURLException e1) {
+				// ignore
 			}
 			
-			if (filePath.indexOf(FILE_PROTOCOL) != -1) {
-				continue;
-			}
+			if (sourceFile != null) {
+				
+				filePath = processUrl(filePath, sourceFile);
 
-			if (!new File(filePath).isAbsolute()) {
-				filePath = getFilePath(href_val, filePath);
 			} else {
-				filePath = FILE_PROTOCOL + SLASH + SLASH + filePath.replace('\\', '/');
-			}
+				
+				//TODO to redesign next code
+				try {
+					URL url = new URL(filePath);
+					// with url all ok
+					continue;
+				} catch (MalformedURLException e) {
+					// ignore, continue work with url
+				}
 
-			URL url = null;
-			try {
-				url = new URL(filePath);
-			} catch (MalformedURLException e) {
-				continue;
+				if (filePath.indexOf(FILE_PROTOCOL) != -1) {
+					continue;
+				}
+
+				if (!new File(filePath).isAbsolute()) {
+					filePath = getFilePath(href_val, filePath);
+				} else {
+					filePath = FILE_PROTOCOL + SLASH + SLASH
+							+ filePath.replace('\\', '/');
+				}
+
+				URL url = null;
+				try {
+					url = new URL(filePath);
+				} catch (MalformedURLException e) {
+					continue;
+				}
+				filePath = url.toString();
 			}
-			filePath = url.toString();
+			
 
 			String firstPartValue = urls[i].substring(0, startPathIndex + 1);
 			String secondPartValue = urls[i].substring(endPathIndex, urls[i]
@@ -748,6 +774,39 @@ public class VpeStyleUtil {
     	return size;
     }
     
+    public static String processUrl(String url, IFile file) {
+
+		String resolvedValue = url
+				.replaceFirst(
+						"^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", Constants.EMPTY); //$NON-NLS-1$
+
+		
+
+		resolvedValue = ElService.getInstance().replaceEl(file, resolvedValue);
+
+		URI uri = null;
+		try {
+			uri = new URI(resolvedValue);
+		} catch (URISyntaxException e) {
+		}
+
+		if ((uri != null) && (uri.isAbsolute()))
+			return resolvedValue;
+
+		Path path = new Path(resolvedValue);
+
+		if (resolvedValue.startsWith("/")
+				&& path.segment(0).equals(file.getProject().getName())) {
+			resolvedValue = "/"
+					+ path.removeFirstSegments(1).toPortableString();
+
+		}
+
+		return Constants.FILE_PREFIX
+				+ FileUtil.getFile(resolvedValue, file).getLocation()
+						.toPortableString();
+	}
+    
     /**
      * Gets the absolute workspace path.
      * 
@@ -784,6 +843,6 @@ public class VpeStyleUtil {
 
 		return Constants.FILE_PREFIX
 				+ FileUtil.getFile(resolvedValue, file).getLocation()
-						.toOSString();
+						.toPortableString();
 	}
 }
