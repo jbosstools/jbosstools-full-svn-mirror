@@ -263,11 +263,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     <para>Installation process includes <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application
       Platform</ulink>. Select <emphasis>
       <property>Yes</property>
-     </emphasis> to use it in JBoss Developer Studio.</para>
+      </emphasis> to use it in JBoss Developer Studio.  This step lets you configure locally available JBoss Application Servers. You can fill the list automatically using the <emphasis><property>Find</property></emphasis> button - select a folder where search of available JBoss Application Servers should be started.  After finding the list can be edited by the <emphasis><property>Add</property></emphasis> and <emphasis><property>Remove</property></emphasis> buttons. 
+  </para>
    </listitem>
   </itemizedlist>
-
-  <para/>
 
   <figure>
    <title>JBoss Enterprise Application Platform Installing</title>
@@ -277,13 +276,31 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     </imageobject>
    </mediaobject>
   </figure>
+
+  <itemizedlist>
+   <listitem> <para>You can also add servers or one by one using the <emphasis><property>Add</property></emphasis> button:</para>
+   </listitem>
+  </itemizedlist>
+ 
+  <figure>
+   <title>Add Server to be configured</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_3_1.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
   <para/>
-  <note>
+
+<para>Click on <emphasis><property>Browse</property></emphasis>, select </para>
+  
+  <para/>
+  <!--  <note>
    <title>Note:</title>
    <para>The installer installs JBoss Enterprise Application Platform for running your applications
     if you select this option during the installation process. If you want to use a different server
     than ours, you can change the setting in JBoss Developer Studio.</para>
-  </note>
+    </note>-->
 
   <itemizedlist>
    <listitem>
