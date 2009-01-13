@@ -32,7 +32,7 @@
 				<configuration
                  associatedAgent="org.eclipse.tptp.platform.instrumentation.ui.instrumentAgent"
                  configurationId="org.eclipse.tptp.platform.instrumentation.ui.instrumentCollectorConfiguration"
-                 filter="org.jboss.tools.tptp.PICollectorFiltration"
+                 filter="org.jboss.tools.eclipse.as.tptp.PICollectorFiltration"
                  launchDelegate="org.eclipse.tptp.platform.instrumentation.ui.internal.launcher.deleg.application.InstrumentLauncherDelegate"/>
 	  		</mechanism>  
 		</association>
