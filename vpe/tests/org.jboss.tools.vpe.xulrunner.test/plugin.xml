@@ -5,12 +5,12 @@
          point="org.eclipse.ui.views">
       <category
             id="org.jboss.tools.vpe.xulrunner.view"
-            name="VPE Tests"/>
+            name="%ViewCategory_VPETests"/>
       <view
             category="org.jboss.tools.vpe.xulrunner.view"
             class="org.jboss.tools.vpe.xulrunner.view.XulRunnerView"
             id="org.jboss.tools.vpe.xulrunner.view.XulRunnerView"
-            name="XulRunner View"/>
+            name="%ViewName_XulRunner"/>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">

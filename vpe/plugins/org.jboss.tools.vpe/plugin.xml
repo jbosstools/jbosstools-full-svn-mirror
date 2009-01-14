@@ -31,12 +31,14 @@
       />
    </extension>
 	<extension point="org.eclipse.ui.preferencePages">
-      <page category="org.jboss.tools.common.xstudio.editors" class="org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage" id="org.jboss.tools.vpe.editor" name="Visual Page Editor"></page>
+      <page category="org.jboss.tools.common.xstudio.editors" class="org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage" id="org.jboss.tools.vpe.editor" 
+            name="%PreferencePage_VpeEditor">
+      </page>
       <page
             category="org.jboss.tools.common.model.ui"
             class="org.jboss.tools.vpe.editor.preferences.ELVariablesPreferencePage"
             id="org.jboss.tools.common.xstudio.elvariables"
-            name="El Variables">
+            name="%PreferencePage_ElVariables">
       </page>
    	</extension>
    	<extension
@@ -76,7 +78,7 @@
 	</extension>
   <extension
         point="org.jboss.tools.jst.jsp.visulaEditorImplementations"  id="org.jboss.tools.vpe.editor.VpeEditorPartFactory">
-        	<visualEditorImplementation name="XulRunner Visual Editor" class="org.jboss.tools.vpe.editor.VpeEditorPartFactory"/>
+        	<visualEditorImplementation name="%visualEditorImpl_name" class="org.jboss.tools.vpe.editor.VpeEditorPartFactory"/>
   </extension>
    <extension
         point="org.eclipse.ui.menus">

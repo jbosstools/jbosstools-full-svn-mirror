@@ -31,8 +31,8 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 public class TemplatesPreferencePage extends PreferencePage implements IWorkbenchPreferencePage, CommandBarListener {
-	static String EDIT = "Edit"; //$NON-NLS-1$
-	static String REMOVE = "Remove"; //$NON-NLS-1$
+	static String EDIT = VpeUIMessages.TemplatesPreferencePage_Edit; 
+	static String REMOVE = VpeUIMessages.TemplatesPreferencePage_Remove; 
 	protected TemplatesTableProvider tableProvider;// = new TemplatesTableProvider();
 	protected XTable table = new XTable();
 	protected CommandBar bar = new CommandBar();

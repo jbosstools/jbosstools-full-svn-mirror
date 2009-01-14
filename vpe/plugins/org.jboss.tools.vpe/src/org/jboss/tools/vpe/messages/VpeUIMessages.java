@@ -81,6 +81,14 @@ public class VpeUIMessages extends NLS {
 	public static String SHOW;
 	public static String HIDE;
 	public static String TAG_FOR_DISPLAY;
+	public static String TemplatesPreferencePage_Edit;
+	public static String TemplatesPreferencePage_Remove;
+	public static String TemplatesTableProvider_Children;
+	public static String TemplatesTableProvider_No;
+	public static String TemplatesTableProvider_TagForDisplay;
+	public static String TemplatesTableProvider_TagName;
+	public static String TemplatesTableProvider_URI;
+	public static String TemplatesTableProvider_Yes;
 	public static String STYLE;
 	public static String MAX_SOURCE_PANE;
 	public static String MAX_VISUAL_PANE;
