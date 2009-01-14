@@ -30,13 +30,11 @@ import org.jboss.tools.vpe.editor.util.SelectionUtil;
  * @author Igor Zhukov (izhukov@exadel.com)
  */
 public class InsertAction extends Action {
-
 	private XModelObject item;
 	private Point region;
-
-	private VpePageContext pageContext = null;
-	private StructuredTextEditor sourceEditor = null;
-	private boolean replace= false; 
+	private VpePageContext pageContext;
+	private StructuredTextEditor sourceEditor;
+	private boolean replace; 
 
 	/**
 	 * Constructor.
@@ -49,11 +47,7 @@ public class InsertAction extends Action {
 	 */
 	public InsertAction(String title, Point region, XModelObject item, VpePageContext pageContext,
 			StructuredTextEditor sourceEditor) {
-		super(title);
-		this.item = item;
-		this.region = region;
-		this.pageContext = pageContext;
-		this.sourceEditor = sourceEditor;
+		this(title, region, item, pageContext, sourceEditor, false);
 	}
 	
 	/**
@@ -97,15 +91,14 @@ public class InsertAction extends Action {
 		String startText = Constants.EMPTY + item.getAttributeValue("start text"); //$NON-NLS-1$
 		String endText = Constants.EMPTY + item.getAttributeValue("end text"); //$NON-NLS-1$
 		
-		if (this.replace) {
-			getSourceEditor().getTextViewer().getTextWidget().replaceTextRange(
-					region.x, region.y, ""); //$NON-NLS-1$
-			region.y = 0;
-		}
-
 		if (region != null) {
-			// set source selection
-			SelectionUtil.setSourceSelection(pageContext, region.x, region.y);
+			if (this.replace) {
+				getSourceEditor().getTextViewer().getTextWidget().replaceTextRange(
+						region.x, region.y, ""); //$NON-NLS-1$
+			} else {
+				// set source selection
+				SelectionUtil.setSourceSelection(pageContext, region.x, region.y);
+			}
 		}
 
 		// Gets source editor's selection provider with updated text selection.
@@ -128,13 +121,6 @@ public class InsertAction extends Action {
 		// if(((Node)region).getNodeType() == Node.ELEMENT_NODE)
 		p.put("selectionProvider", selProvider); //$NON-NLS-1$
 		PaletteInsertHelper.insertIntoEditor(sourceEditor.getTextViewer(), p);
-	}
-
-	/**
-	 * @return the region
-	 */
-	protected Point getRegion() {
-		return region;
 	}
 
 	/**

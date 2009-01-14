@@ -44,7 +44,6 @@ import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.menu.BaseActionManager.MyMenuManager;
 import org.jboss.tools.vpe.editor.menu.action.InsertAction;
-import org.jboss.tools.vpe.editor.menu.action.ReplaceAction;
 import org.jboss.tools.vpe.editor.menu.action.VpeMenuListener;
 import org.jboss.tools.vpe.editor.menu.action.VpeTextOperationAction;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
@@ -508,7 +507,7 @@ public class MenuCreationHelper {
 	 */
 	private void createReplaceAction(MenuManager menu, Point region, XModelObject item){
 		String tagName = getTagName(menu, region, item);
-		menu.add(new ReplaceAction(tagName, region, item, pageContext, sourceEditor));
+		menu.add(new InsertAction(tagName, region, item, pageContext, sourceEditor, true));
 	}
 	
 
