@@ -17,7 +17,6 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.jboss.tools.smooks.ui.gef.editparts.StructuredDataConnectionEditPart;
-import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
 
 /**
  * @author Dart Peng

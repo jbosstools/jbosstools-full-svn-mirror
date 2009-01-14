@@ -18,6 +18,7 @@ import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -221,6 +222,8 @@ public class JavaBeanModel implements IValidatable {
 
 	public boolean isPrimitive() {
 		Class beanType = getBeanClass();
+		if (beanType == null)
+			return false;
 		if (beanType.isPrimitive()
 				|| JavaBeanModelFactory.isPrimitiveObject(beanType)) {
 			if (!isArray() && !isList())
@@ -307,7 +310,7 @@ public class JavaBeanModel implements IValidatable {
 				}
 			}
 			if (beanType == null)
-				return null;
+				return Collections.EMPTY_LIST;
 			PropertyDescriptor[] pds = JavaPropertyUtils
 					.getPropertyDescriptor(beanType);
 
@@ -321,11 +324,11 @@ public class JavaBeanModel implements IValidatable {
 						Type returnType = rmethod.getGenericReturnType();
 						if (returnType instanceof ParameterizedType) {
 							Type[] types = ((ParameterizedType) returnType)
-							.getActualTypeArguments();
-							if(types == null || types.length == 0){
+									.getActualTypeArguments();
+							if (types == null || types.length == 0) {
 								continue;
 							}
-						}else{
+						} else {
 							continue;
 						}
 					}
@@ -377,6 +380,17 @@ public class JavaBeanModel implements IValidatable {
 		this.error = error;
 	}
 
+	public JavaBeanModel getRootParent() {
+		JavaBeanModel parent = this.getParent();
+		if(parent == null) return this;
+		JavaBeanModel temp = parent;
+		while(temp != null){
+			parent = temp;
+			temp = temp.getParent();
+		}
+		return parent;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -398,6 +412,18 @@ public class JavaBeanModel implements IValidatable {
 			}
 		}
 		return buffer.toString();
+	}
+	
+	public String getSelectorString(){
+		if(parent == null){
+			return getBeanClassString();
+		}
+		
+		if(parent.isArray() || parent.isList()){
+			return getBeanClassString();
+		}
+		return getName();
+		
 	}
 
 	public boolean hasGenericType() {

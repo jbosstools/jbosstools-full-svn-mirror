@@ -11,6 +11,7 @@
 package org.jboss.tools.smooks.javabean.commandprocessor;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
@@ -20,10 +21,15 @@ import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.ui.gef.commandprocessor.ICommandProcessor;
 import org.jboss.tools.smooks.ui.gef.commands.CreateConnectionCommand;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
+import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
+import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
 import org.jboss.tools.smooks.ui.gef.model.PropertyModel;
+import org.jboss.tools.smooks.ui.gef.model.TargetModel;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.jboss.tools.smooks.utils.UIUtils;
+import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
+import org.jboss.tools.smooks.xml.model.TagList;
 
 /**
  * @author Dart Peng
@@ -52,8 +58,11 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 							.getReferenceEntityModel();
 					Object t = ((AbstractStructuredDataModel) m)
 							.getReferenceEntityModel();
+					List connections = ((IConnectableModel) m).getModelTargetConnections();
+					if(connections.size() > 0) return false;
 					if (source instanceof JavaBeanModel
 							&& t instanceof JavaBeanModel) {
+
 						JavaBeanModel sourceModel = (JavaBeanModel) source;
 						JavaBeanModel targetModel = (JavaBeanModel) t;
 						boolean sis = ((JavaBeanModel) source).isPrimitive();
@@ -61,6 +70,7 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 						if ((sis && !tis) || (!sis && tis)) {
 							return false;
 						}
+
 						Class sourceClass = sourceModel.getBeanClass();
 						Class targetClass = targetModel.getBeanClass();
 						boolean isCompositeSource = sourceClass.isArray()
@@ -69,7 +79,8 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 						boolean isCompositeTarget = targetClass.isArray()
 								|| Collection.class
 										.isAssignableFrom(targetClass);
-						if(isCompositeSource != isCompositeTarget) return false;
+						if (isCompositeSource != isCompositeTarget)
+							return false;
 
 					}
 				}
@@ -106,9 +117,11 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 							.getReferenceEntityModel();
 					Object t = ((AbstractStructuredDataModel) m)
 							.getReferenceEntityModel();
+					if (t instanceof JavaBeanModel) {
+						target = (JavaBeanModel) t;
+					}
 					if (!UIUtils.isInstanceCreatingConnection(source, t)) {
 						if (t instanceof JavaBeanModel) {
-							target = (JavaBeanModel) t;
 							Class clazz = ((JavaBeanModel) t).getBeanClass();
 							if (clazz != null && clazz != String.class) {
 								PropertyModel property = new PropertyModel();
@@ -122,6 +135,10 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 			}
 
 			CompoundCommand compoundCommand = new CompoundCommand();
+			CreateConnectionCommand connectRootNodeCommand = connectRootNode(
+					source, target, context);
+			if (connectRootNodeCommand != null)
+				connectRootNodeCommand.execute();
 			fillCreateParentLinkCommand(compoundCommand, source, target,
 					context);
 			if (!compoundCommand.isEmpty()) {
@@ -129,6 +146,76 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 			}
 		}
 		return true;
+	}
+
+	private CreateConnectionCommand connectRootNode(Object source,
+			Object target, SmooksConfigurationFileGenerateContext context) {
+		JavaBeanModel javaBeanTarget = (JavaBeanModel) target;
+		Object sourceModel = source;
+
+		JavaBeanModel targetRoot = javaBeanTarget.getParent();
+		JavaBeanModel tempTargetRoot = targetRoot;
+		while (tempTargetRoot != null) {
+			targetRoot = tempTargetRoot;
+			tempTargetRoot = tempTargetRoot.getParent();
+		}
+		Object sourceRoot = null;
+		if (sourceModel instanceof JavaBeanModel) {
+			sourceRoot = ((JavaBeanModel) sourceModel).getParent();
+			JavaBeanModel sourceTempRoot = (JavaBeanModel) sourceRoot;
+			while (sourceTempRoot != null) {
+				sourceRoot = sourceTempRoot;
+				sourceTempRoot = ((JavaBeanModel) sourceTempRoot).getParent();
+			}
+		}
+
+		if (sourceModel instanceof AbstractXMLObject) {
+			sourceRoot = ((AbstractXMLObject) sourceModel).getParent();
+			AbstractXMLObject tempParent = ((AbstractXMLObject) sourceRoot)
+					.getParent();
+			while (!(tempParent instanceof TagList)) {
+				sourceRoot = tempParent;
+				tempParent = tempParent.getParent();
+			}
+		}
+		GraphRootModel graphRoot = context.getGraphicalRootModel();
+		if (sourceRoot == null || targetRoot == null)
+			return null;
+		AbstractStructuredDataModel graphSourceRoot = UIUtils.findGraphModel(
+				graphRoot, sourceRoot);
+		AbstractStructuredDataModel graphTargetRoot = UIUtils.findGraphModel(
+				graphRoot, targetRoot);
+
+		List<TargetModel> graphTargetList = graphRoot.loadTargetModelList();
+		boolean isConnected = false;
+		for (Iterator iterator = graphTargetList.iterator(); iterator.hasNext();) {
+			TargetModel targetModel = (TargetModel) iterator.next();
+			if (targetModel == graphTargetRoot) {
+				List connections = targetModel.getModelTargetConnections();
+				for (Iterator iterator2 = connections.iterator(); iterator2
+						.hasNext();) {
+					Object object = (Object) iterator2.next();
+					if (object instanceof LineConnectionModel) {
+						Object cs = ((LineConnectionModel) object).getSource();
+						if (cs == graphSourceRoot) {
+							isConnected = true;
+							break;
+						}
+					}
+				}
+			}
+			if (isConnected)
+				break;
+		}
+
+		if (!isConnected) {
+			CreateConnectionCommand connectionCommand = new CreateConnectionCommand();
+			connectionCommand.setSource(graphSourceRoot);
+			connectionCommand.setTarget(graphTargetRoot);
+			return connectionCommand;
+		}
+
+		return null;
 	}
 
 	private void fillCreateParentLinkCommand(CompoundCommand compoundCommand,
