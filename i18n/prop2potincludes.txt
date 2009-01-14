@@ -3,4 +3,3 @@
 */plugins/*/jbosscore/**/*.properties
 */plugins/*/jbossui/**/*.properties
 */plugins/*/resources/**/*.properties
-*/plugins/*/template-src/**/*.properties

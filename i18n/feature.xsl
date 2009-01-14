@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsl:stylesheet
   version="1.0"
+  xmlns:fn="http://www.w3.org/2005/xpath-functions"
+  xmlns:file="java.io.File"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+	<xsl:output indent="yes" />
     <xsl:param name="feature">FEATURE</xsl:param>
     <xsl:param name="locale">LOCALE</xsl:param>
     <xsl:param name="localename">LOCALE_NAME</xsl:param>
     <xsl:param name="featureversion">FEATURE_VERSION</xsl:param>
     <xsl:param name="pluginversion">PLUGIN_VERSION</xsl:param>
+    <xsl:param name="jardir">target/jars/plugins</xsl:param>
 
 	<xsl:template match="/feature">
 		<feature provider-name="%providerName">
@@ -20,11 +24,18 @@
 			names (since they shouldn't be translated anyway) or use @id 
 			here, not @label.
 			 -->
-			<xsl:attribute name="label">JBoss Tools Language Pack for <xsl:value-of select="@label" /> in <xsl:value-of select="$localename" />
+			<xsl:attribute name="label">Language Pack for <xsl:value-of select="@label" /> in <xsl:value-of select="$localename" />
 			</xsl:attribute>
 			<xsl:attribute name="version">
 				<xsl:value-of select="$featureversion" />
 			</xsl:attribute>
+<!-- 
+			<xsl:if test="@plugin">
+				<xsl:attribute name="plugin">
+					<xsl:value-of select="@plugin" />
+				</xsl:attribute>
+			</xsl:if>
+ -->			
 			<copyright>
 				%copyright
 			</copyright>
@@ -430,27 +441,45 @@
 		HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. 
 		END OF TERMS AND CONDITIONS
 			</license>
-			<description>JBoss Tools Language Pack for <xsl:value-of select="$feature" /> in <xsl:value-of select="$localename" /></description>
+			<description>Language Pack for <xsl:value-of select="$feature" /> in <xsl:value-of select="$localename" /></description>
 			<url>
 				<update label="JBossTools Update Site" url="http://download.jboss.org/jbosstools/updates/stable"/>
 				<discovery label="JBossTools Development Update Site" url="http://download.jboss.org/updates/development"/>
 			</url>
+<!-- 
 			<requires>
-				<import>
+				<import version="0.0.0" match="greaterOrEqual">
 					<xsl:attribute name="feature">
 						<xsl:value-of select="$feature" />
 					</xsl:attribute>
 				</import>
 			</requires>
+		   <includes search-location="self">
+				<xsl:attribute name="id">
+					<xsl:value-of select="$feature" />
+				</xsl:attribute>
+				<xsl:attribute name="version">
+					<xsl:value-of select="@version" />
+				</xsl:attribute>
+		   </includes>
+ -->
+			
 			<xsl:for-each select="plugin">
-				<plugin fragment="true" unpack="false">
-					<xsl:attribute name="id">
-						<xsl:value-of select="@id" />.nl-<xsl:value-of select="$locale" />
-					</xsl:attribute>
-					<xsl:attribute name="version">
-						<xsl:value-of select="$pluginversion" />
-					</xsl:attribute>
-				</plugin>
+<!-- 
+ 				<xsl:copy-of select="." />
+ -->
+ 				<xsl:variable name="jarname" 
+ 					select="concat($jardir,'/', @id, '.nl-', $locale, '_', $pluginversion, '.jar')" />
+				<xsl:if test="file:exists(file:new($jarname))">
+					<plugin fragment="true" unpack="false">
+						<xsl:attribute name="id">
+							<xsl:value-of select="@id" />.nl-<xsl:value-of select="$locale" />
+						</xsl:attribute>
+						<xsl:attribute name="version">
+							<xsl:value-of select="$pluginversion" />
+						</xsl:attribute>
+					</plugin>
+				</xsl:if>
 			</xsl:for-each>
 		</feature>
 	</xsl:template>
