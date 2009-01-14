@@ -73,7 +73,7 @@ public class VpeFunctionHref extends VpeFunctionSrc {
 	}
 
 	if (imgPath != null && imgPath.toFile().exists()) {
-	    return new VpeValue(getPrefix() + imgPath.toOSString());
+	    return new VpeValue(getPrefix() + imgPath.toString());
 	}
 
 	return new VpeValue(getUnresolved());
