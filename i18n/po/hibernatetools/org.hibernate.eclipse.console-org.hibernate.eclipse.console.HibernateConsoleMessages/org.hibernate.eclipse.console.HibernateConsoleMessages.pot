@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-14 12:10+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2897,6 +2897,13 @@ msgid "Create Property File"
 msgstr ""
 
 #. 
+#: ConsoleConfigurationMainTab_DatabaseConnection
+#, java-format
+msgctxt "ConsoleConfigurationMainTab_DatabaseConnection"
+msgid "Database connection:"
+msgstr ""
+
+#. 
 #: ConsoleConfigurationMainTab_do_you_want_to_create_new_cfgxml
 #, java-format
 msgctxt "ConsoleConfigurationMainTab_do_you_want_to_create_new_cfgxml"
@@ -3048,6 +3055,27 @@ msgstr ""
 #, java-format
 msgctxt "ConsoleConfigurationMainTab_wizard_page"
 msgid "wizardPage"
+msgstr ""
+
+#. 
+#: ConsoleConfigurationMainTab_project_must_be_jpa
+#, java-format
+msgctxt "ConsoleConfigurationMainTab_project_must_be_jpa"
+msgid "Project ''{0}'' must be a JPA project"
+msgstr ""
+
+#. 
+#: ConsoleConfigurationMainTab_cp_not_specified
+#, java-format
+msgctxt "ConsoleConfigurationMainTab_cp_not_specified"
+msgid "Connection profile for project ''{0}'' not specified"
+msgstr ""
+
+#. 
+#: ConsoleConfigurationMainTab_project_must_be_set
+#, java-format
+msgctxt "ConsoleConfigurationMainTab_project_must_be_set"
+msgid "Project must be set to JPA project"
 msgstr ""
 
 #. 
@@ -3447,6 +3475,27 @@ msgstr ""
 #, java-format
 msgctxt "HibernateNature_reading_database_metadata_for"
 msgid "Reading database metadata for"
+msgstr ""
+
+#. 
+#: ConnectionProfileCtrl_Edit
+#, java-format
+msgctxt "ConnectionProfileCtrl_Edit"
+msgid "Edit..."
+msgstr ""
+
+#. 
+#: ConnectionProfileCtrl_HibernateConfiguredConnection
+#, java-format
+msgctxt "ConnectionProfileCtrl_HibernateConfiguredConnection"
+msgid "[Hibernate configured connection]"
+msgstr ""
+
+#. 
+#: ConnectionProfileCtrl_New
+#, java-format
+msgctxt "ConnectionProfileCtrl_New"
+msgid "New..."
 msgstr ""
 
 #. 

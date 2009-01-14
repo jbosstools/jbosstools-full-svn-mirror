@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-13 13:14+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,6 +29,20 @@ msgstr ""
 #, java-format
 msgctxt "NewConnectionWizard"
 msgid "New Connection Wizard"
+msgstr ""
+
+#. 
+#: NewConnectionWizard_CreateNewConnection
+#, java-format
+msgctxt "NewConnectionWizard_CreateNewConnection"
+msgid "Create a new JMX Connection"
+msgstr ""
+
+#. 
+#: DefaultConnectionWizardPage_Title
+#, java-format
+msgctxt "DefaultConnectionWizardPage_Title"
+msgid "Create JMX Connection"
 msgstr ""
 
 #. 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2008-12-02 14:58+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,7 +49,7 @@ msgstr ""
 #: Label_Generate_WSDL
 #, java-format
 msgctxt "Label_Generate_WSDL"
-msgid "Generete WSDL file"
+msgid "Generate WSDL file"
 msgstr ""
 
 #. 

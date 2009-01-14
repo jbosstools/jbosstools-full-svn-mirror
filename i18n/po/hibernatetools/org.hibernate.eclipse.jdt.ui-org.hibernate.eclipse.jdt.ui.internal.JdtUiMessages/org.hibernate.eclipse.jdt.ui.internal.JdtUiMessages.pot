@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-14 12:10+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,6 +38,34 @@ msgstr ""
 #, java-format
 msgctxt "AllEntitiesProcessor_message"
 msgid "Add JPA annotations to the related set of entities. The following classes will be changed:"
+msgstr ""
+
+#. 
+#: AllEntitiesProcessor_setup_annotation_generation_preference
+#, java-format
+msgctxt "AllEntitiesProcessor_setup_annotation_generation_preference"
+msgid "Setup annotation generation preference:"
+msgstr ""
+
+#. 
+#: AllEntitiesProcessor_annotate_fields
+#, java-format
+msgctxt "AllEntitiesProcessor_annotate_fields"
+msgid "Annotate fields"
+msgstr ""
+
+#. 
+#: AllEntitiesProcessor_annotate_getters
+#, java-format
+msgctxt "AllEntitiesProcessor_annotate_getters"
+msgid "Annotate getters"
+msgstr ""
+
+#. 
+#: AllEntitiesProcessor_auto_select_from_class_preference
+#, java-format
+msgctxt "AllEntitiesProcessor_auto_select_from_class_preference"
+msgid "Auto select from class preference"
 msgstr ""
 
 #. 
@@ -150,5 +178,68 @@ msgstr ""
 #, java-format
 msgctxt "SaveQueryEditorListener_errormessage"
 msgid "Error while query refactoring"
+msgstr ""
+
+#. 
+#: JPAMapToolActor_message_title
+#, java-format
+msgctxt "JPAMapToolActor_message_title"
+msgid "Hibernate/JPA"
+msgstr ""
+
+#. 
+#: JPAMapToolActor_message
+#, java-format
+msgctxt "JPAMapToolActor_message"
+msgid "Cannot generate annotations for an interface or enumeration"
+msgstr ""
+
+#. 
+#: ResolveAmbiguous_column_Class
+#, java-format
+msgctxt "ResolveAmbiguous_column_Class"
+msgid "Class"
+msgstr ""
+
+#. 
+#: ResolveAmbiguous_column_Association
+#, java-format
+msgctxt "ResolveAmbiguous_column_Association"
+msgid "Association"
+msgstr ""
+
+#. 
+#: ResolveAmbiguous_column_Type
+#, java-format
+msgctxt "ResolveAmbiguous_column_Type"
+msgid "Type"
+msgstr ""
+
+#. 
+#: ResolveAmbiguous_column_Related
+#, java-format
+msgctxt "ResolveAmbiguous_column_Related"
+msgid "Related"
+msgstr ""
+
+#. 
+#: ResolveAmbiguous_column_Owner
+#, java-format
+msgctxt "ResolveAmbiguous_column_Owner"
+msgid "Owner"
+msgstr ""
+
+#. 
+#: ResolveAmbiguous_empty
+#, java-format
+msgctxt "ResolveAmbiguous_empty"
+msgid "<empty>"
+msgstr ""
+
+#. 
+#: ResolveAmbiguous_message
+#, java-format
+msgctxt "ResolveAmbiguous_message"
+msgid "Edit entities relations."
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-14 12:15+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,7 +42,21 @@ msgstr ""
 #: ACTUAL_RUN_TIME_ABSOLUTE_FOLDER
 #, java-format
 msgctxt "ACTUAL_RUN_TIME_ABSOLUTE_FOLDER"
-msgid "Actual Run-Time Absolute Folder"
+msgid "Absolute Folder"
+msgstr ""
+
+#. 
+#: ACTUAL_RUN_TIME_RELATIVE_FOLDER
+#, java-format
+msgctxt "ACTUAL_RUN_TIME_RELATIVE_FOLDER"
+msgid "Relative Folder"
+msgstr ""
+
+#. 
+#: ACTUAL_RUN_TIME_FOLDERS
+#, java-format
+msgctxt "ACTUAL_RUN_TIME_FOLDERS"
+msgid "Actual Run-Time Folders"
 msgstr ""
 
 #. 

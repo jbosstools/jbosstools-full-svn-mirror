@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-13 12:41+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,5 +22,54 @@ msgstr ""
 #, java-format
 msgctxt "searchMenu.label"
 msgid "Se&arch"
+msgstr ""
+
+#. 
+#: PreferencePage_Validator
+#, java-format
+msgctxt "PreferencePage_Validator"
+msgid "Validator"
+msgstr ""
+
+#. 
+#: PreferencePage_Seam
+#, java-format
+msgctxt "PreferencePage_Seam"
+msgid "Seam"
+msgstr ""
+
+#. 
+#: PreferencePage_SeamValidator
+#, java-format
+msgctxt "PreferencePage_SeamValidator"
+msgid "Seam Validator"
+msgstr ""
+
+#. 
+#: PreferencePage_SeamSettings
+#, java-format
+msgctxt "PreferencePage_SeamSettings"
+msgid "Seam Settings"
+msgstr ""
+
+#. 
+#: ViewCategory_Seam
+#, java-format
+msgctxt "ViewCategory_Seam"
+msgid "Seam"
+msgstr ""
+
+#. 
+#: ViewName_SeamComponents
+#, java-format
+msgctxt "ViewName_SeamComponents"
+msgid "Seam Components"
+msgstr ""
+
+#. 
+#: perspective.name
+#, java-format
+msgctxt "perspective.name"
+msgid "Seam"
 msgstr ""
 

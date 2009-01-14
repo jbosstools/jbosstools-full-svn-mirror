@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 15:56+1000\n"
+"POT-Creation-Date: 2009-01-12 17:06+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1683,6 +1683,27 @@ msgid "Find Seam references for ''{0}''"
 msgstr ""
 
 #. 
+#: SeamRuntimeListFieldEditor_ActionAdd
+#, java-format
+msgctxt "SeamRuntimeListFieldEditor_ActionAdd"
+msgid "&Add"
+msgstr ""
+
+#. 
+#: SeamRuntimeListFieldEditor_ActionEdit
+#, java-format
+msgctxt "SeamRuntimeListFieldEditor_ActionEdit"
+msgid "&Edit"
+msgstr ""
+
+#. 
+#: SeamRuntimeListFieldEditor_ActionRemove
+#, java-format
+msgctxt "SeamRuntimeListFieldEditor_ActionRemove"
+msgid "&Remove"
+msgstr ""
+
+#. 
 #: POJO_CLASS_ALREADY_EXISTS
 #, java-format
 msgctxt "POJO_CLASS_ALREADY_EXISTS"
@@ -1694,5 +1715,19 @@ msgstr ""
 #, java-format
 msgctxt "ENTITY_CLASS_ALREADY_EXISTS"
 msgid "Such entity class already exists!"
+msgstr ""
+
+#. 
+#: PAGE_ALREADY_EXISTS
+#, java-format
+msgctxt "PAGE_ALREADY_EXISTS"
+msgid "Such page already exists!"
+msgstr ""
+
+#. 
+#: MASTER_PAGE_ALREADY_EXISTS
+#, java-format
+msgctxt "MASTER_PAGE_ALREADY_EXISTS"
+msgid "Such master page already exists!"
 msgstr ""
 

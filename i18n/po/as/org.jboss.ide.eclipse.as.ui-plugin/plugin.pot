@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-13 12:15+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,5 +113,26 @@ msgstr ""
 #, java-format
 msgctxt "actionSets.serverActions.runApplicationFromSelectedElement.label"
 msgid "Run Application from Selected Element"
+msgstr ""
+
+#. 
+#: perspective.name
+#, java-format
+msgctxt "perspective.name"
+msgid "JBoss AS"
+msgstr ""
+
+#. 
+#: ViewName_JBossServerView
+#, java-format
+msgctxt "ViewName_JBossServerView"
+msgid "JBoss Server View"
+msgstr ""
+
+#. 
+#: ViewName_ServerLog
+#, java-format
+msgctxt "ViewName_ServerLog"
+msgid "Server Log"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-12 17:38+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: providerName
 #, java-format
 msgctxt "providerName"
-msgid "Red Hat, Inc."
+msgid "JBoss, a division of Red Hat"
 msgstr ""
 
 #. 
@@ -124,5 +124,115 @@ msgstr ""
 #, java-format
 msgctxt "new.tiles"
 msgid "Tiles File"
+msgstr ""
+
+#. 
+#: PreferencePage_CustomCapabilities
+#, java-format
+msgctxt "PreferencePage_CustomCapabilities"
+msgid "Custom Capabilities"
+msgstr ""
+
+#. 
+#: PreferencePage_JSF
+#, java-format
+msgctxt "PreferencePage_JSF"
+msgid "JSF"
+msgstr ""
+
+#. 
+#: PreferencePage_Project
+#, java-format
+msgctxt "PreferencePage_Project"
+msgid "Project"
+msgstr ""
+
+#. 
+#: PreferencePage_JSFImplementations
+#, java-format
+msgctxt "PreferencePage_JSFImplementations"
+msgid "JSF Environment"
+msgstr ""
+
+#. 
+#: PreferencePage_JSFPages
+#, java-format
+msgctxt "PreferencePage_JSFPages"
+msgid "JSF Pages"
+msgstr ""
+
+#. 
+#: PreferencePage_JSFFlowTabbed
+#, java-format
+msgctxt "PreferencePage_JSFFlowTabbed"
+msgid "JSF Flow Diagram"
+msgstr ""
+
+#: NewWizardCat_JBossTools
+#, java-format
+msgctxt "NewWizardCat_JBossTools"
+msgid "JBoss Tools"
+msgstr ""
+
+#. 
+#: NewWizardCat_JSF
+#, java-format
+msgctxt "NewWizardCat_JSF"
+msgid "JSF"
+msgstr ""
+
+#. 
+#: NewWizardCat_Struts
+#, java-format
+msgctxt "NewWizardCat_Struts"
+msgid "Struts"
+msgstr ""
+
+#. 
+#: NewWizard_FacesConfig
+#, java-format
+msgctxt "NewWizard_FacesConfig"
+msgid "Faces Config"
+msgstr ""
+
+#. 
+#: NewWizardDescription_FacesConfig
+#, java-format
+msgctxt "NewWizardDescription_FacesConfig"
+msgid "Create a Faces Config"
+msgstr ""
+
+#. 
+#: NewWizardDescription_JSFProject
+#, java-format
+msgctxt "NewWizardDescription_JSFProject"
+msgid "Create a JSF Project"
+msgstr ""
+
+#: ImportWizardCat_JSF
+#, java-format
+msgctxt "ImportWizardCat_JSF"
+msgid "JSF"
+msgstr ""
+
+#. 
+#: ImportWizardCat_Struts
+#, java-format
+msgctxt "ImportWizardCat_Struts"
+msgid "Struts"
+msgstr ""
+
+#. 
+#: ImportWizardDescription_JSFProject
+#, java-format
+msgctxt "ImportWizardDescription_JSFProject"
+msgid "Create a new Project from a JSF project in the file system. This does not copy the project to the workspace."
+msgstr ""
+
+#. 
+#: ImportWizardDescription_JSFWar
+#, java-format
+msgctxt "ImportWizardDescription_JSFWar"
+msgid "Create a new Project from a JSF project in a WAR file. The content of WAR file will be copied to the workspace."
 msgstr ""
 

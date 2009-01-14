@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-13 12:17+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: providerName
 #, java-format
 msgctxt "providerName"
-msgid "Red Hat, Inc."
+msgid "JBoss, a division of Red Hat"
 msgstr ""
 
 #: editors.tld12.name
@@ -107,5 +107,157 @@ msgstr ""
 #, java-format
 msgctxt "web.category_ui_"
 msgid "Web"
+msgstr ""
+
+#: PreferencePage_LibrarySets
+#, java-format
+msgctxt "PreferencePage_LibrarySets"
+msgid "Library Sets"
+msgstr ""
+
+#. 
+#: NewWizardCat_JBossToolsWeb
+#, java-format
+msgctxt "NewWizardCat_JBossToolsWeb"
+msgid "JBoss Tools Web"
+msgstr ""
+
+#. 
+#: NewWizard_CSSFile
+#, java-format
+msgctxt "NewWizard_CSSFile"
+msgid "CSS File"
+msgstr ""
+
+#. 
+#: NewWizardDescription_CSSFile
+#, java-format
+msgctxt "NewWizardDescription_CSSFile"
+msgid "Create a CSS File"
+msgstr ""
+
+#. 
+#: NewWizard_CSSClass
+#, java-format
+msgctxt "NewWizard_CSSClass"
+msgid "CSS Class"
+msgstr ""
+
+#. 
+#: NewWizardDescription_CSSClass
+#, java-format
+msgctxt "NewWizardDescription_CSSClass"
+msgid "Create a CSS Class"
+msgstr ""
+
+#. 
+#: NewWizard_JSFile
+#, java-format
+msgctxt "NewWizard_JSFile"
+msgid "JS File"
+msgstr ""
+
+#. 
+#: NewWizardDescription_JSFile
+#, java-format
+msgctxt "NewWizardDescription_JSFile"
+msgid "Create a JS File"
+msgstr ""
+
+#. 
+#: NewWizard_WebDescriptor
+#, java-format
+msgctxt "NewWizard_WebDescriptor"
+msgid "Web Descriptor"
+msgstr ""
+
+#. 
+#: NewWizardDescription_WebDescriptor
+#, java-format
+msgctxt "NewWizardDescription_WebDescriptor"
+msgid "Create a Web Descriptor"
+msgstr ""
+
+#. 
+#: NewWizard_JSPFile
+#, java-format
+msgctxt "NewWizard_JSPFile"
+msgid "JSP File"
+msgstr ""
+
+#. 
+#: NewWizardDescription_JSPFile
+#, java-format
+msgctxt "NewWizardDescription_JSPFile"
+msgid "Create a JSP File"
+msgstr ""
+
+#. 
+#: NewWizard_XHTMLFile
+#, java-format
+msgctxt "NewWizard_XHTMLFile"
+msgid "XHTML File"
+msgstr ""
+
+#. 
+#: NewWizardDescription_XHTMLFile
+#, java-format
+msgctxt "NewWizardDescription_XHTMLFile"
+msgid "Create a XHTML File"
+msgstr ""
+
+#. 
+#: NewWizard_HTMLFile
+#, java-format
+msgctxt "NewWizard_HTMLFile"
+msgid "HTML File"
+msgstr ""
+
+#. 
+#: NewWizardDescription_HTMLFile
+#, java-format
+msgctxt "NewWizardDescription_HTMLFile"
+msgid "Create a HTML File"
+msgstr ""
+
+#. 
+#: NewWizard_PropertiesFile
+#, java-format
+msgctxt "NewWizard_PropertiesFile"
+msgid "Properties File"
+msgstr ""
+
+#. 
+#: NewWizardDescription_PropertiesFile
+#, java-format
+msgctxt "NewWizardDescription_PropertiesFile"
+msgid "Create a Properties File"
+msgstr ""
+
+#. 
+#: NewWizard_TLDFile
+#, java-format
+msgctxt "NewWizard_TLDFile"
+msgid "TLD File"
+msgstr ""
+
+#. 
+#: NewWizardDescription_TLDFile
+#, java-format
+msgctxt "NewWizardDescription_TLDFile"
+msgid "Create a TLD File"
+msgstr ""
+
+#: ViewName_WebProjects
+#, java-format
+msgctxt "ViewName_WebProjects"
+msgid "Web Projects"
+msgstr ""
+
+#. 
+#: ViewCategory_JBossToolsWeb
+#, java-format
+msgctxt "ViewCategory_JBossToolsWeb"
+msgid "JBoss Tools Web"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-09 15:00+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,14 +21,14 @@ msgstr ""
 #: providerName
 #, java-format
 msgctxt "providerName"
-msgid "Red Hat, Inc."
+msgid "JBoss, a division of Red Hat"
 msgstr ""
 
 #. 
 #: pluginName
 #, java-format
 msgctxt "pluginName"
-msgid "JBoss Tools UI Plugin"
+msgid "JBoss Tools RichFaces"
 msgstr ""
 
 #. 
@@ -71,5 +71,26 @@ msgstr ""
 #, java-format
 msgctxt "visual.jumping"
 msgid "Jump"
+msgstr ""
+
+#. 
+#: PreferencePage_ElVariables
+#, java-format
+msgctxt "PreferencePage_ElVariables"
+msgid "El Variables"
+msgstr ""
+
+#. 
+#: visualEditorImpl_name
+#, java-format
+msgctxt "visualEditorImpl_name"
+msgid "XulRunner Visual Editor"
+msgstr ""
+
+#. 
+#: PreferencePage_VpeEditor
+#, java-format
+msgctxt "PreferencePage_VpeEditor"
+msgid "Visual Page Editor"
 msgstr ""
 

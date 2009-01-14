@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2008-12-08 13:27+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,13 +29,6 @@ msgstr ""
 #, java-format
 msgctxt "ECFExamplesTransport_Downloading"
 msgid "Downloading "
-msgstr ""
-
-#. 
-#: ECFExamplesTransport_Internal_error
-#, java-format
-msgctxt "ECFExamplesTransport_Internal_error"
-msgid "Internal error"
 msgstr ""
 
 #. 
@@ -151,6 +144,13 @@ msgid "Error"
 msgstr ""
 
 #. 
+#: NewProjectExamplesWizard_File_does_not_exist
+#, java-format
+msgctxt "NewProjectExamplesWizard_File_does_not_exist"
+msgid "The {0} does not exist."
+msgstr ""
+
+#. 
 #: NewProjectExamplesWizard_Importing
 #, java-format
 msgctxt "NewProjectExamplesWizard_Importing"
@@ -246,5 +246,12 @@ msgstr ""
 #, java-format
 msgctxt "ProjectUtil_Invalid_URL"
 msgid "Invalid URL: {0}"
+msgstr ""
+
+#. 
+#: ProjectUtil_Invalid_welcome_element
+#, java-format
+msgctxt "ProjectUtil_Invalid_welcome_element"
+msgid "The welcome element has invalid the url attribute"
 msgstr ""
 

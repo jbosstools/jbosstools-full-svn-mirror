@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-09 13:02+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -106,6 +106,20 @@ msgstr ""
 #, java-format
 msgctxt "ImplementationsPreferencesPage.Remove"
 msgid "Remove"
+msgstr ""
+
+#. 
+#: ImplementationsPreferencesPage.Up
+#, java-format
+msgctxt "ImplementationsPreferencesPage.Up"
+msgid "Up"
+msgstr ""
+
+#. 
+#: ImplementationsPreferencesPage.Down
+#, java-format
+msgctxt "ImplementationsPreferencesPage.Down"
+msgid "Down"
 msgstr ""
 
 #. 

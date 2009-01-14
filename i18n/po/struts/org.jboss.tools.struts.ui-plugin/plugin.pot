@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-12 15:57+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: pluginName
 #, java-format
 msgctxt "pluginName"
-msgid "JBoss Tools Struts UI"
+msgid "Struts Tools"
 msgstr ""
 
 #: newProjectWizard.name
@@ -54,7 +54,7 @@ msgstr ""
 #: providerName
 #, java-format
 msgctxt "providerName"
-msgid "Red Hat, Inc."
+msgid "JBoss, a division of Red Hat"
 msgstr ""
 
 #. 
@@ -182,5 +182,88 @@ msgstr ""
 #, java-format
 msgctxt "struts.projects.navigator.name"
 msgid "Struts Projects"
+msgstr ""
+
+#: NewWizardCat_Struts
+#, java-format
+msgctxt "NewWizardCat_Struts"
+msgid "Struts"
+msgstr ""
+
+#. 
+#: ImportWizardCat_Struts
+#, java-format
+msgctxt "ImportWizardCat_Struts"
+msgid "Struts"
+msgstr ""
+
+#. 
+#: PreferencePage_Struts
+#, java-format
+msgctxt "PreferencePage_Struts"
+msgid "Struts"
+msgstr ""
+
+#. 
+#: PreferencePage_StrutsSupport
+#, java-format
+msgctxt "PreferencePage_StrutsSupport"
+msgid "Struts Support"
+msgstr ""
+
+#. 
+#: PreferencePage_StrutsEnvironment
+#, java-format
+msgctxt "PreferencePage_StrutsEnvironment"
+msgid "Struts Environment"
+msgstr ""
+
+#. 
+#: PreferencePage_StrutsPages
+#, java-format
+msgctxt "PreferencePage_StrutsPages"
+msgid "Struts Pages"
+msgstr ""
+
+#. 
+#: PreferencePage_Project
+#, java-format
+msgctxt "PreferencePage_Project"
+msgid "Project"
+msgstr ""
+
+#. 
+#: PreferencePage_Automation
+#, java-format
+msgctxt "PreferencePage_Automation"
+msgid "Automation"
+msgstr ""
+
+#. 
+#: PreferencePage_ResourceInsets
+#, java-format
+msgctxt "PreferencePage_ResourceInsets"
+msgid "Resource Insets"
+msgstr ""
+
+#. 
+#: PreferencePage_Customization
+#, java-format
+msgctxt "PreferencePage_Customization"
+msgid "Customization"
+msgstr ""
+
+#. 
+#: PreferencePage_WebFlow
+#, java-format
+msgctxt "PreferencePage_WebFlow"
+msgid "Struts Flow Diagram"
+msgstr ""
+
+#. 
+#: PreferencePage_PluginInsets
+#, java-format
+msgctxt "PreferencePage_PluginInsets"
+msgid "Plug-in Insets"
 msgstr ""
 

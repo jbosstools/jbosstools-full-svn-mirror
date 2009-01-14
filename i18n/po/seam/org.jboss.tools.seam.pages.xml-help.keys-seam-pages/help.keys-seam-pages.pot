@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-14 12:14+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -791,5 +791,53 @@ msgstr ""
 #, java-format
 msgctxt "SeamItem_SelectNode.Message"
 msgid "Please Select a Node"
+msgstr ""
+
+#: SharableSeamPagesEditor.enableControlModeOnTransitionCompleted
+#, java-format
+msgctxt "SharableSeamPagesEditor.enableControlModeOnTransitionCompleted"
+msgid "Switch to standard control mode for cursor after transition is made"
+msgstr ""
+
+#. 
+#: SharableSeamPagesEditor.showShortcutIcon
+#, java-format
+msgctxt "SharableSeamPagesEditor.showShortcutIcon"
+msgid "Show shortcut icon"
+msgstr ""
+
+#. 
+#: SharableSeamPagesEditor.showShortcutPath
+#, java-format
+msgctxt "SharableSeamPagesEditor.showShortcutPath"
+msgid "Show shortcut path"
+msgstr ""
+
+#. 
+#: SharableSeamPagesEditor.Show_Grid
+#, java-format
+msgctxt "SharableSeamPagesEditor.Show_Grid"
+msgid "Show grid"
+msgstr ""
+
+#. 
+#: SharableSeamPagesEditor.Grid_Step
+#, java-format
+msgctxt "SharableSeamPagesEditor.Grid_Step"
+msgid "Grid Step"
+msgstr ""
+
+#. 
+#: SharableSeamPagesEditor.Link_Path_Font
+#, java-format
+msgctxt "SharableSeamPagesEditor.Link_Path_Font"
+msgid "Link Path Font"
+msgstr ""
+
+#. 
+#: SharableSeamPagesEditor.View_Path_Font
+#, java-format
+msgctxt "SharableSeamPagesEditor.View_Path_Font"
+msgid "View Path Font"
 msgstr ""
 

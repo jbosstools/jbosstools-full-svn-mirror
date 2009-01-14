@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2008-12-02 15:20+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,43 +38,58 @@ msgctxt "VPECSSReference.location"
 msgid "CSS File Path"
 msgstr ""
 
-#: VPECSSReference_AddItem.Title
+#: VPECSSReferenceAddItem.Title
 #, java-format
-msgctxt "VPECSSReference_AddItem.Title"
+msgctxt "VPECSSReferenceAddItem.Title"
 msgid "Add References to CSS File"
 msgstr ""
 
 #. 
-#: VPECSSReference_EditItem.Title
+#: VPECSSReferenceEditItem.Title
 #, java-format
-msgctxt "VPECSSReference_EditItem.Title"
+msgctxt "VPECSSReferenceEditItem.Title"
 msgid "Edit Existing References to CSS File"
 msgstr ""
 
-#: VPETLDReference_AddItem.Title
+#. 
+#: VPECSSReferenceAddItem.Message
 #, java-format
-msgctxt "VPETLDReference_AddItem.Title"
+msgctxt "VPECSSReferenceAddItem.Message"
+msgid "Add References to CSS File, which will be used for generation a preview"
+msgstr ""
+
+#. 
+#: VPECSSReferenceEditItem.Message
+#, java-format
+msgctxt "VPECSSReferenceEditItem.Message"
+msgid "Edit Existing References to CSS File, which is used for generation a preview"
+msgstr ""
+
+#: VPETLDReferenceAddItem.Title
+#, java-format
+msgctxt "VPETLDReferenceAddItem.Title"
 msgid "Add TLD Item"
 msgstr ""
 
 #. 
-#: VPETLDReference_EditItem.Title
+#: VPETLDReferenceEditItem.Title
 #, java-format
-msgctxt "VPETLDReference_EditItem.Title"
+msgctxt "VPETLDReferenceEditItem.Title"
 msgid "Edit TLD Item"
 msgstr ""
 
-#: VPEElReference_AddItem.Title
+#. 
+#: VPETLDReferenceAddItem.Message
 #, java-format
-msgctxt "VPEElReference_AddItem.Title"
-msgid "Add El Item"
+msgctxt "VPETLDReferenceAddItem.Message"
+msgid "Add TLD definition, which will be used in a visual part for generation a preview"
 msgstr ""
 
 #. 
-#: VPEElReference_EditItem.Title
+#: VPETLDReferenceEditItem.Message
 #, java-format
-msgctxt "VPEElReference_EditItem.Title"
-msgid "Edit EL Item"
+msgctxt "VPETLDReferenceEditItem.Message"
+msgid "Edit TLD Item, which is used in a visual part for generation a preview"
 msgstr ""
 
 #: VpeImageReferencesDialog.WindowTitle
@@ -123,17 +138,32 @@ msgctxt "VPEElReference.prefix"
 msgid "Value"
 msgstr ""
 
-#: VPEElReferenceExt.location
+#. 
+#: VPEElReferenceEditItem.Title
 #, java-format
-msgctxt "VPEElReferenceExt.location"
-msgid "El Value"
+msgctxt "VPEElReferenceEditItem.Title"
+msgid "Edit El Item Title"
 msgstr ""
 
 #. 
-#: VPEElReferenceExt.prefix
+#: VPEElReferenceEditItem.Message
 #, java-format
-msgctxt "VPEElReferenceExt.prefix"
-msgid "Value"
+msgctxt "VPEElReferenceEditItem.Message"
+msgid "Edit El variable, which is substituted in a visual part for generating a preview"
+msgstr ""
+
+#. 
+#: VPEElReferenceAddItem.Message
+#, java-format
+msgctxt "VPEElReferenceAddItem.Message"
+msgid "Add El variable, which will be substituted in a visual part for generating a preview"
+msgstr ""
+
+#. 
+#: VPEElReferenceAddItem.Title
+#, java-format
+msgctxt "VPEElReferenceAddItem.Title"
+msgid "Add El Item "
 msgstr ""
 
 #: VPEGlobalElReference.location
@@ -150,44 +180,31 @@ msgid "Value"
 msgstr ""
 
 #. 
-#: VPEGlobalElReference_AddItem.Title
+#: VPEGlobalElReferenceAddItem.Title
 #, java-format
-msgctxt "VPEGlobalElReference_AddItem.Title"
+msgctxt "VPEGlobalElReferenceAddItem.Title"
 msgid "Add El Item"
 msgstr ""
 
 #. 
-#: VPEGlobalElReference_EditItem.Title
+#: VPEGlobalElReferenceEditItem.Title
 #, java-format
-msgctxt "VPEGlobalElReference_EditItem.Title"
+msgctxt "VPEGlobalElReferenceEditItem.Title"
 msgid "Edit EL Item"
 msgstr ""
 
-#: VPEGlobalElReferenceExt.location
+#. 
+#: VPEGlobalElReferenceAddItem.Message
 #, java-format
-msgctxt "VPEGlobalElReferenceExt.location"
-msgid "El Value"
+msgctxt "VPEGlobalElReferenceAddItem.Message"
+msgid "Add global El variable, which will be substituted in a visual part for generating a preview"
 msgstr ""
 
 #. 
-#: VPEGlobalElReferenceExt.prefix
+#: VPEGlobalElReferenceEditItem.Message
 #, java-format
-msgctxt "VPEGlobalElReferenceExt.prefix"
-msgid "Value"
-msgstr ""
-
-#. 
-#: VPEGlobalElReferenceExt_AddItem.Title
-#, java-format
-msgctxt "VPEGlobalElReferenceExt_AddItem.Title"
-msgid "Add El Item"
-msgstr ""
-
-#. 
-#: VPEGlobalElReferenceExt_EditItem.Title
-#, java-format
-msgctxt "VPEGlobalElReferenceExt_EditItem.Title"
-msgid "Edit EL Item"
+msgctxt "VPEGlobalElReferenceEditItem.Message"
+msgid "Edit global El variable, which is substituted in a visual part for generating a preview"
 msgstr ""
 
 #: VpeResourcesDialog.WindowTitle

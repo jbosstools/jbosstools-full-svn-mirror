@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-13 12:27+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,14 +35,14 @@ msgstr ""
 #: BundleProvider
 #, java-format
 msgctxt "BundleProvider"
-msgid "Jeff Mesnil"
+msgid "JBoss, a division of Red Hat"
 msgstr ""
 
 #. 
 #: BundleName
 #, java-format
 msgctxt "BundleName"
-msgid "JMX UI Plug-in"
+msgid "JMX Console"
 msgstr ""
 
 #. 
@@ -85,5 +85,19 @@ msgstr ""
 #, java-format
 msgctxt "OpenMBeanAction.tooltip"
 msgid "Open MBean"
+msgstr ""
+
+#. 
+#: perspective.name
+#, java-format
+msgctxt "perspective.name"
+msgid "JMX"
+msgstr ""
+
+#. 
+#: ViewCategory_JMX
+#, java-format
+msgctxt "ViewCategory_JMX"
+msgid "JMX"
 msgstr ""
 

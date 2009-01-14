@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-13 12:25+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,5 +22,54 @@ msgstr ""
 #, java-format
 msgctxt "GenerateEntities"
 msgid "Generate Entities"
+msgstr ""
+
+#. 
+#: Preference_Page_HQL
+#, java-format
+msgctxt "Preference_Page_HQL"
+msgid "HQL editor"
+msgstr ""
+
+#. 
+#: perspective.name
+#, java-format
+msgctxt "perspective.name"
+msgid "Hibernate"
+msgstr ""
+
+#. 
+#: ViewName_HibernateConfigurations
+#, java-format
+msgctxt "ViewName_HibernateConfigurations"
+msgid "Hibernate Configurations"
+msgstr ""
+
+#. 
+#: ViewName_HibernateQueryResult
+#, java-format
+msgctxt "ViewName_HibernateQueryResult"
+msgid "Hibernate Query Result"
+msgstr ""
+
+#. 
+#: ViewName_HibernateDynamicSQLPreview
+#, java-format
+msgctxt "ViewName_HibernateDynamicSQLPreview"
+msgid "Hibernate Dynamic SQL Preview"
+msgstr ""
+
+#. 
+#: ViewName_QueryParameters
+#, java-format
+msgctxt "ViewName_QueryParameters"
+msgid "Query Parameters"
+msgstr ""
+
+#. 
+#: ViewCategory_Hibernate
+#, java-format
+msgctxt "ViewCategory_Hibernate"
+msgid "Hibernate"
 msgstr ""
 

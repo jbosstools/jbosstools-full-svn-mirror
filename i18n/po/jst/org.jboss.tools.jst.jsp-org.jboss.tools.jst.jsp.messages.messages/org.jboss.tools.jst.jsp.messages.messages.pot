@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2008-12-02 15:20+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -125,6 +125,13 @@ msgid "Clear style sheet"
 msgstr ""
 
 #. 
+#: CSS_APPLY_CHANGES
+#, java-format
+msgctxt "CSS_APPLY_CHANGES"
+msgid "Apply changes"
+msgstr ""
+
+#. 
 #: ADD_FONT_FAMILY_TIP
 #, java-format
 msgctxt "ADD_FONT_FAMILY_TIP"
@@ -143,6 +150,13 @@ msgstr ""
 #, java-format
 msgctxt "FONT_FAMILY_DIALOG_TITLE"
 msgid "Choose font family"
+msgstr ""
+
+#. 
+#: BUTTON_APPLY
+#, java-format
+msgctxt "BUTTON_APPLY"
+msgid "Apply"
 msgstr ""
 
 #. 
@@ -423,5 +437,12 @@ msgstr ""
 #, java-format
 msgctxt "DEFAULT_PREVIEW_TEXT"
 msgid "CSS file to edit will be displayed here"
+msgstr ""
+
+#. 
+#: DEFAULT_TEXT_FOR_BROWSER_PREVIEW
+#, java-format
+msgctxt "DEFAULT_TEXT_FOR_BROWSER_PREVIEW"
+msgid "Double click to edit preview. To save changes press Enter button."
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-09 13:40+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,5 +22,54 @@ msgstr ""
 #, java-format
 msgctxt "CHECKBOX_LABEL"
 msgid "Allow to override preference settings"
+msgstr ""
+
+#. 
+#: ClassTemplateComponent_ADD
+#, java-format
+msgctxt "ClassTemplateComponent_ADD"
+msgid "Add"
+msgstr ""
+
+#. 
+#: ClassTemplateComponent_COLUMN_INTERFACES
+#, java-format
+msgctxt "ClassTemplateComponent_COLUMN_INTERFACES"
+msgid "Interfaces"
+msgstr ""
+
+#. 
+#: ClassTemplateComponent_EDIT
+#, java-format
+msgctxt "ClassTemplateComponent_EDIT"
+msgid "Edit"
+msgstr ""
+
+#. 
+#: ClassTemplateComponent_LABEL_BASECLASS
+#, java-format
+msgctxt "ClassTemplateComponent_LABEL_BASECLASS"
+msgid "Base Class"
+msgstr ""
+
+#. 
+#: ClassTemplateComponent_LABEL_INTERFACES
+#, java-format
+msgctxt "ClassTemplateComponent_LABEL_INTERFACES"
+msgid "Interfaces"
+msgstr ""
+
+#. 
+#: ClassTemplateComponent_REMOVE
+#, java-format
+msgctxt "ClassTemplateComponent_REMOVE"
+msgid "Remove"
+msgstr ""
+
+#. 
+#: ClassTemplateComponent_XPATH
+#, java-format
+msgctxt "ClassTemplateComponent_XPATH"
+msgid "XPath"
 msgstr ""
 

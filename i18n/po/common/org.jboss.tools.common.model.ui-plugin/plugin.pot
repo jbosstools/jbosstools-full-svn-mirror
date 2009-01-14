@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-07 16:54+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: providerName
 #, java-format
 msgctxt "providerName"
-msgid "Red Hat, Inc."
+msgid "JBoss, a division of Red Hat"
 msgstr ""
 
 #. 
@@ -170,9 +170,128 @@ msgid "JBoss Tools"
 msgstr ""
 
 #. 
+#: PreferencePage_Editors
+#, java-format
+msgctxt "PreferencePage_Editors"
+msgid "Editors"
+msgstr ""
+
+#. 
+#: PreferencePage_LabelDecorations
+#, java-format
+msgctxt "PreferencePage_LabelDecorations"
+msgid "Label Decorations"
+msgstr ""
+
+#. 
+#: PreferencePage_Templates
+#, java-format
+msgctxt "PreferencePage_Templates"
+msgid "Templates"
+msgstr ""
+
+#. 
+#: PreferencePage_Web
+#, java-format
+msgctxt "PreferencePage_Web"
+msgid "Web"
+msgstr ""
+
+#. 
+#: ContentType_JBossToolsXML
+#, java-format
+msgctxt "ContentType_JBossToolsXML"
+msgid "JBoss Tools XML"
+msgstr ""
+
+#. 
 #: org.jboss.tools.common.model.ui.views
 #, java-format
 msgctxt "org.jboss.tools.common.model.ui.views"
 msgid "JBoss Tools"
+msgstr ""
+
+#. 
+#: CategoryName_experimental
+#, java-format
+msgctxt "CategoryName_experimental"
+msgid "JBoss Tools Experimental configuration"
+msgstr ""
+
+#. 
+#: CategoryDescription_experimental
+#, java-format
+msgctxt "CategoryDescription_experimental"
+msgid "It allows create Custom Capabilities, Library sets and Project templates for JSF/Struts projects"
+msgstr ""
+
+#. 
+#: ActivityName_templates
+#, java-format
+msgctxt "ActivityName_templates"
+msgid "JSF/Struts Project Templates Development"
+msgstr ""
+
+#. 
+#: ExtensionName_attributeAdapter
+#, java-format
+msgctxt "ExtensionName_attributeAdapter"
+msgid "Attribute Adapter"
+msgstr ""
+
+#. 
+#: ExtensionName_attributeContentProposalProviders
+#, java-format
+msgctxt "ExtensionName_attributeContentProposalProviders"
+msgid "Attribute Content Proposal Providers"
+msgstr ""
+
+#. 
+#: ExtensionName_attributeEditor
+#, java-format
+msgctxt "ExtensionName_attributeEditor"
+msgid "Attribute Editor"
+msgstr ""
+
+#. 
+#: ExtensionName_InsertTagWizard
+#, java-format
+msgctxt "ExtensionName_InsertTagWizard"
+msgid "InsertTagWizard"
+msgstr ""
+
+#. 
+#: ExtensionName_labelDecorator
+#, java-format
+msgctxt "ExtensionName_labelDecorator"
+msgid "Model Object Label Decorator"
+msgstr ""
+
+#. 
+#: ExtensionName_metaTemplates
+#, java-format
+msgctxt "ExtensionName_metaTemplates"
+msgid "Meta Templates"
+msgstr ""
+
+#. 
+#: ExtensionName_paletteConstraints
+#, java-format
+msgctxt "ExtensionName_paletteConstraints"
+msgid "Palette Constraints"
+msgstr ""
+
+#. 
+#: ExtensionName_xmlEditor
+#, java-format
+msgctxt "ExtensionName_xmlEditor"
+msgid "XML Editor"
+msgstr ""
+
+#. 
+#: PropertyPage_templates
+#, java-format
+msgctxt "PropertyPage_templates"
+msgid "Templates"
 msgstr ""
 

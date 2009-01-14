@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-14 12:10+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2555,9 +2555,9 @@ msgid "Show shortcut path"
 msgstr ""
 
 #. 
-#: SharableStrutsEditor.Show_Grid
+#: SharableJSFEditor.Show_Grid
 #, java-format
-msgctxt "SharableStrutsEditor.Show_Grid"
+msgctxt "SharableJSFEditor.Show_Grid"
 msgid "Show grid"
 msgstr ""
 
@@ -2633,7 +2633,7 @@ msgstr ""
 #: AddCustomJSFCapabilities_1.Message
 #, java-format
 msgctxt "AddCustomJSFCapabilities_1.Message"
-msgid "The following updates have been made to the project. The names in quotes are labels from the Custom Capabilities configuration."
+msgid "The following updates have been made to the project."
 msgstr ""
 
 #: JSFApplicationExtension_CreateTag.WindowTitle

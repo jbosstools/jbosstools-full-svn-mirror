@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"POT-Creation-Date: 2009-01-09 13:14+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,55 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 ""
+
+#. 
+#: DecoratorTextPreferencesPage.AddVariable
+#, java-format
+msgctxt "DecoratorTextPreferencesPage.AddVariable"
+msgid "Add Variable..."
+msgstr ""
+
+#. 
+#: DecoratorTextPreferencesPage.Decorator
+#, java-format
+msgctxt "DecoratorTextPreferencesPage.Decorator"
+msgid "Select decorator:"
+msgstr ""
+
+#. 
+#: DecoratorTextPreferencesPage.DefaultLabel
+#, java-format
+msgctxt "DecoratorTextPreferencesPage.DefaultLabel"
+msgid "?"
+msgstr ""
+
+#. 
+#: DecoratorTextPreferencesPage.Format
+#, java-format
+msgctxt "DecoratorTextPreferencesPage.Format"
+msgid "Format:"
+msgstr ""
+
+#. 
+#: DecoratorTextPreferencesPage.Preview
+#, java-format
+msgctxt "DecoratorTextPreferencesPage.Preview"
+msgid "Preview:"
+msgstr ""
+
+#. 
+#: DecoratorTextPreferencesPage.SelectVariable
+#, java-format
+msgctxt "DecoratorTextPreferencesPage.SelectVariable"
+msgid "Select Variable"
+msgstr ""
+
+#. 
+#: DecoratorTextPreferencesPage.Text
+#, java-format
+msgctxt "DecoratorTextPreferencesPage.Text"
+msgid "Text"
+msgstr ""
 
 #. 
 #: org.jboss.tools.common.model.ui.resources.ResourceLayoutManager.ERROR_RESOURCE_NULL
@@ -158,6 +207,13 @@ msgstr ""
 #, java-format
 msgctxt "Editor.Delete.description"
 msgid "Delete"
+msgstr ""
+
+#. 
+#: MainPreferencePage.Description
+#, java-format
+msgctxt "MainPreferencePage.Description"
+msgid "JBossTools preferences"
 msgstr ""
 
 #: org.jboss.tools.common.model.ui.forms.Form.CANNOT_LOAD_ATTRIBUTE
