@@ -11,40 +11,36 @@
 	<title>Smooks Source Editor Page</title>
 	<section>
 		<title>XML Source Editor</title>
-		<para>You can use this editor to edit the Smooks configuration file directly.
-		</para>
+		<para>You can use this editor to edit the Smooks Configuration file directly. </para>
 		<figure>
 			<title>Graphical Editor</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/common/xml_source_editor.png"
-						scale="90" />
+					<imagedata fileref="images/source_editor/source_editor1.png" scale="90"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
 	</section>
 	<section>
 		<title>Error Messages GUI</title>
-		<para>If the Smooks tools can't understand the configuration file or the configuration file is illegal (XML structure isn't right for Smooks configuration file, etc.), The error message panel will be displayed above the XML editor.
-		</para>
+		<para>If the <property>Smooks tools</property> can&apos;t understand the configuration
+			file or the configuration file is illegal (XML structure isn&apos;t right for Smooks
+			Configuration file, etc.), the error will be underlined.</para>
 		<figure>
 			<title>Graphical Editor</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/common/xml_source_editor_error.png"
-						scale="90" />
+					<imagedata fileref="images/source_editor/source_editor2.png" scale="90"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<note>
-			<title>Tip</title>
-			<para>
-				When the error message panel is displayed, other editors (
-				Graphical Editor, Configuration Editor ) are disabled.
-			</para>
-			<para>
-				You can't edit the configuration file with other editors until file becomes valid.
-			</para>
-		</note>
+		<!--note>
+			<title>Tip:</title>
+			<para> When the error message panel is displayed, other editors ( Graphical Editor,
+				Configuration Editor ) are disabled. </para>
+			<para> You can't edit the configuration file with other editors until file becomes
+				valid. </para>
+		</note-->
+
 	</section>
 </chapter>

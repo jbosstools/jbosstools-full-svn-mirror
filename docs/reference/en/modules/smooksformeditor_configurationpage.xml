@@ -9,111 +9,136 @@
 		</keywordset>
 	</chapterinfo>
 	<title>Smooks Configuration Editor Page</title>
-	<para>
-		Smooks Configuration Editor Page is one tab of the Smooks Form
-		Editor.
-	</para>
+	<para> Smooks Configuration Editor Page is one tab of the <property>Smooks Editor</property>. </para>
 	<figure>
 		<title>Graphical Editor</title>
 		<mediaobject>
 			<imageobject>
-				<imagedata fileref="images/common/configuration_page.png"
-					scale="90" />
+				<imagedata fileref="images/config_page/config_page1.png" scale="90"/>
 			</imageobject>
 		</mediaobject>
 	</figure>
-	<para> The <link linkend="configurationpage_datedecoder">"Date Decoder"</link> can add/edit/remove on the configuration editor page.
-	</para>
-	<para>
-		The configuration also edit the <link linkend="configurationpage_parsetype">"Smooks parse type"</link> and manage the <link linkend="configurationpage_importfile">"Import File"</link> .
-	</para>
+
+	<para> You can add/edit/remove the <link linkend="configurationpage_datedecoder">Date
+			Decoder</link> on the Сonfiguration page of the <property>Smooks Editor</property>. </para>
+	<para> The configuration also edit the <link linkend="configurationpage_parsetype">Smooks parse
+			type</link> and manage the <link linkend="configurationpage_importfile">Import
+			Files</link>.</para>
+
 	<section id="configurationpage_parsetype">
-		<title>Smooks parse type</title>
-		<para>Open the "Other configuration" section, you will see there 	is a set of radio buttons:</para>
+
+		<title>Smooks Parse Type</title>
+		<para>Open the <emphasis>
+				<property>Other Configurations</property>
+			</emphasis> section, we will see there is a set of radio buttons:</para>
+
 		<figure>
-			<title>Smooks parse type</title>
+			<title>Smooks Parse Types</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/common/smooks_parse_type.png"
-						scale="90" />
+					<imagedata fileref="images/config_page/config_page2.png" scale="90"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>
-			Select the radio button to change the Smooks parse type.
-		</para>
+		<para> Select the radio button to change the Smooks parse type. </para>
 	</section>
 	<section id="configurationpage_importfile">
-		<title>Import file</title>
-		<para>
-			Open the "Other configuration" section, there is an "Import File" list under the "Smooks parse type" buttons.
-		</para>
+
+		<title>Import File</title>
+		<para> Open the <emphasis>
+				<property>Other Configurations</property>
+			</emphasis> section, there is an <emphasis>
+				<property>Import Files</property>
+			</emphasis> list under the Smooks parse type buttons.</para>
+
 		<figure>
 			<title>Import File</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/common/import_file.png" scale="90" />
+					<imagedata fileref="images/config_page/config_page2.png" scale="90"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>
-			There are three buttons on the right side of the "File Import" 	list. You can click those to add/edit/remove the import files.
-		</para>
+
+		<para>There are three buttons on the right side of the <emphasis>
+				<property>File Import</property>
+			</emphasis> list. You can click those to add/edit/remove the import files.</para>
+
 		<tip>
-			<title>Tip</title>
-			<para>
-				If the import file doesn't exist, the image of the import file will change to "Error Image". If you double-click the import file in the "Import File" list, the file will be opened with a new default editor.
-			</para>
+
+			<title>Tip:</title>
+			<para> If the import file dosen't exist, the image of the import file will change to
+				"Error Image". If you double-click the import file in the Import File list, the file
+				will be open with a new default editor. </para>
+
 		</tip>
 	</section>
 	<section id="configurationpage_datedecoder">
 		<title>Date Decoder Detail Page</title>
-		<para>
-			"Date Decoder" is a resourceConfig element in the Smooks configuration file.It describing how to transform the "Date" type.
-		</para>
-		<para>
-			Click "New" button to open the "New Resource Type" wizard dialog.</para>
+
+		<para>Date Decoder is a resourceConfig element in the Smooks configuration file. It
+			describes how to transform the &quot;Date&quot; type.</para>
+		<para> Click the <emphasis>
+				<property>New</property>
+			</emphasis> button to open the <property>New Resource Type wizard</property>
+			dialog.</para>
+=
 		<figure>
 			<title>Resource Type Selection Wizard</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/common/resource_type_wizard.png"
-						scale="90" />
+					<imagedata fileref="images/config_page/config_page4.png" scale="90"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
-		
-		<para>There are several resource types on the list. Select the 	"Date Decoder" and click "Finish" button, a new "Date Decoder" item was added and shown on the resource type list.
-		</para>
+
+		<para>There are several resource type on the list. Select the <emphasis>
+				<property>Date Decoder</property>
+			</emphasis> and click the <emphasis>
+				<property>Finish</property>
+			</emphasis> button, a new <emphasis>
+				<property>Date Decoder</property>
+			</emphasis> item was added and shown on the resource type list.</para>
+		<para> There are several parameters in the <emphasis>
+				<property>Date Decoder</property>
+			</emphasis> resourceConfig element:</para>
+
 		<para>
-			There are several parameters in the "Date Decoder" 	resourceConfig element:
-		</para>
-		<para>
-			<orderedlist numeration="loweralpha" inheritnum="inherit">
-				<listitem><para>locale-language</para>
+
+			<itemizedlist>
+				<listitem>
+					<para>locale-language</para>
+
 				</listitem>
-				<listitem><para>format</para>
+
+				<listitem>
+					<para>format</para>
 				</listitem>
-				<listitem><para>locale-country</para>
+
+				<listitem>
+					<para>locale-country</para>
+
 				</listitem>
-			</orderedlist>
+			</itemizedlist>
 		</para>
-		<para>
-			You can modify the parameters of the "Date Decoder" item with the left detail page.
-		</para>
+
+		<para> You can modify the parameters of the <emphasis>
+			<property>Date Decoder</property></emphasis> item with the left detail page.</para>
+
 		<figure>
 			<title>Date Decoder Detail Page</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/common/date_type_detail_page.png"
-						scale="90" />
+					<imagedata fileref="images/config_page/config_page5.png" scale="90"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>
-			When you define a new "Date Decoder", it becomes possible to use the
-			<link linkend="graphicalpage_propertiesview"> "JavaBean Properties"</link>  GUI to set it to the "Java type".
-		</para>
+
+		<para> When you defined a new <emphasis>
+			<property>Date Decoder</property></emphasis>, they can use the <link
+				linkend="graphicalpage_propertiesview">JavaBean Properties</link> GUI to set the
+			them to be the &quot;Java type&quot;.</para>
+
 		<!--
 			<para> The XML fragment generated by Smooks tools for the "Date
 			Decoder": </para> <para> <programlisting> <![CDATA[<resource-config

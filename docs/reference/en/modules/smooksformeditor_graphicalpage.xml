@@ -9,108 +9,141 @@
 		</keywordset>
 	</chapterinfo>
 	<title>Smooks Graphical Editor Page</title>
-	<para> Smooks Graphical Editor Page is one tab of the Smooks Form Editor. </para>
+
+	<para>Smooks Graphical Editor page is one tab of the <property>Smooks Editor</property>.</para>
 	<figure>
 		<title>Graphical Editor</title>
 		<mediaobject>
 			<imageobject>
-				<imagedata fileref="images/java2java/correct_editor.png" scale="90"/>
+				<imagedata fileref="images/graph_editor/graph_editor1.png" scale="90"/>
 			</imageobject>
 		</mediaobject>
 	</figure>
-	<para> This graphical editor could allow you to perform drug/drop operations with the nodes of transform data to map the source data to target data. </para>
-	<para> When you save the changes in the graphical editor, the correct Smooks configuration file content will be generated. </para>
+
+	<para> This <property>Graphical editor</property> allows you to perform drug/drop operations
+		with the nodes of transform data to map the source data to target data. </para>
+	<para> When you save the changes in the Graphical editor the correct Smooks Configuration file
+		content will be generated. </para>
 	<section>
+
 		<title>Introducing the areas of graphical editor</title>
-		<para>Information on the topic could be found here <link linkend="quickstart_formeditor"
-			>"Quick Start/Smooks Form Editor"</link>
-		</para>
+		<para>Information on the topic could be found in the <link linkend="quickstart_formeditor">Quick Start/Smooks Editor</link> section.</para>
 	</section>
 	<section>
-		<title>Load source/target data</title>
-		<para> Click the links under the data viewer, the data type selection wizard page will be shown. </para>
+
+		<title>Load Source/Target Data</title>
+		<para> Click the links under the data view, the <property>Data Type Selection wizard</property> page will be
+			shown.</para>
 		<figure>
-			<title>Data type selection wizard page</title>
+			<title>Data Type Selection Wizard Page</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/common/data_type_wizard.png" scale="90"/>
+
+					<imagedata fileref="images/graph_editor/graph_editor2.png" scale="90"/>
+
 				</imageobject>
 			</mediaobject>
 		</figure>
+
 		<para> There are sets of transform data type on the wizard page, select one type and click
-			<property>Next</property> , the data source selection wizard page will be shown. <tip>
-				<title>Note</title>
-				<para> For different data type, the data source selection wizards are different too.
-				</para>
-			</tip>
-		</para>
+					<emphasis><property>Next</property>,</emphasis> the data source selection wizard
+			page will be shown.</para>
+
+		<tip>
+			<title>Note:</title>
+			<para>For different data type, the Data source selection wizard are different too.
+			</para>
+		</tip>
 		<figure>
-			<title>Java data source selection wizard page</title>
+			<title>Java Data Source Selection Wizard Page</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/java2java/java_data_selection_wizard.png" scale="90"
-					/>
+
+					<imagedata fileref="images/graph_editor/graph_editor3.png" scale="90"/>
+
 				</imageobject>
 			</mediaobject>
 		</figure>
+
 		<figure>
-			<title>XML file path selection wizard page</title>
+			<title>XML File Path Selection Wizard Page</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/xml2java/xml_filepath_selection_wizard.png"
-						scale="90"/>
+
+					<imagedata fileref="images/graph_editor/graph_editor4.png" scale="90"/>
+
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para> When you finish the data selection (file path selection), Click
-			<property>Finish</property> , the data viewer will display the selected data structure. </para>
+
+		<para> When you finish the data selection (file path selection), click
+					<emphasis><property>Finish</property>,</emphasis> the data view will display the
+			selected data structure.</para>
 	</section>
 	<section>
-		<title>Using the graphical editor for mapping</title>
+
+		<title>Using Graphical Editor for Mapping</title>
 		<para>To get information on the topic please, read the <link linkend="quickstart_mapping"
-			>"Quick Start/Mapping"</link>
-		</para>
+				>Quick Start/Mapping</link> section. </para>
 	</section>
 	<section>
-		<title>Error messages</title>
-		<para>When you do any mapping operations, the Smooks tools validates the file content with
-			"Mapping Logic", If there are any errors of the configuration file content , error messages are shown on the <link linkend="quickstart_formeditor">"Error message area"</link>. </para>
-		<para> Please, read the <link linkend="quickstart_mapping">"Quick Start/Mapping"</link> to find how to fix the errors. </para>
+
+		<title>Error Messages</title>
+		<para>When you do any mapping operations, the <property>Smooks tools</property> validate the
+			file content with "Mapping Logic". If there are any errors of the configuration file
+			content, error messages are shown in the <link linkend="quickstart_formeditor">Problems
+				area</link>.</para>
+		<para> Please, read the <link linkend="quickstart_mapping">Quick Start/Mapping</link> section to
+			find how to fix the errors.</para>
 	</section>
 	<section id="graphicalpage_propertiesview">
-		<title>Properties Viewer</title>
-		<para> You can edit the properties of the "connection lines" with the properties viewer. </para>
-		<para> Select the menu: "Window -> Show View -> Other -> Properties", the properties viewer is opened. </para>
-		<para> When you select on the connection lines, the properties viewer will show a set of section GUI for editing the properties of the connection line. </para>
+		<title>Properties View</title>
+
+		<para> You can edit the properties of the connection lines with the <property>Properties
+				view</property>.</para>
+		<para>Navigate to <emphasis><property>Window > Show View > Other >
+				Properties</property>,</emphasis> to open the <property>Properties
+			view</property>.</para>
+		<para> When you select on the connection lines, the <property>Properties view</property>
+			will show a set of section GUI for editing the properties of the connection line.</para>
 		<tip>
-			<title>Tip</title>
-			<para> This GUI on the properties viewer is displayed when the "Smooks Graphical Page"
-				is active, if not, the properties viewer displays empty GUI. </para>
-			<para> If the source data type of the selected connection line is "XML", The properties viewer shows a "XML Properties" section GUI. </para>
-			<para> But if the source data type of the selected connection line is "Java", the "XML Properties" section GUI isn't 'displayed. </para>
-			<para> It means that if the source/target data type of the selected connection line is different, the properties viewer shows different GUI. </para>
+
+			<title>Tip:</title>
+			<para>This GUI on the <property>Properties view</property> is displayed when the Smooks
+				Graphical editor is active, if not, the <property>Properties view</property>
+				displays empty GUI.</para>
+			<para>If the source data type of the selected connection line is
+				&quot;XML&quot;, the <property>Properties view</property> shows an XML
+				Properties section GUI.</para>
+			<para>But if the source data type of the selected connection line is
+				&quot;Java&quot;, the XML Properties section GUI isn&apos;t
+				displayed.</para>
+			<para>It means that if the source/target data type of the selected connection line is
+				different, the <property>Properties view</property> shows different GUI.</para>
 		</tip>
 		<figure>
 			<title>JavaBean Properties Section</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/common/java_property_view.png" scale="90"/>
+
+					<imagedata fileref="images/graph_editor/graph_editor5.png" scale="90"/>
+
 				</imageobject>
 			</mediaobject>
 		</figure>
 		<figure>
-			<title>XML properties section</title>
+			<title>XML Properties Section</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/common/xml_property_view.png" scale="90"/>
+					<imagedata fileref="images/graph_editor/graph_editor6.png" scale="90"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
 		<figure>
-			<title>Mapping properties section</title>
+			<title>Mapping Properties Section</title>
 			<mediaobject>
 				<imageobject>
-					<imagedata fileref="images/common/mapping_property_view.png" scale="90"/>
+					<imagedata fileref="images/graph_editor/graph_editor7.png" scale="90"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
