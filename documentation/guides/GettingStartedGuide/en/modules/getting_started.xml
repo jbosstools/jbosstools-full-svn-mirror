@@ -281,7 +281,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 </itemizedlist>
   
   <figure>
-   <title>Finding Available Servers in the Selected Directory</title>
+   <title>Finding Servers in the Selected Directory</title>
    <mediaobject>
     <imageobject>
      <imagedata fileref="images/getting_started/getting_started_3_3_1.png"/>
@@ -297,7 +297,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   
   
   <figure>
-   <title>List of Servers</title>
+   <title>List of Servers Added</title>
    <mediaobject>
     <imageobject>
      <imagedata fileref="images/getting_started/getting_started_3_3.png"/>
@@ -312,7 +312,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </itemizedlist>
  
   <figure>
-   <title>Add Server to be configured</title>
+   <title>Add Server to be Configured</title>
    <mediaobject>
     <imageobject>
      <imagedata fileref="images/getting_started/getting_started_3_1.png"/>
