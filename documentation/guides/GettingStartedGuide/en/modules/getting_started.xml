@@ -205,11 +205,11 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </listitem>
    <listitem>
     <para>Then run in console:</para>
-    <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-linux-gtk-2.0.0.Beta1.jar
+    <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-linux-gtk-2.0.0.Cr2.jar
 ]]></programlisting>
    </listitem>
    <listitem>
-    <para>Follow the instructions presented by the installation wizard</para>
+    <para>Follow the instructions presented by the installation wizard:</para>
    </listitem>
   </itemizedlist>
 
@@ -263,8 +263,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     <para>Installation process includes <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application
       Platform</ulink>. Select <emphasis>
       <property>Yes</property>
-      </emphasis> to use it in JBoss Developer Studio.  This step lets you configure locally available JBoss Application Servers. You can fill the list automatically using the <emphasis><property>Find</property></emphasis> button - select a folder where search of available JBoss Application Servers should be started.  After finding the list can be edited by the <emphasis><property>Add</property></emphasis> and <emphasis><property>Remove</property></emphasis> buttons. 
-  </para>
+      </emphasis> to use it in JBoss Developer Studio.  This step lets you configure locally available JBoss Application Servers: </para> 
    </listitem>
   </itemizedlist>
 
@@ -277,8 +276,38 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </mediaobject>
   </figure>
 
+<itemizedlist>
+ <listitem><para>You can fill the list automatically using the <emphasis><property>Find</property></emphasis> button: click <emphasis><property>Find</property></emphasis>, select a folder where search of available JBoss Application Servers should be started and click on <emphasis><property>Ok</property></emphasis>: </para> </listitem>
+</itemizedlist>
+  
+  <figure>
+   <title>Finding Available Servers in the Selected Directory</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_3_3_1.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+  <para/>
+  
   <itemizedlist>
-   <listitem> <para>Or you can also add servers one by one using the <emphasis><property>Add</property></emphasis> button:</para>
+   <listitem><para> All available servers in the selected directory  will be added to the list with the following information specified: Name, Type, Version and Location.  
+   </para></listitem>
+  </itemizedlist>
+  
+  
+  <figure>
+   <title>List of Servers</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_3_3.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+  <para/>
+  
+  <itemizedlist>
+   <listitem> <para>You can also add servers one by one using the <emphasis><property>Add</property></emphasis> button:</para>
    </listitem>
   </itemizedlist>
  
@@ -305,19 +334,11 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <para/>
   
   
-  <para>Click on <emphasis><property>Ok</property></emphasis>. The server is added to the list with the details on its type, version and location:</para>
+  <para>Click on <emphasis><property>Ok</property></emphasis>. The server is added to the list with the details on its type, version and location.</para>
   
-  <figure>
-   <title>List of Servers</title>
-   <mediaobject>
-    <imageobject>
-     <imagedata fileref="images/getting_started/getting_started_3_3.png"/>
-    </imageobject>
-   </mediaobject>
-  </figure>
-  <para/>
   
-  <para>If necessary, you can edit the server details clicking on the <emphasis><property>Edit</property></emphasis> button:</para>
+  
+  <para>The <emphasis><property>Remove</property></emphasis> button will the remove the selected server from the list. If necessary, you can edit the server details clicking on the <emphasis><property>Edit</property></emphasis> button:</para>
   
   <figure>
    <title>Edit Server</title>
@@ -340,7 +361,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
   <itemizedlist>
    <listitem>
-    <para>The <emphasis><property>Remove</property></emphasis> button will the remove the selected server from the list. Click <emphasis><property>Next</property></emphasis>. Check your installation paths and see the components to install. If you'd like to change
+    <para>Click <emphasis><property>Next</property></emphasis>. Check your installation paths and see the components to install. If you'd like to change
      something, press the <emphasis>
       <property>Previous</property>
      </emphasis> button. Click <emphasis>
