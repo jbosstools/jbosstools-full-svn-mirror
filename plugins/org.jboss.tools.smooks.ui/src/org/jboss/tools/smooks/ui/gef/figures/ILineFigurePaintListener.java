@@ -13,4 +13,8 @@ import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
  */
 public interface ILineFigurePaintListener {
 	public void drawLineAdditions(Graphics graphics , IFigure hostFigure, LineConnectionModel model);
+	
+	public void drawLineSourceLocator(Graphics graphics , IFigure hostFigure, LineConnectionModel model);
+	
+	public void drawLineTargetLocator(Graphics graphics , IFigure hostFigure, LineConnectionModel model);
 }

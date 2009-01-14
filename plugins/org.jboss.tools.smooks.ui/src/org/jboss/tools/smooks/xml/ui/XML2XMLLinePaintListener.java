@@ -12,6 +12,7 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
 import org.jboss.tools.smooks.ui.gef.figures.ILineFigurePaintListener;
+import org.jboss.tools.smooks.ui.gef.figures.LinePaintListener;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
 import org.jboss.tools.smooks.ui.gef.model.PropertyModel;
 import org.jboss.tools.smooks.xml.XMLImageConstants;
@@ -20,7 +21,7 @@ import org.jboss.tools.smooks.xml.XMLImageConstants;
  * @author Dart
  * 
  */
-public class XML2XMLLinePaintListener implements ILineFigurePaintListener {
+public class XML2XMLLinePaintListener extends LinePaintListener {
 
 	/*
 	 * (non-Javadoc)

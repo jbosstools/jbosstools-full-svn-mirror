@@ -97,19 +97,17 @@ public class StructuredDataConnectionEditPart extends
 
 	protected IFigure createFigure() {
 		CurveLineConnection conn = new CurveLineConnection(this) {
-			public void paintClientArea(Graphics graphics) {
-				
+			
+			public void paintFigure(Graphics graphics) {
 				String sourceid = getSourceDataTypeID();
 				String targetid = getTargetDataTypeID();
 				ILineFigurePaintListener listener = LineFigurePaintListenerManager
 						.getInstance().getPaintListener(sourceid, targetid);
-//				graphics.pushState();
 				if (listener != null) {
-					listener.drawLineAdditions(graphics,this,
+					listener.drawLineAdditions(graphics, this,
 							(LineConnectionModel) getHostEditPart().getModel());
 				}
-//				graphics.popState();
-				super.paintClientArea(graphics);
+				super.paintFigure(graphics);
 			}
 		};
 		// conn.setSmoothness(SmoothPolyLineConnection.SMOOTH_MORE);
@@ -122,19 +120,15 @@ public class StructuredDataConnectionEditPart extends
 			@Override
 			public void paint(Graphics graphics) {
 				graphics.pushState();
-				graphics.setBackgroundColor(GraphicsConstants.groupHeaderColor);
-				Point p = getBounds().getTopLeft();
-				Point p2 = getBounds().getBottomLeft();
-				Point p3 = getBounds().getTopRight();
-				p3 = new Point(p3.x, p3.y + getSize().height / 2);
-				PointList pointList = new PointList();
-				pointList.addPoint(p);
-				pointList.addPoint(p2.x, p2.y - 1);
-				pointList.addPoint(p3);
-				graphics.fillPolygon(pointList);
-				graphics.drawPolygon(pointList);
-				graphics.popState();
+				String sourceid = getSourceDataTypeID();
+				String targetid = getTargetDataTypeID();
+				ILineFigurePaintListener listener = LineFigurePaintListenerManager
+						.getInstance().getPaintListener(sourceid, targetid);
+				if (listener != null) {
+					listener.drawLineTargetLocator(graphics, this,(LineConnectionModel) getModel());
+				}
 				super.paint(graphics);
+				graphics.popState();
 			}
 
 		};
@@ -149,21 +143,15 @@ public class StructuredDataConnectionEditPart extends
 			@Override
 			public void paint(Graphics graphics) {
 				graphics.pushState();
-				graphics.setForegroundColor(ColorConstants.black);
-				graphics
-						.setBackgroundColor(GraphicsConstants.elementLabelColor);
-				Point p = getBounds().getTopLeft();
-				Point p2 = getBounds().getBottomLeft();
-				Point p3 = getBounds().getTopRight();
-				p3 = new Point(p3.x, p3.y + getSize().height / 2);
-				PointList pointList = new PointList();
-				pointList.addPoint(p);
-				pointList.addPoint(p2.x, p2.y - 1);
-				pointList.addPoint(p3);
-				graphics.fillPolygon(pointList);
-				graphics.drawPolygon(pointList);
-				graphics.popState();
+				String sourceid = getSourceDataTypeID();
+				String targetid = getTargetDataTypeID();
+				ILineFigurePaintListener listener = LineFigurePaintListenerManager
+						.getInstance().getPaintListener(sourceid, targetid);
+				if (listener != null) {
+					listener.drawLineSourceLocator(graphics, this,(LineConnectionModel) getModel());
+				}
 				super.paint(graphics);
+				graphics.popState();
 			}
 
 		};
@@ -195,12 +183,12 @@ public class StructuredDataConnectionEditPart extends
 			}
 		}
 		if (collapse) {
-//			figure.setForegroundColor(GraphicsConstants.groupBorderColor);
-			figure.setForegroundColor(new Color(null,224,224,224));
-//			figure.setLineStyle(Graphics.LINE_DOT);
+			// figure.setForegroundColor(GraphicsConstants.groupBorderColor);
+			figure.setForegroundColor(new Color(null, 224, 224, 224));
+			// figure.setLineStyle(Graphics.LINE_DOT);
 		} else {
 			figure.setForegroundColor(GraphicsConstants.groupBorderColor);
-//			figure.setLineStyle(Graphics.LINE_SOLID);
+			// figure.setLineStyle(Graphics.LINE_SOLID);
 		}
 	}
 

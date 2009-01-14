@@ -266,5 +266,15 @@
             sourceId="org.jboss.tools.smooks.xml.viewerInitor.xml"
             targetId="org.jboss.tools.smooks.xml.viewerInitor.xml">
       </linePaintListener>
+      <linePaintListener
+            class="org.jboss.tools.smooks.javabean.ui.JavaBeanLinePaintLitener"
+            sourceId="org.jboss.tools.smooks.xml.viewerInitor.xml"
+            targetId="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+      </linePaintListener>
+      <linePaintListener
+            class="org.jboss.tools.smooks.javabean.ui.JavaBeanLinePaintLitener"
+            sourceId="org.jboss.tools.smooks.ui.viewerInitor.javabean"
+            targetId="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+      </linePaintListener>
    </extension>
 </plugin>

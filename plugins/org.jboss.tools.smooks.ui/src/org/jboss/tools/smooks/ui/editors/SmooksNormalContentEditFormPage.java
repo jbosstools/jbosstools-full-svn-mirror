@@ -203,7 +203,9 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 		if (this.getModelPackage() != null) {
 			List list = modelPackage.getSmooksResourceList()
 					.getAbstractResourceConfig();
-			fileViewer.setInput(list);
+			if (fileViewer != null) {
+				fileViewer.setInput(list);
+			}
 			for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 				Object sr = iterator.next();
 				if (sr instanceof ResourceConfigType) {
@@ -462,9 +464,9 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 				if (files != null) {
 					IPath path1 = files[0].getFullPath().removeFirstSegments(1);
 					String s = path1.toString();
-					if(s.startsWith("/") || s.startsWith("\\")){
-						
-					}else{
+					if (s.startsWith("/") || s.startsWith("\\")) {
+
+					} else {
 						s = "/" + s;
 					}
 					((ImportType) obj).setFile("classpath:" + s);
@@ -492,13 +494,13 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 		IFile[] files = WorkspaceResourceDialog.openFileSelection(getSite()
 				.getShell(), "Select Files", "", false, null,
 				Collections.EMPTY_LIST);
-		if (files != null) {
+		if (files != null && files.length > 0) {
 			ImportType fileImport = SmooksFactory.eINSTANCE.createImportType();
 			IPath path1 = files[0].getFullPath().removeFirstSegments(1);
 			String s = path1.toString();
-			if(s.startsWith("/") || s.startsWith("\\")){
-				
-			}else{
+			if (s.startsWith("/") || s.startsWith("\\")) {
+
+			} else {
 				s = "/" + s;
 			}
 			fileImport.setFile("classpath:" + s);
@@ -567,11 +569,13 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 					.getMappingResourceConfigList();
 			// for make sure that the SmooksResourceConfig model was the same :
 			if (rclist != null) {
-				List<ResourceConfigType> renderList = rclist.getGraphRenderResourceConfigList();
-				if(renderList != null && renderList.size() > 0){
+				List<ResourceConfigType> renderList = rclist
+						.getGraphRenderResourceConfigList();
+				if (renderList != null && renderList.size() > 0) {
 					ResourceConfigType resourceConfig = renderList.get(0);
-					SmooksResourceListType rootList = (SmooksResourceListType) resourceConfig.eContainer();
-					if(! (rootList == pa.getSmooksResourceList())){
+					SmooksResourceListType rootList = (SmooksResourceListType) resourceConfig
+							.eContainer();
+					if (!(rootList == pa.getSmooksResourceList())) {
 						pa.setSmooksResourceList(rootList);
 					}
 				}

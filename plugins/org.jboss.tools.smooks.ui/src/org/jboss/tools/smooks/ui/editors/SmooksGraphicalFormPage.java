@@ -591,6 +591,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		if(disableMappingGUI){
 			analyzeResultList.clear();
 			updateNotifyMessage();
+		}else{
+			analyzeDesignGraph();
 		}
 	}
 
@@ -625,6 +627,14 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			if (mappingGUISection != null)
 				mappingGUISection.setEnabled(false);
 			this.notifyAnalyzeListeners(throwable);
+		}
+		
+		// show/unshow the problem panel
+		if(disableMappingGUI){
+			analyzeResultList.clear();
+			updateNotifyMessage();
+		}else{
+			analyzeDesignGraph();
 		}
 	}
 
