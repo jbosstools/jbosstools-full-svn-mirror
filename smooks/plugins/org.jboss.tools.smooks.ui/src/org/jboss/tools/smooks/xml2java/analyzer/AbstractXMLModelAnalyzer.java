@@ -190,7 +190,7 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 			tagPropertyObject.setCanEdit(true);
 			tagPropertyObject.addNodePropetyChangeListener(viewer);
 		}
-		List list = tag.getChildren();
+		List list = tag.getXMLNodeChildren();
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			Object object = (Object) iterator.next();
 			if (object instanceof TagObject) {

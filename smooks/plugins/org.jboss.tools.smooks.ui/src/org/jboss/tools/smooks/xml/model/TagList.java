@@ -13,6 +13,7 @@ package org.jboss.tools.smooks.xml.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.tools.smooks.ui.IXMLStructuredObject;
 import org.jboss.tools.smooks.ui.editors.TransformDataTreeViewer;
 
 /**
@@ -21,6 +22,8 @@ import org.jboss.tools.smooks.ui.editors.TransformDataTreeViewer;
  */
 public class TagList extends AbstractXMLObject {
 	List<TagObject> rootTagList = new ArrayList<TagObject>();
+	
+	private Object id = new Object();
 
 //	public TagObject getRootTag() {
 //		return rootTag;
@@ -29,6 +32,30 @@ public class TagList extends AbstractXMLObject {
 	public List<TagObject> getRootTagList() {
 		return rootTagList;
 	}
+	
+	
+
+	@Override
+	public List<IXMLStructuredObject> getChildren() {
+		List tags = getRootTagList();
+		return tags;
+	}
+
+
+
+	@Override
+	public Object getID() {
+		return id;
+	}
+
+
+
+	@Override
+	public String getName() {
+		return "";
+	}
+
+
 
 	public void removeRootTag(TagObject rootTag){
 		rootTagList.remove(rootTag);

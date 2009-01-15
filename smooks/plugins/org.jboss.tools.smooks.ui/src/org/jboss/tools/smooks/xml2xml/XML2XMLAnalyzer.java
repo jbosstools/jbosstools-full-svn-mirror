@@ -120,7 +120,7 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 		if (xmlNode instanceof TagObject) {
 			Element element = new DefaultElement(xmlNode.getName());
 			List<AbstractXMLObject> childrenList = ((TagObject) xmlNode)
-					.getChildren();
+					.getXMLNodeChildren();
 			for (Iterator iterator = childrenList.iterator(); iterator
 					.hasNext();) {
 				AbstractXMLObject abstractXMLObject = (AbstractXMLObject) iterator
@@ -360,7 +360,7 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 		} else {
 			if (tagList instanceof TagObject) {
 				List<AbstractXMLObject> tags = ((TagObject) tagList)
-						.getChildren();
+						.getXMLNodeChildren();
 				List<AbstractXMLObject> tempTags = new ArrayList<AbstractXMLObject>(
 						tags);
 				for (Iterator<AbstractXMLObject> iterator = tempTags.iterator(); iterator
@@ -489,7 +489,7 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 		} else {
 			if (node instanceof TagObject) {
 				List<AbstractXMLObject> children = ((TagObject) node)
-						.getChildren();
+						.getXMLNodeChildren();
 				for (Iterator iterator = children.iterator(); iterator
 						.hasNext();) {
 					AbstractXMLObject abstractXMLObject = (AbstractXMLObject) iterator
@@ -630,7 +630,7 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 			}
 			if (xmlObject instanceof TagObject) {
 				List<AbstractXMLObject> children = ((TagObject) xmlObject)
-						.getChildren();
+						.getXMLNodeChildren();
 				for (Iterator iterator = children.iterator(); iterator
 						.hasNext();) {
 					AbstractXMLObject abstractXMLObject = (AbstractXMLObject) iterator

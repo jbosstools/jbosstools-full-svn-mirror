@@ -36,6 +36,7 @@ import org.jboss.tools.smooks.model.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
+import org.jboss.tools.smooks.ui.IXMLStructuredObject;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
 import org.jboss.tools.smooks.ui.ViewerInitorStore;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
@@ -56,7 +57,6 @@ import org.jboss.tools.smooks.xml.model.TagObject;
  */
 public class UIUtils {
 
-	
 	public static final String[] SELECTORE_SPLITER = new String[] { "\\", //$NON-NLS-1$
 			"/" }; //$NON-NLS-1$
 
@@ -68,10 +68,13 @@ public class UIUtils {
 	}
 
 	public static AbstractXMLObject getRootTagXMLObject(AbstractXMLObject xmlObj) {
-		if(xmlObj == null) return null;
+		if (xmlObj == null)
+			return null;
 		AbstractXMLObject parent = xmlObj.getParent();
-		if(parent == null) return null;
-		if(parent instanceof TagList) return xmlObj;
+		if (parent == null)
+			return null;
+		if (parent instanceof TagList)
+			return xmlObj;
 		while (true) {
 			AbstractXMLObject p = parent.getParent();
 			if (p instanceof TagList)
@@ -107,9 +110,9 @@ public class UIUtils {
 			AbstractResourceConfig resourceConfig1 = (AbstractResourceConfig) iterator
 					.next();
 			ResourceConfigType resourceConfig = null;
-			if(resourceConfig1 instanceof ResourceConfigType){
-				resourceConfig = (ResourceConfigType)resourceConfig1;
-			}else{
+			if (resourceConfig1 instanceof ResourceConfigType) {
+				resourceConfig = (ResourceConfigType) resourceConfig1;
+			} else {
 				continue;
 			}
 			String selector = resourceConfig.getSelector();
@@ -528,5 +531,189 @@ public class UIUtils {
 						.getDecoratorManager().getLabelDecorator()));
 		viewer.setContentProvider(tprovider);
 		return true;
+	}
+
+	public static IXMLStructuredObject localXMLNodeWithNodeName(String name,
+			IXMLStructuredObject contextNode) {
+		HashMap map = new HashMap();
+		IXMLStructuredObject node = localXMLNodeWithNodeName(name, contextNode,
+				map);
+		map.clear();
+		map = null;
+		return node;
+	}
+
+	private static boolean isAttributeName(String name) {
+		if (name == null)
+			return false;
+		return name.trim().startsWith("@");
+	}
+
+	private static String getRawAttributeName(String name) {
+		if (isAttributeName(name)) {
+			return name.trim().substring(1);
+		}
+		return name;
+	}
+
+	private static IXMLStructuredObject localXMLNodeWithNodeName(String name,
+			IXMLStructuredObject contextNode, HashMap usedNodeMap) {
+		if (name == null || contextNode == null)
+			return null;
+		String nodeName = contextNode.getNodeName();
+		boolean isAttributeName = false;
+		String tempName = name;
+		if (isAttributeName(tempName)) {
+			isAttributeName = true;
+			tempName = getRawAttributeName(tempName);
+		}
+		boolean canCompare = true;
+		if (isAttributeName) {
+			if (!contextNode.isAttribute()) {
+				canCompare = false;
+			}
+		}
+
+		if (canCompare && tempName.equalsIgnoreCase(nodeName)) {
+			return contextNode;
+		}
+		usedNodeMap.put(contextNode.getID(), new Object());
+		List children = contextNode.getChildren();
+		IXMLStructuredObject result = null;
+		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
+			IXMLStructuredObject child = (IXMLStructuredObject) iterator.next();
+			if (isAttributeName) {
+				if (!child.isAttribute())
+					continue;
+			}
+			if (tempName.equalsIgnoreCase(child.getNodeName())) {
+				result = child;
+				break;
+			}
+		}
+		if (result == null) {
+			for (Iterator iterator = children.iterator(); iterator.hasNext();) {
+				IXMLStructuredObject child = (IXMLStructuredObject) iterator
+						.next();
+				// to avoid the "died loop"
+				if (usedNodeMap.get(child.getID()) != null) {
+					continue;
+				}
+				result = localXMLNodeWithNodeName(name, child, usedNodeMap);
+				if (result != null) {
+					return result;
+				}
+			}
+		}
+		return result;
+	}
+
+	public static IXMLStructuredObject getRootParent(IXMLStructuredObject child) {
+		IXMLStructuredObject parent = child.getParent();
+		if (parent == null)
+			return child;
+		IXMLStructuredObject temp = parent;
+		while (temp != null) {
+			parent = temp;
+			temp = temp.getParent();
+		}
+		return parent;
+	}
+
+	public static String generatePath(IXMLStructuredObject node,
+			IXMLStructuredObject contextNode, final String sperator,
+			boolean includeContext) {
+		IXMLStructuredObject parent = node.getParent();
+		String name = node.getNodeName();
+		List<IXMLStructuredObject> nodeList = new ArrayList<IXMLStructuredObject>();
+		if (parent == null) {
+
+		} else {
+			IXMLStructuredObject temp = parent;
+			
+		}
+		if(node.isAttribute()){
+			name = "@" + name;
+		}
+		for(int i = nodeList.size() ; i > 0 ; i --){
+			IXMLStructuredObject n = nodeList.get(i);
+			name = n.getNodeName() + sperator + name;
+		}
+		return "";
+	}
+
+	public static IXMLStructuredObject getChildNodeWithName(String name,
+			IXMLStructuredObject parent) {
+		String tempName = name;
+		boolean isAttribute = false;
+		if (isAttributeName(tempName)) {
+			isAttribute = true;
+			tempName = getRawAttributeName(tempName);
+		}
+		List<IXMLStructuredObject> children = parent.getChildren();
+		if (children == null)
+			return null;
+		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
+			IXMLStructuredObject structuredObject = (IXMLStructuredObject) iterator
+					.next();
+			if (isAttribute) {
+				if (!structuredObject.isAttribute())
+					continue;
+			}
+			if (tempName.equalsIgnoreCase(structuredObject.getNodeName())) {
+				return structuredObject;
+			}
+		}
+		return null;
+	}
+
+	public static IXMLStructuredObject localXMLNodeWithPath(String path,
+			IXMLStructuredObject contextNode) {
+		return localXMLNodeWithPath(path, contextNode, null, true);
+	}
+
+	public static IXMLStructuredObject localXMLNodeWithPath(String path,
+			IXMLStructuredObject contextNode, String sperator,
+			boolean throwException) {
+		if (contextNode == null || path == null)
+			return null;
+		if (sperator == null) {
+			sperator = " ";
+		}
+		if (path != null)
+			path = path.trim();
+		String[] pathes = path.split(sperator);
+		if (pathes != null && pathes.length > 0) {
+			// to find the first node
+			// first time , we search the node via context
+			String firstNodeName = pathes[0];
+			IXMLStructuredObject firstModel = localXMLNodeWithNodeName(
+					firstNodeName, contextNode);
+
+			// if we can't find the node , to find it from the Root Parent node
+			if (firstModel == null) {
+				firstModel = localXMLNodeWithNodeName(firstNodeName,
+						getRootParent(contextNode));
+			}
+
+			if (firstModel == null) {
+				if (throwException)
+					throw new RuntimeException("Can't find the node : "
+							+ firstNodeName);
+				else {
+					return null;
+				}
+			}
+			for (int i = 1; i < pathes.length; i++) {
+				firstModel = getChildNodeWithName(pathes[i], firstModel);
+				if (firstModel == null && throwException) {
+					throw new RuntimeException("Can't find the node : "
+							+ pathes[i] + " from parent node " + pathes[i - 1]);
+				}
+			}
+
+			return firstModel;
+		}
+		return null;
 	}
 }

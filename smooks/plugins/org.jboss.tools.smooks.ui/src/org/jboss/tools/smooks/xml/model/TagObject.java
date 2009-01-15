@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jboss.tools.smooks.ui.IXMLStructuredObject;
 import org.jboss.tools.smooks.ui.editors.TransformDataTreeViewer;
 
 /**
@@ -46,17 +47,27 @@ public class TagObject extends AbstractXMLObject {
 	}
 
 	public void addChildTag(TagObject tag) {
-		this.getChildren().add(tag);
+		this.getXMLNodeChildren().add(tag);
 		if (tag != null)
 			tag.setParent(this);
 		support.firePropertyChange(TransformDataTreeViewer.ADD_CHILDREN_EVENT, null, tag);
 	}
 
 	public void removeChildTag(TagObject tag) {
-		this.getChildren().remove(tag);
+		this.getXMLNodeChildren().remove(tag);
 		if (tag != null)
 			tag.setParent(null);
 		support.firePropertyChange(TransformDataTreeViewer.REMOVE_CHILDREN_EVENT, tag, null);
+	}
+
+	@Override
+	public List<IXMLStructuredObject> getChildren() {
+		List all = new ArrayList();
+		List tags = this.getXMLNodeChildren();
+		List properties = this.getProperties();
+		all.addAll(properties);
+		all.addAll(tags);
+		return all;
 	}
 
 	public String toString() {
@@ -69,7 +80,7 @@ public class TagObject extends AbstractXMLObject {
 			buffer.append("\n");
 		}
 
-		List l = getChildren();
+		List l = getXMLNodeChildren();
 		for (Iterator iterator = l.iterator(); iterator.hasNext();) {
 			TagObject tag = (TagObject) iterator.next();
 			buffer.append("\t");

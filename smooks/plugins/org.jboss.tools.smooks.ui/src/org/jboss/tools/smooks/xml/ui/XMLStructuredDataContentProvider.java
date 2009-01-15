@@ -38,7 +38,7 @@ public class XMLStructuredDataContentProvider implements ITreeContentProvider {
 			List c = new ArrayList();
 			List pros = ((TagObject)obj).getProperties();
 			c.addAll(pros);
-			c.addAll(((TagObject)obj).getChildren());
+			c.addAll(((TagObject)obj).getXMLNodeChildren());
 			
 			return c.toArray();
 		}
@@ -71,7 +71,7 @@ public class XMLStructuredDataContentProvider implements ITreeContentProvider {
 		}
 		if(obj instanceof TagObject){
 			List pros = ((TagObject)obj).getProperties();
-			List c = (((TagObject)obj).getChildren());
+			List c = (((TagObject)obj).getXMLNodeChildren());
 			return !pros.isEmpty() || !c.isEmpty();
 		}
 		return false;

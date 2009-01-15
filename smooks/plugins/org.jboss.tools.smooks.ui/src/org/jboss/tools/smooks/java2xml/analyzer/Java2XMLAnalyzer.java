@@ -98,7 +98,7 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 		AbstractStructuredDataModel dataModel = UIUtils.findGraphModel(graph,
 				tag);
 		generateElementAttribute(graph, element, tag.getProperties());
-		List children = tag.getChildren();
+		List children = tag.getXMLNodeChildren();
 		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
 			TagObject child = (TagObject) iterator.next();
 			element.add(generateXMLContents(graph, child));

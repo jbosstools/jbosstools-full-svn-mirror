@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.xml.model;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,6 +31,13 @@ public class TagPropertyObject extends AbstractXMLObject {
 		this.value = value;
 	}
 
+	
+	
+	@Override
+	public boolean isAttribute() {
+		return true;
+	}
+
 	public String getType() {
 		return type;
 	}
@@ -39,8 +47,13 @@ public class TagPropertyObject extends AbstractXMLObject {
 	}
 
 	@Override
-	public List<AbstractXMLObject> getChildren() {
-		return null;
+	public Object getID() {
+		return "@" + super.getID();
+	}
+
+	@Override
+	public List<AbstractXMLObject> getXMLNodeChildren() {
+		return Collections.EMPTY_LIST;
 	}
 	@Override
 	public void setChildren(List<AbstractXMLObject> children) {
