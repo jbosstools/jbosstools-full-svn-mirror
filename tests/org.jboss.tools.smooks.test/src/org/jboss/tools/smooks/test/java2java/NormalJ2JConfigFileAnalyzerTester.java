@@ -30,6 +30,7 @@ import org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.model.DocumentRoot;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
+import org.jboss.tools.smooks.test.java.SelectorTester;
 
 /**
  * @author Dart Peng Date : 2008-9-1
@@ -51,6 +52,11 @@ public class NormalJ2JConfigFileAnalyzerTester extends
 				listType, null, null);
 		Object target = targetModelAnalyzer.buildTargetInputObjects(graph,
 				listType, null, null);
+
+		SelectorTester tester = new SelectorTester();
+		tester.validSmooksConfigFile(listType, (JavaBeanModel) ((List) source)
+				.get(0), (JavaBeanModel) ((List) target).get(0));
+
 		MappingResourceConfigList configList = connectionsAnalyzer
 				.analyzeMappingSmooksModel(listType, source, target);
 		List connections = configList.getMappingModelList();
@@ -67,18 +73,23 @@ public class NormalJ2JConfigFileAnalyzerTester extends
 			MappingModel connectionModels = (MappingModel) iterator.next();
 			Assert.assertNotNull(connectionModels.getSource());
 			Assert.assertNotNull(connectionModels.getTarget());
-			JavaBeanModel sourceModel = (JavaBeanModel)connectionModels.getSource();
-			JavaBeanModel targetModel = (JavaBeanModel)connectionModels.getSource();
-			if(targetModel.isPrimitive()){
+			JavaBeanModel sourceModel = (JavaBeanModel) connectionModels
+					.getSource();
+			JavaBeanModel targetModel = (JavaBeanModel) connectionModels
+					.getSource();
+			if (targetModel.isPrimitive()) {
 				// check the connection model properties
-				if(targetModel.getName().equals("productCode")){
-					Assert.assertTrue(connectionModels.getProperties().size() > 0);
+				if (targetModel.getName().equals("productCode")) {
+					Assert
+							.assertTrue(connectionModels.getProperties().size() > 0);
 				}
-				if(targetModel.getName().equals("unitPrice")){
-					Assert.assertTrue(connectionModels.getProperties().size() > 0);
+				if (targetModel.getName().equals("unitPrice")) {
+					Assert
+							.assertTrue(connectionModels.getProperties().size() > 0);
 				}
-				if(targetModel.getName().equals("unitQuantity")){
-					Assert.assertTrue(connectionModels.getProperties().size() > 0);
+				if (targetModel.getName().equals("unitQuantity")) {
+					Assert
+							.assertTrue(connectionModels.getProperties().size() > 0);
 				}
 			}
 		}

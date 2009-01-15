@@ -47,6 +47,9 @@ public class ClassicX2JTestCase extends AbstractXML2JavaTestCase {
 	}
 
 	public void testGraph() throws Exception {
+		
+		checkSelectors();
+		
 		MappingResourceConfigList configList = getMappingResourceConfigList();
 		List<MappingModel> mappingModelList = configList.getMappingModelList();
 		// there are 9 connections
@@ -84,7 +87,7 @@ public class ClassicX2JTestCase extends AbstractXML2JavaTestCase {
 			}
 		}
 		Assert.assertEquals(equalsUrl, tag.getNamespaceURL());
-		List<AbstractXMLObject> children = tag.getChildren();
+		List<AbstractXMLObject> children = tag.getXMLNodeChildren();
 		for (Iterator<AbstractXMLObject> iterator = children.iterator(); iterator
 				.hasNext();) {
 			AbstractXMLObject abstractXMLObject = (AbstractXMLObject) iterator

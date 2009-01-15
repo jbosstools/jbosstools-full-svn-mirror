@@ -22,7 +22,9 @@ import org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer;
 import org.jboss.tools.smooks.model.DocumentRoot;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.test.AbstractModelTestCase;
+import org.jboss.tools.smooks.test.java.SelectorTester;
 import org.jboss.tools.smooks.test.java2java.NormalJ2JConfigFileAnalyzerTester;
+import org.jboss.tools.smooks.ui.IXMLStructuredObject;
 import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
 import org.jboss.tools.smooks.xml.model.TagList;
 import org.jboss.tools.smooks.xml.model.TagObject;
@@ -35,11 +37,11 @@ import org.jboss.tools.smooks.xml2java.analyzer.XMLSourceModelAnalyzer;
  * 
  */
 public abstract class AbstractXML2JavaTestCase extends AbstractModelTestCase {
-	
+
 	protected Object source;
 	protected Object target;
 	protected MappingResourceConfigList mappingResourceConfigList;
-	
+
 	public Object getSource() {
 		return source;
 	}
@@ -63,6 +65,14 @@ public abstract class AbstractXML2JavaTestCase extends AbstractModelTestCase {
 	public void setMappingResourceConfigList(
 			MappingResourceConfigList mappingResourceConfigList) {
 		this.mappingResourceConfigList = mappingResourceConfigList;
+	}
+
+	public void checkSelectors() {
+		SelectorTester tester = new SelectorTester();
+		SmooksResourceListType listType = ((DocumentRoot) smooksResource
+				.getContents().get(0)).getSmooksResourceList();
+		tester.validSmooksConfigFile(listType, (IXMLStructuredObject) source,
+				(IXMLStructuredObject) ((List) target).get(0));
 	}
 
 	/*
@@ -110,12 +120,13 @@ public abstract class AbstractXML2JavaTestCase extends AbstractModelTestCase {
 				listType, null, null);
 		return source;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 */
-	public void setUp() throws Exception{
+	public void setUp() throws Exception {
 		super.setUp();
 		setSource(loadSource());
 		setTarget(loadTarget());
@@ -173,7 +184,7 @@ public abstract class AbstractXML2JavaTestCase extends AbstractModelTestCase {
 	protected ITargetModelAnalyzer newTargetModelAnalyzer() {
 		return new JavaBeanAnalyzer();
 	}
-	
+
 	protected void checkTargetConnectionCount(
 			List<MappingModel> mappingModelList) throws Exception {
 		HashMap map = new HashMap();
@@ -187,7 +198,7 @@ public abstract class AbstractXML2JavaTestCase extends AbstractModelTestCase {
 			map.put(mappingModel.getTarget(), "Exist");
 		}
 	}
-	
+
 	public void checkXMLNodeModelValue(AbstractXMLObject tag) {
 		Assert.assertNotNull(tag.getName());
 		if (!(tag instanceof TagList))
@@ -195,7 +206,8 @@ public abstract class AbstractXML2JavaTestCase extends AbstractModelTestCase {
 		else
 			Assert.assertNull(tag.getParent());
 		if (tag instanceof TagObject) {
-			List<AbstractXMLObject> children = ((TagObject) tag).getChildren();
+			List<AbstractXMLObject> children = ((TagObject) tag)
+					.getXMLNodeChildren();
 			for (Iterator iterator = children.iterator(); iterator.hasNext();) {
 				AbstractXMLObject abstractXMLObject = (AbstractXMLObject) iterator
 						.next();
@@ -225,7 +237,7 @@ public abstract class AbstractXML2JavaTestCase extends AbstractModelTestCase {
 		if (name.equalsIgnoreCase(tag.getName())) {
 			return tag;
 		}
-		List list = tag.getChildren();
+		List list = tag.getXMLNodeChildren();
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			Object object = (Object) iterator.next();
 			if (object instanceof TagObject) {
@@ -236,6 +248,5 @@ public abstract class AbstractXML2JavaTestCase extends AbstractModelTestCase {
 		}
 		return null;
 	}
-
 
 }
