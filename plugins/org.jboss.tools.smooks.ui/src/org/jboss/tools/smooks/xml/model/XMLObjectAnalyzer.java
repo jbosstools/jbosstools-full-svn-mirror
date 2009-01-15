@@ -54,7 +54,7 @@ public class XMLObjectAnalyzer {
 		if(isIgnoreNode(name, ignoreNodeNames)) return null;
 		if (tag == null)
 			return null;
-		List list = tag.getChildren();
+		List list = tag.getXMLNodeChildren();
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			TagObject tagc = (TagObject) iterator.next();
 			if (tagc.getName().equals(name))

@@ -710,7 +710,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					}
 				}
 			} else {
-				sourceModel = localJavaBeanModelWithSelector(selector, source);
+				sourceModel = (JavaBeanModel) UIUtils.localXMLNodeWithPath(
+						selector, source);// localJavaBeanModelWithSelector(selector,
+				// source);
 			}
 			if (sourceModel != null) {
 				MappingModel model = new MappingModel(sourceModel,
@@ -734,6 +736,37 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		return model;
 	}
 
+	public static JavaBeanModel localJavaBeanModelWithSelectorWithoutException(
+			String selector, JavaBeanModel model) {
+		if (selector == null || model == null)
+			return null;
+		String[] selectors = selector.trim().split(SPACE_STRING);
+		if (selectors != null && selectors.length > 0) {
+			// to find the first node
+			String firstNode = selectors[0];
+			JavaBeanModel firstModel = localJavaBeanModelFromRootNode(
+					firstNode, model);
+			// first time , we search the node via context
+			if (firstModel == null) {
+				firstModel = localJavaBeanModelFromRootNode(firstNode, model
+						.getRootParent());
+			}
+			// if we can't find the node , to find it from the Root Parent node
+			if (firstModel == null) {
+				return null;
+			}
+			for (int i = 1; i < selectors.length; i++) {
+				firstModel = findTheChildJavaBeanModel(selectors[i], firstModel);
+				if (firstModel == null) {
+					return null;
+				}
+			}
+
+			return firstModel;
+		}
+		return model;
+	}
+
 	public static JavaBeanModel localJavaBeanModelWithSelector(String selector,
 			JavaBeanModel model) {
 		if (selector == null || model == null)
@@ -745,13 +778,13 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			JavaBeanModel firstModel = localJavaBeanModelFromRootNode(
 					firstNode, model);
 			// first time , we search the node via context
-			if(firstModel == null){
-				 firstModel = localJavaBeanModelFromRootNode(
-							firstNode, model.getRootParent());
+			if (firstModel == null) {
+				firstModel = localJavaBeanModelFromRootNode(firstNode, model
+						.getRootParent());
 			}
 			// if we can't find the node , to find it from the Root Parent node
 			if (firstModel == null) {
-				throw new RuntimeException("Can't find the node : " +firstNode);
+				throw new RuntimeException("Can't find the node : " + firstNode);
 			}
 			for (int i = 1; i < selectors.length; i++) {
 				firstModel = findTheChildJavaBeanModel(selectors[i], firstModel);
@@ -760,28 +793,58 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 							+ selectors[i] + " from parent node "
 							+ selectors[i - 1]);
 			}
-			
+
 			return firstModel;
 		}
 		return model;
 	}
 
-	public static JavaBeanModel localJavaBeanModelFromRootNode(String name,
-			JavaBeanModel rootParent) {
+	private static JavaBeanModel localJavaBeanModelFromRootNode(String name,
+			JavaBeanModel rootParent, HashMap usedClassMap) {
 		if (name == null || rootParent == null)
 			return null;
 		if (name.equalsIgnoreCase(rootParent.getSelectorString()))
 			return rootParent;
-
+		usedClassMap.put(rootParent.getBeanClass(), new Object());
+		if (rootParent.isPrimitive())
+			return null;
 		List children = rootParent.getProperties();
+		JavaBeanModel result = null;
 		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
 			JavaBeanModel child = (JavaBeanModel) iterator.next();
-			JavaBeanModel result = localJavaBeanModelFromRootNode(name, child);
-			if (result != null)
-				return result;
+			if (name.equalsIgnoreCase(child.getSelectorString())) {
+				result = child;
+				break;
+			}
 		}
-		return null;
+		if (result == null) {
+			for (Iterator iterator = children.iterator(); iterator.hasNext();) {
+				JavaBeanModel child = (JavaBeanModel) iterator.next();
+				if (child.isPrimitive()) {
+					continue;
+				}
+				// to avoid the "died loop"
+				if (usedClassMap.get(child.getBeanClass()) != null) {
+					continue;
+				}
+				result = localJavaBeanModelFromRootNode(name, child,
+						usedClassMap);
+				if (result != null) {
+					return result;
+				}
+			}
+		}
+		return result;
+	}
 
+	public static JavaBeanModel localJavaBeanModelFromRootNode(String name,
+			JavaBeanModel rootParent) {
+		HashMap usedClassMap = new HashMap();
+		JavaBeanModel model = localJavaBeanModelFromRootNode(name, rootParent,
+				usedClassMap);
+		usedClassMap.clear();
+		usedClassMap = null;
+		return model;
 	}
 
 	protected JavaBeanModel findModelWithSelectorString(String selector,
@@ -904,7 +967,9 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					} else {
 						model = new JavaBeanModel(null, rootClassName);
 						model.setRootClassModel(true);
-						model.setError(Messages.getString("JavaBeanAnalyzer.ClassNotExist") + rootClassName); //$NON-NLS-1$
+						model
+								.setError(Messages
+										.getString("JavaBeanAnalyzer.ClassNotExist") + rootClassName); //$NON-NLS-1$
 						model.setProperties(new ArrayList());
 						isError = true;
 					}
@@ -958,8 +1023,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 			// "Can't load Java bean model form the config file.");
 		}
 		// if can't load the source from GraphicalInformation , return NULL
-//		if (current == null && rootClassName == null)
-//			return list;
+		// if (current == null && rootClassName == null)
+		// return list;
 		return list;
 	}
 
@@ -1280,7 +1345,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 					selector, listType);
 			if (resourceConfig != null && !resourceConfigIsUsed(resourceConfig)) {
 				String referenceSelector = resourceConfig.getSelector();
-				JavaBeanModel model = localJavaBeanModelWithSelector(referenceSelector, currentModel);
+				JavaBeanModel model = localJavaBeanModelWithSelector(
+						referenceSelector, currentModel);
 				// try to test the selector is can be loaded by classloader??
 				if (model == null) {
 					Class clazz = null;
@@ -1319,33 +1385,33 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 		} else {
 			selector = selector.trim();
 			localJavaBeanModelWithSelector(selector, currentModel);
-//			String[] properties = selector.split(SPACE_STRING);
-//			if (properties != null) {
-//				JavaBeanModel currentParent = currentModel;
-//				for (int i = 0; i < properties.length; i++) {
-//					String property = properties[i].trim();
-//					Class currentClazz = currentParent.getBeanClass();
-//					if (currentClazz != null
-//							&& property.equals(currentClazz.getName())) {
-//
-//					} else {
-//						JavaBeanModel pm = findTheChildJavaBeanModel(property,
-//								currentParent);
-//						if (pm != null) {
-//
-//						} else {
-//							pm = new JavaBeanModel(null, property);
-//							pm.setProperties(new ArrayList());
-//							pm.setError(Messages
-//									.getString("JavaBeanAnalyzer.DontExist")); //$NON-NLS-1$
-//							currentParent.addProperty(pm);
-//						}
-//						currentParent = pm;
-//					}
-//				}
-//			} else {
-//				// if properties is null , how to process?
-//			}
+			// String[] properties = selector.split(SPACE_STRING);
+			// if (properties != null) {
+			// JavaBeanModel currentParent = currentModel;
+			// for (int i = 0; i < properties.length; i++) {
+			// String property = properties[i].trim();
+			// Class currentClazz = currentParent.getBeanClass();
+			// if (currentClazz != null
+			// && property.equals(currentClazz.getName())) {
+			//
+			// } else {
+			// JavaBeanModel pm = findTheChildJavaBeanModel(property,
+			// currentParent);
+			// if (pm != null) {
+			//
+			// } else {
+			// pm = new JavaBeanModel(null, property);
+			// pm.setProperties(new ArrayList());
+			// pm.setError(Messages
+			//									.getString("JavaBeanAnalyzer.DontExist")); //$NON-NLS-1$
+			// currentParent.addProperty(pm);
+			// }
+			// currentParent = pm;
+			// }
+			// }
+			// } else {
+			// // if properties is null , how to process?
+			// }
 		}
 	}
 

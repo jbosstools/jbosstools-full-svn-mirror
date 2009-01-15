@@ -24,12 +24,13 @@ import java.util.List;
 
 import org.jboss.tools.smooks.analyzer.IValidatable;
 import org.jboss.tools.smooks.javabean.uitils.JavaPropertyUtils;
+import org.jboss.tools.smooks.ui.IXMLStructuredObject;
 
 /**
  * @author Dart Peng
  * 
  */
-public class JavaBeanModel implements IValidatable {
+public class JavaBeanModel implements IValidatable ,IXMLStructuredObject{
 
 	private String beanClassString = null;
 
@@ -432,6 +433,26 @@ public class JavaBeanModel implements IValidatable {
 
 	public void setGenericType(boolean hasGenericType) {
 		this.hasGenericType = hasGenericType;
+	}
+	
+	public boolean isAttribute(){
+		return false;
+	}
+
+	public List<IXMLStructuredObject> getChildren() {
+		List ps = getProperties();
+		if(ps!=null){
+			return ps;
+		}
+		return null;
+	}
+
+	public Object getID() {
+		return getBeanClass();
+	}
+
+	public String getNodeName() {
+		return getSelectorString();
 	}
 
 }

@@ -339,8 +339,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 				continue;
 			}
 			String selector = resourceConfig.getSelector();
-			AbstractXMLObject source = findXMLNodeWithSelector(selector,
-					sourceRoot);
+			AbstractXMLObject source = (AbstractXMLObject) UIUtils.localXMLNodeWithPath(selector, sourceRoot); 
+//			findXMLNodeWithSelector(selector,		sourceRoot);
 			if (source == null) {
 				// TODO if can't find the root , throw exception
 				// MODIFY by Dart 2008.11.17
@@ -408,7 +408,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		if (selector.equalsIgnoreCase(root.getName()))
 			return root;
 		if (root instanceof TagObject) {
-			List<AbstractXMLObject> children = ((TagObject) root).getChildren();
+			List<AbstractXMLObject> children = ((TagObject) root).getXMLNodeChildren();
 			List<TagPropertyObject> properties = ((TagObject) root)
 					.getProperties();
 			for (Iterator iterator = children.iterator(); iterator.hasNext();) {
@@ -548,13 +548,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			String newSelector = processingResourceConfig.getSelector();
 			if (newSelector == null)
 				return;
-			AbstractXMLObject newRoot = findXMLNodeWithSelector(newSelector,
-					root);
-			// find the node from the root
-			if (newRoot == null) {
-				newRoot = findXMLNodeWithSelector(newSelector, root, true,
-						false);
-			}
+			AbstractXMLObject newRoot = (AbstractXMLObject) UIUtils.localXMLNodeWithPath(newSelector, root);
+//			findXMLNodeWithSelector(newSelector,root);
 			if (newRoot == null) {
 				// TODO If can't find the element , throw exception
 				// MODIFY by Dart , 2008.11.07
@@ -566,8 +561,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 					processingResourceConfig, newRoot, targetBean);
 		} else {
 
-			AbstractXMLObject source = findXMLObjectWithSelectorString(
-					selector, root);
+			AbstractXMLObject source =  (AbstractXMLObject) UIUtils.localXMLNodeWithPath(selector, root);
 			if (source == null) {
 				// TODO If can't find the element , throw exception
 				// MODIFY by Dart , 2008.11.07
