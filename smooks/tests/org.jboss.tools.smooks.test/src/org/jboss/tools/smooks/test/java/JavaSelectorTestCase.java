@@ -6,9 +6,10 @@ package org.jboss.tools.smooks.test.java;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModelFactory;
+import org.jboss.tools.smooks.ui.IXMLStructuredObject;
+import org.jboss.tools.smooks.utils.UIUtils;
 
 /**
  * @author Dart
@@ -23,19 +24,16 @@ public class JavaSelectorTestCase extends TestCase {
 		JavaBeanModel model = JavaBeanModelFactory
 				.getJavaBeanModelWithLazyLoad(A.class);
 
-		JavaBeanModel aModel = JavaBeanAnalyzer.localJavaBeanModelWithSelector(
-				"a", model);
+		IXMLStructuredObject aModel = UIUtils.localXMLNodeWithPath("a", model);
 		Assert.assertNotNull(aModel);
-		Assert.assertEquals(aModel.getBeanClass(), A.class);
+		Assert.assertEquals(((JavaBeanModel) aModel).getBeanClass(), A.class);
 
-		JavaBeanModel nullModel = JavaBeanAnalyzer
-				.localJavaBeanModelWithSelectorWithoutException("a" + sperator
-						+ "null", model);
+		IXMLStructuredObject nullModel = UIUtils.localXMLNodeWithPath("a" + sperator
+				+ "null", model, null, false);
 		Assert.assertNull(nullModel);
 
 		// avoid died loop
-		nullModel = JavaBeanAnalyzer
-				.localJavaBeanModelWithSelectorWithoutException("null", model);
+		nullModel =   UIUtils.localXMLNodeWithPath("null", model, null, false);
 		Assert.assertNull(nullModel);
 	}
 }
