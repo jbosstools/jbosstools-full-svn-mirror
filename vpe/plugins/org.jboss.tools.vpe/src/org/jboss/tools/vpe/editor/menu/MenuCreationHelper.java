@@ -160,6 +160,10 @@ public class MenuCreationHelper {
 		}
 
 		IContributionItem[] items = manager.getItems();
+		/*
+		 * Fix https://jira.jboss.org/jira/browse/JBIDE-3532
+		 */
+		boolean insertFromPalette = false;
 		// fixed for JBIDE-3072
 		// add "insert arround",
 		for (int i = 0; i < items.length; i++) {
@@ -178,20 +182,25 @@ public class MenuCreationHelper {
 					else {
 						region = NodesManagingUtil.getNodeRange(node);
 					}
-
+					insertFromPalette = true;
 				} else if (NodeActionManager.INSERT_BEFORE_MENU.equals(mm.getMenuText())) {
 					type = ITextNodeSplitter.INSERT_BEFORE;
 					region = new Point(NodesManagingUtil.getStartOffsetNode(node), 0);
+					insertFromPalette = true;
 				} else if (NodeActionManager.INSERT_AFTER_MENU.equals(mm.getMenuText())) {
 					type = ITextNodeSplitter.INSERT_AFTER;
 					region = new Point(NodesManagingUtil.getEndOffsetNode(node), 0);
+					insertFromPalette = true;
 				} else if (NodeActionManager.REPLACE_TAG_MENU.equals(mm.getMenuText())){
 					//added by Max Areshkau, fix for JBIDE-3428
 					type = ITextNodeSplitter.REPLACE_TAG;
 					//post start and end offset of node
 					region = new Point(NodesManagingUtil.getStartOffsetNode(node),NodesManagingUtil.getNodeLength(node));
+					insertFromPalette = true;
 				}
-				listenContextMenu(mm, region, type);
+				if (insertFromPalette) {
+				    listenContextMenu(mm, region, type);
+				}
 			}
 		}
 
@@ -434,7 +443,7 @@ public class MenuCreationHelper {
 	 * @param type the type of menu element
 	 */
 	private void listenContextMenu(MenuManager manager, final Point region, final int type) {
-		final MenuManager paletteMenuManager = new MyMenuManager("From Palette", true); //$NON-NLS-1$
+	    final MenuManager paletteMenuManager = new MyMenuManager(VpeUIMessages.FROM_PALETTE, true);
 		manager.add(paletteMenuManager);
 		manager.addMenuListener(new VpeMenuListener(paletteMenuManager) {
 			@Override
