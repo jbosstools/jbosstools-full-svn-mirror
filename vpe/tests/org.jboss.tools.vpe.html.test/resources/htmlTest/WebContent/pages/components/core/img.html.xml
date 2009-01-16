@@ -1,6 +1,11 @@
 <tests>
 	<test id="img">
-		<IMG WIDTH="100" VSPACE="10" HSPACE="20" HEIGHT="100" BORDER="10" ALIGN="top" ALT="img" ID="img" CLASS="imgClass" DIR="ltr" ISMAP="ismap" STYLE="color: red;" SRC="/.*htmlTest/WebContent/pages/components/core/img/image.jpeg/"/>
+		<DIV ID="img" STYLE="-moz-user-modify: read-write;" >
+<IMG WIDTH="100" VSPACE="10" HSPACE="20" HEIGHT="100" BORDER="10" ALIGN="top" ALT="img" ID="img" CLASS="imgClass" ISMAP="ismap" STYLE="color: red;" SRC="/.*htmlTest/WebContent/pages/components/core/img/image.jpeg/"/>
 
+<!-- Test for JBIDE-3465 -->
+<IMG ALT="" SRC="http://www.google.com.by/logos/holiday08_4.gif"/>
+
+</DIV>
 	</test>
 </tests>

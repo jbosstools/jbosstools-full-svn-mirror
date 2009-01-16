@@ -37,7 +37,6 @@ public class HtmlImgTemplate extends VpeAbstractTemplate {
 		boolean jsfc = false;
 		 
 		nsIDOMElement img = visualDocument.createElement(HTML.TAG_IMG);
-
 		/*
 		 * Copy all attributes from source node to "img" tag except for "src", 
 		 * store "alt" attribute state, check if facelets "jsfc" attribute presents.
@@ -52,15 +51,6 @@ public class HtmlImgTemplate extends VpeAbstractTemplate {
 				jsfc = true;
 				continue;
 			}
-			
-			if (HTML.ATTR_ALT.equalsIgnoreCase(name)) {
-				if ((null == value)
-						|| ((null != value) && (value.trim()
-								.equalsIgnoreCase(VpeStyleUtil.EMPTY_STRING)))) {
-					showUnresolvedImage = true;
-					continue;
-				}
-			}
 			try{
 				img.setAttribute(name, value);
 			}catch(XPCOMException ex ) {
@@ -68,45 +58,34 @@ public class HtmlImgTemplate extends VpeAbstractTemplate {
 			}
 		}
 		
-		/*
-		 * Add "src" attribute in consideration of "alt" and "jsfc" attributes
-		 */
-		for (int i = 0; i < sourceNode.getAttributes().getLength(); i++) {
-			String name = sourceNode.getAttributes().item(i).getNodeName();
-			String value = sourceNode.getAttributes().item(i).getNodeValue();
-			if (!jsfc && (HTML.ATTR_SRC.equalsIgnoreCase(name))) {
-				value = VpeStyleUtil.addFullPathToImgSrc(value, pageContext,
+
+			Element  image = (Element) sourceNode;
+		
+			if (!jsfc && image.hasAttribute(HTML.ATTR_SRC)) {
+				String src = VpeStyleUtil.addFullPathToImgSrc(image.getAttribute(HTML.ATTR_SRC), pageContext,
 						showUnresolvedImage);
 				try {
-					img.setAttribute(HTML.ATTR_SRC, value);
+					img.setAttribute(HTML.ATTR_SRC, src);
 				} catch (XPCOMException ex) {
 					// just ignore it
 				}
-			} else if ((jsfc) && (HTML.ATTR_VALUE.equalsIgnoreCase(name))) {
+			} else if ((jsfc) && image.hasAttribute(HTML.ATTR_VALUE)) {
 				/*
 				 * in this case the tag is a facelets's tag
 				 */
-				value = VpeStyleUtil.addFullPathToImgSrc(value, pageContext,
+				String value = VpeStyleUtil.addFullPathToImgSrc(image.getAttribute(HTML.ATTR_VALUE), pageContext,
 						showUnresolvedImage);
 				try {
 					img.setAttribute(HTML.ATTR_SRC, value);
 				} catch (XPCOMException ex) {
 					// just ignore it
 				}
-			}
 		}
 		
 		
 		VpeCreationData creationData = new VpeCreationData(img);
 		
 		return creationData;
-	}
-
-	@Override
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
-			Element sourceElement, nsIDOMDocument visualDocument,
-			nsIDOMElement visualNode, Object data, String name, String value) {
-		return true;
 	}
 
 }
