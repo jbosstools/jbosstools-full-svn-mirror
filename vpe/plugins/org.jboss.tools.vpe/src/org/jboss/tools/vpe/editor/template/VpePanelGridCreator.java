@@ -36,8 +36,6 @@ import org.w3c.dom.NodeList;
 
 public class VpePanelGridCreator extends VpeAbstractCreator {
 
-	private final String REDUNDANT_TEXT_SEPARATOR = "\n\n"; //$NON-NLS-1$
-
 	private boolean caseSensitive;
 	private VpeExpression tableSizeExpr;
 	private VpeExpression captionClassExpr;
@@ -208,18 +206,16 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 		}
 
 		nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
-		nsIDOMElement selectionTable = visualDocument
-				.createElement(HTML.TAG_TABLE);
+		nsIDOMElement selectionTable = visualDocument.createElement(HTML.TAG_TABLE);
 		nsIDOMElement tr = visualDocument.createElement(HTML.TAG_TR);
 		nsIDOMElement td = visualDocument.createElement(HTML.TAG_TD);
-
-		td.appendChild(div);
-		tr.appendChild(td);
+		nsIDOMElement visualTable = visualDocument.createElement(HTML.TAG_TABLE);
+		
 		selectionTable.appendChild(tr);
-
-		nsIDOMElement visualTable = visualDocument
-				.createElement(HTML.TAG_TABLE);
-
+		tr.appendChild(td);
+		td.appendChild(div);
+		div.appendChild(visualTable);
+		
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(selectionTable);
 
 		if (propertyCreators != null) {
@@ -247,179 +243,150 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 		NodeList children = sourceNode.getChildNodes();
 		int count = children != null ? children.getLength() : 0;
 		if (count > 0) {
-			Node header = null;
-			Node footer = null;
-			Node caption = null;
-			Node[] sourceChildren = new Node[count];
-			List<Node> sourceTextChildren = new ArrayList<Node>();
-			int childrenCount = 0;
-			int textChildrenCount = 0;
-			for (int i = 0; i < count; i++) {
-				Node node = children.item(i);
-				int type = node.getNodeType();
-				if (type == Node.ELEMENT_NODE || type == Node.TEXT_NODE
-						&& node.getNodeValue().trim().length() > 0) {
+		    Node header = null;
+		    Node footer = null;
+		    Node caption = null;
+		    Node[] sourceChildren = new Node[count];
+		    int childrenCount = 0;
+		    for (int i = 0; i < count; i++) {
+			Node node = children.item(i);
+			int type = node.getNodeType();
+			if (type == Node.ELEMENT_NODE || type == Node.TEXT_NODE
+				&& node.getNodeValue().trim().length() > 0) {
+			    switch (VpeCreatorUtil.getFacetType(node, pageContext)) {
+			    case VpeCreatorUtil.FACET_TYPE_HEADER:
+				header = node;
+				break;
+			    case VpeCreatorUtil.FACET_TYPE_FOOTER:
+				footer = node;
+				break;
+			    case VpeCreatorUtil.FACET_TYPE_CAPTION:
+				caption = node;
+				break;
+			    default:
+				sourceChildren[childrenCount] = node;
+			    childrenCount++;
+			    break;
+			    }
+			}
+		    }
 
-					/*
-					 * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944
-					 * author: Denis Maliarevich
-					 * Finds all unattended text nodes
-					 */
-					if (type == Node.TEXT_NODE) {
-						sourceTextChildren.add(node);
-						textChildrenCount++;
-					} else {
-						switch (VpeCreatorUtil.getFacetType(node, pageContext)) {
-						case VpeCreatorUtil.FACET_TYPE_HEADER:
-							header = node;
-							break;
-						case VpeCreatorUtil.FACET_TYPE_FOOTER:
-							footer = node;
-							break;
-						case VpeCreatorUtil.FACET_TYPE_CAPTION:
-							caption = node;
-							break;
-						default:
-							sourceChildren[childrenCount] = node;
-							childrenCount++;
-						break;
-						}
-					}
-				}
+		    if (childrenCount > 0) {
+			if (tableSize == 0) {
+			    tableSize = childrenCount;
+			}
+			int rowCount = (childrenCount + tableSize - 1) / tableSize;
+
+			nsIDOMElement visualHead = null;
+			nsIDOMElement visualFoot = null;
+			nsIDOMElement visualCaption = null;
+
+			if (caption != null) {
+			    visualCaption = visualDocument
+			    .createElement(HTML.TAG_CAPTION);
+			    visualTable.appendChild(visualCaption);
+			    VpeChildrenInfo childrenInfo = new VpeChildrenInfo(
+				    visualCaption);
+			    childrenInfo.addSourceChild(caption);
+			    creatorInfo.addChildrenInfo(childrenInfo);
+			    if (captionClassExpr != null
+				    && caption.getParentNode() != null) {
+				String captionClass = captionClassExpr.exec(
+					pageContext, caption.getParentNode())
+					.stringValue();
+				visualCaption.setAttribute(HTML.ATTR_CLASS, captionClass);
+			    }
+
+			    if (captionStyleExpr != null
+				    && caption.getParentNode() != null) {
+				String captionStyle = captionStyleExpr.exec(
+					pageContext, caption.getParentNode())
+					.stringValue();
+				visualCaption.setAttribute(HTML.ATTR_STYLE, captionStyle);
+			    }
+			}
+			if (header != null) {
+			    visualHead = visualDocument.createElement(HTML.TAG_THEAD);
+			    visualTable.appendChild(visualHead);
+			}
+			if (footer != null) {
+			    visualFoot = visualDocument.createElement(HTML.TAG_TFOOT);
+			    visualTable.appendChild(visualFoot);
 			}
 
-			/*
-			 * Fixes http://jira.jboss.com/jira/browse/JBIDE-1944
-			 * author: Denis Maliarevich
-			 * Any text which is placed outside of the tags
-			 * will be displayed above the table.
-			 */
-			if (textChildrenCount > 0) {
-				String redundantText = REDUNDANT_TEXT_SEPARATOR;
-				for (Node node : sourceTextChildren) {
-					redundantText += node.getNodeValue();
-					redundantText += REDUNDANT_TEXT_SEPARATOR;
+			nsIDOMElement visualBody = visualDocument
+			.createElement(HTML.TAG_TBODY);
+			visualTable.appendChild(visualBody);
+
+			List<String> rowClasses = VpeClassUtil.getClasses(rowClassesExpr, sourceNode,
+				pageContext);
+			List<String> columnClasses = VpeClassUtil.getClasses(columnClassesExpr, sourceNode,
+				pageContext);
+
+			int rci = 0; // index of row class
+			for (int i = 0; i < rowCount; i++) {
+			    int cci = 0; // index of column class. Reset on every new row.
+
+			    nsIDOMElement visualRow = visualDocument
+			    .createElement(HTML.TAG_TR);
+			    if (rowClasses.size() > 0) {
+				visualRow.setAttribute(HTML.ATTR_CLASS, rowClasses.get(rci)
+					.toString());
+				rci++;
+				if (rci >= rowClasses.size())
+				    rci = 0;
+			    }
+			    for (int j = 0; j < tableSize; j++) {
+				if (i*tableSize+j >= childrenCount) {
+				    break;
 				}
-				div.appendChild(visualDocument.createTextNode(redundantText));
-			}
-			div.appendChild(visualTable);
-
-			if (childrenCount > 0) {
-				if (tableSize == 0) {
-					tableSize = childrenCount;
+				nsIDOMElement visualCell = visualDocument
+				.createElement(HTML.TAG_TD);
+				if (columnClasses.size() > 0) {
+				    visualCell.setAttribute(HTML.ATTR_CLASS, columnClasses.get(
+					    cci).toString());
+				    cci++;
+				    if (cci >= columnClasses.size())
+					cci = 0;
 				}
-				int rowCount = (childrenCount + tableSize - 1) / tableSize;
-
-				nsIDOMElement visualHead = null;
-				nsIDOMElement visualFoot = null;
-				nsIDOMElement visualCaption = null;
-
-				if (caption != null) {
-					visualCaption = visualDocument
-							.createElement(HTML.TAG_CAPTION);
-					visualTable.appendChild(visualCaption);
+				visualRow.appendChild(visualCell);
+				int sourceIndex = tableSize * i + j;
+				if (sourceIndex < childrenCount) {
+				    Node child = sourceChildren[sourceIndex];
+				    if (child != header && child != footer) {
 					VpeChildrenInfo childrenInfo = new VpeChildrenInfo(
-							visualCaption);
-					childrenInfo.addSourceChild(caption);
+						visualCell);
+					childrenInfo.addSourceChild(child);
 					creatorInfo.addChildrenInfo(childrenInfo);
-					if (captionClassExpr != null
-							&& caption.getParentNode() != null) {
-						String captionClass = captionClassExpr.exec(
-								pageContext, caption.getParentNode())
-								.stringValue();
-						visualCaption.setAttribute(HTML.ATTR_CLASS, captionClass);
-					}
-
-					if (captionStyleExpr != null
-							&& caption.getParentNode() != null) {
-						String captionStyle = captionStyleExpr.exec(
-								pageContext, caption.getParentNode())
-								.stringValue();
-						visualCaption.setAttribute(HTML.ATTR_STYLE, captionStyle);
-					}
+				    }
 				}
-				if (header != null) {
-					visualHead = visualDocument.createElement(HTML.TAG_THEAD);
-					visualTable.appendChild(visualHead);
-				}
-				if (footer != null) {
-					visualFoot = visualDocument.createElement(HTML.TAG_TFOOT);
-					visualTable.appendChild(visualFoot);
-				}
-
-				nsIDOMElement visualBody = visualDocument
-						.createElement(HTML.TAG_TBODY);
-				visualTable.appendChild(visualBody);
-
-				List<String> rowClasses = VpeClassUtil.getClasses(rowClassesExpr, sourceNode,
-						pageContext);
-				List<String> columnClasses = VpeClassUtil.getClasses(columnClassesExpr, sourceNode,
-						pageContext);
-
-				int rci = 0; // index of row class
-				for (int i = 0; i < rowCount; i++) {
-					int cci = 0; // index of column class. Reset on every new row.
-
-					nsIDOMElement visualRow = visualDocument
-							.createElement(HTML.TAG_TR);
-					if (rowClasses.size() > 0) {
-						visualRow.setAttribute(HTML.ATTR_CLASS, rowClasses.get(rci)
-								.toString());
-						rci++;
-						if (rci >= rowClasses.size())
-							rci = 0;
-					}
-					for (int j = 0; j < tableSize; j++) {
-					    	if (i*tableSize+j >= childrenCount) {
-					    	    	break;
-					    	}
-						nsIDOMElement visualCell = visualDocument
-								.createElement(HTML.TAG_TD);
-						if (columnClasses.size() > 0) {
-							visualCell.setAttribute(HTML.ATTR_CLASS, columnClasses.get(
-									cci).toString());
-							cci++;
-							if (cci >= columnClasses.size())
-								cci = 0;
-						}
-						visualRow.appendChild(visualCell);
-						int sourceIndex = tableSize * i + j;
-						if (sourceIndex < childrenCount) {
-							Node child = sourceChildren[sourceIndex];
-							if (child != header && child != footer) {
-								VpeChildrenInfo childrenInfo = new VpeChildrenInfo(
-										visualCell);
-								childrenInfo.addSourceChild(child);
-								creatorInfo.addChildrenInfo(childrenInfo);
-							}
-						}
-					}
-					if (visualBody != null) {
-						visualBody.appendChild(visualRow);
-					} else {
-						visualTable.appendChild(visualRow);
-					}
-				}
-				makeSpecial(header, visualHead, visualDocument, tableSize,
-						creatorInfo,  HTML.TAG_TH, headerClassExpr, pageContext);
-				makeSpecial(footer, visualFoot, visualDocument, tableSize,
-						creatorInfo, HTML.TAG_TD, footerClassExpr, pageContext);
-
-				for (int i = 0; i < propertyCreators.size(); i++) {
-					VpeCreator creator = (VpeCreator) propertyCreators.get(i);
-					if (creator != null) {
-						VpeCreatorInfo info = creator.create(pageContext,
-								sourceNode, visualDocument,
-								visualTable, visualNodeMap);
-						if (info != null && info.getVisualNode() != null) {
-							nsIDOMAttr attr = (nsIDOMAttr) info.getVisualNode();
-							if (attr.getValue().length() > 0) {
-								visualTable.setAttributeNode(attr);
-							}
-						}
-					}
-				}
+			    }
+			    if (visualBody != null) {
+				visualBody.appendChild(visualRow);
+			    } else {
+				visualTable.appendChild(visualRow);
+			    }
 			}
+			makeSpecial(header, visualHead, visualDocument, tableSize,
+				creatorInfo,  HTML.TAG_TH, headerClassExpr, pageContext);
+			makeSpecial(footer, visualFoot, visualDocument, tableSize,
+				creatorInfo, HTML.TAG_TD, footerClassExpr, pageContext);
+
+			for (int i = 0; i < propertyCreators.size(); i++) {
+			    VpeCreator creator = (VpeCreator) propertyCreators.get(i);
+			    if (creator != null) {
+				VpeCreatorInfo info = creator.create(pageContext,
+					sourceNode, visualDocument,
+					visualTable, visualNodeMap);
+				if (info != null && info.getVisualNode() != null) {
+				    nsIDOMAttr attr = (nsIDOMAttr) info.getVisualNode();
+				    if (attr.getValue().length() > 0) {
+					visualTable.setAttributeNode(attr);
+				    }
+				}
+			    }
+			}
+		    }
 		}
 
 		return creatorInfo;
