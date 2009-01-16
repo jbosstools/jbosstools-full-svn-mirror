@@ -182,7 +182,6 @@
 	</target>
 	
 	<target name="po2prop" depends="-init" description="Generate Java properties files from translated PO files">
-		<delete dir="${propdir}" />
 		<mkdir dir="${propdir}" />
 		<po2prop srcDir="po" dstDir="${propdir}" failonnull="true">
 			<unbundlemapper />
@@ -247,7 +246,6 @@
 		<property name="FEATURE_VERSION" value="${PLUGIN_VERSION}"/>
 	<!-- Processes the generated props directory, one plugin at a time, 
 		 generating manifests and jars -->
-		<delete dir="${jardir}/plugins" />
 		<mkdir dir="${jardir}/plugins" />
 		<!-- for each plugin directory -->
 		<for param="pluginsrcdir">
@@ -281,9 +279,7 @@
 		</for>
 
 		<!-- Generate langpack feature manifests (one per locale) for each JBT feature -->
-		<delete dir="${propdir}/features" />
 		<mkdir dir="${propdir}/features" />
-		<delete dir="${jardir}/features" />
 		<mkdir dir="${jardir}/features" />
 		<tempfile 
 			property="temp.file.site.contents" 
@@ -398,15 +394,12 @@
 			<param name="pluginversion" expression="${PLUGIN_VERSION}" />
 		</xslt>
 
-		<copy overwrite="true" 
-			todir="${propdir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}">
+		<copy 
+			todir="${propdir}/features/${feature}.nl-${locale}_${FEATURE_VERSION}">
 			<fileset dir="feature-template/FEATURE.nl-LOCALE_VERSION" />
 		</copy>
-		<jar destfile="${jardir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}.jar" 
-			basedir="${propdir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}" />
-		<!-- might want to keep around for debugging: 
-		<delete dir="${propdir}/features/${feature}.nl-${locale}_${PLUGIN_VERSION}" />
-		-->
+		<jar destfile="${jardir}/features/${feature}.nl-${locale}_${FEATURE_VERSION}.jar" 
+			basedir="${propdir}/features/${feature}.nl-${locale}_${FEATURE_VERSION}" />
 	</target>
 	
 	<!-- Create a <category-def> for ${locale} to go into site.xml -->
@@ -428,9 +421,6 @@
 		</copy>
 		<jar destfile="${jardir}/features/org.jboss.tools.nls-${locale}_${PLUGIN_VERSION}.jar" 
 			basedir="${propdir}/features/org.jboss.tools.nls-${locale}_${PLUGIN_VERSION}" />
-		<!-- might want to keep around for debugging: 
-		<delete dir="${propdir}/features/org.jboss.tools.nls-${locale}_${PLUGIN_VERSION}" />
-		-->
 	</target>
 	
 	<target name="deletep2" description="Remove p2 metadata (revert to site.xml)">
@@ -501,19 +491,21 @@
 	</target>
 	
 	<target name="po" depends="en, qps, en_AA" description="Generates po files for all pseudolocales">
-		<!-- Instead of hard-coding locale ids, get them from i18n.properties and iterate -->
+		<!-- TODO Instead of hard-coding locale ids, get them from i18n.properties and iterate -->
 	</target>
 	
 	<target name="most" depends="clean, prop2pot, po, po2prop, metadata" 
 		description="Generates langpacks and metadata" /> 
 
-	<target name="all" depends="clean, prop2pot, po, po2prop, metadata, p2" 
+    <target name="-all" depends="prop2pot, po, po2prop, metadata, p2" />
+
+	<target name="all" depends="clean, -all" 
 		description="Runs all targets in an appropriate order"/>
 
-    <target name="reall" 
-        description="Runs all targets in an appropriate order, reusing previous buildnum">
+    <target name="quick" 
+        description="Runs all targets except clean in an appropriate order, reusing previous buildnum">
     	<loadproperties srcfile="build.number" />
-    	<antcall target="all" />
+    	<antcall target="-all" />
     </target>
 
 	
