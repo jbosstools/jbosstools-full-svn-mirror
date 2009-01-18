@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.javabean.ui;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -242,7 +243,29 @@ public class JavaBeanModelLoadComposite extends Composite implements
 	}
 
 	public void widgetSelected(SelectionEvent arg0) {
-		IJavaSearchScope scope = JavaSearchScopeFactory.getInstance().createWorkspaceScope(true);
+
+		IJavaSearchScope scope = null;
+		if (javaProject == null) {
+			scope = JavaSearchScopeFactory.getInstance().createWorkspaceScope(
+					true);
+		} else {
+			String[] requiredProjects = null;
+			try {
+				requiredProjects = javaProject.getRequiredProjectNames();
+			} catch (Exception e) {
+			}
+			if (requiredProjects == null) {
+				requiredProjects = new String[] { javaProject.getElementName() };
+			} else {
+				String[] temp = new String[requiredProjects.length + 1];
+				temp[0] = javaProject.getElementName();
+				System.arraycopy(requiredProjects, 0, temp, 1,
+						requiredProjects.length);
+				requiredProjects = temp;
+			}
+			scope = JavaSearchScopeFactory.getInstance()
+					.createJavaProjectSearchScope(requiredProjects, true);
+		}
 		SelectionDialog dialog;
 		Throwable exception = null;
 		try {
@@ -340,12 +363,14 @@ public class JavaBeanModelLoadComposite extends Composite implements
 				switch (columnIndex) {
 				case 0:
 					if (isArray) {
-						return SmooksUIActivator.getDefault().getImageRegistry().get(
-								JavaImageConstants.IMAGE_JAVA_ARRAY);
+						return SmooksUIActivator.getDefault()
+								.getImageRegistry().get(
+										JavaImageConstants.IMAGE_JAVA_ARRAY);
 					}
 					if (isList) {
-						return SmooksUIActivator.getDefault().getImageRegistry().get(
-								JavaImageConstants.IMAGE_JAVA_COLLECTION);
+						return SmooksUIActivator.getDefault()
+								.getImageRegistry()
+								.get(JavaImageConstants.IMAGE_JAVA_COLLECTION);
 					}
 					return SmooksUIActivator.getDefault().getImageRegistry()
 							.get(JavaImageConstants.IMAGE_JAVA_OBJECT);

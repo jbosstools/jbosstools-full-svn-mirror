@@ -27,11 +27,14 @@ import org.jboss.tools.smooks.ui.gef.figures.CurveLineConnection;
 import org.jboss.tools.smooks.ui.gef.figures.ILineFigurePaintListener;
 import org.jboss.tools.smooks.ui.gef.figures.LineFigurePaintListenerManager;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataConnectionModel;
+import org.jboss.tools.smooks.ui.gef.model.GraphicalModelListenerManager;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
+import org.jboss.tools.smooks.ui.gef.model.IGraphicalModelListener;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
 import org.jboss.tools.smooks.ui.gef.model.TreeItemRelationModel;
 import org.jboss.tools.smooks.ui.gef.policy.DeleteConnectionEditPolicy;
 import org.jboss.tools.smooks.ui.gef.util.GraphicsConstants;
+import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 
 public class StructuredDataConnectionEditPart extends
 		AbstractConnectionEditPart implements PropertyChangeListener {
@@ -82,6 +85,17 @@ public class StructuredDataConnectionEditPart extends
 				.getEditorPart();
 		if (editor instanceof SmooksGraphicalFormPage) {
 			return ((SmooksGraphicalFormPage) editor).getSourceDataTypeID();
+		}
+		return null;
+	}
+
+	private SmooksConfigurationFileGenerateContext getSmooksContext() {
+		GraphicalViewer viewer = (GraphicalViewer) this.getViewer();
+		IEditorPart editor = ((DefaultEditDomain) viewer.getEditDomain())
+				.getEditorPart();
+		if (editor instanceof SmooksGraphicalFormPage) {
+			return ((SmooksGraphicalFormPage) editor)
+					.getSmooksConfigurationFileGenerateContext();
 		}
 		return null;
 	}
@@ -251,6 +265,15 @@ public class StructuredDataConnectionEditPart extends
 	}
 
 	public void propertyChange(PropertyChangeEvent evt) {
-
+		String pm = evt.getPropertyName();
+		if (AbstractStructuredDataConnectionModel.CONNECTION_PROPERTY_CHANGE
+				.equals(pm)) {
+			IGraphicalModelListener listener = GraphicalModelListenerManager
+					.getInstance().getPaintListener(getSourceDataTypeID(),
+							getTargetDataTypeID());
+			if (listener == null)
+				return;
+			listener.modelChanged(getModel(), getSmooksContext(),evt);
+		}
 	}
 }

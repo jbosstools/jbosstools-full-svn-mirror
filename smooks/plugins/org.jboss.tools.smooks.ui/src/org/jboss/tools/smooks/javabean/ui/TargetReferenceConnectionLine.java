@@ -38,12 +38,10 @@ public class TargetReferenceConnectionLine extends PolylineConnection {
 		}
 
 		int width = getCenterWidth();
-		int h = Math.min(width/4, 15);
 		
-		
-		Point startnext = new Point(start.x - 30, start.y + h);
+		Point startnext = new Point(start.x - 30, start.y );
 
-		Point endnext = new Point(end.x - 30, end.y - h);
+		Point endnext = new Point(end.x - 30, end.y );
 
 		start = new Point(start.x - 5,start.y);
 		end = new Point(end.x - 5,end.y);
@@ -78,8 +76,30 @@ public class TargetReferenceConnectionLine extends PolylineConnection {
 
 	@Override
 	public boolean containsPoint(int x, int y) {
-		// TODO Auto-generated method stub
-		return super.containsPoint(x, y);
+		Point start = getStart();
+		Point end = getEnd();
+		
+		Point startnext = new Point(start.x - 30, start.y );
+
+		Point endnext = new Point(end.x - 30, end.y );
+
+		start = new Point(start.x - 5,start.y);
+		end = new Point(end.x - 5,end.y);
+		
+		if(x >= startnext.x && (Math.abs(y - startnext.y) <= 2) && x <= start.x){
+			return true;
+		}
+		if(x >= endnext.x && (Math.abs(y - endnext.y) <= 2) && x <= end.x){
+			return true;
+		}
+		int y1 = Math.max(startnext.y, endnext.y);
+		int y2 = Math.min(startnext.y, endnext.y);
+		
+		if(y <= y1 && y >= y2 && (Math.abs(x - startnext.x) <= 2)){
+			return true;
+		}
+		
+		return false;
 	}
 
 }

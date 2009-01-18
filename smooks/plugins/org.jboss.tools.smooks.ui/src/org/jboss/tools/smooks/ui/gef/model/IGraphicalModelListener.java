@@ -3,6 +3,8 @@
  */
 package org.jboss.tools.smooks.ui.gef.model;
 
+import java.beans.PropertyChangeEvent;
+
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 
 /**
@@ -18,5 +20,5 @@ public interface IGraphicalModelListener {
 			SmooksConfigurationFileGenerateContext context);
 	
 	public void modelChanged(Object graphicalModel,
-			SmooksConfigurationFileGenerateContext context);
+			SmooksConfigurationFileGenerateContext context , PropertyChangeEvent event);
 }

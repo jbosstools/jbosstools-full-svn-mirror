@@ -3,6 +3,7 @@
  */
 package org.jboss.tools.smooks.javabean.ui;
 
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.IXMLStructuredObject;
+import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataConnectionModel;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
@@ -132,12 +134,14 @@ public class BeanPopulatorGraphicalModelListener implements
 					return;
 				}
 				beanId = beanId.trim();
-				String propertyName = ((JavaBeanModel)source).getName();
-				if(((JavaBeanModel)sourceParent).isArray() || ((JavaBeanModel)sourceParent).isList()){
+				String propertyName = ((JavaBeanModel) source).getName();
+				if (((JavaBeanModel) sourceParent).isArray()
+						|| ((JavaBeanModel) sourceParent).isList()) {
 					propertyName = null;
 				}
-				String selector = "${" + beanId +"}";
-				addBindingToParamType(hostResourceConfig, propertyName, selector, line);
+				String selector = "${" + beanId + "}";
+				addBindingToParamType(hostResourceConfig, propertyName,
+						selector, line);
 			}
 		}
 	}
@@ -145,7 +149,8 @@ public class BeanPopulatorGraphicalModelListener implements
 	private void setReferenceResourceConfig(ResourceConfigType resourceConfig,
 			LineConnectionModel connection) {
 		connection.updateAndAddProperty(
-				BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG, resourceConfig);
+				BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG,
+				resourceConfig);
 	}
 
 	private ResourceConfigType getResourceConfig(LineConnectionModel line) {
@@ -286,19 +291,19 @@ public class BeanPopulatorGraphicalModelListener implements
 			JavaBeanModel parent, GraphRootModel root,
 			ResourceConfigType referenceResourceConfig) {
 		IConnectableModel parentGraphModel = (IConnectableModel) UIUtils
-		.findGraphModel(root, parent);
-		List targetConnections  = parentGraphModel.getModelTargetConnections();
+				.findGraphModel(root, parent);
+		List targetConnections = parentGraphModel.getModelTargetConnections();
 		List temp1 = new ArrayList(targetConnections);
-		for (Iterator iterator = temp1.iterator(); iterator
-				.hasNext();) {
-			LineConnectionModel targetConnection = (LineConnectionModel) iterator.next();
-			if(isReferenceBindingConnection(targetConnection)){
+		for (Iterator iterator = temp1.iterator(); iterator.hasNext();) {
+			LineConnectionModel targetConnection = (LineConnectionModel) iterator
+					.next();
+			if (isReferenceBindingConnection(targetConnection)) {
 				targetConnection.disConnect();
 			}
 		}
 		temp1.clear();
 		temp1 = null;
-		
+
 		List<IXMLStructuredObject> children = parent.getChildren();
 		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
 			IXMLStructuredObject structuredObject = (IXMLStructuredObject) iterator
@@ -362,7 +367,8 @@ public class BeanPopulatorGraphicalModelListener implements
 		EditingDomain domain = context.getDomain();
 		UIUtils.addResourceConfigType(domain, listType, resourceConfig);
 		PropertyModel bindingModel = new PropertyModel(
-				BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG, resourceConfig);
+				BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG,
+				resourceConfig);
 		((LineConnectionModel) graphicalModel).addPropertyModel(bindingModel);
 	}
 
@@ -430,8 +436,18 @@ public class BeanPopulatorGraphicalModelListener implements
 	 * )
 	 */
 	public void modelChanged(Object graphicalModel,
-			SmooksConfigurationFileGenerateContext context) {
-
+			SmooksConfigurationFileGenerateContext context,
+			PropertyChangeEvent event) {
+		if(graphicalModel instanceof LineConnectionModel){
+			String pm = event.getPropertyName();
+			if(AbstractStructuredDataConnectionModel.CONNECTION_PROPERTY_CHANGE.equals(pm)){
+				if(event.getNewValue() != null){
+					if(event.getOldValue() != null){
+						PropertyModel model = (PropertyModel)event.getNewValue();
+					}
+				}
+			}
+		}
 	}
 
 	/*
