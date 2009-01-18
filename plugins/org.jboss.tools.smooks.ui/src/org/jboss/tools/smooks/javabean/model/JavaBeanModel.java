@@ -91,6 +91,10 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 	}
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		PropertyChangeListener[] array = support.getPropertyChangeListeners();
+		for (int i = 0; i < array.length; i++) {
+			if(listener == array[i]) return;
+		}
 		support.addPropertyChangeListener(listener);
 	}
 

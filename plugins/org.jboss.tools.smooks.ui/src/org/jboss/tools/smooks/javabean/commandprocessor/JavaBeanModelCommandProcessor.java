@@ -11,6 +11,7 @@
 package org.jboss.tools.smooks.javabean.commandprocessor;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
@@ -19,6 +20,7 @@ import org.eclipse.gef.EditDomain;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.jboss.tools.smooks.javabean.model.Java2JavaAnalyzer;
 import org.jboss.tools.smooks.javabean.model.JavaBeanList;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.javabean.ui.BeanPopulatorMappingAnalyzer;
@@ -84,6 +86,8 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 			AbstractStructuredDataModel sourceGraphModel,
 			AbstractStructuredDataModel targetGraphModel,
 			SmooksConfigurationFileGenerateContext context) {
+		if (sourceGraphModel instanceof TargetModel)
+			return true;
 		Object source = ((AbstractStructuredDataModel) sourceGraphModel)
 				.getReferenceEntityModel();
 		Object t = ((AbstractStructuredDataModel) targetGraphModel)
@@ -142,24 +146,54 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 		if (sourceGraphModel instanceof SourceModel) {
 			return true;
 		}
+		Object sourceParent = sourceGraphModel.getReferenceEntityModel();
+		if(!(sourceParent instanceof JavaBeanModel)){
+			return false;
+		}
+		sourceParent = ((JavaBeanModel)sourceParent).getParent();
+		if(sourceParent == null){
+			return false;
+		}
+		if(sourceParent instanceof JavaBeanList){
+			return false;
+		}
+		IConnectableModel sourceParentGraph = (IConnectableModel) UIUtils
+				.findGraphModel(context.getGraphicalRootModel(), sourceParent);
 		List connections = ((IConnectableModel) targetGraphModel)
 				.getModelTargetConnections();
 		List connections1 = ((IConnectableModel) sourceGraphModel)
-		.getModelSourceConnections();
-		// *2Java , allow the target node have two connections :
+				.getModelSourceConnections();
+		// If the source's parent node haven't any associated resource-config ,
+		// refuse the connect request.
+		List parentConnections = sourceParentGraph.getModelTargetConnections();
+		if (parentConnections.size() == 0)
+			return false;
+		for (Iterator iterator = parentConnections.iterator(); iterator
+				.hasNext();) {
+			LineConnectionModel object = (LineConnectionModel) iterator.next();
+			if (object.getProperty(Java2JavaAnalyzer.REFERENCE_RESOURCE_CONFIG) == null) {
+				return false;
+			}
+		}
+
+		if (connections1.size() > 0)
+			return false;
+		boolean hasBeanCreation = false;
+		// *2Java , allow the target node have two kind connections :
 		// 1.beancreation,2.referencebinding
 		// reference binding need the target node have the bean creation
 		// connection already.
-		if(connections1.size() > 0) return false;
-		if (connections.size() != 1)
-			return false;
-		LineConnectionModel line = (LineConnectionModel) connections.get(0);
-		Object bindingType = line
-				.getProperty(BeanPopulatorMappingAnalyzer.BINDING_TYPE);
-		if (!BeanPopulatorMappingAnalyzer.BEAN_CREATION.equals(bindingType)) {
-			return false;
+		for (Iterator iterator = connections.iterator(); iterator.hasNext();) {
+			LineConnectionModel line = (LineConnectionModel) iterator.next();
+			Object bindingType = line
+					.getProperty(BeanPopulatorMappingAnalyzer.BINDING_TYPE);
+			if (BeanPopulatorMappingAnalyzer.BEAN_CREATION.equals(bindingType)) {
+				hasBeanCreation = true;
+				break;
+			}
 		}
-
+		if (!hasBeanCreation)
+			return false;
 		return true;
 	}
 

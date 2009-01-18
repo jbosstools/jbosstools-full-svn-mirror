@@ -74,6 +74,11 @@ public class BeanlabelProvider extends LabelProvider {
 								.getImageRegistry()
 								.get(JavaImageConstants.IMAGE_JAVA_COLLECTION);
 					}
+					if (typeRef.isInterface()) {
+						return SmooksUIActivator.getDefault()
+								.getImageRegistry()
+								.get(JavaImageConstants.IMAGE_JAVA_INTERFACE);
+					}
 				}
 				return this.getJavaObjectImage();
 			}

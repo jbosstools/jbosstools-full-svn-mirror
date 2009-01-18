@@ -58,6 +58,9 @@ public class AddJavaBeanModelAction extends JavaBeanModelAction {
 			}else{
 				if(input instanceof JavaBeanList){
 					List children = list.getChildren();
+					if(viewer instanceof PropertyChangeListener){
+						((JavaBeanList)input).addPropertyChangeListener((PropertyChangeListener)viewer);
+					}
 					for (Iterator iterator = children.iterator(); iterator
 							.hasNext();) {
 						JavaBeanModel javaBean = (JavaBeanModel) iterator.next();
