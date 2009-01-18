@@ -28,8 +28,8 @@ public class One2ManyTestCase extends ClassicX2JTestCase {
 	public void testGraph() throws Exception {
 		MappingResourceConfigList configList = this.getMappingResourceConfigList();
 		List<MappingModel> mappingList = configList.getMappingModelList();
-		// there are 8 connections here
-		Assert.assertEquals(8, mappingList.size());
+		// there are 11 connections here
+		Assert.assertEquals(11, mappingList.size());
 		
 		this.checkTargetConnectionCount(mappingList);
 		int rootSourceconnection = 0;
@@ -41,7 +41,7 @@ public class One2ManyTestCase extends ClassicX2JTestCase {
 				rootSourceconnection ++;
 			}
 		}
-		Assert.assertEquals(4, rootSourceconnection);
+		Assert.assertEquals(3, rootSourceconnection);
 	}
 
 	@Override

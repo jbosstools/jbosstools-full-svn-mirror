@@ -9,6 +9,7 @@ import junit.framework.Assert;
 
 import org.jboss.tools.smooks.analyzer.MappingModel;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
+import org.jboss.tools.smooks.javabean.model.JavaBeanList;
 import org.jboss.tools.smooks.test.xml2java.AbstractXML2JavaTestCase;
 import org.jboss.tools.smooks.xml.model.TagList;
 
@@ -39,15 +40,15 @@ public class DVDStoreTestCase extends AbstractXML2JavaTestCase{
 	
 	public void testTransformModel(){
 		TagList source = (TagList)getSource();
-		List targetList = (List)getTarget();
+		JavaBeanList targetList = (JavaBeanList)getTarget();
 		// there is only one model
 		Assert.assertEquals(1, source.getRootTagList().size());
 		
 		// check xml model value
 		checkXMLNodeModelValue(source);
 		
-		// there are 3 target models:
-		Assert.assertEquals(3, targetList.size());
+//		// there are 3 target models:
+		Assert.assertEquals(3, targetList.getChildren().size());
 	}
 
 }

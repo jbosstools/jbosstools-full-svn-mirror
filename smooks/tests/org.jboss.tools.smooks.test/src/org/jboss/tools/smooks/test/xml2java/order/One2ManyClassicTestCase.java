@@ -35,8 +35,8 @@ public class One2ManyClassicTestCase extends ClassicX2JTestCase {
 		List<MappingModel> mappingModelList = mappingConfigList.getMappingModelList();
 		// there are 4 resource config for rendering
 		Assert.assertEquals(4, renderingConfigList.size());
-		// there are 13 connections here
-		Assert.assertEquals(13, mappingModelList.size());
+		// there are 16 connections here
+		Assert.assertEquals(16, mappingModelList.size());
 		
 		checkTargetConnectionCount(mappingModelList);
 	}
