@@ -19,5 +19,7 @@ public interface IXMLStructuredObject {
 	
 	public Object getID();
 	
+	public boolean isRootNode();
+	
 	public boolean isAttribute();
 }

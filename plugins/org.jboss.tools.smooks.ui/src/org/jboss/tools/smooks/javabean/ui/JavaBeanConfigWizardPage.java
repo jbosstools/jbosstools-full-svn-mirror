@@ -68,42 +68,10 @@ public class JavaBeanConfigWizardPage extends WizardPage implements
 	 */
 	public void createControl(Composite parent) {
 		initilize();
-//		Composite cc = new Composite(parent,SWT.NONE);
-//		cc.setLayout(new GridLayout());
 		try {
 			javaPropertySelectComposite = new JavaBeanModelLoadComposite(
 					parent, SWT.NONE, getContainer(), project);
 			javaPropertySelectComposite.addJavaBeanSelectionListener(this);
-//			Button button = new Button(cc, SWT.BORDER);
-//
-//			final TreeViewer vi = new TreeViewer(cc, SWT.NONE);
-//			GridData gd = new GridData(GridData.FILL_BOTH);
-//			gd.grabExcessHorizontalSpace = true;
-//			gd.grabExcessVerticalSpace = true;
-//			vi.setContentProvider(new BeanContentProvider());
-//			vi.setLabelProvider(new BeanlabelProvider());
-//			vi.getTree().setLayoutData(gd);
-//			
-//			javaPropertySelectComposite.setLayoutData(gd);
-//			button.addSelectionListener(new SelectionAdapter() {
-//
-//				/*
-//				 * (non-Javadoc)
-//				 * 
-//				 * @see
-//				 * org.eclipse.swt.events.SelectionAdapter#widgetSelected(org
-//				 * .eclipse.swt.events.SelectionEvent)
-//				 */
-//				@Override
-//				public void widgetSelected(SelectionEvent e) {
-//					// TODO Auto-generated method stub
-//					super.widgetSelected(e);
-//					List l = new ArrayList();
-//					l.add(javaPropertySelectComposite.getCheckedJavaBeanModel());
-//					vi.setInput(l);
-//				}
-//
-//			});
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

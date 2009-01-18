@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.model.util;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -75,7 +76,7 @@ public class SmooksModelUtils {
 				return bindingList;
 			}
 		}
-		return null;
+		return Collections.EMPTY_LIST;
 	}
 	
 	public static boolean isBeanPopulatorResource(ResourceConfigType type) {

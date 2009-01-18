@@ -8,6 +8,7 @@ import org.eclipse.draw2d.ConnectionLocator;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
@@ -96,20 +97,29 @@ public class StructuredDataConnectionEditPart extends
 	}
 
 	protected IFigure createFigure() {
-		CurveLineConnection conn = new CurveLineConnection(this) {
-			
-			public void paintFigure(Graphics graphics) {
-				String sourceid = getSourceDataTypeID();
-				String targetid = getTargetDataTypeID();
-				ILineFigurePaintListener listener = LineFigurePaintListenerManager
-						.getInstance().getPaintListener(sourceid, targetid);
-				if (listener != null) {
-					listener.drawLineAdditions(graphics, this,
-							(LineConnectionModel) getHostEditPart().getModel());
+		final String sourceid = getSourceDataTypeID();
+		final String targetid = getTargetDataTypeID();
+		final ILineFigurePaintListener listener = LineFigurePaintListenerManager
+				.getInstance().getPaintListener(sourceid, targetid);
+		PolylineConnection connection = null;
+		if (listener != null) {
+			connection = listener
+					.createHostFigure((LineConnectionModel) getModel());
+		}
+		if (connection == null) {
+			connection = new CurveLineConnection(this) {
+				public void paintFigure(Graphics graphics) {
+					ILineFigurePaintListener listener = LineFigurePaintListenerManager
+							.getInstance().getPaintListener(sourceid, targetid);
+					if (listener != null) {
+						listener.drawLineAdditions(graphics, this,
+								(LineConnectionModel) getHostEditPart()
+										.getModel());
+					}
+					super.paintFigure(graphics);
 				}
-				super.paintFigure(graphics);
-			}
-		};
+			};
+		}
 		// conn.setSmoothness(SmoothPolyLineConnection.SMOOTH_MORE);
 		Figure targetFlagFigure = new Figure() {
 			/*
@@ -120,12 +130,11 @@ public class StructuredDataConnectionEditPart extends
 			@Override
 			public void paint(Graphics graphics) {
 				graphics.pushState();
-				String sourceid = getSourceDataTypeID();
-				String targetid = getTargetDataTypeID();
 				ILineFigurePaintListener listener = LineFigurePaintListenerManager
 						.getInstance().getPaintListener(sourceid, targetid);
 				if (listener != null) {
-					listener.drawLineTargetLocator(graphics, this,(LineConnectionModel) getModel());
+					listener.drawLineTargetLocator(graphics, this,
+							(LineConnectionModel) getModel());
 				}
 				super.paint(graphics);
 				graphics.popState();
@@ -143,12 +152,11 @@ public class StructuredDataConnectionEditPart extends
 			@Override
 			public void paint(Graphics graphics) {
 				graphics.pushState();
-				String sourceid = getSourceDataTypeID();
-				String targetid = getTargetDataTypeID();
 				ILineFigurePaintListener listener = LineFigurePaintListenerManager
 						.getInstance().getPaintListener(sourceid, targetid);
 				if (listener != null) {
-					listener.drawLineSourceLocator(graphics, this,(LineConnectionModel) getModel());
+					listener.drawLineSourceLocator(graphics, this,
+							(LineConnectionModel) getModel());
 				}
 				super.paint(graphics);
 				graphics.popState();
@@ -157,13 +165,13 @@ public class StructuredDataConnectionEditPart extends
 		};
 		targetFlagFigure.setSize(10, 10);
 		sourceFlagFigure.setSize(10, 10);
-		ConnectionLocator targetLocator = new ConnectionLocator(conn,
+		ConnectionLocator targetLocator = new ConnectionLocator(connection,
 				ConnectionLocator.TARGET);
-		conn.add(targetFlagFigure, targetLocator);
-		ConnectionLocator sourceLocator = new ConnectionLocator(conn,
+		connection.add(targetFlagFigure, targetLocator);
+		ConnectionLocator sourceLocator = new ConnectionLocator(connection,
 				ConnectionLocator.SOURCE);
-		conn.add(sourceFlagFigure, sourceLocator);
-		return conn;
+		connection.add(sourceFlagFigure, sourceLocator);
+		return connection;
 	}
 
 	protected void changeLineStyleWithCollapseStatus() {

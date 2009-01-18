@@ -74,9 +74,12 @@ public class TargetTreeDropTargetListener extends DropTargetAdapter {
 			if (item == null)
 				return;
 			Object model = item.getData();
-
-			SmooksCustomConnectionCreationTool tool = (SmooksCustomConnectionCreationTool) this
-					.getGraphicalViewer().getEditDomain().getActiveTool();
+			Tool activeTool = getGraphicalViewer().getEditDomain()
+					.getActiveTool();
+			SmooksCustomConnectionCreationTool tool = null;
+			if (activeTool instanceof SmooksCustomConnectionCreationTool) {
+				tool = (SmooksCustomConnectionCreationTool) activeTool;
+			}
 			if (tool != null) {
 				tool.activeTargetEditPart(model, graphicalViewer);
 				Event temp = new Event();
@@ -97,8 +100,13 @@ public class TargetTreeDropTargetListener extends DropTargetAdapter {
 	public void drop(DropTargetEvent event) {
 		try {
 			Object source = TemplateTransfer.getInstance().getTemplate();
-			SmooksCustomConnectionCreationTool tool = (SmooksCustomConnectionCreationTool) this
-					.getGraphicalViewer().getEditDomain().getActiveTool();
+			Tool activeTool = getGraphicalViewer().getEditDomain()
+					.getActiveTool();
+			SmooksCustomConnectionCreationTool tool = null;
+			if (activeTool instanceof SmooksCustomConnectionCreationTool) {
+				tool = (SmooksCustomConnectionCreationTool) activeTool;
+			}
+			if(tool == null) return;
 			if (source == null) {
 				source = tool.getSourceModel();
 			}

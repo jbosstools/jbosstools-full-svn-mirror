@@ -158,9 +158,11 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 				.hasNext();) {
 			PropertyModel propertyModel = (PropertyModel) iterator.next();
 			if (propertyModel.getName().equals("selector-namespace")) {
-				resourceConfigType.setSelectorNamespace(propertyModel
-						.getValue());
+				Object value = propertyModel.getValue();
+				if (value != null)
+					resourceConfigType.setSelectorNamespace(value.toString());
 				break;
+
 			}
 		}
 		// create a resource and add it to resourceConfig
@@ -323,7 +325,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		for (int i = startIndex; i < rlist.size(); i++) {
 			AbstractResourceConfig abstractRC = (AbstractResourceConfig) rlist
 					.get(i);
-			if(!(abstractRC instanceof ResourceConfigType)) continue;
+			if (!(abstractRC instanceof ResourceConfigType))
+				continue;
 			ResourceConfigType resourceConfig = (ResourceConfigType) abstractRC;
 			ResourceType resource = resourceConfig.getResource();
 			if (resource == null)
@@ -339,8 +342,9 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 				continue;
 			}
 			String selector = resourceConfig.getSelector();
-			AbstractXMLObject source = (AbstractXMLObject) UIUtils.localXMLNodeWithPath(selector, sourceRoot); 
-//			findXMLNodeWithSelector(selector,		sourceRoot);
+			AbstractXMLObject source = (AbstractXMLObject) UIUtils
+					.localXMLNodeWithPath(selector, sourceRoot);
+			// findXMLNodeWithSelector(selector, sourceRoot);
 			if (source == null) {
 				// TODO if can't find the root , throw exception
 				// MODIFY by Dart 2008.11.17
@@ -408,7 +412,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		if (selector.equalsIgnoreCase(root.getName()))
 			return root;
 		if (root instanceof TagObject) {
-			List<AbstractXMLObject> children = ((TagObject) root).getXMLNodeChildren();
+			List<AbstractXMLObject> children = ((TagObject) root)
+					.getXMLNodeChildren();
 			List<TagPropertyObject> properties = ((TagObject) root)
 					.getProperties();
 			for (Iterator iterator = children.iterator(); iterator.hasNext();) {
@@ -548,8 +553,9 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			String newSelector = processingResourceConfig.getSelector();
 			if (newSelector == null)
 				return;
-			AbstractXMLObject newRoot = (AbstractXMLObject) UIUtils.localXMLNodeWithPath(newSelector, root);
-//			findXMLNodeWithSelector(newSelector,root);
+			AbstractXMLObject newRoot = (AbstractXMLObject) UIUtils
+					.localXMLNodeWithPath(newSelector, root);
+			// findXMLNodeWithSelector(newSelector,root);
 			if (newRoot == null) {
 				// TODO If can't find the element , throw exception
 				// MODIFY by Dart , 2008.11.07
@@ -561,7 +567,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 					processingResourceConfig, newRoot, targetBean);
 		} else {
 
-			AbstractXMLObject source =  (AbstractXMLObject) UIUtils.localXMLNodeWithPath(selector, root);
+			AbstractXMLObject source = (AbstractXMLObject) UIUtils
+					.localXMLNodeWithPath(selector, root);
 			if (source == null) {
 				// TODO If can't find the element , throw exception
 				// MODIFY by Dart , 2008.11.07
@@ -622,8 +629,10 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			SmooksResourceListType listType) {
 		List list = listType.getAbstractResourceConfig();
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			AbstractResourceConfig abstractRC = (AbstractResourceConfig) iterator.next();
-			if(!(abstractRC instanceof ResourceConfigType)) continue;
+			AbstractResourceConfig abstractRC = (AbstractResourceConfig) iterator
+					.next();
+			if (!(abstractRC instanceof ResourceConfigType))
+				continue;
 			ResourceConfigType resource = (ResourceConfigType) abstractRC;
 			ResourceType rt = resource.getResource();
 			if (rt == null)

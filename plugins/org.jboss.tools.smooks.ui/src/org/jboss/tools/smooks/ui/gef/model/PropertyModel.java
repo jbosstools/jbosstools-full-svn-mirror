@@ -16,9 +16,9 @@ package org.jboss.tools.smooks.ui.gef.model;
  */
 public class PropertyModel extends AbstractStructuredDataModel {
 	private String name;
-	private String value;
+	private Object value;
 	
-	public PropertyModel(String name,String value){
+	public PropertyModel(String name,Object value){
 		this.name = name;
 		this.value = value;
 	}
@@ -39,7 +39,7 @@ public class PropertyModel extends AbstractStructuredDataModel {
 				oldName, this.name);
 	}
 
-	public String getValue() {
+	public Object getValue() {
 		return value;
 	}
 
@@ -58,7 +58,7 @@ public class PropertyModel extends AbstractStructuredDataModel {
 			if (!this.name.equals(name)) {
 				return false;
 			}
-			String value = ((PropertyModel) obj).getValue();
+			Object value = ((PropertyModel) obj).getValue();
 			if (value == null) {
 				if (this.value == null)
 					return true;
@@ -72,8 +72,8 @@ public class PropertyModel extends AbstractStructuredDataModel {
 		return false;
 	}
 
-	public void setValue(String value) {
-		String oldValue = this.value;
+	public void setValue(Object value) {
+		Object oldValue = this.value;
 		this.value = value;
 		firePropertyChange(
 				AbstractStructuredDataConnectionModel.CONNECTION_PROPERTY_CHANGE,

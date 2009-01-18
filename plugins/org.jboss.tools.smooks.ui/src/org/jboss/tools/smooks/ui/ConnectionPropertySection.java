@@ -68,7 +68,9 @@ public class ConnectionPropertySection extends AbstractSmooksPropertySection {
 		pgd.grabExcessVerticalSpace = true;
 		rootParent.setLayoutData(pgd);
 		Section section = factory.createSection(parent, Section.TITLE_BAR);
-		section.setText(Messages.getString("ConnectionPropertySection.ConnectionPropertiesSecionText")); //$NON-NLS-1$
+		section
+				.setText(Messages
+						.getString("ConnectionPropertySection.ConnectionPropertiesSecionText")); //$NON-NLS-1$
 
 		Composite mainComposite = factory.createComposite(section);
 
@@ -157,17 +159,24 @@ public class ConnectionPropertySection extends AbstractSmooksPropertySection {
 
 		});
 		nameColumn.getColumn().setWidth(100);
-		nameColumn.getColumn().setText(Messages.getString("ConnectionPropertySection.NameColumnText")); //$NON-NLS-1$
+		nameColumn.getColumn().setText(
+				Messages.getString("ConnectionPropertySection.NameColumnText")); //$NON-NLS-1$
 		TableViewerColumn valueColumn = new TableViewerColumn(tableViewer,
 				SWT.NONE);
 		valueColumn.getColumn().setWidth(100);
-		valueColumn.getColumn().setText(Messages.getString("ConnectionPropertySection.ValueColumnText")); //$NON-NLS-1$
+		valueColumn
+				.getColumn()
+				.setText(
+						Messages
+								.getString("ConnectionPropertySection.ValueColumnText")); //$NON-NLS-1$
 		valueColumn.setLabelProvider(new CellLabelProvider() {
 
 			public void update(ViewerCell cell) {
 				Object obj = cell.getElement();
 				if (obj instanceof PropertyModel) {
-					cell.setText(((PropertyModel) obj).getValue());
+					Object value = ((PropertyModel) obj).getValue();
+					if (value != null)
+						cell.setText(value.toString());
 				}
 			}
 
@@ -182,7 +191,8 @@ public class ConnectionPropertySection extends AbstractSmooksPropertySection {
 		GridLayout gl = new GridLayout();
 		buttonComposite.setLayout(gl);
 
-		Button button1 = factory.createButton(buttonComposite, Messages.getString("ConnectionPropertySection.NewButtonText"), //$NON-NLS-1$
+		Button button1 = factory.createButton(buttonComposite, Messages
+				.getString("ConnectionPropertySection.NewButtonText"), //$NON-NLS-1$
 				SWT.NONE);
 		button1.addSelectionListener(new SelectionListener() {
 
@@ -214,7 +224,8 @@ public class ConnectionPropertySection extends AbstractSmooksPropertySection {
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		button1.setLayoutData(gd);
 
-		Button button2 = factory.createButton(buttonComposite, Messages.getString("ConnectionPropertySection.DeleteButtonText"), //$NON-NLS-1$
+		Button button2 = factory.createButton(buttonComposite, Messages
+				.getString("ConnectionPropertySection.DeleteButtonText"), //$NON-NLS-1$
 				SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		button2.setLayoutData(gd);
@@ -286,7 +297,8 @@ public class ConnectionPropertySection extends AbstractSmooksPropertySection {
 
 			case 1:
 				if (element instanceof PropertyModel) {
-					return ((PropertyModel) element).getValue();
+					Object value = ((PropertyModel) element).getValue();
+					return value.toString();
 				}
 				return element.toString();
 			}

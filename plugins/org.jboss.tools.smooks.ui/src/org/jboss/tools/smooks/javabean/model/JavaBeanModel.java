@@ -10,18 +10,20 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.javabean.model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.GenericDeclaration;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
+import org.eclipse.jdt.internal.corext.refactoring.typeconstraints.types.ExtendsWildcardType;
 import org.jboss.tools.smooks.analyzer.IValidatable;
 import org.jboss.tools.smooks.javabean.uitils.JavaPropertyUtils;
 import org.jboss.tools.smooks.ui.IXMLStructuredObject;
@@ -30,7 +32,12 @@ import org.jboss.tools.smooks.ui.IXMLStructuredObject;
  * @author Dart Peng
  * 
  */
-public class JavaBeanModel implements IValidatable ,IXMLStructuredObject{
+public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
+		Cloneable {
+	
+	private Properties extendProperties = new Properties();
+
+	protected PropertyChangeSupport support = new PropertyChangeSupport(this);
 
 	private String beanClassString = null;
 
@@ -81,6 +88,14 @@ public class JavaBeanModel implements IValidatable ,IXMLStructuredObject{
 	 */
 	public void setRootClassModel(boolean isRootClassModel) {
 		this.isRootClassModel = isRootClassModel;
+	}
+
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		support.addPropertyChangeListener(listener);
+	}
+
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		support.removePropertyChangeListener(listener);
 	}
 
 	// /**
@@ -148,6 +163,7 @@ public class JavaBeanModel implements IValidatable ,IXMLStructuredObject{
 	public PropertyDescriptor getPropertyDescriptor() {
 		return propertyDescriptor;
 	}
+	
 
 	public void setPropertyDescriptor(PropertyDescriptor propertyDescriptor) {
 		this.propertyDescriptor = propertyDescriptor;
@@ -164,7 +180,6 @@ public class JavaBeanModel implements IValidatable ,IXMLStructuredObject{
 		if (this.name == null) {
 			this.name = beanClass.getSimpleName();
 		}
-
 		if (propertyDescriptor == null)
 			setRootClassModel(true);
 		this.propertyDescriptor = propertyDescriptor;
@@ -298,17 +313,21 @@ public class JavaBeanModel implements IValidatable ,IXMLStructuredObject{
 				return properties;
 
 			Class beanType = beanClass;
-			if (this.componentClass != null) {
-				if (isArray() || isList()) {
+			if (isArray() || isList()) {
+				if (componentClass != null) {
 					JavaBeanModel proxyModel = new JavaBeanModel(
 							componentClass, componentClass.getSimpleName(),
 							null, beanClass, this.lazyLoadProperties);
 					beanType = componentClass;
-
 					addProperty(proxyModel);
 
-					return properties;
+				} else {
+					JavaBeanModel proxyModel = new JavaBeanModel(Object.class,
+							"object", null, beanClass, this.lazyLoadProperties);
+					beanType = componentClass;
+					addProperty(proxyModel);
 				}
+				return properties;
 			}
 			if (beanType == null)
 				return Collections.EMPTY_LIST;
@@ -383,9 +402,10 @@ public class JavaBeanModel implements IValidatable ,IXMLStructuredObject{
 
 	public JavaBeanModel getRootParent() {
 		JavaBeanModel parent = this.getParent();
-		if(parent == null) return this;
+		if (parent == null)
+			return this;
 		JavaBeanModel temp = parent;
-		while(temp != null){
+		while (temp != null) {
 			parent = temp;
 			temp = temp.getParent();
 		}
@@ -414,17 +434,20 @@ public class JavaBeanModel implements IValidatable ,IXMLStructuredObject{
 		}
 		return buffer.toString();
 	}
-	
-	public String getSelectorString(){
-		if(parent == null){
+
+	public String getSelectorString() {
+		if(parent == null) {
 			return getBeanClassString();
 		}
-		
-		if(parent.isArray() || parent.isList()){
+		if (parent.getClass() == JavaBeanList.class) {
+			return getBeanClassString();
+		}
+
+		if (parent.isArray() || parent.isList()) {
 			return getBeanClassString();
 		}
 		return getName();
-		
+
 	}
 
 	public boolean hasGenericType() {
@@ -434,14 +457,14 @@ public class JavaBeanModel implements IValidatable ,IXMLStructuredObject{
 	public void setGenericType(boolean hasGenericType) {
 		this.hasGenericType = hasGenericType;
 	}
-	
-	public boolean isAttribute(){
+
+	public boolean isAttribute() {
 		return false;
 	}
 
 	public List<IXMLStructuredObject> getChildren() {
 		List ps = getProperties();
-		if(ps!=null){
+		if (ps != null) {
 			return ps;
 		}
 		return null;
@@ -453,6 +476,37 @@ public class JavaBeanModel implements IValidatable ,IXMLStructuredObject{
 
 	public String getNodeName() {
 		return getSelectorString();
+	}
+
+	public boolean isRootNode() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	public void setComponentClass(Class clazz){
+		componentClass = clazz;
+	}
+
+	public Class getComponentClass() {
+		return componentClass;
+	}
+	
+	public void addExtendProperty(String name,String value){
+		extendProperties.setProperty(name, value);
+	}
+	
+	public String getExtendProperty(String name){
+		return extendProperties.getProperty(name);
+	}
+
+	public Object clone() {
+		if(isList()){
+			JavaBeanModel model = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(ArrayList.class);
+			model.setComponentClass(componentClass);
+			return model;
+		}
+		return JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(this
+				.getBeanClass());
 	}
 
 }

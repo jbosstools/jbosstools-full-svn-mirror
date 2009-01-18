@@ -6,13 +6,19 @@ package org.jboss.tools.smooks.javabean.ui;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.Shape;
+import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.ui.gef.figures.LinePaintListener;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
+import org.jboss.tools.smooks.ui.gef.model.TargetModel;
 import org.jboss.tools.smooks.ui.gef.model.TreeItemRelationModel;
 
 /**
@@ -20,6 +26,29 @@ import org.jboss.tools.smooks.ui.gef.model.TreeItemRelationModel;
  * 
  */
 public class JavaBeanLinePaintLitener extends LinePaintListener {
+	
+	
+
+	@Override
+	public PolylineConnection createDummyFigure(CreateConnectionRequest req) {
+		EditPart editPart = req.getSourceEditPart();
+		if(editPart != null){
+			if(editPart.getModel() instanceof TargetModel){
+				return new TargetReferenceConnectionLine();
+			}
+		}
+		return super.createDummyFigure(req);
+	}
+
+	@Override
+	public PolylineConnection createHostFigure(LineConnectionModel model) {
+		IConnectableModel source = model.getSource();
+		IConnectableModel target = model.getTarget();
+		if(source instanceof TargetModel && target instanceof TargetModel){
+			return new TargetReferenceConnectionLine();
+		}
+		return super.createHostFigure(model);
+	}
 
 	@Override
 	public void drawLineAdditions(Graphics graphics, IFigure hostFigure,
@@ -55,6 +84,22 @@ public class JavaBeanLinePaintLitener extends LinePaintListener {
 	@Override
 	public void drawLineSourceLocator(Graphics graphics, IFigure hostFigure,
 			LineConnectionModel model) {
+		if(model.getSource() instanceof TargetModel){
+			PointList pointList = new PointList();
+			Rectangle bounds = hostFigure.getBounds();
+			Point p1 = bounds.getTopLeft();
+			p1.setLocation(p1.x, p1.y + bounds.height/2);
+			Point p2 = bounds.getBottomRight();
+			Point p3 = bounds.getTopRight();
+			pointList.addPoint(p1);
+			pointList.addPoint(p2);
+			pointList.addPoint(p3);
+			graphics.pushState();
+			graphics.setBackgroundColor(ColorConstants.darkGray);
+			graphics.fillPolygon(pointList);
+			graphics.popState();
+			return;
+		}
 		AbstractStructuredDataModel targetModel = (AbstractStructuredDataModel) model
 				.getTarget();
 		JavaBeanModel targetTransformModel = (JavaBeanModel) targetModel
@@ -69,6 +114,10 @@ public class JavaBeanLinePaintLitener extends LinePaintListener {
 	@Override
 	public void drawLineTargetLocator(Graphics graphics, IFigure hostFigure,
 			LineConnectionModel model) {
+		if(model.getSource() instanceof TargetModel){
+			super.drawLineTargetLocator(graphics, hostFigure, model);
+			return;
+		}
 		AbstractStructuredDataModel targetModel = (AbstractStructuredDataModel) model
 				.getTarget();
 		JavaBeanModel targetTransformModel = (JavaBeanModel) targetModel

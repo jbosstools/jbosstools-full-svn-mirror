@@ -20,8 +20,11 @@ import org.eclipse.draw2d.IFigure;
  */
 public interface IConnectableModel {
 
-	public static final String P_SOURCE_CONNECTION = "_source_connection";
-	public static final String P_TARGET_CONNECTION = "_target_connection";
+	public static final String P_ADD_SOURCE_CONNECTION = "_source_add_connection";
+	public static final String P_ADD_TARGET_CONNECTION = "_add_target_connection";
+	
+	public static final String P_REMOVE_SOURCE_CONNECTION = "_source_remove_connection";
+	public static final String P_REMOVE_TARGET_CONNECTION = "_remove_target_connection";
 
 	public void addSourceConnection(Object connx);
 

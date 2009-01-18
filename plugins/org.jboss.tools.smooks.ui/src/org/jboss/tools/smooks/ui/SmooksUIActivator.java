@@ -68,6 +68,10 @@ public class SmooksUIActivator extends AbstractUIPlugin {
 		// regist java images
 		reg.put(JavaImageConstants.IMAGE_JAVA_ATTRIBUTE,
 				imageDescriptorFromPlugin(PLUGIN_ID, JavaImageConstants.IMAGE_JAVA_ATTRIBUTE));
+		reg.put(JavaImageConstants.IMAGE_CHECKBOX_CHECK,
+				imageDescriptorFromPlugin(PLUGIN_ID, JavaImageConstants.IMAGE_CHECKBOX_CHECK));
+		reg.put(JavaImageConstants.IMAGE_CHECKBOX_UNCHECK,
+				imageDescriptorFromPlugin(PLUGIN_ID, JavaImageConstants.IMAGE_CHECKBOX_UNCHECK));
 		reg.put(JavaImageConstants.IMAGE_JAVA_OBJECT,
 				imageDescriptorFromPlugin(PLUGIN_ID, "icons/full/obj16/class_obj.gif"));
 		reg.put(JavaImageConstants.IMAGE_JAVA_ARRAY,

@@ -14,6 +14,7 @@ import org.jboss.tools.smooks.ui.gef.model.PropertyModel;
  */
 public class CreateConnectionCommand extends Command {
 
+	
 	private List<PropertyModel> propertyList = new ArrayList<PropertyModel>();
 	
 	
@@ -68,6 +69,7 @@ public class CreateConnectionCommand extends Command {
 		connection.setSource(source);
 		connection.setTarget(target);
 		connection.connect();
+		
 	}
 
 	public void setConnection(Object model) {

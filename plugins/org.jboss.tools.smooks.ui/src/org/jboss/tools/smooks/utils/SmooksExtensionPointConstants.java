@@ -28,7 +28,11 @@ public class SmooksExtensionPointConstants {
 	
 	public static final String EXTENTION_POINT_LINEPAINT_LISTENER = "org.jboss.tools.smooks.ui.linePaintListener";
 	
+	public static final String EXTENTION_POINT_GRAPHICAL_MODEL_LISTENER = "org.jboss.tools.smooks.ui.graphicalModelListener";
+	
 	public static final String EXTENTION_POINT_ELEMENT_LINEPAINT_LISTENER = "linePaintListener";
+	
+	public static final String EXTENTION_POINT_ELEMENT_GRAPHICAL_MODEL_LISTENER = "graphicalModelListener";
 	
 	public static final String EXTENTION_POINT_ELEMENT_SOURCEMODEL_ANALYZER = "sourceModelAnalyzer";
 	
