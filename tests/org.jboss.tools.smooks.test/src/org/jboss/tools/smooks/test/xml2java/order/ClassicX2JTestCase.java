@@ -52,11 +52,9 @@ public class ClassicX2JTestCase extends AbstractXML2JavaTestCase {
 		
 		MappingResourceConfigList configList = getMappingResourceConfigList();
 		List<MappingModel> mappingModelList = configList.getMappingModelList();
-		// there are 9 connections
-		Assert.assertEquals(9, mappingModelList.size());
+		// there are 12 connections
+		Assert.assertEquals(12, mappingModelList.size());
 
-		// check the target connection cout
-		checkTargetConnectionCount(mappingModelList);
 	}
 
 	public void testSourceModel() {
