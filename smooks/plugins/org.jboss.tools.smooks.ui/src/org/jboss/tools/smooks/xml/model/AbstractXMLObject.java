@@ -112,6 +112,10 @@ public class AbstractXMLObject implements IXMLNode , IXMLStructuredObject{
 	public String getNodeName() {
 		return getName();
 	}
+
+	public boolean isRootNode() {
+		return false;
+	}
 	
 	
 }

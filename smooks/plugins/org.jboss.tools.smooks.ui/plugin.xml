@@ -6,6 +6,7 @@
    <extension-point id="commandProcessor" name="commandProcessor" schema="schema/commandProcessor.exsd"/>
    <extension-point id="menuActionProvider" name="menuActionProvider" schema="schema/menuActionProvider.exsd"/>
    <extension-point id="linePaintListener" name="linePaintListener" schema="schema/linePaintListener.exsd"/>
+   <extension-point id="graphicalModelListener" name="graphicalModelListener" schema="schema/graphicalModelListener.exsd"/>
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
        uri = "http://www.jboss.org/tools/smooks/graphicalInformation" 
@@ -150,9 +151,9 @@
      <mappingAnalyzer
            class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
            name="Java"
-           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean1">
         <targetSourceType
-              id="org.jboss.tools.smooks.ui.viewerInitor.javabean"
+              id="org.jboss.tools.smooks.ui.viewerInitor.javabean1"
               name="java2java">
         </targetSourceType>
      </mappingAnalyzer>
@@ -160,13 +161,13 @@
            class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
            level="0"
            name="Java"
-           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean1">
      </sourceModelAnalyzer>
      <targetModelAnalyzer
            class="org.jboss.tools.smooks.javabean.analyzer.JavaBeanAnalyzer"
            level="0"
            name="Java"
-           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+           typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean1">
      </targetModelAnalyzer>
   </extension>
   
@@ -186,7 +187,7 @@
    <extension
          point="org.jboss.tools.smooks.ui.analyzer">
       <mappingAnalyzer
-            class="org.jboss.tools.smooks.xml2java.analyzer.XML2JavaAnalyzer"
+            class="org.jboss.tools.smooks.xml2java.analyzer.XML2JavaAnalyzer2"
             name="XML2Java"
             typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
          <targetSourceType
@@ -258,6 +259,10 @@
             class="org.jboss.tools.smooks.xml.ui.XMLViewerActionProvider"
             typeID="org.jboss.tools.smooks.xml.viewerInitor.xml">
       </menuActionProvider>
+      <menuActionProvider
+            class="org.jboss.tools.smooks.javabean.ui.JavaBeanViewerActionProvider"
+            typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+      </menuActionProvider>
    </extension>
    <extension
          point="org.jboss.tools.smooks.ui.linePaintListener">
@@ -276,5 +281,42 @@
             sourceId="org.jboss.tools.smooks.ui.viewerInitor.javabean"
             targetId="org.jboss.tools.smooks.ui.viewerInitor.javabean">
       </linePaintListener>
+   </extension>
+   <extension
+         point="org.jboss.tools.smooks.ui.analyzer">
+      <mappingAnalyzer
+            class="org.jboss.tools.smooks.javabean.model.Java2JavaAnalyzer"
+            name="Java"
+            typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+         <targetSourceType
+               id="org.jboss.tools.smooks.ui.viewerInitor.javabean"
+               name="java2java">
+         </targetSourceType>
+      </mappingAnalyzer>
+      <sourceModelAnalyzer
+            class="org.jboss.tools.smooks.javabean.ui.JavaBeanSourceBuilder"
+            level="0"
+            name="Java"
+            typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+      </sourceModelAnalyzer>
+      <targetModelAnalyzer
+            class="org.jboss.tools.smooks.javabean.ui.JavaBeanTargetBuilder"
+            level="0"
+            name="Java"
+            typeID="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+      </targetModelAnalyzer>
+   </extension>
+   <extension
+         point="org.jboss.tools.smooks.ui.graphicalModelListener">
+      <graphicalModelListener
+            class="org.jboss.tools.smooks.javabean.ui.BeanPopulatorGraphicalModelListener"
+            sourceId="org.jboss.tools.smooks.ui.viewerInitor.javabean"
+            targetId="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+      </graphicalModelListener>
+      <graphicalModelListener
+            class="org.jboss.tools.smooks.javabean.ui.BeanPopulatorGraphicalModelListener"
+            sourceId="org.jboss.tools.smooks.xml.viewerInitor.xml"
+            targetId="org.jboss.tools.smooks.ui.viewerInitor.javabean">
+      </graphicalModelListener>
    </extension>
 </plugin>

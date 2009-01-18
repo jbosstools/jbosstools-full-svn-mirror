@@ -7,4 +7,8 @@ public class JavaImageConstants {
 	public static final String IMAGE_JAVA_COLLECTION = "icons/full/obj16/javalistmodel.gif";
 	
 	public static final String IMAGE_JAVA_ARRAY = "icons/full/obj16/javaarraymodel.gif";
+	
+	public static final String IMAGE_CHECKBOX_CHECK = "icons/full/obj16/checkbox_checked.gif";
+	
+	public static final String IMAGE_CHECKBOX_UNCHECK = "icons/full/obj16/checkbox_uncheck.gif";
 }

@@ -23,9 +23,13 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.swt.widgets.TreeItem;
+import org.jboss.tools.smooks.ui.editors.SmooksGraphicalFormPage;
+import org.jboss.tools.smooks.ui.gef.model.GraphicalModelListenerManager;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
+import org.jboss.tools.smooks.ui.gef.model.IGraphicalModelListener;
 import org.jboss.tools.smooks.ui.gef.model.TreeItemRelationModel;
 import org.jboss.tools.smooks.ui.gef.policy.CustomGraphicalNodeEditPolicy;
+import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 
 /**
  * @author Dart Peng
@@ -46,42 +50,40 @@ public class ConnectionPointEditPart extends AbstractStructuredDataEditPart
 		return figure;
 	}
 
-	public boolean isCollapse(){
-		TreeItemRelationModel model =  (TreeItemRelationModel) this.getModel();
-		if(model == null) return false;
+	public boolean isCollapse() {
+		TreeItemRelationModel model = (TreeItemRelationModel) this.getModel();
+		if (model == null)
+			return false;
 		return model.isCollapse();
 	}
-	
-	
+
 	@Override
 	protected List getModelSourceConnections() {
 		Object model = getModel();
-		if(model instanceof IConnectableModel){
-			return ((IConnectableModel)model).getModelSourceConnections();
+		if (model instanceof IConnectableModel) {
+			return ((IConnectableModel) model).getModelSourceConnections();
 		}
 		return super.getModelSourceConnections();
 	}
 
-
-
 	@Override
 	protected List getModelTargetConnections() {
 		Object model = getModel();
-		if(model instanceof IConnectableModel){
-			return ((IConnectableModel)model).getModelTargetConnections();
+		if (model instanceof IConnectableModel) {
+			return ((IConnectableModel) model).getModelTargetConnections();
 		}
 		return super.getModelTargetConnections();
 	}
-	
-	public void refreshAllSourceConnectionLineStyle(){
+
+	public void refreshAllSourceConnectionLineStyle() {
 		List sourceConnection = this.getSourceConnections();
 		for (Iterator iterator = sourceConnection.iterator(); iterator
 				.hasNext();) {
-			StructuredDataConnectionEditPart connection = (StructuredDataConnectionEditPart) iterator.next();
+			StructuredDataConnectionEditPart connection = (StructuredDataConnectionEditPart) iterator
+					.next();
 			connection.refresh();
 		}
 	}
-
 
 	/*
 	 * (non-Javadoc)
@@ -97,14 +99,34 @@ public class ConnectionPointEditPart extends AbstractStructuredDataEditPart
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+	 * @seejava.beans.PropertyChangeListener#propertyChange(java.beans.
+	 * PropertyChangeEvent)
 	 */
 	public void propertyChange(PropertyChangeEvent evt) {
 		String pname = evt.getPropertyName();
-		if (IConnectableModel.P_SOURCE_CONNECTION.equals(pname)) {
+		String sid = getSourceID();
+		String tid = getTargetID();
+		SmooksGraphicalFormPage page = getSmooksGraphicalPage();
+		SmooksConfigurationFileGenerateContext context = null;
+		if(page != null){
+			context = page.getSmooksConfigurationFileGenerateContext();
+		}
+		IGraphicalModelListener listener = GraphicalModelListenerManager
+				.getInstance().getPaintListener(sid, tid);
+		if (IConnectableModel.P_ADD_SOURCE_CONNECTION.equals(pname) ||
+				IConnectableModel.P_REMOVE_SOURCE_CONNECTION.equals(pname)) {
+			if (listener != null) {
+				if(IConnectableModel.P_ADD_SOURCE_CONNECTION.equals(pname)){
+					listener.modelAdded(evt.getNewValue(), context);
+				}
+				if(IConnectableModel.P_REMOVE_SOURCE_CONNECTION.equals(pname)){
+					listener.modelRemoved(evt.getOldValue(), context);
+				}
+			}
 			this.refreshSourceConnections();
 		}
-		if (IConnectableModel.P_TARGET_CONNECTION.equals(pname)) {
+		if (IConnectableModel.P_ADD_TARGET_CONNECTION.equals(pname) ||
+				IConnectableModel.P_REMOVE_TARGET_CONNECTION.equals(pname)) {
 			this.refreshTargetConnections();
 		}
 	}

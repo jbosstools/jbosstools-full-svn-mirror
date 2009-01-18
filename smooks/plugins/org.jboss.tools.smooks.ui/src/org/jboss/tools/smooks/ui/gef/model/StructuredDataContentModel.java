@@ -103,7 +103,7 @@ public class StructuredDataContentModel extends AbstractStructuredDataModel
 	public void addSourceConnection(Object connx) {
 		sourceConnections.add(connx);
 
-		firePropertyChange(P_SOURCE_CONNECTION, null, connx);
+		firePropertyChange(P_ADD_SOURCE_CONNECTION, null, connx);
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class StructuredDataContentModel extends AbstractStructuredDataModel
 	public void addTargetConnection(Object connx) {
 		targetConnections.add(connx);
 
-		firePropertyChange(P_TARGET_CONNECTION, null, connx);
+		firePropertyChange(P_ADD_TARGET_CONNECTION, null, connx);
 	}
 
 	public List getModelSourceConnections() {
@@ -126,13 +126,13 @@ public class StructuredDataContentModel extends AbstractStructuredDataModel
 	public void removeSourceConnection(Object connx) {
 		sourceConnections.remove(connx);
 
-		firePropertyChange(P_SOURCE_CONNECTION, connx, null);
+		firePropertyChange(P_ADD_SOURCE_CONNECTION, connx, null);
 	}
 
 	public void removeTargetConnection(Object connx) {
 		targetConnections.remove(connx);
 
-		firePropertyChange(P_TARGET_CONNECTION, connx, null);
+		firePropertyChange(P_ADD_TARGET_CONNECTION, connx, null);
 	}
 
 	public boolean equals(Object node) {

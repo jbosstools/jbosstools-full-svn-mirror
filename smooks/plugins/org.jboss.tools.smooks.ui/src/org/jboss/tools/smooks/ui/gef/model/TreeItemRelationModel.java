@@ -54,22 +54,22 @@ public class TreeItemRelationModel extends AbstractStructuredDataModel
 
 	public void addSourceConnection(Object connx) {
 		this.getModelSourceConnections().add(connx);
-		this.firePropertyChange(P_SOURCE_CONNECTION, null, connx);
+		this.firePropertyChange(P_ADD_SOURCE_CONNECTION, null, connx);
 	}
 
 	public void addTargetConnection(Object connx) {
 		this.getModelTargetConnections().add(connx);
-		this.firePropertyChange(P_TARGET_CONNECTION, null, connx);
+		this.firePropertyChange(P_ADD_TARGET_CONNECTION, null, connx);
 	}
 
 	public void removeSourceConnection(Object connx) {
 		this.getModelSourceConnections().remove(connx);
-		this.firePropertyChange(P_SOURCE_CONNECTION, connx, null);
+		this.firePropertyChange(P_REMOVE_SOURCE_CONNECTION, connx, null);
 	}
 
 	public void removeTargetConnection(Object connx) {
 		this.getModelTargetConnections().remove(connx);
-		this.firePropertyChange(P_TARGET_CONNECTION, connx, null);
+		this.firePropertyChange(P_REMOVE_TARGET_CONNECTION, connx, null);
 	}
 
 	public List<Object> getModelSourceConnections() {

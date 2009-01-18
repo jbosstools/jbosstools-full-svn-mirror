@@ -386,7 +386,10 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 			PropertyModel pro = (PropertyModel) properties[i];
 			if (Messages
 					.getString("JavaBeanPropertiesSection.TypePropertyName").equalsIgnoreCase(pro.getName())) { //$NON-NLS-1$
-				return pro.getValue();
+				Object value = pro.getValue();
+				if(value != null){
+					return value.toString();
+				}
 			}
 		}
 		return null;

@@ -64,12 +64,13 @@ public class TransformDataTreeViewer extends TreeViewer implements
 		ITreeContentProvider provider = (ITreeContentProvider) this
 				.getContentProvider();
 		if (provider != null) {
-			editor.clearGraphModel(model);
-			Object[] children = provider.getChildren(model);
-			if (children != null) {
-				for (int i = 0; i < children.length; i++) {
-					Object child = children[i];
-					removeGraphModel(child);
+			if (editor.clearGraphModel(model)) {
+				Object[] children = provider.getChildren(model);
+				if (children != null) {
+					for (int i = 0; i < children.length; i++) {
+						Object child = children[i];
+						removeGraphModel(child);
+					}
 				}
 			}
 		}

@@ -301,8 +301,13 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 		fileViewer = new TableViewer(viewerComposite, SWT.NONE);
 		fileViewer.setContentProvider(new FileImportContentProvider());
 		fileViewer.setLabelProvider(new FileImportLabelProvider());
-		fileViewer.setInput(getModelPackage().getSmooksResourceList()
-				.getAbstractResourceConfig());
+		if (getModelPackage() != null) {
+			SmooksResourceListType listType = getModelPackage()
+					.getSmooksResourceList();
+			if (listType != null && listType.getAbstractResourceConfig() != null) {
+				fileViewer.setInput(listType.getAbstractResourceConfig());
+			}
+		}
 		fileViewer.addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
 				openFile(fileViewer.getSelection());

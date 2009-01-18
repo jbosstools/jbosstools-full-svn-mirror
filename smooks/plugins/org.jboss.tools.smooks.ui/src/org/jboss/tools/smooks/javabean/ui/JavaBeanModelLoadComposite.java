@@ -16,25 +16,32 @@ import java.util.List;
 
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IType;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.search.IJavaSearchScope;
 import org.eclipse.jdt.internal.corext.util.JavaModelUtil;
 import org.eclipse.jdt.internal.ui.search.JavaSearchScopeFactory;
 import org.eclipse.jdt.ui.IJavaElementSearchConstants;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.operation.IRunnableContext;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.CheckboxCellEditor;
+import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -42,6 +49,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.SelectionDialog;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
@@ -134,30 +142,6 @@ public class JavaBeanModelLoadComposite extends Composite implements
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		classLabel.setLayoutData(gd);
-		// Composite classTextContainer = new Composite(com, SWT.NONE);
-		// GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		// gd.grabExcessHorizontalSpace = true;
-		// classTextContainer.setLayoutData(gd);
-		//
-		// GridLayout gl = new GridLayout();
-		// gl.numColumns = 2;
-		// classTextContainer.setLayout(gl);
-		//
-		// {
-		// classText = new Text(classTextContainer, SWT.BORDER);
-		// gd = new GridData(GridData.FILL_HORIZONTAL);
-		// gd.grabExcessHorizontalSpace = true;
-		// classText.setLayoutData(gd);
-		// classText.addModifyListener(new ModifyListener() {
-		// public void modifyText(ModifyEvent arg0) {
-		// classFullName = classText.getText();
-		// }
-		// });
-		//
-		// classBrowseButton = new Button(classTextContainer, SWT.NONE);
-		// classBrowseButton.addSelectionListener(this);
-		//			classBrowseButton.setText(Messages.getString("JavaBeanModelLoadComposite.Browse")); //$NON-NLS-1$
-		// }
 
 		Composite listViewerComposite = new Composite(com, SWT.NONE);
 		GridLayout listLayout = new GridLayout();
@@ -168,7 +152,24 @@ public class JavaBeanModelLoadComposite extends Composite implements
 		listViewerComposite.setLayoutData(gd);
 
 		listViewer = new TableViewer(listViewerComposite, SWT.BORDER);
+		TableColumn nameColumn = new TableColumn(listViewer.getTable(),
+				SWT.NONE);
+		nameColumn.setText("Class");
+		TableColumn isArrayColumn = new TableColumn(listViewer.getTable(),
+				SWT.NONE);
+		isArrayColumn.setText("Array");
+		TableColumn isListColumn = new TableColumn(listViewer.getTable(),
+				SWT.NONE);
+		isListColumn.setText("List");
+
+		nameColumn.setWidth(400);
+		isArrayColumn.setWidth(60);
+		isListColumn.setWidth(60);
+
+		listViewer.getTable().setHeaderVisible(true);
+
 		gd = new GridData(GridData.FILL_BOTH);
+		listViewer.getTable().addMouseListener(new ColumnSelectionListener());
 		listViewer.getControl().setLayoutData(gd);
 		listViewer.setContentProvider(new IStructuredContentProvider() {
 
@@ -189,26 +190,7 @@ public class JavaBeanModelLoadComposite extends Composite implements
 			}
 
 		});
-		listViewer.setLabelProvider(new LabelProvider() {
-
-			@Override
-			public Image getImage(Object element) {
-				if (element instanceof JavaBeanModel) {
-					return SmooksUIActivator.getDefault().getImageRegistry()
-							.get(JavaImageConstants.IMAGE_JAVA_OBJECT);
-				}
-				return super.getImage(element);
-			}
-
-			@Override
-			public String getText(Object element) {
-				if (element instanceof JavaBeanModel) {
-					return ((JavaBeanModel) element).getBeanClassString();
-				}
-				return super.getText(element);
-			}
-
-		});
+		listViewer.setLabelProvider(new BeanViewerLabelProvider());
 		listViewer.setInput(javabeanList);
 
 		Composite buttonArea = new Composite(listViewerComposite, SWT.NONE);
@@ -260,13 +242,17 @@ public class JavaBeanModelLoadComposite extends Composite implements
 	}
 
 	public void widgetSelected(SelectionEvent arg0) {
-		IJavaSearchScope scope = JavaSearchScopeFactory.getInstance()
-				.createJavaProjectSearchScope(javaProject, true);
+		IJavaSearchScope scope = JavaSearchScopeFactory.getInstance().createWorkspaceScope(true);
 		SelectionDialog dialog;
-		Exception exception = null;
+		Throwable exception = null;
 		try {
-			dialog = JavaUI.createTypeDialog(this.getShell(), runnableContext,
-					scope, IJavaElementSearchConstants.CONSIDER_CLASSES, false);
+			dialog = JavaUI
+					.createTypeDialog(
+							this.getShell(),
+							runnableContext,
+							scope,
+							IJavaElementSearchConstants.CONSIDER_CLASSES_AND_INTERFACES,
+							false);
 			dialog.setMessage(Messages
 					.getString("JavaBeanModelLoadComposite.SourceJavaBean")); //$NON-NLS-1$
 			dialog.setTitle(Messages
@@ -301,7 +287,7 @@ public class JavaBeanModelLoadComposite extends Composite implements
 					}
 				}
 			}
-		} catch (Exception e){
+		} catch (Throwable e) {
 			exception = e;
 		}
 		if (exception != null) {
@@ -309,10 +295,154 @@ public class JavaBeanModelLoadComposite extends Composite implements
 					.iterator(); iterator.hasNext();) {
 				IJavaBeanSelectionListener l = (IJavaBeanSelectionListener) iterator
 						.next();
-				l.exceptionOccur(exception);
+				l.exceptionOccur(new Exception(exception));
 			}
 		}
 
+	}
+
+	private class BeanViewerCellModifyer implements ICellModifier {
+
+		public boolean canModify(Object element, String property) {
+			if (property.equals("name"))
+				return false;
+			return true;
+		}
+
+		public Object getValue(Object element, String property) {
+			if (element instanceof JavaBeanModel) {
+				if (property.equals("array")) {
+					return ((JavaBeanModel) element).isArray();
+				}
+				if (property.equals("list")) {
+					return ((JavaBeanModel) element).isList();
+				}
+			}
+			return Boolean.TRUE;
+		}
+
+		public void modify(Object element, String property, Object value) {
+
+		}
+
+	}
+
+	private class BeanViewerLabelProvider extends LabelProvider implements
+			ITableLabelProvider {
+
+		public Image getColumnImage(Object element, int columnIndex) {
+
+			if (element instanceof JavaBeanModel) {
+				boolean isArray = "array".equals(((JavaBeanModel) element)
+						.getExtendProperty("many"));
+				boolean isList = "list".equals(((JavaBeanModel) element)
+						.getExtendProperty("many"));
+				switch (columnIndex) {
+				case 0:
+					if (isArray) {
+						return SmooksUIActivator.getDefault().getImageRegistry().get(
+								JavaImageConstants.IMAGE_JAVA_ARRAY);
+					}
+					if (isList) {
+						return SmooksUIActivator.getDefault().getImageRegistry().get(
+								JavaImageConstants.IMAGE_JAVA_COLLECTION);
+					}
+					return SmooksUIActivator.getDefault().getImageRegistry()
+							.get(JavaImageConstants.IMAGE_JAVA_OBJECT);
+				case 1:
+					if (isArray) {
+						return SmooksUIActivator.getDefault()
+								.getImageRegistry()
+								.get(JavaImageConstants.IMAGE_CHECKBOX_CHECK);
+					} else {
+						return SmooksUIActivator.getDefault()
+								.getImageRegistry()
+								.get(JavaImageConstants.IMAGE_CHECKBOX_UNCHECK);
+					}
+				case 2:
+					if (isList) {
+						return SmooksUIActivator.getDefault()
+								.getImageRegistry()
+								.get(JavaImageConstants.IMAGE_CHECKBOX_CHECK);
+					} else {
+						return SmooksUIActivator.getDefault()
+								.getImageRegistry()
+								.get(JavaImageConstants.IMAGE_CHECKBOX_UNCHECK);
+					}
+				}
+			}
+			return null;
+		}
+
+		public String getColumnText(Object element, int columnIndex) {
+			if (element instanceof JavaBeanModel) {
+				switch (columnIndex) {
+				case 0:
+					return ((JavaBeanModel) element).getBeanClassString();
+				case 1:
+					return null;
+				case 2:
+					return null;
+				}
+			}
+			return null;
+		}
+
+	}
+
+	public class ColumnSelectionListener implements MouseListener {
+
+		public void widgetSelected(SelectionEvent e) {
+		}
+
+		public void widgetDefaultSelected(SelectionEvent e) {
+
+		}
+
+		public void mouseDoubleClick(MouseEvent e) {
+
+		}
+
+		public void mouseDown(MouseEvent e) {
+			if (!(e.button == 1))
+				return;
+			ViewerCell cell = listViewer.getCell(new Point(e.x, e.y));
+			if (cell != null) {
+				Object element = cell.getElement();
+				if (element instanceof JavaBeanModel) {
+					if (cell.getColumnIndex() == 1) {
+						String many = ((JavaBeanModel) element)
+								.getExtendProperty("many");
+						if ("array".equals(many)) {
+							((JavaBeanModel) element).addExtendProperty("many",
+									"");
+						} else {
+							((JavaBeanModel) element).addExtendProperty("many",
+									"array");
+						}
+					}
+					if (cell.getColumnIndex() == 2) {
+						String many = ((JavaBeanModel) element)
+								.getExtendProperty("many");
+						if ("list".equals(many)) {
+							((JavaBeanModel) element).addExtendProperty("many",
+									"");
+						} else {
+							((JavaBeanModel) element).addExtendProperty("many",
+									"list");
+						}
+					}
+					try {
+						listViewer.refresh(element);
+					} catch (Exception e1) {
+					}
+				}
+			}
+		}
+
+		public void mouseUp(MouseEvent e) {
+
+		}
 	}
 
 }

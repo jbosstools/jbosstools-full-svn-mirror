@@ -1,10 +1,9 @@
 package org.jboss.tools.smooks.javabean.model;
 
-import java.util.List;
-
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.jboss.tools.smooks.ui.IXMLStructuredObject;
 /**
  * 
  * @author Dart Peng
@@ -14,8 +13,8 @@ public class BeanContentProvider implements ITreeContentProvider,
 		IStructuredContentProvider {
 
 	public Object[] getChildren(Object arg0) {
-		if (arg0 instanceof JavaBeanModel) {
-			return ((JavaBeanModel) arg0).getProperties().toArray();
+		if (arg0 instanceof IXMLStructuredObject) {
+			return ((IXMLStructuredObject) arg0).getChildren().toArray();
 		}
 		return new Object[] {};
 	}
@@ -35,10 +34,10 @@ public class BeanContentProvider implements ITreeContentProvider,
 	}
 
 	public Object[] getElements(Object arg0) {
-		if (arg0 instanceof List) {
-			return ((List) arg0).toArray();
+		if (arg0 instanceof JavaBeanList) {
+			return ((JavaBeanList) arg0).getChildren().toArray();
 		}
-		return new Object[]{arg0};
+		return new Object[]{};
 	}
 
 	public void dispose() {

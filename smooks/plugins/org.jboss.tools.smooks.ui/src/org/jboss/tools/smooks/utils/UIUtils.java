@@ -9,10 +9,13 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.xml.type.AnyType;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -34,6 +37,7 @@ import org.jboss.tools.smooks.javabean.analyzer.JavaModelResolveCommand;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.model.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.SmooksPackage;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.IXMLStructuredObject;
@@ -65,6 +69,15 @@ public class UIUtils {
 		fill.marginHeight = marginH;
 		fill.marginWidth = marginW;
 		return fill;
+	}
+
+	public synchronized static void addResourceConfigType(EditingDomain domain,
+			SmooksResourceListType list, ResourceConfigType obj) {
+		Command addResourceConfigCommand = AddCommand.create(domain, list,
+				SmooksPackage.eINSTANCE
+						.getSmooksResourceListType_AbstractResourceConfig(),
+				obj);
+		addResourceConfigCommand.execute();
 	}
 
 	public static AbstractXMLObject getRootTagXMLObject(AbstractXMLObject xmlObj) {
@@ -149,11 +162,13 @@ public class UIUtils {
 			}
 			if (ignore)
 				continue;
-			String pvalue = property.getValue();
-			binding.getAnyAttribute()
-					.add(
-							ExtendedMetaData.INSTANCE.demandFeature(null,
-									pname, false), pvalue);
+			Object obj = property.getValue();
+			if (obj != null) {
+				String pvalue = obj.toString();
+				binding.getAnyAttribute().add(
+						ExtendedMetaData.INSTANCE.demandFeature(null, pname,
+								false), pvalue);
+			}
 		}
 	}
 
@@ -610,36 +625,37 @@ public class UIUtils {
 
 	public static IXMLStructuredObject getRootParent(IXMLStructuredObject child) {
 		IXMLStructuredObject parent = child.getParent();
-		if (parent == null)
+		if (parent == null || parent.isRootNode())
 			return child;
 		IXMLStructuredObject temp = parent;
-		while (temp != null) {
+		while (temp != null && !temp.isRootNode()) {
 			parent = temp;
 			temp = temp.getParent();
 		}
 		return parent;
 	}
 
-	public static String generatePath(IXMLStructuredObject node,
-			IXMLStructuredObject contextNode, final String sperator,
+	public static String generatePath(IXMLStructuredObject startNode,
+			IXMLStructuredObject stopNode, final String sperator,
 			boolean includeContext) {
-		IXMLStructuredObject parent = node.getParent();
-		String name = node.getNodeName();
+		String name = "";
 		List<IXMLStructuredObject> nodeList = new ArrayList<IXMLStructuredObject>();
-		if (parent == null) {
-
-		} else {
-			IXMLStructuredObject temp = parent;
-			
+		IXMLStructuredObject temp = startNode;
+		if (stopNode != null) {
+			while (temp != stopNode && temp != null) {
+				nodeList.add(temp);
+				temp = temp.getParent();
+			}
 		}
-		if(node.isAttribute()){
-			name = "@" + name;
-		}
-		for(int i = nodeList.size() ; i > 0 ; i --){
+		for (int i =0; i < nodeList.size(); i++) {
 			IXMLStructuredObject n = nodeList.get(i);
-			name = n.getNodeName() + sperator + name;
+			String nodeName = n.getNodeName();
+			if(n.isAttribute()){
+				nodeName = "@" + nodeName;
+			}
+			name = nodeName + sperator + name;
 		}
-		return "";
+		return name;
 	}
 
 	public static IXMLStructuredObject getChildNodeWithName(String name,

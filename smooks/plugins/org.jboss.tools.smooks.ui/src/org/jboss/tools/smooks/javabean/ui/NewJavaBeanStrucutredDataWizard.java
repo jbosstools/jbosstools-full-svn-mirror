@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.javabean.ui;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -27,7 +29,9 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.jboss.tools.smooks.javabean.model.JavaBeanList;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
+import org.jboss.tools.smooks.javabean.model.JavaBeanModelFactory;
 import org.jboss.tools.smooks.ui.IStructuredDataCreationWizard;
 import org.jboss.tools.smooks.ui.SmooksUIActivator;
 
@@ -39,6 +43,14 @@ public class NewJavaBeanStrucutredDataWizard extends Wizard implements
 		IStructuredDataCreationWizard, INewWizard {
 	JavaBeanConfigWizardPage page = null;
 	IJavaProject project = null;
+	public IJavaProject getProject() {
+		return project;
+	}
+
+	public void setProject(IJavaProject project) {
+		this.project = project;
+	}
+
 	Object result = null;
 	Properties properties = new Properties();
 
@@ -67,10 +79,47 @@ public class NewJavaBeanStrucutredDataWizard extends Wizard implements
 		return true;
 	}
 
-	public Object getTreeViewerInputContents() {
-		if (result == null)
+	public JavaBeanList getJavaBeanList() {
+		JavaBeanList list = new JavaBeanList();
+		if (result != null && result instanceof List) {
+			for (Iterator iterator = ((List) result).iterator(); iterator
+					.hasNext();) {
+				JavaBeanModel javabean = (JavaBeanModel) iterator.next();
+				boolean isArray = "array".equals(javabean
+						.getExtendProperty("many"));
+				boolean isList = "list".equals(javabean
+						.getExtendProperty("many"));
+				if (isArray) {
+					Object arrayInstance = Array.newInstance(javabean
+							.getBeanClass(), 0);
+					JavaBeanModel model = JavaBeanModelFactory
+							.getJavaBeanModelWithLazyLoad(arrayInstance
+									.getClass());
+					list.addJavaBean(model);
+					continue;
+				}
+				if(isList){
+					JavaBeanModel model = JavaBeanModelFactory
+							.getJavaBeanModelWithLazyLoad(ArrayList.class);
+					model.setComponentClass(javabean.getBeanClass());
+					list.addJavaBean(model);
+					continue;
+				}
+				list.addJavaBean(javabean);
+			}
+		}
+		if (list.getChildren().size() <= 0) {
 			return null;
+		}
+		return list;
+	}
+
+	public Object getResult() {
 		return result;
+	}
+
+	public Object getTreeViewerInputContents() {
+		return getJavaBeanList();
 	}
 
 	public void init(IEditorSite site, IEditorInput input) {

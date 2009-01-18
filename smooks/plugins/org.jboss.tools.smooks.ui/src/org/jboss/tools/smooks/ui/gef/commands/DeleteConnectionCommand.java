@@ -14,9 +14,10 @@ public class DeleteConnectionCommand extends Command {
 	private IConnectableModel targetNode;
 
 	public void execute() {
-
-		sourceNode.removeSourceConnection(connectionModel);
-		targetNode.removeTargetConnection(connectionModel);
+		if (sourceNode != null && targetNode != null) {
+			sourceNode.removeSourceConnection(connectionModel);
+			targetNode.removeTargetConnection(connectionModel);
+		}
 	}
 
 	public void undo() {
@@ -35,6 +36,10 @@ public class DeleteConnectionCommand extends Command {
 	public void setConnectionModel(
 			AbstractStructuredDataConnectionModel connectionModel) {
 		this.connectionModel = connectionModel;
+		if (connectionModel != null) {
+			setSourceNode(connectionModel.getSource());
+			setTargetNode(connectionModel.getTarget());
+		}
 	}
 
 	/**

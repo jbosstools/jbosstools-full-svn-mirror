@@ -35,11 +35,11 @@ public class XMLPropertiesSection extends AbstractSmooksPropertySection {
 
 	public static final String MAPPING_TYPE = "mappingType";
 	public static final String SELECTOR_NAMESPACE = "selector-namespace";
-	
+
 	public static final String MAPPING = "mapping";
-	
+
 	public static final String BINDING = "binding";
-	
+
 	private Text namespaceText;
 	private Button checkButton;
 	private CCombo connectionTypeCombo;
@@ -124,12 +124,12 @@ public class XMLPropertiesSection extends AbstractSmooksPropertySection {
 			List<PropertyModel> list = connection.getProperties();
 			for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 				PropertyModel propertyModel = (PropertyModel) iterator.next();
-				if(propertyModel.getName().equals(MAPPING_TYPE)){
+				if (propertyModel.getName().equals(MAPPING_TYPE)) {
 					type = propertyModel;
 					break;
 				}
 			}
-			if(type == null){
+			if (type == null) {
 				type = new PropertyModel();
 				type.setName(MAPPING_TYPE);
 			}
@@ -166,9 +166,9 @@ public class XMLPropertiesSection extends AbstractSmooksPropertySection {
 						}
 
 						if (propertyModel.getName().equals(MAPPING_TYPE)) {
-							String type = propertyModel.getValue();
-							if (type != null)
-								connectionTypeCombo.setText(type);
+							Object value = propertyModel.getValue();
+							if (value != null)
+								connectionTypeCombo.setText(value.toString());
 						}
 					}
 				}

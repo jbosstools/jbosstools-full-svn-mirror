@@ -6,8 +6,10 @@ package org.jboss.tools.smooks.ui.gef.figures;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
+import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
 import org.jboss.tools.smooks.ui.gef.util.GraphicsConstants;
 
@@ -79,6 +81,14 @@ public class LinePaintListener implements ILineFigurePaintListener {
 		graphics.fillPolygon(pointList);
 		graphics.drawPolygon(pointList);
 		graphics.popState();
+	}
+
+	public PolylineConnection createHostFigure(LineConnectionModel model) {
+		return null;
+	}
+
+	public PolylineConnection createDummyFigure(CreateConnectionRequest req) {
+		return null;
 	}
 
 }

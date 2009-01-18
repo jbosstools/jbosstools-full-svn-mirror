@@ -4,6 +4,7 @@
 package org.jboss.tools.smooks.analyzer;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.jboss.tools.smooks.ui.gef.model.PropertyModel;
@@ -21,6 +22,16 @@ public class MappingModel {
 	public MappingModel(Object source, Object target) {
 		setSource(source);
 		setTarget(target);
+	}
+	
+	public Object getPropertyValue(String name){
+		for (Iterator iterator = properties.iterator(); iterator.hasNext();) {
+			PropertyModel property = (PropertyModel) iterator.next();
+			if(name.equals(property.getName())){
+				return property.getValue();
+			}
+		}
+		return null;
 	}
 
 	public Object getSource() {

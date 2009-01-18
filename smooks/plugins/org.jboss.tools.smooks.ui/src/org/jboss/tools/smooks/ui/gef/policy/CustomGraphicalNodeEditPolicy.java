@@ -4,18 +4,26 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.draw2d.Connection;
 import org.eclipse.draw2d.ConnectionAnchor;
+import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.NodeEditPart;
+import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.GraphicalNodeEditPolicy;
 import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.ReconnectRequest;
 import org.jboss.tools.smooks.ui.gef.commandprocessor.CommandProcessorFactory;
 import org.jboss.tools.smooks.ui.gef.commands.CreateConnectionCommand;
+import org.jboss.tools.smooks.ui.gef.editparts.AbstractStructuredDataEditPart;
+import org.jboss.tools.smooks.ui.gef.figures.CurveLineConnection;
+import org.jboss.tools.smooks.ui.gef.figures.ILineFigurePaintListener;
+import org.jboss.tools.smooks.ui.gef.figures.LineFigurePaintListenerManager;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
+import org.jboss.tools.smooks.ui.gef.model.SourceModel;
 
 public class CustomGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 
@@ -29,13 +37,38 @@ public class CustomGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 		}
 		command.setTarget(getHost().getModel());
 		try {
-			boolean cando = CommandProcessorFactory.getInstance().processGEFCommand(command,
-					getHost());
-			if(!cando) return null;
+			boolean cando = CommandProcessorFactory.getInstance()
+					.processGEFCommand(command, getHost());
+			if (!cando)
+				return null;
 		} catch (CoreException e) {
 			// ignore
 		}
 		return command;
+	}
+
+	protected Connection createDummyConnection(Request req) {
+		if (req instanceof CreateConnectionRequest) {
+			CreateConnectionRequest connectionRequest = (CreateConnectionRequest) req;
+			EditPart part = connectionRequest.getSourceEditPart();
+			if (part != null) {
+				if (part instanceof AbstractStructuredDataEditPart) {
+					String sid = ((AbstractStructuredDataEditPart) part)
+							.getSourceID();
+					String tid = ((AbstractStructuredDataEditPart) part)
+							.getTargetID();
+					ILineFigurePaintListener listener = LineFigurePaintListenerManager
+							.getInstance().getPaintListener(sid, tid);
+					if (listener != null) {
+						Connection connection = listener
+								.createDummyFigure(connectionRequest);
+						if (connection != null)
+							return connection;
+					}
+				}
+			}
+		}
+		return new CurveLineConnection(null);
 	}
 
 	protected EditPart findTheEditPart(Object model, GraphicalViewer viewer) {
@@ -47,7 +80,8 @@ public class CustomGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 			EditPart childEditPart = (EditPart) iterator.next();
 			Object cm = childEditPart.getModel();
 			if (cm instanceof AbstractStructuredDataModel) {
-				if (((AbstractStructuredDataModel) cm).getReferenceEntityModel() == model) {
+				if (((AbstractStructuredDataModel) cm)
+						.getReferenceEntityModel() == model) {
 					resultEditPart = childEditPart;
 					break;
 				}
@@ -62,9 +96,10 @@ public class CustomGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 		command.setSource(getHost().getModel());
 		request.setStartCommand(command);
 		try {
-			boolean cando = CommandProcessorFactory.getInstance().processGEFCommand(command,
-					getHost());
-			if(!cando) return null;
+			boolean cando = CommandProcessorFactory.getInstance()
+					.processGEFCommand(command, getHost());
+			if (!cando)
+				return null;
 		} catch (CoreException e) {
 			// ignore
 		}

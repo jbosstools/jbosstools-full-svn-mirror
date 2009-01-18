@@ -17,6 +17,8 @@ import java.util.Properties;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.gef.EditDomain;
+import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.widgets.Shell;
@@ -39,6 +41,16 @@ public class SmooksConfigurationFileGenerateContext {
 	protected IFile smooksConfigFile = null;
 	protected EditingDomain domain;
 	
+	protected EditDomain gefDomain;
+
+	public EditDomain getGefDomain() {
+		return gefDomain;
+	}
+
+	public void setGefDomain(EditDomain gefDomain) {
+		this.gefDomain = gefDomain;
+	}
+
 	protected ITreeContentProvider sourceViewerProvider;
 	
 	protected ITreeContentProvider targetViewerProvider;

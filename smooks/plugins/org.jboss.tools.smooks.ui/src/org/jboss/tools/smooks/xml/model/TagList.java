@@ -83,6 +83,15 @@ public class TagList extends AbstractXMLObject {
 	public AbstractXMLObject getParent() {
 		return null;
 	}
+
+
+
+	@Override
+	public boolean isRootNode() {
+		return true;
+	}
+	
+	
 	
 	
 	
