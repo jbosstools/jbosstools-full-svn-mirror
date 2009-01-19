@@ -359,9 +359,9 @@ public abstract class GenericModelEditor extends GraphicalEditorWithPalette {
 		return overviewOutlinePage;
 	}
 
-	public String getContributorId() {
-		return getSite().getId();
-	}
+//	public String getContributorId() {
+//		return getSite().getId();
+//	}
 
 	/**
 	 * Writes the content of this editor to the given stream. Possible formats

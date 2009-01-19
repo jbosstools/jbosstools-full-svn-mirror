@@ -1,5 +1,6 @@
 package org.jboss.tools.flow.common.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,9 @@ public class DefaultNode implements Node {
 	private Container container;
 	
 	private HashMap<String, Object> metaData = new HashMap<String, Object>();
+	
+	private List<Connection> incomingConnections = new ArrayList<Connection>();
+	private List<Connection> outgoingConnections = new ArrayList<Connection>();
 
 	public long getId() {
 		return id;
@@ -45,43 +49,39 @@ public class DefaultNode implements Node {
 	}
 
 	public void addIncomingConnection(String type, Connection connection) {
-		// TODO Auto-generated method stub
-		
+		incomingConnections.add(connection);
 	}
 
 	public void addOutgoingConnection(String type, Connection connection) {
-		// TODO Auto-generated method stub
-		
+		outgoingConnections.add(connection);
 	}
 
 	public Map<String, List<Connection>> getIncomingConnections() {
-		// TODO Auto-generated method stub
-		return null;
+		HashMap<String, List<Connection>> result = new HashMap<String, List<Connection>>();
+		result.put(null, getIncomingConnections(null));
+		return result;
 	}
 
 	public List<Connection> getIncomingConnections(String type) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<Connection>(incomingConnections);
 	}
 
 	public Map<String, List<Connection>> getOutgoingConnections() {
-		// TODO Auto-generated method stub
-		return null;
+		HashMap<String, List<Connection>> result = new HashMap<String, List<Connection>>();
+		result.put(null, getOutgoingConnections(null));
+		return result;
 	}
 
 	public List<Connection> getOutgoingConnections(String type) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<Connection>(outgoingConnections);
 	}
 
 	public void removeIncomingConnection(String type, Connection connection) {
-		// TODO Auto-generated method stub
-		
+		incomingConnections.remove(connection);
 	}
 
 	public void removeOutgoingConnection(String type, Connection connection) {
-		// TODO Auto-generated method stub
-		
+		outgoingConnections.remove(connection);
 	}
 
 }

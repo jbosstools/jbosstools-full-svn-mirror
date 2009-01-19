@@ -7,7 +7,7 @@ import java.util.List;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
-public interface Container {
+public interface Container extends Element{
 
     /**
      * Returns the nodes of this node container.

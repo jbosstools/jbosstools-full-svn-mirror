@@ -12,8 +12,8 @@ public class DefaultConnection implements Connection {
 	}
 
 	public DefaultConnection(Node from, Node to) {
-		this.from = from;
-		this.to = to;
+		setFrom(from);
+		setTo(to);
 	}
 
 	public Object getMetaData(String key) {
@@ -29,7 +29,13 @@ public class DefaultConnection implements Connection {
 	}
 	
 	public void setFrom(Node node) {
-		this.from = node;
+		if (from != null) {
+			from.removeOutgoingConnection(null, this);
+		}
+		from = node;
+		if (from != null) {
+			from.addOutgoingConnection(null, this);
+		}
 	}
 	
 	public Node getTo() {
@@ -37,7 +43,13 @@ public class DefaultConnection implements Connection {
 	}
 	
 	public void setTo(Node node) {
-		this.to = node;
+		if (to != null) {
+			to.removeIncomingConnection(null, this);
+		}
+		to = node;
+		if (to != null) {
+			to.addIncomingConnection(null, this);
+		}
 	}
 
 	public String getFromType() {
