@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: JBoss Tools Ruleflow Plug-in
+Bundle-Name: %Bundle-Name.0
 Bundle-SymbolicName: org.jboss.tools.flow.ruleflow;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jboss.tools.process.ruleflow.Activator
-Bundle-Vendor: JBoss
+Bundle-Vendor: %Bundle-Vendor.0
 Require-Bundle: 
  org.eclipse.core.resources,
  org.eclipse.core.runtime,
@@ -20,3 +20,4 @@ Bundle-ClassPath: .,
  lib/core-3.2.3.v_686_R32x.jar,
  lib/mvel.jar
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Localization: plugin

@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: JBoss Tools Process Plug-in
+Bundle-Name: %Bundle-Name.0
 Bundle-SymbolicName: org.jboss.tools.flow.common;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jboss.tools.flow.common.Activator
-Bundle-Vendor: JBoss
+Bundle-Vendor: %Bundle-Vendor.0
 Require-Bundle: 
  org.eclipse.ui.views,
  org.eclipse.draw2d,
@@ -28,3 +28,4 @@ Export-Package: org.jboss.tools.flow.common;uses:="org.eclipse.core.runtime,org.
  org.jboss.tools.flow.common.wrapper
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Localization: plugin

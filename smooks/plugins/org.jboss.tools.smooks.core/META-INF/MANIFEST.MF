@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Smooks Tools Core Plug-in
+Bundle-Name: %Bundle-Name.0
 Bundle-SymbolicName: org.jboss.tools.smooks.core;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jboss.tools.smooks.core.SmooksCoreActivator
@@ -17,4 +17,5 @@ Export-Package: org.jboss.tools.smooks.core,
  org.jboss.tools.smooks.model.impl,
  org.jboss.tools.smooks.model.provider,
  org.jboss.tools.smooks.model.util
-Bundle-Vendor: JBoss, a division of Red Hat
+Bundle-Vendor: %Bundle-Vendor.0
+Bundle-Localization: plugin

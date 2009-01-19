@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Tests Plug-in
+Bundle-Name: %Bundle-Name.0
 Bundle-SymbolicName: org.jboss.tools.vpe.test;singleton:=true
 Bundle-Version: 2.0.0
 Bundle-Activator: org.jboss.tools.vpe.test.VpeTestPlugin
-Bundle-Vendor: JBoss, a division of Red Hat
+Bundle-Vendor: %Bundle-Vendor.0
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.junit,
@@ -27,3 +27,4 @@ Export-Package: org.jboss.tools.vpe.editor.preferences,
  org.jboss.tools.vpe.test
 Bundle-ClassPath: vpe-tests.jar
 Import-Package: org.eclipse.ui.part
+Bundle-Localization: plugin
