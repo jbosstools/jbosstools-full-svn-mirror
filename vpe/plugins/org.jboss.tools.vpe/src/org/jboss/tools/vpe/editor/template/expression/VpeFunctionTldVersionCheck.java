@@ -10,8 +10,6 @@
 ******************************************************************************/
 package org.jboss.tools.vpe.editor.template.expression;
 
-import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
@@ -95,7 +93,7 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 			double tldVersionNumber =0;
 			if(tldVersion!=null) {
 				
-				tldVersionNumber = Double.parseDouble(tldVersion);
+				tldVersionNumber = stringVersionToDouble(tldVersion);
 			
 			} else {
 				//here we getting tld version for xhtml files
@@ -116,7 +114,7 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 						xm);
 				if(tldVersion!=null) {
 				
-					tldVersionNumber = Double.parseDouble(tldVersion);
+					tldVersionNumber = stringVersionToDouble(tldVersion);
 				} else {
 					tldVersionNumber = 0;
 				}
@@ -135,7 +133,7 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 		
 		try {
 			if(tagValue.indexOf(MIN_VERSION_KEYWORD)!=-1){
-			    return Double.parseDouble(tagValue.substring(tagValue.indexOf(MIN_VERSION_KEYWORD)+4));    
+			    return stringVersionToDouble(tagValue.substring(tagValue.indexOf(MIN_VERSION_KEYWORD)+4));    
 			} else {
 				
 				return (-1)*Double.MAX_VALUE;
@@ -151,7 +149,7 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 		
 		try{
 			if(tagValue.indexOf(MAX_VERSION_KEYWORD)!=-1) {
-			    return Double.parseDouble(tagValue.substring(tagValue.indexOf(MAX_VERSION_KEYWORD)+4));    
+			    return stringVersionToDouble(tagValue.substring(tagValue.indexOf(MAX_VERSION_KEYWORD)+4));    
 			}else {
 				return Double.MAX_VALUE;
 			}
@@ -159,5 +157,39 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 			VpePlugin.getPluginLog().logError(e);
 		}
 		return Double.MAX_VALUE;
+	}
+	
+	/**
+	 * Converts {@code sVersion} representing version of a library to
+	 * {@code double} value. 
+	 * 
+	 * @deprecated it does not make difference between incremental versions
+	 * like 1.2.0 and 1.2.1. This method have to be replaced by a more complicated
+	 * version-comparator like [<a href="http://maven.apache.org/ref/current/maven-artifact/apidocs/org/apache/maven/artifact/versioning/package-summary.html">http://maven.apache.org/ref/current/maven-artifact/apidocs/org/apache/maven/artifact/versioning/package-summary.html</a>] 
+	 */
+	private double stringVersionToDouble(String sVersion) {
+		String tokens[] = sVersion.split("\\.");
+
+		String parseableVersion;
+		switch (tokens.length) {
+		case 0:
+			parseableVersion = "0"; //$NON-NLS-N$
+			break;
+		case 1:
+			parseableVersion = tokens[0];
+			break;
+		case 2: default:
+			parseableVersion = tokens[0] + '.' + tokens[1];
+			break;
+		}
+
+		double dVersion;
+		try {
+			dVersion = Double.parseDouble(parseableVersion);
+		} catch (Exception e) {
+			dVersion = 0.0;
+		}
+
+		return dVersion;
 	}
 }
