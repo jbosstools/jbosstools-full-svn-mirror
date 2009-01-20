@@ -35,8 +35,20 @@ public class JavaBeanSourceBuilder extends AbstractJavaBeanBuilder implements
 	public Object buildSourceInputObjects(GraphInformations graphInfo,
 			SmooksResourceListType listType, IFile sourceFile, Object viewer)
 			throws InvocationTargetException {
-		return buildSourceInputObjects(graphInfo, listType, sourceFile, viewer,
-				getClassLoader());
+		ClassLoader classLoader = getClassLoader();
+		if (classLoader == null) {
+			IProject project = sourceFile.getProject();
+			try {
+				classLoader = new ProjectClassLoader(JavaCore.create(project));
+			} catch (JavaModelException e) {
+				throw new InvocationTargetException(e);
+			}
+		}
+		JavaBeanList beanList = (JavaBeanList) buildSourceInputObjects(
+				graphInfo, listType, sourceFile, viewer, getClassLoader());
+		mergeJavaBeans(beanList, getTheJavaBeanFromGraphFile(classLoader,
+				graphInfo, SOURCE_DATA));
+		return beanList;
 	}
 
 	public Object buildSourceInputObjects(GraphInformations graphInfo,
@@ -87,7 +99,8 @@ public class JavaBeanSourceBuilder extends AbstractJavaBeanBuilder implements
 			}
 		}
 		if (viewer instanceof PropertyChangeListener) {
-			beanList.addNodePropetyChangeListener((PropertyChangeListener) viewer);
+			beanList
+					.addNodePropetyChangeListener((PropertyChangeListener) viewer);
 		}
 		return beanList;
 	}
