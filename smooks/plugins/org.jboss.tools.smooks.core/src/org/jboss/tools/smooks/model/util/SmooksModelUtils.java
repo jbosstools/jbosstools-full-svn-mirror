@@ -91,6 +91,23 @@ public class SmooksModelUtils {
 		return false;
 	}
 	
+	public static void setPropertyValueToAnyType(Object value,EStructuralFeature attribute,AnyType anyType){
+		anyType.getAnyAttribute().set(attribute, value);
+	}
+	
+	public static AnyType getBindingViaProperty(ResourceConfigType resourceConfig , String property){
+		List bindingList = getBindingListFromResourceConfigType(resourceConfig);
+		for (Iterator iterator = bindingList.iterator(); iterator.hasNext();) {
+			AnyType binding = (AnyType) iterator.next();
+			String pro = getAttributeValueFromAnyType(binding, ATTRIBUTE_PROPERTY);
+			if(pro != null) pro = pro.trim();
+			if(property.equals(pro)){
+				return binding;
+			}
+		}
+		return null;
+	}
+	
 	public static boolean isInnerFileContents(ResourceConfigType resourceConfig){
 		ResourceType resource = resourceConfig.getResource();
 		if(resource == null) return false;
