@@ -57,6 +57,12 @@
                id="org.jboss.tools.smooks.ui.xmlnode.propertySection"
                tab="org.jboss.tools.smooks.ui.xmlnode.propertyTab">
          </propertySection>
+         <propertySection
+               class="org.jboss.tools.smooks.javabean.ui.BeanPopulatorConnectionSection"
+               filter="org.jboss.tools.smooks.javabean.ui.BeanPopulatorConnectionFilter"
+               id="org.jboss.tools.smooks.ui.connection.beanpopulator.section"
+               tab="org.jboss.tools.smooks.ui.connection.beanpopulator.propertyTab">
+         </propertySection>
       </propertySections>
    </extension>
    <extension
@@ -94,6 +100,11 @@
                category="transformdata"
                id="org.jboss.tools.smooks.ui.xmlnode.propertyTab"
                label="XML Node">
+         </propertyTab>
+         <propertyTab
+               category="connection"
+               id="org.jboss.tools.smooks.ui.connection.beanpopulator.propertyTab"
+               label="BeanPopulator Connection">
          </propertyTab>
       </propertyTabs>
    </extension>
