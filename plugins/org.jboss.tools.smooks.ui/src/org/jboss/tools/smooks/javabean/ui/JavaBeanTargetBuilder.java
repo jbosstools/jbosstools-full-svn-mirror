@@ -36,8 +36,19 @@ public class JavaBeanTargetBuilder extends AbstractJavaBeanBuilder implements
 	public Object buildTargetInputObjects(GraphInformations graphInfo,
 			SmooksResourceListType listType, IFile sourceFile, Object viewer)
 			throws InvocationTargetException {
-		return buildTargetInputObjects(graphInfo, listType, sourceFile, viewer,
+		ClassLoader classLoader = getClassLoader();
+		if (classLoader == null) {
+			IProject project = sourceFile.getProject();
+			try {
+				classLoader = new ProjectClassLoader(JavaCore.create(project));
+			} catch (JavaModelException e) {
+				throw new InvocationTargetException(e);
+			}
+		}
+		JavaBeanList beanList = (JavaBeanList) buildTargetInputObjects(graphInfo, listType, sourceFile, viewer,
 				getClassLoader());
+		mergeJavaBeans(beanList, getTheJavaBeanFromGraphFile(classLoader, graphInfo, TARGET_DATA));
+		return beanList;
 	}
 
 	public Object buildTargetInputObjects(GraphInformations graphInfo,
