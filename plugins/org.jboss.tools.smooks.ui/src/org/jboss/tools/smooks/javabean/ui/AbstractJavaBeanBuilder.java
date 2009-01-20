@@ -56,6 +56,8 @@ public class AbstractJavaBeanBuilder {
 			GraphInformations graphInfo, int dataMode) {
 		String array = getDataSourceClassArray(graphInfo, dataMode);
 		List list = new ArrayList();
+		if (array == null)
+			return list;
 		String[] classes = array.split(";");
 		for (int i = 0; i < classes.length; i++) {
 			String className = classes[i];
@@ -85,13 +87,17 @@ public class AbstractJavaBeanBuilder {
 		if (dataMode == TARGET_DATA) {
 			key = "targetDataPath"; //$NON-NLS-1$
 		}
-
-		Params params = info.getParams();
-		List paramList = params.getParam();
-		for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
-			Param param = (Param) iterator.next();
-			if (key.equals(param.getName())) {
-				return param.getValue();
+		if (info != null) {
+			Params params = info.getParams();
+			if (params != null) {
+				List paramList = params.getParam();
+				for (Iterator iterator = paramList.iterator(); iterator
+						.hasNext();) {
+					Param param = (Param) iterator.next();
+					if (key.equals(param.getName())) {
+						return param.getValue();
+					}
+				}
 			}
 		}
 		return null;

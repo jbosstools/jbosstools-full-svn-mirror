@@ -99,8 +99,9 @@ public class DecoraterSelectionDialog extends Dialog implements
 					.getAbstractResourceConfig();
 			for (Iterator<AbstractResourceConfig> iterator = list.iterator(); iterator
 					.hasNext();) {
-				ResourceConfigType config = (ResourceConfigType) iterator
-						.next();
+				AbstractResourceConfig abstractResourceConfig = iterator.next();
+				if(!(abstractResourceConfig instanceof ResourceConfigType)) continue;
+				ResourceConfigType config = (ResourceConfigType)abstractResourceConfig;
 				String selector = config.getSelector();
 
 				if (selector != null && selector.indexOf(":") != -1) {

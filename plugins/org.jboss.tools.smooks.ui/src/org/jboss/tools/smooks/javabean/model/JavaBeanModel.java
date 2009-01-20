@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import org.eclipse.ui.internal.part.NullEditorInput;
 import org.jboss.tools.smooks.analyzer.IValidatable;
 import org.jboss.tools.smooks.javabean.uitils.JavaPropertyUtils;
 import org.jboss.tools.smooks.ui.IXMLStructuredObject;
@@ -337,11 +338,11 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 				return Collections.EMPTY_LIST;
 			PropertyDescriptor[] pds = JavaPropertyUtils
 					.getPropertyDescriptor(beanType);
-
 			for (int i = 0; i < pds.length; i++) {
 				PropertyDescriptor pd = pds[i];
 				if ("class".equals(pd.getName())) //$NON-NLS-1$
 					continue;
+				if(pd.getPropertyType() == null) continue;
 				if (Collection.class.isAssignableFrom(pd.getPropertyType())) {
 					Method rmethod = pd.getReadMethod();
 					if (rmethod != null) {

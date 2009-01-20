@@ -33,11 +33,9 @@
             contributorId="org.jboss.tools.smooks.ui.editors.SmooksFormEditor">
          <propertySection
                class="org.jboss.tools.smooks.ui.ConnectionPropertySection"
+               filter="org.jboss.tools.smooks.ui.LineConnectionSectionFilter"
                id="org.jboss.tools.smooks.ui.connection.propertyTab.Section"
                tab="org.jboss.tools.smooks.ui.connection.propertyTab">
-            <input
-                  type="org.jboss.tools.smooks.ui.gef.model.LineConnectionModel">
-            </input>
          </propertySection>
          <propertySection
                class="org.jboss.tools.smooks.javabean.ui.JavaBeanPropertiesSection"

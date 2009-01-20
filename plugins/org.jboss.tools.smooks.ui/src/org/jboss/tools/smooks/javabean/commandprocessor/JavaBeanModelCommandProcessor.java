@@ -24,6 +24,7 @@ import org.jboss.tools.smooks.javabean.model.Java2JavaAnalyzer;
 import org.jboss.tools.smooks.javabean.model.JavaBeanList;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.javabean.ui.BeanPopulatorMappingAnalyzer;
+import org.jboss.tools.smooks.ui.IXMLStructuredObject;
 import org.jboss.tools.smooks.ui.gef.commandprocessor.ICommandProcessor;
 import org.jboss.tools.smooks.ui.gef.commands.CreateConnectionCommand;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
@@ -116,6 +117,15 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 				return false;
 			}
 		}
+		
+		if(source instanceof IXMLStructuredObject && t instanceof JavaBeanModel){
+			boolean isattribute = ((IXMLStructuredObject)source).isAttribute();
+			JavaBeanModel targetModel = (JavaBeanModel) t;
+			boolean isprimitive = targetModel.isPrimitive();
+			if(isattribute && !isprimitive) return false;
+			if(!isattribute && isprimitive) return false;
+		}
+		
 		if (source instanceof JavaBeanModel && t instanceof JavaBeanModel
 				&& sourceGraphModel instanceof SourceModel) {
 
