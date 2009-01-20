@@ -10,8 +10,10 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.jdt.internal.ui.preferences.PropertyAndPreferencePage;
 import org.jboss.tools.smooks.javabean.model.JavaBeanList;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
+import org.jboss.tools.smooks.javabean.model.SelectorAttributes;
 import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.ResourceType;
@@ -20,6 +22,7 @@ import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.IXMLStructuredObject;
+import org.jboss.tools.smooks.ui.editors.SmooksFormEditor;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataConnectionModel;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
@@ -148,14 +151,14 @@ public class BeanPopulatorGraphicalModelListener implements
 
 	private void setReferenceResourceConfig(ResourceConfigType resourceConfig,
 			LineConnectionModel connection) {
-		connection.updateAndAddProperty(
-				BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG,
+		connection.addPropertyModel(
+				BeanPopulatorMappingAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG,
 				resourceConfig);
 	}
 
 	private ResourceConfigType getResourceConfig(LineConnectionModel line) {
 		Object obj = line
-				.getProperty(BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG);
+				.getProperty(BeanPopulatorMappingAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG);
 		if (obj != null && obj instanceof ResourceConfigType) {
 			return (ResourceConfigType) obj;
 		}
@@ -189,7 +192,7 @@ public class BeanPopulatorGraphicalModelListener implements
 						.next();
 				if (isBeanCreationConnection(connection)) {
 					Object obj = connection
-							.getProperty(BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG);
+							.getProperty(BeanPopulatorMappingAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG);
 					if (obj == null || !(obj instanceof ResourceConfigType))
 						return null;
 					return (ResourceConfigType) obj;
@@ -244,23 +247,14 @@ public class BeanPopulatorGraphicalModelListener implements
 			LineConnectionModel line) {
 		JavaBeanModel target = (JavaBeanModel) ((AbstractStructuredDataModel) line
 				.getTarget()).getReferenceEntityModel();
-		JavaBeanModel targetParent = target.getParent();
 		Object source = ((AbstractStructuredDataModel) line.getSource())
 				.getReferenceEntityModel();
 		String propertyName = target.getName();
-		//
-		IXMLStructuredObject contextNode = ignoreRootParentNode((IXMLStructuredObject) source);
-		if (targetParent.isList() || targetParent.isArray()) {
-			propertyName = null;
-			//
-			contextNode = parentNode((IXMLStructuredObject) source);
-		}
 		String currentSelectorName = null;
 		if (source instanceof IXMLStructuredObject) {
-			currentSelectorName = UIUtils.generatePath(
-					(IXMLStructuredObject) source, contextNode, " ", false);
+			currentSelectorName = UIUtils.generateFullPath(
+					(IXMLStructuredObject) source, " ");
 		}
-
 		if (currentSelectorName == null)
 			return;
 		addBindingToParamType(resourceConfig, propertyName,
@@ -283,8 +277,19 @@ public class BeanPopulatorGraphicalModelListener implements
 						line,
 						binding,
 						new String[] {
-								"property", "selector", BeanPopulatorMappingAnalyzer.BINDING_TYPE, BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG }); //$NON-NLS-1$ //$NON-NLS-2$
-
+								"property", "selector", BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE, BeanPopulatorMappingAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG }); //$NON-NLS-1$ //$NON-NLS-2$
+		if (!this.isReferenceBindingConnection(line)) {
+			PropertyModel bindingType = new PropertyModel(
+					BeanPopulatorMappingAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG,
+					resourceConfig);
+			line.getProperties().add(bindingType);
+			SelectorAttributes sa = new SelectorAttributes();
+			sa.setSelectorPolicy(BeanPopulatorMappingAnalyzer.FULL_PATH);
+			sa.setSelectorSperator(" ");
+			PropertyModel selectorProperty = new PropertyModel(
+					BeanPopulatorMappingAnalyzer.PRO_SELECTOR_ATTRIBUTES, sa);
+			line.getProperties().add(selectorProperty);
+		}
 	}
 
 	protected void removeResourceConfigAssociatedConnections(
@@ -318,7 +323,7 @@ public class BeanPopulatorGraphicalModelListener implements
 				LineConnectionModel connection1 = (LineConnectionModel) iterator2
 						.next();
 				if (referenceResourceConfig == connection1
-						.getProperty(BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG)) {
+						.getProperty(BeanPopulatorMappingAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG)) {
 					connection1.disConnect();
 				}
 			}
@@ -330,7 +335,7 @@ public class BeanPopulatorGraphicalModelListener implements
 				LineConnectionModel connection2 = (LineConnectionModel) iterator2
 						.next();
 				if (referenceResourceConfig == connection2
-						.getProperty(BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG)) {
+						.getProperty(BeanPopulatorMappingAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG)) {
 					connection2.disConnect();
 				}
 			}
@@ -342,7 +347,7 @@ public class BeanPopulatorGraphicalModelListener implements
 	protected void removeResourceConfig(LineConnectionModel line,
 			SmooksConfigurationFileGenerateContext context) {
 		Object value = line
-				.getProperty(BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG);
+				.getProperty(BeanPopulatorMappingAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG);
 		if (value == null || !(value instanceof ResourceConfigType))
 			return;
 		ResourceConfigType resourceConfig = (ResourceConfigType) value;
@@ -367,24 +372,31 @@ public class BeanPopulatorGraphicalModelListener implements
 		EditingDomain domain = context.getDomain();
 		UIUtils.addResourceConfigType(domain, listType, resourceConfig);
 		PropertyModel bindingModel = new PropertyModel(
-				BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG,
+				BeanPopulatorMappingAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG,
 				resourceConfig);
+		SelectorAttributes sa = new SelectorAttributes();
+		sa.setSelectorPolicy(BeanPopulatorMappingAnalyzer.FULL_PATH);
+		sa.setSelectorSperator(" ");
+		PropertyModel selectorProperty = new PropertyModel(
+				BeanPopulatorMappingAnalyzer.PRO_SELECTOR_ATTRIBUTES, sa);
 		((LineConnectionModel) graphicalModel).addPropertyModel(bindingModel);
+		((LineConnectionModel) graphicalModel)
+				.addPropertyModel(selectorProperty);
 	}
 
 	private boolean isPropertyBindingConnection(LineConnectionModel connection) {
 		return BeanPopulatorMappingAnalyzer.PROPERTY_BINDING.equals(connection
-				.getProperty(BeanPopulatorMappingAnalyzer.BINDING_TYPE));
+				.getProperty(BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE));
 	}
 
 	private boolean isReferenceBindingConnection(LineConnectionModel connection) {
 		return BeanPopulatorMappingAnalyzer.REFERENCE_BINDING.equals(connection
-				.getProperty(BeanPopulatorMappingAnalyzer.BINDING_TYPE));
+				.getProperty(BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE));
 	}
 
 	private boolean isBeanCreationConnection(LineConnectionModel connection) {
 		return BeanPopulatorMappingAnalyzer.BEAN_CREATION.equals(connection
-				.getProperty(BeanPopulatorMappingAnalyzer.BINDING_TYPE));
+				.getProperty(BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE));
 	}
 
 	protected void configNewResourceConfig(ResourceConfigType resourceConfig,
@@ -395,7 +407,8 @@ public class BeanPopulatorGraphicalModelListener implements
 				.getReferenceEntityModel();
 		String sourceSelector = null;
 		if (source instanceof IXMLStructuredObject) {
-			sourceSelector = ((IXMLStructuredObject) source).getNodeName();
+			sourceSelector = UIUtils.generateFullPath(
+					(IXMLStructuredObject) source, " ");
 		}
 		if (sourceSelector != null) {
 			resourceConfig.setSelector(sourceSelector);
@@ -438,13 +451,79 @@ public class BeanPopulatorGraphicalModelListener implements
 	public void modelChanged(Object graphicalModel,
 			SmooksConfigurationFileGenerateContext context,
 			PropertyChangeEvent event) {
-		if(graphicalModel instanceof LineConnectionModel){
-			String pm = event.getPropertyName();
-			if(AbstractStructuredDataConnectionModel.CONNECTION_PROPERTY_CHANGE.equals(pm)){
-				if(event.getNewValue() != null){
-					if(event.getOldValue() != null){
-						PropertyModel model = (PropertyModel)event.getNewValue();
+		LineConnectionModel line = null;
+		if (graphicalModel instanceof LineConnectionModel) {
+			line = (LineConnectionModel) graphicalModel;
+		}
+		String pm = event.getPropertyName();
+		if (pm
+				.equals(AbstractStructuredDataConnectionModel.CONNECTION_PROPERTY_UPDATE)) {
+			Object obj = event.getNewValue();
+			if (obj != null && obj instanceof PropertyModel && line != null) {
+				String name = ((PropertyModel) obj).getName();
+				if (name
+						.equals(BeanPopulatorMappingAnalyzer.PRO_SELECTOR_ATTRIBUTES)) {
+					SelectorAttributes sa = (SelectorAttributes) ((PropertyModel) obj)
+							.getValue();
+					if (sa != null) {
+						if (isBeanCreationConnection(line)) {
+							modifyResourceConfigSelector(line, sa);
+						}
+						if (isPropertyBindingConnection(line)) {
+							modifyPropertyBindingSelector(line, sa);
+						}
 					}
+				}
+			}
+		}
+	}
+
+	protected void modifyResourceConfigSelector(LineConnectionModel line,
+			SelectorAttributes sa) {
+		ResourceConfigType resourceConfig = getResourceConfig(line);
+		if (resourceConfig != null) {
+			AbstractStructuredDataModel source = (AbstractStructuredDataModel) line
+					.getSource();
+			Object s = source.getReferenceEntityModel();
+			if (s instanceof IXMLStructuredObject) {
+				String selector = UIUtils.generatePath(
+						(IXMLStructuredObject) s, sa);
+				if (selector != null) {
+					resourceConfig.setSelector(selector);
+					return;
+				}
+			}
+		}
+	}
+
+	protected void modifyPropertyBindingSelector(LineConnectionModel line,
+			SelectorAttributes sa) {
+		ResourceConfigType resourceConfig = getResourceConfig(line);
+		if (resourceConfig != null) {
+			AbstractStructuredDataModel source = (AbstractStructuredDataModel) line
+					.getSource();
+			AbstractStructuredDataModel target = (AbstractStructuredDataModel) line
+					.getTarget();
+			Object t = target.getReferenceEntityModel();
+			JavaBeanModel targetModel = null;
+			if (t instanceof JavaBeanModel) {
+				targetModel = (JavaBeanModel) t;
+			}
+			if (targetModel == null)
+				return;
+			Object s = source.getReferenceEntityModel();
+			if (s instanceof IXMLStructuredObject) {
+				String selector = UIUtils.generatePath(
+						(IXMLStructuredObject) s, sa);
+				if (selector != null) {
+					String pro = targetModel.getName();
+					AnyType binding = SmooksModelUtils.getBindingViaProperty(
+							resourceConfig, pro);
+					if (binding == null)
+						return;
+					SmooksModelUtils.setPropertyValueToAnyType(selector,
+							SmooksModelUtils.ATTRIBUTE_SELECTOR, binding);
+					return;
 				}
 			}
 		}
@@ -482,7 +561,7 @@ public class BeanPopulatorGraphicalModelListener implements
 	protected void removeReferenceBinding(LineConnectionModel line,
 			SmooksConfigurationFileGenerateContext context) {
 		Object value = line
-				.getProperty(BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG);
+				.getProperty(BeanPopulatorMappingAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG);
 		if (value == null || !(value instanceof ResourceConfigType))
 			return;
 		ResourceConfigType resourceConfig = (ResourceConfigType) value;
@@ -508,10 +587,11 @@ public class BeanPopulatorGraphicalModelListener implements
 		for (Iterator iterator = connections.iterator(); iterator.hasNext();) {
 			LineConnectionModel connection = (LineConnectionModel) iterator
 					.next();
-			if (BeanPopulatorMappingAnalyzer.BEAN_CREATION.equals(connection
-					.getProperty(BeanPopulatorMappingAnalyzer.BINDING_TYPE))) {
+			if (BeanPopulatorMappingAnalyzer.BEAN_CREATION
+					.equals(connection
+							.getProperty(BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE))) {
 				Object obj = connection
-						.getProperty(BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG);
+						.getProperty(BeanPopulatorMappingAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG);
 				if (obj == null || !(obj instanceof ResourceConfigType)) {
 
 				} else {
@@ -526,7 +606,7 @@ public class BeanPopulatorGraphicalModelListener implements
 	protected void removePropertyBinding(LineConnectionModel line,
 			SmooksConfigurationFileGenerateContext context) {
 		Object value = line
-				.getProperty(BeanPopulatorMappingAnalyzer.REFERENCE_RESOURCE_CONFIG);
+				.getProperty(BeanPopulatorMappingAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG);
 		if (value == null || !(value instanceof ResourceConfigType))
 			return;
 		ResourceConfigType resourceConfig = (ResourceConfigType) value;

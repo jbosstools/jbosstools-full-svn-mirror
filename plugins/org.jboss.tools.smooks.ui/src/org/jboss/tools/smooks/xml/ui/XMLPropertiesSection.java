@@ -99,7 +99,7 @@ public class XMLPropertiesSection extends AbstractSmooksPropertySection {
 		namespaceText.setLayoutData(gd);
 		namespaceText.setEditable(false);
 
-		factory.createLabel(com, "Connection Type : ");
+		factory.createLabel(com, "Connection Type : ").setVisible(false);
 		connectionTypeCombo = factory.createCCombo(com);// (com, "");
 		connectionTypeCombo.add("mapping");
 		connectionTypeCombo.add("binding");
@@ -115,6 +115,7 @@ public class XMLPropertiesSection extends AbstractSmooksPropertySection {
 			}
 
 		});
+		connectionTypeCombo.setVisible(false);
 	}
 
 	private void setConnectionType() {

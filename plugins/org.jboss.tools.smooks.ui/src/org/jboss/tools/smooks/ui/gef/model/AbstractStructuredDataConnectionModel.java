@@ -7,14 +7,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class AbstractStructuredDataConnectionModel implements PropertyChangeListener {
-	public static final String CONNECTION_PROPERTY_CHANGE = "__connection_property_change";
+public class AbstractStructuredDataConnectionModel implements
+		PropertyChangeListener {
+	public static final String CONNECTION_PROPERTY_REMOVE = "__connection_property_remove";
+
+	public static final String CONNECTION_PROPERTY_UPDATE = "__connection_property_update";
+
+	public static final String CONNECTION_PROPERTY_ADD = "__connection_property_add";
 	protected IConnectableModel source;
 	protected IConnectableModel target;
 	protected List<PropertyModel> properties = new ArrayList<PropertyModel>();
-	
-	private PropertyChangeSupport support =new PropertyChangeSupport(this);
-	
+
+	private PropertyChangeSupport support = new PropertyChangeSupport(this);
+
 	public AbstractStructuredDataConnectionModel(IConnectableModel source,
 			IConnectableModel target) {
 		this();
@@ -23,38 +28,38 @@ public class AbstractStructuredDataConnectionModel implements PropertyChangeList
 		attachSource();
 		attachTarget();
 	}
-	
-	public void updateAndAddProperty(String propertyName,Object value){
+
+	// public void updateAndAddProperty(String propertyName,Object value){
+	// for (Iterator iterator = properties.iterator(); iterator.hasNext();) {
+	// PropertyModel property = (PropertyModel) iterator.next();
+	// if(property.getName().equals(propertyName)){
+	// property.setValue(value);
+	// return;
+	// }
+	// }
+	//		
+	// PropertyModel model = new PropertyModel(propertyName,value);
+	// properties.add(model);
+	// }
+
+	public Object getProperty(String propertyName) {
 		for (Iterator iterator = properties.iterator(); iterator.hasNext();) {
 			PropertyModel property = (PropertyModel) iterator.next();
-			if(property.getName().equals(propertyName)){
-				property.setValue(value);
-				return;
-			}
-		}
-		
-		PropertyModel model = new PropertyModel(propertyName,value);
-		properties.add(model);
-	}
-	
-	public Object getProperty(String propertyName){
-		for (Iterator iterator = properties.iterator(); iterator.hasNext();) {
-			PropertyModel property = (PropertyModel) iterator.next();
-			if(property.getName().equals(propertyName)){
+			if (property.getName().equals(propertyName)) {
 				return property.getValue();
 			}
 		}
 		return null;
 	}
-	
-	public AbstractStructuredDataConnectionModel(){
+
+	public AbstractStructuredDataConnectionModel() {
 	}
-	
-	public void addPropertyChangeListener(PropertyChangeListener listener){
+
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		support.addPropertyChangeListener(listener);
 	}
-	
-	public void removePropertyChangeListener(PropertyChangeListener listener){
+
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		support.removePropertyChangeListener(listener);
 	}
 
@@ -97,9 +102,9 @@ public class AbstractStructuredDataConnectionModel implements PropertyChangeList
 	public void setTarget(IConnectableModel target) {
 		this.target = target;
 	}
-	
-	public Object[] getPropertyArray(){
-		return  properties.toArray();
+
+	public Object[] getPropertyArray() {
+		return properties.toArray();
 	}
 
 	public List<PropertyModel> getProperties() {
@@ -110,47 +115,55 @@ public class AbstractStructuredDataConnectionModel implements PropertyChangeList
 		this.properties = properties;
 	}
 	
-	public void addPropertyModel(PropertyModel property){
-		if(properties != null){
+	public void addPropertyModel(String name,Object value){
+		addPropertyModel(new PropertyModel(name,value));
+	}
+
+	public void addPropertyModel(PropertyModel property) {
+		if (properties != null) {
 			boolean updated = false;
 			for (Iterator iterator = properties.iterator(); iterator.hasNext();) {
 				PropertyModel p = (PropertyModel) iterator.next();
-				if(p.getName().equals(property.getName())){
+				if (p.getName().equals(property.getName())) {
 					p.setValue(property.getValue());
 					updated = true;
 				}
 			}
-			if(!updated){
+			if (!updated) {
 				this.getProperties().add(property);
 				property.addPropertyChangeListener(this);
+				support.firePropertyChange(CONNECTION_PROPERTY_ADD, null,
+						property);
+				return;
 			}
-			support.firePropertyChange(CONNECTION_PROPERTY_CHANGE, null, property);
+			support.firePropertyChange(CONNECTION_PROPERTY_UPDATE, null,
+					property);
 		}
 	}
-	
-	public void removePropertyModel(String propertyName){
-		List<PropertyModel> list= this.getProperties();
-		for (Iterator<PropertyModel> iterator = list.iterator(); iterator.hasNext();) {
+
+	public void removePropertyModel(String propertyName) {
+		List<PropertyModel> list = this.getProperties();
+		for (Iterator<PropertyModel> iterator = list.iterator(); iterator
+				.hasNext();) {
 			PropertyModel propertyModel = (PropertyModel) iterator.next();
-			if(propertyModel.getName().equals(propertyName)){
+			if (propertyModel.getName().equals(propertyName)) {
 				list.remove(propertyModel);
-				support.firePropertyChange(CONNECTION_PROPERTY_CHANGE, propertyModel, null);
+				support.firePropertyChange(CONNECTION_PROPERTY_REMOVE,
+						propertyModel, null);
 				break;
 			}
 		}
-		
+
 	}
-	
-	public void removePropertyModel(PropertyModel property){
+
+	public void removePropertyModel(PropertyModel property) {
 		property.removePropertyChangeListener(this);
 		this.getProperties().remove(property);
-		support.firePropertyChange(CONNECTION_PROPERTY_CHANGE, property, null);
+		support.firePropertyChange(CONNECTION_PROPERTY_REMOVE, property, null);
 	}
 
 	public void propertyChange(PropertyChangeEvent evt) {
 		String name = evt.getPropertyName();
-		if(CONNECTION_PROPERTY_CHANGE.equals(name)){
-			support.firePropertyChange(evt);
-		}
+		support.firePropertyChange(evt);
 	}
 }

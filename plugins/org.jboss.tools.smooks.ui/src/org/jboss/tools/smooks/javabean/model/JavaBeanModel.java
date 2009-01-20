@@ -23,17 +23,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-import org.eclipse.jdt.internal.corext.refactoring.typeconstraints.types.ExtendsWildcardType;
 import org.jboss.tools.smooks.analyzer.IValidatable;
 import org.jboss.tools.smooks.javabean.uitils.JavaPropertyUtils;
 import org.jboss.tools.smooks.ui.IXMLStructuredObject;
+import org.jboss.tools.smooks.xml.model.ITransformTreeNode;
 
 /**
  * @author Dart Peng
  * 
  */
 public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
-		Cloneable {
+		Cloneable , ITransformTreeNode{
 	
 	private Properties extendProperties = new Properties();
 
@@ -90,7 +90,7 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 		this.isRootClassModel = isRootClassModel;
 	}
 
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
+	public void addNodePropetyChangeListener(PropertyChangeListener listener) {
 		PropertyChangeListener[] array = support.getPropertyChangeListeners();
 		for (int i = 0; i < array.length; i++) {
 			if(listener == array[i]) return;
@@ -98,7 +98,7 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 		support.addPropertyChangeListener(listener);
 	}
 
-	public void removePropertyChangeListener(PropertyChangeListener listener) {
+	public void removeNodePropetyChangeListener(PropertyChangeListener listener) {
 		support.removePropertyChangeListener(listener);
 	}
 

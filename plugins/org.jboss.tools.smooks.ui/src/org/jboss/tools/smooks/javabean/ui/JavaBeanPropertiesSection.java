@@ -97,7 +97,7 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 		controlComposite.setLayout(gl);
 
 		factory.createLabel(controlComposite, Messages
-				.getString("JavaBeanPropertiesSection.TargetInstanceClass")); //$NON-NLS-1$
+				.getString("JavaBeanPropertiesSection.TargetInstanceClass")).setVisible(false); //$NON-NLS-1$
 
 		instanceClassComposite = factory.createComposite(controlComposite);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -110,6 +110,7 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.grabExcessHorizontalSpace = true;
 		instanceClassText.setLayoutData(gd);
+		instanceClassComposite.setVisible(false);
 
 		Button button1 = factory.createButton(instanceClassComposite, Messages
 				.getString("JavaBeanPropertiesSection.Browse"), //$NON-NLS-1$
@@ -231,6 +232,7 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 									.getString("JavaBeanPropertiesSection.ErrorMessageTitle"), Messages.getString("JavaBeanPropertiesSection.TypeDialogErrorMessage")); //$NON-NLS-1$ //$NON-NLS-2$
 			return;
 		}
+		// TODO should modify the scope to inculde the required projects
 		IJavaSearchScope scope = JavaSearchScopeFactory.getInstance()
 				.createJavaProjectSearchScope(javaProject, true);
 		SelectionDialog dialog;

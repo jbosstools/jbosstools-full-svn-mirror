@@ -63,6 +63,10 @@ public class CompositeSelectionProvider implements ISelectionProvider {
 	 */
 	public void setSelection(ISelection selection) {
 		this.selection = selection;
+//		for (Iterator iterator = this.list.iterator(); iterator.hasNext();) {
+//			ISelectionProvider provider = (ISelectionProvider) iterator.next();
+//			provider.setSelection(selection);
+//		}
 	}
 
 }

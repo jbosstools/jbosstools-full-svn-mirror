@@ -11,6 +11,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.jboss.tools.smooks.ui.IXMLStructuredObject;
+import org.jboss.tools.smooks.xml.model.ITransformTreeNode;
 
 /**
  * @author Dart
@@ -32,6 +34,18 @@ public class TransformDataTreeViewer extends TreeViewer implements
 		super(parent, style);
 		this.editor = editor;
 	}
+	
+	public void inputChanged(Object newInput,Object oldInput){
+		super.inputChanged(newInput, oldInput);
+		if(newInput == oldInput) return;
+		if(newInput != null && newInput instanceof ITransformTreeNode){
+			((ITransformTreeNode)newInput).addNodePropetyChangeListener(this);
+		}
+		if(oldInput != null && oldInput instanceof ITransformTreeNode){
+			((ITransformTreeNode)oldInput).removeNodePropetyChangeListener(this);
+		}
+	}
+	
 
 	public TransformDataTreeViewer(Composite parent,
 			SmooksGraphicalFormPage editor) {

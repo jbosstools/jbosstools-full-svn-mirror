@@ -24,6 +24,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.smooks.graphical.Param;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
+import org.jboss.tools.smooks.ui.editors.SmooksGraphicalFormPage;
 import org.jboss.tools.smooks.ui.gef.model.GraphRootModel;
 
 /**
@@ -40,8 +41,16 @@ public class SmooksConfigurationFileGenerateContext {
 	private Properties properties = new Properties();
 	protected IFile smooksConfigFile = null;
 	protected EditingDomain domain;
-	
+	protected SmooksGraphicalFormPage smooksGraphcalPage = null;
 	protected EditDomain gefDomain;
+	
+	public SmooksGraphicalFormPage getSmooksGraphcalPage() {
+		return smooksGraphcalPage;
+	}
+
+	public void setSmooksGraphcalPage(SmooksGraphicalFormPage smooksGraphcalPage) {
+		this.smooksGraphcalPage = smooksGraphcalPage;
+	}
 
 	public EditDomain getGefDomain() {
 		return gefDomain;

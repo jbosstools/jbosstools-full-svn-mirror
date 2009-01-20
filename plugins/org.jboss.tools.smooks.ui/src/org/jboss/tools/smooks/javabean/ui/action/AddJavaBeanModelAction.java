@@ -34,6 +34,17 @@ public class AddJavaBeanModelAction extends JavaBeanModelAction {
 		SmooksConfigurationFileGenerateContext context = getSmooksContext();
 		if(context == null) return;
 		
+		List elements = ((IStructuredSelection) selection).toList();
+		for (Iterator iterator = elements.iterator(); iterator.hasNext();) {
+			JavaBeanModel model = (JavaBeanModel) iterator.next();
+			AbstractStructuredDataModel graphModel = UIUtils.findGraphModel(
+					context.getGraphicalRootModel(), model);
+			if(graphModel instanceof SourceModel){
+				setEnabled(false);
+				break;
+			}
+		}
+		
 		NewJavaBeanStrucutredDataWizard wizard = new NewJavaBeanStrucutredDataWizard();
 		IProject project = context.getSmooksConfigFile().getProject();
 		IJavaProject javaProject = null;
@@ -52,14 +63,14 @@ public class AddJavaBeanModelAction extends JavaBeanModelAction {
 			Object input = viewer.getInput();
 			if(input == null){
 				if(viewer instanceof PropertyChangeListener){
-					list.addPropertyChangeListener((PropertyChangeListener)viewer);
+					list.addNodePropetyChangeListener((PropertyChangeListener)viewer);
 				}
 				viewer.setInput(list);
 			}else{
 				if(input instanceof JavaBeanList){
 					List children = list.getChildren();
 					if(viewer instanceof PropertyChangeListener){
-						((JavaBeanList)input).addPropertyChangeListener((PropertyChangeListener)viewer);
+						((JavaBeanList)input).addNodePropetyChangeListener((PropertyChangeListener)viewer);
 					}
 					for (Iterator iterator = children.iterator(); iterator
 							.hasNext();) {
@@ -77,7 +88,9 @@ public class AddJavaBeanModelAction extends JavaBeanModelAction {
 		super.setSelection(selection);
 		setEnabled(true);
 		SmooksConfigurationFileGenerateContext context = getSmooksContext();
-		if(context == null) return;
+		if(context == null){
+			return;
+		}
 		List elements = ((IStructuredSelection) selection).toList();
 		for (Iterator iterator = elements.iterator(); iterator.hasNext();) {
 			JavaBeanModel model = (JavaBeanModel) iterator.next();

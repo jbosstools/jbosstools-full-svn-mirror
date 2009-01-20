@@ -101,7 +101,7 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 		if (connections.size() == 1) {
 			LineConnectionModel line = (LineConnectionModel) connections.get(0);
 			Object bindingType = line
-					.getProperty(BeanPopulatorMappingAnalyzer.BINDING_TYPE);
+					.getProperty(BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE);
 			if (!BeanPopulatorMappingAnalyzer.REFERENCE_BINDING
 					.equals(bindingType)) {
 				if (sourceGraphModel instanceof SourceModel) {
@@ -171,7 +171,7 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 		for (Iterator iterator = parentConnections.iterator(); iterator
 				.hasNext();) {
 			LineConnectionModel object = (LineConnectionModel) iterator.next();
-			if (object.getProperty(Java2JavaAnalyzer.REFERENCE_RESOURCE_CONFIG) == null) {
+			if (object.getProperty(Java2JavaAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG) == null) {
 				return false;
 			}
 		}
@@ -186,7 +186,7 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 		for (Iterator iterator = connections.iterator(); iterator.hasNext();) {
 			LineConnectionModel line = (LineConnectionModel) iterator.next();
 			Object bindingType = line
-					.getProperty(BeanPopulatorMappingAnalyzer.BINDING_TYPE);
+					.getProperty(BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE);
 			if (BeanPopulatorMappingAnalyzer.BEAN_CREATION.equals(bindingType)) {
 				hasBeanCreation = true;
 				break;
@@ -252,7 +252,7 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 			beanCreationLineCommand
 					.setTarget((IConnectableModel) cloneTargetGraphModel);
 			PropertyModel bindingType = new PropertyModel(
-					BeanPopulatorMappingAnalyzer.BINDING_TYPE,
+					BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE,
 					BeanPopulatorMappingAnalyzer.BEAN_CREATION);
 			beanCreationLineCommand.addPropertyModel(bindingType);
 			commands.add(beanCreationLineCommand);
@@ -263,7 +263,7 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 			referenceLineCommand
 					.setTarget((IConnectableModel) cloneTargetGraphModel);
 			PropertyModel referenceType = new PropertyModel(
-					BeanPopulatorMappingAnalyzer.BINDING_TYPE,
+					BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE,
 					BeanPopulatorMappingAnalyzer.REFERENCE_BINDING);
 			referenceLineCommand.addPropertyModel(referenceType);
 			commands.add(referenceLineCommand);
@@ -320,7 +320,7 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 					if (!UIUtils.isInstanceCreatingConnection(source, t)) {
 						if (t instanceof JavaBeanModel) {
 							PropertyModel bindingType = new PropertyModel(
-									BeanPopulatorMappingAnalyzer.BINDING_TYPE,
+									BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE,
 									BeanPopulatorMappingAnalyzer.PROPERTY_BINDING);
 							command.addPropertyModel(bindingType);
 							Class clazz = ((JavaBeanModel) t).getBeanClass();
@@ -334,13 +334,13 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 					} else {
 						if (s instanceof TargetModel) {
 							PropertyModel bindingType = new PropertyModel(
-									BeanPopulatorMappingAnalyzer.BINDING_TYPE,
+									BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE,
 									BeanPopulatorMappingAnalyzer.REFERENCE_BINDING);
 							command.addPropertyModel(bindingType);
 						}
 						if (s instanceof SourceModel) {
 							PropertyModel bindingType = new PropertyModel(
-									BeanPopulatorMappingAnalyzer.BINDING_TYPE,
+									BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE,
 									BeanPopulatorMappingAnalyzer.BEAN_CREATION);
 							command.addPropertyModel(bindingType);
 						}
@@ -357,78 +357,6 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 		}
 		return true;
 	}
-
-	// private CreateConnectionCommand connectRootNode(Object source,
-	// Object target, SmooksConfigurationFileGenerateContext context) {
-	// JavaBeanModel javaBeanTarget = (JavaBeanModel) target;
-	// Object sourceModel = source;
-	//
-	// JavaBeanModel targetRoot = javaBeanTarget.getParent();
-	// JavaBeanModel tempTargetRoot = targetRoot;
-	// while (tempTargetRoot != null) {
-	// targetRoot = tempTargetRoot;
-	// tempTargetRoot = tempTargetRoot.getParent();
-	// }
-	// Object sourceRoot = null;
-	// if (sourceModel instanceof JavaBeanModel) {
-	// sourceRoot = ((JavaBeanModel) sourceModel).getParent();
-	// JavaBeanModel sourceTempRoot = (JavaBeanModel) sourceRoot;
-	// while (sourceTempRoot != null) {
-	// sourceRoot = sourceTempRoot;
-	// sourceTempRoot = ((JavaBeanModel) sourceTempRoot).getParent();
-	// }
-	// }
-	//
-	// if (sourceModel instanceof AbstractXMLObject) {
-	// sourceRoot = ((AbstractXMLObject) sourceModel).getParent();
-	// AbstractXMLObject tempParent = ((AbstractXMLObject) sourceRoot)
-	// .getParent();
-	// while (!(tempParent instanceof TagList)) {
-	// sourceRoot = tempParent;
-	// tempParent = tempParent.getParent();
-	// }
-	// }
-	// GraphRootModel graphRoot = context.getGraphicalRootModel();
-	// if (sourceRoot == null || targetRoot == null)
-	// return null;
-	// AbstractStructuredDataModel graphSourceRoot = UIUtils.findGraphModel(
-	// graphRoot, sourceRoot);
-	// AbstractStructuredDataModel graphTargetRoot = UIUtils.findGraphModel(
-	// graphRoot, targetRoot);
-	//
-	// List<TargetModel> graphTargetList = graphRoot.loadTargetModelList();
-	// boolean isConnected = false;
-	// for (Iterator iterator = graphTargetList.iterator(); iterator.hasNext();)
-	// {
-	// TargetModel targetModel = (TargetModel) iterator.next();
-	// if (targetModel == graphTargetRoot) {
-	// List connections = targetModel.getModelTargetConnections();
-	// for (Iterator iterator2 = connections.iterator(); iterator2
-	// .hasNext();) {
-	// Object object = (Object) iterator2.next();
-	// if (object instanceof LineConnectionModel) {
-	// Object cs = ((LineConnectionModel) object).getSource();
-	// if (cs == graphSourceRoot) {
-	// isConnected = true;
-	// break;
-	// }
-	// }
-	// }
-	// }
-	// if (isConnected)
-	// break;
-	// }
-	//
-	// if (!isConnected) {
-	// CreateConnectionCommand connectionCommand = new
-	// CreateConnectionCommand();
-	// connectionCommand.setSource(graphSourceRoot);
-	// connectionCommand.setTarget(graphTargetRoot);
-	// return connectionCommand;
-	// }
-	//
-	// return null;
-	// }
 
 	private void fillCreateParentLinkCommand(CompoundCommand compoundCommand,
 			Object source, JavaBeanModel target,
@@ -478,7 +406,7 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 						Class clazz = ((JavaBeanModel) targetParent)
 								.getBeanClass();
 						PropertyModel bindingType = new PropertyModel(
-								BeanPopulatorMappingAnalyzer.BINDING_TYPE,
+								BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE,
 								BeanPopulatorMappingAnalyzer.PROPERTY_BINDING);
 						connectionCommand.addPropertyModel(bindingType);
 						if (clazz != null && clazz != String.class) {
@@ -490,13 +418,13 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 					} else {
 						if (sourceParentGraphModel instanceof TargetModel) {
 							PropertyModel bindingType = new PropertyModel(
-									BeanPopulatorMappingAnalyzer.BINDING_TYPE,
+									BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE,
 									BeanPopulatorMappingAnalyzer.REFERENCE_BINDING);
 							connectionCommand.addPropertyModel(bindingType);
 						}
 						if (sourceParentGraphModel instanceof SourceModel) {
 							PropertyModel bindingType = new PropertyModel(
-									BeanPopulatorMappingAnalyzer.BINDING_TYPE,
+									BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE,
 									BeanPopulatorMappingAnalyzer.BEAN_CREATION);
 							connectionCommand.addPropertyModel(bindingType);
 						}

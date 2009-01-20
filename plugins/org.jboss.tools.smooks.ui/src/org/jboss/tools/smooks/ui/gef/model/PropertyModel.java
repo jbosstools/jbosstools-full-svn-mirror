@@ -35,7 +35,7 @@ public class PropertyModel extends AbstractStructuredDataModel {
 		String oldName = this.name;
 		this.name = name;
 		firePropertyChange(
-				AbstractStructuredDataConnectionModel.CONNECTION_PROPERTY_CHANGE,
+				AbstractStructuredDataConnectionModel.CONNECTION_PROPERTY_REMOVE,
 				oldName, this.name);
 	}
 
@@ -76,7 +76,7 @@ public class PropertyModel extends AbstractStructuredDataModel {
 		Object oldValue = this.value;
 		this.value = value;
 		firePropertyChange(
-				AbstractStructuredDataConnectionModel.CONNECTION_PROPERTY_CHANGE,
+				AbstractStructuredDataConnectionModel.CONNECTION_PROPERTY_REMOVE,
 				oldValue, this.value);
 	}
 }

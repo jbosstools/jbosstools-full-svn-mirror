@@ -15,7 +15,6 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.core.resources.IFile;
 import org.jboss.tools.smooks.graphical.GraphInformations;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
-import org.jboss.tools.smooks.utils.UIUtils;
 
 /**
  * @author Dart Peng<br>
@@ -31,7 +30,6 @@ public class XMLSourceModelAnalyzer extends AbstractXMLModelAnalyzer {
 	public Object buildSourceInputObjects(GraphInformations graphInfo,
 			SmooksResourceListType listType, IFile sourceFile , Object viewer)
 			throws InvocationTargetException {
-		UIUtils.checkSelector(listType);
 		return super.buildSourceInputObjects(graphInfo, listType, sourceFile,viewer);
 	}
 }
