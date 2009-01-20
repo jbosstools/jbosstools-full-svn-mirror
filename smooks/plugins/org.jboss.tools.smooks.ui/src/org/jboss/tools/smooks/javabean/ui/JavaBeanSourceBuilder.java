@@ -50,7 +50,7 @@ public class JavaBeanSourceBuilder extends AbstractJavaBeanBuilder implements
 			} catch (JavaModelException e) {
 				if (viewer instanceof PropertyChangeListener) {
 					beanList
-							.addPropertyChangeListener((PropertyChangeListener) viewer);
+							.addNodePropetyChangeListener((PropertyChangeListener) viewer);
 				}
 				throw new InvocationTargetException(e);
 			}
@@ -87,7 +87,7 @@ public class JavaBeanSourceBuilder extends AbstractJavaBeanBuilder implements
 			}
 		}
 		if (viewer instanceof PropertyChangeListener) {
-			beanList.addPropertyChangeListener((PropertyChangeListener) viewer);
+			beanList.addNodePropetyChangeListener((PropertyChangeListener) viewer);
 		}
 		return beanList;
 	}

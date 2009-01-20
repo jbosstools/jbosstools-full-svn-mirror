@@ -266,14 +266,21 @@ public class StructuredDataConnectionEditPart extends
 
 	public void propertyChange(PropertyChangeEvent evt) {
 		String pm = evt.getPropertyName();
-		if (AbstractStructuredDataConnectionModel.CONNECTION_PROPERTY_CHANGE
-				.equals(pm)) {
-			IGraphicalModelListener listener = GraphicalModelListenerManager
-					.getInstance().getPaintListener(getSourceDataTypeID(),
-							getTargetDataTypeID());
-			if (listener == null)
-				return;
-			listener.modelChanged(getModel(), getSmooksContext(),evt);
+		String sid = getSourceDataTypeID();
+		String tid = getTargetDataTypeID();
+		IGraphicalModelListener listener = GraphicalModelListenerManager
+				.getInstance().getPaintListener(sid, tid);
+		if (listener != null) {
+			if (AbstractStructuredDataConnectionModel.CONNECTION_PROPERTY_REMOVE
+					.equals(pm)) {
+			}
+			if (AbstractStructuredDataConnectionModel.CONNECTION_PROPERTY_ADD
+					.equals(pm)) {
+			}
+			if (AbstractStructuredDataConnectionModel.CONNECTION_PROPERTY_UPDATE
+					.equals(pm)) {
+				listener.modelChanged(getModel(), getSmooksContext(), evt);
+			}
 		}
 	}
 }

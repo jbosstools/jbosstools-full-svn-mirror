@@ -22,7 +22,7 @@ import org.jboss.tools.smooks.ui.editors.TransformDataTreeViewer;
  * @author Dart Peng
  * @Date Jul 25, 2008
  */
-public class AbstractXMLObject implements IXMLNode , IXMLStructuredObject{
+public class AbstractXMLObject implements ITransformTreeNode , IXMLStructuredObject{
 	
 	protected PropertyChangeSupport support = new PropertyChangeSupport(this);
 	

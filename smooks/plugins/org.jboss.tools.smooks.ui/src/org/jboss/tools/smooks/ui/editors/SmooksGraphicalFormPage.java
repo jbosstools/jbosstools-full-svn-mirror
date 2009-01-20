@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.editors;
 
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -63,6 +64,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -114,7 +116,6 @@ import org.jboss.tools.smooks.analyzer.ITargetModelAnalyzer;
 import org.jboss.tools.smooks.analyzer.MappingModel;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.ResolveCommand;
-import org.jboss.tools.smooks.analyzer.ResourceConfigEraser;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
 import org.jboss.tools.smooks.analyzer.SmooksFileBuilder;
 import org.jboss.tools.smooks.graphical.GraphInformations;
@@ -123,7 +124,6 @@ import org.jboss.tools.smooks.graphical.Param;
 import org.jboss.tools.smooks.graphical.Params;
 import org.jboss.tools.smooks.graphical.util.GraphicalInformationSaver;
 import org.jboss.tools.smooks.model.DocumentRoot;
-import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
 import org.jboss.tools.smooks.model.util.SmooksResourceFactoryImpl;
@@ -155,13 +155,14 @@ import org.jboss.tools.smooks.ui.wizards.SmooksConfigFileNewWizard;
 import org.jboss.tools.smooks.ui.wizards.TransformDataSelectionWizard;
 import org.jboss.tools.smooks.utils.SmooksGraphConstants;
 import org.jboss.tools.smooks.utils.UIUtils;
+import org.jboss.tools.smooks.xml.model.ITransformTreeNode;
 
 /**
  * @author Dart Peng
  * @Date Jul 28, 2008
  */
 public class SmooksGraphicalFormPage extends FormPage implements
-		ISelectionChangedListener, ISelectionProvider,
+		ISelectionChangedListener,
 		org.eclipse.emf.common.command.CommandStackListener, ISaveListener {
 
 	private HashMap<Object, Object> graph_trasform_data_map = new HashMap<Object, Object>();
@@ -237,17 +238,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		return selection;
 	}
 
-	public void setSelection(ISelection selection) {
-		if (this.selection == selection)
-			return;
-		this.selection = selection;
-		SelectionChangedEvent event = new SelectionChangedEvent(this, selection);
-		for (Iterator iterator = selectionChangeListener.iterator(); iterator
-				.hasNext();) {
-			ISelectionChangedListener listener = (ISelectionChangedListener) iterator
-					.next();
-			listener.selectionChanged(event);
-		}
+	public void fireEmptySelection() {
+		StructuredSelection selection = new StructuredSelection(new Object[] {});
+		compositeSelectionProvider.setSelection(selection);
 	}
 
 	public SmooksGraphicalFormPage(FormEditor editor, String id, String title) {
@@ -515,12 +508,12 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				new Transfer[] { TemplateTransfer.getInstance() },
 				new TargetTreeDropTargetListener(targetViewer,
 						getGraphicalViewer()));
-		
+
 		targetViewer.addDragSupport(DND.DROP_MOVE | DND.DROP_COPY
 				| DND.DROP_LINK, new Transfer[] { TemplateTransfer
 				.getInstance() }, new TargetTreeDragListener(targetViewer,
 				getGraphicalViewer()));
-		
+
 		targetViewer.getTree().addPaintListener(new TreePaintControlListener());
 		targetViewer.getTree().addListener(SWT.PaintItem,
 				new TreeItemPaintListener());
@@ -640,6 +633,11 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	protected void initTargetTreeViewer() {
 		if (this.targetTreeViewerInputModel != null) {
+//			if (targetTreeViewerInputModel instanceof ITransformTreeNode
+//					&& targetViewer instanceof PropertyChangeListener) {
+//				((ITransformTreeNode) targetTreeViewerInputModel)
+//						.addNodePropetyChangeListener((PropertyChangeListener) targetViewer);
+//			}
 			targetViewer.setInput(targetTreeViewerInputModel);
 		}
 	}
@@ -660,6 +658,11 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	protected void initSourceTreeViewer() {
 		if (this.sourceTreeViewerInputModel != null) {
+			if (sourceTreeViewerInputModel instanceof ITransformTreeNode
+					&& sourceViewer instanceof PropertyChangeListener) {
+				((ITransformTreeNode) sourceTreeViewerInputModel)
+						.addNodePropetyChangeListener((PropertyChangeListener) sourceViewer);
+			}
 			sourceViewer.setInput(sourceTreeViewerInputModel);
 		}
 	}
@@ -1042,6 +1045,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		context.setDataMappingRootModel(this.rootModel);
 		context.setSmooksConfigFile(((IFileEditorInput) getEditorInput())
 				.getFile());
+		context.setSmooksGraphcalPage(this);
 		context.setGefDomain(getEditDomain());
 		List contents = this.smooksResource.getContents();
 		if (contents.size() > 0) {
@@ -1480,7 +1484,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				}
 			}
 			if (UIUtils.setTheProvidersForTreeViewer(viewer, typeID)) {
-				viewer.setInput(cw.getTreeViewerInputContents());
+				Object obj = cw.getTreeViewerInputContents();
+				viewer.setInput(obj);
 				try {
 					if (viewer == this.sourceViewer) {
 						this.createSourceGraphModels();
@@ -1688,7 +1693,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	public void selectionChanged(SelectionChangedEvent event) {
 		this.selection = event.getSelection();
-		compositeSelectionProvider.setSelection(selection);
+		if (compositeSelectionProvider != null) {
+			compositeSelectionProvider.setSelection(selection);
+		}
 		updateSelectionActions();
 		updataViewerAction(event);
 	}

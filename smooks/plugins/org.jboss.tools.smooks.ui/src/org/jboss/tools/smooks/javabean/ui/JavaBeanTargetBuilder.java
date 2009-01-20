@@ -94,7 +94,7 @@ public class JavaBeanTargetBuilder extends AbstractJavaBeanBuilder implements
 	private void registeListener(Object listener, JavaBeanModel javaBean) {
 		if (listener instanceof PropertyChangeListener) {
 			javaBean
-					.addPropertyChangeListener((PropertyChangeListener) listener);
+					.addNodePropetyChangeListener((PropertyChangeListener) listener);
 		}
 	}
 

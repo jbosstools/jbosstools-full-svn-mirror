@@ -9,7 +9,7 @@ import java.beans.PropertyChangeListener;
  * @author Dart
  *
  */
-public interface IXMLNode {
+public interface ITransformTreeNode {
 
 	public void addNodePropetyChangeListener(PropertyChangeListener listener);
 	

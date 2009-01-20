@@ -344,6 +344,9 @@ public class SmooksFormEditor extends FormEditor implements
 	@Override
 	protected void pageChange(int newPageIndex) {
 		int oldPageIndex = this.getCurrentPage();
+		if(oldPageIndex == 0){
+			graphicalPage.fireEmptySelection();
+		}
 		if (oldPageIndex == -1 || oldPageIndex == newPageIndex) {
 			super.pageChange(newPageIndex);
 			return;
@@ -353,9 +356,9 @@ public class SmooksFormEditor extends FormEditor implements
 			super.pageChange(newPageIndex);
 			return;
 		}
-
 		ByteArrayOutputStream tempStream = null;
 		XMLWriter writer = null;
+		
 		try {
 			if ((oldPageIndex == 0 || oldPageIndex == 1) && newPageIndex == 2) {
 				if (xmlTextEditor.getErrorMessage() == null) {

@@ -14,6 +14,7 @@ import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
 import org.jboss.tools.smooks.javabean.model.JavaBeanList;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
+import org.jboss.tools.smooks.javabean.model.SelectorAttributes;
 import org.jboss.tools.smooks.model.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.ResourceConfigType;
@@ -31,15 +32,27 @@ import org.jboss.tools.smooks.utils.UIUtils;
  * 
  */
 public class BeanPopulatorMappingAnalyzer implements IMappingAnalyzer {
-	public static final String BINDING_TYPE = "bindingType";
+	public static final String PRO_BINDING_TYPE = "bindingType";
 
-	public static final String REFERENCE_RESOURCE_CONFIG = "reference_resourceConfig";
+	public static final String PRO_REFERENCE_RESOURCE_CONFIG = "reference_resourceConfig";
+
+	public static final String PRO_SELECTOR_ATTRIBUTES = "__pro_selector_attributes";
 
 	public static final String BEAN_CREATION = "beanCreation";
 
 	public static final String PROPERTY_BINDING = "propertyBinding";
 
 	public static final String REFERENCE_BINDING = "referenceBinding";
+
+	public static final String[] SELECTOR_SPERATORS = new String[] { " ", "/",
+			"\\" };
+	public static final String ONLY_NAME = "only_name";
+
+	public static final String FULL_PATH = "full_path";
+
+	public static final String IGNORE_ROOT = "ignore_root";
+
+	public static final String INCLUDE_PARENT = "include_parent";
 
 	/*
 	 * (non-Javadoc)
@@ -136,23 +149,26 @@ public class BeanPopulatorMappingAnalyzer implements IMappingAnalyzer {
 
 					bindingClass = bindingClass.trim();
 					JavaBeanModel targetNode = findJavaBeanFrombeanList(
-							bindingClass, targetModel, mappingList , false);
+							bindingClass, targetModel, mappingList, false);
 					if (targetNode == null) {
 						throw new RuntimeException(
 								"Can't find the class node : " + bindingClass);
 					}
-
+					SelectorAttributes selectorAttributes = UIUtils
+							.guessSelectorProperty(selector, sourceNode);
 					MappingModel mapping = new MappingModel(sourceNode,
 							targetNode);
 					PropertyModel bindingProperty = new PropertyModel();
-					bindingProperty.setName(BINDING_TYPE);
+					bindingProperty.setName(PRO_BINDING_TYPE);
 					bindingProperty.setValue(BEAN_CREATION);
 					mapping.getProperties().add(bindingProperty);
 
 					PropertyModel referenceProperty = new PropertyModel(
-							REFERENCE_RESOURCE_CONFIG, resourceConfig);
+							PRO_REFERENCE_RESOURCE_CONFIG, resourceConfig);
 					mapping.getProperties().add(referenceProperty);
-
+					mapping.getProperties().add(
+							new PropertyModel(PRO_SELECTOR_ATTRIBUTES,
+									selectorAttributes));
 					mappingList.getMappingModelList().add(mapping);
 					mappingList.addResourceConfig(resourceConfig);
 
@@ -210,7 +226,8 @@ public class BeanPopulatorMappingAnalyzer implements IMappingAnalyzer {
 						continue;
 					beanClass = beanClass.trim();
 					childSourceNode = findJavaBeanFrombeanList(beanClass,
-							(JavaBeanList) targetNode.getParent(), mappingList , true);
+							(JavaBeanList) targetNode.getParent(), mappingList,
+							true);
 					if (childSourceNode == null) {
 						throw new RuntimeException("Can't find the class "
 								+ beanClass);
@@ -240,19 +257,24 @@ public class BeanPopulatorMappingAnalyzer implements IMappingAnalyzer {
 					mapping = new MappingModel(childTargetNode, childSourceNode);
 				} else {
 					mapping = new MappingModel(childSourceNode, childTargetNode);
+					SelectorAttributes selectorAttributes = UIUtils
+							.guessSelectorProperty(selector, childSourceNode);
+					mapping.getProperties().add(
+							new PropertyModel(PRO_SELECTOR_ATTRIBUTES,
+									selectorAttributes));
 				}
 				UIUtils.assignBindingPropertyToMappingModel(binding, mapping,
 						new Object[] { SmooksModelUtils.ATTRIBUTE_PROPERTY,
 								SmooksModelUtils.ATTRIBUTE_SELECTOR });
 				PropertyModel bindingProperty = new PropertyModel();
-				bindingProperty.setName(BINDING_TYPE);
+				bindingProperty.setName(PRO_BINDING_TYPE);
 				if (!isReferenceBinding) {
 					bindingProperty.setValue(PROPERTY_BINDING);
 				} else {
 					bindingProperty.setValue(REFERENCE_BINDING);
 				}
 				mapping.getProperties().add(
-						new PropertyModel(REFERENCE_RESOURCE_CONFIG,
+						new PropertyModel(PRO_REFERENCE_RESOURCE_CONFIG,
 								resourceConfig));
 				mapping.getProperties().add(bindingProperty);
 				mappingList.getMappingModelList().add(mapping);
@@ -331,7 +353,7 @@ public class BeanPopulatorMappingAnalyzer implements IMappingAnalyzer {
 			MappingModel mappingModel = (MappingModel) iterator.next();
 			if (mappingModel.getTarget() == javaBean) {
 				if (BEAN_CREATION.equals(mappingModel
-						.getPropertyValue(BINDING_TYPE))) {
+						.getPropertyValue(PRO_BINDING_TYPE))) {
 					return true;
 				}
 			}

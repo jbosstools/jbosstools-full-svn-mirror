@@ -35,6 +35,8 @@ import org.jboss.tools.smooks.analyzer.MappingModel;
 import org.jboss.tools.smooks.javabean.analyzer.JavaModelConnectionResolveCommand;
 import org.jboss.tools.smooks.javabean.analyzer.JavaModelResolveCommand;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
+import org.jboss.tools.smooks.javabean.model.SelectorAttributes;
+import org.jboss.tools.smooks.javabean.ui.BeanPopulatorMappingAnalyzer;
 import org.jboss.tools.smooks.model.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.SmooksPackage;
@@ -78,6 +80,40 @@ public class UIUtils {
 						.getSmooksResourceListType_AbstractResourceConfig(),
 				obj);
 		addResourceConfigCommand.execute();
+	}
+	
+	public static SelectorAttributes guessSelectorProperty(String selector,IXMLStructuredObject node){
+		SelectorAttributes property = new SelectorAttributes();
+		if(selector != null) selector.trim();
+		boolean hasSperator = false;
+		for (int i = 0; i < BeanPopulatorMappingAnalyzer.SELECTOR_SPERATORS.length; i++) {
+			if(selector.indexOf(BeanPopulatorMappingAnalyzer.SELECTOR_SPERATORS[i]) != -1){
+				property.setSelectorSperator(BeanPopulatorMappingAnalyzer.SELECTOR_SPERATORS[i]);
+				hasSperator = true;
+				break;
+			}
+		}
+		
+		if(!hasSperator){
+			property.setSelectorPolicy(BeanPopulatorMappingAnalyzer.ONLY_NAME);
+			return property;
+		}
+		String[] nodeNames = selector.split(property.getSelectorSperator());
+		IXMLStructuredObject parent = node;
+		for(int i = 1 ; i < nodeNames.length ; i++){
+			parent = parent.getParent();
+		}
+		IXMLStructuredObject rootNode = getRootParent(node);
+		if(parent == rootNode){
+			property.setSelectorPolicy(BeanPopulatorMappingAnalyzer.FULL_PATH);
+			return property;
+		}
+		if(parent == node.getParent()){
+			property.setSelectorPolicy(BeanPopulatorMappingAnalyzer.INCLUDE_PARENT);
+		}else{
+			property.setSelectorPolicy(BeanPopulatorMappingAnalyzer.IGNORE_ROOT);
+		}
+		return property;
 	}
 
 	public static AbstractXMLObject getRootTagXMLObject(AbstractXMLObject xmlObj) {
@@ -625,6 +661,7 @@ public class UIUtils {
 
 	public static IXMLStructuredObject getRootParent(IXMLStructuredObject child) {
 		IXMLStructuredObject parent = child.getParent();
+		if(child.isRootNode()) return child;
 		if (parent == null || parent.isRootNode())
 			return child;
 		IXMLStructuredObject temp = parent;
@@ -634,26 +671,57 @@ public class UIUtils {
 		}
 		return parent;
 	}
+	
+	public static String generatePath(IXMLStructuredObject node,SelectorAttributes selectorAttributes){
+		String sperator = selectorAttributes.getSelectorSperator();
+		String policy = selectorAttributes.getSelectorPolicy();
+		if(sperator == null) sperator = " ";
+		if(policy == null) policy = BeanPopulatorMappingAnalyzer.FULL_PATH;
+		if(policy.equals(BeanPopulatorMappingAnalyzer.FULL_PATH)){
+			return generateFullPath(node, sperator);
+		}
+		if(policy.equals(BeanPopulatorMappingAnalyzer.INCLUDE_PARENT)){
+			return generatePath(node, node.getParent(),sperator,true);
+		}
+		if(policy.equals(BeanPopulatorMappingAnalyzer.IGNORE_ROOT)){
+			
+		}
+		if(policy.equals(BeanPopulatorMappingAnalyzer.ONLY_NAME)){
+			return node.getNodeName();
+		}
+		return generateFullPath(node,sperator);
+	}
+	
+	public static String generateFullPath(IXMLStructuredObject node,final String sperator){
+		return generatePath(node, getRootParent(node), sperator, true);
+	}
 
 	public static String generatePath(IXMLStructuredObject startNode,
 			IXMLStructuredObject stopNode, final String sperator,
 			boolean includeContext) {
 		String name = "";
+		if(startNode == stopNode){
+			return startNode.getNodeName();
+		}
 		List<IXMLStructuredObject> nodeList = new ArrayList<IXMLStructuredObject>();
 		IXMLStructuredObject temp = startNode;
 		if (stopNode != null) {
-			while (temp != stopNode && temp != null) {
+			while (temp != stopNode.getParent() && temp != null) {
 				nodeList.add(temp);
 				temp = temp.getParent();
 			}
 		}
-		for (int i =0; i < nodeList.size(); i++) {
+		int length = nodeList.size();
+		if(!includeContext){
+			length--;
+		}
+		for (int i =0; i < length; i++) {
 			IXMLStructuredObject n = nodeList.get(i);
 			String nodeName = n.getNodeName();
 			if(n.isAttribute()){
 				nodeName = "@" + nodeName;
 			}
-			name = nodeName + sperator + name;
+			name = sperator + nodeName  + name;
 		}
 		return name;
 	}
@@ -685,7 +753,20 @@ public class UIUtils {
 
 	public static IXMLStructuredObject localXMLNodeWithPath(String path,
 			IXMLStructuredObject contextNode) {
-		return localXMLNodeWithPath(path, contextNode, null, true);
+		if(path == null) return null;
+		path = path.trim();
+		String[] sperators = BeanPopulatorMappingAnalyzer.SELECTOR_SPERATORS;
+		String sperator = null;
+		boolean hasSperator = false;
+		for (int i = 0; i < sperators.length; i++) {
+			 sperator = sperators[i];
+			if(path.indexOf(sperator) != -1){
+				hasSperator = true;
+				break;
+			}
+		}
+		if(!hasSperator) sperator = null;
+		return localXMLNodeWithPath(path, contextNode, sperator, true);
 	}
 
 	public static IXMLStructuredObject localXMLNodeWithPath(String path,
@@ -703,6 +784,11 @@ public class UIUtils {
 			// to find the first node
 			// first time , we search the node via context
 			String firstNodeName = pathes[0];
+			int index = 0;
+			while(firstNodeName.length() == 0){
+				index ++;
+				firstNodeName = pathes[index];
+			}
 			IXMLStructuredObject firstModel = localXMLNodeWithNodeName(
 					firstNodeName, contextNode);
 
@@ -720,7 +806,7 @@ public class UIUtils {
 					return null;
 				}
 			}
-			for (int i = 1; i < pathes.length; i++) {
+			for (int i = index + 1; i < pathes.length; i++) {
 				firstModel = getChildNodeWithName(pathes[i], firstModel);
 				if (firstModel == null && throwException) {
 					throw new RuntimeException("Can't find the node : "

@@ -177,6 +177,7 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 					wizard.addSourceWizardPage(p);
 					p.setWizard(rootWizard);
 				}
+				sourceDataCreationWizard = sourceWizard;
 			}
 
 			if (targetWizard != null) {
@@ -187,10 +188,9 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 					wizard.addTargetWizardPage(p);
 					p.setWizard(rootWizard);
 				}
+				targetDataCreationWizard = targetWizard;
 			}
 		}
-		sourceDataCreationWizard = sourceWizard;
-		targetDataCreationWizard = targetWizard;
 	}
 
 	private boolean wizardIsCreated(IWizard wizard) {
