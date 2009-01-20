@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.javabean.ui;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,15 +22,12 @@ import org.eclipse.jdt.internal.ui.search.JavaSearchScopeFactory;
 import org.eclipse.jdt.ui.IJavaElementSearchConstants;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.operation.IRunnableContext;
-import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.CheckboxCellEditor;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.window.Window;
@@ -313,12 +309,15 @@ public class JavaBeanModelLoadComposite extends Composite implements
 		} catch (Throwable e) {
 			exception = e;
 		}
-		if (exception != null) {
-			for (Iterator<IJavaBeanSelectionListener> iterator = this.selectionListenerList
-					.iterator(); iterator.hasNext();) {
-				IJavaBeanSelectionListener l = (IJavaBeanSelectionListener) iterator
-						.next();
+
+		for (Iterator<IJavaBeanSelectionListener> iterator = this.selectionListenerList
+				.iterator(); iterator.hasNext();) {
+			IJavaBeanSelectionListener l = (IJavaBeanSelectionListener) iterator
+					.next();
+			if (exception != null) {
 				l.exceptionOccur(new Exception(exception));
+			}else{
+				l.exceptionOccur(null);
 			}
 		}
 

@@ -106,7 +106,9 @@ public class JavaBeanConfigWizardPage extends WizardPage implements
 	}
 
 	public void exceptionOccur(Exception e) {
-		this.setErrorMessage(e.toString());
+		String error = null;
+		if(e != null) error = e.toString();
+		this.setErrorMessage(error);
 	}
 
 }

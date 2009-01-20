@@ -44,8 +44,7 @@ public class BeanPopulatorMappingAnalyzer implements IMappingAnalyzer {
 
 	public static final String REFERENCE_BINDING = "referenceBinding";
 
-	public static final String[] SELECTOR_SPERATORS = new String[] { " ", "/",
-			"\\" };
+	public static final String[] SELECTOR_SPERATORS = new String[] { " ", "/"};
 	public static final String ONLY_NAME = "only_name";
 
 	public static final String FULL_PATH = "full_path";
@@ -291,7 +290,11 @@ public class BeanPopulatorMappingAnalyzer implements IMappingAnalyzer {
 		List rl = listType.getAbstractResourceConfig();
 		ResourceConfigType resourceConfig = null;
 		for (Iterator iterator = rl.iterator(); iterator.hasNext();) {
-			ResourceConfigType rct = (ResourceConfigType) iterator.next();
+			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
+			
+			if(!(abstractResourceConfig instanceof ResourceConfigType)) continue;
+			
+			ResourceConfigType rct = (ResourceConfigType) abstractResourceConfig;
 			// if (this.isSelectorIsUsed(rct.getSelector()))
 			// continue;
 			String beanId = getBeanIDFromParam(rct);
