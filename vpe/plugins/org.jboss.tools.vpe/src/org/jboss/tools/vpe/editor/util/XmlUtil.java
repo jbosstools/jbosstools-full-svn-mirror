@@ -219,7 +219,7 @@ public class XmlUtil {
 
 		for (TaglibData data : taglibData) {
 
-			if (data.getPrefix() != null && data.getUri().equalsIgnoreCase(uri)) {
+			if (data.getUri() != null && data.getUri().equalsIgnoreCase(uri)) {
 				return data;
 			}
 		}
