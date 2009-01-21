@@ -207,6 +207,24 @@ public class XmlUtil {
 			}	
 			return null;
 	}
+	
+	/**
+	 * 
+	 * @param uri
+	 * @param taglibData
+	 * @return
+	 */
+	public static TaglibData getTaglibForURI(String uri,
+			List<TaglibData> taglibData) {
+
+		for (TaglibData data : taglibData) {
+
+			if (data.getPrefix() != null && data.getUri().equalsIgnoreCase(uri)) {
+				return data;
+			}
+		}
+		return null;
+	}
 	/**
 	 * Creates clone node
 	 * @param cloneNode

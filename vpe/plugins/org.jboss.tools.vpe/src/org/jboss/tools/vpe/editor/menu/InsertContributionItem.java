@@ -18,6 +18,7 @@ import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Menu;
@@ -27,12 +28,15 @@ import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
+import org.jboss.tools.jst.web.tld.TaglibData;
+import org.jboss.tools.jst.web.tld.URIConstants;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.menu.action.InsertAction;
 import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
+import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.w3c.dom.Node;
 
@@ -55,6 +59,11 @@ public class InsertContributionItem extends ContributionItem {
 	private final static String END_TEXT_PROPERTY = "end text";//$NON-NLS-1$
 
 	private final static String TAG_ELEMENT_TYPE = "macro"; //$NON-NLS-1$
+
+	private final static String TAGLIB_ELEMENT_TYPE = "sub-group"; //$NON-NLS-1$
+
+	private final static String LEFT_ANGLE_BRACKET = "<"; //$NON-NLS-1$
+	private final static String RIGHT_ANGLE_BRACKET = ">"; //$NON-NLS-1$
 
 	private static List<String> INSERT_ITEMS;
 	static {
@@ -106,8 +115,10 @@ public class InsertContributionItem extends ContributionItem {
 			XModelObject model = ModelUtilities.getPreferenceModel().getByPath(
 					"%Palette%"); //$NON-NLS-1$
 
-			paletteManuManager
-					.addMenuListener(new InsertMenuListener(model, i));
+			paletteManuManager.addMenuListener(new InsertMenuListener(model, i,
+					getSelectionRange(sourceEditor)));
+
+			paletteManuManager.setRemoveAllWhenShown(true);
 
 			paletteManuManager.fill(paletteManu, -1);
 
@@ -165,15 +176,25 @@ public class InsertContributionItem extends ContributionItem {
 
 		private XModelObject modelObject;
 		private int typeAction;
+		private Point selectionRange;
 
-		public InsertMenuListener(XModelObject modelObject, int typeAction) {
+		public InsertMenuListener(XModelObject modelObject, int typeAction,
+				Point selectionRange) {
 			this.modelObject = modelObject;
 			this.typeAction = typeAction;
+			this.selectionRange = selectionRange;
 		}
 
 		public void menuAboutToShow(IMenuManager manager) {
 
 			XModelObject[] modelObjects = modelObject.getChildren();
+
+			String prefix = null;
+			if (TAGLIB_ELEMENT_TYPE.equals(modelObject
+					.getAttributeValue(ELEMENT_TYPE_PROPERTY))) {
+				prefix = getPrefix(modelObject);
+			}
+
 			for (int i = 0; i < modelObjects.length; i++) {
 				if (Constants.YES_STRING.equals(modelObjects[i]
 						.getAttributeValue(HIDDEN_PROPERTY))) {
@@ -189,8 +210,6 @@ public class InsertContributionItem extends ContributionItem {
 					if (!((typeAction == INSERT_AROUND) && ((endText == null) || (endText
 							.length() == 0)))) {
 
-						Point selectionRange = getSelectionRange(sourceEditor);
-
 						if (typeAction == INSERT_BEFORE) {
 							selectionRange.y = 0;
 						} else if (typeAction == INSERT_AFTER) {
@@ -198,19 +217,26 @@ public class InsertContributionItem extends ContributionItem {
 							selectionRange.y = 0;
 						}
 
-						manager.add(new InsertAction(modelObjects[i]
-								.getAttributeValue(NAME_PROPERTY),
-								selectionRange, modelObjects[i], pageContext,
-								sourceEditor, REPLACE_WITH == this.typeAction));
+						String name = LEFT_ANGLE_BRACKET
+								+ (prefix == null || prefix.length() == 0 ? Constants.EMPTY
+										: prefix + Constants.COLON)
+								+ modelObjects[i]
+										.getAttributeValue(NAME_PROPERTY)
+								+ RIGHT_ANGLE_BRACKET;
+
+						manager.add(new InsertAction(name, selectionRange,
+								modelObjects[i], pageContext, sourceEditor,
+								REPLACE_WITH == this.typeAction));
 					}
 				}
 
 				else {
 					MenuManager subMenu = new InsertSubMenuManager(
 							modelObjects[i].getAttributeValue(NAME_PROPERTY));
+					subMenu.setRemoveAllWhenShown(true);
 
 					subMenu.addMenuListener(new InsertMenuListener(
-							modelObjects[i], typeAction));
+							modelObjects[i], typeAction, selectionRange));
 
 					manager.add(subMenu);
 
@@ -220,6 +246,27 @@ public class InsertContributionItem extends ContributionItem {
 
 			}
 
+		}
+
+		private String getPrefix(XModelObject modelObject) {
+
+			List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(
+					(Node) ((IStructuredSelection) sourceEditor
+							.getSelectionProvider().getSelection())
+							.getFirstElement(), pageContext);
+
+			String uri = modelObject
+					.getAttributeValue(URIConstants.LIBRARY_URI);
+			String prefix = null;
+			TaglibData sourceNodeTaglib = XmlUtil.getTaglibForURI(uri, taglibs);
+
+			if (sourceNodeTaglib == null)
+				prefix = modelObject
+						.getAttributeValue(URIConstants.DEFAULT_PREFIX);
+			else
+				prefix = sourceNodeTaglib.getPrefix();
+
+			return prefix;
 		}
 
 	}
