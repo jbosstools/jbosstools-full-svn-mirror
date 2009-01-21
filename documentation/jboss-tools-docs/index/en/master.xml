@@ -180,5 +180,15 @@
             </primaryie>
         </indexentry>
 
+        <indexentry>
+            <primaryie>JMX Reference Guide <ulink
+                    url="en/jmx_ref_guide/html/index.html">(html)</ulink>
+                <ulink url="en/jmx_ref_guide/html_single/index.html">(html single)</ulink>
+                <ulink url="en/jmx_ref_guide/pdf/JMX_Tools_Reference_Guide.pdf"
+                >(pdf)</ulink>
+            </primaryie>
+        </indexentry>
+
+
     </index>
 </book>

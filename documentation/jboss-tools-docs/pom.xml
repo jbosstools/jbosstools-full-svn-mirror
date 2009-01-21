@@ -29,6 +29,7 @@
 		<module>../../drools/docs/reference</module>
 		<module>../../smooks/docs/reference</module>
 		<module>../../jbpm/docs/converter_ref</module>
+		<module>../../jmx/docs/reference</module>
 
 		<module>index</module>
 	</modules>
