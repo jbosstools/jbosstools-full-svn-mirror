@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<chapter id="project_examples" xreflabel="project_examples">
+    <?dbhtml filename="project_examples.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Developer Studio</keyword>
+            <keyword>Eclipse</keyword>
+            <keyword>Java</keyword>
+            <keyword>JBoss</keyword>
+        </keywordset>
+    </chapterinfo>
+    <title>Project Examples</title>
+
+    <para>JBoss Developer Studio provides an option to download and import a ready-made 
+    project that you can explore and derive some useful technology implementation lessons. </para>
+    
+    <para>To start working with a project example you need to take a few steps:</para>
+
+<itemizedlist>
+    <listitem>
+        <para>Go to the menu bar and select <emphasis><property>File &gt; New &gt; Other...</property></emphasis>
+    </para></listitem>
+    
+    <listitem><para>Select <emphasis><property>Jboss Tools &gt; Project Examples</property></emphasis></para></listitem>
+    
+  
+</itemizedlist>
+    
+    <figure>
+        <title>Project Examples</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/project_examples/pr_example_1.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+    
+    <itemizedlist>
+        <listitem><para>Now in the New Project Example dialog you can select a project you would like to explore.</para></listitem>
+   
+    </itemizedlist>
+
+  
+    <figure>
+        <title>Selecting a Project Example</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/project_examples/pr_example_2.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+    
+    <itemizedlist>
+        <listitem><para>Press <emphasis><property>Finish</property></emphasis> to start downloading the project from the repository. 
+        </para></listitem>
+     
+    </itemizedlist>
+    
+    <para>When downloading is finished the project will be imported automatically and you will be able to see it in the Package Explorer.</para>
+  
+    <para>Now you can run the application on the server.</para>
+    
+    <figure>
+        <title>Seam Demo Application run on the Server</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/project_examples/pr_example_3.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+    
+</chapter>
