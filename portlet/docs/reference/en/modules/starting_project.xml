@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="starting_project" xreflabel="starting_project" role="updated">
+<chapter id="starting_project" xreflabel="starting_project">
     <?dbhtml filename="starting_project.html"?>
     <title>Starting the Project with JBoss Portal</title>
 

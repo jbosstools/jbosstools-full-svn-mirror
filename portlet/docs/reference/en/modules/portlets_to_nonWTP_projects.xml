@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="portlets_to_nonWTP_projects" xreflabel="portlets_to_nonWTP_projects" role="new">
+<chapter id="portlets_to_nonWTP_projects" xreflabel="portlets_to_nonWTP_projects">
     <?dbhtml filename="portlets_to_nonWTP_projects.html"?>
     <title>Adding Portlets to non-WTP Projects</title>
 
