@@ -34,7 +34,7 @@
    guide we will show you how to install a 32-bit Sun JDK 5.0 on a Linux Platform and Microsoft
    Windows Platform.</para>
 
-  <section id="InstallJDK50onLinux" role="updated">
+  <section id="InstallJDK50onLinux">
    <title>Installing and Configuring 32-bit Sun JDK 5.0 on Linux</title>
    <para>To install 32-bit Sun JDK 5.0 on Linux and configure it, you should follow the next steps:</para>
    <itemizedlist>
@@ -424,7 +424,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      >JBoss.com</ulink></para>
   </section>
 
-  <section id="JBossToolsInstall" role="updated">
+  <section id="JBossToolsInstall">
    <title>JBoss Tools Installation</title>
    <para>Here, let&apos;s consider the installation of the <property>JBoss Tools</property>
     modules.</para>

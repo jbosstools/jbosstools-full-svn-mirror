@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="first_seam" xreflabel="first_seam" role="updated">
+<chapter id="first_seam" xreflabel="first_seam">
   <?dbhtml filename="first_seam.html"?>
   <chapterinfo>
     <keywordset>
@@ -41,7 +41,7 @@
 
     </section>
 
-    <section id="create_deploy_seam" role="updated">
+    <section id="create_deploy_seam">
       <title>Create and deploy Seam Web Project</title>
 
       <para>Minimize the terminal window and run the <property>JBoss Developer Studio</property>
@@ -308,7 +308,7 @@
 
     </section>
 
-    <section id="workshop_code_overview" role="updated">
+    <section id="workshop_code_overview">
       <title>Workshop Project Code Overview</title>
 
       <para>Now let's examine the project and its structure. Go back to the Package Explorer view in
@@ -544,7 +544,7 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
 
   </section>
 
-  <section id="declarative_security" role="updated">
+  <section id="declarative_security">
     <title>Declarative Security</title>
 
     <para>In this section you will see how it’s easy to secure the facelets and facelet components
@@ -714,13 +714,13 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
 
   </section>
 
-  <section id="db_programming" role="updated">
+  <section id="db_programming">
     <title>Database Programming</title>
 
     <para>Now, it’s time to reverse engineer the workshop database into a fully functioning Seam
       CRUD(Create Read Update Delete) application.</para>
 
-    <section id="reverse_engineer_crud" role="updated">
+    <section id="reverse_engineer_crud">
       <title>Reverse Engineer CRUD from a Running Database</title>
 
       <para>In <property>JBoss Developer Studio</property>, switch to <property>Seam
