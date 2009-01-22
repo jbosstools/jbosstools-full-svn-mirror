@@ -9,6 +9,8 @@
 <!ENTITY rad_jsf_application  SYSTEM "modules/rad_jsf_application.xml">
 <!ENTITY gsg_faq  SYSTEM "modules/gsg_faq.xml">
 <!ENTITY further_reading  SYSTEM "modules/further_reading.xml">
+<!ENTITY project_examples  SYSTEM "modules/project_examples.xml">
+
 
 <!ENTITY seamlink "../../seam/html_single/index.html">
 <!ENTITY aslink "../../as/html_single/index.html">
@@ -54,6 +56,7 @@
  &first_seam; 
  &jsp_application;
  &rad_jsf_application; 
+ &project_examples;
  &gsg_faq;
  &further_reading; 
 
