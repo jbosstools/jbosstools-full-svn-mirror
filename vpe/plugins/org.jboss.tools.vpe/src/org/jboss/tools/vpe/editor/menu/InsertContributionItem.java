@@ -144,23 +144,25 @@ public class InsertContributionItem extends ContributionItem {
 		Point selectionRange = SelectionUtil
 				.getSourceSelectionRange(sourceEditor);
 
+		int start = selectionRange.x;
+		int length = selectionRange.y;
+
 		Node firstElement = SelectionUtil.getNodeBySourcePosition(sourceEditor,
 				selectionRange.x);
 		Node endElement = SelectionUtil.getNodeBySourcePosition(sourceEditor,
 				selectionRange.x + selectionRange.y);
 
-		int start;
-		int length;
+		if (firstElement != null)
+			if (firstElement.getNodeType() == Node.TEXT_NODE)
+				start = selectionRange.x;
+			else
+				start = NodesManagingUtil.getStartOffsetNode(firstElement);
 
-		if (firstElement.getNodeType() == Node.TEXT_NODE)
-			start = selectionRange.x;
-		else
-			start = NodesManagingUtil.getStartOffsetNode(firstElement);
-
-		if (endElement.getNodeType() == Node.TEXT_NODE)
-			length = selectionRange.x + selectionRange.y - start;
-		else
-			length = NodesManagingUtil.getEndOffsetNode(endElement) - start;
+		if (endElement != null)
+			if (endElement.getNodeType() == Node.TEXT_NODE)
+				length = selectionRange.x + selectionRange.y - start;
+			else
+				length = NodesManagingUtil.getEndOffsetNode(endElement) - start;
 
 		return new Point(start, length);
 
