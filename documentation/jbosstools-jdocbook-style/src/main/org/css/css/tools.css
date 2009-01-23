@@ -3,18 +3,16 @@
 /* -----Override jbossorg.css----- */
 
 body {
-    background-image:url(../images/community/bkg_gradient.gif);
-    background-repeat:repeat-x;
-background-image:url(../images/richfaces_label2.png);
+background-image:url(../images/jbosstools_label2.png);
+background-repeat:repeat-x;
 background-repeat:no-repeat;
 background-attachment:fixed;
 background-position:top left;
 z-index:1;
-
-    text-align:center;
-    margin:0 auto;
-    padding:0;
- }
+text-align:center;
+margin:0 auto;
+padding:0;
+}
 
 div#overlay{
 background-image:url(../images/community/bkg_gradient.gif);
