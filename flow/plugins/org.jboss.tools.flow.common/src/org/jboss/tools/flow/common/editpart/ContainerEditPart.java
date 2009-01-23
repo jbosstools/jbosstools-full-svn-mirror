@@ -47,8 +47,6 @@ public class ContainerEditPart extends ElementEditPart {
     public void modelChanged(ModelEvent event) {
         if (event.getChange() == AbstractContainerWrapper.CHANGE_ELEMENTS) {
             refreshChildren();
-        } else if (event.getChange() == AbstractContainerWrapper.CHANGE_ELEMENTS) {
-            refreshChildren();
         } else {
             super.modelChanged(event);
         }
