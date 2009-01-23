@@ -26,7 +26,7 @@ public class VpeTemplateManagerTest extends TestCase {
 	
 	public void testGetAnyTemplates() {
 		List<VpeAnyData> templates = VpeTemplateManager.getInstance().getAnyTemplates();
-		assertEquals(4, templates.size());
+		assertEquals(2, templates.size());
 	}
 	
 	public void testReload() {
