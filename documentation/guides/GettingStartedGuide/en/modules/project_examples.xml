@@ -11,63 +11,116 @@
         </keywordset>
     </chapterinfo>
     <title>Project Examples</title>
-
-    <para>JBoss Developer Studio provides an option to download and import a ready-made 
-    project that you can explore and derive some useful technology implementation lessons. </para>
     
-    <para>To start working with a project example you need to take a few steps:</para>
-
-<itemizedlist>
-    <listitem>
-        <para>Go to the menu bar and select <emphasis><property>File &gt; New &gt; Other...</property></emphasis>
-    </para></listitem>
+    <para><emphasis><property>JBoss Developer Studio</property></emphasis> provides an option to download and import a ready-made 
+        project that you can explore and derive some useful technology implementation lessons. </para>
     
-    <listitem><para>Select <emphasis><property>Jboss Tools &gt; Project Examples</property></emphasis></para></listitem>
     
-  
-</itemizedlist>
+    <section id="DownloadingProjectExample">
+        <title>Downloading a Project Example</title>
+        
+        <para>To download a project example and  start working with it you need to take a few steps:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Go to the menu bar and select <emphasis><property>File &gt; New &gt; Other...</property></emphasis>
+                </para></listitem>
+            
+            <listitem><para>Select <emphasis><property>Jboss Tools &gt; Project Examples</property></emphasis>(You can also call the <emphasis><property>Project Examples</property></emphasis> from menu bar: <emphasis><property>Help &gt; Project Examples...</property></emphasis>)</para></listitem>
+            
+            
+        </itemizedlist>
+        
+        <figure>
+            <title>Project Examples</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project_examples/pr_example_1.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <itemizedlist>
+            <listitem><para>Now in the New Project Example dialog you can select a project you would like to explore</para>
+                <para>Project Examples Wizard  provides a filter field to more easily locate the project examples you want, so you can type in the project you would like to explore in the field.</para></listitem>
+            
+        </itemizedlist>
+        
+        
+        <figure>
+            <title>Selecting a Project Example</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project_examples/pr_example_2.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <note>
+            <title>Note:</title>
+            <para>
+                The <emphasis><property>Show the Quick Fix Dialog</property></emphasis> option is described in the <link linkend="QuickFixes">Quick Fixes</link> section.
+            </para>
+        </note>
+        
+        <itemizedlist>
+            <listitem><para>Press <emphasis><property>Finish</property></emphasis> to start downloading the project from the repository
+            </para></listitem>
+            
+        </itemizedlist>
+        
+        <para>When downloading is finished the project will be imported automatically and you will be able to see it in the Package Explorer.</para>
+        
+        <para>Now you can run the application on the server.</para>
+        
+        <figure>
+            <title>Seam Demo Application run on the Server</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project_examples/pr_example_3.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
     
-    <figure>
-        <title>Project Examples</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/project_examples/pr_example_1.png"/>
-            </imageobject>
-        </mediaobject>
-    </figure>
+    <section id="QuickFixes">
+        <title>Quick Fixes</title>
+        <para>
+            Project Examples Wizard has an option for making quick fixes 
+            for the imported project to easily fix possible issues like  missing servers, Seam runtimes etc.
+        </para>
+        <para>To enable quick fixing option you need to check the
+            <emphasis><property>Show the Quick Fix dialog</property></emphasis> while choosing the <link linkend="DownloadingProjectExample">Project Example</link>.</para>
+        
+        <para>When the project you selected is downloaded it will be checked for missing dependences and if there are some you will see a dialog listing the problems.</para>
+        <figure>
+            <title>Quick Fix Dialog box</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project_examples/pr_example_4.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>To fix the problem you need to:</para>
+        
+        <itemizedlist>
+            <listitem><para>Select the problem from the list</para></listitem>
+            <listitem><para>Click <emphasis><property>Quick Fix</property></emphasis> button</para></listitem>
+        </itemizedlist>
+        
+        <para>You will be offered a solution or a number of solutions to the problem.</para>
+        
+        <figure>
+            <title>Quick Fix Dialog box: Selecting a Fix</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project_examples/pr_example_5.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>In this case, when the <emphasis><property>Finish</property></emphasis> button is pressed, Seam Settings dialog box will be displayed where you need to provide a path to the Seam environment to fix the issue.</para>
+        
+        <para>When the problem is fixed you will be returned to the Quick Fix dialog box with the remaining problems to be fixed.</para>
+        
+    </section>
     
-    <itemizedlist>
-        <listitem><para>Now in the New Project Example dialog you can select a project you would like to explore</para></listitem>
-   
-    </itemizedlist>
-
-  
-    <figure>
-        <title>Selecting a Project Example</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/project_examples/pr_example_2.png"/>
-            </imageobject>
-        </mediaobject>
-    </figure>
-    
-    <itemizedlist>
-        <listitem><para>Press <emphasis><property>Finish</property></emphasis> to start downloading the project from the repository
-        </para></listitem>
-     
-    </itemizedlist>
-    
-    <para>When downloading is finished the project will be imported automatically and you will be able to see it in the Package Explorer.</para>
-  
-    <para>Now you can run the application on the server.</para>
-    
-    <figure>
-        <title>Seam Demo Application run on the Server</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/project_examples/pr_example_3.png"/>
-            </imageobject>
-        </mediaobject>
-    </figure>
     
 </chapter>
