@@ -1,0 +1,110 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="../whatsnew.css">
+<title>JBoss AS Tools 2.0.0.CR2 News</title>
+</head>
+
+<body>
+
+<h1>JBoss AS Tools 2.0.0.CR2 - New and Noteworthy</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../vpe/vpe-news-3.0.0.CR2.html">Visual Page Editor &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+   <tr>
+    <td colspan="2">
+      <hr>
+      <h3>Views</h3>
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Drag'n'Drop to JBoss Server View</b></td>
+    <td valign="top">
+      <p>JBoss Server View now supports drag'n'drop of deployable and runnable projects/resources.</p>
+      <p>This means that if you...
+
+	<ul>
+	  <li>drag a project to a server it will deploy it to the
+	    server and run it by showing the main page in a
+	    browser</li>
+	  <li>dragging a .xhtml file from WebContent will do the same
+	    and show the corresponding page in a browser</li>
+	  <li>dragging a deployable resource (i.e. a datasource
+      (-ds.xml) file that has been made deployable) will simply deploy
+      that resource directly to the server.</li>
+	</ul>
+	
+	...in short it does the same thing as if you used "Run On Server" or "Add and Remove projects" just with fewer clicks.
+
+      </p>
+
+      <p><img src="../images/dragndrop_jboss_serversview.png"/></p>    
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3608">Related jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>'Explore' shortcut in Server view</b></td>
+    <td valign="top">
+      <p>There is now an "Explore" item in the context menu of JBoss
+      servers and its deployed resources/projects. This action uses
+      the native OS file explorer to browse the deploy
+      destination.</p>
+
+      <p><img src="../images/explore_server_view.png"/></p>
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3087">Related jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr>
+      <h3>Setup/Configuration</h3>
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>More strict server launches</b></td>
+    <td valign="top">
+      <p>To avoid inconsistencies between server's and their configured runtime the Launch Configurations for JBoss Servers are now more strict in enforcing the configured values in the server.</p>
+      <p>For example if you change the launch configuration program arguments to "-c myConfig" but do not change the targeted runtime configuration then your program arguments will be ignored. The server runtime "wins" so to speak. This ensures consistency and if you i.e. change the location of the runtime your launch configurations will automatically pick that up.</p>
+
+      <p>Values not controlled by the server and its runtime setup will be passed on unaltered.</p>
+
+      <p><img src="../images/strict_launchconfig.png"/></p>
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3073">Related jira</a></small></p>
+    </td>
+  </tr>
+
+
+
+
+
+  
+</table>
+
+</body>
+
+</html>
+
+
