@@ -28,16 +28,17 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.ManhattanConnectionRouter;
 import org.eclipse.draw2d.ShortestPathConnectionRouter;
 import org.eclipse.draw2d.XYLayout;
-import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.LayerConstants;
 import org.eclipse.gef.SnapToGrid;
 import org.eclipse.gef.SnapToHelper;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gef.editpolicies.RootComponentEditPolicy;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.jboss.tools.flow.common.figure.ElementFigure;
 import org.jboss.tools.flow.common.policy.ElementContainerLayoutEditPolicy;
+import org.jboss.tools.flow.common.wrapper.ContainerWrapper;
 import org.jboss.tools.flow.common.wrapper.FlowWrapper;
 import org.jboss.tools.flow.common.wrapper.ModelEvent;
 import org.jboss.tools.flow.common.wrapper.ModelListener;
@@ -83,7 +84,18 @@ public class RootEditPart extends AbstractGraphicalEditPart implements ModelList
     }
 
     public void modelChanged(ModelEvent event) {
-        if (event.getChange() == FlowWrapper.CHANGE_ELEMENTS) {
+        if (event.getChange() == ContainerWrapper.ADD_ELEMENT) {
+        	refreshChildren();
+        	Object changedObject = event.getChangedObject();
+        	if (changedObject != null) {
+        		EditPart editPart = (EditPart)getViewer().getEditPartRegistry().get(changedObject);
+        		if (editPart instanceof ElementEditPart) {
+        			((ElementEditPart)editPart).performDirectEdit();
+        			// force selection to update the properties view
+        			getViewer().setSelection(new StructuredSelection(editPart));
+        		}
+        	}
+        } else if (event.getChange() == ContainerWrapper.REMOVE_ELEMENT) {
             refreshChildren();
         } else if (event.getChange() == FlowWrapper.CHANGE_VISUAL) {
     		refreshVisuals();
@@ -120,18 +132,18 @@ public class RootEditPart extends AbstractGraphicalEditPart implements ModelList
     	Animation.run(400);
     }
     
-	@SuppressWarnings("unchecked")
-    public boolean setTableModelBounds() {
-		List<ElementEditPart> tableParts = getChildren();
-		for (ElementEditPart elementEditPart: tableParts) {
-			ElementFigure elementFigure = (ElementFigure) elementEditPart.getFigure();
-			if (elementFigure == null) {
-				continue;
-			}
-			Rectangle constraint = elementFigure.getBounds().getCopy();
-			NodeWrapper elementWrapper = elementEditPart.getElementWrapper();
-			elementWrapper.setConstraint(constraint);
-		}
-		return true;
-	}
+//	@SuppressWarnings("unchecked")
+//    public boolean setTableModelBounds() {
+//		List<ElementEditPart> tableParts = getChildren();
+//		for (ElementEditPart elementEditPart: tableParts) {
+//			ElementFigure elementFigure = (ElementFigure) elementEditPart.getFigure();
+//			if (elementFigure == null) {
+//				continue;
+//			}
+//			Rectangle constraint = elementFigure.getBounds().getCopy();
+//			NodeWrapper elementWrapper = elementEditPart.getElementWrapper();
+//			elementWrapper.setConstraint(constraint);
+//		}
+//		return true;
+//	}
 }

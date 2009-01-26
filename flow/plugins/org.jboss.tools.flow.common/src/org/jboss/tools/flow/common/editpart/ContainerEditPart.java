@@ -19,12 +19,14 @@ package org.jboss.tools.flow.common.editpart;
 import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.MouseWheelHelper;
 import org.eclipse.gef.editparts.ViewportMouseWheelHelper;
 import org.jboss.tools.flow.common.figure.ElementContainerFigure;
 import org.jboss.tools.flow.common.policy.ElementContainerLayoutEditPolicy;
 import org.jboss.tools.flow.common.wrapper.AbstractContainerWrapper;
+import org.jboss.tools.flow.common.wrapper.ContainerWrapper;
 import org.jboss.tools.flow.common.wrapper.ModelEvent;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
@@ -45,7 +47,16 @@ public class ContainerEditPart extends ElementEditPart {
     }
     
     public void modelChanged(ModelEvent event) {
-        if (event.getChange() == AbstractContainerWrapper.CHANGE_ELEMENTS) {
+        if (event.getChange() == ContainerWrapper.ADD_ELEMENT) {
+        	refreshChildren();
+        	Object changedObject = event.getChangedObject();
+        	if (changedObject != null) {
+        		EditPart editPart = (EditPart)getViewer().getEditPartRegistry().get(changedObject);
+        		if (editPart instanceof ElementEditPart) {
+        			((ElementEditPart)editPart).performDirectEdit();
+        		}
+        	}
+        } else if (event.getChange() == ContainerWrapper.REMOVE_ELEMENT) {
             refreshChildren();
         } else {
             super.modelChanged(event);

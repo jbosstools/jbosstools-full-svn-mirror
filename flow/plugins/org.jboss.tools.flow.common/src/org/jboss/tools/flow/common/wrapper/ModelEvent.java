@@ -24,13 +24,23 @@ package org.jboss.tools.flow.common.wrapper;
 public class ModelEvent {
 	
 	private int change;
+	private Object changedObject;
     
     public ModelEvent(int change) {
         this.change = change;
     }
     
+    public ModelEvent(int change, Object changedObject) {
+    	this.change = change;
+    	this.changedObject = changedObject;
+    }
+    
     public int getChange() {
         return change;
     }
-
+    
+    public Object getChangedObject() {
+    	return changedObject;
+    }
+    
 }

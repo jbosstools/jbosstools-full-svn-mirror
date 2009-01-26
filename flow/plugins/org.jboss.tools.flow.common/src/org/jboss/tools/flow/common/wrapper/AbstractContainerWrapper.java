@@ -21,14 +21,12 @@ import java.util.List;
 
 public abstract class AbstractContainerWrapper extends AbstractNodeWrapper implements ContainerWrapper {
 
-    public static final int CHANGE_ELEMENTS = 4;
-    
     List<NodeWrapper> elements = new ArrayList<NodeWrapper>();
     
     public void addElement(NodeWrapper element) {
         internalAddElement(element);
         localAddElement(element);
-        notifyListeners(CHANGE_ELEMENTS);
+        notifyListeners(ADD_ELEMENT, element);
     }
     
     public void localAddElement(NodeWrapper element) {
@@ -42,7 +40,7 @@ public abstract class AbstractContainerWrapper extends AbstractNodeWrapper imple
         internalRemoveElement(element);
         elements.remove(element);
         element.setParent(null);
-        notifyListeners(CHANGE_ELEMENTS);
+        notifyListeners(REMOVE_ELEMENT, element);
     }
     
     protected abstract void internalRemoveElement(NodeWrapper element);

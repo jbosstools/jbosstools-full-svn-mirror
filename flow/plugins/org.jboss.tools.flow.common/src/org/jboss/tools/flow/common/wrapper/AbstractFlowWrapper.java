@@ -37,7 +37,7 @@ public abstract class AbstractFlowWrapper extends AbstractWrapper implements Flo
     
     public void setRouterLayout(Integer routerLayout) {
     	internalSetRouterLayout(routerLayout);
-    	notifyListeners(CHANGE_VISUAL);
+    	notifyListeners(CHANGE_VISUAL, null);
     }
     
     protected void internalSetRouterLayout(Integer routerLayout) {
@@ -56,7 +56,7 @@ public abstract class AbstractFlowWrapper extends AbstractWrapper implements Flo
     	if (!acceptsElement(element)) return;
         internalAddElement(element);
 		localAddElement(element);
-		notifyListeners(CHANGE_ELEMENTS);
+		notifyListeners(ADD_ELEMENT, element);
     }
     
     public void localAddElement(NodeWrapper element) {
@@ -79,7 +79,7 @@ public abstract class AbstractFlowWrapper extends AbstractWrapper implements Flo
     public void removeElement(NodeWrapper element) {
     	localRemoveElement(element);
         internalRemoveElement(element);
-        notifyListeners(CHANGE_ELEMENTS);
+        notifyListeners(REMOVE_ELEMENT, element);
     }
     
     protected abstract void internalRemoveElement(NodeWrapper element);
@@ -96,8 +96,8 @@ public abstract class AbstractFlowWrapper extends AbstractWrapper implements Flo
         listeners.remove(listener);
     }
     
-    public void notifyListeners(int change) {
-        ModelEvent event = new ModelEvent(change);
+    protected void notifyListeners(int change, NodeWrapper wrapper) {
+        ModelEvent event = new ModelEvent(change, wrapper);
         for (ModelListener listener: listeners) {
         	listener.modelChanged(event);
         }

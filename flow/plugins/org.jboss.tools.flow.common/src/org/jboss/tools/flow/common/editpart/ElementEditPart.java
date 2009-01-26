@@ -99,10 +99,16 @@ public abstract class ElementEditPart extends AbstractGraphicalEditPart implemen
     }
     
     public void modelChanged(ModelEvent event) {
-        if (event.getChange() == NodeWrapper.CHANGE_INCOMING_CONNECTIONS) {
+        if (event.getChange() == NodeWrapper.ADD_INCOMING_CONNECTION) {
+        	System.out.println("first");
             refreshTargetConnections();
-        } else if (event.getChange() == NodeWrapper.CHANGE_OUTGOING_CONNECTIONS) {
+        } else if (event.getChange() == NodeWrapper.REMOVE_INCOMING_CONNECTION) {
+        	refreshTargetConnections();
+        } else if (event.getChange() == NodeWrapper.ADD_OUTGOING_CONNECTION) {
+        	System.out.println("second");
             refreshSourceConnections();
+        } else if (event.getChange() == NodeWrapper.REMOVE_OUTGOING_CONNECTION) {
+        	refreshSourceConnections();
         } else if (event.getChange() == NodeWrapper.CHANGE_VISUAL) {
             refreshVisuals();
         }
@@ -132,7 +138,7 @@ public abstract class ElementEditPart extends AbstractGraphicalEditPart implemen
         // do nothing
     }
     
-    private void performDirectEdit() {
+    protected void performDirectEdit() {
     	Label label = ((ElementFigure) getFigure()).getLabel();
     	if (label == null) {
     		return;

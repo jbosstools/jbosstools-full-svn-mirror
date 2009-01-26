@@ -50,7 +50,7 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 	public void setConstraint(Rectangle constraint) {
 	    this.constraint = constraint;
 		internalSetConstraint(constraint);
-		notifyListeners(CHANGE_VISUAL);
+		notifyListeners(CHANGE_VISUAL, this);
 	}
 	
 	protected abstract void internalSetConstraint(Rectangle constraint);
@@ -91,7 +91,7 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 	public void addIncomingConnection(ConnectionWrapper connection) {
 	    localAddIncomingConnection(connection);
 		internalAddIncomingConnection(connection);
-		notifyListeners(CHANGE_INCOMING_CONNECTIONS);
+		notifyListeners(ADD_INCOMING_CONNECTION, connection);
 	}
 	
 	public void localAddIncomingConnection(ConnectionWrapper connection) {
@@ -104,7 +104,7 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 	public void removeIncomingConnection(ConnectionWrapper connection) {
 		incomingConnections.remove(connection);
 		internalRemoveIncomingConnection(connection);
-		notifyListeners(CHANGE_INCOMING_CONNECTIONS);
+		notifyListeners(REMOVE_INCOMING_CONNECTION, connection);
 	}
 
 	protected void internalRemoveIncomingConnection(ConnectionWrapper connection) {
@@ -113,7 +113,7 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 	public void addOutgoingConnection(ConnectionWrapper connection) {
 	    localAddOutgoingConnection(connection);
 		internalAddOutgoingConnection(connection);
-		notifyListeners(CHANGE_OUTGOING_CONNECTIONS);
+		notifyListeners(ADD_OUTGOING_CONNECTION, connection);
 	}
 
     public void localAddOutgoingConnection(ConnectionWrapper connection) {
@@ -126,7 +126,7 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 	public void removeOutgoingConnection(ConnectionWrapper connection) {
 		outgoingConnections.remove(connection);
 		internalRemoveOutgoingConnection(connection);
-		notifyListeners(CHANGE_OUTGOING_CONNECTIONS);
+		notifyListeners(REMOVE_OUTGOING_CONNECTION, connection);
 	}
 
 	protected void internalRemoveOutgoingConnection(ConnectionWrapper connection) {
@@ -134,7 +134,7 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 
 	public void setName(String name) {
 		internalSetName(name);
-		notifyListeners(CHANGE_VISUAL);
+		notifyListeners(CHANGE_VISUAL, this);
 	}
 
 	protected void internalSetName(String name) {
@@ -148,8 +148,8 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 		listeners.remove(listener);
 	}
 
-	protected void notifyListeners(int change) {
-		ModelEvent event = new ModelEvent(change);
+	protected void notifyListeners(int change, Object object) {
+		ModelEvent event = new ModelEvent(change, object);
 		for (ModelListener listener: listeners) {
 			listener.modelChanged(event);
 		}

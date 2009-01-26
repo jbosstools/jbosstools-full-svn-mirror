@@ -79,7 +79,7 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="name" type="string">
+         <attribute name="label" type="string">
             <annotation>
                <documentation>
                   
