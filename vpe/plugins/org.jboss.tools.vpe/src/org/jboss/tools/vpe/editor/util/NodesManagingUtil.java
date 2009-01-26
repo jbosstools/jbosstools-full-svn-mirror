@@ -71,7 +71,8 @@ public class NodesManagingUtil {
 	 */
 	public static int getNodeLength(Node node) {
 
-		if (node instanceof IDOMAttr) {
+		if ( (node instanceof IDOMAttr)
+				&& (((IDOMAttr) node).getValueSource()!=null) ) {
 			return ((IDOMAttr) node).getValueSource().length();
 		} else if (node instanceof IndexedRegion) {
 			return ((IndexedRegion) node).getEndOffset()
