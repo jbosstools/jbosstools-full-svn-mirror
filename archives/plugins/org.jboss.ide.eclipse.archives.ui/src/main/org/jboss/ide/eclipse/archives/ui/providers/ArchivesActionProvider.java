@@ -192,8 +192,7 @@ public class ArchivesActionProvider extends CommonActionProvider {
 	 */
 	private void addNewPackageActions (IMenuManager manager) {
           	//workaround for JBIDE-3016
-                if( manager.getItems().length > 0)
-                	return;
+        manager.removeAll();
                 		 							
 		for( int i = 0; i < newPackageActions.length; i++ ) {
 			NewArchiveAction action = newPackageActions[i];
