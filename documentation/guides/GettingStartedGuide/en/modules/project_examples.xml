@@ -116,7 +116,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>In this case, when the <emphasis><property>Finish</property></emphasis> button is pressed, Seam Settings dialog box will be displayed where you need to provide a path to the Seam environment to fix the issue.</para>
+        <para>In this case(see the image above), when the <emphasis><property>Finish</property></emphasis> button is pressed, Seam Settings dialog box will be displayed where you need to provide a path to the Seam environment to fix the issue.</para>
         
         <para>When the problem is fixed you will be returned to the Quick Fix dialog box with the remaining problems to be fixed.</para>
         
