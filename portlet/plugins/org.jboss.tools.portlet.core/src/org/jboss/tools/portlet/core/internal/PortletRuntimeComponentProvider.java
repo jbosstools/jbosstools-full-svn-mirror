@@ -54,8 +54,14 @@ public class PortletRuntimeComponentProvider extends
 			IPath jbossLocation = runtime.getLocation();
 			IPath configPath = jbossLocation.append(IJBossServerConstants.SERVER).append(jbossRuntime.getJBossConfiguration());
 			File configFile = configPath.toFile();
+			// JBoss Portal server
 			if (exists(configFile,
 					IPortletConstants.SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_SAR)) {
+				return true;
+			}
+			// JBoss Portal clustering server
+			if (exists(configFile,
+					IPortletConstants.SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_HA_SAR)) {
 				return true;
 			}
 			// JBoss portletcontainer
