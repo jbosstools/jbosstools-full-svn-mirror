@@ -111,7 +111,8 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 	return tabFolder;
     }
 
-    public void action(String command) {
+    @Override
+	public void action(String command) {
 	if (OK.equals(command)) {
 	    absFolder.commit();
 	    relFolder.commit();
@@ -122,7 +123,8 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 	super.action(command);
     }
 
-    public Point getPreferredSize() {
+    @Override
+	public Point getPreferredSize() {
 	// changed by estherbin
 	// http://jira.jboss.com/jira/browse/JBIDE-2010
 	String os_name = System.getProperty("os.name"); //$NON-NLS-1$
@@ -131,7 +133,7 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 	}
 	// changed by estherbin
 	// http://jira.jboss.com/jira/browse/JBIDE-2010
-	return new Point(400, 285);
+	return new Point(580, 285);
     }
 
 }
