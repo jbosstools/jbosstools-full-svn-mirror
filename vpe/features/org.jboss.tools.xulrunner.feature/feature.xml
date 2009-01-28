@@ -20,7 +20,7 @@
 
    <url>
       <update label="%updateSiteName" url="http://download.jboss.org/jbosstools/updates/stable"/>
-      <discovery label="%discoverySiteName" url="http://download.jboss.org/updates/development"/>
+      <discovery label="%discoverySiteName" url="http://download.jboss.org/jbosstools/updates/development"/>
    </url>
 
    <plugin
