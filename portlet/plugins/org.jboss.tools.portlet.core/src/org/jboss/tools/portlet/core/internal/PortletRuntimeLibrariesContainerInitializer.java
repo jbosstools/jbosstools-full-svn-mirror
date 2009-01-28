@@ -18,6 +18,7 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.core.IAccessRule;
@@ -30,6 +31,8 @@ import org.eclipse.wst.server.core.IRuntime;
 import org.jboss.ide.eclipse.as.classpath.core.jee.AbstractClasspathContainer;
 import org.jboss.ide.eclipse.as.classpath.core.jee.AbstractClasspathContainerInitializer;
 import org.jboss.ide.eclipse.as.classpath.core.xpl.ClasspathDecorations;
+import org.jboss.ide.eclipse.as.core.server.IJBossServerConstants;
+import org.jboss.ide.eclipse.as.core.server.IJBossServerRuntime;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
@@ -146,22 +149,52 @@ public class PortletRuntimeLibrariesContainerInitializer extends
 		}
 
 		private File getLibDirectory(File location) {
-			File libDirectory = getDirectory(location,
-					IPortletConstants.SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_SAR);
-			if (libDirectory != null) {
-				libDirectory = new File(libDirectory, "lib"); //$NON-NLS-1$
-			} else {
-				libDirectory = getDirectory(location,
-						IPortletConstants.SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL);
+			IJavaProject javaProject = getProject();
+			if (javaProject == null) {
+				return null;
+			}
+			IProject project = javaProject.getProject();
+			if (project == null) {
+				return null;
+			}
+			IRuntime runtime = null;
+			try {
+				runtime = J2EEProjectUtilities.getServerRuntime(project);
+			} catch (CoreException e) {
+				// ignore
+			}
+			if (runtime == null) {
+				return null;
+			}
+			File libDirectory = null;
+			IJBossServerRuntime jbossRuntime = (IJBossServerRuntime)runtime.loadAdapter(IJBossServerRuntime.class, new NullProgressMonitor());
+			if (jbossRuntime != null) {
+				// JBoss Portal server
+				IPath jbossLocation = runtime.getLocation();
+				IPath configPath = jbossLocation.append(IJBossServerConstants.SERVER).append(jbossRuntime.getJBossConfiguration());
+				location = configPath.toFile();
+				libDirectory = getDirectory(location,IPortletConstants.SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_SAR);
 				if (libDirectory != null) {
 					libDirectory = new File(libDirectory, "lib"); //$NON-NLS-1$
 				} else {
-					// Tomcat adds portlet-api.jat automatically
-					/*File tomcatLib = new File(location,
+					libDirectory = getDirectory(location,
+						IPortletConstants.SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL);
+					if (libDirectory != null) {
+						libDirectory = new File(libDirectory, "lib"); //$NON-NLS-1$
+					} else {
+						libDirectory = getDirectory(location,
+							IPortletConstants.SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_HA_SAR);
+						if (libDirectory != null) {
+							libDirectory = new File(libDirectory, "lib"); //$NON-NLS-1$
+						} else {
+							// Tomcat adds portlet-api.jat automatically
+							/*File tomcatLib = new File(location,
 							IPortletConstants.TOMCAT_LIB);
-					if (tomcatLib != null && tomcatLib.isDirectory()) {
-						libDirectory = tomcatLib;
-					}*/
+							if (tomcatLib != null && tomcatLib.isDirectory()) {
+							libDirectory = tomcatLib;
+							}*/
+						}
+					}
 				}
 			}
 			return libDirectory;
