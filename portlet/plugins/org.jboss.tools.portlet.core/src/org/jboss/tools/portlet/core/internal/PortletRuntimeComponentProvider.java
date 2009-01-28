@@ -5,6 +5,8 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.wst.common.project.facet.core.runtime.IRuntimeComponent;
 import org.eclipse.wst.common.project.facet.core.runtime.IRuntimeComponentType;
@@ -12,6 +14,8 @@ import org.eclipse.wst.common.project.facet.core.runtime.IRuntimeComponentVersio
 import org.eclipse.wst.common.project.facet.core.runtime.RuntimeManager;
 import org.eclipse.wst.server.core.IRuntime;
 import org.eclipse.wst.server.core.internal.facets.RuntimeFacetComponentProviderDelegate;
+import org.jboss.ide.eclipse.as.core.server.IJBossServerConstants;
+import org.jboss.ide.eclipse.as.core.server.IJBossServerRuntime;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
@@ -28,7 +32,8 @@ public class PortletRuntimeComponentProvider extends
 	public List<IRuntimeComponent> getRuntimeComponents(final IRuntime runtime) {
 		final File location = runtime.getLocation().toFile();
 		final List<IRuntimeComponent> components = new ArrayList<IRuntimeComponent>();
-		if (isPortalPresent(location)) {
+		
+		if (isPortalPresent(location,runtime)) {
 			final IRuntimeComponent portalComponent = RuntimeManager
 					.createRuntimeComponent(PORTAL_VERSION_1, null);
 			components.add(portalComponent);
@@ -37,18 +42,27 @@ public class PortletRuntimeComponentProvider extends
 	}
 
 	
-	private static boolean isPortalPresent(final File location) {
+	private static boolean isPortalPresent(final File location, IRuntime runtime) {
 		boolean check = PortletCoreActivator.getDefault().getPluginPreferences().getBoolean(PortletCoreActivator.CHECK_RUNTIMES);
 		if (!check) {
 			return true;
 		}
-		// JBoss Portal server
-		if (exists(location, IPortletConstants.SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_SAR)) {
-			return true;
-		}
-		// JBoss portletcontainer
-		if (exists(location,IPortletConstants.SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL)) {
-			return true;
+		
+		IJBossServerRuntime jbossRuntime = (IJBossServerRuntime)runtime.loadAdapter(IJBossServerRuntime.class, new NullProgressMonitor());
+		if (jbossRuntime != null) {
+			// JBoss Portal server
+			IPath jbossLocation = runtime.getLocation();
+			IPath configPath = jbossLocation.append(IJBossServerConstants.SERVER).append(jbossRuntime.getJBossConfiguration());
+			File configFile = configPath.toFile();
+			if (exists(configFile,
+					IPortletConstants.SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_SAR)) {
+				return true;
+			}
+			// JBoss portletcontainer
+			if (exists(configFile,
+					IPortletConstants.SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL)) {
+				return true;
+			}
 		}
 		// Tomcat portletcontainer
 		File tomcatLib = new File(location,IPortletConstants.TOMCAT_LIB);

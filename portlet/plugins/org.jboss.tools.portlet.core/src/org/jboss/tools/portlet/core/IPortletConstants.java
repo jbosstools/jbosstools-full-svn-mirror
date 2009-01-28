@@ -71,9 +71,9 @@ public interface IPortletConstants {
 
 	static final String USER_LIBRARY_NAME = "userLibraryName"; //$NON-NLS-1$
 	
-	static final String SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_SAR = "server/default/deploy/jboss-portal.sar"; //$NON-NLS-1$
+	static final String SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_SAR = "deploy/jboss-portal.sar"; //$NON-NLS-1$
 
-	static final String SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL = "server/default/deploy/simple-portal"; //$NON-NLS-1$
+	static final String SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL = "deploy/simple-portal"; //$NON-NLS-1$
 
 	static final String TOMCAT_LIB = "lib"; //$NON-NLS-1$
 
