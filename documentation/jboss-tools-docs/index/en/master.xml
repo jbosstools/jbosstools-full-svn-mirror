@@ -47,13 +47,6 @@
         </indexentry>
 
         <indexentry>
-            <primaryie>jBPM Tools Reference Guide <ulink url="en/jbpm/html/index.html">(html)</ulink>
-                <ulink url="en/jbpm/html_single/index.html">(html single)</ulink>
-                <ulink url="en/jbpm/pdf/JBPM_Reference_Guide.pdf">(pdf)</ulink>
-            </primaryie>
-        </indexentry>
-
-        <indexentry>
             <primaryie>Hibernate Tools Reference Guide 
                 <ulink url="en/hibernatetools/html/index.html">(html)</ulink>
                 <ulink url="en/hibernatetools/html_single/index.html">(html single)</ulink>
