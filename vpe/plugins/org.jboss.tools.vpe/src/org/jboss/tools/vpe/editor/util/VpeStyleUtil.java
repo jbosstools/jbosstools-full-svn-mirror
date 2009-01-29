@@ -360,7 +360,7 @@ public class VpeStyleUtil {
 			int endPathIndex = urls[i].indexOf(CLOSE_BRACKET,
 					startPathIndex + 1);
 
-			if (startPathIndex == -1 || endPathIndex == -1) {
+			if (startPathIndex < 0 || endPathIndex < 0) {
 				continue;
 			}
 
@@ -491,9 +491,14 @@ public class VpeStyleUtil {
 			int startPathIndex = urls[i].indexOf(OPEN_BRACKET, startAttr);
 			int endPathIndex = urls[i].indexOf(CLOSE_BRACKET,
 					startPathIndex + 1);
+
+			if (startPathIndex < 0 || endPathIndex < 0) {
+				continue;
+			}
+
 			String filePath = urls[i].substring(startPathIndex + 1,
 					endPathIndex);
-			
+
 			IFile sourceFile = null;
 			try {
 				URL url1 = new URL(href_val);
