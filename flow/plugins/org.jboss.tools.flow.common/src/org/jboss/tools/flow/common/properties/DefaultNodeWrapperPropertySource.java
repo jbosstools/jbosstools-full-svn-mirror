@@ -1,50 +1,60 @@
 package org.jboss.tools.flow.common.properties;
 
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
-import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
-import org.jboss.tools.flow.common.wrapper.DefaultFlowWrapper;
+import org.jboss.tools.flow.common.wrapper.DefaultNodeWrapper;
 
-public class DefaultFlowPropertySource implements IPropertySource {
+public class DefaultNodeWrapperPropertySource extends WrapperPropertySource implements IPropertyId {
 	
-	private static final String NAME = "org.jboss.tools.flow.common.model.DefaultFlow.name";
-
-	private DefaultFlowWrapper wrapper = null;
+	private DefaultNodeWrapper wrapper = null;
 	private IPropertyDescriptor[] propertyDescriptors;
 	
-	public DefaultFlowPropertySource(DefaultFlowWrapper wrapper) {
+	public DefaultNodeWrapperPropertySource(DefaultNodeWrapper wrapper) {
+		super(wrapper);
 		this.wrapper = wrapper;
 	}
+	
 	public Object getEditableValue() {
-		return null;
+		return super.getEditableValue();
 	}
+	
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		if (propertyDescriptors == null) {
 			propertyDescriptors = new IPropertyDescriptor[] {
 				new TextPropertyDescriptor(NAME, "Name") {}
 			};
+			propertyDescriptors = merge(propertyDescriptors, super.getPropertyDescriptors());
 		}
 		return propertyDescriptors;
 	}
+	
 	public Object getPropertyValue(Object id) {
 		if (NAME.equals(id)) {
-			return wrapper.getName();
+			return wrapper.getName() != null ? wrapper.getName() : "";
+		} else {
+			return super.getPropertyValue(id);
 		}
-		return null;
 	}
+	
 	public boolean isPropertySet(Object id) {
 		if (NAME.equals(id)) {
 			return wrapper.getName() != null;
+		} else  {
+			return super.isPropertySet(id);
 		}
-		return false;
 	}
+	
 	public void resetPropertyValue(Object id) {
+		super.resetPropertyValue(id);
 	}
+	
 	public void setPropertyValue(Object id, Object value) {
 		if (NAME.equals(id)) {
 			if (value instanceof String) {
 				wrapper.setName((String)value);
 			}
+		} else {
+			super.setPropertyValue(id, value);
 		}
 	}
 }

@@ -1,50 +1,61 @@
 package org.jboss.tools.flow.common.properties;
 
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
-import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 import org.jboss.tools.flow.common.wrapper.DefaultContainerWrapper;
 
-public class DefaultContainerPropertySource implements IPropertySource {
+public class DefaultContainerWrapperPropertySource extends WrapperPropertySource implements IPropertyId {
 	
-	private static final String NAME = "org.jboss.tools.flow.common.model.DefaultContainer.name";
-
 	private DefaultContainerWrapper wrapper = null;
 	private IPropertyDescriptor[] propertyDescriptors;
 	
-	public DefaultContainerPropertySource(DefaultContainerWrapper wrapper) {
+	public DefaultContainerWrapperPropertySource(DefaultContainerWrapper wrapper) {
+		super(wrapper);
 		this.wrapper = wrapper;
 	}
+	
 	public Object getEditableValue() {
-		return null;
+		return super.getEditableValue();
 	}
+	
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		if (propertyDescriptors == null) {
 			propertyDescriptors = new IPropertyDescriptor[] {
 				new TextPropertyDescriptor(NAME, "Name") {}
 			};
+			propertyDescriptors = merge(propertyDescriptors, super.getPropertyDescriptors());
 		}
 		return propertyDescriptors;
 	}
+	
 	public Object getPropertyValue(Object id) {
 		if (NAME.equals(id)) {
 			return wrapper.getName();
+		} else {
+			return super.getPropertyValue(id);
 		}
-		return null;
 	}
+	
 	public boolean isPropertySet(Object id) {
 		if (NAME.equals(id)) {
 			return wrapper.getName() != null;
+		} else {
+			return super.isPropertySet(id);
 		}
-		return false;
 	}
+	
 	public void resetPropertyValue(Object id) {
+		super.resetPropertyValue(id);
 	}
+	
 	public void setPropertyValue(Object id, Object value) {
 		if (NAME.equals(id)) {
 			if (value instanceof String) {
 				wrapper.setName((String)value);
 			}
+		} else {
+			super.setPropertyValue(id, value);
 		}
 	}
+	
 }

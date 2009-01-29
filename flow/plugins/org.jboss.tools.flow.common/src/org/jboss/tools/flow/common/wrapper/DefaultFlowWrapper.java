@@ -4,13 +4,13 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.flow.common.model.DefaultFlow;
 import org.jboss.tools.flow.common.model.Flow;
 import org.jboss.tools.flow.common.model.Node;
-import org.jboss.tools.flow.common.properties.DefaultFlowPropertySource;
+import org.jboss.tools.flow.common.properties.DefaultFlowWrapperPropertySource;
 import org.jboss.tools.flow.common.strategy.AcceptsElementStrategy;
 
 public class DefaultFlowWrapper extends AbstractFlowWrapper {
 	
 	private AcceptsElementStrategy acceptsElementStrategy;
-	private DefaultFlowPropertySource propertySource;
+	private DefaultFlowWrapperPropertySource propertySource;
 	
 	public String getName() {
 		return ((DefaultFlow)getElement()).getName();
@@ -72,7 +72,7 @@ public class DefaultFlowWrapper extends AbstractFlowWrapper {
     
     private IPropertySource getPropertySource() {
     	if (propertySource == null) {
-    		propertySource = new DefaultFlowPropertySource(this);
+    		propertySource = new DefaultFlowWrapperPropertySource(this);
     	}
     	return propertySource;
     }

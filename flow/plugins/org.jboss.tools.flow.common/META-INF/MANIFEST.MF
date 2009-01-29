@@ -23,6 +23,7 @@ Export-Package: org.jboss.tools.flow.common;uses:="org.eclipse.core.runtime,org.
  org.jboss.tools.flow.common.figure,
  org.jboss.tools.flow.common.model,
  org.jboss.tools.flow.common.policy,
+ org.jboss.tools.flow.common.properties,
  org.jboss.tools.flow.common.registry,
  org.jboss.tools.flow.common.strategy,
  org.jboss.tools.flow.common.wrapper

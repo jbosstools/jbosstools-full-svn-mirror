@@ -5,13 +5,17 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.flow.common.model.Connection;
 import org.jboss.tools.flow.common.model.DefaultConnection;
 import org.jboss.tools.flow.common.model.Node;
+import org.jboss.tools.flow.common.properties.DefaultConnectionWrapperPropertySource;
 
 
 public class DefaultConnectionWrapper extends AbstractConnectionWrapper {
 	
+	private DefaultConnectionWrapperPropertySource propertySource;
+
 	public Connection getConnection() {
 	    return (Connection)getElement();
 	}
@@ -74,4 +78,20 @@ public class DefaultConnectionWrapper extends AbstractConnectionWrapper {
 		}
 		return result;
 	}
+	
+    @SuppressWarnings("unchecked")
+	public Object getAdapter(Class adapter) {
+    	if (adapter == IPropertySource.class) {
+    		return getPropertySource();
+    	}
+    	return super.getAdapter(adapter);
+    }
+    
+    private IPropertySource getPropertySource() {
+    	if (propertySource == null) {
+    		propertySource = new DefaultConnectionWrapperPropertySource(this);
+    	}
+    	return propertySource;
+    }
+    
 }

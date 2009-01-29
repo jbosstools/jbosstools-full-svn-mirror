@@ -4,7 +4,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.flow.common.model.Connection;
 import org.jboss.tools.flow.common.model.Node;
-import org.jboss.tools.flow.common.properties.DefaultNodePropertySource;
+import org.jboss.tools.flow.common.properties.DefaultNodeWrapperPropertySource;
 import org.jboss.tools.flow.common.strategy.AcceptsIncomingConnectionStrategy;
 import org.jboss.tools.flow.common.strategy.AcceptsOutgoingConnectionStrategy;
 
@@ -12,7 +12,7 @@ public class DefaultNodeWrapper extends AbstractNodeWrapper {
 	
 	private AcceptsIncomingConnectionStrategy incomingConnectionStrategy;
 	private AcceptsOutgoingConnectionStrategy outgoingConnectionStrategy;
-	private DefaultNodePropertySource propertySource;
+	private DefaultNodeWrapperPropertySource propertySource;
 
 	public void setNode(Node node) {
 		setElement(node);
@@ -117,7 +117,7 @@ public class DefaultNodeWrapper extends AbstractNodeWrapper {
     
     private IPropertySource getPropertySource() {
     	if (propertySource == null) {
-    		propertySource = new DefaultNodePropertySource(this);
+    		propertySource = new DefaultNodeWrapperPropertySource(this);
     	}
     	return propertySource;
     }

@@ -8,7 +8,7 @@ import org.jboss.tools.flow.common.model.Connection;
 import org.jboss.tools.flow.common.model.Container;
 import org.jboss.tools.flow.common.model.Flow;
 import org.jboss.tools.flow.common.model.Node;
-import org.jboss.tools.flow.common.properties.DefaultContainerPropertySource;
+import org.jboss.tools.flow.common.properties.DefaultContainerWrapperPropertySource;
 import org.jboss.tools.flow.common.strategy.AcceptsElementStrategy;
 import org.jboss.tools.flow.common.strategy.AcceptsIncomingConnectionStrategy;
 import org.jboss.tools.flow.common.strategy.AcceptsOutgoingConnectionStrategy;
@@ -18,7 +18,7 @@ public class DefaultContainerWrapper extends AbstractContainerWrapper {
 	private AcceptsElementStrategy acceptsElementStrategy;
 	private AcceptsIncomingConnectionStrategy incomingConnectionStrategy;
 	private AcceptsOutgoingConnectionStrategy outgoingConnectionStrategy;
-	private DefaultContainerPropertySource propertySource;
+	private DefaultContainerWrapperPropertySource propertySource;
 
 	protected void internalSetName(String name) {
 		getNode().setName(name);
@@ -134,7 +134,7 @@ public class DefaultContainerWrapper extends AbstractContainerWrapper {
     
     private IPropertySource getPropertySource() {
     	if (propertySource == null) {
-    		propertySource = new DefaultContainerPropertySource(this);
+    		propertySource = new DefaultContainerWrapperPropertySource(this);
     	}
     	return propertySource;
     }
