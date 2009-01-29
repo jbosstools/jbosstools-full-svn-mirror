@@ -36,7 +36,6 @@ import org.eclipse.draw2d.SWTGraphics;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.ContextMenuProvider;
 import org.eclipse.gef.DefaultEditDomain;
-import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.KeyHandler;
 import org.eclipse.gef.KeyStroke;
 import org.eclipse.gef.LayerConstants;
@@ -73,7 +72,7 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.jboss.tools.flow.common.Activator;
 import org.jboss.tools.flow.common.action.HorizontalAutoLayoutAction;
 import org.jboss.tools.flow.common.action.VerticalAutoLayoutAction;
-import org.jboss.tools.flow.common.editpart.DefaultEditPartFactory;
+import org.jboss.tools.flow.common.editpart.EditPartFactory;
 import org.jboss.tools.flow.common.registry.LanguageRegistry;
 
 /**
@@ -204,8 +203,8 @@ public abstract class GenericModelEditor extends GraphicalEditorWithPalette {
 				getGraphicalViewer());
 	}
 
-    protected EditPartFactory createEditPartFactory() {
-        return new DefaultEditPartFactory();
+    protected org.eclipse.gef.EditPartFactory createEditPartFactory() {
+        return new EditPartFactory();
     }
 
 	protected void initializeGraphicalViewer() {
