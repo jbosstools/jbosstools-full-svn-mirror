@@ -90,7 +90,7 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 			String  tldVersion = TLDVersionHelper.getTldVersion(sourceNodeTaglib.getUri(), sourceNodeTaglib.getPrefix(), 
 								pageContext.getSourceBuilder().getStructuredTextViewer().getDocument());
 			
-			double tldVersionNumber =0;
+			double tldVersionNumber;
 			if(tldVersion!=null) {
 				
 				tldVersionNumber = stringVersionToDouble(tldVersion);
@@ -116,7 +116,9 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 				
 					tldVersionNumber = stringVersionToDouble(tldVersion);
 				} else {
-					tldVersionNumber = 0;
+					// if the version of the TLD-file is not specified or the file is not found
+					// then assume it is the last version
+					tldVersionNumber = Double.MAX_VALUE;
 				}
 			}
 			if((startValue<=tldVersionNumber)&&
