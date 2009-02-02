@@ -7,8 +7,8 @@
         <pubdate>Last published: <?dbtimestamp format="B d, Y"?></pubdate>
         <copyright>
             <year>2007</year>
-            <year>2008</year>
-            <holder>JBoss, a division of Red Hat Inc.</holder>
+            <year>2009</year>
+            <holder>JBoss, a division of Red Hat</holder>
         </copyright>
     </bookinfo>
     <index>

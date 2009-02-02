@@ -205,7 +205,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </listitem>
    <listitem>
     <para>Then run in console:</para>
-    <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-linux-gtk-2.0.0.Cr2.jar
+    <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-linux-gtk-2.0.0.GA.jar
 ]]></programlisting>
    </listitem>
    <listitem>
@@ -458,8 +458,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      <para>Get Eclipse and Web Tools</para>
     </listitem>
    </itemizedlist>
-   <para>The currant version of JBoss Tools (3.0.0.CR1) targets at Eclipse 3.4/Ganymede and WTP
-    3.0.</para>
+   <para>The current version of JBoss Tools (3.0.0.GA) targets at Eclipse 3.4.2/Ganymede SR2 and WTP
+    3.0.3+</para>
 
    <tip>
     <title>Tip:</title>
