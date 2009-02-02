@@ -33,11 +33,11 @@
          <pubdate>April 2008</pubdate>
 	                       <copyright>
 			             <year>2007</year>
-	                           <year>2008</year>
-	                           <holder>JBoss, a division of Red Hat Inc.</holder>
+	                           <year>2009</year>
+	                           <holder>JBoss, a division of Red Hat</holder>
 	                       </copyright>
           <releaseinfo>
-            Version: 5.0.0.MR2
+            Version: 5.0.0.M5
           </releaseinfo>
 <abstract>
    <title/>
