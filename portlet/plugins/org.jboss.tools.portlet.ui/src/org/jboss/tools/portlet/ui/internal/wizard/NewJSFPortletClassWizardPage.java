@@ -191,6 +191,9 @@ public class NewJSFPortletClassWizardPage extends NewJavaClassWizardPage {
 	
 	protected void updateProject() {
 		String projectName = projectNameCombo.getText();
+		if (projectName == null || projectName.trim().length() <= 0) {
+			return;
+		}
 		IProject project = ProjectUtilities.getProject(projectName);
 		try {
 			boolean isSeamPortlet = FacetedProjectFramework.hasProjectFacet(project, IPortletConstants.SEAMPORTLET_FACET_ID);
