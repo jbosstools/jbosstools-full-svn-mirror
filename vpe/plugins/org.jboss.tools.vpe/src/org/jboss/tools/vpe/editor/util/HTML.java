@@ -83,6 +83,8 @@ public final class HTML {
 	public static final String ATTR_CELLPADDING = "cellpadding"; //$NON-NLS-1$
 	public static final String ATTR_WIDTH = "width"; //$NON-NLS-1$
 	public static final String ATTR_HEIGHT = "height"; //$NON-NLS-1$
+	public static final String ATTR_HSPACE = "hspace"; //$NON-NLS-1$
+	public static final String ATTR_VSPACE = "vspace"; //$NON-NLS-1$
 	public static final String ATTR_BORDER = "border"; //$NON-NLS-1$
 	public static final String ATTR_FOR = "FOR"; //$NON-NLS-1$
 	public static final String ATTR_DIR = "dir"; //$NON-NLS-1$
