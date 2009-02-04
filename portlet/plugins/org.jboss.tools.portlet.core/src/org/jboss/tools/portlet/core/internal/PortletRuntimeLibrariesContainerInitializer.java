@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -44,22 +43,13 @@ import org.jboss.tools.portlet.core.PortletCoreActivator;
 public class PortletRuntimeLibrariesContainerInitializer extends
 		AbstractClasspathContainerInitializer {
 
-	private IJavaProject project;
-
-	@Override
-	public void initialize(IPath containerPath, IJavaProject project)
-			throws CoreException {
-		this.project = project;
-		super.initialize(containerPath, project);
-	}
-
 	public String getDescription(IPath containerPath, IJavaProject project) {
 		return Messages.PortletLibrariesContainerInitializer_JBoss_Portlet_Classpath_Container_Initializer;
 	}
 
 	@Override
 	protected AbstractClasspathContainer createClasspathContainer(IPath path) {
-		return new PortletRuntimeClasspathContainer(path, project);
+		return new PortletRuntimeClasspathContainer(path, javaProject);
 	}
 
 	@Override
@@ -209,6 +199,11 @@ public class PortletRuntimeLibrariesContainerInitializer extends
 				return file;
 			}
 			return null;
+		}
+		
+		@Override
+		public void refresh() {
+			new PortletRuntimeClasspathContainer(path,javaProject).install();
 		}
 	}
 }

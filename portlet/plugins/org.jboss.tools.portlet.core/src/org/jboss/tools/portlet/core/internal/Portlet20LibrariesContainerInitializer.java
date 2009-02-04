@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -27,6 +26,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.jboss.ide.eclipse.as.classpath.core.jee.AbstractClasspathContainer;
 import org.jboss.ide.eclipse.as.classpath.core.jee.AbstractClasspathContainerInitializer;
+import org.jboss.ide.eclipse.as.classpath.core.jee.J2EE13ClasspathContainerInitializer.J2EE13ClasspathContainer;
 import org.jboss.ide.eclipse.as.classpath.core.xpl.ClasspathDecorations;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.Messages;
@@ -39,22 +39,13 @@ import org.jboss.tools.portlet.core.PortletCoreActivator;
 public class Portlet20LibrariesContainerInitializer extends
 		AbstractClasspathContainerInitializer {
 
-	private IJavaProject project;
-
-	@Override
-	public void initialize(IPath containerPath, IJavaProject project)
-			throws CoreException {
-		this.project = project;
-		super.initialize(containerPath, project);
-	}
-
 	public String getDescription(IPath containerPath, IJavaProject project) {
 		return Messages.Portlet20LibrariesContainerInitializer_JBoss_Portlet_Classpath_Container_Initializer;
 	}
 
 	@Override
 	protected AbstractClasspathContainer createClasspathContainer(IPath path) {
-		return new Portlet20ClasspathContainer(path, project);
+		return new Portlet20ClasspathContainer(path, javaProject);
 	}
 
 	@Override
@@ -133,6 +124,11 @@ public class Portlet20LibrariesContainerInitializer extends
 								Messages.BasePortletClasspathContainer_Error_loading_classpath_container);
 			}
 			return null;
+		}
+
+		@Override
+		public void refresh() {
+			new Portlet20ClasspathContainer(path,javaProject).install();
 		}
 
 	}

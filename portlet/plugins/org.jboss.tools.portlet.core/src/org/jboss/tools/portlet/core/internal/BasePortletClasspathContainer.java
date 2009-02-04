@@ -10,15 +10,13 @@ public abstract class BasePortletClasspathContainer extends
 	protected static final String PORTLET_FOLDER = "portlet"; //$NON-NLS-1$
 	public final static String SUFFIX = PORTLET_FOLDER;//$NON-NLS-1$
 	public final static String PREFIX = "org.jboss.tools.portlet.core"; //$NON-NLS-1$
-	private IJavaProject project;
 
 	public BasePortletClasspathContainer(IJavaProject project, IPath path,
 			String description, String suffix) {
-		super(path, description, suffix);
-		this.project = project;
+		super(path, description, suffix,  project);
 	}
 
 	public IJavaProject getProject() {
-		return project;
+		return javaProject;
 	}
 }

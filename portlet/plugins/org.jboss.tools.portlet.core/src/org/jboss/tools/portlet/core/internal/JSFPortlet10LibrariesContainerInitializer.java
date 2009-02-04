@@ -44,7 +44,7 @@ public class JSFPortlet10LibrariesContainerInitializer extends
 
 	@Override
 	protected AbstractClasspathContainer createClasspathContainer(IPath path) {
-		return new JSFPortlet10ClasspathContainer(path);
+		return new JSFPortlet10ClasspathContainer(path, javaProject);
 	}
 
 	@Override
@@ -57,8 +57,8 @@ public class JSFPortlet10LibrariesContainerInitializer extends
 		public final static String SUFFIX = PortletCoreActivator.JSFPORTLET_FOLDER;//$NON-NLS-1$
 		public final static String PREFIX = "org.jboss.tools.portlet.core"; //$NON-NLS-1$
 
-		public JSFPortlet10ClasspathContainer(IPath path) {
-			super(path, Messages.JSFPortlet10LibrariesContainerInitializer_JBoss_JSF_Portlet_Libraries_v1_0, SUFFIX);
+		public JSFPortlet10ClasspathContainer(IPath path, IJavaProject javaProject) {
+			super(path, Messages.JSFPortlet10LibrariesContainerInitializer_JBoss_JSF_Portlet_Libraries_v1_0, SUFFIX, javaProject);
 		}
 
 		@Override
@@ -121,6 +121,11 @@ public class JSFPortlet10LibrariesContainerInitializer extends
 			}
 
 			return entries.toArray(new IClasspathEntry[entries.size()]);
+		}
+		
+		@Override
+		public void refresh() {
+			new JSFPortlet10ClasspathContainer(path,javaProject).install();
 		}
 	}
 }
