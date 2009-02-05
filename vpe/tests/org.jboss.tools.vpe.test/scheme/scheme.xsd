@@ -72,7 +72,11 @@
             <xsd:element minOccurs="0" name="em" type="vpe:HTML_EM" form="unqualified" maxOccurs="unbounded"/>
             <xsd:element minOccurs="0" name="i" type="vpe:HTML_I" form="unqualified" maxOccurs="unbounded"/>
             <xsd:element minOccurs="0" name="ol" type="vpe:HTML_OL" form="unqualified" maxOccurs="unbounded"/>
-          
+            <xsd:element minOccurs="0" name="form" type="vpe:HTML_FORM" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="frame" type="vpe:HTML_FRAME" form="unqualified" maxOccurs="unbounded"/>
+            <xsd:element minOccurs="0" name="iframe" type="vpe:HTML_IFRAME" form="unqualified" maxOccurs="unbounded"/>
+            
+            
             <!-- VPE tags -->
             <xsd:element minOccurs="0" name="panellayout" type="vpe:PANELLAYOT"/>
             <xsd:element minOccurs="0" name="list" type="vpe:LIST"/>
@@ -519,7 +523,31 @@
         <xsd:attribute name="width" use="optional" type="xsd:string"/>
         <xsd:attribute name="title" use="optional" type="xsd:string"/>
     </xsd:complexType>
-<!--  -->
+<!--  -->    
+    <xsd:complexType name="HTML_FRAME">
+        <xsd:attribute name="frameborder" use="optional" type="xsd:string"/>
+        <xsd:attribute name="longdesc" use="optional" type="xsd:string"/>
+        <xsd:attribute name="marginheight" use="optional" type="xsd:string"/>
+        <xsd:attribute name="marginwidth" use="optional" type="xsd:string"/>
+        <xsd:attribute name="name" use="optional" type="xsd:string"/>
+        <xsd:attribute name="noresize" use="optional" type="xsd:string"/>
+        <xsd:attribute name="scrolling" use="optional" type="xsd:string"/>
+        <xsd:attribute name="src" use="optional" type="xsd:string" />
+    </xsd:complexType>
+    <!--  -->    
+    <xsd:complexType name="HTML_IFRAME">
+        <xsd:attribute name="align" use="optional" type="xsd:string"/>
+        <xsd:attribute name="frameborder" use="optional" type="xsd:string"/>
+        <xsd:attribute name="height" use="optional" type="xsd:string"/>
+        <xsd:attribute name="longdesc" use="optional" type="xsd:string"/>
+        <xsd:attribute name="marginheight" use="optional" type="xsd:string"/>
+        <xsd:attribute name="marginwidth" use="optional" type="xsd:string"/>
+        <xsd:attribute name="name" use="optional" type="xsd:string"/>
+        <xsd:attribute name="scrolling" use="optional" type="xsd:string"/>
+        <xsd:attribute name="src" use="optional" type="xsd:string" />
+        <xsd:attribute name="width" use="optional" type="xsd:string"/>
+    </xsd:complexType>
+<!--  -->    
     <xsd:complexType name="HTML_OL"/>
 <!--  -->
     <xsd:complexType name="HTML_I"/>
@@ -533,6 +561,8 @@
     <xsd:complexType name="HTML_UL"/>   
 <!--  -->
     <xsd:complexType name="HTML_P"/>
+ <!--  -->
+    <xsd:complexType name="HTML_FORM"/>
 <!--  -->
     <xsd:complexType name="DEFAULT_TEMPLATE">
         <xsd:sequence>

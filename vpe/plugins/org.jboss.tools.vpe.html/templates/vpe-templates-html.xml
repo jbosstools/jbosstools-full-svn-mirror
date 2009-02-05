@@ -809,7 +809,8 @@
 
 	<vpe:tag name="frame" case-sensitive="no">
 		<vpe:template children="no" modify="no">
-			<frame src="{src(@src)}" bordercolor="{@bordercolor}"
+			<frame src="{src(@src)}" longdesc="{@longdesc}" marginheight="{@marginheight}"
+				marginwidth="{@marginwidth}"
 				frameborder="{@frameborder}" name="{@name}" noresize="{@noresize}"
 				scrolling="{@scrolling}" />
 		</vpe:template>
@@ -1085,8 +1086,9 @@
 	<vpe:tag name="iframe" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
 			<iframe src="{src(@src)}" align="{@align}" frameborder="{@frameborder}"
-				height="{@height}" hspace="{@hspace}" name="{@name}" scrolling="{@scrolling}"
-				vspace="{@vspace}" width="{@width}" />
+				height="{@height}"  name="{@name}" scrolling="{@scrolling}"
+				width="{@width}" longdesc="{@longdesc}" marginheight="{@marginheight}"
+				marginwidth="{@marginwidth}"/>
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 			</vpe:dnd>
@@ -1183,7 +1185,7 @@
 			<vpe:template children="no" modify="no">
 				<!--				<img src="{@src}" width="20" height="20" />-->
 				<input type="image" value="{@value}" class="{@class}" style="{@style}"
-					size="{@size}" disabled="{@disabled}" width="{@width}" height="{@height}" border="{@border}" dir="{@dir}" src="{src(@src)}" />
+					size="{@size}" disabled="{@disabled}" border="{@border}" dir="{@dir}" src="{src(@src)}" />
 			</vpe:template>
 		</vpe:if>
 		<vpe:template children="no" modify="no">
@@ -1421,11 +1423,13 @@
 	<vpe:template children="yes" modify="no">
 		<vpe:copy
 			attrs="align,classid,code,codebase,codetype,data,height,hspace,type,vspace,width,class,id,dir" />
-		<vpe:drop container="yes">
-			<vpe:container-child tag-name="param" />
-			<vpe:container-child tag-name="object" />
-			<vpe:container-child tag-name="embed" />
-		</vpe:drop>
+		<vpe:dnd>
+			<vpe:drop container="yes">
+				<vpe:container-child tag-name="param" />
+				<vpe:container-child tag-name="object" />
+				<vpe:container-child tag-name="embed" />		
+			</vpe:drop>
+		</vpe:dnd>
 	</vpe:template>
 	</vpe:tag>
 	
