@@ -6,6 +6,10 @@ import org.jboss.tools.flow.common.figure.IFigureFactory;
 import org.jboss.tools.flow.common.figure.NodeFigureFactory;
 import org.jboss.tools.flow.common.model.Element;
 import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
+import org.jboss.tools.flow.common.wrapper.ContainerWrapper;
+import org.jboss.tools.flow.common.wrapper.FlowWrapper;
+import org.jboss.tools.flow.common.wrapper.LabelWrapper;
+import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 import org.jboss.tools.flow.common.wrapper.Wrapper;
 
 public class EditPartFactory implements org.eclipse.gef.EditPartFactory {
@@ -13,16 +17,84 @@ public class EditPartFactory implements org.eclipse.gef.EditPartFactory {
     public EditPart createEditPart(EditPart context, Object model) {
         EditPart result = null;
         if (!(model instanceof Wrapper)) return result;
-        Object element = ((Wrapper)model).getElement();
-        if (element != null && element instanceof Element) {
-        	result = createEditPart((Element)element);
-        } else if (model instanceof ConnectionWrapper) {
-        	result = new ConnectionEditPart();
-        }
+        result = createEditPart((Wrapper)model);
         if (result != null) {
         	result.setModel(model);
         }
         return result;
+    }
+    
+    protected EditPart createEditPart(Wrapper wrapper) {
+    	EditPart result = null;
+    	if (wrapper instanceof FlowWrapper) {
+    		result = createFlowEditPart((FlowWrapper)wrapper);
+    	} else if (wrapper instanceof ContainerWrapper) {
+    		result = createContainerEditPart((ContainerWrapper)wrapper);
+    	} else if (wrapper instanceof NodeWrapper) {
+    		result = createNodeEditPart((NodeWrapper)wrapper);
+    	} else if (wrapper instanceof ConnectionWrapper) {
+    		result = createConnectionEditPart((ConnectionWrapper)wrapper);
+    	} else if (wrapper instanceof LabelWrapper) {
+    		result = createLabelEditPart((LabelWrapper)wrapper);
+    	}
+    	return result;
+    }
+    
+    protected EditPart createFlowEditPart(FlowWrapper wrapper) {
+    	return createFlowEditPart(wrapper.getElement());
+    }
+    
+    protected EditPart createFlowEditPart(Element element) {
+    	return new RootEditPart();
+    }
+    
+    protected EditPart createContainerEditPart(ContainerWrapper wrapper) {
+    	Element element = wrapper.getElement();
+    	if (element == null) {
+    		return null;
+    	} else {
+    		return createContainerEditPart(element);
+    	}
+    }
+    
+    protected EditPart createContainerEditPart(Element element) {
+    	return new ContainerEditPart();
+    }
+    
+    protected EditPart createNodeEditPart(NodeWrapper wrapper) {
+    	Element element = wrapper.getElement();
+    	if (element == null) {
+    		return null;
+    	} else {
+    		return createNodeEditPart(element);
+    	}
+    }
+    
+    protected EditPart createNodeEditPart(Element element) {
+		IConfigurationElement configurationElement = 
+			(IConfigurationElement)element.getMetaData("configurationElement");
+		if (configurationElement == null) return null;
+    	NodeEditPart result = new NodeEditPart();
+    	IFigureFactory figureFactory = new NodeFigureFactory(configurationElement);
+    	result.setFigureFactory(figureFactory);
+    	return result;
+    }
+    
+    protected EditPart createConnectionEditPart(ConnectionWrapper wrapper) {
+    	Element element = wrapper.getElement();
+    	if (element == null) {
+    		return null;
+    	} else {
+    		return createConnectionEditPart(element);
+    	}
+    }
+    
+    protected EditPart createConnectionEditPart(Element element) {
+    	return new ConnectionEditPart();
+    }
+    
+    protected EditPart createLabelEditPart(LabelWrapper wrapper) {
+    	return new LabelEditPart();
     }
     
 	protected EditPart createEditPart(Element element) {
@@ -45,26 +117,4 @@ public class EditPartFactory implements org.eclipse.gef.EditPartFactory {
 		}
 	}
 	
-    public EditPart createFlowEditPart(Element element) {
-    	return new RootEditPart();
-    }
-    
-    public EditPart createContainerEditPart(Element element) {
-    	return new ContainerEditPart();
-    }
-    
-    public EditPart createNodeEditPart(Element element) {
-		IConfigurationElement configurationElement = 
-			(IConfigurationElement)element.getMetaData("configurationElement");
-		if (configurationElement == null) return null;
-    	NodeEditPart result = new NodeEditPart();
-    	IFigureFactory figureFactory = new NodeFigureFactory(configurationElement);
-    	result.setFigureFactory(figureFactory);
-    	return result;
-    }
-    
-    public EditPart createConnectionEditPart(Element element) {
-    	return new ConnectionEditPart();
-    }
-    
 }

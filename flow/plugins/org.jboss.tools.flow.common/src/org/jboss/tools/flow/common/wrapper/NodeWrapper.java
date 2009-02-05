@@ -27,12 +27,6 @@ import org.eclipse.draw2d.geometry.Rectangle;
  */
 public interface NodeWrapper extends Wrapper {
 	
-	static final int ADD_INCOMING_CONNECTION = 1;
-	static final int REMOVE_INCOMING_CONNECTION = 2;
-	static final int ADD_OUTGOING_CONNECTION = 3;
-	static final int REMOVE_OUTGOING_CONNECTION = 4;
-	static final int CHANGE_VISUAL = 5;
-    
     String getId();
     String getName();
     void setName(String name);

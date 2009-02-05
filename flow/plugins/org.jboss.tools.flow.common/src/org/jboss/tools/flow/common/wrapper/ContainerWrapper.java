@@ -20,10 +20,6 @@ import java.util.List;
 
 public interface ContainerWrapper extends Wrapper {
 	
-	int ADD_ELEMENT = 1;
-	int REMOVE_ELEMENT = 2;
-	int CHANGE_VISUAL = 3;
-
     void addElement(NodeWrapper element);
     
     void localAddElement(NodeWrapper element);

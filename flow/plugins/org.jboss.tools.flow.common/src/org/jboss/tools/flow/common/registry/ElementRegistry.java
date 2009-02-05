@@ -15,9 +15,11 @@ import org.jboss.tools.flow.common.model.Node;
 import org.jboss.tools.flow.common.strategy.AcceptsElementStrategy;
 import org.jboss.tools.flow.common.strategy.AcceptsIncomingConnectionStrategy;
 import org.jboss.tools.flow.common.strategy.AcceptsOutgoingConnectionStrategy;
+import org.jboss.tools.flow.common.wrapper.ConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.DefaultConnectionWrapper;
 import org.jboss.tools.flow.common.wrapper.DefaultContainerWrapper;
 import org.jboss.tools.flow.common.wrapper.DefaultFlowWrapper;
+import org.jboss.tools.flow.common.wrapper.DefaultLabelWrapper;
 import org.jboss.tools.flow.common.wrapper.DefaultNodeWrapper;
 import org.jboss.tools.flow.common.wrapper.Wrapper;
 
@@ -63,8 +65,9 @@ public class ElementRegistry {
 			return null;
 		}
 		((Element)element).setMetaData("configurationElement", configurationElement);
-		Wrapper result = new DefaultConnectionWrapper();
+		ConnectionWrapper result = new DefaultConnectionWrapper();
 		result.setElement((Element)element);
+		result.setLabel(new DefaultLabelWrapper((Element)element));
 		return result;
 	}
 	

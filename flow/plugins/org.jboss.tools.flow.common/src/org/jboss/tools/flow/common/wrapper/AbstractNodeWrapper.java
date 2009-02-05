@@ -45,8 +45,7 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
     private transient Rectangle constraint;
     private List<ConnectionWrapper> incomingConnections = new ArrayList<ConnectionWrapper>();
     private List<ConnectionWrapper> outgoingConnections = new ArrayList<ConnectionWrapper>();
-    private transient List<ModelListener> listeners = new ArrayList<ModelListener>();
-    
+   
 	public void setConstraint(Rectangle constraint) {
 	    this.constraint = constraint;
 		internalSetConstraint(constraint);
@@ -138,21 +137,6 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 	}
 
 	protected void internalSetName(String name) {
-	}
-
-	public void addListener(ModelListener listener) {
-		listeners.add(listener);
-	}
-
-	public void removeListener(ModelListener listener) {
-		listeners.remove(listener);
-	}
-
-	protected void notifyListeners(int change, Object object) {
-		ModelEvent event = new ModelEvent(change, object);
-		for (ModelListener listener: listeners) {
-			listener.modelChanged(event);
-		}
 	}
 
 }

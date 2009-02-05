@@ -28,14 +28,12 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.ManhattanConnectionRouter;
 import org.eclipse.draw2d.ShortestPathConnectionRouter;
 import org.eclipse.draw2d.XYLayout;
-import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.LayerConstants;
 import org.eclipse.gef.SnapToGrid;
 import org.eclipse.gef.SnapToHelper;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gef.editpolicies.RootComponentEditPolicy;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.jboss.tools.flow.common.policy.ElementContainerLayoutEditPolicy;
 import org.jboss.tools.flow.common.wrapper.ContainerWrapper;
@@ -86,15 +84,6 @@ public class RootEditPart extends AbstractGraphicalEditPart implements ModelList
     public void modelChanged(ModelEvent event) {
         if (event.getChange() == ContainerWrapper.ADD_ELEMENT) {
         	refreshChildren();
-        	Object changedObject = event.getChangedObject();
-        	if (changedObject != null) {
-        		EditPart editPart = (EditPart)getViewer().getEditPartRegistry().get(changedObject);
-        		if (editPart instanceof ElementEditPart) {
-        			((ElementEditPart)editPart).performDirectEdit();
-        			// force selection to update the properties view
-        			getViewer().setSelection(new StructuredSelection(editPart));
-        		}
-        	}
         } else if (event.getChange() == ContainerWrapper.REMOVE_ELEMENT) {
             refreshChildren();
         } else if (event.getChange() == FlowWrapper.CHANGE_VISUAL) {
