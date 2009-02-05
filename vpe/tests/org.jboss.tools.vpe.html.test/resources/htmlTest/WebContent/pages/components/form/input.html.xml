@@ -17,7 +17,7 @@
 
 	</test>
 	<test id="image">
-		<INPUT WIDTH="40" TYPE="image" HEIGHT="40" CLASS="imageClass"
+		<INPUT TYPE="image" CLASS="imageClass"
 			SRC="/.*ve/unresolved_image.gif/" STYLE="color: red; -moz-user-modify: read-only;" />
 	</test>
 	<test id="password">
