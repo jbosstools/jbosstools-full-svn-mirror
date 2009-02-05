@@ -187,6 +187,7 @@
         <xsd:attribute name="class" use="required" type="xsd:string"/>
         <xsd:attribute name="dir" use="optional" type="xsd:string"/>
         <xsd:attribute name="title" use="optional" type="xsd:string"/>
+        <xsd:attribute name="value" use="optional" type="xsd:string"/>
     </xsd:complexType>
 <!--  -->    
     <xsd:complexType name="TEXT-FORMATING">
