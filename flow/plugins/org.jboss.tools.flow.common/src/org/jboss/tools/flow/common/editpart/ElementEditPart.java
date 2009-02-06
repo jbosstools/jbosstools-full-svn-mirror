@@ -104,6 +104,7 @@ public abstract class ElementEditPart extends AbstractGraphicalEditPart implemen
         } else if (event.getChange() == NodeWrapper.REMOVE_INCOMING_CONNECTION) {
         	refreshTargetConnections();
         } else if (event.getChange() == NodeWrapper.ADD_OUTGOING_CONNECTION) {
+        	System.out.println("first: " + System.currentTimeMillis());
             refreshSourceConnections();
         } else if (event.getChange() == NodeWrapper.REMOVE_OUTGOING_CONNECTION) {
         	refreshSourceConnections();
