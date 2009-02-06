@@ -108,6 +108,7 @@
 			regexpmapper below) 
 		-->
 		<prop2pot srcDir="${jbt.srcdir}" dstDir="po" 
+			whenEmptyString="${prop2pot_whenEmptyString}"
 			includesfile="prop2potincludes.txt">
 			<!-- we currently need to include properties from the following base directories:
 				src/main
@@ -338,7 +339,7 @@
 			destfile="${jardir}/plugins/${plugin}.nl-${locale}_${PLUGIN_VERSION}.jar" 
 			filesonly="true"
 			update="false" 
-			whenmanifestonly="skip"
+			whenmanifestonly="${fragment_whenManifestOnly}"
 			duplicate="fail">
 			<fileset dir="${plugindir}" includes="**/*_${locale}.properties" erroronmissingdir="false"/>
 			<manifest>
