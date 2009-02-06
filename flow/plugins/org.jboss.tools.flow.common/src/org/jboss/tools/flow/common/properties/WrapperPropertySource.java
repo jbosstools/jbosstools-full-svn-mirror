@@ -59,6 +59,7 @@ public class WrapperPropertySource implements IPropertySource {
 	public void setPropertyValue(Object id, Object value) {
 		if (elementPropertySource != null) {
 			elementPropertySource.setPropertyValue(id, value);
+			wrapper.notifyListeners(Wrapper.CHANGE_PROPERTY, id);
 		}
 	}
 	

@@ -1,10 +1,11 @@
 package org.jboss.tools.flow.common.wrapper;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.flow.common.model.Element;
 
 
-public interface Wrapper extends IAdaptable {
+public interface Wrapper extends IAdaptable, IPropertySource {
 	
 	int ADD_INCOMING_CONNECTION = 1;
 	int REMOVE_INCOMING_CONNECTION = 2;
@@ -13,6 +14,7 @@ public interface Wrapper extends IAdaptable {
 	int CHANGE_VISUAL = 5;
 	int ADD_ELEMENT = 6;
 	int REMOVE_ELEMENT = 7;
+	int CHANGE_PROPERTY = 8;
 
     
 
@@ -21,6 +23,6 @@ public interface Wrapper extends IAdaptable {
 	
     void addListener(ModelListener listener);
     void removeListener(ModelListener listener);
-
+    void notifyListeners(int changeId, Object changedObject);
 
 }

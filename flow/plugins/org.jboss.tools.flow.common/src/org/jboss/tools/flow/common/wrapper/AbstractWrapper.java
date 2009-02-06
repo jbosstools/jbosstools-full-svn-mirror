@@ -3,6 +3,8 @@ package org.jboss.tools.flow.common.wrapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.ui.views.properties.IPropertyDescriptor;
+import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.flow.common.model.Element;
 
 public abstract class AbstractWrapper implements Wrapper {
@@ -25,13 +27,56 @@ public abstract class AbstractWrapper implements Wrapper {
 	public void removeListener(ModelListener listener) {
 		listeners.remove(listener);
 	}
-
-	protected void notifyListeners(int change, Object object) {
+	
+	public void notifyListeners(int change, Object object) {
 		ModelEvent event = new ModelEvent(change, object);
 		for (ModelListener listener: listeners) {
 			listener.modelChanged(event);
 		}
 	}
+
+	public Object getEditableValue() {
+		if (getPropertySource() != null) {
+			getPropertySource().getEditableValue();
+		}
+		return null;
+	}
+
+	public IPropertyDescriptor[] getPropertyDescriptors() {
+		if (getPropertySource() != null) {
+			return getPropertySource().getPropertyDescriptors();
+		}
+		return null;
+	}
+
+	public Object getPropertyValue(Object id) {
+		if (getPropertySource() != null) {
+			return getPropertySource().getPropertyValue(id);
+		}
+		return null;
+	}
+
+	public boolean isPropertySet(Object id) {
+		if (getPropertySource() != null) {
+			return getPropertySource().isPropertySet(id);
+		}
+		return false;
+	}
+
+	public void resetPropertyValue(Object id) {
+		if (getPropertySource() != null) {
+			getPropertySource().resetPropertyValue(id);
+		}
+	}
+
+	public void setPropertyValue(Object id, Object value) {
+		if (getPropertySource() != null) {
+			getPropertySource().setPropertyValue(id, value);
+			notifyListeners(CHANGE_PROPERTY, id);
+		}		
+	}
+	
+	protected abstract IPropertySource getPropertySource(); 	
 
    @SuppressWarnings("unchecked")
 	public Object getAdapter(Class adapter) {

@@ -62,19 +62,19 @@ public class DefaultFlowWrapper extends AbstractFlowWrapper {
     	this.acceptsElementStrategy = strategy;
     }
 
-    @SuppressWarnings("unchecked")
-	public Object getAdapter(Class adapter) {
-    	if (adapter == IPropertySource.class) {
-    		return getPropertySource();
-    	}
-    	return super.getAdapter(adapter);
-    }
-    
-    private IPropertySource getPropertySource() {
+    protected IPropertySource getPropertySource() {
     	if (propertySource == null) {
     		propertySource = new DefaultFlowWrapperPropertySource(this);
     	}
     	return propertySource;
+    }
+    
+   @SuppressWarnings("unchecked")
+	public Object getAdapter(Class adapter) {
+    	if (adapter == IPropertySource.class) {
+    		return this;
+    	}
+    	return super.getAdapter(adapter);
     }
     
 }

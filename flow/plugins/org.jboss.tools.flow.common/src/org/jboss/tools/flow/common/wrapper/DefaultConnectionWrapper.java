@@ -9,12 +9,12 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.flow.common.model.Connection;
 import org.jboss.tools.flow.common.model.DefaultConnection;
 import org.jboss.tools.flow.common.model.Node;
-import org.jboss.tools.flow.common.properties.DefaultConnectionWrapperPropertySource;
+import org.jboss.tools.flow.common.properties.WrapperPropertySource;
 
 
 public class DefaultConnectionWrapper extends AbstractConnectionWrapper {
 	
-	private DefaultConnectionWrapperPropertySource propertySource;
+	private IPropertySource propertySource;
 
 	public Connection getConnection() {
 	    return (Connection)getElement();
@@ -79,19 +79,19 @@ public class DefaultConnectionWrapper extends AbstractConnectionWrapper {
 		return result;
 	}
 	
+    protected IPropertySource getPropertySource() {
+    	if (propertySource == null) {
+    		propertySource = new WrapperPropertySource(this);
+    	}
+    	return propertySource;
+    }
+    
     @SuppressWarnings("unchecked")
 	public Object getAdapter(Class adapter) {
     	if (adapter == IPropertySource.class) {
-    		return getPropertySource();
+    		return this;
     	}
     	return super.getAdapter(adapter);
-    }
-    
-    private IPropertySource getPropertySource() {
-    	if (propertySource == null) {
-    		propertySource = new DefaultConnectionWrapperPropertySource(this);
-    	}
-    	return propertySource;
     }
     
 }
