@@ -16,12 +16,14 @@ package org.jboss.tools.flow.common.policy;
  * limitations under the License.
  */
 
+import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.tools.CellEditorLocator;
 import org.eclipse.gef.tools.DirectEditManager;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Text;
-import org.jboss.tools.flow.common.editpart.ElementEditPart;
-import org.jboss.tools.flow.common.wrapper.NodeWrapper;
+import org.eclipse.ui.views.properties.IPropertySource;
+import org.jboss.tools.flow.common.properties.IPropertyId;
+import org.jboss.tools.flow.common.wrapper.Wrapper;
 
 /**
  * Manager for directly editing elements.
@@ -30,15 +32,22 @@ import org.jboss.tools.flow.common.wrapper.NodeWrapper;
  */
 public class ElementDirectEditManager extends DirectEditManager {
 
-    private NodeWrapper element;
+    private IPropertySource propertySource;
 
-    public ElementDirectEditManager(ElementEditPart source, CellEditorLocator locator) {
+    public ElementDirectEditManager(GraphicalEditPart source, CellEditorLocator locator) {
         super(source, TextCellEditor.class, locator);
-        element = source.getElementWrapper();
+        Object object = source.getModel();
+        if (object instanceof Wrapper) {
+        	propertySource = (IPropertySource)((Wrapper)object).getAdapter(IPropertySource.class);
+        }
     }
 
     protected void initCellEditor() {
-        getCellEditor().setValue(element.getName());
+    	String initialValue = null;
+    	if (propertySource != null) {
+    		initialValue = (String)propertySource.getPropertyValue(IPropertyId.NAME);
+    	}
+        getCellEditor().setValue(initialValue == null ? "" : initialValue);
         Text text = (Text) getCellEditor().getControl();
         text.selectAll();
     }

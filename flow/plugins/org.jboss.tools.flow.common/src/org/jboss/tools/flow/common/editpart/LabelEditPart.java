@@ -9,17 +9,25 @@ import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.DragTracker;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.Request;
+import org.eclipse.gef.RequestConstants;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
+import org.eclipse.gef.tools.DirectEditManager;
 import org.eclipse.gef.tools.DragEditPartsTracker;
+import org.jboss.tools.flow.common.policy.ElementDirectEditManager;
+import org.jboss.tools.flow.common.policy.ElementDirectEditPolicy;
 import org.jboss.tools.flow.common.policy.LabelGraphicalNodeEditPolicy;
 import org.jboss.tools.flow.common.wrapper.LabelWrapper;
 import org.jboss.tools.flow.common.wrapper.ModelEvent;
 import org.jboss.tools.flow.common.wrapper.ModelListener;
+import org.jboss.tools.flow.common.wrapper.Wrapper;
 
 public class LabelEditPart extends AbstractGraphicalEditPart implements ModelListener {
 
+    private DirectEditManager manager;
+    
 	@Override
 	protected IFigure createFigure() {
 		return new Label();
@@ -27,12 +35,12 @@ public class LabelEditPart extends AbstractGraphicalEditPart implements ModelLis
 
 	@Override
 	protected void createEditPolicies() {
-		installEditPolicy("GraphicalNodeEditPoliy", new LabelGraphicalNodeEditPolicy());
+		installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new LabelGraphicalNodeEditPolicy());
+        installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE, new ElementDirectEditPolicy());
 	}
 	
 	protected void refreshVisuals() {
 		String text = getLabelWrapper().getText();
-//		if (text == null || "".equals(text)) text = "text";
 		Polyline polyline = (Polyline)((ConnectionEditPart)getParent()).getConnectionFigure();
 		Point location = ((LabelWrapper)getModel()).getLocation();
 		if (location == null) {
@@ -50,6 +58,25 @@ public class LabelEditPart extends AbstractGraphicalEditPart implements ModelLis
 		return new Point(- (textDimension.width +5) , -(textDimension.height + 5));
 	}
 	
+    public void performRequest(Request request) {
+        if (request.getType() == RequestConstants.REQ_DIRECT_EDIT) {
+            performDirectEdit();
+        } else {
+            super.performRequest(request);
+        }
+    }
+    
+    protected void performDirectEdit() {
+    	Label label = (Label) getFigure();
+    	if (label == null) {
+    		return;
+    	}
+        if (manager == null) {
+            manager = new ElementDirectEditManager(this, new CellEditorLocator(label));
+        }
+        manager.show();
+    }
+    
 	public LabelWrapper getLabelWrapper() {
 		return (LabelWrapper)getModel();
 	}
@@ -65,9 +92,15 @@ public class LabelEditPart extends AbstractGraphicalEditPart implements ModelLis
     public void activate() {
         super.activate();
         getLabelWrapper().addListener(this);
+        if (getParent().getModel() instanceof Wrapper) {
+        	((Wrapper)getParent().getModel()).addListener(this);
+        }
     }
 
     public void deactivate() {
+        if (getParent().getModel() instanceof Wrapper) {
+        	((Wrapper)getParent().getModel()).removeListener(this);
+        }
         getLabelWrapper().removeListener(this);
         super.deactivate();
     }

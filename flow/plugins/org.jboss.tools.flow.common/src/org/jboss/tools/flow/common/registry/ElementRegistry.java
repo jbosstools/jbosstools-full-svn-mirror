@@ -67,7 +67,7 @@ public class ElementRegistry {
 		((Element)element).setMetaData("configurationElement", configurationElement);
 		ConnectionWrapper result = new DefaultConnectionWrapper();
 		result.setElement((Element)element);
-		result.setLabel(new DefaultLabelWrapper((Element)element));
+		result.setLabel(new DefaultLabelWrapper(result));
 		return result;
 	}
 	

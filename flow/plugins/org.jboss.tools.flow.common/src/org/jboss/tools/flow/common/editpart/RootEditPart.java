@@ -121,18 +121,4 @@ public class RootEditPart extends AbstractGraphicalEditPart implements ModelList
     	Animation.run(400);
     }
     
-//	@SuppressWarnings("unchecked")
-//    public boolean setTableModelBounds() {
-//		List<ElementEditPart> tableParts = getChildren();
-//		for (ElementEditPart elementEditPart: tableParts) {
-//			ElementFigure elementFigure = (ElementFigure) elementEditPart.getFigure();
-//			if (elementFigure == null) {
-//				continue;
-//			}
-//			Rectangle constraint = elementFigure.getBounds().getCopy();
-//			NodeWrapper elementWrapper = elementEditPart.getElementWrapper();
-//			elementWrapper.setConstraint(constraint);
-//		}
-//		return true;
-//	}
 }

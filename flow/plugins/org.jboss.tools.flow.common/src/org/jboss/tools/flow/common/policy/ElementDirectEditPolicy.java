@@ -16,12 +16,16 @@ package org.jboss.tools.flow.common.policy;
  * limitations under the License.
  */
 
+import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.DirectEditPolicy;
 import org.eclipse.gef.requests.DirectEditRequest;
+import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.flow.common.command.RenameElementCommand;
 import org.jboss.tools.flow.common.figure.ElementFigure;
-import org.jboss.tools.flow.common.wrapper.NodeWrapper;
+import org.jboss.tools.flow.common.properties.IPropertyId;
+import org.jboss.tools.flow.common.wrapper.Wrapper;
 
 /**
  * Policy for directly editing elements.
@@ -32,15 +36,23 @@ public class ElementDirectEditPolicy extends DirectEditPolicy {
 
     protected Command getDirectEditCommand(DirectEditRequest request) {
         RenameElementCommand cmd = new RenameElementCommand();
-        cmd.setSource((NodeWrapper) getHost().getModel());
-        cmd.setOldName(((NodeWrapper) getHost().getModel()).getName());
+        cmd.setSource((Wrapper) getHost().getModel());
+        IPropertySource propertySource = (IPropertySource)((Wrapper)getHost().getModel()).getAdapter(IPropertySource.class);
+        if (propertySource != null) {
+        	cmd.setOldName((String)propertySource.getPropertyValue(IPropertyId.NAME));
+        }
         cmd.setName((String) request.getCellEditor().getValue());
         return cmd;
     }
 
     protected void showCurrentEditValue(DirectEditRequest request) {
         String value = (String) request.getCellEditor().getValue();
-        ((ElementFigure) getHostFigure()).setText(value);
+        IFigure figure = getHostFigure();
+        if (figure instanceof Label) {
+        	((Label)figure).setText(value);
+        } else if (figure instanceof ElementFigure){
+        	((ElementFigure)figure).setText(value);
+        }
     }
 
 }

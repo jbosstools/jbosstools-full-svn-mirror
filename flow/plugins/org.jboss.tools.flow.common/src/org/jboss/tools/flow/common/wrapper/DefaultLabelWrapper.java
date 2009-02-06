@@ -1,22 +1,23 @@
 package org.jboss.tools.flow.common.wrapper;
 
 import org.eclipse.ui.views.properties.IPropertySource;
-import org.jboss.tools.flow.common.model.Element;
 import org.jboss.tools.flow.common.properties.IPropertyId;
 
 public class DefaultLabelWrapper extends AbstractLabelWrapper {
 	
 	private IPropertySource propertySource;
 	
-	public DefaultLabelWrapper(Element element) {
-		if (element != null) {
-			propertySource = (IPropertySource)element.getMetaData("propertySource");
+	public DefaultLabelWrapper(Wrapper owner) {
+		if (owner != null) {
+			propertySource = (IPropertySource)owner.getAdapter(IPropertySource.class);
+			setElement(owner.getElement());
 		}
 	}
 	
 	public void setText(String text) {
 		if (propertySource != null) {
 			propertySource.setPropertyValue(IPropertyId.LABEL, text);
+			notifyListeners(CHANGE_VISUAL, text);
 		}
 	}
 	
@@ -27,5 +28,14 @@ public class DefaultLabelWrapper extends AbstractLabelWrapper {
 		}
 		return result;
 	}
+	
+    @SuppressWarnings("unchecked")
+	public Object getAdapter(Class adapter) {
+    	if (adapter == IPropertySource.class && propertySource != null) {
+    		return propertySource;
+    	}
+    	return super.getAdapter(adapter);
+    }
+    
 	
 }
