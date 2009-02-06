@@ -1321,7 +1321,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return getContentArea().equals(visualNode);
 	}
 
-	nsIDOMElement getContentArea() {
+	public nsIDOMElement getContentArea() {
 		return visualEditor.getContentArea();
 	}
 
