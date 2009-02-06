@@ -35,10 +35,3 @@ msgctxt "SelectionListenerWithSMManager.job.title"
 msgid "JBoss tools SM creation"
 msgstr ""
 
-#. 
-#: RedHatStructuredTextEditor.markOccurrences.job.name
-#, java-format
-msgctxt "RedHatStructuredTextEditor.markOccurrences.job.name"
-msgid ""
-msgstr ""
-

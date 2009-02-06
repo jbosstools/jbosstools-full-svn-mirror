@@ -17,10 +17,3 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 ""
 
-#. comment
-#: FavoritesClassController.defaultClasses
-#, java-format
-msgctxt "FavoritesClassController.defaultClasses"
-msgid ""
-msgstr ""
-

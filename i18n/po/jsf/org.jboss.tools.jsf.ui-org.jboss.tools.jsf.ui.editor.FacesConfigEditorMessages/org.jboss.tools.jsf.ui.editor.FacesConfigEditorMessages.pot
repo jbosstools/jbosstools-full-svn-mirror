@@ -48,17 +48,6 @@ msgid "View Template"
 msgstr ""
 
 #. 
-#. 
-#. ####
-#. LocaleConfigForm
-#. ####
-#: LOCALECONFIGFORM_DESCRIPTION
-#, java-format
-msgctxt "LOCALECONFIGFORM_DESCRIPTION"
-msgid ""
-msgstr ""
-
-#. 
 #: LOCALECONFIGFORM_HEADER
 #, java-format
 msgctxt "LOCALECONFIGFORM_HEADER"
@@ -80,17 +69,6 @@ msgid "Locale"
 msgstr ""
 
 #. 
-#. 
-#. ####
-#. ApplicationConfigForm
-#. ####
-#: APPLICATIONCONFIGFORM_DESCRIPTION
-#, java-format
-msgctxt "APPLICATIONCONFIGFORM_DESCRIPTION"
-msgid ""
-msgstr ""
-
-#. 
 #: APPLICATIONCONFIGFORM_HEADER
 #, java-format
 msgctxt "APPLICATIONCONFIGFORM_HEADER"
@@ -105,32 +83,10 @@ msgid "Message-bundle"
 msgstr ""
 
 #. 
-#. 
-#. ####
-#. ManagedBeanPropertyForm
-#. ####
-#: MANAGEDBEANPROPERTYFORM_DESCRIPTION
-#, java-format
-msgctxt "MANAGEDBEANPROPERTYFORM_DESCRIPTION"
-msgid ""
-msgstr ""
-
-#. 
 #: MANAGEDBEANPROPERTYFORM_HEADER
 #, java-format
 msgctxt "MANAGEDBEANPROPERTYFORM_HEADER"
 msgid "Property"
-msgstr ""
-
-#. 
-#. 
-#. ####
-#. ListEntriesForm
-#. ####
-#: LISTENTRIESFORM_DESCRIPTION
-#, java-format
-msgctxt "LISTENTRIESFORM_DESCRIPTION"
-msgid ""
 msgstr ""
 
 #. 
@@ -145,17 +101,6 @@ msgstr ""
 #, java-format
 msgctxt "LISTENTRIESFORM_ENTRY_COLUMN_LABEL"
 msgid "Value"
-msgstr ""
-
-#. 
-#. 
-#. ####
-#. MapEntriesForm
-#. ####
-#: MAPENTRIESFORM_DESCRIPTION
-#, java-format
-msgctxt "MAPENTRIESFORM_DESCRIPTION"
-msgid ""
 msgstr ""
 
 #. 

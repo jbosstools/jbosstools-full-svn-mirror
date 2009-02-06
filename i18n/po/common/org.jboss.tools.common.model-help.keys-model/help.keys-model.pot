@@ -1154,13 +1154,6 @@ msgid "/model/PaletteEditor.html"
 msgstr ""
 
 #. 
-#: SharableXStudioIcons_Properties.Title
-#, java-format
-msgctxt "SharableXStudioIcons_Properties.Title"
-msgid ""
-msgstr ""
-
-#. 
 #: SharablePalette
 #, java-format
 msgctxt "SharablePalette"
@@ -1193,13 +1186,6 @@ msgstr ""
 #, java-format
 msgctxt "SharablePalette_Properties"
 msgid "/model/PaletteEditor.html"
-msgstr ""
-
-#. 
-#: SharablePalette_Properties.Title
-#, java-format
-msgctxt "SharablePalette_Properties.Title"
-msgid ""
 msgstr ""
 
 #. 
@@ -1280,13 +1266,6 @@ msgid "/model/PaletteEditor.html"
 msgstr ""
 
 #. 
-#: SharableGroup_Properties.Title
-#, java-format
-msgctxt "SharableGroup_Properties.Title"
-msgid ""
-msgstr ""
-
-#. 
 #: SharableGroupHTML
 #, java-format
 msgctxt "SharableGroupHTML"
@@ -1319,13 +1298,6 @@ msgstr ""
 #, java-format
 msgctxt "SharableGroupHTML_Properties"
 msgid "/model/PaletteEditor.html"
-msgstr ""
-
-#. 
-#: SharableGroupHTML_Properties.Title
-#, java-format
-msgctxt "SharableGroupHTML_Properties.Title"
-msgid ""
 msgstr ""
 
 #. 
@@ -1497,13 +1469,6 @@ msgid "/model/PaletteEditor.html"
 msgstr ""
 
 #. 
-#: SharablePageTab_Properties.Title
-#, java-format
-msgctxt "SharablePageTab_Properties.Title"
-msgid ""
-msgstr ""
-
-#. 
 #. #### Palette items #####
 #: SharablePageTabHTML
 #, java-format
@@ -1547,13 +1512,6 @@ msgid "Add Palette Macro"
 msgstr ""
 
 #. 
-#: SharablePageTabHTML_CreateMacro.Title
-#, java-format
-msgctxt "SharablePageTabHTML_CreateMacro.Title"
-msgid ""
-msgstr ""
-
-#. 
 #: SharablePageTabHTML_CreateMacro_0
 #, java-format
 msgctxt "SharablePageTabHTML_CreateMacro_0"
@@ -1565,13 +1523,6 @@ msgstr ""
 #, java-format
 msgctxt "SharablePageTabHTML_Properties"
 msgid "/model/PaletteEditor.html"
-msgstr ""
-
-#. 
-#: SharablePageTabHTML_Properties.Title
-#, java-format
-msgctxt "SharablePageTabHTML_Properties.Title"
-msgid ""
 msgstr ""
 
 #. 

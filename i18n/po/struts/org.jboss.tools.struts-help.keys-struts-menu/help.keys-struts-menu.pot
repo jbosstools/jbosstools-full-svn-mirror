@@ -249,13 +249,6 @@ msgid "Create Form Property..."
 msgstr ""
 
 #. 
-#: Struts.AddDefaultErrorMessages.menu
-#, java-format
-msgctxt "Struts.AddDefaultErrorMessages.menu"
-msgid ""
-msgstr ""
-
-#. 
 #: Struts.CreateMessageResources.menu
 #, java-format
 msgctxt "Struts.CreateMessageResources.menu"
@@ -274,34 +267,6 @@ msgstr ""
 #, java-format
 msgctxt "Struts.CreateSpecialPlugin.menu"
 msgid "Create Special Plug-in"
-msgstr ""
-
-#. 
-#: Struts.Plugin0.menu
-#, java-format
-msgctxt "Struts.Plugin0.menu"
-msgid ""
-msgstr ""
-
-#. 
-#: Struts.Plugin1.menu
-#, java-format
-msgctxt "Struts.Plugin1.menu"
-msgid ""
-msgstr ""
-
-#. 
-#: Struts.Plugin2.menu
-#, java-format
-msgctxt "Struts.Plugin2.menu"
-msgid ""
-msgstr ""
-
-#. 
-#: Struts.Plugin3.menu
-#, java-format
-msgctxt "Struts.Plugin3.menu"
-msgid ""
 msgstr ""
 
 #. 
@@ -519,41 +484,6 @@ msgstr ""
 #, java-format
 msgctxt "Struts.GenerateJavaCode.menu"
 msgid "Generate Java Code..."
-msgstr ""
-
-#. 
-#: Struts.M0.menu
-#, java-format
-msgctxt "Struts.M0.menu"
-msgid ""
-msgstr ""
-
-#. 
-#: Struts.M1.menu
-#, java-format
-msgctxt "Struts.M1.menu"
-msgid ""
-msgstr ""
-
-#. 
-#: Struts.M2.menu
-#, java-format
-msgctxt "Struts.M2.menu"
-msgid ""
-msgstr ""
-
-#. 
-#: Struts.M3.menu
-#, java-format
-msgctxt "Struts.M3.menu"
-msgid ""
-msgstr ""
-
-#. 
-#: Struts.M4.menu
-#, java-format
-msgctxt "Struts.M4.menu"
-msgid ""
 msgstr ""
 
 #. 

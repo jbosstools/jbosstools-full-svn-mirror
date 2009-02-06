@@ -53,13 +53,6 @@ msgid "Find/Replace"
 msgstr ""
 
 #. 
-#: find_replace_action_image
-#, java-format
-msgctxt "find_replace_action_image"
-msgid ""
-msgstr ""
-
-#. 
 #: find_replace_action_description
 #, java-format
 msgctxt "find_replace_action_description"
