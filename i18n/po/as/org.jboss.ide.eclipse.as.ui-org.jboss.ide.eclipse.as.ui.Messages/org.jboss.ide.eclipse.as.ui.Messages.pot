@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-14 12:15+1000\n"
+"POT-Creation-Date: 2009-01-19 11:43+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -123,13 +123,6 @@ msgstr ""
 #, java-format
 msgctxt "swf_Title"
 msgid "Create a new JBoss Server"
-msgstr ""
-
-#. 
-#: swf_Description
-#, java-format
-msgctxt "swf_Description"
-msgid ""
 msgstr ""
 
 #. 
@@ -259,9 +252,11 @@ msgstr ""
 #, java-format
 msgctxt "credentials_warning"
 msgid ""
-"Your server is throwing a security exception.\n"
-"Please enter your username and password now, or\n"
-"enter them in the server editor by double-clicking on the server."
+"Your server is responding to JMX inquiries with a Security Exception.\n"
+"You can try entering new credentials below, or you can double-click\n"
+"on your server and verify that the host, JNDI port, username, and password are accurate.\n"
+"You can also click \"ignore\" below to begin working with your server,\n"
+"but deploying to and stopping the server may not function properly."
 msgstr ""
 
 #. 
@@ -778,152 +773,9 @@ msgid ""
 msgstr ""
 
 #. 
-#. 
-#. Upgrade Wizard
-#: UpgradeWizardTitle
-#, java-format
-msgctxt "UpgradeWizardTitle"
-msgid "Convert JBoss AS Launch Configurations"
-msgstr ""
-
-#. 
-#: UpgradeWizardDescription
-#, java-format
-msgctxt "UpgradeWizardDescription"
-msgid ""
-"Starting and Stopping JBoss is no longer done through simple launch configurations.\n"
-"Instead, webtools and its server functionality is being used, which means your launch\n"
-"configurations must be converted into JBoss \"servers\" and \"runtimes\".\n"
-"\n"
-" This wizard will help with that."
-msgstr ""
-
-#. 
-#: UpgradeWizardNoConvertableConfigs
-#, java-format
-msgctxt "UpgradeWizardNoConvertableConfigs"
-msgid "You do not have any JBoss launch configurations to convert, so you can just skip this page."
-msgstr ""
-
-#. 
-#: UpgradeWizardDetails
-#, java-format
-msgctxt "UpgradeWizardDetails"
-msgid "Details:"
-msgstr ""
-
-#. 
-#: UpgradeWizardLaunchConfigName
-#, java-format
-msgctxt "UpgradeWizardLaunchConfigName"
-msgid "Launch Configuration Name:"
-msgstr ""
-
-#. 
-#: UpgradeWizardLaunchHomeDir
-#, java-format
-msgctxt "UpgradeWizardLaunchHomeDir"
-msgid "Home Directory:"
-msgstr ""
-
-#. 
-#: UpgradeWizardLaunchJBossConfig
-#, java-format
-msgctxt "UpgradeWizardLaunchJBossConfig"
-msgid "JBoss Configuration:"
-msgstr ""
-
-#. 
-#: UpgradeWizardLaunchStartArgs
-#, java-format
-msgctxt "UpgradeWizardLaunchStartArgs"
-msgid "Start Args:"
-msgstr ""
-
-#. 
-#: UpgradeWizardLaunchShutdownArgs
-#, java-format
-msgctxt "UpgradeWizardLaunchShutdownArgs"
-msgid "Shutdown Args:"
-msgstr ""
-
-#. 
-#: UpgradeWizardLaunchJRE
-#, java-format
-msgctxt "UpgradeWizardLaunchJRE"
-msgid "JRE:"
-msgstr ""
-
-#. 
-#: UpgradeWizardLaunchConvert
-#, java-format
-msgctxt "UpgradeWizardLaunchConvert"
-msgid "Convert?"
-msgstr ""
-
-#. 
-#: UpgradeWizardLaunchConfigName2
-#, java-format
-msgctxt "UpgradeWizardLaunchConfigName2"
-msgid "Configuration Name"
-msgstr ""
-
-#. 
-#: UpgradeWizardLaunchRuntimeName
-#, java-format
-msgctxt "UpgradeWizardLaunchRuntimeName"
-msgid "Runtime Name"
-msgstr ""
-
-#. 
-#: UpgradeWizardLaunchServerName
-#, java-format
-msgctxt "UpgradeWizardLaunchServerName"
-msgid "Server Name"
-msgstr ""
-
-#. 
-#: UpgradeWizardLaunchMonitorMainTask
-#, java-format
-msgctxt "UpgradeWizardLaunchMonitorMainTask"
-msgid "Converting Launch Configurations"
-msgstr ""
-
-#. 
-#: UpgradeWizardLaunchMonitorConverting
-#, java-format
-msgctxt "UpgradeWizardLaunchMonitorConverting"
-msgid "Converting"
-msgstr ""
-
-#. 
-#: UpgradeWizardLaunchRuntimeNamesInUse
-#, java-format
-msgctxt "UpgradeWizardLaunchRuntimeNamesInUse"
-msgid "The following runtime names are already in use:"
-msgstr ""
-
-#. 
-#: UpgradeWizardLaunchServerNamesInUse
-#, java-format
-msgctxt "UpgradeWizardLaunchServerNamesInUse"
-msgid "The following server names are already in use:"
-msgstr ""
-
-#. 
-#. 
 #. ##########################################
 #. ############# view providers
 #. ##########################################
-#. 
-#. 
-#. Inactive Categories
-#: InactiveCategoriesReEnable
-#, java-format
-msgctxt "InactiveCategoriesReEnable"
-msgid "Re-enable Category"
-msgstr ""
-
 #. 
 #. Descriptor XPath
 #: DescriptorXPathRemoveCategory

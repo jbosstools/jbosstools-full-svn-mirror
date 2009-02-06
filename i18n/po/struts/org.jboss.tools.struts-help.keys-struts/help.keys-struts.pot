@@ -102,6 +102,7 @@ msgctxt "StrutsProcess_Properties.Title"
 msgid "Struts Config"
 msgstr ""
 
+#. 
 #: StrutsProcess_CreateAction.WindowTitle
 #, java-format
 msgctxt "StrutsProcess_CreateAction.WindowTitle"
@@ -115,6 +116,7 @@ msgctxt "StrutsProcess_CreateAction.Title"
 msgid "Struts Action"
 msgstr ""
 
+#. 
 #: StrutsProcess_CreateForward.WindowTitle
 #, java-format
 msgctxt "StrutsProcess_CreateForward.WindowTitle"
@@ -128,6 +130,7 @@ msgctxt "StrutsProcess_CreateForward.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsProcess_CreateException.WindowTitle
 #, java-format
 msgctxt "StrutsProcess_CreateException.WindowTitle"
@@ -141,6 +144,7 @@ msgctxt "StrutsProcess_CreateException.Title"
 msgid "Struts Exception"
 msgstr ""
 
+#. 
 #: StrutsProcess_CreateComment.WindowTitle
 #, java-format
 msgctxt "StrutsProcess_CreateComment.WindowTitle"
@@ -154,6 +158,7 @@ msgctxt "StrutsProcess_CreateComment.Title"
 msgid "Comment"
 msgstr ""
 
+#. 
 #: StrutsProcess_CreatePage_0.WindowTitle
 #, java-format
 msgctxt "StrutsProcess_CreatePage_0.WindowTitle"
@@ -167,6 +172,7 @@ msgctxt "StrutsProcess_CreatePage_0.Title"
 msgid "Page"
 msgstr ""
 
+#. 
 #: StrutsProcess_CreatePage_1.WindowTitle
 #, java-format
 msgctxt "StrutsProcess_CreatePage_1.WindowTitle"
@@ -180,6 +186,7 @@ msgctxt "StrutsProcess_CreatePage_1.Title"
 msgid "Page"
 msgstr ""
 
+#. 
 #: StrutsProcess_CreatePage_2.WindowTitle
 #, java-format
 msgctxt "StrutsProcess_CreatePage_2.WindowTitle"
@@ -193,6 +200,7 @@ msgctxt "StrutsProcess_CreatePage_2.Title"
 msgid "Page"
 msgstr ""
 
+#. 
 #: StrutsProcess_SelectPage_0.WindowTitle
 #, java-format
 msgctxt "StrutsProcess_SelectPage_0.WindowTitle"
@@ -206,6 +214,7 @@ msgctxt "StrutsProcess_SelectPage_0.Title"
 msgid "Page"
 msgstr ""
 
+#. 
 #: StrutsProcess_SelectPath_0.WindowTitle
 #, java-format
 msgctxt "StrutsProcess_SelectPath_0.WindowTitle"
@@ -243,14 +252,6 @@ msgid "Please select element"
 msgstr ""
 
 #. 
-#. 
-#. #### Struts Process Item #####
-#: StrutsProcessItem_Properties.Title
-#, java-format
-msgctxt "StrutsProcessItem_Properties.Title"
-msgid ""
-msgstr ""
-
 #: StrutsProcessItem_CreateException.WindowTitle
 #, java-format
 msgctxt "StrutsProcessItem_CreateException.WindowTitle"
@@ -264,6 +265,7 @@ msgctxt "StrutsProcessItem_CreateException.Title"
 msgid "Struts Exception"
 msgstr ""
 
+#. 
 #: StrutsProcessItem_CreateForward.WindowTitle
 #, java-format
 msgctxt "StrutsProcessItem_CreateForward.WindowTitle"
@@ -277,6 +279,7 @@ msgctxt "StrutsProcessItem_CreateForward.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsProcessItem_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsProcessItem_CreateSetProperty.WindowTitle"
@@ -284,12 +287,6 @@ msgid "Add Set Property"
 msgstr ""
 
 #. 
-#: StrutsProcessItem_CreateSetProperty.Title
-#, java-format
-msgctxt "StrutsProcessItem_CreateSetProperty.Title"
-msgid ""
-msgstr ""
-
 #: StrutsProcessItem_CreateLink.WindowTitle
 #, java-format
 msgctxt "StrutsProcessItem_CreateLink.WindowTitle"
@@ -303,6 +300,7 @@ msgctxt "StrutsProcessItem_CreateLink.Title"
 msgid "Link"
 msgstr ""
 
+#. 
 #: StrutsProcessItem_CreateComment.WindowTitle
 #, java-format
 msgctxt "StrutsProcessItem_CreateComment.WindowTitle"
@@ -316,6 +314,7 @@ msgctxt "StrutsProcessItem_CreateComment.Title"
 msgid "Comment"
 msgstr ""
 
+#. 
 #: StrutsProcessItem_RenamePage.WindowTitle
 #, java-format
 msgctxt "StrutsProcessItem_RenamePage.WindowTitle"
@@ -329,6 +328,7 @@ msgctxt "StrutsProcessItem_RenamePage.Title"
 msgid "Page"
 msgstr ""
 
+#. 
 #: StrutsProcessItem_EditPath_0.WindowTitle
 #, java-format
 msgctxt "StrutsProcessItem_EditPath_0.WindowTitle"
@@ -336,21 +336,6 @@ msgid "Edit"
 msgstr ""
 
 #. 
-#: StrutsProcessItem_EditPath_0.Title
-#, java-format
-msgctxt "StrutsProcessItem_EditPath_0.Title"
-msgid ""
-msgstr ""
-
-#. 
-#. 
-#. #### Struts Process Item Output #####
-#: StrutsProcessItemOutput_Properties.Title
-#, java-format
-msgctxt "StrutsProcessItemOutput_Properties.Title"
-msgid ""
-msgstr ""
-
 #: StrutsProcessItemOutput_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsProcessItemOutput_CreateSetProperty.WindowTitle"
@@ -358,18 +343,13 @@ msgid "Add Set Property"
 msgstr ""
 
 #. 
-#: StrutsProcessItemOutput_CreateSetProperty.Title
-#, java-format
-msgctxt "StrutsProcessItemOutput_CreateSetProperty.Title"
-msgid ""
-msgstr ""
-
 #: StrutsProcessPageTransition_Properties.Title
 #, java-format
 msgctxt "StrutsProcessPageTransition_Properties.Title"
 msgid "Page Link"
 msgstr ""
 
+#. 
 #: StrutsProcessTransition_Properties.Title
 #, java-format
 msgctxt "StrutsProcessTransition_Properties.Title"
@@ -392,6 +372,7 @@ msgctxt "StrutsProcessComment_Edit.Title"
 msgid "Comment"
 msgstr ""
 
+#. 
 #: StrutsProcessComment_Properties.WindowTitle
 #, java-format
 msgctxt "StrutsProcessComment_Properties.WindowTitle"
@@ -423,6 +404,7 @@ msgctxt "StrutsConfig10_Rename.Title"
 msgid "Struts Config"
 msgstr ""
 
+#. 
 #: StrutsConfig10_CreateAction.WindowTitle
 #, java-format
 msgctxt "StrutsConfig10_CreateAction.WindowTitle"
@@ -436,6 +418,7 @@ msgctxt "StrutsConfig10_CreateAction.Title"
 msgid "Struts Action"
 msgstr ""
 
+#. 
 #: StrutsConfig10_CreateForward.WindowTitle
 #, java-format
 msgctxt "StrutsConfig10_CreateForward.WindowTitle"
@@ -458,6 +441,7 @@ msgctxt "StrutsAction10_Properties.Title"
 msgid "Struts Action"
 msgstr ""
 
+#. 
 #: StrutsAction10_CreateForward.WindowTitle
 #, java-format
 msgctxt "StrutsAction10_CreateForward.WindowTitle"
@@ -471,6 +455,7 @@ msgctxt "StrutsAction10_CreateForward.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsAction10_CreateForward_0.WindowTitle
 #, java-format
 msgctxt "StrutsAction10_CreateForward_0.WindowTitle"
@@ -484,6 +469,7 @@ msgctxt "StrutsAction10_CreateForward_0.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsAction10_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsAction10_CreateSetProperty.WindowTitle"
@@ -497,12 +483,14 @@ msgctxt "StrutsAction10_CreateSetProperty.Title"
 msgid "Set Property"
 msgstr ""
 
+#. 
 #: StrutsActionMappings10_Properties.Title
 #, java-format
 msgctxt "StrutsActionMappings10_Properties.Title"
 msgid "Struts Action Mappings"
 msgstr ""
 
+#. 
 #: StrutsActionMappings10_CreateAction.WindowTitle
 #, java-format
 msgctxt "StrutsActionMappings10_CreateAction.WindowTitle"
@@ -516,6 +504,7 @@ msgctxt "StrutsActionMappings10_CreateAction.Title"
 msgid "Struts Action Mappings"
 msgstr ""
 
+#. 
 #: StrutsActionMappings10_CreateAction_0.WindowTitle
 #, java-format
 msgctxt "StrutsActionMappings10_CreateAction_0.WindowTitle"
@@ -538,6 +527,7 @@ msgctxt "StrutsDataSource10_Properties.Title"
 msgid "Data Source"
 msgstr ""
 
+#. 
 #: StrutsDataSource10_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsDataSource10_CreateSetProperty.WindowTitle"
@@ -551,12 +541,14 @@ msgctxt "StrutsDataSource10_CreateSetProperty.Title"
 msgid "Set Property"
 msgstr ""
 
+#. 
 #: StrutsDataSources10_Properties.Title
 #, java-format
 msgctxt "StrutsDataSources10_Properties.Title"
 msgid "Data Sources"
 msgstr ""
 
+#. 
 #: StrutsDataSources10_CreateDataSource.WindowTitle
 #, java-format
 msgctxt "StrutsDataSources10_CreateDataSource.WindowTitle"
@@ -579,6 +571,7 @@ msgctxt "StrutsFormBean10_Properties.Title"
 msgid "Form Bean"
 msgstr ""
 
+#. 
 #: StrutsFormBean10_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsFormBean10_CreateSetProperty.WindowTitle"
@@ -592,12 +585,14 @@ msgctxt "StrutsFormBean10_CreateSetProperty.Title"
 msgid "Set Property"
 msgstr ""
 
+#. 
 #: StrutsFormBeans10_Properties.Title
 #, java-format
 msgctxt "StrutsFormBeans10_Properties.Title"
 msgid "Form Beans"
 msgstr ""
 
+#. 
 #: StrutsFormBeans10_CreateFormBean.WindowTitle
 #, java-format
 msgctxt "StrutsFormBeans10_CreateFormBean.WindowTitle"
@@ -620,6 +615,7 @@ msgctxt "StrutsForward10_Properties.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsForward10_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsForward10_CreateSetProperty.WindowTitle"
@@ -633,6 +629,7 @@ msgctxt "StrutsForward10_CreateSetProperty.Title"
 msgid "Set Property"
 msgstr ""
 
+#. 
 #: StrutsForward10_EditPath.WindowTitle
 #, java-format
 msgctxt "StrutsForward10_EditPath.WindowTitle"
@@ -646,6 +643,7 @@ msgctxt "StrutsForward10_EditPath.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsForward10_EditPath_0.WindowTitle
 #, java-format
 msgctxt "StrutsForward10_EditPath_0.WindowTitle"
@@ -659,12 +657,14 @@ msgctxt "StrutsForward10_EditPath_0.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsGlobalForwards10_Properties.Title
 #, java-format
 msgctxt "StrutsGlobalForwards10_Properties.Title"
 msgid "Global Forwards"
 msgstr ""
 
+#. 
 #: StrutsGlobalForwards10_CreateForward.WindowTitle
 #, java-format
 msgctxt "StrutsGlobalForwards10_CreateForward.WindowTitle"
@@ -678,6 +678,7 @@ msgctxt "StrutsGlobalForwards10_CreateForward.Title"
 msgid "Global Forward"
 msgstr ""
 
+#. 
 #: StrutsGlobalForwards10_CreateForward_0.WindowTitle
 #, java-format
 msgctxt "StrutsGlobalForwards10_CreateForward_0.WindowTitle"
@@ -707,6 +708,7 @@ msgctxt "FileFolder_CreateStrutsConfig10.Title"
 msgid "Struts Config"
 msgstr ""
 
+#. 
 #: FileSystemFolder_CreateStrutsConfig10.WindowTitle
 #, java-format
 msgctxt "FileSystemFolder_CreateStrutsConfig10.WindowTitle"
@@ -729,6 +731,7 @@ msgctxt "StrutsAction11_Properties.Title"
 msgid "Struts Action"
 msgstr ""
 
+#. 
 #: StrutsAction11_CreateException.WindowTitle
 #, java-format
 msgctxt "StrutsAction11_CreateException.WindowTitle"
@@ -742,6 +745,7 @@ msgctxt "StrutsAction11_CreateException.Title"
 msgid "Struts Exception"
 msgstr ""
 
+#. 
 #: StrutsAction11_CreateException_0.WindowTitle
 #, java-format
 msgctxt "StrutsAction11_CreateException_0.WindowTitle"
@@ -755,6 +759,7 @@ msgctxt "StrutsAction11_CreateException_0.Title"
 msgid "Struts Exception"
 msgstr ""
 
+#. 
 #: StrutsAction11_CreateForward.WindowTitle
 #, java-format
 msgctxt "StrutsAction11_CreateForward.WindowTitle"
@@ -768,6 +773,7 @@ msgctxt "StrutsAction11_CreateForward.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsAction11_CreateForward_0.WindowTitle
 #, java-format
 msgctxt "StrutsAction11_CreateForward_0.WindowTitle"
@@ -781,6 +787,7 @@ msgctxt "StrutsAction11_CreateForward_0.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsAction11_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsAction11_CreateSetProperty.WindowTitle"
@@ -794,12 +801,14 @@ msgctxt "StrutsAction11_CreateSetProperty.Title"
 msgid "Set Property"
 msgstr ""
 
+#. 
 #: StrutsAction12_Properties.Title
 #, java-format
 msgctxt "StrutsAction12_Properties.Title"
 msgid "Struts Action"
 msgstr ""
 
+#. 
 #: StrutsAction12_CreateException.WindowTitle
 #, java-format
 msgctxt "StrutsAction12_CreateException.WindowTitle"
@@ -813,6 +822,7 @@ msgctxt "StrutsAction12_CreateException.Title"
 msgid "Struts Exception"
 msgstr ""
 
+#. 
 #: StrutsAction12_CreateException_0.WindowTitle
 #, java-format
 msgctxt "StrutsAction12_CreateException_0.WindowTitle"
@@ -826,6 +836,7 @@ msgctxt "StrutsAction12_CreateException_0.Title"
 msgid "Struts Exception"
 msgstr ""
 
+#. 
 #: StrutsAction12_CreateForward.WindowTitle
 #, java-format
 msgctxt "StrutsAction12_CreateForward.WindowTitle"
@@ -839,6 +850,7 @@ msgctxt "StrutsAction12_CreateForward.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsAction12_CreateForward_0.WindowTitle
 #, java-format
 msgctxt "StrutsAction12_CreateForward_0.WindowTitle"
@@ -852,6 +864,7 @@ msgctxt "StrutsAction12_CreateForward_0.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsAction12_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsAction12_CreateSetProperty.WindowTitle"
@@ -874,6 +887,7 @@ msgctxt "StrutsActionMappings11_Properties.Title"
 msgid "Action Mappings"
 msgstr ""
 
+#. 
 #: StrutsActionMappings11_CreateAction.WindowTitle
 #, java-format
 msgctxt "StrutsActionMappings11_CreateAction.WindowTitle"
@@ -887,6 +901,7 @@ msgctxt "StrutsActionMappings11_CreateAction.Title"
 msgid "Struts Action"
 msgstr ""
 
+#. 
 #: StrutsActionMappings11_CreateAction_0.WindowTitle
 #, java-format
 msgctxt "StrutsActionMappings11_CreateAction_0.WindowTitle"
@@ -909,6 +924,7 @@ msgctxt "StrutsActionMappings12_Properties.Title"
 msgid "Action Mappings"
 msgstr ""
 
+#. 
 #: StrutsActionMappings12_CreateAction.WindowTitle
 #, java-format
 msgctxt "StrutsActionMappings12_CreateAction.WindowTitle"
@@ -922,6 +938,7 @@ msgctxt "StrutsActionMappings12_CreateAction.Title"
 msgid "Struts Action"
 msgstr ""
 
+#. 
 #: StrutsActionMappings12_CreateAction_0.WindowTitle
 #, java-format
 msgctxt "StrutsActionMappings12_CreateAction_0.WindowTitle"
@@ -944,12 +961,14 @@ msgctxt "StrutsConfig11_Properties.Title"
 msgid "Struts Config"
 msgstr ""
 
+#. 
 #: StrutsConfig11_Rename.Title
 #, java-format
 msgctxt "StrutsConfig11_Rename.Title"
 msgid "Struts Config"
 msgstr ""
 
+#. 
 #: StrutsConfig11_CreateAction.WindowTitle
 #, java-format
 msgctxt "StrutsConfig11_CreateAction.WindowTitle"
@@ -963,6 +982,7 @@ msgctxt "StrutsConfig11_CreateAction.Title"
 msgid "Struts Action"
 msgstr ""
 
+#. 
 #: StrutsConfig11_CreateForward.WindowTitle
 #, java-format
 msgctxt "StrutsConfig11_CreateForward.WindowTitle"
@@ -976,6 +996,7 @@ msgctxt "StrutsConfig11_CreateForward.Title"
 msgid "Global Forward"
 msgstr ""
 
+#. 
 #: StrutsConfig11_CreateException.WindowTitle
 #, java-format
 msgctxt "StrutsConfig11_CreateException.WindowTitle"
@@ -998,12 +1019,14 @@ msgctxt "StrutsConfig12_Properties.Title"
 msgid "Struts Config"
 msgstr ""
 
+#. 
 #: StrutsConfig12_Rename.Title
 #, java-format
 msgctxt "StrutsConfig12_Rename.Title"
 msgid "Struts Config"
 msgstr ""
 
+#. 
 #: StrutsConfig12_CreateAction.WindowTitle
 #, java-format
 msgctxt "StrutsConfig12_CreateAction.WindowTitle"
@@ -1017,6 +1040,7 @@ msgctxt "StrutsConfig12_CreateAction.Title"
 msgid "Struts Action"
 msgstr ""
 
+#. 
 #: StrutsConfig12_CreateForward.WindowTitle
 #, java-format
 msgctxt "StrutsConfig12_CreateForward.WindowTitle"
@@ -1030,6 +1054,7 @@ msgctxt "StrutsConfig12_CreateForward.Title"
 msgid "Global Forward"
 msgstr ""
 
+#. 
 #: StrutsConfig12_CreateException.WindowTitle
 #, java-format
 msgctxt "StrutsConfig12_CreateException.WindowTitle"
@@ -1052,6 +1077,7 @@ msgctxt "StrutsController11_Properties.Title"
 msgid "Struts Controller"
 msgstr ""
 
+#. 
 #: StrutsController11_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsController11_CreateSetProperty.WindowTitle"
@@ -1074,6 +1100,7 @@ msgctxt "StrutsController12_Properties.Title"
 msgid "Struts Controller"
 msgstr ""
 
+#. 
 #: StrutsController12_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsController12_CreateSetProperty.WindowTitle"
@@ -1096,6 +1123,7 @@ msgctxt "StrutsDataSource11_Properties.Title"
 msgid "Data Source"
 msgstr ""
 
+#. 
 #: StrutsDataSource11_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsDataSource11_CreateSetProperty.WindowTitle"
@@ -1109,12 +1137,14 @@ msgctxt "StrutsDataSource11_CreateSetProperty.Title"
 msgid "Set Property"
 msgstr ""
 
+#. 
 #: StrutsDataSources11_Properties.Title
 #, java-format
 msgctxt "StrutsDataSources11_Properties.Title"
 msgid "Data Sources"
 msgstr ""
 
+#. 
 #: StrutsDataSources11_CreateDataSource.WindowTitle
 #, java-format
 msgctxt "StrutsDataSources11_CreateDataSource.WindowTitle"
@@ -1137,6 +1167,7 @@ msgctxt "StrutsException11_Properties.Title"
 msgid "Struts Exception"
 msgstr ""
 
+#. 
 #: StrutsException11_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsException11_CreateSetProperty.WindowTitle"
@@ -1150,6 +1181,7 @@ msgctxt "StrutsException11_CreateSetProperty.Title"
 msgid "Set Property"
 msgstr ""
 
+#. 
 #: StrutsException11_EditPath.WindowTitle
 #, java-format
 msgctxt "StrutsException11_EditPath.WindowTitle"
@@ -1163,6 +1195,7 @@ msgctxt "StrutsException11_EditPath.Title"
 msgid "Struts Exception"
 msgstr ""
 
+#. 
 #: StrutsException11_EditPath_0.WindowTitle
 #, java-format
 msgctxt "StrutsException11_EditPath_0.WindowTitle"
@@ -1185,6 +1218,7 @@ msgctxt "StrutsFormBean11_Properties.Title"
 msgid "Form Bean"
 msgstr ""
 
+#. 
 #: StrutsFormBean11_CreateFormProperty.WindowTitle
 #, java-format
 msgctxt "StrutsFormBean11_CreateFormProperty.WindowTitle"
@@ -1198,6 +1232,7 @@ msgctxt "StrutsFormBean11_CreateFormProperty.Title"
 msgid "Form Property"
 msgstr ""
 
+#. 
 #: StrutsFormBean11_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsFormBean11_CreateSetProperty.WindowTitle"
@@ -1211,12 +1246,14 @@ msgctxt "StrutsFormBean11_CreateSetProperty.Title"
 msgid "Set Property"
 msgstr ""
 
+#. 
 #: StrutsFormBeans11_Properties.Title
 #, java-format
 msgctxt "StrutsFormBeans11_Properties.Title"
 msgid "Form Beans"
 msgstr ""
 
+#. 
 #: StrutsFormBeans11_CreateFormBean.WindowTitle
 #, java-format
 msgctxt "StrutsFormBeans11_CreateFormBean.WindowTitle"
@@ -1239,6 +1276,7 @@ msgctxt "StrutsFormBean12_Properties.Title"
 msgid "Form Bean"
 msgstr ""
 
+#. 
 #: StrutsFormBean12_CreateFormProperty.WindowTitle
 #, java-format
 msgctxt "StrutsFormBean12_CreateFormProperty.WindowTitle"
@@ -1252,6 +1290,7 @@ msgctxt "StrutsFormBean12_CreateFormProperty.Title"
 msgid "Form Property"
 msgstr ""
 
+#. 
 #: StrutsFormBean12_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsFormBean12_CreateSetProperty.WindowTitle"
@@ -1265,12 +1304,14 @@ msgctxt "StrutsFormBean12_CreateSetProperty.Title"
 msgid "Set Property"
 msgstr ""
 
+#. 
 #: StrutsFormBeans12_Properties.Title
 #, java-format
 msgctxt "StrutsFormBeans12_Properties.Title"
 msgid "Form Beans"
 msgstr ""
 
+#. 
 #: StrutsFormBeans12_CreateFormBean.WindowTitle
 #, java-format
 msgctxt "StrutsFormBeans12_CreateFormBean.WindowTitle"
@@ -1293,6 +1334,7 @@ msgctxt "StrutsFormProperty11_Properties.Title"
 msgid "Form Property"
 msgstr ""
 
+#. 
 #: StrutsFormProperty11_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsFormProperty11_CreateSetProperty.WindowTitle"
@@ -1315,6 +1357,7 @@ msgctxt "StrutsForward11_Properties.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsForward11_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsForward11_CreateSetProperty.WindowTitle"
@@ -1328,6 +1371,7 @@ msgctxt "StrutsForward11_CreateSetProperty.Title"
 msgid "Set Property"
 msgstr ""
 
+#. 
 #: StrutsForward11_EditPath.WindowTitle
 #, java-format
 msgctxt "StrutsForward11_EditPath.WindowTitle"
@@ -1341,6 +1385,7 @@ msgctxt "StrutsForward11_EditPath.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsForward11_EditPath_0.WindowTitle
 #, java-format
 msgctxt "StrutsForward11_EditPath_0.WindowTitle"
@@ -1363,6 +1408,7 @@ msgctxt "StrutsForward12_Properties.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsForward12_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsForward12_CreateSetProperty.WindowTitle"
@@ -1376,6 +1422,7 @@ msgctxt "StrutsForward12_CreateSetProperty.Title"
 msgid "Set Property"
 msgstr ""
 
+#. 
 #: StrutsForward12_EditPath.WindowTitle
 #, java-format
 msgctxt "StrutsForward12_EditPath.WindowTitle"
@@ -1389,6 +1436,7 @@ msgctxt "StrutsForward1_EditPath.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsForward12_EditPath_0.WindowTitle
 #, java-format
 msgctxt "StrutsForward12_EditPath_0.WindowTitle"
@@ -1411,6 +1459,7 @@ msgctxt "StrutsGlobalExceptions11_Properties.Title"
 msgid "Global Exceptions"
 msgstr ""
 
+#. 
 #: StrutsGlobalExceptions11_CreateException.WindowTitle
 #, java-format
 msgctxt "StrutsGlobalExceptions11_CreateException.WindowTitle"
@@ -1424,6 +1473,7 @@ msgctxt "StrutsGlobalExceptions11_CreateException.Title"
 msgid "Global Exception"
 msgstr ""
 
+#. 
 #: StrutsGlobalExceptions11_CreateException_0.WindowTitle
 #, java-format
 msgctxt "StrutsGlobalExceptions11_CreateException_0.WindowTitle"
@@ -1446,6 +1496,7 @@ msgctxt "StrutsGlobalForwards11_Properties.Title"
 msgid "Global Forwards"
 msgstr ""
 
+#. 
 #: StrutsGlobalForwards11_CreateForward.WindowTitle
 #, java-format
 msgctxt "StrutsGlobalForwards11_CreateForward.WindowTitle"
@@ -1459,6 +1510,7 @@ msgctxt "StrutsGlobalForwards11_CreateForward.Title"
 msgid "Global Forward"
 msgstr ""
 
+#. 
 #: StrutsGlobalForwards11_CreateForward_0.WindowTitle
 #, java-format
 msgctxt "StrutsGlobalForwards11_CreateForward_0.WindowTitle"
@@ -1481,6 +1533,7 @@ msgctxt "StrutsGlobalForwards12_Properties.Title"
 msgid "Global Forwards"
 msgstr ""
 
+#. 
 #: StrutsGlobalForwards12_CreateForward.WindowTitle
 #, java-format
 msgctxt "StrutsGlobalForwards12_CreateForward.WindowTitle"
@@ -1494,6 +1547,7 @@ msgctxt "StrutsGlobalForwards12_CreateForward.Title"
 msgid "Global Forward"
 msgstr ""
 
+#. 
 #: StrutsGlobalForwards12_CreateForward_0.WindowTitle
 #, java-format
 msgctxt "StrutsGlobalForwards12_CreateForward_0.WindowTitle"
@@ -1516,6 +1570,7 @@ msgctxt "StrutsMessageResources11_Properties.Title"
 msgid "Message Resources"
 msgstr ""
 
+#. 
 #: StrutsMessageResources11_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsMessageResources11_CreateSetProperty.WindowTitle"
@@ -1529,12 +1584,14 @@ msgctxt "StrutsMessageResources11_CreateSetProperty.Title"
 msgid "Set Property"
 msgstr ""
 
+#. 
 #: StrutsMessageResourcesFolder11_Properties.Title
 #, java-format
 msgctxt "StrutsMessageResourcesFolder11_Properties.Title"
 msgid "Message Resources Folder"
 msgstr ""
 
+#. 
 #: StrutsMessageResourcesFolder11_CreateMessageResources.WindowTitle
 #, java-format
 msgctxt "StrutsMessageResourcesFolder11_CreateMessageResources.WindowTitle"
@@ -1557,6 +1614,7 @@ msgctxt "StrutsPlugin11_Properties.Title"
 msgid "Struts Plugin"
 msgstr ""
 
+#. 
 #: StrutsPlugin11_CreateSetProperty.WindowTitle
 #, java-format
 msgctxt "StrutsPlugin11_CreateSetProperty.WindowTitle"
@@ -1570,12 +1628,14 @@ msgctxt "StrutsPlugin11_CreateSetProperty.Title"
 msgid "Set Property"
 msgstr ""
 
+#. 
 #: StrutsPluginFolder11_Properties.Title
 #, java-format
 msgctxt "StrutsPluginFolder11_Properties.Title"
 msgid "Struts Plugin Folder"
 msgstr ""
 
+#. 
 #: StrutsPluginFolder11_CreatePlugin.WindowTitle
 #, java-format
 msgctxt "StrutsPluginFolder11_CreatePlugin.WindowTitle"
@@ -1605,6 +1665,7 @@ msgctxt "FileFolder_CreateStrutsConfig11.Title"
 msgid "Struts Config"
 msgstr ""
 
+#. 
 #: FileSystemFolder_CreateStrutsConfig11.WindowTitle
 #, java-format
 msgctxt "FileSystemFolder_CreateStrutsConfig11.WindowTitle"
@@ -1636,6 +1697,7 @@ msgctxt "StrutsConfig10_GenerateJavaCode_0.Title"
 msgid "Java Code Step 1"
 msgstr ""
 
+#. 
 #: StrutsConfig10_GenerateJavaCode_1.WindowTitle
 #, java-format
 msgctxt "StrutsConfig10_GenerateJavaCode_1.WindowTitle"
@@ -1649,6 +1711,7 @@ msgctxt "StrutsConfig10_GenerateJavaCode_1.Title"
 msgid "Java Code Step 2"
 msgstr ""
 
+#. 
 #: StrutsConfig10_GenerateJavaCode_2.WindowTitle
 #, java-format
 msgctxt "StrutsConfig10_GenerateJavaCode_2.WindowTitle"
@@ -1662,6 +1725,7 @@ msgctxt "StrutsConfig10_GenerateJavaCode_2.Title"
 msgid "Java Code Step 3"
 msgstr ""
 
+#. 
 #: StrutsConfig10_GenerateJavaCode_3.WindowTitle
 #, java-format
 msgctxt "StrutsConfig10_GenerateJavaCode_3.WindowTitle"
@@ -1675,6 +1739,7 @@ msgctxt "StrutsConfig10_GenerateJavaCode_3.Title"
 msgid "Java Code Step 4"
 msgstr ""
 
+#. 
 #: StrutsConfig10_GenerateJavaCode_4.WindowTitle
 #, java-format
 msgctxt "StrutsConfig10_GenerateJavaCode_4.WindowTitle"
@@ -1688,6 +1753,7 @@ msgctxt "StrutsConfig10_GenerateJavaCode_4.Title"
 msgid "Java Code Step 5"
 msgstr ""
 
+#. 
 #: StrutsConfig10_GenerateJavaCode_5.WindowTitle
 #, java-format
 msgctxt "StrutsConfig10_GenerateJavaCode_5.WindowTitle"
@@ -1701,6 +1767,7 @@ msgctxt "StrutsConfig10_GenerateJavaCode_5.Title"
 msgid "Java Code Step 6"
 msgstr ""
 
+#. 
 #: StrutsConfig10_GenerateJavaCode_6.WindowTitle
 #, java-format
 msgctxt "StrutsConfig10_GenerateJavaCode_6.WindowTitle"
@@ -1730,6 +1797,7 @@ msgctxt "StrutsConfig11_GenerateJavaCode_0.Title"
 msgid "Java Code Step 1"
 msgstr ""
 
+#. 
 #: StrutsConfig11_GenerateJavaCode_1.WindowTitle
 #, java-format
 msgctxt "StrutsConfig11_GenerateJavaCode_1.WindowTitle"
@@ -1743,6 +1811,7 @@ msgctxt "StrutsConfig11_GenerateJavaCode_1.Title"
 msgid "Java Code Step 2"
 msgstr ""
 
+#. 
 #: StrutsConfig11_GenerateJavaCode_2.WindowTitle
 #, java-format
 msgctxt "StrutsConfig11_GenerateJavaCode_2.WindowTitle"
@@ -1756,6 +1825,7 @@ msgctxt "StrutsConfig11_GenerateJavaCode_2.Title"
 msgid "Java Code Step 3"
 msgstr ""
 
+#. 
 #: StrutsConfig11_GenerateJavaCode_3.WindowTitle
 #, java-format
 msgctxt "StrutsConfig11_GenerateJavaCode_3.WindowTitle"
@@ -1769,6 +1839,7 @@ msgctxt "StrutsConfig11_GenerateJavaCode_3.Title"
 msgid "Java Code Step 4"
 msgstr ""
 
+#. 
 #: StrutsConfig11_GenerateJavaCode_4.WindowTitle
 #, java-format
 msgctxt "StrutsConfig11_GenerateJavaCode_4.WindowTitle"
@@ -1782,6 +1853,7 @@ msgctxt "StrutsConfig11_GenerateJavaCode_4.Title"
 msgid "Java Code Step 5"
 msgstr ""
 
+#. 
 #: StrutsConfig11_GenerateJavaCode_5.WindowTitle
 #, java-format
 msgctxt "StrutsConfig11_GenerateJavaCode_5.WindowTitle"
@@ -1795,6 +1867,7 @@ msgctxt "StrutsConfig11_GenerateJavaCode_5.Title"
 msgid "Java Code Step 6"
 msgstr ""
 
+#. 
 #: StrutsConfig11_GenerateJavaCode_6.WindowTitle
 #, java-format
 msgctxt "StrutsConfig11_GenerateJavaCode_6.WindowTitle"
@@ -1824,6 +1897,7 @@ msgctxt "StrutsForward11_GenerateJavaCode_0.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsForward11_GenerateJavaCode_1.WindowTitle
 #, java-format
 msgctxt "StrutsForward11_GenerateJavaCode_1.WindowTitle"
@@ -1837,6 +1911,7 @@ msgctxt "StrutsForward11_GenerateJavaCode_1.Title"
 msgid "Forward"
 msgstr ""
 
+#. 
 #: StrutsForward11_GenerateJavaCode_2.WindowTitle
 #, java-format
 msgctxt "StrutsForward11_GenerateJavaCode_2.WindowTitle"
@@ -1866,6 +1941,7 @@ msgctxt "StrutsAction11_GenerateJavaCode_0.Title"
 msgid "Struts Action"
 msgstr ""
 
+#. 
 #: StrutsAction11_GenerateJavaCode_1.WindowTitle
 #, java-format
 msgctxt "StrutsAction11_GenerateJavaCode_1.WindowTitle"
@@ -1879,6 +1955,7 @@ msgctxt "StrutsAction11_GenerateJavaCode_1.Title"
 msgid "Action"
 msgstr ""
 
+#. 
 #: StrutsAction11_GenerateJavaCode_2.WindowTitle
 #, java-format
 msgctxt "StrutsAction11_GenerateJavaCode_2.WindowTitle"
@@ -1908,6 +1985,7 @@ msgctxt "StrutsException11_GenerateJavaCode_0.Title"
 msgid "Struts Exception"
 msgstr ""
 
+#. 
 #: StrutsException11_GenerateJavaCode_1.WindowTitle
 #, java-format
 msgctxt "StrutsException11_GenerateJavaCode_1.WindowTitle"
@@ -1921,6 +1999,7 @@ msgctxt "StrutsException11_GenerateJavaCode_1.Title"
 msgid "Exception"
 msgstr ""
 
+#. 
 #: StrutsException11_GenerateJavaCode_2.WindowTitle
 #, java-format
 msgctxt "StrutsException11_GenerateJavaCode_2.WindowTitle"
@@ -1950,6 +2029,7 @@ msgctxt "StrutsFormBean11_GenerateJavaCode_0.Title"
 msgid "Form Bean"
 msgstr ""
 
+#. 
 #: StrutsFormBean11_GenerateJavaCode_1.WindowTitle
 #, java-format
 msgctxt "StrutsFormBean11_GenerateJavaCode_1.WindowTitle"
@@ -1963,6 +2043,7 @@ msgctxt "StrutsFormBean11_GenerateJavaCode_1.Title"
 msgid "Form Bean"
 msgstr ""
 
+#. 
 #: StrutsFormBean11_GenerateJavaCode_2.WindowTitle
 #, java-format
 msgctxt "StrutsFormBean11_GenerateJavaCode_2.WindowTitle"
@@ -1992,6 +2073,7 @@ msgctxt "StrutsForward10_GenerateJavaCode_0.Title"
 msgid "Struts Forward"
 msgstr ""
 
+#. 
 #: StrutsForward10_GenerateJavaCode_1.WindowTitle
 #, java-format
 msgctxt "StrutsForward10_GenerateJavaCode_1.WindowTitle"
@@ -2005,6 +2087,7 @@ msgctxt "StrutsForward10_GenerateJavaCode_1.Title"
 msgid "Forward"
 msgstr ""
 
+#. 
 #: StrutsForward10_GenerateJavaCode_2.WindowTitle
 #, java-format
 msgctxt "StrutsForward10_GenerateJavaCode_2.WindowTitle"
@@ -2034,6 +2117,7 @@ msgctxt "StrutsAction10_GenerateJavaCode_0.Title"
 msgid "Struts Action"
 msgstr ""
 
+#. 
 #: StrutsAction10_GenerateJavaCode_1.WindowTitle
 #, java-format
 msgctxt "StrutsAction10_GenerateJavaCode_1.WindowTitle"
@@ -2047,6 +2131,7 @@ msgctxt "StrutsAction10_GenerateJavaCode_1.Title"
 msgid "Action"
 msgstr ""
 
+#. 
 #: StrutsAction10_GenerateJavaCode_2.WindowTitle
 #, java-format
 msgctxt "StrutsAction10_GenerateJavaCode_2.WindowTitle"
@@ -2092,6 +2177,7 @@ msgctxt "StrutsFormBean10_GenerateJavaCode_0.Title"
 msgid "Form Bean"
 msgstr ""
 
+#. 
 #: StrutsFormBean10_GenerateJavaCode_1.WindowTitle
 #, java-format
 msgctxt "StrutsFormBean10_GenerateJavaCode_1.WindowTitle"
@@ -2105,6 +2191,7 @@ msgctxt "StrutsFormBean10_GenerateJavaCode_1.Title"
 msgid "Form Bean"
 msgstr ""
 
+#. 
 #: StrutsFormBean10_GenerateJavaCode_2.WindowTitle
 #, java-format
 msgctxt "StrutsFormBean10_GenerateJavaCode_2.WindowTitle"
@@ -2127,6 +2214,7 @@ msgctxt "StrutsSetProperty_Properties.Title"
 msgid "Struts Set Property"
 msgstr ""
 
+#. 
 #: StrutsSetProperty_Edit.WindowTitle
 #, java-format
 msgctxt "StrutsSetProperty_Edit.WindowTitle"
@@ -2167,6 +2255,7 @@ msgctxt "WebPrjRoot_OpenProject_2.WindowTitle"
 msgid "Open"
 msgstr ""
 
+#. 
 #: FileSystems_ImportStrutsProject_0.WindowTitle
 #, java-format
 msgctxt "FileSystems_ImportStrutsProject_0.WindowTitle"
@@ -2194,12 +2283,14 @@ msgctxt "FileSystems_CreateStrutsProject_1.WindowTitle"
 msgid "Create Project"
 msgstr ""
 
+#. 
 #: StrutsTomcatServer_Properties.Title
 #, java-format
 msgctxt "StrutsTomcatServer_Properties.Title"
 msgid "Tomcat"
 msgstr ""
 
+#. 
 #: Workspaces_CreateStrutsProject_0.WindowTitle
 #, java-format
 msgctxt "Workspaces_CreateStrutsProject_0.WindowTitle"
@@ -2213,12 +2304,14 @@ msgctxt "Workspaces_CreateStrutsProject_1.WindowTitle"
 msgid "Create Project"
 msgstr ""
 
+#. 
 #: StrutsProcessExceptionTransition_Properties.WindowTitle
 #, java-format
 msgctxt "StrutsProcessExceptionTransition_Properties.WindowTitle"
 msgid "Link"
 msgstr ""
 
+#. 
 #: StrutsOptions_Properties.WindowTitle
 #, java-format
 msgctxt "StrutsOptions_Properties.WindowTitle"
@@ -2246,12 +2339,14 @@ msgctxt "StrutsProcessItem_Links.WindowTitle"
 msgid "Process Item"
 msgstr ""
 
+#. 
 #: JstWeb_SelectBuildXML.WindowTitle
 #, java-format
 msgctxt "JstWeb_SelectBuildXML.WindowTitle"
 msgid "Ant Script"
 msgstr ""
 
+#. 
 #: Wizard_SelectKey.WindowTitle
 #, java-format
 msgctxt "Wizard_SelectKey.WindowTitle"
@@ -2311,12 +2406,14 @@ msgctxt "WebPrjRoot_OpenProject_2.Title"
 msgid "Red Hat Struts Project"
 msgstr ""
 
+#. 
 #: FileSystems_ImportStrutsProject_0.Title
 #, java-format
 msgctxt "FileSystems_ImportStrutsProject_0.Title"
 msgid "Struts Project"
 msgstr ""
 
+#. 
 #: FileSystems_ImportStrutsProject_1.Title
 #, java-format
 msgctxt "FileSystems_ImportStrutsProject_1.Title"
@@ -2337,6 +2434,7 @@ msgctxt "FileSystems_CreateStrutsProject_1.Title"
 msgid "Red Hat Struts Project"
 msgstr ""
 
+#. 
 #: Workspaces_CreateStrutsProject_0.Title
 #, java-format
 msgctxt "Workspaces_CreateStrutsProject_0.Title"
@@ -2350,12 +2448,14 @@ msgctxt "Workspaces_CreateStrutsProject_1.Title"
 msgid "Red Hat Struts Project"
 msgstr ""
 
+#. 
 #: StrutsProcessExceptionTransition_Properties.Title
 #, java-format
 msgctxt "StrutsProcessExceptionTransition_Properties.Title"
 msgid "Link"
 msgstr ""
 
+#. 
 #: StrutsOptions_Properties.Title
 #, java-format
 msgctxt "StrutsOptions_Properties.Title"
@@ -2383,12 +2483,14 @@ msgctxt "StrutsProcessItem_Links.Title"
 msgid "Process Item"
 msgstr ""
 
+#. 
 #: JstWeb_SelectBuildXML.Title
 #, java-format
 msgctxt "JstWeb_SelectBuildXML.Title"
 msgid "Ant Script"
 msgstr ""
 
+#. 
 #: Wizard_SelectKey.Title
 #, java-format
 msgctxt "Wizard_SelectKey.Title"
@@ -2486,6 +2588,7 @@ msgctxt "FileValidationRules_Properties.Title"
 msgid "Validation Framework"
 msgstr ""
 
+#. 
 #: FileValidationRules_AddFormset_0.WindowTitle
 #, java-format
 msgctxt "FileValidationRules_AddFormset_0.WindowTitle"
@@ -2499,12 +2602,14 @@ msgctxt "FileValidationRules_AddFormset_0.Title"
 msgid "Validation Formset"
 msgstr ""
 
+#. 
 #: FileValidationRules11_Properties.Title
 #, java-format
 msgctxt "FileValidationRules11_Properties.Title"
 msgid "Validation Framework"
 msgstr ""
 
+#. 
 #: FileValidationRules11_AddFormset_0.WindowTitle
 #, java-format
 msgctxt "FileValidationRules11_AddFormset_0.WindowTitle"
@@ -2543,6 +2648,7 @@ msgctxt "PropertyFileSelector_Properties.Title"
 msgid "Property File"
 msgstr ""
 
+#. 
 #: PropertyFileSelector_Edit.WindowTitle
 #, java-format
 msgctxt "PropertyFileSelector_Edit.WindowTitle"
@@ -2572,6 +2678,7 @@ msgctxt "ValidationArg0_Edit_0.Title"
 msgid "Validation Arg0"
 msgstr ""
 
+#. 
 #: ValidationArg0_Properties.WindowTitle
 #, java-format
 msgctxt "ValidationArg0_Properties.WindowTitle"
@@ -2585,6 +2692,7 @@ msgctxt "ValidationArg0_Properties.Title"
 msgid "Validation Arg0"
 msgstr ""
 
+#. 
 #: ValidationArg1_Edit_0.WindowTitle
 #, java-format
 msgctxt "ValidationArg1_Edit_0.WindowTitle"
@@ -2598,6 +2706,7 @@ msgctxt "ValidationArg1_Edit_0.Title"
 msgid "Validation Arg1"
 msgstr ""
 
+#. 
 #: ValidationArg1_Properties.WindowTitle
 #, java-format
 msgctxt "ValidationArg1_Properties.WindowTitle"
@@ -2611,6 +2720,7 @@ msgctxt "ValidationArg1_Properties.Title"
 msgid "Validation Arg1"
 msgstr ""
 
+#. 
 #: ValidationArg2_Edit_0.WindowTitle
 #, java-format
 msgctxt "ValidationArg2_Edit_0.WindowTitle"
@@ -2624,6 +2734,7 @@ msgctxt "ValidationArg2_Edit_0.Title"
 msgid "Validation Arg2"
 msgstr ""
 
+#. 
 #: ValidationArg2_Properties.WindowTitle
 #, java-format
 msgctxt "ValidationArg2_Properties.WindowTitle"
@@ -2637,6 +2748,7 @@ msgctxt "ValidationArg2_Properties.Title"
 msgid "Validation Arg2"
 msgstr ""
 
+#. 
 #: ValidationArg3_Edit_0.WindowTitle
 #, java-format
 msgctxt "ValidationArg3_Edit_0.WindowTitle"
@@ -2650,6 +2762,7 @@ msgctxt "ValidationArg3_Edit_0.Title"
 msgid "Validation Arg3"
 msgstr ""
 
+#. 
 #: ValidationArg3_Properties.WindowTitle
 #, java-format
 msgctxt "ValidationArg3_Properties.WindowTitle"
@@ -2663,6 +2776,7 @@ msgctxt "ValidationArg3_Properties.Title"
 msgid "Validation Arg3"
 msgstr ""
 
+#. 
 #: ValidationArg11_Edit_0.WindowTitle
 #, java-format
 msgctxt "ValidationArg11_Edit_0.WindowTitle"
@@ -2693,12 +2807,14 @@ msgctxt "ValidationConstant_Edit.Title"
 msgid "Validation Constant"
 msgstr ""
 
+#. 
 #: ValidationConstant_Properties.Title
 #, java-format
 msgctxt "ValidationConstant_Properties.Title"
 msgid "Validation Properties"
 msgstr ""
 
+#. 
 #: ValidationConstant11_Edit.WindowTitle
 #, java-format
 msgctxt "ValidationConstant11_Edit.WindowTitle"
@@ -2712,6 +2828,7 @@ msgctxt "ValidationConstant11_Edit.Title"
 msgid "Validation Constant"
 msgstr ""
 
+#. 
 #: ValidationConstant11_Properties.Title
 #, java-format
 msgctxt "ValidationConstant11_Properties.Title"
@@ -2727,6 +2844,7 @@ msgctxt "ValidationField_Properties.Title"
 msgid "Validation Field"
 msgstr ""
 
+#. 
 #: ValidationField_AddMsg.WindowTitle
 #, java-format
 msgctxt "ValidationField_AddMsg.WindowTitle"
@@ -2740,6 +2858,7 @@ msgctxt "ValidationField_AddMsg.Title"
 msgid "Validation Msg"
 msgstr ""
 
+#. 
 #: ValidationField_AddArg_0.WindowTitle
 #, java-format
 msgctxt "ValidationField_AddArg_0.WindowTitle"
@@ -2753,6 +2872,7 @@ msgctxt "ValidationField_AddArg_0.Title"
 msgid "Validation Arg"
 msgstr ""
 
+#. 
 #: ValidationField_AddVar.WindowTitle
 #, java-format
 msgctxt "ValidationField_AddVar.WindowTitle"
@@ -2766,6 +2886,7 @@ msgctxt "ValidationField_AddVar.Title"
 msgid "Validation Var"
 msgstr ""
 
+#. 
 #: ValidationField_EditPage.WindowTitle
 #, java-format
 msgctxt "ValidationField_EditPage.WindowTitle"
@@ -2779,6 +2900,7 @@ msgctxt "ValidationField_EditPage.Title"
 msgid "Validation Field"
 msgstr ""
 
+#. 
 #: ValidationField_EditIndex.WindowTitle
 #, java-format
 msgctxt "ValidationField_EditIndex.WindowTitle"
@@ -2792,12 +2914,14 @@ msgctxt "ValidationField_EditIndex.Title"
 msgid "Validation Field"
 msgstr ""
 
+#. 
 #: ValidationField11_Properties.Title
 #, java-format
 msgctxt "ValidationField11_Properties.Title"
 msgid "Validation Field"
 msgstr ""
 
+#. 
 #: ValidationField11_AddMsg.WindowTitle
 #, java-format
 msgctxt "ValidationField11_AddMsg.WindowTitle"
@@ -2811,6 +2935,7 @@ msgctxt "ValidationField11_AddMsg.Title"
 msgid "Validation Msg"
 msgstr ""
 
+#. 
 #: ValidationField11_AddArg_0.WindowTitle
 #, java-format
 msgctxt "ValidationField11_AddArg_0.WindowTitle"
@@ -2824,6 +2949,7 @@ msgctxt "ValidationField11_AddArg_0.Title"
 msgid "Validation Arg"
 msgstr ""
 
+#. 
 #: ValidationField11_AddVar.WindowTitle
 #, java-format
 msgctxt "ValidationField11_AddVar.WindowTitle"
@@ -2837,6 +2963,7 @@ msgctxt "ValidationField11_AddVar.Title"
 msgid "Validation Var"
 msgstr ""
 
+#. 
 #: ValidationField11_EditPage.WindowTitle
 #, java-format
 msgctxt "ValidationField11_EditPage.WindowTitle"
@@ -2850,6 +2977,7 @@ msgctxt "ValidationField11_EditPage.Title"
 msgid "Validation Field"
 msgstr ""
 
+#. 
 #: ValidationField11_EditIndex.WindowTitle
 #, java-format
 msgctxt "ValidationField11_EditIndex.WindowTitle"
@@ -2872,6 +3000,7 @@ msgctxt "ValidationForm_Properties.Title"
 msgid "Validation Form"
 msgstr ""
 
+#. 
 #: ValidationForm_AddField.WindowTitle
 #, java-format
 msgctxt "ValidationForm_AddField.WindowTitle"
@@ -2885,12 +3014,14 @@ msgctxt "ValidationForm_AddField.Title"
 msgid "Validation Field"
 msgstr ""
 
+#. 
 #: ValidationForm11_Properties.Title
 #, java-format
 msgctxt "ValidationForm11_Properties.Title"
 msgid "Validation Form"
 msgstr ""
 
+#. 
 #: ValidationForm11_AddField.WindowTitle
 #, java-format
 msgctxt "ValidationForm11_AddField.WindowTitle"
@@ -2913,6 +3044,7 @@ msgctxt "ValidationFormset_Properties.Title"
 msgid "Validation Formset"
 msgstr ""
 
+#. 
 #: ValidationFormset_AddConstant.WindowTitle
 #, java-format
 msgctxt "ValidationFormset_AddConstant.WindowTitle"
@@ -2926,6 +3058,7 @@ msgctxt "ValidationFormset_AddConstant.Title"
 msgid "Formset Constant"
 msgstr ""
 
+#. 
 #: ValidationFormset_AddForm.WindowTitle
 #, java-format
 msgctxt "ValidationFormset_AddForm.WindowTitle"
@@ -2939,12 +3072,14 @@ msgctxt "ValidationFormset_AddForm.Title"
 msgid "Validation Form"
 msgstr ""
 
+#. 
 #: ValidationFormset11_Properties.Title
 #, java-format
 msgctxt "ValidationFormset11_Properties.Title"
 msgid "Validation Formset"
 msgstr ""
 
+#. 
 #: ValidationFormset11_AddConstant.WindowTitle
 #, java-format
 msgctxt "ValidationFormset11_AddConstant.WindowTitle"
@@ -2958,6 +3093,7 @@ msgctxt "ValidationFormset11_AddConstant.Title"
 msgid "Formset Constant"
 msgstr ""
 
+#. 
 #: ValidationFormset11_AddForm.WindowTitle
 #, java-format
 msgctxt "ValidationFormset11_AddForm.WindowTitle"
@@ -2980,6 +3116,7 @@ msgctxt "ValidationGlobal_Properties.Title"
 msgid "Validation Global"
 msgstr ""
 
+#. 
 #: ValidationGlobal_AddValidator.WindowTitle
 #, java-format
 msgctxt "ValidationGlobal_AddValidator.WindowTitle"
@@ -2993,6 +3130,7 @@ msgctxt "ValidationGlobal_AddValidator.Title"
 msgid "Validator"
 msgstr ""
 
+#. 
 #: ValidationGlobal_AddConstant.WindowTitle
 #, java-format
 msgctxt "ValidationGlobal_AddConstant.WindowTitle"
@@ -3006,12 +3144,14 @@ msgctxt "ValidationGlobal_AddConstant.Title"
 msgid "Global Constant"
 msgstr ""
 
+#. 
 #: ValidationGlobal11_Properties.Title
 #, java-format
 msgctxt "ValidationGlobal11_Properties.Title"
 msgid "Validation Global"
 msgstr ""
 
+#. 
 #: ValidationGlobal11_AddValidator.WindowTitle
 #, java-format
 msgctxt "ValidationGlobal11_AddValidator.WindowTitle"
@@ -3025,6 +3165,7 @@ msgctxt "ValidationGlobal11_AddValidator.Title"
 msgid "Validator"
 msgstr ""
 
+#. 
 #: ValidationGlobal11_AddConstant.WindowTitle
 #, java-format
 msgctxt "ValidationGlobal11_AddConstant.WindowTitle"
@@ -3054,12 +3195,14 @@ msgctxt "ValidationMsg_Edit.Title"
 msgid "Validation Msg"
 msgstr ""
 
+#. 
 #: ValidationMsg_Properties.Title
 #, java-format
 msgctxt "ValidationMsg_Properties.Title"
 msgid "Validation Msg"
 msgstr ""
 
+#. 
 #: ValidationMsg11_Edit.WindowTitle
 #, java-format
 msgctxt "ValidationMsg11_Edit.WindowTitle"
@@ -3073,6 +3216,7 @@ msgctxt "ValidationMsg11_Edit.Title"
 msgid "Validation Msg"
 msgstr ""
 
+#. 
 #: ValidationMsg11_Properties.Title
 #, java-format
 msgctxt "ValidationMsg11_Properties.Title"
@@ -3088,6 +3232,7 @@ msgctxt "ValidationValidator.methodParams"
 msgid "Method Params"
 msgstr ""
 
+#. 
 #: ValidationValidator_Edit.WindowTitle
 #, java-format
 msgctxt "ValidationValidator_Edit.WindowTitle"
@@ -3101,6 +3246,7 @@ msgctxt "ValidationValidator_Edit.Title"
 msgid "Validator"
 msgstr ""
 
+#. 
 #: ValidationValidator_EditBody.WindowTitle
 #, java-format
 msgctxt "ValidationValidator_EditBody.WindowTitle"
@@ -3114,12 +3260,14 @@ msgctxt "ValidationValidator_EditBody.Title"
 msgid "Validator"
 msgstr ""
 
+#. 
 #: ValidationValidator_Properties.Title
 #, java-format
 msgctxt "ValidationValidator_Properties.Title"
 msgid "Validator"
 msgstr ""
 
+#. 
 #: ValidationValidator11_Edit.WindowTitle
 #, java-format
 msgctxt "ValidationValidator11_Edit.WindowTitle"
@@ -3133,6 +3281,7 @@ msgctxt "ValidationValidator11_Edit.Title"
 msgid "Validator"
 msgstr ""
 
+#. 
 #: ValidationValidator11_EditBody.WindowTitle
 #, java-format
 msgctxt "ValidationValidator11_EditBody.WindowTitle"
@@ -3146,6 +3295,7 @@ msgctxt "ValidationValidator11_EditBody.Title"
 msgid "Validator"
 msgstr ""
 
+#. 
 #: ValidationValidator11_Properties.Title
 #, java-format
 msgctxt "ValidationValidator11_Properties.Title"
@@ -3168,12 +3318,14 @@ msgctxt "ValidationVar_Edit.Title"
 msgid "Validation Var"
 msgstr ""
 
+#. 
 #: ValidationVar_Properties.Title
 #, java-format
 msgctxt "ValidationVar_Properties.Title"
 msgid "Validation Var"
 msgstr ""
 
+#. 
 #: ValidationVar11_Edit.WindowTitle
 #, java-format
 msgctxt "ValidationVar11_Edit.WindowTitle"
@@ -3187,6 +3339,7 @@ msgctxt "ValidationVar11_Edit.Title"
 msgid "Validation Var"
 msgstr ""
 
+#. 
 #: ValidationVar11_Properties.Title
 #, java-format
 msgctxt "ValidationVar11_Properties.Title"
@@ -3209,6 +3362,7 @@ msgctxt "ValidatorFileSelector_Edit.Title"
 msgid "Validation Framework File"
 msgstr ""
 
+#. 
 #: ValidatorFileSelector_Properties.Title
 #, java-format
 msgctxt "ValidatorFileSelector_Properties.Title"
@@ -3231,6 +3385,7 @@ msgctxt "FileFolder_CreateValidator.Title"
 msgid "Validation File"
 msgstr ""
 
+#. 
 #: FileSystemFolder_CreateValidator.WindowTitle
 #, java-format
 msgctxt "FileSystemFolder_CreateValidator.WindowTitle"
@@ -3244,6 +3399,7 @@ msgctxt "FileSystemFolder_CreateValidator.Title"
 msgid "Validation File"
 msgstr ""
 
+#. 
 #: FileFolder_CreateValidator11.WindowTitle
 #, java-format
 msgctxt "FileFolder_CreateValidator11.WindowTitle"
@@ -3257,6 +3413,7 @@ msgctxt "FileFolder_CreateValidator11.Title"
 msgid "Validation File"
 msgstr ""
 
+#. 
 #: FileSystemFolder_CreateValidator11.WindowTitle
 #, java-format
 msgctxt "FileSystemFolder_CreateValidator11.WindowTitle"
@@ -3300,6 +3457,7 @@ msgctxt "SVWAddArgN_AddArg_0.Title"
 msgid "Arg"
 msgstr ""
 
+#. 
 #: SVWAddMsg_AddMsg_0.WindowTitle
 #, java-format
 msgctxt "SVWAddMsg_AddMsg_0.WindowTitle"
@@ -3313,6 +3471,7 @@ msgctxt "SVWAddMsg_AddMsg_0.Title"
 msgid "Msg"
 msgstr ""
 
+#. 
 #: SVWAddMsg_Edit_0.WindowTitle
 #, java-format
 msgctxt "SVWAddMsg_Edit_0.WindowTitle"
@@ -3326,6 +3485,7 @@ msgctxt "SVWAddMsg_Edit_0.Title"
 msgid "Msg"
 msgstr ""
 
+#. 
 #: SVWEditArg_Edit_0.WindowTitle
 #, java-format
 msgctxt "SVWEditArg_Edit_0.WindowTitle"
@@ -3339,6 +3499,7 @@ msgctxt "SVWEditArg_Edit_0.Title"
 msgid "Arg"
 msgstr ""
 
+#. 
 #: SVWEditArgN_Edit_0.WindowTitle
 #, java-format
 msgctxt "SVWEditArgN_Edit_0.WindowTitle"
@@ -3369,6 +3530,7 @@ msgctxt "ValidationValidator_EditClassName.Title"
 msgid "Validator"
 msgstr ""
 
+#. 
 #: ValidationValidator_EditMethod.WindowTitle
 #, java-format
 msgctxt "ValidationValidator_EditMethod.WindowTitle"
@@ -3382,6 +3544,7 @@ msgctxt "ValidationValidator_EditMethod.Title"
 msgid "Validator"
 msgstr ""
 
+#. 
 #: ValidationValidator_EditMethodParams.WindowTitle
 #, java-format
 msgctxt "ValidationValidator_EditMethodParams.WindowTitle"
@@ -3395,6 +3558,7 @@ msgctxt "ValidationValidator_EditMethodParams.Title"
 msgid "Validator"
 msgstr ""
 
+#. 
 #: ValidationValidator_EditFunctionName.WindowTitle
 #, java-format
 msgctxt "ValidationValidator_EditFunctionName.WindowTitle"
@@ -3434,6 +3598,7 @@ msgctxt "StrutsProcessItem_BreakPointWizard.execute"
 msgid "Before execution"
 msgstr ""
 
+#. 
 #: StrutsProcessItem_BreakpointProperties.WindowTitle
 #, java-format
 msgctxt "StrutsProcessItem_BreakpointProperties.WindowTitle"
@@ -3454,6 +3619,7 @@ msgctxt "StrutsProcessItem_BreakpointProperties.Message"
 msgid "Select events to stop JVM."
 msgstr ""
 
+#. 
 #: SharableStrutsEditor.enableControlModeOnTransitionCompleted
 #, java-format
 msgctxt "SharableStrutsEditor.enableControlModeOnTransitionCompleted"

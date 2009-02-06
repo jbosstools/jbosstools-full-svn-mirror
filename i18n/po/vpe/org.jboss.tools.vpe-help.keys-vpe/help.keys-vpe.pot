@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-02 15:20+1000\n"
+"POT-Creation-Date: 2009-02-06 16:44+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,6 +38,7 @@ msgctxt "VPECSSReference.location"
 msgid "CSS File Path"
 msgstr ""
 
+#. 
 #: VPECSSReferenceAddItem.Title
 #, java-format
 msgctxt "VPECSSReferenceAddItem.Title"
@@ -65,6 +66,7 @@ msgctxt "VPECSSReferenceEditItem.Message"
 msgid "Edit Existing References to CSS File, which is used for generation a preview"
 msgstr ""
 
+#. 
 #: VPETLDReferenceAddItem.Title
 #, java-format
 msgctxt "VPETLDReferenceAddItem.Title"
@@ -92,6 +94,7 @@ msgctxt "VPETLDReferenceEditItem.Message"
 msgid "Edit TLD Item, which is used in a visual part for generation a preview"
 msgstr ""
 
+#. 
 #: VpeImageReferencesDialog.WindowTitle
 #, java-format
 msgctxt "VpeImageReferencesDialog.WindowTitle"
@@ -112,6 +115,7 @@ msgctxt "VPEImageReference.location"
 msgid "Path to Folder"
 msgstr ""
 
+#. 
 #: VPETLDReference.location
 #, java-format
 msgctxt "VPETLDReference.location"
@@ -125,6 +129,7 @@ msgctxt "VPETLDReferenceExt.location"
 msgid "URI"
 msgstr ""
 
+#. 
 #: VPEElReference.location
 #, java-format
 msgctxt "VPEElReference.location"
@@ -166,6 +171,7 @@ msgctxt "VPEElReferenceAddItem.Title"
 msgid "Add El Item "
 msgstr ""
 
+#. 
 #: VPEGlobalElReference.location
 #, java-format
 msgctxt "VPEGlobalElReference.location"
@@ -207,10 +213,11 @@ msgctxt "VPEGlobalElReferenceEditItem.Message"
 msgid "Edit global El variable, which is substituted in a visual part for generating a preview"
 msgstr ""
 
+#. 
 #: VpeResourcesDialog.WindowTitle
 #, java-format
 msgctxt "VpeResourcesDialog.WindowTitle"
-msgid "References to Resources"
+msgid "Page Design Options"
 msgstr ""
 
 #. 
@@ -220,6 +227,7 @@ msgctxt "VpeResourcesDialog.Title"
 msgid "Page Design Options"
 msgstr ""
 
+#. 
 #: VPEFolderReference.location
 #, java-format
 msgctxt "VPEFolderReference.location"

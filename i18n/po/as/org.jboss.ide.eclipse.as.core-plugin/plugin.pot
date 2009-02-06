@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-04 13:16+1000\n"
+"POT-Creation-Date: 2009-02-06 16:44+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,7 +28,14 @@ msgstr ""
 #: providerName
 #, java-format
 msgctxt "providerName"
-msgid "JBoss, a division of Red Hat"
+msgid "JBoss Community"
+msgstr ""
+
+#. 
+#: enterpriseProviderName
+#, java-format
+msgctxt "enterpriseProviderName"
+msgid "JBoss Enterprise Middleware"
 msgstr ""
 
 #. 
@@ -40,17 +47,17 @@ msgid "JBoss AS 3.2"
 msgstr ""
 
 #. 
-#: jboss.version.32.version
-#, java-format
-msgctxt "jboss.version.32.version"
-msgid "JBoss 3.2"
-msgstr ""
-
-#. 
 #: jboss.version.32.description
 #, java-format
 msgctxt "jboss.version.32.description"
 msgid "JBoss Application Server 3.2"
+msgstr ""
+
+#. 
+#: jboss.version.32.runtime.name
+#, java-format
+msgctxt "jboss.version.32.runtime.name"
+msgid "JBoss 3.2 Runtime"
 msgstr ""
 
 #. 
@@ -61,17 +68,17 @@ msgid "JBoss AS 4.0"
 msgstr ""
 
 #. 
-#: jboss.version.40.version
-#, java-format
-msgctxt "jboss.version.40.version"
-msgid "JBoss 4.0"
-msgstr ""
-
-#. 
 #: jboss.version.40.description
 #, java-format
 msgctxt "jboss.version.40.description"
 msgid "JBoss Application Server 4.0"
+msgstr ""
+
+#. 
+#: jboss.version.40.runtime.name
+#, java-format
+msgctxt "jboss.version.40.runtime.name"
+msgid "JBoss 4.0 Runtime"
 msgstr ""
 
 #. 
@@ -82,17 +89,17 @@ msgid "JBoss AS 4.2"
 msgstr ""
 
 #. 
-#: jboss.version.42.version
-#, java-format
-msgctxt "jboss.version.42.version"
-msgid "JBoss 4.2"
-msgstr ""
-
-#. 
 #: jboss.version.42.description
 #, java-format
 msgctxt "jboss.version.42.description"
 msgid "JBoss Application Server 4.2"
+msgstr ""
+
+#. 
+#: jboss.version.42.runtime.name
+#, java-format
+msgctxt "jboss.version.42.runtime.name"
+msgid "JBoss 4.2 Runtime"
 msgstr ""
 
 #. 
@@ -103,13 +110,6 @@ msgid "JBoss AS 5.0"
 msgstr ""
 
 #. 
-#: jboss.version.50.version
-#, java-format
-msgctxt "jboss.version.50.version"
-msgid "JBoss 5.0"
-msgstr ""
-
-#. 
 #: jboss.version.50.description
 #, java-format
 msgctxt "jboss.version.50.description"
@@ -117,52 +117,58 @@ msgid "JBoss Application Server 5.0"
 msgstr ""
 
 #. 
-#. service names
-#: jboss.ejb.deployer
+#: jboss.version.50.runtime.name
 #, java-format
-msgctxt "jboss.ejb.deployer"
-msgid "JBoss Enterprise JavaBeans (EJB-JAR) Deployer"
+msgctxt "jboss.version.50.runtime.name"
+msgid "JBoss 5.0 Runtime"
 msgstr ""
 
 #. 
-#: jboss.war.deployer
+#: jboss.eap.version.43.name
 #, java-format
-msgctxt "jboss.war.deployer"
-msgid "JBoss Web Application (WAR) Deployer"
+msgctxt "jboss.eap.version.43.name"
+msgid "JBoss EAP 4.3"
 msgstr ""
 
 #. 
-#: jboss.ear.deployer
+#: jboss.eap.version.43.description
 #, java-format
-msgctxt "jboss.ear.deployer"
-msgid "JBoss J2EE Application (EAR) Deployer"
+msgctxt "jboss.eap.version.43.description"
+msgid "JBoss EAP Server 4.3"
 msgstr ""
 
 #. 
-#: jboss.service.xml.deployer
+#: jboss.eap.version.43.runtime.name
 #, java-format
-msgctxt "jboss.service.xml.deployer"
-msgid "JBoss service.xml Deployer"
+msgctxt "jboss.eap.version.43.runtime.name"
+msgid "JBoss EAP 4.3 Runtime"
 msgstr ""
 
 #. 
-#: jboss.sar.deployer
+#: deploy.runtime.name
 #, java-format
-msgctxt "jboss.sar.deployer"
-msgid "JBoss Service Archive (SAR) Deployer"
+msgctxt "deploy.runtime.name"
+msgid "JBoss Deploy-Only Runtime"
 msgstr ""
 
 #. 
-#: jboss.client.deployer
+#: deploy.runtime.description
 #, java-format
-msgctxt "jboss.client.deployer"
-msgid "JBoss J2EE Client Deployer"
+msgctxt "deploy.runtime.description"
+msgid "A runtime provided to allow a deploy-only server the ability to deploy certain project types."
 msgstr ""
 
 #. 
-#: jboss.rar.deployer
+#: Bundle-Vendor.0
 #, java-format
-msgctxt "jboss.rar.deployer"
-msgid "JBoss Connector Resource (RAR) Deployer"
+msgctxt "Bundle-Vendor.0"
+msgid "JBoss, a division of Red Hat"
+msgstr ""
+
+#. 
+#: Bundle-Name.0
+#, java-format
+msgctxt "Bundle-Name.0"
+msgid "JBoss AS Core Plug-in"
 msgstr ""
 

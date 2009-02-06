@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-08 13:23+1000\n"
+"POT-Creation-Date: 2009-01-19 13:09+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,12 +24,14 @@ msgctxt "providerName"
 msgid "JBoss, a division of Red Hat"
 msgstr ""
 
+#. 
 #: xml.page.name
 #, java-format
 msgctxt "xml.page.name"
 msgid "XML Syntax Colors"
 msgstr ""
 
+#. 
 #: XML_Occurrences.name
 #, java-format
 msgctxt "XML_Occurrences.name"
@@ -59,6 +61,7 @@ msgctxt "Folding.label"
 msgid "F&olding"
 msgstr ""
 
+#. 
 #: occurrenceStructureProvidersExtensionPoint
 #, java-format
 msgctxt "occurrenceStructureProvidersExtensionPoint"
@@ -72,9 +75,17 @@ msgctxt "defaultOccurrenceStructureProviderName"
 msgid "Default Occurrence Provider"
 msgstr ""
 
+#. 
 #: OccurrenceAnnotation.label
 #, java-format
 msgctxt "OccurrenceAnnotation.label"
 msgid "Occurences (JSP,XML)"
+msgstr ""
+
+#. 
+#: Bundle-Name.0
+#, java-format
+msgctxt "Bundle-Name.0"
+msgid "Xml Editor Plug-in"
 msgstr ""
 

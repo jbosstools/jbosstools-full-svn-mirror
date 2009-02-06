@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-14 12:16+1000\n"
+"POT-Creation-Date: 2009-02-06 16:44+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -313,6 +313,13 @@ msgid "Register Project"
 msgstr ""
 
 #. 
+#: UnregisterProject
+#, java-format
+msgctxt "UnregisterProject"
+msgid "Unregister Project"
+msgstr ""
+
+#. 
 #: SaveArchivesJob
 #, java-format
 msgctxt "SaveArchivesJob"
@@ -331,5 +338,12 @@ msgstr ""
 #, java-format
 msgctxt "CreatingDefaultJarConfig"
 msgid "Creating default JAR configuration for java project \"{0}\""
+msgstr ""
+
+#. 
+#: UpdatingModelJob
+#, java-format
+msgctxt "UpdatingModelJob"
+msgid "Updating archives model"
 msgstr ""
 

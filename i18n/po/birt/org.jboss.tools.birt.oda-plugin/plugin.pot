@@ -57,6 +57,7 @@ msgctxt "connection.profile.name"
 msgid "Hibernate Data Source Connection Profile"
 msgstr ""
 
+#. 
 #: BundleVendor
 #, java-format
 msgctxt "BundleVendor"

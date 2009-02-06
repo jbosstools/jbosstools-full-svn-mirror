@@ -31,6 +31,7 @@ msgctxt "ViewPlugin_canot_load_preference_store_properties"
 msgid "Can't load preference store properties"
 msgstr ""
 
+#. 
 #: OrmLabelProvider_element
 #, java-format
 msgctxt "OrmLabelProvider_element"

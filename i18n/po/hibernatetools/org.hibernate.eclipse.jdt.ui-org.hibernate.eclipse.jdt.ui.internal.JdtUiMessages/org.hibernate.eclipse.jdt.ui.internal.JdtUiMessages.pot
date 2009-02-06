@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-14 12:10+1000\n"
+"POT-Creation-Date: 2009-01-16 10:38+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -202,10 +202,10 @@ msgid "Class"
 msgstr ""
 
 #. 
-#: ResolveAmbiguous_column_Association
+#: ResolveAmbiguous_column_Property
 #, java-format
-msgctxt "ResolveAmbiguous_column_Association"
-msgid "Association"
+msgctxt "ResolveAmbiguous_column_Property"
+msgid "Property"
 msgstr ""
 
 #. 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-13 12:26+1000\n"
+"POT-Creation-Date: 2009-01-21 17:21+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,5 +43,40 @@ msgstr ""
 #, java-format
 msgctxt "ViewCategory_JBossTools"
 msgid "JBoss Tools"
+msgstr ""
+
+#. 
+#: Bundle-Vendor.0
+#, java-format
+msgctxt "Bundle-Vendor.0"
+msgid "JBoss, a division of Red Hat"
+msgstr ""
+
+#. 
+#: Bundle-Name.0
+#, java-format
+msgctxt "Bundle-Name.0"
+msgid "JBoss Archives Tools"
+msgstr ""
+
+#. 
+#: newPackageAction.label.jar
+#, java-format
+msgctxt "newPackageAction.label.jar"
+msgid "JAR"
+msgstr ""
+
+#. 
+#: NavigatorContent_ArchivesContent
+#, java-format
+msgctxt "NavigatorContent_ArchivesContent"
+msgid "Archives Content"
+msgstr ""
+
+#. 
+#: NavigatorContent_ProjectArchives
+#, java-format
+msgctxt "NavigatorContent_ProjectArchives"
+msgid "Project Archives"
 msgstr ""
 

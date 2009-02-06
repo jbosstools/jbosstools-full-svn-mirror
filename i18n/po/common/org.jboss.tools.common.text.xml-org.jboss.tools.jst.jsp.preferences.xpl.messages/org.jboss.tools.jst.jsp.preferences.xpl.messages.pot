@@ -70,6 +70,7 @@ msgctxt "OccurrencesPreferencePage.Sticky"
 msgid "Sticky"
 msgstr ""
 
+#. 
 #: ToggleOccurencesMarkUpAction.label
 #, java-format
 msgctxt "ToggleOccurencesMarkUpAction.label"

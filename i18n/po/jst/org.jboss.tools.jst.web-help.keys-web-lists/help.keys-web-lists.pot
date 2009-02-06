@@ -474,6 +474,7 @@ msgctxt "Web.lists.CONFIDENTIAL"
 msgid "CONFIDENTIAL"
 msgstr ""
 
+#. 
 #: Web.lists.Exact_structure_of_war_file
 #, java-format
 msgctxt "Web.lists.Exact_structure_of_war_file"
@@ -487,6 +488,7 @@ msgctxt "Web.lists.Classic_Eclipse_project_structure"
 msgid "Classic Eclipse project structure"
 msgstr ""
 
+#. 
 #: Web.lists.none
 #, java-format
 msgctxt "Web.lists.none"

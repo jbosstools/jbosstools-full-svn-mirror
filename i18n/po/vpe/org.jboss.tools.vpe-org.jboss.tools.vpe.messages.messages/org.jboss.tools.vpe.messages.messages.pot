@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-14 12:15+1000\n"
+"POT-Creation-Date: 2009-02-06 16:44+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -581,34 +581,34 @@ msgstr ""
 #: PAGE_DESIGN_OPTIONS_ABOUT
 #, java-format
 msgctxt "PAGE_DESIGN_OPTIONS_ABOUT"
-msgid "Here you can configure Visual Page Editor arguments, which will be used for generating a preview"
+msgid "Here you can configure Visual Page Editor options, which will be used for generating a preview"
 msgstr ""
 
 #. 
 #: ACTUAL_RUN_TIME_FOLDERS_ABOUT
 #, java-format
 msgctxt "ACTUAL_RUN_TIME_FOLDERS_ABOUT"
-msgid "This parameters will be used by Visual Page Editor for replacing absolute and relative path values when generating a preview"
+msgid "These options will be used by Visual Page Editor for replacing absolute and relative path values when generating a preview"
 msgstr ""
 
 #. 
 #: INCLUDED_CSS_FILES_ABOUT
 #, java-format
 msgctxt "INCLUDED_CSS_FILES_ABOUT"
-msgid "This CSS files will be linked by Visual Page Editor when generating a preview"
+msgid "These CSS files will be linked by Visual Page Editor when generating a preview"
 msgstr ""
 
 #. 
 #: INCLUDED_TAG_LIBS_ABOUT
 #, java-format
 msgctxt "INCLUDED_TAG_LIBS_ABOUT"
-msgid "This Taglibs will be used by Visual Page Editor for getting appropriate template for generating a preview, if this Taglibs doesn't included on page"
+msgid "These Taglibs will be used by Visual Page Editor for getting appropriate template for generating a preview, if this Taglibs doesn't included on page"
 msgstr ""
 
 #. 
 #: SUBSTITUTED_EL_EXPRESSIONS_ABOUT
 #, java-format
 msgctxt "SUBSTITUTED_EL_EXPRESSIONS_ABOUT"
-msgid "This EL expressions will be substituted by Visual Page Editor when generating a  preview "
+msgid "These EL expressions will be substituted by Visual Page Editor when generating a  preview "
 msgstr ""
 

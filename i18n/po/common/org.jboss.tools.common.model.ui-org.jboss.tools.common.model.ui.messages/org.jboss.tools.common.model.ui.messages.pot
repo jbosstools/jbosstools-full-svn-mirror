@@ -101,6 +101,7 @@ msgctxt "org.jboss.tools.common.model.ui.resources.ResourceLayoutManager.ERROR_U
 msgid "Unknow Exception."
 msgstr ""
 
+#. 
 #: Editor.Cut.label
 #, java-format
 msgctxt "Editor.Cut.label"
@@ -115,19 +116,13 @@ msgid "Cut"
 msgstr ""
 
 #. 
-#: Editor.Cut.image
-#, java-format
-msgctxt "Editor.Cut.image"
-msgid ""
-msgstr ""
-
-#. 
 #: Editor.Cut.description
 #, java-format
 msgctxt "Editor.Cut.description"
 msgid "Cut"
 msgstr ""
 
+#. 
 #: Editor.Copy.label
 #, java-format
 msgctxt "Editor.Copy.label"
@@ -142,19 +137,13 @@ msgid "Copy"
 msgstr ""
 
 #. 
-#: Editor.Copy.image
-#, java-format
-msgctxt "Editor.Copy.image"
-msgid ""
-msgstr ""
-
-#. 
 #: Editor.Copy.description
 #, java-format
 msgctxt "Editor.Copy.description"
 msgid "Copy"
 msgstr ""
 
+#. 
 #: Editor.Paste.label
 #, java-format
 msgctxt "Editor.Paste.label"
@@ -169,19 +158,13 @@ msgid "Paste"
 msgstr ""
 
 #. 
-#: Editor.Paste.image
-#, java-format
-msgctxt "Editor.Paste.image"
-msgid ""
-msgstr ""
-
-#. 
 #: Editor.Paste.description
 #, java-format
 msgctxt "Editor.Paste.description"
 msgid "Paste"
 msgstr ""
 
+#. 
 #: Editor.Delete.label
 #, java-format
 msgctxt "Editor.Delete.label"
@@ -193,13 +176,6 @@ msgstr ""
 #, java-format
 msgctxt "Editor.Delete.tooltip"
 msgid "Delete"
-msgstr ""
-
-#. 
-#: Editor.Delete.image
-#, java-format
-msgctxt "Editor.Delete.image"
-msgid ""
 msgstr ""
 
 #. 
@@ -216,6 +192,7 @@ msgctxt "MainPreferencePage.Description"
 msgid "JBossTools preferences"
 msgstr ""
 
+#. 
 #: org.jboss.tools.common.model.ui.forms.Form.CANNOT_LOAD_ATTRIBUTE
 #, java-format
 msgctxt "org.jboss.tools.common.model.ui.forms.Form.CANNOT_LOAD_ATTRIBUTE"

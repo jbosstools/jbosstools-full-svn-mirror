@@ -24,6 +24,7 @@ msgctxt "FileTiles"
 msgid "/struts_pro/FileTiles.html"
 msgstr ""
 
+#. 
 #: FileTiles_Properties
 #, java-format
 msgctxt "FileTiles_Properties"
@@ -44,6 +45,7 @@ msgctxt "FileTiles_Properties.Title"
 msgid "File Tiles"
 msgstr ""
 
+#. 
 #: FileTiles_CreateDefinition
 #, java-format
 msgctxt "FileTiles_CreateDefinition"
@@ -64,6 +66,7 @@ msgctxt "FileTiles_CreateDefinition.Title"
 msgid "Tiles Definition"
 msgstr ""
 
+#. 
 #: FileTiles_EditPath_0
 #, java-format
 msgctxt "FileTiles_EditPath_0"
@@ -93,6 +96,7 @@ msgctxt "FileFolder_CreateTiles.Title"
 msgid "Tiles File"
 msgstr ""
 
+#. 
 #: FileSystemFolder_CreateTiles
 #, java-format
 msgctxt "FileSystemFolder_CreateTiles"
@@ -113,6 +117,7 @@ msgctxt "FileSystemFolder_CreateTiles.Title"
 msgid "Tiles File"
 msgstr ""
 
+#. 
 #: FileSystemFolder_CreateTiles_0
 #, java-format
 msgctxt "FileSystemFolder_CreateTiles_0"
@@ -128,6 +133,7 @@ msgctxt "TilesAdd"
 msgid "/struts_pro/TilesAdd.html"
 msgstr ""
 
+#. 
 #: TilesAdd_Properties
 #, java-format
 msgctxt "TilesAdd_Properties"
@@ -157,6 +163,7 @@ msgctxt "TilesBean"
 msgid "/struts_pro/TilesBean.html"
 msgstr ""
 
+#. 
 #: TilesBean_Properties
 #, java-format
 msgctxt "TilesBean_Properties"
@@ -177,6 +184,7 @@ msgctxt "TilesBean_Properties.Title"
 msgid "Tiles Bean"
 msgstr ""
 
+#. 
 #: TilesBean_CreateSetProperty
 #, java-format
 msgctxt "TilesBean_CreateSetProperty"
@@ -206,6 +214,7 @@ msgctxt "TilesDefinition"
 msgid "/struts_pro/TilesDefinition.html"
 msgstr ""
 
+#. 
 #: TilesDefinition_Properties
 #, java-format
 msgctxt "TilesDefinition_Properties"
@@ -226,6 +235,7 @@ msgctxt "TilesDefinition_Properties.Title"
 msgid "Tiles Definition"
 msgstr ""
 
+#. 
 #: TilesDefinition_CreatePut
 #, java-format
 msgctxt "TilesDefinition_CreatePut"
@@ -246,6 +256,7 @@ msgctxt "TilesDefinition_CreatePut.Title"
 msgid "Tiles Put"
 msgstr ""
 
+#. 
 #: TilesDefinition_CreatePutList
 #, java-format
 msgctxt "TilesDefinition_CreatePutList"
@@ -305,6 +316,7 @@ msgctxt "TilesList"
 msgid "/struts_pro/TilesList.html"
 msgstr ""
 
+#. 
 #: TilesList_Properties
 #, java-format
 msgctxt "TilesList_Properties"
@@ -325,6 +337,7 @@ msgctxt "TilesList_Properties.Title"
 msgid "Tiles List"
 msgstr ""
 
+#. 
 #: TilesList_CreateAdd
 #, java-format
 msgctxt "TilesList_CreateAdd"
@@ -345,6 +358,7 @@ msgctxt "TilesList_CreateAdd.Title"
 msgid "Tiles Add"
 msgstr ""
 
+#. 
 #: TilesList_CreateItem
 #, java-format
 msgctxt "TilesList_CreateItem"
@@ -365,6 +379,7 @@ msgctxt "TilesList_CreateItem.Title"
 msgid "Tiles Item"
 msgstr ""
 
+#. 
 #: TilesList_CreateBean
 #, java-format
 msgctxt "TilesList_CreateBean"
@@ -385,6 +400,7 @@ msgctxt "TilesList_CreateBean.Title"
 msgid "Tiles Bean"
 msgstr ""
 
+#. 
 #: TilesList_CreatePutList
 #, java-format
 msgctxt "TilesList_CreatePutList"
@@ -414,6 +430,7 @@ msgctxt "TilesPut"
 msgid "/struts_pro/TilesPut.html"
 msgstr ""
 
+#. 
 #: TilesPut_Properties
 #, java-format
 msgctxt "TilesPut_Properties"
@@ -434,6 +451,7 @@ msgctxt "TilesPut_Properties.Title"
 msgid "Tiles Put"
 msgstr ""
 
+#. 
 #: SharableTilesEditor.verticalSpacing
 #, java-format
 msgctxt "SharableTilesEditor.verticalSpacing"

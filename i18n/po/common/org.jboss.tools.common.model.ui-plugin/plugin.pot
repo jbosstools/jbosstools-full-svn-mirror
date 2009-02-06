@@ -31,6 +31,7 @@ msgctxt "pluginName"
 msgid "JBoss Tools UI Plugin"
 msgstr ""
 
+#. 
 #: popupMenus.action.verify
 #, java-format
 msgctxt "popupMenus.action.verify"
@@ -44,12 +45,14 @@ msgctxt "popupMenus.action.removeStrutsNature"
 msgid "Remove Struts Nature"
 msgstr ""
 
+#. 
 #: views.name
 #, java-format
 msgctxt "views.name"
 msgid "JBoss Tools"
 msgstr ""
 
+#. 
 #: editors.xml.advanced.name
 #, java-format
 msgctxt "editors.xml.advanced.name"
@@ -112,6 +115,7 @@ msgctxt "editors.web.name"
 msgid "JBoss Tools Web Descriptor Editor"
 msgstr ""
 
+#. 
 #: strutsConfig.10
 #, java-format
 msgctxt "strutsConfig.10"
@@ -125,6 +129,7 @@ msgctxt "strutsConfig.11"
 msgid "Struts Config 1.1"
 msgstr ""
 
+#. 
 #: textProblemName
 #, java-format
 msgctxt "textProblemName"
@@ -138,6 +143,7 @@ msgctxt "strutsProblemName"
 msgid "Struts Verification Problem"
 msgstr ""
 
+#. 
 #: actionSets.jbosstoolsMenu.label
 #, java-format
 msgctxt "actionSets.jbosstoolsMenu.label"
@@ -151,6 +157,7 @@ msgctxt "actionSets.jbosstoolsMenu.description"
 msgid "JBoss Tools"
 msgstr ""
 
+#. 
 #: action.reportproblem.label
 #, java-format
 msgctxt "action.reportproblem.label"
@@ -163,6 +170,7 @@ msgctxt "action.visitsite.label"
 msgid "Red Hat Web Site"
 msgstr ""
 
+#. 
 #: MainPreferencePage
 #, java-format
 msgctxt "MainPreferencePage"

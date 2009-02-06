@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-12 17:50+1000\n"
+"POT-Creation-Date: 2009-01-20 10:29+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,34 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 ""
-
-#. 
-#: XChildrenEditor_10
-#, java-format
-msgctxt "XChildrenEditor_10"
-msgid "shell"
-msgstr ""
-
-#. 
-#: XChildrenEditor_11
-#, java-format
-msgctxt "XChildrenEditor_11"
-msgid "insertAfter"
-msgstr ""
-
-#. 
-#: XChildrenEditor_12
-#, java-format
-msgctxt "XChildrenEditor_12"
-msgid "draggedObject"
-msgstr ""
-
-#. 
-#: XChildrenEditor_9
-#, java-format
-msgctxt "XChildrenEditor_9"
-msgid "CreateActions.AddKeyPair"
-msgstr ""
 
 #. 
 #: XChildrenEditor_Add

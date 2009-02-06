@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-04 13:13+1000\n"
+"POT-Creation-Date: 2009-02-06 16:43+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,5 +50,12 @@ msgstr ""
 #, java-format
 msgctxt "MUST_BE_IFILEEDITORINPUT"
 msgid "Invalid Input: Must be IFileEditorInput"
+msgstr ""
+
+#. 
+#: CANNOT_DISPLAY_DOCUMENT_CONTENTS
+#, java-format
+msgctxt "CANNOT_DISPLAY_DOCUMENT_CONTENTS"
+msgid "Cannot display document contents."
 msgstr ""
 

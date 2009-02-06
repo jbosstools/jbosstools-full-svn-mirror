@@ -38,6 +38,7 @@ msgctxt "JBOSS_BIRT_FACET_TEMPLATE_LABEL"
 msgid "JBoss BIRT Integration Web Project"
 msgstr ""
 
+#. 
 #: BundleVendor
 #, java-format
 msgctxt "BundleVendor"

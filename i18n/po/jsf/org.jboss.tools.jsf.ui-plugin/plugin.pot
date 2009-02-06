@@ -66,6 +66,7 @@ msgctxt "editors.jsf.name"
 msgid "JSF Page Flow Editor"
 msgstr ""
 
+#. 
 #: popupMenus.action.addJSFNature
 #, java-format
 msgctxt "popupMenus.action.addJSFNature"
@@ -100,6 +101,7 @@ msgctxt "jsf.projects.navigator.name"
 msgid "JSF Projects"
 msgstr ""
 
+#. 
 #: actionSets_license.label
 #, java-format
 msgctxt "actionSets_license.label"
@@ -120,6 +122,7 @@ msgctxt "actionSets.license.label"
 msgid "&JSF Studio License"
 msgstr ""
 
+#. 
 #: new.tiles
 #, java-format
 msgctxt "new.tiles"
@@ -168,6 +171,7 @@ msgctxt "PreferencePage_JSFFlowTabbed"
 msgid "JSF Flow Diagram"
 msgstr ""
 
+#. 
 #: NewWizardCat_JBossTools
 #, java-format
 msgctxt "NewWizardCat_JBossTools"
@@ -209,6 +213,7 @@ msgctxt "NewWizardDescription_JSFProject"
 msgid "Create a JSF Project"
 msgstr ""
 
+#. 
 #: ImportWizardCat_JSF
 #, java-format
 msgctxt "ImportWizardCat_JSF"

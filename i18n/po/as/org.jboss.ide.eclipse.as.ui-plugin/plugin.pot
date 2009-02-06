@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-13 12:15+1000\n"
+"POT-Creation-Date: 2009-01-21 17:19+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -134,5 +134,40 @@ msgstr ""
 #, java-format
 msgctxt "ViewName_ServerLog"
 msgid "Server Log"
+msgstr ""
+
+#. 
+#: Bundle-Vendor.0
+#, java-format
+msgctxt "Bundle-Vendor.0"
+msgid "JBoss, a division of Red Hat"
+msgstr ""
+
+#. 
+#: Bundle-Name.0
+#, java-format
+msgctxt "Bundle-Name.0"
+msgid "JBossAS Tools"
+msgstr ""
+
+#. 
+#: NavigatorContent_ServersViewDefaultContent
+#, java-format
+msgctxt "NavigatorContent_ServersViewDefaultContent"
+msgid "Servers View Default Content"
+msgstr ""
+
+#. 
+#: NavigatorContent_XMLConfiguration
+#, java-format
+msgctxt "NavigatorContent_XMLConfiguration"
+msgid "XML Configuration"
+msgstr ""
+
+#. 
+#: NavigatorContent_JMX
+#, java-format
+msgctxt "NavigatorContent_JMX"
+msgid "JMX"
 msgstr ""
 

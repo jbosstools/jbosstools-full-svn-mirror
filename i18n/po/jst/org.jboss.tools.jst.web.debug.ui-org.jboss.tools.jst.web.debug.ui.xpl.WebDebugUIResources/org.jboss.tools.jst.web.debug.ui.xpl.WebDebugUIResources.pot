@@ -69,6 +69,7 @@ msgctxt "showServletContext"
 msgid "Show Servlet Context"
 msgstr ""
 
+#. 
 #: showStrutsVariables
 #, java-format
 msgctxt "showStrutsVariables"
@@ -110,6 +111,7 @@ msgctxt "showAction"
 msgid "Show Action object"
 msgstr ""
 
+#. 
 #: WebDataProperties.WebRoot
 #, java-format
 msgctxt "WebDataProperties.WebRoot"
@@ -256,6 +258,7 @@ msgctxt "WebDataProperties.FilterPrefix"
 msgid "Filter: "
 msgstr ""
 
+#. 
 #: ShowDetailPaneAction.Show_detail_pane_2
 #, java-format
 msgctxt "ShowDetailPaneAction.Show_detail_pane_2"

@@ -87,6 +87,7 @@ msgctxt "OrmModelImageVisitor.PersistentField"
 msgid "exdPersistentField.gif"
 msgstr ""
 
+#. 
 #: OrmModelImageVisitor.PersistentClassMapping
 #, java-format
 msgctxt "OrmModelImageVisitor.PersistentClassMapping"
@@ -122,6 +123,7 @@ msgctxt "OrmModelImageVisitor.PersistentJoinedSubclassMapping"
 msgid "exdPersistentJoinedSubclassMapping.gif"
 msgstr ""
 
+#. 
 #: OrmModelImageVisitor.PersistentFieldMapping
 #, java-format
 msgctxt "OrmModelImageVisitor.PersistentFieldMapping"
@@ -417,6 +419,7 @@ msgctxt "Explorer.refreshOrmGef"
 msgid "refresh_orm_gef.gif "
 msgstr ""
 
+#. 
 #: ExplorerBase.RootSchemaTableColumn
 #, java-format
 msgctxt "ExplorerBase.RootSchemaTableColumn"

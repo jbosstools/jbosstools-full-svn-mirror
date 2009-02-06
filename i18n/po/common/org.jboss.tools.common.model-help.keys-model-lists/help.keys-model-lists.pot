@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-27 12:41+1000\n"
+"POT-Creation-Date: 2009-01-20 10:29+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -304,5 +304,112 @@ msgstr ""
 #, java-format
 msgctxt "Model.lists.is_contained"
 msgid "is contained"
+msgstr ""
+
+#. 
+#. 
+#. Specific values of model objects used as names of tabs in preference pages
+#: lists.Editors
+#, java-format
+msgctxt "lists.Editors"
+msgid "Editors"
+msgstr ""
+
+#. 
+#: lists.JSF_Flow_Diagram
+#, java-format
+msgctxt "lists.JSF_Flow_Diagram"
+msgid "JSF Flow Diagram"
+msgstr ""
+
+#. 
+#: lists.Struts_Flow_Diagram
+#, java-format
+msgctxt "lists.Struts_Flow_Diagram"
+msgid "Struts Flow Diagram"
+msgstr ""
+
+#. 
+#: lists.Seam_Pages_Diagram
+#, java-format
+msgctxt "lists.Seam_Pages_Diagram"
+msgid "Seam Pages Diagram"
+msgstr ""
+
+#. 
+#: lists.Add_Page
+#, java-format
+msgctxt "lists.Add_Page"
+msgid "Add Page"
+msgstr ""
+
+#. 
+#: lists.Add_View
+#, java-format
+msgctxt "lists.Add_View"
+msgid "Add View"
+msgstr ""
+
+#. 
+#: lists.New_Project
+#, java-format
+msgctxt "lists.New_Project"
+msgid "New Project"
+msgstr ""
+
+#. 
+#: lists.Import_Project
+#, java-format
+msgctxt "lists.Import_Project"
+msgid "Import Project"
+msgstr ""
+
+#. 
+#: lists.Struts_Support_1.2
+#, java-format
+msgctxt "lists.Struts_Support_1.2"
+msgid "Struts Support 1.2"
+msgstr ""
+
+#. 
+#: lists.Struts_Support_1.1
+#, java-format
+msgctxt "lists.Struts_Support_1.1"
+msgid "Struts Support 1.1"
+msgstr ""
+
+#. 
+#: lists.Struts_Support_1.0
+#, java-format
+msgctxt "lists.Struts_Support_1.0"
+msgid "Struts Support 1.0"
+msgstr ""
+
+#. 
+#: lists.Default_Error_Messages
+#, java-format
+msgctxt "lists.Default_Error_Messages"
+msgid "Default Error Messages"
+msgstr ""
+
+#. 
+#: lists.Tiles
+#, java-format
+msgctxt "lists.Tiles"
+msgid "Tiles"
+msgstr ""
+
+#. 
+#: lists.Validators
+#, java-format
+msgctxt "lists.Validators"
+msgid "Validators"
+msgstr ""
+
+#. 
+#: lists.Verification
+#, java-format
+msgctxt "lists.Verification"
+msgid "Options"
 msgstr ""
 

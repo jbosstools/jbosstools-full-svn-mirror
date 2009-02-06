@@ -78,6 +78,7 @@ msgctxt "TilesConfigDescriptionForm.name.attribute"
 msgid "name"
 msgstr ""
 
+#. 
 #: TilesConfigDescriptionForm.encoding.label
 #, java-format
 msgctxt "TilesConfigDescriptionForm.encoding.label"
@@ -140,6 +141,7 @@ msgctxt "BasicDefinitionForm.name.attribute"
 msgid "name"
 msgstr ""
 
+#. 
 #: BasicDefinitionForm.extends.label
 #, java-format
 msgctxt "BasicDefinitionForm.extends.label"
@@ -153,6 +155,7 @@ msgctxt "BasicDefinitionForm.extends.attribute"
 msgid "extends"
 msgstr ""
 
+#. 
 #: BasicDefinitionForm.path.label
 #, java-format
 msgctxt "BasicDefinitionForm.path.label"
@@ -166,6 +169,7 @@ msgctxt "BasicDefinitionForm.path.attribute"
 msgid "path"
 msgstr ""
 
+#. 
 #: BasicDefinitionForm.controllerClass.label
 #, java-format
 msgctxt "BasicDefinitionForm.controllerClass.label"
@@ -179,6 +183,7 @@ msgctxt "BasicDefinitionForm.controllerClass.attribute"
 msgid "controllerClass"
 msgstr ""
 
+#. 
 #: BasicDefinitionForm.controllerUrl.label
 #, java-format
 msgctxt "BasicDefinitionForm.controllerUrl.label"
@@ -223,6 +228,7 @@ msgctxt "AdvancedDefinitionForm.id.attribute"
 msgid "id"
 msgstr ""
 
+#. 
 #: AdvancedDefinitionForm.displayname.label
 #, java-format
 msgctxt "AdvancedDefinitionForm.displayname.label"
@@ -236,6 +242,7 @@ msgctxt "AdvancedDefinitionForm.displayname.attribute"
 msgid "display-name"
 msgstr ""
 
+#. 
 #: AdvancedDefinitionForm.description.label
 #, java-format
 msgctxt "AdvancedDefinitionForm.description.label"
@@ -249,6 +256,7 @@ msgctxt "AdvancedDefinitionForm.description.attribute"
 msgid "description"
 msgstr ""
 
+#. 
 #: AdvancedDefinitionForm.role.label
 #, java-format
 msgctxt "AdvancedDefinitionForm.role.label"
@@ -262,6 +270,7 @@ msgctxt "AdvancedDefinitionForm.role.attribute"
 msgid "role"
 msgstr ""
 
+#. 
 #: AdvancedDefinitionForm.smallicon.label
 #, java-format
 msgctxt "AdvancedDefinitionForm.smallicon.label"
@@ -275,6 +284,7 @@ msgctxt "AdvancedDefinitionForm.smallicon.attribute"
 msgid "small-icon"
 msgstr ""
 
+#. 
 #: AdvancedDefinitionForm.largeicon.label
 #, java-format
 msgctxt "AdvancedDefinitionForm.largeicon.label"
@@ -319,6 +329,7 @@ msgctxt "DeprecatedDefinitionForm.page.attribute"
 msgid "page"
 msgstr ""
 
+#. 
 #: DeprecatedDefinitionForm.template.label
 #, java-format
 msgctxt "DeprecatedDefinitionForm.template.label"
@@ -399,6 +410,7 @@ msgctxt "BasicPutForm.name.attribute"
 msgid "name"
 msgstr ""
 
+#. 
 #: BasicPutForm.type.label
 #, java-format
 msgctxt "BasicPutForm.type.label"
@@ -412,6 +424,7 @@ msgctxt "BasicPutForm.type.attribute"
 msgid "type"
 msgstr ""
 
+#. 
 #: BasicPutForm.value.label
 #, java-format
 msgctxt "BasicPutForm.value.label"
@@ -425,6 +438,7 @@ msgctxt "BasicPutForm.value.attribute"
 msgid "value"
 msgstr ""
 
+#. 
 #: BasicPutForm.content.label
 #, java-format
 msgctxt "BasicPutForm.content.label"
@@ -531,6 +545,7 @@ msgctxt "PutListForm.name.attribute"
 msgid "name"
 msgstr ""
 
+#. 
 #: PutListForm.id.label
 #, java-format
 msgctxt "PutListForm.id.label"

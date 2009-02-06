@@ -192,6 +192,7 @@ msgctxt "No"
 msgid "No"
 msgstr ""
 
+#. 
 #: ProjectPackagesView_noProjectSelectedMessage
 #, java-format
 msgctxt "ProjectPackagesView_noProjectSelectedMessage"
@@ -338,6 +339,7 @@ msgctxt "ProjectPackagesView_createFolderDialog_warnFolderExists"
 msgid "The folder \"{0}\" already exists."
 msgstr ""
 
+#. 
 #: FilesetInfoWizardPage_new_message
 #, java-format
 msgctxt "FilesetInfoWizardPage_new_message"
@@ -498,6 +500,7 @@ msgctxt "FilesetInfoWizardPage_fileWorkspaceBrowser_message"
 msgid "Select a file for this fileset"
 msgstr ""
 
+#. 
 #: PackageInfoWizardPage_title
 #, java-format
 msgctxt "PackageInfoWizardPage_title"
@@ -581,12 +584,14 @@ msgctxt "PackageInfoWizardPage_error_noDestination"
 msgid "There is no destination selected for this archive."
 msgstr ""
 
+#. 
 #: PackageNodeDestinationComposite_destinationBrowseButton_label
 #, java-format
 msgctxt "PackageNodeDestinationComposite_destinationBrowseButton_label"
 msgid "Browse..."
 msgstr ""
 
+#. 
 #: PackageDestinationComposite_filesystemBrowseButton_label
 #, java-format
 msgctxt "PackageDestinationComposite_filesystemBrowseButton_label"
@@ -600,6 +605,7 @@ msgctxt "PackageDestinationComposite_workspaceBrowseButton_label"
 msgid "Workspace..."
 msgstr ""
 
+#. 
 #: NewJARWizard_windowTitle
 #, java-format
 msgctxt "NewJARWizard_windowTitle"
@@ -613,6 +619,7 @@ msgctxt "NewJARWizard_windowTitle_editJAR"
 msgid "Edit Archive"
 msgstr ""
 
+#. 
 #: PackagesLabelProvider_filesetProperty_destination
 #, java-format
 msgctxt "PackagesLabelProvider_filesetProperty_destination"
@@ -654,12 +661,14 @@ msgctxt "PackagesLabelProvider_filesetProperty_file"
 msgid "File :"
 msgstr ""
 
+#. 
 #: PackagesLabelProvider_filesetProperty_dir
 #, java-format
 msgctxt "PackagesLabelProvider_filesetProperty_dir"
 msgid "Dir :"
 msgstr ""
 
+#. 
 #: PackageNodeDestinationDialog_messagePrefix
 #, java-format
 msgctxt "PackageNodeDestinationDialog_messagePrefix"
@@ -694,6 +703,7 @@ msgctxt "PackageNodeDestinationDialog_title"
 msgid "Select a destination"
 msgstr ""
 
+#. 
 #: PreferencePageTitle
 #, java-format
 msgctxt "PreferencePageTitle"

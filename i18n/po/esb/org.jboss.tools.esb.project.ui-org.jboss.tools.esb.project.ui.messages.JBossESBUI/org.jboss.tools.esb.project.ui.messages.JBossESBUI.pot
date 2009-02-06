@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-12 18:05+1000\n"
+"POT-Creation-Date: 2009-01-19 17:13+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -281,6 +281,27 @@ msgstr ""
 #, java-format
 msgctxt "JBoss_Preference_Page_Runtimes"
 msgid "JBoss ESB Runtimes"
+msgstr ""
+
+#. 
+#: JBossLibraryListFieldEditor_ActionAdd
+#, java-format
+msgctxt "JBossLibraryListFieldEditor_ActionAdd"
+msgid "&Add"
+msgstr ""
+
+#. 
+#: JBossLibraryListFieldEditor_ActionRemove
+#, java-format
+msgctxt "JBossLibraryListFieldEditor_ActionRemove"
+msgid "&Remove"
+msgstr ""
+
+#. 
+#: JBossLibraryListFieldEditor_LIBRARY_JARS
+#, java-format
+msgctxt "JBossLibraryListFieldEditor_LIBRARY_JARS"
+msgid "Library Jars"
 msgstr ""
 
 #. 

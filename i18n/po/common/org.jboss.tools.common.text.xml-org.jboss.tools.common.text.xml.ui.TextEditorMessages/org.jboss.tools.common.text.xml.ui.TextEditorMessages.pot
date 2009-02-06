@@ -32,19 +32,13 @@ msgid "Content Assist"
 msgstr ""
 
 #. 
-#: ContentAssistProposal.image
-#, java-format
-msgctxt "ContentAssistProposal.image"
-msgid ""
-msgstr ""
-
-#. 
 #: ContentAssistProposal.description
 #, java-format
 msgctxt "ContentAssistProposal.description"
 msgid "Content Assist"
 msgstr ""
 
+#. 
 #: ContentAssistTip.label
 #, java-format
 msgctxt "ContentAssistTip.label"
@@ -59,23 +53,10 @@ msgid "Content Tip"
 msgstr ""
 
 #. 
-#: ContentAssistTip.image
-#, java-format
-msgctxt "ContentAssistTip.image"
-msgid ""
-msgstr ""
-
-#. 
 #: ContentAssistTip.description
 #, java-format
 msgctxt "ContentAssistTip.description"
 msgid "Content Tip"
-msgstr ""
-
-#: HTMLTextPresenter.ellipsis
-#, java-format
-msgctxt "HTMLTextPresenter.ellipsis"
-msgid ""
 msgstr ""
 
 #. 

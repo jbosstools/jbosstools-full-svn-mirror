@@ -31,12 +31,14 @@ msgctxt "FileSeamPage20.editorTitle"
 msgid "Seam Page Editor"
 msgstr ""
 
+#. 
 #: AddSeamPageException_Properties.Title
 #, java-format
 msgctxt "AddSeamPageException_Properties.Title"
 msgid "Add Exception"
 msgstr ""
 
+#. 
 #: FileSeamPage12_Rename.WindowTitle
 #, java-format
 msgctxt "FileSeamPage12_Rename.WindowTitle"
@@ -44,25 +46,13 @@ msgid "Rename"
 msgstr ""
 
 #. 
-#: FileSeamPage12_Rename.Title
-#, java-format
-msgctxt "FileSeamPage12_Rename.Title"
-msgid ""
-msgstr ""
-
-#. 
-#: FileSeamPage12_Rename.Message
-#, java-format
-msgctxt "FileSeamPage12_Rename.Message"
-msgid ""
-msgstr ""
-
 #: FileSeamPage12_Properties.Title
 #, java-format
 msgctxt "FileSeamPage12_Properties.Title"
 msgid "File Seam Page"
 msgstr ""
 
+#. 
 #: FileSeamPage20_Rename.WindowTitle
 #, java-format
 msgctxt "FileSeamPage20_Rename.WindowTitle"
@@ -70,25 +60,13 @@ msgid "Rename"
 msgstr ""
 
 #. 
-#: FileSeamPage20_Rename.Title
-#, java-format
-msgctxt "FileSeamPage20_Rename.Title"
-msgid ""
-msgstr ""
-
-#. 
-#: FileSeamPage20_Rename.Message
-#, java-format
-msgctxt "FileSeamPage20_Rename.Message"
-msgid ""
-msgstr ""
-
 #: FileSeamPage20_Properties.Title
 #, java-format
 msgctxt "FileSeamPage20_Properties.Title"
 msgid "File Seam Page"
 msgstr ""
 
+#. 
 #: FileSeamPages12_Rename.WindowTitle
 #, java-format
 msgctxt "FileSeamPages12_Rename.WindowTitle"
@@ -96,19 +74,6 @@ msgid "Rename"
 msgstr ""
 
 #. 
-#: FileSeamPages12_Rename.Title
-#, java-format
-msgctxt "FileSeamPages12_Rename.Title"
-msgid ""
-msgstr ""
-
-#. 
-#: FileSeamPages12_Rename.Message
-#, java-format
-msgctxt "FileSeamPages12_Rename.Message"
-msgid ""
-msgstr ""
-
 #: FileSeamPages12_AddPage.WindowTitle
 #, java-format
 msgctxt "FileSeamPages12_AddPage.WindowTitle"
@@ -122,6 +87,7 @@ msgctxt "FileSeamPages12_AddPage.Title"
 msgid "Page"
 msgstr ""
 
+#. 
 #: FileSeamPages12_AddConversation.WindowTitle
 #, java-format
 msgctxt "FileSeamPages12_AddConversation.WindowTitle"
@@ -135,6 +101,7 @@ msgctxt "FileSeamPages12_AddConversation.Title"
 msgid "Conversation"
 msgstr ""
 
+#. 
 #: FileSeamPages12_AddException.WindowTitle
 #, java-format
 msgctxt "FileSeamPages12_AddException.WindowTitle"
@@ -148,12 +115,14 @@ msgctxt "FileSeamPages12_AddException.Title"
 msgid "Exception"
 msgstr ""
 
+#. 
 #: FileSeamPages12_Properties.Title
 #, java-format
 msgctxt "FileSeamPages12_Properties.Title"
 msgid "File Seam Pages"
 msgstr ""
 
+#. 
 #: FileSeamPages20_Rename.WindowTitle
 #, java-format
 msgctxt "FileSeamPages20_Rename.WindowTitle"
@@ -161,19 +130,6 @@ msgid "Rename"
 msgstr ""
 
 #. 
-#: FileSeamPages20_Rename.Title
-#, java-format
-msgctxt "FileSeamPages20_Rename.Title"
-msgid ""
-msgstr ""
-
-#. 
-#: FileSeamPages20_Rename.Message
-#, java-format
-msgctxt "FileSeamPages20_Rename.Message"
-msgid ""
-msgstr ""
-
 #: FileSeamPages20_AddPage.WindowTitle
 #, java-format
 msgctxt "FileSeamPages20_AddPage.WindowTitle"
@@ -187,6 +143,7 @@ msgctxt "FileSeamPages20_AddPage.Title"
 msgid "Page"
 msgstr ""
 
+#. 
 #: FileSeamPages20_AddConversation.WindowTitle
 #, java-format
 msgctxt "FileSeamPages20_AddConversation.WindowTitle"
@@ -200,6 +157,7 @@ msgctxt "FileSeamPages20_AddConversation.Title"
 msgid "Conversation"
 msgstr ""
 
+#. 
 #: FileSeamPages20_AddException.WindowTitle
 #, java-format
 msgctxt "FileSeamPages20_AddException.WindowTitle"
@@ -213,12 +171,14 @@ msgctxt "FileSeamPages20_AddException.Title"
 msgid "Exception"
 msgstr ""
 
+#. 
 #: FileSeamPages20_Properties.Title
 #, java-format
 msgctxt "FileSeamPages20_Properties.Title"
 msgid "File Seam Pages"
 msgstr ""
 
+#. 
 #: SeamPage_AddParam.WindowTitle
 #, java-format
 msgctxt "SeamPage_AddParam.WindowTitle"
@@ -232,6 +192,7 @@ msgctxt "SeamPage_AddParam.Title"
 msgid "Param"
 msgstr ""
 
+#. 
 #: SeamPage_AddIn.WindowTitle
 #, java-format
 msgctxt "SeamPage_AddIn.WindowTitle"
@@ -245,6 +206,7 @@ msgctxt "SeamPage_AddIn.Title"
 msgid "In"
 msgstr ""
 
+#. 
 #: SeamPage_AddAction.WindowTitle
 #, java-format
 msgctxt "SeamPage_AddAction.WindowTitle"
@@ -258,6 +220,7 @@ msgctxt "SeamPage_AddAction.Title"
 msgid "Action"
 msgstr ""
 
+#. 
 #: SeamPage_AddNavigation.WindowTitle
 #, java-format
 msgctxt "SeamPage_AddNavigation.WindowTitle"
@@ -271,6 +234,7 @@ msgctxt "SeamPage_AddNavigation.Title"
 msgid "Navigation"
 msgstr ""
 
+#. 
 #: SeamPage_AddRule.WindowTitle
 #, java-format
 msgctxt "SeamPage_AddRule.WindowTitle"
@@ -284,72 +248,84 @@ msgctxt "SeamPage_AddRule.Title"
 msgid "Rule"
 msgstr ""
 
+#. 
 #: SeamPage12_Properties.Title
 #, java-format
 msgctxt "SeamPage12_Properties.Title"
 msgid "Seam Page"
 msgstr ""
 
+#. 
 #: SeamPage20_Properties.Title
 #, java-format
 msgctxt "SeamPage20_Properties.Title"
 msgid "Seam Page"
 msgstr ""
 
+#. 
 #: SeamPageAction_Properties.Title
 #, java-format
 msgctxt "SeamPageAction_Properties.Title"
 msgid "Action"
 msgstr ""
 
+#. 
 #: SeamPageBeginConversation_Properties.Title
 #, java-format
 msgctxt "SeamPageBeginConversation_Properties.Title"
 msgid "Begin Conversation"
 msgstr ""
 
+#. 
 #: SeamPageBeginTask_Properties.Title
 #, java-format
 msgctxt "SeamPageBeginTask_Properties.Title"
 msgid "Begin Task"
 msgstr ""
 
+#. 
 #: SeamPageConversation_Properties.Title
 #, java-format
 msgctxt "SeamPageConversation_Properties.Title"
 msgid "Conversation"
 msgstr ""
 
+#. 
 #: SeamPageCreateProcess_Properties.Title
 #, java-format
 msgctxt "SeamPageCreateProcess_Properties.Title"
 msgid "Create Process"
 msgstr ""
 
+#. 
 #: SeamPageEndConversation_Properties.Title
 #, java-format
 msgctxt "SeamPageEndConversation_Properties.Title"
 msgid "End Conversation"
 msgstr ""
 
+#. 
 #: SeamPageEndTask_Properties.Title
 #, java-format
 msgctxt "SeamPageEndTask_Properties.Title"
 msgid "End Task"
 msgstr ""
 
+#. 
 #: SeamPageException12_Properties.Title
 #, java-format
 msgctxt "SeamPageException12_Properties.Title"
 msgid "Exception"
 msgstr ""
 
+#. 
 #: SeamPageException20_Properties.Title
 #, java-format
 msgctxt "SeamPageException20_Properties.Title"
 msgid "Exception"
 msgstr ""
 
+#. 
 #: SeamPageFolderConversation_AddConversation.WindowTitle
 #, java-format
 msgctxt "SeamPageFolderConversation_AddConversation.WindowTitle"
@@ -363,12 +339,14 @@ msgctxt "SeamPageFolderConversation_AddConversation.Title"
 msgid "Conversation"
 msgstr ""
 
+#. 
 #: SeamPageFolderConversation_Properties.Title
 #, java-format
 msgctxt "SeamPageFolderConversation_Properties.Title"
 msgid "Conversations Folder"
 msgstr ""
 
+#. 
 #: SeamPageFolderException12_AddException.WindowTitle
 #, java-format
 msgctxt "SeamPageFolderException12_AddException.WindowTitle"
@@ -382,12 +360,14 @@ msgctxt "SeamPageFolderException12_AddException.Title"
 msgid "Exception"
 msgstr ""
 
+#. 
 #: SeamPageFolderException12_Properties.Title
 #, java-format
 msgctxt "SeamPageFolderException12_Properties.Title"
 msgid "Exceptions Folder"
 msgstr ""
 
+#. 
 #: SeamPageFolderException20_AddException.WindowTitle
 #, java-format
 msgctxt "SeamPageFolderException20_AddException.WindowTitle"
@@ -401,12 +381,14 @@ msgctxt "SeamPageFolderException20_AddException.Title"
 msgid "Exception"
 msgstr ""
 
+#. 
 #: SeamPageFolderException20_Properties.Title
 #, java-format
 msgctxt "SeamPageFolderException20_Properties.Title"
 msgid "Exceptions Folder"
 msgstr ""
 
+#. 
 #: SeamPageFolderPage12_AddPage.WindowTitle
 #, java-format
 msgctxt "SeamPageFolderPage12_AddPage.WindowTitle"
@@ -420,12 +402,14 @@ msgctxt "SeamPageFolderPage12_AddPage.Title"
 msgid "Page"
 msgstr ""
 
+#. 
 #: SeamPageFolderPage12_Properties.Title
 #, java-format
 msgctxt "SeamPageFolderPage12_Properties.Title"
 msgid "Pages Folder"
 msgstr ""
 
+#. 
 #: SeamPageFolderPage20_AddPage.WindowTitle
 #, java-format
 msgctxt "SeamPageFolderPage20_AddPage.WindowTitle"
@@ -439,12 +423,14 @@ msgctxt "SeamPageFolderPage20_AddPage.Title"
 msgid "Page"
 msgstr ""
 
+#. 
 #: SeamPageFolderPage20_Properties.Title
 #, java-format
 msgctxt "SeamPageFolderPage20_Properties.Title"
 msgid "Pages Folder"
 msgstr ""
 
+#. 
 #: SeamPageHTTPError_AddMessage.WindowTitle
 #, java-format
 msgctxt "SeamPageHTTPError_AddMessage.WindowTitle"
@@ -458,72 +444,84 @@ msgctxt "SeamPageHTTPError_AddMessage.Title"
 msgid "Message"
 msgstr ""
 
+#. 
 #: SeamPageHTTPError_Properties.Title
 #, java-format
 msgctxt "SeamPageHTTPError_Properties.Title"
 msgid "HTTP Error"
 msgstr ""
 
+#. 
 #: SeamPageIn_Properties.Title
 #, java-format
 msgctxt "SeamPageIn_Properties.Title"
 msgid "In"
 msgstr ""
 
+#. 
 #: SeamPageMessage_Properties.Title
 #, java-format
 msgctxt "SeamPageMessage_Properties.Title"
 msgid "Message"
 msgstr ""
 
+#. 
 #: SeamPageNavigation12_Properties.Title
 #, java-format
 msgctxt "SeamPageNavigation12_Properties.Title"
 msgid "Navigation"
 msgstr ""
 
+#. 
 #: SeamPageNavigation20_Properties.Title
 #, java-format
 msgctxt "SeamPageNavigation20_Properties.Title"
 msgid "Navigation"
 msgstr ""
 
+#. 
 #: SeamPageNavigationRule12_Properties.Title
 #, java-format
 msgctxt "SeamPageNavigationRule12_Properties.Title"
 msgid "Navigation Rule"
 msgstr ""
 
+#. 
 #: SeamPageNavigationRule20_Properties.Title
 #, java-format
 msgctxt "SeamPageNavigationRule20_Properties.Title"
 msgid "Navigation Rule"
 msgstr ""
 
+#. 
 #: SeamPageOut_Properties.Title
 #, java-format
 msgctxt "SeamPageOut_Properties.Title"
 msgid "Out"
 msgstr ""
 
+#. 
 #: SeamPageParam12_Properties.Title
 #, java-format
 msgctxt "SeamPageParam12_Properties.Title"
 msgid "Param"
 msgstr ""
 
+#. 
 #: SeamPageParam20_Properties.Title
 #, java-format
 msgctxt "SeamPageParam20_Properties.Title"
 msgid "Param"
 msgstr ""
 
+#. 
 #: SeamPageRaiseEvent20_Properties.Title
 #, java-format
 msgctxt "SeamPageRaiseEvent20_Properties.Title"
 msgid "Raise Event"
 msgstr ""
 
+#. 
 #: SeamPageRedirect12_AddMessage.WindowTitle
 #, java-format
 msgctxt "SeamPageRedirect12_AddMessage.WindowTitle"
@@ -537,12 +535,14 @@ msgctxt "SeamPageRedirect12_AddMessage.Title"
 msgid "Message"
 msgstr ""
 
+#. 
 #: SeamPageRedirect12_Properties.Title
 #, java-format
 msgctxt "SeamPageRedirect12_Properties.Title"
 msgid "Redirect"
 msgstr ""
 
+#. 
 #: SeamPageRedirect20_AddMessage.WindowTitle
 #, java-format
 msgctxt "SeamPageRedirect20_AddMessage.WindowTitle"
@@ -556,12 +556,14 @@ msgctxt "SeamPageRedirect20_AddMessage.Title"
 msgid "Message"
 msgstr ""
 
+#. 
 #: SeamPageRedirect20_Properties.Title
 #, java-format
 msgctxt "SeamPageRedirect20_Properties.Title"
 msgid "Redirect"
 msgstr ""
 
+#. 
 #: SeamPageRender_AddMessage.WindowTitle
 #, java-format
 msgctxt "SeamPageRender_AddMessage.WindowTitle"
@@ -575,18 +577,21 @@ msgctxt "SeamPageRender_AddMessage.Title"
 msgid "Message"
 msgstr ""
 
+#. 
 #: SeamPageRender_Properties.Title
 #, java-format
 msgctxt "SeamPageRender_Properties.Title"
 msgid "Render"
 msgstr ""
 
+#. 
 #: SeamPageResumeProcess_Properties.Title
 #, java-format
 msgctxt "SeamPageResumeProcess_Properties.Title"
 msgid "Resume Process"
 msgstr ""
 
+#. 
 #: SeamPageRule_AddOut.WindowTitle
 #, java-format
 msgctxt "SeamPageRule_AddOut.WindowTitle"
@@ -600,24 +605,28 @@ msgctxt "SeamPageRule_AddOut.Title"
 msgid "Out"
 msgstr ""
 
+#. 
 #: SeamPageRule12_Properties.Title
 #, java-format
 msgctxt "SeamPageRule12_Properties.Title"
 msgid "Rule"
 msgstr ""
 
+#. 
 #: SeamPageRule20_Properties.Title
 #, java-format
 msgctxt "SeamPageRule20_Properties.Title"
 msgid "Rule"
 msgstr ""
 
+#. 
 #: SeamPageStartTask_Properties.Title
 #, java-format
 msgctxt "SeamPageStartTask_Properties.Title"
 msgid "Start Task"
 msgstr ""
 
+#. 
 #: SeamPagesDiagram_AddPage.WindowTitle
 #, java-format
 msgctxt "SeamPagesDiagram_AddPage.WindowTitle"
@@ -631,6 +640,7 @@ msgctxt "SeamPagesDiagram_AddPage.Title"
 msgid "Page"
 msgstr ""
 
+#. 
 #: SeamPagesDiagram_AddException.WindowTitle
 #, java-format
 msgctxt "SeamPagesDiagram_AddException.WindowTitle"
@@ -644,12 +654,14 @@ msgctxt "SeamPagesDiagram_AddException.Title"
 msgid "Exception"
 msgstr ""
 
+#. 
 #: SeamPagesDiagram_Properties.Title
 #, java-format
 msgctxt "SeamPagesDiagram_Properties.Title"
 msgid "Seam Pages Diagram"
 msgstr ""
 
+#. 
 #: SeamPagesDiagram_CreateComment.WindowTitle
 #, java-format
 msgctxt "SeamPagesDiagram_CreateComment.WindowTitle"
@@ -663,6 +675,7 @@ msgctxt "SeamPagesDiagram_CreateComment.Title"
 msgid "Comment"
 msgstr ""
 
+#. 
 #: SeamPagesDiagramItem_CreateRule.WindowTitle
 #, java-format
 msgctxt "SeamPagesDiagramItem_CreateRule.WindowTitle"
@@ -676,6 +689,7 @@ msgctxt "SeamPagesDiagramItem_CreateRule.Title"
 msgid "Rule"
 msgstr ""
 
+#. 
 #: SeamPagesDiagramItem_CreateComment.WindowTitle
 #, java-format
 msgctxt "SeamPagesDiagramItem_CreateComment.WindowTitle"
@@ -689,6 +703,7 @@ msgctxt "SeamPagesDiagramItem_CreateComment.Title"
 msgid "Comment"
 msgstr ""
 
+#. 
 #: SeamPagesDiagramItem_Rename_0.WindowTitle
 #, java-format
 msgctxt "SeamPagesDiagramItem_Rename_0.WindowTitle"
@@ -709,18 +724,21 @@ msgctxt "SeamPagesDiagramItem_Rename_0.Message"
 msgid "Enter new view ID."
 msgstr ""
 
+#. 
 #: SeamPagesDiagramItem_Properties.Title
 #, java-format
 msgctxt "SeamPagesDiagramItem_Properties.Title"
 msgid "Seam Pages Diagram Item"
 msgstr ""
 
+#. 
 #: SeamPagesDiagramItemOutput_Properties.Title
 #, java-format
 msgctxt "SeamPagesDiagramItemOutput_Properties.Title"
 msgid "Seam Pages Diagram Item Output"
 msgstr ""
 
+#. 
 #: FileFolder_CreateFileSeamPages_0.WindowTitle
 #, java-format
 msgctxt "FileFolder_CreateFileSeamPages_0.WindowTitle"
@@ -734,6 +752,7 @@ msgctxt "FileFolder_CreateFileSeamPages_0.Title"
 msgid "Seam Pages File"
 msgstr ""
 
+#. 
 #: FileFolder_CreateFileSeamPage_0.WindowTitle
 #, java-format
 msgctxt "FileFolder_CreateFileSeamPage_0.WindowTitle"
@@ -747,6 +766,7 @@ msgctxt "FileFolder_CreateFileSeamPage_0.Title"
 msgid "Seam Page File"
 msgstr ""
 
+#. 
 #: FileSystemFolder_CreateFileSeamPages_0.WindowTitle
 #, java-format
 msgctxt "FileSystemFolder_CreateFileSeamPages_0.WindowTitle"
@@ -760,6 +780,7 @@ msgctxt "FileSystemFolder_CreateFileSeamPages_0.Title"
 msgid "Seam Page File"
 msgstr ""
 
+#. 
 #: FileSystemFolder_CreateFileSeamPage_0.WindowTitle
 #, java-format
 msgctxt "FileSystemFolder_CreateFileSeamPage_0.WindowTitle"
@@ -773,6 +794,7 @@ msgctxt "FileSystemFolder_CreateFileSeamPage_0.Title"
 msgid "Seam Page File"
 msgstr ""
 
+#. 
 #: SeamItem_SelectNode.WindowTitle
 #, java-format
 msgctxt "SeamItem_SelectNode.WindowTitle"
@@ -793,6 +815,7 @@ msgctxt "SeamItem_SelectNode.Message"
 msgid "Please Select a Node"
 msgstr ""
 
+#. 
 #: SharableSeamPagesEditor.enableControlModeOnTransitionCompleted
 #, java-format
 msgctxt "SharableSeamPagesEditor.enableControlModeOnTransitionCompleted"

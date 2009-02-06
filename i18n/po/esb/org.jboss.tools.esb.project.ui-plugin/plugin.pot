@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-12 16:58+1000\n"
+"POT-Creation-Date: 2009-01-19 13:09+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,5 +36,19 @@ msgstr ""
 #, java-format
 msgctxt "Preference_Page_Runtimes"
 msgid "JBoss ESB Runtimes"
+msgstr ""
+
+#. 
+#: Bundle-Vendor.0
+#, java-format
+msgctxt "Bundle-Vendor.0"
+msgid "JBoss, a division of Red Hat"
+msgstr ""
+
+#. 
+#: Bundle-Name.0
+#, java-format
+msgctxt "Bundle-Name.0"
+msgid "JBoss ESB Project UI Plugin"
 msgstr ""
 

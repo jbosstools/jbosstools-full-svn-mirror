@@ -293,6 +293,7 @@ msgctxt "INVALID_CONNECTION_NAME"
 msgid "Connection profiler \"{0}\" specified for Seam project \"{1}\" does not exist."
 msgstr ""
 
+#. 
 #: INVALID_XML_VERSION
 #, java-format
 msgctxt "INVALID_XML_VERSION"

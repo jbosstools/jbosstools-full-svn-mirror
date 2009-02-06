@@ -18,13 +18,6 @@ msgstr ""
 ""
 
 #. 
-#: SEAM_UI_PAGES_PLUGIN_NO_MESSAGES
-#, java-format
-msgctxt "SEAM_UI_PAGES_PLUGIN_NO_MESSAGES"
-msgid ""
-msgstr ""
-
-#. 
 #: PAGESDIAGRAM_SELECT
 #, java-format
 msgctxt "PAGESDIAGRAM_SELECT"
@@ -45,6 +38,7 @@ msgctxt "PAGESDIAGRAM_CREATE_NEW_CONNECTION"
 msgid "Create New Connection"
 msgstr ""
 
+#. 
 #: SEAM_PAGES_EDITOR_TITLE
 #, java-format
 msgctxt "SEAM_PAGES_EDITOR_TITLE"

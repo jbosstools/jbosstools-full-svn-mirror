@@ -24,6 +24,7 @@ msgctxt "pluginName"
 msgid "Struts Tools"
 msgstr ""
 
+#. 
 #: newProjectWizard.name
 #, java-format
 msgctxt "newProjectWizard.name"
@@ -51,6 +52,7 @@ msgctxt "importStrutsWarWizard.name"
 msgid "Struts Project from *.war"
 msgstr ""
 
+#. 
 #: providerName
 #, java-format
 msgctxt "providerName"
@@ -64,6 +66,7 @@ msgctxt "perspective.name"
 msgid "Struts Studio"
 msgstr ""
 
+#. 
 #: views.name
 #, java-format
 msgctxt "views.name"
@@ -84,6 +87,7 @@ msgctxt "strutsProjectsViewPart.name"
 msgid "Struts Projects"
 msgstr ""
 
+#. 
 #: editors.tiles.name
 #, java-format
 msgctxt "editors.tiles.name"
@@ -97,6 +101,7 @@ msgctxt "editors.strutsconfig.name"
 msgid "JBoss Tools Struts Flow Editor"
 msgstr ""
 
+#. 
 #: popupMenus.action.addStrutsNature
 #, java-format
 msgctxt "popupMenus.action.addStrutsNature"
@@ -124,6 +129,7 @@ msgctxt "popupMenus.action.removeStrutsNature"
 msgid "Remove Struts Capabilities"
 msgstr ""
 
+#. 
 #: actionSets.projectActions.label
 #, java-format
 msgctxt "actionSets.projectActions.label"
@@ -151,6 +157,7 @@ msgctxt "actionSets.projectActions.importStrutsProject.label"
 msgid "Import Struts Project"
 msgstr ""
 
+#. 
 #: strutsConfig.10
 #, java-format
 msgctxt "strutsConfig.10"
@@ -178,12 +185,14 @@ msgctxt "new.validation"
 msgid "Validation File"
 msgstr ""
 
+#. 
 #: struts.projects.navigator.name
 #, java-format
 msgctxt "struts.projects.navigator.name"
 msgid "Struts Projects"
 msgstr ""
 
+#. 
 #: NewWizardCat_Struts
 #, java-format
 msgctxt "NewWizardCat_Struts"

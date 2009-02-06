@@ -31,6 +31,7 @@ msgctxt "providerName"
 msgid "JBoss, a division of Red Hat"
 msgstr ""
 
+#. 
 #: actionSets.verificationMenu.label
 #, java-format
 msgctxt "actionSets.verificationMenu.label"

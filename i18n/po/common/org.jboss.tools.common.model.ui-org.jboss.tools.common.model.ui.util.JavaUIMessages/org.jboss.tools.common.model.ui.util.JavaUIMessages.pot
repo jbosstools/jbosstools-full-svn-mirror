@@ -70,6 +70,7 @@ msgctxt "AddMethodStubAction.tooltip"
 msgid "Add Method Stub to Type"
 msgstr ""
 
+#. 
 #: AddMethodStubAction.error.title
 #, java-format
 msgctxt "AddMethodStubAction.error.title"
@@ -83,6 +84,7 @@ msgctxt "AddMethodStubAction.error.type_removed_in_editor"
 msgid "Input type has been removed in editor"
 msgstr ""
 
+#. 
 #: AddMethodStubAction.QueryDialog.title
 #, java-format
 msgctxt "AddMethodStubAction.QueryDialog.title"
@@ -116,6 +118,7 @@ msgid ""
 "OK to continue?"
 msgstr ""
 
+#. 
 #: OpenTypeAction.description
 #, java-format
 msgctxt "OpenTypeAction.description"
@@ -176,12 +179,14 @@ msgctxt "JavaUI.defaultDialogMessage"
 msgid "Select entries:"
 msgstr ""
 
+#. 
 #: MultiElementListSelectionDialog.pageInfoMessage
 #, java-format
 msgctxt "MultiElementListSelectionDialog.pageInfoMessage"
 msgid "Page {0} of {1}"
 msgstr ""
 
+#. 
 #: MultiTypeSelectionDialog.dialogMessage
 #, java-format
 msgctxt "MultiTypeSelectionDialog.dialogMessage"
@@ -223,6 +228,7 @@ msgctxt "MultiTypeSelectionDialog.error2Title"
 msgid "Exception"
 msgstr ""
 
+#. 
 #: TypeSelectionDialog.errorMessage
 #, java-format
 msgctxt "TypeSelectionDialog.errorMessage"
@@ -299,12 +305,14 @@ msgctxt "TypeSelectionDialog.error3Title"
 msgid "Exception"
 msgstr ""
 
+#. 
 #: ExceptionDialog.seeErrorLogMessage
 #, java-format
 msgctxt "ExceptionDialog.seeErrorLogMessage"
 msgid "See error log for more details."
 msgstr ""
 
+#. 
 #: MainTypeSelectionDialog.errorTitle
 #, java-format
 msgctxt "MainTypeSelectionDialog.errorTitle"
@@ -318,6 +326,7 @@ msgctxt "MultiMainTypeSelectionDialog.errorTitle"
 msgid "Error"
 msgstr ""
 
+#. 
 #: BuildPathDialog.title
 #, java-format
 msgctxt "BuildPathDialog.title"
@@ -346,6 +355,7 @@ msgctxt "JavaImageLabelprovider.assert.wrongImage"
 msgid "no image for this JavaElement Type"
 msgstr ""
 
+#. 
 #: JavaElementLabels.default_package
 #, java-format
 msgctxt "JavaElementLabels.default_package"
@@ -387,6 +397,7 @@ msgctxt "JavaElementLabels.declseparator_string"
 msgid " : "
 msgstr ""
 
+#. 
 #: StatusBarUpdater.num_elements_selected
 #, java-format
 msgctxt "StatusBarUpdater.num_elements_selected"
@@ -432,6 +443,7 @@ msgctxt "OpenTypeHierarchyUtil.selectionDialog.message"
 msgid "&Select the type to be shown in the Type Hierarchy:"
 msgstr ""
 
+#. 
 #: TypeInfoLabelProvider.default_package
 #, java-format
 msgctxt "TypeInfoLabelProvider.default_package"
@@ -445,6 +457,7 @@ msgctxt "TypeInfoLabelProvider.dash"
 msgid " - "
 msgstr ""
 
+#. 
 #: JavaUIHelp.link.label
 #, java-format
 msgctxt "JavaUIHelp.link.label"
@@ -487,12 +500,6 @@ msgctxt "JavaAnnotationHover.multipleMarkersAtThisLine"
 msgid "Multiple markers at this line"
 msgstr ""
 
-#: HTMLTextPresenter.ellipsis
-#, java-format
-msgctxt "HTMLTextPresenter.ellipsis"
-msgid ""
-msgstr ""
-
 #. 
 #: HTML2TextReader.dash
 #, java-format
@@ -500,18 +507,21 @@ msgctxt "HTML2TextReader.dash"
 msgid "- "
 msgstr ""
 
+#. 
 #: JavaEditor.codeassist.noCompletions
 #, java-format
 msgctxt "JavaEditor.codeassist.noCompletions"
 msgid "No completions available."
 msgstr ""
 
+#. 
 #: OptionalMessageDialog.dontShowAgain
 #, java-format
 msgctxt "OptionalMessageDialog.dontShowAgain"
 msgid "Don't show this message again"
 msgstr ""
 
+#. 
 #: ElementValidator.cannotPerform
 #, java-format
 msgctxt "ElementValidator.cannotPerform"

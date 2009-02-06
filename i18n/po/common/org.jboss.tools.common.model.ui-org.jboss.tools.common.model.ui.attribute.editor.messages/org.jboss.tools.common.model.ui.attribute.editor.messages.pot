@@ -38,6 +38,7 @@ msgctxt "TabbedJavaChoicerFieldEditor.Tab3.Label"
 msgid "Recent"
 msgstr ""
 
+#. 
 #: JavaChoicerFieldEditor.Tab1.Tree.Label
 #, java-format
 msgctxt "JavaChoicerFieldEditor.Tab1.Tree.Label"
@@ -51,6 +52,7 @@ msgctxt "JavaChoicerFieldEditor.Tab1.Text.Label"
 msgid "Selected type:"
 msgstr ""
 
+#. 
 #: JavaEclipseChoicerFieldEditor.ChooseType.Label
 #, java-format
 msgctxt "JavaEclipseChoicerFieldEditor.ChooseType.Label"
@@ -71,12 +73,14 @@ msgctxt "JavaEclipseChoicerFieldEditor.PackagesList.Label"
 msgid "Qualifier:"
 msgstr ""
 
+#. 
 #: JavaFavoritesChoicerFieldEditor.ClassesList.Label
 #, java-format
 msgctxt "JavaFavoritesChoicerFieldEditor.ClassesList.Label"
 msgid "Recent types:"
 msgstr ""
 
+#. 
 #: JavaChoicerFieldEditor.Tab3.Tree.Label
 #, java-format
 msgctxt "JavaChoicerFieldEditor.Tab3.Tree.Label"
@@ -90,6 +94,7 @@ msgctxt "JavaChoicerFieldEditor.Tab3.Text.Label"
 msgid "Choose a type:"
 msgstr ""
 
+#. 
 #: JavaHyperlinkLineFieldEditor.CannotOpenJavaSource
 #, java-format
 msgctxt "JavaHyperlinkLineFieldEditor.CannotOpenJavaSource"

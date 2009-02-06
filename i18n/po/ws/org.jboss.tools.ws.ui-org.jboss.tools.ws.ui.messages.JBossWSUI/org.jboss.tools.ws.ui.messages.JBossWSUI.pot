@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-22 16:28+1000\n"
+"POT-Creation-Date: 2009-01-19 17:21+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,6 +78,34 @@ msgstr ""
 #, java-format
 msgctxt "Error_JBossWS_Basic_Editor_Different"
 msgid "Parent for label is different"
+msgstr ""
+
+#. 
+#: JBossRuntimeListFieldEditor_ActionAdd
+#, java-format
+msgctxt "JBossRuntimeListFieldEditor_ActionAdd"
+msgid "&Add"
+msgstr ""
+
+#. 
+#: JBossRuntimeListFieldEditor_ActionEdit
+#, java-format
+msgctxt "JBossRuntimeListFieldEditor_ActionEdit"
+msgid "&Edit"
+msgstr ""
+
+#. 
+#: JBossRuntimeListFieldEditor_ActionRemove
+#, java-format
+msgctxt "JBossRuntimeListFieldEditor_ActionRemove"
+msgid "&Remove"
+msgstr ""
+
+#. 
+#: JBossRuntimeListFieldEditor_ErrorMessageAtLeastOneJar
+#, java-format
+msgctxt "JBossRuntimeListFieldEditor_ErrorMessageAtLeastOneJar"
+msgid "The library must contain at least one jar."
 msgstr ""
 
 #. 
@@ -260,5 +288,26 @@ msgstr ""
 #, java-format
 msgctxt "JBossWS_Preference_Page_Runtimes"
 msgid "JBossWS Runtimes"
+msgstr ""
+
+#. 
+#: JBossWSLibraryListFieldEditor_ActionAdd
+#, java-format
+msgctxt "JBossWSLibraryListFieldEditor_ActionAdd"
+msgid "&Add"
+msgstr ""
+
+#. 
+#: JBossWSLibraryListFieldEditor_ActionRemove
+#, java-format
+msgctxt "JBossWSLibraryListFieldEditor_ActionRemove"
+msgid "&Remove"
+msgstr ""
+
+#. 
+#: JBossWSLibraryListFieldEditor_LIBRARY_JARS
+#, java-format
+msgctxt "JBossWSLibraryListFieldEditor_LIBRARY_JARS"
+msgid "Library Jars"
 msgstr ""
 

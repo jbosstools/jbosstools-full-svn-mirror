@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-13 12:17+1000\n"
+"POT-Creation-Date: 2009-01-21 17:23+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,6 +24,7 @@ msgctxt "providerName"
 msgid "JBoss, a division of Red Hat"
 msgstr ""
 
+#. 
 #: editors.tld12.name
 #, java-format
 msgctxt "editors.tld12.name"
@@ -37,6 +38,7 @@ msgctxt "editors.web.name"
 msgid "JBoss Tools Web Descriptor Editor"
 msgstr ""
 
+#. 
 #: textProblemName
 #, java-format
 msgctxt "textProblemName"
@@ -57,6 +59,7 @@ msgctxt "constraintProblemName"
 msgid "Constraint Problem"
 msgstr ""
 
+#. 
 #: perspective.name
 #, java-format
 msgctxt "perspective.name"
@@ -70,6 +73,7 @@ msgctxt "paletteViewPart.name"
 msgid "JBoss Tools Palette"
 msgstr ""
 
+#. 
 #: actionSets_online_help.label
 #, java-format
 msgctxt "actionSets_online_help.label"
@@ -77,12 +81,6 @@ msgid "JBoss Tools Help"
 msgstr ""
 
 #. 
-#: actionSets_online_help.description
-#, java-format
-msgctxt "actionSets_online_help.description"
-msgid ""
-msgstr ""
-
 #: popupMenus.action.registerInServerXml
 #, java-format
 msgctxt "popupMenus.action.registerInServerXml"
@@ -103,12 +101,14 @@ msgctxt "popupMenus.action.saveAsTemplate"
 msgid "Save As Template..."
 msgstr ""
 
+#. 
 #: web.category_ui_
 #, java-format
 msgctxt "web.category_ui_"
 msgid "Web"
 msgstr ""
 
+#. 
 #: PreferencePage_LibrarySets
 #, java-format
 msgctxt "PreferencePage_LibrarySets"
@@ -248,6 +248,7 @@ msgctxt "NewWizardDescription_TLDFile"
 msgid "Create a TLD File"
 msgstr ""
 
+#. 
 #: ViewName_WebProjects
 #, java-format
 msgctxt "ViewName_WebProjects"
@@ -259,5 +260,26 @@ msgstr ""
 #, java-format
 msgctxt "ViewCategory_JBossToolsWeb"
 msgid "JBoss Tools Web"
+msgstr ""
+
+#. 
+#: Bundle-Name.0
+#, java-format
+msgctxt "Bundle-Name.0"
+msgid "Web UI"
+msgstr ""
+
+#. 
+#: NavigatorContent_FileContentProvider
+#, java-format
+msgctxt "NavigatorContent_FileContentProvider"
+msgid "JBoss Tools File Content Provider"
+msgstr ""
+
+#. 
+#: NavigatorContent_ProjectContentProvider
+#, java-format
+msgctxt "NavigatorContent_ProjectContentProvider"
+msgid "JBoss Tools Project Content Provider"
 msgstr ""
 
