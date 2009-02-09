@@ -16,122 +16,122 @@ import java.util.Map;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 
 public class TextUtil {
-	private final static String SOURCE_BREAK = "\r\n"; 
-	private final static String VISUAL_BREAK = "\n"; 
+	private final static String SOURCE_BREAK = "\r\n";  //$NON-NLS-1$
+	private final static String VISUAL_BREAK = "\n";  //$NON-NLS-1$
 	private final static char SOURCE_SPACE = ' '; 
 	private final static char VISUAL_SPACE = 160; 
 	private final static int CHR_ESC_START = '&';
 	private final static int CHR_ESC_STOP = ';';
-	private final static String SPCHARS = "\f\n\r\t\u0020\u2028\u2029";
-	private final static Map textSet = new HashMap();
+	private final static String SPCHARS = "\f\n\r\t\u0020\u2028\u2029"; //$NON-NLS-1$
+	private final static Map<Character,String> textSet = new HashMap<Character,String>();
 	static{
-		textSet.put(new Character('"'), "&quot;");
-		textSet.put(new Character('&'),"&amp;");
-		textSet.put(new Character('<'),"&lt;");
-		textSet.put(new Character('>'),"&gt;");
+		textSet.put(new Character('"'), "&quot;"); //$NON-NLS-1$
+		textSet.put(new Character('&'),"&amp;"); //$NON-NLS-1$
+		textSet.put(new Character('<'),"&lt;"); //$NON-NLS-1$
+		textSet.put(new Character('>'),"&gt;"); //$NON-NLS-1$
 //		textSet.put(new Character(' '),"&nbsp;");
-		textSet.put(new Character('\u00A1'),"&iexcl;");
-		textSet.put(new Character('\u00A2'),"&cent;");
-		textSet.put(new Character('\u00A3'),"&pound;");
-		textSet.put(new Character('\u00A4'),"&curren;");
-		textSet.put(new Character('\u00A5'),"&yen;");
-		textSet.put(new Character('\u00A6'),"&brvbar;");
-		textSet.put(new Character('\u00A7'),"&sect;");
-		textSet.put(new Character('\u00A8'),"&uml;");
-		textSet.put(new Character('\u00A9'),"&copy;");
-		textSet.put(new Character('\u00AA'),"&ordf;");
-		textSet.put(new Character('\u00AB'),"&laquo;");
-		textSet.put(new Character('\u00AC'),"&not;");
+		textSet.put(new Character('\u00A1'),"&iexcl;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00A2'),"&cent;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00A3'),"&pound;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00A4'),"&curren;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00A5'),"&yen;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00A6'),"&brvbar;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00A7'),"&sect;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00A8'),"&uml;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00A9'),"&copy;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00AA'),"&ordf;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00AB'),"&laquo;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00AC'),"&not;"); //$NON-NLS-1$
 		//textSet.put(new Character('\u00AD'),"&shy;");
-		textSet.put(new Character('\u00AE'),"&reg;");
-		textSet.put(new Character('\u00AF'),"&macr;");
-		textSet.put(new Character('\u00B0'),"&deg;");
-		textSet.put(new Character('\u00B1'),"&plusmn;");
-		textSet.put(new Character('\u00B2'),"&sup2;");
-		textSet.put(new Character('\u00B3'),"&sup3;");
-		textSet.put(new Character('\u00B4'),"&acute;");
-		textSet.put(new Character('\u00B5'),"&micro;");
-		textSet.put(new Character('\u00B6'),"&para;");
-		textSet.put(new Character('\u00B7'),"&middot;");
-		textSet.put(new Character('\u00B8'),"&cedil;");
-		textSet.put(new Character('\u00B9'),"&sup1;");
-		textSet.put(new Character('\u00BA'),"&ordm;");
-		textSet.put(new Character('\u00BB'),"&raquo;");
-		textSet.put(new Character('\u00BC'),"&frac14;");
-		textSet.put(new Character('\u00BD'),"&frac12;");
-		textSet.put(new Character('\u00BE'),"&frac34;");
-		textSet.put(new Character('\u00BF'),"&iquest;");
-		textSet.put(new Character('\u00C0'),"&Agrave;");
-		textSet.put(new Character('\u00E0'),"&agrave;");
-		textSet.put(new Character('\u00C1'),"&Aacute;");
-		textSet.put(new Character('\u00E1'),"&aacute;");
-		textSet.put(new Character('\u00C2'),"&Acirc;");
-		textSet.put(new Character('\u00E2'),"&acirc;");
-		textSet.put(new Character('\u00C3'),"&Atilde;");
-		textSet.put(new Character('\u00E3'),"&atilde;");
-		textSet.put(new Character('\u00C4'),"&Auml;");
-		textSet.put(new Character('\u00E4'),"&auml;");
-		textSet.put(new Character('\u00C5'),"&Aring;");
-		textSet.put(new Character('\u00E5'),"&aring;");
-		textSet.put(new Character('\u00C6'),"&AElig;");
-		textSet.put(new Character('\u00E6'),"&aelig;");
-		textSet.put(new Character('\u00C7'),"&Ccedil;");
-		textSet.put(new Character('\u00E7'),"&ccedil;");
-		textSet.put(new Character('\u00C8'),"&Egrave;");
-		textSet.put(new Character('\u00E8'),"&egrave;");
-		textSet.put(new Character('\u00C9'),"&Eacute;");
-		textSet.put(new Character('\u00E9'),"&eacute;");
-		textSet.put(new Character('\u00CA'),"&Ecirc;");
-		textSet.put(new Character('\u00EA'),"&ecirc;");
-		textSet.put(new Character('\u00CB'),"&Euml;");
-		textSet.put(new Character('\u00EB'),"&euml;");
-		textSet.put(new Character('\u00CC'),"&Igrave;");
-		textSet.put(new Character('\u00EC'),"&igrave;");
-		textSet.put(new Character('\u00CD'),"&Iacute;");
-		textSet.put(new Character('\u00ED'),"&iacute;");
-		textSet.put(new Character('\u00CE'),"&Icirc;");
-		textSet.put(new Character('\u00EE'),"&icirc;");
-		textSet.put(new Character('\u00CF'),"&Iuml;");
-		textSet.put(new Character('\u00EF'),"&iuml;");
-		textSet.put(new Character('\u00D0'),"&ETH;");
-		textSet.put(new Character('\u00F0'),"&eth;");
-		textSet.put(new Character('\u00D1'),"&Ntilde;");
-		textSet.put(new Character('\u00F1'),"&ntilde;");
-		textSet.put(new Character('\u00D2'),"&Ograve;");
-		textSet.put(new Character('\u00F2'),"&ograve;");
-		textSet.put(new Character('\u00D3'),"&Oacute;");
-		textSet.put(new Character('\u00F3'),"&oacute;");
-		textSet.put(new Character('\u00D4'),"&Ocirc;");
-		textSet.put(new Character('\u00F4'),"&ocirc;");
-		textSet.put(new Character('\u00D5'),"&Otilde;");
-		textSet.put(new Character('\u00F5'),"&otilde;");
-		textSet.put(new Character('\u00D6'),"&Ouml;");
-		textSet.put(new Character('\u00F6'),"&ouml;");
-		textSet.put(new Character('\u00D7'),"&times;");
-		textSet.put(new Character('\u00F7'),"&divide;");
-		textSet.put(new Character('\u00D8'),"&Oslash;");
-		textSet.put(new Character('\u00F8'),"&oslash;");
-		textSet.put(new Character('\u00D9'),"&Ugrave;");
-		textSet.put(new Character('\u00F9'),"&ugrave;");
-		textSet.put(new Character('\u00DA'),"&Uacute;");
-		textSet.put(new Character('\u00FA'),"&uacute;");
-		textSet.put(new Character('\u00DB'),"&Ucirc;");
-		textSet.put(new Character('\u00FB'),"&ucirc;");
-		textSet.put(new Character('\u00DC'),"&Uuml;");
-		textSet.put(new Character('\u00FC'),"&uuml;");
-		textSet.put(new Character('\u00DD'),"&Yacute;");
-		textSet.put(new Character('\u00FD'),"&yacute;");
-		textSet.put(new Character('\u00DE'),"&THORN;");
-		textSet.put(new Character('\u00FE'),"&thorn;");
-		textSet.put(new Character('\u00DF'),"&szlig;");
-		textSet.put(new Character('\u00FF'),"&yuml;");
-		textSet.put(new Character('\u2013'),"&ndash;");
-		textSet.put(new Character('\u2014'),"&mdash;");
-		textSet.put(new Character('\u2018'),"&lsquo;");
-		textSet.put(new Character('\u2019'),"&rsquo;");
-		textSet.put(new Character('\u201C'),"&ldquo;");
-		textSet.put(new Character('\u201D'),"&rdquo;");
-		textSet.put(new Character('\u20AC'),"&euro;");
+		textSet.put(new Character('\u00AE'),"&reg;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00AF'),"&macr;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00B0'),"&deg;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00B1'),"&plusmn;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00B2'),"&sup2;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00B3'),"&sup3;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00B4'),"&acute;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00B5'),"&micro;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00B6'),"&para;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00B7'),"&middot;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00B8'),"&cedil;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00B9'),"&sup1;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00BA'),"&ordm;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00BB'),"&raquo;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00BC'),"&frac14;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00BD'),"&frac12;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00BE'),"&frac34;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00BF'),"&iquest;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00C0'),"&Agrave;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00E0'),"&agrave;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00C1'),"&Aacute;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00E1'),"&aacute;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00C2'),"&Acirc;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00E2'),"&acirc;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00C3'),"&Atilde;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00E3'),"&atilde;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00C4'),"&Auml;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00E4'),"&auml;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00C5'),"&Aring;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00E5'),"&aring;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00C6'),"&AElig;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00E6'),"&aelig;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00C7'),"&Ccedil;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00E7'),"&ccedil;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00C8'),"&Egrave;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00E8'),"&egrave;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00C9'),"&Eacute;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00E9'),"&eacute;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00CA'),"&Ecirc;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00EA'),"&ecirc;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00CB'),"&Euml;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00EB'),"&euml;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00CC'),"&Igrave;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00EC'),"&igrave;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00CD'),"&Iacute;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00ED'),"&iacute;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00CE'),"&Icirc;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00EE'),"&icirc;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00CF'),"&Iuml;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00EF'),"&iuml;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00D0'),"&ETH;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00F0'),"&eth;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00D1'),"&Ntilde;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00F1'),"&ntilde;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00D2'),"&Ograve;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00F2'),"&ograve;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00D3'),"&Oacute;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00F3'),"&oacute;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00D4'),"&Ocirc;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00F4'),"&ocirc;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00D5'),"&Otilde;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00F5'),"&otilde;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00D6'),"&Ouml;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00F6'),"&ouml;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00D7'),"&times;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00F7'),"&divide;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00D8'),"&Oslash;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00F8'),"&oslash;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00D9'),"&Ugrave;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00F9'),"&ugrave;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00DA'),"&Uacute;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00FA'),"&uacute;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00DB'),"&Ucirc;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00FB'),"&ucirc;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00DC'),"&Uuml;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00FC'),"&uuml;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00DD'),"&Yacute;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00FD'),"&yacute;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00DE'),"&THORN;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00FE'),"&thorn;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00DF'),"&szlig;"); //$NON-NLS-1$
+		textSet.put(new Character('\u00FF'),"&yuml;"); //$NON-NLS-1$
+		textSet.put(new Character('\u2013'),"&ndash;"); //$NON-NLS-1$
+		textSet.put(new Character('\u2014'),"&mdash;"); //$NON-NLS-1$
+		textSet.put(new Character('\u2018'),"&lsquo;"); //$NON-NLS-1$
+		textSet.put(new Character('\u2019'),"&rsquo;"); //$NON-NLS-1$
+		textSet.put(new Character('\u201C'),"&ldquo;"); //$NON-NLS-1$
+		textSet.put(new Character('\u201D'),"&rdquo;"); //$NON-NLS-1$
+		textSet.put(new Character('\u20AC'),"&euro;"); //$NON-NLS-1$
 	}
 	
 	public static boolean containsKey(char key){
@@ -185,7 +185,7 @@ public class TextUtil {
 			String value = (String)textSet.get(ch);
 			char sourceChar = sourceText.charAt(sourceIndex);
 			if(value != null){
-				if(sourceChar != ch.charValue() || (ch.charValue() == '&' && sourceText.indexOf("&amp;",sourceIndex) >= 0)){
+				if(sourceChar != ch.charValue() || (ch.charValue() == '&' && sourceText.indexOf("&amp;",sourceIndex) >= 0)){ //$NON-NLS-1$
 					if(visualIndex == visualPosition) return true;
 					sourceIndex += value.length()-1;
 				}
@@ -301,8 +301,8 @@ public class TextUtil {
 		int start1 = s1.length()-delta;
 		if(position < sourceText.length()){
 			while(position > sourcePosition){
-				int ampersandPosition = s1.lastIndexOf("&");
-				int semicolonPosition = s1.lastIndexOf(";");
+				int ampersandPosition = s1.lastIndexOf("&"); //$NON-NLS-1$
+				int semicolonPosition = s1.lastIndexOf(";"); //$NON-NLS-1$
 				if(ampersandPosition > 0 && semicolonPosition > 0 && ampersandPosition < semicolonPosition && (semicolonPosition+1) > sourcePosition){
 					String value = s1.substring(ampersandPosition, semicolonPosition+1);
 					if(textSet.containsValue(value))
@@ -325,7 +325,7 @@ public class TextUtil {
 		
 		String[] strings = (String[]) textSet.values().toArray(new String[]{});
 		for(int i=0;i<strings.length;i++){
-			s1 = s1.replaceAll(strings[i]," ");
+			s1 = s1.replaceAll(strings[i]," "); //$NON-NLS-1$
 		}
 		s1 = visualText(s1);
 		return sourcePosition-(startLength - s1.length())-(start1-start2);
