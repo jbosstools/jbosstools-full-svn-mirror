@@ -189,6 +189,41 @@ public class VpeStyleUtil {
 	return null;
     }
 
+    /**
+     * This method is used to get parameter value from <code>style</code> attribute.
+     * For instance, in case of style="width:65px; color:red" for parameter <code>color</code>
+     * method should return <code>red</code> string value.
+     *
+     * @param styleAttr the style attribute value
+     * @param parameter the name of parameter of style attribute
+     * @return the parameter value
+     */
+    public static String getParameterFromStyleAttribute(String style, String parameter) {
+    	if (style == null || EMPTY_STRING.equals(style)) {
+    		return null;
+    	}
+    	int parameterPosition = style.indexOf(parameter);
+    	if (parameterPosition >= 0) {
+    		int valuePosition = style.indexOf(COLON_STRING, parameterPosition);
+    		if (valuePosition >= 0) {
+    			int endPosition = style.indexOf(SEMICOLON_STRING, valuePosition);
+    			if (endPosition >= 0) {
+    				style = style.substring(valuePosition + 1, endPosition).trim();
+    				endPosition = style.indexOf(PX_STRING, valuePosition);
+    				if (endPosition >= 0) {
+    					return style.substring(valuePosition + 1, endPosition).trim();
+    				}
+    				return style;
+    			} else {
+    				// last parameter ends without closing semicolon symbol
+    				return style.substring(valuePosition + 1).trim();
+    			}
+    		}
+    	}
+
+    	return null;
+    }
+
     // sets value of parameter described in sizeAttribute, for example
     // "style.width"
     public static void setSizeInStyle(Element sourceElement,
