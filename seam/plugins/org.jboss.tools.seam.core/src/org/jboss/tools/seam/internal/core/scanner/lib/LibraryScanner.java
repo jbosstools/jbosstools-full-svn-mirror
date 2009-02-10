@@ -59,8 +59,7 @@ public class LibraryScanner implements IFileScanner {
 	}
 
 	public boolean isRelevant(IFile f) {
-		if(f.getName().endsWith(".jar")) return true; //$NON-NLS-1$
-		return false;
+		return f.getName().endsWith(".jar"); //$NON-NLS-1$
 	}
 
 	public boolean isLikelyComponentSource(IFile f) {
