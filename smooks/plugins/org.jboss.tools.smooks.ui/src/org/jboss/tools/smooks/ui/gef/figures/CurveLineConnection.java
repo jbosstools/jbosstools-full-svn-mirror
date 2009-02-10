@@ -48,6 +48,12 @@ public class CurveLineConnection extends PolylineConnection {
 		double height = endy - starty;
 		height = height / 2;
 		int width = Math.abs(startx - endx);
+
+		
+		if (width > fBasicCenterCurve.length) {
+			width = fBasicCenterCurve.length;
+//			return points;
+		}
 		int[] points = new int[width];
 		for (int i = 0; i < width; i++) {
 			points[i] = (int) (-height * fBasicCenterCurve[i] + height + starty);
