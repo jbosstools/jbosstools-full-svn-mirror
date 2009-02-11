@@ -29,7 +29,7 @@ public class TextUtil {
 		textSet.put(new Character('&'),"&amp;"); //$NON-NLS-1$
 		textSet.put(new Character('<'),"&lt;"); //$NON-NLS-1$
 		textSet.put(new Character('>'),"&gt;"); //$NON-NLS-1$
-//		textSet.put(new Character(' '),"&nbsp;");
+		textSet.put(new Character('\u00A0'),"&nbsp;"); //$NON-NLS-1$
 		textSet.put(new Character('\u00A1'),"&iexcl;"); //$NON-NLS-1$
 		textSet.put(new Character('\u00A2'),"&cent;"); //$NON-NLS-1$
 		textSet.put(new Character('\u00A3'),"&pound;"); //$NON-NLS-1$
@@ -43,6 +43,7 @@ public class TextUtil {
 		textSet.put(new Character('\u00AB'),"&laquo;"); //$NON-NLS-1$
 		textSet.put(new Character('\u00AC'),"&not;"); //$NON-NLS-1$
 		//textSet.put(new Character('\u00AD'),"&shy;");
+		textSet.put(new Character('\u2022'), "&bull;"); //$NON-NLS-1$
 		textSet.put(new Character('\u00AE'),"&reg;"); //$NON-NLS-1$
 		textSet.put(new Character('\u00AF'),"&macr;"); //$NON-NLS-1$
 		textSet.put(new Character('\u00B0'),"&deg;"); //$NON-NLS-1$
@@ -135,6 +136,7 @@ public class TextUtil {
 	}
 	
 	public static boolean containsKey(char key){
+		
 		return textSet.containsKey(new Character(key));
 	}
 
@@ -227,11 +229,9 @@ public class TextUtil {
 //		}
 //		return s3.length()+(sourceIndex-visualIndex);
 //	}
-
 	public static int sourcePosition(String sourceText, String visualText, int visualPosition) {
 		int sourceIndex = 0;
 		int visualIndex = 0;
-		
 		while (sourceIndex < sourceText.length() && visualIndex < visualPosition) {
 			char sourceChar = sourceText.charAt(sourceIndex);
 			if (sourceChar == '\r') {

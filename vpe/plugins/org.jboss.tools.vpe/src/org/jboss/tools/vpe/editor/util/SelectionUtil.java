@@ -18,6 +18,7 @@ import org.eclipse.wst.sse.core.StructuredModelManager;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
+import org.eclipse.wst.xml.core.internal.document.TextImpl;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
@@ -208,9 +209,11 @@ public class SelectionUtil {
 		Point sourceRange = new Point(0, 0);
 		// converts to source selection
 		if ((sourceNode != null) && (sourceNode.getNodeValue() != null)) {
-			sourceRange.x = TextUtil.sourcePosition(sourceNode.getNodeValue(),
+			//fix for JBIDE-3650
+			TextImpl textImpl = (TextImpl) sourceNode;
+			sourceRange.x = TextUtil.sourcePosition(textImpl.getSource(),
 					focusedNode.getNodeValue(), selection.getFocusOffset());
-			sourceRange.y = TextUtil.sourcePosition(sourceNode.getNodeValue(),
+			sourceRange.y = TextUtil.sourcePosition(textImpl.getSource(),
 					focusedNode.getNodeValue(), selection.getAnchorOffset())
 					- sourceRange.x;
 		}
