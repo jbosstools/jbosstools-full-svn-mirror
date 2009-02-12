@@ -210,10 +210,10 @@ public class SelectionUtil {
 		// converts to source selection
 		if ((sourceNode != null) && (sourceNode.getNodeValue() != null)) {
 			//fix for JBIDE-3650
-			NodeImpl textImpl = (NodeImpl) sourceNode;
-			sourceRange.x = TextUtil.sourcePosition(textImpl.getSource(),
+			NodeImpl nodeImpl = (NodeImpl) sourceNode;
+			sourceRange.x = TextUtil.sourcePosition(nodeImpl.getValueSource(),
 					focusedNode.getNodeValue(), selection.getFocusOffset());
-			sourceRange.y = TextUtil.sourcePosition(textImpl.getSource(),
+			sourceRange.y = TextUtil.sourcePosition(nodeImpl.getValueSource(),
 					focusedNode.getNodeValue(), selection.getAnchorOffset())
 					- sourceRange.x;
 		}
