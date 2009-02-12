@@ -21,7 +21,6 @@ import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
-import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
@@ -262,14 +261,14 @@ public class KeyEventManager implements IKeyEventHandler {
 					return true;
 
 				}
-
+				
 				editable = nodeData.isEditable()
 						&& !isBorderPosition(
 								nodeData.getSourceNode(),
 								SelectionUtil
 										.getSourceSelectionRange(getSourceEditor()),
 								delete);
-
+				
 			}
 			// if template can't give necessary information
 			else {
@@ -286,6 +285,7 @@ public class KeyEventManager implements IKeyEventHandler {
 		}
 
 		if (editable) {
+
 			sourceEditor.getTextViewer().getTextWidget().invokeAction(delete);
 		}
 
