@@ -15,7 +15,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.core.StructuredModelManager;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
-import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.document.NodeImpl;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
@@ -254,7 +253,6 @@ public class SelectionManager implements ISelectionManager {
 	final public void refreshVisualSelection() {
 
 		IStructuredModel model = null;
-
 		try {
 			// checks for null, for case when we close editor and background
 			// update job is running
@@ -368,9 +366,9 @@ public class SelectionManager implements ISelectionManager {
 					- NodesManagingUtil.getStartOffsetNode(targetSourceNode);
 
 			int length = visualNode.getNodeValue().length();
-			if (focusOffcetReferenceToSourceNode > length
-					|| anchorOffcetReferenceToSourceNode > length)
-				return;
+//			if (focusOffcetReferenceToSourceNode > length
+//					|| anchorOffcetReferenceToSourceNode > length)
+//				return;
 			NodeImpl sourceTextImpl = (NodeImpl) targetSourceNode;
 			int visualNodeFocusOffcet = TextUtil.visualPosition(
 					sourceTextImpl.getValueSource(),
@@ -379,7 +377,9 @@ public class SelectionManager implements ISelectionManager {
 			int visualNodeAnchorOffcet = TextUtil.visualPosition(
 					sourceTextImpl.getValueSource(),
 					anchorOffcetReferenceToSourceNode);
-			
+			if (visualNodeFocusOffcet > length
+					|| visualNodeAnchorOffcet > length)
+					return;
 			nsISelection selection = selectionController.getSelection(
 					nsISelectionController.SELECTION_NORMAL);
 
