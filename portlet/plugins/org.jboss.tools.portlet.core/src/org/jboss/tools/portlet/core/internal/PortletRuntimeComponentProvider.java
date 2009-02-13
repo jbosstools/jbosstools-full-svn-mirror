@@ -30,13 +30,15 @@ public class PortletRuntimeComponentProvider extends
 			.getVersion("1.0"); //$NON-NLS-1$
 
 	public List<IRuntimeComponent> getRuntimeComponents(final IRuntime runtime) {
-		final File location = runtime.getLocation().toFile();
-		final List<IRuntimeComponent> components = new ArrayList<IRuntimeComponent>();
-		
-		if (isPortalPresent(location,runtime)) {
-			final IRuntimeComponent portalComponent = RuntimeManager
-					.createRuntimeComponent(PORTAL_VERSION_1, null);
-			components.add(portalComponent);
+		List<IRuntimeComponent> components = new ArrayList<IRuntimeComponent>();
+		if (runtime != null && runtime.getLocation() != null) {
+			File location = runtime.getLocation().toFile();
+
+			if (isPortalPresent(location, runtime)) {
+				final IRuntimeComponent portalComponent = RuntimeManager
+						.createRuntimeComponent(PORTAL_VERSION_1, null);
+				components.add(portalComponent);
+			}
 		}
 		return components;
 	}
