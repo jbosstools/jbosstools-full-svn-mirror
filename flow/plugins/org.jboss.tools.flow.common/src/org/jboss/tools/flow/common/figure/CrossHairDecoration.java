@@ -16,12 +16,11 @@ public class CrossHairDecoration extends PolygonDecoration {
 		CROSSHAIR_TIP.addPoint(-1, 0);
 		CROSSHAIR_TIP.addPoint(-1, 1);
 		CROSSHAIR_TIP.addPoint(-1, 0);
-		
 	}
-	
+
 	public CrossHairDecoration() {
 		setTemplate(CROSSHAIR_TIP);
-		setScale(3.5, 2);
+		setScale(4, 4);
 		setFill(false);
 	}
 	
