@@ -262,6 +262,9 @@ public class TextUtil {
 	
 	public static int visualPosition(String sourceText, int sourcePosition) {
 		int calcPosition = sourcePosition;
+		if(sourceText==null) {
+			return 0;
+		}
 		int start = sourceText.indexOf(CHR_ESC_START);
 		while (start != -1 && start < sourcePosition && start + 1 < sourceText.length()) {
 			int stop = sourceText.indexOf(CHR_ESC_STOP, start + 1);
