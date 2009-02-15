@@ -4,9 +4,12 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jboss.tools.portlet.core.messages"; //$NON-NLS-1$
+	public static String PortletPostInstallListener_Invalid_Richfaces_Runtime;
+	public static String PortletPostInstallListener_Cannot_find_Richfaces_Runtime;
+	public static String Libraries_provided_by_richfaces;
+	public static String Libraries_provided_by_portletbridge ;
 	public static String BasePortletClasspathContainer_Error_loading_classpath_container;
 	public static String IPortletConstants_Libraries_provided_by_server_runtime;
-	public static String IPortletConstants_Library_provided_by_JBoss_Tools;
 	public static String IPortletConstants_User_library;
 	public static String JSFPortlet10LibrariesContainerInitializer_Error_loading_classpath_container;
 	public static String JSFPortlet10LibrariesContainerInitializer_JBoss_JSF_Portlet_Libraries_v1_0;

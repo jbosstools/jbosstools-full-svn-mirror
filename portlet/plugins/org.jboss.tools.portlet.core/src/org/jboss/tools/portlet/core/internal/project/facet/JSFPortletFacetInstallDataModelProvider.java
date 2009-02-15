@@ -31,7 +31,25 @@ public class JSFPortletFacetInstallDataModelProvider extends
 		if (propertyName.equals(IPortletConstants.DEPLOY_JARS)) {
 			return Boolean.TRUE;
 		}
+		if (propertyName.equals(IPortletConstants.RICHFACES_LIBRARIES_SELECTED)) {
+			return Boolean.FALSE;
+		}
+		if (propertyName.equals(IPortletConstants.RICHFACES_LIBRARIES_TYPE)) {
+			return ""; //$NON-NLS-1$
+		}
+		if (propertyName.equals(IPortletConstants.RICHFACES_CAPABILITIES)) {
+			return Boolean.TRUE;
+		}
 		if (propertyName.equals(IPortletConstants.PORTLET_BRIDGE_RUNTIME)) {
+			return ""; //$NON-NLS-1$
+		}
+		if (propertyName.equals(IPortletConstants.RICHFACES_RUNTIME)) {
+			return ""; //$NON-NLS-1$
+		}
+		if (propertyName.equals(IPortletConstants.IMPLEMENTATION_LIBRARY)) {
+			return IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE;
+		}
+		if (propertyName.equals(IPortletConstants.USER_LIBRARY_NAME)) {
 			return ""; //$NON-NLS-1$
 		}
 		return super.getDefaultProperty(propertyName);
@@ -42,6 +60,12 @@ public class JSFPortletFacetInstallDataModelProvider extends
 		Set<String> propertyNames = super.getPropertyNames();
 		propertyNames.add(IPortletConstants.DEPLOY_JARS);
 		propertyNames.add(IPortletConstants.PORTLET_BRIDGE_RUNTIME);
+		propertyNames.add(IPortletConstants.IMPLEMENTATION_LIBRARY);
+		propertyNames.add(IPortletConstants.USER_LIBRARY_NAME);
+		propertyNames.add(IPortletConstants.RICHFACES_RUNTIME);
+		propertyNames.add(IPortletConstants.RICHFACES_LIBRARIES_SELECTED);
+		propertyNames.add(IPortletConstants.RICHFACES_LIBRARIES_TYPE);
+		propertyNames.add(IPortletConstants.RICHFACES_CAPABILITIES);
 		return propertyNames;
 	}
 }

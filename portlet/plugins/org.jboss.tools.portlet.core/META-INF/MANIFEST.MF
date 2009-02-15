@@ -21,9 +21,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.ide,
  org.eclipse.jem,
  org.eclipse.jst.jsf.facesconfig,
- org.eclipse.wst.server.core,
+ org.eclipse.wst.server.core;visibility:=reexport,
  org.eclipse.jem.util,
- org.jboss.ide.eclipse.as.core
+ org.jboss.ide.eclipse.as.core;visibility:=reexport,
+ org.eclipse.core.commands
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.portlet.core,
  org.jboss.tools.portlet.core.internal,

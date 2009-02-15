@@ -22,6 +22,8 @@ import org.eclipse.jst.j2ee.model.IModelProvider;
 import org.eclipse.jst.j2ee.model.ModelProviderManager;
 import org.eclipse.ui.dialogs.IOverwriteQuery;
 import org.eclipse.wst.common.componentcore.ComponentCore;
+import org.eclipse.wst.server.core.IRuntime;
+import org.eclipse.wst.server.core.ServerCore;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -236,4 +238,20 @@ public class PortletCoreActivator extends Plugin {
 		file.create(source, true, new NullProgressMonitor());
 	}
 	
+	public static IRuntime getRuntime(org.eclipse.wst.common.project.facet.core.runtime.IRuntime runtime) {
+		if (runtime == null)
+			throw new IllegalArgumentException();
+		
+		String id = runtime.getProperty("id"); //$NON-NLS-1$
+		if (id == null)
+			return null;
+		
+		IRuntime[] runtimes = ServerCore.getRuntimes();
+		for (IRuntime r : runtimes) {
+			if (id.equals(r.getId()))
+				return r;
+		}
+		
+		return null;
+	}
 }

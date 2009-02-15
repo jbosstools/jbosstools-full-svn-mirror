@@ -63,8 +63,6 @@ public interface IPortletConstants {
 	
 	static final String USER_LIBRARY = Messages.IPortletConstants_User_library;
 	
-	//static final String LIBRARY_PROVIDED_BY_JBOSS_TOOLS = Messages.IPortletConstants_Library_provided_by_JBoss_Tools;
-	
 	static final String LIBRARIES_PROVIDED_BY_SERVER_RUNTIME = Messages.IPortletConstants_Libraries_provided_by_server_runtime;
 
 	static final String IMPLEMENTATION_LIBRARY = "implementationLibrary"; //$NON-NLS-1$
@@ -83,5 +81,19 @@ public interface IPortletConstants {
 
 	static final String PORTLET_API = "portlet-api"; //$NON-NLS-1$
 
+	static final String LIBRARIES_PROVIDED_BY_PORTLETBRIDGE = Messages.Libraries_provided_by_portletbridge;
+
+	static final String LIBRARIES_PROVIDED_BY_RICHFACES = Messages.Libraries_provided_by_richfaces;
+
+	static final String RICHFACES_RUNTIME = "RICHFACES_RUNTIME"; //$NON-NLS-1$
+
+	static final String RICHFACES_LIBRARIES_SELECTED = "RICHFACES_LIBRARIES_SELECTED"; //$NON-NLS-1$
 	
+	static final String RICHFACES_LIBRARIES_TYPE = "RICHFACES_LIBRARIES_TYPE"; //$NON-NLS-1$
+
+	static final String RICHFACES_CAPABILITIES = "RICHFACES_CAPABILITIES"; //$NON-NLS-1$
+
+	static final String PORTLET_SAR_LIB = "deploy/jboss-portal.sar/portal-identity.sar/portal-identity.war/WEB-INF/lib"; //$NON-NLS-1$
+	
+	static final String PORTLET_SAR_HA_LIB = "deploy/jboss-portal-ha.sar/portal-identity.sar/portal-identity.war/WEB-INF/lib"; //$NON-NLS-1$
 }
