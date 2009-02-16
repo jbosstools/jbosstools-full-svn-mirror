@@ -499,6 +499,16 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 								switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE))
 							try {
 								sourceSelectionChanged();
+								/*
+								 * https://jira.jboss.org/jira/browse/JBIDE-3619
+								 * VpeViewUpdateJob takes place after toolbar selection have been updated.
+								 * New nodes haven't been put into dom mapping 
+								 * thus toolbar becomes desabled.
+								 * Updating toolbar state here takes into account updated vpe nodes.
+								 */
+								if (toolbarFormatControllerManager != null) {
+								    toolbarFormatControllerManager.selectionChanged();
+								}
 							} finally {
 								switcher.stopActiveEditor();
 							}
@@ -1375,9 +1385,15 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	void visualRefreshImpl() {
 		visualEditor.hideResizer();
-
+		
 		String currentDoctype = DocTypeUtil.getDoctype(visualEditor.getEditorInput());
-		if (!visualEditor.getDoctype().equals(currentDoctype)) {
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-3591
+		 * Avoid using missing resource.
+		 */
+		String visualEditorDoctype = visualEditor.getDoctype();
+		if ((null != currentDoctype) && (null != visualEditorDoctype)
+			&& (!visualEditorDoctype.equals(currentDoctype))) {
 			visualEditor.reload();
 		} else {
 		    //Fix bugs JBIDE-2750
