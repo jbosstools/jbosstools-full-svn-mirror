@@ -33,6 +33,7 @@ import org.jboss.tools.vpe.resref.VpeResourcesDialog;
  */
 public class ELVariablesPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
     
+	public static final String ID = "org.jboss.tools.common.xstudio.elvariables";
     /** The el. */
     private GlobalElVariablesComposite   el  = new GlobalElVariablesComposite();
     
