@@ -31,4 +31,20 @@ public class VpeEditorPreferencesPageTest extends TestCase {
 			prefDialog.close();
 		}
 	}
+	
+	public void testVpeEditorELPreferencesPageShow() {
+		PreferenceDialog prefDialog = 
+			WorkbenchUtils.createPreferenceDialog(
+					ELVariablesPreferencePage.ID);
+
+		try {
+			prefDialog.setBlockOnOpen(false);
+			prefDialog.open();
+			
+			Object selectedPage = prefDialog.getSelectedPage();
+			assertTrue("Selected page is not an instance of org.jboss.tools.vpe.editor.preferences.ELVariablesPreferencePage", selectedPage instanceof ELVariablesPreferencePage);
+		} finally {
+			prefDialog.close();
+		}
+	}
 }
