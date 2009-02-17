@@ -464,7 +464,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 							monitor.worked((int) (100 / getChangeEvents().size()));
 							VpeEventBean eventBean = getChangeEvents().getFirst();
 							if (monitor.isCanceled()) {
-								getChangeEvents().clear();
+								/* 
+								 * Yahor Radtsevich: the following line is commented 
+								 * as fix of JBIDE-3758: VPE autorefresh is broken in some cases.
+								 * Now if the change events queue should be cleared, the user have to do it explicitly.
+								 */
+								// getChangeEvents().clear();
+								
 								return Status.CANCEL_STATUS;
 							}
 							try {
