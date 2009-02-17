@@ -210,6 +210,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		// better
 		// pageContext.installIncludeElements();
 		
+		refreshExternalLinks();
+		
 //		if (isFacelet()) {
 		Element root = FaceletUtil.findComponentElement(sourceDocument.getDocumentElement());
 		if (root != null) {
@@ -232,7 +234,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		super.dispose();
 
 		pageContext.clearAll();
-		refreshExternalLinks();
+		// FIXED FOR JBIDE-3799 by sdzmitrovich, moved calling of this method to buid dom 
+		// refreshExternalLinks();
 		pageContext.getBundle().refreshRegisteredBundles();
 
 		nsIDOMNodeList children = getContentArea().getChildNodes();
