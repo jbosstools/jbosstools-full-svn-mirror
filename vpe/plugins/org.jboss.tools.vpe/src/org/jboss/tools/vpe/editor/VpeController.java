@@ -268,7 +268,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 
 		IDOMDocument sourceDocument = sourceModel.getDocument();
-		visualBuilder.refreshExternalLinks();
+		// FIXED FOR JBIDE-3799 by sdzmitrovich, moved calling of this method to buid dom 
+		// visualBuilder.refreshExternalLinks();
 		visualBuilder.buildDom(sourceDocument);
 
 		VpeTemplateManager.getInstance().addTemplateListener(this);
