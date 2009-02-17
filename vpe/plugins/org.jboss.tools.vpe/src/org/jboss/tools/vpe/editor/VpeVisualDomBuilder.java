@@ -204,7 +204,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 
 		pageContext.refreshConnector();
-		pageContext.installIncludeElements();
+		
+		// FIXED FOR JBIDE-3799 by sdzmitrovich
+		// it code is not necessary because addExternalLinks() does the same but
+		// better
+		// pageContext.installIncludeElements();
+		
 //		if (isFacelet()) {
 		Element root = FaceletUtil.findComponentElement(sourceDocument.getDocumentElement());
 		if (root != null) {
@@ -581,7 +586,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			return visualNewNode;
 	}
 
-	private void correctVisualAttribute(nsIDOMElement element) {
+	protected void correctVisualAttribute(nsIDOMElement element) {
 
 		String styleValue = element.getAttribute(HTML.TAG_STYLE);
 		String backgroundValue = element

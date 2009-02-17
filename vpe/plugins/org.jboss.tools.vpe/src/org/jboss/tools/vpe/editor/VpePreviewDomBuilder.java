@@ -102,6 +102,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			if(sourceNode instanceof Element && visualNewNode != null) {
 			
 				setTooltip((Element)sourceNode, (nsIDOMElement)visualNewNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
+				correctVisualAttribute((nsIDOMElement)visualNewNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
 			}
 
 			
