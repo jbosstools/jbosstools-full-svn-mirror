@@ -43,7 +43,7 @@ public class RemoveXMLNodeAction extends SmooksAction {
 				}
 				
 				if (v != null && v instanceof PropertyChangeListener) {
-					((TagObject)obj).removeNodePropetyChangeListener((PropertyChangeListener)v);
+					((AbstractXMLObject)obj).removeNodePropetyChangeListener((PropertyChangeListener)v);
 				}
 			}
 		}
