@@ -265,7 +265,12 @@ public class SelectionManager implements ISelectionManager {
 			model = StructuredModelManager.getModelManager()
 					.getExistingModelForRead(
 							getSourceEditor().getTextViewer().getDocument());
-
+			
+			//fix for JBIDE-3805, mareshkau			
+			if(model==null) {
+				return;
+			}
+			
 			Point range = SelectionUtil
 					.getSourceSelectionRange(getSourceEditor());
 

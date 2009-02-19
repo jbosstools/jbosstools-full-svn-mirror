@@ -55,7 +55,10 @@ public class SashSetting implements EditorSettings.ISetting {
 		sb.append(EditorSettings.SEPERATOR);
 		sb.append(sash.getSavedWeight());
 		try {
+			//fix for JBIDE-3805
+			if(resource.exists()) {
 			resource.setPersistentProperty(name,sb.toString());
+			}
 		} catch (CoreException e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
