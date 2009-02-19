@@ -2473,6 +2473,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	 * this condition (!switcher.startActiveEditor)
 	 */
 	public void selectionChanged(SelectionChangedEvent event) {
+		if (selectionBar != null)
+			selectionBar.selectionChanged();
 		// FIX for JBIDE-2114
 		if (!isVisualEditorVisible()) {
 			// selection event doesn't changes a content
@@ -2484,9 +2486,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			if (toolbarFormatControllerManager != null)
 				toolbarFormatControllerManager.selectionChanged();
 		}
-
-		if (selectionBar != null)
-			selectionBar.selectionChanged();
 
 		if (!switcher
 				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {

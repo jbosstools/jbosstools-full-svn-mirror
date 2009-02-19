@@ -68,8 +68,8 @@ public class SelectionBar extends Layout implements SelectionListener {
 
     //Listener selbarListener = null;
 
-    final static String PREFERENCE_STATUS_BAR_ENABLE = "yes";
-    final static String PREFERENCE_STATUS_BAR_DISABLE = "no";
+    final static String PREFERENCE_STATUS_BAR_ENABLE = "yes"; //$NON-NLS-1$
+    final static String PREFERENCE_STATUS_BAR_DISABLE = "no"; //$NON-NLS-1$
 
 	public Composite createToolBarComposite(Composite parent, boolean show) {
 		splitter = new Splitter(parent, SWT.NONE);
