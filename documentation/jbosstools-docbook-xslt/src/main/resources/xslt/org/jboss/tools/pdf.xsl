@@ -32,16 +32,9 @@
    </xsl:template>
    
 <xsl:template match="//diffmk:wrapper">
-<xsl:choose>
-  <xsl:when test="@diffmk:change='deleted'">
-      <fo:inline> </fo:inline>
-   </xsl:when>
-   <xsl:otherwise>
-    <fo:inline background-color="#cce2f6"> 
+    <fo:inline> 
      <xsl:value-of select="."/><xsl:text> </xsl:text>
     </fo:inline>
-  </xsl:otherwise>
- </xsl:choose>
-  </xsl:template>
+</xsl:template>
   
 </xsl:stylesheet>

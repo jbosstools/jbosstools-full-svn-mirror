@@ -11,6 +11,8 @@
   <!-- XHTML settings -->
   <xsl:param name="html.stylesheet" select="'css/tools.css'"/>
   
+  
+
   <xsl:template name="head.content"> 
     <xsl:param name="node" select="."/> 
     <xsl:param name="title"> 
@@ -59,13 +61,40 @@
  
   </xsl:template>
   
+  <!-- This template adds proper markers to the titles of guide -->
+  <xsl:template name="markerTypes">
+	<xsl:param name="marker-type" />
+	<xsl:param name="marker-value" />
+	<xsl:choose>
+	    	<xsl:when test="$marker-type = 'attribute'">
+			<xsl:attribute name="class">
+				<xsl:value-of select="$marker-value" />
+			</xsl:attribute>   
+	    	</xsl:when>
+	    	<xsl:when test="$marker-type = 'image'">
+	    		<xsl:choose>
+	    			<xsl:when test="$marker-value='changed'">
+	    				<img src="images/updated.png" alt="updated" class="img_marker" />
+	    			</xsl:when>
+	    			<xsl:when test="$marker-value='added'">
+	    				<img src="images/new.png" alt="updated" class="img_marker" />
+	    			</xsl:when>
+    			</xsl:choose>
+	    	</xsl:when>
+	</xsl:choose>
+  </xsl:template>
+  
+ 
   
   <!--                 Overriding toc.line                          -->
   <xsl:template name="toc.line"> 
     <xsl:param name="toc-context" select="."/> 
     <xsl:param name="depth" select="1"/> 
     <xsl:param name="depth.from.context" select="8"/> 
-    
+
+    <xsl:param name="min-diff" select="10"/> 
+    <xsl:param name="pos" select="position()"/> 
+
     <span> 
       <xsl:attribute name="class"><xsl:value-of select="local-name(.)"/></xsl:attribute> 
       
@@ -88,26 +117,29 @@
             <xsl:with-param name="toc-context" select="$toc-context"/> 
           </xsl:call-template> 
         </xsl:attribute> 
-        
-        <xsl:choose> 
-          <xsl:when test="@role='new' or @role='updated'"> 
-            <xsl:attribute name="class"> 
-              <xsl:value-of select="@role"/> 
-            </xsl:attribute> 
-          </xsl:when> 
-	<!-- For mkdiff compatibility-->
-	<xsl:when test="@revisionflag='added' or @revisionflag='changed'"> 
-            <xsl:attribute name="class"> 
-              <xsl:value-of select="@revisionflag"/> 
-            </xsl:attribute>
-        </xsl:when>
-	<xsl:when test="@diffmk:change='added' or @diffmk:change='changed'"> 
-            <xsl:attribute name="class"> 
-              <xsl:value-of select="@diffmk:change"/> 
-            </xsl:attribute>
-        </xsl:when>
-        </xsl:choose> 
-        
+
+	<xsl:choose>       
+		<xsl:when test="local-name(.)='section' and current()/@diffmk:change='added'">
+			<xsl:call-template name="markerTypes">
+	    			<xsl:with-param name="marker-type">attribute</xsl:with-param>
+				<xsl:with-param name="marker-value">added</xsl:with-param>
+			</xsl:call-template>
+		</xsl:when>	
+		<xsl:when test="local-name(.)='chapter' and current()/@diffmk:change='added'">
+			<xsl:call-template name="markerTypes">
+	    			<xsl:with-param name="marker-type">attribute</xsl:with-param>
+				<xsl:with-param name="marker-value">added</xsl:with-param>
+			</xsl:call-template>
+		</xsl:when>	
+		<xsl:when test="local-name(.)='section' and current()//diffmk:wrapper">
+			<xsl:call-template name="markerTypes">
+	    			<xsl:with-param name="marker-type">attribute</xsl:with-param>
+				<xsl:with-param name="marker-value">updated</xsl:with-param>
+			</xsl:call-template>
+		</xsl:when>
+	</xsl:choose>
+
+              
         <!-- * if $autotoc.label.in.hyperlink is non-zero, then output the label --> 
         <!-- * as part of the hyperlinked title --> 
         <xsl:if test="not($autotoc.label.in.hyperlink = 0)"> 
@@ -126,7 +158,9 @@
   </xsl:template> 
   <!-- XHTML and PDF -->
   
-  <xsl:template match="//diffmk:wrapper">
+  
+    <!-- This template is used for the release build -->
+    <xsl:template match="//diffmk:wrapper">
 	<xsl:choose>
 		<xsl:when test="@diffmk:change='deleted'">
 				<xsl:text> </xsl:text>
@@ -135,61 +169,13 @@
 				<xsl:value-of select="."/>
 		 </xsl:when>
 		 <xsl:otherwise>
-			<span class="diffmkwrapper">
 				<xsl:value-of select="."/> 
-			</span>
 		</xsl:otherwise>
 	</xsl:choose>
   </xsl:template>
   
-  <!--xsl:template match="//node()[@diffmk:change]">
-  	<xsl:choose>
-  		 <xsl:when test="local-name()='note' or local-name()='tip' or local-name()='important' or local-name()='warning' or local-name()='caution'"> 
-  			<xsl:call-template name="my.graphical.admonition"/>
-		</xsl:when> 
-         <xsl:when test="local-name()='diffmk:wrapper'">
-         	<span class="diffmkwrapper">
-  			<xsl:value-of select="."/> 
-  		</span>
-         </xsl:when>
-  	</xsl:choose>
-  </xsl:template>
-  <xsl:template name="my.graphical.admonition">
-	<xsl:variable name="admon.type">
-		<xsl:choose>
-			<xsl:when test="local-name(.)='note'">Note</xsl:when>
-			<xsl:when test="local-name(.)='warning'">Warning</xsl:when>
-			<xsl:when test="local-name(.)='caution'">Caution</xsl:when>
-			<xsl:when test="local-name(.)='tip'">Tip</xsl:when>
-			<xsl:when test="local-name(.)='important'">Important</xsl:when>
-			<xsl:otherwise>Note</xsl:otherwise>
-		</xsl:choose>
-	</xsl:variable>
-
-	<xsl:variable name="alt">
-		<xsl:call-template name="gentext">
-			<xsl:with-param name="key" select="$admon.type"/>
-		</xsl:call-template>
-	</xsl:variable>
-
-	<div xmlns="http://www.w3.org/1999/xhtml">
-	 	<xsl:apply-templates select="." mode="class.attribute"/>
-		<xsl:if test="$admon.style != ''">
-			<xsl:attribute name="style">
-				<xsl:value-of select="$admon.style"/>
-			</xsl:attribute>
-		</xsl:if>
-		<xsl:call-template name="anchor"/>
-		<xsl:if test="$admon.textlabel != 0 or title">
-			<h2>
-				<xsl:apply-templates select="." mode="object.title.markup"/>
-			</h2>
-		</xsl:if>
-		<div class="diffmkwrapper">
-  			<xsl:apply-templates /> 
-		</div>
-	</div>
-	</xsl:template-->
+  
+ 
 
 	<xsl:template match="abstract" mode="titlepage.mode">
 	  <xsl:apply-templates select="." mode="class.attribute"/>
@@ -204,6 +190,8 @@
 
 <xsl:template name="component.title">
   <xsl:param name="node" select="."/>
+  <xsl:param name="pos" select="position()"/>
+  <xsl:param name="min-diff" select="10"/>  
 
   <xsl:variable name="level">
     <xsl:choose>
@@ -236,19 +224,26 @@
       <xsl:with-param name="allow-anchors" select="1"/>
     </xsl:apply-templates>
   </xsl:element>
-  
-  	<xsl:choose> 
-		  <xsl:when test="../@role='new' or ../@revisionflag='added' or ../@diffmk:change='added'"> 
-			<img src="images/new.png" alt="new" class="img_marker" />
-		  </xsl:when> 
-		<!-- For mkdiff compatibility-->
-		<xsl:when test="../@role='updated' or ../@revisionflag='changed' or ../@diffmk:change='changed'"> 
-			<img src="images/updated.png" alt="updated" class="img_marker" />
-		</xsl:when>
-	</xsl:choose> 
+	
+	  	<!-- These rules add markers to the title of chapter  -->
+      	<xsl:choose>
+    		<xsl:when test="current()/parent::node()[@diffmk:change='added']">
+			<xsl:call-template name="markerTypes">
+	    			<xsl:with-param name="marker-type">image</xsl:with-param>
+				<xsl:with-param name="marker-value">added</xsl:with-param>
+			</xsl:call-template>
+		</xsl:when>	
+    		<xsl:when test="current()/following-sibling::node()[name(.)!='section']/descendant-or-self::node()[name()='diffmk:wrapper']">
+			<xsl:call-template name="markerTypes">
+	    			<xsl:with-param name="marker-type">image</xsl:with-param>
+				<xsl:with-param name="marker-value">changed</xsl:with-param>
+			</xsl:call-template>
+		</xsl:when>			
+	</xsl:choose>
+
 </xsl:template>
 
-<!-- ==================================================================== -->
+<!-- ===================== Rules for title of section ====================================== -->
 
 <xsl:template name="section.heading">
   <xsl:param name="section" select="."/>
@@ -256,7 +251,9 @@
   <xsl:param name="allow-anchors" select="1"/>
   <xsl:param name="title"/>
   <xsl:param name="class" select="'title'"/>
-
+  <xsl:param name="pos" select="position()"/>
+  <xsl:param name="min-diff" select="10"/>  
+  
   <xsl:variable name="id">
     <xsl:choose>
       <!-- if title is in an *info wrapper, get the grandparent -->
@@ -305,15 +302,23 @@
     </xsl:if>
     <xsl:copy-of select="$title"/>
   </xsl:element>
- 	<xsl:choose> 
-		  <xsl:when test="../@role='new' or ../@revisionflag='added' or ../@diffmk:change='added'"> 
-			<img src="images/new.png" alt="new" class="img_marker" />
-		  </xsl:when> 
-		<!-- For mkdiff compatibility-->
-		<xsl:when test="../@role='updated' or ../@revisionflag='changed' or ../@diffmk:change='changed'"> 
-			<img src="images/updated.png" alt="updated" class="img_marker" />
+  
+  	<!-- These rules add markers to the title of section  -->
+      	<xsl:choose>
+    		<xsl:when test="current()/parent::node()[@diffmk:change='added']">
+			<xsl:call-template name="markerTypes">
+	    			<xsl:with-param name="marker-type">image</xsl:with-param>
+				<xsl:with-param name="marker-value">added</xsl:with-param>
+			</xsl:call-template>
+		</xsl:when>		
+		<xsl:when test="current()/following-sibling::*/descendant-or-self::node()[name()='diffmk:wrapper']">
+			<xsl:call-template name="markerTypes">
+	    			<xsl:with-param name="marker-type">image</xsl:with-param>
+				<xsl:with-param name="marker-value">changed</xsl:with-param>
+			</xsl:call-template>
 		</xsl:when>
 	</xsl:choose>
+	
 </xsl:template>
 
 <!-- ==================================================================== -->
