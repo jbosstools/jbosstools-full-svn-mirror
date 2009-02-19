@@ -57,9 +57,8 @@ public class DefaultConnectionWrapper extends AbstractConnectionWrapper {
 	
 	
 	public void connect(NodeWrapper source, NodeWrapper target) {
-		super.connect(source, target);
-		Node from = (Node)getSource().getElement();
-		Node to = (Node)getTarget().getElement();
+		Node from = (Node)source.getElement();
+		Node to = (Node)target.getElement();
 		Connection connection = getConnection();
 		if (connection != null) {
 			connection.setTo(to);
@@ -67,6 +66,7 @@ public class DefaultConnectionWrapper extends AbstractConnectionWrapper {
 		} else {
 			setElement(createConnection(from, to));		
 		}
+		super.connect(source, target);
 	}
 
 	protected Connection createConnection(Node from, Node to) {
