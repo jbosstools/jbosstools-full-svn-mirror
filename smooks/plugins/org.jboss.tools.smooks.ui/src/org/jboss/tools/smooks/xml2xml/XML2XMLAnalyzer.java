@@ -20,6 +20,7 @@ import org.jboss.tools.smooks.analyzer.DesignTimeAnalyzeResult;
 import org.jboss.tools.smooks.analyzer.MappingModel;
 import org.jboss.tools.smooks.analyzer.MappingResourceConfigList;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
+import org.jboss.tools.smooks.javabean.model.SelectorAttributes;
 import org.jboss.tools.smooks.model.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.ResourceType;
@@ -49,7 +50,13 @@ import org.jboss.tools.smooks.xml2java.analyzer.AbstractXMLModelAnalyzer;
  */
 public class XML2XMLAnalyzer extends AbstractAnalyzer {
 
-	private static final String XSL = "xsl";
+	public static final String XSL_PRO_SELECT = "select";
+
+	public static final String XSL_ELEMENT_VALUE_OF = "value-of";
+
+	public static final String XSL = "xsl";
+
+	public static final String XSL_NAMESPACE = " xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" ";
 
 	private List<AbstractXMLObject> xmlUsedList = new ArrayList<AbstractXMLObject>();
 
@@ -65,6 +72,8 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 	public void analyzeMappingGraphModel(
 			SmooksConfigurationFileGenerateContext context)
 			throws SmooksAnalyzerException {
+		if (true)
+			return;
 		GraphRootModel root = context.getGraphicalRootModel();
 		List<SourceModel> sourceList = root.loadSourceModelList();
 		for (Iterator<SourceModel> iterator = sourceList.iterator(); iterator
@@ -187,7 +196,8 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 				.getReferenceEntityModel();
 		String selector = transformModel.getName();
 		AbstractXMLObject parent = transformModel.getParent();
-		while (parent != null && !(parent instanceof TagList) && !(parent.getParent() instanceof TagList)) {
+		while (parent != null && !(parent instanceof TagList)
+				&& !(parent.getParent() instanceof TagList)) {
 			selector = parent.getName() + " " + selector;
 			parent = parent.getParent();
 		}
@@ -203,7 +213,7 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 		String select = generateXSLValueOfSelectValue(context, mappingSource,
 				bindingSource);
 		if (select != null)
-			element.addAttribute("select", select);
+			element.addAttribute(XSL_PRO_SELECT, select);
 		return element;
 	}
 
@@ -311,7 +321,7 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 				}
 			}
 		}
-		removeXSLElements(targetList, new String[] { "xsl-value-of" });
+		removeXSLElements(targetList, new String[] { "value-of" });
 		if (listeners != null) {
 			List<TagObject> tagList = targetList.getRootTagList();
 			for (Iterator iterator = tagList.iterator(); iterator.hasNext();) {
@@ -419,6 +429,28 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 							new PropertyModel(
 									XMLPropertiesSection.MAPPING_TYPE,
 									XMLPropertiesSection.MAPPING));
+					// link resourceConfig to the connection model;
+					mapping
+							.getProperties()
+							.add(
+									new PropertyModel(
+											XML2XMLGraphicalModelListener.PRO_REFERENCE_RESOURCE_CONFIG,
+											resourceConfig));
+
+					SelectorAttributes sa = UIUtils.guessSelectorProperty(
+							resourceConfig.getSelector(), sourceNode);
+					if (sa == null) {
+						sa = new SelectorAttributes();
+						sa.setSelectorPolicy(SelectorAttributes.FULL_PATH);
+						sa.setSelectorSperator(" ");
+					}
+					mapping
+							.getProperties()
+							.add(
+									new PropertyModel(
+											XML2XMLGraphicalModelListener.PRO_SELECTOR_ATTRIBUTES,
+											sa));
+
 					mappingList.getMappingModelList().add(mapping);
 					setXMLObjectUsed(sourceNode);
 					setXMLObjectUsed(targetNode);
@@ -436,24 +468,27 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 			ResourceType resource = resourceConfig.getResource();
 			if (resource != null) {
 				processCDATA(resource.getCDATAValue(), mappingList, sourceList,
-						targetNode, mappingSource);
+						targetNode, mappingSource, resourceConfig);
 			}
 		}
 	}
 
 	private void processCDATA(String cdata,
 			MappingResourceConfigList mappingList, TagList sourceList,
-			AbstractXMLObject targetNode, AbstractXMLObject mappingSource) {
+			AbstractXMLObject targetNode, AbstractXMLObject mappingSource,
+			ResourceConfigType referenceRC) {
 		if (cdata == null)
 			return;
 		cdata = cdata.trim();
 		cdata = transformCDATA(cdata);
-		handleXSLNode(targetNode, mappingSource, mappingList);
+		handleXSLNode(targetNode, mappingSource, mappingList, referenceRC);
 	}
 
 	private void handleXSLNode(AbstractXMLObject node,
-			AbstractXMLObject mappingNode, MappingResourceConfigList mappingList) {
-		if ("xsl-value-of".equals(node.getName())) {
+			AbstractXMLObject mappingNode,
+			MappingResourceConfigList mappingList,
+			ResourceConfigType referenceResourceConfig) {
+		if (XSL_ELEMENT_VALUE_OF.equals(node.getName())) {
 			if (node instanceof TagObject) {
 				List<TagPropertyObject> propertyList = ((TagObject) node)
 						.getProperties();
@@ -461,7 +496,7 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 						.hasNext();) {
 					TagPropertyObject tagPropertyObject = (TagPropertyObject) iterator
 							.next();
-					if ("select".equals(tagPropertyObject.getName())) {
+					if (XSL_PRO_SELECT.equals(tagPropertyObject.getName())) {
 						String selectValue = tagPropertyObject.getValue();
 						AbstractXMLObject sourceNode = findSourceNodeFromXSLSelect(
 								selectValue, mappingNode);
@@ -480,6 +515,12 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 												new PropertyModel(
 														XMLPropertiesSection.MAPPING_TYPE,
 														XMLPropertiesSection.BINDING));
+								mapping
+										.getProperties()
+										.add(
+												new PropertyModel(
+														XML2XMLGraphicalModelListener.PRO_REFERENCE_RESOURCE_CONFIG,
+														referenceResourceConfig));
 								mappingList.getMappingModelList().add(mapping);
 							}
 						}
@@ -494,7 +535,8 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 						.hasNext();) {
 					AbstractXMLObject abstractXMLObject = (AbstractXMLObject) iterator
 							.next();
-					handleXSLNode(abstractXMLObject, mappingNode, mappingList);
+					handleXSLNode(abstractXMLObject, mappingNode, mappingList,
+							referenceResourceConfig);
 				}
 			}
 		}
@@ -545,7 +587,18 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 	}
 
 	private String transformCDATA(String cdata) {
-		cdata = cdata.replace(":", "-");
+		// cdata = cdata.replace(":", "-");
+		// return cdata;
+		int start_index = cdata.indexOf("<");
+		int end_index = cdata.indexOf(">");
+		if (start_index == -1 || end_index == -1)
+			return cdata;
+		String contents = cdata.substring(start_index, end_index);
+		if (contents.indexOf("\"http://www.w3.org/1999/XSL/Transform\"") != -1) {
+			return cdata;
+		}
+		String second_frg = cdata.substring(end_index, cdata.length());
+		cdata = contents + XSL_NAMESPACE + second_frg;
 		return cdata;
 	}
 

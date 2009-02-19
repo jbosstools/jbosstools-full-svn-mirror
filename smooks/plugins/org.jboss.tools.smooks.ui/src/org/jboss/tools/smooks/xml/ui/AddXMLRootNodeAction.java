@@ -5,6 +5,11 @@ package org.jboss.tools.smooks.xml.ui;
 
 import java.beans.PropertyChangeListener;
 
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.dom.DOMDocumentFactory;
+import org.dom4j.tree.DefaultElement;
+import org.eclipse.emf.ecore.xmi.DOMHelper;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.jboss.tools.smooks.ui.popup.SmooksAction;
@@ -29,6 +34,10 @@ public class AddXMLRootNodeAction extends SmooksAction {
 			TagObject tag = new TagObject();
 			tag.setCanEdit(true);
 			tag.setName("Node");
+			Element element = new DefaultElement("Node");
+			Document doc = DOMDocumentFactory.getInstance().createDocument();
+			doc.setRootElement(element);
+			tag.setReferenceElement(element);
 			((TagList) obj).addRootTag(tag);
 			Object v = this.getViewer();
 			if (v != null && v instanceof TreeViewer) {

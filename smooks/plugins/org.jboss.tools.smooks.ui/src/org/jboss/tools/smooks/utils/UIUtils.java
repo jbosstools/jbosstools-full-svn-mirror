@@ -95,7 +95,7 @@ public class UIUtils {
 		}
 		
 		if(!hasSperator){
-			property.setSelectorPolicy(BeanPopulatorMappingAnalyzer.ONLY_NAME);
+			property.setSelectorPolicy(SelectorAttributes.ONLY_NAME);
 			return property;
 		}
 		String[] nodeNames = selector.split(property.getSelectorSperator());
@@ -105,13 +105,13 @@ public class UIUtils {
 		}
 		IXMLStructuredObject rootNode = getRootParent(node);
 		if(parent == rootNode){
-			property.setSelectorPolicy(BeanPopulatorMappingAnalyzer.FULL_PATH);
+			property.setSelectorPolicy(SelectorAttributes.FULL_PATH);
 			return property;
 		}
 		if(parent == node.getParent()){
-			property.setSelectorPolicy(BeanPopulatorMappingAnalyzer.INCLUDE_PARENT);
+			property.setSelectorPolicy(SelectorAttributes.INCLUDE_PARENT);
 		}else{
-			property.setSelectorPolicy(BeanPopulatorMappingAnalyzer.IGNORE_ROOT);
+			property.setSelectorPolicy(SelectorAttributes.IGNORE_ROOT);
 		}
 		return property;
 	}
@@ -676,17 +676,17 @@ public class UIUtils {
 		String sperator = selectorAttributes.getSelectorSperator();
 		String policy = selectorAttributes.getSelectorPolicy();
 		if(sperator == null) sperator = " ";
-		if(policy == null) policy = BeanPopulatorMappingAnalyzer.FULL_PATH;
-		if(policy.equals(BeanPopulatorMappingAnalyzer.FULL_PATH)){
+		if(policy == null) policy = SelectorAttributes.FULL_PATH;
+		if(policy.equals(SelectorAttributes.FULL_PATH)){
 			return generateFullPath(node, sperator);
 		}
-		if(policy.equals(BeanPopulatorMappingAnalyzer.INCLUDE_PARENT)){
+		if(policy.equals(SelectorAttributes.INCLUDE_PARENT)){
 			return generatePath(node, node.getParent(),sperator,true);
 		}
-		if(policy.equals(BeanPopulatorMappingAnalyzer.IGNORE_ROOT)){
+		if(policy.equals(SelectorAttributes.IGNORE_ROOT)){
 			
 		}
-		if(policy.equals(BeanPopulatorMappingAnalyzer.ONLY_NAME)){
+		if(policy.equals(SelectorAttributes.ONLY_NAME)){
 			return node.getNodeName();
 		}
 		return generateFullPath(node,sperator);

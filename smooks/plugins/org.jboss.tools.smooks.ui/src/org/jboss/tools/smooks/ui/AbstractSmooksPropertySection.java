@@ -39,6 +39,7 @@ public class AbstractSmooksPropertySection extends AbstractPropertySection {
 	public SmooksGraphicalFormPage getGraphicalEditor() {
 		IStructuredSelection selection = (IStructuredSelection) this
 				.getSelection();
+		if(selection == null) return null;
 		Object obj = selection.getFirstElement();
 		if (obj == null)
 			return null;

@@ -3,15 +3,21 @@
  */
 package org.jboss.tools.smooks.javabean.model;
 
-import org.jboss.tools.smooks.javabean.ui.BeanPopulatorMappingAnalyzer;
 
 /**
  * @author Dart
  *
  */
 public class SelectorAttributes {
+	public static final String ONLY_NAME = "only_name";
+
+	public static final String FULL_PATH = "full_path";
+
+	public static final String IGNORE_ROOT = "ignore_root";
+
+	public static final String INCLUDE_PARENT = "include_parent";
 	private String selectorSperator = " ";
-	private String selectorPolicy = BeanPopulatorMappingAnalyzer.FULL_PATH;
+	private String selectorPolicy = SelectorAttributes.FULL_PATH;
 	public String getSelectorSperator() {
 		return selectorSperator;
 	}
