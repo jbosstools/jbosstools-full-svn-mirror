@@ -51,6 +51,8 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 
 	public static final String RESOURCE = "Resource:/";
 
+	public static final String XSL_NAMESPACE = " xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" ";
+
 	private String parmaKey = ""; //$NON-NLS-1$
 
 	public AbstractXMLModelAnalyzer(String paramKey) {
@@ -144,7 +146,7 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 							if ("xsl".equals(resource.getType())) {
 								String cdata = resource.getCDATAValue();
 								if (cdata != null) {
-									cdata = cdata.replaceAll(":", "-");
+									cdata = processXSLFragmentString(cdata);
 									XMLObjectAnalyzer fragmentBuilder = new XMLObjectAnalyzer();
 									try {
 										TagObject tag = fragmentBuilder
@@ -152,7 +154,9 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 														new ByteArrayInputStream(
 																cdata
 																		.getBytes()),
-														new String[] { "xsl-value-of" });
+														new String[] {
+																"value-of",
+																"null_xsl" });
 										if (tag != null) {
 											if (viewer instanceof PropertyChangeListener) {
 												document
@@ -178,6 +182,22 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 			}
 		}
 		return document;
+	}
+
+	private String processXSLFragmentString(String cdata) {
+		// cdata = cdata.replaceAll(":", "-");
+		int start_index = cdata.indexOf("<");
+		int end_index = cdata.indexOf(">");
+		if(start_index == -1 ||  end_index == -1) return cdata;
+		String contents = cdata.substring(start_index,end_index);
+		if(contents.indexOf("\"http://www.w3.org/1999/XSL/Transform\"") != -1){
+			return cdata;
+		}
+		
+		String second_frg = cdata.substring(end_index,cdata.length());
+		
+		cdata = contents + XSL_NAMESPACE + second_frg;
+		return cdata;
 	}
 
 	public static void hookNodes(TagObject tag, PropertyChangeListener viewer) {

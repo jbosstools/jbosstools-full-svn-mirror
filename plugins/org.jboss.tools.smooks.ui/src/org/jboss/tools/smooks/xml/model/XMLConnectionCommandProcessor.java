@@ -8,7 +8,6 @@ import org.jboss.tools.smooks.ui.gef.commandprocessor.ICommandProcessor;
 import org.jboss.tools.smooks.ui.gef.commands.CreateConnectionCommand;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
-import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
 import org.jboss.tools.smooks.ui.gef.model.PropertyModel;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 import org.jboss.tools.smooks.xml.ui.XMLPropertiesSection;
@@ -18,7 +17,6 @@ import org.jboss.tools.smooks.xml.ui.XMLPropertiesSection;
  * 
  */
 public class XMLConnectionCommandProcessor implements ICommandProcessor {
-
 	/*
 	 * (non-Javadoc)
 	 * 

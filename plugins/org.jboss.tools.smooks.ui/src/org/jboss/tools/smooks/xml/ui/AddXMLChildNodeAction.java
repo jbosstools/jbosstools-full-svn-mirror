@@ -5,6 +5,8 @@ package org.jboss.tools.smooks.xml.ui;
 
 import java.beans.PropertyChangeListener;
 
+import org.dom4j.Element;
+import org.dom4j.tree.DefaultElement;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.jboss.tools.smooks.ui.popup.SmooksAction;
@@ -34,6 +36,12 @@ public class AddXMLChildNodeAction extends SmooksAction {
 					tag
 							.addNodePropetyChangeListener((PropertyChangeListener) v);
 				}
+				Element element = new DefaultElement("Node");
+				Element parentElement = ((TagObject) obj).getReferenceElement();
+				if(parentElement != null){
+					parentElement.add(element);
+				}
+				tag.setReferenceElement(element);
 				((TagObject) obj).addChildTag(tag);
 			}
 		}

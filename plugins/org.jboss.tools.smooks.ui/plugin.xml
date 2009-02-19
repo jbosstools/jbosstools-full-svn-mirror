@@ -327,5 +327,10 @@
             sourceId="org.jboss.tools.smooks.xml.viewerInitor.xml"
             targetId="org.jboss.tools.smooks.ui.viewerInitor.javabean">
       </graphicalModelListener>
+      <graphicalModelListener
+            class="org.jboss.tools.smooks.xml2xml.XML2XMLGraphicalModelListener"
+            sourceId="org.jboss.tools.smooks.xml.viewerInitor.xml"
+            targetId="org.jboss.tools.smooks.xml.viewerInitor.xml">
+      </graphicalModelListener>
    </extension>
 </plugin>

@@ -89,6 +89,7 @@ public class XMLObjectAnalyzer {
 			tag = new TagObject();
 			canAdd = true;
 		}
+		tag.setReferenceElement(element);
 		tag.setName(element.getName());
 		fillProperties(element, tag ,ignoreNodeNames);
 		tag.setNamespaceURL(element.getNamespaceURI());
@@ -96,8 +97,10 @@ public class XMLObjectAnalyzer {
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			Element childElement = (Element) iterator.next();
 			TagObject t = parseElement(childElement, tag , ignoreNodeNames);
-			if (t != null)
+			if (t != null){
+				t.setReferenceElement(childElement);
 				tag.addChildTag(t);
+			}
 		}
 		if (canAdd)
 			return tag;

@@ -45,13 +45,7 @@ public class BeanPopulatorMappingAnalyzer implements IMappingAnalyzer {
 	public static final String REFERENCE_BINDING = "referenceBinding";
 
 	public static final String[] SELECTOR_SPERATORS = new String[] { " ", "/"};
-	public static final String ONLY_NAME = "only_name";
 
-	public static final String FULL_PATH = "full_path";
-
-	public static final String IGNORE_ROOT = "ignore_root";
-
-	public static final String INCLUDE_PARENT = "include_parent";
 
 	/*
 	 * (non-Javadoc)
@@ -337,7 +331,7 @@ public class BeanPopulatorMappingAnalyzer implements IMappingAnalyzer {
 		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
 			JavaBeanModel javaBean = (JavaBeanModel) iterator.next();
 			if (className.equals(javaBean.getBeanClassString())) {
-				// If the node hasbean coonect
+				// If the node has bean connected
 				if (!ignoreMultipleConnection) {
 					if (isHasBeenConnected(mappingList, javaBean)) {
 						continue;

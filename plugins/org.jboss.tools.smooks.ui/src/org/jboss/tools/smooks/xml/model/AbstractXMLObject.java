@@ -15,6 +15,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dom4j.Element;
 import org.jboss.tools.smooks.ui.IXMLStructuredObject;
 import org.jboss.tools.smooks.ui.editors.TransformDataTreeViewer;
 
@@ -26,6 +27,8 @@ public class AbstractXMLObject implements ITransformTreeNode , IXMLStructuredObj
 	
 	protected PropertyChangeSupport support = new PropertyChangeSupport(this);
 	
+	protected Element referenceElement = null;
+
 	protected boolean canEdit = false;
 		
 	public boolean isCanEdit() {
@@ -67,6 +70,10 @@ public class AbstractXMLObject implements ITransformTreeNode , IXMLStructuredObj
 	public void setName(String name) {
 		String oldName = this.name;
 		this.name = name;
+		Element element = this.getReferenceElement();
+		if(element != null){
+			element.setName(name);
+		}
 		support.firePropertyChange(TransformDataTreeViewer.NODE_PROPERTY_EVENT, oldName, this.name);
 	}
 
@@ -76,6 +83,14 @@ public class AbstractXMLObject implements ITransformTreeNode , IXMLStructuredObj
 
 	public void setChildren(List<AbstractXMLObject> children) {
 		this.children = children;
+	}
+	
+	public Element getReferenceElement() {
+		return referenceElement;
+	}
+
+	public void setReferenceElement(Element referenceElement) {
+		this.referenceElement = referenceElement;
 	}
 
 	/**

@@ -284,7 +284,7 @@ public class BeanPopulatorGraphicalModelListener implements
 					resourceConfig);
 			line.getProperties().add(bindingType);
 			SelectorAttributes sa = new SelectorAttributes();
-			sa.setSelectorPolicy(BeanPopulatorMappingAnalyzer.FULL_PATH);
+			sa.setSelectorPolicy(SelectorAttributes.FULL_PATH);
 			sa.setSelectorSperator(" ");
 			PropertyModel selectorProperty = new PropertyModel(
 					BeanPopulatorMappingAnalyzer.PRO_SELECTOR_ATTRIBUTES, sa);
@@ -375,7 +375,7 @@ public class BeanPopulatorGraphicalModelListener implements
 				BeanPopulatorMappingAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG,
 				resourceConfig);
 		SelectorAttributes sa = new SelectorAttributes();
-		sa.setSelectorPolicy(BeanPopulatorMappingAnalyzer.FULL_PATH);
+		sa.setSelectorPolicy(SelectorAttributes.FULL_PATH);
 		sa.setSelectorSperator(" ");
 		PropertyModel selectorProperty = new PropertyModel(
 				BeanPopulatorMappingAnalyzer.PRO_SELECTOR_ATTRIBUTES, sa);

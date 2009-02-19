@@ -109,15 +109,15 @@ public class BeanPopulatorConnectionSection extends
 
 	protected void hookButtons() {
 		allPathButton.addSelectionListener(new PolicyButtonSelectionListener(
-				BeanPopulatorMappingAnalyzer.FULL_PATH));
+				SelectorAttributes.FULL_PATH));
 		nameOnlyButton.addSelectionListener(new PolicyButtonSelectionListener(
-				BeanPopulatorMappingAnalyzer.ONLY_NAME));
+				SelectorAttributes.ONLY_NAME));
 		includeParentButton
 				.addSelectionListener(new PolicyButtonSelectionListener(
-						BeanPopulatorMappingAnalyzer.INCLUDE_PARENT));
+						SelectorAttributes.INCLUDE_PARENT));
 		ignoreRootButton
 				.addSelectionListener(new PolicyButtonSelectionListener(
-						BeanPopulatorMappingAnalyzer.IGNORE_ROOT));
+						SelectorAttributes.IGNORE_ROOT));
 	}
 
 	protected void hookSperatorCombox() {
@@ -175,22 +175,22 @@ public class BeanPopulatorConnectionSection extends
 
 		String policy = getSelectorPolicy();
 		if (policy == null) {
-			policy = BeanPopulatorMappingAnalyzer.FULL_PATH;
+			policy = SelectorAttributes.FULL_PATH;
 		}
 		allPathButton.setSelection(false);
 		nameOnlyButton.setSelection(false);
 		ignoreRootButton.setSelection(false);
 		includeParentButton.setSelection(false);
-		if (policy.equals(BeanPopulatorMappingAnalyzer.FULL_PATH)) {
+		if (policy.equals(SelectorAttributes.FULL_PATH)) {
 			this.allPathButton.setSelection(true);
 		}
-		if (policy.equals(BeanPopulatorMappingAnalyzer.ONLY_NAME)) {
+		if (policy.equals(SelectorAttributes.ONLY_NAME)) {
 			this.nameOnlyButton.setSelection(true);
 		}
-		if (policy.equals(BeanPopulatorMappingAnalyzer.IGNORE_ROOT)) {
+		if (policy.equals(SelectorAttributes.IGNORE_ROOT)) {
 			this.ignoreRootButton.setSelection(true);
 		}
-		if (policy.equals(BeanPopulatorMappingAnalyzer.INCLUDE_PARENT)) {
+		if (policy.equals(SelectorAttributes.INCLUDE_PARENT)) {
 			this.includeParentButton.setSelection(true);
 		}
 

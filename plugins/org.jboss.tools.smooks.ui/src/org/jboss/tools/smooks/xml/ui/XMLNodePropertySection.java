@@ -17,8 +17,14 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 import org.jboss.tools.smooks.ui.AbstractSmooksPropertySection;
+import org.jboss.tools.smooks.ui.IXMLStructuredObject;
+import org.jboss.tools.smooks.ui.editors.SmooksFormEditor;
 import org.jboss.tools.smooks.ui.editors.SmooksGraphicalFormPage;
+import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
+import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
+import org.jboss.tools.smooks.utils.UIUtils;
 import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
+import org.jboss.tools.smooks.xml2xml.XML2XMLGraphicalModelListener;
 
 /**
  * @author Dart
@@ -38,7 +44,6 @@ public class XMLNodePropertySection extends AbstractSmooksPropertySection {
 	public void createControls(Composite parent,
 			TabbedPropertySheetPage tabbedPropertySheetPage) {
 		super.createControls(parent, tabbedPropertySheetPage);
-
 		TabbedPropertySheetWidgetFactory factory = tabbedPropertySheetPage
 				.getWidgetFactory();
 		Section section = createRootSection(factory, parent);
@@ -68,23 +73,30 @@ public class XMLNodePropertySection extends AbstractSmooksPropertySection {
 			public void modifyText(ModifyEvent e) {
 				if (isLock())
 					return;
+				SmooksGraphicalFormPage page = null;
+				IWorkbenchPart part = getPart();
+				if(part instanceof SmooksFormEditor){
+					page = ((SmooksFormEditor)part).getGraphicalPage();
+				}
+				
 				String text = nodeText.getText();
 				AbstractXMLObject model = getModel();
 				if (model != null && model.isCanEdit()) {
 					model.setName(text);
-					
+					if(page != null){
+						SmooksConfigurationFileGenerateContext context = page.getSmooksConfigurationFileGenerateContext();
+						IConnectableModel connectModel = (IConnectableModel) UIUtils.findGraphModel(context.getGraphicalRootModel(), model);
+						XML2XMLGraphicalModelListener.setResourceCDATAViaTargetNode(model.getReferenceElement(), connectModel);
+					}
 				}
 			}
-
 		});
 	}
-	
-	
 
 	@Override
 	public SmooksGraphicalFormPage getGraphicalEditor() {
 		IWorkbenchPart part = getPart();
-		return null;
+		return super.getGraphicalEditor();
 	}
 
 	@Override
@@ -99,12 +111,12 @@ public class XMLNodePropertySection extends AbstractSmooksPropertySection {
 		unLockEventFire();
 	}
 
-	private AbstractXMLObject getModel(){
-		ISelection selection =  this.getSelection();
-		if(selection instanceof IStructuredSelection){
-			Object model = ((IStructuredSelection)selection).getFirstElement();
-			if(model instanceof AbstractXMLObject){
-				return (AbstractXMLObject)model;
+	private AbstractXMLObject getModel() {
+		ISelection selection = this.getSelection();
+		if (selection instanceof IStructuredSelection) {
+			Object model = ((IStructuredSelection) selection).getFirstElement();
+			if (model instanceof AbstractXMLObject) {
+				return (AbstractXMLObject) model;
 			}
 		}
 		return null;
