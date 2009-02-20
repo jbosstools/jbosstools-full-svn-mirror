@@ -46,18 +46,18 @@
             </listitem>
         </itemizedlist>
 
-        <para>In this guide we provide you with the information on BIRT Designer which allows you to
-            create a report much faster and with far fewer errors so sparing your time.</para>
+        <para>In this guide we provide you with the information on BIRT Designer which allows  to
+            create a report much faster and with far fewer errors to spare your time.</para>
 
         <literallayout> </literallayout>
         <para>You can find detailed information on the BIRT report types and anatomy here: <ulink
                 url="http://www.eclipse.org/birt/phoenix/intro/">JBoss BIRT</ulink></para>
 
 
-        <para>All JBoss Developer Studio/JBoss Tools documentation you can find <ulink
-                url="http://docs.jboss.org/tools/">here</ulink>.</para>
-        <para>The latest documentation builds are available <ulink
-                url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
+        <para>All JBoss Developer Studio/JBoss Tools documentation you can find on<ulink
+                url="http://docs.jboss.org/tools/">documentation release page</ulink>.</para>
+        <para>The latest documentation builds are available on <ulink
+                url="http://download.jboss.org/jbosstools/nightly-docs/">documentation nightly builds page</ulink>.</para>
 
     </section>
 
