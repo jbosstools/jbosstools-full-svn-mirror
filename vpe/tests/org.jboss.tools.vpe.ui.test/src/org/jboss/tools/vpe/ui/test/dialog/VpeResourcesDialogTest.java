@@ -7,7 +7,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.editor.dialogs;
+package org.jboss.tools.vpe.ui.test.dialog;
 
 import java.util.Properties;
 

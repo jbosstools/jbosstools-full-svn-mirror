@@ -2,4 +2,12 @@
 <?eclipse version="3.2"?>
 <plugin>
   <extension-point id="org.jboss.tools.vpe.ui.tests" name="Visual Page Editor Junit Test" schema="schema/vpe.tests.exsd"/>
+  <extension
+        point="org.jboss.tools.vpe.ui.tests">
+     <tests
+           description="UI tests of VPE components"
+           name="UI tests of VPE"
+           testSuite="org.jboss.tools.vpe.ui.test.VpeUiTests">
+     </tests>
+  </extension>
 </plugin>

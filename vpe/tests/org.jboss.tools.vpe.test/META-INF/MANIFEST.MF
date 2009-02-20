@@ -8,20 +8,11 @@ Bundle-Vendor: %Bundle-Vendor.0
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.junit,
- org.jboss.tools.common,
  org.jboss.tools.vpe,
- org.jboss.tools.jst.jsp,
- org.jboss.tools.vpe.ui.test,
  org.jboss.tools.jsf.vpe.jsf.test,
- org.jboss.tools.jsf.vpe.richfaces.test,
- org.jboss.tools.common.model,
- org.jboss.tools.jsf.vpe.richfaces,
- org.jboss.tools.vpe.xulrunner,
- org.mozilla.xpcom,
- org.jboss.tools.tests;bundle-version="2.0.0",
  org.jboss.tools.common.model.ui;bundle-version="2.0.0",
  org.eclipse.jface.text;bundle-version="3.4.0"
-Eclipse-LazyStart: true
+Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.vpe.editor.preferences,
  org.jboss.tools.vpe.editor.template,
  org.jboss.tools.vpe.test

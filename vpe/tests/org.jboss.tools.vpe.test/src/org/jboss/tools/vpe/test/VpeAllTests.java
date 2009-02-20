@@ -12,16 +12,12 @@ package org.jboss.tools.vpe.test;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
 import org.jboss.tools.jsf.vpe.jsf.test.JsfComponentTest;
 import org.jboss.tools.jsf.vpe.jsf.test.JsfTestPlugin;
 import org.jboss.tools.tests.ImportBean;
-import org.jboss.tools.vpe.editor.dialogs.VpeResourcesDialogTest;
-import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPageTest;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManagerTest;
 import org.jboss.tools.vpe.ui.test.VpeTestSetup;
 
@@ -40,8 +36,6 @@ public class VpeAllTests extends TestCase{
 		suite.addTestSuite(TemplateLoadingTest.class);
 		suite.addTestSuite(TemplateSchemeValidateTest.class);
 		suite.addTestSuite(TemplatesExpressionParsingTest.class);
-		suite.addTestSuite(VpeEditorPreferencesPageTest.class);
-		suite.addTestSuite(VpeResourcesDialogTest.class);
 		suite.addTestSuite(VpeTemplateManagerTest.class);
         List<ImportBean> projectToImport = new ArrayList<ImportBean>();
         ImportBean importBean = new ImportBean();

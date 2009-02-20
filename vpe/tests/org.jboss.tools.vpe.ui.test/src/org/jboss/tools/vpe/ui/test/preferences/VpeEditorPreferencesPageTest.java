@@ -8,12 +8,14 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.editor.preferences;
+package org.jboss.tools.vpe.ui.test.preferences;
 
 import junit.framework.TestCase;
 
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.jboss.tools.test.util.WorkbenchUtils;
+import org.jboss.tools.vpe.editor.preferences.ELVariablesPreferencePage;
+import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage;
 
 public class VpeEditorPreferencesPageTest extends TestCase {
 	public void testVpeEditorPreferencesPageShow() {
@@ -26,7 +28,7 @@ public class VpeEditorPreferencesPageTest extends TestCase {
 			prefDialog.open();
 			
 			Object selectedPage = prefDialog.getSelectedPage();
-			assertTrue("Selected page is not an instance of org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage", selectedPage instanceof VpeEditorPreferencesPage);
+			assertTrue("Selected page is not an instance of org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage", selectedPage instanceof VpeEditorPreferencesPage); //$NON-NLS-1$
 		} finally {
 			prefDialog.close();
 		}
@@ -42,7 +44,7 @@ public class VpeEditorPreferencesPageTest extends TestCase {
 			prefDialog.open();
 			
 			Object selectedPage = prefDialog.getSelectedPage();
-			assertTrue("Selected page is not an instance of org.jboss.tools.vpe.editor.preferences.ELVariablesPreferencePage", selectedPage instanceof ELVariablesPreferencePage);
+			assertTrue("Selected page is not an instance of org.jboss.tools.vpe.editor.preferences.ELVariablesPreferencePage", selectedPage instanceof ELVariablesPreferencePage); //$NON-NLS-1$
 		} finally {
 			prefDialog.close();
 		}
