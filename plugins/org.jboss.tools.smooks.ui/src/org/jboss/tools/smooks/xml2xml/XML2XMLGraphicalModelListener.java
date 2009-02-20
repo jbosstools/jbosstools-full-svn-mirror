@@ -15,12 +15,14 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultElement;
 import org.jboss.tools.smooks.javabean.model.SelectorAttributes;
+import org.jboss.tools.smooks.javabean.ui.BeanPopulatorMappingAnalyzer;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.ResourceType;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.ui.IXMLStructuredObject;
+import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataConnectionModel;
 import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.IConnectableModel;
 import org.jboss.tools.smooks.ui.gef.model.IGraphicalModelListener;
@@ -39,7 +41,7 @@ import org.jboss.tools.smooks.xml.ui.XMLPropertiesSection;
 public class XML2XMLGraphicalModelListener implements IGraphicalModelListener {
 	public static final String PRO_REFERENCE_RESOURCE_CONFIG = "__reference_resource_config_x2x";
 
-	public static final String PRO_SELECTOR_ATTRIBUTES = "__pro_selector_attributes_x2x";
+	public static final String PRO_SELECTOR_ATTRIBUTES = BeanPopulatorMappingAnalyzer.PRO_SELECTOR_ATTRIBUTES;
 
 	/*
 	 * (non-Javadoc)
@@ -94,10 +96,17 @@ public class XML2XMLGraphicalModelListener implements IGraphicalModelListener {
 		if (selector == null)
 			return;
 
-		newMappingResourceConfig(selector, target, context);
+		ResourceConfigType resourceConfig = newMappingResourceConfig(selector,
+				target, context);
+		if (resourceConfig != null) {
+			PropertyModel property = new PropertyModel();
+			property.setName(PRO_REFERENCE_RESOURCE_CONFIG);
+			property.setValue(resourceConfig);
+			connection.addPropertyModel(property);
+		}
 	}
 
-	private void newMappingResourceConfig(String selector,
+	private ResourceConfigType newMappingResourceConfig(String selector,
 			AbstractStructuredDataModel target,
 			SmooksConfigurationFileGenerateContext context) {
 		SmooksResourceListType list = context.getSmooksResourceListModel();
@@ -120,7 +129,7 @@ public class XML2XMLGraphicalModelListener implements IGraphicalModelListener {
 		UIUtils
 				.addResourceConfigType(context.getDomain(), list,
 						resourceConfig);
-
+		return resourceConfig;
 	}
 
 	private SelectorAttributes newDefaultSelectorAttribute() {
@@ -348,7 +357,25 @@ public class XML2XMLGraphicalModelListener implements IGraphicalModelListener {
 	public void modelChanged(Object graphicalModel,
 			SmooksConfigurationFileGenerateContext context,
 			PropertyChangeEvent event) {
-
+		String pm = event.getPropertyName();
+		if (AbstractStructuredDataConnectionModel.CONNECTION_PROPERTY_UPDATE
+				.equals(pm)) {
+			LineConnectionModel line = (LineConnectionModel) graphicalModel;
+			ResourceConfigType rc = (ResourceConfigType) line
+					.getProperty(PRO_REFERENCE_RESOURCE_CONFIG);
+			if (rc == null)
+				return;
+			SelectorAttributes sa = (SelectorAttributes) line
+					.getProperty(PRO_SELECTOR_ATTRIBUTES);
+			Object obj = ((AbstractStructuredDataModel) line.getSource())
+					.getReferenceEntityModel();
+			if (obj instanceof IXMLStructuredObject) {
+				String newSelector = UIUtils.generatePath(
+						(IXMLStructuredObject) obj, sa);
+				if (newSelector != null)
+					rc.setSelector(newSelector);
+			}
+		}
 	}
 
 	/*
@@ -372,26 +399,28 @@ public class XML2XMLGraphicalModelListener implements IGraphicalModelListener {
 				AbstractXMLObject xmlNode = (AbstractXMLObject) target
 						.getReferenceEntityModel();
 				Element element = xmlNode.getReferenceElement();
-				Element valueOf= null;
+				Element valueOf = null;
 				List elements = element.elements();
 				for (Iterator iterator = elements.iterator(); iterator
 						.hasNext();) {
 					Element e1 = (Element) iterator.next();
-					if (e1.getName().equalsIgnoreCase("value-of") ||
-							e1.getName().equalsIgnoreCase("xsl:value-of")) {
+					if (e1.getName().equalsIgnoreCase("value-of")
+							|| e1.getName().equalsIgnoreCase("xsl:value-of")) {
 						valueOf = e1;
 						break;
 					}
 				}
-				if(valueOf != null){
+				if (valueOf != null) {
 					element.remove(valueOf);
 				}
-				setResourceCDATAViaTargetNode(element, (IConnectableModel) target);
+				setResourceCDATAViaTargetNode(element,
+						(IConnectableModel) target);
 			}
 			if (XMLPropertiesSection.MAPPING.equals(mt)) {
 				ResourceConfigType resourceConfig = (ResourceConfigType) connection
 						.getProperty(PRO_REFERENCE_RESOURCE_CONFIG);
-				if(resourceConfig == null) return;
+				if (resourceConfig == null)
+					return;
 				context.getSmooksResourceListModel()
 						.getAbstractResourceConfig().remove(resourceConfig);
 			}

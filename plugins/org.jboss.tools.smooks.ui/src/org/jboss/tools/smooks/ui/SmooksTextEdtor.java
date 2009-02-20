@@ -8,19 +8,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ExtendedModifyEvent;
-import org.eclipse.swt.custom.ExtendedModifyListener;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.texteditor.IDocumentProvider;
+import org.eclipse.ui.texteditor.IDocumentProviderExtension;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.smooks.ui.editors.ISaveListener;
 import org.jboss.tools.smooks.ui.editors.SaveResult;
@@ -48,6 +48,20 @@ public class SmooksTextEdtor extends StructuredTextEditor implements
 		if (!dirty)
 			return false;
 		return super.isDirty();
+	}
+	
+	
+	public void editorInputChanged(IEditorInput input){
+		IDocumentProvider provider = getDocumentProvider();
+		try {
+			if (provider instanceof IDocumentProviderExtension) {
+				IDocumentProviderExtension extension= (IDocumentProviderExtension) provider;
+				extension.synchronize(input);
+			} else {
+				doSetInput(input);
+			}
+		} catch (CoreException x) {
+		}
 	}
 
 	public void setDirty(boolean dirty) {
@@ -216,11 +230,9 @@ public class SmooksTextEdtor extends StructuredTextEditor implements
 
 			public void documentAboutToBeChanged(DocumentEvent event) {
 				setDirty(true);
-//				firePropertyChange(PROP_DIRTY);
 			}
 
 			public void documentChanged(DocumentEvent event) {
-				
 			}
 			
 		});

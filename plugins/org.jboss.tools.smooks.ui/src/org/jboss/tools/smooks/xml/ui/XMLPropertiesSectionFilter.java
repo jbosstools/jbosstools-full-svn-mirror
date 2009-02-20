@@ -20,6 +20,11 @@ public class XMLPropertiesSectionFilter extends
 	 */
 	public boolean select(Object toTest) {
 		Object source = getReferenceSourceObject(toTest);
+		Object target = getReferenceSourceObject(toTest);
+		if(target != null && target instanceof AbstractXMLObject){
+			// don't allow show it when editing x2x
+			return false;
+		}
 		if (source != null && source instanceof AbstractXMLObject) {
 			return true;
 		}

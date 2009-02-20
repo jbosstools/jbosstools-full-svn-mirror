@@ -256,6 +256,7 @@ public class SmooksFormEditor extends FormEditor implements
 		IEditorPart editor = this.getActiveEditor();
 		if (editor == null) {
 			this.graphicalPage.doSave(monitor);
+			this.xmlTextEditor.editorInputChanged(getEditorInput());
 			fireEditorDirty(false);
 		} else {
 			this.xmlTextEditor.doSave(monitor);
