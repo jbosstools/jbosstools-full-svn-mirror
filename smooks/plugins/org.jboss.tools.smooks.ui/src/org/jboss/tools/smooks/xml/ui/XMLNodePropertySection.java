@@ -87,6 +87,9 @@ public class XMLNodePropertySection extends AbstractSmooksPropertySection {
 						SmooksConfigurationFileGenerateContext context = page.getSmooksConfigurationFileGenerateContext();
 						IConnectableModel connectModel = (IConnectableModel) UIUtils.findGraphModel(context.getGraphicalRootModel(), model);
 						XML2XMLGraphicalModelListener.setResourceCDATAViaTargetNode(model.getReferenceElement(), connectModel);
+						if(part != null){
+							((SmooksFormEditor)part).fireEditorDirty(true);
+						}
 					}
 				}
 			}

@@ -996,6 +996,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			IFile file = ((IFileEditorInput) this.getEditorInput()).getFile();
 			if (file.exists()) {
 				file.setContents(stream, IResource.FORCE, monitor);
+				file.refreshLocal(IResource.DEPTH_ZERO, monitor);
 			}
 
 			// save graphical informations

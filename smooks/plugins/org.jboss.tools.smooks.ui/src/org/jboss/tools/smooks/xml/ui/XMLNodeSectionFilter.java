@@ -3,7 +3,6 @@
  */
 package org.jboss.tools.smooks.xml.ui;
 
-import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.jface.viewers.IFilter;
 import org.jboss.tools.smooks.xml.model.AbstractXMLObject;
 

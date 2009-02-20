@@ -118,7 +118,7 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 			}
 		}
 		
-		if(source instanceof IXMLStructuredObject && t instanceof JavaBeanModel){
+		if(source instanceof IXMLStructuredObject && t instanceof JavaBeanModel && !(source instanceof JavaBeanModel)){
 			boolean isattribute = ((IXMLStructuredObject)source).isAttribute();
 			JavaBeanModel targetModel = (JavaBeanModel) t;
 			boolean isprimitive = targetModel.isPrimitive();
