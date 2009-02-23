@@ -155,7 +155,7 @@
                                         </mediaobject>
                                 </figure> 
                              
-                                <para>The New Data Source dialog appears. Choose the "Create from a data source type in the following list" radiobutton and then "Classic Models Inc. Sample Database". Click on the <emphasis><property>Next</property></emphasis> button:</para>
+                                <para>The New Data Source dialog appears. Choose the "Create from a data source type in the following list" radio button and then "Classic Models Inc. Sample Database". Click on the <emphasis><property>Next</property></emphasis> button:</para>
                                                    
                              
                                 <figure>
@@ -179,7 +179,7 @@
                                 </figure> 
                              <para>Click on the <emphasis><property>Finish</property></emphasis> button to add the data source to the data source for your report.</para>
                              
-                        <para>If you need to edit the data source right-click on it and select the corresponding option.</para>    
+                        <para>If you need to edit the data source, right-click on it and select the corresponding option.</para>    
                         </section>
                         
                         
