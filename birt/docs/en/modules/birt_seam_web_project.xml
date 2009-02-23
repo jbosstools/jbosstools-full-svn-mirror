@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<chapter id="Birt_Seam_Web_Project" xreflabel="Birt_Seam_Web_Project">
+    
+   <?dbhtml filename="birtSeamWebProject.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss</keyword>
+            <keyword>BIRT</keyword>
+            <keyword>Seam</keyword>
+         </keywordset>
+    </chapterinfo>
+    
+    <title> Adding JBoss BIRT functionality to the standard Seam web project</title>
+        
+    <para>In this chapter you'll find out how to create a web project including Seam and BIRT capabilities </para>
+    
+    <section id="prerequisites" xreflabel="prerequisites">
+        <title>Prerequisites</title>
+        
+        <para>These are the prerequisites required to create a Seam web project including with BIRT functionality:</para>
+        
+                
+    </section>
+    
+</chapter>
