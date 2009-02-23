@@ -13,8 +13,7 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.common.model.ui;bundle-version="2.0.0",
  org.eclipse.jface.text;bundle-version="3.4.0"
 Bundle-ActivationPolicy: lazy
-Export-Package: org.jboss.tools.vpe.editor.preferences,
- org.jboss.tools.vpe.editor.template,
+Export-Package: org.jboss.tools.vpe.editor.template,
  org.jboss.tools.vpe.test
 Bundle-ClassPath: vpe-tests.jar
 Import-Package: org.eclipse.ui.part
