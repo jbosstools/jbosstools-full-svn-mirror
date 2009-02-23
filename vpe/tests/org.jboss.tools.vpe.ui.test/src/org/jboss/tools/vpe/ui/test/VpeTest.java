@@ -186,7 +186,9 @@ public class VpeTest extends TestCase implements ILogListener {
         TestUtil.waitForJobs();
 
         IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(input, EDITOR_ID, true);
-
+        //here we wait for inintialization VPE controller
+        TestUtil.getVpeController((JSPMultiPageEditor) editor);
+        
         assertNotNull(editor);
 
         TestUtil.waitForJobs();
