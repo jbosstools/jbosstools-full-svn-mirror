@@ -205,18 +205,8 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 			}
 		}
 
-		nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
-		nsIDOMElement selectionTable = visualDocument.createElement(HTML.TAG_TABLE);
-		nsIDOMElement tr = visualDocument.createElement(HTML.TAG_TR);
-		nsIDOMElement td = visualDocument.createElement(HTML.TAG_TD);
 		nsIDOMElement visualTable = visualDocument.createElement(HTML.TAG_TABLE);
-		
-		selectionTable.appendChild(tr);
-		tr.appendChild(td);
-		td.appendChild(div);
-		div.appendChild(visualTable);
-		
-		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(selectionTable);
+		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(visualTable);
 
 		if (propertyCreators != null) {
 			for (int i = 0; i < propertyCreators.size(); i++) {
@@ -251,8 +241,10 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 		    for (int i = 0; i < count; i++) {
 			Node node = children.item(i);
 			int type = node.getNodeType();
-			if (type == Node.ELEMENT_NODE || type == Node.TEXT_NODE
-				&& node.getNodeValue().trim().length() > 0) {
+			if ((type == Node.ELEMENT_NODE)
+				|| ((type == Node.TEXT_NODE) && (node != null)
+					&& (node.getNodeValue() != null) 
+						&& (node.getNodeValue().trim().length() > 0))) {
 			    switch (VpeCreatorUtil.getFacetType(node, pageContext)) {
 			    case VpeCreatorUtil.FACET_TYPE_HEADER:
 				header = node;
