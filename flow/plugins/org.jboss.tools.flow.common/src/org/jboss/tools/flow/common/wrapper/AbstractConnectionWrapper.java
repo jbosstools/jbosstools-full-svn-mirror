@@ -34,7 +34,6 @@ public abstract class AbstractConnectionWrapper extends AbstractWrapper implemen
     private NodeWrapper target;
     private LabelWrapper label;
     private transient List<Point> bendpoints = new ArrayList<Point>();
-    private transient List<ModelListener> listeners = new ArrayList<ModelListener>();
         
     public void localSetSource(NodeWrapper source) {
     	this.source = source;
@@ -125,21 +124,6 @@ public abstract class AbstractConnectionWrapper extends AbstractWrapper implemen
     
     public LabelWrapper getLabel() {
     	return label;
-    }
-
-    public void addListener(ModelListener listener) {
-        listeners.add(listener);
-    }
-
-    public void removeListener(ModelListener listener) {
-        listeners.remove(listener);
-    }
-
-    protected void notifyListeners(int change) {
-        ModelEvent event = new ModelEvent(change);
-        for (ModelListener listener : listeners) {
-        	listener.modelChanged(event);
-        }
     }
 
 }

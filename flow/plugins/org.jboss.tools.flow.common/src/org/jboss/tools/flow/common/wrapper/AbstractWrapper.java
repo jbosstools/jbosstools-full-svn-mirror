@@ -34,6 +34,10 @@ public abstract class AbstractWrapper implements Wrapper {
 			listener.modelChanged(event);
 		}
 	}
+	
+	public void notifyListeners(int change) {
+		notifyListeners(change, null);
+	}
 
 	public Object getEditableValue() {
 		if (getPropertySource() != null) {

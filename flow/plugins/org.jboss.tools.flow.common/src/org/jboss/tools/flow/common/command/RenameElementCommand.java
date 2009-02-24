@@ -19,7 +19,6 @@ package org.jboss.tools.flow.common.command;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.flow.common.properties.IPropertyId;
-import org.jboss.tools.flow.common.wrapper.Wrapper;
 
 /**
  * A command for renaming an element.
@@ -28,15 +27,14 @@ import org.jboss.tools.flow.common.wrapper.Wrapper;
  */
 public class RenameElementCommand extends Command {
 
-    private Wrapper source;
+    private IPropertySource source;
     private String name;
     private String oldName;
     
 
     public void execute() {
-    	IPropertySource propertySource = (IPropertySource)source.getAdapter(IPropertySource.class);
-    	if (propertySource != null) {
-    		propertySource.setPropertyValue(IPropertyId.NAME, name);
+    	if (source != null) {
+    		source.setPropertyValue(IPropertyId.NAME, name);
     	}
     }
 
@@ -48,14 +46,13 @@ public class RenameElementCommand extends Command {
         oldName = string;
     }
 
-    public void setSource(Wrapper action) {
-        source = action;
+    public void setSource(IPropertySource propertySource) {
+        source = propertySource;
     }
 
     public void undo() {
-    	IPropertySource propertySource = (IPropertySource)source.getAdapter(IPropertySource.class);
-    	if (propertySource != null) {
-    		propertySource.setPropertyValue(IPropertyId.NAME, oldName);
+    	if (source != null) {
+    		source.setPropertyValue(IPropertyId.NAME, oldName);
     	}
     }
 }

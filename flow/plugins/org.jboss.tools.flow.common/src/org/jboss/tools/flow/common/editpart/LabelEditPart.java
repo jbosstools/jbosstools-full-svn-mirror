@@ -106,7 +106,9 @@ public class LabelEditPart extends AbstractGraphicalEditPart implements ModelLis
     }
 
 	public void modelChanged(ModelEvent event) {
-		refreshVisuals();
+		if (event.getChange() == Wrapper.CHANGE_PROPERTY) {
+			refreshVisuals();
+		}
 	}
 	
 	private class LabelConstraint implements Locator {
