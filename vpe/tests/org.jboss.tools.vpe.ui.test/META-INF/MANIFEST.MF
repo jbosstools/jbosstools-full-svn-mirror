@@ -22,8 +22,10 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.common.model.ui;bundle-version="2.0.0",
  org.jboss.tools.tests;bundle-version="2.0.0";visibility:=reexport
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: .
-Export-Package: org.jboss.tools.vpe.ui.test
+Bundle-ClassPath: vpe-ui-test.jar
+Export-Package: org.jboss.tools.vpe.ui.test,
+ org.jboss.tools.vpe.ui.test.dialog,
+ org.jboss.tools.vpe.ui.test.preferences
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
