@@ -19,7 +19,132 @@
         
         <para>These are the prerequisites required to create a Seam web project including with BIRT functionality:</para>
         
-                
+        <orderedlist>
+            <listitem>
+                <para>
+                    <ulink url="http://download.eclipse.org/eclipse/downloads/drops/R-3.4-200806172000/index.php">Eclipse Version 3.4 SDK</ulink>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <ulink url="http://www.eclipse.org/downloads/download.php?file=/datatools/downloads/1.6/dtp-sdk_1.6.0.zip">DTP Version 1.6 Release</ulink>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <ulink url="http://www.eclipse.org/modeling/emf/downloads/?project=emf">EMF Version 2.4 Release EMF+XSD</ulink>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <ulink url="http://www.eclipse.org/gef/downloads/">GEF Version 3.4 Release runtime</ulink>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <ulink url="http://download.eclipse.org/webtools/downloads/drops/R3.0/R-3.0-20080616152118/">WTP Version 3.0 Release</ulink>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <ulink url="http://www.eclipse.org/downloads/download.php?file=/birt/downloads/drops/R-R1-2_3_0-200806191030/birt-report-framework-sdk-2_3_0.zip">BIRT Report Designer SDK 2.3.0 Release</ulink> or <ulink url="http://www.eclipse.org/downloads/download.php?file=/birt/downloads/drops/R-R1-2_3_0-200806191030/birt-report-framework-2_3_0.zip">BIRT Report Designer 2.3.0 Release</ulink> 
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <ulink url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777">JBoss Application Server 4.2.2 GA</ulink>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <ulink url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777">JBoss Seam 2.0.1 GA</ulink>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <ulink url="http://www.eclipse.org/downloads/download.php?file=/birt/downloads/drops/R-R1-2_3_0-200806191030/birt-wtp-integration-sdk-2_3_0.zip">BIRT Web Tools Integration</ulink>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <ulink url="http://download.jboss.org/jbosstools/builds/nightly/latestBuild.html">JBoss Tools nightly build</ulink>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <ulink url="http://jira.jboss.com/jira/secure/attachment/12320944/org.jboss.tools.birt.feature.zip">JBoss BIRT integration feature</ulink>
+                </para>
+            </listitem>
+        </orderedlist>
+                             
     </section>
+    
+    <section id="creating_web_project" xreflabel="creating_web_project">
+        <title>Creating a web project</title>
+        
+        <para>Follow the next steps to create a web project</para>
+        <orderedlist>
+            <listitem>
+                <para>Create a new Seam Web Project</para>
+            </listitem>
+            <listitem>
+                <para>Choose the 2.0 version of the Seam facet</para>
+            </listitem>
+            <listitem>
+                <para>Add the &quot;Birt Reporting Runtime Component&quot;  facet </para>
+            </listitem>
+        </orderedlist>
+        
+        <figure>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure> 
+        
+        <orderedlist>
+            <listitem>
+                <para>Or choose the &quot;JBoss BIRT Integration Web Project&quot; configuration</para>
+            </listitem>
+        </orderedlist>
+        
+        <figure>
+            <title>Choosing &quot;JBoss BIRT Integration Web Project &quot; Configuration</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/SeamProjectConfiguration.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure> 
+        
+        <orderedlist>
+            <listitem>
+                <para>Create the birttests.xhtml, testbirt.xhtml and testbirt1.xhtml pages as follows:</para>
+            </listitem>
+        </orderedlist>
+        <para>
+            <emphasis role="bold">Example:</emphasis>
+        </para>
+              
+            <programlisting role="XHTML"><![CDATA[
+            <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+            <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+            xmlns:s="http://jboss.com/products/seam/taglib"
+            xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" 
+            xmlns:h="http://java.sun.com/jsf/html" 
+            xmlns:rich="http://richfaces.org/rich" 
+            template="layout/template.xhtml">
+            <ui:define name="body">  
+            <h:messages globalOnly="true" styleClass="message"/> <rich:panel> 
+            <f:facet name="header">Welcome to JBoss BIRT!</f:facet> 
+            <ul>  <li><s:link view="/testbirt.xhtml" value="Test Birt" /></li>  
+            <li><s:link view="/testbirt1.xhtml" value="Test Birt 1" /></li>  
+            </ul>  </rich:panel> </ui:define> </ui:composition>
+]]></programlisting>
+        
+    </section>
+     
     
 </chapter>
