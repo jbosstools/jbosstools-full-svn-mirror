@@ -31,6 +31,16 @@ public class SmooksFileEditorInput extends FileEditorInput {
 	
 	private Object targetRoot = null;
 	
+	private IFile graphicalInformationFile;
+	
+	public IFile getGraphicalInformationFile() {
+		return graphicalInformationFile;
+	}
+
+	public void setGraphicalInformationFile(IFile graphicalInformationFile) {
+		this.graphicalInformationFile = graphicalInformationFile;
+	}
+
 	public Object getSourceTreeViewerInputContents() {
 		return sourceRoot;
 	}
@@ -48,7 +58,12 @@ public class SmooksFileEditorInput extends FileEditorInput {
 	}
 
 	public SmooksFileEditorInput(IFile file) {
-		super(file);
+		this(file,null);
+	}
+	
+	public SmooksFileEditorInput(IFile smooksConfigFile , IFile graphicalInformationFile) {
+		super(smooksConfigFile);
+		this.graphicalInformationFile = graphicalInformationFile;
 	}
 
 	/**
