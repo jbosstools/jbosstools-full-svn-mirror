@@ -81,7 +81,7 @@
     
     <section id="creating_web_project" xreflabel="creating_web_project">
         <title>Creating a web project</title>
-        
+
         <para>Follow the next steps to create a web project</para>
         <orderedlist>
             <listitem>
@@ -91,60 +91,250 @@
                 <para>Choose the 2.0 version of the Seam facet</para>
             </listitem>
             <listitem>
-                <para>Add the &quot;Birt Reporting Runtime Component&quot;  facet </para>
+                <para>Add the &quot;Birt Reporting Runtime Component&quot; facet </para>
             </listitem>
         </orderedlist>
-        
+
         <figure>
-            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot; Facet </title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
                 </imageobject>
             </mediaobject>
-        </figure> 
-        
+        </figure>
+
         <orderedlist>
             <listitem>
-                <para>Or choose the &quot;JBoss BIRT Integration Web Project&quot; configuration</para>
+                <para>Or choose the &quot;JBoss BIRT Integration Web Project&quot;
+                    configuration</para>
             </listitem>
         </orderedlist>
-        
+
         <figure>
-            <title>Choosing &quot;JBoss BIRT Integration Web Project &quot; Configuration</title>
+            <title>Choosing &quot;JBoss BIRT Integration Web Project &quot;
+                Configuration</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/BirtSeamProject/SeamProjectConfiguration.png"/>
                 </imageobject>
             </mediaobject>
-        </figure> 
-        
+        </figure>
+
         <orderedlist>
             <listitem>
-                <para>Create the birttests.xhtml, testbirt.xhtml and testbirt1.xhtml pages as follows:</para>
+                <para>Create the birttests.xhtml, testbirt.xhtml and testbirt1.xhtml pages as
+                    follows:</para>
             </listitem>
         </orderedlist>
         <para>
+            <emphasis role="bold">birttests.xhtml:</emphasis>
+        </para>
+
+        <programlisting role="XHTML"><![CDATA[
+            <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                                                            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+            <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                                          xmlns:s="http://jboss.com/products/seam/taglib"
+                                          xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" 
+                                          xmlns:h="http://java.sun.com/jsf/html" 
+                                          xmlns:rich="http://richfaces.org/rich" 
+                                          template="layout/template.xhtml">
+            
+            <ui:define name="body">  
+                   <h:messages globalOnly="true" styleClass="message"/> <rich:panel> 
+                    <f:facet name="header">Welcome to JBoss BIRT!</f:facet> 
+                    <ul>
+                           <li><s:link view="/testbirt.xhtml" value="Test Birt" /></li>  
+                           <li><s:link view="/testbirt1.xhtml" value="Test Birt 1" /></li>  
+                      </ul>
+                      </rich:panel> 
+            </ui:define>
+            </ui:composition>
+            ]]></programlisting>
+        
+            
+        <para>
+            <emphasis role="bold">testbirt.xhtml:</emphasis>
+         </para>
+        
+        <programlisting role="XHTML"><![CDATA[
+            <p:birt xmlns:ui="http://java.sun.com/jsf/facelets" 
+                                xmlns:s="http://jboss.com/products/seam/taglib" 
+                                xmlns:p="http://jboss.com/products/seam/birt" 
+                        designType="run" 
+                        format="pdf" 
+                        designName="test.rptdesign" 
+                        title="JBoss Birt Test">
+                        
+                        <p:param name="sample" value="sample param"/>
+            </p:birt> 
+        ]]></programlisting>
+        
+        <para>
+            <emphasis role="bold">testbirt1.xhtml:</emphasis>
+        </para>
+     
+        <programlisting role="XHTML"><![CDATA[
+<p:birt xmlns:ui="http://java.sun.com/jsf/facelets"
+                        xmlns:s="http://jboss.com/products/seam/taglib"
+                        xmlns:p="http://jboss.com/products/seam/birt"
+            designType="frameset"
+            designName="test1.rptdesign"
+            title="JBoss Birt Test"> 
+ </p:birt> 
+        ]]></programlisting>
+        
+        
+        <orderedlist>
+            <listitem>
+                <para>Try the tests out by accessing http://localhost:8080//birttests.seam with your web browser.</para>
+            </listitem>
+        </orderedlist>
+        
+        <figure>
+            <title>Trying the tests out. First Page</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/Tests1.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <figure>
+            <title>Trying the tests out. Second Page</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/Tests2.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <figure>
+            <title>Trying the tests out. Third Page</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/Tests3.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <figure>
+            <title>Trying the tests out. Forth Page</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/Tests4.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+              
+        <para>The birt tag recognizes most of the parameters described on <ulink url="http://www.eclipse.org/birt/phoenix/deploy/viewerUsage2.2.php#parameters">the BIRT Report Viewer Parameters page</ulink>. The attributes of the birt tag don't contain the "__" prefix. The param tag describes report parameters. It supports the following attributes: </para>
+        <orderedlist>
+            <listitem>
+                <para>name - the parameter name (required)</para>
+            </listitem>
+            <listitem>
+                <para>value - the parameter value (required)</para>
+            </listitem>
+            <listitem>
+                <para>isnull - specifies that a report parameter has a null value (optional)</para>
+            </listitem>
+            <listitem>
+                <para>islocale - specifies whether the parameter is localized (optional)</para>
+            </listitem>
+        </orderedlist>
+        <para>These tags are defined in the org.jboss.birt.core/resources/jboss-seam-birt.jar library that contains source. </para>
+        <para>It is possible to embed a BIRT report in some Seam xhtml page. For instance: </para>
+        <para/>
+
+	<para>
             <emphasis role="bold">Example:</emphasis>
         </para>
-              
-            <programlisting role="XHTML"><![CDATA[
-            <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-            <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-            xmlns:s="http://jboss.com/products/seam/taglib"
-            xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" 
-            xmlns:h="http://java.sun.com/jsf/html" 
-            xmlns:rich="http://richfaces.org/rich" 
-            template="layout/template.xhtml">
-            <ui:define name="body">  
-            <h:messages globalOnly="true" styleClass="message"/> <rich:panel> 
-            <f:facet name="header">Welcome to JBoss BIRT!</f:facet> 
-            <ul>  <li><s:link view="/testbirt.xhtml" value="Test Birt" /></li>  
-            <li><s:link view="/testbirt1.xhtml" value="Test Birt 1" /></li>  
-            </ul>  </rich:panel> </ui:define> </ui:composition>
-]]></programlisting>
-        
-    </section>
-     
+        &lt;!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+
+&lt;ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:b="http://jboss.com/products/seam/birt" 
+                template="layout/template.xhtml"&gt;
+                       
+&lt;ui:define name="body"&gt;
     
+    &lt;h:messages globalOnly="true" styleClass="message" id="globalMessages"/&gt;
+    
+    &lt;rich:panel&gt;
+        &lt;f:facet name="header"&gt;Products&lt;/f:facet&gt;
+
+	&lt;b:birt designType="embed"
+        designName="ProductCatalog.rptdesign"
+        embeddable="true"
+        masterpage="false"&gt;
+	&lt;/b:birt&gt; 
+
+        
+        &lt;div style="clear:both"/&gt;
+        
+    &lt;/rich:panel&gt;
+    
+    &lt;div class="actionButtons"&gt;      
+
+        &lt;s:button view="/ProductsEdit.xhtml" 
+                    id="edit" 
+                 value="Edit"/&gt;
+                 
+        &lt;s:button view="/BirtProductsPdf.xhtml" 
+                    id="BirtProductPdf" 
+                 value="Product Catalog - PDF"/&gt;
+                 
+        &lt;s:button view="/BirtProductsFrameset.xhtml" 
+                    id="BirtProductFrameset" 
+                 value="Product Catalog - Frameset"/&gt;
+                 
+        &lt;s:button view="/BirtProductsEmbedded.xhtml" 
+                    id="BirtProductEmbedded" 
+                 value="Product Catalog - Embedded"/&gt;
+
+		&lt;s:button view="/TopSellingProducts.xhtml" 
+                    id="TopSellingProducts" 
+                 value="Top Selling Products"/&gt;
+                 
+        &lt;s:button view="/#{empty productsFrom ? 'ProductsList' : productsFrom}.xhtml"
+                    id="done"
+                 value="Done"/&gt;
+
+    &lt;/div&gt;
+
+&lt;/ui:define&gt;
+
+&lt;/ui:composition&gt;
+ 
+        <programlisting role="XHTML"><![CDATA[
+        ]]></programlisting>
+        
+<figure>
+           <title>Embeding BIRT Report in Seam xhtml Page. First Page</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/BirtReportInSeamPage1.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+ <figure>
+            <title>Embeding BIRT Report in Seam xhtml Page. Second Page</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/BirtReportInSeamPage2.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>   
+
+
+</section>
+          
+         
 </chapter>
