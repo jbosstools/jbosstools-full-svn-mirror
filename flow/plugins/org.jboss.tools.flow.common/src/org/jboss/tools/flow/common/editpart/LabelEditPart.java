@@ -106,7 +106,7 @@ public class LabelEditPart extends AbstractGraphicalEditPart implements ModelLis
     }
 
 	public void modelChanged(ModelEvent event) {
-		if (event.getChange() == Wrapper.CHANGE_PROPERTY) {
+		if (event.getChange() == Wrapper.CHANGE_PROPERTY || event.getChange() == Wrapper.CHANGE_VISUAL) {
 			refreshVisuals();
 		}
 	}
