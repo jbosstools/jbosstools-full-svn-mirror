@@ -30,9 +30,11 @@
                 <property>New</property>
             </emphasis> button in the <emphasis>
                 <property>Target Runtime</property>
-            </emphasis> section to specify a new Target Runtime. Click <emphasis>
-                <property>JBoss 4.2 Runtime</property>
-            </emphasis> and press <emphasis>
+            </emphasis> section to specify a new Target Runtime. Choose <emphasis>
+                <property> JBoss Community &gt; JBoss 4.2 Runtime</property>
+            </emphasis> and select the <emphasis>
+                <property>Create a new local server</property>
+            </emphasis> checkbox. Click <emphasis>
                 <property>Next</property>.</emphasis></para>
 
         <figure>
@@ -49,6 +51,15 @@
             </emphasis>, and then point it to the location of your JBoss AS + Portal
             installation.</para>
 
+        <figure>
+            <title>New Server Runtime Environment</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/server_runtime_environment.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
         <note>
             <title>Note:</title>
 
@@ -57,8 +68,13 @@
                 version 2.0 (JSR-268), you have to choose JBoss Portal 2.7.</para>
         </note>
 
+        <para>At this point a new JBoss Server instance will be created. Here you can verify the
+            defined runtime information. If something is incorrect, press <emphasis>
+                <property>Back</property>
+            </emphasis> to return on the previous wizard page.</para>
+
         <figure>
-            <title>Target Runtime</title>
+            <title>Target Server</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/starting_project/starting_project_3.png"/>
@@ -73,12 +89,6 @@
                 <property>Modify</property>
             </emphasis> button next to the <property>Configuration</property> section to enable
             Portlet Facets for the project.</para>
-
-        <!--para>where it&apos;s also necessary to set the project
-            Configuration. <property>JBoss Tools</property> (starting from 3.0.0.Alpha1) support the
-            JSR-168 Portlet Specification (Portlet 1.0), JSR-286 Portlet Specification (Portlet
-            2.0). Thus you can choose <emphasis>Portlet Project v1.0</emphasis> or <emphasis>Portlet
-                Project v2.0</emphasis>.</para-->
 
         <figure>
             <title>Setting the Project Configuration</title>
@@ -104,8 +114,31 @@
             </mediaobject>
         </figure>
 
-        <para>The last wizard page is for configuring web modules. Here all values are set, so you
-            can leave everything as it is.</para>
+        <note>
+            <title>Note:</title>
+            <para>If the portlet libraries aren&apos;t available in the runtime you targeted,
+                JBoss Portlet facets will be hidden on this page.</para>
+            <para>To made portal functionality always visible no matter what the runtime support,
+                you should go to <emphasis>
+                    <property>Window &gt; Preferences</property>
+                </emphasis> and then <emphasis>
+                    <property>JBoss Tools &gt; JBoss Portlet</property>
+                </emphasis> and deselect <emphasis>
+                    <property>Check runtimes for Portlet Components</property>
+                </emphasis> checkbox (see figure below).</para>
+        </note>
+
+        <figure>
+            <title>JBoss Runtime Preferences</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/portlet_preferences.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>The next page is for configuring web modules. Here all values are set, so you can
+            leave everything as it is.</para>
 
         <figure>
             <title>The Project Web Modules</title>
@@ -116,9 +149,96 @@
             </mediaobject>
         </figure>
 
-        <para>Press <emphasis>
-                <property>Finish</property>.</emphasis>
+        <para>Finally, the last wizard page will ask you to add JBoss Portlet capabilities to your
+            project. Here you can choose whether to set up user libraries, libraries provided by
+            server runtime or not include libraries at all.</para>
+        
+        <itemizedlist>
+            <listitem><para>To set up server runtime libraries, you need to select <emphasis>
+                <property>Libraries provided by server runtime</property></emphasis> in the list box.</para>
+            </listitem>
+        </itemizedlist>
+        
+        <figure>
+            <title>Including Server Runtime Libraries</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/portlet_capabilities6.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <itemizedlist>
+            <listitem>
+            <para>For setting up user libraries, select <emphasis>
+                <property>User library</property></emphasis> in the list box and then press <emphasis>
+                    <property>Add</property></emphasis> in the <emphasis>
+                        <property>User Library</property></emphasis> section.</para>
+            </listitem>
+        </itemizedlist>
+        
+        <figure>
+            <title>Adding User Library</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/portlet_capabilities1.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <para>Then press <emphasis>
+            <property>New</property></emphasis> and type the user library name in the appeared dialog.</para>
+        
+        <figure>
+        <title>Adding User Library</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/starting_project/portlet_capabilities2.png"/>
+            </imageobject>
+        </mediaobject>
+        </figure>
+        
+        <para>Next add necessary jar&apos;s.</para>
+        
+        <figure>
+        <title>Adding the Portlet API Jar</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/starting_project/portlet_capabilities3.png"/>
+            </imageobject>
+        </mediaobject>
+        </figure>
+        
+        <para>Hit <emphasis>
+                <property>OK</property>.</emphasis> The user library will be added.
         </para>
+        
+        <figure>
+            <title>User Library Added</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/portlet_capabilities4.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <itemizedlist>
+            <listitem><para>If you don&apos;t need to include libraries at all, just deselect the <emphasis>
+                <property>Enable implementation library</property></emphasis> checkbox.</para>
+            </listitem>
+        </itemizedlist>
+        
+        <figure>
+            <title>Disabling Implementation Libraries</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/portlet_capabilities5.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <para>After setting JBoss Portlet capabilities press <emphasis>
+            <property>Finish</property>.</emphasis></para>
 
         <para>That&apos;s it! Our base project is done.</para>
 
