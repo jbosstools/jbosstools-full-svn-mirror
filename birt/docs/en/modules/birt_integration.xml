@@ -336,5 +336,213 @@
 
 </section>
           
+<section>
+<title>Hibernate ODA Data Source</title>
+
+<para>The JBoss BIRT Integration feature includes the Hibernate ODA Data Source completely integrated with Hibernate Tools. You can use it in the way you use any of BIRT ODA drivers. For instance, </para>
+   <orderedlist>
+      <listitem>
+         <para>run the Seam Generate Entities action</para>
+      </listitem>
+   </orderedlist>
+   <para>This action will create a Hibernate Console configuration. </para>
+   <orderedlist>
+      <listitem>
+         <para>create a new BIRT report</para>
+      </listitem>
+   </orderedlist>
+    
+        <figure>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure> 
+        
+   <orderedlist>
+      <listitem>
+         <para>add the Hibernate ODA datasource</para>
+      </listitem>
+   </orderedlist>
+
+ <figure>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+  <figure>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+   
+
+
+<orderedlist>
+      <listitem>
+         <para>add the Hibernate ODA dataset</para>
+      </listitem>
+   </orderedlist>
+ 
+  <figure>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+  
+  <figure>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+<orderedlist>
+      <listitem>
+         <para>All the HQL features like syntax highlighting, content assist, formatting, Drag and Drop, etc., are available to you here <inlinegraphic fileref="embedded:graphics15" width="8.3335inch" depth="5.2083inch"/>
+         </para>
+      </listitem>
+   </orderedlist>
+   
+ <figure>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+ <figure>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+<para>You can also use parameters within the Hibernate ODA driver. </para>
+  
+
+<figure>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+<figure>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+<figure>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+ 
+</section>
+
+<section> 
+<title>Deploying a BIRT report</title>
+<para>You can deploy this report by adding an action button to the Seam&apos;s CRUD xhtml file.</para>
+
+<figure>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+<orderedlist>
+      <listitem>
+         <para>create the testHibernateOda.xhtml file </para>
+      </listitem>
+   </orderedlist>
+
+        <para>
+            <emphasis role="bold">birttests.xhtml:</emphasis>
+        </para>
+
+        <programlisting role="XHTML"><![CDATA[
+            
+&lt;p:birt xmlns:ui="http://java.sun.com/jsf/facelets"
+            xmlns:s="http://jboss.com/products/seam/taglib"
+            xmlns:p="http://jboss.com/products/seam/birt"
+       designType="run"
+       format="pdf"
+       designName="testHibernateOda.rptdesign"
+       title="JBoss Birt Test"&gt;
+      
+&lt;/p:birt&gt;   
+]]></programlisting>
+
+<orderedlist>
+      <listitem>
+         <para>open the Articles.xhtml page</para>
+      </listitem>
+   </orderedlist>
+
+<figure>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+<orderedlist>
+      <listitem>
+         <para>click the Birt PDF Report button </para>
+      </listitem>
+   </orderedlist>
+    
+        <figure>
+            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure> 
+        
+   <para>The JNDI URL property can be either Hibernate Session Factory or Hibernate Entity Manager Factory. If a user doesn't specify this property, our engine will try the following JNDI URLs : </para>
+   <orderedlist>
+      <listitem>
+         <para>java:/&lt;project_name&gt;</para>
+      </listitem>
+      <listitem>
+         <para>java:/&lt;project_name&gt;EntityManagerFactory</para>
+      </listitem>
+   </orderedlist></sect2><sect2><title>NOTE:</title>
+   <para>If you want to test this feature using PDE Runtime, you need to add osgi.dev=bin to the WebContent/WEB-INF/platform/configuration/config.ini file </para>        
+</section>
          
 </chapter>
