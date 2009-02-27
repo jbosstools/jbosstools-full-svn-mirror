@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.jboss.tools.tests.ImportBean;
 import org.jboss.tools.vpe.ui.test.dialog.VpeResourcesDialogTest;
+import org.jboss.tools.vpe.ui.test.editor.CustomSashFormTest;
 import org.jboss.tools.vpe.ui.test.preferences.VpeEditorPreferencesPageTest;
 
 import junit.framework.Test;
@@ -30,6 +31,7 @@ public class VpeUiTests {
 		TestSuite suite = new TestSuite("UI Tests for vpe"); //$NON-NLS-1$
 		suite.addTestSuite(VpeResourcesDialogTest.class);
 		suite.addTestSuite(VpeEditorPreferencesPageTest.class);
+		suite.addTestSuite(CustomSashFormTest.class);
 		
 		/*
 		 * Add projects that will be used in junit tests.
