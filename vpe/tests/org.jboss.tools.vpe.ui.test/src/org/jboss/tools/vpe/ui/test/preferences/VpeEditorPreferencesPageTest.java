@@ -14,39 +14,16 @@ import junit.framework.TestCase;
 
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.jboss.tools.test.util.WorkbenchUtils;
+import org.jboss.tools.tests.PreferencePageTest;
 import org.jboss.tools.vpe.editor.preferences.ELVariablesPreferencePage;
 import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage;
 
-public class VpeEditorPreferencesPageTest extends TestCase {
+public class VpeEditorPreferencesPageTest extends PreferencePageTest  {
 	public void testVpeEditorPreferencesPageShow() {
-		PreferenceDialog prefDialog = 
-			WorkbenchUtils.createPreferenceDialog(
-					VpeEditorPreferencesPage.ID);
-
-		try {
-			prefDialog.setBlockOnOpen(false);
-			prefDialog.open();
-			
-			Object selectedPage = prefDialog.getSelectedPage();
-			assertTrue("Selected page is not an instance of org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage", selectedPage instanceof VpeEditorPreferencesPage); //$NON-NLS-1$
-		} finally {
-			prefDialog.close();
-		}
+		doDefaultTest(VpeEditorPreferencesPage.ID, VpeEditorPreferencesPage.class); //$NON-NLS-1$
 	}
 	
 	public void testVpeEditorELPreferencesPageShow() {
-		PreferenceDialog prefDialog = 
-			WorkbenchUtils.createPreferenceDialog(
-					ELVariablesPreferencePage.ID);
-
-		try {
-			prefDialog.setBlockOnOpen(false);
-			prefDialog.open();
-			
-			Object selectedPage = prefDialog.getSelectedPage();
-			assertTrue("Selected page is not an instance of org.jboss.tools.vpe.editor.preferences.ELVariablesPreferencePage", selectedPage instanceof ELVariablesPreferencePage); //$NON-NLS-1$
-		} finally {
-			prefDialog.close();
-		}
+		doDefaultTest(ELVariablesPreferencePage.ID, ELVariablesPreferencePage.class); //$NON-NLS-1$
 	}
 }
