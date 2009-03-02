@@ -1,18 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<chapter id="Birt_Seam_Web_Project" xreflabel="Birt_Seam_Web_Project">
+<chapter id="Birt_Integration" xreflabel="Birt_Integration">
     
-   <?dbhtml filename="birtSeamWebProject.html"?>
+    <?dbhtml filename="birtSeamWebProject.html"?>
     <chapterinfo>
         <keywordset>
             <keyword>JBoss</keyword>
             <keyword>BIRT</keyword>
             <keyword>Seam</keyword>
-         </keywordset>
+        </keywordset>
     </chapterinfo>
+    <title>Birt Integration</title>
     
+    <para>This chapter covers the steps required for BIRT Integration</para>
+         
+    <section id="Birt_Seam_Web_Project" xreflabel="Birt_Seam_Web_Project"> 
     <title> Adding JBoss BIRT functionality to the standard Seam web project</title>
-        
-    <para>In this chapter you'll find out how to create a web project including Seam and BIRT capabilities </para>
+    
+    <para>In this section  you'll find out how to create a web project including Seam and BIRT capabilities </para>
     
     <section id="prerequisites" xreflabel="prerequisites">
         <title>Prerequisites</title>
@@ -76,12 +80,12 @@
                 </para>
             </listitem>
         </orderedlist>
-                             
+        
     </section>
     
     <section id="creating_web_project" xreflabel="creating_web_project">
         <title>Creating a web project</title>
-
+        
         <para>Follow the next steps to create a web project</para>
         <orderedlist>
             <listitem>
@@ -94,7 +98,7 @@
                 <para>Add the &quot;Birt Reporting Runtime Component&quot; facet </para>
             </listitem>
         </orderedlist>
-
+        
         <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot; Facet </title>
             <mediaobject>
@@ -103,14 +107,14 @@
                 </imageobject>
             </mediaobject>
         </figure>
-
+        
         <orderedlist>
             <listitem>
                 <para>Or choose the &quot;JBoss BIRT Integration Web Project&quot;
                     configuration</para>
             </listitem>
         </orderedlist>
-
+        
         <figure>
             <title>Choosing &quot;JBoss BIRT Integration Web Project &quot;
                 Configuration</title>
@@ -120,7 +124,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
-
+        
         <orderedlist>
             <listitem>
                 <para>Create the birttests.xhtml, testbirt.xhtml and testbirt1.xhtml pages as
@@ -130,7 +134,7 @@
         <para>
             <emphasis role="bold">birttests.xhtml:</emphasis>
         </para>
-
+        
         <programlisting role="XHTML"><![CDATA[
             <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                                                             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
@@ -153,10 +157,10 @@
             </ui:composition>
             ]]></programlisting>
         
-            
+        
         <para>
             <emphasis role="bold">testbirt.xhtml:</emphasis>
-         </para>
+        </para>
         
         <programlisting role="XHTML"><![CDATA[
             <p:birt xmlns:ui="http://java.sun.com/jsf/facelets" 
@@ -174,7 +178,7 @@
         <para>
             <emphasis role="bold">testbirt1.xhtml:</emphasis>
         </para>
-     
+        
         <programlisting role="XHTML"><![CDATA[
 <p:birt xmlns:ui="http://java.sun.com/jsf/facelets"
                         xmlns:s="http://jboss.com/products/seam/taglib"
@@ -227,7 +231,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
-              
+        
         <para>The birt tag recognizes most of the parameters described on <ulink url="http://www.eclipse.org/birt/phoenix/deploy/viewerUsage2.2.php#parameters">the BIRT Report Viewer Parameters page</ulink>. The attributes of the birt tag don't contain the "__" prefix. The param tag describes report parameters. It supports the following attributes: </para>
         <orderedlist>
             <listitem>
@@ -246,10 +250,11 @@
         <para>These tags are defined in the org.jboss.birt.core/resources/jboss-seam-birt.jar library that contains source. </para>
         <para>It is possible to embed a BIRT report in some Seam xhtml page. For instance: </para>
         <para/>
-
-	<para>
+        
+        <para>
             <emphasis role="bold">Example:</emphasis>
         </para>
+        <programlisting role="XHTML"><![CDATA[
         &lt;!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
                              "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
 
@@ -312,19 +317,18 @@
 
 &lt;/ui:composition&gt;
  
-        <programlisting role="XHTML"><![CDATA[
         ]]></programlisting>
         
-<figure>
-           <title>Embeding BIRT Report in Seam xhtml Page. First Page</title>
+        <figure>
+            <title>Embeding BIRT Report in Seam xhtml Page. First Page</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/BirtSeamProject/BirtReportInSeamPage1.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
-
- <figure>
+        
+        <figure>
             <title>Embeding BIRT Report in Seam xhtml Page. Second Page</title>
             <mediaobject>
                 <imageobject>
@@ -332,26 +336,28 @@
                 </imageobject>
             </mediaobject>
         </figure>   
-
-
-</section>
-          
-<section>
-<title>Hibernate ODA Data Source</title>
-
-<para>The JBoss BIRT Integration feature includes the Hibernate ODA Data Source completely integrated with Hibernate Tools. You can use it in the way you use any of BIRT ODA drivers. For instance, </para>
-   <orderedlist>
-      <listitem>
-         <para>run the Seam Generate Entities action</para>
-      </listitem>
-   </orderedlist>
-   <para>This action will create a Hibernate Console configuration. </para>
-   <orderedlist>
-      <listitem>
-         <para>create a new BIRT report</para>
-      </listitem>
-   </orderedlist>
+        
+        
+    </section>
+    </section>
     
+    
+    <section>
+        <title>Hibernate ODA Data Source</title>
+        
+        <para>The JBoss BIRT Integration feature includes the Hibernate ODA Data Source completely integrated with Hibernate Tools. You can use it in the way you use any of BIRT ODA drivers. For instance, </para>
+        <orderedlist>
+            <listitem>
+                <para>run the Seam Generate Entities action</para>
+            </listitem>
+        </orderedlist>
+        <para>This action will create a Hibernate Console configuration. </para>
+        <orderedlist>
+            <listitem>
+                <para>create a new BIRT report</para>
+            </listitem>
+        </orderedlist>
+        
         <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
@@ -361,13 +367,13 @@
             </mediaobject>
         </figure> 
         
-   <orderedlist>
-      <listitem>
-         <para>add the Hibernate ODA datasource</para>
-      </listitem>
-   </orderedlist>
-
- <figure>
+        <orderedlist>
+            <listitem>
+                <para>add the Hibernate ODA datasource</para>
+            </listitem>
+        </orderedlist>
+        
+        <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
@@ -375,8 +381,8 @@
                 </imageobject>
             </mediaobject>
         </figure>
-
-  <figure>
+        
+        <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
@@ -384,16 +390,16 @@
                 </imageobject>
             </mediaobject>
         </figure>
-   
-
-
-<orderedlist>
-      <listitem>
-         <para>add the Hibernate ODA dataset</para>
-      </listitem>
-   </orderedlist>
- 
-  <figure>
+        
+        
+        
+        <orderedlist>
+            <listitem>
+                <para>add the Hibernate ODA dataset</para>
+            </listitem>
+        </orderedlist>
+        
+        <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
@@ -401,8 +407,8 @@
                 </imageobject>
             </mediaobject>
         </figure>
-  
-  <figure>
+        
+        <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
@@ -410,15 +416,15 @@
                 </imageobject>
             </mediaobject>
         </figure>
-
-<orderedlist>
-      <listitem>
-         <para>All the HQL features like syntax highlighting, content assist, formatting, Drag and Drop, etc., are available to you here <inlinegraphic fileref="embedded:graphics15" width="8.3335inch" depth="5.2083inch"/>
-         </para>
-      </listitem>
-   </orderedlist>
-   
- <figure>
+        
+        <orderedlist>
+            <listitem>
+                <para>All the HQL features like syntax highlighting, content assist, formatting, Drag and Drop, etc., are available to you here <inlinegraphic fileref="embedded:graphics15" width="8.3335inch" depth="5.2083inch"/>
+                </para>
+            </listitem>
+        </orderedlist>
+        
+        <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
@@ -426,7 +432,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
- <figure>
+        <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
@@ -434,11 +440,11 @@
                 </imageobject>
             </mediaobject>
         </figure>
-
-<para>You can also use parameters within the Hibernate ODA driver. </para>
-  
-
-<figure>
+        
+        <para>You can also use parameters within the Hibernate ODA driver. </para>
+        
+        
+        <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
@@ -446,8 +452,8 @@
                 </imageobject>
             </mediaobject>
         </figure>
-
-<figure>
+        
+        <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
@@ -455,8 +461,8 @@
                 </imageobject>
             </mediaobject>
         </figure>
-
-<figure>
+        
+        <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
@@ -464,15 +470,15 @@
                 </imageobject>
             </mediaobject>
         </figure>
-
- 
-</section>
-
-<section> 
-<title>Deploying a BIRT report</title>
-<para>You can deploy this report by adding an action button to the Seam&apos;s CRUD xhtml file.</para>
-
-<figure>
+        
+        
+    </section>
+    
+    <section> 
+        <title>Deploying a BIRT report</title>
+        <para>You can deploy this report by adding an action button to the Seam&apos;s CRUD xhtml file.</para>
+        
+        <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
@@ -480,16 +486,16 @@
                 </imageobject>
             </mediaobject>
         </figure>
-<orderedlist>
-      <listitem>
-         <para>create the testHibernateOda.xhtml file </para>
-      </listitem>
-   </orderedlist>
-
+        <orderedlist>
+            <listitem>
+                <para>create the testHibernateOda.xhtml file </para>
+            </listitem>
+        </orderedlist>
+        
         <para>
             <emphasis role="bold">birttests.xhtml:</emphasis>
         </para>
-
+        
         <programlisting role="XHTML"><![CDATA[
             
 &lt;p:birt xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -502,14 +508,14 @@
       
 &lt;/p:birt&gt;   
 ]]></programlisting>
-
-<orderedlist>
-      <listitem>
-         <para>open the Articles.xhtml page</para>
-      </listitem>
-   </orderedlist>
-
-<figure>
+        
+        <orderedlist>
+            <listitem>
+                <para>open the Articles.xhtml page</para>
+            </listitem>
+        </orderedlist>
+        
+        <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
@@ -517,13 +523,13 @@
                 </imageobject>
             </mediaobject>
         </figure>
-
-<orderedlist>
-      <listitem>
-         <para>click the Birt PDF Report button </para>
-      </listitem>
-   </orderedlist>
-    
+        
+        <orderedlist>
+            <listitem>
+                <para>click the Birt PDF Report button </para>
+            </listitem>
+        </orderedlist>
+        
         <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
@@ -533,16 +539,18 @@
             </mediaobject>
         </figure> 
         
-   <para>The JNDI URL property can be either Hibernate Session Factory or Hibernate Entity Manager Factory. If a user doesn't specify this property, our engine will try the following JNDI URLs : </para>
-   <orderedlist>
-      <listitem>
-         <para>java:/&lt;project_name&gt;</para>
-      </listitem>
-      <listitem>
-         <para>java:/&lt;project_name&gt;EntityManagerFactory</para>
-      </listitem>
-   </orderedlist></sect2><sect2><title>NOTE:</title>
-   <para>If you want to test this feature using PDE Runtime, you need to add osgi.dev=bin to the WebContent/WEB-INF/platform/configuration/config.ini file </para>        
-</section>
-         
+        <para>The JNDI URL property can be either Hibernate Session Factory or Hibernate Entity Manager Factory. If a user doesn't specify this property, our engine will try the following JNDI URLs : </para>
+        <orderedlist>
+            <listitem>
+                <para>java:/&lt;project_name&gt;</para>
+            </listitem>
+            <listitem>
+                <para>java:/&lt;project_name&gt;EntityManagerFactory</para>
+            </listitem>
+        </orderedlist>
+        <note><title>Note:</title>
+                 <para>If you want to test this feature using PDE Runtime, you need to add osgi.dev=bin to the WebContent/WEB-INF/platform/configuration/config.ini file </para>        
+        </note>
+    </section>
+    
 </chapter>

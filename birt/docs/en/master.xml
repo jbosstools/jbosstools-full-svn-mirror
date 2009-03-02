@@ -6,6 +6,7 @@
 <!ENTITY introduction SYSTEM "modules/introduction.xml">
 <!ENTITY birt_support SYSTEM "modules/birt_support.xml">
 <!ENTITY birt_designer SYSTEM "modules/birt_designer.xml">
+<!ENTITY birt_integration SYSTEM "modules/birt_integration.xml">
 
                     
 
@@ -43,6 +44,7 @@
     &introduction;
     &birt_support;
     &birt_designer;
+    &birt_integration;	
     
 
 </book>    
