@@ -103,7 +103,7 @@
             <title>Adding &quot;Birt Reporting Runtime Component&quot; Facet </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -120,7 +120,7 @@
                 Configuration</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/SeamProjectConfiguration.png"/>
+                    <imagedata fileref="images/BirtIntegration/SeamProjectConfiguration.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -200,7 +200,7 @@
             <title>Trying the tests out. First Page</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/Tests1.png"/>
+                    <imagedata fileref="images/BirtIntegration/Tests1.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -209,7 +209,7 @@
             <title>Trying the tests out. Second Page</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/Tests2.png"/>
+                    <imagedata fileref="images/BirtIntegration/Tests2.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -218,7 +218,7 @@
             <title>Trying the tests out. Third Page</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/Tests3.png"/>
+                    <imagedata fileref="images/BirtIntegration/Tests3.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -227,7 +227,7 @@
             <title>Trying the tests out. Forth Page</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/Tests4.png"/>
+                    <imagedata fileref="images/BirtIntegration/Tests4.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -323,7 +323,7 @@
             <title>Embeding BIRT Report in Seam xhtml Page. First Page</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/BirtReportInSeamPage1.png"/>
+                    <imagedata fileref="images/BirtIntegration/BirtReportInSeamPage1.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -332,13 +332,21 @@
             <title>Embeding BIRT Report in Seam xhtml Page. Second Page</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/BirtReportInSeamPage2.png"/>
+                    <imagedata fileref="images/BirtIntegration/BirtReportInSeamPage2.png"/>
                 </imageobject>
             </mediaobject>
         </figure>   
         
+        <figure>
+            <title>Embeding BIRT Report in Seam xhtml Page. Third Page</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtIntegration/BirtReportInSeamPage3.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>   
         
-    </section>
+     </section>
     </section>
     
     
@@ -359,10 +367,10 @@
         </orderedlist>
         
         <figure>
-            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <title>Creating New Birt Report </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/CreatingNewBirtReport.png"/>
                 </imageobject>
             </mediaobject>
         </figure> 
@@ -374,10 +382,10 @@
         </orderedlist>
         
         <figure>
-            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <title>Adding Hibernate ODA Datasource </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingHibernateODADatasource.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -386,7 +394,7 @@
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -403,7 +411,7 @@
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -412,7 +420,7 @@
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -428,7 +436,7 @@
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -436,7 +444,7 @@
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -448,7 +456,7 @@
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -457,7 +465,7 @@
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -466,7 +474,7 @@
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -482,7 +490,7 @@
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -519,7 +527,7 @@
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -534,7 +542,7 @@
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtSeamProject/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
                 </imageobject>
             </mediaobject>
         </figure> 
