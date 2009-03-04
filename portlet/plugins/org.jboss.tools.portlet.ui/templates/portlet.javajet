@@ -1,5 +1,5 @@
 <%@ jet package="org.jboss.tools.portlet.ui" 
-	imports="java.util.* org.eclipse.jst.j2ee.internal.common.operations.* org.eclipse.jst.j2ee.internal.web.operations.* org.jboss.tools.portlet.operations.* org.jboss.tools.portlet.ui.*" 
+	imports="java.util.* org.eclipse.jst.j2ee.internal.common.operations.* org.jboss.tools.portlet.operations.*" 
 	class="PortletTemplate" 
 %>
 <% CreatePortletTemplateModel model = (CreatePortletTemplateModel) argument; %>
