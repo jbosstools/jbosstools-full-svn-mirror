@@ -391,16 +391,15 @@
         </figure>
         
         <figure>
-            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <title>Testing Connection</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/TestingConnection.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
         
-        
-        
+                
         <orderedlist>
             <listitem>
                 <para>add the Hibernate ODA dataset</para>
@@ -408,10 +407,10 @@
         </orderedlist>
         
         <figure>
-            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <title>Adding  </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingHibernateODADataset.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
