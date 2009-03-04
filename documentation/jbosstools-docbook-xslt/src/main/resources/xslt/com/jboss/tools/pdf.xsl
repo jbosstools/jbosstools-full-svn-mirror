@@ -10,47 +10,6 @@
 
    <xsl:import href="classpath:/xslt/com/jboss/pdf.xsl"/>
    
-   
-   <!--xsl:template name="toc.line">
-      <xsl:param name="toc-context" select="NOTANODE"/>  
-      <xsl:variable name="id">  
-         <xsl:call-template name="object.id"/>
-      </xsl:variable>
-      
-      <xsl:variable name="label">  
-         <xsl:apply-templates select="." mode="label.markup"/>  
-      </xsl:variable>
-      
-      <fo:block xsl:use-attribute-sets="toc.line.properties">  
-         <fo:inline keep-with-next.within-line="always">
-            
-            <fo:basic-link internal-destination="{$id}" 
-                                       background-image="new.png"
-                                       background-repeat="no-repeat"
-                                       background-position-horizontal="right">  
-               
-              
-               <xsl:if test="$label != ''">
-                  <xsl:copy-of select="$label"/>
-                  <xsl:value-of select="$autotoc.label.separator"/>
-               </xsl:if>
-               <xsl:apply-templates select="." mode="title.markup"/>  
-            </fo:basic-link>
-         </fo:inline>
-         <fo:inline keep-together.within-line="always"> 
-            <xsl:text> </xsl:text>
-            <fo:leader leader-pattern="dots"
-               leader-pattern-width="3pt"
-               leader-alignment="reference-area"
-               keep-with-next.within-line="always"/>
-            <xsl:text> </xsl:text>
-            <fo:basic-link internal-destination="{$id}">
-               <fo:page-number-citation ref-id="{$id}"/>
-            </fo:basic-link>
-         </fo:inline>
-      </fo:block>
-      </xsl:template-->
-
    <!--            overwriting links properties                        -->
    <xsl:param name="ulink.show" select="0"></xsl:param>
   
@@ -104,16 +63,6 @@
       </xsl:attribute>
    </xsl:attribute-set>
 
-   <!-- tables headers bgcolor overwriting  -->
-   
-   <!--xsl:template name="table.cell.block.properties">
-      <xsl:if test="ancestor::thead or ancestor::tfoot">
-         <xsl:attribute name="font-weight">bold</xsl:attribute>
-         <xsl:attribute name="background-color">green</xsl:attribute>
-         <xsl:attribute name="border-color">green</xsl:attribute>
-         <xsl:attribute name="color">white</xsl:attribute>
-      </xsl:if>
-   </xsl:template-->
    
    <!--              highlighting meaningful words                      -->
    
@@ -124,16 +73,9 @@
          </fo:inline>
    </xsl:template>
    
-   <xsl:template match="//diffmk:wrapper">
- <xsl:choose>
-  <xsl:when test="@diffmk:change='deleted'">
-      <fo:inline> </fo:inline>
-   </xsl:when>
-   <xsl:otherwise>
-       <fo:inline background-color="#cce2f6"> 
-         <xsl:value-of select="."/> 
-         </fo:inline>
-  </xsl:otherwise>
- </xsl:choose>
-  </xsl:template>   
+<xsl:template match="//diffmk:wrapper">
+    <fo:inline> 
+     <xsl:value-of select="."/><xsl:text> </xsl:text>
+    </fo:inline>
+</xsl:template>
 </xsl:stylesheet>
