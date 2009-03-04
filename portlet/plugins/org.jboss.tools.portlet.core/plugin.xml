@@ -92,6 +92,11 @@
       id="org.jboss.tools.portlet.core.internal.portletlibrarycontainer.runtime"/>
    </extension>
    
+   <extension point="org.eclipse.jst.j2ee.classpathdep">
+  	<filteredClasspathContainer containerID="org.jboss.tools.portlet.core.internal.portletlibrarycontainer.runtime"/>
+  	<filteredClasspathContainer containerID="org.jboss.tools.portlet.core.internal.portletlibrarycontainer.v20"/>
+   </extension>
+   
    <extension point="org.eclipse.wst.common.project.facet.core.facets">
       
       <project-facet id="jboss.jsfportlet">
