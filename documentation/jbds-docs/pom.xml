@@ -13,8 +13,18 @@
 	<modules>
 		<module>../guides/Exadel-migration</module>
 		<module>../guides/GettingStartedGuide</module>
+		<module>../../as/docs/reference</module>
+		<module>../../hibernatetools/docs/reference</module>
+		<module>../../jbpm/docs/reference</module>
 		<module>../../jsf/docs/userguide</module>
-	<!--module>index</module-->
+		<module>../../jsf/docs/jsf_tools_ref_guide</module>
+		<module>../../jsf/docs/jsf_tools_tutorial</module>
+		<module>../../seam/docs/reference</module>
+		<module>../../struts/docs/struts_tools_ref_guide</module>
+		<module>../../struts/docs/struts_tools_tutorial</module>
+		<module>../../esb/docs/esb_ref_guide</module>
+		
+	<module>index</module>
 	</modules>
 
 	<build>
