@@ -407,7 +407,7 @@
         </orderedlist>
         
         <figure>
-            <title>Adding  </title>
+            <title>Adding Hibernate ODA Dataset </title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/BirtIntegration/AddingHibernateODADataset.png"/>
@@ -416,10 +416,10 @@
         </figure>
         
         <figure>
-            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <title>Testing Query </title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/TestingQuery.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -432,13 +432,43 @@
         </orderedlist>
         
         <figure>
-            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <title>HQL Features - Output Columns Section</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/HQLFeaturesOutputColumns.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
+        <figure>
+            <title>HQL Features - Preview Results Section</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtIntegration/HQLFeaturesPreviewResults.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        
+        <para>You can create a BIRT report using this data source and data set.</para>
+                 
+        <figure>
+            <title>Creating a BIRT report using this data source and data set</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="BIRTReportUsingDataSourceAndSet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <figure>
+            <title>BIRT Report  -Preview Tab</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtIntegration/BIRTReportPreviewTab.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
         <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
             <mediaobject>
@@ -450,30 +480,31 @@
         
         <para>You can also use parameters within the Hibernate ODA driver. </para>
         
-        
         <figure>
-            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <title>Using parameters within the Hibernate ODA driver.</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/ParametersWithinHibernateODADriver.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
         
+        
         <figure>
-            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <title>Adding New Parameter</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingNewParameter.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
         
+        
         <figure>
-            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <title>Previewing Results</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/PreviewingResults.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
