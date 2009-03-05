@@ -25,6 +25,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
@@ -149,10 +151,12 @@ public class VpeTest extends TestCase implements ILogListener {
     protected void closeEditors() {
 
         // wait
-        TestUtil.waitForJobs();
-
+//        TestUtil.waitForJobs();
+        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        IWorkbenchPart part = page.getViewReferences()[0].getPart(false);
+        page.activate(part);
         // close
-        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeAllEditors(false);
+        page.closeAllEditors(false);
 
     }
  
@@ -218,12 +222,6 @@ public class VpeTest extends TestCase implements ILogListener {
                 input, EDITOR_ID, true);
 
         assertNotNull(part);
-        // wait for jobs
-        // TestUtil.waitForJobs();
-        // wait full initialization of vpe
-        // commented by dgolovin to get rid of jvm error [libexpat.so.0+0xeff4]
-        // TestUtil.delay(1000);
-
         return part;
 
     }
