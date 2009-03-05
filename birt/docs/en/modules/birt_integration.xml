@@ -517,10 +517,10 @@
         <para>You can deploy this report by adding an action button to the Seam&apos;s CRUD xhtml file.</para>
         
         <figure>
-            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <title>Adding Action Button</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/AddingActionButton.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -554,10 +554,10 @@
         </orderedlist>
         
         <figure>
-            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <title>Opening Articles.xhtml Page</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/OpeningArticlesPage.png"/>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -569,10 +569,10 @@
         </orderedlist>
         
         <figure>
-            <title>Adding &quot;Birt Reporting Runtime Component&quot;  Facet </title>
+            <title>Birt PDF Report</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/BirtIntegration/AddingBirtFacet.png"/>
+                    <imagedata fileref="images/BirtIntegration/BirtPDFReport.png"/>
                 </imageobject>
             </mediaobject>
         </figure> 
