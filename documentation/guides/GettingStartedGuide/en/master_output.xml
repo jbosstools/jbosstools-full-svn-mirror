@@ -26,7 +26,8 @@
 <!ENTITY jbossportallink "../../jboss_portal_tools_ref_guide/html_single/index.html"> 
 <!ENTITY migrationlink "../../Exadel-migration/html_single/index.html">                         
 <!ENTITY wslink "../../ws_ref_guide/html_single/index.html">
-]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
+]>
+<book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
  <bookinfo>
   <title>Getting Started with JBoss Developer Studio</title>
   <pubdate>April 2008</pubdate>
@@ -671,7 +672,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <section id="Support">
   <?dbhtml filename="Support.html"?>
   <title>Support</title>
-  <para>If you have comments or questions, you can discuss them at our <ulink url="http://www.jboss.com/index.html?module=bb&op=viewforum&f=258">JBoss
+  <para>If you have comments or questions, you can discuss them at our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
     Developer Studio Forum</ulink>.</para>
   <para>When writing to the forum for questions, please include the following information:</para>
   <orderedlist continuation="restarts" inheritnum="ignore">
@@ -695,7 +696,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <title>Other relevant resources on the topic</title>
   <para>JBDS on JBoss: <ulink url="http://labs.jboss.com/rhdevstudio/">JBoss Developer
    Studio</ulink></para>
-  <para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&op=viewforum&f=258">JBoss
+  <para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
    Forum</ulink></para>
   <para>Subscription: <ulink url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">JBDS
    Subscription</ulink></para>

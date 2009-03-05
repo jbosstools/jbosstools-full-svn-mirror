@@ -63,7 +63,7 @@
 
 			<fileSet>
 				<directory>../../jbpm/docs/reference/target/docbook/publish/en-US</directory>
-				<outputDirectory>/jboss_jbpm_ref_guide</outputDirectory>
+				<outputDirectory>/jbpm</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
 				<includes>
