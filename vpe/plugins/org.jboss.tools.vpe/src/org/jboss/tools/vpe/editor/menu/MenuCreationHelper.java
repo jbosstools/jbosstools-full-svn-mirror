@@ -232,9 +232,9 @@ public class MenuCreationHelper {
 					manager.add(new Separator());
 				}
 	
-				manager.add(new VpeTextOperationAction(CUT_ACTION, ActionFactory.CUT.getId(), node, pageContext));
-				manager.add(new VpeTextOperationAction(COPY_ACTION, ActionFactory.COPY.getId(), node, pageContext));
-				manager.add(new VpeTextOperationAction(PASTE_ACTION, ActionFactory.PASTE.getId(), node, pageContext));
+				manager.add(new VpeTextOperationAction(CUT_ACTION, ActionFactory.CUT.getId(), node, pageContext,sourceEditor));
+				manager.add(new VpeTextOperationAction(COPY_ACTION, ActionFactory.COPY.getId(), node, pageContext,sourceEditor));
+				manager.add(new VpeTextOperationAction(PASTE_ACTION, ActionFactory.PASTE.getId(), node, pageContext,sourceEditor));
 			} else if (node.getNodeType() == Node.TEXT_NODE) {
 				manager.add(new Action(CUT_ACTION) {
 							public void run() {

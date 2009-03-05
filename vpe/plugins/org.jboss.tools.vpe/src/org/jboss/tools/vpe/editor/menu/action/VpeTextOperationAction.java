@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor.menu.action;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.w3c.dom.Node;
@@ -25,6 +26,7 @@ public class VpeTextOperationAction extends Action {
 	private String id = null;
 	private Node region = null;
 	private VpePageContext pageContext = null;
+	private StructuredTextEditor sourceEditor;
 
 	/**
 	 * Constructor.
@@ -33,12 +35,14 @@ public class VpeTextOperationAction extends Action {
 	 * @param id action id
 	 * @param region the Node object
 	 * @param pageContext the VpePageContext object
+	 * @param sourceEditor 
 	 */
-	public VpeTextOperationAction(String name, String id, Node region, VpePageContext pageContext) {
+	public VpeTextOperationAction(String name, String id, Node region, VpePageContext pageContext, StructuredTextEditor sourceEditor) {
 		super(name);
 		this.id = id;
 		this.region = region;
 		this.pageContext = pageContext;
+		this.sourceEditor = sourceEditor;
 	}
 
 	/**
@@ -46,5 +50,6 @@ public class VpeTextOperationAction extends Action {
 	 */
 	public void run() {
 		SelectionUtil.setSourceSelection(pageContext, region);
+		this.sourceEditor.getAction(id).run();
 	}
 }
