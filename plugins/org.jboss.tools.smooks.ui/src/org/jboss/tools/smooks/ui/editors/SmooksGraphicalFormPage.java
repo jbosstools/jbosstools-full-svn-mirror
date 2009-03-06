@@ -123,9 +123,14 @@ import org.jboss.tools.smooks.graphical.MappingDataType;
 import org.jboss.tools.smooks.graphical.Param;
 import org.jboss.tools.smooks.graphical.Params;
 import org.jboss.tools.smooks.graphical.util.GraphicalInformationSaver;
+import org.jboss.tools.smooks.model.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.DocumentRoot;
+import org.jboss.tools.smooks.model.ParamType;
+import org.jboss.tools.smooks.model.ResourceConfigType;
+import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
+import org.jboss.tools.smooks.model.util.SmooksModelUtils;
 import org.jboss.tools.smooks.model.util.SmooksResourceFactoryImpl;
 import org.jboss.tools.smooks.ui.AnalyzeResult;
 import org.jboss.tools.smooks.ui.IAnalyzeListener;
@@ -1328,7 +1333,45 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				return;
 			SmooksResourceListType listType = ((DocumentRoot) smooksResource
 					.getContents().get(0)).getSmooksResourceList();
+			checkSmooksConfigFileModel(listType);
 			this.analyzeGraphicalModel(listType, graphinformations, file);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param listType
+	 */
+	protected void checkSmooksConfigFileModel(SmooksResourceListType listType){
+		List<AbstractResourceConfig> list = listType.getAbstractResourceConfig();
+		ResourceConfigType globalParameterResource = null;
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			AbstractResourceConfig arc = (AbstractResourceConfig) iterator
+					.next();
+			if(arc instanceof ResourceConfigType){
+				String selector = ((ResourceConfigType)arc).getSelector();
+				if(selector == null) continue;
+				selector = selector.trim();
+				if(SmooksModelConstants.GLOBAL_PARAMETERS.equals(selector)){
+					globalParameterResource = (ResourceConfigType)arc;
+					break;
+				}
+			}
+		}
+		
+		if(globalParameterResource == null){
+			globalParameterResource = SmooksFactory.eINSTANCE.createResourceConfigType();
+			globalParameterResource.setSelector(SmooksModelConstants.GLOBAL_PARAMETERS);
+			SmooksModelUtils.setParamText("stream.filter.type", "SAX", globalParameterResource);
+		}else{
+			String value = SmooksModelUtils.getParmaText("stream.filter.type", globalParameterResource);
+			if(value == null){
+				SmooksModelUtils.setParamText("stream.filter.type", "SAX", globalParameterResource);
+			}else{
+				if(value.trim().length() == 0){
+					SmooksModelUtils.setParamText("stream.filter.type", "SAX", globalParameterResource);
+				}
+			}
 		}
 	}
 
