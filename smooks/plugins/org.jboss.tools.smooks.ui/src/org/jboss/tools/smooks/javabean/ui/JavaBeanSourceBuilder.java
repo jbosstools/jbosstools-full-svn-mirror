@@ -112,7 +112,9 @@ public class JavaBeanSourceBuilder extends AbstractJavaBeanBuilder implements
 				selector = selector.substring(0, selector.length() - 2);
 				Class arrayClass = loader.loadClass(selector);
 				Object arrayInstance = Array.newInstance(arrayClass, 0);
-				return arrayInstance.getClass();
+				Class arrayClasss =  arrayInstance.getClass();
+				arrayInstance = null;
+				return arrayClass;
 			}
 			return loader.loadClass(selector);
 		} catch (ClassNotFoundException e) {

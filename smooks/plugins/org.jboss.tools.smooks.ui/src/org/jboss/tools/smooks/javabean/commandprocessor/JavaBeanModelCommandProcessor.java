@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditDomain;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.commands.CompoundCommand;
@@ -117,14 +116,25 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 				return false;
 			}
 		}
-		
-		if(source instanceof IXMLStructuredObject && t instanceof JavaBeanModel && !(source instanceof JavaBeanModel)){
-			boolean isattribute = ((IXMLStructuredObject)source).isAttribute();
+
+		if (source instanceof IXMLStructuredObject
+				&& t instanceof JavaBeanModel
+				&& !(source instanceof JavaBeanModel)) {
+			boolean isattribute = ((IXMLStructuredObject) source).isAttribute();
 			JavaBeanModel targetModel = (JavaBeanModel) t;
 			boolean isprimitive = targetModel.isPrimitive();
-			if(isattribute && !isprimitive) return false;
+			if (isattribute && !isprimitive)
+				return false;
+			boolean canlink = hasBeanCreationParentLink(targetGraphModel,
+					context);
+			if (isprimitive) {
+				if (!canlink){
+					linkBeanCreateionParentLink(sourceGraphModel,
+							targetGraphModel, context);
+				}
+			}
 		}
-		
+
 		if (source instanceof JavaBeanModel && t instanceof JavaBeanModel
 				&& sourceGraphModel instanceof SourceModel) {
 
@@ -134,6 +144,16 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 			boolean tis = ((JavaBeanModel) t).isPrimitive();
 			if ((sis && !tis) || (!sis && tis)) {
 				return false;
+			}
+
+			boolean canlink = hasBeanCreationParentLink(targetGraphModel,
+					context);
+
+			if (tis) {
+				if (!canlink) {
+					linkBeanCreateionParentLink(sourceGraphModel,
+							targetGraphModel, context);
+				}
 			}
 
 			Class sourceClass = sourceModel.getBeanClass();
@@ -148,6 +168,74 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 		return true;
 	}
 
+	private void linkBeanCreateionParentLink(
+			AbstractStructuredDataModel sourceGraphModel,
+			AbstractStructuredDataModel targetGraphModel,
+			SmooksConfigurationFileGenerateContext context) {
+		Object obj = sourceGraphModel.getReferenceEntityModel();
+		AbstractStructuredDataModel sourceParentGraph = null;
+		AbstractStructuredDataModel targetParentGraph = null;
+		if (obj instanceof IXMLStructuredObject) {
+			IXMLStructuredObject sourceParent = ((IXMLStructuredObject) obj)
+					.getParent();
+			sourceParentGraph = UIUtils.findGraphModel(context
+					.getGraphicalRootModel(), sourceParent);
+		}
+		Object obj1 = targetGraphModel.getReferenceEntityModel();
+		if (obj1 instanceof IXMLStructuredObject) {
+			IXMLStructuredObject targetParent = ((IXMLStructuredObject) obj1)
+					.getParent();
+			targetParentGraph = UIUtils.findGraphModel(context
+					.getGraphicalRootModel(), targetParent);
+		}
+		if (sourceParentGraph != null && targetParentGraph != null) {
+			PropertyModel propertyModel = new PropertyModel();
+			propertyModel.setName(BeanPopulatorMappingAnalyzer.PRO_BINDING_TYPE);
+			propertyModel.setValue(BeanPopulatorMappingAnalyzer.BEAN_CREATION);
+			CreateConnectionCommand command = new CreateConnectionCommand();
+			command.addPropertyModel(propertyModel);
+			command.setSource((IConnectableModel) sourceParentGraph);
+			command.setTarget((IConnectableModel) targetParentGraph);
+			context.getGefDomain().getCommandStack().execute(command);
+		}
+
+	}
+
+	private boolean hasBeanCreationParentLink(
+			AbstractStructuredDataModel sourceGraphModel,
+			SmooksConfigurationFileGenerateContext context) {
+		Object sourceNode = sourceGraphModel.getReferenceEntityModel();
+		if (!(sourceNode instanceof JavaBeanModel)) {
+			return false;
+		}
+		JavaBeanModel sourceParent = ((JavaBeanModel) sourceNode).getParent();
+		if (sourceParent == null) {
+			return false;
+		}
+		if (sourceParent instanceof JavaBeanList) {
+			return false;
+		}
+		IConnectableModel sourceParentGraph = (IConnectableModel) UIUtils
+				.findGraphModel(context.getGraphicalRootModel(), sourceParent);
+		// If the source's parent node haven't any associated resource-config ,
+		// refuse the connect request.
+		List parentConnections = sourceParentGraph.getModelTargetConnections();
+		if (parentConnections.size() == 0)
+			return false;
+		for (Iterator iterator = parentConnections.iterator(); iterator
+				.hasNext();) {
+			LineConnectionModel object = (LineConnectionModel) iterator.next();
+			if (Java2JavaAnalyzer.BEAN_CREATION.equals(object
+					.getProperty(Java2JavaAnalyzer.PRO_BINDING_TYPE))) {
+				if (object
+						.getProperty(Java2JavaAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG) != null) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private boolean checkTargetToTarget(
 			AbstractStructuredDataModel sourceGraphModel,
 			AbstractStructuredDataModel targetGraphModel,
@@ -156,14 +244,14 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 			return true;
 		}
 		Object sourceParent = sourceGraphModel.getReferenceEntityModel();
-		if(!(sourceParent instanceof JavaBeanModel)){
+		if (!(sourceParent instanceof JavaBeanModel)) {
 			return false;
 		}
-		sourceParent = ((JavaBeanModel)sourceParent).getParent();
-		if(sourceParent == null){
+		sourceParent = ((JavaBeanModel) sourceParent).getParent();
+		if (sourceParent == null) {
 			return false;
 		}
-		if(sourceParent instanceof JavaBeanList){
+		if (sourceParent instanceof JavaBeanList) {
 			return false;
 		}
 		IConnectableModel sourceParentGraph = (IConnectableModel) UIUtils
@@ -180,7 +268,8 @@ public class JavaBeanModelCommandProcessor implements ICommandProcessor {
 		for (Iterator iterator = parentConnections.iterator(); iterator
 				.hasNext();) {
 			LineConnectionModel object = (LineConnectionModel) iterator.next();
-			if (object.getProperty(Java2JavaAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG) == null) {
+			if (object
+					.getProperty(Java2JavaAnalyzer.PRO_REFERENCE_RESOURCE_CONFIG) == null) {
 				return false;
 			}
 		}

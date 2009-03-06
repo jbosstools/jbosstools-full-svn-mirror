@@ -43,10 +43,11 @@ public class RemoveJavaBeanAction extends JavaBeanModelAction {
 //				disConnectAllConnections(graphModel);
 			}
 			if(viewer instanceof PropertyChangeListener){
-				model.removeNodePropetyChangeListener((PropertyChangeListener)viewer);
+				model.cleanAllNodePropertyChangeListeners();
 			}
 			beanList.removeJavaBean(model);
 		}
+		super.run();
 	}
 	
 	protected void disConnectAllConnections(IConnectableModel model){

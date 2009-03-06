@@ -56,7 +56,6 @@ public class SmooksAction extends Action implements ISmooksAction {
 	}
 	
 	public void run(){
-		
 	}
 
 	public void selectionChanged(ISelection selection) {
