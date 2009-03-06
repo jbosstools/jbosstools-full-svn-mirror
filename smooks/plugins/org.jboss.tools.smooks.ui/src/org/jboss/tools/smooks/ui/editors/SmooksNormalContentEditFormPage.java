@@ -85,8 +85,6 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 
 	private Button domButton;
 
-	private Button saxdomButton;
-
 	private EditingDomain domain;
 
 	private List hidenResourceConfigs;
@@ -198,8 +196,6 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 			saxButton.setSelection(false);
 		if (domButton != null)
 			domButton.setSelection(false);
-		if (saxdomButton != null)
-			saxdomButton.setSelection(false);
 		if (this.getModelPackage() != null) {
 			List list = modelPackage.getSmooksResourceList()
 					.getAbstractResourceConfig();
@@ -228,10 +224,6 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 				if (SmooksModelConstants.DOM.equals(type)) {
 					if (domButton != null)
 						domButton.setSelection(true);
-				}
-				if ("SAX/DOM".equals(type)) { //$NON-NLS-1$
-					if (saxdomButton != null)
-						saxdomButton.setSelection(true);
 				}
 			}
 		}
@@ -270,9 +262,6 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 				SmooksModelConstants.SAX);
 		domButton = createTypeSelectRadioButton(buttonComposite, tool,
 				SmooksModelConstants.DOM);
-		saxdomButton = createTypeSelectRadioButton(buttonComposite, tool,
-				SmooksModelConstants.SAX_DOM);
-
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 //		tool.createSeparator(otherConfigurationComposite, SWT.HORIZONTAL)
@@ -417,14 +406,6 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 			public void widgetSelected(SelectionEvent e) {
 				setTransformType(SmooksModelConstants.DOM);
 			}
-		});
-
-		saxdomButton.addSelectionListener(new SelectionAdapter() {
-
-			public void widgetSelected(SelectionEvent e) {
-				setTransformType(SmooksModelConstants.SAX_DOM);
-			}
-
 		});
 
 		addFileButton.addSelectionListener(new SelectionAdapter() {
