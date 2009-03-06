@@ -23,7 +23,7 @@
         
         <para>These are the prerequisites required to create a Seam web project including with BIRT functionality:</para>
         
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>
                     <ulink url="http://download.eclipse.org/eclipse/downloads/drops/R-3.4-200806172000/index.php">Eclipse Version 3.4 SDK</ulink>
@@ -79,7 +79,7 @@
                     <ulink url="http://jira.jboss.com/jira/secure/attachment/12320944/org.jboss.tools.birt.feature.zip">JBoss BIRT integration feature</ulink>
                 </para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         
     </section>
     
@@ -87,7 +87,7 @@
         <title>Creating a web project</title>
         
         <para>Follow the next steps to create a web project</para>
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>Create a new Seam Web Project</para>
             </listitem>
@@ -97,7 +97,7 @@
             <listitem>
                 <para>Add the &quot;Birt Reporting Runtime Component&quot; facet </para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         
         <figure>
             <title>Adding &quot;Birt Reporting Runtime Component&quot; Facet </title>
@@ -108,12 +108,12 @@
             </mediaobject>
         </figure>
         
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>Or choose the &quot;JBoss BIRT Integration Web Project&quot;
                     configuration</para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         
         <figure>
             <title>Choosing &quot;JBoss BIRT Integration Web Project &quot;
@@ -125,25 +125,26 @@
             </mediaobject>
         </figure>
         
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>Create the birttests.xhtml, testbirt.xhtml and testbirt1.xhtml pages as
                     follows:</para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         <para>
             <emphasis role="bold">birttests.xhtml:</emphasis>
         </para>
         
         <programlisting role="XHTML"><![CDATA[
+
             <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                                                             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
             <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-                                          xmlns:s="http://jboss.com/products/seam/taglib"
-                                          xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" 
-                                          xmlns:h="http://java.sun.com/jsf/html" 
-                                          xmlns:rich="http://richfaces.org/rich" 
-                                          template="layout/template.xhtml">
+                                        xmlns:s="http://jboss.com/products/seam/taglib"
+                                        xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+                                        xmlns:h="http://java.sun.com/jsf/html" 
+                                        xmlns:rich="http://richfaces.org/rich" 
+                                        template="layout/template.xhtml">
             
             <ui:define name="body">  
                    <h:messages globalOnly="true" styleClass="message"/> <rich:panel> 
@@ -190,11 +191,11 @@
         ]]></programlisting>
         
         
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>Try the tests out by accessing http://localhost:8080//birttests.seam with your web browser.</para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         
         <figure>
             <title>Trying the tests out. First Page</title>
@@ -233,7 +234,7 @@
         </figure>
         
         <para>The birt tag recognizes most of the parameters described on <ulink url="http://www.eclipse.org/birt/phoenix/deploy/viewerUsage2.2.php#parameters">the BIRT Report Viewer Parameters page</ulink>. The attributes of the birt tag don't contain the "__" prefix. The param tag describes report parameters. It supports the following attributes: </para>
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>name - the parameter name (required)</para>
             </listitem>
@@ -246,7 +247,7 @@
             <listitem>
                 <para>islocale - specifies whether the parameter is localized (optional)</para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         <para>These tags are defined in the org.jboss.birt.core/resources/jboss-seam-birt.jar library that contains source. </para>
         <para>It is possible to embed a BIRT report in some Seam xhtml page. For instance: </para>
         <para/>
@@ -254,68 +255,28 @@
         <para>
             <emphasis role="bold">Example:</emphasis>
         </para>
-        <programlisting role="XHTML"><![CDATA[
-        &lt;!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-                             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+            <programlisting role="XHTML"><![CDATA[
 
-&lt;ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:s="http://jboss.com/products/seam/taglib"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:rich="http://richfaces.org/rich"
-                xmlns:b="http://jboss.com/products/seam/birt" 
-                template="layout/template.xhtml"&gt;
-                       
-&lt;ui:define name="body"&gt;
-    
-    &lt;h:messages globalOnly="true" styleClass="message" id="globalMessages"/&gt;
-    
-    &lt;rich:panel&gt;
-        &lt;f:facet name="header"&gt;Products&lt;/f:facet&gt;
 
-	&lt;b:birt designType="embed"
-        designName="ProductCatalog.rptdesign"
-        embeddable="true"
-        masterpage="false"&gt;
-	&lt;/b:birt&gt; 
-
-        
-        &lt;div style="clear:both"/&gt;
-        
-    &lt;/rich:panel&gt;
-    
-    &lt;div class="actionButtons"&gt;      
-
-        &lt;s:button view="/ProductsEdit.xhtml" 
-                    id="edit" 
-                 value="Edit"/&gt;
-                 
-        &lt;s:button view="/BirtProductsPdf.xhtml" 
-                    id="BirtProductPdf" 
-                 value="Product Catalog - PDF"/&gt;
-                 
-        &lt;s:button view="/BirtProductsFrameset.xhtml" 
-                    id="BirtProductFrameset" 
-                 value="Product Catalog - Frameset"/&gt;
-                 
-        &lt;s:button view="/BirtProductsEmbedded.xhtml" 
-                    id="BirtProductEmbedded" 
-                 value="Product Catalog - Embedded"/&gt;
-
-		&lt;s:button view="/TopSellingProducts.xhtml" 
-                    id="TopSellingProducts" 
-                 value="Top Selling Products"/&gt;
-                 
-        &lt;s:button view="/#{empty productsFrom ? 'ProductsList' : productsFrom}.xhtml"
-                    id="done"
-                 value="Done"/&gt;
-
-    &lt;/div&gt;
-
-&lt;/ui:define&gt;
-
-&lt;/ui:composition&gt;
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:rich="http://richfaces.org/rich" xmlns:b="http://jboss.com/products/seam/birt" template="layout/template.xhtml">
+ <ui:define name="body">
+  <h:messages globalOnly="true" styleClass="message" id="globalMessages"/>
+  <rich:panel>
+   <f:facet name="header">Products</f:facet>
+   <b:birt designType="embed" designName="ProductCatalog.rptdesign" embeddable="true" masterpage="false"/>
+   <div style="clear:both"/>
+  </rich:panel>
+  <div class="actionButtons">
+   <s:button view="/ProductsEdit.xhtml" id="edit" value="Edit"/>
+   <s:button view="/BirtProductsPdf.xhtml" id="BirtProductPdf" value="Product Catalog - PDF"/>
+   <s:button view="/BirtProductsFrameset.xhtml" id="BirtProductFrameset" value="Product Catalog - Frameset"/>
+   <s:button view="/BirtProductsEmbedded.xhtml" id="BirtProductEmbedded" value="Product Catalog - Embedded"/>
+   <s:button view="/TopSellingProducts.xhtml" id="TopSellingProducts" value="Top Selling Products"/>
+   <s:button view="/#{empty productsFrom ? 'ProductsList' : productsFrom}.xhtml" id="done" value="Done"/>
+  </div>
+ </ui:define>
+</ui:composition>
  
         ]]></programlisting>
         
@@ -354,17 +315,17 @@
         <title>Hibernate ODA Data Source</title>
         
         <para>The JBoss BIRT Integration feature includes the Hibernate ODA Data Source completely integrated with Hibernate Tools. You can use it in the way you use any of BIRT ODA drivers. For instance, </para>
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>run the Seam Generate Entities action</para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         <para>This action will create a Hibernate Console configuration. </para>
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>create a new BIRT report</para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         
         <figure>
             <title>Creating New Birt Report </title>
@@ -375,11 +336,11 @@
             </mediaobject>
         </figure> 
         
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>add the Hibernate ODA datasource</para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         
         <figure>
             <title>Adding Hibernate ODA Datasource </title>
@@ -400,11 +361,11 @@
         </figure>
         
                 
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>add the Hibernate ODA dataset</para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         
         <figure>
             <title>Adding Hibernate ODA Dataset </title>
@@ -424,12 +385,12 @@
             </mediaobject>
         </figure>
         
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>All the HQL features like syntax highlighting, content assist, formatting, Drag and Drop, etc., are available to you here <inlinegraphic fileref="embedded:graphics15" width="8.3335inch" depth="5.2083inch"/>
                 </para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         
         <figure>
             <title>HQL Features - Output Columns Section</title>
@@ -524,11 +485,11 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>create the testHibernateOda.xhtml file </para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         
         <para>
             <emphasis role="bold">birttests.xhtml:</emphasis>
@@ -547,11 +508,11 @@
 &lt;/p:birt&gt;   
 ]]></programlisting>
         
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>open the Articles.xhtml page</para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         
         <figure>
             <title>Opening Articles.xhtml Page</title>
@@ -562,11 +523,11 @@
             </mediaobject>
         </figure>
         
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>click the Birt PDF Report button </para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         
         <figure>
             <title>Birt PDF Report</title>
@@ -578,14 +539,14 @@
         </figure> 
         
         <para>The JNDI URL property can be either Hibernate Session Factory or Hibernate Entity Manager Factory. If a user doesn't specify this property, our engine will try the following JNDI URLs : </para>
-        <orderedlist>
+        <itemizedlist>
             <listitem>
                 <para>java:/&lt;project_name&gt;</para>
             </listitem>
             <listitem>
                 <para>java:/&lt;project_name&gt;EntityManagerFactory</para>
             </listitem>
-        </orderedlist>
+        </itemizedlist>
         <note><title>Note:</title>
                  <para>If you want to test this feature using PDE Runtime, you need to add osgi.dev=bin to the WebContent/WEB-INF/platform/configuration/config.ini file </para>        
         </note>

@@ -3637,7 +3637,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 
  
 
-<chapter id="gsg_faq" role="updated" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/gsg_faq.xml" xreflabel="gsg_faq">
+<chapter id="gsg_faq"  xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/gsg_faq.xml" xreflabel="gsg_faq">
     <?dbhtml filename="gsg_faq.html"?>
     <chapterinfo>
         <keywordset>
