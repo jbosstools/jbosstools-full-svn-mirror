@@ -35,7 +35,7 @@ import org.jboss.tools.smooks.ui.editors.TypeIDSelectionWizardPage;
 /**
  * 
  * @author Dart
- *
+ * 
  */
 public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 		ISmooksDataCreationAddtionWizard {
@@ -60,8 +60,11 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 	public SmooksConfigFileNewWizard() {
 		super();
 		setNeedsProgressMonitor(true);
-		super.setWindowTitle(Messages.getString("SmooksConfigFileNewWizard.NewConfigFileWizardTitle")); //$NON-NLS-1$
-		setDefaultPageImageDescriptor(SmooksUIActivator.getImageDescriptor("icons/smooks-wiz.gif"));
+		super
+				.setWindowTitle(Messages
+						.getString("SmooksConfigFileNewWizard.NewConfigFileWizardTitle")); //$NON-NLS-1$
+		setDefaultPageImageDescriptor(SmooksUIActivator
+				.getImageDescriptor("icons/smooks-wiz.gif"));
 	}
 
 	/**
@@ -103,8 +106,12 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 			return false;
 		} catch (InvocationTargetException e) {
 			Throwable realException = e.getTargetException();
-			MessageDialog.openError(getShell(), Messages.getString("SmooksConfigFileNewWizard.ErrorTitle"), realException //$NON-NLS-1$
-					.getMessage());
+			MessageDialog
+					.openError(
+							getShell(),
+							Messages
+									.getString("SmooksConfigFileNewWizard.ErrorTitle"), realException //$NON-NLS-1$
+									.getMessage());
 			return false;
 		}
 		return true;
@@ -176,14 +183,17 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 					if (sourceDataPath[0] != null || targetDataPath[0] != null) {
 						properties = new Properties();
 						if (sourceDataPath[0] != null) {
-							properties.setProperty(PRO_SOURCE_DATA_PATH, sourceDataPath[0]);
+							properties.setProperty(PRO_SOURCE_DATA_PATH,
+									sourceDataPath[0]);
 						}
 						if (targetDataPath[0] != null) {
-							properties.setProperty(PRO_TARGET_DATA_PATH, targetDataPath[0]);
+							properties.setProperty(PRO_TARGET_DATA_PATH,
+									targetDataPath[0]);
 						}
 					}
 					try {
-						ginforSave.doSave(null, sourceTypeID, targetTypeID, properties);
+						ginforSave.doSave(null, sourceTypeID, targetTypeID,
+								properties);
 					} catch (IOException e) {
 					} catch (CoreException e) {
 					}
@@ -193,7 +203,7 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 				}
 			}
 		});
-		
+
 		monitor.worked(1);
 	}
 
@@ -203,7 +213,11 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 
 	private InputStream openContentStream() {
 		String contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
-				+ "     <smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.0.xsd\"/>"; //$NON-NLS-1$
+				+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.0.xsd\">\n"
+				+ "		<resource-config selector=\"global-parameters\">\n"
+				+ "			<param name=\"stream.filter.type\">SAX</param>\n"
+				+ "		</resource-config>\n" + 
+				"</smooks-resource-list>"; //$NON-NLS-1$
 		return new ByteArrayInputStream(contents.getBytes());
 	}
 
@@ -228,12 +242,16 @@ public class SmooksConfigFileNewWizard extends Wizard implements INewWizard,
 
 	public void addSourceWizardPage(IWizardPage page) {
 		sourceCreationPages.add(page);
-		page.setTitle(Messages.getString("SmooksConfigFileNewWizard.SourceDataTypeSelectionTitle")); //$NON-NLS-1$
+		page
+				.setTitle(Messages
+						.getString("SmooksConfigFileNewWizard.SourceDataTypeSelectionTitle")); //$NON-NLS-1$
 	}
 
 	public void addTargetWizardPage(IWizardPage page) {
 		targetCreationPages.add(page);
-		page.setTitle(Messages.getString("SmooksConfigFileNewWizard.TargetDataTypeSelectionTitle")); //$NON-NLS-1$
+		page
+				.setTitle(Messages
+						.getString("SmooksConfigFileNewWizard.TargetDataTypeSelectionTitle")); //$NON-NLS-1$
 	}
 
 	public void clearSourceWizardPages() {
