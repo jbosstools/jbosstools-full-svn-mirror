@@ -34,8 +34,8 @@ import org.jboss.tools.smooks.xml.model.ITransformTreeNode;
  * 
  */
 public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
-		Cloneable , ITransformTreeNode{
-	
+		Cloneable, ITransformTreeNode {
+
 	private Properties extendProperties = new Properties();
 
 	protected PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -94,13 +94,22 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 	public void addNodePropetyChangeListener(PropertyChangeListener listener) {
 		PropertyChangeListener[] array = support.getPropertyChangeListeners();
 		for (int i = 0; i < array.length; i++) {
-			if(listener == array[i]) return;
+			if (listener == array[i])
+				return;
 		}
 		support.addPropertyChangeListener(listener);
 	}
 
 	public void removeNodePropetyChangeListener(PropertyChangeListener listener) {
 		support.removePropertyChangeListener(listener);
+	}
+
+	public void cleanAllNodePropertyChangeListeners() {
+		PropertyChangeListener[] ps = support.getPropertyChangeListeners();
+		for (int i = 0; i < ps.length; i++) {
+			PropertyChangeListener p = ps[i];
+			support.removePropertyChangeListener(p);
+		}
 	}
 
 	// /**
@@ -124,6 +133,16 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 		}
 
 		return clazz.getName();
+	}
+
+	public String getBeanClassStringWithList() {
+		String s = getBeanClassString();
+		if (this.isList()) {
+			Class genericType = getGenericType();
+			if (genericType != null)
+				s += "<" + genericType.getName() + ">";
+		}
+		return s;
 	}
 
 	/**
@@ -168,7 +187,6 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 	public PropertyDescriptor getPropertyDescriptor() {
 		return propertyDescriptor;
 	}
-	
 
 	public void setPropertyDescriptor(PropertyDescriptor propertyDescriptor) {
 		this.propertyDescriptor = propertyDescriptor;
@@ -308,6 +326,22 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 		}
 	}
 
+	protected void createArrayChildren(Class<Object> clazz, String name,
+			PropertyDescriptor pd, Class<? extends Object> parentClass,
+			boolean lazyLoad) {
+		JavaBeanModel proxyModel = newChildJavaBean(clazz, name, pd,
+				parentClass, lazyLoad);
+		addProperty(proxyModel);
+	}
+
+	protected void createListChildren(Class<Object> clazz, String name,
+			PropertyDescriptor pd, Class<? extends Object> parentClass,
+			boolean lazyLoad) {
+		JavaBeanModel proxyModel = newChildJavaBean(clazz, name, pd,
+				parentClass, lazyLoad);
+		addProperty(proxyModel);
+	}
+
 	private List properties;
 
 	public List getProperties() {
@@ -320,17 +354,14 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 			Class beanType = beanClass;
 			if (isArray() || isList()) {
 				if (componentClass != null) {
-					JavaBeanModel proxyModel = new JavaBeanModel(
-							componentClass, componentClass.getSimpleName(),
-							null, beanClass, this.lazyLoadProperties);
+					createArrayChildren(componentClass, componentClass
+							.getSimpleName(), null, beanClass,
+							this.lazyLoadProperties);
 					beanType = componentClass;
-					addProperty(proxyModel);
-
 				} else {
-					JavaBeanModel proxyModel = new JavaBeanModel(Object.class,
-							"object", null, beanClass, this.lazyLoadProperties);
+					createListChildren(Object.class, "object", null, beanClass,
+							this.lazyLoadProperties);
 					beanType = componentClass;
-					addProperty(proxyModel);
 				}
 				return properties;
 			}
@@ -342,7 +373,8 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 				PropertyDescriptor pd = pds[i];
 				if ("class".equals(pd.getName())) //$NON-NLS-1$
 					continue;
-				if(pd.getPropertyType() == null) continue;
+				if (pd.getPropertyType() == null)
+					continue;
 				if (Collection.class.isAssignableFrom(pd.getPropertyType())) {
 					Method rmethod = pd.getReadMethod();
 					if (rmethod != null) {
@@ -358,12 +390,18 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 						}
 					}
 				}
-				JavaBeanModel jbm = new JavaBeanModel(pd.getPropertyType(), pd
+				JavaBeanModel jbm = newChildJavaBean(pd.getPropertyType(), pd
 						.getName(), pd, beanClass, this.lazyLoadProperties);
 				addProperty(jbm);
 			}
 		}
 		return properties;
+	}
+
+	protected JavaBeanModel newChildJavaBean(Class clazz, String name,
+			PropertyDescriptor pd, Class parentClass, boolean lazyLoading) {
+		return new JavaBeanModel(clazz, name, pd, parentClass,
+				lazyLoading);
 	}
 
 	public void setProperties(List properties) {
@@ -441,7 +479,7 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 	}
 
 	public String getSelectorString() {
-		if(parent == null) {
+		if (parent == null) {
 			return getBeanClassString();
 		}
 		if (parent.getClass() == JavaBeanList.class) {
@@ -487,26 +525,27 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	public void setComponentClass(Class clazz){
+
+	public void setComponentClass(Class clazz) {
 		componentClass = clazz;
 	}
 
 	public Class getComponentClass() {
 		return componentClass;
 	}
-	
-	public void addExtendProperty(String name,String value){
+
+	public void addExtendProperty(String name, String value) {
 		extendProperties.setProperty(name, value);
 	}
-	
-	public String getExtendProperty(String name){
+
+	public String getExtendProperty(String name) {
 		return extendProperties.getProperty(name);
 	}
 
 	public Object clone() {
-		if(isList()){
-			JavaBeanModel model = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(ArrayList.class);
+		if (isList()) {
+			JavaBeanModel model = JavaBeanModelFactory
+					.getJavaBeanModelWithLazyLoad(ArrayList.class);
 			model.setComponentClass(componentClass);
 			return model;
 		}

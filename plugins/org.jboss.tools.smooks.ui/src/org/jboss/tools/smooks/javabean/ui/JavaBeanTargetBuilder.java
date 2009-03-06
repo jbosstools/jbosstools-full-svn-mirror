@@ -3,6 +3,7 @@
  */
 package org.jboss.tools.smooks.javabean.ui;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,8 @@ import org.jboss.tools.smooks.model.ResourceType;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
 import org.jboss.tools.smooks.model.util.SmooksModelConstants;
 import org.jboss.tools.smooks.model.util.SmooksModelUtils;
+import org.jboss.tools.smooks.ui.editors.SmooksGraphicalFormPage;
+import org.jboss.tools.smooks.ui.editors.TransformDataTreeViewer;
 import org.jboss.tools.smooks.utils.ProjectClassLoader;
 
 /**
@@ -31,11 +34,13 @@ import org.jboss.tools.smooks.utils.ProjectClassLoader;
  * 
  */
 public class JavaBeanTargetBuilder extends AbstractJavaBeanBuilder implements
-		ITargetModelAnalyzer {
+		ITargetModelAnalyzer, PropertyChangeListener {
+	private GraphInformations graphInfo;
 
 	public Object buildTargetInputObjects(GraphInformations graphInfo,
 			SmooksResourceListType listType, IFile sourceFile, Object viewer)
 			throws InvocationTargetException {
+		this.graphInfo = graphInfo;
 		ClassLoader classLoader = getClassLoader();
 		if (classLoader == null) {
 			IProject project = sourceFile.getProject();
@@ -45,9 +50,18 @@ public class JavaBeanTargetBuilder extends AbstractJavaBeanBuilder implements
 				throw new InvocationTargetException(e);
 			}
 		}
-		JavaBeanList beanList = (JavaBeanList) buildTargetInputObjects(graphInfo, listType, sourceFile, viewer,
-				getClassLoader());
-		mergeJavaBeans(beanList, getTheJavaBeanFromGraphFile(classLoader, graphInfo, TARGET_DATA));
+		JavaBeanList beanList = (JavaBeanList) buildTargetInputObjects(
+				graphInfo, listType, sourceFile, viewer, getClassLoader());
+		mergeJavaBeans(beanList, getTheJavaBeanFromGraphFile(classLoader,
+				graphInfo,  TARGET_DATA));
+		if (viewer instanceof PropertyChangeListener) {
+			registeListener((PropertyChangeListener) viewer, beanList);
+			List list = beanList.getChildren();
+			for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+				JavaBeanModel beanModel = (JavaBeanModel) iterator.next();
+				registeListener((PropertyChangeListener) viewer, beanModel);
+			}
+		}
 		return beanList;
 	}
 
@@ -93,12 +107,12 @@ public class JavaBeanTargetBuilder extends AbstractJavaBeanBuilder implements
 						continue;
 					JavaBeanModel javaBean = JavaBeanModelFactory
 							.getJavaBeanModelWithLazyLoad(clazz);
-					registeListener(viewer, javaBean);
+					// registeListener(viewer, javaBean);
 					beanList.addJavaBean(javaBean);
 				}
 			}
 		}
-		registeListener(viewer, beanList);
+		// registeListener(viewer, beanList);
 		return beanList;
 	}
 
@@ -106,6 +120,7 @@ public class JavaBeanTargetBuilder extends AbstractJavaBeanBuilder implements
 		if (listener instanceof PropertyChangeListener) {
 			javaBean
 					.addNodePropetyChangeListener((PropertyChangeListener) listener);
+			javaBean.addNodePropetyChangeListener(this);
 		}
 	}
 
@@ -127,6 +142,33 @@ public class JavaBeanTargetBuilder extends AbstractJavaBeanBuilder implements
 
 		}
 		return null;
+	}
+
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (graphInfo != null) {
+			String type = evt.getPropertyName();
+			Object node = evt.getNewValue();
+			if(TransformDataTreeViewer.REMOVE_CHILDREN_EVENT
+							.equals(type)){
+				node = evt.getOldValue();
+			}
+			if (node instanceof JavaBeanModel) {
+				if (!((JavaBeanModel) node).isPrimitive()) {
+					if (TransformDataTreeViewer.NODE_PROPERTY_EVENT
+							.equals(type)
+							|| TransformDataTreeViewer.ADD_CHILDREN_EVENT
+									.equals(type)) {
+						appendClassToGraph((JavaBeanModel) node, graphInfo,
+								TARGET_DATA);
+					}
+					if (TransformDataTreeViewer.REMOVE_CHILDREN_EVENT
+							.equals(type)) {
+						removeClassFromGraph((JavaBeanModel) node, graphInfo,
+								TARGET_DATA);
+					}
+				}
+			}
+		}
 	}
 
 }

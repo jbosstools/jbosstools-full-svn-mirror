@@ -80,6 +80,8 @@ public class AddJavaBeanModelAction extends JavaBeanModelAction {
 				}
 			}
 		}
+		
+		super.run();
 	}
 	
 

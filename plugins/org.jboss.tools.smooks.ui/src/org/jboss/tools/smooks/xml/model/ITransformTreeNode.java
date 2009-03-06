@@ -14,4 +14,6 @@ public interface ITransformTreeNode {
 	public void addNodePropetyChangeListener(PropertyChangeListener listener);
 	
 	public void removeNodePropetyChangeListener(PropertyChangeListener listener);
+	
+	public void cleanAllNodePropertyChangeListeners();
 }

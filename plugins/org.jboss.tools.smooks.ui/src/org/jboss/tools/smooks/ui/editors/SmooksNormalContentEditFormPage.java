@@ -275,9 +275,10 @@ public class SmooksNormalContentEditFormPage extends FormPage implements
 
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
-		tool.createSeparator(otherConfigurationComposite, SWT.HORIZONTAL)
-				.setLayoutData(gd);
+//		tool.createSeparator(otherConfigurationComposite, SWT.HORIZONTAL)
+//				.setLayoutData(gd);
 
+		// below is for creating import files GUI.
 		Composite importFileComposite = tool
 				.createComposite(otherConfigurationComposite);
 		gd = new GridData(GridData.FILL_HORIZONTAL);

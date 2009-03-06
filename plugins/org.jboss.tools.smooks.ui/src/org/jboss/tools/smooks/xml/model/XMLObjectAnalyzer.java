@@ -81,6 +81,7 @@ public class XMLObjectAnalyzer {
 	}
 
 	protected TagObject parseElement(Element element, TagObject parentTag , String[] ignoreNodeNames) {
+		
 		if(isIgnoreNode(element, ignoreNodeNames))
 			return null;
 		boolean canAdd = false;

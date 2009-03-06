@@ -60,7 +60,6 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -119,6 +118,7 @@ import org.jboss.tools.smooks.analyzer.ResolveCommand;
 import org.jboss.tools.smooks.analyzer.SmooksAnalyzerException;
 import org.jboss.tools.smooks.analyzer.SmooksFileBuilder;
 import org.jboss.tools.smooks.graphical.GraphInformations;
+import org.jboss.tools.smooks.graphical.GraphicalFactory;
 import org.jboss.tools.smooks.graphical.MappingDataType;
 import org.jboss.tools.smooks.graphical.Param;
 import org.jboss.tools.smooks.graphical.Params;
@@ -190,6 +190,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	protected Hyperlink sourceLink = null;
 	protected Hyperlink targetLink = null;
 	protected String sourceDataTypeID = null;
+	protected GraphInformations graphinformations = null;
 
 	public String getSourceDataTypeID() {
 		return sourceDataTypeID;
@@ -470,9 +471,16 @@ public class SmooksGraphicalFormPage extends FormPage implements
 						targetViewer));
 			}
 		}
+		
+		
+		
 		toolkit.paintBordersFor(rootMainControl);
 		form.pack();
 
+		/*
+		 * below is init GUIs
+		 */
+		
 		Throwable throwable = null;
 		try {
 			this.initTransformViewerModel((IEditorSite) getSite(),
@@ -633,11 +641,12 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	protected void initTargetTreeViewer() {
 		if (this.targetTreeViewerInputModel != null) {
-//			if (targetTreeViewerInputModel instanceof ITransformTreeNode
-//					&& targetViewer instanceof PropertyChangeListener) {
-//				((ITransformTreeNode) targetTreeViewerInputModel)
-//						.addNodePropetyChangeListener((PropertyChangeListener) targetViewer);
-//			}
+			// if (targetTreeViewerInputModel instanceof ITransformTreeNode
+			// && targetViewer instanceof PropertyChangeListener) {
+			// ((ITransformTreeNode) targetTreeViewerInputModel)
+			// .addNodePropetyChangeListener((PropertyChangeListener)
+			// targetViewer);
+			// }
 			targetViewer.setInput(targetTreeViewerInputModel);
 		}
 	}
@@ -1001,8 +1010,10 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 			// save graphical informations
 			if (this.graphicalInformationSaver != null) {
-				graphicalInformationSaver.doSave(monitor,
-						getSmooksConfigurationFileGenerateContext());
+				SmooksConfigurationFileGenerateContext context = new SmooksConfigurationFileGenerateContext();
+				initSmooksConfigurationFileGenerateContext(context);
+				context.getProperties().clear();
+				graphicalInformationSaver.doSave(monitor, context);
 			}
 		} catch (CoreException e) {
 			exp = e;
@@ -1043,6 +1054,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		context.setSourceDataTypeID(this.sourceDataTypeID);
 		context.setTargetDataTypeID(this.targetDataTypeID);
 		context.setSmooksType(SmooksModelConstants.SAX);
+		context.setGraphInformations(graphinformations);
 		context.setDataMappingRootModel(this.rootModel);
 		context.setSmooksConfigFile(((IFileEditorInput) getEditorInput())
 				.getFile());
@@ -1277,11 +1289,12 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			throws Throwable {
 		graphicalInformationSaver = new GraphicalInformationSaver(input);
 
-		GraphInformations graph = null;
 		try {
-			graph = graphicalInformationSaver.doLoad();
-			initFormEditorWithGraphInfo(graph);
-			initSmooksContext(graph, this
+			if (graphinformations == null) {
+				graphinformations = graphicalInformationSaver.doLoad();
+			}
+			initFormEditorWithGraphInfo(graphinformations);
+			initSmooksContext(graphinformations, this
 					.getSmooksConfigurationFileGenerateContext());
 		} catch (Throwable t) {
 			// ignore
@@ -1315,7 +1328,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				return;
 			SmooksResourceListType listType = ((DocumentRoot) smooksResource
 					.getContents().get(0)).getSmooksResourceList();
-			this.analyzeGraphicalModel(listType, graph, file);
+			this.analyzeGraphicalModel(listType, graphinformations, file);
 		}
 	}
 
@@ -1330,10 +1343,10 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			smooksResource.getContents().clear();
 			smooksResource.getContents().add(listType.eContainer());
 		}
-		GraphInformations graph = null;
-		if (graphicalInformationSaver != null)
-			graph = graphicalInformationSaver.doLoad();
-		this.analyzeGraphicalModel(listType, graph,
+		// GraphInformations graph = null;
+		// if (graphicalInformationSaver != null)
+		// graph = graphicalInformationSaver.doLoad();
+		this.analyzeGraphicalModel(listType, graphinformations,
 				((IFileEditorInput) getEditorInput()).getFile());
 	}
 
@@ -1450,6 +1463,30 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		}
 	}
 
+	public void replaceInputDataPathData(String pathName, String value) {
+		if (graphinformations != null) {
+			Params params = graphinformations.getParams();
+			if (params == null) {
+				return;
+			}
+			Param param = null;
+			List list = params.getParam();
+			for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+				Param p = (Param) iterator.next();
+				if (pathName.equals(p.getName())) {
+					param = p;
+					break;
+				}
+			}
+			if (param == null) {
+				param = GraphicalFactory.eINSTANCE.createParam();
+				params.getParam().add(param);
+				param.setName(pathName);
+			}
+			param.setValue(value);
+		}
+	}
+
 	/**
 	 * It's a very important method
 	 * <p>
@@ -1490,23 +1527,17 @@ public class SmooksGraphicalFormPage extends FormPage implements
 				try {
 					if (viewer == this.sourceViewer) {
 						this.createSourceGraphModels();
-						this
-								.getSmooksConfigurationFileGenerateContext()
-								.getProperties()
-								.setProperty(
-										SmooksConfigFileNewWizard.PRO_SOURCE_DATA_PATH,
-										cw.getStructuredDataSourcePath());
+						replaceInputDataPathData(
+								SmooksConfigFileNewWizard.PRO_SOURCE_DATA_PATH,
+								cw.getStructuredDataSourcePath());
 						sourceDataTypeID = typeID;
 					}
 					if (viewer == this.targetViewer) {
 						this.createTargetGraphModels();
 						targetDataTypeID = typeID;
-						this
-								.getSmooksConfigurationFileGenerateContext()
-								.getProperties()
-								.setProperty(
-										SmooksConfigFileNewWizard.PRO_TARGET_DATA_PATH,
-										cw.getStructuredDataSourcePath());
+						replaceInputDataPathData(
+								SmooksConfigFileNewWizard.PRO_TARGET_DATA_PATH,
+								cw.getStructuredDataSourcePath());
 					}
 					commandStackChanged = true;
 					firePropertyChange(PROP_DIRTY);

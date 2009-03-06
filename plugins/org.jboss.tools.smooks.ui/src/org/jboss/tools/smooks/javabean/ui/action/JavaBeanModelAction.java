@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
+import org.jboss.tools.smooks.ui.editors.SmooksFormEditor;
 import org.jboss.tools.smooks.ui.popup.SmooksAction;
 
 /**
@@ -25,4 +26,16 @@ public class JavaBeanModelAction extends SmooksAction{
 		}
 		return null;
 	}
+	
+	protected void fireEditorIsDirty(){
+		((SmooksFormEditor)context.getSmooksGraphcalPage().getEditor()).fireEditorDirty(true);
+	}
+
+	@Override
+	public void run() {
+		super.run();
+		fireEditorIsDirty();
+	}
+	
+	
 }

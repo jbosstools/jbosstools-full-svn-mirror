@@ -14,6 +14,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IContainer;
@@ -131,8 +133,12 @@ public class GraphicalInformationSaver {
 			}
 			if (graph != null) {
 				initMappingTypes(graph, sourceid, targetid);
-				Params params = GraphicalFactory.eINSTANCE.createParams();
-				graph.setParams(params);
+				
+				Params params = graph.getParams();
+				if(params == null){
+					params = GraphicalFactory.eINSTANCE.createParams();
+					graph.setParams(params);
+				}
 				initParams(params, properties);
 			}
 			graphicalFileResource.save(Collections.EMPTY_MAP);
@@ -156,10 +162,22 @@ public class GraphicalInformationSaver {
 		Enumeration<Object> keys = properties.keys();
 		while (keys.hasMoreElements()) {
 			String key = (String) keys.nextElement();
-			Param param = GraphicalFactory.eINSTANCE.createParam();
-			param.setName(key);
+			List list = params.getParam();
+			Param param = null;
+			for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+				Param para = (Param) iterator.next();
+				if(para.getName().equals(key)){
+					param = para;
+					break;
+				}
+			}
+			if(param == null){
+				param = GraphicalFactory.eINSTANCE.createParam();
+				params.getParam().add(param);
+				param.setName(key);
+			}
 			param.setValue(properties.getProperty(key));
-			params.getParam().add(param);
+			
 		}
 	}
 
