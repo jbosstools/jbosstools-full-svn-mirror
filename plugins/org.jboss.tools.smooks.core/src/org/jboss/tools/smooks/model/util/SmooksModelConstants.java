@@ -19,7 +19,6 @@ public class SmooksModelConstants {
 	public static final String STREAM_FILTER_TYPE = "stream.filter.type";
 	public static final String SAX = "SAX";
 	public static final String DOM = "DOM";
-	public static final String SAX_DOM = "SAX/DOM";
 	public static final String BEAN_POPULATOR = "org.milyn.javabean.BeanPopulator";
 	
 	public static final String[] DECODER_CLASSES = new String[] {
@@ -34,11 +33,11 @@ public class SmooksModelConstants {
 	
 	public static final String BEAN_ID = "beanId";
 	
-	public static final String FORMATE = "formate";
+	public static final String FORMATE = "format";
 	
 	public static final String LOCALE_LANGUAGE = "Locale-Language";
 	
-	public static final String LOCALE_CONTRY = "Locale-Contry";
+	public static final String LOCALE_CONTRY = "Locale-Country";
 	
 	public static final String BEAN_CLASS = "beanClass";
 	

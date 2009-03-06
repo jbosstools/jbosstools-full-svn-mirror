@@ -31,11 +31,11 @@ import org.jboss.tools.smooks.model.SmooksPackage;
  */
 
 public class SmooksModelUtils {
-	
+
 	public static final String TYPE_XSL = "xsl";
-	
-	public static final String[] TEMPLATE_TYPES = new String[] { "xsl","ftl" };
-	
+
+	public static final String[] TEMPLATE_TYPES = new String[] { "xsl", "ftl" };
+
 	public static final String BEAN_CLASS = "beanClass";
 
 	public static final String BEAN_ID = "beanId";
@@ -78,44 +78,52 @@ public class SmooksModelUtils {
 		}
 		return Collections.EMPTY_LIST;
 	}
-	
+
 	public static boolean isBeanPopulatorResource(ResourceConfigType type) {
 		ResourceType resource = type.getResource();
 		if (resource == null)
 			return false;
 		String value = resource.getStringValue();
-		if(value != null) value = value.trim();
+		if (value != null)
+			value = value.trim();
 		if (SmooksModelConstants.BEAN_POPULATOR.equals(value)) {
 			return true;
 		}
 		return false;
 	}
-	
-	public static void setPropertyValueToAnyType(Object value,EStructuralFeature attribute,AnyType anyType){
+
+	public static void setPropertyValueToAnyType(Object value,
+			EStructuralFeature attribute, AnyType anyType) {
 		anyType.getAnyAttribute().set(attribute, value);
 	}
-	
-	public static AnyType getBindingViaProperty(ResourceConfigType resourceConfig , String property){
+
+	public static AnyType getBindingViaProperty(
+			ResourceConfigType resourceConfig, String property) {
 		List bindingList = getBindingListFromResourceConfigType(resourceConfig);
 		for (Iterator iterator = bindingList.iterator(); iterator.hasNext();) {
 			AnyType binding = (AnyType) iterator.next();
-			String pro = getAttributeValueFromAnyType(binding, ATTRIBUTE_PROPERTY);
-			if(pro != null) pro = pro.trim();
-			if(property.equals(pro)){
+			String pro = getAttributeValueFromAnyType(binding,
+					ATTRIBUTE_PROPERTY);
+			if (pro != null)
+				pro = pro.trim();
+			if (property.equals(pro)) {
 				return binding;
 			}
 		}
 		return null;
 	}
-	
-	public static boolean isInnerFileContents(ResourceConfigType resourceConfig){
+
+	public static boolean isInnerFileContents(ResourceConfigType resourceConfig) {
 		ResourceType resource = resourceConfig.getResource();
-		if(resource == null) return false;
+		if (resource == null)
+			return false;
 		String type = resource.getType();
-		if(type != null) type = type.trim();
+		if (type != null)
+			type = type.trim();
 		for (int i = 0; i < TEMPLATE_TYPES.length; i++) {
 			String type1 = TEMPLATE_TYPES[i];
-			if(type1.equalsIgnoreCase(type)) return true;
+			if (type1.equalsIgnoreCase(type))
+				return true;
 		}
 		return false;
 	}
@@ -125,10 +133,11 @@ public class SmooksModelUtils {
 		if (resource == null)
 			return false;
 		String value = resource.getStringValue();
-		if(value != null) value = value.trim();
+		if (value != null)
+			value = value.trim();
 		for (int i = 0; i < SmooksModelConstants.DECODER_CLASSES.length; i++) {
 			String decoderClass = SmooksModelConstants.DECODER_CLASSES[i];
-			if(decoderClass.equals(value)){
+			if (decoderClass.equals(value)) {
 				return true;
 			}
 		}
@@ -224,16 +233,20 @@ public class SmooksModelUtils {
 		ParamType param = null;
 		for (Iterator<ParamType> iterator = list.iterator(); iterator.hasNext();) {
 			ParamType paramType = (ParamType) iterator.next();
-			if (paramType.getName().equalsIgnoreCase(paramName)) {
+			String n = paramType.getName();
+			if (n == null)
+				continue;
+			n = n.trim();
+			if (n.equalsIgnoreCase(paramName)) {
 				param = paramType;
 				break;
 			}
 		}
 		if (param == null) {
 			param = SmooksFactory.eINSTANCE.createParamType();
+			param.setName(paramName);
 			resourceConfigType.getParam().add(param);
 		}
-		param.setName(paramName);
 		setTextToAnyType(param, value);
 	}
 
@@ -242,7 +255,11 @@ public class SmooksModelUtils {
 		List plist = resourceConfigType.getParam();
 		for (Iterator iterator = plist.iterator(); iterator.hasNext();) {
 			ParamType p = (ParamType) iterator.next();
-			if (paramName.equalsIgnoreCase(p.getName())) {
+			String n = p.getName();
+			if (n == null)
+				continue;
+			n = n.trim();
+			if (paramName.equalsIgnoreCase(n)) {
 				return getAnyTypeText(p);
 			}
 		}
