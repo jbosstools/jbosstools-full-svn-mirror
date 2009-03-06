@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.jboss.tools</groupId>
+	<artifactId>all-guides</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>All_Userguides</name>
+
+	<modules>
+                <module>../jbosstools-docbook-xslt</module>
+		<module>../guides/Exadel-migration</module>
+		<module>../guides/GettingStartedGuide</module>
+		<module>../../as/docs/reference</module>
+		<module>../../hibernatetools/docs/reference</module>
+		<module>../../jbpm/docs/reference</module>
+		<module>../../jsf/docs/userguide</module>
+		<module>../../jsf/docs/jsf_tools_ref_guide</module>
+		<module>../../jsf/docs/jsf_tools_tutorial</module>
+		<module>../../seam/docs/reference</module>
+		<module>../../struts/docs/struts_tools_ref_guide</module>
+		<module>../../struts/docs/struts_tools_tutorial</module>
+		<module>../../esb/docs/esb_ref_guide</module>
+		
+	<module>index</module>
+	</modules>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2-beta-2</version>
+				<configuration>
+					<descriptors>
+						<descriptor>all-guides.xml</descriptor>
+					</descriptors>
+					<finalName>en</finalName>
+					<outputDirectory>jbds-docs</outputDirectory>
+					<appendAssemblyId>false</appendAssemblyId>
+					<ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<properties>
+		<translation>en-US</translation>
+	</properties>
+
+</project>
