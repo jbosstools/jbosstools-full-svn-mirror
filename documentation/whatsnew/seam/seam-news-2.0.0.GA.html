@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>Seam tools 2.0.0.GA What's New</title>
+</head>
+<body>
+<h1>Seam tools 2.0.0.GA What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../as/as-news-2.0.0.GA.html">JBoss AS Tools &gt;</a></p>
+
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>General</h3>
+	<hr/>
+    </td>
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Improved Seam 2.1 support</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>XSD's and corresponding have been updated to handle new attributes and elements in Seam 2.1.</p>
+
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3854">Related Jira</a></small></p>
+
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Performance</h3>
+	<hr/>
+    </td>
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Seam validators</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>Various issues around Seam validators running too often were fixed.</p>
+
+    <p>We now only validate files within source path and web content, meaning temporary files or test files is not included.</p>
+    <p>Re-validation of unresolved EL expressions will only be triggered if the saved resource is a .java file or a components.xml file.</p>
+    <p>Issue where Seam validator were invoked multiple times on the same resource were fixed.</p>
+
+<p>All of the above should make the time spent on validation for Seam much less prominent.</p>
+
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3336">Related Jira</a></small></p>
+
+    </td>
+  </tr>
+
+
+
+
+
+
+
+
+</table>
+
+</body>
+
+</html>
+
+

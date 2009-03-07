@@ -1,0 +1,94 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="../whatsnew.css">
+<title>JBoss AS Tools 2.0.0.GA News</title>
+</head>
+
+<body>
+
+<h1>JBoss AS Tools 2.0.0.GA - New and Noteworthy</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../vpe/vpe-news-3.0.0.CR2.html">Visual Page Editor &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>General</h3>
+      <hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Seperation of JBoss Community and JBoss product based servers</b></td>
+    <td valign="top">
+      <p>There is now a specific server adapter for the productized
+      and supported version of JBoss AS, also called JBoss Enterprise
+      Application Platform(EAP). Making it possible for us to
+      specialize and validate the adapters according to their feature set but also
+      to make it clear which servers are community supported and
+      which are commercially supported by JBoss Enterprise Middleware.</p>
+
+      <p><img src="../images/orgprod_seperation.png"/></p>      
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3087">Related jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>More control over server launch</b></td>
+    <td valign="top">
+      <p>Various improvements have been made to ensure server launches will be started with the proper parameters, classpaths, etc.
+This have made the launch setup more strict, but there is still a lot of freedom to adjust the server launch as wanted.</p>
+
+<p>The servers classpath was in previous releases readonly, but that causes problems for users wanting to add their own jars in the startup classpath. That is relevant in cases where you want to patch the server, add a custom charset or other tweaks that requires early access to the classpath. This is now done by all servers to have a custom 'server runtime classpath container', this container will be there by default and point to the default jars in JBoss. You can now adjust the classpath and just make sure this container is there (if it is not there press 'Restore defaults') if you want us to pick up the classpath.</p>
+
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3770">Related jira</a></small></p>
+    </td>
+  </tr>
+
+
+   <tr>
+    <td colspan="2">
+      <hr>
+      <h3>Exports</h3>
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Export ESB Archive</b></td>
+    <td valign="top">
+      <p>There is now an Export wizard for ESB Archives allowing you to get a .esb archive for i.e. deploying to an external server.</p>
+
+      <p><img src="../images/esbexport.png"/></p>
+      
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3772">Related jira</a></small></p>
+    </td>
+  </tr>
+  
+</table>
+
+</body>
+
+</html>
+
+
