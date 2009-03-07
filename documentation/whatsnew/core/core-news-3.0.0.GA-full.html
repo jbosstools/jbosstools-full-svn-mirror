@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>Core 3.0.0.Alpha1 What's New</title>
+</head>
+<body>
+<h1>Core 3.0.0.Alpha1 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../seam/seam-news-2.0.0.Alpha1.html">Seam News &gt;</a></p>
+
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>General</h3>
+	<hr/>
+    </td>
+  </tr>
+
+ 
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam2e" id="itemname2"></a><b>Ganymede Support</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>All plugins were migrated to Eclipse 3.4/WebTools 3.0 and their dependencies, making 3.0.0.alpha runnable on Ganymede.</p> 
+    <p>This also means that 3.0.0.alpha is not supported on Eclipse 3.3.x/WebTools 2.x aka Europa becuase of API changes in Eclipse API's.</p>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Project Archives</h3>
+	<hr/>
+    </td>
+  </tr>
+ 
+ <tr>
+    <td valign="top" align="right">
+       <a name="itemname3" id="itemname3"></a><b>New .packages format</b>
+    </td>
+    <td valign="top">
+
+      <p>To accomdate the new features the .packages file format has
+      changed slightly. Old files will still work, but new ones will
+      have version="1.2" in the first element and should not be used
+      with old JBoss Tools versions.</p>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+ 
+ <tr>
+    <td valign="top" align="right">
+       <a name="itemname3" id="itemname3"></a><b>Common Navigator Views</b>
+    </td>
+    <td valign="top">
+
+<p>The Project Archives view is now implemented with the
+    "Common Navigator" API which allow us to have a more customizable
+    archive view, but also makes "Project Archives" node available in
+    Project Explorer for even easier access.</p>
+
+   <p><img src="../images/projectarchivesinprojextexplorer.png"/></p>
+
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemname3" id="itemname3"></a><b>Variable and relative path support</b>
+    </td>
+    <td valign="top">
+
+      <p>Archives can now use Eclipse variables to specify destination paths and paths are now relative to the location of the .packages file.</p>
+
+      <p>These two features allow teams to more easily share .packages files because it allows for more flexibile/dynamic archive specification</p>
+
+<p>Example 1: Because we no longer require absolute paths including the project name you can now have /projectA-1.0 and /projectA-2.3 and not having to change the .packages file to reflect the change in version numbers. Instead of using /projectA-1.0 or /projectA-2.3 as path you just use "" (blank) or ".".</p>
+
+<p>Example 2: By using Eclipse variables you can setup a system specific location but just refer to it via an eclipse variable. e.g. the following screenshots shows how usage of a custom defined variable (${hudson_loc}).</p>
+
+<img src="../images/archivescustomvariablesupport.png"/>
+
+<p>Variables can be selected and configured via the "Variables" button.</p>
+
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemname3" id="itemname3"></a><b>Common Navigator Views</b>
+    </td>
+    <td valign="top">
+
+<p>The Project Archives view is now implemented with the
+    "Common Navigator" API which allow us to have a more customizable
+    archive view, but also makes "Project Archives" node available in
+    Project Explorer for even easier access.</p>
+
+   <p><img src="../images/projectarchivesinprojextexplorer.png"/></p>
+
+<p>Note: this feature is only available on Project Archives created with this version. See below.</p>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right"><b>Project Archives error dialog</b></td>
+    <td valign="top">
+      <p>Project Archives now will show an error dialog if a build or incremental update fails.</p>
+      
+      <p><img src="../images/projectarchives_error.png"/></p>
+
+      <p>Detailed information about what caused the error is shown when clicking Details...</p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+      <p align="right"><b>Project Archives Ant task improvements</b></td>
+    <td valign="top">
+      <p>The project archives Ant task now supports variables and gives more informative error/logging messages when something goes wrong.</p>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+</table>
+
+</body>
+
+</html>
+
+

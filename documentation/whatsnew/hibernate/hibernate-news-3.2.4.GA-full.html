@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>Hibernate tools 3.2.4.GA What's New</title>
+</head>
+<body>
+<h1>Hibernate tools 3.2.4.GA What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../as/as-news-2.0.0.Alpha1.html">JBoss AS Tools News &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+
+  
+  <tr>
+    <td colspan="2"><hr />
+    <h3>Setup</h3>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Use DTP Connection</b></td>
+    <td valign="top">
+    <p>Hibernate console configuration can now use a Data Tools Project (DTP) connection configured in Eclipse instead of the default hibernate connection settings.</p>
+
+    <p><img src="../images/hibernate_dtp_connection.png"/></p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Improved Exporter property editor</b></td>
+    <td valign="top">
+    <p>Exporter properties now have type specific input fields instead of just a simple text field.</p>
+
+    <p><img src="../images/exporter_property_editor.png"/></p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>More validation in Console configuration wizard</b></td>
+    <td valign="top">
+    <p>Default console name is now generated so it is unqiue avoiding warnings and the name is furthermore checked for invalid filename characters preventing any errors doing save.</p>
+
+<p><img src="../images/consoleconfig_validation.png"/></p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>JPA Projects</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Wizards</h3>
+	<hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Generate JPA/Hibernate Annotations</b></td>
+    <td valign="top">
+    <p>We added a "Generate JPA/Hibernate Annotations" entry in the
+    Source menu of java elements (classes, packages, source
+    directories etc.). This menu will analyze the source code and do a
+    best-guess on how to enable persistence for you model.</p>
+
+    <p><img src="../images/step1_generate_jpa.png"/></p>
+
+    <p>Here we have chosen to Generate JPA/Hibernate Annotations on single class and the list of classes that will touched to make this model persistent is shown.</p>
+
+    <p><img src="../images/step2_generatejpa.png"/></p>
+
+    <p>Users can press Preview... to see which changes will be done. Notice that bi-directional assocations is mapped automatically.</p>
+
+    </td>
+  </tr>
+
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>JPA/Dali support</b></td>
+    <td valign="top">
+    <p>We added support for Hibernate to the Dali plugins provided by Eclipse WTP.</p>
+    <p>This makes Hibernate available as a target platform for JPA projects.</p>
+
+    <p><img src="../images/dalihibernateplatform.png"/></p>
+
+    <p>This include enabling "Generate DDL"
+    and "Generate entities" from the JPA menu.</p>
+
+    <p><img src="../images/jpatoolsmenu.png"/></p>
+
+    <p><img src="../images/daligenentities.png"/></p>
+
+    <p>There is also a JPA validator that registers GenericGenerator annotations as possible values to GeneratedValue annotations preventing
+      false errors from Dali validation.</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Hibernate page in persistence.xml</b></td>
+    <td valign="top">
+    <p>We now have a Hibernate specific page in the persistence.xml editor for JPA projects to provide a form UI for 
+Hibernate specific properties.</p>
+
+    <p><img src="../images/persistence_xml_hibernate.png"/></p>
+
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>JPA Project Generate Entities</b></td>
+    <td valign="top">
+    <p>We now provide support for JPA Project Generate Entities action and allow you to use a DTP connection directly or use a Hibernate Console configuration for the basis of the generation.</p>
+
+    <p><img src="../images/generate_entities.png"/></p>
+
+    </td>
+  </tr>
+
+
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Console configuration created for JPA project</b></td>
+    <td valign="top">
+    <p>When a JPA/Dali project is created we now automatically setup a Hibernate Console configuration for the project allowing full
+usage of Hibernate Tools features without additional setup.</p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Reverse engineering</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>One-to-One</b></td>
+    <td valign="top">
+    <p>Reverse engineering now detects one-to-one associations via primary key and both hbm.xml and annotation generation generates the proper code for it.</p>
+
+<p>The detection is enabled by default (except for Seam 1.2 and Seam 2.0) reverse engineering. For Hibernate Tools generation there is a checkbox to disable if not wanted.</p>
+
+    <p><img src="../images/onetooneconfig.png"/></p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+
+</table>
+
+</body>
+
+</html>
+
+

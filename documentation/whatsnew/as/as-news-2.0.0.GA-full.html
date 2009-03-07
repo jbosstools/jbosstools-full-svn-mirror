@@ -1,0 +1,328 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="../whatsnew.css">
+<title>JBoss AS Tools 2.0.0.Alpha1 News</title>
+</head>
+
+<body>
+
+<h1>JBoss AS Tools 2.0.0.Alpha1 - New and Noteworthy</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../portlet/portlet-news-1.0.0.Alpha1.html">Portlet Tools News &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+  <tr>
+    <td colspan="2">
+      <hr>
+      <h3>General</h3>
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>JBoss 5</b></td>
+    <td valign="top">
+      <p>JBoss 5 GA is now supported. Previous versions did not take into account the new common/lib in AS 5 which made some operations fail.</p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2">
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Seperation of JBoss Community and JBoss product based servers</b></td>
+    <td valign="top">
+      <p>There is now a specific server adapter for the productized
+      and supported version of JBoss AS, also called JBoss Enterprise
+      Application Platform(EAP). Making it possible for us to
+      specialize and validate the adapters according to their feature set but also
+      to make it clear which servers are community supported and
+      which are commercially supported by JBoss Enterprise Middleware.</p>
+
+      <p><img src="../images/orgprod_seperation.png"/></p>      
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3087">Related jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+      <p align="right"><b>XML Catalog</b></td>
+    <td valign="top">
+      <p>We added in a range of JBoss related DTD's and Schema's into Eclipse's XML Catalog.</p>
+<p>For example: JBoss JCA Config, MBean service, JBoss Web Service reference and jaxws-config.</p>
+<p>This makes the xml validation and code completion available without extra setup or need for being online.</p>
+    </td>
+  </tr>
+
+
+
+  <tr>
+    <td colspan="2">
+      <hr>
+      <h3>Setup/Configuration</h3>
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Deploy in Workspace</b></td>
+    <td valign="top">
+      <p>All JBoss 4.x servers now default to deploying into Eclipse workspace preventing pollution off the default server deploy directory.</p>
+<p>Existing servers will still deploy where they were configured to, but you can double click a server and adjust which mode of deployment you want: In Workspace, Default Server deploy or any custom directory you would wish.</p>
+
+<p>The locations are added to the server via JMX thus it requires JMX to be enabled and if secured that you have specified username/password.</p>
+
+<p><img src="../images/as_deployoptions.png"/></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>More control over server launch</b></td>
+    <td valign="top">
+      <p>Various improvements have been made to ensure server launches will be started with the proper parameters, classpaths, etc.
+This have made the launch setup more strict, but there is still a lot of freedom to adjust the server launch as wanted.</p>
+
+<p>The servers classpath was in previous releases readonly, but that causes problems for users wanting to add their own jars in the startup classpath. That is relevant in cases where you want to patch the server, add a custom charset or other tweaks that requires early access to the classpath. This is now done by all servers to have a custom 'server runtime classpath container', this container will be there by default and point to the default jars in JBoss. You can now adjust the classpath and just make sure this container is there (if it is not there press 'Restore defaults') if you want us to pick up the classpath.</p>
+
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3770">Related jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>More strict server launches</b></td>
+    <td valign="top">
+      <p>To avoid inconsistencies between server's and their configured runtime the Launch Configurations for JBoss Servers are now more strict in enforcing the configured values in the server.</p>
+      <p>For example if you change the launch configuration program arguments to "-c myConfig" but do not change the targeted runtime configuration then your program arguments will be ignored. The server runtime "wins" so to speak. This ensures consistency and if you i.e. change the location of the runtime your launch configurations will automatically pick that up.</p>
+
+      <p>Values not controlled by the server and its runtime setup will be passed on unaltered.</p>
+
+      <p><img src="../images/strict_launchconfig.png"/></p>
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3073">Related jira</a></small></p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2">
+      <hr>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right"><b>Port preferences</b></td>
+    <td valign="top">
+      <p>Our server adapter by default tries to automatically detect the ports it needs for integrating with a JBoss server.</p>
+      <p>Sometimes it can though be relevant to override this automatic detection if a user is using some custom configuration. These port settings are now configurable on the Server in the Server Editor.</p>
+      <p><img src="../images/as_serverports.png"/></p>
+
+      <p>Other server settings like Timeouts and Server polling have also been moved to the server editor from the seperate preference page in Eclipse preferences.</p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr>
+      <h3>Server view</h3>
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Improved Servers View</b></td>
+    <td valign="top">
+      <p>We have always had an extra servers view since Eclipse WTP's
+      server view does not provide any form of extension points to add
+      server specific info.</p>
+
+      <p>In this release we have added a beta/preview of a Servers
+	view that is built on Common Navigator Framework allowing extensions
+	and is using label decorators instead of extra columns to make the UI
+	more compact without loosing the vital information.</p>
+
+      <p>We have suggested to WTP that they incorporate a view based
+	on this. You can provide feedback on this
+	at <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=247934">bugs.eclipse.org</a>
+	and the related bugs.</p>
+
+      <p><img src="../images/serveres_beta_view.png"/></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+      <p align="right"><b>Server Log View</b></td>
+    <td valign="top">
+      <p>The Event Log was formerly embedded inside the Servers view; now it has its own view providing easier access and sorting.</p>
+
+      <p><img src="../images/as_serverlog.png"/></p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Show In Additons</b></td>
+    <td valign="top">
+      <p>The Show In menu on AS servers now also include easy access to Server Log and MBean Explorer</p>
+
+      <p><img src="../images/as_showin.png"/></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Direct edit from Fileset's</b></td>
+    <td valign="top">
+      <p>Double clicking on a file from Servers fileset now opens up the editor automatically.</p>
+
+      <p><img src="../images/as_dblclickforedit.png"/></p>
+    </td>
+  </tr>
+
+
+   <tr>
+    <td colspan="2">
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Drag'n'Drop to JBoss Server View</b></td>
+    <td valign="top">
+      <p>JBoss Server View now supports drag'n'drop of deployable and runnable projects/resources.</p>
+      <p>This means that if you...
+
+	<ul>
+	  <li>drag a project to a server it will deploy it to the
+	    server and run it by showing the main page in a
+	    browser</li>
+	  <li>dragging a .xhtml file from WebContent will do the same
+	    and show the corresponding page in a browser</li>
+	  <li>dragging a deployable resource (i.e. a datasource
+      (-ds.xml) file that has been made deployable) will simply deploy
+      that resource directly to the server.</li>
+	</ul>
+	
+	...in short it does the same thing as if you used "Run On Server" or "Add and Remove projects" just with fewer clicks.
+
+      </p>
+
+      <p><img src="../images/dragndrop_jboss_serversview.png"/></p>    
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3608">Related jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>'Explore' shortcut in Server view</b></td>
+    <td valign="top">
+      <p>There is now an "Explore" item in the context menu of JBoss
+      servers and its deployed resources/projects. This action uses
+      the native OS file explorer to browse the deploy
+      destination.</p>
+
+      <p><img src="../images/explore_server_view.png"/></p>
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3087">Related jira</a></small></p>
+    </td>
+  </tr>
+
+
+<tr>
+    <td colspan="2">
+      <hr>
+      <h3>Exports</h3>
+      <hr>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Export ESB Archive</b></td>
+    <td valign="top">
+      <p>There is now an Export wizard for ESB Archives allowing you to get a .esb archive for i.e. deploying to an external server.</p>
+
+      <p><img src="../images/esbexport.png"/></p>
+      
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3772">Related jira</a></small></p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2">
+      <hr>
+    </td>
+  </tr>
+  
+</table>
+
+</body>
+
+</html>
+
+
