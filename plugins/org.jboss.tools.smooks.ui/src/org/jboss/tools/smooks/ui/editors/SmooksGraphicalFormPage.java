@@ -476,16 +476,14 @@ public class SmooksGraphicalFormPage extends FormPage implements
 						targetViewer));
 			}
 		}
-		
-		
-		
+
 		toolkit.paintBordersFor(rootMainControl);
 		form.pack();
 
 		/*
 		 * below is init GUIs
 		 */
-		
+
 		Throwable throwable = null;
 		try {
 			this.initTransformViewerModel((IEditorSite) getSite(),
@@ -746,8 +744,17 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			}
 			if (item == null)
 				continue;
-			if (item.getData(REFERENCE_MODEL) != null && !item.isDisposed()) {
-
+			Object referenceModel = item.getData(REFERENCE_MODEL);
+			if (referenceModel != null && !item.isDisposed()) {
+				if (!rootModel.getChildren().contains(referenceModel)) {
+					rootModel.addChild(referenceModel);
+				}
+				((TreeItemRelationModel) referenceModel).setTreeItem(item);
+				AbstractStructuredDataModel model = (AbstractStructuredDataModel) graph_trasform_data_map
+						.get(item.getData());
+				if (model == null) {
+					graph_trasform_data_map.put(item.getData(), referenceModel);
+				}
 			} else {
 				AbstractStructuredDataModel model = (AbstractStructuredDataModel) graph_trasform_data_map
 						.get(item.getData());
@@ -770,6 +777,9 @@ public class SmooksGraphicalFormPage extends FormPage implements
 							this.rootModel.addChild(model);
 					}
 				} else {
+					if (!rootModel.getChildren().contains(model)) {
+						rootModel.addChild(model);
+					}
 					((TreeItemRelationModel) model).setTreeItem(item);
 				}
 			}
@@ -1337,39 +1347,47 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			this.analyzeGraphicalModel(listType, graphinformations, file);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param listType
 	 */
-	protected void checkSmooksConfigFileModel(SmooksResourceListType listType){
-		List<AbstractResourceConfig> list = listType.getAbstractResourceConfig();
+	protected void checkSmooksConfigFileModel(SmooksResourceListType listType) {
+		List<AbstractResourceConfig> list = listType
+				.getAbstractResourceConfig();
 		ResourceConfigType globalParameterResource = null;
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			AbstractResourceConfig arc = (AbstractResourceConfig) iterator
 					.next();
-			if(arc instanceof ResourceConfigType){
-				String selector = ((ResourceConfigType)arc).getSelector();
-				if(selector == null) continue;
+			if (arc instanceof ResourceConfigType) {
+				String selector = ((ResourceConfigType) arc).getSelector();
+				if (selector == null)
+					continue;
 				selector = selector.trim();
-				if(SmooksModelConstants.GLOBAL_PARAMETERS.equals(selector)){
-					globalParameterResource = (ResourceConfigType)arc;
+				if (SmooksModelConstants.GLOBAL_PARAMETERS.equals(selector)) {
+					globalParameterResource = (ResourceConfigType) arc;
 					break;
 				}
 			}
 		}
-		
-		if(globalParameterResource == null){
-			globalParameterResource = SmooksFactory.eINSTANCE.createResourceConfigType();
-			globalParameterResource.setSelector(SmooksModelConstants.GLOBAL_PARAMETERS);
-			SmooksModelUtils.setParamText("stream.filter.type", "SAX", globalParameterResource);
-		}else{
-			String value = SmooksModelUtils.getParmaText("stream.filter.type", globalParameterResource);
-			if(value == null){
-				SmooksModelUtils.setParamText("stream.filter.type", "SAX", globalParameterResource);
-			}else{
-				if(value.trim().length() == 0){
-					SmooksModelUtils.setParamText("stream.filter.type", "SAX", globalParameterResource);
+
+		if (globalParameterResource == null) {
+			globalParameterResource = SmooksFactory.eINSTANCE
+					.createResourceConfigType();
+			globalParameterResource
+					.setSelector(SmooksModelConstants.GLOBAL_PARAMETERS);
+			SmooksModelUtils.setParamText("stream.filter.type", "SAX",
+					globalParameterResource);
+		} else {
+			String value = SmooksModelUtils.getParmaText("stream.filter.type",
+					globalParameterResource);
+			if (value == null) {
+				SmooksModelUtils.setParamText("stream.filter.type", "SAX",
+						globalParameterResource);
+			} else {
+				if (value.trim().length() == 0) {
+					SmooksModelUtils.setParamText("stream.filter.type", "SAX",
+							globalParameterResource);
 				}
 			}
 		}
