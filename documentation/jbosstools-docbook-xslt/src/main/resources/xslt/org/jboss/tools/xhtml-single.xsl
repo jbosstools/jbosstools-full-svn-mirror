@@ -88,5 +88,4 @@
   <xsl:apply-templates mode="book.titlepage.recto.auto.mode" select="bookinfo/abstract"/>
   <xsl:apply-templates mode="book.titlepage.recto.auto.mode" select="info/abstract"/>
 </xsl:template>
-
 </xsl:stylesheet>
