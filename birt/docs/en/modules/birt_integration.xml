@@ -198,7 +198,7 @@
         </itemizedlist>
         
         <figure>
-            <title>Trying the tests out. First Page</title>
+            <title>Trying the Tests out. First Page</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/BirtIntegration/Tests1.png"/>
@@ -207,7 +207,7 @@
         </figure>
         
         <figure>
-            <title>Trying the tests out. Second Page</title>
+            <title>Trying the Tests out. Second Page</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/BirtIntegration/Tests2.png"/>
@@ -216,7 +216,7 @@
         </figure>
         
         <figure>
-            <title>Trying the tests out. Third Page</title>
+            <title>Trying the Tests out. Third Page</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/BirtIntegration/Tests3.png"/>
@@ -225,7 +225,7 @@
         </figure>
         
         <figure>
-            <title>Trying the tests out. Forth Page</title>
+            <title>Trying the Tests out. Forth Page</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/BirtIntegration/Tests4.png"/>
@@ -259,7 +259,14 @@
 
 
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:rich="http://richfaces.org/rich" xmlns:b="http://jboss.com/products/seam/birt" template="layout/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:s="http://jboss.com/products/seam/taglib" 
+		xmlns:ui="http://java.sun.com/jsf/facelets" 
+		xmlns:f="http://java.sun.com/jsf/core" 
+		xmlns:h="http://java.sun.com/jsf/html" 
+		xmlns:rich="http://richfaces.org/rich" 
+		xmlns:b="http://jboss.com/products/seam/birt" 
+		template="layout/template.xhtml">
  <ui:define name="body">
   <h:messages globalOnly="true" styleClass="message" id="globalMessages"/>
   <rich:panel>
@@ -416,8 +423,8 @@
             <title>Creating a BIRT report using this data source and data set</title>
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="BIRTReportUsingDataSourceAndSet.png"/>
-                </imageobject>
+                    <imagedata fileref="BIRTReportUsingDataSourceAndSet.png "/>
+                </imageobject>           
             </mediaobject>
         </figure>
         
@@ -550,6 +557,12 @@
         <note><title>Note:</title>
                  <para>If you want to test this feature using PDE Runtime, you need to add osgi.dev=bin to the WebContent/WEB-INF/platform/configuration/config.ini file </para>        
         </note>
+<para>In conclusion, the main goal of this document is to get you know with a full featureset that JBoss BIRT Tools provides. Thus if you have some questions, comments or suggestions on the topic, please fell free to ask in the JBoss Tools Forum. You can also influence on how you want to see JBoss Tools docs in future leaving your vote on our page here.</para>
+
     </section>
+
+
     
+
+
 </chapter>
