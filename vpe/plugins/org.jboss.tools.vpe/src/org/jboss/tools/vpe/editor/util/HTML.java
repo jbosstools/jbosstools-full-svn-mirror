@@ -124,6 +124,7 @@ public final class HTML {
 	public static final String VALUE_TYPE_PASSWORD = "password"; //$NON-NLS-1$
 	public static final String VALUE_TYPE_IMAGE = "image"; //$NON-NLS-1$
 	public static final String VALUE_TYPE_CHECKBOX = "checkbox"; //$NON-NLS-1$
+	public static final String VALUE_TYPE_RADIO = "radio"; //$NON-NLS-1$
 	public static final String VALUE_TYPE_HIDDEN = "hidden"; //$NON-NLS-1$
 	public static final String VALUE_TYPE_BUTTON= "button"; //$NON-NLS-1$
 	public static final String VALUE_CLEAR_BOTH = "both"; //$NON-NLS-1$
