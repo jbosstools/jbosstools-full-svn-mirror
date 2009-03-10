@@ -65,7 +65,7 @@ import org.jboss.tools.smooks.utils.UIUtils;
  */
 public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 
-	private static final String PRO_TYPE = "type"; //$NON-NLS-1$
+	public static final String PRO_TYPE = "type"; //$NON-NLS-1$
 
 	private Text instanceClassText;
 
@@ -143,6 +143,7 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 				PropertyModel pro = getTypePropertyModel();
 				if (pro != null) {
 					pro.setValue(beanClassType);
+					getLineConnectionModel().addPropertyModel(pro);
 					fireDirty();
 					refresh();
 				}

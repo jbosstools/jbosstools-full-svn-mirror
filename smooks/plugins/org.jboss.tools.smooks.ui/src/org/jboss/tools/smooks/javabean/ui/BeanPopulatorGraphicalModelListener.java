@@ -461,6 +461,10 @@ public class BeanPopulatorGraphicalModelListener implements
 			Object obj = event.getNewValue();
 			if (obj != null && obj instanceof PropertyModel && line != null) {
 				String name = ((PropertyModel) obj).getName();
+				if (name.equals(JavaBeanPropertiesSection.PRO_TYPE)) {
+					String value = (String) ((PropertyModel) obj).getValue();
+					modifyResourceConfigAdditionalProperties(line, name, value);
+				}
 				if (name
 						.equals(BeanPopulatorMappingAnalyzer.PRO_SELECTOR_ATTRIBUTES)) {
 					SelectorAttributes sa = (SelectorAttributes) ((PropertyModel) obj)
@@ -473,6 +477,34 @@ public class BeanPopulatorGraphicalModelListener implements
 							modifyPropertyBindingSelector(line, sa);
 						}
 					}
+				}
+			}
+		}
+	}
+
+	protected void modifyResourceConfigAdditionalProperties(
+			LineConnectionModel line, String proName, String value) {
+		ResourceConfigType resourceConfigType = getResourceConfig(line);
+		if (resourceConfigType != null) {
+			JavaBeanModel target = (JavaBeanModel) ((AbstractStructuredDataModel) line
+					.getTarget()).getReferenceEntityModel();
+			String name = target.getName();
+			List bindings = SmooksModelUtils
+					.getBindingListFromResourceConfigType(resourceConfigType);
+			if (bindings == null)
+				return;
+			for (Iterator iterator = bindings.iterator(); iterator.hasNext();) {
+				AnyType param = (AnyType) iterator.next();
+				String property = SmooksModelUtils
+						.getAttributeValueFromAnyType(param,
+								SmooksModelUtils.ATTRIBUTE_PROPERTY);
+				if (property == null)
+					return;
+				property = property.trim();
+				if (name.equalsIgnoreCase(property)) {
+					SmooksModelUtils.setPropertyValueToAnyType(value,
+							SmooksModelUtils.ATTRIBUTE_TYPE, param);
+					break;
 				}
 			}
 		}

@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.ui.gef.model;
 
+import javax.print.attribute.SupportedValuesAttribute;
+
 /**
  * @author Dart Peng<br>
  *         Date : Sep 4, 2008
