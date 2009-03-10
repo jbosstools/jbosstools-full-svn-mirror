@@ -26,17 +26,16 @@
 <!ENTITY jbossportallink "../../jboss_portal_tools_ref_guide/html_single/index.html"> 
 <!ENTITY migrationlink "../../Exadel-migration/html_single/index.html">                         
 <!ENTITY wslink "../../ws_ref_guide/html_single/index.html">
-]>
-<book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
+]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
  <bookinfo>
   <title>Getting Started with JBoss Developer Studio</title>
   <pubdate>April 2008</pubdate>
   <copyright>
    <year>2007</year>
-   <year>2009</year>
-   <holder>JBoss, a division of Red Hat</holder>
+   <year><diffmk:wrapper diffmk:change="changed">2009</diffmk:wrapper></year>
+   <holder><diffmk:wrapper diffmk:change="changed">JBoss, a division of Red Hat</diffmk:wrapper></holder>
   </copyright>
-  <releaseinfo>Version: 2.0.0.GA</releaseinfo>
+  <releaseinfo><diffmk:wrapper diffmk:change="changed">Version: 2.0.0.GA</diffmk:wrapper></releaseinfo>
  <abstract>
    <title></title>
        <para>
@@ -509,8 +508,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      <para>Get Eclipse and Web Tools</para>
     </listitem>
    </itemizedlist>
-   <para>The current version of JBoss Tools (3.0.0.GA) targets at Eclipse 3.4.2/Ganymede SR2 and WTP
-    3.0.3+</para>
+   <para><diffmk:wrapper diffmk:change="changed">The current version of JBoss Tools (3.0.0.GA) targets at Eclipse 3.4.2/Ganymede SR2 and WTP
+    3.0.3+</diffmk:wrapper></para>
 
    <tip>
     <title>Tip:</title>
@@ -725,9 +724,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
             AS</property> from <property moreinfo="none">JBoss Developer Studio</property>.</para>
     <para><property moreinfo="none">JBoss Developer Studio</property> ships with <property moreinfo="none">JBoss EAP
             v.4.2</property> bundled. When you followed the default installation of <property moreinfo="none">JBoss
-            Developer Studio</property>, you should already have a JBoss EAP 4.3 Server installed and
+            Developer Studio</property><diffmk:wrapper diffmk:change="changed">, you should already have a JBoss EAP 4.3 Server installed and
         defined. To run JBoss AS you need JDK 1.5, JDK 6 is not formally supported yet, although
-        you may be able to start the server with it.</para>
+        you may be able to start the server with it.</diffmk:wrapper></para>
 
     <section id="JBossbundled">
         <?dbhtml filename="JBossbundled.html"?>
@@ -741,9 +740,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
             <?dbhtml filename="StartingServer.html"?>
             <title>Starting JBoss Server</title>
             <para>Starting <property moreinfo="none">JBoss Server</property> is quite simple. <property moreinfo="none">JBoss
-                    Developer Studio</property> allows you to control its behaviour with the help of
+                    Developer Studio</property><diffmk:wrapper diffmk:change="changed"> allows you to control its behaviour with the help of
                 a special toolbar, where you could start it in a regular or debug mode, stop it or
-                restart it.</para>
+                restart it.</diffmk:wrapper></para>
 
             <itemizedlist>
                 <listitem>
@@ -779,8 +778,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
             </figure>
             <para>When the server is started you should see <emphasis>
                     <property moreinfo="none">Started</property>
-                </emphasis> in the square brackets right next its name in <property moreinfo="none">JBoss Server
-                    View</property>.</para>
+                </emphasis><diffmk:wrapper diffmk:change="changed"> in the square brackets right next its name in </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss Server
+                    View</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed">.</diffmk:wrapper></para>
 
             <figure float="0">
                 <title>Server is Started</title>
@@ -807,9 +806,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
             <title>Stopping JBoss Server</title>
             <para>To stop the server, click the <emphasis>
                     <property moreinfo="none">Stop</property>
-                </emphasis> icon in <property moreinfo="none">JBoss Server View</property> or right click the server
+                </emphasis> icon in <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss Server View</diffmk:wrapper></property> or right click the server
                 name and press <emphasis>
-                    <property moreinfo="none">Stop</property>. </emphasis></para>
+                    <property moreinfo="none">Stop</property><diffmk:wrapper diffmk:change="changed">. </diffmk:wrapper></emphasis></para>
 
             <figure float="0">
                 <title>Stopping Server</title>
@@ -821,7 +820,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
             </figure>
             <para>When the server is stopped you will see <emphasis>
                     <property moreinfo="none">Stopped</property>
-                </emphasis> in the square brackets next to its name.</para>
+                </emphasis><diffmk:wrapper diffmk:change="changed"> in the square brackets next to its name.</diffmk:wrapper></para>
         </section>
         <section id="ServerPreferences">
             <?dbhtml filename="ServerPreferences.html"?>
@@ -852,14 +851,14 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
                 <property moreinfo="none">JBoss EAP 4.2</property> we do not ultimately tie you to any particular
             server for deployment. There are some servers that Studio supports directly (via the
             bundled Eclipse WTP plug-ins). In this section we discuss how to manage self-installed
-            JBoss AS. Suppose you want to deploy the application to <property moreinfo="none">JBoss 4.2.3
-                server</property>. First of all you need to install it.</para>
+            JBoss AS. Suppose you want to deploy the application to <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss 4.2.3
+                server</diffmk:wrapper></property>. First of all you need to install it.</para>
         <section id="JBossInstalling">
             <?dbhtml filename="JBossInstalling.html"?>
             <title>JBoss AS Installation</title>
             <itemizedlist>
                 <listitem>
-                    <para>Download the binary package of <property moreinfo="none">JBoss 4.2.3</property> and save
+                    <para>Download the binary package of <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss 4.2.3</diffmk:wrapper></property> and save
                         it on your computer: <ulink url="http://labs.jboss.com/jbossas/downloads">http://labs.jboss.com/jbossas/downloads</ulink></para>
                 </listitem>
             </itemizedlist>
@@ -877,24 +876,24 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
                 range.</para>
             <itemizedlist>
                 <listitem>
-                    <para>After you have the binary archive you want to install, use the JDK jar
+                    <para><diffmk:wrapper diffmk:change="changed">After you have the binary archive you want to install, use the JDK jar
                         tool (or any other ZIP extraction tool) to extract the jboss-4.2.3.GA.zip
                         archive contents into a location of your choice. The jboss-4.2.3.GA.tgz
                         archive is a gzipped tar file that requires a gnutar compatible tar which
                         can handle the long pathnames in the archive. The extraction process will
-                        create a jboss-4.2.3.GA directory. </para>
+                        create a jboss-4.2.3.GA directory. </diffmk:wrapper></para>
                 </listitem>
             </itemizedlist>
         </section>
 
         <section id="AddingJBossServer">
             <?dbhtml filename="AddingJBossServer.html"?>
-            <title>Adding and Configuring JBoss Server</title>
+            <title><diffmk:wrapper diffmk:change="changed">Adding and Configuring JBoss Server</diffmk:wrapper></title>
             <para>Now we should add just installed server into server manager in <property moreinfo="none">JBoss
                     Developer Studio</property>.</para>
             <itemizedlist>
                 <listitem>
-                    <para>Open the <property moreinfo="none">JBoss Server View</property> by selecting <emphasis>
+                    <para><diffmk:wrapper diffmk:change="added">Open the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Server View</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> by selecting </diffmk:wrapper><emphasis>
                             <property moreinfo="none">Window &gt; Show View &gt; Other &gt; Server
                                 &gt; JBoss Server View</property>
                         </emphasis></para>
@@ -906,7 +905,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
                 </listitem>
                 <listitem>
                     <para>Select <emphasis>
-                            <property moreinfo="none">JBoss Community &gt; JBoss 4.2 Server</property>
+                            <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss Community &gt; JBoss 4.2 Server</diffmk:wrapper></property>
                         </emphasis></para>
                 </listitem>
             </itemizedlist>
@@ -919,21 +918,21 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
                 </mediaobject>
             </figure>
 
-            <note>
-                <title>Note:</title>
+            <note diffmk:change="added">
+                <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Note:</diffmk:wrapper></title>
 
-                <para>Now in the <property moreinfo="none">New Server wizard</property> there is a separation
-                    between the .org servers (the <emphasis>
-                        <property moreinfo="none">JBoss Community</property>
-                    </emphasis> category) and product server that comes bundled with JBoss EAP (the
-                    <emphasis>
-                        <property moreinfo="none">JBoss Enterprise Middleware</property></emphasis> category).</para>
+                <para><diffmk:wrapper diffmk:change="changed">Now in the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">New Server wizard</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> there is a separation
+                    between the .org servers (the </diffmk:wrapper><emphasis diffmk:change="added">
+                        <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Community</diffmk:wrapper></property>
+                    </emphasis><diffmk:wrapper diffmk:change="added"> category) and product server that comes bundled with JBoss EAP (the
+                    </diffmk:wrapper><emphasis diffmk:change="added">
+                        <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Enterprise Middleware</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> category).</diffmk:wrapper></para>
             </note>
 
             <itemizedlist>
                 <listitem>
-                    <para>To create a new runtime, which Jboss AS 4.2 matches to, click <emphasis>
-                            <property moreinfo="none">Next</property>
+                    <para><diffmk:wrapper diffmk:change="changed">To create a new runtime, which Jboss AS 4.2 matches to, click </diffmk:wrapper><emphasis>
+                            <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Next</diffmk:wrapper></property>
                         </emphasis></para>
                 </listitem>
             </itemizedlist>
@@ -961,8 +960,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
             <itemizedlist>
                 <listitem>
-                    <para>In the next dialog verify the specified information and if something is
-                        unfair go back and correct it</para>
+                    <para><diffmk:wrapper diffmk:change="added">In the next dialog verify the specified information and if something is
+                        unfair go back and correct it</diffmk:wrapper></para>
                 </listitem>
             </itemizedlist>
             <figure float="0">
@@ -3637,7 +3636,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 
  
 
-<chapter id="gsg_faq"  xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/gsg_faq.xml" xreflabel="gsg_faq">
+<chapter id="gsg_faq" role="updated" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/gsg_faq.xml" xreflabel="gsg_faq">
     <?dbhtml filename="gsg_faq.html"?>
     <chapterinfo>
         <keywordset>
