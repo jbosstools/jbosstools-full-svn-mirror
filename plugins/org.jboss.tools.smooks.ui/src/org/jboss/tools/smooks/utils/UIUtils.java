@@ -32,12 +32,17 @@ import org.eclipse.ui.IFileEditorInput;
 import org.jboss.tools.smooks.analyzer.CompositeResolveCommand;
 import org.jboss.tools.smooks.analyzer.DesignTimeAnalyzeResult;
 import org.jboss.tools.smooks.analyzer.MappingModel;
+import org.jboss.tools.smooks.graphical.GraphInformations;
+import org.jboss.tools.smooks.graphical.GraphicalFactory;
+import org.jboss.tools.smooks.graphical.Param;
+import org.jboss.tools.smooks.graphical.Params;
 import org.jboss.tools.smooks.javabean.analyzer.JavaModelConnectionResolveCommand;
 import org.jboss.tools.smooks.javabean.analyzer.JavaModelResolveCommand;
 import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.javabean.model.SelectorAttributes;
 import org.jboss.tools.smooks.javabean.ui.BeanPopulatorMappingAnalyzer;
 import org.jboss.tools.smooks.model.AbstractResourceConfig;
+import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.SmooksPackage;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
@@ -749,6 +754,49 @@ public class UIUtils {
 			}
 		}
 		return null;
+	}
+	
+	public static void removeParamToGraphModel(GraphInformations graph,String paramName){
+		Params params = graph.getParams();
+		if(params == null){
+			return;
+		}
+		List<Param> paramList = params.getParam();
+		Param p = null;
+		for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
+			Param param = (Param) iterator.next();
+			if(paramName.equalsIgnoreCase(param.getName())){
+				p = param;
+				break;
+			}
+		}
+		if(p == null){
+			return;
+		}
+		params.getParam().remove(p);
+	}
+
+	public static void addParamToGraphModel(GraphInformations graph,String paramName,String paramValue){
+		Params params = graph.getParams();
+		if(params == null){
+			params = GraphicalFactory.eINSTANCE.createParams();
+			graph.setParams(params);
+		}
+		List<Param> paramList = params.getParam();
+		Param p = null;
+		for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
+			Param param = (Param) iterator.next();
+			if(paramName.equalsIgnoreCase(param.getName())){
+				p = param;
+				break;
+			}
+		}
+		if(p == null){
+			p =  GraphicalFactory.eINSTANCE.createParam();
+			p.setName(paramName);
+			params.getParam().add(p);
+		}
+		p.setValue(paramValue);
 	}
 
 	public static IXMLStructuredObject localXMLNodeWithPath(String path,

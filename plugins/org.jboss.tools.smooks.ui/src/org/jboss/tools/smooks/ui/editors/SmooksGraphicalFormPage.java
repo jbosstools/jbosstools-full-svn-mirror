@@ -1336,6 +1336,22 @@ public class SmooksGraphicalFormPage extends FormPage implements
 						context);
 			}
 		}
+		if (sourceTreeViewerInputModel == null && sourceDataTypeID != null) {
+			SmooksConfigurationFileGenerateContext context = getSmooksConfigurationFileGenerateContext();
+			context.setSourceDataTypeID(sourceDataTypeID);
+			context.setTargetDataTypeID(targetDataTypeID);
+			sourceTreeViewerInputModel = selectSourceDataSource(
+					sourceDataTypeID, context);
+			if(sourceTreeViewerInputModel != null) setDirty(true);
+		}
+		if (targetTreeViewerInputModel == null && targetDataTypeID != null) {
+			SmooksConfigurationFileGenerateContext context = getSmooksConfigurationFileGenerateContext();
+			context.setSourceDataTypeID(sourceDataTypeID);
+			context.setTargetDataTypeID(targetDataTypeID);
+			targetTreeViewerInputModel = selectSourceDataSource(
+					targetDataTypeID, context);
+			if(targetTreeViewerInputModel != null) setDirty(true);
+		}
 		smooksResource = this.getSmooksResource();
 		if (smooksResource != null) {
 			smooksResource.load(Collections.EMPTY_MAP);
@@ -1429,8 +1445,10 @@ public class SmooksGraphicalFormPage extends FormPage implements
 					wizard1);
 			((Wizard) wizard1).setWindowTitle("Target Data Selection");
 			if (dialog1.open() == Dialog.OK) {
-				context.getProperties().put("targetDataPath",
-						wizard1.getStructuredDataSourcePath());
+				UIUtils
+						.addParamToGraphModel(graphinformations,
+								"targetDataPath", wizard1
+										.getStructuredDataSourcePath());
 			}
 			return wizard1.getTreeViewerInputContents();
 		}
@@ -1446,8 +1464,10 @@ public class SmooksGraphicalFormPage extends FormPage implements
 					wizard1);
 			((Wizard) wizard1).setWindowTitle("Source Data Selection");
 			if (dialog1.open() == Dialog.OK) {
-				context.getProperties().put("sourceDataPath",
-						wizard1.getStructuredDataSourcePath());
+				UIUtils
+						.addParamToGraphModel(graphinformations,
+								"sourceDataPath", wizard1
+										.getStructuredDataSourcePath());
 			}
 			return wizard1.getTreeViewerInputContents();
 		}

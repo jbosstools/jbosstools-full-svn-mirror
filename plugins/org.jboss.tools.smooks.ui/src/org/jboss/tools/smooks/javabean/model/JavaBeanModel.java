@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-import org.eclipse.ui.internal.part.NullEditorInput;
 import org.jboss.tools.smooks.analyzer.IValidatable;
 import org.jboss.tools.smooks.javabean.uitils.JavaPropertyUtils;
 import org.jboss.tools.smooks.ui.IXMLStructuredObject;
