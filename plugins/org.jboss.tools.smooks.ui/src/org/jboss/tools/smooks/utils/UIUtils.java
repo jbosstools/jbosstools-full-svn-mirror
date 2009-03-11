@@ -775,6 +775,26 @@ public class UIUtils {
 		}
 		params.getParam().remove(p);
 	}
+	
+	public static String getParamToGraphModel(GraphInformations graph,String paramName){
+		Params params = graph.getParams();
+		if(params == null){
+			return null;
+		}
+		List<Param> paramList = params.getParam();
+		Param p = null;
+		for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
+			Param param = (Param) iterator.next();
+			if(paramName.equalsIgnoreCase(param.getName())){
+				p = param;
+				break;
+			}
+		}
+		if(p == null){
+			return null;
+		}
+		return p.getValue();
+	}
 
 	public static void addParamToGraphModel(GraphInformations graph,String paramName,String paramValue){
 		Params params = graph.getParams();
