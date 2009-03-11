@@ -24,6 +24,11 @@
 		<module>../../struts/docs/struts_tools_ref_guide</module>
 		<module>../../struts/docs/struts_tools_tutorial</module>
 		<module>../../esb/docs/esb_ref_guide</module>
+		<module>../../ws/docs/reference</module>
+		<module>../../portlet/docs/reference</module>
+		<module>../../drools/docs/reference</module>
+		<module>../../jbpm/docs/converter_ref</module>
+		<module>../../jmx/docs/reference</module>
 		
 	<module>index</module>
 	</modules>
