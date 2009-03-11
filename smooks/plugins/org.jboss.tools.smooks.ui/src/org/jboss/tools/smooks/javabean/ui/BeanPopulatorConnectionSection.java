@@ -52,7 +52,7 @@ public class BeanPopulatorConnectionSection extends
 
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 
-		factory.createLabel(controlComposite, "Selector text sperator : ");
+		factory.createLabel(controlComposite, "Selector split character : ");
 		speratorCombox = factory.createCCombo(controlComposite);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		speratorCombox.setLayoutData(gd);
