@@ -20,11 +20,11 @@
 
 		<pubdate>November 2008</pubdate>
 		<copyright>
-			<year><diffmk:wrapper diffmk:change="changed">2009</diffmk:wrapper></year>
-			<holder><diffmk:wrapper diffmk:change="changed">JBoss, a division of Red Hat</diffmk:wrapper></holder>
+			<year>2008</year>
+			<holder>JBoss, a division of Red Hat Inc.</holder>
 		</copyright>
 		<releaseinfo><diffmk:wrapper diffmk:change="changed">
-			Version: 1.0.0.GA
+			Version: 1.0.0.CR1
          </diffmk:wrapper></releaseinfo>
 
 		<abstract>
@@ -48,40 +48,40 @@
 		</keywordset>
 	</chapterinfo>
 	<title>Introduction</title>
-	<section>
+	<section diffmk:change="added">
 		<title>What is Smooks?</title>
 
-		<para><property moreinfo="none">Smooks</property> is a Java Framework/Engine for processing XML and non XML
-			data (CSV, EDI, Java, JSON etc).</para>
+		<para><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Smooks</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> is a Java Framework/Engine for processing XML and non XML
+			data (CSV, EDI, Java, JSON etc).</diffmk:wrapper></para>
 		<para></para>
 		<para>
 			<orderedlist continuation="restarts" inheritnum="inherit" numeration="upperroman">
 				<listitem>
-					<para><emphasis role="bold">Transformation</emphasis>: Perform a wide range of
+					<para><emphasis diffmk:change="added" role="bold"><diffmk:wrapper diffmk:change="added">Transformation</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">: Perform a wide range of
 						Data Transforms. Supports many different Source and Result types
-						-XML/CSV/EDI/Java/JSON to XML/CSV/EDI/Java/JSON.</para>
+						-XML/CSV/EDI/Java/JSON to XML/CSV/EDI/Java/JSON.</diffmk:wrapper></para>
 				</listitem>
 				<listitem>
-					<para><emphasis role="bold">Java Binding</emphasis>: Bind into a Java Object
-						Model from any data source (CSV, EDI, XML, Java, JSON etc). </para>
+					<para><emphasis diffmk:change="added" role="bold"><diffmk:wrapper diffmk:change="added">Java Binding</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">: Bind into a Java Object
+						Model from any data source (CSV, EDI, XML, Java, JSON etc). </diffmk:wrapper></para>
 				</listitem>
 
 				<listitem>
-					<para><emphasis role="bold">Huge Message Processing</emphasis>: Process huge
+					<para><emphasis diffmk:change="added" role="bold"><diffmk:wrapper diffmk:change="added">Huge Message Processing</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">: Process huge
 						messages (GBs) - Split, Transform and Route message fragments to JMS, File,
 						Database etc destinations. Route multiple message formats to multiple
-						destinations in a single pass over a message. </para>
+						destinations in a single pass over a message. </diffmk:wrapper></para>
 				</listitem>
 
 				<listitem>
-					<para><emphasis role="bold">Message Enrichment</emphasis>: Enrich a message with
-						data from a Database, or other Datasources. </para>
+					<para><emphasis diffmk:change="added" role="bold"><diffmk:wrapper diffmk:change="added">Message Enrichment</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">: Enrich a message with
+						data from a Database, or other Datasources. </diffmk:wrapper></para>
 				</listitem>
 
 				<listitem>
-					<para><emphasis role="bold">Combine</emphasis>: Combine the above features in
+					<para><emphasis diffmk:change="added" role="bold"><diffmk:wrapper diffmk:change="added">Combine</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">: Combine the above features in
 						different ways e.g. add Message Enrichment as part of a Splitting and
-						Routing process. </para>
+						Routing process. </diffmk:wrapper></para>
 				</listitem>
 			</orderedlist>
 		</para>
@@ -93,13 +93,13 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para> For More informations about <property moreinfo="none">Smooks</property>, please visit <ulink url="http://www.smooks.org">Smooks official site</ulink>.</para>
+		<para><diffmk:wrapper diffmk:change="added"> For More informations about </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Smooks</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">, please visit </diffmk:wrapper><ulink url="http://www.smooks.org">Smooks official site</ulink><diffmk:wrapper diffmk:change="changed">.</diffmk:wrapper></para>
 	</section>
-	<section>
+	<section diffmk:change="added">
 		<title>What is Smooks dev tools?</title>
 
-		<para>Smooks dev tools is a set of graphical tools for editing Smooks configuration file
-			base on Eclipse.</para>
+		<para><diffmk:wrapper diffmk:change="changed">Smooks dev tools is a set of graphical tools for editing Smooks configuration file
+			base on Eclipse.</diffmk:wrapper></para>
 		<figure float="0">
 			<title>Smooks form editor</title>
 			<mediaobject>
@@ -109,15 +109,15 @@
 			</mediaobject>
 		</figure>
 	</section>
-	<section>
+	<section diffmk:change="added">
 		<title>How to install Smooks dev tools?</title>
 
-		<para> The Smooks dev tools was included by the <property moreinfo="none">JBoss Tools</property> since 3.0.0
-			Beta1 version. You can download the <property moreinfo="none">JBoss Tools</property> from <ulink url="http://www.jboss.org/tools/download/index.html">here</ulink>.</para>
-		<para> Smooks dev tools (<property moreinfo="none">JBoss Tools</property>) run with the latest Eclipse and
-			other required plug-ins (GEF, EMF, etc.).</para>
-		<para> You should download the latest IDE for Java EE developers from this <ulink url="http://www.eclipse.org/downloads/">site</ulink>. It contains many plug-ins (
-			GEF, EMF, etc. ) required by Smooks dev tools. </para>
+		<para><diffmk:wrapper diffmk:change="added"> The Smooks dev tools was included by the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Tools</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> since 3.0.0
+			Beta1 version. You can download the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Tools</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> from </diffmk:wrapper><ulink url="http://www.jboss.org/tools/download/index.html"><diffmk:wrapper diffmk:change="changed">here</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="changed">.</diffmk:wrapper></para>
+		<para><diffmk:wrapper diffmk:change="added"> Smooks dev tools (</diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Tools</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">) run with the latest Eclipse and
+			other required plug-ins (GEF, EMF, etc.).</diffmk:wrapper></para>
+		<para><diffmk:wrapper diffmk:change="changed"> You should download the latest IDE for Java EE developers from this </diffmk:wrapper><ulink url="http://www.eclipse.org/downloads/"><diffmk:wrapper diffmk:change="changed">site</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="changed">. It contains many plug-ins (
+			GEF, EMF, etc. ) required by Smooks dev tools. </diffmk:wrapper></para>
 	</section>
 </chapter>
 
@@ -133,43 +133,43 @@
 		</keywordset>
 	</chapterinfo>
 	<title>Quick Start</title>
-	<para> This "Quick Start" will show how to use the <property moreinfo="none">Smooks tools</property> to create/edit the Smooks
-		configuration file for Java2Java data transformation.</para>
-	<para> This chapter should give you a brief understanding of the <property moreinfo="none">Smooks dev tools</property>.</para>
+	<para><diffmk:wrapper diffmk:change="added"> This "Quick Start" will show how to use the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Smooks tools</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> to create/edit the Smooks
+		configuration file for Java2Java data transformation.</diffmk:wrapper></para>
+	<para><diffmk:wrapper diffmk:change="added"> This chapter should give you a brief understanding of the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Smooks dev tools</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
 	<section>
-		<title>Download Smooks Java-to-Java Example</title>
-		<para> Visit <ulink url="http://www.smooks.org/documentation/documentation-smooks-1-1-x/examples/example---java-to-java">here</ulink> to download the "java-to-java" example project. </para>
+		<title><diffmk:wrapper diffmk:change="changed">Download Smooks Java-to-Java Example</diffmk:wrapper></title>
+		<para><diffmk:wrapper diffmk:change="changed"> Visit </diffmk:wrapper><ulink url="http://www.smooks.org/documentation/documentation-smooks-1-1-x/examples/example---java-to-java">here</ulink><diffmk:wrapper diffmk:change="changed"> to download the "java-to-java" example project. </diffmk:wrapper></para>
 		<tip>
 			<title>Tip:</title>
 
-			<para> The example project is base on Maven, you suggest you to create a new eclipse
+			<para><diffmk:wrapper diffmk:change="changed"> The example project is base on Maven, you suggest you to create a new eclipse
 				Java project and copy the example code and .jar files from the example project paste
-				them into the eclipse Java project. </para>
+				them into the eclipse Java project. </diffmk:wrapper></para>
 		</tip>
 	</section>
 	<section>
-		<title>Smooks Configuration File Wizard</title>
-		<para>Select the Smooks Java-to-Java example project what you created and right-click,
-			select the menu <emphasis><property moreinfo="none">New &gt; Other</property>,</emphasis> then find
-					<emphasis><property moreinfo="none">Smooks &gt; Smooks Configuration File</property>.</emphasis>
-			Click the <emphasis>
-				<property moreinfo="none">Next</property>
-			</emphasis> button. </para>
+		<title><diffmk:wrapper diffmk:change="changed">Smooks Configuration File Wizard</diffmk:wrapper></title>
+		<para><diffmk:wrapper diffmk:change="added">Select the Smooks Java-to-Java example project what you created and right-click,
+			select the menu </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">New &gt; Other</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">,</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> then find
+					</diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Smooks &gt; Smooks Configuration File</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">
+			Click the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Next</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> button. </diffmk:wrapper></para>
 		<figure float="0">
-			<title>Selecting Smooks Configuration File Wizard</title>
+			<title><diffmk:wrapper diffmk:change="changed">Selecting Smooks Configuration File Wizard</diffmk:wrapper></title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/quick_start/quick_start1.png" scale="90"></imagedata>
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>The first wizard page is a file path creation page. Select the <emphasis>
-				<property moreinfo="none">src</property>
-			</emphasis> folder to be the files container, and input the name
-					<emphasis><property moreinfo="none">newConfig.smooks</property>.</emphasis> Click
-					<emphasis><property moreinfo="none">Next</property>.</emphasis></para>
+		<para><diffmk:wrapper diffmk:change="added">The first wizard page is a file path creation page. Select the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">src</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> folder to be the files container, and input the name
+					</diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">newConfig.smooks</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> Click
+					</diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Next</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></emphasis></para>
 		<figure float="0">
-			<title>Choosing the configuration file container and the file name</title>
+			<title><diffmk:wrapper diffmk:change="changed">Choosing the configuration file container and the file name</diffmk:wrapper></title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/quick_start/quick_start2.png" scale="90"></imagedata>
@@ -177,37 +177,37 @@
 			</mediaobject>
 		</figure>
 		<para>The second wizard page is a transform data type choose page.</para>
-		<para> As the quick start introduces how to create/edit the Java-to-Java Smooks
-			configuration file, let's select the<emphasis>
-				<property moreinfo="none">Java-to-Java</property>
-			</emphasis> type as the source/target transform data type. </para>
+		<para diffmk:change="added"><diffmk:wrapper diffmk:change="added"> As the quick start introduces how to create/edit the Java-to-Java Smooks
+			configuration file, let's select the</diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Java-to-Java</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> type as the source/target transform data type. </diffmk:wrapper></para>
 
-		<figure float="0">
-			<title>Selecting Data Type</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start3.png" scale="90"></imagedata>
+		<figure diffmk:change="added" float="0">
+			<title><diffmk:wrapper diffmk:change="changed">Selecting Data Type</diffmk:wrapper></title>
+			<mediaobject diffmk:change="added">
+				<imageobject diffmk:change="added">
+					<imagedata diffmk:change="added" fileref="images/quick_start/quick_start3.png" scale="90"></imagedata>
 				</imageobject>
 			</mediaobject>
 		</figure>
 
-		<para>On the next page you are prompted to choose the source data for transformation.
-			Let's select the <property moreinfo="none">Order</property> class from the example project as
-			the source JavaBean class.</para>
+		<para><diffmk:wrapper diffmk:change="added">On the next page you are prompted to choose the source data for transformation.
+			Let's select the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Order</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> class from the example project as
+			the source JavaBean class.</diffmk:wrapper></para>
 
-		<figure float="0">
-			<title>Selecting the Source Data</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start4.png" scale="90"></imagedata>
+		<figure diffmk:change="added" float="0">
+			<title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Selecting the Source Data</diffmk:wrapper></title>
+			<mediaobject diffmk:change="added">
+				<imageobject diffmk:change="added">
+					<imagedata diffmk:change="added" fileref="images/quick_start/quick_start4.png" scale="90"></imagedata>
 				</imageobject>
 			</mediaobject>
 		</figure>
 
-		<para>Then the wizard page asks you to choose the target data for transformation. We select
-			the <property moreinfo="none">ListOrder</property> class as the target JavaBean class.</para>
+		<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Then the wizard page asks you to choose the target data for transformation. We select
+			the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">ListOrder</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> class as the target JavaBean class.</diffmk:wrapper></para>
 		<figure float="0">
-			<title>Selecting the Target Data</title>
+			<title><diffmk:wrapper diffmk:change="changed">Selecting the Target Data</diffmk:wrapper></title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/quick_start/quick_start5.png" scale="90"></imagedata>
@@ -215,23 +215,23 @@
 			</mediaobject>
 		</figure>
 
-		<para></para>
+		<para diffmk:change="added"></para>
 
-		<tip>
-			<title>Tip:</title>
-			<para>You can omit two these steps and just press
-					<emphasis><property moreinfo="none">Finish</property>.</emphasis> This will open the empty
-				Smooks Configuration file. It's possible to <link linkend="graphicaleditor_datalink">select source/target data</link> afterwards
-				in the Smooks Graph editor.</para>
+		<tip diffmk:change="added">
+			<title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Tip:</diffmk:wrapper></title>
+			<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">You can omit two these steps and just press
+					</diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Finish</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> This will open the empty
+				Smooks Configuration file. It's possible to </diffmk:wrapper><link diffmk:change="added" linkend="graphicaleditor_datalink"><diffmk:wrapper diffmk:change="added">select source/target data</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> afterwards
+				in the Smooks Graph editor.</diffmk:wrapper></para>
 		</tip>
 	</section>
 	<section id="quickstart_formeditor">
-		<title>Smooks Editor</title>
+		<title><diffmk:wrapper diffmk:change="changed">Smooks Editor</diffmk:wrapper></title>
 
-		<para>When all the wizard steps are passed, a new Smooks Configuration file is created and
-			the <property moreinfo="none">Smooks Editor</property> will be opened automatically:</para>
+		<para><diffmk:wrapper diffmk:change="added">When all the wizard steps are passed, a new Smooks Configuration file is created and
+			the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Smooks Editor</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> will be opened automatically:</diffmk:wrapper></para>
 		<figure float="0">
-			<title>Smooks Editor</title>
+			<title><diffmk:wrapper diffmk:change="changed">Smooks Editor</diffmk:wrapper></title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/quick_start/quick_start6.png" scale="90"></imagedata>
@@ -239,68 +239,68 @@
 			</mediaobject>
 		</figure>
 
-		<para> This editor contains several parts: <table>
-				<title>The Smooks Editor Parts</title>
-				<tgroup cols="2">
+		<para><diffmk:wrapper diffmk:change="added"> This editor contains several parts: </diffmk:wrapper><table diffmk:change="added">
+				<title diffmk:change="added"><diffmk:wrapper diffmk:change="added">The Smooks Editor Parts</diffmk:wrapper></title>
+				<tgroup cols="2" diffmk:change="added">
 
-					<colspec align="left" colnum="1" colwidth="1*"></colspec>
-					<colspec colnum="2" colwidth="5*"></colspec>
+					<colspec align="left" colnum="1" colwidth="1*" diffmk:change="added"></colspec>
+					<colspec colnum="2" colwidth="5*" diffmk:change="added"></colspec>
 
-					<thead>
-						<row>
-							<entry>Editor feature</entry>
-							<entry>Functionality</entry>
+					<thead diffmk:change="added">
+						<row diffmk:change="added">
+							<entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Editor feature</diffmk:wrapper></entry>
+							<entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Functionality</diffmk:wrapper></entry>
 						</row>
 					</thead>
 
-					<tbody>
+					<tbody diffmk:change="added">
 
-						<row>
-							<entry>
-								<para>Problems area</para>
+						<row diffmk:change="added">
+							<entry diffmk:change="added">
+								<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Problems area</diffmk:wrapper></para>
 							</entry>
-							<entry>
-								<para>If there are any errors when you are editing the file, the
-									Problems area will display them</para>
+							<entry diffmk:change="added">
+								<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If there are any errors when you are editing the file, the
+									Problems area will display them</diffmk:wrapper></para>
 							</entry>
 						</row>
 
-						<row>
-							<entry>
-								<para>Source data tree</para>
+						<row diffmk:change="added">
+							<entry diffmk:change="added">
+								<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Source data tree</diffmk:wrapper></para>
 							</entry>
-							<entry>
-								<para>The tree will display the structure of transformed source
-									data</para>
-							</entry>
-						</row>
-
-						<row>
-							<entry>
-								<para>Target data tree</para>
-							</entry>
-							<entry>
-								<para>The tree will display the structure of transformed target
-									data</para>
+							<entry diffmk:change="added">
+								<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The tree will display the structure of transformed source
+									data</diffmk:wrapper></para>
 							</entry>
 						</row>
 
-						<row>
-							<entry>
-								<para>Mapping graphical area</para>
+						<row diffmk:change="added">
+							<entry diffmk:change="added">
+								<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Target data tree</diffmk:wrapper></para>
 							</entry>
-							<entry>
-								<para>Show the data mapping connection lines</para>
+							<entry diffmk:change="added">
+								<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The tree will display the structure of transformed target
+									data</diffmk:wrapper></para>
 							</entry>
 						</row>
 
-						<row>
-							<entry>
-								<para>Source/Target data selection links</para>
+						<row diffmk:change="added">
+							<entry diffmk:change="added">
+								<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Mapping graphical area</diffmk:wrapper></para>
 							</entry>
-							<entry>
-								<para>Click the link, and <link linkend="graphicaleditor_datalink">Data Selection wizard</link> will be opened helping you to
-									choose the source/target data</para>
+							<entry diffmk:change="added">
+								<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Show the data mapping connection lines</diffmk:wrapper></para>
+							</entry>
+						</row>
+
+						<row diffmk:change="added">
+							<entry diffmk:change="added">
+								<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Source/Target data selection links</diffmk:wrapper></para>
+							</entry>
+							<entry diffmk:change="added">
+								<para><diffmk:wrapper diffmk:change="changed">Click the link, and </diffmk:wrapper><link linkend="graphicaleditor_datalink"><diffmk:wrapper diffmk:change="changed">Data Selection wizard</diffmk:wrapper></link><diffmk:wrapper diffmk:change="changed"> will be opened helping you to
+									choose the source/target data</diffmk:wrapper></para>
 							</entry>
 						</row>
 					</tbody>
@@ -310,34 +310,34 @@
 	</section>
 
 	<section id="graphicaleditor_datalink">
-		<title>Choosing the Source/Target Data</title>
+		<title><diffmk:wrapper diffmk:change="changed">Choosing the Source/Target Data</diffmk:wrapper></title>
 
-		<para>To choose the transform data you should make use of the data selection links:</para>
+		<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">To choose the transform data you should make use of the data selection links:</diffmk:wrapper></para>
 
-		<itemizedlist>
-			<listitem>
-				<para><emphasis>
-						<property moreinfo="none">Source Select</property>
-					</emphasis> for selecting source data</para>
+		<itemizedlist diffmk:change="added">
+			<listitem diffmk:change="added">
+				<para diffmk:change="added"><emphasis diffmk:change="added">
+						<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Source Select</diffmk:wrapper></property>
+					</emphasis><diffmk:wrapper diffmk:change="added"> for selecting source data</diffmk:wrapper></para>
 			</listitem>
 
-			<listitem>
-				<para><emphasis>
-						<property moreinfo="none">Target Select</property>
-					</emphasis> for selecting target data</para>
+			<listitem diffmk:change="added">
+				<para diffmk:change="added"><emphasis diffmk:change="added">
+						<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Target Select</diffmk:wrapper></property>
+					</emphasis><diffmk:wrapper diffmk:change="added"> for selecting target data</diffmk:wrapper></para>
 			</listitem>
 		</itemizedlist>
 
-		<para>After clicking the link the <property moreinfo="none">Data Type Selection wizard</property> will be
-			opened, and there are two data types on the list: Java and XML.</para>
-		<note>
+		<para><diffmk:wrapper diffmk:change="added">After clicking the link the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Data Type Selection wizard</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> will be
+			opened, and there are two data types on the list: Java and XML.</diffmk:wrapper></para>
+		<note diffmk:change="added">
 			<title>Note</title>
-			<para> There will be more and more data types on the list as the development went on.
-			</para>
+			<para><diffmk:wrapper diffmk:change="changed"> There will be more and more data types on the list as the development went on.
+			</diffmk:wrapper></para>
 		</note>
 
 		<figure float="0">
-			<title>Data Type Wizard</title>
+			<title><diffmk:wrapper diffmk:change="changed">Data Type Wizard</diffmk:wrapper></title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/quick_start/quick_start7.png" scale="90"></imagedata>
@@ -345,13 +345,13 @@
 			</mediaobject>
 		</figure>
 
-		<para>Select the <emphasis>
-				<property moreinfo="none">Java</property>
-			</emphasis> data type and click <emphasis><property moreinfo="none">Next</property>,</emphasis> you will
-			see the JavaBean class selection page:</para>
+		<para><diffmk:wrapper diffmk:change="added">Select the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Java</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> data type and click </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Next</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">,</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> you will
+			see the JavaBean class selection page:</diffmk:wrapper></para>
 
 		<figure float="0">
-			<title>JavaBean Data Selection</title>
+			<title><diffmk:wrapper diffmk:change="changed">JavaBean Data Selection</diffmk:wrapper></title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/quick_start/quick_start8.png" scale="90"></imagedata>
@@ -359,12 +359,12 @@
 			</mediaobject>
 		</figure>
 
-		<para>When you select all the necessary java classes, click <emphasis>
-				<property moreinfo="none">Finish</property>
-			</emphasis> and the structure of the java class will be displayed on the source/target
-			data tree.</para>
+		<para><diffmk:wrapper diffmk:change="added">When you select all the necessary java classes, click </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Finish</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> and the structure of the java class will be displayed on the source/target
+			data tree.</diffmk:wrapper></para>
 		<figure float="0">
-			<title>Displaying the Structure of the Transformed Data</title>
+			<title><diffmk:wrapper diffmk:change="changed">Displaying the Structure of the Transformed Data</diffmk:wrapper></title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/quick_start/quick_start9.png" scale="90"></imagedata>
@@ -376,61 +376,61 @@
 	<section id="quickstart_mapping">
 		<title>Mapping</title>
 
-		<para> As you see, the source/target data tree displays the structure of the java class. </para>
+		<para><diffmk:wrapper diffmk:change="changed"> As you see, the source/target data tree displays the structure of the java class. </diffmk:wrapper></para>
 		<para>How to map it?</para>
 		
-		<para>First, you should know what to transform:</para>
+		<para><diffmk:wrapper diffmk:change="added">First, you should know what to transform:</diffmk:wrapper></para>
 
 		<orderedlist continuation="restarts" inheritnum="inherit" numeration="loweralpha">
 			<listitem>
-				<para>Bind the <emphasis>
-						<property moreinfo="none">"customerName"</property>
-					</emphasis> property of the <property moreinfo="none">Order#header</property> to the <emphasis>
-						<property moreinfo="none">"customerName"</property>
-					</emphasis> property of <property moreinfo="none">LineOrder</property>.</para>
+				<para><diffmk:wrapper diffmk:change="added">Bind the </diffmk:wrapper><emphasis diffmk:change="added">
+						<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"customerName"</diffmk:wrapper></property>
+					</emphasis><diffmk:wrapper diffmk:change="added"> property of the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Order#header</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> to the </diffmk:wrapper><emphasis diffmk:change="added">
+						<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"customerName"</diffmk:wrapper></property>
+					</emphasis><diffmk:wrapper diffmk:change="added"> property of </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">LineOrder</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
 			</listitem>
 			<listitem>
-				<para>Bind the <emphasis>
-						<property moreinfo="none">"customerNumber"</property>
-					</emphasis> property of the <property moreinfo="none">Order#header</property> to the <emphasis>
-						<property moreinfo="none">"customerId"</property>
-					</emphasis> property of <property moreinfo="none">LineOrder</property>.</para>
+				<para><diffmk:wrapper diffmk:change="added">Bind the </diffmk:wrapper><emphasis diffmk:change="added">
+						<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"customerNumber"</diffmk:wrapper></property>
+					</emphasis><diffmk:wrapper diffmk:change="added"> property of the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Order#header</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> to the </diffmk:wrapper><emphasis diffmk:change="added">
+						<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"customerId"</diffmk:wrapper></property>
+					</emphasis><diffmk:wrapper diffmk:change="added"> property of </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">LineOrder</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
 			</listitem>
 			<listitem>
-				<para>Bind the <emphasis>
-						<property moreinfo="none">"price"</property>
-					</emphasis> property of the <property moreinfo="none">OrderItem</property> to the <emphasis>
-						<property moreinfo="none">"unitPrice"</property>
-					</emphasis> property of <property moreinfo="none">LineItem</property>.</para>
+				<para><diffmk:wrapper diffmk:change="added">Bind the </diffmk:wrapper><emphasis diffmk:change="added">
+						<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"price"</diffmk:wrapper></property>
+					</emphasis><diffmk:wrapper diffmk:change="added"> property of the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">OrderItem</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> to the </diffmk:wrapper><emphasis diffmk:change="added">
+						<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"unitPrice"</diffmk:wrapper></property>
+					</emphasis><diffmk:wrapper diffmk:change="added"> property of </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">LineItem</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
 			</listitem>
 			<listitem>
-				<para>Bind the <emphasis>
-						<property moreinfo="none">"productId"</property>
-					</emphasis> property of the <property moreinfo="none">OrderItem</property> to the <emphasis>
-						<property moreinfo="none">"productCode"</property>
-					</emphasis> property of <property moreinfo="none">LineItem</property>.</para>
+				<para><diffmk:wrapper diffmk:change="added">Bind the </diffmk:wrapper><emphasis diffmk:change="added">
+						<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"productId"</diffmk:wrapper></property>
+					</emphasis><diffmk:wrapper diffmk:change="added"> property of the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">OrderItem</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> to the </diffmk:wrapper><emphasis diffmk:change="added">
+						<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"productCode"</diffmk:wrapper></property>
+					</emphasis><diffmk:wrapper diffmk:change="added"> property of </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">LineItem</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
 			</listitem>
 			<listitem>
-				<para>Bind the <emphasis>
-						<property moreinfo="none">"quantity"</property>
-					</emphasis> property of the <property moreinfo="none">OrderItem</property> to the <emphasis>
-						<property moreinfo="none">"unitQuantity"</property>
-					</emphasis> property of <property moreinfo="none">LineItem</property>.</para>
+				<para><diffmk:wrapper diffmk:change="added">Bind the </diffmk:wrapper><emphasis diffmk:change="added">
+						<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"quantity"</diffmk:wrapper></property>
+					</emphasis><diffmk:wrapper diffmk:change="added"> property of the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">OrderItem</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> to the </diffmk:wrapper><emphasis diffmk:change="added">
+						<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"unitQuantity"</diffmk:wrapper></property>
+					</emphasis><diffmk:wrapper diffmk:change="added"> property of </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">LineItem</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
 			</listitem>
 		</orderedlist>
 
-		<para> Make sense?</para>
-		<para> OK, let's select the <emphasis>
-				<property moreinfo="none">"customerName"</property>
-			</emphasis> item of the <emphasis>
-				<property moreinfo="none">"header"</property>
-			</emphasis> item on the source data tree and start to drag it. When the drag item
+		<para><diffmk:wrapper diffmk:change="changed"> Make sense?</diffmk:wrapper></para>
+		<para><diffmk:wrapper diffmk:change="added"> OK, let's select the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"customerName"</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> item of the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"header"</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> item on the source data tree and start to drag it. When the drag item
 			crosses the Mapping graphical area, you will see a connection line. Drop the item onto
-			the <emphasis>
-				<property moreinfo="none">"customerName"</property>
-			</emphasis> of the <property moreinfo="none">LineOrder</property> on the target data
-			view.</para>
-		<para> Now a dialog is opened asking you to connect the root node:</para>
+			the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"customerName"</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> of the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">LineOrder</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> on the target data
+			view.</diffmk:wrapper></para>
+		<para><diffmk:wrapper diffmk:change="changed"> Now a dialog is opened asking you to connect the root node:</diffmk:wrapper></para>
 
 		<figure float="0">
 			<title>Dialog Asking You to Connect to the Root Nodes</title>
@@ -440,20 +440,20 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para> Please, click <emphasis>
-				<property moreinfo="none">Yes</property>
-			</emphasis> to connect the root node. If you don't do that, this dialog will be
-			opened again when you connect other nodes.</para>
-		<note>
-			<title>Note:</title>
-			<para>Please, remember that: The root nodes of the source data and target data *MUST* be
-				connected.</para>
-			<para>This rule is not only for Java-to-Java, but the same is also relevant for
-				XML-to-Java </para>
+		<para><diffmk:wrapper diffmk:change="added"> Please, click </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Yes</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> to connect the root node. If you don't do that, this dialog will be
+			opened again when you connect other nodes.</diffmk:wrapper></para>
+		<note diffmk:change="added">
+			<title><diffmk:wrapper diffmk:change="changed">Note:</diffmk:wrapper></title>
+			<para><diffmk:wrapper diffmk:change="changed">Please, remember that: The root nodes of the source data and target data *MUST* be
+				connected.</diffmk:wrapper></para>
+			<para><diffmk:wrapper diffmk:change="changed">This rule is not only for Java-to-Java, but the same is also relevant for
+				XML-to-Java </diffmk:wrapper></para>
 		</note>
-		<para> Now let's do the same operation with the <emphasis>
-				<property moreinfo="none">"customerNumber"</property>,</emphasis> that is what you
-			should see:</para>
+		<para><diffmk:wrapper diffmk:change="added"> Now let's do the same operation with the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"customerNumber"</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">,</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> that is what you
+			should see:</diffmk:wrapper></para>
 		<figure float="0">
 			<title>Correctly Mapping Editor</title>
 			<mediaobject>
@@ -462,14 +462,14 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>Next, you are going to bind the properties of the <property moreinfo="none">OrderItem</property> to
-			the properties of the <property moreinfo="none">LineItem</property>.</para>
-		<para>Select the <emphasis>
-				<property moreinfo="none">"price"</property>
-			</emphasis> and drag it onto the <emphasis>
-				<property moreinfo="none">"unitPrice"</property>
-			</emphasis> of the other side tree viewer. The Problems area will show an
-			error:</para>
+		<para><diffmk:wrapper diffmk:change="added">Next, you are going to bind the properties of the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">OrderItem</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> to
+			the properties of the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">LineItem</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+		<para><diffmk:wrapper diffmk:change="added">Select the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"price"</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> and drag it onto the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"unitPrice"</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> of the other side tree viewer. The Problems area will show an
+			error:</diffmk:wrapper></para>
 		<figure float="0">
 			<title>Connection Error 1</title>
 			<mediaobject>
@@ -478,25 +478,25 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>How to deal with the error?</para>
-		<para>Please click the <emphasis>
-			<property moreinfo="none">Fix it</property></emphasis> link, a menu is popped-up with several
-			resolve methods on it.</para>
-		<figure float="0">
-			<title>Fixing the Connection Error</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start13.png" scale="90"></imagedata>
+		<para><diffmk:wrapper diffmk:change="changed">How to deal with the error?</diffmk:wrapper></para>
+		<para><diffmk:wrapper diffmk:change="added">Please click the </diffmk:wrapper><emphasis diffmk:change="added">
+			<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Fix it</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> link, a menu is popped-up with several
+			resolve methods on it.</diffmk:wrapper></para>
+		<figure diffmk:change="added" float="0">
+			<title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Fixing the Connection Error</diffmk:wrapper></title>
+			<mediaobject diffmk:change="added">
+				<imageobject diffmk:change="added">
+					<imagedata diffmk:change="added" fileref="images/quick_start/quick_start13.png" scale="90"></imagedata>
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para> Select the first resolve method: <emphasis>
+		<para><diffmk:wrapper diffmk:change="added"> Select the first resolve method: </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">
 			'Connect the "OrderItem" to the
-			"LineItem" '.</emphasis> As the result the <emphasis>
-				<property moreinfo="none">"OrderItem"</property></emphasis> is connected with
-			the <emphasis>
-				<property moreinfo="none">"LineItem"</property>.</emphasis></para>
-		<para>But the notify message area still shows some other errors:</para>
+			"LineItem" '.</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> As the result the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"OrderItem"</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> is connected with
+			the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"LineItem"</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></emphasis></para>
+		<para><diffmk:wrapper diffmk:change="changed">But the notify message area still shows some other errors:</diffmk:wrapper></para>
 		<figure float="0">
 			<title>Connection Error 2</title>
 			<mediaobject>
@@ -505,42 +505,42 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>OK, let's deal with the fire error. Click the <emphasis>
-			<property moreinfo="none">Fix it</property></emphasis> link and
-			select the first resolve method. The <emphasis>
-				<property moreinfo="none">"orderItems"</property></emphasis> is connected with
-			the <emphasis>
-				<property moreinfo="none">"lineItems"</property>.</emphasis></para>
+		<para><diffmk:wrapper diffmk:change="added">OK, let's deal with the fire error. Click the </diffmk:wrapper><emphasis diffmk:change="added">
+			<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Fix it</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> link and
+			select the first resolve method. The </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"orderItems"</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> is connected with
+			the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"lineItems"</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></emphasis></para>
 		
 		<tip>
-			<title>Tip:</title>
-			<para> Why does the error occur?</para>
-			<para> You will find that, if you only connect the property node without connecting the
-				parent node of the property, the "connection error" occurs.</para>
-			<para>The connection of the "price-to-unitPrice" is the
+			<title><diffmk:wrapper diffmk:change="changed">Tip:</diffmk:wrapper></title>
+			<para><diffmk:wrapper diffmk:change="changed"> Why does the error occur?</diffmk:wrapper></para>
+			<para><diffmk:wrapper diffmk:change="changed"> You will find that, if you only connect the property node without connecting the
+				parent node of the property, the "connection error" occurs.</diffmk:wrapper></para>
+			<para><diffmk:wrapper diffmk:change="changed">The connection of the "price-to-unitPrice" is the
 				"Binding Connection", but it needs an "Instance Creation
 				Connection" - the connection of the
-				"OrderItem-to-LineItem".</para>
+				"OrderItem-to-LineItem".</diffmk:wrapper></para>
 		</tip>
-		<para> After that, connect <emphasis>
-			<property moreinfo="none">"quantity"</property></emphasis> to the <emphasis>
-				<property moreinfo="none">"unitQuantity"</property></emphasis> and <emphasis>
-					<property moreinfo="none">"productId"</property></emphasis> to the
-			<emphasis>
-				<property moreinfo="none">"productCode"</property>:</emphasis></para>
+		<para><diffmk:wrapper diffmk:change="added"> After that, connect </diffmk:wrapper><emphasis diffmk:change="added">
+			<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"quantity"</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> to the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"unitQuantity"</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> and </diffmk:wrapper><emphasis diffmk:change="added">
+					<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"productId"</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> to the
+			</diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">"productCode"</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">:</diffmk:wrapper></emphasis></para>
 		<figure float="0">
-			<title>Complete Mapping</title>
+			<title><diffmk:wrapper diffmk:change="changed">Complete Mapping</diffmk:wrapper></title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/quick_start/quick_start15.png" scale="90"></imagedata>
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>Now, you should save the file and the <property moreinfo="none">Smooks tools</property> will generate the correct
-			configuration file content.</para>
-		<para>OK, let run the test class: <property moreinfo="none">example.Main</property>. (Please, make sure that the Smooks engine
-			loads the correct configuration file).</para>
-		<para>Success!</para>
+		<para><diffmk:wrapper diffmk:change="added">Now, you should save the file and the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Smooks tools</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> will generate the correct
+			configuration file content.</diffmk:wrapper></para>
+		<para><diffmk:wrapper diffmk:change="added">OK, let run the test class: </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">example.Main</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. (Please, make sure that the Smooks engine
+			loads the correct configuration file).</diffmk:wrapper></para>
+		<para><diffmk:wrapper diffmk:change="changed">Success!</diffmk:wrapper></para>
 	</section>
 </chapter>
 
@@ -556,7 +556,7 @@
 	</chapterinfo>
 	<title>Smooks Graphical Editor Page</title>
 
-	<para>Smooks Graphical Editor page is one tab of the <property moreinfo="none">Smooks Editor</property>.</para>
+	<para><diffmk:wrapper diffmk:change="added">Smooks Graphical Editor page is one tab of the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Smooks Editor</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
 	<figure float="0">
 		<title>Graphical Editor</title>
 		<mediaobject>
@@ -566,118 +566,118 @@
 		</mediaobject>
 	</figure>
 
-	<para> This <property moreinfo="none">Graphical editor</property> allows you to perform drug/drop operations
-		with the nodes of transform data to map the source data to target data. </para>
-	<para> When you save the changes in the Graphical editor the correct Smooks Configuration file
-		content will be generated. </para>
+	<para><diffmk:wrapper diffmk:change="added"> This </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Graphical editor</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> allows you to perform drug/drop operations
+		with the nodes of transform data to map the source data to target data. </diffmk:wrapper></para>
+	<para><diffmk:wrapper diffmk:change="changed"> When you save the changes in the Graphical editor the correct Smooks Configuration file
+		content will be generated. </diffmk:wrapper></para>
 	<section>
 
-		<title>Introducing the areas of graphical editor</title>
-		<para>Information on the topic could be found in the <link linkend="quickstart_formeditor">Quick Start/Smooks Editor</link> section.</para>
+		<title><diffmk:wrapper diffmk:change="changed">Introducing the areas of graphical editor</diffmk:wrapper></title>
+		<para><diffmk:wrapper diffmk:change="changed">Information on the topic could be found in the </diffmk:wrapper><link linkend="quickstart_formeditor"><diffmk:wrapper diffmk:change="changed">Quick Start/Smooks Editor</diffmk:wrapper></link><diffmk:wrapper diffmk:change="changed"> section.</diffmk:wrapper></para>
 	</section>
 	<section>
 
-		<title>Load Source/Target Data</title>
-		<para> Click the links under the data view, the <property moreinfo="none">Data Type Selection wizard</property> page will be
-			shown.</para>
+		<title><diffmk:wrapper diffmk:change="changed">Load Source/Target Data</diffmk:wrapper></title>
+		<para><diffmk:wrapper diffmk:change="added"> Click the links under the data view, the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Data Type Selection wizard</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> page will be
+			shown.</diffmk:wrapper></para>
 		<figure float="0">
-			<title>Data Type Selection Wizard Page</title>
+			<title><diffmk:wrapper diffmk:change="changed">Data Type Selection Wizard Page</diffmk:wrapper></title>
 			<mediaobject>
 				<imageobject>
 
-					<imagedata fileref="images/graph_editor/graph_editor2.png" scale="90"></imagedata>
+					<imagedata fileref="images/graph_editor/graph_editor2.png" scale="90"/>
 
 				</imageobject>
 			</mediaobject>
 		</figure>
 
-		<para> There are sets of transform data type on the wizard page, select one type and click
-					<emphasis><property moreinfo="none">Next</property>,</emphasis> the data source selection wizard
-			page will be shown.</para>
+		<para><diffmk:wrapper diffmk:change="added"> There are sets of transform data type on the wizard page, select one type and click
+					</diffmk:wrapper><emphasis diffmk:change="added"><property moreinfo="none">Next</property><diffmk:wrapper diffmk:change="added">,</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> the data source selection wizard
+			page will be shown.</diffmk:wrapper></para>
 
 		<tip>
-			<title>Note:</title>
-			<para>For different data type, the Data source selection wizard are different too.
-			</para>
+			<title><diffmk:wrapper diffmk:change="changed">Note:</diffmk:wrapper></title>
+			<para><diffmk:wrapper diffmk:change="changed">For different data type, the Data source selection wizard are different too.
+			</diffmk:wrapper></para>
 		</tip>
 		<figure float="0">
-			<title>Java Data Source Selection Wizard Page</title>
+			<title><diffmk:wrapper diffmk:change="changed">Java Data Source Selection Wizard Page</diffmk:wrapper></title>
 			<mediaobject>
 				<imageobject>
 
-					<imagedata fileref="images/graph_editor/graph_editor3.png" scale="90"></imagedata>
+					<imagedata fileref="images/graph_editor/graph_editor3.png" scale="90"/>
 
 				</imageobject>
 			</mediaobject>
 		</figure>
 
 		<figure float="0">
-			<title>XML File Path Selection Wizard Page</title>
+			<title><diffmk:wrapper diffmk:change="changed">XML File Path Selection Wizard Page</diffmk:wrapper></title>
 			<mediaobject>
 				<imageobject>
 
-					<imagedata fileref="images/graph_editor/graph_editor4.png" scale="90"></imagedata>
+					<imagedata fileref="images/graph_editor/graph_editor4.png" scale="90"/>
 
 				</imageobject>
 			</mediaobject>
 		</figure>
 
-		<para> When you finish the data selection (file path selection), click
-					<emphasis><property moreinfo="none">Finish</property>,</emphasis> the data view will display the
-			selected data structure.</para>
+		<para><diffmk:wrapper diffmk:change="added"> When you finish the data selection (file path selection), click
+					</diffmk:wrapper><emphasis diffmk:change="added"><property moreinfo="none">Finish</property><diffmk:wrapper diffmk:change="added">,</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> the data view will display the
+			selected data structure.</diffmk:wrapper></para>
 	</section>
 	<section>
 
-		<title>Using Graphical Editor for Mapping</title>
-		<para>To get information on the topic please, read the <link linkend="quickstart_mapping">Quick Start/Mapping</link> section. </para>
+		<title><diffmk:wrapper diffmk:change="changed">Using Graphical Editor for Mapping</diffmk:wrapper></title>
+		<para><diffmk:wrapper diffmk:change="changed">To get information on the topic please, read the </diffmk:wrapper><link linkend="quickstart_mapping"><diffmk:wrapper diffmk:change="changed">Quick Start/Mapping</diffmk:wrapper></link><diffmk:wrapper diffmk:change="changed"> section. </diffmk:wrapper></para>
 	</section>
 	<section>
 
-		<title>Error Messages</title>
-		<para>When you do any mapping operations, the <property moreinfo="none">Smooks tools</property> validate the
+		<title><diffmk:wrapper diffmk:change="changed">Error Messages</diffmk:wrapper></title>
+		<para><diffmk:wrapper diffmk:change="added">When you do any mapping operations, the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Smooks tools</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> validate the
 			file content with "Mapping Logic". If there are any errors of the configuration file
-			content, error messages are shown in the <link linkend="quickstart_formeditor">Problems
-				area</link>.</para>
-		<para> Please, read the <link linkend="quickstart_mapping">Quick Start/Mapping</link> section to
-			find how to fix the errors.</para>
+			content, error messages are shown in the </diffmk:wrapper><link linkend="quickstart_formeditor"><diffmk:wrapper diffmk:change="changed">Problems
+				area</diffmk:wrapper></link><diffmk:wrapper diffmk:change="changed">.</diffmk:wrapper></para>
+		<para><diffmk:wrapper diffmk:change="changed"> Please, read the </diffmk:wrapper><link linkend="quickstart_mapping"><diffmk:wrapper diffmk:change="changed">Quick Start/Mapping</diffmk:wrapper></link><diffmk:wrapper diffmk:change="changed"> section to
+			find how to fix the errors.</diffmk:wrapper></para>
 	</section>
 	<section id="graphicalpage_propertiesview">
-		<title>Properties View</title>
+		<title><diffmk:wrapper diffmk:change="changed">Properties View</diffmk:wrapper></title>
 
-		<para> You can edit the properties of the connection lines with the <property moreinfo="none">Properties
-				view</property>.</para>
-		<para>Navigate to <emphasis><property moreinfo="none">Window &gt; Show View &gt; Other &gt;
-				Properties</property>,</emphasis> to open the <property moreinfo="none">Properties
-			view</property>.</para>
-		<para> When you select on the connection lines, the <property moreinfo="none">Properties view</property>
-			will show a set of section GUI for editing the properties of the connection line.</para>
+		<para><diffmk:wrapper diffmk:change="added"> You can edit the properties of the connection lines with the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Properties
+				view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+		<para><diffmk:wrapper diffmk:change="added">Navigate to </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Window &gt; Show View &gt; Other &gt;
+				Properties</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">,</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> to open the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Properties
+			view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+		<para><diffmk:wrapper diffmk:change="added"> When you select on the connection lines, the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Properties view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+			will show a set of section GUI for editing the properties of the connection line.</diffmk:wrapper></para>
 		<tip>
 
-			<title>Tip:</title>
-			<para>This GUI on the <property moreinfo="none">Properties view</property> is displayed when the Smooks
-				Graphical editor is active, if not, the <property moreinfo="none">Properties view</property>
-				displays empty GUI.</para>
-			<para>If the source data type of the selected connection line is
-				"XML", the <property moreinfo="none">Properties view</property> shows an XML
-				Properties section GUI.</para>
-			<para>But if the source data type of the selected connection line is
+			<title><diffmk:wrapper diffmk:change="changed">Tip:</diffmk:wrapper></title>
+			<para><diffmk:wrapper diffmk:change="added">This GUI on the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Properties view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> is displayed when the Smooks
+				Graphical editor is active, if not, the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Properties view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+				displays empty GUI.</diffmk:wrapper></para>
+			<para><diffmk:wrapper diffmk:change="added">If the source data type of the selected connection line is
+				"XML", the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Properties view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> shows an XML
+				Properties section GUI.</diffmk:wrapper></para>
+			<para><diffmk:wrapper diffmk:change="changed">But if the source data type of the selected connection line is
 				"Java", the XML Properties section GUI isn't
-				displayed.</para>
-			<para>It means that if the source/target data type of the selected connection line is
-				different, the <property moreinfo="none">Properties view</property> shows different GUI.</para>
+				displayed.</diffmk:wrapper></para>
+			<para><diffmk:wrapper diffmk:change="added">It means that if the source/target data type of the selected connection line is
+				different, the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Properties view</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> shows different GUI.</diffmk:wrapper></para>
 		</tip>
 		<figure float="0">
 			<title>JavaBean Properties Section</title>
 			<mediaobject>
 				<imageobject>
 
-					<imagedata fileref="images/graph_editor/graph_editor5.png" scale="90"></imagedata>
+					<imagedata fileref="images/graph_editor/graph_editor5.png" scale="90"/>
 
 				</imageobject>
 			</mediaobject>
 		</figure>
 		<figure float="0">
-			<title>XML Properties Section</title>
+			<title><diffmk:wrapper diffmk:change="changed">XML Properties Section</diffmk:wrapper></title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/graph_editor/graph_editor6.png" scale="90"></imagedata>
@@ -685,7 +685,7 @@
 			</mediaobject>
 		</figure>
 		<figure float="0">
-			<title>Mapping Properties Section</title>
+			<title><diffmk:wrapper diffmk:change="changed">Mapping Properties Section</diffmk:wrapper></title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/graph_editor/graph_editor7.png" scale="90"></imagedata>
@@ -693,9 +693,10 @@
 			</mediaobject>
 		</figure>
 	</section>
-</chapter>
+
 
 	
+</chapter>
 <chapter id="smooksformeditor_configurationtab" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/smooks/docs/reference/en/modules/smooksformeditor_configurationpage.xml" xreflabel="Smooks Configuration Editor Page">
 	<?dbhtml filename="smooks_form_editor_configurationtab.html"?>
 	<chapterinfo>
@@ -706,7 +707,7 @@
 		</keywordset>
 	</chapterinfo>
 	<title>Smooks Configuration Editor Page</title>
-	<para> Smooks Configuration Editor Page is one tab of the <property moreinfo="none">Smooks Editor</property>. </para>
+	<para><diffmk:wrapper diffmk:change="added"> Smooks Configuration Editor Page is one tab of the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Smooks Editor</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. </diffmk:wrapper></para>
 	<figure float="0">
 		<title>Graphical Editor</title>
 		<mediaobject>
@@ -716,37 +717,37 @@
 		</mediaobject>
 	</figure>
 
-	<para> You can add/edit/remove the <link linkend="configurationpage_datedecoder">Date
-			Decoder</link> on the Сonfiguration page of the <property moreinfo="none">Smooks Editor</property>. </para>
-	<para> The configuration also edit the <link linkend="configurationpage_parsetype">Smooks parse
-			type</link> and manage the <link linkend="configurationpage_importfile">Import
-			Files</link>.</para>
+	<para><diffmk:wrapper diffmk:change="changed"> You can add/edit/remove the </diffmk:wrapper><link linkend="configurationpage_datedecoder"><diffmk:wrapper diffmk:change="changed">Date
+			Decoder</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> on the Сonfiguration page of the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Smooks Editor</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. </diffmk:wrapper></para>
+	<para><diffmk:wrapper diffmk:change="changed"> The configuration also edit the </diffmk:wrapper><link linkend="configurationpage_parsetype"><diffmk:wrapper diffmk:change="changed">Smooks parse
+			type</diffmk:wrapper></link><diffmk:wrapper diffmk:change="changed"> and manage the </diffmk:wrapper><link linkend="configurationpage_importfile"><diffmk:wrapper diffmk:change="changed">Import
+			Files</diffmk:wrapper></link><diffmk:wrapper diffmk:change="changed">.</diffmk:wrapper></para>
 
 	<section id="configurationpage_parsetype">
 
-		<title>Smooks Parse Type</title>
-		<para>Open the <emphasis>
-				<property moreinfo="none">Other Configurations</property>
-			</emphasis> section, we will see there is a set of radio buttons:</para>
+		<title><diffmk:wrapper diffmk:change="changed">Smooks Parse Type</diffmk:wrapper></title>
+		<para><diffmk:wrapper diffmk:change="added">Open the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Other Configurations</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> section, we will see there is a set of radio buttons:</diffmk:wrapper></para>
 
 		<figure float="0">
-			<title>Smooks Parse Types</title>
+			<title><diffmk:wrapper diffmk:change="changed">Smooks Parse Types</diffmk:wrapper></title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/config_page/config_page2.png" scale="90"></imagedata>
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para> Select the radio button to change the Smooks parse type. </para>
+		<para><diffmk:wrapper diffmk:change="changed"> Select the radio button to change the Smooks parse type. </diffmk:wrapper></para>
 	</section>
 	<section id="configurationpage_importfile">
 
-		<title>Import File</title>
-		<para> Open the <emphasis>
-				<property moreinfo="none">Other Configurations</property>
-			</emphasis> section, there is an <emphasis>
-				<property moreinfo="none">Import Files</property>
-			</emphasis> list under the Smooks parse type buttons.</para>
+		<title><diffmk:wrapper diffmk:change="changed">Import File</diffmk:wrapper></title>
+		<para><diffmk:wrapper diffmk:change="added"> Open the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Other Configurations</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> section, there is an </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Import Files</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> list under the Smooks parse type buttons.</diffmk:wrapper></para>
 
 		<figure float="0">
 			<title>Import File</title>
@@ -757,28 +758,28 @@
 			</mediaobject>
 		</figure>
 
-		<para>There are three buttons on the right side of the <emphasis>
-				<property moreinfo="none">File Import</property>
-			</emphasis> list. You can click those to add/edit/remove the import files.</para>
+		<para><diffmk:wrapper diffmk:change="added">There are three buttons on the right side of the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">File Import</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> list. You can click those to add/edit/remove the import files.</diffmk:wrapper></para>
 
 		<tip>
 
-			<title>Tip:</title>
-			<para> If the import file dosen't exist, the image of the import file will change to
+			<title><diffmk:wrapper diffmk:change="changed">Tip:</diffmk:wrapper></title>
+			<para><diffmk:wrapper diffmk:change="changed"> If the import file dosen't exist, the image of the import file will change to
 				"Error Image". If you double-click the import file in the Import File list, the file
-				will be open with a new default editor. </para>
+				will be open with a new default editor. </diffmk:wrapper></para>
 
 		</tip>
 	</section>
 	<section id="configurationpage_datedecoder">
 		<title>Date Decoder Detail Page</title>
 
-		<para>Date Decoder is a resourceConfig element in the Smooks configuration file. It
-			describes how to transform the "Date" type.</para>
-		<para> Click the <emphasis>
-				<property moreinfo="none">New</property>
-			</emphasis> button to open the <property moreinfo="none">New Resource Type wizard</property>
-			dialog.</para>
+		<para><diffmk:wrapper diffmk:change="changed">Date Decoder is a resourceConfig element in the Smooks configuration file. It
+			describes how to transform the "Date" type.</diffmk:wrapper></para>
+		<para><diffmk:wrapper diffmk:change="added"> Click the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">New</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> button to open the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">New Resource Type wizard</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+			dialog.</diffmk:wrapper></para>
 		<figure float="0">
 			<title>Resource Type Selection Wizard</title>
 			<mediaobject>
@@ -788,20 +789,20 @@
 			</mediaobject>
 		</figure>
 
-		<para>There are several resource type on the list. Select the <emphasis>
-				<property moreinfo="none">Date Decoder</property>
-			</emphasis> and click the <emphasis>
-				<property moreinfo="none">Finish</property>
-			</emphasis> button, a new <emphasis>
-				<property moreinfo="none">Date Decoder</property>
-			</emphasis> item was added and shown on the resource type list.</para>
-		<para> There are several parameters in the <emphasis>
-				<property moreinfo="none">Date Decoder</property>
-			</emphasis> resourceConfig element:</para>
+		<para><diffmk:wrapper diffmk:change="added">There are several resource type on the list. Select the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Date Decoder</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> and click the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Finish</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> button, a new </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Date Decoder</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> item was added and shown on the resource type list.</diffmk:wrapper></para>
+		<para><diffmk:wrapper diffmk:change="added"> There are several parameters in the </diffmk:wrapper><emphasis diffmk:change="added">
+				<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Date Decoder</diffmk:wrapper></property>
+			</emphasis><diffmk:wrapper diffmk:change="added"> resourceConfig element:</diffmk:wrapper></para>
 
 		<para>
 
-			<itemizedlist>
+			<itemizedlist diffmk:change="added">
 				<listitem>
 					<para>locale-language</para>
 
@@ -818,8 +819,8 @@
 			</itemizedlist>
 		</para>
 
-		<para> You can modify the parameters of the <emphasis>
-			<property moreinfo="none">Date Decoder</property></emphasis> item with the left detail page.</para>
+		<para><diffmk:wrapper diffmk:change="added"> You can modify the parameters of the </diffmk:wrapper><emphasis diffmk:change="added">
+			<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Date Decoder</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> item with the left detail page.</diffmk:wrapper></para>
 
 		<figure float="0">
 			<title>Date Decoder Detail Page</title>
@@ -830,9 +831,9 @@
 			</mediaobject>
 		</figure>
 
-		<para> When you defined a new <emphasis>
-			<property moreinfo="none">Date Decoder</property></emphasis>, they can use the <link linkend="graphicalpage_propertiesview">JavaBean Properties</link> GUI to set the
-			them to be the "Java type".</para>
+		<para><diffmk:wrapper diffmk:change="added"> When you defined a new </diffmk:wrapper><emphasis diffmk:change="added">
+			<property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Date Decoder</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added">, they can use the </diffmk:wrapper><link linkend="graphicalpage_propertiesview"><diffmk:wrapper diffmk:change="changed">JavaBean Properties</diffmk:wrapper></link><diffmk:wrapper diffmk:change="changed"> GUI to set the
+			them to be the "Java type".</diffmk:wrapper></para>
 
 		<!--
 			<para> The XML fragment generated by Smooks tools for the "Date
@@ -850,9 +851,10 @@
 		id="configurationpage_unhandleresourceconfig"> <title>Unhandle
 		ResourceConfig</title> </section>
 	-->
-</chapter>
+
 
 	
+</chapter>
 <chapter id="smooksformeditor_sourcetab" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/smooks/docs/reference/en/modules/smooksformeditor_sourcepage.xml" xreflabel="Smooks Source Editor Page">
 	<?dbhtml filename="smooks_form_editor_sourcetab.html"?>
 	<chapterinfo>
@@ -865,7 +867,7 @@
 	<title>Smooks Source Editor Page</title>
 	<section>
 		<title>XML Source Editor</title>
-		<para>You can use this editor to edit the Smooks Configuration file directly. </para>
+		<para><diffmk:wrapper diffmk:change="changed">You can use this editor to edit the Smooks Configuration file directly. </diffmk:wrapper></para>
 		<figure float="0">
 			<title>Graphical Editor</title>
 			<mediaobject>
@@ -877,9 +879,9 @@
 	</section>
 	<section>
 		<title>Error Messages GUI</title>
-		<para>If the <property moreinfo="none">Smooks tools</property> can't understand the configuration
+		<para><diffmk:wrapper diffmk:change="added">If the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Smooks tools</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> can't understand the configuration
 			file or the configuration file is illegal (XML structure isn't right for Smooks
-			Configuration file, etc.), the error will be underlined.</para>
+			Configuration file, etc.), the error will be underlined.</diffmk:wrapper></para>
 		<figure float="0">
 			<title>Graphical Editor</title>
 			<mediaobject>
@@ -897,6 +899,7 @@
 		</note-->
 
 	</section>
-</chapter>
 
+
+</chapter>
 </book>
