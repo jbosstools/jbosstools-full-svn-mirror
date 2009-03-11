@@ -21,9 +21,10 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
 		
-                        <fileSet>
-				<directory>../guides/Legacy-jsf-struts/target/docbook/publish/en-US</directory>
-				<outputDirectory>/Legacy-jsf-struts</outputDirectory>
+		
+			<fileSet>
+				<directory>../guides/Exadel-migration/target/docbook/publish/en-US</directory>
+				<outputDirectory>/Exadel-migration</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
 				<includes>
@@ -34,6 +35,32 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
+			<fileSet>
+				<directory>../guides/GettingStartedGuide/target/docbook/publish/en-US</directory>
+				<outputDirectory>/GettingStartedGuide</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			<!--fileSet>
+				<directory>../guides/GettingStartedGuide/en</directory>
+				<outputDirectory>/GettingStartedGuide</outputDirectory>
+				<filtered>false</filtered>
+				<includes>
+				<include>database.zip</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+				</fileSet-->
+			
 			<fileSet>
 				<directory>../../as/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/as</outputDirectory>
@@ -60,10 +87,9 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
-
 			<fileSet>
 				<directory>../../jbpm/docs/reference/target/docbook/publish/en-US</directory>
-				<outputDirectory>/jbpm</outputDirectory>
+				<outputDirectory>/jboss_jbpm_ref_guide</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
 				<includes>
@@ -75,105 +101,8 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
 			<fileSet>
-				<directory>../../seam/docs/reference/target/docbook/publish/en-US</directory>
-				<outputDirectory>/seam</outputDirectory>
-				<filtered>false</filtered>
-				<lineEnding>keep</lineEnding>
-				<includes>
-					<include>**/*.*</include>
-				</includes>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet>
-
-                         <fileSet>
-				<directory>../../jsf/docs/jsf_tools_ref_guide/target/docbook/publish/en-US</directory>
-				<outputDirectory>/jsf_tools_ref_guide</outputDirectory>
-				<filtered>false</filtered>
-				<lineEnding>keep</lineEnding>
-				<includes>
-					<include>**/*.*</include>
-				</includes>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet>
-
-
-			<fileSet>
-				<directory>../../jsf/docs/jsf_tools_tutorial/target/docbook/publish/en-US</directory>
-				<outputDirectory>/jsf_tools_tutorial</outputDirectory>
-				<filtered>false</filtered>
-				<lineEnding>keep</lineEnding>
-				<includes>
-					<include>**/*.*</include>
-				</includes>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet>
-
-			<fileSet>
-				<directory>../../struts/docs/struts_tools_tutorial/target/docbook/publish/en-US</directory>
-				<outputDirectory>/struts_tools_tutorial</outputDirectory>
-				<filtered>false</filtered>
-				<lineEnding>keep</lineEnding>
-				<includes>
-					<include>**/*.*</include>
-				</includes>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet>
-
-			<fileSet>
-				<directory>../../struts/docs/struts_tools_ref_guide/target/docbook/publish/en-US</directory>
-				<outputDirectory>/struts_tools_ref_guide</outputDirectory>
-				<filtered>false</filtered>
-				<lineEnding>keep</lineEnding>
-				<includes>
-					<include>**/*.*</include>
-				</includes>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet>
-                        	<fileSet>
-				<directory>../../esb/docs/esb_ref_guide/target/docbook/publish/en-US</directory>
-				<outputDirectory>/esb_ref_guide</outputDirectory>
-				<filtered>false</filtered>
-				<lineEnding>keep</lineEnding>
-				<includes>
-					<include>**/*.*</include>
-				</includes>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet>
-
-                        <fileSet>
-				<directory>../guides/Exadel-migration/target/docbook/publish/en-US</directory>
-				<outputDirectory>/Exadel-migration</outputDirectory>
-				<filtered>false</filtered>
-				<lineEnding>keep</lineEnding>
-				<includes>
-					<include>**/*.*</include>
-				</includes>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet>
-			<fileSet>
-				<directory>../guides/GettingStartedGuide/target/docbook/publish/en-US</directory>
-				<outputDirectory>/GettingStartedGuide</outputDirectory>
+				<directory>../../jbpm/docs/converter_ref/target/docbook/publish/en-US</directory>
+				<outputDirectory>/jboss_bpmn_convert_ref_guide</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
 				<includes>
@@ -197,6 +126,147 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
+			<fileSet>
+				<directory>../../seam/docs/reference/target/docbook/publish/en-US</directory>
+				<outputDirectory>/seam</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			<fileSet>
+				<directory>../../jsf/docs/jsf_tools_ref_guide/target/docbook/publish/en-US</directory>
+				<outputDirectory>/jsf_tools_ref_guide</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			
+			<fileSet>
+				<directory>../../jsf/docs/jsf_tools_tutorial/target/docbook/publish/en-US</directory>
+				<outputDirectory>/jsf_tools_tutorial</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			
+			<fileSet>
+				<directory>../../struts/docs/struts_tools_tutorial/target/docbook/publish/en-US</directory>
+				<outputDirectory>/struts_tools_tutorial</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			
+			<fileSet>
+				<directory>../../struts/docs/struts_tools_ref_guide/target/docbook/publish/en-US</directory>
+				<outputDirectory>/struts_tools_ref_guide</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			<fileSet>
+				<directory>../../esb/docs/esb_ref_guide/target/docbook/publish/en-US</directory>
+				<outputDirectory>/esb_ref_guide</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			
+			<fileSet>
+				<directory>../../ws/docs/reference/target/docbook/publish/en-US</directory>
+				<outputDirectory>/ws_ref_guide</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			
+			<fileSet>
+				<directory>../../portlet/docs/reference/target/docbook/publish/en-US</directory>
+				<outputDirectory>/jboss_portal_tools_ref_guide</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			
+						
+			<fileSet>
+				<directory>../../drools/docs/reference/target/docbook/publish/en-US</directory>
+				<outputDirectory>/drools_tools_ref_guide</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			
+			
+			
+			<fileSet>
+				<directory>../../jmx/docs/reference/target/docbook/publish/en-US</directory>
+				<outputDirectory>/jmx_ref_guide</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+		</fileSets>
 		
 	</fileSets>
 		
