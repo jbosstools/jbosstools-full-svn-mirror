@@ -19,7 +19,7 @@ import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 public class TemplatesTableProvider implements XTableProvider, XTableImageProvider {
-	static String[] COLUMNS = new String[]{VpeUIMessages.TemplatesTableProvider_URI,VpeUIMessages.TemplatesTableProvider_TagForDisplay, VpeUIMessages.TemplatesTableProvider_TagName, VpeUIMessages.TemplatesTableProvider_Children};
+	static String[] COLUMNS = new String[]{VpeUIMessages.TemplatesTableProvider_TagName, VpeUIMessages.TemplatesTableProvider_TagForDisplay, VpeUIMessages.TemplatesTableProvider_URI, VpeUIMessages.TemplatesTableProvider_Children};
 	static int[] WIDTH = new int[]{200,150, 150,100};
 	List dataList;
 	
@@ -44,11 +44,11 @@ public class TemplatesTableProvider implements XTableProvider, XTableImageProvid
 		VpeAnyData data = (VpeAnyData)dataList.get(r);
 		switch(c){
 			case 0:
-				return data.getUri();
+			    return data.getName();
 			case 1:
 			    return data.getTagForDisplay();
 			case 2:
-				return data.getName();
+			    return data.getUri();
 			case 3:
 				if(data.isChildren()) return VpeUIMessages.TemplatesTableProvider_Yes;
 				else return VpeUIMessages.TemplatesTableProvider_No;
