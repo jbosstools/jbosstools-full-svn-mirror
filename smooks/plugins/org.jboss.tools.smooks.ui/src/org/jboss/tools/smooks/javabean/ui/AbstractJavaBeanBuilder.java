@@ -50,9 +50,9 @@ public class AbstractJavaBeanBuilder {
 	public void mergeJavaBeans(JavaBeanList beanList, List javabeans) {
 		for (Iterator iterator = javabeans.iterator(); iterator.hasNext();) {
 			JavaBeanModel javaBean = (JavaBeanModel) iterator.next();
-			// if (!hasSameNameBean(beanList, javaBean)) {
-			beanList.addJavaBean(javaBean);
-			// }
+			if (!hasSameNameBean(beanList, javaBean)) {
+				beanList.addJavaBean(javaBean);
+			}
 		}
 	}
 
@@ -142,7 +142,7 @@ public class AbstractJavaBeanBuilder {
 		int endIndex = startIndex1 + removeClass.length();
 		endIndex++;
 		if (classArray.length() <= endIndex) {
-			endIndex --;
+			endIndex--;
 			if (classArray.charAt(endIndex - 1) != ';') {
 				endIndex = startIndex1 + removeClass.length();
 			}

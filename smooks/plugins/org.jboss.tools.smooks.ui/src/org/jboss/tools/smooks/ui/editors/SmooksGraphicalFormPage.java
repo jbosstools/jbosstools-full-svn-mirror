@@ -20,6 +20,7 @@ import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.GraphicalViewer;
+import org.eclipse.gef.KeyHandler;
 import org.eclipse.gef.KeyStroke;
 import org.eclipse.gef.LayerConstants;
 import org.eclipse.gef.commands.CommandStack;
@@ -125,7 +127,6 @@ import org.jboss.tools.smooks.graphical.Params;
 import org.jboss.tools.smooks.graphical.util.GraphicalInformationSaver;
 import org.jboss.tools.smooks.model.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.DocumentRoot;
-import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.SmooksFactory;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
@@ -174,7 +175,13 @@ public class SmooksGraphicalFormPage extends FormPage implements
 
 	private CompositeSelectionProvider compositeSelectionProvider = new CompositeSelectionProvider();
 
-	private final String[] REQUIRED_SOURCE_SELECT_TYPE = new String[] { "org.jboss.tools.smooks.xml.viewerInitor.xml" };
+	private final String[] REQUIRED_SOURCE_SELECT_TYPE = new String[] {
+			"org.jboss.tools.smooks.ui.viewerInitor.javabean",
+			"org.jboss.tools.smooks.xml.viewerInitor.xml" };
+
+	private Map requiredSourceCheckMap = new HashMap();
+
+	private Map requiredTargetCheckMap = new HashMap();
 
 	private List<IAnalyzeListener> analyzeListenerList = new ArrayList<IAnalyzeListener>();
 
@@ -1336,21 +1343,25 @@ public class SmooksGraphicalFormPage extends FormPage implements
 						context);
 			}
 		}
-		if (sourceTreeViewerInputModel == null && sourceDataTypeID != null) {
+		if (!checkDataInput("sourceDataPath") && sourceDataTypeID != null
+				&& needCheckSourceDataPath(sourceDataTypeID, targetDataTypeID)) {
 			SmooksConfigurationFileGenerateContext context = getSmooksConfigurationFileGenerateContext();
 			context.setSourceDataTypeID(sourceDataTypeID);
 			context.setTargetDataTypeID(targetDataTypeID);
 			sourceTreeViewerInputModel = selectSourceDataSource(
 					sourceDataTypeID, context);
-			if(sourceTreeViewerInputModel != null) setDirty(true);
+			if (sourceTreeViewerInputModel != null)
+				setDirty(true);
 		}
-		if (targetTreeViewerInputModel == null && targetDataTypeID != null) {
+		if (!checkDataInput("targetDataPath") && targetDataTypeID != null
+				&& needCheckTargetDataPath(sourceDataTypeID, targetDataTypeID)) {
 			SmooksConfigurationFileGenerateContext context = getSmooksConfigurationFileGenerateContext();
 			context.setSourceDataTypeID(sourceDataTypeID);
 			context.setTargetDataTypeID(targetDataTypeID);
 			targetTreeViewerInputModel = selectSourceDataSource(
 					targetDataTypeID, context);
-			if(targetTreeViewerInputModel != null) setDirty(true);
+			if (targetTreeViewerInputModel != null)
+				setDirty(true);
 		}
 		smooksResource = this.getSmooksResource();
 		if (smooksResource != null) {
@@ -1362,6 +1373,40 @@ public class SmooksGraphicalFormPage extends FormPage implements
 			checkSmooksConfigFileModel(listType);
 			this.analyzeGraphicalModel(listType, graphinformations, file);
 		}
+	}
+
+	private boolean needCheckSourceDataPath(String sourceId, String targetId) {
+		String key = sourceId + ":" + targetId;
+		List needList = (List) requiredSourceCheckMap.get(key);
+		if (needList != null) {
+			for (Iterator iterator = needList.iterator(); iterator.hasNext();) {
+				Object k = (Object) iterator.next();
+				if (k.equals(sourceId)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean needCheckTargetDataPath(String sourceId, String targetId) {
+		String key = sourceId + ":" + targetId;
+		List needList = (List) requiredTargetCheckMap.get(key);
+		if (needList != null) {
+			for (Iterator iterator = needList.iterator(); iterator.hasNext();) {
+				Object k = (Object) iterator.next();
+				if (k.equals(targetId)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean checkDataInput(String paramName) {
+		String path = UIUtils
+				.getParamToGraphModel(graphinformations, paramName);
+		return (path != null);
 	}
 
 	/**
@@ -1460,6 +1505,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		if (requiredSelectDataSource(typeID)) {
 			IStructuredDataCreationWizard wizard1 = ViewerInitorStore
 					.getInstance().getStructuredDataCreationWizard(typeID);
+			wizard1.init(getEditorSite(), getEditorInput());
 			WizardDialog dialog1 = new WizardDialog(getSite().getShell(),
 					wizard1);
 			((Wizard) wizard1).setWindowTitle("Source Data Selection");
@@ -1489,6 +1535,52 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		}
 	}
 
+	private void initRequiredSourceDataCheckMap() {
+		List l1 = new ArrayList();
+		l1.add("org.jboss.tools.smooks.ui.viewerInitor.javabean");
+		l1.add("org.jboss.tools.smooks.xml.viewerInitor.xml");
+		requiredSourceCheckMap
+				.put(
+						"org.jboss.tools.smooks.ui.viewerInitor.javabean:org.jboss.tools.smooks.xml.viewerInitor.xml",
+						l1);
+		List l2 = new ArrayList();
+		l2.add("org.jboss.tools.smooks.ui.viewerInitor.javabean");
+		requiredSourceCheckMap
+				.put(
+						"org.jboss.tools.smooks.ui.viewerInitor.javabean:org.jboss.tools.smooks.ui.viewerInitor.javabean",
+						l2);
+
+		List l3 = new ArrayList();
+		l3.add("org.jboss.tools.smooks.xml.viewerInitor.xml");
+		requiredSourceCheckMap
+				.put(
+						"org.jboss.tools.smooks.xml.viewerInitor.xml:org.jboss.tools.smooks.xml.viewerInitor.xml",
+						l3);
+	}
+
+	private void initRequiredTargetDataCheckMap() {
+		// List l1 = new ArrayList();
+		// l1.add("org.jboss.tools.smooks.ui.viewerInitor.javabean");
+		// l1.add("org.jboss.tools.smooks.xml.viewerInitor.xml");
+		// requiredTargetCheckMap
+		// .put(
+		// "org.jboss.tools.smooks.ui.viewerInitor.javabean:org.jboss.tools.smooks.xml.viewerInitor.xml",
+		// l1);
+		// List l2 = new ArrayList();
+		// l2.add("org.jboss.tools.smooks.ui.viewerInitor.javabean");
+		// requiredTargetCheckMap
+		// .put(
+		// "org.jboss.tools.smooks.ui.viewerInitor.javabean:org.jboss.tools.smooks.ui.viewerInitor.javabean",
+		// l2);
+		//
+		// List l3 = new ArrayList();
+		// l3.add("org.jboss.tools.smooks.xml.viewerInitor.xml");
+		// requiredTargetCheckMap
+		// .put(
+		// "org.jboss.tools.smooks.xml.viewerInitor.xml:org.jboss.tools.smooks.xml.viewerInitor.xml",
+		// l3);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -1498,6 +1590,8 @@ public class SmooksGraphicalFormPage extends FormPage implements
 	 */
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
+		initRequiredSourceDataCheckMap();
+		initRequiredTargetDataCheckMap();
 		FormEditor parentEditor = this.getEditor();
 		if (parentEditor instanceof SmooksFormEditor) {
 			editingDomain = ((SmooksFormEditor) parentEditor)

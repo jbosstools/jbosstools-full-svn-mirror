@@ -125,7 +125,9 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 				}
 				return document;
 			} catch (FileNotFoundException e) {
-				throw new InvocationTargetException(e);
+				throw new InvocationTargetException(
+						new Exception(
+								"Can't find the file from .graph file , please make sure the source/target data xml exists"));
 			} catch (DocumentException e) {
 				throw new InvocationTargetException(e);
 			}
@@ -177,8 +179,9 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 					}
 				}
 			} else {
-				throw new InvocationTargetException(new Exception(
-						"can't load xml file"));
+				throw new InvocationTargetException(
+						new Exception(
+								"Can't load xml file from .graph file , please make sure that the .graph file records any source/target xml file path"));
 			}
 		}
 		return document;
@@ -188,14 +191,15 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 		// cdata = cdata.replaceAll(":", "-");
 		int start_index = cdata.indexOf("<");
 		int end_index = cdata.indexOf(">");
-		if(start_index == -1 ||  end_index == -1) return cdata;
-		String contents = cdata.substring(start_index,end_index);
-		if(contents.indexOf("\"http://www.w3.org/1999/XSL/Transform\"") != -1){
+		if (start_index == -1 || end_index == -1)
+			return cdata;
+		String contents = cdata.substring(start_index, end_index);
+		if (contents.indexOf("\"http://www.w3.org/1999/XSL/Transform\"") != -1) {
 			return cdata;
 		}
-		
-		String second_frg = cdata.substring(end_index,cdata.length());
-		
+
+		String second_frg = cdata.substring(end_index, cdata.length());
+
 		cdata = contents + XSL_NAMESPACE + second_frg;
 		return cdata;
 	}
