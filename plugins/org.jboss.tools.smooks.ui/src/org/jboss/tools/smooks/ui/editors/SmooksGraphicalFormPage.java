@@ -1541,7 +1541,7 @@ public class SmooksGraphicalFormPage extends FormPage implements
 		l1.add("org.jboss.tools.smooks.xml.viewerInitor.xml");
 		requiredSourceCheckMap
 				.put(
-						"org.jboss.tools.smooks.ui.viewerInitor.javabean:org.jboss.tools.smooks.xml.viewerInitor.xml",
+						"org.jboss.tools.smooks.xml.viewerInitor.xml:org.jboss.tools.smooks.ui.viewerInitor.javabean",
 						l1);
 		List l2 = new ArrayList();
 		l2.add("org.jboss.tools.smooks.ui.viewerInitor.javabean");
