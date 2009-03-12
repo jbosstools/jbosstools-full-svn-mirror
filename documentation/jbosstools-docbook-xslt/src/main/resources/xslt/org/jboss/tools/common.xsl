@@ -115,19 +115,9 @@
   
   
     <!-- This template is used for the release build -->
-    <!--xsl:template match="//diffmk:wrapper">
-	<xsl:choose>
-		<xsl:when test="@diffmk:change='deleted'">
-				<xsl:text> </xsl:text>
-		 </xsl:when>
-		<xsl:when test="parent::node()[local-name()='title']">
-				<xsl:value-of select="."/>
-		 </xsl:when>
-		 <xsl:otherwise>
-				<xsl:value-of select="."/> 
-		</xsl:otherwise>
-	</xsl:choose>
-  </xsl:template-->
+    <xsl:template match="//diffmk:wrapper">
+	<xsl:value-of select="."/>
+  </xsl:template>
   
   
  
