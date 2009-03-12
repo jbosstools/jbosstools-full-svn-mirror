@@ -27,8 +27,7 @@ public class ConfigurationViewerLabelProvider extends LabelProvider {
 //			}
 			if (SmooksModelUtils
 					.isDateTypeSelector((ResourceConfigType) element)) {
-				String name = Messages
-						.getString("SmooksResourceConfigFormBlock.DateType"); //$NON-NLS-1$
+				String name = "Date Type"; //$NON-NLS-1$
 				String selector = ((ResourceConfigType) element).getSelector();
 				if (selector == null) {
 					return name;
