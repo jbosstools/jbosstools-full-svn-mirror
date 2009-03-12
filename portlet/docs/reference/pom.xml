@@ -60,7 +60,24 @@
            
                 <extensions>true</extensions>
                
+               
                 <dependencies>
+                    <dependency>
+                        <groupId>org.jboss.tools</groupId>
+                        <artifactId>jbosstools-docbook-xslt</artifactId>
+                        <version>1.0.0-SNAPSHOT</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.jboss</groupId>
+                        <artifactId>jbossent-docbook-xslt</artifactId>
+                        <version>1.0.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.jboss</groupId>
+                        <artifactId>jbossent-jdocbook-style</artifactId>
+                        <version>1.0.0</version>
+                        <type>jdocbook-style</type>
+                    </dependency>
                     <dependency>
                         <groupId>org.jboss</groupId>
                         <artifactId>jbossorg-docbook-xslt</artifactId>
@@ -73,6 +90,7 @@
                         <type>jdocbook-style</type>
                     </dependency>
                 </dependencies>
+                
                 
                 <configuration>
                     <sourceDocumentName>${master}</sourceDocumentName>
@@ -89,25 +107,25 @@
                     
                     <formats>
                         <format>
-                            <formatName>pdf</formatName>              
-                            <stylesheetResource>file:${pom.basedir}/${stylesdir}/xslt/org/jboss/tools/pdf.xsl</stylesheetResource>
-                            <finalName>${pom.name}.pdf</finalName>
-                        </format>
-                        <format>
-                            <formatName>html</formatName>
-                            <stylesheetResource>file:${pom.basedir}/${stylesdir}/xslt/org/jboss/tools/xhtml.xsl</stylesheetResource>
-                            <finalName>index.html</finalName>
-                        </format>
-                        <format>
-                            <formatName>html_single</formatName>
-                            <stylesheetResource>file:${pom.basedir}/${stylesdir}/xslt/org/jboss/tools/xhtml-single.xsl</stylesheetResource>
-                            <finalName>index.html</finalName>
-                        </format>
-                        <format>
-                            <formatName>eclipse</formatName>
-                            <stylesheetResource>file:${pom.basedir}/${stylesdir}/xslt/org/jboss/tools/eclipse.xsl</stylesheetResource>
-                            <finalName>index.html</finalName>
-                        </format>
+                        <formatName>pdf</formatName>              
+                        <stylesheetResource>${xsl-pdf}</stylesheetResource>
+                        <finalName>${pom.name}.pdf</finalName>
+                    </format>
+                    <format>
+                        <formatName>html</formatName>
+                        <stylesheetResource>${xsl-chunked}</stylesheetResource>
+                        <finalName>index.html</finalName>
+                    </format>
+                    <format>
+                        <formatName>html_single</formatName>
+                        <stylesheetResource>${xsl-single}</stylesheetResource>
+                        <finalName>index.html</finalName>
+                    </format>
+                    <format>
+                        <formatName>eclipse</formatName>
+                        <stylesheetResource>classpath:/xslt/org/jboss/eclipse.xsl</stylesheetResource>
+                        <finalName>index.html</finalName>
+                    </format>
                     </formats>
                    
                     <options>
