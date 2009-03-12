@@ -728,7 +728,7 @@ public class UIUtils {
 			}
 			name = sperator + nodeName  + name;
 		}
-		return name;
+		return name.trim();
 	}
 
 	public static IXMLStructuredObject getChildNodeWithName(String name,
