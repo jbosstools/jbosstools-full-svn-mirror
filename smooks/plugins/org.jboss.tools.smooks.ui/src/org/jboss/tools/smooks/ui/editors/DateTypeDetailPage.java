@@ -14,8 +14,11 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
@@ -36,6 +39,7 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 	private Combo localeContryCombo;
 	private Text selectorText;
 	private Combo decoderCombo;
+	private Button localeVerifyButton;
 
 	public DateTypeDetailPage(SmooksFormEditor parentEditor,
 			EditingDomain domain) {
@@ -78,6 +82,13 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		localeContryCombo = new Combo(parent, SWT.FLAT);
 		localeContryCombo.setLayoutData(gd);
+		
+//		this.formToolKit.createLabel(parent, Messages.getString("DateTypeDetailPage.DateTypeLocaleContryText")); //$NON-NLS-1$
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 2;
+		localeVerifyButton =this.formToolKit.createButton(parent,"Verify Locale", SWT.CHECK);
+		localeVerifyButton.setLayoutData(gd);
+
 
 		formToolKit.paintBordersFor(parent);
 		
@@ -93,23 +104,32 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 
 	private void hookControls() {
 		
+		localeVerifyButton.addSelectionListener(new SelectionAdapter(){
+
+			public void widgetSelected(SelectionEvent e) {
+				if(isLock()) return ;
+				setLocaleVerify();
+			}
+			
+		});
+		
 		decoderCombo.addModifyListener(new ModifyListener(){
 
-			public void modifyText(ModifyEvent e) {
+			public void modifyText(ModifyEvent e) {if(isLock()) return ;
 				setDecoderClass();
 			}
 			
 		});
 		
 		selectorText.addModifyListener(new ModifyListener(){
-			public void modifyText(ModifyEvent e) {
+			public void modifyText(ModifyEvent e) {if(isLock()) return ;
 				setSelector();
 			}
 		});
 		
 		formatText.addModifyListener(new ModifyListener(){
 
-			public void modifyText(ModifyEvent e) {
+			public void modifyText(ModifyEvent e) {if(isLock()) return ;
 				setFormat();
 			}
 			
@@ -117,7 +137,7 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 		
 		localeContryCombo.addModifyListener(new ModifyListener(){
 
-			public void modifyText(ModifyEvent e) {
+			public void modifyText(ModifyEvent e) {if(isLock()) return ;
 				setLocalContry();
 			}
 			
@@ -125,13 +145,23 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 		
 		localeLangaugeCombo.addModifyListener(new ModifyListener(){
 
-			public void modifyText(ModifyEvent e) {
+			public void modifyText(ModifyEvent e) {if(isLock()) return ;
 				setLocalLang();
 			}
 			
 		});
 	}
 	
+	protected void setLocaleVerify() {
+		boolean check = localeVerifyButton.getSelection();
+		String s = "false";
+		if(check){
+			s = "true";
+		}
+		SmooksModelUtils.setParamText("verify-locale", s, resourceConfig);
+		this.parentEditor.fireEditorDirty(true);
+	}
+
 	protected void setDecoderClass() {
 		String text = decoderCombo.getText();
 		if(text == null) text = "";
@@ -199,6 +229,7 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 			String formate = SmooksModelUtils.getParmaText("format", resourceConfig); //$NON-NLS-1$
 			String locallang = SmooksModelUtils.getParmaText("locale-language", resourceConfig); //$NON-NLS-1$
 			String localcontry = SmooksModelUtils.getParmaText("locale-country", resourceConfig); //$NON-NLS-1$
+			String verify = SmooksModelUtils.getParmaText("verify-locale", resourceConfig); //$NON-NLS-1$
 			String decoderClass = "";
 			ResourceType resource = resourceConfig.getResource();
 			if(resource != null){
@@ -209,6 +240,8 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 			if(locallang == null) locallang = ""; //$NON-NLS-1$
 			if(localcontry == null) localcontry = ""; //$NON-NLS-1$
 			
+			
+			setLock(true);
 			String selector = resourceConfig.getSelector();
 			selector = getSelectorName(selector);
 			selectorText.setText(selector);
@@ -216,6 +249,14 @@ public class DateTypeDetailPage extends AbstractSmooksModelDetailPage {
 			localeContryCombo.setText(localcontry);
 			localeLangaugeCombo.setText(locallang);
 			decoderCombo.setText(decoderClass);
+			if(verify != null){
+				verify = verify.trim();
+				boolean v = Boolean.parseBoolean(verify);
+				localeVerifyButton.setSelection(v);
+			}else{
+				localeVerifyButton.setSelection(false);
+			}
+			setLock(false);
 		}
 	}
 

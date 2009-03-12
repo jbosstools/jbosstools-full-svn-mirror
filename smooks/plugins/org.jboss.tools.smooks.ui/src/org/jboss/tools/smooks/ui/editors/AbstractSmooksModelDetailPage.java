@@ -30,6 +30,17 @@ import org.jboss.tools.smooks.ui.ResourceConfigWarrper;
  *         Date : Sep 11, 2008
  */
 public abstract class AbstractSmooksModelDetailPage implements IDetailsPage {
+	
+	protected boolean lock = false;
+	
+	public boolean isLock() {
+		return lock;
+	}
+
+	public void setLock(boolean lock) {
+		this.lock = lock;
+	}
+
 	IFormPart formPart;
 
 	ISelection selection;
