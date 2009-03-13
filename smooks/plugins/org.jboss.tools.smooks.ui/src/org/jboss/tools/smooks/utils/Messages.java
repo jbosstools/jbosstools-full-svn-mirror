@@ -1,5 +1,6 @@
 package org.jboss.tools.smooks.utils;
 
+import java.text.MessageFormat;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -18,5 +19,9 @@ public class Messages {
 		} catch (MissingResourceException e) {
 			return '!' + key + '!';
 		}
+	}
+
+	public static String getString(String key, Object... args) {
+		return MessageFormat.format(getString(key), args);
 	}
 }
