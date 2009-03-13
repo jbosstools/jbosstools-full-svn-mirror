@@ -3,8 +3,11 @@
  */
 package org.jboss.tools.smooks.ui.editors;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -26,6 +29,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
@@ -45,7 +49,7 @@ import org.jboss.tools.smooks.utils.UIUtils;
  */
 public class DocumentResourceTypeDetailPage extends
 		AbstractSmooksModelDetailPage implements ParamaterChangeLitener {
-
+	private List tempParameterList = null;
 	private static final int INNER = 0;
 	private static final int EXTERNAL = 1;
 	private Text text;
@@ -62,6 +66,7 @@ public class DocumentResourceTypeDetailPage extends
 	// private static final String PARAM_VALUE_PRO = "__param_value_pro";
 
 	private ParamaterTableViewerCreator creator;
+	private Label parameterLabel;
 
 	public DocumentResourceTypeDetailPage(SmooksFormEditor parentEditor,
 			EditingDomain domain) {
@@ -196,6 +201,7 @@ public class DocumentResourceTypeDetailPage extends
 		typeCombo.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
+				if(!canFireChange) return;
 				resetResourceType();
 			}
 
@@ -238,22 +244,39 @@ public class DocumentResourceTypeDetailPage extends
 		if (type != null) {
 			type = type.trim();
 		}
-
 		ResourceType resource = resourceConfig.getResource();
 		if (resource != null) {
 			resource.setType(type);
+			if (type.equals("ftl") && creator != null) {
+				creator.setVisible(false);
+				parameterLabel.setVisible(false);
+				tempParameterList = new ArrayList(resourceConfig.getParam());
+				resourceConfig.getParam().clear();
+			} else {
+				creator.setVisible(true);
+				parameterLabel.setVisible(true);
+				if(tempParameterList != null){
+					for (Iterator iterator = tempParameterList.iterator(); iterator
+							.hasNext();) {
+						ParamType obj = (ParamType) iterator.next();
+						resourceConfig.getParam().add(obj);
+					}
+					tempParameterList.clear();
+					tempParameterList = null;
+				}
+			}
 			parentEditor.fireEditorDirty(true);
 		}
+
 	}
 
 	protected void createParamerTable(Composite parent) {
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		formToolKit.createLabel(parent, "Paramater List : ").setLayoutData(gd);
-		creator = new ParamaterTableViewerCreator(
-				parent, formToolKit, SWT.NONE);
+		parameterLabel = formToolKit.createLabel(parent, "Parameter List : ");
+		parameterLabel.setLayoutData(gd);
+		creator = new ParamaterTableViewerCreator(parent, formToolKit, SWT.NONE);
 		creator.addParamaterListener(this);
 	}
-
 
 	protected void createInnerContentsGUI(Composite parent) {
 		GridData gd = new GridData(GridData.BEGINNING);
@@ -268,6 +291,7 @@ public class DocumentResourceTypeDetailPage extends
 		innerContentText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
+				if(!canFireChange) return;
 				resetCDATA();
 			}
 
@@ -312,6 +336,7 @@ public class DocumentResourceTypeDetailPage extends
 				SmooksModelUtils.setTextToAnyType(resource, text);
 			}
 		}
+		if(!canFireChange) return;
 		this.parentEditor.fireEditorDirty(true);
 	}
 
@@ -348,7 +373,15 @@ public class DocumentResourceTypeDetailPage extends
 				String type = resource.getType();
 				if (type != null) {
 					typeCombo.setText(type);
+					if (type.equals("ftl")) {
+						creator.setVisible(false);
+						parameterLabel.setVisible(false);
+					} else {
+						creator.setVisible(true);
+						parameterLabel.setVisible(true);
+					}
 				}
+
 				if (isInit) {
 					creator.setInput(resourceConfig);
 					creator.setResourceConfig(resourceConfig);
