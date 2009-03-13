@@ -19,7 +19,6 @@
 		<script type="text/javascript" src="script/toggle.js"><xsl:comment>If you see this message, your web browser doesn't support JavaScript or JavaScript is disabled.</xsl:comment></script>
 	</xsl:template>
 
-   
    <xsl:template name="header.navigation">
       <xsl:param name="prev" select="/foo"/>
       <xsl:param name="next" select="/foo"/>

@@ -11,8 +11,7 @@
 	<name>All_Userguides</name>
 
 	<modules>
-	  	<module>../jbosstools-docbook-xslt</module>
-	  	<module>../../ws/docs/reference</module>
+                <module>../jbosstools-docbook-xslt</module>
 		<module>../guides/Exadel-migration</module>
 		<module>../guides/GettingStartedGuide</module>
 		<module>../../as/docs/reference</module>
@@ -25,6 +24,7 @@
 		<module>../../struts/docs/struts_tools_ref_guide</module>
 		<module>../../struts/docs/struts_tools_tutorial</module>
 		<module>../../esb/docs/esb_ref_guide</module>
+		<module>../../ws/docs/reference</module>
 		<module>../../portlet/docs/reference</module>
 		<module>../../birt/docs</module>
 		<module>../../drools/docs/reference</module>
