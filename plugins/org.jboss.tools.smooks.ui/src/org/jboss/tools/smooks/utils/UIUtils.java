@@ -42,7 +42,6 @@ import org.jboss.tools.smooks.javabean.model.JavaBeanModel;
 import org.jboss.tools.smooks.javabean.model.SelectorAttributes;
 import org.jboss.tools.smooks.javabean.ui.BeanPopulatorMappingAnalyzer;
 import org.jboss.tools.smooks.model.AbstractResourceConfig;
-import org.jboss.tools.smooks.model.ParamType;
 import org.jboss.tools.smooks.model.ResourceConfigType;
 import org.jboss.tools.smooks.model.SmooksPackage;
 import org.jboss.tools.smooks.model.SmooksResourceListType;
@@ -148,9 +147,9 @@ public class UIUtils {
 				throw new InvocationTargetException(
 						new Exception(
 								Messages
-										.getString("UIUtils.SelectorCheckErrorMessage1") + splitString //$NON-NLS-1$
-										+ Messages
-												.getString("UIUtils.SelectorCheckErrorMessage2") + selector + "\"")); //$NON-NLS-1$ //$NON-NLS-2$
+										.getString("UIUtils.SelectorCheckErrorMessage",  //$NON-NLS-1$
+												splitString,
+												selector)));
 			}
 		}
 	}
@@ -278,8 +277,8 @@ public class UIUtils {
 		compositeCommand.setResolveDescription(Messages
 				.getString("UIUtils.ConnectAllConnections")); //$NON-NLS-1$
 		disconnectCommand.setResolveDescription(Messages
-				.getString("UIUtils.DisconnectAllConnections") //$NON-NLS-1$
-				+ currentNode.getName() + Messages.getString("UIUtils.Node")); //$NON-NLS-1$
+				.getString("UIUtils.DisconnectAllConnections", //$NON-NLS-1$
+						currentNode.getName()));
 		AbstractStructuredDataModel targetNode = UIUtils.findGraphModel(root,
 				currentNode);
 		if (targetNode instanceof IConnectableModel) {
@@ -304,12 +303,12 @@ public class UIUtils {
 				if (tempMap.get(sourceParentNode) == null) {
 					JavaModelConnectionResolveCommand connectParent = new JavaModelConnectionResolveCommand(
 							context);
-					connectParent.setResolveDescription(Messages
-							.getString("UIUtils.ConnectNode1") //$NON-NLS-1$
-							+ context.getSourceViewerLabelProvider().getText(
-									sourceParent)
-							+ Messages.getString("UIUtils.ConnectNode2") //$NON-NLS-1$
-							+ parentNode.getName() + "\""); //$NON-NLS-1$
+					String desc = Messages
+							.getString("UIUtils.ConnectNode", //$NON-NLS-1$
+									context.getSourceViewerLabelProvider().getText(
+											sourceParent),
+									parentNode.getName());
+					connectParent.setResolveDescription(desc);
 					connectParent.setSourceModel(sourceParentNode);
 					connectParent.setTargetModel(targetParentNode);
 					result.addResolveCommand(connectParent);
@@ -352,12 +351,9 @@ public class UIUtils {
 						if (((IConnectableModel) pgm)
 								.getModelTargetConnections().isEmpty()) {
 							String errorMessage = Messages
-									.getString("UIUtils.ParentNodeConnectErrorMessage1") //$NON-NLS-1$
-									+ javaModel.getName()
-									+ "\" : \"" //$NON-NLS-1$
-									+ parent.getName()
-									+ Messages
-											.getString("UIUtils.ParentNodeConnectErrorMessage2"); //$NON-NLS-1$
+									.getString("UIUtils.ParentNodeConnectErrorMessage", //$NON-NLS-1$
+											javaModel.getName(),
+											parent.getName());
 							DesignTimeAnalyzeResult dr = new DesignTimeAnalyzeResult();
 							dr.setErrorMessage(errorMessage);
 							createJavaModelConnectionErrorResolveCommand(dr,
@@ -402,17 +398,15 @@ public class UIUtils {
 						DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
 						result
 								.setErrorMessage(Messages
-										.getString("UIUtils.InstanceLoadedErrorMessage1") //$NON-NLS-1$
-										+ ((JavaBeanModel) refObj).getName()
-										+ Messages
-												.getString("UIUtils.InstanceLoadedErrorMessage2") //$NON-NLS-1$
-										+ instanceName + "\""); //$NON-NLS-1$
+										.getString("UIUtils.InstanceLoadedErrorMessage", //$NON-NLS-1$
+												((JavaBeanModel) refObj).getName(),
+												instanceName));
 						JavaModelResolveCommand command = new JavaModelResolveCommand(
 								context);
 						command
 								.setResolveDescription(Messages
-										.getString("UIUtils.InstanceLoadedResolveMessage1") //$NON-NLS-1$
-										+ instanceName + "\""); //$NON-NLS-1$
+										.getString("UIUtils.InstanceLoadedResolveMessage", //$NON-NLS-1$
+												instanceName));
 						command.setInstanceName(instanceName);
 						command.setJavaBean((JavaBeanModel) refObj);
 						result.addResolveCommand(command);
@@ -422,11 +416,9 @@ public class UIUtils {
 						DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
 						result
 								.setErrorMessage(Messages
-										.getString("UIUtils.JavaModelLoadedErrorMessage1") //$NON-NLS-1$
-										+ ((JavaBeanModel) refObj).getName()
-										+ Messages
-												.getString("UIUtils.JavaModelLoadedErrorMessage2") //$NON-NLS-1$
-										+ instanceName + "\""); //$NON-NLS-1$
+										.getString("UIUtils.JavaModelLoadedErrorMessage", //$NON-NLS-1$
+												((JavaBeanModel) refObj).getName(),
+												instanceName));
 						if (List.class.isAssignableFrom(instanceClazz)) {
 							JavaModelResolveCommand command = new JavaModelResolveCommand(
 									context);
