@@ -1624,7 +1624,7 @@
 
 	<vpe:tag name="select" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,size,dir,disabled" />
+			<vpe:copy attrs="id,style,class,size,dir,disabled,multiple" />
 			<vpe:resize>
 				<vpe:width width-attr="style.width" />
 				<vpe:height height-attr="style.height" />
