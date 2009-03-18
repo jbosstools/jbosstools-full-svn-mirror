@@ -155,10 +155,10 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.jboss.tools.vpe.editor.template.VpeAbstractCreator#getNodeForUptate(org.jboss.tools.vpe.editor.context.VpePageContext, org.w3c.dom.Node, org.mozilla.interfaces.nsIDOMNode, java.util.Map)
+	 * @see org.jboss.tools.vpe.editor.template.VpeAbstractCreator#getNodeForUpdate(org.jboss.tools.vpe.editor.context.VpePageContext, org.w3c.dom.Node, org.mozilla.interfaces.nsIDOMNode, java.util.Map)
 	 */
 	@Override
-	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode,
+	public Node getNodeForUpdate(VpePageContext pageContext, Node sourceNode,
 			nsIDOMNode visualNode, Map visualNodeMap) {
 		return sourceNode.getParentNode();
 	}

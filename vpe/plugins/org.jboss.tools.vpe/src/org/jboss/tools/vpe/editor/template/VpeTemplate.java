@@ -173,7 +173,7 @@ public interface VpeTemplate {
 	 * @return For this node of an source tree the method update is invoked. If
 	 *         null, that is invoked update for current source node
 	 */
-	Node getNodeForUptate(VpePageContext pageContext, Node sourceNode,
+	Node getNodeForUpdate(VpePageContext pageContext, Node sourceNode,
 			nsIDOMNode visualNode, Object data);
 
 	/**

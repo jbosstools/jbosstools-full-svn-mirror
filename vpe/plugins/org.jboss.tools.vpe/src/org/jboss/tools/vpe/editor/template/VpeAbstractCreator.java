@@ -120,7 +120,7 @@ public abstract class VpeAbstractCreator implements VpeCreator {
 		return false;
 	}
 
-	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Map visualNodeMap) {
+	public Node getNodeForUpdate(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Map visualNodeMap) {
 		return null;
 	}
 }

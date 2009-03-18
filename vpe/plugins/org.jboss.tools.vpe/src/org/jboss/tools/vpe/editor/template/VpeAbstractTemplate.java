@@ -868,7 +868,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @return For this node of an source tree the method update is invoked. If
 	 * null, that is invoked update for current source node
 	 */
-	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode,
+	public Node getNodeForUpdate(VpePageContext pageContext, Node sourceNode,
 			nsIDOMNode visualNode, Object data) {
 		return null;
 	}

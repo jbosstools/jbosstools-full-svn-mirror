@@ -990,7 +990,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			elementMapping = (VpeElementMapping) nodeMapping;
 			if (elementMapping != null && elementMapping.getTemplate() != null) {
 				Node updateNode = elementMapping.getTemplate()
-						.getNodeForUptate(pageContext,
+						.getNodeForUpdate(pageContext,
 								elementMapping.getSourceNode(),
 								elementMapping.getVisualNode(),
 								elementMapping.getData());

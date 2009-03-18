@@ -584,14 +584,14 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		return false;
 	}
 	@Override
-	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
+	public Node getNodeForUpdate(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
 		// TODO Sergey Vasilyev redevelop JSF's facet template
 		if (sourceNode.getNodeName().endsWith(":facet")) {
 			return sourceNode.getParentNode();
 		}
 		
 		if (creator != null) {
-			return creator.getNodeForUptate(pageContext, sourceNode, visualNode, (Map<VpeTemplate,?>)data);
+			return creator.getNodeForUpdate(pageContext, sourceNode, visualNode, (Map<VpeTemplate,?>)data);
 		}
 		return null;
 	}

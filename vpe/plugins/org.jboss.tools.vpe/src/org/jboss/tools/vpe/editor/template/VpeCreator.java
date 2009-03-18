@@ -111,5 +111,5 @@ public interface VpeCreator {
 	 */
 	boolean nonctrlKeyPressHandler(VpePageContext pageContext, Document sourceDocument, Node sourceNode, Object data, long charCode, VpeSourceSelection selection, ITextFormatter formatter);
 
-	Node getNodeForUptate(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Map<VpeTemplate,?> visualNodeMap);
+	Node getNodeForUpdate(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Map<VpeTemplate,?> visualNodeMap);
 }

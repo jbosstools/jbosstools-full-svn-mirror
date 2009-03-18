@@ -107,7 +107,7 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		return true;
 	}
 
-	public Node getNodeForUptate(VpePageContext pageContext, Node sourceNode, Node visualNode, Map visualNodeMap) {
+	public Node getNodeForUpdate(VpePageContext pageContext, Node sourceNode, Node visualNode, Map visualNodeMap) {
 		return sourceNode.getParentNode();
 	}
 
