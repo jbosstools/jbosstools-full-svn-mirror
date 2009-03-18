@@ -114,7 +114,13 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		public void handleEvent(Event event) {
 			Display.getCurrent().asyncExec(new Thread(){
 				public void run(){
-					showSelectionRectangle();
+				    /*
+				     * https://jira.jboss.org/jira/browse/JBIDE-3917
+				     * Resizer should be updated together with selection rectangle.
+				     * Otherwise after window maximizing/restoring resizer shows old position.
+				     */
+				    showResizer();
+				    showSelectionRectangle();
 				}
 			});
 		}};
@@ -152,9 +158,16 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		
 //			addListener(SWT.Activate, eventListenet);
 			addListener(SWT.Paint, eventListenet);
+			/*
+			 * https://jira.jboss.org/jira/browse/JBIDE-3917
+			 * Resizer and selection rectangle should be updated
+			 * after eclipse window resizing. 
+			 * Need to test on Mac OS. 
+			 */
 			//Commented by Max Areshkau (bug on Mac OS X10.4 
 			//when switch from visual to preview selection rectangle doen't disappear
-//			addListener(SWT.Resize, eventListenet);
+			addListener(SWT.Resize, eventListenet);
+			
 			addListener(SWT.Show, eventListenet);
 			addListener(SWT.FocusIn, eventListenet);
 			//Commented by Max Areshkau (bug on Mac OS X10.4 
@@ -325,7 +338,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * @param scroll
 	 */
 	public void setSelectionRectangle(nsIDOMNode node, int resizerConstrains, boolean scroll) {
-		if (getIFlasher() == null) {
+	    	if (getIFlasher() == null) {
 			
 			return;
 		}
