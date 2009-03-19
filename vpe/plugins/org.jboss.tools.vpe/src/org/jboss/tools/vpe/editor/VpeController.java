@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -83,6 +85,7 @@ import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
 import org.jboss.tools.common.model.ui.editor.IModelObjectEditorInput;
 import org.jboss.tools.common.model.ui.editors.dnd.DropCommandFactory;
 import org.jboss.tools.common.model.ui.editors.dnd.DropData;
+import org.jboss.tools.common.model.ui.editors.dnd.DropUtils;
 import org.jboss.tools.common.model.ui.editors.dnd.IDropCommand;
 import org.jboss.tools.common.model.ui.editors.dnd.JSPTagProposalFactory;
 import org.jboss.tools.common.model.ui.editors.dnd.context.DropContext;
@@ -2193,7 +2196,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		dropCommand.getDefaultModel().setPromptForTagAttributesRequired(
 				promptAttributes);
 
-		dropCommand.execute(new DropData(flavor, data, sourceEditor
+		// because it is external, convert path to URL
+		final String mimeData = DropUtils.convertPathToUrl(data);
+
+		dropCommand.execute(new DropData(flavor, mimeData, sourceEditor
 				.getEditorInput(), (ISourceViewer) sourceEditor
 				.getAdapter(ISourceViewer.class), new VpeSelectionProvider(
 				range.x, range.y), container));
