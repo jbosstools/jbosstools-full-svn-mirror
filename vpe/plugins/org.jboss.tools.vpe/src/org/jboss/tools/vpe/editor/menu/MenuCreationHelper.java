@@ -214,7 +214,7 @@ public class MenuCreationHelper {
 						&& elementMapping.getTemplate().getType() == VpeHtmlTemplate.TYPE_ANY) {
 					final VpeTemplate selectedTemplate = elementMapping.getTemplate();
 					manager.add(new VpeAction(NLS.bind(VpeUIMessages.SETUP_TEMPLATE_FOR_MENU,
-							"<" + node.getNodeName() + ">"), node) { //$NON-NLS-1$ //$NON-NLS-2$
+							 node.getNodeName() ), node) { 
 								public void run() {
 									boolean isCorrectNS = pageContext.isCorrectNS(actionNode);
 									VpeAnyData data = null;
