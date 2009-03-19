@@ -288,7 +288,7 @@
         ]]></programlisting>
         
         <figure>
-            <title>Embeding BIRT Report in Seam xhtml Page. First Page</title>
+            <title>Embedding BIRT Report in Seam xhtml Page. First Page</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/BirtIntegration/BirtReportInSeamPage1.png"/>
@@ -297,7 +297,7 @@
         </figure>
         
         <figure>
-            <title>Embeding BIRT Report in Seam xhtml Page. Second Page</title>
+            <title>Embedding BIRT Report in Seam xhtml Page. Second Page</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/BirtIntegration/BirtReportInSeamPage2.png"/>
@@ -306,7 +306,7 @@
         </figure>   
         
         <figure>
-            <title>Embeding BIRT Report in Seam xhtml Page. Third Page</title>
+            <title>Embedding BIRT Report in Seam xhtml Page. Third Page</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/BirtIntegration/BirtReportInSeamPage3.png"/>
