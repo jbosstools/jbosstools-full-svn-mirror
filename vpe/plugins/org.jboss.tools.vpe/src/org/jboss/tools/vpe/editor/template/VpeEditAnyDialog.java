@@ -10,12 +10,18 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -30,7 +36,13 @@ import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.outline.cssdialog.CSSStyleDialog;
 import org.jboss.tools.jst.jsp.outline.cssdialog.common.Constants;
+import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
+import org.jboss.tools.vpe.editor.Message;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
 
 /**
  * Class which presents dialog for any template
@@ -41,9 +53,10 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 
 	private VpeAnyData data;
 	private CheckControl ctlChildren;
-	private Text txtTagForDisplay; 
+	private Text txtTagForDisplay;
 	private Text txtValue;
 	private Text txtStyle;
+    private VpeEditAnyDialogValidator templateVerifier;
 
 	public VpeEditAnyDialog(Shell shell, VpeAnyData data) {
 		super(shell);
@@ -52,9 +65,11 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
+		templateVerifier = new VpeEditAnyDialogValidator();
 		getShell().setText(VpeUIMessages.TEMPLATE);
 		setTitle(VpeUIMessages.TAG_ATTRIBUTES);
-		setMessage((data.getUri() != null ? ("URI:           " + data.getUri() + "\n") : "") + VpeUIMessages.TAG_NAME + data.getName()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+		setMessage(getDefaultMessage());
 
 		Composite topComposite = (Composite)super.createDialogArea(parent);
 		((GridData)topComposite.getLayoutData()).widthHint = 300;
@@ -80,6 +95,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
         gd.horizontalSpan=2;
         txtTagForDisplay.setLayoutData(gd);
         txtTagForDisplay.setText(data.getTagForDisplay() != null ? data.getTagForDisplay() : ""); //$NON-NLS-1$
+        txtTagForDisplay.addModifyListener(templateVerifier);
 //        txtTagForDisplay.select(tagNameItemIndex);
         
         
@@ -95,6 +111,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		gd.horizontalSpan = 2;
 		txtValue.setLayoutData(gd);
 		txtValue.setText(data.getValue() != null ? data.getValue() : ""); //$NON-NLS-1$
+		txtValue.addModifyListener(templateVerifier);
 
 		//style control
 		Label lbStyle = makeLabel(composite, VpeUIMessages.STYLE);
@@ -131,6 +148,19 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		});
 
 		return composite;
+	}
+	
+	
+
+	@Override
+	public void create() {
+		super.create();
+		templateVerifier.validateAll(false);
+	}
+
+	private IMessageProvider getDefaultMessage() {
+		final String message = (data.getUri() != null ? ("URI:           " + data.getUri() + "\n") : "") + VpeUIMessages.TAG_NAME + data.getName(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ 
+		return new Message(message, IMessageProvider.NONE);
 	}
 
 	private Label makeLabel(Composite parent, String text) {
@@ -174,6 +204,20 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		return data.isChanged() || (oldValue != newValue);
 	}
 
+	/**
+	 * Sets the message for this dialog with an indication of what type of
+	 * message it is.
+	 * <p>
+	 * @param message the message, or <code>null</code> to clear the message
+	 */
+	public void setMessage(IMessageProvider message) {
+		if (message == null) {
+			setMessage(null, IMessageProvider.NONE);
+		} else {
+			setMessage(message.getMessage(), message.getMessageType());			
+		}
+	}
+
 	private class CheckControl {
 		private Label label;
 		private Button button;
@@ -196,6 +240,99 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 
 		public boolean getSelection() {
 			return button.getSelection();
+		}
+	}
+
+	/**
+	 * Validator of {@link VpeEditAnyDialog}.
+	 * 
+	 * @author yradtsevich
+	 */
+	private class VpeEditAnyDialogValidator implements ModifyListener {
+		/**
+		 * Used to validate tag-names.
+		 */
+		private Document xmlDocument = null;
+		public VpeEditAnyDialogValidator() {
+			try {
+				xmlDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+			} catch (ParserConfigurationException e) {
+				VpePlugin.getPluginLog().logError(e);
+			}
+		}
+
+		/**
+		 * Validates {@link VpeEditAnyDialog#txtTagForDisplay} field.
+		 *
+		 * @return {@code null} if it is valid or an instance of {@code IMessageProvider} if
+		 * it contains any error.
+		 */
+		private IMessageProvider validateTagForDisplay() {
+			if (xmlDocument != null) {
+				try {
+					xmlDocument.createElement(txtTagForDisplay.getText());
+				} catch (DOMException e) {
+					return new Message(VpeUIMessages.TAG_FOR_DISPLAY + VpeUIMessages.ERROR_MESSAGE_POSTFIX + " (" + //$NON-NLS-1$
+							e.getMessage() + ")." , IMessageProvider.ERROR); //$NON-NLS-1$
+				}
+			}
+
+			return null;
+		}
+
+		/**
+		 * Validates {@link VpeEditAnyDialog#txtValue} field.
+		 *
+		 * @return {@code null} if it is valid or an instance of {@code IMessageProvider} if
+		 * it contains any error.
+		 */
+		private IMessageProvider validateValue() {
+
+			try {
+				VpeExpressionBuilder.buildCompletedExpression(txtValue.getText(), true);
+			} catch (VpeExpressionBuilderException e) {
+				return new Message(VpeUIMessages.VALUE + VpeUIMessages.ERROR_MESSAGE_POSTFIX + " (" + //$NON-NLS-1$
+						e.getMessage() + ")." , IMessageProvider.ERROR); //$NON-NLS-1$
+			}
+
+			return null;
+		}
+
+		/**
+		 * Validates all fields of {@link VpeEditAnyDialog} and changes the view of
+		 * dialog according to validation results.
+		 * 
+		 * @param updateMessage if it is {@code true}, the dialog's message will be updated.
+		 */
+		void validateAll(boolean updateMessage) {
+			IMessageProvider message = VpeEditAnyDialog.this.getDefaultMessage();
+
+			IMessageProvider tagForDisplayMessage = validateTagForDisplay();
+			IMessageProvider valueMessage = validateValue();
+
+			if (tagForDisplayMessage != null) {
+				message = tagForDisplayMessage;
+			} else if (valueMessage != null) {
+				message = valueMessage;
+			}
+
+			Button okButton = getButton(IDialogConstants.OK_ID);
+			if (message.getMessageType() <= IMessageProvider.INFORMATION) {
+				okButton.setEnabled(true);
+			} else {
+				okButton.setEnabled(false);
+			}
+
+			if (updateMessage) {
+				VpeEditAnyDialog.this.setMessage(message);
+			}
+		}
+
+		/**
+		 * Fired when a field is modified.
+		 */
+		public void modifyText(ModifyEvent e) {
+			validateAll(true);
 		}
 	}
 }
