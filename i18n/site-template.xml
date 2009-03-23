@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<site>
-   <description url="http://www.jboss.org/tools">
-      This is the development update site for JBoss Tools Localization. You will find the latest development release of JBossTools here.
-   </description>
-${site.contents}
-</site>

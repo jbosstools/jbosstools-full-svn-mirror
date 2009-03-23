@@ -1,5 +1,0 @@
-*/plugins/*/plugin.properties
-*/plugins/*/src/**/*.properties
-*/plugins/*/jbosscore/**/*.properties
-*/plugins/*/jbossui/**/*.properties
-*/plugins/*/resources/**/*.properties
