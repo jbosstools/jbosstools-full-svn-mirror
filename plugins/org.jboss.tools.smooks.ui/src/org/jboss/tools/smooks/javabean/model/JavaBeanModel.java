@@ -35,6 +35,8 @@ import org.jboss.tools.smooks.xml.model.ITransformTreeNode;
 public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 		Cloneable, ITransformTreeNode {
 
+	private boolean flat = false;
+
 	private Properties extendProperties = new Properties();
 
 	protected PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -80,6 +82,14 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 	 */
 	public boolean isRootClassModel() {
 		return isRootClassModel || getParent() == null;
+	}
+
+	public boolean isFlat() {
+		return flat;
+	}
+
+	public void setFlat(boolean flat) {
+		this.flat = flat;
 	}
 
 	/**
@@ -220,8 +230,10 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 					if (returnType instanceof ParameterizedType) {
 						Type gtype = ((ParameterizedType) returnType)
 								.getActualTypeArguments()[0];
-						beanType = (Class) gtype;
-						componentClass = beanType;
+						if (gtype instanceof Class) {
+							beanType = (Class) gtype;
+							componentClass = beanType;
+						}
 					}
 				}
 			}
@@ -344,7 +356,11 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 	private List properties;
 
 	public List getProperties() {
-
+		JavaBeanModel parent = this.getParent();
+		if (parent != null) {
+			if (parent.isFlat())
+				return Collections.emptyList();
+		}
 		if (properties == null) {
 			properties = new ArrayList();
 			if (isPrimitive())
@@ -399,8 +415,7 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 
 	protected JavaBeanModel newChildJavaBean(Class clazz, String name,
 			PropertyDescriptor pd, Class parentClass, boolean lazyLoading) {
-		return new JavaBeanModel(clazz, name, pd, parentClass,
-				lazyLoading);
+		return new JavaBeanModel(clazz, name, pd, parentClass, lazyLoading);
 	}
 
 	public void setProperties(List properties) {

@@ -2,7 +2,6 @@ package org.jboss.tools.smooks.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.jboss.tools.smooks.javabean.ui.JavaImageConstants;
 import org.jboss.tools.smooks.utils.SmooksGraphConstants;
