@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
+import org.jboss.tools.smooks.ui.SmooksConstants;
 
 /**
  * @deprecated
@@ -148,7 +149,7 @@ public class SmooksNewWizardPage extends WizardPage {
 				containerText.setText(container.getFullPath().toString());
 			}
 		}
-		fileText.setText("smooks-config.smooks");
+		fileText.setText("smooks-config" + SmooksConstants.SMOOKS_EXTENTION_NAME_WITHDOT);
 	}
 
 	/**
@@ -209,7 +210,7 @@ public class SmooksNewWizardPage extends WizardPage {
 		if (dotLoc != -1) {
 			String ext = fileName.substring(dotLoc + 1);
 			if (ext.equalsIgnoreCase("smooks") == false) {
-				updateStatus("File extension must be \"smooks\"");
+				updateStatus("File extension must be \""+SmooksConstants.SMOOKS_EXTENTION_NAME+"\"");
 				return;
 			}
 		}

@@ -17,6 +17,7 @@ import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 import org.jboss.tools.smooks.ui.editors.SmooksFormEditor;
 import org.jboss.tools.smooks.ui.editors.SmooksGraphicalFormPage;
+import org.jboss.tools.smooks.ui.gef.model.AbstractStructuredDataModel;
 import org.jboss.tools.smooks.ui.gef.model.LineConnectionModel;
 
 /**
@@ -82,6 +83,29 @@ public class AbstractSmooksPropertySection extends AbstractPropertySection {
 		}
 		return null;
 	}
+	
+	protected Object getReferenceSourceModel() {
+		LineConnectionModel line = getLineConnectionModel();
+		if (line != null) {
+			AbstractStructuredDataModel s = (AbstractStructuredDataModel) line
+					.getSource();
+			if (s != null)
+				return s.getReferenceEntityModel();
+		}
+		return null;
+	}
+
+	protected Object getReferenceTargetModel() {
+		LineConnectionModel line = getLineConnectionModel();
+		if (line != null) {
+			AbstractStructuredDataModel s = (AbstractStructuredDataModel) line
+					.getTarget();
+			if (s != null)
+				return s.getReferenceEntityModel();
+		}
+		return null;
+	}
+
 
 	public boolean isLock() {
 		return lock;

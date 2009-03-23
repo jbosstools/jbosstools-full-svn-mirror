@@ -7,6 +7,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
+import org.jboss.tools.smooks.ui.SmooksConstants;
 
 /**
  * 
@@ -17,10 +18,10 @@ public class SmooksConfigFileNewWizardPage extends WizardNewFileCreationPage {
 	public SmooksConfigFileNewWizardPage(String pageName,
 			IStructuredSelection selection) {
 		super(pageName, selection);
-		setFileExtension("smooks"); //$NON-NLS-1$
+		setFileExtension(SmooksConstants.SMOOKS_EXTENTION_NAME); //$NON-NLS-1$
 		super.setTitle(Messages.getString("SmooksConfigFileNewWizardPage.NewConfigFileWizardPageTitle")); //$NON-NLS-1$
 		super.setDescription(Messages.getString("SmooksConfigFileNewWizardPage.NewConfigFileWizardPageDescription")); //$NON-NLS-1$
-		this.setFileName(Messages.getString("SmooksConfigFileNewWizardPage.NewConfigFileWizardPageDefaultFileName")); //$NON-NLS-1$
+		this.setFileName("smooks-config.xml"); //$NON-NLS-1$
 	}
 
 	@Override

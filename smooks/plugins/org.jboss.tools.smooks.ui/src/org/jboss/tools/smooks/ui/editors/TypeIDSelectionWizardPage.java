@@ -246,6 +246,20 @@ public class TypeIDSelectionWizardPage extends WizardPage {
 			}
 			
 		});
+		
+		Button x2xButton = new Button(mainComposite,SWT.RADIO);
+		x2xButton.setText("XML-to-XML(XSL inner)");
+		x2xButton.addSelectionListener(new SelectionAdapter(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				setPageComplete(true);
+				setSourceID("org.jboss.tools.smooks.xml.viewerInitor.xml");
+				setTargetID("org.jboss.tools.smooks.xml.viewerInitor.xml");
+				getContainer().updateButtons();
+			}
+			
+		});
 		setPageComplete(false);
 		
 //		GridLayout gl = new GridLayout();

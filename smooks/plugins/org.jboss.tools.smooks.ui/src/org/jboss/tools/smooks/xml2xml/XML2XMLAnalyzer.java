@@ -376,7 +376,10 @@ public class XML2XMLAnalyzer extends AbstractAnalyzer {
 		// cdata = cdata.replace(":", "-");
 		// return cdata;
 		int start_index = cdata.indexOf("<");
-		int end_index = cdata.indexOf(">");
+		int end_index = cdata.indexOf("/>");
+		if(end_index == -1){
+		  end_index = cdata.indexOf(">");
+		}
 		if (start_index == -1 || end_index == -1)
 			return cdata;
 		String contents = cdata.substring(start_index, end_index);

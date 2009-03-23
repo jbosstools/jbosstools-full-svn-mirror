@@ -17,7 +17,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
@@ -110,9 +109,7 @@ public class SmooksResourceChangeListener implements IResourceChangeListener {
 		public boolean visit(IResourceDelta delta) {
 			IResource res = delta.getResource();
 			String fileExtension = res.getFileExtension();
-			if (!Messages
-					.getString(
-							"SmooksResourceChangeListener.SmooksFileExtensionName").equals(fileExtension)) { //$NON-NLS-1$
+			if (!SmooksConstants.SMOOKS_EXTENTION_NAME.equals(fileExtension)) { //$NON-NLS-1$
 				return true;
 			}
 			int flags = delta.getFlags();
@@ -128,21 +125,17 @@ public class SmooksResourceChangeListener implements IResourceChangeListener {
 							fileExtension = fileName.substring(dotIndex + 1,
 									fileName.length());
 						}
-						if (!Messages
-								.getString(
-										"SmooksResourceChangeListener.SmooksFileExtensionName").equals(fileExtension)) { //$NON-NLS-1$
+						if (!SmooksConstants.SMOOKS_EXTENTION_NAME.equals(fileExtension)) { //$NON-NLS-1$
 							return true;
 						}
-						fileName += Messages
-								.getString("SmooksResourceChangeListener.SmooksGraphFileExtensionName"); //$NON-NLS-1$
+						fileName += SmooksConstants.SMOOKS_GRAPH_EXTENTION_NAME_WITHDOT; //$NON-NLS-1$
 						path = path.removeLastSegments(1);
 						path = path.append(fileName);
 					}
 
 					IPath newPath = res.getFullPath();
 					fileName = newPath.lastSegment();
-					fileName += Messages
-							.getString("SmooksResourceChangeListener.SmooksGraphFileExtensionName"); //$NON-NLS-1$
+					fileName += SmooksConstants.SMOOKS_GRAPH_EXTENTION_NAME_WITHDOT; //$NON-NLS-1$
 					newPath = newPath.removeLastSegments(1).append(fileName);
 					newFile(path, newPath);
 				}
@@ -170,8 +163,7 @@ public class SmooksResourceChangeListener implements IResourceChangeListener {
 				}
 				IPath path = res.getFullPath();
 				String fileName = path.lastSegment();
-				fileName += Messages
-						.getString("SmooksResourceChangeListener.SmooksGraphFileExtensionName"); //$NON-NLS-1$
+				fileName += SmooksConstants.SMOOKS_GRAPH_EXTENTION_NAME_WITHDOT; //$NON-NLS-1$
 				path = path.removeLastSegments(1).append(fileName);
 				deleteFile(path);
 				break;

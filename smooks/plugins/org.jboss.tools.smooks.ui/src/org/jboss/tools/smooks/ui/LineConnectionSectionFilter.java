@@ -15,7 +15,8 @@ public class LineConnectionSectionFilter implements IFilter {
 	 * @see org.eclipse.jface.viewers.IFilter#select(java.lang.Object)
 	 */
 	public boolean select(Object toTest) {
-		return false;
+		// for debug
+		return true;
 	}
 
 }

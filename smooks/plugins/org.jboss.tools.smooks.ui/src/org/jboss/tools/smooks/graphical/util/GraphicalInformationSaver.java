@@ -34,6 +34,7 @@ import org.jboss.tools.smooks.graphical.GraphicalFactory;
 import org.jboss.tools.smooks.graphical.MappingDataType;
 import org.jboss.tools.smooks.graphical.Param;
 import org.jboss.tools.smooks.graphical.Params;
+import org.jboss.tools.smooks.ui.SmooksConstants;
 import org.jboss.tools.smooks.ui.modelparser.SmooksConfigurationFileGenerateContext;
 
 /**
@@ -58,8 +59,8 @@ public class GraphicalInformationSaver {
 			IFile file = ((IFileEditorInput) input).getFile();
 			IContainer container = file.getParent();
 			String fileName = file.getName();
-			if (fileName.endsWith(".smooks")) {
-				String gfileName = fileName + ".graph";
+			if (fileName.endsWith(SmooksConstants.SMOOKS_EXTENTION_NAME_WITHDOT)) {
+				String gfileName = fileName + SmooksConstants.SMOOKS_GRAPH_EXTENTION_NAME_WITHDOT;
 				if (container != null) {
 					IFile gfile = container.getFile(new Path(gfileName));
 					if (!gfile.exists()) {
@@ -83,8 +84,8 @@ public class GraphicalInformationSaver {
 	public GraphicalInformationSaver(IFile file) {
 		IContainer container = file.getParent();
 		String fileName = file.getName();
-		if (fileName.endsWith(".smooks")) {
-			String gfileName = fileName + ".graph";
+		if (fileName.endsWith(SmooksConstants.SMOOKS_EXTENTION_NAME_WITHDOT)) {
+			String gfileName = fileName + SmooksConstants.SMOOKS_GRAPH_EXTENTION_NAME_WITHDOT;
 			if (container != null) {
 				IFile gfile = container.getFile(new Path(gfileName));
 				if (!gfile.exists()) {
