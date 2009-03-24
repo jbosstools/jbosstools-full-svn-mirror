@@ -41,4 +41,5 @@ public final class Messages {
     public static String ACTUAL_RUN_TIME_ABSOLUTE_FOLDER;
     public static String ACTUAL_RUN_TIME_RELATIVE_FOLDER;
     public static String INVALID_EL_EXPRESSION;
+    public static String EL_EXPRESSION_ALREADY_EXISTS;
 }

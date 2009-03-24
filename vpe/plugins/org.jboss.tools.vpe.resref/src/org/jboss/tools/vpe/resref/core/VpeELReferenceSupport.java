@@ -11,19 +11,21 @@
 package org.jboss.tools.vpe.resref.core;
 
 import org.jboss.tools.common.meta.action.impl.WizardDataValidator;
+import org.jboss.tools.common.resref.core.ResourceReference;
 
 /**
  * @author mareshkau
  *
  */
 public class VpeELReferenceSupport extends VpeAddReferenceSupport {
-
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.common.meta.action.impl.SpecialWizardSupport#getValidator(int)
 	 */
 	@Override
 	public WizardDataValidator getValidator(int step) {
-		return new VpeElVariableValidator(this ,getStepId());
+		ResourceReference[] currentReferenceList = (ResourceReference[])p.get("list"); //$NON-NLS-1$
+		ResourceReference editingReference = (ResourceReference)p.get("resourceReference"); //$NON-NLS-1$
+		return new VpeElVariableValidator(this, getStepId(), currentReferenceList, editingReference);
 	}
 
 }
