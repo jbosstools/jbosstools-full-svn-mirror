@@ -22,18 +22,37 @@
 
 	<para> This <property>Graphical editor</property> allows you to perform drug/drop operations
 		with the nodes of transform data to map the source data to target data. </para>
-	<para> When you save the changes in the Graphical editor the correct Smooks Configuration file
-		content will be generated. </para>
+	<para> When you save the changes in the <property>Graphical editor</property> the correct Smooks
+		Configuration file content will be generated. </para>
+
+	<para>To adjust the properties of the connection lines in the editor, you should use the <link
+			linkend="graphicalpage_propertiesview">Properties view</link> (activate it by following
+		to <emphasis>
+			<property>Window &gt; Show View &gt; Other &gt; General &gt; Properties</property>).</emphasis></para>
+
+	<para>For example, if you defined a date decoder in the <link
+		linkend="configurationpage_datedecoder">Smooks Configuration Editor</link>, in the <property>Properties view</property> you can
+		select it as a Mapping type for the &quot;Date&quot; type element.</para>
+
+	<figure>
+		<title>Browsing Custom Type for the Date Type Element</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/graph_editor/graph_editor1a.png" scale="90"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
 	<section>
 
 		<title>Introducing the areas of graphical editor</title>
-		<para>Information on the topic could be found in the <link linkend="quickstart_formeditor">Quick Start/Smooks Editor</link> section.</para>
+		<para>Information on the topic could be found in the <link linkend="quickstart_formeditor"
+				>Quick Start/Smooks Editor</link> section.</para>
 	</section>
 	<section>
 
 		<title>Load Source/Target Data</title>
-		<para> Click the links under the data view, the <property>Data Type Selection wizard</property> page will be
-			shown.</para>
+		<para> Click the links under the data view, the <property>Data Type Selection
+				wizard</property> page will be shown.</para>
 		<figure>
 			<title>Data Type Selection Wizard Page</title>
 			<mediaobject>
@@ -93,8 +112,8 @@
 			file content with "Mapping Logic". If there are any errors of the configuration file
 			content, error messages are shown in the <link linkend="quickstart_formeditor">Problems
 				area</link>.</para>
-		<para> Please, read the <link linkend="quickstart_mapping">Quick Start/Mapping</link> section to
-			find how to fix the errors.</para>
+		<para> Please, read the <link linkend="quickstart_mapping">Quick Start/Mapping</link>
+			section to find how to fix the errors.</para>
 	</section>
 	<section id="graphicalpage_propertiesview">
 		<title>Properties View</title>
@@ -104,8 +123,8 @@
 		<para>Navigate to <emphasis><property>Window > Show View > Other >
 				Properties</property>,</emphasis> to open the <property>Properties
 			view</property>.</para>
-		<para> When you select on the connection lines, the <property>Properties view</property>
-			will show a set of section GUI for editing the properties of the connection line.</para>
+		<para> When you select the connection line, the <property>Properties view</property> will
+			show a set of section GUI for editing its properties.</para>
 		<tip>
 
 			<title>Tip:</title>
