@@ -130,7 +130,8 @@ public final class ElService implements IELService {
 
 			if (resourceString.contains(dollarEl)) {
 				result = result.replace(dollarEl, rf.getProperties());
-			} else if (resourceString.contains(sharpEl)) {
+			}
+			if (resourceString.contains(sharpEl)) {
 				result = result.replace(sharpEl, rf.getProperties());
 			}
 		}
