@@ -1,4 +1,4 @@
-/******************************************************************************* 
+/*******************************************************************************
  * Copyright (c) 2007 Red Hat, Inc.
  * Distributed under license by Red Hat, Inc. All rights reserved.
  * This program is made available under the terms of the
@@ -11,6 +11,9 @@
 
 package org.jboss.tools.vpe.editor.util;
 
+
+import java.util.Arrays;
+import java.util.Comparator;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Assert;
@@ -28,7 +31,7 @@ import org.w3c.dom.Node;
 
 /**
  * The {@link IELService} implementation.
- * 
+ *
  * @author Eugeny Stherbin
  */
 public final class ElService implements IELService {
@@ -44,9 +47,9 @@ public final class ElService implements IELService {
 
     /**
      * Checks if is available.
-     * 
+     *
      * @param resourceFile the resource file
-     * 
+     *
      * @return true, if is available
      */
     public boolean isAvailable(IFile resourceFile) {
@@ -58,11 +61,11 @@ public final class ElService implements IELService {
         }
         return rst;
     }
-    
+
 
     /**
      * Gets the singleton instance.
-     * 
+     *
      * @return the singleton instance
      */
     public static synchronized IELService getInstance() {
@@ -79,12 +82,12 @@ public final class ElService implements IELService {
 
     /**
      * Replace el.
-     * 
+     *
      * @param resourceFile the resource file
      * @param resourceString the resource string
-     * 
+     *
      * @return the string
-     * 
+     *
      * @see IELService#replaceEl(IFile, String)
      */
     public String replaceEl(IFile resourceFile, String resourceString) {
@@ -95,8 +98,8 @@ public final class ElService implements IELService {
         Assert.isNotNull(resourceFile);
         String rst = resourceString;
         final ResourceReference[] references = getAllResources(resourceFile);
- 
-    
+
+
         if ((references != null) && (references.length > 0)) {
             rst = replace(resourceString, references);
         }
@@ -105,37 +108,65 @@ public final class ElService implements IELService {
 
 
 
+
     /**
-     * Replace.
-     * 
+	 * Replace.
+	 *
      * @param resourceString the resource string
      * @param references the references
-     * 
-     * @return the string
-     */
-      private String replace(String resourceString, ResourceReference[] references) {
-        String result = resourceString;
+	 *
+	 * @return the string
+	 */
+	private String replace(String resourceString, ResourceReference[] references) {
+		String result = resourceString;
 
-        for (ResourceReference rf : references) {
-            final String dollarEl = String.valueOf(DOLLAR_PREFIX)+rf.getLocation()+String.valueOf(SUFFIX);
-            final String sharpEl  = String.valueOf(SHARP_PREFIX)+rf.getLocation()+String.valueOf(SUFFIX);
-            
-            if (resourceString.contains(dollarEl)) {
-                result = result.replace(dollarEl, rf.getProperties());
-            }else if(resourceString.contains(sharpEl)){
-                result = result.replace(sharpEl, rf.getProperties());
-            }
-        }
-        return result;
-    }
+		// yradtsevich: JBIDE-3576: EL expression overriding.
+		// Values with higher precedence are replaced in the first place.
+		ResourceReference[] sortedReferences = sortReferencesByScope(references);
 
+		for (ResourceReference rf : sortedReferences) {
+			final String dollarEl = DOLLAR_PREFIX + rf.getLocation() + SUFFIX;
+			final String sharpEl = SHARP_PREFIX + rf.getLocation() + SUFFIX;
+
+			if (resourceString.contains(dollarEl)) {
+				result = result.replace(dollarEl, rf.getProperties());
+			} else if (resourceString.contains(sharpEl)) {
+				result = result.replace(sharpEl, rf.getProperties());
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * Creates a copy of {@code references} array and sorts its elements by
+	 * scope value.
+	 *
+	 * References with the lowest scope value ({@link ResourceReference#FILE_SCOPE})
+	 * become the first in the array and so on.
+	 *
+	 * @param references array to be sorted
+	 * @return sorted copy of {@code references}
+	 * @author yradtsevich
+	 */
+	private ResourceReference[] sortReferencesByScope(ResourceReference[] references) {
+		ResourceReference[] sortedReferences = references.clone();
+
+        Arrays.sort(sortedReferences, new Comparator<ResourceReference>() {
+			public int compare(ResourceReference r1, ResourceReference r2) {
+				return r1.getScope() - r2.getScope();
+			}
+        });
+
+		return sortedReferences;
+	}
 
     /**
      * Checks if is cloneable node.
-     * 
+     *
      * @param sourceNode the source node
      * @param pageContext the page context
-     * 
+     *
      * @return true, if is cloneable node
      */
     public boolean isELNode(VpePageContext pageContext,Node sourceNode) {
@@ -145,7 +176,7 @@ public final class ElService implements IELService {
         	return rst;
         }
         final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
-        
+
         if (((this.isAvailable(file) && this.isAvailableForNode(sourceNode, file))) || isInResourcesBundle(pageContext, sourceNode)){
             rst = true;
         }
@@ -153,7 +184,7 @@ public final class ElService implements IELService {
     }
 
     /**
-     * 
+     *
      * @param pageContext
      * @param sourceNode
      * @return
@@ -171,11 +202,11 @@ public final class ElService implements IELService {
      */
     private boolean findInResourcesBundle(VpePageContext pageContext, Node sourceNode) {
         boolean rst = false;
-      
+
         BundleMap bundleMap = pageContext.getBundle();
         if (bundleMap != null) {
             String textValue = null;
-            
+
             if (sourceNode.getNodeType() == Node.TEXT_NODE) {
                 textValue = sourceNode.getNodeValue();
 
@@ -215,10 +246,10 @@ public final class ElService implements IELService {
 
     /**
      * Checks if is available for node.
-     * 
+     *
      * @param resourceFile the resource file
      * @param sourceNode the source node
-     * 
+     *
      * @return true, if is available for node
      */
     private boolean isAvailableForNode(Node sourceNode, IFile resourceFile) {
@@ -236,7 +267,7 @@ public final class ElService implements IELService {
         boolean rst = false;
         final ResourceReference[] references = getAllResources(resourceFile);
         String textValue = null;
-        
+
         if (sourceNode.getNodeType() == Node.TEXT_NODE) {
             textValue = sourceNode.getNodeValue();
             if (textValue != null) {
@@ -250,7 +281,7 @@ public final class ElService implements IELService {
             for (int i = 0; i < nodeMap.getLength(); i++) {
                 if (isInReferenceResourcesList(references, ((Attr) nodeMap.item(i)).getValue())) {
                     return true;
-                   
+
                 }
             }
         }
@@ -260,10 +291,10 @@ public final class ElService implements IELService {
 
     /**
      * Checks if is in reference resources list.
-     * 
+     *
      * @param value the value
      * @param references the references
-     * 
+     *
      * @return true, if is in reference resources list
      */
     private boolean isInReferenceResourcesList(ResourceReference[] references, String value) {
@@ -272,39 +303,13 @@ public final class ElService implements IELService {
         for (ResourceReference ref : references) {
 
         	//FIXED FOR JBIDE-3149 by sdzmitrovich
-			if (equalsExppression(value, ref.getLocation()))
+			if (equalsExppression(value, ref.getLocation())) {
 				return true;
+			}
         }
         return rst;
     }
 
-
-    /**
-     * Reverse replace.
-     * 
-     * @param resourceFile the resource file
-     * @param replacedString the replaced string
-     * 
-     * @return the string
-     */
-    public String reverseReplace(IFile resourceFile, String replacedString) {
-        String str = replacedString;
-        final ResourceReference[] references = getAllResources(resourceFile); 
-            //ELReferenceList.getInstance().getAllResources(resourceFile);
-        
-        if ((str != null) && (references != null) && (references.length > 0)) {
-            for (ResourceReference rf : references) {
-                if (replacedString.contains(rf.getProperties())) {
-                    str = str.replace(rf.getProperties(), rf.getLocation());
-                }
-            }
-        }
-   
-        return str;
-    }
-
-    
-    
     protected ResourceReference[] getAllResources(IFile resourceFile) {
         ResourceReference[] rst = null;
         final IPath workspacePath = Platform.getLocation();
@@ -322,14 +327,14 @@ public final class ElService implements IELService {
         if ((elResources != null) && (elResources.length > 0)) {
         	System.arraycopy(elResources, 0, rst,  gResources==null?0:gResources.length, elResources.length);
         }
-        
+
         return rst;
 
     }
-    
+
     public String replaceElAndResources(VpePageContext pageContext, Node attributeNode) {
-   
-        
+
+
         String attribuString = null;
         if (attributeNode instanceof Attr) {
             attribuString = ((Attr) attributeNode).getValue();
@@ -337,7 +342,7 @@ public final class ElService implements IELService {
             attribuString = attributeNode.getNodeValue();
         }
         String rst  = attribuString;
-        
+
         rst = ResourceUtil.getBundleValue(pageContext, attributeNode);
         //fix for JBIDE-3030
         if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null) {
@@ -349,8 +354,8 @@ public final class ElService implements IELService {
         return rst;
     }
 
-    
-    
+
+
     private boolean equalsExppression(String value, String expression) {
 
 		final String dollarEl = String.valueOf(DOLLAR_PREFIX) + expression
