@@ -64,7 +64,7 @@
             </mediaobject>
         </figure>
 
-        <para>You should see the <property>Prefernces window</property> where you can configure the
+        <para>You should see the <property>Preferences window</property> where you can configure the
             workspace settings for Drools runtimes. To create a new runtime, press the <emphasis>
                 <property>Add</property>
             </emphasis> button. The appeared dialog prompts you to enter a
