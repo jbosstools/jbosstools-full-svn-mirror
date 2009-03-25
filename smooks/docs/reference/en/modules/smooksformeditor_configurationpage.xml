@@ -20,7 +20,7 @@
 	</figure>
 
 	<para> You can add/edit/remove the <link linkend="configurationpage_datedecoder">Date
-			Decoder</link> on the Сonfiguration page of the <property>Smooks Editor</property>. </para>
+			Decoder</link> on the Configuration page of the <property>Smooks Editor</property>. </para>
 	<para> The configuration also edit the <link linkend="configurationpage_parsetype">Smooks parse
 			type</link> and manage the <link linkend="configurationpage_importfile">Import
 			Files</link>.</para>
@@ -58,7 +58,7 @@
 		<tip>
 
 			<title>Tip:</title>
-			<para> If the import file dosen't exist, the image of the import file will change to
+			<para> If the import file doesn't exist, the image of the import file will change to
 				"Error Image". If you double-click the import file in the Import File list, the file
 				will be open with a new default editor. </para>
 
