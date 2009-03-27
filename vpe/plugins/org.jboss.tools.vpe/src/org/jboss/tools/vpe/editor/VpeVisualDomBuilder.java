@@ -561,7 +561,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					ifDependencySet, creationData.getData(), data);
 			registerNodes(elementMapping);
 		}
-		if (template.isChildren()) {
+		if (template.hasChildren()) {
 			List<?> childrenInfoList = creationData.getChildrenInfoList();
 			if (childrenInfoList == null) {
 				addChildren(template, sourceNode,
@@ -1124,7 +1124,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				VpeTemplate template = elementMapping.getTemplate();
 				if (elementMapping.getBorder() != null) {
 					updateElement(sourceElement);
-				} else if (template.isRecreateAtAttrChange(pageContext,
+				} else if (template.recreateAtAttrChange(pageContext,
 						sourceElement, getVisualDocument(),
 						(nsIDOMElement) elementMapping.getVisualNode(),
 						elementMapping.getData(), name, value)) {
@@ -1296,7 +1296,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				updateElement(sourceElement);
 			} else {
 				VpeTemplate template = elementMapping.getTemplate();
-				if (template.isRecreateAtAttrChange(pageContext, sourceElement,
+				if (template.recreateAtAttrChange(pageContext, sourceElement,
 						getVisualDocument(), (nsIDOMElement) elementMapping
 								.getVisualNode(), elementMapping.getData(),
 						name, null)) {
@@ -1564,14 +1564,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return VpeTagDescription.RESIZE_CONSTRAINS_NONE;
 	}
 
-	public void resize(nsIDOMElement element, int resizerConstrains, int top,
+	public void resize(nsIDOMElement element, int constrains, int top,
 			int left, int width, int height) {
 		VpeElementMapping elementMapping = (VpeElementMapping) domMapping
 				.getNodeMapping(element);
 		if (elementMapping != null) {
 			elementMapping.getTemplate().resize(pageContext,
 					(Element) elementMapping.getSourceNode(), getVisualDocument(),
-					element, elementMapping.getData(), resizerConstrains, top,
+					element, elementMapping.getData(), constrains, top,
 					left, width, height);
 		}
 	}
@@ -1668,7 +1668,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			// it's attribute
 			if (isTextEditable(visualDropContainer)) {
 				String[] atributeNames = ((VpeElementMapping) nodeMapping)
-						.getTemplate().getOutputAtributeNames();
+						.getTemplate().getOutputAttributeNames();
 				if (atributeNames != null && atributeNames.length > 0) {
 					Element sourceElement = (Element) nodeMapping
 							.getSourceNode();
@@ -2120,7 +2120,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					sourceNode = null;
 					if (isTextEditable(visualNode)) {
 						String[] atributeNames = ((VpeElementMapping) nodeMapping)
-								.getTemplate().getOutputAtributeNames();
+								.getTemplate().getOutputAttributeNames();
 						if (atributeNames != null && atributeNames.length > 0) {
 							Element sourceElement = (Element) nodeMapping
 									.getSourceNode();

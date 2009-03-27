@@ -311,7 +311,7 @@ public class SelectionManager implements ISelectionManager {
 
 				VpeTemplate template = elementMapping.getTemplate();
 
-				targetVisualNode = template.getVisualNodeByBySourcePosition(
+				targetVisualNode = template.getVisualNodeBySourcePosition(
 						elementMapping, focusOffcetInSourceDocument,
 						anchorOffcetInSourceDocument, getDomMapping());
 

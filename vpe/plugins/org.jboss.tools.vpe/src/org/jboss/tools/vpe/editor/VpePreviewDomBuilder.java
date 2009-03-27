@@ -106,7 +106,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			}
 
 			
-			if (template.isChildren()) {
+			if (template.hasChildren()) {
 				List<?> childrenInfoList = creationData.getChildrenInfoList();
 				if (childrenInfoList == null) {
 					addChildren(template, sourceNode, visualNewNode != null ? visualNewNode : visualOldContainer);

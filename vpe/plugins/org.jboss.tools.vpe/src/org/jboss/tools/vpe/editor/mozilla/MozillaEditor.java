@@ -294,9 +294,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 					}
 
 				}
-				public void onElementResize(nsIDOMElement element, int resizerConstrains, int top, int left, int width, int height) {
+				public void onElementResize(nsIDOMElement element, int constrains, int top, int left, int width, int height) {
 					if (editorDomEventListener != null) {
-						editorDomEventListener.elementResized(element, resizerConstrains, top, left, width, height);
+						editorDomEventListener.elementResized(element, constrains, top, left, width, height);
 					}
 				}
 				public void onShowTooltip(int x, int y, String text) {

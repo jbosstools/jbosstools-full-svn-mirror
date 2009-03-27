@@ -189,7 +189,7 @@ public interface VpeTemplate {
 	 *            The current element of the visual tree.
 	 * @param data
 	 *            The arbitrary data, built by a method <code>create</code>
-	 * @param resizerConstrains
+	 * @param constrains
 	 *            Code of resizer:<br>
 	 *            top-left: 1<br>
 	 *            top: 2<br>
@@ -210,7 +210,7 @@ public interface VpeTemplate {
 	 */
 	void resize(VpePageContext pageContext, Element sourceElement,
 			nsIDOMDocument visualDocument, nsIDOMElement visualElement, Object data,
-			int resizerConstrains, int top, int left, int width, int height);
+			int constrains, int top, int left, int width, int height);
 
 	/**
 	 * Checks a capability of drag of visual element
@@ -297,14 +297,14 @@ public interface VpeTemplate {
 	 * @return <code>true</code> if it is required to re-create an element at
 	 *         a modification of attribute, <code>false</code> otherwise.
 	 */
-	boolean isRecreateAtAttrChange(VpePageContext pageContext,
+	boolean recreateAtAttrChange(VpePageContext pageContext,
 			Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualNde,
 			Object data, String name, String value);
 
 	/**
 	 * @return <code>true</code> if the element can have children
 	 */
-	boolean isChildren();
+	boolean hasChildren();
 
 	/**
 	 * @return <code>true</code> if the element is case sensitive
@@ -322,7 +322,7 @@ public interface VpeTemplate {
 	 * 
 	 * @return <code>TextFormatingData</code>
 	 */
-	TextFormatingData getTextFormatingData();
+	TextFormatingData getTextFormattingData();
 
 	/**
 	 * Returns a list of attributes of an element of the source tree, the values
@@ -330,7 +330,7 @@ public interface VpeTemplate {
 	 * @deprecated
 	 * @return attrubute name array
 	 */
-	String[] getOutputAtributeNames();
+	String[] getOutputAttributeNames();
 
 	/**
 	 * Is invoked at a change of bundle values
@@ -449,7 +449,7 @@ public interface VpeTemplate {
 
 	boolean containsText();
 	
-	public boolean isModify();
+	public boolean canModify();
 	
 	public void setModify(boolean modify);
 	
@@ -481,7 +481,7 @@ public interface VpeTemplate {
 	 * @param domMapping
 	 * @return
 	 */
-	public nsIDOMNode getVisualNodeByBySourcePosition(
+	public nsIDOMNode getVisualNodeBySourcePosition(
 			VpeElementMapping elementMapping, int focusPosition,
 			int anchorPosition, VpeDomMapping domMapping);
 	

@@ -1003,7 +1003,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @return <code>true</code> if it is required to re-create an element at a
 	 * modification of attribute, <code>false</code> otherwise.
 	 */
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
+	public boolean recreateAtAttrChange(VpePageContext pageContext,
 			Element sourceElement, nsIDOMDocument visualDocument,
 			nsIDOMElement visualNode, Object data, String name, String value) {
 		
@@ -1017,7 +1017,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * 
 	 * @return <code>true</code> if the element can have children
 	 */
-	public boolean isChildren() {
+	public boolean hasChildren() {
 		return children;
 	}
 
@@ -1026,7 +1026,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * 
 	 * @return true, if is modify
 	 */
-	public boolean isModify() {
+	public boolean canModify() {
 		return modify;
 	}
 
@@ -1053,7 +1053,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * 
 	 * @return <code>TextFormatingData</code>
 	 */
-	public TextFormatingData getTextFormatingData() {
+	public TextFormatingData getTextFormattingData() {
 		return textFormatingData;
 	}
 
@@ -1122,7 +1122,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * 
 	 * @return attrubute name array
 	 */
-	public String[] getOutputAtributeNames() {
+	public String[] getOutputAttributeNames() {
 		return null;
 	}
 
@@ -1358,7 +1358,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * 
 	 * @return the visual node by by source position
 	 */
-	public nsIDOMNode getVisualNodeByBySourcePosition(
+	public nsIDOMNode getVisualNodeBySourcePosition(
 			VpeElementMapping elementMapping, int focusPosition,
 			int anchorPosition, VpeDomMapping domMapping) {
 

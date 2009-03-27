@@ -228,7 +228,7 @@ public class FormatControllerManager {
 			}
 			VpeTemplate template = elementMapping.getTemplate();
 			if(template!=null) {
-				return template.getTextFormatingData();
+				return template.getTextFormattingData();
 			}
 		} else {
 			// Selected node is text.

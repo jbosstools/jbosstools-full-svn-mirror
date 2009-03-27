@@ -187,7 +187,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 			removeElement(pageContext, (Element)sourceNode, (Map<VpeTemplate,?>) data);
 	}
 	@Override
-	public boolean isChildren() {
+	public boolean hasChildren() {
 		// was commented to correct work of non-visual templates which have
 		// visual children
 		// (for example rich:graphValidator)
@@ -414,7 +414,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		changeModify(pageContext, sourceElement, visualNodeMap);
 	}
 	@Override
-	public String[] getOutputAtributeNames() {
+	public String[] getOutputAttributeNames() {
 		VpeCreator[] creators = dependencyMap.getCreators(VpeValueCreator.SIGNATURE_VPE_VALUE);
 		for (int i = 0; i < creators.length; i++) {
 			if (creators[i] instanceof VpeOutputAttributes) {
@@ -577,7 +577,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		}
 	}
 	@Override
-	public boolean isRecreateAtAttrChange(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualNode, Object data, String name, String value) {
+	public boolean recreateAtAttrChange(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualNode, Object data, String name, String value) {
 		if (creator != null) {
 			return creator.isRecreateAtAttrChange(pageContext, sourceElement, visualDocument, visualNode, data, name, value);
 		}

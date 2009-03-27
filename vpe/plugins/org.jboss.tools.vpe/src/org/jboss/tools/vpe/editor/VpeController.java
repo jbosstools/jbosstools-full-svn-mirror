@@ -1269,7 +1269,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			}
 	}
 
-	public void elementResized(nsIDOMElement element, int resizerConstrains,
+	public void elementResized(nsIDOMElement element, int constrains,
 			int top, int left, int width, int height) {
 		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
@@ -1279,7 +1279,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		} finally {
 			switcher.stopActiveEditor();
 		}
-		visualBuilder.resize(element, resizerConstrains, top, left, width, height);
+		visualBuilder.resize(element, constrains, top, left, width, height);
 		sourceSelectionChanged();
 	}
 
