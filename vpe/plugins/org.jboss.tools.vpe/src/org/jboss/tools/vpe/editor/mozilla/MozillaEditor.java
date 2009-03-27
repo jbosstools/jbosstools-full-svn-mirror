@@ -105,6 +105,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 * for example enable or disable readOnlyMode
 	 */
 	private nsIEditor editor;
+	private VpeDropDownMenu dropDownMenu = null;
 
 	public void doSave(IProgressMonitor monitor) {
 	}
@@ -174,8 +175,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		ToolBar verBar = new ToolBar(cmpVerticalToolbar, SWT.VERTICAL|SWT.FLAT);
 		verBar.setLayoutData(new GridData(GridData.FILL_VERTICAL));
 		
-		VpeDropDownMenu dropDownMenu = new VpeDropDownMenu(verBar,
-				VpeUIMessages.MENU); 
+		dropDownMenu = new VpeDropDownMenu(verBar, VpeUIMessages.MENU); 
 		
 		 // Use vpeToolBarManager to create a horizontal toolbar.
 		vpeToolBarManager = new VpeToolBarManager(dropDownMenu
@@ -394,11 +394,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 		// add dispose listener
 		item.addDisposeListener(new DisposeListener() {
-
 			public void widgetDisposed(DisposeEvent e) {
 				// dispose tollitem's image
 				((ToolItem) e.widget).getImage().dispose();
-
 			}
 		});
 		return item;
@@ -418,6 +416,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			vpeToolBarManager = null;
 		}
 		
+		if (dropDownMenu != null) {
+			dropDownMenu.dispose();
+			dropDownMenu = null;
+		}
+
 //		removeDomEventListeners();
 		if(getController()!=null) {
 			controller.dispose();
@@ -785,5 +788,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			
 		}
 		return editor;
+	}
+
+	public VpeDropDownMenu getDropDownMenu() {
+		return dropDownMenu;
 	}
 }

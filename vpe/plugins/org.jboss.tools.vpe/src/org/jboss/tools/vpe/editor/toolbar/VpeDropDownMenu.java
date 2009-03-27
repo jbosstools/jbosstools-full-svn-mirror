@@ -64,5 +64,10 @@ public class VpeDropDownMenu {
 		return dropDownMenu;
 	}
 	
-
+	public void dispose() {
+		if (dropDownMenu != null) {
+			dropDownMenu.dispose();
+			dropDownMenu = null;
+		}
+	}
 }

@@ -31,6 +31,8 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Point;
@@ -40,6 +42,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -80,10 +83,14 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.mozilla.EditorLoadWindowListener;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.mozilla.MozillaPreview;
+import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.xpl.CustomSashForm;
 import org.jboss.tools.vpe.editor.xpl.EditorSettings;
 import org.jboss.tools.vpe.editor.xpl.SashSetting;
+import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.selbar.SelectionBar;
+import org.jboss.tools.vpe.selbar.VisibilityEvent;
+import org.jboss.tools.vpe.selbar.VisibilityListener;
 
 public class VpeEditorPart extends EditorPart implements ITextEditor,
 		ITextEditorExtension, IReusableEditor, IVisualEditor {
@@ -358,11 +365,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	Composite visualContent = null;
 
 	public void setVisualMode(int type) {
-		String showSelectionBar = VpePreference.SHOW_SELECTION_TAG_BAR
-				.getValue();
 		switch (type) {
 		case VISUALSOURCE_MODE:
-			selectionBar.showBar(showSelectionBar);
+			selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
 			/*
 			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-3140
 			 * author Denis Maliarevich.
@@ -389,7 +394,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 //			break;
 
 		case SOURCE_MODE:
-			selectionBar.showBar(showSelectionBar);
+			selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
 			if (sourceContent != null) {
 				sourceContent.setVisible(true);
 				/*
@@ -419,7 +424,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 		case PREVIEW_MODE:
 			if (selectionBar != null) {
-				selectionBar.showBar("no");
+				selectionBar.setVisible(false);
 			}
 			/*
 			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-3140
@@ -576,8 +581,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		visualContent.addDisposeListener(new DisposeListener() {
 
 			public void widgetDisposed(DisposeEvent e) {
-				visualContent
-						.removeControlListener(visualContentControlListener);
+				visualContent.removeControlListener(visualContentControlListener);
 				visualContent.removeDisposeListener(this);
 			}
 
@@ -671,9 +675,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		listener = new XModelTreeListener() {
 
 			public void nodeChanged(XModelTreeEvent event) {
-				String showSelectionBar = VpePreference.SHOW_SELECTION_TAG_BAR
-						.getValue();
-				selectionBar.showBar(showSelectionBar);
+				selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
 			}
 
 			public void structureChanged(XModelTreeEvent event) {
@@ -755,19 +757,50 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			VpePlugin.reportProblem(e);
 		}
 		if (visualEditor != null) {
-			visualEditor
-					.setEditorLoadWindowListener(new EditorLoadWindowListener() {
+			visualEditor.setEditorLoadWindowListener(new EditorLoadWindowListener() {
 						public void load() {
 							visualEditor.setEditorLoadWindowListener(null);
 							visualEditor.setController(new VpeController(
 									VpeEditorPart.this));
 							selectionBar.setVpeController(visualEditor.getController());
 							visualEditor.getController().setSelectionBarController(selectionBar);
+							createShowSelectionBarMenuItem();
 							visualEditor.getController().init(sourceEditor, visualEditor);
 						}
+
 					});
 			visualEditor.createPartControl(visualContent);
 		}
+	}
+
+	/**
+	 * Creates new MenuItem in VPE drop-down menu. This menu item provides 
+	 * option to show/hide selection bar.
+	 */
+	private void createShowSelectionBarMenuItem() {
+		final MenuItem selectionBarVisibilityMenuItem = 
+				new MenuItem(visualEditor.getDropDownMenu().getDropDownMenu(), SWT.PUSH);
+
+		selectionBarVisibilityMenuItem.setText(selectionBar.isVisible() 
+				? VpeUIMessages.HIDE_SELECTION_BAR
+				: VpeUIMessages.SHOW_SELECTION_BAR);
+
+		// add menu item listener
+		selectionBarVisibilityMenuItem.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				boolean selectionBarVisible = !selectionBar.isVisible();
+				selectionBar.setAlwaysVisibleOption(selectionBarVisible);
+				selectionBar.setVisible(selectionBarVisible);
+			}
+		});
+		// add selection bar listener
+		selectionBar.addVisibilityListener(new VisibilityListener() {
+			public void visibilityChanged(VisibilityEvent event) {
+				selectionBarVisibilityMenuItem.setText(event.getSource().isVisible() 
+						? VpeUIMessages.HIDE_SELECTION_BAR
+						: VpeUIMessages.SHOW_SELECTION_BAR);	
+			}
+		});
 	}
 
 	public void createPreviewBrowser() {

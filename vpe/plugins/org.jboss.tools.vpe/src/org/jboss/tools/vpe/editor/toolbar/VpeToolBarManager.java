@@ -61,8 +61,8 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 					return super.computeSize(hint, hint2, changed);
 			}
 		};
-		return splitter;
 
+		return splitter;
 	}
 
 	public void addToolBar(IVpeToolBar bar) {
@@ -81,8 +81,7 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 		bar.createToolBarControl(cmpToolBar);
 
 		// create tolbar container
-		ToolbarContainer toolbarContainer = new ToolbarContainer(cmpToolBar,
-				bar);
+		ToolbarContainer toolbarContainer = new ToolbarContainer(cmpToolBar, bar);
 
 		// show or hide toolbar
 		setStateToolbar(cmpToolBar, isShowedToolbar(bar));
@@ -103,15 +102,13 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 		boolean showToolbar = isShowedToolbar(toolbarContainer.getToolbar());
 
 		// set text to menu item
-		menuItem
-				.setText((showToolbar ? VpeUIMessages.HIDE : VpeUIMessages.SHOW)
+		menuItem.setText( (showToolbar ? VpeUIMessages.HIDE : VpeUIMessages.SHOW)
 						+ Constants.WHITE_SPACE
-						+ toolbarContainer.getToolbar().getName());
+						+ toolbarContainer.getToolbar().getName() );
 
 		// add listener
-		menuItem.addSelectionListener(new ToolbarManagerSelectionListener(
-				toolbarContainer, showToolbar));
-
+		menuItem.addSelectionListener(
+				new ToolbarManagerSelectionListener(toolbarContainer, showToolbar));
 	}
 
 	/**
@@ -120,7 +117,6 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 	 * @return
 	 */
 	protected boolean isShowedToolbar(IVpeToolBar bar) {
-
 		return !HIDE.equalsIgnoreCase(getPreference(bar.getId()));
 	}
 
@@ -194,8 +190,8 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 			showBar = !showBar;
 
 			// set new value of preference 
-			setPreference(toolbarContainer.getToolbar().getId(), showBar ? SHOW
-					: HIDE);
+			setPreference(toolbarContainer.getToolbar().getId(), 
+					showBar ? SHOW : HIDE);
 			// change text
 			selectedItem.setText((showBar ? VpeUIMessages.HIDE
 					: VpeUIMessages.SHOW)
@@ -228,5 +224,4 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 		}
 
 	}
-
 }
