@@ -10,129 +10,47 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.util;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Map.Entry;
 
+import org.jboss.tools.vpe.VpePlugin;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 
 public class TextUtil {
+	
+
+	// ISO codes are contained in interval  [0,2^31 -1]
+	private final static int MIN_ISO_CODE_RANGE = 0;
+	private final static int MAX_ISO_CODE_RANGE = Integer.MAX_VALUE;
+	
+	private final static String CODES_FILE = "htmlCodes.properties";  //$NON-NLS-1$
+	
 	private final static String SOURCE_BREAK = "\r\n";  //$NON-NLS-1$
 	private final static String VISUAL_BREAK = "\n";  //$NON-NLS-1$
 	private final static char SOURCE_SPACE = ' '; 
 	private final static char VISUAL_SPACE = 160; 
-	private final static int CHR_ESC_START = '&';
-	private final static int CHR_ESC_STOP = ';';
+	private final static char CHR_ESC_START = '&';
+	private final static char CHR_SHARP = '#';
+	private final static char CHR_ESC_STOP = ';';
+	private final static char CHR_HEX_FLAG = 'x';
 	private final static String SPCHARS = "\f\n\r\t\u0020\u2028\u2029"; //$NON-NLS-1$
 	private final static Map<Character,String> textSet = new HashMap<Character,String>();
 	static{
-		textSet.put(new Character('"'), "&quot;"); //$NON-NLS-1$
-		textSet.put(new Character('&'),"&amp;"); //$NON-NLS-1$
-		textSet.put(new Character('<'),"&lt;"); //$NON-NLS-1$
-		textSet.put(new Character('>'),"&gt;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00A0'),"&nbsp;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00A1'),"&iexcl;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00A2'),"&cent;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00A3'),"&pound;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00A4'),"&curren;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00A5'),"&yen;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00A6'),"&brvbar;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00A7'),"&sect;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00A8'),"&uml;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00A9'),"&copy;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00AA'),"&ordf;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00AB'),"&laquo;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00AC'),"&not;"); //$NON-NLS-1$
-		//textSet.put(new Character('\u00AD'),"&shy;");
-		textSet.put(new Character('\u2022'), "&bull;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00AE'),"&reg;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00AF'),"&macr;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00B0'),"&deg;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00B1'),"&plusmn;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00B2'),"&sup2;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00B3'),"&sup3;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00B4'),"&acute;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00B5'),"&micro;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00B6'),"&para;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00B7'),"&middot;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00B8'),"&cedil;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00B9'),"&sup1;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00BA'),"&ordm;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00BB'),"&raquo;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00BC'),"&frac14;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00BD'),"&frac12;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00BE'),"&frac34;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00BF'),"&iquest;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00C0'),"&Agrave;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00E0'),"&agrave;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00C1'),"&Aacute;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00E1'),"&aacute;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00C2'),"&Acirc;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00E2'),"&acirc;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00C3'),"&Atilde;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00E3'),"&atilde;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00C4'),"&Auml;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00E4'),"&auml;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00C5'),"&Aring;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00E5'),"&aring;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00C6'),"&AElig;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00E6'),"&aelig;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00C7'),"&Ccedil;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00E7'),"&ccedil;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00C8'),"&Egrave;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00E8'),"&egrave;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00C9'),"&Eacute;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00E9'),"&eacute;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00CA'),"&Ecirc;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00EA'),"&ecirc;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00CB'),"&Euml;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00EB'),"&euml;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00CC'),"&Igrave;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00EC'),"&igrave;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00CD'),"&Iacute;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00ED'),"&iacute;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00CE'),"&Icirc;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00EE'),"&icirc;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00CF'),"&Iuml;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00EF'),"&iuml;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00D0'),"&ETH;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00F0'),"&eth;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00D1'),"&Ntilde;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00F1'),"&ntilde;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00D2'),"&Ograve;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00F2'),"&ograve;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00D3'),"&Oacute;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00F3'),"&oacute;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00D4'),"&Ocirc;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00F4'),"&ocirc;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00D5'),"&Otilde;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00F5'),"&otilde;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00D6'),"&Ouml;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00F6'),"&ouml;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00D7'),"&times;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00F7'),"&divide;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00D8'),"&Oslash;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00F8'),"&oslash;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00D9'),"&Ugrave;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00F9'),"&ugrave;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00DA'),"&Uacute;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00FA'),"&uacute;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00DB'),"&Ucirc;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00FB'),"&ucirc;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00DC'),"&Uuml;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00FC'),"&uuml;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00DD'),"&Yacute;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00FD'),"&yacute;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00DE'),"&THORN;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00FE'),"&thorn;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00DF'),"&szlig;"); //$NON-NLS-1$
-		textSet.put(new Character('\u00FF'),"&yuml;"); //$NON-NLS-1$
-		textSet.put(new Character('\u2013'),"&ndash;"); //$NON-NLS-1$
-		textSet.put(new Character('\u2014'),"&mdash;"); //$NON-NLS-1$
-		textSet.put(new Character('\u2018'),"&lsquo;"); //$NON-NLS-1$
-		textSet.put(new Character('\u2019'),"&rsquo;"); //$NON-NLS-1$
-		textSet.put(new Character('\u201C'),"&ldquo;"); //$NON-NLS-1$
-		textSet.put(new Character('\u201D'),"&rdquo;"); //$NON-NLS-1$
-		textSet.put(new Character('\u20AC'),"&euro;"); //$NON-NLS-1$
+		try {
+			InputStream is = VpePlugin.getDefault().getBundle().getResource(CODES_FILE).openStream();
+			Properties prop = new Properties();
+			prop.load(is);
+			for (Entry<Object, Object> e : prop.entrySet()) {
+				textSet.put((char)Integer.parseInt((String) e.getKey()), (String) e.getValue());
+			}
+			is.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static boolean containsKey(char key){
@@ -240,13 +158,47 @@ public class TextUtil {
 				}
 				sourceIndex++;
 			} else if (sourceChar == CHR_ESC_START) {
+				// find index of the escape sequence's end  
 				int end = sourceText.indexOf(CHR_ESC_STOP, sourceIndex + 1);
-				if (end != -1 && textSet.containsValue(sourceText.substring(sourceIndex, end + 1))) {
+				
+				// if next symbol is '#' then escape sequence may be iso code  
+				if (end != -1 && (sourceIndex + 2 < sourceText.length())
+						&& sourceText.charAt(sourceIndex + 1) == CHR_SHARP) {
+					
+					//convert string to number 
+					
+					int isoCode = MIN_ISO_CODE_RANGE - 1;
+					
+					// if number has prefix 'x' means that it is hex number
+					int radix = sourceText.charAt(sourceIndex + 2) == CHR_HEX_FLAG ? 16
+							: 10;
+					int offcet = sourceText.charAt(sourceIndex + 2) == CHR_HEX_FLAG ? 3
+							: 2; 
+
+					try {
+						isoCode = Integer.parseInt(sourceText.substring(
+								sourceIndex + offcet, end), radix);
+					} catch (NumberFormatException exception) {
+					}
+					
+					// if escape sequence is iso code
+					if (isoCode >= MIN_ISO_CODE_RANGE
+							&& isoCode <= MAX_ISO_CODE_RANGE) {
+						sourceIndex += end - sourceIndex;
+					}
+
+				} 
+				// check is escape sequence is contained in the list 
+				else if (end != -1
+						&& textSet.containsValue(sourceText.substring(
+								sourceIndex, end + 1))) {
 					sourceIndex += end - sourceIndex;
 				}
+
 				sourceIndex++;
 				visualIndex++;
-			} else {
+			}
+			else {
 				sourceIndex++;
 				visualIndex++;
 			}
