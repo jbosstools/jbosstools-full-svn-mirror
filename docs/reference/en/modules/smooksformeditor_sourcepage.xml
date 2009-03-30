@@ -9,6 +9,7 @@
 		</keywordset>
 	</chapterinfo>
 	<title>Smooks Source Editor Page</title>
+	<para>This section provides information about Smooks Source Editor Page</para>
 	<section>
 		<title>XML Source Editor</title>
 		<para>You can use this editor to edit the Smooks Configuration file directly. </para>
@@ -25,7 +26,7 @@
 		<title>Error Messages GUI</title>
 		<para>If the <property>Smooks tools</property> can&apos;t understand the configuration
 			file or the configuration file is illegal (XML structure isn&apos;t right for Smooks
-			Configuration file, etc.), the error will be underlined.</para>
+			Configuration file, etc.), the error is underlined.</para>
 		<figure>
 			<title>Graphical Editor</title>
 			<mediaobject>
@@ -41,6 +42,7 @@
 			<para> You can't edit the configuration file with other editors until file becomes
 				valid. </para>
 		</note-->
-
+		<para>We hope, our guide will help you to get started with JBoss Smooks Tools. Besides, for additional information you are welcome on <ulink
+			url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=217">JBoss forum</ulink>.</para>
 	</section>
 </chapter>

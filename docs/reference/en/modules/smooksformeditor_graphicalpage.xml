@@ -9,7 +9,7 @@
 		</keywordset>
 	</chapterinfo>
 	<title>Smooks Graphical Editor Page</title>
-
+	<para>This chapter is packed with useful information about Smooks Graphical Editor Page usage</para>
 	<para>Smooks Graphical Editor page is one tab of the <property>Smooks Editor</property>.</para>
 	<figure>
 		<title>Graphical Editor</title>
@@ -23,7 +23,7 @@
 	<para> This <property>Graphical editor</property> allows you to perform drug/drop operations
 		with the nodes of transform data to map the source data to target data. </para>
 	<para> When you save the changes in the <property>Graphical editor</property> the correct Smooks
-		Configuration file content will be generated. </para>
+		Configuration file content is generated. </para>
 
 	<para>To adjust the properties of the connection lines in the editor, you should use the <link
 			linkend="graphicalpage_propertiesview">Properties view</link> (activate it by following
@@ -96,7 +96,7 @@
 		</figure>
 
 		<para> When you finish the data selection (file path selection), click
-					<emphasis><property>Finish</property>,</emphasis> the data view will display the
+					<emphasis><property>Finish</property>,</emphasis> the data view displays the
 			selected data structure.</para>
 	</section>
 	<section>
@@ -138,7 +138,7 @@
 				&quot;Java&quot;, the XML Properties section GUI isn&apos;t
 				displayed.</para>
 			<para>It means that if the source/target data type of the selected connection line is
-				different, the <property>Properties view</property> shows different GUI.</para>
+				different, the <property>Properties view</property> shows a different GUI.</para>
 		</tip>
 		<figure>
 			<title>JavaBean Properties Section</title>
@@ -166,5 +166,7 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
+		
+		<para>To discover about other Editor pages, read the next chapters</para>
 	</section>
 </chapter>

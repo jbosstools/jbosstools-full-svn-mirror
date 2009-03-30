@@ -9,6 +9,7 @@
 		</keywordset>
 	</chapterinfo>
 	<title>Introduction</title>
+	<para>This chapter give you a short introduction to Smooks, Smooks tools and its installation</para>
 	<section>
 		<title>What is Smooks?</title>
 
@@ -58,12 +59,12 @@
 				url="http://www.smooks.org">Smooks official site</ulink>.</para>
 	</section>
 	<section>
-		<title>What is Smooks dev tools?</title>
+		<title>What is Smooks Tools?</title>
 
-		<para>Smooks dev tools is a set of graphical tools for editing Smooks configuration file
-			base on Eclipse.</para>
+		<para>Smooks tools is a set of graphical tools for editing Smooks configuration file
+			based on Eclipse.</para>
 		<figure>
-			<title>Smooks form editor</title>
+			<title>Smooks Form editor</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/introduction/introduction2.png" scale="90"/>
@@ -74,13 +75,16 @@
 	<section>
 		<title>How to install Smooks dev tools?</title>
 
-		<para> The Smooks dev tools was included by the <property>JBoss Tools</property> since 3.0.0
+		<para> The Smooks tools was included by the <property>JBoss Tools</property> since 3.0.0
 			Beta1 version. You can download the <property>JBoss Tools</property> from <ulink
-				url="http://www.jboss.org/tools/download/index.html">here</ulink>.</para>
-		<para> Smooks dev tools (<property>JBoss Tools</property>) run with the latest Eclipse and
+				url="http://www.jboss.org/tools/download/index.html">JBoss download site</ulink>.</para>
+		<para> Smooks tools (<property>JBoss Tools</property>) run with the latest Eclipse and
 			other required plug-ins (GEF, EMF, etc.).</para>
-		<para> You should download the latest IDE for Java EE developers from this <ulink
-				url="http://www.eclipse.org/downloads/">site</ulink>. It contains many plug-ins (
-			GEF, EMF, etc. ) required by Smooks dev tools. </para>
+		<para> You should download the latest IDE for Java EE developers from <ulink
+				url="http://www.eclipse.org/downloads/"> Eclipse site</ulink>. It contains many plug-ins (
+				GEF, EMF, etc. ) required by Smooks dev tools. </para>
+		
+		<para>Now let's progress to more advanced topics.</para>
 	</section>
+
 </chapter>
