@@ -1,8 +1,5 @@
 package org.jboss.tools.flow.common.properties;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.flow.common.wrapper.Wrapper;
@@ -68,9 +65,14 @@ public class WrapperPropertySource implements IPropertySource {
 	}
 	
 	protected IPropertyDescriptor[] merge(IPropertyDescriptor[] first, IPropertyDescriptor[] second) {
-		List<IPropertyDescriptor> result = Arrays.asList(first);
-		result.addAll(Arrays.asList(second));
-		return (IPropertyDescriptor[])result.toArray();
+		IPropertyDescriptor[] result = new IPropertyDescriptor[first.length + second.length];
+		for (int i = 0; i < first.length; i++) {
+			result[i] = first[i];
+		}
+		for (int i = first.length; i < result.length; i++) {
+			result[i] = second[i - first.length];
+		}
+		return result;
 	}
 
 }
