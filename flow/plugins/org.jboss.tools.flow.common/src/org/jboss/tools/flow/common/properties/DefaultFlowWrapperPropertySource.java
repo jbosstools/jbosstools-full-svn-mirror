@@ -17,7 +17,11 @@ public class DefaultFlowWrapperPropertySource extends WrapperPropertySource impl
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		if (propertyDescriptors == null) {
 			propertyDescriptors = new IPropertyDescriptor[] {
-				new TextPropertyDescriptor(NAME, "Name") {}
+				new TextPropertyDescriptor(NAME, "Name") {
+					public String getCategory() {
+						return "General";
+					}
+				}
 			};
 			propertyDescriptors = merge(propertyDescriptors, super.getPropertyDescriptors());
 		}
