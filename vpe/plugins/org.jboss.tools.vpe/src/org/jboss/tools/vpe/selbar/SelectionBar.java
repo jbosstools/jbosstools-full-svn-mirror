@@ -32,6 +32,8 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
+import org.eclipse.wst.sse.core.internal.provisional.INodeNotifier;
 import org.jboss.tools.common.meta.XAttribute;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.ui.attribute.adapter.AdapterFactory;
@@ -286,12 +288,15 @@ public class SelectionBar extends Layout implements SelectionListener {
 			node = node.getParentNode();
 		}
 
+		removeNodeListenerFromAllNodes();
 		int elementCounter = 0;
-		while (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
+		while (node != null 
+				&& (node.getNodeType() == Node.ELEMENT_NODE || node.getNodeType() == Node.COMMENT_NODE)) {
+			addNodeListenerTo(node);
+
 			ToolItem item = null;
 			if (selBar.getItemCount() > elementCounter) {
-				item = selBar.getItem(selBar.getItemCount() - elementCounter
-						- 1);
+				item = selBar.getItem(selBar.getItemCount() - 1 - elementCounter);
 				item.setData(node);
 			} else {
 				item = new ToolItem(selBar, SWT.FLAT, 0);
@@ -303,12 +308,49 @@ public class SelectionBar extends Layout implements SelectionListener {
 			elementCounter++;
 			node = node.getParentNode();
 		}
+		if (node != null && node.getNodeType() == Node.DOCUMENT_NODE) {
+			addNodeListenerTo(node);
+		}
 
 		itemCount = elementCounter;
 		cmpToolBar.layout();
 		// bug was fixed when toolbar are not shown for resizeble components
 		cmpToolBar.layout();
 		splitter.getParent().layout(true,true);
+	}
+
+    /**
+     * List of nodes that are notifying {@link #nodeListener} when they are
+     * changed. 
+     */
+    private List<INodeNotifier> nodeNotifiers = new ArrayList<INodeNotifier>();
+    /**
+     * Listener for all {@link #nodeNotifiers} 
+     */
+    private NodeListener nodeListener = new NodeListener(this);
+    
+    /**
+     * Adds {@link #nodeListener} to the given {@code node}.
+     * 
+     * @param node the node to that the listener must be added.
+     */
+	private void addNodeListenerTo(Node node) {
+		if (node instanceof INodeNotifier) {
+			INodeNotifier notifier = (INodeNotifier) node;
+			if (notifier.getExistingAdapter(this) == null) {
+				notifier.addAdapter(nodeListener);
+				nodeNotifiers.add(notifier);
+			}
+		}
+	}
+	/**
+	 * Removes {@link #nodeListener} from all nodes associated with this {@code SelectionBar}. 
+	 */
+	private void removeNodeListenerFromAllNodes() {
+		for (INodeNotifier notifier : nodeNotifiers) {
+			notifier.removeAdapter(nodeListener);
+		}
+		nodeNotifiers.clear();
 	}
 
     protected Point computeSize(Composite composite, int wHint, int hHint, boolean flushCache) {
@@ -363,6 +405,8 @@ public class SelectionBar extends Layout implements SelectionListener {
 	}
 
     public void dispose() {
+    	removeNodeListenerFromAllNodes();
+
 		if (!selBar.isDisposed()) {
 			for (int i = 0; i < selBar.getItemCount(); i++) {
 				if (!selBar.getItem(i).isDisposed()) {
@@ -438,4 +482,42 @@ public class SelectionBar extends Layout implements SelectionListener {
 		st.append(" Bar : " + selBar.getBounds().width);
 		return st.toString();
 	}
+}
+
+/**
+ * Listener for nodes that are implementing {@link INodeAdapter}.
+ * Calls {@link SelectionBar#selectionChanged()} every time when these nodes are changed.
+ * <P>
+ * This class is a part of fix of JBIDE-3919: 
+ * Incorrect interaction of block comments with selection bar.
+ * </P>
+ * @author yradtsevich
+ */
+class NodeListener implements INodeAdapter {
+	private SelectionBar selectionBar;
+	
+	public NodeListener(SelectionBar selectionBar) {
+		this.selectionBar = selectionBar;
+	}
+
+	/* (non-javadoc)
+     * The infrastructure calls this method to determine if the adapter is
+     * appropriate for 'type'. Typically, adapters return true based on
+     * identity comparison to 'type', but this is not required, that is, the
+     * decision can be based on complex logic.
+     */
+    public boolean isAdapterForType(Object type) {
+    	return selectionBar == type;
+    }
+
+    /* (non-javadoc)
+     * Sent to adapter when notifier changes. Each notifier is responsible for
+     * defining specific eventTypes, feature changed, etc.
+     *
+     * ISSUE: may be more evolvable if the argument was one big 'notifier
+     * event' instance.
+     */
+    public void notifyChanged(INodeNotifier notifier, int eventType, Object changedFeature, Object oldValue, Object newValue, int pos) {
+   		selectionBar.selectionChanged();
+    }
 }
