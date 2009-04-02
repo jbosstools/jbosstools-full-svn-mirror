@@ -25,6 +25,109 @@
     in a JSF project. </para>
 
 <itemizedlist>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">Seam Dev Tools Reference Guide</emphasis>
+      <ulink url="&seamlink;">(html)</ulink>
+    </para>
+    <para> This guide helps you to understand what Seam is and how to install Seam plug-in into
+      Eclipse. It tells you the necessary steps to start working with Seam Framework and assists in a
+      simple Seam Project creation. Also you will learn how to create and run the CRUD Database
+      Application with Seam as well as find out what Seam Editors Features and Seam Components are. </para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">Visual Web Tools Reference Guide</emphasis>
+      <ulink url="&jsflink;">(html)</ulink> provides general orientation and an overview of JBDS visual web tools functionality 
+    </para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">JBoss Server Manager Reference Guide</emphasis>
+      <ulink url="&aslink;">(html)</ulink>
+    </para>
+    <para> This guide covers the basics of working with the JBoss server manager. You will read how to
+      install runtimes and servers and quickly learn how to configure, start, stop the server and know
+      how deployment and archiving process. You will find out how to manage installed JBoss Servers
+      via JBoss AS Perspective. You will also read how to deploy modules onto the server. </para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">jBPM Tools Reference Guide</emphasis>
+      <ulink url="&jbpmlink;">(html)</ulink>
+    </para>
+    <para>With jBPM Tools Reference Guide we&apos;ll help you to facilitate a cross-product
+      learning and know how you can speed your development using special editors and visual designers.
+      We&apos;ll also guide you through the steps on how to create a simple process and test it
+      within jBPM jPDL perspective.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">Hibernate Tools Reference Guide</emphasis>
+      <ulink url="&hibernatelink;">(html)</ulink>
+    </para>
+    <para>Throughout this guide you will learn how to install and use Hibernate Tools bath via Ant and
+      through Eclipse. We&apos;ll supply you with the information on how to create mapping files,
+      configuration file as well as a file for controlling reverse engineering by using specific
+      wizards that Hibernate tooling provides. Also you will know about Code Generation and
+      peculiarities of work within Hibernate Console Perspective.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">ESB Editor Reference Guide</emphasis>
+      <ulink url="&esblink;">(html)</ulink>
+    </para>
+    <para>This guide provides you with the information on ESB Editor which allows you to develop ESB
+      files.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">JBoss Portal Tools Reference Guide</emphasis>
+      <ulink url="&jbossportallink;">(html)</ulink>
+    </para>
+    <para>The guide gives a detail look at how you can easily build a Portlet Web Application with
+      JBoss Tools and deploy it onto JBoss Portal.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">JBoss WS User Guide</emphasis>
+      <ulink url="&wslink;">(html)</ulink>
+    </para>
+    <para>This guide gives you practical help on JBossWS usage.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">Smooks Tools Reference Guide</emphasis>
+      <ulink url="&wslink;">(html)</ulink>
+    </para>
+    <para>This guide is packed with useful and easy-to-understand information about Jboss Smooks Tools.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">Drools Tools Reference Guide</emphasis>
+      <ulink url="&wslink;">(html)</ulink>
+    </para>
+    <para>The guide help you to discover how to work with JBoss Drools Tools.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">JMX Tools Reference Guide</emphasis>
+      <ulink url="&wslink;">(html)</ulink>
+    </para>
+    <para>With the help of this guide you'll explore the best practices to follow when working with JBoss JMX Tools.</para>
+  </listitem>
+  
   <listitem>
   <para>
     <emphasis role="bold">JSF Tools Tutorial</emphasis>
@@ -52,84 +155,7 @@
   step-by-step show you how to create a simple Struts application in JBoss Developer Studio.</para>
 </listitem>
 
-<listitem>
-  <para>
-    <emphasis role="bold">Seam Dev Tools Reference Guide</emphasis>
-    <ulink url="&seamlink;">(html)</ulink>
-  </para>
-  <para> This guide helps you to understand what Seam is and how to install Seam plug-in into
-    Eclipse. It tells you the necessary steps to start working with Seam Framework and assists in a
-    simple Seam Project creation. Also you will learn how to create and run the CRUD Database
-    Application with Seam as well as find out what Seam Editors Features and Seam Components are. </para>
-   </listitem>
-      
-    <listitem>
-  <para>
-    <emphasis role="bold">Visual Web Tools Reference Guide</emphasis>
-    <ulink url="&jsflink;">(html)</ulink>
-  </para>
-    </listitem>
-      
-    <listitem>
-  <para>
-    <emphasis role="bold">JBoss Server Manager Reference Guide</emphasis>
-    <ulink url="&aslink;">(html)</ulink>
-  </para>
-  <para> This guide covers the basics of working with the JBoss server manager. You will read how to
-    install runtimes and servers and quickly learn how to configure, start, stop the server and know
-    how deployment and archiving process. You will find out how to manage installed JBoss Servers
-    via JBoss AS Perspective. You will also read how to deploy modules onto the server. </para>
-    </listitem>
-      
-    <listitem>
-  <para>
-    <emphasis role="bold">jBPM Tools Reference Guide</emphasis>
-    <ulink url="&jbpmlink;">(html)</ulink>
-  </para>
-  <para>With jBPM Tools Reference Guide we&apos;ll help you to facilitate a cross-product
-    learning and know how you can speed your development using special editors and visual designers.
-    We&apos;ll also guide you through the steps on how to create a simple process and test it
-    within jBPM jPDL perspective.</para>
-    </listitem>
-  
-  <listitem>
-  <para>
-    <emphasis role="bold">Hibernate Tools Reference Guide</emphasis>
-    <ulink url="&hibernatelink;">(html)</ulink>
-  </para>
-  <para>Throughout this guide you will learn how to install and use Hibernate Tools bath via Ant and
-    through Eclipse. We&apos;ll supply you with the information on how to create mapping files,
-    configuration file as well as a file for controlling reverse engineering by using specific
-    wizards that Hibernate tooling provides. Also you will know about Code Generation and
-    peculiarities of work within Hibernate Console Perspective.</para>
-  </listitem>
 
-    <listitem>
-      <para>
-    <emphasis role="bold">ESB Editor Reference Guide</emphasis>
-    <ulink url="&esblink;">(html)</ulink>
-  </para>
-  <para>This guide provides you with the information on ESB Editor which allows you to develop ESB
-  file.</para>
-    </listitem>
-      
-    <listitem>
-  <para>
-    <emphasis role="bold">JBoss Portal Tools Reference Guide</emphasis>
-    <ulink url="&jbossportallink;">(html)</ulink>
-  </para>
-  <para>The guide gives a detail look at how you can easily build a Portlet Web Application with
-  JBoss Tools and deploy it onto JBoss Portal.</para>
-    </listitem>
-      
-    <listitem>
-      <para>
-    <emphasis role="bold">JBoss WS User Guide</emphasis>
-    <ulink url="&wslink;">(html)</ulink>
-  </para>
-  <para>This guide gives you practical help on JBossWS usage.</para>
-    </listitem>
-      
     <listitem> 
   <para>
     <emphasis role="bold">Exadel Studio Migration Guide</emphasis>
