@@ -144,5 +144,15 @@
       </listitem>
     </itemizedlist>
 	<para>The migration process is completed</para>
+    
+    <para>If there&apos;s anything we didn&apos;t cover or you can&apos;t figure
+      out, please feel free to visit our <ulink
+        url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258"
+        >JBoss Developer Studio Users Forum</ulink> or <ulink
+          url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
+          >JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
+      your suggestions and comments.</para>
+  </section>
+    
   </section>
 </chapter>
