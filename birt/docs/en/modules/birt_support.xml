@@ -227,7 +227,7 @@ WHERE COUNTRY = 'USA']]></programlisting>
                         </figure> 
                         
                         
-                        <para>Click on the <emphasis><property>Finish</property></emphasis> button. The Edit Data Set window opens where you can change Data Source, Settings, Parameters and other details for the Data Set created. If switched to the Query page you can check the schemes within this database, you can expand them to see the list of tables with their columns:</para>
+                        <para>Click on the <emphasis><property>Finish</property></emphasis> button. The Edit Data Set window opens where you can change Data Source, Settings, Parameters and other details for the Data Set created. If switched to the Query page you can check the schemas within this database, you can expand them to see the list of tables with their columns:</para>
                         
                         
                         <figure>
