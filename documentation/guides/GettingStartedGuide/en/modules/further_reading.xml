@@ -13,16 +13,7 @@
 
   <title>Further Reading</title>
 
-  <para>
-    <emphasis role="bold">JSF Tools Reference Guide</emphasis>
-    <ulink url="&jsfreflink;">(html)</ulink>
-
-  </para>
-  <para> From this guide you'll discover all peculiarities of work at a JSF project. You&apos;ll
-    learn all shades that cover the process of project creation and take a closer look at the JSF
-    configuration file. Also you&apos;ll get to know managed beans and how to work with them and
-    find out, how to create and register a custom converter, custom validator and referenced beans
-    in a JSF project. </para>
+ 
 
 <itemizedlist>
   
@@ -40,7 +31,7 @@
   <listitem>
     <para>
       <emphasis role="bold">Visual Web Tools Reference Guide</emphasis>
-      <ulink url="&jsflink;">(html)</ulink> provides general orientation and an overview of JBDS visual web tools functionality 
+      <ulink url="&jsflink;">(html)</ulink> provides general orientation and an overview of JBDS visual web tools functionality. This guide discusses the following topics: editors, palette, web properties view, openOn, content assist, RichFaces support.  
     </para>
   </listitem>
   
@@ -83,8 +74,8 @@
       <emphasis role="bold">ESB Editor Reference Guide</emphasis>
       <ulink url="&esblink;">(html)</ulink>
     </para>
-    <para>This guide provides you with the information on ESB Editor which allows you to develop ESB
-      files.</para>
+    <para>This guide provides you with the information on ESB Editor and all necessary wizards for ESB
+      files development.</para>
   </listitem>
   
   <listitem>
@@ -101,7 +92,7 @@
       <emphasis role="bold">JBoss WS User Guide</emphasis>
       <ulink url="&wslink;">(html)</ulink>
     </para>
-    <para>This guide gives you practical help on JBossWS usage.</para>
+    <para>This guide gives you practical help on JBossWS usage. You will learn how to create a web service using JBossWS runtime, find out how to create a web service client from a WSDL document using JBoss WS and also see how to set your development environment.</para>
   </listitem>
   
   <listitem>
@@ -109,7 +100,7 @@
       <emphasis role="bold">Smooks Tools Reference Guide</emphasis>
       <ulink url="&wslink;">(html)</ulink>
     </para>
-    <para>This guide is packed with useful and easy-to-understand information about Jboss Smooks Tools.</para>
+    <para>This guide is packed with useful and easy-to-understand information about graphical, configuration and source editor pages.</para>
   </listitem>
   
   <listitem>
@@ -117,7 +108,7 @@
       <emphasis role="bold">Drools Tools Reference Guide</emphasis>
       <ulink url="&wslink;">(html)</ulink>
     </para>
-    <para>The guide help you to discover how to work with JBoss Drools Tools.</para>
+    <para>The guide help you to discover how to create a new Drools project, use debugging rules and work with different editors.</para>
   </listitem>
   
   <listitem>
@@ -125,7 +116,7 @@
       <emphasis role="bold">JMX Tools Reference Guide</emphasis>
       <ulink url="&wslink;">(html)</ulink>
     </para>
-    <para>With the help of this guide you'll explore the best practices to follow when working with JBoss JMX Tools.</para>
+    <para>With the help of this guide you'll explore the best practices to follow when working with MBean Explorer, MBean Editor, Connections and etc.</para>
   </listitem>
   
   <listitem>
@@ -135,6 +126,18 @@
   </para>
   <para> This tutorial will describe how to deal with classic/old style of JSF development and how
     to create a simple JSF application using the JBoss Developer Studio. </para>
+  </listitem>
+  
+  <listitem> <para>
+    <emphasis role="bold">JSF Tools Reference Guide</emphasis>
+    <ulink url="&jsfreflink;">(html)</ulink>
+    
+  </para>
+    <para> From this guide you'll discover all peculiarities of work at a JSF project. You&apos;ll
+      learn all shades that cover the process of project creation and take a closer look at the JSF
+      configuration file. Also you&apos;ll get to know managed beans and how to work with them and
+      find out, how to create and register a custom converter, custom validator and referenced beans
+      in a JSF project. </para>
   </listitem>
   
   <listitem> <para>
@@ -171,7 +174,6 @@
         url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
         >JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
     your suggestions and comments.</para>
-    </section>
-      
 </itemizedlist>
+
 </chapter>
