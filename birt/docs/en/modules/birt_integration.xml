@@ -557,7 +557,8 @@
         <note><title>Note:</title>
                  <para>If you want to test this feature using PDE Runtime, you need to add osgi.dev=bin to the WebContent/WEB-INF/platform/configuration/config.ini file </para>        
         </note>
-<para>In conclusion, the main goal of this document is to get you know with a full featureset that JBoss BIRT Tools provides. Thus if you have some questions, comments or suggestions on the topic, please fell free to ask in the JBoss Tools Forum. You can also influence on how you want to see JBoss Tools docs in future leaving your vote on our page here.</para>
+        <para>In conclusion, the main goal of this document is to get you know with a full featureset that JBoss BIRT Tools provides. Thus if you have some questions, comments or suggestions on the topic, please fell free to ask in <ulink
+            url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Forum</ulink>. You can also influence on how you want to see JBoss Tools docs in future leaving your vote on our page here.</para>
 
     </section>
 
