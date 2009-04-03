@@ -12,9 +12,6 @@
   </chapterinfo>
 
   <title>Further Reading</title>
-
- 
-
 <itemizedlist>
   
   <listitem>
@@ -98,7 +95,7 @@
   <listitem>
     <para>
       <emphasis role="bold">Smooks Tools Reference Guide</emphasis>
-      <ulink url="&wslink;">(html)</ulink>
+      <ulink url="&smookslink;">(html)</ulink>
     </para>
     <para>This guide is packed with useful and easy-to-understand information about graphical, configuration and source editor pages.</para>
   </listitem>
@@ -106,7 +103,7 @@
   <listitem>
     <para>
       <emphasis role="bold">Drools Tools Reference Guide</emphasis>
-      <ulink url="&wslink;">(html)</ulink>
+      <ulink url="&droolslink;">(html)</ulink>
     </para>
     <para>The guide help you to discover how to create a new Drools project, use debugging rules and work with different editors.</para>
   </listitem>
@@ -114,7 +111,7 @@
   <listitem>
     <para>
       <emphasis role="bold">JMX Tools Reference Guide</emphasis>
-      <ulink url="&wslink;">(html)</ulink>
+      <ulink url="&jmxlink;">(html)</ulink>
     </para>
     <para>With the help of this guide you'll explore the best practices to follow when working with MBean Explorer, MBean Editor, Connections and etc.</para>
   </listitem>
