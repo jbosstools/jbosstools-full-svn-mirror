@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.toolbar;
 
+import java.text.MessageFormat;
+
 import org.eclipse.compare.Splitter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -102,9 +104,9 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 		boolean showToolbar = isShowedToolbar(toolbarContainer.getToolbar());
 
 		// set text to menu item
-		menuItem.setText( (showToolbar ? VpeUIMessages.HIDE : VpeUIMessages.SHOW)
-						+ Constants.WHITE_SPACE
-						+ toolbarContainer.getToolbar().getName() );
+		menuItem.setText(
+				MessageFormat.format((showToolbar ? VpeUIMessages.HIDE_TOOLBAR : VpeUIMessages.SHOW_TOOLBAR),
+						toolbarContainer.getToolbar().getName()));
 
 		// add listener
 		menuItem.addSelectionListener(
@@ -193,10 +195,11 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 			setPreference(toolbarContainer.getToolbar().getId(), 
 					showBar ? SHOW : HIDE);
 			// change text
-			selectedItem.setText((showBar ? VpeUIMessages.HIDE
-					: VpeUIMessages.SHOW)
-					+ Constants.WHITE_SPACE
-					+ toolbarContainer.getToolbar().getName());
+			selectedItem.setText(
+					MessageFormat.format(showBar ? VpeUIMessages.HIDE_TOOLBAR 
+												 : VpeUIMessages.SHOW_TOOLBAR,
+										 toolbarContainer.getToolbar().getName())
+								 );
 			// show or hide toolbar
 			setStateToolbar(toolbarContainer.getParent(), showBar);
 		}

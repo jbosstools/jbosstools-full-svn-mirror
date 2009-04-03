@@ -13,7 +13,6 @@ package org.jboss.tools.vpe.editor.template.expression;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 public abstract class VpeFunction extends VpeOperand {
-	private static final String ERROR_PARAMETER_INCORRECT = VpeUIMessages.INCORRECT_PARAMETER_ERROR;
 	
 	private VpeOperand[] paramertes;
 	
@@ -31,7 +30,7 @@ public abstract class VpeFunction extends VpeOperand {
 
 	VpeOperand getParameter(int index) throws VpeExpressionException {
 		if (paramertes == null || paramertes.length < index) {
-			throw new VpeExpressionException(ERROR_PARAMETER_INCORRECT);
+			throw new VpeExpressionException(VpeUIMessages.INCORRECT_PARAMETER_ERROR);
 		}
 		return paramertes[index];
 	}

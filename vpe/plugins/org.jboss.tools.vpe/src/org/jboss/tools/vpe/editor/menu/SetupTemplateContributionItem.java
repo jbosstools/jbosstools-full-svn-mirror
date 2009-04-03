@@ -80,8 +80,8 @@ public class SetupTemplateContributionItem extends ActionContributionItem {
 					&& elementMapping.getTemplate().getType() == VpeHtmlTemplate.TYPE_ANY) {
 
 				((SetupTemplateAction) getAction()).setText(NLS.bind(
-						VpeUIMessages.SETUP_TEMPLATE_FOR_MENU, element
-								.getNodeName()));
+						VpeUIMessages.SETUP_TEMPLATE_FOR_MENU,
+						element.getNodeName()));
 				((SetupTemplateAction) getAction()).setActionNode(element);
 				((SetupTemplateAction) getAction()).setData(elementMapping
 						.getTemplate().getAnyData());

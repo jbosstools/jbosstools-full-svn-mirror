@@ -197,9 +197,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				.equals(VpePreference.SHOW_INVISIBLE_TAGS.getValue());
 
 		// set text
-		menuItem.setText((showInvisibleTags ? VpeUIMessages.HIDE
-				: VpeUIMessages.SHOW)
-				+ Constants.WHITE_SPACE + VpeUIMessages.NON_VISUAL_TAGS);
+		menuItem.setText(showInvisibleTags ? VpeUIMessages.HIDE_NON_VISUAL_TAGS
+										   : VpeUIMessages.SHOW_NON_VISUAL_TAGS);
 
 		// add listener
 		menuItem.addSelectionListener(new SelectionAdapter() {

@@ -10,6 +10,8 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
+import java.text.MessageFormat;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -159,7 +161,10 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 	}
 
 	private IMessageProvider getDefaultMessage() {
-		final String message = (data.getUri() != null ? ("URI:           " + data.getUri() + "\n") : "") + VpeUIMessages.TAG_NAME + data.getName(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ 
+		final String message = (data.getUri() != null 
+					? (MessageFormat.format(VpeUIMessages.TAG_URI, data.getUri()) + "\n") //$NON-NLS-1$ 
+					: "") //$NON-NLS-1$
+				+ MessageFormat.format(VpeUIMessages.TAG_NAME, data.getName()); 
 		return new Message(message, IMessageProvider.NONE);
 	}
 
@@ -272,8 +277,10 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 				try {
 					xmlDocument.createElement(txtTagForDisplay.getText());
 				} catch (DOMException e) {
-					return new Message(VpeUIMessages.TAG_FOR_DISPLAY + VpeUIMessages.ERROR_MESSAGE_POSTFIX + " (" + //$NON-NLS-1$
-							e.getMessage() + ")." , IMessageProvider.ERROR); //$NON-NLS-1$
+					return new Message(
+							MessageFormat.format(VpeUIMessages.TAG_FOR_DISPLAY_IS_NOT_VALID,
+												e.getMessage()),
+							IMessageProvider.ERROR);
 				}
 			}
 
@@ -291,8 +298,10 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 			try {
 				VpeExpressionBuilder.buildCompletedExpression(txtValue.getText(), true);
 			} catch (VpeExpressionBuilderException e) {
-				return new Message(VpeUIMessages.VALUE + VpeUIMessages.ERROR_MESSAGE_POSTFIX + " (" + //$NON-NLS-1$
-						e.getMessage() + ")." , IMessageProvider.ERROR); //$NON-NLS-1$
+				return new Message(
+						MessageFormat.format(VpeUIMessages.VALUE_IS_NOT_VALID,
+											e.getMessage()),
+						IMessageProvider.ERROR);
 			}
 
 			return null;
