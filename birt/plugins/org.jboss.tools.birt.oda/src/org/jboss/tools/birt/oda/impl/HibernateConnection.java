@@ -20,6 +20,8 @@ import org.jboss.tools.birt.oda.IOdaFactory;
 import org.jboss.tools.birt.oda.Messages;
 import org.osgi.framework.Bundle;
 
+import com.ibm.icu.util.ULocale;
+
 /**
  * Implementation class of IConnection for an ODA runtime driver.
  * 
@@ -123,4 +125,10 @@ public class HibernateConnection implements IConnection {
 		return odaSessionFactory;
 	}
 
+	/* (non-Javadoc)
+     * @see org.eclipse.datatools.connectivity.oda.IConnection#setLocale(com.ibm.icu.util.ULocale)
+     */
+	public void setLocale(ULocale uLocale) throws OdaException {
+		throw new UnsupportedOperationException();
+	}
 }

@@ -377,4 +377,12 @@ public class HibernateResultSet implements IResultSet {
 			throw new OdaException(Messages.HibernateResultSet_Cursor_has_not_been_initialized);
 	}
 
+	public Object getObject(int index) throws OdaException {
+		return getResult(index);
+	}
+
+	public Object getObject(String columnName) throws OdaException {
+		return getObject(findColumn(columnName));
+	}
+
 }

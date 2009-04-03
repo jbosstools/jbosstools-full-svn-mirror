@@ -20,7 +20,7 @@ import org.eclipse.datatools.connectivity.oda.IResultSet;
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
 import org.eclipse.datatools.connectivity.oda.SortSpec;
-import org.jboss.tools.birt.oda.Messages;
+import org.eclipse.datatools.connectivity.oda.spec.QuerySpecification;
 
 /**
  * Implementation class of IQuery for an ODA runtime driver.
@@ -361,6 +361,38 @@ public class HibernateOdaQuery implements IQuery {
 
 	public HibernateConnection getConnection() {
 		return connection;
+	}
+
+	public void cancel() throws OdaException, UnsupportedOperationException {
+		// TODO 
+		throw new UnsupportedOperationException();
+	}
+
+	public String getEffectiveQueryText() {
+		// TODO 
+		return null;
+	}
+
+	public QuerySpecification getSpecification() {
+		// TODO 
+		return null;
+	}
+
+	public void setObject(String parameterName, Object value)
+			throws OdaException {
+		// TODO 
+		throw new UnsupportedOperationException();
+	}
+
+	public void setObject(int parameterId, Object value) throws OdaException {
+		// TODO
+		throw new UnsupportedOperationException();
+	}
+
+	public void setSpecification(QuerySpecification querySpec)
+			throws OdaException, UnsupportedOperationException {
+		// TODO 
+		throw new UnsupportedOperationException();
 	}
 
 }
