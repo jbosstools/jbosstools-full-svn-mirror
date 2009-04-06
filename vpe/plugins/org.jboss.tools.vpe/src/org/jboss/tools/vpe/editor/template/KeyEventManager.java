@@ -227,6 +227,7 @@ public class KeyEventManager implements IKeyEventHandler {
 			return false;
 
 		boolean editable = false;
+		Node visibleSourceNode = null;
 
 		// if selected node is element
 		if (selectedNodeMapping instanceof VpeElementMapping) {
@@ -268,7 +269,7 @@ public class KeyEventManager implements IKeyEventHandler {
 								SelectionUtil
 										.getSourceSelectionRange(getSourceEditor()),
 								delete);
-				
+				visibleSourceNode = nodeData.getSourceNode();
 			}
 			// if template can't give necessary information
 			else {
@@ -281,11 +282,22 @@ public class KeyEventManager implements IKeyEventHandler {
 		}
 		// if node is simple text
 		else {
+			visibleSourceNode = selectedNodeMapping.getSourceNode();
 			editable = true;
 		}
 
 		if (editable) {
 
+			Point range =  SelectionUtil
+			.getSourceSelectionRange(getSourceEditor());
+			
+			if (range.y == 0) {
+				int offset = getEscOffset(visibleSourceNode, range, delete);
+				if (offset != 0)
+					SelectionUtil.setSourceSelection(pageContext, range.x,
+							offset);
+
+			}
 			sourceEditor.getTextViewer().getTextWidget().invokeAction(delete);
 		}
 
@@ -445,5 +457,23 @@ public class KeyEventManager implements IKeyEventHandler {
 			}
 		}
 		return false;
+	}
+	
+	private int getEscOffset(Node visibleNode, Point selectionRange, int delete) {
+
+		int offset = 0;
+		
+		if (delete == ST.DELETE_NEXT) {
+			offset = TextUtil.checkEscToRight(NodesManagingUtil
+					.getSourceText(visibleNode), selectionRange.x
+					- NodesManagingUtil.getStartOffsetNode(visibleNode));
+		} else {
+			offset = TextUtil.checkEscToLeft(NodesManagingUtil
+					.getSourceText(visibleNode), selectionRange.x
+					- NodesManagingUtil.getStartOffsetNode(visibleNode));
+		}
+
+		return offset;
+
 	}
 }

@@ -14,6 +14,7 @@ package org.jboss.tools.vpe.editor.util;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
+import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
@@ -71,8 +72,8 @@ public class NodesManagingUtil {
 	 */
 	public static int getNodeLength(Node node) {
 
-		if ( (node instanceof IDOMAttr)
-				&& (((IDOMAttr) node).getValueSource()!=null) ) {
+		if ((node instanceof IDOMAttr)
+				&& (((IDOMAttr) node).getValueSource() != null)) {
 			return ((IDOMAttr) node).getValueSource().length();
 		} else if (node instanceof IndexedRegion) {
 			return ((IndexedRegion) node).getEndOffset()
@@ -175,6 +176,18 @@ public class NodesManagingUtil {
 
 		return pageContext.getSourceBuilder().getStructuredTextViewer()
 				.getTextWidget().getText(startPosition, endPosition);
+	}
+
+	/**
+	 * 
+	 * @param pageContext
+	 * @param startPosition
+	 * @param endPosition
+	 * @return
+	 */
+	public static String getSourceText(Node node) {
+
+		return ((IDOMNode) node).getSource();
 	}
 
 }
