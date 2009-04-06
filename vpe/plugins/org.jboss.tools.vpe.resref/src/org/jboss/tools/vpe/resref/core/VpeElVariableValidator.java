@@ -59,7 +59,15 @@ public class VpeElVariableValidator extends DefaultWizardDataValidator {
 	 	} else {
 	 		// yradtsevich: JBIDE-3576: EL expression overriding
 	 		// check if there is no another EL reference in the same scope with the same name
-	 		final int selectedScope = ((BaseAddReferenceSupport)support).getSelectedScope(data);
+	 		
+	 		int selectedScope = ((BaseAddReferenceSupport)support).getSelectedScope(data);
+
+	 		/* XXX yradtsevich: BaseAddReferenceSupport.getSelectedScope(...) returns an
+	 		 * incorrect scope if the scope is global. So we need to fix it. */
+	 		if (editingReference.isGlobal()) {
+	 			selectedScope = ResourceReference.GLOBAL_SCOPE;
+	 		}
+
 	 		for (ResourceReference listItemReference : currentReferenceList) {
 				if (editingReference != listItemReference
 						&& listItemReference.getScope() == selectedScope
