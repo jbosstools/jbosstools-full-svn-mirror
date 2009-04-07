@@ -23,6 +23,7 @@ import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Shell;
@@ -146,8 +147,8 @@ public class UIUtils {
 			if (selector.indexOf(splitString) != -1) {
 				throw new InvocationTargetException(
 						new Exception(
-								Messages
-										.getString("UIUtils.SelectorCheckErrorMessage",  //$NON-NLS-1$
+								NLS.bind(Messages
+										.getString("UIUtils.SelectorCheckErrorMessage"),  //$NON-NLS-1$
 												splitString,
 												selector)));
 			}
@@ -276,8 +277,8 @@ public class UIUtils {
 				context);
 		compositeCommand.setResolveDescription(Messages
 				.getString("UIUtils.ConnectAllConnections")); //$NON-NLS-1$
-		disconnectCommand.setResolveDescription(Messages
-				.getString("UIUtils.DisconnectAllConnections", //$NON-NLS-1$
+		disconnectCommand.setResolveDescription(NLS.bind(Messages
+				.getString("UIUtils.DisconnectAllConnections"), //$NON-NLS-1$
 						currentNode.getName()));
 		AbstractStructuredDataModel targetNode = UIUtils.findGraphModel(root,
 				currentNode);
@@ -303,8 +304,8 @@ public class UIUtils {
 				if (tempMap.get(sourceParentNode) == null) {
 					JavaModelConnectionResolveCommand connectParent = new JavaModelConnectionResolveCommand(
 							context);
-					String desc = Messages
-							.getString("UIUtils.ConnectNode", //$NON-NLS-1$
+					String desc = NLS.bind(Messages
+							.getString("UIUtils.ConnectNode"), //$NON-NLS-1$
 									context.getSourceViewerLabelProvider().getText(
 											sourceParent),
 									parentNode.getName());
@@ -350,8 +351,8 @@ public class UIUtils {
 					if (pgm != null && pgm instanceof IConnectableModel) {
 						if (((IConnectableModel) pgm)
 								.getModelTargetConnections().isEmpty()) {
-							String errorMessage = Messages
-									.getString("UIUtils.ParentNodeConnectErrorMessage", //$NON-NLS-1$
+							String errorMessage = NLS.bind(Messages
+									.getString("UIUtils.ParentNodeConnectErrorMessage"), //$NON-NLS-1$
 											javaModel.getName(),
 											parent.getName());
 							DesignTimeAnalyzeResult dr = new DesignTimeAnalyzeResult();
@@ -397,15 +398,15 @@ public class UIUtils {
 					if (instanceClazz == null) {
 						DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
 						result
-								.setErrorMessage(Messages
-										.getString("UIUtils.InstanceLoadedErrorMessage", //$NON-NLS-1$
+								.setErrorMessage(NLS.bind(Messages
+										.getString("UIUtils.InstanceLoadedErrorMessage"), //$NON-NLS-1$
 												((JavaBeanModel) refObj).getName(),
 												instanceName));
 						JavaModelResolveCommand command = new JavaModelResolveCommand(
 								context);
 						command
-								.setResolveDescription(Messages
-										.getString("UIUtils.InstanceLoadedResolveMessage", //$NON-NLS-1$
+								.setResolveDescription(NLS.bind(Messages
+										.getString("UIUtils.InstanceLoadedResolveMessage"), //$NON-NLS-1$
 												instanceName));
 						command.setInstanceName(instanceName);
 						command.setJavaBean((JavaBeanModel) refObj);
@@ -415,8 +416,8 @@ public class UIUtils {
 					if (instanceClazz != null && instanceClazz.isInterface()) {
 						DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
 						result
-								.setErrorMessage(Messages
-										.getString("UIUtils.JavaModelLoadedErrorMessage", //$NON-NLS-1$
+								.setErrorMessage(NLS.bind(Messages
+										.getString("UIUtils.JavaModelLoadedErrorMessage"), //$NON-NLS-1$
 												((JavaBeanModel) refObj).getName(),
 												instanceName));
 						if (List.class.isAssignableFrom(instanceClazz)) {

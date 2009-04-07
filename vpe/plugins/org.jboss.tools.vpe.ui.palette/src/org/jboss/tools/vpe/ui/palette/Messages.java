@@ -10,25 +10,30 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.ui.palette;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.lang.reflect.Field;
 
+/**
+ * @deprecated use the fields of PaletteUIMessages instead
+ */
 public class Messages {
-	private static final String BUNDLE_NAME = "org.jboss.tools.vpe.ui.palette.messages"; //$NON-NLS-1$
-
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-			.getBundle(BUNDLE_NAME);
-
 	private Messages() {
 	}
-
-	public static String getString(String key) {
-		// TODO Auto-generated method stub
+	
+    /**
+	 * Gets a resource string by field name. This is useful when the field name
+	 * is constructed ad hoc.
+	 * 
+	 * @param fieldName
+	 * @return
+	 */
+	public static String getString(String fieldName) {
+		Class c = PaletteUIMessages.class;
 		try {
-			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
+			Field field = c.getDeclaredField(fieldName);
+			return (String) field.get(null);
+		} catch (Exception e) {
 			PalettePlugin.getPluginLog().logError(e);
-			return '!' + key + '!';
+			return "!" + fieldName + "!"; //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 }

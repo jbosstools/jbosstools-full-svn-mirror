@@ -10,6 +10,8 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.ui.palette;
 
+import java.util.ResourceBundle;
+
 import org.eclipse.osgi.util.NLS;
 
 
@@ -25,4 +27,15 @@ public class PaletteUIMessages extends NLS {
 	public static String SHOW_HIDE;
 	public static String IMPORT_TLD;
 	public static String IMPORT;
+	
+	private PaletteUIMessages() {
+	}
+	
+	/**
+	 * @deprecated use the fields of PaletteUIMessages instead
+	 */
+	static final ResourceBundle getBundle() {
+		return ResourceBundle.getBundle(BUNDLE_NAME);
+	}
+
 }
