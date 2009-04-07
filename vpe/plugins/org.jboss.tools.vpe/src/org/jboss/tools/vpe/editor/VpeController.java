@@ -10,8 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor;
 
-import java.io.File;
-import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -346,6 +344,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		//initialization of vpe update delay time
 		vpeUpdateDelayTime = 400;
 		// pageContext.fireTaglibsChanged();
+
+		// yradtsevich: we have to refresh VPE selection on init (fix of JBIDE-4037)
+		sourceSelectionChanged(true);
 	}
 
 	public void dispose() {
@@ -1986,27 +1987,22 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					.getInnerDropInfo(event);
 			if (visualDropInfo.getDropContainer() != null) {
 				if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
-					System.out
-							.print("  x: " + visualDropInfo.getMouseX() + "  y: " + visualDropInfo.getMouseY() + //$NON-NLS-1$ //$NON-NLS-2$
-									"  container: "
-									+ visualDropInfo.getDropContainer()
-											.getNodeName()
-									+ //$NON-NLS-1$
-									"("
-									+ visualDropInfo.getDropContainer()
-									+ ")" + //$NON-NLS-1$ //$NON-NLS-2$
-									"  parent: "
-									+ visualDropInfo.getDropContainer()
-											.getParentNode().getNodeName()
-									+ //$NON-NLS-1$
-									"("
-									+ visualDropInfo.getDropContainer()
-											.getParentNode() + ")" + //$NON-NLS-1$ //$NON-NLS-2$
-									"  offset: "
-									+ visualDropInfo.getDropOffset()); //$NON-NLS-1$
+					System.out.print("  x: " + visualDropInfo.getMouseX() 
+							+ "  y: "			//$NON-NLS-1$
+							+ visualDropInfo.getMouseY() 
+							+ "  container: " 	//$NON-NLS-1$
+							+ visualDropInfo.getDropContainer().getNodeName()
+							+ "(" 				//$NON-NLS-1$
+							+ visualDropInfo.getDropContainer() 
+							+ ")  parent: " 	//$NON-NLS-1$
+							+ visualDropInfo.getDropContainer().getParentNode().getNodeName()
+							+ "("				//$NON-NLS-1$
+							+ visualDropInfo.getDropContainer().getParentNode()
+							+ ")  offset: " 	//$NON-NLS-1$
+							+ visualDropInfo.getDropOffset());
 				}
-				VpeSourceInnerDragInfo sourceInnerDragInfo = visualBuilder
-						.getSourceInnerDragInfo(innerDragInfo);
+				VpeSourceInnerDragInfo sourceInnerDragInfo = 
+					visualBuilder.getSourceInnerDragInfo(innerDragInfo);
 				VpeSourceInnerDropInfo sourceDropInfo = visualBuilder
 						.getSourceInnerDropInfo(sourceInnerDragInfo.getNode(),
 								visualDropInfo, true);
@@ -2493,15 +2489,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				toolbarFormatControllerManager.selectionChanged();
 		}
 
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
 		try {
 			
 			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-				System.out
-						.println(">>>>>>>>>>>>>> selectionChanged  " + event.getSource()); //$NON-NLS-1$
+				System.out.println(">>>>>>>>>>>>>> selectionChanged  " + event.getSource()); //$NON-NLS-1$
 			}
 			sourceSelectionChanged();
 		} finally {
@@ -2510,8 +2504,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	// nsIClipboardDragDropHooks implementation
-	public void onPasteOrDrop(nsIDOMMouseEvent mouseEvent, String flavor,
-			String data) {
+	public void onPasteOrDrop(nsIDOMMouseEvent mouseEvent, String flavor, String data) {
 		onHideTooltip();
 
 		VpeVisualInnerDropInfo visualDropInfo = selectionBuilder
@@ -2537,8 +2530,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 		if (visualDropInfo.getDropContainer() != null) {
 			if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
-				System.out
-						.println("  drop!  container: " + visualDropInfo.getDropContainer().getNodeName()); //$NON-NLS-1$
+				System.out.println("  drop!  container: " + visualDropInfo.getDropContainer().getNodeName()); //$NON-NLS-1$
 			}
 			final String finalFlavor = flavor;
 			final String finalData = data;
