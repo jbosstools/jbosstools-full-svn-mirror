@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<chapter id="birt_reports_deployment" xreflabel="birt_reports_deployment">
+
+    <?dbhtml filename="birt_reports_deployment"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss</keyword>
+            <keyword>BIRT</keyword>
+            <keyword>Seam</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>BIRT Reports Deployment</title>
+
+    <para>When everything is configured correctly you will be able to view/render the designed
+        reports in your Seam (or any other) Web application.</para>
+
+    <para>You can deploy a report by adding an action button to the Seam&apos;s CRUD <emphasis>
+            <property>.xhtml</property>
+        </emphasis> file.</para>
+
+    <figure>
+        <title>Adding Action Button to the Seam file</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/birt_reports_deployment/addingActionButton.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>As you can see on the figure you should have the <emphasis>
+            <property>testHibernateOda.xhtml</property>
+        </emphasis> file. It&apos;s content should be the following:</para>
+
+    <programlisting role="XHTML"><![CDATA[<p:birt xmlns:ui="http://java.sun.com/jsf/facelets"
+            xmlns:s="http://jboss.com/products/seam/taglib"
+            xmlns:p="http://jboss.com/products/seam/birt"
+            designType="run"
+            format="pdf"
+            designName="testHibernateOda.rptdesign"
+            title="JBoss Birt Test">
+      
+</p:birt>
+]]></programlisting>
+
+    <para>Next run the Seam page with embedded report on the server by right-clicking the file and
+        going to <emphasis>
+            <property>Run &gt; Run on Server</property>.</emphasis></para>
+
+    <figure>
+        <title>Opening Employees.xhtml Page</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/birt_reports_deployment/openingArticlesPage.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>After clicking the <emphasis>
+            <property>BIRT PDF Report</property>
+        </emphasis> button, you should see the following report:</para>
+
+    <figure>
+        <title>Birt PDF Report</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/birt_reports_deployment/BirtPDFReport.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>Thus, a Seam project that includes the BIRT facet can be deployed as any project. If you
+        define the Hibernate ODA driver, the JBoss BIRT engine will use JNDI URL that has to be bind
+        to either Hibernate Session Factory or Hibernate Entity Manager Factory. If you
+        don&apos;t specify the JNDI URL property, our engine will try the following JNDI
+        URLs:</para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                <emphasis>java:/&lt;project_name&gt;</emphasis>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <emphasis>java:/&lt;project_name&gt;EntityManagerFactory</emphasis>
+            </para>
+        </listitem>
+    </itemizedlist>
+
+    <para>When creating a Seam EAR project, Hibernate Entity Manager Factory is bound to
+            <emphasis>java:/{projectName}EntityManagerFactory</emphasis>. All you need to do is
+        using the Hibernate Configuration created automatically. You can use default values for the
+        Hibernate Configuration and JNDI URL within the BIRT Hibernate Data Source.</para>
+
+    <para>When using a Seam WAR project, neither HSF nor HEMF aren&apos;t binded to JNDI by
+        default. You has to do this manually. For instance, HSF can be bound to JNDI by adding the
+        following property to the <emphasis>
+            <property>persistence.xml</property></emphasis> file:</para>
+
+    <programlisting role="XHTML"><![CDATA[<property name="hibernate.session_factory_name" value="java:/projectname"/>
+    ]]></programlisting>
+
+    <para>And you can use <emphasis>java:/projectname</emphasis> as the JNDI URL property when creating a BIRT
+        Hibernate Data Source.</para>
+
+    <note>
+        <title>Note:</title>
+        <para>If you want to test this feature using PDE Runtime, you need to add <emphasis>
+                <property>osgi.dev=bin</property>
+            </emphasis> to the <emphasis>
+                <property>WebContent/WEB-INF/platform/configuration/config.ini</property>
+            </emphasis> file.</para>
+    </note>
+    <para>In conclusion, the main goal of this document is to get you know with a full featureset
+        that <property>JBoss BIRT Tools</property> provide. Thus if you have some questions,
+        comments or suggestions on the topic, please feel free to ask in the <ulink
+            url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss
+            Tools Forum</ulink>. You can also influence on how you want to see JBoss Tools docs in
+        future leaving your vote on our page <ulink
+            url="http://www.jboss.org/community/docs/DOC-10795">here</ulink>.</para>
+
+</chapter>

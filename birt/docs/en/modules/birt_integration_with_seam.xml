@@ -1,0 +1,360 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<chapter id="birt_integration_with_seam" xreflabel="birt_integration_with_seam">
+
+    <?dbhtml filename="birt_integration_with_seam.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss</keyword>
+            <keyword>BIRT</keyword>
+            <keyword>Seam</keyword>
+        </keywordset>
+    </chapterinfo>
+    <title>Adding BIRT Functionality to Standard Seam Web Project</title>
+
+    <para>In this chapter you&apos;ll know how to create a Seam web project with BIRT
+        capabilities included.</para>
+
+    <para>You are supposed to have Seam runtime and JBoss Application Server downloaded and
+        extracted somewhere on you hard drive.</para>
+
+    <tip>
+        <title>Tip:</title>
+        <para><ulink
+                url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777"
+                >JBoss Seam 2.0.1 GA</ulink> and <ulink
+                url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777"
+                >JBoss Application Server 4.2.2 GA</ulink> are required.</para>
+    </tip>
+
+    <section id="creatin_project_with_birt">
+        <title>Creating Seam Web Project with Birt Facet</title>
+
+        <para>First, open <property>Seam perspective</property> by going to <emphasis>
+                <property>Window &gt; Open Perspective &gt; Other &gt; Seam</property>.
+            </emphasis> To create a new Seam Web project follow to <emphasis>
+                <property>File &gt; New &gt; Seam Web Project</property>
+            </emphasis> (or <emphasis>
+                <property>File &gt; New &gt; Other &gt; Seam &gt; Seam Web
+                    Project</property>
+            </emphasis> if you are not in the <property>Seam perspective</property>).</para>
+
+        <para>On the first wizard page enter the project name, then specify the target runtime and
+            target server. In the <emphasis>
+                <property>Configuration</property>
+            </emphasis> section click <emphasis>
+                <property>Modify</property>
+            </emphasis> to configure the project facets.</para>
+
+        <figure>
+            <title>Creating Seam Web Project</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/birt_integration_with_seam/testBirtProject.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Choose the 2.0 version of the <emphasis>
+                <property>Seam</property>
+            </emphasis> facet and enable the <emphasis>
+                <property>Birt Reporting Runtime Component</property>
+            </emphasis> facet.</para>
+
+        <figure>
+            <title>Adding the Birt Reporting Runtime Component Facet </title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/birt_integration_with_seam/addingBirtFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Or you can just choose the <emphasis>
+                <property>JBoss BIRT Integration Web Project</property>
+            </emphasis> configuration.</para>
+
+        <figure>
+            <title>Choosing the JBoss BIRT Integration Web Project Configuration</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata
+                        fileref="images/birt_integration_with_seam/projectBirtConfiguration.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Next three pages are filled out with defaults, just leave them through by pressing <emphasis>
+                <property>Next</property>.</emphasis> On the <emphasis>
+                <property>Seam Facet</property>
+            </emphasis> page you should specify the Seam runtime and Connection profile.</para>
+
+        <figure>
+            <title>Configuring the Seam Facet settings</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/birt_integration_with_seam/seamFacet.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Hit <emphasis>
+                <property>Finish</property>
+            </emphasis> to create the project with Birt functionality enabled.</para>
+    </section>
+
+    <section id="integration">
+        <title>Integration with Seam</title>
+
+        <para>The JBoss BIRT Integration feature contains the BIRT tag that allows the user to add a
+            BIRT report to an <emphasis>
+                <property>.xhtml</property>
+            </emphasis> file:</para>
+
+        <programlisting role="XHTML"><![CDATA[<p:birt xmlns:ui="http://java.sun.com/jsf/facelets" 
+            xmlns:s="http://jboss.com/products/seam/taglib" 
+            xmlns:p="http://jboss.com/products/seam/birt" 
+            designType="run" 
+            format="pdf" 
+            designName="test.rptdesign" 
+            title="JBoss Birt Test">
+        
+</p:birt>]]></programlisting>
+
+        <para>Let&apos;s look how it works.</para>
+        <para>Create in the <emphasis>
+                <property>Web Content</property>
+            </emphasis> folder three <emphasis>
+                <property>.xhtml</property>
+            </emphasis> pages with the following content:</para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis>
+                        <property>birttests.xhtml</property>:</emphasis>
+                </para>
+                <programlisting role="XHTML"><![CDATA[<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                                                            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+    <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                                  xmlns:s="http://jboss.com/products/seam/taglib"
+                                  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+                                  xmlns:h="http://java.sun.com/jsf/html" 
+                                  xmlns:rich="http://richfaces.org/rich" 
+                                  template="layout/template.xhtml">
+            
+        <ui:define name="body">  
+                <h:messages globalOnly="true" styleClass="message"/> 
+                        <rich:panel> 
+                            <f:facet name="header">Welcome to JBoss BIRT!</f:facet> 
+                            <ul>
+                                    <li><s:link view="/testbirt.xhtml" value="Test Birt" /></li>  
+                                    <li><s:link view="/testbirt1.xhtml" value="Test Birt 1" /></li>  
+                            </ul>
+                        </rich:panel> 
+        </ui:define>
+    </ui:composition>]]></programlisting>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis>
+                        <property>testbirt.xhtml</property>:</emphasis>
+                </para>
+                <programlisting role="XHTML"><![CDATA[<p:birt xmlns:ui="http://java.sun.com/jsf/facelets" 
+                    xmlns:s="http://jboss.com/products/seam/taglib" 
+                    xmlns:p="http://jboss.com/products/seam/birt" 
+                    designType="run" 
+                    format="pdf" 
+                    designName="test.rptdesign" 
+                    title="JBoss Birt Test">
+                        
+                        <p:param name="sample" value="sample param"/>
+</p:birt>]]></programlisting>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis>
+                        <property>testbirt1.xhtml</property>:</emphasis>
+                </para>
+                <programlisting role="XHTML"><![CDATA[<p:birt xmlns:ui="http://java.sun.com/jsf/facelets"
+                    xmlns:s="http://jboss.com/products/seam/taglib"
+                    xmlns:p="http://jboss.com/products/seam/birt"
+                    designType="frameset"
+                    designName="test1.rptdesign"
+                    title="JBoss Birt Test"> 
+</p:birt>]]></programlisting>
+            </listitem>
+        </itemizedlist>
+
+        <para>Now start the application server by clicking the <emphasis>
+                <property>Start</property>
+            </emphasis> option in the context menu of the server in the <property>JBoss Server
+                View</property> (if the view isn&apos;t open go to <emphasis>
+                <property>Window &gt; Show View &gt; Other &gt; JBoss Server
+                    View</property>)</emphasis>. Try the tests out by accessing <emphasis>
+                <property>http://localhost:8080/hellobirt/birttests.seam</property>
+            </emphasis> in your web browser.</para>
+
+        <figure>
+            <title>Welcome Page in the Browser</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/birt_integration_with_seam/birttestsPage.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Now if you click <emphasis>
+                <property>Test Birt</property>
+            </emphasis> you should see the following <emphasis>
+                <property>.pdf</property>
+            </emphasis> file:</para>
+
+        <figure>
+            <title>After Clicking Test Birt</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/birt_integration_with_seam/testbirtPage.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>After clicking <emphasis>
+                <property>Test Birt 1</property>
+            </emphasis> the next page is displayed:</para>
+
+        <figure>
+            <title>After Clicking Test Birt 1</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/birt_integration_with_seam/testbirt1Page1.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Put the <emphasis>
+                <property>test param</property>
+            </emphasis> as Sample Parameter value, specify the maximum possible Customer Number as
+            <emphasis>
+                <property>1001</property>,</emphasis> for instance, and then press <emphasis>
+                <property>Ok</property>.</emphasis> You&apos;ll see the following BIRT
+            report:</para>
+
+        <figure>
+            <title>BIRT Report in the Browser Window</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/birt_integration_with_seam/testbirt1Page2.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>The BIRT tag recognizes most of the parameters described on <ulink
+                url="http://www.eclipse.org/birt/phoenix/deploy/viewerUsage2.2.php#parameters">the
+                BIRT Report Viewer Parameters page</ulink>. The attributes of the BIRT tag
+            don&apos;t contain the <emphasis>
+                <property>&quot;__&quot;</property>
+            </emphasis> prefix.</para>
+
+        <para>The <emphasis>
+                <property>param</property>
+            </emphasis> tag describes report parameters (see the listing for the <emphasis>
+                <property>testbirt.xhtml</property>
+            </emphasis> above). It supports the following attributes: </para>
+        <itemizedlist>
+            <listitem>
+                <para><emphasis>
+                        <property>name</property>
+                    </emphasis> - the parameter name (required)</para>
+            </listitem>
+            <listitem>
+                <para><emphasis>
+                        <property>value</property>
+                    </emphasis> - the parameter value (required)</para>
+            </listitem>
+            <listitem>
+                <para><emphasis>
+                        <property>isnull</property>
+                    </emphasis> - specifies that a report parameter has a null value
+                    (optional)</para>
+            </listitem>
+            <listitem>
+                <para><emphasis>
+                        <property>islocale</property>
+                    </emphasis> - specifies whether the parameter is localized (optional)</para>
+            </listitem>
+        </itemizedlist>
+
+        <para>These tags are defined in the <emphasis>
+                <property>org.jboss.birt.core/resources/jboss-seam-birt.jar</property>
+            </emphasis> library that contains source. </para>
+
+        <!--para>It is also possible to embed a BIRT report in some Seam <emphasis>
+                <property>.xhtml</property>
+            </emphasis> page. See how it may be done:</para>
+        <para/>
+
+        <para>
+            <emphasis role="bold">Example:</emphasis>
+        </para>
+        <programlisting role="XHTML"><![CDATA[<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                                                        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+		                 xmlns:s="http://jboss.com/products/seam/taglib" 
+		                 xmlns:ui="http://java.sun.com/jsf/facelets" 
+		                 xmlns:f="http://java.sun.com/jsf/core" 
+		                 xmlns:h="http://java.sun.com/jsf/html" 
+		                 xmlns:rich="http://richfaces.org/rich" 
+		                 xmlns:b="http://jboss.com/products/seam/birt" 
+		                 template="layout/template.xhtml">
+        <ui:define name="body">
+                <h:messages globalOnly="true" styleClass="message" id="globalMessages"/>
+                     <rich:panel>
+                         <f:facet name="header">Products</f:facet>
+                         <b:birt designType="embed" designName="ProductCatalog.rptdesign" 
+                                         embeddable="true" masterpage="false"/>
+                             <div style="clear:both"/>
+                     </rich:panel>
+                     <div class="actionButtons">
+                         <s:button view="/ProductsEdit.xhtml" id="edit" value="Edit"/>
+                         <s:button view="/BirtProductsPdf.xhtml" 
+                                             id="BirtProductPdf" value="Product Catalog - PDF"/>
+                         <s:button view="/BirtProductsFrameset.xhtml" 
+                                             id="BirtProductFrameset" value="Product Catalog - Frameset"/>
+                         <s:button view="/BirtProductsEmbedded.xhtml" 
+                                             id="BirtProductEmbedded" value="Product Catalog - Embedded"/>
+                         <s:button view="/TopSellingProducts.xhtml" 
+                                             id="TopSellingProducts" value="Top Selling Products"/>
+                         <s:button view="/#{empty productsFrom ? 'ProductsList' : productsFrom}.xhtml" 
+                                             id="done" value="Done"/>
+                     </div>
+        </ui:define>
+    </ui:composition>]]></programlisting>
+
+        <figure>
+            <title>Embedding BIRT Report in Seam xhtml Page. First Page</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtIntegration/BirtReportInSeamPage1.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <figure>
+            <title>Embedding BIRT Report in Seam xhtml Page. Second Page</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtIntegration/BirtReportInSeamPage2.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <figure>
+            <title>Embedding BIRT Report in Seam xhtml Page. Third Page</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/BirtIntegration/BirtReportInSeamPage3.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure-->
+    </section>
+</chapter>
