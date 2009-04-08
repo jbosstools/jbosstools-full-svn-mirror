@@ -4,19 +4,17 @@
 
 [
 <!ENTITY introduction SYSTEM "modules/introduction.xml">
-<!ENTITY birt_support SYSTEM "modules/birt_support.xml">
-<!ENTITY birt_designer SYSTEM "modules/birt_designer.xml">
-<!ENTITY birt_integration SYSTEM "modules/birt_integration.xml">
-
-                    
-
+<!ENTITY birt_integration_with_seam SYSTEM "modules/birt_integration_with_seam.xml">
+<!ENTITY hibernate_datasource SYSTEM "modules/hibernate_datasource.xml">      
+<!ENTITY birt_reports_deployment SYSTEM "modules/birt_reports_deployment.xml">           
 ]>
+
 <book>
     <bookinfo>
-        <title>Birt Plugin Reference Guide</title>
+        <title>Birt Plugin Integration Reference Guide</title>
 
         <author><firstname>Anastasiya</firstname><surname>Bogachuk</surname><email>abogachuk@exadel.com</email></author> 
-  
+        <author><firstname>Olga</firstname><surname>Chikvina</surname></author> 
         
         <pubdate>August 2008</pubdate>
         <copyright>
@@ -39,12 +37,10 @@
     
     </bookinfo>
  <toc/> 
-
-  
-    &introduction;
-    &birt_support;
-    &birt_designer;
-    &birt_integration;	
     
+    &introduction;
+    &birt_integration_with_seam;
+    &hibernate_datasource;
+    &birt_reports_deployment;
 
 </book>    
