@@ -147,8 +147,7 @@ public class UIUtils {
 			if (selector.indexOf(splitString) != -1) {
 				throw new InvocationTargetException(
 						new Exception(
-								NLS.bind(Messages
-										.getString("UIUtils.SelectorCheckErrorMessage"),  //$NON-NLS-1$
+								NLS.bind(Messages.UIUtils_SelectorCheckErrorMessage,  //$NON-NLS-1$
 												splitString,
 												selector)));
 			}
@@ -275,10 +274,8 @@ public class UIUtils {
 				context);
 		CompositeResolveCommand compositeCommand = new CompositeResolveCommand(
 				context);
-		compositeCommand.setResolveDescription(Messages
-				.getString("UIUtils.ConnectAllConnections")); //$NON-NLS-1$
-		disconnectCommand.setResolveDescription(NLS.bind(Messages
-				.getString("UIUtils.DisconnectAllConnections"), //$NON-NLS-1$
+		compositeCommand.setResolveDescription(Messages.UIUtils_ConnectAllConnections); //$NON-NLS-1$
+		disconnectCommand.setResolveDescription(NLS.bind(Messages.UIUtils_DisconnectAllConnections, //$NON-NLS-1$
 						currentNode.getName()));
 		AbstractStructuredDataModel targetNode = UIUtils.findGraphModel(root,
 				currentNode);
@@ -304,8 +301,7 @@ public class UIUtils {
 				if (tempMap.get(sourceParentNode) == null) {
 					JavaModelConnectionResolveCommand connectParent = new JavaModelConnectionResolveCommand(
 							context);
-					String desc = NLS.bind(Messages
-							.getString("UIUtils.ConnectNode"), //$NON-NLS-1$
+					String desc = NLS.bind(Messages.UIUtils_ConnectNode, //$NON-NLS-1$
 									context.getSourceViewerLabelProvider().getText(
 											sourceParent),
 									parentNode.getName());
@@ -351,8 +347,7 @@ public class UIUtils {
 					if (pgm != null && pgm instanceof IConnectableModel) {
 						if (((IConnectableModel) pgm)
 								.getModelTargetConnections().isEmpty()) {
-							String errorMessage = NLS.bind(Messages
-									.getString("UIUtils.ParentNodeConnectErrorMessage"), //$NON-NLS-1$
+							String errorMessage = NLS.bind(Messages.UIUtils_ParentNodeConnectErrorMessage, //$NON-NLS-1$
 											javaModel.getName(),
 											parent.getName());
 							DesignTimeAnalyzeResult dr = new DesignTimeAnalyzeResult();
@@ -398,15 +393,13 @@ public class UIUtils {
 					if (instanceClazz == null) {
 						DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
 						result
-								.setErrorMessage(NLS.bind(Messages
-										.getString("UIUtils.InstanceLoadedErrorMessage"), //$NON-NLS-1$
+								.setErrorMessage(NLS.bind(Messages.UIUtils_InstanceLoadedErrorMessage, //$NON-NLS-1$
 												((JavaBeanModel) refObj).getName(),
 												instanceName));
 						JavaModelResolveCommand command = new JavaModelResolveCommand(
 								context);
 						command
-								.setResolveDescription(NLS.bind(Messages
-										.getString("UIUtils.InstanceLoadedResolveMessage"), //$NON-NLS-1$
+								.setResolveDescription(NLS.bind(Messages.UIUtils_InstanceLoadedResolveMessage, //$NON-NLS-1$
 												instanceName));
 						command.setInstanceName(instanceName);
 						command.setJavaBean((JavaBeanModel) refObj);
@@ -416,19 +409,16 @@ public class UIUtils {
 					if (instanceClazz != null && instanceClazz.isInterface()) {
 						DesignTimeAnalyzeResult result = new DesignTimeAnalyzeResult();
 						result
-								.setErrorMessage(NLS.bind(Messages
-										.getString("UIUtils.JavaModelLoadedErrorMessage"), //$NON-NLS-1$
+								.setErrorMessage(NLS.bind(Messages.UIUtils_JavaModelLoadedErrorMessage, //$NON-NLS-1$
 												((JavaBeanModel) refObj).getName(),
 												instanceName));
 						if (List.class.isAssignableFrom(instanceClazz)) {
 							JavaModelResolveCommand command = new JavaModelResolveCommand(
 									context);
 							command
-									.setResolveDescription(Messages
-											.getString("UIUtils.InstanceClassResolveMessage1")); //$NON-NLS-1$
+									.setResolveDescription(Messages.UIUtils_InstanceClassResolveMessage1); //$NON-NLS-1$
 							command
-									.setInstanceName(Messages
-											.getString("UIUtils.InstanceClassResolveMessage2")); //$NON-NLS-1$
+									.setInstanceName(Messages.UIUtils_InstanceClassResolveMessage2); //$NON-NLS-1$
 							command.setJavaBean((JavaBeanModel) refObj);
 							result.addResolveCommand(command);
 						}

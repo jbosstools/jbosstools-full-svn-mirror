@@ -24,6 +24,7 @@ import org.dom4j.DocumentException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.smooks.analyzer.ISourceModelAnalyzer;
 import org.jboss.tools.smooks.analyzer.ITargetModelAnalyzer;
 import org.jboss.tools.smooks.graphical.GraphInformations;
@@ -49,9 +50,9 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 
 	public static final String WORKSPACE_PRIX = "Workspace:/"; //$NON-NLS-1$
 
-	public static final String RESOURCE = "Resource:/";
+	public static final String RESOURCE = "Resource:/"; //$NON-NLS-1$
 
-	public static final String XSL_NAMESPACE = " xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" ";
+	public static final String XSL_NAMESPACE = " xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" "; //$NON-NLS-1$
 
 	private String parmaKey = ""; //$NON-NLS-1$
 
@@ -77,14 +78,12 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 				} else {
 					throw new InvocationTargetException(
 							new Exception(
-									Messages
-											.getString("AbstractXMLModelAnalyzer.FileDosentExistErrorMessage1") + path + Messages.getString("AbstractXMLModelAnalyzer.FileDosentExistErrorMessage2"))); //$NON-NLS-1$ //$NON-NLS-2$
+									NLS.bind(Messages.AbstractXMLModelAnalyzer_FileDosentExistErrorMessage, path))); 
 				}
 			} else {
 				throw new InvocationTargetException(
 						new Exception(
-								Messages
-										.getString("AbstractXMLModelAnalyzer.IllegalPathErrorMessage1") + path + ".")); //$NON-NLS-1$ //$NON-NLS-2$
+								NLS.bind(Messages.AbstractXMLModelAnalyzer_IllegalPathErrorMessage, path)));
 			}
 		}
 		return path;
@@ -134,9 +133,9 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 		} else {
 			String sid = graphInfo.getMappingType().getSourceTypeID();
 			String tid = graphInfo.getMappingType().getTargetTypeID();
-			if (sid.equals("org.jboss.tools.smooks.xml.viewerInitor.xml")
+			if (sid.equals("org.jboss.tools.smooks.xml.viewerInitor.xml") //$NON-NLS-1$
 					&& tid
-							.equals("org.jboss.tools.smooks.xml.viewerInitor.xml")) {
+							.equals("org.jboss.tools.smooks.xml.viewerInitor.xml")) { //$NON-NLS-1$
 				List list = listType.getAbstractResourceConfig();
 				for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 					AbstractResourceConfig re = (AbstractResourceConfig) iterator
@@ -145,7 +144,7 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 						ResourceConfigType config = (ResourceConfigType) re;
 						ResourceType resource = config.getResource();
 						if (resource != null) {
-							if ("xsl".equals(resource.getType())) {
+							if ("xsl".equals(resource.getType())) { //$NON-NLS-1$
 								String cdata = resource.getCDATAValue();
 								if (cdata != null) {
 									cdata = processXSLFragmentString(cdata);
@@ -157,8 +156,8 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 																cdata
 																		.getBytes()),
 														new String[] {
-																"value-of",
-																"null_xsl" });
+																"value-of", //$NON-NLS-1$
+																"null_xsl" }); //$NON-NLS-1$
 										if (tag != null) {
 											if (viewer instanceof PropertyChangeListener) {
 												document
@@ -189,15 +188,15 @@ public class AbstractXMLModelAnalyzer implements ISourceModelAnalyzer,
 
 	private String processXSLFragmentString(String cdata) {
 		// cdata = cdata.replaceAll(":", "-");
-		int start_index = cdata.indexOf("<");
-		int end_index = cdata.indexOf("/>");
+		int start_index = cdata.indexOf("<"); //$NON-NLS-1$
+		int end_index = cdata.indexOf("/>"); //$NON-NLS-1$
 		if (end_index == -1) {
-			end_index = cdata.indexOf(">");
+			end_index = cdata.indexOf(">"); //$NON-NLS-1$
 		}
 		if (start_index == -1 || end_index == -1)
 			return cdata;
 		String contents = cdata.substring(start_index, end_index);
-		if (contents.indexOf("\"http://www.w3.org/1999/XSL/Transform\"") != -1) {
+		if (contents.indexOf("\"http://www.w3.org/1999/XSL/Transform\"") != -1) { //$NON-NLS-1$
 			return cdata;
 		}
 

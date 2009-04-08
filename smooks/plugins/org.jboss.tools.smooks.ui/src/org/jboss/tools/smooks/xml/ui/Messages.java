@@ -1,22 +1,19 @@
 package org.jboss.tools.smooks.xml.ui;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import org.eclipse.osgi.util.NLS;
 
-public class Messages {
-	private static final String BUNDLE_NAME = "org.jboss.tools.smooks.xml.ui.messages"; //$NON-NLS-1$
+public final class Messages extends NLS {
 
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-			.getBundle(BUNDLE_NAME);
+	private static final String BUNDLE_NAME = "org.jboss.tools.smooks.xml.ui.messages";//$NON-NLS-1$
 
 	private Messages() {
+		// Do not instantiate
 	}
 
-	public static String getString(String key) {
-		try {
-			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
-			return '!' + key + '!';
-		}
+	public static String XMLStructuredDataWizardPage_XMLDataWizardPageDescription;
+	public static String XMLStructuredDataWizardPage_XMLDataWizardPageTitle;
+
+	static {
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
 	}
 }

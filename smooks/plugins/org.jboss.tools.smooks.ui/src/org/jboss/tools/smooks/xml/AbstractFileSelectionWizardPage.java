@@ -174,7 +174,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		xsdComposite.setLayout(xsdLayout);
 
 		Label nfileLanel = new Label(xsdComposite, SWT.NONE);
-		nfileLanel.setText(Messages.getString("AbstractFileSelectionWizardPage.XMLFilePathLabelText")); //$NON-NLS-1$
+		nfileLanel.setText(Messages.AbstractFileSelectionWizardPage_XMLFilePathLabelText); 
 		fileTextComposite = new Composite(xsdComposite, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.grabExcessHorizontalSpace = true;
@@ -223,10 +223,10 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		browseButtonComposite.setLayout(bg);
 
 		fileSystemBrowseButton = new Button(browseButtonComposite, SWT.NONE);
-		fileSystemBrowseButton.setText(Messages.getString("AbstractFileSelectionWizardPage.BrowseFileSystemButtonText")); //$NON-NLS-1$
+		fileSystemBrowseButton.setText(Messages.AbstractFileSelectionWizardPage_BrowseFileSystemButtonText); 
 
 		workspaceBrowseButton = new Button(browseButtonComposite, SWT.NONE);
-		workspaceBrowseButton.setText(Messages.getString("AbstractFileSelectionWizardPage.BrowseWorkspaceButtonText")); //$NON-NLS-1$
+		workspaceBrowseButton.setText(Messages.AbstractFileSelectionWizardPage_BrowseWorkspaceButtonText); 
 		gd = new GridData();
 		gd.horizontalAlignment = GridData.END;
 		workspaceBrowseButton.setLayoutData(gd);
@@ -291,7 +291,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		String text = this.fileText.getText();
 		String error = null;
 		if (text == null || "".equals(text)) //$NON-NLS-1$
-			error = Messages.getString("AbstractFileSelectionWizardPage.Errormessage"); //$NON-NLS-1$
+			error = Messages.AbstractFileSelectionWizardPage_Errormessage; 
 		
 //		File tempFile = new File(text);
 //		if(!tempFile.exists()){
