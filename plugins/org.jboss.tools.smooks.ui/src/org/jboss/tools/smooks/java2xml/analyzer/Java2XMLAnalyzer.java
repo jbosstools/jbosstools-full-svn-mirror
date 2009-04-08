@@ -58,7 +58,7 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 		// TODO will modify soon
 		if(true){
 			Shell shell = context.getShell();
-			MessageDialog.openWarning(shell, Messages.getString("Java2XMLAnalyzer.Warning"), Messages.getString("Java2XMLAnalyzer.CantGenerateConfig")); //$NON-NLS-1$ //$NON-NLS-2$
+			MessageDialog.openWarning(shell, Messages.Java2XMLAnalyzer_Warning, Messages.Java2XMLAnalyzer_CantGenerateConfig); 
 			return;
 		}
 		
@@ -77,7 +77,7 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 		}
 
 		if (root == null)
-			throw new SmooksAnalyzerException(Messages.getString("Java2XMLAnalyzer.CantFindRoot")); //$NON-NLS-1$
+			throw new SmooksAnalyzerException(Messages.Java2XMLAnalyzer_CantFindRoot); 
 		Document document = DocumentHelper.createDocument();
 		Element rootElement = generateXMLContents(rootModel, root);
 		document.setRootElement(rootElement);
@@ -156,7 +156,7 @@ public class Java2XMLAnalyzer extends AbstractAnalyzer {
 	public MappingResourceConfigList analyzeMappingSmooksModel(
 			SmooksResourceListType listType, Object sourceObject,
 			Object targetObject) {
-		throw new RuntimeException(Messages.getString("Java2XMLAnalyzer.DontSupportJ2X")); //$NON-NLS-1$
+		throw new RuntimeException(Messages.Java2XMLAnalyzer_DontSupportJ2X); 
 	}
 
 	protected String getTheJavaBeanString(JavaBeanModel currentModel) {

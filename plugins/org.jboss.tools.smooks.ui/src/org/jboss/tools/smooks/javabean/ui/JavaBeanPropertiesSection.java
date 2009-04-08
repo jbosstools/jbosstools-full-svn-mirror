@@ -87,8 +87,7 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 				.getWidgetFactory();
 
 		Section section = createRootSection(factory, parent);
-		section.setText(Messages
-				.getString("JavaBeanPropertiesSection.JavaBeanProperties")); //$NON-NLS-1$
+		section.setText(Messages.JavaBeanPropertiesSection_JavaBeanProperties);
 		Composite controlComposite = factory.createComposite(section);
 		section.setClient(controlComposite);
 		GridLayout gl = new GridLayout();
@@ -96,8 +95,7 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 
 		controlComposite.setLayout(gl);
 
-		factory.createLabel(controlComposite, Messages
-				.getString("JavaBeanPropertiesSection.TargetInstanceClass")).setVisible(false); //$NON-NLS-1$
+		factory.createLabel(controlComposite, Messages.JavaBeanPropertiesSection_TargetInstanceClass).setVisible(false);
 
 		instanceClassComposite = factory.createComposite(controlComposite);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -112,8 +110,7 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 		instanceClassText.setLayoutData(gd);
 		instanceClassComposite.setVisible(false);
 
-		Button button1 = factory.createButton(instanceClassComposite, Messages
-				.getString("JavaBeanPropertiesSection.Browse"), //$NON-NLS-1$
+		Button button1 = factory.createButton(instanceClassComposite, Messages.JavaBeanPropertiesSection_Browse,
 				SWT.NONE);
 		button1.addSelectionListener(new SelectionAdapter() {
 
@@ -124,8 +121,7 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 
 		});
 
-		factory.createLabel(controlComposite, Messages
-				.getString("JavaBeanPropertiesSection.MappingType")); //$NON-NLS-1$
+		factory.createLabel(controlComposite, Messages.JavaBeanPropertiesSection_MappingType);
 		typeComposite = factory.createComposite(controlComposite);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		typeComposite.setLayoutData(gd);
@@ -157,8 +153,7 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 		GridLayout buttonLayout = new GridLayout();
 		buttonLayout.numColumns = 2;
 		buttonCom.setLayout(buttonLayout);
-		Button button3 = factory.createButton(buttonCom, Messages
-				.getString("JavaBeanPropertiesSection.ClassBrowse"), //$NON-NLS-1$
+		Button button3 = factory.createButton(buttonCom, Messages.JavaBeanPropertiesSection_ClassBrowse,
 				SWT.NONE);
 		button3.addSelectionListener(new SelectionAdapter() {
 
@@ -169,8 +164,7 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 
 		});
 
-		Button button2 = factory.createButton(buttonCom, Messages
-				.getString("JavaBeanPropertiesSection.CustomTypeBrowse"), //$NON-NLS-1$
+		Button button2 = factory.createButton(buttonCom, Messages.JavaBeanPropertiesSection_CustomTypeBrowse,
 				SWT.NONE);
 		button2.addSelectionListener(new SelectionAdapter() {
 
@@ -229,8 +223,7 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 			MessageDialog
 					.openError(
 							this.getPart().getSite().getShell(),
-							Messages
-									.getString("JavaBeanPropertiesSection.ErrorMessageTitle"), Messages.getString("JavaBeanPropertiesSection.TypeDialogErrorMessage")); //$NON-NLS-1$ //$NON-NLS-2$
+							Messages.JavaBeanPropertiesSection_ErrorMessageTitle, Messages.JavaBeanPropertiesSection_TypeDialogErrorMessage); 
 			return;
 		}
 		// TODO should modify the scope to inculde the required projects
@@ -242,10 +235,8 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 					SmooksUIActivator.getDefault().getWorkbench()
 							.getActiveWorkbenchWindow(), scope,
 					IJavaElementSearchConstants.CONSIDER_CLASSES, false);
-			dialog.setMessage(Messages
-					.getString("JavaBeanPropertiesSection.JavaType")); //$NON-NLS-1$
-			dialog.setTitle(Messages
-					.getString("JavaBeanPropertiesSection.SearchJavaType")); //$NON-NLS-1$
+			dialog.setMessage(Messages.JavaBeanPropertiesSection_JavaType);
+			dialog.setTitle(Messages.JavaBeanPropertiesSection_SearchJavaType);
 
 			if (dialog.open() == Window.OK) {
 				Object[] results = dialog.getResult();
@@ -387,8 +378,7 @@ public class JavaBeanPropertiesSection extends AbstractSmooksPropertySection {
 			return null;
 		for (int i = 0; i < properties.length; i++) {
 			PropertyModel pro = (PropertyModel) properties[i];
-			if (Messages
-					.getString("JavaBeanPropertiesSection.TypePropertyName").equalsIgnoreCase(pro.getName())) { //$NON-NLS-1$
+			if (Messages.JavaBeanPropertiesSection_TypePropertyName.equalsIgnoreCase(pro.getName())) {
 				Object value = pro.getValue();
 				if(value != null){
 					return value.toString();

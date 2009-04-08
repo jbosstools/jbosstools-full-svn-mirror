@@ -52,8 +52,8 @@ public class JavaBeanConfigWizardPage extends WizardPage implements
 		super("beansearchwizardpage"); //$NON-NLS-1$
 		this.project = selection;
 		setPageComplete(true);
-		setTitle(Messages.getString("JavaBeanConfigWizardPage.JavaBeanSelectionDialogTitle")); //$NON-NLS-1$
-		setDescription(Messages.getString("JavaBeanConfigWizardPage.JavaBeanSelectionDialogDesc")); //$NON-NLS-1$
+		setTitle(Messages.JavaBeanConfigWizardPage_JavaBeanSelectionDialogTitle); 
+		setDescription(Messages.JavaBeanConfigWizardPage_JavaBeanSelectionDialogDesc); 
 	}
 	
 	protected void initilize() {
@@ -82,7 +82,7 @@ public class JavaBeanConfigWizardPage extends WizardPage implements
 	protected void updatePage() {
 		String error = null;
 		if (project == null) {
-			error = Messages.getString("JavaBeanConfigWizardPage.JavaBeanSelectionDialogErrorMsg"); //$NON-NLS-1$
+			error = Messages.JavaBeanConfigWizardPage_JavaBeanSelectionDialogErrorMsg; 
 		}
 		setPageComplete(error == null);
 		this.setErrorMessage(error);

@@ -1,22 +1,36 @@
 package org.jboss.tools.smooks.javabean.ui;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import org.eclipse.osgi.util.NLS;
 
-public class Messages {
-	private static final String BUNDLE_NAME = "org.jboss.tools.smooks.javabean.ui.messages"; //$NON-NLS-1$
+public final class Messages extends NLS {
 
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-			.getBundle(BUNDLE_NAME);
+	private static final String BUNDLE_NAME = "org.jboss.tools.smooks.javabean.ui.messages";//$NON-NLS-1$
 
 	private Messages() {
+		// Do not instantiate
 	}
 
-	public static String getString(String key) {
-		try {
-			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
-			return '!' + key + '!';
-		}
+	public static String JavaBeanConfigWizardPage_JavaBeanSelectionDialogDesc;
+	public static String JavaBeanConfigWizardPage_JavaBeanSelectionDialogErrorMsg;
+	public static String JavaBeanConfigWizardPage_JavaBeanSelectionDialogTitle;
+//	public static String JavaBeanModelLoadComposite_Browse;
+	public static String JavaBeanModelLoadComposite_ClassNameText;
+	public static String JavaBeanModelLoadComposite_InitRunnableContextException;
+	public static String JavaBeanModelLoadComposite_SearchJavaType;
+	public static String JavaBeanModelLoadComposite_SourceJavaBean;
+	public static String JavaBeanPropertiesSection_Browse;
+	public static String JavaBeanPropertiesSection_ClassBrowse;
+	public static String JavaBeanPropertiesSection_CustomTypeBrowse;
+	public static String JavaBeanPropertiesSection_ErrorMessageTitle;
+	public static String JavaBeanPropertiesSection_JavaBeanProperties;
+	public static String JavaBeanPropertiesSection_JavaType;
+	public static String JavaBeanPropertiesSection_MappingType;
+	public static String JavaBeanPropertiesSection_SearchJavaType;
+	public static String JavaBeanPropertiesSection_TargetInstanceClass;
+	public static String JavaBeanPropertiesSection_TypeDialogErrorMessage;
+	public static String JavaBeanPropertiesSection_TypePropertyName;
+
+	static {
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
 	}
 }

@@ -90,8 +90,7 @@ public class JavaBeanModelLoadComposite extends Composite implements
 			// ProgressMonitorDialog(parent.getShell());
 			if (this.runnableContext == null)
 				throw new Exception(
-						Messages
-								.getString("JavaBeanModelLoadComposite.InitRunnableContextException")); //$NON-NLS-1$
+						Messages.JavaBeanModelLoadComposite_InitRunnableContextException);
 		}
 
 		if (project != null) {
@@ -134,8 +133,7 @@ public class JavaBeanModelLoadComposite extends Composite implements
 		com.setLayout(layout);
 
 		Label classLabel = new Label(com, SWT.NULL);
-		classLabel.setText(Messages
-				.getString("JavaBeanModelLoadComposite.ClassNameText")); //$NON-NLS-1$
+		classLabel.setText(Messages.JavaBeanModelLoadComposite_ClassNameText);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		classLabel.setLayoutData(gd);
@@ -272,10 +270,8 @@ public class JavaBeanModelLoadComposite extends Composite implements
 							scope,
 							IJavaElementSearchConstants.CONSIDER_CLASSES_AND_INTERFACES,
 							false);
-			dialog.setMessage(Messages
-					.getString("JavaBeanModelLoadComposite.SourceJavaBean")); //$NON-NLS-1$
-			dialog.setTitle(Messages
-					.getString("JavaBeanModelLoadComposite.SearchJavaType")); //$NON-NLS-1$
+			dialog.setMessage(Messages.JavaBeanModelLoadComposite_SourceJavaBean);
+			dialog.setTitle(Messages.JavaBeanModelLoadComposite_SearchJavaType);
 
 			if (dialog.open() == Window.OK) {
 				Object[] results = dialog.getResult();

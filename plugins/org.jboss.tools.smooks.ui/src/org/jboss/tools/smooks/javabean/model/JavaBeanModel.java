@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.smooks.analyzer.IValidatable;
 import org.jboss.tools.smooks.javabean.uitils.JavaPropertyUtils;
 import org.jboss.tools.smooks.ui.IXMLStructuredObject;
@@ -475,11 +476,14 @@ public class JavaBeanModel implements IValidatable, IXMLStructuredObject,
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		StringBuffer buffer = new StringBuffer(Messages
-				.getString("JavaBeanModel.JavaBeanName") + name); //$NON-NLS-1$
+		StringBuilder buffer = new StringBuilder();
 		if (beanClass != null)
-			buffer
-					.append(Messages.getString("JavaBeanModel.ClassIs") + this.beanClass.getName()); //$NON-NLS-1$
+			buffer.append(NLS.bind(
+				Messages.JavaBeanModel_JavaBeanDetails, name, this.beanClass.getName()));
+		else 
+			buffer.append(NLS.bind(
+				Messages.JavaBeanModel_JavaBeanName, name));
+		
 		if (this.properties != null) {
 			buffer.append("\n"); //$NON-NLS-1$
 			for (Iterator iterator = properties.iterator(); iterator.hasNext();) {
