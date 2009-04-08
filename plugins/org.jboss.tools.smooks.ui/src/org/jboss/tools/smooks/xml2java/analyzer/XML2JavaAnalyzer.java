@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.smooks.analyzer.AbstractAnalyzer;
 import org.jboss.tools.smooks.analyzer.DesignTimeAnalyzeResult;
@@ -349,8 +350,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 				// TODO if can't find the root , throw exception
 				// MODIFY by Dart 2008.11.17
 				throw new RuntimeException(
-						Messages
-								.getString("XML2JavaAnalyzer.CantFindRootNodeErrorMessage") + " : " + selector); //$NON-NLS-1$
+						 NLS.bind(Messages.XML2JavaAnalyzer_CantFindRootNodeErrorMessage, selector));
 				// return MappingResourceConfigList.createEmptyList();
 			}
 			JavaBeanModel target = findJavaBeanModel(((List) targetObject),
@@ -358,7 +358,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			if (target == null) {
 				// TODO if can't find the root , throw exception
 				// MODIFY by Dart 2008.11.17
-				String clazzName = SmooksModelUtils.getParmaText("beanClass",
+				String clazzName = SmooksModelUtils.getParmaText("beanClass", //$NON-NLS-1$
 						resourceConfig);
 				if (clazzName != null)
 					throw new RuntimeException("Can't find the Java class"
@@ -380,7 +380,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 			JavaBeanModel bean = (JavaBeanModel) iterator.next();
 			Class clazz = bean.getBeanClass();
 			if (clazz != null) {
-				String clazzName = SmooksModelUtils.getParmaText("beanClass",
+				String clazzName = SmooksModelUtils.getParmaText("beanClass", //$NON-NLS-1$
 						resourceConfig);
 				if (clazzName != null)
 					clazzName = clazzName.trim();
@@ -473,7 +473,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 		String namespace = config.getSelectorNamespace();
 		if (namespace != null) {
 			PropertyModel np = new PropertyModel();
-			np.setName("selector-namespace");
+			np.setName("selector-namespace"); //$NON-NLS-1$
 			np.setValue(namespace);
 			mapping.getProperties().add(np);
 		}
@@ -560,8 +560,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 				// TODO If can't find the element , throw exception
 				// MODIFY by Dart , 2008.11.07
 				throw new RuntimeException(
-						Messages
-								.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage1") + newSelector + Messages.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage2")); //$NON-NLS-1$ //$NON-NLS-2$
+						NLS.bind(Messages.XML2JavaAnalyzer_CantFindNodeErrorMessage, newSelector)); 
 			}
 			createMappingResourceConfigList(configList, listType,
 					processingResourceConfig, newRoot, targetBean);
@@ -573,8 +572,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 				// TODO If can't find the element , throw exception
 				// MODIFY by Dart , 2008.11.07
 				throw new RuntimeException(
-						Messages
-								.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage1") + selector + Messages.getString("XML2JavaAnalyzer.CantFindNodeErrorMessage2")); //$NON-NLS-1$ //$NON-NLS-2$
+						NLS.bind(Messages.XML2JavaAnalyzer_CantFindNodeErrorMessage, selector)); 
 			}
 			if (source != null) {
 				MappingModel mapping = new MappingModel(source, targetBean);
@@ -620,7 +618,7 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 	}
 
 	public static boolean isXMLAttributeObject(String name) {
-		if (name != null && name.startsWith("@"))
+		if (name != null && name.startsWith("@")) //$NON-NLS-1$
 			return true;
 		return false;
 	}
@@ -709,10 +707,8 @@ public class XML2JavaAnalyzer extends AbstractAnalyzer {
 						boolean connectAuto = MessageDialog
 								.openQuestion(
 										displayParent,
-										Messages
-												.getString("XML2JavaAnalyzer.ConnectQDlgTitle"), //$NON-NLS-1$
-										Messages
-												.getString("XML2JavaAnalyzer.ConnectQDlgContent")); //$NON-NLS-1$
+										Messages.XML2JavaAnalyzer_ConnectQDlgTitle,
+										Messages.XML2JavaAnalyzer_ConnectQDlgContent);
 						if (connectAuto) {
 							// connect root model
 							LineConnectionModel connectionModel = new LineConnectionModel();

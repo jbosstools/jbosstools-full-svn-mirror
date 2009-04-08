@@ -20,8 +20,8 @@ public class XMLStructuredDataWizardPage extends
 	}
 
 	private void setPageText() {
-		this.setTitle(Messages.getString("XMLStructuredDataWizardPage.XMLDataWizardPageTitle")); //$NON-NLS-1$
-		this.setDescription(Messages.getString("XMLStructuredDataWizardPage.XMLDataWizardPageDescription")); //$NON-NLS-1$
+		this.setTitle(Messages.XMLStructuredDataWizardPage_XMLDataWizardPageTitle); 
+		this.setDescription(Messages.XMLStructuredDataWizardPage_XMLDataWizardPageDescription); 
 
 	}
 

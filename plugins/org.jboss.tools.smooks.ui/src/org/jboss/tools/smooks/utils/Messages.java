@@ -1,23 +1,27 @@
 package org.jboss.tools.smooks.utils;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import org.eclipse.osgi.util.NLS;
 
-public class Messages {
-	private static final String BUNDLE_NAME = "org.jboss.tools.smooks.utils.messages"; //$NON-NLS-1$
+public final class Messages extends NLS {
 
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-			.getBundle(BUNDLE_NAME);
+	private static final String BUNDLE_NAME = "org.jboss.tools.smooks.utils.messages";//$NON-NLS-1$
 
 	private Messages() {
+		// Do not instantiate
 	}
 
-	public static String getString(String key) {
-		try {
-			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
-			return '!' + key + '!';
-		}
-	}
+	public static String UIUtils_ConnectAllConnections;
+	public static String UIUtils_ConnectNode;
+	public static String UIUtils_DisconnectAllConnections;
+	public static String UIUtils_InstanceClassResolveMessage1;
+	public static String UIUtils_InstanceClassResolveMessage2;
+	public static String UIUtils_InstanceLoadedErrorMessage;
+	public static String UIUtils_InstanceLoadedResolveMessage;
+	public static String UIUtils_JavaModelLoadedErrorMessage;
+	public static String UIUtils_ParentNodeConnectErrorMessage;
+	public static String UIUtils_SelectorCheckErrorMessage;
 
+	static {
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
 }
