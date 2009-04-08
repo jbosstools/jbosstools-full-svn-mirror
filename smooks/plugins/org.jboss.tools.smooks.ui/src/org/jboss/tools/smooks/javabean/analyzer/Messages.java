@@ -1,22 +1,22 @@
 package org.jboss.tools.smooks.javabean.analyzer;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import org.eclipse.osgi.util.NLS;
 
-public class Messages {
-	private static final String BUNDLE_NAME = "org.jboss.tools.smooks.javabean.analyzer.messages"; //$NON-NLS-1$
+public final class Messages extends NLS {
 
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-			.getBundle(BUNDLE_NAME);
+	private static final String BUNDLE_NAME = "org.jboss.tools.smooks.javabean.analyzer.messages";//$NON-NLS-1$
 
 	private Messages() {
+		// Do not instantiate
 	}
 
-	public static String getString(String key) {
-		try {
-			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
-			return '!' + key + '!';
-		}
+	public static String JavaBeanAnalyzer_ClassNotExist;
+	public static String JavaBeanAnalyzer_ConnectionQuestion;
+	public static String JavaBeanAnalyzer_ConnectRootQuestion;
+	public static String JavaBeanAnalyzer_DoesNotExist;
+	public static String JavaModelConnectionResolveCommand_SmooksContextIsNull;
+
+	static {
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
 	}
 }

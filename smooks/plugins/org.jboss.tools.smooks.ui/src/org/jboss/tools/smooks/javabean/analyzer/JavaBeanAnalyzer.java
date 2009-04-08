@@ -29,6 +29,7 @@ import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.smooks.analyzer.DesignTimeAnalyzeResult;
 import org.jboss.tools.smooks.analyzer.IMappingAnalyzer;
@@ -507,10 +508,8 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						boolean connectAuto = MessageDialog
 								.openQuestion(
 										displayParent,
-										Messages
-												.getString("JavaBeanAnalyzer.ConnectionQuestion"), //$NON-NLS-1$
-										Messages
-												.getString("JavaBeanAnalyzer.ConnectRootQuestion")); //$NON-NLS-1$
+										Messages.JavaBeanAnalyzer_ConnectionQuestion, //$NON-NLS-1$
+										Messages.JavaBeanAnalyzer_ConnectRootQuestion); //$NON-NLS-1$
 						if (connectAuto) {
 							// connect root model
 							LineConnectionModel connectionModel = new LineConnectionModel();
@@ -968,8 +967,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						model = new JavaBeanModel(null, rootClassName);
 						model.setRootClassModel(true);
 						model
-								.setError(Messages
-										.getString("JavaBeanAnalyzer.ClassNotExist") + rootClassName); //$NON-NLS-1$
+								.setError(NLS.bind(Messages.JavaBeanAnalyzer_ClassNotExist, rootClassName));
 						model.setProperties(new ArrayList());
 						isError = true;
 					}
@@ -1236,7 +1234,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 						+ "\" from \"" + parentModel.getName() + "\" model");
 			model = new JavaBeanModel(null, property);
 			parentModel.addProperty(model);
-			model.setError(Messages.getString("JavaBeanAnalyzer.DontExist")); //$NON-NLS-1$
+			model.setError(Messages.JavaBeanAnalyzer_DoesNotExist); 
 		}
 		if (isSelectorIsUsed(selector))
 			return;
@@ -1368,8 +1366,7 @@ public class JavaBeanAnalyzer implements IMappingAnalyzer,
 				// something wrong
 				if (model == null) {
 					model = new JavaBeanModel(null, referenceSelector);
-					model.setError(Messages
-							.getString("JavaBeanAnalyzer.DontExist")); //$NON-NLS-1$
+					model.setError(Messages.JavaBeanAnalyzer_DoesNotExist); //$NON-NLS-1$
 					model.setProperties(new ArrayList());
 					setCollectionsInstanceClassName(model, resourceConfig);
 				}
