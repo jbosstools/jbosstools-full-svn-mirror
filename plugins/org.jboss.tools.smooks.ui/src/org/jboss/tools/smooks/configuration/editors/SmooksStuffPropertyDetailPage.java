@@ -256,7 +256,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage {
 			final IItemPropertyDescriptor itemPropertyDescriptor) {
 		String displayName = itemPropertyDescriptor.getDisplayName(getModel());
 		formToolKit.createLabel(propertyComposite, displayName + " :");
-		final Spinner spinner = new Spinner(propertyComposite, SWT.NONE);
+		final Spinner spinner = new Spinner(propertyComposite, SWT.BORDER);
 		Object value = itemPropertyDescriptor.getPropertyValue(getModel());
 		if (value != null && value instanceof PropertyValueWrapper) {
 			Object editValue = ((PropertyValueWrapper) value).getEditableValue(getModel());
