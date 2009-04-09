@@ -53,7 +53,6 @@ public class AbstractAnyTypeItemProvider
 	}
 
 	protected boolean isWrappingNeeded(Object object){
-		wrappingNeeded = null;
 		return super.isWrappingNeeded(object);
 	}
 	/**

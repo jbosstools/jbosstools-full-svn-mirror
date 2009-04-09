@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.javabean;
 
-import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.dialogs.Dialog;
@@ -45,13 +45,13 @@ import org.jboss.tools.smooks.configuration.editors.uitls.JavaPropertyUtils;
  *         <p>
  *         Apr 9, 2009
  */
-public class JavaPropertiesSelectionDialog implements IFieldDialog {
+public class JavaMethodsSelectionDialog implements IFieldDialog {
 
 	private IJavaProject resource;
 
 	private Class<?> clazz;
 
-	public JavaPropertiesSelectionDialog(IJavaProject resource, Class<?> clazz) {
+	public JavaMethodsSelectionDialog(IJavaProject resource, Class<?> clazz) {
 		super();
 		this.resource = resource;
 		this.clazz = clazz;
@@ -59,20 +59,20 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 
 	public Object open(Shell shell) {
 		if (resource != null && clazz != null) {
-			PropertySelectionDialog dialog = new PropertySelectionDialog(shell, resource, clazz);
+			MethodSelectionDialog dialog = new MethodSelectionDialog(shell, resource, clazz);
 			if (dialog.open() == Dialog.OK) {
-				PropertyDescriptor pd = (PropertyDescriptor) dialog.getCurrentSelection();
+				Method pd = (Method) dialog.getCurrentSelection();
 				return pd.getName();
 			}else{
 				return null;
 			}
 		}
 		MessageDialog.openInformation(shell, "Can't open dialog",
-				"Can't open java properties selection dialog.");
+				"Can't open java methods selection dialog.");
 		return null;
 	}
 
-	private class PropertySelectionDialog extends Dialog {
+	private class MethodSelectionDialog extends Dialog {
 
 		private TableViewer viewer;
 
@@ -82,11 +82,11 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 
 		
 		
-		public PropertySelectionDialog(IShellProvider parentShell) {
+		public MethodSelectionDialog(IShellProvider parentShell) {
 			super(parentShell);
 		}
 
-		public PropertySelectionDialog(Shell parentShell, IJavaProject project, Class<?> clazz) {
+		public MethodSelectionDialog(Shell parentShell, IJavaProject project, Class<?> clazz) {
 			super(parentShell);
 			this.clazz = clazz;
 		}
@@ -103,26 +103,30 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 			Table table = viewer.getTable();
 			TableColumn nameColumn = new TableColumn(table, SWT.NONE);
 			nameColumn.setWidth(100);
-			nameColumn.setText("Name");
+			nameColumn.setText("Method Name");
 			TableColumn typeColumn = new TableColumn(table, SWT.NONE);
 			typeColumn.setWidth(200);
-			typeColumn.setText("Type");
+			typeColumn.setText("Paramters Type");
 			table.setHeaderVisible(true);
-			viewer.setContentProvider(new PropertyDescriptorContentProvider());
-			viewer.setLabelProvider(new PropertyDescriptorLabelProvider());
-			PropertyDescriptor[] pds = JavaPropertyUtils.getPropertyDescriptor(clazz);
-			viewer.setInput(pds);
+			viewer.setContentProvider(new MethodContentProvider());
+			viewer.setLabelProvider(new MethodLabelProvider());
+			Method[] settMethods = JavaPropertyUtils.getSetterMethods(clazz);
+			viewer.setInput(settMethods);
 			viewer.addDoubleClickListener(new IDoubleClickListener(){
+
 				public void doubleClick(DoubleClickEvent event) {
 					okPressed();
 				}
+				
 			});
 			viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+
 				public void selectionChanged(SelectionChangedEvent event) {
 					currentSelection = ((IStructuredSelection) event.getSelection()).getFirstElement();
 				}
+
 			});
-			getShell().setText(clazz.getSimpleName() + "'s Properties");
+			getShell().setText(clazz.getSimpleName() + "'s Setter Methods");
 			return composite;
 		}
 
@@ -135,7 +139,7 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 		}
 	}
 
-	private class PropertyDescriptorContentProvider implements IStructuredContentProvider {
+	private class MethodContentProvider implements IStructuredContentProvider {
 
 		public Object[] getElements(Object inputElement) {
 			if (inputElement.getClass().isArray()) {
@@ -154,7 +158,7 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 
 	}
 
-	private class PropertyDescriptorLabelProvider extends LabelProvider implements ITableLabelProvider {
+	private class MethodLabelProvider extends LabelProvider implements ITableLabelProvider {
 		public Image getColumnImage(Object element, int columnIndex) {
 			if (columnIndex == 0) {
 				return SmooksConfigurationActivator.getDefault().getImageRegistry().get(
@@ -164,17 +168,25 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 		}
 
 		public String getColumnText(Object element, int columnIndex) {
-			if (element instanceof PropertyDescriptor) {
-				PropertyDescriptor p = (PropertyDescriptor) element;
+			if (element instanceof Method) {
+				Method p = (Method) element;
 				switch (columnIndex) {
 				case 0:
 					return p.getName();
 				case 1:
-					Class<?> cla = p.getPropertyType();
-					if(cla.isArray()){
-						return cla.getComponentType().getName() + "[]";
+					Class<?>[] pts = p.getParameterTypes();
+					String paramtersName = "";
+					for (int i = 0; i < pts.length; i++,paramtersName+=",") {
+						String name = pts[i].getName();
+						if(pts[i].isArray()){
+							name = pts[i].getComponentType().getName() + "[]";
+						}
+						paramtersName += name;
 					}
-					return cla.getName();
+					if(paramtersName.endsWith(",")){
+						paramtersName = paramtersName.substring(0,paramtersName.length() - 1);
+					}
+					return paramtersName;
 				}
 			}
 			return getText(element);

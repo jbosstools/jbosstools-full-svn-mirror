@@ -10,19 +10,14 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -47,23 +42,11 @@ public class PropertyUICreator implements IPropertyUICreator {
 	}
 
 	public IResource getResource(EObject model) {
-		final Resource resource = ((EObject) model).eResource();
-		URI uri = resource.getURI();
-		IResource workspaceResource = null;
-		if (uri.isPlatformResource()) {
-			String path = uri.toPlatformString(true);
-			workspaceResource = ResourcesPlugin.getWorkspace().getRoot().findMember(new Path(path));
-		}
-		return workspaceResource;
+		return SmooksUIUtils.getResource(model);
 	}
 
 	public IJavaProject getJavaProject(EObject model) {
-		IResource r = getResource(model);
-		if (r != null) {
-			IProject p = r.getProject();
-			return JavaCore.create(p);
-		}
-		return null;
+		return SmooksUIUtils.getJavaProject(model);
 	}
 
 }
