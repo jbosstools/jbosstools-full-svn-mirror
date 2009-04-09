@@ -41,6 +41,7 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -165,7 +166,8 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 				.getEditorSite().getActionBarContributor());
 		}
 		smooksTreeViewer.addSelectionChangedListener(this);
-
+		tableComposite.setBackground(new Color(null,128,128,128));
+		
 		gd = new GridData(GridData.FILL_BOTH);
 		tableComposite.setLayoutData(gd);
 		tool.paintBordersFor(tableComposite);

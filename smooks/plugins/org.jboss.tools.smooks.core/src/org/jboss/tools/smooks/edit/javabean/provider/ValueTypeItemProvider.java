@@ -256,7 +256,7 @@ public class ValueTypeItemProvider
 	@Override
 	public String getText(Object object) {
 		String label = ((ValueType)object).getData();
-		if(label.length() > 12){
+		if(label != null && label.length() > 12){
 			label = label.substring(0, 12) + "...";
 		}
 		return label == null || label.length() == 0 ?
