@@ -1117,50 +1117,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	public void setAttribute(Element sourceElement, String name, String value) {
 		VpeElementMapping elementMapping = (VpeElementMapping) domMapping
 				.getNodeMapping(sourceElement);
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4110
+		 * Update any template automatically on attribute adding.
+		 */
 		if (elementMapping != null) {
-			if (elementMapping.isIfDependencyFromAttribute(name)) {
-				updateElement(sourceElement);
-			} else {
-				VpeTemplate template = elementMapping.getTemplate();
-				if (elementMapping.getBorder() != null) {
-					updateElement(sourceElement);
-				} else if (template.recreateAtAttrChange(pageContext,
-						sourceElement, getVisualDocument(),
-						(nsIDOMElement) elementMapping.getVisualNode(),
-						elementMapping.getData(), name, value)) {
-					updateElement(sourceElement);
-				} else {
-					nsIDOMElement visualElement = (nsIDOMElement) elementMapping
-							.getVisualNode();
-					if (visualElement != null) {
-						String visualElementName = visualElement.getNodeName();
-						if (HTML.TAG_SELECT.equalsIgnoreCase(visualElementName)) {
-							updateElement(sourceElement);
-							return;
-						} else if (HTML.TAG_OPTION
-								.equalsIgnoreCase(visualElementName)) {
-							updateElement(sourceElement.getParentNode());
-							return;
-						} else if (HTML.TAG_INPUT
-								.equalsIgnoreCase(visualElementName)) {
-							updateElement(sourceElement);
-							// Fixes JBIDE-1744 author dmaliarevich
-							// unified h:dataTable border lookup
-							// after attribute change and
-							// after visual editor refresh
-						} else if (HTML.TAG_TABLE
-								.equalsIgnoreCase(visualElementName)) {
-							updateElement(sourceElement);
-						}
-						// End of fix
-					}
-					// setXmlnsAttribute(elementMapping, name, value);
-					template.setAttribute(pageContext, sourceElement,
-							getVisualDocument(), visualElement, elementMapping
-									.getData(), name, value);
-					resetTooltip(sourceElement, visualElement);
-				}
-			}
+		    updateElement(sourceElement);
 		}
 	}
 
@@ -1291,27 +1253,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	public void removeAttribute(Element sourceElement, String name) {
 		VpeElementMapping elementMapping = (VpeElementMapping) domMapping
 				.getNodeMapping(sourceElement);
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4110
+		 * Update any template automatically on attribute deleting.
+		 */
 		if (elementMapping != null) {
-			if (elementMapping.isIfDependencyFromAttribute(name)) {
-				updateElement(sourceElement);
-			} else {
-				VpeTemplate template = elementMapping.getTemplate();
-				if (template.recreateAtAttrChange(pageContext, sourceElement,
-						getVisualDocument(), (nsIDOMElement) elementMapping
-								.getVisualNode(), elementMapping.getData(),
-						name, null)) {
-					updateElement(sourceElement);
-				}
-				// else {
-				// removeXmlnsAttribute(elementMapping, name);
-				// template.removeAttribute(pageContext, sourceElement,
-				// visualDocument, (nsIDOMElement) elementMapping
-				// .getVisualNode(), elementMapping.getData(),
-				// name);
-				// resetTooltip(sourceElement, (nsIDOMElement) elementMapping
-				// .getVisualNode());
-				// }
-			}
+		    updateElement(sourceElement);
 		}
 	}
 
