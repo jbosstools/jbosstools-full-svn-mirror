@@ -7,19 +7,19 @@
   <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.milyn.org/xsd/smooks-1.0.xsd"
-            class="org.jboss.tools.smooks.model.SmooksPackage"
+            class="org.jboss.tools.smooks10.model.smooks.SmooksPackage"
             genModel="model/smooks_1_0.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
       <parser
             type="smooks"
-            class="org.jboss.tools.smooks.model.util.SmooksResourceFactoryImpl"/>
+            class="org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl"/>
    </extension>
       <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
             uri="http://www.milyn.org/xsd/smooks-1.0.xsd"
-            class="org.jboss.tools.smooks.model.provider.SmooksItemProviderAdapterFactory"
+            class="org.jboss.tools.smooks10.model.smooks.provider.SmooksItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider
@@ -27,5 +27,98 @@
                org.eclipse.emf.edit.provider.IItemLabelProvider
                org.eclipse.emf.edit.provider.IItemPropertySource"/>
    </extension>
+   
+     <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.milyn.org/xsd/smooks/groovy-1.1.xsd"
+            class="org.jboss.tools.smooks.model.groovy.GroovyPackage"
+            genModel="model/groovy.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="groovy"
+            class="org.jboss.tools.smooks.model.groovy.util.GroovyResourceFactoryImpl"/>
+   </extension>
+   
+   
+      <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.milyn.org/xsd/smooks/freemarker-1.1.xsd"
+            class="org.jboss.tools.smooks.model.freemarker.FreemarkerPackage"
+            genModel="ecore.model/freemarker-1.1.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="freemarker"
+            class="org.jboss.tools.smooks.model.freemarker.util.FreemarkerResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.jboss.org/smookstools"
+            class="org.jboss.tools.smooks.model.common.CommonPackage"
+            genModel="ecore.model/freemarker-1.1.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="common"
+            class="org.jboss.tools.smooks.model.common.util.CommonResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.milyn.org/xsd/smooks-1.1.xsd"
+            class="org.jboss.tools.smooks.model.smooks.SmooksPackage"
+            genModel="ecore.model/freemarker-1.1.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="smooks"
+            class="org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl"/>
+   </extension>
+   
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.milyn.org/xsd/smooks/xsl-1.1.xsd"
+            class="org.jboss.tools.smooks.model.xsl.XslPackage"
+            genModel="ecore.model/xsl-1.1.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="xsl"
+            class="org.jboss.tools.smooks.model.xsl.util.XslResourceFactoryImpl"/>
+   </extension>
+   
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.milyn.org/xsd/smooks/javabean-1.1.xsd"
+            class="org.jboss.tools.smooks.model.javabean.JavabeanPackage"
+            genModel="ecore.model/javabean-1.1.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="javabean"
+            class="org.jboss.tools.smooks.model.javabean.util.JavabeanResourceFactoryImpl"/>
+   </extension>
+   
+     <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.milyn.org/schema/edi-message-mapping-1.0.xsd"
+            class="org.jboss.tools.smooks.model.edi.EdiPackage"
+            genModel="ecore.model/edi-message-mapping-1.0.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="edi"
+            class="org.jboss.tools.smooks.model.edi.util.EdiResourceFactoryImpl"/>
+   </extension>
+   
    
 </plugin>
