@@ -65,13 +65,6 @@ public class TestUtil {
 
 
 	/**
-	 * @deprecated Use {@link ResourcesUtils#importProjectIntoWorkspace(ImportBean)} instead
-	 */
-	static public void importProjectIntoWorkspace(ImportBean bean) {
-		ResourcesUtils.importProjectIntoWorkspace(bean);
-	}
-	
-	/**
 	 * Import project into workspace.
 	 * 
 	 * @param path the path
