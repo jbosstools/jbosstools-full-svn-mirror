@@ -200,22 +200,22 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		hookButtons();
 	}
 
-	protected List<Object> getViewerSelections() {
+	protected List<?> getViewerSelections() {
 		IStructuredSelection selections = (IStructuredSelection) smooksTreeViewer.getSelection();
-		List l = selections.toList();
-		List<Object> nl = new ArrayList<Object>();
-		for (Iterator<?> iterator = l.iterator(); iterator.hasNext();) {
-			Object object = (Object) iterator.next();
-			// object = AdapterFactoryEditingDomain.unwrap(object);
-			nl.add(object);
-		}
-		return l;
+		return selections.toList();
+//		List<Object> nl = new ArrayList<Object>();
+//		for (Iterator<?> iterator = l.iterator(); iterator.hasNext();) {
+//			Object object = (Object) iterator.next();
+//			// object = AdapterFactoryEditingDomain.unwrap(object);
+//			nl.add(object);
+//		}
+//		return l;
 	}
 
 	private void hookButtons() {
 		removeButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				List<Object> list = getViewerSelections();
+				List<?> list = getViewerSelections();
 				CompoundCommand ccommand = new CompoundCommand();
 				for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 					Object object = (Object) iterator.next();
@@ -231,7 +231,7 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 
 		downButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				List<Object> list = getViewerSelections();
+				List<?> list = getViewerSelections();
 				if(list.size() == 1){
 					Object obj = list.get(0);
 					EObject v = (EObject) AdapterFactoryEditingDomain.unwrap(obj);
