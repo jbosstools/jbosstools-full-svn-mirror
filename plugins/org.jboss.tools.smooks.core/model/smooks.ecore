@@ -3,13 +3,14 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="smooks"
     nsURI="http://www.milyn.org/xsd/smooks-1.0.xsd" nsPrefix="smooks">
-  <eClassifiers xsi:type="ecore:EClass" name="AbstractResourceConfig" abstract="true">
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractResourceConfig" abstract="true"
+      eSuperTypes="#//AbstractType">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="abstract-resource-config"/>
       <details key="kind" value="empty"/>
     </eAnnotations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ConditionType">
+  <eClassifiers xsi:type="ecore:EClass" name="ConditionType" eSuperTypes="#//AbstractType">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Resource Targetting Condition"/>
     </eAnnotations>
@@ -159,7 +160,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ParamType" eSuperTypes="http://www.eclipse.org/emf/2003/XMLType#//AnyType">
+  <eClassifiers xsi:type="ecore:EClass" name="ParamType" eSuperTypes="#//AbstractType">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Resource Parameter"/>
     </eAnnotations>
@@ -180,7 +181,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ProfilesType">
+  <eClassifiers xsi:type="ecore:EClass" name="ProfilesType" eSuperTypes="#//AbstractType">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="List of Profiles"/>
     </eAnnotations>
@@ -197,7 +198,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ProfileType">
+  <eClassifiers xsi:type="ecore:EClass" name="ProfileType" eSuperTypes="#//AbstractType">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Profile Configuration. Basically allows you to specify the name of a&#xA;                    base profile along with a list of its sub-profiles.&#xA;                "/>
     </eAnnotations>
@@ -276,7 +277,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ResourceType" eSuperTypes="http://www.eclipse.org/emf/2003/XMLType#//AnyType">
+  <eClassifiers xsi:type="ecore:EClass" name="ResourceType" eSuperTypes="#//AbstractType">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Resource Configuration Resource Type (xsl, class etc)"/>
     </eAnnotations>
@@ -291,7 +292,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SmooksResourceListType">
+  <eClassifiers xsi:type="ecore:EClass" name="SmooksResourceListType" eSuperTypes="#//AbstractType">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="List of Smooks Resource Configuration."/>
     </eAnnotations>
@@ -345,4 +346,5 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractType" abstract="true" eSuperTypes="http://www.eclipse.org/emf/2003/XMLType#//AnyType"/>
 </ecore:EPackage>
