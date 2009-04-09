@@ -14,9 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jboss.tools.smooks.configuration.editors.javabean.BindingsPropertyUICreator;
-import org.jboss.tools.smooks.configuration.editors.javabean.ValuePropertiesUICreator;
+import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanValueUICreator;
+import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanWiringUICreator;
 import org.jboss.tools.smooks.model.javabean.impl.BindingsTypeImpl;
 import org.jboss.tools.smooks.model.javabean.impl.ValueTypeImpl;
+import org.jboss.tools.smooks.model.javabean.impl.WiringTypeImpl;
 
 /**
  * @author Dart (dpeng@redhat.com)<p>
@@ -34,7 +36,8 @@ public class PropertyUICreatorManager {
 	
 	private void init() {
 		map.put(BindingsTypeImpl.class, new BindingsPropertyUICreator());
-		map.put(ValueTypeImpl.class, new ValuePropertiesUICreator());
+		map.put(ValueTypeImpl.class, new JavabeanValueUICreator());
+		map.put(WiringTypeImpl.class, new JavabeanWiringUICreator());
 	}
 
 	public void registePropertyUICreator(Class<?> key,IPropertyUICreator creator){

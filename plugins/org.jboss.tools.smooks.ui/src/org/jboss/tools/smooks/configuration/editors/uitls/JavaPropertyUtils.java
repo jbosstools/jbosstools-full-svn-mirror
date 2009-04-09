@@ -3,6 +3,9 @@ package org.jboss.tools.smooks.configuration.editors.uitls;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -20,6 +23,19 @@ public class JavaPropertyUtils {
 			// ignore
 			return new PropertyDescriptor[]{};
 		}
+	}
+	
+	public static Method[] getSetterMethods(Class<?> clazz){
+		Method[] methods = clazz.getMethods();
+		List<Method> mlist = new ArrayList<Method>();
+		for (int i = 0; i < methods.length; i++) {
+			Method method = methods[i];
+			String methodName = method.getName();
+			if(methodName.startsWith("set")){
+				mlist.add(method);
+			}
+		}
+		return mlist.toArray(new Method[]{});
 	}
 
 	/**

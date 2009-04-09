@@ -11,12 +11,17 @@
 package org.jboss.tools.smooks.configuration.editors;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl.BasicFeatureMapEntry;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
+import org.eclipse.emf.edit.command.DeleteCommand;
+import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IWrapperItemProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
@@ -34,6 +39,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -47,6 +54,7 @@ import org.eclipse.ui.forms.SectionPart;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
  * @author Dart Peng (dpeng@redhat.com)
@@ -54,7 +62,7 @@ import org.eclipse.ui.forms.widgets.Section;
  *         Date Apr 1, 2009
  */
 public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenuListener,
-		ISelectionChangedListener {
+	ISelectionChangedListener {
 
 	private Section configurationSection;
 	private SectionPart sectionPart;
@@ -112,14 +120,15 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		// provider.registePage(ResourceType.class, new
 		// SmooksStuffPropertyDetailPage());
 		detailsPart.registerPage(EObject.class, new SmooksStuffPropertyDetailPage(
-				(SmooksMultiFormEditor) this.formEditor));
+			(SmooksMultiFormEditor) this.formEditor));
 	}
 
 	protected void createSmooksTreeViewer(FormToolkit tool, final IManagedForm managedForm,
-			Composite rootMainControl) {
-		configurationSection = tool.createSection(rootMainControl, Section.TITLE_BAR | Section.DESCRIPTION);
+		Composite rootMainControl) {
+		configurationSection = tool.createSection(rootMainControl, Section.TITLE_BAR
+			| Section.DESCRIPTION);
 		configurationSection
-				.setDescription("Define Smooks stuffes for configuration file in the following section.");
+			.setDescription("Define Smooks stuffes for configuration file in the following section.");
 		configurationSection.setText("All Smooks Stuffes");
 		sectionPart = new SectionPart(configurationSection);
 		managedForm.addPart(sectionPart);
@@ -140,8 +149,9 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		smooksTreeViewer = new TreeViewer(tableComposite, SWT.NONE);
 		smooksTreeViewer.addSelectionChangedListener(this);
 		smooksTreeViewer.setContentProvider(new AdapterFactoryContentProvider(editingDomain
-				.getAdapterFactory()));
-		smooksTreeViewer.setLabelProvider(new AdapterFactoryLabelProvider(editingDomain.getAdapterFactory()));
+			.getAdapterFactory()));
+		smooksTreeViewer.setLabelProvider(new AdapterFactoryLabelProvider(editingDomain
+			.getAdapterFactory()));
 		smooksTreeViewer.setFilters(new ViewerFilter[] { new TextEObjectModelFilter() });
 		Object smooksModel = ((SmooksMultiFormEditor) this.formEditor).getSmooksModel();
 		if (smooksModel != null) {
@@ -152,7 +162,7 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 
 		if (formEditor.getEditorSite().getActionBarContributor() instanceof ISelectionChangedListener) {
 			smooksTreeViewer.addSelectionChangedListener((ISelectionChangedListener) formEditor
-					.getEditorSite().getActionBarContributor());
+				.getEditorSite().getActionBarContributor());
 		}
 		smooksTreeViewer.addSelectionChangedListener(this);
 
@@ -181,6 +191,63 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 
 		downButton = tool.createButton(buttonComposite, "Down", SWT.NONE);
 		downButton.setLayoutData(gd);
+		// don't display button area
+		gd = new GridData(GridData.FILL_VERTICAL);
+		gd.widthHint = 0;
+		buttonComposite.setLayoutData(gd);
+		buttonComposite.setVisible(false);
+		
+		hookButtons();
+	}
+
+	protected List<Object> getViewerSelections() {
+		IStructuredSelection selections = (IStructuredSelection) smooksTreeViewer.getSelection();
+		List l = selections.toList();
+		List<Object> nl = new ArrayList<Object>();
+		for (Iterator<?> iterator = l.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			// object = AdapterFactoryEditingDomain.unwrap(object);
+			nl.add(object);
+		}
+		return l;
+	}
+
+	private void hookButtons() {
+		removeButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				List<Object> list = getViewerSelections();
+				CompoundCommand ccommand = new CompoundCommand();
+				for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+					Object object = (Object) iterator.next();
+					Command command = DeleteCommand.create(editingDomain, object);
+					if (command.canExecute()) {
+						ccommand.append(command);
+					}
+				}
+
+				editingDomain.getCommandStack().execute(ccommand);
+			}
+		});
+
+		downButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				List<Object> list = getViewerSelections();
+				if(list.size() == 1){
+					Object obj = list.get(0);
+					EObject v = (EObject) AdapterFactoryEditingDomain.unwrap(obj);
+					EObject parent = v.eContainer();
+					int index = parent.eContents().indexOf(v);
+					Command command = MoveCommand.create(editingDomain, parent, null, obj, index + 1);
+					System.out.println(command.canExecute());
+					editingDomain.getCommandStack().execute(command);
+				}
+			}
+		});
+
+		upButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
 	}
 
 	private void createMenuForViewer(TreeViewer smooksTreeViewer2) {
@@ -192,7 +259,7 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		Menu menu = contextMenu.createContextMenu(smooksTreeViewer2.getControl());
 		smooksTreeViewer2.getControl().setMenu(menu);
 		formEditor.getSite().registerContextMenu(contextMenu,
-				new UnwrappingSelectionProvider(smooksTreeViewer2));
+			new UnwrappingSelectionProvider(smooksTreeViewer2));
 	}
 
 	public TreeViewer getSmooksTreeViewer() {
@@ -204,7 +271,8 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 	}
 
 	public void menuAboutToShow(IMenuManager menuManager) {
-		((IMenuListener) formEditor.getEditorSite().getActionBarContributor()).menuAboutToShow(menuManager);
+		((IMenuListener) formEditor.getEditorSite().getActionBarContributor())
+			.menuAboutToShow(menuManager);
 	}
 
 	private class TextEObjectModelFilter extends ViewerFilter {
@@ -217,7 +285,7 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 			if (obj instanceof BasicFeatureMapEntry) {
 				EStructuralFeature sf = ((BasicFeatureMapEntry) obj).getEStructuralFeature();
 				if (sf.equals(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT)
-						|| sf.equals(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA)) {
+					|| sf.equals(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA)) {
 					return false;
 				}
 			}
@@ -230,6 +298,46 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 			smooksTreeViewer.setInput(model);
 		} else {
 			smooksTreeViewer.setInput(new Object());
+		}
+	}
+
+	/**
+	 * 
+	 * @param selections
+	 */
+	protected void updateButtons(List<?> selections) {
+		removeButton.setEnabled(true);
+		upButton.setEnabled(true);
+		downButton.setEnabled(true);
+		if (selections.size() >= 1) {
+			for (Iterator<?> iterator = selections.iterator(); iterator.hasNext();) {
+				Object object = (Object) iterator.next();
+				object = AdapterFactoryEditingDomain.unwrap(object);
+				if (object instanceof SmooksResourceListType
+					|| object instanceof org.jboss.tools.smooks10.model.smooks.SmooksResourceListType) {
+					removeButton.setEnabled(false);
+					break;
+				}
+			}
+		}
+		if (selections.size() == 1) {
+			Object selection = selections.get(0);
+			if (selection instanceof SmooksResourceListType
+				|| selection instanceof org.jboss.tools.smooks10.model.smooks.SmooksResourceListType) {
+				upButton.setEnabled(false);
+				downButton.setEnabled(false);
+			} else {
+				if (selection instanceof EObject) {
+					EObject parent = ((EObject) selection).eContainer();
+					int index = parent.eContents().indexOf(selection);
+					if (index <= 0) {
+						upButton.setEnabled(false);
+					}
+					if (index >= parent.eContents().size() - 1) {
+						downButton.setEnabled(false);
+					}
+				}
+			}
 		}
 	}
 
@@ -250,11 +358,13 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 				objList.add(obj);
 			}
 			if (objList.isEmpty()) {
-				sectionPart.getManagedForm().fireSelectionChanged(sectionPart, event.getSelection());
+				sectionPart.getManagedForm()
+					.fireSelectionChanged(sectionPart, event.getSelection());
 			} else {
 				sectionPart.getManagedForm().fireSelectionChanged(sectionPart,
-						new StructuredSelection(objList.toArray()));
+					new StructuredSelection(objList.toArray()));
 			}
+			updateButtons(objList);
 		}
 	}
 
