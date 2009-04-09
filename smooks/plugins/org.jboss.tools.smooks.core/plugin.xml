@@ -120,5 +120,18 @@
             class="org.jboss.tools.smooks.model.edi.util.EdiResourceFactoryImpl"/>
    </extension>
    
+      <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.milyn.org/xsd/smooks/file-routing-1.1.xsd"
+            class="org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage"
+            genModel="model/file-routing-1.1.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="filerouting"
+            class="org.jboss.tools.smooks.model.fileRouting.util.FileRoutingResourceFactoryImpl"/>
+   </extension>
+   
    
 </plugin>
