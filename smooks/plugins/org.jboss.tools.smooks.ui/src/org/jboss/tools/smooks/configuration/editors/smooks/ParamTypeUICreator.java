@@ -46,5 +46,6 @@ public class ParamTypeUICreator extends PropertyUICreator {
 	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 		Composite parent, Object model) {
 		SmooksUIUtils.createTextFieldEditor("Value", editingdomain, toolkit, parent, model);
+		SmooksUIUtils.createCDATAFieldEditor("CDATA", editingdomain, toolkit, parent, model);
 	}
 }
