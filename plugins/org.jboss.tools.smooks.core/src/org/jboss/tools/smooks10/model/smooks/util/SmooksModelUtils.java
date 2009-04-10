@@ -10,17 +10,23 @@
  ******************************************************************************/
 package org.jboss.tools.smooks10.model.smooks.util;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
+import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.jboss.tools.smooks10.model.smooks.ParamType;
 import org.jboss.tools.smooks10.model.smooks.ResourceConfigType;
@@ -296,9 +302,63 @@ public class SmooksModelUtils {
 	public static void appendTextToSmooksType(AnyType smooksModel, String text) {
 		smooksModel.getMixed().add(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, text);
 	}
+
+	public static void setTextToSmooksType(EditingDomain editingDomain, AnyType smooksModel,
+		String text) {
+		CompoundCommand ccommand = new CompoundCommand();
+		List<String> listValue = new ArrayList<String>();
+		listValue.add(text);
+		Command addCommand = AddCommand.create(editingDomain, smooksModel,
+			XMLTypePackage.Literals.ANY_TYPE__MIXED, FeatureMapUtil.createEntry(
+				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, text));
+		Object removeValue = (smooksModel.getMixed().get(
+			XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, true));
+		if (removeValue != null && removeValue instanceof Collection<?>) {
+			List<Object> rList = new ArrayList<Object>();
+			for (Iterator<?> iterator = ((Collection<?>) removeValue).iterator(); iterator
+				.hasNext();) {
+				Object string = (Object) iterator.next();
+				rList.add(FeatureMapUtil.createEntry(
+					XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, string));
+			}
+			Command cc = RemoveCommand.create(editingDomain, smooksModel, null, rList);
+			if (cc != null && cc.canExecute()) {
+				ccommand.append(cc);
+			}
+		}
+		if (addCommand != null && addCommand.canExecute()) {
+			ccommand.append(addCommand);
+		}
+		editingDomain.getCommandStack().execute(ccommand);
+	}
 	
-	public static void appendTextToSmooksType(EditingDomain editingDomain , AnyType smooksModel, String text) {
-		smooksModel.getMixed().add(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, text);
+	public static void setCDATAToSmooksType(EditingDomain editingDomain, AnyType smooksModel,
+		String cdata) {
+		CompoundCommand ccommand = new CompoundCommand();
+		List<String> listValue = new ArrayList<String>();
+		listValue.add(cdata);
+		Command addCommand = AddCommand.create(editingDomain, smooksModel,
+			XMLTypePackage.Literals.ANY_TYPE__MIXED, FeatureMapUtil.createEntry(
+				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, cdata));
+		Object removeValue = (smooksModel.getMixed().get(
+			XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, true));
+		if (removeValue != null && removeValue instanceof Collection<?>) {
+			List<Object> rList = new ArrayList<Object>();
+			for (Iterator<?> iterator = ((Collection<?>) removeValue).iterator(); iterator
+				.hasNext();) {
+				Object string = (Object) iterator.next();
+				rList.add(FeatureMapUtil.createEntry(
+					XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, string));
+			}
+			Command cc = RemoveCommand.create(editingDomain, smooksModel, null, rList);
+			if (cc != null && cc.canExecute()) {
+				ccommand.append(cc);
+			}
+		}
+		if (addCommand != null && addCommand.canExecute()) {
+			ccommand.append(addCommand);
+		}
+		editingDomain.getCommandStack().execute(ccommand);
 	}
 
 	public static void appendCDATAToSmooksType(AnyType smooksModel, String text) {
@@ -331,12 +391,12 @@ public class SmooksModelUtils {
 		}
 	}
 
-	public static CommandParameter createTextCommandParamter(Object owner , String value) {
-		return createChildParameter(owner , XMLTypePackage.Literals.ANY_TYPE__MIXED, FeatureMapUtil.createEntry(
-			XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, value));
+	public static CommandParameter createTextCommandParamter(Object owner, String value) {
+		return createChildParameter(owner, XMLTypePackage.Literals.ANY_TYPE__MIXED, FeatureMapUtil
+			.createEntry(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, value));
 	}
 
-	public static CommandParameter createChildParameter(Object owner ,Object feature, Object child) {
+	public static CommandParameter createChildParameter(Object owner, Object feature, Object child) {
 		return new CommandParameter(owner, feature, child);
 	}
 
