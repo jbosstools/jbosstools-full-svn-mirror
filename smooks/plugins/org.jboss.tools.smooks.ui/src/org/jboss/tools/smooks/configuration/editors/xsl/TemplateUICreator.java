@@ -8,21 +8,21 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors.smooks;
+package org.jboss.tools.smooks.configuration.editors.xsl;
 
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.xsl.XslPackage;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
  */
-public class ConditionTypeUICreator extends PropertyUICreator {
+public class TemplateUICreator extends PropertyUICreator {
 
 	/*
 	 * (non-Javadoc)
@@ -35,17 +35,21 @@ public class ConditionTypeUICreator extends PropertyUICreator {
 	 */
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
 		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature) {
-		if (feature == SmooksPackage.eINSTANCE.getConditionType_Value()) {
+		if (feature == XslPackage.eINSTANCE.getTemplate_Value()) {
 		}
-		if (feature == SmooksPackage.eINSTANCE.getConditionType_Evaluator()) {
-			return SmooksUIUtils.createJavaTypeSearchFieldEditor(parent, toolkit, propertyDescriptor, (EObject)model);
-		}
-		if (feature == SmooksPackage.eINSTANCE.getConditionType_Id()) {
-		}
-		if (feature == SmooksPackage.eINSTANCE.getConditionType_IdRef()) {
+		if (feature == XslPackage.eINSTANCE.getTemplate_Encoding()) {
 		}
 
 		return null;
 	}
+
+	@Override
+	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+		Composite parent, Object model) {
+		SmooksUIUtils.createTextFieldEditor("Value", editingdomain, toolkit, parent, model);
+		SmooksUIUtils.createCDATAFieldEditor("Template Contents", editingdomain, toolkit, parent, model);
+	}
+	
+	
 
 }

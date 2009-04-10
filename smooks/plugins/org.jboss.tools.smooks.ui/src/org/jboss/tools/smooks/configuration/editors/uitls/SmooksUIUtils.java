@@ -10,26 +10,15 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.uitls;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.xml.type.AnyType;
-import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
-import org.eclipse.emf.edit.command.AddCommand;
-import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor.PropertyValueWrapper;
@@ -88,7 +77,7 @@ public class SmooksUIUtils {
 				}
 				String text = SmooksModelUtils.getAnyTypeText((AnyType) fm);
 				if (!valueText.getText().equals(text)) {
-					SmooksModelUtils.setTextToSmooksType(fEditingDomain,(AnyType) fm, text);
+					SmooksModelUtils.setTextToSmooksType(fEditingDomain,(AnyType) fm, valueText.getText());
 				}
 			}
 		});
@@ -101,7 +90,7 @@ public class SmooksUIUtils {
 		GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 		label1.setLayoutData(gd);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		final Text cdataText = toolkit.createText(parent, "", SWT.MULTI | SWT.V_SCROLL);
+		final Text cdataText = toolkit.createText(parent, "", SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.heightHint = 300;
 		cdataText.setLayoutData(gd);
@@ -121,7 +110,7 @@ public class SmooksUIUtils {
 				}
 				String text = SmooksModelUtils.getAnyTypeCDATA((AnyType) fm);
 				if (!cdataText.getText().equals(text)) {
-					SmooksModelUtils.setCDATAToSmooksType(fEditingDomain,(AnyType) fm, text);
+					SmooksModelUtils.setCDATAToSmooksType(fEditingDomain,(AnyType) fm, cdataText.getText());
 				}
 			}
 		});
