@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -150,12 +151,12 @@ public class AbstractAnyTypeItemProvider
 //					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT,
 //					 "")));
 //
-//		newChildDescriptors.add
-//			(createChildParameter
-//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-//				 FeatureMapUtil.createEntry
-//					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT,
-//					 "")));
+		newChildDescriptors.add
+			(createChildParameter
+				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+				 FeatureMapUtil.createEntry
+					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT,
+					 "")));
 //
 //		newChildDescriptors.add
 //			(createChildParameter

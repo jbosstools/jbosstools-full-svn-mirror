@@ -16,9 +16,19 @@ import java.util.Map;
 import org.jboss.tools.smooks.configuration.editors.javabean.BindingsPropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanValueUICreator;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanWiringUICreator;
+import org.jboss.tools.smooks.configuration.editors.smooks.ConditionTypeUICreator;
+import org.jboss.tools.smooks.configuration.editors.smooks.ImportTypeUICreator;
+import org.jboss.tools.smooks.configuration.editors.smooks.ParamTypeUICreator;
+import org.jboss.tools.smooks.configuration.editors.smooks.ResourceConfigTypeUICreator;
+import org.jboss.tools.smooks.configuration.editors.smooks.ResourceTypeUICreator;
 import org.jboss.tools.smooks.model.javabean.impl.BindingsTypeImpl;
 import org.jboss.tools.smooks.model.javabean.impl.ValueTypeImpl;
 import org.jboss.tools.smooks.model.javabean.impl.WiringTypeImpl;
+import org.jboss.tools.smooks.model.smooks.impl.ConditionTypeImpl;
+import org.jboss.tools.smooks.model.smooks.impl.ImportTypeImpl;
+import org.jboss.tools.smooks.model.smooks.impl.ParamTypeImpl;
+import org.jboss.tools.smooks.model.smooks.impl.ResourceConfigTypeImpl;
+import org.jboss.tools.smooks.model.smooks.impl.ResourceTypeImpl;
 
 /**
  * @author Dart (dpeng@redhat.com)<p>
@@ -38,6 +48,13 @@ public class PropertyUICreatorManager {
 		map.put(BindingsTypeImpl.class, new BindingsPropertyUICreator());
 		map.put(ValueTypeImpl.class, new JavabeanValueUICreator());
 		map.put(WiringTypeImpl.class, new JavabeanWiringUICreator());
+		
+		// for smooks models 
+		map.put(ConditionTypeImpl.class, new ConditionTypeUICreator());
+		map.put(ImportTypeImpl.class, new ImportTypeUICreator());
+		map.put(ParamTypeImpl.class, new ParamTypeUICreator());
+		map.put(ResourceConfigTypeImpl.class, new ResourceConfigTypeUICreator());
+		map.put(ResourceTypeImpl.class, new ResourceTypeUICreator());
 	}
 
 	public void registePropertyUICreator(Class<?> key,IPropertyUICreator creator){

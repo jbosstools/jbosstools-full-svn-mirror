@@ -8,25 +8,19 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors;
+package org.jboss.tools.smooks.configuration.editors.smooks;
 
-import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 /**
- * @author Dart (dpeng@redhat.com)
- *         <p>
- *         Apr 9, 2009
+ * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
  */
-public class PropertyUICreator implements IPropertyUICreator {
+public class ResourceConfigTypeUICreator extends PropertyUICreator {
 
 	/*
 	 * (non-Javadoc)
@@ -38,25 +32,16 @@ public class PropertyUICreator implements IPropertyUICreator {
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
-			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature) {
-		if(feature == SmooksPackage.eINSTANCE.getAbstractReader_TargetProfile()){
-			
+		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature) {
+		
+		if (feature == SmooksPackage.eINSTANCE.getResourceConfigType_Selector()) {
 		}
+		if (feature == SmooksPackage.eINSTANCE.getResourceConfigType_SelectorNamespace()) {
+		}
+		if (feature == SmooksPackage.eINSTANCE.getResourceConfigType_TargetProfile()) {
+		}
+
 		return null;
 	}
-
-	public IResource getResource(EObject model) {
-		return SmooksUIUtils.getResource(model);
-	}
-
-	public IJavaProject getJavaProject(EObject model) {
-		return SmooksUIUtils.getJavaProject(model);
-	}
-
-	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-		Composite parent, Object model) {
-		
-	}
-
 
 }

@@ -281,14 +281,12 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		@Override
 		public boolean select(Viewer viewer, Object parentElement, Object element) {
 			Object obj = element;
-			while (obj != null && obj instanceof IWrapperItemProvider) {
-				obj = ((IWrapperItemProvider) obj).getValue();
-			}
+			obj = AdapterFactoryEditingDomain.unwrap(obj);
 			if (obj instanceof BasicFeatureMapEntry) {
 				EStructuralFeature sf = ((BasicFeatureMapEntry) obj).getEStructuralFeature();
 				if (sf.equals(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT)
 					|| sf.equals(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA)) {
-					return false;
+//					return false;
 				}
 			}
 			return true;
