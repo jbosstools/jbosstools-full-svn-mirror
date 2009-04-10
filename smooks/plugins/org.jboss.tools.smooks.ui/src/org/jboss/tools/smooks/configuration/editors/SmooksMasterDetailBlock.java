@@ -286,7 +286,11 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 				EStructuralFeature sf = ((BasicFeatureMapEntry) obj).getEStructuralFeature();
 				if (sf.equals(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT)
 					|| sf.equals(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA)) {
-//					return false;
+					return false;
+				}
+			}else{
+				if(obj.getClass() == String.class){
+					return false;
 				}
 			}
 			return true;
