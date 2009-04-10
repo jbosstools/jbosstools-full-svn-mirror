@@ -131,7 +131,7 @@ public class TemplateItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Template)object).getValue();
+		String label = null;
 		return label == null || label.length() == 0 ?
 			getString("_UI_Template_type") :
 			getString("_UI_Template_type") + " " + label;

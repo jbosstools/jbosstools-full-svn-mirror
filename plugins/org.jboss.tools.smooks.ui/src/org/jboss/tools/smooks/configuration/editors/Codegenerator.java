@@ -13,7 +13,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.jboss.tools.smooks.model.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.xsl.XslPackage;
 
 public class Codegenerator {
 	String basePath = "/home/Dart/Works/eclipse_wtp.3.0.4/eclipse/workspace/jbosstools/org.jboss.tools.smooks.ui/src/org/jboss/tools/smooks/configuration/editors/uitls/temp/";
@@ -43,7 +43,7 @@ public class Codegenerator {
 	public static void main(String[] args) {
 		Codegenerator g = new Codegenerator();
 		try {
-			g.generateCodes(SmooksPackage.eINSTANCE);
+			g.generateCodes(XslPackage.eINSTANCE);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
