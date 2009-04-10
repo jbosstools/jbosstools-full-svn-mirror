@@ -119,7 +119,7 @@ public class SmooksUIUtils {
 				if (!(fm instanceof AnyType)) {
 					return;
 				}
-				String text = SmooksModelUtils.getAnyTypeText((AnyType) fm);
+				String text = SmooksModelUtils.getAnyTypeCDATA((AnyType) fm);
 				if (!cdataText.getText().equals(text)) {
 					SmooksModelUtils.setCDATAToSmooksType(fEditingDomain,(AnyType) fm, text);
 				}
