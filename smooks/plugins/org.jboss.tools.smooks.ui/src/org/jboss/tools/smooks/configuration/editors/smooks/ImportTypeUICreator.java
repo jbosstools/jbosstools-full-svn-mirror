@@ -8,22 +8,34 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors;
+package org.jboss.tools.smooks.configuration.editors.smooks;
 
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
+import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 /**
- * @author Dart (dpeng@redhat.com)
- *         <p>
- *         Apr 7, 2009
+ * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
  */
-public interface IPropertyUICreator {
+public class ImportTypeUICreator extends PropertyUICreator {
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.configuration.editors.IPropertyUICreator#
+	 * createPropertyUI(org.eclipse.ui.forms.widgets.FormToolkit,
+	 * org.eclipse.swt.widgets.Composite,
+	 * org.eclipse.emf.edit.provider.IItemPropertyDescriptor, java.lang.Object,
+	 * org.eclipse.emf.ecore.EAttribute)
+	 */
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
-			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature);
-	
-	public void createExtendUI(AdapterFactoryEditingDomain editingdomain,FormToolkit toolkit, Composite parent,Object model );
+		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature) {
+		if (feature == SmooksPackage.eINSTANCE.getImportType_File()) {
+		}
+		return null;
+	}
+
 }

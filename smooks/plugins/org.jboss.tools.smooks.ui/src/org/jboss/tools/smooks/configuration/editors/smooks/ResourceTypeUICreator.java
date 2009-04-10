@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors.javabean;
+package org.jboss.tools.smooks.configuration.editors.smooks;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
@@ -17,29 +17,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
+import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 /**
- * @author Dart (dpeng@redhat.com)
- *         <p>
- *         Apr 8, 2009
+ * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
  */
-public class BindingsPropertyUICreator extends PropertyUICreator {
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.jboss.tools.smooks.configuration.editors.IPropertyUICreator#canCreate
-	 * (org.eclipse.emf.edit.provider.IItemPropertyDescriptor, java.lang.Object,
-	 * org.eclipse.emf.ecore.EAttribute)
-	 */
-	public boolean canCreate(IItemPropertyDescriptor itemPropertyDescriptor, Object model, EAttribute feature) {
-		if (feature == JavabeanPackage.eINSTANCE.getBindingsType_Class()) {
-			return true;
-		}
-		return false;
-	}
+public class ResourceTypeUICreator extends PropertyUICreator {
 
 	/*
 	 * (non-Javadoc)
@@ -51,15 +34,15 @@ public class BindingsPropertyUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
-			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature) {
-		if (feature == JavabeanPackage.eINSTANCE.getBindingsType_Class()) {
-			return createBeanClassTextWithButton(parent, toolkit, propertyDescriptor, model);
+		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature) {
+		if (feature == SmooksPackage.eINSTANCE.getResourceType_Value()) {
+			return SmooksUIUtils.createJavaTypeSearchFieldEditor(parent, toolkit,
+				propertyDescriptor, (EObject) model);
 		}
+		if (feature == SmooksPackage.eINSTANCE.getResourceType_Type()) {
+		}
+
 		return null;
 	}
 
-	protected Composite createBeanClassTextWithButton(Composite composite, FormToolkit toolkit,
-			final IItemPropertyDescriptor propertyDescriptor, final Object model) {
-		return SmooksUIUtils.createJavaTypeSearchFieldEditor(composite, toolkit, propertyDescriptor, (EObject)model);
-	}
 }
