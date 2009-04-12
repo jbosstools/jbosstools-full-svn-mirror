@@ -16,6 +16,17 @@ package org.jboss.tools.smooks.configuration;
  */
 public class SmooksConstants {
 	public static final String SMOOKS_EXTENTION_NAME = "xml";
+	
+	public static final String SMOOKS_GRAPHICSEXT_EXTENTION_NAME = "ext";
+	
+	public static final String SMOOKS_EXTENTION_NAME_WITHDOT = "." + SMOOKS_EXTENTION_NAME;
+	
+	public static final String SMOOKS_GRAPHICSEXT_EXTENTION_NAME_WITHDOT = "." + SMOOKS_GRAPHICSEXT_EXTENTION_NAME;
+
+	
 	public static final String VERSION_1_0 = "1.0";
-	public static final String VERSION_1_1_1 = "1.1.1";
+	
+	public static final String VERSION_1_1 = "1.1";
+	
+	public static final String[] SMOOKS_VERSIONS = new String[]{VERSION_1_0,VERSION_1_1};
 }

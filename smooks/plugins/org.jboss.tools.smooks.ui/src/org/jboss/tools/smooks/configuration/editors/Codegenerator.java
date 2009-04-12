@@ -13,7 +13,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.jboss.tools.smooks.model.xsl.XslPackage;
+import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 public class Codegenerator {
 	String basePath = "/home/Dart/Works/eclipse_wtp.3.0.4/eclipse/workspace/jbosstools/org.jboss.tools.smooks.ui/src/org/jboss/tools/smooks/configuration/editors/uitls/temp/";
@@ -23,7 +23,7 @@ public class Codegenerator {
 		try {
 			FileReader reader = new FileReader(
 				new File(
-					"/home/Dart/Works/eclipse_wtp.3.0.4/eclipse/workspace/jbosstools/org.jboss.tools.smooks.ui/src/org/jboss/tools/smooks/configuration/editors/Template.txt"));
+					"/home/DartPeng/Work/eclipse/new-smooks-editor/org.jboss.tools.smooks.ui/src/org/jboss/tools/smooks/configuration/editors/Template.txt"));
 			BufferedReader r = new BufferedReader(reader);
 			String line = r.readLine();
 			while (line != null) {
@@ -43,7 +43,7 @@ public class Codegenerator {
 	public static void main(String[] args) {
 		Codegenerator g = new Codegenerator();
 		try {
-			g.generateCodes(XslPackage.eINSTANCE);
+			g.generateCodes(SmooksPackage.eINSTANCE);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -95,7 +95,7 @@ public class Codegenerator {
 			String allepName = epName + ".eINSTANCE.get" + eClass.getName();
 			List<EAttribute> alist = eClass.getEAllAttributes();
 			String attributeMethod = "";
-			for (Iterator iterator = alist.iterator(); iterator.hasNext();) {
+			for (Iterator<?> iterator = alist.iterator(); iterator.hasNext();) {
 				EAttribute attribute = (EAttribute) iterator.next();
 				String atn = attribute.getName();
 				String firstC = new String(new char[]{ atn.toCharArray()[0] });

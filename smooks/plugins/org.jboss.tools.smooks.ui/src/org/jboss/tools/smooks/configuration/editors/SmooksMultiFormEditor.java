@@ -24,9 +24,11 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
@@ -56,15 +58,17 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.SmooksConstants;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.wizards.SmooksConfigurationFileNewWizard;
 import org.jboss.tools.smooks.edit.common.provider.CommonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.edit.edi.provider.EdiItemProviderAdapterFactory;
 import org.jboss.tools.smooks.edit.freemarker.provider.FreemarkerItemProviderAdapterFactory;
 import org.jboss.tools.smooks.edit.javabean.provider.JavabeanItemProviderAdapterFactory;
 import org.jboss.tools.smooks.edit.smooks.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.edit.xsl.provider.XslItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
-
-
 
 /**
  * 
@@ -83,6 +87,8 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 	protected EditingDomain editingDomain = null;
 
 	private PropertySheetPage propertySheetPage = null;
+
+	private SmooksGraphicsExtType smooksGraphicsExt = null;
 
 	private EObject smooksModel;
 
@@ -149,7 +155,6 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		return ((BasicCommandStack) editingDomain.getCommandStack()).isSaveNeeded() || super.isDirty();
 	}
 
-	
 	public EObject getSmooksModel() {
 		return smooksModel;
 	}
@@ -181,8 +186,8 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 			List<Object> newList = new ArrayList<Object>();
 			for (Iterator<?> iterator = theSelection.iterator(); iterator.hasNext();) {
 				Object object = (Object) iterator.next();
-				if(object instanceof IWrapperItemProvider){
-					newList.add(((IWrapperItemProvider)object).getValue());
+				if (object instanceof IWrapperItemProvider) {
+					newList.add(((IWrapperItemProvider) object).getValue());
 				}
 			}
 			configurationPage.setSelectionToViewer(newList);
@@ -212,9 +217,18 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 			e.printStackTrace();
 		}
 	}
+	
+	
+
+	/**
+	 * @return the smooksGraphicsExt
+	 */
+	public SmooksGraphicsExtType getSmooksGraphicsExt() {
+		return smooksGraphicsExt;
+	}
 
 	protected StructuredTextEditor createTextEditor() {
-		SmooksXMLEditor xmlEditor = new SmooksXMLEditor(){
+		SmooksXMLEditor xmlEditor = new SmooksXMLEditor() {
 
 			public void createPartControl(Composite parent) {
 				super.createPartControl(parent);
@@ -260,7 +274,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 				});
 
 			}
-			
+
 		};
 		return xmlEditor;
 	}
@@ -297,7 +311,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 	@Override
 	public void doSave(IProgressMonitor monitor) {
 		IEditorPart activeEditor = getActiveEditor();
-		if(activeEditor != null && activeEditor == textEditor){
+		if (activeEditor != null && activeEditor == textEditor) {
 			textEditor.doSave(monitor);
 			((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
 			firePropertyChange(PROP_DIRTY);
@@ -339,11 +353,27 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		}
 		editingDomain.getResourceSet().getResources().add(smooksResource);
 		super.init(site, input);
-		// try {
-		// file.move(getNewPath(file), true, true, null);
-		// } catch (CoreException e) {
-		// e.printStackTrace();
-		// }
+		// if success to open editor , check if there isn't ext file and create
+		// a new one
+		String extFileName = file.getName() + SmooksConstants.SMOOKS_GRAPHICSEXT_EXTENTION_NAME_WITHDOT;
+		IContainer container = file.getParent();
+		if (container != null && container.exists()) {
+			IFile extFile = container.getFile(new Path(extFileName));
+			if (extFile != null && !extFile.exists()) {
+				try {
+					SmooksConfigurationFileNewWizard.createExtentionFile(extFile, null);
+				} catch (Throwable t) {
+					// ignore
+				}
+			}
+			if (extFile != null && extFile.exists()) {
+				try {
+					smooksGraphicsExt = SmooksUIUtils.loadSmooksGraphicsExt(extFile);
+				} catch (IOException e) {
+					SmooksConfigurationActivator.getDefault().log(e);
+				}
+			}
+		}
 	}
 
 	public IPath getNewPath(IFile file) {

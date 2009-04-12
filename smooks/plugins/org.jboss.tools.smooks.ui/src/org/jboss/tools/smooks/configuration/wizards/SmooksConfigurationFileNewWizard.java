@@ -14,6 +14,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -46,6 +47,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 	public SmooksConfigurationFileNewWizard() {
 		super();
 		setNeedsProgressMonitor(true);
+		setDefaultPageImageDescriptor(SmooksConfigurationActivator.getImageDescriptor("icons/smooks-wiz.gif"));
 	}
 
 	/**
@@ -54,7 +56,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 
 	public void addPages() {
 		containerSelectionPage = new SmooksFileContainerSelectionPage("Smooks Configuration File",
-			(IStructuredSelection) selection);
+				(IStructuredSelection) selection);
 		addPage(containerSelectionPage);
 	}
 
@@ -95,8 +97,8 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 	 * file.
 	 */
 
-	private void doFinish(IPath containerPath, String fileName, IProgressMonitor monitor,
-		String version) throws CoreException {
+	private void doFinish(IPath containerPath, String fileName, IProgressMonitor monitor, String version)
+			throws CoreException {
 		// create a sample file
 		monitor.beginTask("Creating " + fileName, 2);
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
@@ -105,17 +107,22 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		if (resource.exists() && resource instanceof IContainer) {
 			container = (IContainer) resource;
 		}
-		if (container == null) throwCoreException("Container \"" + containerPath.toPortableString()
-			+ "\" does not exist.");
-		final IFile file = container.getFile(new Path(fileName));
+		if (container == null)
+			throwCoreException("Container \"" + containerPath.toPortableString() + "\" does not exist.");
+		final IFile configFile = container.getFile(new Path(fileName));
+		String extFileName = fileName + ".ext";
+		final IFile extFile = container.getFile(new Path(extFileName));
 		try {
+			// create config file
 			InputStream stream = openContentStream(version);
-			if (file.exists()) {
-				file.setContents(stream, true, true, monitor);
+			if (configFile.exists()) {
+				configFile.setContents(stream, true, true, monitor);
 			} else {
-				file.create(stream, true, monitor);
+				configFile.create(stream, true, monitor);
 			}
 			stream.close();
+			// create ext file:
+			createExtentionFile(extFile, monitor);
 		} catch (IOException e) {
 			SmooksConfigurationActivator.getDefault().log(e);
 		}
@@ -123,9 +130,8 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		monitor.setTaskName("Opening file with Smooks Editor.");
 		getShell().getDisplay().asyncExec(new Runnable() {
 			public void run() {
-				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-					.getActivePage();
-				FileEditorInput editorInput = new FileEditorInput(file);
+				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+				FileEditorInput editorInput = new FileEditorInput(configFile);
 				try {
 					page.openEditor(editorInput, SmooksMultiFormEditor.EDITOR_ID, true);
 				} catch (PartInitException e) {
@@ -134,6 +140,25 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 			}
 		});
 		monitor.worked(1);
+	}
+	
+	public static void createExtentionFile(IFile file , IProgressMonitor monitor) throws CoreException, IOException{
+		if(monitor == null){
+			monitor = new NullProgressMonitor();
+		}
+		InputStream stream1 = createExtContentStream();
+		if (file.exists()) {
+			file.setContents(stream1, true, true, monitor);
+		} else {
+			file.create(stream1, true, monitor);
+		}
+		stream1.close();
+	}
+
+	public static InputStream createExtContentStream() {
+		String contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+				+ "    <smooks-graphics-ext xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
+		return new ByteArrayInputStream(contents.getBytes());
 	}
 
 	/**
@@ -145,26 +170,26 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		String contents = "";
 		if (SmooksConstants.VERSION_1_0.equals(version)) {
 			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
-				+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.0.xsd\">\n"//$NON-NLS-1$
-				+ "		<resource-config selector=\"global-parameters\">\n"//$NON-NLS-1$
-				+ "			<param name=\"stream.filter.type\">SAX</param>\n"//$NON-NLS-1$
-				+ "		</resource-config>\n"//$NON-NLS-1$
-				+ "</smooks-resource-list>"; //$NON-NLS-1$
+					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.0.xsd\">\n"//$NON-NLS-1$
+					+ "		<resource-config selector=\"global-parameters\">\n"//$NON-NLS-1$
+					+ "			<param name=\"stream.filter.type\">SAX</param>\n"//$NON-NLS-1$
+					+ "		</resource-config>\n"//$NON-NLS-1$
+					+ "</smooks-resource-list>"; //$NON-NLS-1$
 		}
-		if (SmooksConstants.VERSION_1_1_1.equals(version)) {
+		if (SmooksConstants.VERSION_1_1.equals(version)) {
 			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
-				+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.1.xsd\">\n"//$NON-NLS-1$
-				+ "		<resource-config selector=\"global-parameters\">\n"//$NON-NLS-1$
-				+ "			<param name=\"stream.filter.type\">SAX</param>\n"//$NON-NLS-1$
-				+ "		</resource-config>\n"//$NON-NLS-1$
-				+ "</smooks-resource-list>"; //$NON-NLS-1$
+					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.1.xsd\">\n"//$NON-NLS-1$
+					+ "		<resource-config selector=\"global-parameters\">\n"//$NON-NLS-1$
+					+ "			<param name=\"stream.filter.type\">SAX</param>\n"//$NON-NLS-1$
+					+ "		</resource-config>\n"//$NON-NLS-1$
+					+ "</smooks-resource-list>"; //$NON-NLS-1$
 		}
 		return new ByteArrayInputStream(contents.getBytes());
 	}
 
 	private void throwCoreException(String message) throws CoreException {
-		IStatus status = new Status(IStatus.ERROR,SmooksConfigurationActivator.PLUGIN_ID,
-			IStatus.OK, message, null);
+		IStatus status = new Status(IStatus.ERROR, SmooksConfigurationActivator.PLUGIN_ID, IStatus.OK,
+				message, null);
 		throw new CoreException(status);
 	}
 

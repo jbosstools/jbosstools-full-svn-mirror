@@ -23,7 +23,11 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
  */
 public interface IPropertyUICreator {
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
-			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature);
+			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
+			SmooksMultiFormEditor formEditor);
+
+	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+			Composite parent, Object model, SmooksMultiFormEditor formEditor);
 	
-	public void createExtendUI(AdapterFactoryEditingDomain editingdomain,FormToolkit toolkit, Composite parent,Object model );
+	public boolean ignoreProperty(EAttribute feature);
 }

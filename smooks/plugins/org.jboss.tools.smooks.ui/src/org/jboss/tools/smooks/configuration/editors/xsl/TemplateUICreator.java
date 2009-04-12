@@ -16,6 +16,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
+import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
 
@@ -34,7 +35,7 @@ public class TemplateUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
-		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature) {
+			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,SmooksMultiFormEditor formEditor) {
 		if (feature == XslPackage.eINSTANCE.getTemplate_Value()) {
 		}
 		if (feature == XslPackage.eINSTANCE.getTemplate_Encoding()) {
@@ -42,14 +43,27 @@ public class TemplateUICreator extends PropertyUICreator {
 
 		return null;
 	}
+	
+	
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.configuration.editors.PropertyUICreator#ignoreProperty(org.eclipse.emf.ecore.EAttribute)
+	 */
+	@Override
+	public boolean ignoreProperty(EAttribute feature) {
+		if (feature == XslPackage.eINSTANCE.getTemplate_Value()) {
+			return true;
+		}
+		return super.ignoreProperty(feature);
+	}
+
+
 
 	@Override
 	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-		Composite parent, Object model) {
+			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		SmooksUIUtils.createTextFieldEditor("Value", editingdomain, toolkit, parent, model);
 		SmooksUIUtils.createCDATAFieldEditor("Template Contents", editingdomain, toolkit, parent, model);
 	}
-	
-	
 
 }

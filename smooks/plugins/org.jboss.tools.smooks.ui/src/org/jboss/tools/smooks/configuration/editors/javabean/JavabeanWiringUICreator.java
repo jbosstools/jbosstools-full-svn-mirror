@@ -24,6 +24,7 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
@@ -42,29 +43,26 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 		}
 		return false;
 	}
-	
-	
 
 	@Override
 	protected boolean canCreateMethodsSearchFieldEditor(EAttribute feature) {
-		if(feature == JavabeanPackage.eINSTANCE.getWiringType_SetterMethod()){
+		if (feature == JavabeanPackage.eINSTANCE.getWiringType_SetterMethod()) {
 			return true;
 		}
 		return super.canCreateMethodsSearchFieldEditor(feature);
 	}
 
-
-
 	@Override
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
-		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature) {
+			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
+			SmooksMultiFormEditor formEditor) {
 		if (feature == JavabeanPackage.eINSTANCE.getWiringType_BeanIdRef()) {
-			if(model instanceof EObject){
-				SmooksResourceListType smooksResourceList = getSmooksResourceList((EObject)model);
-				if(smooksResourceList != null){
+			if (model instanceof EObject) {
+				SmooksResourceListType smooksResourceList = getSmooksResourceList((EObject) model);
+				if (smooksResourceList != null) {
 					String displayName = propertyDescriptor.getDisplayName(model);
 					toolkit.createLabel(parent, displayName + " :");
-					final CCombo combo = new CCombo(parent,SWT.BORDER);
+					final CCombo combo = new CCombo(parent, SWT.BORDER);
 					GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 					combo.setLayoutData(gd);
 					Object editValue = SmooksUIUtils.getEditValue(propertyDescriptor, model);
@@ -77,15 +75,15 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 						combo.add(beanId);
 					}
 					int selectIndex = list.indexOf(editValue);
-					if(selectIndex != -1){
+					if (selectIndex != -1) {
 						combo.select(selectIndex);
 					}
 					final IItemPropertyDescriptor ip = propertyDescriptor;
 					final Object cmodel = model;
-					combo.addModifyListener(new ModifyListener(){
+					combo.addModifyListener(new ModifyListener() {
 						public void modifyText(ModifyEvent e) {
 							Object editValue = SmooksUIUtils.getEditValue(ip, cmodel);
-							if(combo.getText().equals(editValue)){
+							if (combo.getText().equals(editValue)) {
 								return;
 							}
 							ip.setPropertyValue(cmodel, combo.getText());
@@ -95,18 +93,18 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 				}
 			}
 		}
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature,formEditor);
 	}
-	
-	protected List<String> getBeanIdList(SmooksResourceListType resourceList){
+
+	protected List<String> getBeanIdList(SmooksResourceListType resourceList) {
 		List<AbstractResourceConfig> rlist = resourceList.getAbstractResourceConfig();
 		List<String> beanIdList = new ArrayList<String>();
 		for (Iterator<?> iterator = rlist.iterator(); iterator.hasNext();) {
-			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator
-				.next();
-			if(abstractResourceConfig instanceof BindingsType){
-				String beanId = ((BindingsType)abstractResourceConfig).getBeanId();
-				if(beanId == null) continue;
+			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
+			if (abstractResourceConfig instanceof BindingsType) {
+				String beanId = ((BindingsType) abstractResourceConfig).getBeanId();
+				if (beanId == null)
+					continue;
 				beanIdList.add(beanId);
 			}
 		}
