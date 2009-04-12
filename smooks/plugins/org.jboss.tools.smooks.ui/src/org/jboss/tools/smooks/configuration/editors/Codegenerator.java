@@ -13,17 +13,18 @@ import java.util.List;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 public class Codegenerator {
-	String basePath = "/home/Dart/Works/eclipse_wtp.3.0.4/eclipse/workspace/jbosstools/org.jboss.tools.smooks.ui/src/org/jboss/tools/smooks/configuration/editors/uitls/temp/";
+	String basePath = "/home/DartPeng/Work/eclipse/new-smooks-editor/org.jboss.tools.smooks.ui/src/org/jboss/tools/smooks/configuration/editors/uitls/temp";
 	String tempContents = "";
 
 	public Codegenerator() {
 		try {
 			FileReader reader = new FileReader(
-				new File(
-					"/home/DartPeng/Work/eclipse/new-smooks-editor/org.jboss.tools.smooks.ui/src/org/jboss/tools/smooks/configuration/editors/Template.txt"));
+					new File(
+							"/home/DartPeng/Work/eclipse/new-smooks-editor/org.jboss.tools.smooks.ui/src/org/jboss/tools/smooks/configuration/editors/Template.txt"));
 			BufferedReader r = new BufferedReader(reader);
 			String line = r.readLine();
 			while (line != null) {
@@ -43,7 +44,7 @@ public class Codegenerator {
 	public static void main(String[] args) {
 		Codegenerator g = new Codegenerator();
 		try {
-			g.generateCodes(SmooksPackage.eINSTANCE);
+			g.generateCodes(JavabeanPackage.eINSTANCE);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -53,8 +54,8 @@ public class Codegenerator {
 		}
 	}
 
-	public void generateCodes(EPackage epackage) throws IllegalArgumentException,
-		IllegalAccessException, IOException {
+	public void generateCodes(EPackage epackage) throws IllegalArgumentException, IllegalAccessException,
+			IOException {
 		Field[] fields = epackage.getClass().getDeclaredFields();
 		for (int i = 0; i < fields.length; i++) {
 			Field f = fields[i];
@@ -66,7 +67,8 @@ public class Codegenerator {
 					continue;
 				}
 				File file = new File(basePath + eClass.getName() + "UICreator.java");
-				System.out.println("map.put("+eClass.getName()+"Impl.class, new "+eClass.getName()+"UICreator());");
+				System.out.println("map.put(" + eClass.getName() + "Impl.class, new " + eClass.getName()
+						+ "UICreator());");
 				if (!file.exists()) {
 					file.createNewFile();
 					FileWriter writer = new FileWriter(file);
@@ -83,8 +85,7 @@ public class Codegenerator {
 			String t = tempContents;
 			if (t.indexOf("${className}") != -1) {
 				String s = t.substring(0, t.indexOf("${className}"));
-				String es = t.substring(t.indexOf("${className}") + "${className}".length(), t
-					.length());
+				String es = t.substring(t.indexOf("${className}") + "${className}".length(), t.length());
 				t = s + className + es;
 			}
 			String epName = ePackage.getClass().getSimpleName();
@@ -98,9 +99,9 @@ public class Codegenerator {
 			for (Iterator<?> iterator = alist.iterator(); iterator.hasNext();) {
 				EAttribute attribute = (EAttribute) iterator.next();
 				String atn = attribute.getName();
-				String firstC = new String(new char[]{ atn.toCharArray()[0] });
+				String firstC = new String(new char[] { atn.toCharArray()[0] });
 				firstC = firstC.toUpperCase();
-				atn = firstC + atn.substring(1,atn.length());
+				atn = firstC + atn.substring(1, atn.length());
 				String n = allepName + "_" + atn + "()";
 				String cn = "if(feature == " + n + "){}\n";
 				attributeMethod += cn;
@@ -108,7 +109,7 @@ public class Codegenerator {
 			int index2 = t.indexOf("${attributeMethod}");
 			if (index2 != -1) {
 				String am1 = t.substring(0, index2);
-				String am2 = t.substring(index2 + "${attributeMethod}".length() , t.length());
+				String am2 = t.substring(index2 + "${attributeMethod}".length(), t.length());
 				t = am1 + attributeMethod + am2;
 			}
 			return t;

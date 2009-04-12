@@ -11,6 +11,7 @@
 package org.jboss.tools.smooks.configuration.editors.uitls;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -34,6 +36,7 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -68,6 +71,14 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  */
 public class SmooksUIUtils {
 
+	public static final String FILE_PRIX = "File:/"; //$NON-NLS-1$
+
+	public static final String WORKSPACE_PRIX = "Workspace:/"; //$NON-NLS-1$
+
+	public static final String RESOURCE = "Resource:/";
+
+	public static final String XSL_NAMESPACE = " xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" ";
+
 	public static void createTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model) {
 		toolkit.createLabel(parent, "Value :");
@@ -94,6 +105,28 @@ public class SmooksUIUtils {
 				}
 			}
 		});
+	}
+
+	public static String parseFilePath(String path) throws InvocationTargetException {
+		int index = path.indexOf(FILE_PRIX);
+		if (index != -1) {
+			path = path.substring(index + FILE_PRIX.length(), path.length());
+		} else {
+			index = path.indexOf(WORKSPACE_PRIX);
+			if (index != -1) {
+				path = path.substring(index + WORKSPACE_PRIX.length(), path.length());
+				Path wpath = new Path(path);
+				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(wpath);
+				if (file.exists()) {
+					path = file.getLocation().toOSString();
+				} else {
+					throw new InvocationTargetException(new Exception("File : " + path + " isn't exsit")); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+			} else {
+				throw new InvocationTargetException(new Exception("This path is un-support" + path + ".")); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		}
+		return path;
 	}
 
 	public static Composite createSelectorFieldEditor(FormToolkit toolkit, Composite parent,
@@ -430,4 +463,20 @@ public class SmooksUIUtils {
 		toolkit.paintBordersFor(classTextComposite);
 		return classTextComposite;
 	}
+
+	public static void showErrorDialog(Shell shell, Status status) {
+		ErrorDialog.openError(shell, "Error", "error", status); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	public static Status createErrorStatus(Throwable throwable, String message) {
+		while (throwable != null && throwable instanceof InvocationTargetException) {
+			throwable = ((InvocationTargetException) throwable).getTargetException();
+		}
+		return new Status(Status.ERROR, SmooksConfigurationActivator.PLUGIN_ID, message, throwable);
+	}
+
+	public static Status createErrorStatus(Throwable throwable) {
+		return createErrorStatus(throwable, "Error"); //$NON-NLS-1$
+	}
+
 }
