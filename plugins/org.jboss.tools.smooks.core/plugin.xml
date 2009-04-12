@@ -133,5 +133,18 @@
             class="org.jboss.tools.smooks.model.fileRouting.util.FileRoutingResourceFactoryImpl"/>
    </extension>
    
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd"
+            class="org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtPackage"
+            genModel="model/smooks-graphics-ext.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="filerouting"
+            class="org.jboss.tools.smooks.model.graphics.ext.util.SmooksGraphicsExtResourceFactoryImpl"/>
+   </extension>
+   
    
 </plugin>
