@@ -38,5 +38,11 @@
             priority="low">
       </content-type>
    </extension>
+    <extension
+          point="org.eclipse.ui.startup">
+       <startup
+             class="org.jboss.tools.smooks.configuration.editors.SmooksToolsStartup">
+       </startup>
+    </extension>
 
 </plugin>

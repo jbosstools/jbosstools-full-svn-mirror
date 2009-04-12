@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+	targetNamespace="http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd"
+	elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:ext="http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd">
+
+
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Smooks Graphics
+			Editor Extention File Schema
+</xs:documentation>
+	</xs:annotation>
+
+	<xs:element name="smooks-graphics-ext">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ext:input" minOccurs="0" maxOccurs="unbounded">
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="inputType" type="xs:string"></xs:attribute>
+			<xs:attribute name="outputType" type="xs:string"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="input">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ext:param" minOccurs="0"
+					maxOccurs="unbounded">
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="type" type="xs:string"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="param">
+
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="type" type="xs:string" />
+					<xs:attribute name="name" type="xs:string">
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>
