@@ -94,6 +94,16 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		createSmooksTreeViewer(tool, managedForm, parent);
 	}
 
+	
+	
+	@Override
+	public void createContent(IManagedForm managedForm) {
+		super.createContent(managedForm);
+		GridData gd = new GridData(GridData.FILL_BOTH);
+		gd.horizontalSpan = 2;
+		sashForm.setLayoutData(gd);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

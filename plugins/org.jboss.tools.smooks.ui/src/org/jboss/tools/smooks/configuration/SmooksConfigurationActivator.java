@@ -66,6 +66,37 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 		super.initializeImageRegistry(reg);
 		reg.put(GraphicsConstants.JAVA_PROPERTY_ICON,
 				getImageDescriptor(GraphicsConstants.JAVA_PROPERTY_ICON_PATH));
+
+		reg.put(GraphicsConstants.IMAGE_EMPTY, getImageDescriptor(GraphicsConstants.IMAGE_PATH_BLANK));
+		reg.put(GraphicsConstants.IMAGE_ERROR, getImageDescriptor(GraphicsConstants.IMAGE_PATH_ERROR));
+		reg.put(GraphicsConstants.IMAGE_WARNING, getImageDescriptor(GraphicsConstants.IMAGE_PATH_WARNING));
+
+		// regist java images
+		reg.put(GraphicsConstants.IMAGE_JAVA_INTERFACE, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_JAVA_INTERFACE));
+		reg.put(GraphicsConstants.IMAGE_JAVA_ATTRIBUTE, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_JAVA_ATTRIBUTE));
+		reg.put(GraphicsConstants.IMAGE_CHECKBOX_CHECK, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_CHECKBOX_CHECK));
+		reg.put(GraphicsConstants.IMAGE_CHECKBOX_UNCHECK, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_CHECKBOX_UNCHECK));
+		reg.put(GraphicsConstants.IMAGE_JAVA_OBJECT, imageDescriptorFromPlugin(PLUGIN_ID,
+				"icons/full/obj16/class_obj.gif"));
+		reg.put(GraphicsConstants.IMAGE_JAVA_ARRAY, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_JAVA_ARRAY));
+		reg.put(GraphicsConstants.IMAGE_JAVA_COLLECTION, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_JAVA_COLLECTION));
+
+		// for the xml2xml line
+		reg.put(GraphicsConstants.IMAGE_BINDING_LINE, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_BINDING_LINE));
+
+		reg.put(GraphicsConstants.IMAGE_MAPPING_LINE, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_MAPPING_LINE));
+		reg.put(GraphicsConstants.IMAGE_XML_ATTRIBUTE, imageDescriptorFromPlugin(PLUGIN_ID,
+				"icons/full/obj16/attribute_obj.gif"));
+		reg.put(GraphicsConstants.IMAGE_XML_ELEMENT, imageDescriptorFromPlugin(PLUGIN_ID,
+				"icons/full/obj16/element_obj.gif"));
 	}
 
 	/**

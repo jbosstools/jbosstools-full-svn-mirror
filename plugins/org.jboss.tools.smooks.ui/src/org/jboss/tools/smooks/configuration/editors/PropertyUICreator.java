@@ -38,7 +38,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
-			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature) {
+			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,SmooksMultiFormEditor formEditor) {
 		if(feature == SmooksPackage.eINSTANCE.getAbstractReader_TargetProfile()){
 			
 		}
@@ -54,8 +54,12 @@ public class PropertyUICreator implements IPropertyUICreator {
 	}
 
 	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-		Composite parent, Object model) {
+		Composite parent, Object model,SmooksMultiFormEditor formEditor) {
 		
+	}
+
+	public boolean ignoreProperty(EAttribute feature) {
+		return false;
 	}
 
 

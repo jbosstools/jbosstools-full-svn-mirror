@@ -15,6 +15,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
+import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 /**
@@ -32,7 +33,7 @@ public class ImportTypeUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
-		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature) {
+		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,SmooksMultiFormEditor formEditor) {
 		if (feature == SmooksPackage.eINSTANCE.getImportType_File()) {
 		}
 		return null;
