@@ -47,7 +47,7 @@ public class JavabeanlabelProvider extends LabelProvider {
 
 			return name;
 		}
-		return super.getText(element);
+		return "";
 	}
 
 	@Override

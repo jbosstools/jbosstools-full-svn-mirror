@@ -19,6 +19,9 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanContentProvider;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanlabelProvider;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanStrucutredDataWizard;
+import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataContentProvider;
+import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataLabelProvider;
+import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataWizard;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -120,9 +123,11 @@ public class ViewerInitorStore {
 
 	protected HashMap<String, IViewerInitor> createNewInitorMap() {
 		HashMap<String, IViewerInitor> map = new HashMap<String, IViewerInitor>();
+
+		// for java
 		BaseViewerInitor javabeanViewerInitor = new BaseViewerInitor();
 		String name = "Java";
-		String description = "Java class";
+		String description = "Browse a Java type";
 		String iconPath = null;
 		String typeID = SmooksModelUtils.INPUT_TYPE_JAVA;
 
@@ -134,6 +139,24 @@ public class ViewerInitorStore {
 		javabeanViewerInitor.setTreeContentProvider(new JavabeanContentProvider());
 		javabeanViewerInitor.setStructuredDataLoadWizard(new JavabeanStrucutredDataWizard());
 		map.put(typeID, javabeanViewerInitor);
+
+		// for XML
+
+		BaseViewerInitor xmlViewerInitor = new BaseViewerInitor();
+		name = "XML";
+		description = "Select a xml file ";
+		iconPath = null;
+		typeID = SmooksModelUtils.INPUT_TYPE_XML;
+
+		xmlViewerInitor.setName(name);
+		xmlViewerInitor.setDescription(description);
+		xmlViewerInitor.setWizardIconPath(iconPath);
+		xmlViewerInitor.setTypeID(typeID);
+		xmlViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
+		xmlViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
+		xmlViewerInitor.setStructuredDataLoadWizard(new XMLStructuredDataWizard());
+		map.put(typeID, xmlViewerInitor);
+
 		return map;
 	}
 }

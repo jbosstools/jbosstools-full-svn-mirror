@@ -98,7 +98,10 @@ public class JavaMethodsSelectionDialog implements IFieldDialog {
 			gd.heightHint = 400;
 			gd.widthHint = 400;
 			composite.setLayoutData(gd);
-			composite.setLayout(new FillLayout());
+			FillLayout fl = new FillLayout();
+			fl.marginHeight = 10;
+			fl.marginWidth = 10;
+			composite.setLayout(fl);
 			viewer = new TableViewer(composite, SWT.BORDER);
 			Table table = viewer.getTable();
 			TableColumn nameColumn = new TableColumn(table, SWT.NONE);

@@ -102,7 +102,7 @@ public class ProjectClassLoader extends URLClassLoader {
 
 		URL[] urls = new URL[list.size()];
 		int index = 0;
-		for (Iterator i = list.iterator(); i.hasNext(); index++) {
+		for (Iterator<?> i = list.iterator(); i.hasNext(); index++) {
 			urls[index] = (URL) i.next();
 		}
 		return urls;

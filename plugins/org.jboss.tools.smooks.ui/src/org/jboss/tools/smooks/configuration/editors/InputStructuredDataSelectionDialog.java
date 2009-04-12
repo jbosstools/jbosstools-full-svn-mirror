@@ -24,16 +24,22 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.IShellProvider;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModelFactory;
 import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
+import org.jboss.tools.smooks.configuration.editors.xml.TagList;
+import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
@@ -70,10 +76,25 @@ public class InputStructuredDataSelectionDialog extends Dialog {
 	protected Control createDialogArea(Composite parent) {
 		Composite composite = (Composite) super.createDialogArea(parent);
 		GridData gd = new GridData(GridData.FILL_BOTH);
-		gd.heightHint = 400;
-		gd.widthHint = 400;
+		gd.heightHint = 500;
+		gd.widthHint = 450;
 		composite.setLayoutData(gd);
-		composite.setLayout(new FillLayout());
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 2;
+		layout.marginHeight = 10;
+		layout.marginWidth = 10;
+		layout.makeColumnsEqualWidth = false;
+		composite.setLayout(layout);
+		
+		Label label = new Label(composite,SWT.NONE);
+		label.setText("Sperator Char : ");
+		CCombo speratorCombo = new CCombo(composite,SWT.BORDER);
+		speratorCombo.add(" ");
+		speratorCombo.add("/");
+		speratorCombo.setEditable(false);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		speratorCombo.setLayoutData(gd);
+		
 		viewer = new TreeViewer(composite, SWT.BORDER);
 		viewer.setContentProvider(new CompoundStructuredDataContentProvider());
 		viewer.setLabelProvider(new CompoundStructuredDataLabelProvider());
@@ -88,7 +109,33 @@ public class InputStructuredDataSelectionDialog extends Dialog {
 				currentSelection = ((IStructuredSelection) event.getSelection()).getFirstElement();
 			}
 		});
-		getShell().setText("Input Datas");
+		
+		gd = new GridData(GridData.FILL_BOTH);
+		gd.horizontalSpan = 2;
+		viewer.getTree().setLayoutData(gd);
+		
+		Label l = new Label(composite,SWT.NONE);
+		l.setText("Selector generate policy : ");
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 2;
+		l.setLayoutData(gd);
+		
+		Composite com = new Composite(composite,SWT.NONE);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 2;
+		com.setLayoutData(gd);
+		
+		GridLayout gl = new GridLayout();
+		gl.numColumns = 3;
+		com.setLayout(gl);
+		Button fullPathButton  = new Button(com,SWT.RADIO);
+		fullPathButton.setText("Full Path");
+		Button onlyNameButton  = new Button(com,SWT.RADIO);
+		onlyNameButton.setText("Only Name");
+		Button containtParentButton  = new Button(com,SWT.RADIO);
+		containtParentButton.setText("Containt Parent Name");
+		
+		getShell().setText("Selector generate dialog");
 		return composite;
 	}
 
@@ -117,7 +164,24 @@ public class InputStructuredDataSelectionDialog extends Dialog {
 							}
 						}
 						if (SmooksModelUtils.INPUT_TYPE_XML.equals(type)) {
+							try {
+								path = SmooksUIUtils.parseFilePath(path);
+								AbstractXMLObject model = new XMLObjectAnalyzer().analyze(path, null);
+								if (model != null) {
+									if (model instanceof TagList) {
+										List<IXMLStructuredObject> children = ((TagList) model).getChildren();
+										for (Iterator<?> iterator2 = children.iterator(); iterator2.hasNext();) {
+											IXMLStructuredObject structuredObject = (IXMLStructuredObject) iterator2
+													.next();
+											list.add(structuredObject);
+										}
+									} else {
+										list.add(model);
+									}
+								}
+							} finally {
 
+							}
 						}
 					}
 				}
