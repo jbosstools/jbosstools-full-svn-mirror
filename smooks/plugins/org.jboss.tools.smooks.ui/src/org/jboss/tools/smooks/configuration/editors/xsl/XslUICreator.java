@@ -16,8 +16,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
 
 /**
@@ -39,17 +37,19 @@ public class XslUICreator extends PropertyUICreator {
 		SmooksMultiFormEditor formEditor) {
 		if (feature == XslPackage.eINSTANCE.getXsl_ApplyBefore()) {
 		}
-		if (feature == XslPackage.eINSTANCE.getXsl_ApplyOnElement()) {
-			SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
-			if (ext != null) {
-				return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor,
-					model, ext);
-			}
-		}
 		if (feature == XslPackage.eINSTANCE.getXsl_ApplyOnElementNS()) {
 		}
 
-		return null;
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature,
+			formEditor);
+	}
+
+	@Override
+	public boolean isSelectorFeature(EAttribute attribute) {
+		if (attribute == XslPackage.eINSTANCE.getXsl_ApplyOnElement()) {
+			return true;
+		}
+		return super.isSelectorFeature(attribute);
 	}
 
 }

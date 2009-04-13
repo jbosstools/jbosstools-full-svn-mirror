@@ -46,7 +46,7 @@ public class ConditionTypeUICreator extends PropertyUICreator {
 		if (feature == SmooksPackage.eINSTANCE.getConditionType_IdRef()) {
 		}
 
-		return null;
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
 }

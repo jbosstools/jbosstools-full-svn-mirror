@@ -13,6 +13,8 @@ import java.util.List;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.jboss.tools.smooks.model.edi.EdiPackage;
+import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 
@@ -44,7 +46,7 @@ public class Codegenerator {
 	public static void main(String[] args) {
 		Codegenerator g = new Codegenerator();
 		try {
-			g.generateCodes(GroovyPackage.eINSTANCE);
+			g.generateCodes(EdiPackage.eINSTANCE);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {

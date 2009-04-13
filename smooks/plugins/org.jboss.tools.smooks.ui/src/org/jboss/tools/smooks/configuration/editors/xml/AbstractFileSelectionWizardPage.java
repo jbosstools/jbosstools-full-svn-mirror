@@ -39,7 +39,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	protected CheckboxTableViewer tableViewer = null;
 	protected Button fileSystemBrowseButton;
 	protected boolean reasourceLoaded = false;
-	private Button workspaceBrowseButton;
+	protected Button workspaceBrowseButton;
 	private String filePath = null;
 
 	public AbstractFileSelectionWizardPage(String pageName) {
@@ -156,10 +156,20 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		// dialog.setInitialSelections(selectedResources);
 		if (files.length > 0) {
 			IFile file = files[0];
-			String s = file.getFullPath().toPortableString();
-			s = SmooksUIUtils.WORKSPACE_PRIX + s;
+			String s = processWorkSpaceFilePath(file);
 			relationT.setText(s);
 		}
+	}
+	
+	protected String processFileSystemFilePath(String path){
+		path = SmooksUIUtils.FILE_PRIX + path;
+		return path;
+	}
+	
+	protected String processWorkSpaceFilePath(IFile file){
+		String s = file.getFullPath().toPortableString();
+		s = SmooksUIUtils.WORKSPACE_PRIX + s;
+		return s;
 	}
 
 	protected Composite createFileSelectionComposite(Composite parent) {
@@ -221,10 +231,10 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		browseButtonComposite.setLayout(bg);
 
 		fileSystemBrowseButton = new Button(browseButtonComposite, SWT.NONE);
-		fileSystemBrowseButton.setText("File System"); //$NON-NLS-1$
+		fileSystemBrowseButton.setText("Browse File System"); //$NON-NLS-1$
 
 		workspaceBrowseButton = new Button(browseButtonComposite, SWT.NONE);
-		workspaceBrowseButton.setText("Work Space"); //$NON-NLS-1$
+		workspaceBrowseButton.setText("Browse WorkSpace"); //$NON-NLS-1$
 		gd = new GridData();
 		gd.horizontalAlignment = GridData.END;
 		workspaceBrowseButton.setLayoutData(gd);
@@ -280,7 +290,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		FileDialog dialog = new FileDialog(this.getShell());
 		String path = dialog.open();
 		if (path != null) {
-			path = SmooksUIUtils.FILE_PRIX + path;
+			path = processFileSystemFilePath(path);
 			relationText.setText(path);
 		} 
 	}

@@ -379,9 +379,7 @@ public class SmooksUIUtils {
 			JavaMethodsSelectionDialog dialog = new JavaMethodsSelectionDialog(project, clazz);
 			return SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor,
 				"Select method", dialog, (EObject) model);
-		} catch (JavaModelException e) {
-			// ignore
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 			// ignore
 		}
 		return null;
@@ -464,9 +462,7 @@ public class SmooksUIUtils {
 			JavaPropertiesSelectionDialog dialog = new JavaPropertiesSelectionDialog(project, clazz);
 			return SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor,
 				"Select property", dialog, (EObject) model);
-		} catch (JavaModelException e) {
-			// ignore
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 			// ignore
 		}
 		return null;
@@ -484,8 +480,21 @@ public class SmooksUIUtils {
 	public static Composite createDialogFieldEditor(Composite parent, FormToolkit toolkit,
 		final IItemPropertyDescriptor propertyDescriptor, String buttonName, IFieldDialog dialog,
 		final EObject model) {
+		return createDialogFieldEditor(parent, toolkit, propertyDescriptor, buttonName, dialog, model, false, null);
+	}
+
+	public static Composite createDialogFieldEditor(Composite parent, FormToolkit toolkit,
+		final IItemPropertyDescriptor propertyDescriptor, String buttonName, IFieldDialog dialog,
+		final EObject model, boolean labelLink, IHyperlinkListener listener) {
 		String displayName = propertyDescriptor.getDisplayName(model);
-		toolkit.createLabel(parent, displayName + " :");
+		if (labelLink) {
+			Hyperlink link = toolkit.createHyperlink(parent,  displayName + " :", SWT.NONE);
+			if(listener != null){
+				link.addHyperlinkListener(listener);
+			}
+		} else {
+			toolkit.createLabel(parent, displayName + " :");
+		}
 		final Composite classTextComposite = toolkit.createComposite(parent);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		classTextComposite.setLayoutData(gd);

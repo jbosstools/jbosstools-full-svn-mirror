@@ -36,7 +36,7 @@ public class ScriptUICreator  extends PropertyUICreator {
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
 		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 		SmooksMultiFormEditor formEditor) {
-		return null;
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
 	@Override

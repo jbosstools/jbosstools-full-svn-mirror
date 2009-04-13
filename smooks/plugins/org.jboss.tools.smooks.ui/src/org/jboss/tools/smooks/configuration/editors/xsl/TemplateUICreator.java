@@ -41,7 +41,7 @@ public class TemplateUICreator extends PropertyUICreator {
 		if (feature == XslPackage.eINSTANCE.getTemplate_Encoding()) {
 		}
 
-		return null;
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 	
 	

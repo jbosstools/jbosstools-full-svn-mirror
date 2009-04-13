@@ -42,7 +42,7 @@ public class ResourceTypeUICreator extends PropertyUICreator {
 		}
 		if (feature == SmooksPackage.eINSTANCE.getResourceType_Type()) {
 		}
-		return null;
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
 }

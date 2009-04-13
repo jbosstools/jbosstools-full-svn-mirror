@@ -18,7 +18,6 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 
 /**
@@ -57,13 +56,17 @@ public class BindingsPropertyUICreator extends PropertyUICreator {
 		if (feature == JavabeanPackage.eINSTANCE.getBindingsType_Class()) {
 			return createBeanClassTextWithButton(parent, toolkit, propertyDescriptor, model);
 		}
-		if(feature == JavabeanPackage.eINSTANCE.getBindingsType_CreateOnElement()){
-			SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
-			if (ext != null)
-				return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model,
-						ext);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
+	}
+	
+	
+
+	@Override
+	public boolean isSelectorFeature(EAttribute attribute) {
+		if(attribute == JavabeanPackage.eINSTANCE.getBindingsType_CreateOnElement()){
+			return true;
 		}
-		return null;
+		return super.isSelectorFeature(attribute);
 	}
 
 	protected Composite createBeanClassTextWithButton(Composite composite, FormToolkit toolkit,

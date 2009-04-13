@@ -26,6 +26,8 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.jboss.tools.smooks.edit.common.provider.AbstractAnyTypeItemProvider;
 import org.jboss.tools.smooks.edit.xsl.provider.Xsl1EditPlugin;
+import org.jboss.tools.smooks.model.fileRouting.FileRoutingFactory;
+import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerFactory;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.javabean.JavabeanFactory;
@@ -296,6 +298,13 @@ public class SmooksResourceListTypeItemProvider
 			 FeatureMapUtil.createEntry
 				(JavabeanPackage.Literals.DOCUMENT_ROOT__BINDINGS,
 				 JavabeanFactory.eINSTANCE.createBindingsType())));
+		
+		newChildDescriptors.add
+		(createChildParameter
+			(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
+			 FeatureMapUtil.createEntry
+				(FileRoutingPackage.Literals.DOCUMENT_ROOT__OUTPUT_STREAM,
+				 FileRoutingFactory.eINSTANCE.createOutputStream())));
 		
 		newChildDescriptors.add
 		(createChildParameter

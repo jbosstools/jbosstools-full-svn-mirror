@@ -38,7 +38,7 @@ public class OutputToUICreator extends PropertyUICreator {
 		if (feature == FreemarkerPackage.eINSTANCE.getOutputTo_OutputStreamResource()) {
 		}
 
-		return null;
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
 }

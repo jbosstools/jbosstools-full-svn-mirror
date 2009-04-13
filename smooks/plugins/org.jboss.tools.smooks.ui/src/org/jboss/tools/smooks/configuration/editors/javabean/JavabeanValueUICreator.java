@@ -15,8 +15,6 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 
 
@@ -50,14 +48,15 @@ public class JavabeanValueUICreator extends PropertiesAndSetterMethodSearchField
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 			SmooksMultiFormEditor formEditor) {
-		if(feature == JavabeanPackage.eINSTANCE.getValueType_Data()){
-			SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
-			if (ext != null)
-				return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model,
-						ext);
-
-		}
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
+	}
+
+	@Override
+	public boolean isSelectorFeature(EAttribute attribute) {
+		if(attribute == JavabeanPackage.eINSTANCE.getValueType_Data()){
+			return true;
+		}
+		return super.isSelectorFeature(attribute);
 	}
 	
 	

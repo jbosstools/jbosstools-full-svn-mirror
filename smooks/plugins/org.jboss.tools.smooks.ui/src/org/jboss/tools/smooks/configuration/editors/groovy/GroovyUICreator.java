@@ -17,8 +17,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 
 /**
@@ -44,17 +42,22 @@ public class GroovyUICreator extends PropertyUICreator {
 		}
 		if (feature == GroovyPackage.eINSTANCE.getGroovy_ExecuteBefore()) {
 		}
-		if (feature == GroovyPackage.eINSTANCE.getGroovy_ExecuteOnElement()) {
-			SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
-			if (ext != null) {
-				return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor,
-					model, ext);
-			}
-		}
 		if (feature == GroovyPackage.eINSTANCE.getGroovy_ExecuteOnElementNS()) {
 		}
-		return null;
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
+	
+	
+
+	@Override
+	public boolean isSelectorFeature(EAttribute attribute) {
+		if (attribute == GroovyPackage.eINSTANCE.getGroovy_ExecuteOnElement()) {
+			return true;
+		}
+		return super.isSelectorFeature(attribute);
+	}
+
+
 
 	@Override
 	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,

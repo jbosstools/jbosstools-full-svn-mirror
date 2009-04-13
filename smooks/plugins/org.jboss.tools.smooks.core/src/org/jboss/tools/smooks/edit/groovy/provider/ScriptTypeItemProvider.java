@@ -14,8 +14,6 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
-import org.eclipse.emf.ecore.xml.type.XMLTypeFactory;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -25,11 +23,8 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.jboss.tools.smooks.model.groovy.GroovyFactory;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.groovy.ScriptType;
-import org.jboss.tools.smooks.model.smooks.SmooksFactory;
-import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 /**
  * This is the item provider adapter for a {@link groovy.ScriptType} object.
@@ -153,160 +148,160 @@ public class ScriptTypeItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT,
-					 "")));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT,
-					 "")));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__PROCESSING_INSTRUCTION,
-					 XMLTypeFactory.eINSTANCE.createProcessingInstruction())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA,
-					 "")));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(GroovyPackage.Literals.DOCUMENT_ROOT__GROOVY,
-					 GroovyFactory.eINSTANCE.createGroovy())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(GroovyPackage.Literals.DOCUMENT_ROOT__SCRIPT,
-					 GroovyFactory.eINSTANCE.createScriptType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__CONDITION,
-					 SmooksFactory.eINSTANCE.createConditionType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__CONDITIONS,
-					 SmooksFactory.eINSTANCE.createConditionsType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__FEATURES,
-					 SmooksFactory.eINSTANCE.createFeaturesType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__HANDLER,
-					 SmooksFactory.eINSTANCE.createHandlerType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__HANDLERS,
-					 SmooksFactory.eINSTANCE.createHandlersType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__IMPORT,
-					 SmooksFactory.eINSTANCE.createImportType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__PARAM,
-					 SmooksFactory.eINSTANCE.createParamType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__PARAMS,
-					 SmooksFactory.eINSTANCE.createParamsType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__PROFILE,
-					 SmooksFactory.eINSTANCE.createProfileType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__PROFILES,
-					 SmooksFactory.eINSTANCE.createProfilesType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__READER,
-					 SmooksFactory.eINSTANCE.createReaderType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE,
-					 SmooksFactory.eINSTANCE.createResourceType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE_CONFIG,
-					 SmooksFactory.eINSTANCE.createResourceConfigType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__SET_OFF,
-					 SmooksFactory.eINSTANCE.createSetOffType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__SET_ON,
-					 SmooksFactory.eINSTANCE.createSetOnType())));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
-				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST,
-					 SmooksFactory.eINSTANCE.createSmooksResourceListType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT,
+//					 "")));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT,
+//					 "")));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__PROCESSING_INSTRUCTION,
+//					 XMLTypeFactory.eINSTANCE.createProcessingInstruction())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA,
+//					 "")));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(GroovyPackage.Literals.DOCUMENT_ROOT__GROOVY,
+//					 GroovyFactory.eINSTANCE.createGroovy())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(GroovyPackage.Literals.DOCUMENT_ROOT__SCRIPT,
+//					 GroovyFactory.eINSTANCE.createScriptType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__CONDITION,
+//					 SmooksFactory.eINSTANCE.createConditionType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__CONDITIONS,
+//					 SmooksFactory.eINSTANCE.createConditionsType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__FEATURES,
+//					 SmooksFactory.eINSTANCE.createFeaturesType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__HANDLER,
+//					 SmooksFactory.eINSTANCE.createHandlerType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__HANDLERS,
+//					 SmooksFactory.eINSTANCE.createHandlersType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__IMPORT,
+//					 SmooksFactory.eINSTANCE.createImportType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__PARAM,
+//					 SmooksFactory.eINSTANCE.createParamType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__PARAMS,
+//					 SmooksFactory.eINSTANCE.createParamsType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__PROFILE,
+//					 SmooksFactory.eINSTANCE.createProfileType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__PROFILES,
+//					 SmooksFactory.eINSTANCE.createProfilesType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__READER,
+//					 SmooksFactory.eINSTANCE.createReaderType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE,
+//					 SmooksFactory.eINSTANCE.createResourceType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE_CONFIG,
+//					 SmooksFactory.eINSTANCE.createResourceConfigType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__SET_OFF,
+//					 SmooksFactory.eINSTANCE.createSetOffType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__SET_ON,
+//					 SmooksFactory.eINSTANCE.createSetOnType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST,
+//					 SmooksFactory.eINSTANCE.createSmooksResourceListType())));
 	}
 
 	/**

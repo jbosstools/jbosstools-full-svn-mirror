@@ -38,7 +38,7 @@ public class InlineUICreator extends PropertyUICreator {
 		if (feature == FreemarkerPackage.eINSTANCE.getInline_Directive()) {
 		}
 
-		return null;
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
 }
