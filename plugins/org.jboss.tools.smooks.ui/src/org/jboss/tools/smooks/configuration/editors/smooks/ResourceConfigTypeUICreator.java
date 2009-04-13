@@ -48,7 +48,15 @@ public class ResourceConfigTypeUICreator extends PropertyUICreator {
 		}
 		if (feature == SmooksPackage.eINSTANCE.getResourceConfigType_TargetProfile()) {
 		}
-		return null;
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
+	}
+
+	@Override
+	public boolean isSelectorFeature(EAttribute attribute) {
+		if (attribute == SmooksPackage.eINSTANCE.getResourceConfigType_Selector()) {
+			return true;
+		}
+		return super.isSelectorFeature(attribute);
 	}
 
 }

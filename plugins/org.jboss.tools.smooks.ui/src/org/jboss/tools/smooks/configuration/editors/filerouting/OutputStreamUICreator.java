@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors.freemarker;
+package org.jboss.tools.smooks.configuration.editors.filerouting;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -16,12 +16,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
-import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
+import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
  */
-public class FreemarkerUICreator extends PropertyUICreator {
+public class OutputStreamUICreator extends PropertyUICreator {
 
 	/*
 	 * (non-Javadoc)
@@ -35,29 +35,25 @@ public class FreemarkerUICreator extends PropertyUICreator {
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
 		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 		SmooksMultiFormEditor formEditor) {
-		if (feature == FreemarkerPackage.eINSTANCE.getFreemarker_ApplyBefore()) {
+		if (feature == FileRoutingPackage.eINSTANCE.getOutputStream_FileNamePattern()) {
 		}
-//		if (feature == FreemarkerPackage.eINSTANCE.getFreemarker_ApplyOnElement()) {
-//			SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
-//			if (ext != null) {
-//				return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor,
-//					model, ext);
-//			}
-//		}
-		if (feature == FreemarkerPackage.eINSTANCE.getFreemarker_ApplyOnElementNS()) {
+		if (feature == FileRoutingPackage.eINSTANCE.getOutputStream_DestinationDirectoryPattern()) {
+		}
+		if (feature == FileRoutingPackage.eINSTANCE.getOutputStream_ListFileNamePattern()) {
+		}
+		if (feature == FileRoutingPackage.eINSTANCE.getOutputStream_CloseOnCondition()) {
+		}
+		if (feature == FileRoutingPackage.eINSTANCE.getOutputStream_Encoding()) {
+		}
+		if (feature == FileRoutingPackage.eINSTANCE.getOutputStream_OpenOnElement()) {
+		}
+		if (feature == FileRoutingPackage.eINSTANCE.getOutputStream_OpenOnElementNS()) {
+		}
+		if (feature == FileRoutingPackage.eINSTANCE.getOutputStream_ResourceName()) {
 		}
 
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature,
+			formEditor);
 	}
-
-	@Override
-	public boolean isSelectorFeature(EAttribute attribute) {
-		if (attribute == FreemarkerPackage.eINSTANCE.getFreemarker_ApplyOnElement()) {
-			return true;
-		}
-		return super.isSelectorFeature(attribute);
-	}
-	
-	
 
 }

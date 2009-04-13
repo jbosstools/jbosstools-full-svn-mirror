@@ -37,7 +37,7 @@ public class OutputToUICreator extends PropertyUICreator {
 		if (feature == XslPackage.eINSTANCE.getOutputTo_OutputStreamResource()) {
 		}
 
-		return null;
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
 }

@@ -36,7 +36,7 @@ public class ImportTypeUICreator extends PropertyUICreator {
 		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,SmooksMultiFormEditor formEditor) {
 		if (feature == SmooksPackage.eINSTANCE.getImportType_File()) {
 		}
-		return null;
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
 }

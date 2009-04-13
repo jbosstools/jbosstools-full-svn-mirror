@@ -63,7 +63,9 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.wizards.SmooksConfigurationFileNewWizard;
 import org.jboss.tools.smooks.edit.common.provider.CommonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.edit.edi.provider.EdiItemProviderAdapterFactory;
+import org.jboss.tools.smooks.edit.fileRouting.provider.FileRoutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.edit.freemarker.provider.FreemarkerItemProviderAdapterFactory;
+import org.jboss.tools.smooks.edit.groovy.provider.GroovyItemProviderAdapterFactory;
 import org.jboss.tools.smooks.edit.javabean.provider.JavabeanItemProviderAdapterFactory;
 import org.jboss.tools.smooks.edit.smooks.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.edit.xsl.provider.XslItemProviderAdapterFactory;
@@ -173,6 +175,8 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		adapterFactory.addAdapterFactory(new CommonItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new SmooksItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new EdiItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new GroovyItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new FileRoutingItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 		BasicCommandStack commandStack = new BasicCommandStack();
 		handleCommandStack(commandStack);

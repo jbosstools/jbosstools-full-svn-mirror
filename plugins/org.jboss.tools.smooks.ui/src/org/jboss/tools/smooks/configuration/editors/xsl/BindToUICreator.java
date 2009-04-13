@@ -37,7 +37,7 @@ public class BindToUICreator extends PropertyUICreator {
 		if (feature == XslPackage.eINSTANCE.getBindTo_Id()) {
 		}
 
-		return null;
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
 }

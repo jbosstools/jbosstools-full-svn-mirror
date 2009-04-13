@@ -40,7 +40,7 @@ public class ParamTypeUICreator extends PropertyUICreator {
 		}
 		if (feature == SmooksPackage.eINSTANCE.getParamType_Type()) {
 		}
-		return null;
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
 	@Override

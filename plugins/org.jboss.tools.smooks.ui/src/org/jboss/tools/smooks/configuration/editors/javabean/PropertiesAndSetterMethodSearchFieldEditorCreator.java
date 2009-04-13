@@ -34,7 +34,7 @@ public class PropertiesAndSetterMethodSearchFieldEditorCreator extends PropertyU
 		if(canCreateMethodsSearchFieldEditor(feature)){
 			return createMethodsSearchFieldEditor(toolkit, parent, propertyDescriptor, model);
 		}
-		return null;
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
 	protected boolean canCreatePropertiesSearchFieldEditor(EAttribute feature) {
