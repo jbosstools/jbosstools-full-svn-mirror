@@ -6,7 +6,6 @@
  */
 package org.jboss.tools.smooks.model.groovy.impl;
 
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -19,6 +18,7 @@ import org.jboss.tools.smooks.model.groovy.DocumentRoot;
 import org.jboss.tools.smooks.model.groovy.Groovy;
 import org.jboss.tools.smooks.model.groovy.GroovyFactory;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
+import org.jboss.tools.smooks.model.groovy.ScriptType;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.impl.SmooksPackageImpl;
 
@@ -44,6 +44,13 @@ public class GroovyPackageImpl extends EPackageImpl implements GroovyPackage {
 	private EClass groovyEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass scriptTypeEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -54,7 +61,7 @@ public class GroovyPackageImpl extends EPackageImpl implements GroovyPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.jboss.tools.smooks.model.groovy.GroovyPackage#eNS_URI
+	 * @see groovy.GroovyPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
@@ -172,6 +179,15 @@ public class GroovyPackageImpl extends EPackageImpl implements GroovyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getDocumentRoot_Script() {
+		return (EReference)documentRootEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getGroovy() {
 		return groovyEClass;
 	}
@@ -190,8 +206,8 @@ public class GroovyPackageImpl extends EPackageImpl implements GroovyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getGroovy_Script() {
-		return (EAttribute)groovyEClass.getEStructuralFeatures().get(1);
+	public EReference getGroovy_Param() {
+		return (EReference)groovyEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -199,7 +215,7 @@ public class GroovyPackageImpl extends EPackageImpl implements GroovyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getGroovy_Param() {
+	public EReference getGroovy_Script() {
 		return (EReference)groovyEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -235,6 +251,15 @@ public class GroovyPackageImpl extends EPackageImpl implements GroovyPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getScriptType() {
+		return scriptTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public GroovyFactory getGroovyFactory() {
 		return (GroovyFactory)getEFactoryInstance();
 	}
@@ -263,14 +288,17 @@ public class GroovyPackageImpl extends EPackageImpl implements GroovyPackage {
 		createEReference(documentRootEClass, DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
 		createEReference(documentRootEClass, DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
 		createEReference(documentRootEClass, DOCUMENT_ROOT__GROOVY);
+		createEReference(documentRootEClass, DOCUMENT_ROOT__SCRIPT);
 
 		groovyEClass = createEClass(GROOVY);
 		createEAttribute(groovyEClass, GROOVY__IMPORTS);
-		createEAttribute(groovyEClass, GROOVY__SCRIPT);
 		createEReference(groovyEClass, GROOVY__PARAM);
+		createEReference(groovyEClass, GROOVY__SCRIPT);
 		createEAttribute(groovyEClass, GROOVY__EXECUTE_BEFORE);
 		createEAttribute(groovyEClass, GROOVY__EXECUTE_ON_ELEMENT);
 		createEAttribute(groovyEClass, GROOVY__EXECUTE_ON_ELEMENT_NS);
+
+		scriptTypeEClass = createEClass(SCRIPT_TYPE);
 	}
 
 	/**
@@ -306,6 +334,7 @@ public class GroovyPackageImpl extends EPackageImpl implements GroovyPackage {
 
 		// Add supertypes to classes
 		groovyEClass.getESuperTypes().add(theSmooksPackage.getElementVisitor());
+		scriptTypeEClass.getESuperTypes().add(theXMLTypePackage.getAnyType());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -313,14 +342,17 @@ public class GroovyPackageImpl extends EPackageImpl implements GroovyPackage {
 		initEReference(getDocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDocumentRoot_Groovy(), this.getGroovy(), null, "groovy", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getDocumentRoot_Script(), this.getScriptType(), null, "script", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(groovyEClass, Groovy.class, "Groovy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getGroovy_Imports(), theXMLTypePackage.getString(), "imports", null, 0, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getGroovy_Script(), theXMLTypePackage.getString(), "script", null, 1, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getGroovy_Param(), theSmooksPackage.getParamType(), null, "param", null, 0, -1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGroovy_Script(), this.getScriptType(), null, "script", null, 1, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGroovy_ExecuteBefore(), theXMLTypePackage.getBoolean(), "executeBefore", "false", 0, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGroovy_ExecuteOnElement(), theXMLTypePackage.getString(), "executeOnElement", null, 1, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGroovy_ExecuteOnElementNS(), theXMLTypePackage.getAnyURI(), "executeOnElementNS", null, 0, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(scriptTypeEClass, ScriptType.class, "ScriptType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -374,6 +406,14 @@ public class GroovyPackageImpl extends EPackageImpl implements GroovyPackage {
 			 "name", "groovy",
 			 "namespace", "##targetNamespace",
 			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config"
+		   });		
+		addAnnotation
+		  (getDocumentRoot_Script(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "script",
+			 "namespace", "##targetNamespace"
 		   });			
 		addAnnotation
 		  (groovyEClass, 
@@ -391,20 +431,20 @@ public class GroovyPackageImpl extends EPackageImpl implements GroovyPackage {
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
-		  (getGroovy_Script(), 
-		   source, 
-		   new String[] {
-			 "kind", "element",
-			 "name", "script",
-			 "namespace", "##targetNamespace"
-		   });		
-		addAnnotation
 		  (getGroovy_Param(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "param",
 			 "namespace", "http://www.milyn.org/xsd/smooks-1.1.xsd"
+		   });		
+		addAnnotation
+		  (getGroovy_Script(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "script",
+			 "namespace", "##targetNamespace"
 		   });			
 		addAnnotation
 		  (getGroovy_ExecuteBefore(), 
@@ -426,6 +466,13 @@ public class GroovyPackageImpl extends EPackageImpl implements GroovyPackage {
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "executeOnElementNS"
+		   });		
+		addAnnotation
+		  (scriptTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "script_._type",
+			 "kind", "mixed"
 		   });
 	}
 

@@ -6,7 +6,6 @@
  */
 package org.jboss.tools.smooks.model.groovy.util;
 
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
@@ -16,6 +15,7 @@ import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.groovy.DocumentRoot;
 import org.jboss.tools.smooks.model.groovy.Groovy;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
+import org.jboss.tools.smooks.model.groovy.ScriptType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ElementVisitor;
 
@@ -24,7 +24,7 @@ import org.jboss.tools.smooks.model.smooks.ElementVisitor;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see org.jboss.tools.smooks.model.groovy.GroovyPackage
+ * @see groovy.GroovyPackage
  * @generated
  */
 public class GroovyAdapterFactory extends AdapterFactoryImpl {
@@ -84,6 +84,10 @@ public class GroovyAdapterFactory extends AdapterFactoryImpl {
 				return createGroovyAdapter();
 			}
 			@Override
+			public Adapter caseScriptType(ScriptType object) {
+				return createScriptTypeAdapter();
+			}
+			@Override
 			public Adapter caseAnyType(AnyType object) {
 				return createAnyTypeAdapter();
 			}
@@ -120,13 +124,13 @@ public class GroovyAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.groovy.DocumentRoot <em>Document Root</em>}'.
+	 * Creates a new adapter for an object of class '{@link groovy.DocumentRoot <em>Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.jboss.tools.smooks.model.groovy.DocumentRoot
+	 * @see groovy.DocumentRoot
 	 * @generated
 	 */
 	public Adapter createDocumentRootAdapter() {
@@ -134,16 +138,30 @@ public class GroovyAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.groovy.Groovy <em>Groovy</em>}'.
+	 * Creates a new adapter for an object of class '{@link groovy.Groovy <em>Groovy</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.jboss.tools.smooks.model.groovy.Groovy
+	 * @see groovy.Groovy
 	 * @generated
 	 */
 	public Adapter createGroovyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link groovy.ScriptType <em>Script Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see groovy.ScriptType
+	 * @generated
+	 */
+	public Adapter createScriptTypeAdapter() {
 		return null;
 	}
 

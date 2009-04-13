@@ -7,17 +7,13 @@
 package org.jboss.tools.smooks.edit.groovy.provider;
 
 
-
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -31,7 +27,7 @@ import org.jboss.tools.smooks.model.groovy.GroovyFactory;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 
 /**
- * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.groovy.DocumentRoot} object.
+ * This is the item provider adapter for a {@link groovy.DocumentRoot} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -82,6 +78,7 @@ public class DocumentRootItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(GroovyPackage.Literals.DOCUMENT_ROOT__GROOVY);
+			childrenFeatures.add(GroovyPackage.Literals.DOCUMENT_ROOT__SCRIPT);
 		}
 		return childrenFeatures;
 	}
@@ -134,6 +131,7 @@ public class DocumentRootItemProvider
 
 		switch (notification.getFeatureID(DocumentRoot.class)) {
 			case GroovyPackage.DOCUMENT_ROOT__GROOVY:
+			case GroovyPackage.DOCUMENT_ROOT__SCRIPT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -155,6 +153,11 @@ public class DocumentRootItemProvider
 			(createChildParameter
 				(GroovyPackage.Literals.DOCUMENT_ROOT__GROOVY,
 				 GroovyFactory.eINSTANCE.createGroovy()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GroovyPackage.Literals.DOCUMENT_ROOT__SCRIPT,
+				 GroovyFactory.eINSTANCE.createScriptType()));
 	}
 
 	/**

@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/groovymodel/src"
-    modelPluginID="groovymodel" modelName="Groovy" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="6.0" copyrightFields="false">
-  <foreignModel>groovy.ecore</foreignModel>
-  <genPackages prefix="Groovy" resource="XML" disposableProviderFactory="true" ecorePackage="groovy.ecore#/">
-    <genClasses ecoreClass="groovy.ecore#//DocumentRoot">
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute groovy.ecore#//DocumentRoot/mixed"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference groovy.ecore#//DocumentRoot/xMLNSPrefixMap"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference groovy.ecore#//DocumentRoot/xSISchemaLocation"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference groovy.ecore#//DocumentRoot/groovy"/>
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/newgroovy/src"
+    modelPluginID="newgroovy" modelName="Groovy-1" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false">
+  <foreignModel>groovy-1.1.ecore</foreignModel>
+  <genPackages prefix="Groovy" resource="XML" disposableProviderFactory="true" ecorePackage="groovy-1.1.ecore#/">
+    <genClasses ecoreClass="groovy-1.1.ecore#//DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute groovy-1.1.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference groovy-1.1.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference groovy-1.1.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference groovy-1.1.ecore#//DocumentRoot/groovy"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference groovy-1.1.ecore#//DocumentRoot/script"/>
     </genClasses>
-    <genClasses ecoreClass="groovy.ecore#//Groovy">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute groovy.ecore#//Groovy/imports"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute groovy.ecore#//Groovy/script"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference groovy.ecore#//Groovy/param"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute groovy.ecore#//Groovy/executeBefore"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute groovy.ecore#//Groovy/executeOnElement"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute groovy.ecore#//Groovy/executeOnElementNS"/>
+    <genClasses ecoreClass="groovy-1.1.ecore#//Groovy">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute groovy-1.1.ecore#//Groovy/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference groovy-1.1.ecore#//Groovy/param"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference groovy-1.1.ecore#//Groovy/script"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute groovy-1.1.ecore#//Groovy/executeBefore"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute groovy-1.1.ecore#//Groovy/executeOnElement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute groovy-1.1.ecore#//Groovy/executeOnElementNS"/>
     </genClasses>
+    <genClasses ecoreClass="groovy-1.1.ecore#//ScriptType"/>
   </genPackages>
   <genPackages prefix="Smooks" resource="XML" disposableProviderFactory="true" ecorePackage="smooks-1.1.ecore#/">
     <genClasses image="false" ecoreClass="smooks-1.1.ecore#//AbstractReader">

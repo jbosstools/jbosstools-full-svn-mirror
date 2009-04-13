@@ -32,7 +32,7 @@
       <package
             uri="http://www.milyn.org/xsd/smooks/groovy-1.1.xsd"
             class="org.jboss.tools.smooks.model.groovy.GroovyPackage"
-            genModel="model/groovy.genmodel"/>
+            genModel="model/groovy-1.1.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
@@ -142,7 +142,7 @@
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
       <parser
-            type="filerouting"
+            type="smooks-graphics-ext"
             class="org.jboss.tools.smooks.model.graphics.ext.util.SmooksGraphicsExtResourceFactoryImpl"/>
    </extension>
    

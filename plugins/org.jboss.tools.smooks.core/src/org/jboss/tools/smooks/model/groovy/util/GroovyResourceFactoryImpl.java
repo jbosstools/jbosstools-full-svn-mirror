@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
  * <!-- begin-user-doc -->
  * The <b>Resource Factory</b> associated with the package.
  * <!-- end-user-doc -->
- * @see org.jboss.tools.smooks.model.groovy.util.GroovyResourceImpl
+ * @see groovy.util.GroovyResourceImpl
  * @generated
  */
 public class GroovyResourceFactoryImpl extends ResourceFactoryImpl {

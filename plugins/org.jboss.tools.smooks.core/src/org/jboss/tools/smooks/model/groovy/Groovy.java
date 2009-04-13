@@ -24,16 +24,16 @@ import org.jboss.tools.smooks.model.smooks.ParamType;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.Groovy#getImports <em>Imports</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.Groovy#getScript <em>Script</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.Groovy#getParam <em>Param</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.Groovy#isExecuteBefore <em>Execute Before</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.Groovy#getExecuteOnElement <em>Execute On Element</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.Groovy#getExecuteOnElementNS <em>Execute On Element NS</em>}</li>
+ *   <li>{@link groovy.Groovy#getImports <em>Imports</em>}</li>
+ *   <li>{@link groovy.Groovy#getParam <em>Param</em>}</li>
+ *   <li>{@link groovy.Groovy#getScript <em>Script</em>}</li>
+ *   <li>{@link groovy.Groovy#isExecuteBefore <em>Execute Before</em>}</li>
+ *   <li>{@link groovy.Groovy#getExecuteOnElement <em>Execute On Element</em>}</li>
+ *   <li>{@link groovy.Groovy#getExecuteOnElementNS <em>Execute On Element NS</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.groovy.GroovyPackage#getGroovy()
+ * @see groovy.GroovyPackage#getGroovy()
  * @model extendedMetaData="name='groovy' kind='elementOnly'"
  * @generated
  */
@@ -48,7 +48,7 @@ public interface Groovy extends ElementVisitor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Imports</em>' attribute.
 	 * @see #setImports(String)
-	 * @see org.jboss.tools.smooks.model.groovy.GroovyPackage#getGroovy_Imports()
+	 * @see groovy.GroovyPackage#getGroovy_Imports()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='imports' namespace='##targetNamespace'"
 	 * @generated
@@ -56,7 +56,7 @@ public interface Groovy extends ElementVisitor {
 	String getImports();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.groovy.Groovy#getImports <em>Imports</em>}' attribute.
+	 * Sets the value of the '{@link groovy.Groovy#getImports <em>Imports</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Imports</em>' attribute.
@@ -64,33 +64,6 @@ public interface Groovy extends ElementVisitor {
 	 * @generated
 	 */
 	void setImports(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Script</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Script</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Script</em>' attribute.
-	 * @see #setScript(String)
-	 * @see org.jboss.tools.smooks.model.groovy.GroovyPackage#getGroovy_Script()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
-	 *        extendedMetaData="kind='element' name='script' namespace='##targetNamespace'"
-	 * @generated
-	 */
-	String getScript();
-
-	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.groovy.Groovy#getScript <em>Script</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Script</em>' attribute.
-	 * @see #getScript()
-	 * @generated
-	 */
-	void setScript(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Param</b></em>' containment reference list.
@@ -102,12 +75,39 @@ public interface Groovy extends ElementVisitor {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Param</em>' containment reference list.
-	 * @see org.jboss.tools.smooks.model.groovy.GroovyPackage#getGroovy_Param()
+	 * @see groovy.GroovyPackage#getGroovy_Param()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='param' namespace='http://www.milyn.org/xsd/smooks-1.1.xsd'"
 	 * @generated
 	 */
 	EList<ParamType> getParam();
+
+	/**
+	 * Returns the value of the '<em><b>Script</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Script</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Script</em>' containment reference.
+	 * @see #setScript(ScriptType)
+	 * @see groovy.GroovyPackage#getGroovy_Script()
+	 * @model containment="true" required="true"
+	 *        extendedMetaData="kind='element' name='script' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	ScriptType getScript();
+
+	/**
+	 * Sets the value of the '{@link groovy.Groovy#getScript <em>Script</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Script</em>' containment reference.
+	 * @see #getScript()
+	 * @generated
+	 */
+	void setScript(ScriptType value);
 
 	/**
 	 * Returns the value of the '<em><b>Execute Before</b></em>' attribute.
@@ -123,7 +123,7 @@ public interface Groovy extends ElementVisitor {
 	 * @see #isSetExecuteBefore()
 	 * @see #unsetExecuteBefore()
 	 * @see #setExecuteBefore(boolean)
-	 * @see org.jboss.tools.smooks.model.groovy.GroovyPackage#getGroovy_ExecuteBefore()
+	 * @see groovy.GroovyPackage#getGroovy_ExecuteBefore()
 	 * @model default="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='executeBefore'"
 	 * @generated
@@ -131,7 +131,7 @@ public interface Groovy extends ElementVisitor {
 	boolean isExecuteBefore();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.groovy.Groovy#isExecuteBefore <em>Execute Before</em>}' attribute.
+	 * Sets the value of the '{@link groovy.Groovy#isExecuteBefore <em>Execute Before</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Execute Before</em>' attribute.
@@ -143,7 +143,7 @@ public interface Groovy extends ElementVisitor {
 	void setExecuteBefore(boolean value);
 
 	/**
-	 * Unsets the value of the '{@link org.jboss.tools.smooks.model.groovy.Groovy#isExecuteBefore <em>Execute Before</em>}' attribute.
+	 * Unsets the value of the '{@link groovy.Groovy#isExecuteBefore <em>Execute Before</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #isSetExecuteBefore()
@@ -154,7 +154,7 @@ public interface Groovy extends ElementVisitor {
 	void unsetExecuteBefore();
 
 	/**
-	 * Returns whether the value of the '{@link org.jboss.tools.smooks.model.groovy.Groovy#isExecuteBefore <em>Execute Before</em>}' attribute is set.
+	 * Returns whether the value of the '{@link groovy.Groovy#isExecuteBefore <em>Execute Before</em>}' attribute is set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return whether the value of the '<em>Execute Before</em>' attribute is set.
@@ -176,7 +176,7 @@ public interface Groovy extends ElementVisitor {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Execute On Element</em>' attribute.
 	 * @see #setExecuteOnElement(String)
-	 * @see org.jboss.tools.smooks.model.groovy.GroovyPackage#getGroovy_ExecuteOnElement()
+	 * @see groovy.GroovyPackage#getGroovy_ExecuteOnElement()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
 	 *        extendedMetaData="kind='attribute' name='executeOnElement'"
 	 * @generated
@@ -184,7 +184,7 @@ public interface Groovy extends ElementVisitor {
 	String getExecuteOnElement();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.groovy.Groovy#getExecuteOnElement <em>Execute On Element</em>}' attribute.
+	 * Sets the value of the '{@link groovy.Groovy#getExecuteOnElement <em>Execute On Element</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Execute On Element</em>' attribute.
@@ -204,7 +204,7 @@ public interface Groovy extends ElementVisitor {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Execute On Element NS</em>' attribute.
 	 * @see #setExecuteOnElementNS(String)
-	 * @see org.jboss.tools.smooks.model.groovy.GroovyPackage#getGroovy_ExecuteOnElementNS()
+	 * @see groovy.GroovyPackage#getGroovy_ExecuteOnElementNS()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.AnyURI"
 	 *        extendedMetaData="kind='attribute' name='executeOnElementNS'"
 	 * @generated
@@ -212,7 +212,7 @@ public interface Groovy extends ElementVisitor {
 	String getExecuteOnElementNS();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.groovy.Groovy#getExecuteOnElementNS <em>Execute On Element NS</em>}' attribute.
+	 * Sets the value of the '{@link groovy.Groovy#getExecuteOnElementNS <em>Execute On Element NS</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Execute On Element NS</em>' attribute.
