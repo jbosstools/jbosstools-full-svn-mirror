@@ -22,6 +22,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.custom.BusyIndicator;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -29,6 +30,8 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -142,27 +145,38 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 */
 	@Override
 	public void createPartControl(final Composite parent) {
+
+	    	//Setting  Layout for the parent Composite
+		parent.setLayout(new FillLayout());
 		
-		//Setting  Layout for the parent Composite
-		GridLayout layout = new GridLayout(2,false);
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4062
+		 * Creating scrollable eclipse element.
+		 */
+		ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		sc.setLayout(new FillLayout());
+		Composite composite = new Composite(sc, SWT.NATIVE);
+
+	    	GridLayout layout = new GridLayout(2,false);
 		layout.marginHeight = 0;
 		layout.marginWidth = 2;
 		layout.verticalSpacing = 2;
 		layout.horizontalSpacing = 2;
 		layout.marginBottom = 0;
-		parent.setLayout(layout);
-				
+		composite.setLayout(layout);
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
 		// Composite for the left Vertical toolbar
-		Composite cmpVerticalToolbar = new Composite(parent, SWT.NONE);
+		Composite cmpVerticalToolbar = new Composite(composite, SWT.NONE);
 		layout = new GridLayout(1,false);
 		layout.marginHeight = 2;
 		layout.marginWidth = 0;
 		layout.verticalSpacing = 0;		
 		cmpVerticalToolbar.setLayout(layout);
-		cmpVerticalToolbar.setLayoutData(new GridData(GridData.FILL_VERTICAL));
+		cmpVerticalToolbar.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		// Editors and Toolbar composite 
-		Composite cmpEdTl = new Composite(parent, SWT.NONE);
+		Composite cmpEdTl = new Composite(composite, SWT.NONE);
 		GridLayout layoutEdTl = new GridLayout(1, false);
 		layoutEdTl.verticalSpacing = 0;
 		layoutEdTl.marginHeight = 0;
@@ -335,6 +349,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 //					Display.getCurrent().sleep();
 //			}
 			xulRunnerEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			
 		}
 		catch (XulRunnerException e) {
 			VpePlugin.getPluginLog().logError(e);
@@ -381,7 +396,17 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	        link.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 	        Label fill = new Label(cmpEd, SWT.WRAP);		
 	        fill.setLayoutData(new GridData(GridData.FILL_BOTH));
-		}		
+		}
+		
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4062
+		 * Computing elements sizes to set up scroll bars.
+		 */
+		Point totalSize = composite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		sc.setContent(composite);
+		sc.setExpandHorizontal(true);
+		sc.setExpandVertical(true);
+		sc.setMinSize(totalSize);
 	}
 
 	private ToolItem createToolItem(ToolBar parent, int type, String image,
