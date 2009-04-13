@@ -20,14 +20,15 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.DocumentRoot#getMixed <em>Mixed</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.DocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.DocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.DocumentRoot#getGroovy <em>Groovy</em>}</li>
+ *   <li>{@link groovy.DocumentRoot#getMixed <em>Mixed</em>}</li>
+ *   <li>{@link groovy.DocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}</li>
+ *   <li>{@link groovy.DocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}</li>
+ *   <li>{@link groovy.DocumentRoot#getGroovy <em>Groovy</em>}</li>
+ *   <li>{@link groovy.DocumentRoot#getScript <em>Script</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.groovy.GroovyPackage#getDocumentRoot()
+ * @see groovy.GroovyPackage#getDocumentRoot()
  * @model extendedMetaData="name='' kind='mixed'"
  * @generated
  */
@@ -42,7 +43,7 @@ public interface DocumentRoot extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mixed</em>' attribute list.
-	 * @see org.jboss.tools.smooks.model.groovy.GroovyPackage#getDocumentRoot_Mixed()
+	 * @see groovy.GroovyPackage#getDocumentRoot_Mixed()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
 	 *        extendedMetaData="kind='elementWildcard' name=':mixed'"
 	 * @generated
@@ -60,7 +61,7 @@ public interface DocumentRoot extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>XMLNS Prefix Map</em>' map.
-	 * @see org.jboss.tools.smooks.model.groovy.GroovyPackage#getDocumentRoot_XMLNSPrefixMap()
+	 * @see groovy.GroovyPackage#getDocumentRoot_XMLNSPrefixMap()
 	 * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>" transient="true"
 	 *        extendedMetaData="kind='attribute' name='xmlns:prefix'"
 	 * @generated
@@ -78,7 +79,7 @@ public interface DocumentRoot extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>XSI Schema Location</em>' map.
-	 * @see org.jboss.tools.smooks.model.groovy.GroovyPackage#getDocumentRoot_XSISchemaLocation()
+	 * @see groovy.GroovyPackage#getDocumentRoot_XSISchemaLocation()
 	 * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>" transient="true"
 	 *        extendedMetaData="kind='attribute' name='xsi:schemaLocation'"
 	 * @generated
@@ -96,7 +97,7 @@ public interface DocumentRoot extends EObject {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Groovy</em>' containment reference.
 	 * @see #setGroovy(Groovy)
-	 * @see org.jboss.tools.smooks.model.groovy.GroovyPackage#getDocumentRoot_Groovy()
+	 * @see groovy.GroovyPackage#getDocumentRoot_Groovy()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='groovy' namespace='##targetNamespace' affiliation='http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config'"
 	 * @generated
@@ -104,7 +105,7 @@ public interface DocumentRoot extends EObject {
 	Groovy getGroovy();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.groovy.DocumentRoot#getGroovy <em>Groovy</em>}' containment reference.
+	 * Sets the value of the '{@link groovy.DocumentRoot#getGroovy <em>Groovy</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Groovy</em>' containment reference.
@@ -112,5 +113,32 @@ public interface DocumentRoot extends EObject {
 	 * @generated
 	 */
 	void setGroovy(Groovy value);
+
+	/**
+	 * Returns the value of the '<em><b>Script</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Script</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Script</em>' containment reference.
+	 * @see #setScript(ScriptType)
+	 * @see groovy.GroovyPackage#getDocumentRoot_Script()
+	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='script' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	ScriptType getScript();
+
+	/**
+	 * Sets the value of the '{@link groovy.DocumentRoot#getScript <em>Script</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Script</em>' containment reference.
+	 * @see #getScript()
+	 * @generated
+	 */
+	void setScript(ScriptType value);
 
 } // DocumentRoot

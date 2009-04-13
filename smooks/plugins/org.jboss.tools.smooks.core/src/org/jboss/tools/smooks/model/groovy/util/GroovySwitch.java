@@ -6,7 +6,6 @@
  */
 package org.jboss.tools.smooks.model.groovy.util;
 
-
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
@@ -16,6 +15,7 @@ import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.groovy.DocumentRoot;
 import org.jboss.tools.smooks.model.groovy.Groovy;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
+import org.jboss.tools.smooks.model.groovy.ScriptType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ElementVisitor;
 
@@ -29,7 +29,7 @@ import org.jboss.tools.smooks.model.smooks.ElementVisitor;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.jboss.tools.smooks.model.groovy.GroovyPackage
+ * @see groovy.GroovyPackage
  * @generated
  */
 public class GroovySwitch<T> {
@@ -109,6 +109,13 @@ public class GroovySwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case GroovyPackage.SCRIPT_TYPE: {
+				ScriptType scriptType = (ScriptType)theEObject;
+				T result = caseScriptType(scriptType);
+				if (result == null) result = caseAnyType(scriptType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -140,6 +147,21 @@ public class GroovySwitch<T> {
 	 * @generated
 	 */
 	public T caseGroovy(Groovy object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Script Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Script Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseScriptType(ScriptType object) {
 		return null;
 	}
 

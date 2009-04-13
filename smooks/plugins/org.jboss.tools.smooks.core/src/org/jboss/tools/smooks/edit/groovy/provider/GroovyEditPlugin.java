@@ -11,7 +11,7 @@ import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
 
 /**
- * This is the central singleton for the Groovy edit plugin.
+ * This is the central singleton for the Groovy-1 edit plugin.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

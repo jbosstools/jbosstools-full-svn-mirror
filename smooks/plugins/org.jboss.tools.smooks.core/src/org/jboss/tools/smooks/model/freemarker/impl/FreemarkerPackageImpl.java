@@ -743,7 +743,7 @@ public class FreemarkerPackageImpl extends EPackageImpl implements FreemarkerPac
 		   source, 
 		   new String[] {
 			 "name", "template",
-			 "kind", "simple"
+			 "kind", "mixed"
 		   });		
 		addAnnotation
 		  (getTemplate_Value(), 

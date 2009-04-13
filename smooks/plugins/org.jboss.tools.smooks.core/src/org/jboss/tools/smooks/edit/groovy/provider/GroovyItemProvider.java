@@ -7,7 +7,6 @@
 package org.jboss.tools.smooks.edit.groovy.provider;
 
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -26,11 +25,12 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.jboss.tools.smooks.edit.smooks.provider.ElementVisitorItemProvider;
 import org.jboss.tools.smooks.model.groovy.Groovy;
+import org.jboss.tools.smooks.model.groovy.GroovyFactory;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 
 /**
- * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.groovy.Groovy} object.
+ * This is the item provider adapter for a {@link groovy.Groovy} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -65,7 +65,6 @@ public class GroovyItemProvider
 			super.getPropertyDescriptors(object);
 
 			addImportsPropertyDescriptor(object);
-			addScriptPropertyDescriptor(object);
 			addExecuteBeforePropertyDescriptor(object);
 			addExecuteOnElementPropertyDescriptor(object);
 			addExecuteOnElementNSPropertyDescriptor(object);
@@ -87,28 +86,6 @@ public class GroovyItemProvider
 				 getString("_UI_Groovy_imports_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Groovy_imports_feature", "_UI_Groovy_type"),
 				 GroovyPackage.Literals.GROOVY__IMPORTS,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Script feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addScriptPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Groovy_script_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Groovy_script_feature", "_UI_Groovy_type"),
-				 GroovyPackage.Literals.GROOVY__SCRIPT,
 				 true,
 				 false,
 				 false,
@@ -196,6 +173,7 @@ public class GroovyItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(GroovyPackage.Literals.GROOVY__PARAM);
+			childrenFeatures.add(GroovyPackage.Literals.GROOVY__SCRIPT);
 		}
 		return childrenFeatures;
 	}
@@ -251,13 +229,13 @@ public class GroovyItemProvider
 
 		switch (notification.getFeatureID(Groovy.class)) {
 			case GroovyPackage.GROOVY__IMPORTS:
-			case GroovyPackage.GROOVY__SCRIPT:
 			case GroovyPackage.GROOVY__EXECUTE_BEFORE:
 			case GroovyPackage.GROOVY__EXECUTE_ON_ELEMENT:
 			case GroovyPackage.GROOVY__EXECUTE_ON_ELEMENT_NS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case GroovyPackage.GROOVY__PARAM:
+			case GroovyPackage.GROOVY__SCRIPT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -279,6 +257,11 @@ public class GroovyItemProvider
 			(createChildParameter
 				(GroovyPackage.Literals.GROOVY__PARAM,
 				 SmooksFactory.eINSTANCE.createParamType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(GroovyPackage.Literals.GROOVY__SCRIPT,
+				 GroovyFactory.eINSTANCE.createScriptType()));
 	}
 
 	/**

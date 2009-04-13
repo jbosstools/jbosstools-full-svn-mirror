@@ -10,6 +10,8 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
+import org.jboss.tools.smooks.model.groovy.impl.GroovyPackageImpl;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 /**
@@ -26,7 +28,7 @@ import org.jboss.tools.smooks.model.smooks.SmooksPackage;
  * <!-- begin-model-doc -->
  * Groovy Scripting Configuration
  * <!-- end-model-doc -->
- * @see org.jboss.tools.smooks.model.groovy.GroovyFactory
+ * @see groovy.GroovyFactory
  * @model kind="package"
  * @generated
  */
@@ -61,14 +63,14 @@ public interface GroovyPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	GroovyPackage eINSTANCE = org.jboss.tools.smooks.model.groovy.impl.GroovyPackageImpl.init();
+	GroovyPackage eINSTANCE = GroovyPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.jboss.tools.smooks.model.groovy.impl.DocumentRootImpl <em>Document Root</em>}' class.
+	 * The meta object id for the '{@link groovy.impl.DocumentRootImpl <em>Document Root</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.jboss.tools.smooks.model.groovy.impl.DocumentRootImpl
-	 * @see org.jboss.tools.smooks.model.groovy.impl.GroovyPackageImpl#getDocumentRoot()
+	 * @see groovy.impl.DocumentRootImpl
+	 * @see groovy.impl.GroovyPackageImpl#getDocumentRoot()
 	 * @generated
 	 */
 	int DOCUMENT_ROOT = 0;
@@ -110,20 +112,29 @@ public interface GroovyPackage extends EPackage {
 	int DOCUMENT_ROOT__GROOVY = 3;
 
 	/**
+	 * The feature id for the '<em><b>Script</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENT_ROOT__SCRIPT = 4;
+
+	/**
 	 * The number of structural features of the '<em>Document Root</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT_FEATURE_COUNT = 4;
+	int DOCUMENT_ROOT_FEATURE_COUNT = 5;
 
 	/**
-	 * The meta object id for the '{@link org.jboss.tools.smooks.model.groovy.impl.GroovyImpl <em>Groovy</em>}' class.
+	 * The meta object id for the '{@link groovy.impl.GroovyImpl <em>Groovy</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.jboss.tools.smooks.model.groovy.impl.GroovyImpl
-	 * @see org.jboss.tools.smooks.model.groovy.impl.GroovyPackageImpl#getGroovy()
+	 * @see groovy.impl.GroovyImpl
+	 * @see groovy.impl.GroovyPackageImpl#getGroovy()
 	 * @generated
 	 */
 	int GROOVY = 1;
@@ -183,22 +194,22 @@ public interface GroovyPackage extends EPackage {
 	int GROOVY__IMPORTS = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Script</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROOVY__SCRIPT = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 1;
-
-	/**
 	 * The feature id for the '<em><b>Param</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GROOVY__PARAM = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 2;
+	int GROOVY__PARAM = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Script</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROOVY__SCRIPT = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Execute Before</b></em>' attribute.
@@ -236,136 +247,203 @@ public interface GroovyPackage extends EPackage {
 	 */
 	int GROOVY_FEATURE_COUNT = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 6;
 
+	/**
+	 * The meta object id for the '{@link groovy.impl.ScriptTypeImpl <em>Script Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see groovy.impl.ScriptTypeImpl
+	 * @see groovy.impl.GroovyPackageImpl#getScriptType()
+	 * @generated
+	 */
+	int SCRIPT_TYPE = 2;
 
 	/**
-	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.groovy.DocumentRoot <em>Document Root</em>}'.
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT_TYPE__MIXED = XMLTypePackage.ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT_TYPE__ANY = XMLTypePackage.ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT_TYPE__ANY_ATTRIBUTE = XMLTypePackage.ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
+	 * The number of structural features of the '<em>Script Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCRIPT_TYPE_FEATURE_COUNT = XMLTypePackage.ANY_TYPE_FEATURE_COUNT + 0;
+
+
+	/**
+	 * Returns the meta object for class '{@link groovy.DocumentRoot <em>Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Document Root</em>'.
-	 * @see org.jboss.tools.smooks.model.groovy.DocumentRoot
+	 * @see groovy.DocumentRoot
 	 * @generated
 	 */
 	EClass getDocumentRoot();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.jboss.tools.smooks.model.groovy.DocumentRoot#getMixed <em>Mixed</em>}'.
+	 * Returns the meta object for the attribute list '{@link groovy.DocumentRoot#getMixed <em>Mixed</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Mixed</em>'.
-	 * @see org.jboss.tools.smooks.model.groovy.DocumentRoot#getMixed()
+	 * @see groovy.DocumentRoot#getMixed()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EAttribute getDocumentRoot_Mixed();
 
 	/**
-	 * Returns the meta object for the map '{@link org.jboss.tools.smooks.model.groovy.DocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}'.
+	 * Returns the meta object for the map '{@link groovy.DocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>XMLNS Prefix Map</em>'.
-	 * @see org.jboss.tools.smooks.model.groovy.DocumentRoot#getXMLNSPrefixMap()
+	 * @see groovy.DocumentRoot#getXMLNSPrefixMap()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_XMLNSPrefixMap();
 
 	/**
-	 * Returns the meta object for the map '{@link org.jboss.tools.smooks.model.groovy.DocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}'.
+	 * Returns the meta object for the map '{@link groovy.DocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>XSI Schema Location</em>'.
-	 * @see org.jboss.tools.smooks.model.groovy.DocumentRoot#getXSISchemaLocation()
+	 * @see groovy.DocumentRoot#getXSISchemaLocation()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_XSISchemaLocation();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.groovy.DocumentRoot#getGroovy <em>Groovy</em>}'.
+	 * Returns the meta object for the containment reference '{@link groovy.DocumentRoot#getGroovy <em>Groovy</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Groovy</em>'.
-	 * @see org.jboss.tools.smooks.model.groovy.DocumentRoot#getGroovy()
+	 * @see groovy.DocumentRoot#getGroovy()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_Groovy();
 
 	/**
-	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.groovy.Groovy <em>Groovy</em>}'.
+	 * Returns the meta object for the containment reference '{@link groovy.DocumentRoot#getScript <em>Script</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Script</em>'.
+	 * @see groovy.DocumentRoot#getScript()
+	 * @see #getDocumentRoot()
+	 * @generated
+	 */
+	EReference getDocumentRoot_Script();
+
+	/**
+	 * Returns the meta object for class '{@link groovy.Groovy <em>Groovy</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Groovy</em>'.
-	 * @see org.jboss.tools.smooks.model.groovy.Groovy
+	 * @see groovy.Groovy
 	 * @generated
 	 */
 	EClass getGroovy();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.groovy.Groovy#getImports <em>Imports</em>}'.
+	 * Returns the meta object for the attribute '{@link groovy.Groovy#getImports <em>Imports</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Imports</em>'.
-	 * @see org.jboss.tools.smooks.model.groovy.Groovy#getImports()
+	 * @see groovy.Groovy#getImports()
 	 * @see #getGroovy()
 	 * @generated
 	 */
 	EAttribute getGroovy_Imports();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.groovy.Groovy#getScript <em>Script</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Script</em>'.
-	 * @see org.jboss.tools.smooks.model.groovy.Groovy#getScript()
-	 * @see #getGroovy()
-	 * @generated
-	 */
-	EAttribute getGroovy_Script();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.jboss.tools.smooks.model.groovy.Groovy#getParam <em>Param</em>}'.
+	 * Returns the meta object for the containment reference list '{@link groovy.Groovy#getParam <em>Param</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Param</em>'.
-	 * @see org.jboss.tools.smooks.model.groovy.Groovy#getParam()
+	 * @see groovy.Groovy#getParam()
 	 * @see #getGroovy()
 	 * @generated
 	 */
 	EReference getGroovy_Param();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.groovy.Groovy#isExecuteBefore <em>Execute Before</em>}'.
+	 * Returns the meta object for the containment reference '{@link groovy.Groovy#getScript <em>Script</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Script</em>'.
+	 * @see groovy.Groovy#getScript()
+	 * @see #getGroovy()
+	 * @generated
+	 */
+	EReference getGroovy_Script();
+
+	/**
+	 * Returns the meta object for the attribute '{@link groovy.Groovy#isExecuteBefore <em>Execute Before</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Execute Before</em>'.
-	 * @see org.jboss.tools.smooks.model.groovy.Groovy#isExecuteBefore()
+	 * @see groovy.Groovy#isExecuteBefore()
 	 * @see #getGroovy()
 	 * @generated
 	 */
 	EAttribute getGroovy_ExecuteBefore();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.groovy.Groovy#getExecuteOnElement <em>Execute On Element</em>}'.
+	 * Returns the meta object for the attribute '{@link groovy.Groovy#getExecuteOnElement <em>Execute On Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Execute On Element</em>'.
-	 * @see org.jboss.tools.smooks.model.groovy.Groovy#getExecuteOnElement()
+	 * @see groovy.Groovy#getExecuteOnElement()
 	 * @see #getGroovy()
 	 * @generated
 	 */
 	EAttribute getGroovy_ExecuteOnElement();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.groovy.Groovy#getExecuteOnElementNS <em>Execute On Element NS</em>}'.
+	 * Returns the meta object for the attribute '{@link groovy.Groovy#getExecuteOnElementNS <em>Execute On Element NS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Execute On Element NS</em>'.
-	 * @see org.jboss.tools.smooks.model.groovy.Groovy#getExecuteOnElementNS()
+	 * @see groovy.Groovy#getExecuteOnElementNS()
 	 * @see #getGroovy()
 	 * @generated
 	 */
 	EAttribute getGroovy_ExecuteOnElementNS();
+
+	/**
+	 * Returns the meta object for class '{@link groovy.ScriptType <em>Script Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Script Type</em>'.
+	 * @see groovy.ScriptType
+	 * @generated
+	 */
+	EClass getScriptType();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -390,11 +468,11 @@ public interface GroovyPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.groovy.impl.DocumentRootImpl <em>Document Root</em>}' class.
+		 * The meta object literal for the '{@link groovy.impl.DocumentRootImpl <em>Document Root</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.jboss.tools.smooks.model.groovy.impl.DocumentRootImpl
-		 * @see org.jboss.tools.smooks.model.groovy.impl.GroovyPackageImpl#getDocumentRoot()
+		 * @see groovy.impl.DocumentRootImpl
+		 * @see groovy.impl.GroovyPackageImpl#getDocumentRoot()
 		 * @generated
 		 */
 		EClass DOCUMENT_ROOT = eINSTANCE.getDocumentRoot();
@@ -432,11 +510,19 @@ public interface GroovyPackage extends EPackage {
 		EReference DOCUMENT_ROOT__GROOVY = eINSTANCE.getDocumentRoot_Groovy();
 
 		/**
-		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.groovy.impl.GroovyImpl <em>Groovy</em>}' class.
+		 * The meta object literal for the '<em><b>Script</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.jboss.tools.smooks.model.groovy.impl.GroovyImpl
-		 * @see org.jboss.tools.smooks.model.groovy.impl.GroovyPackageImpl#getGroovy()
+		 * @generated
+		 */
+		EReference DOCUMENT_ROOT__SCRIPT = eINSTANCE.getDocumentRoot_Script();
+
+		/**
+		 * The meta object literal for the '{@link groovy.impl.GroovyImpl <em>Groovy</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see groovy.impl.GroovyImpl
+		 * @see groovy.impl.GroovyPackageImpl#getGroovy()
 		 * @generated
 		 */
 		EClass GROOVY = eINSTANCE.getGroovy();
@@ -450,20 +536,20 @@ public interface GroovyPackage extends EPackage {
 		EAttribute GROOVY__IMPORTS = eINSTANCE.getGroovy_Imports();
 
 		/**
-		 * The meta object literal for the '<em><b>Script</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute GROOVY__SCRIPT = eINSTANCE.getGroovy_Script();
-
-		/**
 		 * The meta object literal for the '<em><b>Param</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference GROOVY__PARAM = eINSTANCE.getGroovy_Param();
+
+		/**
+		 * The meta object literal for the '<em><b>Script</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GROOVY__SCRIPT = eINSTANCE.getGroovy_Script();
 
 		/**
 		 * The meta object literal for the '<em><b>Execute Before</b></em>' attribute feature.
@@ -488,6 +574,16 @@ public interface GroovyPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute GROOVY__EXECUTE_ON_ELEMENT_NS = eINSTANCE.getGroovy_ExecuteOnElementNS();
+
+		/**
+		 * The meta object literal for the '{@link groovy.impl.ScriptTypeImpl <em>Script Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see groovy.impl.ScriptTypeImpl
+		 * @see groovy.impl.GroovyPackageImpl#getScriptType()
+		 * @generated
+		 */
+		EClass SCRIPT_TYPE = eINSTANCE.getScriptType();
 
 	}
 

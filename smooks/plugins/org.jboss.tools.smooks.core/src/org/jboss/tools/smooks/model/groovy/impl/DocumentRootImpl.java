@@ -6,19 +6,14 @@
  */
 package org.jboss.tools.smooks.model.groovy.impl;
 
-
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EMap;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
-
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
@@ -26,6 +21,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.jboss.tools.smooks.model.groovy.DocumentRoot;
 import org.jboss.tools.smooks.model.groovy.Groovy;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
+import org.jboss.tools.smooks.model.groovy.ScriptType;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,10 +30,11 @@ import org.jboss.tools.smooks.model.groovy.GroovyPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.impl.DocumentRootImpl#getMixed <em>Mixed</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.impl.DocumentRootImpl#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.impl.DocumentRootImpl#getXSISchemaLocation <em>XSI Schema Location</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.impl.DocumentRootImpl#getGroovy <em>Groovy</em>}</li>
+ *   <li>{@link groovy.impl.DocumentRootImpl#getMixed <em>Mixed</em>}</li>
+ *   <li>{@link groovy.impl.DocumentRootImpl#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}</li>
+ *   <li>{@link groovy.impl.DocumentRootImpl#getXSISchemaLocation <em>XSI Schema Location</em>}</li>
+ *   <li>{@link groovy.impl.DocumentRootImpl#getGroovy <em>Groovy</em>}</li>
+ *   <li>{@link groovy.impl.DocumentRootImpl#getScript <em>Script</em>}</li>
  * </ul>
  * </p>
  *
@@ -161,6 +158,33 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ScriptType getScript() {
+		return (ScriptType)getMixed().get(GroovyPackage.Literals.DOCUMENT_ROOT__SCRIPT, true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetScript(ScriptType newScript, NotificationChain msgs) {
+		return ((FeatureMap.Internal)getMixed()).basicAdd(GroovyPackage.Literals.DOCUMENT_ROOT__SCRIPT, newScript, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setScript(ScriptType newScript) {
+		((FeatureMap.Internal)getMixed()).set(GroovyPackage.Literals.DOCUMENT_ROOT__SCRIPT, newScript);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -172,6 +196,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return ((InternalEList<?>)getXSISchemaLocation()).basicRemove(otherEnd, msgs);
 			case GroovyPackage.DOCUMENT_ROOT__GROOVY:
 				return basicSetGroovy(null, msgs);
+			case GroovyPackage.DOCUMENT_ROOT__SCRIPT:
+				return basicSetScript(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -195,6 +221,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				else return getXSISchemaLocation().map();
 			case GroovyPackage.DOCUMENT_ROOT__GROOVY:
 				return getGroovy();
+			case GroovyPackage.DOCUMENT_ROOT__SCRIPT:
+				return getScript();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -218,6 +246,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return;
 			case GroovyPackage.DOCUMENT_ROOT__GROOVY:
 				setGroovy((Groovy)newValue);
+				return;
+			case GroovyPackage.DOCUMENT_ROOT__SCRIPT:
+				setScript((ScriptType)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -243,6 +274,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 			case GroovyPackage.DOCUMENT_ROOT__GROOVY:
 				setGroovy((Groovy)null);
 				return;
+			case GroovyPackage.DOCUMENT_ROOT__SCRIPT:
+				setScript((ScriptType)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -263,6 +297,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 				return xSISchemaLocation != null && !xSISchemaLocation.isEmpty();
 			case GroovyPackage.DOCUMENT_ROOT__GROOVY:
 				return getGroovy() != null;
+			case GroovyPackage.DOCUMENT_ROOT__SCRIPT:
+				return getScript() != null;
 		}
 		return super.eIsSet(featureID);
 	}

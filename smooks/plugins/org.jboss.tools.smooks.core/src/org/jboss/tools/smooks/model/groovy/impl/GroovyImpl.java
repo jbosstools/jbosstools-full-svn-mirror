@@ -6,7 +6,6 @@
  */
 package org.jboss.tools.smooks.model.groovy.impl;
 
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -19,6 +18,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.jboss.tools.smooks.model.groovy.Groovy;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
+import org.jboss.tools.smooks.model.groovy.ScriptType;
 import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks.model.smooks.impl.ElementVisitorImpl;
 
@@ -29,12 +29,12 @@ import org.jboss.tools.smooks.model.smooks.impl.ElementVisitorImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.impl.GroovyImpl#getImports <em>Imports</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.impl.GroovyImpl#getScript <em>Script</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.impl.GroovyImpl#getParam <em>Param</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.impl.GroovyImpl#isExecuteBefore <em>Execute Before</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.impl.GroovyImpl#getExecuteOnElement <em>Execute On Element</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.groovy.impl.GroovyImpl#getExecuteOnElementNS <em>Execute On Element NS</em>}</li>
+ *   <li>{@link groovy.impl.GroovyImpl#getImports <em>Imports</em>}</li>
+ *   <li>{@link groovy.impl.GroovyImpl#getParam <em>Param</em>}</li>
+ *   <li>{@link groovy.impl.GroovyImpl#getScript <em>Script</em>}</li>
+ *   <li>{@link groovy.impl.GroovyImpl#isExecuteBefore <em>Execute Before</em>}</li>
+ *   <li>{@link groovy.impl.GroovyImpl#getExecuteOnElement <em>Execute On Element</em>}</li>
+ *   <li>{@link groovy.impl.GroovyImpl#getExecuteOnElementNS <em>Execute On Element NS</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,26 +62,6 @@ public class GroovyImpl extends ElementVisitorImpl implements Groovy {
 	protected String imports = IMPORTS_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getScript() <em>Script</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getScript()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String SCRIPT_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getScript() <em>Script</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getScript()
-	 * @generated
-	 * @ordered
-	 */
-	protected String script = SCRIPT_EDEFAULT;
-
-	/**
 	 * The cached value of the '{@link #getParam() <em>Param</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -90,6 +70,16 @@ public class GroovyImpl extends ElementVisitorImpl implements Groovy {
 	 * @ordered
 	 */
 	protected EList<ParamType> param;
+
+	/**
+	 * The cached value of the '{@link #getScript() <em>Script</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getScript()
+	 * @generated
+	 * @ordered
+	 */
+	protected ScriptType script;
 
 	/**
 	 * The default value of the '{@link #isExecuteBefore() <em>Execute Before</em>}' attribute.
@@ -205,7 +195,19 @@ public class GroovyImpl extends ElementVisitorImpl implements Groovy {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getScript() {
+	public EList<ParamType> getParam() {
+		if (param == null) {
+			param = new EObjectContainmentEList<ParamType>(ParamType.class, this, GroovyPackage.GROOVY__PARAM);
+		}
+		return param;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ScriptType getScript() {
 		return script;
 	}
 
@@ -214,11 +216,14 @@ public class GroovyImpl extends ElementVisitorImpl implements Groovy {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setScript(String newScript) {
-		String oldScript = script;
+	public NotificationChain basicSetScript(ScriptType newScript, NotificationChain msgs) {
+		ScriptType oldScript = script;
 		script = newScript;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GroovyPackage.GROOVY__SCRIPT, oldScript, script));
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GroovyPackage.GROOVY__SCRIPT, oldScript, newScript);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
 	/**
@@ -226,11 +231,18 @@ public class GroovyImpl extends ElementVisitorImpl implements Groovy {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ParamType> getParam() {
-		if (param == null) {
-			param = new EObjectContainmentEList<ParamType>(ParamType.class, this, GroovyPackage.GROOVY__PARAM);
+	public void setScript(ScriptType newScript) {
+		if (newScript != script) {
+			NotificationChain msgs = null;
+			if (script != null)
+				msgs = ((InternalEObject)script).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GroovyPackage.GROOVY__SCRIPT, null, msgs);
+			if (newScript != null)
+				msgs = ((InternalEObject)newScript).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - GroovyPackage.GROOVY__SCRIPT, null, msgs);
+			msgs = basicSetScript(newScript, msgs);
+			if (msgs != null) msgs.dispatch();
 		}
-		return param;
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, GroovyPackage.GROOVY__SCRIPT, newScript, newScript));
 	}
 
 	/**
@@ -331,6 +343,8 @@ public class GroovyImpl extends ElementVisitorImpl implements Groovy {
 		switch (featureID) {
 			case GroovyPackage.GROOVY__PARAM:
 				return ((InternalEList<?>)getParam()).basicRemove(otherEnd, msgs);
+			case GroovyPackage.GROOVY__SCRIPT:
+				return basicSetScript(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -345,10 +359,10 @@ public class GroovyImpl extends ElementVisitorImpl implements Groovy {
 		switch (featureID) {
 			case GroovyPackage.GROOVY__IMPORTS:
 				return getImports();
-			case GroovyPackage.GROOVY__SCRIPT:
-				return getScript();
 			case GroovyPackage.GROOVY__PARAM:
 				return getParam();
+			case GroovyPackage.GROOVY__SCRIPT:
+				return getScript();
 			case GroovyPackage.GROOVY__EXECUTE_BEFORE:
 				return isExecuteBefore() ? Boolean.TRUE : Boolean.FALSE;
 			case GroovyPackage.GROOVY__EXECUTE_ON_ELEMENT:
@@ -371,12 +385,12 @@ public class GroovyImpl extends ElementVisitorImpl implements Groovy {
 			case GroovyPackage.GROOVY__IMPORTS:
 				setImports((String)newValue);
 				return;
-			case GroovyPackage.GROOVY__SCRIPT:
-				setScript((String)newValue);
-				return;
 			case GroovyPackage.GROOVY__PARAM:
 				getParam().clear();
 				getParam().addAll((Collection<? extends ParamType>)newValue);
+				return;
+			case GroovyPackage.GROOVY__SCRIPT:
+				setScript((ScriptType)newValue);
 				return;
 			case GroovyPackage.GROOVY__EXECUTE_BEFORE:
 				setExecuteBefore(((Boolean)newValue).booleanValue());
@@ -402,11 +416,11 @@ public class GroovyImpl extends ElementVisitorImpl implements Groovy {
 			case GroovyPackage.GROOVY__IMPORTS:
 				setImports(IMPORTS_EDEFAULT);
 				return;
-			case GroovyPackage.GROOVY__SCRIPT:
-				setScript(SCRIPT_EDEFAULT);
-				return;
 			case GroovyPackage.GROOVY__PARAM:
 				getParam().clear();
+				return;
+			case GroovyPackage.GROOVY__SCRIPT:
+				setScript((ScriptType)null);
 				return;
 			case GroovyPackage.GROOVY__EXECUTE_BEFORE:
 				unsetExecuteBefore();
@@ -431,10 +445,10 @@ public class GroovyImpl extends ElementVisitorImpl implements Groovy {
 		switch (featureID) {
 			case GroovyPackage.GROOVY__IMPORTS:
 				return IMPORTS_EDEFAULT == null ? imports != null : !IMPORTS_EDEFAULT.equals(imports);
-			case GroovyPackage.GROOVY__SCRIPT:
-				return SCRIPT_EDEFAULT == null ? script != null : !SCRIPT_EDEFAULT.equals(script);
 			case GroovyPackage.GROOVY__PARAM:
 				return param != null && !param.isEmpty();
+			case GroovyPackage.GROOVY__SCRIPT:
+				return script != null;
 			case GroovyPackage.GROOVY__EXECUTE_BEFORE:
 				return isSetExecuteBefore();
 			case GroovyPackage.GROOVY__EXECUTE_ON_ELEMENT:
@@ -457,8 +471,6 @@ public class GroovyImpl extends ElementVisitorImpl implements Groovy {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (imports: ");
 		result.append(imports);
-		result.append(", script: ");
-		result.append(script);
 		result.append(", executeBefore: ");
 		if (executeBeforeESet) result.append(executeBefore); else result.append("<unset>");
 		result.append(", executeOnElement: ");

@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors.xsl;
+package org.jboss.tools.smooks.configuration.editors.freemarker;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -16,14 +16,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks.model.xsl.XslPackage;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
  */
-public class XslUICreator extends PropertyUICreator {
+public class UseUICreator extends PropertyUICreator {
 
 	/*
 	 * (non-Javadoc)
@@ -37,18 +34,6 @@ public class XslUICreator extends PropertyUICreator {
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
 		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 		SmooksMultiFormEditor formEditor) {
-		if (feature == XslPackage.eINSTANCE.getXsl_ApplyBefore()) {
-		}
-		if (feature == XslPackage.eINSTANCE.getXsl_ApplyOnElement()) {
-			SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
-			if (ext != null) {
-				return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor,
-					model, ext);
-			}
-		}
-		if (feature == XslPackage.eINSTANCE.getXsl_ApplyOnElementNS()) {
-		}
-
 		return null;
 	}
 

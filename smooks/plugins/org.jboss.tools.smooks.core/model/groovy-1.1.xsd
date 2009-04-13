@@ -24,9 +24,11 @@
         <xs:complexContent>
             <xs:extension base="smooks:element-visitor">
                 <xs:sequence>
-                    <xs:element name="imports" type="xs:string" minOccurs="0"/>
-                    <xs:element name="script" type="xs:string"/>
-                    <xs:element ref="smooks:param" minOccurs="0" maxOccurs="unbounded"/>
+                	<xs:element name="imports" type="xs:string"
+                		minOccurs="0" />
+                	<xs:element ref="smooks:param" minOccurs="0"
+                		maxOccurs="unbounded" />
+                	<xs:element ref="smooks-groovy:script"></xs:element>
                 </xs:sequence>
                 <xs:attribute name="executeOnElement" type="xs:string" use="required">
                     <xs:annotation>
@@ -53,4 +55,13 @@
         </xs:complexContent>
     </xs:complexType>
 
+
+    <xs:element name="script">
+    	  <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="xs:anyType">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

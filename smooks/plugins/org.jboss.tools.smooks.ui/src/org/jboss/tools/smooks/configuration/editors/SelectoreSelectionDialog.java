@@ -25,6 +25,10 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.IShellProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -49,20 +53,23 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  *         <p>
  *         Apr 12, 2009
  */
-public class InputStructuredDataSelectionDialog extends Dialog {
+public class SelectoreSelectionDialog extends Dialog {
 
 	private SmooksGraphicsExtType graphicsExt;
 	private TreeViewer viewer;
 	private Object currentSelection;
+	private Button onlyNameButton;
+	private Button fullPathButton;
+	private SelectorAttributes selectorAttributes = null;
 
-	public InputStructuredDataSelectionDialog(IShellProvider parentShell) {
+	public SelectoreSelectionDialog(IShellProvider parentShell) {
 		super(parentShell);
-		// TODO Auto-generated constructor stub
 	}
 
-	public InputStructuredDataSelectionDialog(Shell parentShell, SmooksGraphicsExtType graphicsExt) {
+	public SelectoreSelectionDialog(Shell parentShell, SmooksGraphicsExtType graphicsExt) {
 		super(parentShell);
 		this.graphicsExt = graphicsExt;
+		selectorAttributes = new SelectorAttributes();
 	}
 
 	/*
@@ -88,13 +95,20 @@ public class InputStructuredDataSelectionDialog extends Dialog {
 		
 		Label label = new Label(composite,SWT.NONE);
 		label.setText("Sperator Char : ");
-		CCombo speratorCombo = new CCombo(composite,SWT.BORDER);
+		final CCombo speratorCombo = new CCombo(composite,SWT.BORDER);
 		speratorCombo.add(" ");
 		speratorCombo.add("/");
+		speratorCombo.select(0);
 		speratorCombo.setEditable(false);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		speratorCombo.setLayoutData(gd);
-		
+		speratorCombo.addModifyListener(new ModifyListener(){
+
+			public void modifyText(ModifyEvent e) {
+				selectorAttributes.setSelectorSperator(speratorCombo.getText());
+			}
+			
+		});
 		viewer = new TreeViewer(composite, SWT.BORDER);
 		viewer.setContentProvider(new CompoundStructuredDataContentProvider());
 		viewer.setLabelProvider(new CompoundStructuredDataLabelProvider());
@@ -126,17 +140,36 @@ public class InputStructuredDataSelectionDialog extends Dialog {
 		com.setLayoutData(gd);
 		
 		GridLayout gl = new GridLayout();
-		gl.numColumns = 3;
+		gl.numColumns = 2;
 		com.setLayout(gl);
-		Button fullPathButton  = new Button(com,SWT.RADIO);
+		fullPathButton  = new Button(com,SWT.RADIO);
 		fullPathButton.setText("Full Path");
-		Button onlyNameButton  = new Button(com,SWT.RADIO);
+		onlyNameButton  = new Button(com,SWT.RADIO);
 		onlyNameButton.setText("Only Name");
-		Button containtParentButton  = new Button(com,SWT.RADIO);
-		containtParentButton.setText("Containt Parent Name");
+//		Button containtParentButton  = new Button(com,SWT.RADIO);
+//		containtParentButton.setText("Containt Parent Name");
+		fullPathButton.setSelection(true);
+		
+		handleButtons();
 		
 		getShell().setText("Selector generate dialog");
 		return composite;
+	}
+
+	private void handleButtons() {
+		fullPathButton.addSelectionListener(new SelectionAdapter(){
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				selectorAttributes.setSelectorPolicy(SelectorAttributes.FULL_PATH);
+			}
+		});
+		
+		onlyNameButton.addSelectionListener(new SelectionAdapter(){
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				selectorAttributes.setSelectorPolicy(SelectorAttributes.ONLY_NAME);
+			}
+		});
 	}
 
 	protected List<?> generateInputData() {
@@ -197,5 +230,9 @@ public class InputStructuredDataSelectionDialog extends Dialog {
 	 */
 	public Object getCurrentSelection() {
 		return currentSelection;
+	}
+
+	public SelectorAttributes getSelectorAttributes() {
+		return selectorAttributes;
 	}
 }

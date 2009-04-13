@@ -47,6 +47,15 @@
         <details key="affiliation" value="http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="script" upperBound="-2"
+        eType="#//ScriptType" volatile="true" transient="true" derived="true" containment="true"
+        resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="script"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Groovy" eSuperTypes="smooks-1.1.ecore#//ElementVisitor">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -63,20 +72,20 @@
         <details key="namespace" value="##targetNamespace"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="script" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="element"/>
-        <details key="name" value="script"/>
-        <details key="namespace" value="##targetNamespace"/>
-      </eAnnotations>
-    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="param" upperBound="-1"
         eType="ecore:EClass smooks-1.1.ecore#//ParamType" containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="param"/>
         <details key="namespace" value="http://www.milyn.org/xsd/smooks-1.1.xsd"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="script" lowerBound="1"
+        eType="#//ScriptType" containment="true" resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="script"/>
+        <details key="namespace" value="##targetNamespace"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="executeBefore" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
@@ -108,5 +117,11 @@
         <details key="name" value="executeOnElementNS"/>
       </eAnnotations>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScriptType" eSuperTypes="http://www.eclipse.org/emf/2003/XMLType#//AnyType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="script_._type"/>
+      <details key="kind" value="mixed"/>
+    </eAnnotations>
   </eClassifiers>
 </ecore:EPackage>

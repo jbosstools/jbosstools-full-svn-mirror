@@ -7,13 +7,14 @@
 package org.jboss.tools.smooks.model.groovy;
 
 import org.eclipse.emf.ecore.EFactory;
+import org.jboss.tools.smooks.model.groovy.impl.GroovyFactoryImpl;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see org.jboss.tools.smooks.model.groovy.GroovyPackage
+ * @see groovy.GroovyPackage
  * @generated
  */
 public interface GroovyFactory extends EFactory {
@@ -23,7 +24,7 @@ public interface GroovyFactory extends EFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	GroovyFactory eINSTANCE = org.jboss.tools.smooks.model.groovy.impl.GroovyFactoryImpl.init();
+	GroovyFactory eINSTANCE = GroovyFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Document Root</em>'.
@@ -42,6 +43,15 @@ public interface GroovyFactory extends EFactory {
 	 * @generated
 	 */
 	Groovy createGroovy();
+
+	/**
+	 * Returns a new object of class '<em>Script Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Script Type</em>'.
+	 * @generated
+	 */
+	ScriptType createScriptType();
 
 	/**
 	 * Returns the package supported by this factory.

@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
@@ -54,8 +55,15 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 
 	@Override
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
-			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-			SmooksMultiFormEditor formEditor) {
+		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
+		SmooksMultiFormEditor formEditor) {
+		if (feature == JavabeanPackage.eINSTANCE.getWiringType_WireOnElement()) {
+			SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
+			if (ext != null) {
+				return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor,
+					model, ext);
+			}
+		}
 		if (feature == JavabeanPackage.eINSTANCE.getWiringType_BeanIdRef()) {
 			if (model instanceof EObject) {
 				SmooksResourceListType smooksResourceList = getSmooksResourceList((EObject) model);
@@ -93,18 +101,19 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 				}
 			}
 		}
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature,formEditor);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature,
+			formEditor);
 	}
 
 	protected List<String> getBeanIdList(SmooksResourceListType resourceList) {
 		List<AbstractResourceConfig> rlist = resourceList.getAbstractResourceConfig();
 		List<String> beanIdList = new ArrayList<String>();
 		for (Iterator<?> iterator = rlist.iterator(); iterator.hasNext();) {
-			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
+			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator
+				.next();
 			if (abstractResourceConfig instanceof BindingsType) {
 				String beanId = ((BindingsType) abstractResourceConfig).getBeanId();
-				if (beanId == null)
-					continue;
+				if (beanId == null) continue;
 				beanIdList.add(beanId);
 			}
 		}

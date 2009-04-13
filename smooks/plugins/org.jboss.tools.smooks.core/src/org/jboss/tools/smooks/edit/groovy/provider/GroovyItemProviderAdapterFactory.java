@@ -6,14 +6,12 @@
  */
 package org.jboss.tools.smooks.edit.groovy.provider;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -76,7 +74,7 @@ public class GroovyItemProviderAdapterFactory extends GroovyAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.jboss.tools.smooks.model.groovy.DocumentRoot} instances.
+	 * This keeps track of the one adapter used for all {@link groovy.DocumentRoot} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -84,7 +82,7 @@ public class GroovyItemProviderAdapterFactory extends GroovyAdapterFactory imple
 	protected DocumentRootItemProvider documentRootItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.groovy.DocumentRoot}.
+	 * This creates an adapter for a {@link groovy.DocumentRoot}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -99,7 +97,7 @@ public class GroovyItemProviderAdapterFactory extends GroovyAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.jboss.tools.smooks.model.groovy.Groovy} instances.
+	 * This keeps track of the one adapter used for all {@link groovy.Groovy} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -107,7 +105,7 @@ public class GroovyItemProviderAdapterFactory extends GroovyAdapterFactory imple
 	protected GroovyItemProvider groovyItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.groovy.Groovy}.
+	 * This creates an adapter for a {@link groovy.Groovy}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -119,6 +117,29 @@ public class GroovyItemProviderAdapterFactory extends GroovyAdapterFactory imple
 		}
 
 		return groovyItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link groovy.ScriptType} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ScriptTypeItemProvider scriptTypeItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link groovy.ScriptType}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createScriptTypeAdapter() {
+		if (scriptTypeItemProvider == null) {
+			scriptTypeItemProvider = new ScriptTypeItemProvider(this);
+		}
+
+		return scriptTypeItemProvider;
 	}
 
 	/**
@@ -222,6 +243,7 @@ public class GroovyItemProviderAdapterFactory extends GroovyAdapterFactory imple
 	public void dispose() {
 		if (documentRootItemProvider != null) documentRootItemProvider.dispose();
 		if (groovyItemProvider != null) groovyItemProvider.dispose();
+		if (scriptTypeItemProvider != null) scriptTypeItemProvider.dispose();
 	}
 
 }

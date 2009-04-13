@@ -6,15 +6,16 @@
  */
 package org.jboss.tools.smooks.model.groovy.impl;
 
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.jboss.tools.smooks.model.groovy.*;
+import org.jboss.tools.smooks.model.groovy.DocumentRoot;
+import org.jboss.tools.smooks.model.groovy.Groovy;
+import org.jboss.tools.smooks.model.groovy.GroovyFactory;
+import org.jboss.tools.smooks.model.groovy.GroovyPackage;
+import org.jboss.tools.smooks.model.groovy.ScriptType;
 
 /**
  * <!-- begin-user-doc -->
@@ -62,6 +63,7 @@ public class GroovyFactoryImpl extends EFactoryImpl implements GroovyFactory {
 		switch (eClass.getClassifierID()) {
 			case GroovyPackage.DOCUMENT_ROOT: return createDocumentRoot();
 			case GroovyPackage.GROOVY: return createGroovy();
+			case GroovyPackage.SCRIPT_TYPE: return createScriptType();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -85,6 +87,16 @@ public class GroovyFactoryImpl extends EFactoryImpl implements GroovyFactory {
 	public Groovy createGroovy() {
 		GroovyImpl groovy = new GroovyImpl();
 		return groovy;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ScriptType createScriptType() {
+		ScriptTypeImpl scriptType = new ScriptTypeImpl();
+		return scriptType;
 	}
 
 	/**
