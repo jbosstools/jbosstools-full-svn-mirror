@@ -17,8 +17,8 @@ import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.common.CommonFactory;
 import org.jboss.tools.smooks.model.common.CommonPackage;
-import org.jboss.tools.smooks.model.edi.EdiPackage;
-import org.jboss.tools.smooks.model.edi.impl.EdiPackageImpl;
+import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl;
 
 
 
