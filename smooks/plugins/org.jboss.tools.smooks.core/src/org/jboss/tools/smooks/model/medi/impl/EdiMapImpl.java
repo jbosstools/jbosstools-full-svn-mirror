@@ -19,7 +19,7 @@ import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.medi.Delimiters;
 import org.jboss.tools.smooks.model.medi.Description;
 import org.jboss.tools.smooks.model.medi.EdiMap;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.Segments;
 
 /**
@@ -84,7 +84,7 @@ public class EdiMapImpl extends AbstractAnyTypeImpl implements EdiMap {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return EdiPackage.Literals.EDI_MAP;
+		return MEdiPackage.Literals.EDI_MAP;
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class EdiMapImpl extends AbstractAnyTypeImpl implements EdiMap {
 		Description oldDescription = description;
 		description = newDescription;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EdiPackage.EDI_MAP__DESCRIPTION, oldDescription, newDescription);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MEdiPackage.EDI_MAP__DESCRIPTION, oldDescription, newDescription);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -120,14 +120,14 @@ public class EdiMapImpl extends AbstractAnyTypeImpl implements EdiMap {
 		if (newDescription != description) {
 			NotificationChain msgs = null;
 			if (description != null)
-				msgs = ((InternalEObject)description).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EdiPackage.EDI_MAP__DESCRIPTION, null, msgs);
+				msgs = ((InternalEObject)description).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MEdiPackage.EDI_MAP__DESCRIPTION, null, msgs);
 			if (newDescription != null)
-				msgs = ((InternalEObject)newDescription).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EdiPackage.EDI_MAP__DESCRIPTION, null, msgs);
+				msgs = ((InternalEObject)newDescription).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MEdiPackage.EDI_MAP__DESCRIPTION, null, msgs);
 			msgs = basicSetDescription(newDescription, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.EDI_MAP__DESCRIPTION, newDescription, newDescription));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.EDI_MAP__DESCRIPTION, newDescription, newDescription));
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class EdiMapImpl extends AbstractAnyTypeImpl implements EdiMap {
 		Delimiters oldDelimiters = delimiters;
 		delimiters = newDelimiters;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EdiPackage.EDI_MAP__DELIMITERS, oldDelimiters, newDelimiters);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MEdiPackage.EDI_MAP__DELIMITERS, oldDelimiters, newDelimiters);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -163,14 +163,14 @@ public class EdiMapImpl extends AbstractAnyTypeImpl implements EdiMap {
 		if (newDelimiters != delimiters) {
 			NotificationChain msgs = null;
 			if (delimiters != null)
-				msgs = ((InternalEObject)delimiters).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EdiPackage.EDI_MAP__DELIMITERS, null, msgs);
+				msgs = ((InternalEObject)delimiters).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MEdiPackage.EDI_MAP__DELIMITERS, null, msgs);
 			if (newDelimiters != null)
-				msgs = ((InternalEObject)newDelimiters).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EdiPackage.EDI_MAP__DELIMITERS, null, msgs);
+				msgs = ((InternalEObject)newDelimiters).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MEdiPackage.EDI_MAP__DELIMITERS, null, msgs);
 			msgs = basicSetDelimiters(newDelimiters, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.EDI_MAP__DELIMITERS, newDelimiters, newDelimiters));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.EDI_MAP__DELIMITERS, newDelimiters, newDelimiters));
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class EdiMapImpl extends AbstractAnyTypeImpl implements EdiMap {
 		Segments oldSegments = segments;
 		segments = newSegments;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EdiPackage.EDI_MAP__SEGMENTS, oldSegments, newSegments);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MEdiPackage.EDI_MAP__SEGMENTS, oldSegments, newSegments);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -206,14 +206,14 @@ public class EdiMapImpl extends AbstractAnyTypeImpl implements EdiMap {
 		if (newSegments != segments) {
 			NotificationChain msgs = null;
 			if (segments != null)
-				msgs = ((InternalEObject)segments).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EdiPackage.EDI_MAP__SEGMENTS, null, msgs);
+				msgs = ((InternalEObject)segments).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MEdiPackage.EDI_MAP__SEGMENTS, null, msgs);
 			if (newSegments != null)
-				msgs = ((InternalEObject)newSegments).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EdiPackage.EDI_MAP__SEGMENTS, null, msgs);
+				msgs = ((InternalEObject)newSegments).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MEdiPackage.EDI_MAP__SEGMENTS, null, msgs);
 			msgs = basicSetSegments(newSegments, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.EDI_MAP__SEGMENTS, newSegments, newSegments));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.EDI_MAP__SEGMENTS, newSegments, newSegments));
 	}
 
 	/**
@@ -224,11 +224,11 @@ public class EdiMapImpl extends AbstractAnyTypeImpl implements EdiMap {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EdiPackage.EDI_MAP__DESCRIPTION:
+			case MEdiPackage.EDI_MAP__DESCRIPTION:
 				return basicSetDescription(null, msgs);
-			case EdiPackage.EDI_MAP__DELIMITERS:
+			case MEdiPackage.EDI_MAP__DELIMITERS:
 				return basicSetDelimiters(null, msgs);
-			case EdiPackage.EDI_MAP__SEGMENTS:
+			case MEdiPackage.EDI_MAP__SEGMENTS:
 				return basicSetSegments(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -242,11 +242,11 @@ public class EdiMapImpl extends AbstractAnyTypeImpl implements EdiMap {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EdiPackage.EDI_MAP__DESCRIPTION:
+			case MEdiPackage.EDI_MAP__DESCRIPTION:
 				return getDescription();
-			case EdiPackage.EDI_MAP__DELIMITERS:
+			case MEdiPackage.EDI_MAP__DELIMITERS:
 				return getDelimiters();
-			case EdiPackage.EDI_MAP__SEGMENTS:
+			case MEdiPackage.EDI_MAP__SEGMENTS:
 				return getSegments();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -260,13 +260,13 @@ public class EdiMapImpl extends AbstractAnyTypeImpl implements EdiMap {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EdiPackage.EDI_MAP__DESCRIPTION:
+			case MEdiPackage.EDI_MAP__DESCRIPTION:
 				setDescription((Description)newValue);
 				return;
-			case EdiPackage.EDI_MAP__DELIMITERS:
+			case MEdiPackage.EDI_MAP__DELIMITERS:
 				setDelimiters((Delimiters)newValue);
 				return;
-			case EdiPackage.EDI_MAP__SEGMENTS:
+			case MEdiPackage.EDI_MAP__SEGMENTS:
 				setSegments((Segments)newValue);
 				return;
 		}
@@ -281,13 +281,13 @@ public class EdiMapImpl extends AbstractAnyTypeImpl implements EdiMap {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EdiPackage.EDI_MAP__DESCRIPTION:
+			case MEdiPackage.EDI_MAP__DESCRIPTION:
 				setDescription((Description)null);
 				return;
-			case EdiPackage.EDI_MAP__DELIMITERS:
+			case MEdiPackage.EDI_MAP__DELIMITERS:
 				setDelimiters((Delimiters)null);
 				return;
-			case EdiPackage.EDI_MAP__SEGMENTS:
+			case MEdiPackage.EDI_MAP__SEGMENTS:
 				setSegments((Segments)null);
 				return;
 		}
@@ -302,11 +302,11 @@ public class EdiMapImpl extends AbstractAnyTypeImpl implements EdiMap {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EdiPackage.EDI_MAP__DESCRIPTION:
+			case MEdiPackage.EDI_MAP__DESCRIPTION:
 				return description != null;
-			case EdiPackage.EDI_MAP__DELIMITERS:
+			case MEdiPackage.EDI_MAP__DELIMITERS:
 				return delimiters != null;
-			case EdiPackage.EDI_MAP__SEGMENTS:
+			case MEdiPackage.EDI_MAP__SEGMENTS:
 				return segments != null;
 		}
 		return super.eIsSet(featureID);

@@ -24,17 +24,17 @@ import org.jboss.tools.smooks.model.medi.*;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see org.jboss.tools.smooks.model.medi.EdiPackage
+ * @see org.jboss.tools.smooks.model.medi.MEdiPackage
  * @generated
  */
-public class EdiAdapterFactory extends AdapterFactoryImpl {
+public class MEdiAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static EdiPackage modelPackage;
+	protected static MEdiPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -42,9 +42,9 @@ public class EdiAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EdiAdapterFactory() {
+	public MEdiAdapterFactory() {
 		if (modelPackage == null) {
-			modelPackage = EdiPackage.eINSTANCE;
+			modelPackage = MEdiPackage.eINSTANCE;
 		}
 	}
 
@@ -73,8 +73,8 @@ public class EdiAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected EdiSwitch<Adapter> modelSwitch =
-		new EdiSwitch<Adapter>() {
+	protected MEdiSwitch<Adapter> modelSwitch =
+		new MEdiSwitch<Adapter>() {
 			@Override
 			public Adapter caseComponent(Component object) {
 				return createComponentAdapter();

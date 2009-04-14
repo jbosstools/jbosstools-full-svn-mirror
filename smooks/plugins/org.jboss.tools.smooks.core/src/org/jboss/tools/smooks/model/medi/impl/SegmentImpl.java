@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.Field;
 import org.jboss.tools.smooks.model.medi.Segment;
 
@@ -187,7 +187,7 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return EdiPackage.Literals.SEGMENT;
+		return MEdiPackage.Literals.SEGMENT;
 	}
 
 	/**
@@ -197,7 +197,7 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 	 */
 	public EList<Field> getField() {
 		if (field == null) {
-			field = new EObjectContainmentEList<Field>(Field.class, this, EdiPackage.SEGMENT__FIELD);
+			field = new EObjectContainmentEList<Field>(Field.class, this, MEdiPackage.SEGMENT__FIELD);
 		}
 		return field;
 	}
@@ -209,7 +209,7 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 	 */
 	public EList<Segment> getSegment() {
 		if (segment == null) {
-			segment = new EObjectContainmentEList<Segment>(Segment.class, this, EdiPackage.SEGMENT__SEGMENT);
+			segment = new EObjectContainmentEList<Segment>(Segment.class, this, MEdiPackage.SEGMENT__SEGMENT);
 		}
 		return segment;
 	}
@@ -234,7 +234,7 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 		boolean oldMaxOccursESet = maxOccursESet;
 		maxOccursESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.SEGMENT__MAX_OCCURS, oldMaxOccurs, maxOccurs, !oldMaxOccursESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.SEGMENT__MAX_OCCURS, oldMaxOccurs, maxOccurs, !oldMaxOccursESet));
 	}
 
 	/**
@@ -248,7 +248,7 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 		maxOccurs = MAX_OCCURS_EDEFAULT;
 		maxOccursESet = false;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, EdiPackage.SEGMENT__MAX_OCCURS, oldMaxOccurs, MAX_OCCURS_EDEFAULT, oldMaxOccursESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, MEdiPackage.SEGMENT__MAX_OCCURS, oldMaxOccurs, MAX_OCCURS_EDEFAULT, oldMaxOccursESet));
 	}
 
 	/**
@@ -280,7 +280,7 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 		boolean oldMinOccursESet = minOccursESet;
 		minOccursESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.SEGMENT__MIN_OCCURS, oldMinOccurs, minOccurs, !oldMinOccursESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.SEGMENT__MIN_OCCURS, oldMinOccurs, minOccurs, !oldMinOccursESet));
 	}
 
 	/**
@@ -294,7 +294,7 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 		minOccurs = MIN_OCCURS_EDEFAULT;
 		minOccursESet = false;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, EdiPackage.SEGMENT__MIN_OCCURS, oldMinOccurs, MIN_OCCURS_EDEFAULT, oldMinOccursESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, MEdiPackage.SEGMENT__MIN_OCCURS, oldMinOccurs, MIN_OCCURS_EDEFAULT, oldMinOccursESet));
 	}
 
 	/**
@@ -324,7 +324,7 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 		String oldSegcode = segcode;
 		segcode = newSegcode;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.SEGMENT__SEGCODE, oldSegcode, segcode));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.SEGMENT__SEGCODE, oldSegcode, segcode));
 	}
 
 	/**
@@ -347,7 +347,7 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 		boolean oldTruncatableESet = truncatableESet;
 		truncatableESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.SEGMENT__TRUNCATABLE, oldTruncatable, truncatable, !oldTruncatableESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.SEGMENT__TRUNCATABLE, oldTruncatable, truncatable, !oldTruncatableESet));
 	}
 
 	/**
@@ -361,7 +361,7 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 		truncatable = TRUNCATABLE_EDEFAULT;
 		truncatableESet = false;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, EdiPackage.SEGMENT__TRUNCATABLE, oldTruncatable, TRUNCATABLE_EDEFAULT, oldTruncatableESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, MEdiPackage.SEGMENT__TRUNCATABLE, oldTruncatable, TRUNCATABLE_EDEFAULT, oldTruncatableESet));
 	}
 
 	/**
@@ -381,9 +381,9 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EdiPackage.SEGMENT__FIELD:
+			case MEdiPackage.SEGMENT__FIELD:
 				return ((InternalEList<?>)getField()).basicRemove(otherEnd, msgs);
-			case EdiPackage.SEGMENT__SEGMENT:
+			case MEdiPackage.SEGMENT__SEGMENT:
 				return ((InternalEList<?>)getSegment()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -397,17 +397,17 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EdiPackage.SEGMENT__FIELD:
+			case MEdiPackage.SEGMENT__FIELD:
 				return getField();
-			case EdiPackage.SEGMENT__SEGMENT:
+			case MEdiPackage.SEGMENT__SEGMENT:
 				return getSegment();
-			case EdiPackage.SEGMENT__MAX_OCCURS:
+			case MEdiPackage.SEGMENT__MAX_OCCURS:
 				return new Integer(getMaxOccurs());
-			case EdiPackage.SEGMENT__MIN_OCCURS:
+			case MEdiPackage.SEGMENT__MIN_OCCURS:
 				return new Integer(getMinOccurs());
-			case EdiPackage.SEGMENT__SEGCODE:
+			case MEdiPackage.SEGMENT__SEGCODE:
 				return getSegcode();
-			case EdiPackage.SEGMENT__TRUNCATABLE:
+			case MEdiPackage.SEGMENT__TRUNCATABLE:
 				return isTruncatable() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -422,24 +422,24 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EdiPackage.SEGMENT__FIELD:
+			case MEdiPackage.SEGMENT__FIELD:
 				getField().clear();
 				getField().addAll((Collection<? extends Field>)newValue);
 				return;
-			case EdiPackage.SEGMENT__SEGMENT:
+			case MEdiPackage.SEGMENT__SEGMENT:
 				getSegment().clear();
 				getSegment().addAll((Collection<? extends Segment>)newValue);
 				return;
-			case EdiPackage.SEGMENT__MAX_OCCURS:
+			case MEdiPackage.SEGMENT__MAX_OCCURS:
 				setMaxOccurs(((Integer)newValue).intValue());
 				return;
-			case EdiPackage.SEGMENT__MIN_OCCURS:
+			case MEdiPackage.SEGMENT__MIN_OCCURS:
 				setMinOccurs(((Integer)newValue).intValue());
 				return;
-			case EdiPackage.SEGMENT__SEGCODE:
+			case MEdiPackage.SEGMENT__SEGCODE:
 				setSegcode((String)newValue);
 				return;
-			case EdiPackage.SEGMENT__TRUNCATABLE:
+			case MEdiPackage.SEGMENT__TRUNCATABLE:
 				setTruncatable(((Boolean)newValue).booleanValue());
 				return;
 		}
@@ -454,22 +454,22 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EdiPackage.SEGMENT__FIELD:
+			case MEdiPackage.SEGMENT__FIELD:
 				getField().clear();
 				return;
-			case EdiPackage.SEGMENT__SEGMENT:
+			case MEdiPackage.SEGMENT__SEGMENT:
 				getSegment().clear();
 				return;
-			case EdiPackage.SEGMENT__MAX_OCCURS:
+			case MEdiPackage.SEGMENT__MAX_OCCURS:
 				unsetMaxOccurs();
 				return;
-			case EdiPackage.SEGMENT__MIN_OCCURS:
+			case MEdiPackage.SEGMENT__MIN_OCCURS:
 				unsetMinOccurs();
 				return;
-			case EdiPackage.SEGMENT__SEGCODE:
+			case MEdiPackage.SEGMENT__SEGCODE:
 				setSegcode(SEGCODE_EDEFAULT);
 				return;
-			case EdiPackage.SEGMENT__TRUNCATABLE:
+			case MEdiPackage.SEGMENT__TRUNCATABLE:
 				unsetTruncatable();
 				return;
 		}
@@ -484,17 +484,17 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EdiPackage.SEGMENT__FIELD:
+			case MEdiPackage.SEGMENT__FIELD:
 				return field != null && !field.isEmpty();
-			case EdiPackage.SEGMENT__SEGMENT:
+			case MEdiPackage.SEGMENT__SEGMENT:
 				return segment != null && !segment.isEmpty();
-			case EdiPackage.SEGMENT__MAX_OCCURS:
+			case MEdiPackage.SEGMENT__MAX_OCCURS:
 				return isSetMaxOccurs();
-			case EdiPackage.SEGMENT__MIN_OCCURS:
+			case MEdiPackage.SEGMENT__MIN_OCCURS:
 				return isSetMinOccurs();
-			case EdiPackage.SEGMENT__SEGCODE:
+			case MEdiPackage.SEGMENT__SEGCODE:
 				return SEGCODE_EDEFAULT == null ? segcode != null : !SEGCODE_EDEFAULT.equals(segcode);
-			case EdiPackage.SEGMENT__TRUNCATABLE:
+			case MEdiPackage.SEGMENT__TRUNCATABLE:
 				return isSetTruncatable();
 		}
 		return super.eIsSet(featureID);

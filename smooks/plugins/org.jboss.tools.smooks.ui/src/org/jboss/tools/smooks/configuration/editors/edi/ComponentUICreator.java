@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
-import org.jboss.tools.smooks.model.edi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
@@ -35,9 +35,9 @@ public class ComponentUICreator extends PropertyUICreator {
 	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
 		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 		SmooksMultiFormEditor formEditor) {
-		if (feature == EdiPackage.eINSTANCE.getComponent_Required()) {
+		if (feature == MEdiPackage.eINSTANCE.getComponent_Required()) {
 		}
-		if (feature == EdiPackage.eINSTANCE.getComponent_Truncatable()) {
+		if (feature == MEdiPackage.eINSTANCE.getComponent_Truncatable()) {
 		}
 
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature,

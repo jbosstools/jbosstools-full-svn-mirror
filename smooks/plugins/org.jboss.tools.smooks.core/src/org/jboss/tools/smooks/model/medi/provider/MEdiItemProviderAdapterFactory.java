@@ -23,7 +23,7 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.jboss.tools.smooks.model.medi.util.EdiAdapterFactory;
+import org.jboss.tools.smooks.model.medi.util.MEdiAdapterFactory;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -34,7 +34,7 @@ import org.jboss.tools.smooks.model.medi.util.EdiAdapterFactory;
  * <!-- end-user-doc -->
  * @generated
  */
-public class EdiItemProviderAdapterFactory extends EdiAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
+public class MEdiItemProviderAdapterFactory extends MEdiAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
@@ -65,7 +65,7 @@ public class EdiItemProviderAdapterFactory extends EdiAdapterFactory implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EdiItemProviderAdapterFactory() {
+	public MEdiItemProviderAdapterFactory() {
 		supportedTypes.add(IEditingDomainItemProvider.class);
 		supportedTypes.add(IStructuredItemContentProvider.class);
 		supportedTypes.add(ITreeItemContentProvider.class);

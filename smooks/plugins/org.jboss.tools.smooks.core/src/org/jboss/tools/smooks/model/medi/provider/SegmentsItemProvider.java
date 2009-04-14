@@ -20,8 +20,8 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.jboss.tools.smooks.model.medi.EdiFactory;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiFactory;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.Segments;
 
 /**
@@ -75,7 +75,7 @@ public class SegmentsItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(EdiPackage.Literals.SEGMENTS__SEGMENT);
+			childrenFeatures.add(MEdiPackage.Literals.SEGMENTS__SEGMENT);
 		}
 		return childrenFeatures;
 	}
@@ -130,7 +130,7 @@ public class SegmentsItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Segments.class)) {
-			case EdiPackage.SEGMENTS__SEGMENT:
+			case MEdiPackage.SEGMENTS__SEGMENT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -150,8 +150,8 @@ public class SegmentsItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(EdiPackage.Literals.SEGMENTS__SEGMENT,
-				 EdiFactory.eINSTANCE.createSegment()));
+				(MEdiPackage.Literals.SEGMENTS__SEGMENT,
+				 MEdiFactory.eINSTANCE.createSegment()));
 	}
 
 }

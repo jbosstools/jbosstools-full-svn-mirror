@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
-import org.jboss.tools.smooks.model.edi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
@@ -36,13 +36,13 @@ public class DelimitersUICreator extends PropertyUICreator {
 		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 		SmooksMultiFormEditor formEditor) {
 		
-		if (feature == EdiPackage.eINSTANCE.getDelimiters_Component()) {
+		if (feature == MEdiPackage.eINSTANCE.getDelimiters_Component()) {
 		}
-		if (feature == EdiPackage.eINSTANCE.getDelimiters_Field()) {
+		if (feature == MEdiPackage.eINSTANCE.getDelimiters_Field()) {
 		}
-		if (feature == EdiPackage.eINSTANCE.getDelimiters_Segment()) {
+		if (feature == MEdiPackage.eINSTANCE.getDelimiters_Segment()) {
 		}
-		if (feature == EdiPackage.eINSTANCE.getDelimiters_SubComponent()) {
+		if (feature == MEdiPackage.eINSTANCE.getDelimiters_SubComponent()) {
 		}
 
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature,

@@ -23,8 +23,8 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.jboss.tools.smooks.model.medi.Component;
-import org.jboss.tools.smooks.model.medi.EdiFactory;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiFactory;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 
 /**
  * This is the item provider adapter for a {@link edi.Component} object.
@@ -80,7 +80,7 @@ public class ComponentItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Component_required_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Component_required_feature", "_UI_Component_type"),
-				 EdiPackage.Literals.COMPONENT__REQUIRED,
+				 MEdiPackage.Literals.COMPONENT__REQUIRED,
 				 true,
 				 false,
 				 false,
@@ -102,7 +102,7 @@ public class ComponentItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Component_truncatable_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Component_truncatable_feature", "_UI_Component_type"),
-				 EdiPackage.Literals.COMPONENT__TRUNCATABLE,
+				 MEdiPackage.Literals.COMPONENT__TRUNCATABLE,
 				 true,
 				 false,
 				 false,
@@ -123,7 +123,7 @@ public class ComponentItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(EdiPackage.Literals.COMPONENT__SUB_COMPONENT);
+			childrenFeatures.add(MEdiPackage.Literals.COMPONENT__SUB_COMPONENT);
 		}
 		return childrenFeatures;
 	}
@@ -178,11 +178,11 @@ public class ComponentItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Component.class)) {
-			case EdiPackage.COMPONENT__REQUIRED:
-			case EdiPackage.COMPONENT__TRUNCATABLE:
+			case MEdiPackage.COMPONENT__REQUIRED:
+			case MEdiPackage.COMPONENT__TRUNCATABLE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case EdiPackage.COMPONENT__SUB_COMPONENT:
+			case MEdiPackage.COMPONENT__SUB_COMPONENT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -202,8 +202,8 @@ public class ComponentItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(EdiPackage.Literals.COMPONENT__SUB_COMPONENT,
-				 EdiFactory.eINSTANCE.createSubComponent()));
+				(MEdiPackage.Literals.COMPONENT__SUB_COMPONENT,
+				 MEdiFactory.eINSTANCE.createSubComponent()));
 	}
 
 }

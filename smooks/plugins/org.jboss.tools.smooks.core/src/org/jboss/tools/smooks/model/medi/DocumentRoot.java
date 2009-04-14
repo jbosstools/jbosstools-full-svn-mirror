@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.medi.EdiPackage#getDocumentRoot()
+ * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getDocumentRoot()
  * @model extendedMetaData="name='' kind='mixed'"
  * @generated
  */
@@ -42,7 +42,7 @@ public interface DocumentRoot extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mixed</em>' attribute list.
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getDocumentRoot_Mixed()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getDocumentRoot_Mixed()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
 	 *        extendedMetaData="kind='elementWildcard' name=':mixed'"
 	 * @generated
@@ -60,7 +60,7 @@ public interface DocumentRoot extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>XMLNS Prefix Map</em>' map.
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getDocumentRoot_XMLNSPrefixMap()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getDocumentRoot_XMLNSPrefixMap()
 	 * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>" transient="true"
 	 *        extendedMetaData="kind='attribute' name='xmlns:prefix'"
 	 * @generated
@@ -78,7 +78,7 @@ public interface DocumentRoot extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>XSI Schema Location</em>' map.
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getDocumentRoot_XSISchemaLocation()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getDocumentRoot_XSISchemaLocation()
 	 * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>" transient="true"
 	 *        extendedMetaData="kind='attribute' name='xsi:schemaLocation'"
 	 * @generated
@@ -95,7 +95,7 @@ public interface DocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Edimap</em>' containment reference.
 	 * @see #setEdimap(EdiMap)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getDocumentRoot_Edimap()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getDocumentRoot_Edimap()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='edimap' namespace='##targetNamespace'"
 	 * @generated

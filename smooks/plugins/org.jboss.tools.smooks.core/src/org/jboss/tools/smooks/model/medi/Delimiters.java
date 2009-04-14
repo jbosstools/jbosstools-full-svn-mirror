@@ -23,7 +23,7 @@ import org.jboss.tools.smooks.model.common.AbstractAnyType;
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.medi.EdiPackage#getDelimiters()
+ * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getDelimiters()
  * @model extendedMetaData="name='Delimiters' kind='empty'"
  * @generated
  */
@@ -38,7 +38,7 @@ public interface Delimiters extends AbstractAnyType {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Component</em>' attribute.
 	 * @see #setComponent(String)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getDelimiters_Component()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getDelimiters_Component()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
 	 *        extendedMetaData="kind='attribute' name='component'"
 	 * @generated
@@ -65,7 +65,7 @@ public interface Delimiters extends AbstractAnyType {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Field</em>' attribute.
 	 * @see #setField(String)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getDelimiters_Field()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getDelimiters_Field()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
 	 *        extendedMetaData="kind='attribute' name='field'"
 	 * @generated
@@ -92,7 +92,7 @@ public interface Delimiters extends AbstractAnyType {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Segment</em>' attribute.
 	 * @see #setSegment(String)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getDelimiters_Segment()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getDelimiters_Segment()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
 	 *        extendedMetaData="kind='attribute' name='segment'"
 	 * @generated
@@ -127,7 +127,7 @@ public interface Delimiters extends AbstractAnyType {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Sub Component</em>' attribute.
 	 * @see #setSubComponent(String)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getDelimiters_SubComponent()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getDelimiters_SubComponent()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
 	 *        extendedMetaData="kind='attribute' name='sub-component'"
 	 * @generated

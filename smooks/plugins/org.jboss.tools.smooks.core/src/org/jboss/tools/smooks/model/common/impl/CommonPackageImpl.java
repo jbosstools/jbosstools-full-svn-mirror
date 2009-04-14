@@ -17,8 +17,8 @@ import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.common.CommonFactory;
 import org.jboss.tools.smooks.model.common.CommonPackage;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
-import org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
+import org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl;
 
 
 
@@ -96,7 +96,7 @@ public class CommonPackageImpl extends EPackageImpl implements CommonPackage {
 		XMLTypePackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
-		EdiPackageImpl theEdiPackage = (EdiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(EdiPackage.eNS_URI) instanceof EdiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(EdiPackage.eNS_URI) : EdiPackage.eINSTANCE);
+		MEdiPackageImpl theEdiPackage = (MEdiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(MEdiPackage.eNS_URI) instanceof MEdiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(MEdiPackage.eNS_URI) : MEdiPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theCommonPackage.createPackageContents();

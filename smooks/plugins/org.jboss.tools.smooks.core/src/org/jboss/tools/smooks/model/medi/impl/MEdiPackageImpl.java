@@ -23,9 +23,9 @@ import org.jboss.tools.smooks.model.medi.Component;
 import org.jboss.tools.smooks.model.medi.Delimiters;
 import org.jboss.tools.smooks.model.medi.Description;
 import org.jboss.tools.smooks.model.medi.DocumentRoot;
-import org.jboss.tools.smooks.model.medi.EdiFactory;
+import org.jboss.tools.smooks.model.medi.MEdiFactory;
 import org.jboss.tools.smooks.model.medi.EdiMap;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.Field;
 import org.jboss.tools.smooks.model.medi.MappingNode;
 import org.jboss.tools.smooks.model.medi.Segment;
@@ -38,7 +38,7 @@ import org.jboss.tools.smooks.model.medi.SubComponent;
  * <!-- end-user-doc -->
  * @generated
  */
-public class EdiPackageImpl extends EPackageImpl implements EdiPackage {
+public class MEdiPackageImpl extends EPackageImpl implements MEdiPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -120,12 +120,12 @@ public class EdiPackageImpl extends EPackageImpl implements EdiPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#eNS_URI
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
-	private EdiPackageImpl() {
-		super(eNS_URI, EdiFactory.eINSTANCE);
+	private MEdiPackageImpl() {
+		super(eNS_URI, MEdiFactory.eINSTANCE);
 	}
 
 	/**
@@ -157,11 +157,11 @@ public class EdiPackageImpl extends EPackageImpl implements EdiPackage {
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static EdiPackage init() {
-		if (isInited) return (EdiPackage)EPackage.Registry.INSTANCE.getEPackage(EdiPackage.eNS_URI);
+	public static MEdiPackage init() {
+		if (isInited) return (MEdiPackage)EPackage.Registry.INSTANCE.getEPackage(MEdiPackage.eNS_URI);
 
 		// Obtain or create and register package
-		EdiPackageImpl theEdiPackage = (EdiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof EdiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI) : new EdiPackageImpl());
+		MEdiPackageImpl theEdiPackage = (MEdiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof MEdiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI) : new MEdiPackageImpl());
 
 		isInited = true;
 
@@ -532,8 +532,8 @@ public class EdiPackageImpl extends EPackageImpl implements EdiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EdiFactory getEdiFactory() {
-		return (EdiFactory)getEFactoryInstance();
+	public MEdiFactory getEdiFactory() {
+		return (MEdiFactory)getEFactoryInstance();
 	}
 
 	/**

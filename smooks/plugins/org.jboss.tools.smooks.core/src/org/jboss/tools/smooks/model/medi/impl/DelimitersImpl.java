@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.medi.Delimiters;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -130,7 +130,7 @@ public class DelimitersImpl extends AbstractAnyTypeImpl implements Delimiters {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return EdiPackage.Literals.DELIMITERS;
+		return MEdiPackage.Literals.DELIMITERS;
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class DelimitersImpl extends AbstractAnyTypeImpl implements Delimiters {
 		String oldComponent = component;
 		component = newComponent;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.DELIMITERS__COMPONENT, oldComponent, component));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.DELIMITERS__COMPONENT, oldComponent, component));
 	}
 
 	/**
@@ -172,7 +172,7 @@ public class DelimitersImpl extends AbstractAnyTypeImpl implements Delimiters {
 		String oldField = field;
 		field = newField;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.DELIMITERS__FIELD, oldField, field));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.DELIMITERS__FIELD, oldField, field));
 	}
 
 	/**
@@ -193,7 +193,7 @@ public class DelimitersImpl extends AbstractAnyTypeImpl implements Delimiters {
 		String oldSegment = segment;
 		segment = newSegment;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.DELIMITERS__SEGMENT, oldSegment, segment));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.DELIMITERS__SEGMENT, oldSegment, segment));
 	}
 
 	/**
@@ -214,7 +214,7 @@ public class DelimitersImpl extends AbstractAnyTypeImpl implements Delimiters {
 		String oldSubComponent = subComponent;
 		subComponent = newSubComponent;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.DELIMITERS__SUB_COMPONENT, oldSubComponent, subComponent));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.DELIMITERS__SUB_COMPONENT, oldSubComponent, subComponent));
 	}
 
 	/**
@@ -225,13 +225,13 @@ public class DelimitersImpl extends AbstractAnyTypeImpl implements Delimiters {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EdiPackage.DELIMITERS__COMPONENT:
+			case MEdiPackage.DELIMITERS__COMPONENT:
 				return getComponent();
-			case EdiPackage.DELIMITERS__FIELD:
+			case MEdiPackage.DELIMITERS__FIELD:
 				return getField();
-			case EdiPackage.DELIMITERS__SEGMENT:
+			case MEdiPackage.DELIMITERS__SEGMENT:
 				return getSegment();
-			case EdiPackage.DELIMITERS__SUB_COMPONENT:
+			case MEdiPackage.DELIMITERS__SUB_COMPONENT:
 				return getSubComponent();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -245,16 +245,16 @@ public class DelimitersImpl extends AbstractAnyTypeImpl implements Delimiters {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EdiPackage.DELIMITERS__COMPONENT:
+			case MEdiPackage.DELIMITERS__COMPONENT:
 				setComponent((String)newValue);
 				return;
-			case EdiPackage.DELIMITERS__FIELD:
+			case MEdiPackage.DELIMITERS__FIELD:
 				setField((String)newValue);
 				return;
-			case EdiPackage.DELIMITERS__SEGMENT:
+			case MEdiPackage.DELIMITERS__SEGMENT:
 				setSegment((String)newValue);
 				return;
-			case EdiPackage.DELIMITERS__SUB_COMPONENT:
+			case MEdiPackage.DELIMITERS__SUB_COMPONENT:
 				setSubComponent((String)newValue);
 				return;
 		}
@@ -269,16 +269,16 @@ public class DelimitersImpl extends AbstractAnyTypeImpl implements Delimiters {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EdiPackage.DELIMITERS__COMPONENT:
+			case MEdiPackage.DELIMITERS__COMPONENT:
 				setComponent(COMPONENT_EDEFAULT);
 				return;
-			case EdiPackage.DELIMITERS__FIELD:
+			case MEdiPackage.DELIMITERS__FIELD:
 				setField(FIELD_EDEFAULT);
 				return;
-			case EdiPackage.DELIMITERS__SEGMENT:
+			case MEdiPackage.DELIMITERS__SEGMENT:
 				setSegment(SEGMENT_EDEFAULT);
 				return;
-			case EdiPackage.DELIMITERS__SUB_COMPONENT:
+			case MEdiPackage.DELIMITERS__SUB_COMPONENT:
 				setSubComponent(SUB_COMPONENT_EDEFAULT);
 				return;
 		}
@@ -293,13 +293,13 @@ public class DelimitersImpl extends AbstractAnyTypeImpl implements Delimiters {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EdiPackage.DELIMITERS__COMPONENT:
+			case MEdiPackage.DELIMITERS__COMPONENT:
 				return COMPONENT_EDEFAULT == null ? component != null : !COMPONENT_EDEFAULT.equals(component);
-			case EdiPackage.DELIMITERS__FIELD:
+			case MEdiPackage.DELIMITERS__FIELD:
 				return FIELD_EDEFAULT == null ? field != null : !FIELD_EDEFAULT.equals(field);
-			case EdiPackage.DELIMITERS__SEGMENT:
+			case MEdiPackage.DELIMITERS__SEGMENT:
 				return SEGMENT_EDEFAULT == null ? segment != null : !SEGMENT_EDEFAULT.equals(segment);
-			case EdiPackage.DELIMITERS__SUB_COMPONENT:
+			case MEdiPackage.DELIMITERS__SUB_COMPONENT:
 				return SUB_COMPONENT_EDEFAULT == null ? subComponent != null : !SUB_COMPONENT_EDEFAULT.equals(subComponent);
 		}
 		return super.eIsSet(featureID);

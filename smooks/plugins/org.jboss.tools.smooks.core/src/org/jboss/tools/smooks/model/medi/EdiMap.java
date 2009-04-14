@@ -22,7 +22,7 @@ import org.jboss.tools.smooks.model.common.AbstractAnyType;
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.medi.EdiPackage#getEdiMap()
+ * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getEdiMap()
  * @model extendedMetaData="name='EdiMap' kind='elementOnly'"
  * @generated
  */
@@ -37,7 +37,7 @@ public interface EdiMap extends AbstractAnyType {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Description</em>' containment reference.
 	 * @see #setDescription(Description)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getEdiMap_Description()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getEdiMap_Description()
 	 * @model containment="true" required="true"
 	 *        extendedMetaData="kind='element' name='description' namespace='##targetNamespace'"
 	 * @generated
@@ -64,7 +64,7 @@ public interface EdiMap extends AbstractAnyType {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Delimiters</em>' containment reference.
 	 * @see #setDelimiters(Delimiters)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getEdiMap_Delimiters()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getEdiMap_Delimiters()
 	 * @model containment="true" required="true"
 	 *        extendedMetaData="kind='element' name='delimiters' namespace='##targetNamespace'"
 	 * @generated
@@ -91,7 +91,7 @@ public interface EdiMap extends AbstractAnyType {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Segments</em>' containment reference.
 	 * @see #setSegments(Segments)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getEdiMap_Segments()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getEdiMap_Segments()
 	 * @model containment="true" required="true"
 	 *        extendedMetaData="kind='element' name='segments' namespace='##targetNamespace'"
 	 * @generated

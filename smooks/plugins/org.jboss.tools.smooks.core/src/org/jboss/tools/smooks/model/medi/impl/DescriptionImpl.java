@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.medi.Description;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -88,7 +88,7 @@ public class DescriptionImpl extends AbstractAnyTypeImpl implements Description 
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return EdiPackage.Literals.DESCRIPTION;
+		return MEdiPackage.Literals.DESCRIPTION;
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class DescriptionImpl extends AbstractAnyTypeImpl implements Description 
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.DESCRIPTION__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.DESCRIPTION__NAME, oldName, name));
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class DescriptionImpl extends AbstractAnyTypeImpl implements Description 
 		String oldVersion = version;
 		version = newVersion;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.DESCRIPTION__VERSION, oldVersion, version));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.DESCRIPTION__VERSION, oldVersion, version));
 	}
 
 	/**
@@ -141,9 +141,9 @@ public class DescriptionImpl extends AbstractAnyTypeImpl implements Description 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EdiPackage.DESCRIPTION__NAME:
+			case MEdiPackage.DESCRIPTION__NAME:
 				return getName();
-			case EdiPackage.DESCRIPTION__VERSION:
+			case MEdiPackage.DESCRIPTION__VERSION:
 				return getVersion();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -157,10 +157,10 @@ public class DescriptionImpl extends AbstractAnyTypeImpl implements Description 
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EdiPackage.DESCRIPTION__NAME:
+			case MEdiPackage.DESCRIPTION__NAME:
 				setName((String)newValue);
 				return;
-			case EdiPackage.DESCRIPTION__VERSION:
+			case MEdiPackage.DESCRIPTION__VERSION:
 				setVersion((String)newValue);
 				return;
 		}
@@ -175,10 +175,10 @@ public class DescriptionImpl extends AbstractAnyTypeImpl implements Description 
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EdiPackage.DESCRIPTION__NAME:
+			case MEdiPackage.DESCRIPTION__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case EdiPackage.DESCRIPTION__VERSION:
+			case MEdiPackage.DESCRIPTION__VERSION:
 				setVersion(VERSION_EDEFAULT);
 				return;
 		}
@@ -193,9 +193,9 @@ public class DescriptionImpl extends AbstractAnyTypeImpl implements Description 
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EdiPackage.DESCRIPTION__NAME:
+			case MEdiPackage.DESCRIPTION__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case EdiPackage.DESCRIPTION__VERSION:
+			case MEdiPackage.DESCRIPTION__VERSION:
 				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
 		}
 		return super.eIsSet(featureID);

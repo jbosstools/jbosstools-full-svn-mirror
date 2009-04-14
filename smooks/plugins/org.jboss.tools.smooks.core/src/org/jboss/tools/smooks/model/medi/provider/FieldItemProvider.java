@@ -22,8 +22,8 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.jboss.tools.smooks.model.medi.EdiFactory;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiFactory;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.Field;
 
 /**
@@ -80,7 +80,7 @@ public class FieldItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Field_required_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Field_required_feature", "_UI_Field_type"),
-				 EdiPackage.Literals.FIELD__REQUIRED,
+				 MEdiPackage.Literals.FIELD__REQUIRED,
 				 true,
 				 false,
 				 false,
@@ -102,7 +102,7 @@ public class FieldItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Field_truncatable_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Field_truncatable_feature", "_UI_Field_type"),
-				 EdiPackage.Literals.FIELD__TRUNCATABLE,
+				 MEdiPackage.Literals.FIELD__TRUNCATABLE,
 				 true,
 				 false,
 				 false,
@@ -123,7 +123,7 @@ public class FieldItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(EdiPackage.Literals.FIELD__COMPONENT);
+			childrenFeatures.add(MEdiPackage.Literals.FIELD__COMPONENT);
 		}
 		return childrenFeatures;
 	}
@@ -178,11 +178,11 @@ public class FieldItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Field.class)) {
-			case EdiPackage.FIELD__REQUIRED:
-			case EdiPackage.FIELD__TRUNCATABLE:
+			case MEdiPackage.FIELD__REQUIRED:
+			case MEdiPackage.FIELD__TRUNCATABLE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case EdiPackage.FIELD__COMPONENT:
+			case MEdiPackage.FIELD__COMPONENT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -202,8 +202,8 @@ public class FieldItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(EdiPackage.Literals.FIELD__COMPONENT,
-				 EdiFactory.eINSTANCE.createComponent()));
+				(MEdiPackage.Literals.FIELD__COMPONENT,
+				 MEdiFactory.eINSTANCE.createComponent()));
 	}
 
 }

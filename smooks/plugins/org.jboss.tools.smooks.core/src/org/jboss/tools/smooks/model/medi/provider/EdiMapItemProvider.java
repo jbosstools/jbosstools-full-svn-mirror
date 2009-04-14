@@ -22,9 +22,9 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
-import org.jboss.tools.smooks.model.medi.EdiFactory;
+import org.jboss.tools.smooks.model.medi.MEdiFactory;
 import org.jboss.tools.smooks.model.medi.EdiMap;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 
 
 /**
@@ -78,9 +78,9 @@ public class EdiMapItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(EdiPackage.Literals.EDI_MAP__DESCRIPTION);
-			childrenFeatures.add(EdiPackage.Literals.EDI_MAP__DELIMITERS);
-			childrenFeatures.add(EdiPackage.Literals.EDI_MAP__SEGMENTS);
+			childrenFeatures.add(MEdiPackage.Literals.EDI_MAP__DESCRIPTION);
+			childrenFeatures.add(MEdiPackage.Literals.EDI_MAP__DELIMITERS);
+			childrenFeatures.add(MEdiPackage.Literals.EDI_MAP__SEGMENTS);
 		}
 		return childrenFeatures;
 	}
@@ -132,9 +132,9 @@ public class EdiMapItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(EdiMap.class)) {
-			case EdiPackage.EDI_MAP__DESCRIPTION:
-			case EdiPackage.EDI_MAP__DELIMITERS:
-			case EdiPackage.EDI_MAP__SEGMENTS:
+			case MEdiPackage.EDI_MAP__DESCRIPTION:
+			case MEdiPackage.EDI_MAP__DELIMITERS:
+			case MEdiPackage.EDI_MAP__SEGMENTS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -154,18 +154,18 @@ public class EdiMapItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(EdiPackage.Literals.EDI_MAP__DESCRIPTION,
-				 EdiFactory.eINSTANCE.createDescription()));
+				(MEdiPackage.Literals.EDI_MAP__DESCRIPTION,
+				 MEdiFactory.eINSTANCE.createDescription()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(EdiPackage.Literals.EDI_MAP__DELIMITERS,
-				 EdiFactory.eINSTANCE.createDelimiters()));
+				(MEdiPackage.Literals.EDI_MAP__DELIMITERS,
+				 MEdiFactory.eINSTANCE.createDelimiters()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(EdiPackage.Literals.EDI_MAP__SEGMENTS,
-				 EdiFactory.eINSTANCE.createSegments()));
+				(MEdiPackage.Literals.EDI_MAP__SEGMENTS,
+				 MEdiFactory.eINSTANCE.createSegments()));
 	}
 
 	/**

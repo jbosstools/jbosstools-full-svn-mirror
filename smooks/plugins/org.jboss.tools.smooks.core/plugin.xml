@@ -110,14 +110,14 @@
      <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.milyn.org/schema/edi-message-mapping-1.0.xsd"
-            class="org.jboss.tools.smooks.model.edi.EdiPackage"
+            class="org.jboss.tools.smooks.model.medi.MEdiPackage"
             genModel="ecore.model/edi-message-mapping-1.0.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
       <parser
             type="edi"
-            class="org.jboss.tools.smooks.model.edi.util.EdiResourceFactoryImpl"/>
+            class="org.jboss.tools.smooks.model.medi.util.MEdiResourceFactoryImpl"/>
    </extension>
    
       <extension point="org.eclipse.emf.ecore.generated_package">
@@ -182,6 +182,14 @@
             class="org.jboss.tools.smooks.model.json.JsonPackage"
             genModel="model/json-1.1.genmodel"
             uri="http://www.milyn.org/xsd/smooks/json-1.1.xsd">
+      </package>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.jboss.tools.smooks.model.edi.EdiPackage"
+            genModel="model/edi-1.1.genmodel"
+            uri="http://www.milyn.org/xsd/smooks/edi-1.1.xsd">
       </package>
    </extension>
 

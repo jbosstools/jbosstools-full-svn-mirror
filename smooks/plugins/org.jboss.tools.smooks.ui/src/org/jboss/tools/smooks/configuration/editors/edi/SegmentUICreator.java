@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
-import org.jboss.tools.smooks.model.edi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
@@ -36,13 +36,13 @@ public class SegmentUICreator extends PropertyUICreator {
 		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 		SmooksMultiFormEditor formEditor) {
 		
-		if (feature == EdiPackage.eINSTANCE.getSegment_MaxOccurs()) {
+		if (feature == MEdiPackage.eINSTANCE.getSegment_MaxOccurs()) {
 		}
-		if (feature == EdiPackage.eINSTANCE.getSegment_MinOccurs()) {
+		if (feature == MEdiPackage.eINSTANCE.getSegment_MinOccurs()) {
 		}
-		if (feature == EdiPackage.eINSTANCE.getSegment_Segcode()) {
+		if (feature == MEdiPackage.eINSTANCE.getSegment_Segcode()) {
 		}
-		if (feature == EdiPackage.eINSTANCE.getSegment_Truncatable()) {
+		if (feature == MEdiPackage.eINSTANCE.getSegment_Truncatable()) {
 		}
 
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature,

@@ -22,16 +22,16 @@ import org.jboss.tools.smooks.model.medi.*;
  * <!-- end-user-doc -->
  * @generated
  */
-public class EdiFactoryImpl extends EFactoryImpl implements EdiFactory {
+public class MEdiFactoryImpl extends EFactoryImpl implements MEdiFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static EdiFactory init() {
+	public static MEdiFactory init() {
 		try {
-			EdiFactory theEdiFactory = (EdiFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/schema/edi-message-mapping-1.0.xsd"); 
+			MEdiFactory theEdiFactory = (MEdiFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/schema/edi-message-mapping-1.0.xsd"); 
 			if (theEdiFactory != null) {
 				return theEdiFactory;
 			}
@@ -39,7 +39,7 @@ public class EdiFactoryImpl extends EFactoryImpl implements EdiFactory {
 		catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
-		return new EdiFactoryImpl();
+		return new MEdiFactoryImpl();
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class EdiFactoryImpl extends EFactoryImpl implements EdiFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EdiFactoryImpl() {
+	public MEdiFactoryImpl() {
 		super();
 	}
 
@@ -60,16 +60,16 @@ public class EdiFactoryImpl extends EFactoryImpl implements EdiFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case EdiPackage.COMPONENT: return createComponent();
-			case EdiPackage.DELIMITERS: return createDelimiters();
-			case EdiPackage.DESCRIPTION: return createDescription();
-			case EdiPackage.DOCUMENT_ROOT: return createDocumentRoot();
-			case EdiPackage.EDI_MAP: return createEdiMap();
-			case EdiPackage.FIELD: return createField();
-			case EdiPackage.MAPPING_NODE: return createMappingNode();
-			case EdiPackage.SEGMENT: return createSegment();
-			case EdiPackage.SEGMENTS: return createSegments();
-			case EdiPackage.SUB_COMPONENT: return createSubComponent();
+			case MEdiPackage.COMPONENT: return createComponent();
+			case MEdiPackage.DELIMITERS: return createDelimiters();
+			case MEdiPackage.DESCRIPTION: return createDescription();
+			case MEdiPackage.DOCUMENT_ROOT: return createDocumentRoot();
+			case MEdiPackage.EDI_MAP: return createEdiMap();
+			case MEdiPackage.FIELD: return createField();
+			case MEdiPackage.MAPPING_NODE: return createMappingNode();
+			case MEdiPackage.SEGMENT: return createSegment();
+			case MEdiPackage.SEGMENTS: return createSegments();
+			case MEdiPackage.SUB_COMPONENT: return createSubComponent();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -180,8 +180,8 @@ public class EdiFactoryImpl extends EFactoryImpl implements EdiFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EdiPackage getEdiPackage() {
-		return (EdiPackage)getEPackage();
+	public MEdiPackage getEdiPackage() {
+		return (MEdiPackage)getEPackage();
 	}
 
 	/**
@@ -191,8 +191,8 @@ public class EdiFactoryImpl extends EFactoryImpl implements EdiFactory {
 	 * @generated
 	 */
 	@Deprecated
-	public static EdiPackage getPackage() {
-		return EdiPackage.eINSTANCE;
+	public static MEdiPackage getPackage() {
+		return MEdiPackage.eINSTANCE;
 	}
 
 } //EdiFactoryImpl

@@ -22,8 +22,8 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.jboss.tools.smooks.model.medi.EdiFactory;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiFactory;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.Segment;
 
 /**
@@ -82,7 +82,7 @@ public class SegmentItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Segment_maxOccurs_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Segment_maxOccurs_feature", "_UI_Segment_type"),
-				 EdiPackage.Literals.SEGMENT__MAX_OCCURS,
+				 MEdiPackage.Literals.SEGMENT__MAX_OCCURS,
 				 true,
 				 false,
 				 false,
@@ -104,7 +104,7 @@ public class SegmentItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Segment_minOccurs_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Segment_minOccurs_feature", "_UI_Segment_type"),
-				 EdiPackage.Literals.SEGMENT__MIN_OCCURS,
+				 MEdiPackage.Literals.SEGMENT__MIN_OCCURS,
 				 true,
 				 false,
 				 false,
@@ -126,7 +126,7 @@ public class SegmentItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Segment_segcode_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Segment_segcode_feature", "_UI_Segment_type"),
-				 EdiPackage.Literals.SEGMENT__SEGCODE,
+				 MEdiPackage.Literals.SEGMENT__SEGCODE,
 				 true,
 				 false,
 				 false,
@@ -148,7 +148,7 @@ public class SegmentItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Segment_truncatable_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Segment_truncatable_feature", "_UI_Segment_type"),
-				 EdiPackage.Literals.SEGMENT__TRUNCATABLE,
+				 MEdiPackage.Literals.SEGMENT__TRUNCATABLE,
 				 true,
 				 false,
 				 false,
@@ -169,8 +169,8 @@ public class SegmentItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(EdiPackage.Literals.SEGMENT__FIELD);
-			childrenFeatures.add(EdiPackage.Literals.SEGMENT__SEGMENT);
+			childrenFeatures.add(MEdiPackage.Literals.SEGMENT__FIELD);
+			childrenFeatures.add(MEdiPackage.Literals.SEGMENT__SEGMENT);
 		}
 		return childrenFeatures;
 	}
@@ -225,14 +225,14 @@ public class SegmentItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Segment.class)) {
-			case EdiPackage.SEGMENT__MAX_OCCURS:
-			case EdiPackage.SEGMENT__MIN_OCCURS:
-			case EdiPackage.SEGMENT__SEGCODE:
-			case EdiPackage.SEGMENT__TRUNCATABLE:
+			case MEdiPackage.SEGMENT__MAX_OCCURS:
+			case MEdiPackage.SEGMENT__MIN_OCCURS:
+			case MEdiPackage.SEGMENT__SEGCODE:
+			case MEdiPackage.SEGMENT__TRUNCATABLE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case EdiPackage.SEGMENT__FIELD:
-			case EdiPackage.SEGMENT__SEGMENT:
+			case MEdiPackage.SEGMENT__FIELD:
+			case MEdiPackage.SEGMENT__SEGMENT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -252,13 +252,13 @@ public class SegmentItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(EdiPackage.Literals.SEGMENT__FIELD,
-				 EdiFactory.eINSTANCE.createField()));
+				(MEdiPackage.Literals.SEGMENT__FIELD,
+				 MEdiFactory.eINSTANCE.createField()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(EdiPackage.Literals.SEGMENT__SEGMENT,
-				 EdiFactory.eINSTANCE.createSegment()));
+				(MEdiPackage.Literals.SEGMENT__SEGMENT,
+				 MEdiFactory.eINSTANCE.createSegment()));
 	}
 
 }

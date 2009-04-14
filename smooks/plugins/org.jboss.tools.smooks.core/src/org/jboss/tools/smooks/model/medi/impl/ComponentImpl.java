@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.jboss.tools.smooks.model.medi.Component;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.SubComponent;
 
 /**
@@ -125,7 +125,7 @@ public class ComponentImpl extends MappingNodeImpl implements Component {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return EdiPackage.Literals.COMPONENT;
+		return MEdiPackage.Literals.COMPONENT;
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class ComponentImpl extends MappingNodeImpl implements Component {
 	 */
 	public EList<SubComponent> getSubComponent() {
 		if (subComponent == null) {
-			subComponent = new EObjectContainmentEList<SubComponent>(SubComponent.class, this, EdiPackage.COMPONENT__SUB_COMPONENT);
+			subComponent = new EObjectContainmentEList<SubComponent>(SubComponent.class, this, MEdiPackage.COMPONENT__SUB_COMPONENT);
 		}
 		return subComponent;
 	}
@@ -160,7 +160,7 @@ public class ComponentImpl extends MappingNodeImpl implements Component {
 		boolean oldRequiredESet = requiredESet;
 		requiredESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.COMPONENT__REQUIRED, oldRequired, required, !oldRequiredESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.COMPONENT__REQUIRED, oldRequired, required, !oldRequiredESet));
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class ComponentImpl extends MappingNodeImpl implements Component {
 		required = REQUIRED_EDEFAULT;
 		requiredESet = false;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, EdiPackage.COMPONENT__REQUIRED, oldRequired, REQUIRED_EDEFAULT, oldRequiredESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, MEdiPackage.COMPONENT__REQUIRED, oldRequired, REQUIRED_EDEFAULT, oldRequiredESet));
 	}
 
 	/**
@@ -206,7 +206,7 @@ public class ComponentImpl extends MappingNodeImpl implements Component {
 		boolean oldTruncatableESet = truncatableESet;
 		truncatableESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.COMPONENT__TRUNCATABLE, oldTruncatable, truncatable, !oldTruncatableESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.COMPONENT__TRUNCATABLE, oldTruncatable, truncatable, !oldTruncatableESet));
 	}
 
 	/**
@@ -220,7 +220,7 @@ public class ComponentImpl extends MappingNodeImpl implements Component {
 		truncatable = TRUNCATABLE_EDEFAULT;
 		truncatableESet = false;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, EdiPackage.COMPONENT__TRUNCATABLE, oldTruncatable, TRUNCATABLE_EDEFAULT, oldTruncatableESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, MEdiPackage.COMPONENT__TRUNCATABLE, oldTruncatable, TRUNCATABLE_EDEFAULT, oldTruncatableESet));
 	}
 
 	/**
@@ -240,7 +240,7 @@ public class ComponentImpl extends MappingNodeImpl implements Component {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EdiPackage.COMPONENT__SUB_COMPONENT:
+			case MEdiPackage.COMPONENT__SUB_COMPONENT:
 				return ((InternalEList<?>)getSubComponent()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -254,11 +254,11 @@ public class ComponentImpl extends MappingNodeImpl implements Component {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EdiPackage.COMPONENT__SUB_COMPONENT:
+			case MEdiPackage.COMPONENT__SUB_COMPONENT:
 				return getSubComponent();
-			case EdiPackage.COMPONENT__REQUIRED:
+			case MEdiPackage.COMPONENT__REQUIRED:
 				return isRequired() ? Boolean.TRUE : Boolean.FALSE;
-			case EdiPackage.COMPONENT__TRUNCATABLE:
+			case MEdiPackage.COMPONENT__TRUNCATABLE:
 				return isTruncatable() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -273,14 +273,14 @@ public class ComponentImpl extends MappingNodeImpl implements Component {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EdiPackage.COMPONENT__SUB_COMPONENT:
+			case MEdiPackage.COMPONENT__SUB_COMPONENT:
 				getSubComponent().clear();
 				getSubComponent().addAll((Collection<? extends SubComponent>)newValue);
 				return;
-			case EdiPackage.COMPONENT__REQUIRED:
+			case MEdiPackage.COMPONENT__REQUIRED:
 				setRequired(((Boolean)newValue).booleanValue());
 				return;
-			case EdiPackage.COMPONENT__TRUNCATABLE:
+			case MEdiPackage.COMPONENT__TRUNCATABLE:
 				setTruncatable(((Boolean)newValue).booleanValue());
 				return;
 		}
@@ -295,13 +295,13 @@ public class ComponentImpl extends MappingNodeImpl implements Component {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EdiPackage.COMPONENT__SUB_COMPONENT:
+			case MEdiPackage.COMPONENT__SUB_COMPONENT:
 				getSubComponent().clear();
 				return;
-			case EdiPackage.COMPONENT__REQUIRED:
+			case MEdiPackage.COMPONENT__REQUIRED:
 				unsetRequired();
 				return;
-			case EdiPackage.COMPONENT__TRUNCATABLE:
+			case MEdiPackage.COMPONENT__TRUNCATABLE:
 				unsetTruncatable();
 				return;
 		}
@@ -316,11 +316,11 @@ public class ComponentImpl extends MappingNodeImpl implements Component {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EdiPackage.COMPONENT__SUB_COMPONENT:
+			case MEdiPackage.COMPONENT__SUB_COMPONENT:
 				return subComponent != null && !subComponent.isEmpty();
-			case EdiPackage.COMPONENT__REQUIRED:
+			case MEdiPackage.COMPONENT__REQUIRED:
 				return isSetRequired();
-			case EdiPackage.COMPONENT__TRUNCATABLE:
+			case MEdiPackage.COMPONENT__TRUNCATABLE:
 				return isSetTruncatable();
 		}
 		return super.eIsSet(featureID);

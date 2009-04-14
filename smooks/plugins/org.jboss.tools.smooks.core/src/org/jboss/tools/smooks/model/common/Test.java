@@ -12,7 +12,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.jboss.tools.smooks.model.common.util.CommonResourceFactoryImpl;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -29,7 +29,7 @@ public class Test {
 		Registry.INSTANCE.put(XslPackage.eNS_URI, XslPackage.eINSTANCE);
 		Registry.INSTANCE.put(SmooksPackage.eNS_URI, SmooksPackage.eINSTANCE);
 		Registry.INSTANCE.put(JavabeanPackage.eNS_URI, JavabeanPackage.eINSTANCE);
-		Registry.INSTANCE.put(EdiPackage.eNS_URI, EdiPackage.eINSTANCE);
+		Registry.INSTANCE.put(MEdiPackage.eNS_URI, MEdiPackage.eINSTANCE);
 		
 		
 		Resource resource = new CommonResourceFactoryImpl().createResource(null);

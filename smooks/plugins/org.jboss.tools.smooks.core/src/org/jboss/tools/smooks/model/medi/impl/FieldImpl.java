@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.jboss.tools.smooks.model.medi.Component;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.Field;
 
 /**
@@ -125,7 +125,7 @@ public class FieldImpl extends MappingNodeImpl implements Field {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return EdiPackage.Literals.FIELD;
+		return MEdiPackage.Literals.FIELD;
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class FieldImpl extends MappingNodeImpl implements Field {
 	 */
 	public EList<Component> getComponent() {
 		if (component == null) {
-			component = new EObjectContainmentEList<Component>(Component.class, this, EdiPackage.FIELD__COMPONENT);
+			component = new EObjectContainmentEList<Component>(Component.class, this, MEdiPackage.FIELD__COMPONENT);
 		}
 		return component;
 	}
@@ -160,7 +160,7 @@ public class FieldImpl extends MappingNodeImpl implements Field {
 		boolean oldRequiredESet = requiredESet;
 		requiredESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.FIELD__REQUIRED, oldRequired, required, !oldRequiredESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.FIELD__REQUIRED, oldRequired, required, !oldRequiredESet));
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class FieldImpl extends MappingNodeImpl implements Field {
 		required = REQUIRED_EDEFAULT;
 		requiredESet = false;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, EdiPackage.FIELD__REQUIRED, oldRequired, REQUIRED_EDEFAULT, oldRequiredESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, MEdiPackage.FIELD__REQUIRED, oldRequired, REQUIRED_EDEFAULT, oldRequiredESet));
 	}
 
 	/**
@@ -206,7 +206,7 @@ public class FieldImpl extends MappingNodeImpl implements Field {
 		boolean oldTruncatableESet = truncatableESet;
 		truncatableESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.FIELD__TRUNCATABLE, oldTruncatable, truncatable, !oldTruncatableESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.FIELD__TRUNCATABLE, oldTruncatable, truncatable, !oldTruncatableESet));
 	}
 
 	/**
@@ -220,7 +220,7 @@ public class FieldImpl extends MappingNodeImpl implements Field {
 		truncatable = TRUNCATABLE_EDEFAULT;
 		truncatableESet = false;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, EdiPackage.FIELD__TRUNCATABLE, oldTruncatable, TRUNCATABLE_EDEFAULT, oldTruncatableESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, MEdiPackage.FIELD__TRUNCATABLE, oldTruncatable, TRUNCATABLE_EDEFAULT, oldTruncatableESet));
 	}
 
 	/**
@@ -240,7 +240,7 @@ public class FieldImpl extends MappingNodeImpl implements Field {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EdiPackage.FIELD__COMPONENT:
+			case MEdiPackage.FIELD__COMPONENT:
 				return ((InternalEList<?>)getComponent()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -254,11 +254,11 @@ public class FieldImpl extends MappingNodeImpl implements Field {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EdiPackage.FIELD__COMPONENT:
+			case MEdiPackage.FIELD__COMPONENT:
 				return getComponent();
-			case EdiPackage.FIELD__REQUIRED:
+			case MEdiPackage.FIELD__REQUIRED:
 				return isRequired() ? Boolean.TRUE : Boolean.FALSE;
-			case EdiPackage.FIELD__TRUNCATABLE:
+			case MEdiPackage.FIELD__TRUNCATABLE:
 				return isTruncatable() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -273,14 +273,14 @@ public class FieldImpl extends MappingNodeImpl implements Field {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EdiPackage.FIELD__COMPONENT:
+			case MEdiPackage.FIELD__COMPONENT:
 				getComponent().clear();
 				getComponent().addAll((Collection<? extends Component>)newValue);
 				return;
-			case EdiPackage.FIELD__REQUIRED:
+			case MEdiPackage.FIELD__REQUIRED:
 				setRequired(((Boolean)newValue).booleanValue());
 				return;
-			case EdiPackage.FIELD__TRUNCATABLE:
+			case MEdiPackage.FIELD__TRUNCATABLE:
 				setTruncatable(((Boolean)newValue).booleanValue());
 				return;
 		}
@@ -295,13 +295,13 @@ public class FieldImpl extends MappingNodeImpl implements Field {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EdiPackage.FIELD__COMPONENT:
+			case MEdiPackage.FIELD__COMPONENT:
 				getComponent().clear();
 				return;
-			case EdiPackage.FIELD__REQUIRED:
+			case MEdiPackage.FIELD__REQUIRED:
 				unsetRequired();
 				return;
-			case EdiPackage.FIELD__TRUNCATABLE:
+			case MEdiPackage.FIELD__TRUNCATABLE:
 				unsetTruncatable();
 				return;
 		}
@@ -316,11 +316,11 @@ public class FieldImpl extends MappingNodeImpl implements Field {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EdiPackage.FIELD__COMPONENT:
+			case MEdiPackage.FIELD__COMPONENT:
 				return component != null && !component.isEmpty();
-			case EdiPackage.FIELD__REQUIRED:
+			case MEdiPackage.FIELD__REQUIRED:
 				return isSetRequired();
-			case EdiPackage.FIELD__TRUNCATABLE:
+			case MEdiPackage.FIELD__TRUNCATABLE:
 				return isSetTruncatable();
 		}
 		return super.eIsSet(featureID);
