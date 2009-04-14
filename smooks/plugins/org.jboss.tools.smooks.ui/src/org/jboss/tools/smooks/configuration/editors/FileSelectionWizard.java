@@ -10,7 +10,10 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors;
 
+import java.util.List;
+
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
@@ -21,14 +24,23 @@ import org.eclipse.ui.IWorkbench;
  */
 public class FileSelectionWizard extends Wizard implements INewWizard {
 
-	private FileSelectionWizardPage wizardPage = null;
+	private FileSelectionWizardPage fileSelectionWizardPage = null;
 	
 	private String filePath = null;
+	
+	private List<ViewerFilter> viewerFilters = null;
+	
+	private Object[] initSelections = null;
+	
+	private boolean multiSelect = false;
 
 	@Override
 	public void addPages() {
-		wizardPage = new FileSelectionWizardPage("File Selection");
-		this.addPage(wizardPage);
+		fileSelectionWizardPage = new FileSelectionWizardPage("File Selection");
+		fileSelectionWizardPage.setFilters(viewerFilters);
+		fileSelectionWizardPage.setInitSelections(getInitSelections());
+		fileSelectionWizardPage.setMultiSelect(isMultiSelect());
+		this.addPage(fileSelectionWizardPage);
 	}
 
 	/* (non-Javadoc)
@@ -36,7 +48,7 @@ public class FileSelectionWizard extends Wizard implements INewWizard {
 	 */
 	@Override
 	public boolean performFinish() {
-		filePath = wizardPage.getFilePath();
+		filePath = fileSelectionWizardPage.getFilePath();
 		return true;
 	}
 
@@ -47,12 +59,36 @@ public class FileSelectionWizard extends Wizard implements INewWizard {
 
 	}
 
+	public Object[] getInitSelections() {
+		return initSelections;
+	}
+
+	public void setInitSelections(Object[] initSelections) {
+		this.initSelections = initSelections;
+	}
+
+	public boolean isMultiSelect() {
+		return multiSelect;
+	}
+
+	public void setMultiSelect(boolean multiSelect) {
+		this.multiSelect = multiSelect;
+	}
+
 	public String getFilePath() {
 		return filePath;
 	}
 
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+
+	public List<ViewerFilter> getViewerFilters() {
+		return viewerFilters;
+	}
+
+	public void setViewerFilters(List<ViewerFilter> viewerFilters) {
+		this.viewerFilters = viewerFilters;
 	}
 	
 	

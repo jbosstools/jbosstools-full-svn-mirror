@@ -104,5 +104,15 @@ public class JavaTypeFieldDialog implements IFieldDialog {
 		return className;
 	}
 
+	public IModelProcsser getModelProcesser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setModelProcesser(IModelProcsser processer) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

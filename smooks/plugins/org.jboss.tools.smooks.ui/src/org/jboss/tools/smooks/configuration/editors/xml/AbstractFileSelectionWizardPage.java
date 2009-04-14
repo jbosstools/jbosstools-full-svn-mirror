@@ -4,11 +4,13 @@
 package org.jboss.tools.smooks.configuration.editors.xml;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -41,11 +43,21 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	protected boolean reasourceLoaded = false;
 	protected Button workspaceBrowseButton;
 	private String filePath = null;
-
-	public AbstractFileSelectionWizardPage(String pageName) {
+	protected Object[] initSelections;
+	protected List<ViewerFilter> filters = null;
+	protected boolean multiSelect =false;
+	
+	public AbstractFileSelectionWizardPage(String pageName,boolean multiSelect , Object[] initSelections,List<ViewerFilter> filters) {
 		super(pageName);
-		// TODO Auto-generated constructor stub
+		this.initSelections = initSelections;
+		this.filters = filters;
+		this.multiSelect = multiSelect;
 	}
+	
+	public AbstractFileSelectionWizardPage(String pageName){
+		this(pageName,false,null,Collections.EMPTY_LIST);
+	}
+	
 
 	public Object getReturnValue() {
 		try {
@@ -152,7 +164,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 
 	protected void openWorkSpaceSelection(Text relationT) {
 		IFile[] files = WorkspaceResourceDialog.openFileSelection(getShell(),
-				"Select Files", "", false, null, Collections.EMPTY_LIST); //$NON-NLS-1$ //$NON-NLS-2$
+				"Select Files", "", false, initSelections, filters); //$NON-NLS-1$ //$NON-NLS-2$
 		// dialog.setInitialSelections(selectedResources);
 		if (files.length > 0) {
 			IFile file = files[0];
@@ -337,5 +349,31 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	public void setSelection(IStructuredSelection selection) {
 		this.selection = selection;
 	}
+
+	public Object[] getInitSelections() {
+		return initSelections;
+	}
+
+	public void setInitSelections(Object[] initSelections) {
+		this.initSelections = initSelections;
+	}
+
+	public List<ViewerFilter> getFilters() {
+		return filters;
+	}
+
+	public void setFilters(List<ViewerFilter> filters) {
+		this.filters = filters;
+	}
+
+	public boolean isMultiSelect() {
+		return multiSelect;
+	}
+
+	public void setMultiSelect(boolean multiSelect) {
+		this.multiSelect = multiSelect;
+	}
+	
+	
 
 }

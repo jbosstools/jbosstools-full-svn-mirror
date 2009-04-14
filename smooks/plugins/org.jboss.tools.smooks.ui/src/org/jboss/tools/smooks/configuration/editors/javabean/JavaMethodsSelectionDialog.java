@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.uitls.IFieldDialog;
+import org.jboss.tools.smooks.configuration.editors.uitls.IModelProcsser;
 import org.jboss.tools.smooks.configuration.editors.uitls.JavaPropertyUtils;
 
 /**
@@ -194,5 +195,15 @@ public class JavaMethodsSelectionDialog implements IFieldDialog {
 			}
 			return getText(element);
 		}
+	}
+
+	public IModelProcsser getModelProcesser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setModelProcesser(IModelProcsser processer) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -18,4 +18,6 @@ import org.eclipse.swt.widgets.Shell;
  */
 public interface IFieldDialog {
 	Object open(Shell shell);
+	IModelProcsser getModelProcesser();
+	void setModelProcesser(IModelProcsser processer);
 }
