@@ -12,7 +12,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.SubComponent;
 
 /**
@@ -74,7 +74,7 @@ public class SubComponentImpl extends MappingNodeImpl implements SubComponent {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return EdiPackage.Literals.SUB_COMPONENT;
+		return MEdiPackage.Literals.SUB_COMPONENT;
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class SubComponentImpl extends MappingNodeImpl implements SubComponent {
 		boolean oldRequiredESet = requiredESet;
 		requiredESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.SUB_COMPONENT__REQUIRED, oldRequired, required, !oldRequiredESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.SUB_COMPONENT__REQUIRED, oldRequired, required, !oldRequiredESet));
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class SubComponentImpl extends MappingNodeImpl implements SubComponent {
 		required = REQUIRED_EDEFAULT;
 		requiredESet = false;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, EdiPackage.SUB_COMPONENT__REQUIRED, oldRequired, REQUIRED_EDEFAULT, oldRequiredESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, MEdiPackage.SUB_COMPONENT__REQUIRED, oldRequired, REQUIRED_EDEFAULT, oldRequiredESet));
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class SubComponentImpl extends MappingNodeImpl implements SubComponent {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EdiPackage.SUB_COMPONENT__REQUIRED:
+			case MEdiPackage.SUB_COMPONENT__REQUIRED:
 				return isRequired() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -145,7 +145,7 @@ public class SubComponentImpl extends MappingNodeImpl implements SubComponent {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EdiPackage.SUB_COMPONENT__REQUIRED:
+			case MEdiPackage.SUB_COMPONENT__REQUIRED:
 				setRequired(((Boolean)newValue).booleanValue());
 				return;
 		}
@@ -160,7 +160,7 @@ public class SubComponentImpl extends MappingNodeImpl implements SubComponent {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EdiPackage.SUB_COMPONENT__REQUIRED:
+			case MEdiPackage.SUB_COMPONENT__REQUIRED:
 				unsetRequired();
 				return;
 		}
@@ -175,7 +175,7 @@ public class SubComponentImpl extends MappingNodeImpl implements SubComponent {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EdiPackage.SUB_COMPONENT__REQUIRED:
+			case MEdiPackage.SUB_COMPONENT__REQUIRED:
 				return isSetRequired();
 		}
 		return super.eIsSet(featureID);

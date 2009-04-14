@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.Segment;
 import org.jboss.tools.smooks.model.medi.Segments;
 
@@ -62,7 +62,7 @@ public class SegmentsImpl extends MappingNodeImpl implements Segments {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return EdiPackage.Literals.SEGMENTS;
+		return MEdiPackage.Literals.SEGMENTS;
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class SegmentsImpl extends MappingNodeImpl implements Segments {
 	 */
 	public EList<Segment> getSegment() {
 		if (segment == null) {
-			segment = new EObjectContainmentEList<Segment>(Segment.class, this, EdiPackage.SEGMENTS__SEGMENT);
+			segment = new EObjectContainmentEList<Segment>(Segment.class, this, MEdiPackage.SEGMENTS__SEGMENT);
 		}
 		return segment;
 	}
@@ -85,7 +85,7 @@ public class SegmentsImpl extends MappingNodeImpl implements Segments {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EdiPackage.SEGMENTS__SEGMENT:
+			case MEdiPackage.SEGMENTS__SEGMENT:
 				return ((InternalEList<?>)getSegment()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -99,7 +99,7 @@ public class SegmentsImpl extends MappingNodeImpl implements Segments {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EdiPackage.SEGMENTS__SEGMENT:
+			case MEdiPackage.SEGMENTS__SEGMENT:
 				return getSegment();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -114,7 +114,7 @@ public class SegmentsImpl extends MappingNodeImpl implements Segments {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EdiPackage.SEGMENTS__SEGMENT:
+			case MEdiPackage.SEGMENTS__SEGMENT:
 				getSegment().clear();
 				getSegment().addAll((Collection<? extends Segment>)newValue);
 				return;
@@ -130,7 +130,7 @@ public class SegmentsImpl extends MappingNodeImpl implements Segments {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EdiPackage.SEGMENTS__SEGMENT:
+			case MEdiPackage.SEGMENTS__SEGMENT:
 				getSegment().clear();
 				return;
 		}
@@ -145,7 +145,7 @@ public class SegmentsImpl extends MappingNodeImpl implements Segments {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EdiPackage.SEGMENTS__SEGMENT:
+			case MEdiPackage.SEGMENTS__SEGMENT:
 				return segment != null && !segment.isEmpty();
 		}
 		return super.eIsSet(featureID);

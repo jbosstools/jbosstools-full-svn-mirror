@@ -18,6 +18,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -46,6 +47,7 @@ import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtFactory;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
+import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -69,7 +71,26 @@ public class SmooksConfigurationFormPage extends FormPage {
 		final ScrolledForm form = managedForm.getForm();
 		FormToolkit toolkit = managedForm.getToolkit();
 		toolkit.decorateFormHeading(form.getForm());
-		form.setText(getTitle());
+		String title = getTitle();
+		EObject smooksModel = ((SmooksMultiFormEditor) getEditor()).getSmooksModel();
+		if (smooksModel != null) {
+			EObject parent = smooksModel;
+			while(parent != null){
+				EObject old = parent;
+				parent = parent.eContainer();
+				if(parent == null){
+					parent = old;
+					break;
+				}
+			}
+			if (parent instanceof DocumentRoot) {
+				title = "Smooks 1.1 - " + title;
+			}
+			if (parent instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
+				title = "Smooks 1.0 - " + title;
+			}
+		}
+		form.setText(title);
 		// create master details UI
 		createMasterDetailBlock(managedForm);
 		GridLayout gridLayout = new GridLayout();
@@ -82,8 +103,8 @@ public class SmooksConfigurationFormPage extends FormPage {
 	}
 
 	protected void createMasterDetailBlock(IManagedForm managedForm) {
-		masterDetailBlock = new SmooksMasterDetailBlock(getEditor(),
-				(AdapterFactoryEditingDomain) ((SmooksMultiFormEditor) getEditor()).getEditingDomain());
+		masterDetailBlock = new SmooksMasterDetailBlock(getEditor(), (AdapterFactoryEditingDomain) ((SmooksMultiFormEditor) getEditor())
+				.getEditingDomain());
 		masterDetailBlock.createContent(managedForm);
 	}
 
@@ -191,8 +212,7 @@ public class SmooksConfigurationFormPage extends FormPage {
 		wizard.setInput(getEditorInput());
 		wizard.setSite(getEditorSite());
 		wizard.setForcePreviousAndNextButtons(true);
-		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(getEditorSite()
-				.getShell(), wizard);
+		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(getEditorSite().getShell(), wizard);
 		if (dialog.open() == WizardDialog.OK) {
 			IStructuredDataSelectionWizard wizard1 = dialog.getCurrentCreationWizard();
 			String type = wizard1.getInputDataTypeID();

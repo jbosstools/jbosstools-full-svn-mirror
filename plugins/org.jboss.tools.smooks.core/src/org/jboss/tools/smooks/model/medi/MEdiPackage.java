@@ -24,18 +24,18 @@ import org.jboss.tools.smooks.model.common.CommonPackage;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see org.jboss.tools.smooks.model.medi.EdiFactory
+ * @see org.jboss.tools.smooks.model.medi.MEdiFactory
  * @model kind="package"
  * @generated
  */
-public interface EdiPackage extends EPackage {
+public interface MEdiPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "edi";
+	String eNAME = "eedi";
 
 	/**
 	 * The package namespace URI.
@@ -51,7 +51,7 @@ public interface EdiPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "edi";
+	String eNS_PREFIX = "eedi";
 
 	/**
 	 * The singleton instance of the package.
@@ -59,14 +59,14 @@ public interface EdiPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	EdiPackage eINSTANCE = org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl.init();
+	MEdiPackage eINSTANCE = org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl.init();
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.medi.impl.MappingNodeImpl <em>Mapping Node</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.jboss.tools.smooks.model.medi.impl.MappingNodeImpl
-	 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getMappingNode()
+	 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getMappingNode()
 	 * @generated
 	 */
 	int MAPPING_NODE = 6;
@@ -121,7 +121,7 @@ public interface EdiPackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.jboss.tools.smooks.model.medi.impl.ComponentImpl
-	 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getComponent()
+	 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getComponent()
 	 * @generated
 	 */
 	int COMPONENT = 0;
@@ -203,7 +203,7 @@ public interface EdiPackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.jboss.tools.smooks.model.medi.impl.DelimitersImpl
-	 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getDelimiters()
+	 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getDelimiters()
 	 * @generated
 	 */
 	int DELIMITERS = 1;
@@ -285,7 +285,7 @@ public interface EdiPackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.jboss.tools.smooks.model.medi.impl.DescriptionImpl
-	 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getDescription()
+	 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getDescription()
 	 * @generated
 	 */
 	int DESCRIPTION = 2;
@@ -349,7 +349,7 @@ public interface EdiPackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.jboss.tools.smooks.model.medi.impl.DocumentRootImpl
-	 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getDocumentRoot()
+	 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getDocumentRoot()
 	 * @generated
 	 */
 	int DOCUMENT_ROOT = 3;
@@ -404,7 +404,7 @@ public interface EdiPackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.jboss.tools.smooks.model.medi.impl.EdiMapImpl
-	 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getEdiMap()
+	 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getEdiMap()
 	 * @generated
 	 */
 	int EDI_MAP = 4;
@@ -477,7 +477,7 @@ public interface EdiPackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.jboss.tools.smooks.model.medi.impl.FieldImpl
-	 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getField()
+	 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getField()
 	 * @generated
 	 */
 	int FIELD = 5;
@@ -559,7 +559,7 @@ public interface EdiPackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.jboss.tools.smooks.model.medi.impl.SegmentImpl
-	 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getSegment()
+	 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getSegment()
 	 * @generated
 	 */
 	int SEGMENT = 7;
@@ -668,7 +668,7 @@ public interface EdiPackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.jboss.tools.smooks.model.medi.impl.SegmentsImpl
-	 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getSegments()
+	 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getSegments()
 	 * @generated
 	 */
 	int SEGMENTS = 8;
@@ -732,7 +732,7 @@ public interface EdiPackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.jboss.tools.smooks.model.medi.impl.SubComponentImpl
-	 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getSubComponent()
+	 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getSubComponent()
 	 * @generated
 	 */
 	int SUB_COMPONENT = 9;
@@ -1207,7 +1207,7 @@ public interface EdiPackage extends EPackage {
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
-	EdiFactory getEdiFactory();
+	MEdiFactory getEdiFactory();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1227,7 +1227,7 @@ public interface EdiPackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.jboss.tools.smooks.model.medi.impl.ComponentImpl
-		 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getComponent()
+		 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getComponent()
 		 * @generated
 		 */
 		EClass COMPONENT = eINSTANCE.getComponent();
@@ -1261,7 +1261,7 @@ public interface EdiPackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.jboss.tools.smooks.model.medi.impl.DelimitersImpl
-		 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getDelimiters()
+		 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getDelimiters()
 		 * @generated
 		 */
 		EClass DELIMITERS = eINSTANCE.getDelimiters();
@@ -1303,7 +1303,7 @@ public interface EdiPackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.jboss.tools.smooks.model.medi.impl.DescriptionImpl
-		 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getDescription()
+		 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getDescription()
 		 * @generated
 		 */
 		EClass DESCRIPTION = eINSTANCE.getDescription();
@@ -1329,7 +1329,7 @@ public interface EdiPackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.jboss.tools.smooks.model.medi.impl.DocumentRootImpl
-		 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getDocumentRoot()
+		 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getDocumentRoot()
 		 * @generated
 		 */
 		EClass DOCUMENT_ROOT = eINSTANCE.getDocumentRoot();
@@ -1371,7 +1371,7 @@ public interface EdiPackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.jboss.tools.smooks.model.medi.impl.EdiMapImpl
-		 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getEdiMap()
+		 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getEdiMap()
 		 * @generated
 		 */
 		EClass EDI_MAP = eINSTANCE.getEdiMap();
@@ -1405,7 +1405,7 @@ public interface EdiPackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.jboss.tools.smooks.model.medi.impl.FieldImpl
-		 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getField()
+		 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getField()
 		 * @generated
 		 */
 		EClass FIELD = eINSTANCE.getField();
@@ -1439,7 +1439,7 @@ public interface EdiPackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.jboss.tools.smooks.model.medi.impl.MappingNodeImpl
-		 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getMappingNode()
+		 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getMappingNode()
 		 * @generated
 		 */
 		EClass MAPPING_NODE = eINSTANCE.getMappingNode();
@@ -1457,7 +1457,7 @@ public interface EdiPackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.jboss.tools.smooks.model.medi.impl.SegmentImpl
-		 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getSegment()
+		 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getSegment()
 		 * @generated
 		 */
 		EClass SEGMENT = eINSTANCE.getSegment();
@@ -1515,7 +1515,7 @@ public interface EdiPackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.jboss.tools.smooks.model.medi.impl.SegmentsImpl
-		 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getSegments()
+		 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getSegments()
 		 * @generated
 		 */
 		EClass SEGMENTS = eINSTANCE.getSegments();
@@ -1533,7 +1533,7 @@ public interface EdiPackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.jboss.tools.smooks.model.medi.impl.SubComponentImpl
-		 * @see org.jboss.tools.smooks.model.medi.impl.EdiPackageImpl#getSubComponent()
+		 * @see org.jboss.tools.smooks.model.medi.impl.MEdiPackageImpl#getSubComponent()
 		 * @generated
 		 */
 		EClass SUB_COMPONENT = eINSTANCE.getSubComponent();

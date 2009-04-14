@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="edi"
-    nsURI="http://www.milyn.org/schema/edi-message-mapping-1.0.xsd" nsPrefix="edi">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="medi"
+    nsURI="http://www.milyn.org/schema/edi-message-mapping-1.0.xsd" nsPrefix="medi">
   <eClassifiers xsi:type="ecore:EClass" name="Component" eSuperTypes="#//MappingNode">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="Component"/>

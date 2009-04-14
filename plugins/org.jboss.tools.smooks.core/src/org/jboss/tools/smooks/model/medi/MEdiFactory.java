@@ -13,17 +13,17 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see org.jboss.tools.smooks.model.medi.EdiPackage
+ * @see org.jboss.tools.smooks.model.medi.MEdiPackage
  * @generated
  */
-public interface EdiFactory extends EFactory {
+public interface MEdiFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	EdiFactory eINSTANCE = org.jboss.tools.smooks.model.medi.impl.EdiFactoryImpl.init();
+	MEdiFactory eINSTANCE = org.jboss.tools.smooks.model.medi.impl.MEdiFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Component</em>'.
@@ -122,6 +122,6 @@ public interface EdiFactory extends EFactory {
 	 * @return the package supported by this factory.
 	 * @generated
 	 */
-	EdiPackage getEdiPackage();
+	MEdiPackage getEdiPackage();
 
 } //EdiFactory

@@ -24,7 +24,7 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
 import org.jboss.tools.smooks.model.medi.Delimiters;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 
 
 /**
@@ -83,7 +83,7 @@ public class DelimitersItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Delimiters_component_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Delimiters_component_feature", "_UI_Delimiters_type"),
-				 EdiPackage.Literals.DELIMITERS__COMPONENT,
+				 MEdiPackage.Literals.DELIMITERS__COMPONENT,
 				 true,
 				 false,
 				 false,
@@ -105,7 +105,7 @@ public class DelimitersItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Delimiters_field_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Delimiters_field_feature", "_UI_Delimiters_type"),
-				 EdiPackage.Literals.DELIMITERS__FIELD,
+				 MEdiPackage.Literals.DELIMITERS__FIELD,
 				 true,
 				 false,
 				 false,
@@ -127,7 +127,7 @@ public class DelimitersItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Delimiters_segment_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Delimiters_segment_feature", "_UI_Delimiters_type"),
-				 EdiPackage.Literals.DELIMITERS__SEGMENT,
+				 MEdiPackage.Literals.DELIMITERS__SEGMENT,
 				 true,
 				 false,
 				 false,
@@ -149,7 +149,7 @@ public class DelimitersItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Delimiters_subComponent_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Delimiters_subComponent_feature", "_UI_Delimiters_type"),
-				 EdiPackage.Literals.DELIMITERS__SUB_COMPONENT,
+				 MEdiPackage.Literals.DELIMITERS__SUB_COMPONENT,
 				 true,
 				 false,
 				 false,
@@ -195,10 +195,10 @@ public class DelimitersItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Delimiters.class)) {
-			case EdiPackage.DELIMITERS__COMPONENT:
-			case EdiPackage.DELIMITERS__FIELD:
-			case EdiPackage.DELIMITERS__SEGMENT:
-			case EdiPackage.DELIMITERS__SUB_COMPONENT:
+			case MEdiPackage.DELIMITERS__COMPONENT:
+			case MEdiPackage.DELIMITERS__FIELD:
+			case MEdiPackage.DELIMITERS__SEGMENT:
+			case MEdiPackage.DELIMITERS__SUB_COMPONENT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

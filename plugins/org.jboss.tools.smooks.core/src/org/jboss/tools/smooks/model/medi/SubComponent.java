@@ -19,7 +19,7 @@ package org.jboss.tools.smooks.model.medi;
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.medi.EdiPackage#getSubComponent()
+ * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getSubComponent()
  * @model extendedMetaData="name='SubComponent' kind='empty'"
  * @generated
  */
@@ -37,7 +37,7 @@ public interface SubComponent extends MappingNode {
 	 * @see #isSetRequired()
 	 * @see #unsetRequired()
 	 * @see #setRequired(boolean)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getSubComponent_Required()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getSubComponent_Required()
 	 * @model default="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='required'"
 	 * @generated

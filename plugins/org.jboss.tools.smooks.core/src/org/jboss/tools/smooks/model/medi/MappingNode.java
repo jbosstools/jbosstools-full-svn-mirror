@@ -20,7 +20,7 @@ import org.jboss.tools.smooks.model.common.AbstractAnyType;
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.medi.EdiPackage#getMappingNode()
+ * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getMappingNode()
  * @model extendedMetaData="name='MappingNode' kind='empty'"
  * @generated
  */
@@ -35,7 +35,7 @@ public interface MappingNode extends AbstractAnyType {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Xmltag</em>' attribute.
 	 * @see #setXmltag(String)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getMappingNode_Xmltag()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getMappingNode_Xmltag()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
 	 *        extendedMetaData="kind='attribute' name='xmltag'"
 	 * @generated

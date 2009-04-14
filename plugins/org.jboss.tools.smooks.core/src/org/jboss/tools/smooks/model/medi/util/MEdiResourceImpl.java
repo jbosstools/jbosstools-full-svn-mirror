@@ -14,10 +14,10 @@ import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
  * <!-- begin-user-doc -->
  * The <b>Resource </b> associated with the package.
  * <!-- end-user-doc -->
- * @see org.jboss.tools.smooks.model.medi.util.EdiResourceFactoryImpl
+ * @see org.jboss.tools.smooks.model.medi.util.MEdiResourceFactoryImpl
  * @generated
  */
-public class EdiResourceImpl extends XMLResourceImpl {
+public class MEdiResourceImpl extends XMLResourceImpl {
 	/**
 	 * Creates an instance of the resource.
 	 * <!-- begin-user-doc -->
@@ -25,7 +25,7 @@ public class EdiResourceImpl extends XMLResourceImpl {
 	 * @param uri the URI of the new resource.
 	 * @generated
 	 */
-	public EdiResourceImpl(URI uri) {
+	public MEdiResourceImpl(URI uri) {
 		super(uri);
 	}
 

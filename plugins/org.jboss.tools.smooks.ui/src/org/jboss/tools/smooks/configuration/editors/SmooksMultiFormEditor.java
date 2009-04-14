@@ -73,6 +73,7 @@ import org.jboss.tools.smooks.model.iorouting.provider.IoroutingItemProviderAdap
 import org.jboss.tools.smooks.model.javabean.provider.JavabeanItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.jmsrouting.provider.JmsroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.json.provider.JsonItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
@@ -141,8 +142,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 			}
 			int newEndIndex = newContent.length() - 1;
 			int oldEndIndex = oldContent.length() - 1;
-			while (newEndIndex >= startIndex && oldEndIndex >= startIndex
-					&& newContent.charAt(newEndIndex) == oldContent.charAt(oldEndIndex)) {
+			while (newEndIndex >= startIndex && oldEndIndex >= startIndex && newContent.charAt(newEndIndex) == oldContent.charAt(oldEndIndex)) {
 				--newEndIndex;
 				--oldEndIndex;
 			}
@@ -179,6 +179,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		adapterFactory.addAdapterFactory(new JavabeanItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new CommonItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new SmooksItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new MEdiItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new EdiItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new IoroutingItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new JsonItemProviderAdapterFactory());
@@ -190,8 +191,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 		BasicCommandStack commandStack = new BasicCommandStack();
 		handleCommandStack(commandStack);
-		editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack,
-				new HashMap<Resource, Boolean>());
+		editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
 	}
 
 	public void setSelectionToViewer(Collection<?> collection) {
@@ -231,8 +231,6 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 			e.printStackTrace();
 		}
 	}
-	
-	
 
 	/**
 	 * @return the smooksGraphicsExt
@@ -357,8 +355,8 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
 		IFile file = ((IFileEditorInput) input).getFile();
-		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(URI
-				.createPlatformResourceURI(file.getFullPath().toPortableString(), false));
+		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(URI.createPlatformResourceURI(file.getFullPath().toPortableString(),
+				false));
 		try {
 			smooksResource.load(Collections.emptyMap());
 			smooksModel = smooksResource.getContents().get(0);

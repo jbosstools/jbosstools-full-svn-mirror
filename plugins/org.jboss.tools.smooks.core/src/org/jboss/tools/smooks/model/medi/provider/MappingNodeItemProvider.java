@@ -23,7 +23,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.MappingNode;
 
 
@@ -80,7 +80,7 @@ public class MappingNodeItemProvider
 				 getResourceLocator(),
 				 getString("_UI_MappingNode_xmltag_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_MappingNode_xmltag_feature", "_UI_MappingNode_type"),
-				 EdiPackage.Literals.MAPPING_NODE__XMLTAG,
+				 MEdiPackage.Literals.MAPPING_NODE__XMLTAG,
 				 true,
 				 false,
 				 false,
@@ -126,7 +126,7 @@ public class MappingNodeItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(MappingNode.class)) {
-			case EdiPackage.MAPPING_NODE__XMLTAG:
+			case MEdiPackage.MAPPING_NODE__XMLTAG:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

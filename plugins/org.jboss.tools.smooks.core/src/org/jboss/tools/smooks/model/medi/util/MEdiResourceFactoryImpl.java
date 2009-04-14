@@ -18,17 +18,17 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
  * <!-- begin-user-doc -->
  * The <b>Resource Factory</b> associated with the package.
  * <!-- end-user-doc -->
- * @see org.jboss.tools.smooks.model.medi.util.EdiResourceImpl
+ * @see org.jboss.tools.smooks.model.medi.util.MEdiResourceImpl
  * @generated
  */
-public class EdiResourceFactoryImpl extends ResourceFactoryImpl {
+public class MEdiResourceFactoryImpl extends ResourceFactoryImpl {
 	/**
 	 * Creates an instance of the resource factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EdiResourceFactoryImpl() {
+	public MEdiResourceFactoryImpl() {
 		super();
 	}
 
@@ -40,7 +40,7 @@ public class EdiResourceFactoryImpl extends ResourceFactoryImpl {
 	 */
 	@Override
 	public Resource createResource(URI uri) {
-		XMLResource result = new EdiResourceImpl(uri);
+		XMLResource result = new MEdiResourceImpl(uri);
 		result.getDefaultSaveOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
 		result.getDefaultLoadOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
 

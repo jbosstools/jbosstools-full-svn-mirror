@@ -27,17 +27,17 @@ import org.jboss.tools.smooks.model.medi.*;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.jboss.tools.smooks.model.medi.EdiPackage
+ * @see org.jboss.tools.smooks.model.medi.MEdiPackage
  * @generated
  */
-public class EdiSwitch<T> {
+public class MEdiSwitch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static EdiPackage modelPackage;
+	protected static MEdiPackage modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -45,9 +45,9 @@ public class EdiSwitch<T> {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EdiSwitch() {
+	public MEdiSwitch() {
 		if (modelPackage == null) {
-			modelPackage = EdiPackage.eINSTANCE;
+			modelPackage = MEdiPackage.eINSTANCE;
 		}
 	}
 
@@ -91,7 +91,7 @@ public class EdiSwitch<T> {
 	 */
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case EdiPackage.COMPONENT: {
+			case MEdiPackage.COMPONENT: {
 				Component component = (Component)theEObject;
 				T result = caseComponent(component);
 				if (result == null) result = caseMappingNode(component);
@@ -100,7 +100,7 @@ public class EdiSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EdiPackage.DELIMITERS: {
+			case MEdiPackage.DELIMITERS: {
 				Delimiters delimiters = (Delimiters)theEObject;
 				T result = caseDelimiters(delimiters);
 				if (result == null) result = caseAbstractAnyType(delimiters);
@@ -108,7 +108,7 @@ public class EdiSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EdiPackage.DESCRIPTION: {
+			case MEdiPackage.DESCRIPTION: {
 				Description description = (Description)theEObject;
 				T result = caseDescription(description);
 				if (result == null) result = caseAbstractAnyType(description);
@@ -116,13 +116,13 @@ public class EdiSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EdiPackage.DOCUMENT_ROOT: {
+			case MEdiPackage.DOCUMENT_ROOT: {
 				DocumentRoot documentRoot = (DocumentRoot)theEObject;
 				T result = caseDocumentRoot(documentRoot);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EdiPackage.EDI_MAP: {
+			case MEdiPackage.EDI_MAP: {
 				EdiMap ediMap = (EdiMap)theEObject;
 				T result = caseEdiMap(ediMap);
 				if (result == null) result = caseAbstractAnyType(ediMap);
@@ -130,7 +130,7 @@ public class EdiSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EdiPackage.FIELD: {
+			case MEdiPackage.FIELD: {
 				Field field = (Field)theEObject;
 				T result = caseField(field);
 				if (result == null) result = caseMappingNode(field);
@@ -139,7 +139,7 @@ public class EdiSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EdiPackage.MAPPING_NODE: {
+			case MEdiPackage.MAPPING_NODE: {
 				MappingNode mappingNode = (MappingNode)theEObject;
 				T result = caseMappingNode(mappingNode);
 				if (result == null) result = caseAbstractAnyType(mappingNode);
@@ -147,7 +147,7 @@ public class EdiSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EdiPackage.SEGMENT: {
+			case MEdiPackage.SEGMENT: {
 				Segment segment = (Segment)theEObject;
 				T result = caseSegment(segment);
 				if (result == null) result = caseMappingNode(segment);
@@ -156,7 +156,7 @@ public class EdiSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EdiPackage.SEGMENTS: {
+			case MEdiPackage.SEGMENTS: {
 				Segments segments = (Segments)theEObject;
 				T result = caseSegments(segments);
 				if (result == null) result = caseMappingNode(segments);
@@ -165,7 +165,7 @@ public class EdiSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EdiPackage.SUB_COMPONENT: {
+			case MEdiPackage.SUB_COMPONENT: {
 				SubComponent subComponent = (SubComponent)theEObject;
 				T result = caseSubComponent(subComponent);
 				if (result == null) result = caseMappingNode(subComponent);

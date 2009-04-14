@@ -25,7 +25,7 @@ import org.eclipse.emf.common.util.EList;
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.medi.EdiPackage#getSegment()
+ * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getSegment()
  * @model extendedMetaData="name='Segment' kind='elementOnly'"
  * @generated
  */
@@ -40,7 +40,7 @@ public interface Segment extends MappingNode {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Field</em>' containment reference list.
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getSegment_Field()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getSegment_Field()
 	 * @model containment="true" required="true"
 	 *        extendedMetaData="kind='element' name='field' namespace='##targetNamespace'"
 	 * @generated
@@ -57,7 +57,7 @@ public interface Segment extends MappingNode {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Segment</em>' containment reference list.
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getSegment_Segment()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getSegment_Segment()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='segment' namespace='##targetNamespace'"
 	 * @generated
@@ -80,7 +80,7 @@ public interface Segment extends MappingNode {
 	 * @see #isSetMaxOccurs()
 	 * @see #unsetMaxOccurs()
 	 * @see #setMaxOccurs(int)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getSegment_MaxOccurs()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getSegment_MaxOccurs()
 	 * @model default="1" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
 	 *        extendedMetaData="kind='attribute' name='maxOccurs'"
 	 * @generated
@@ -137,7 +137,7 @@ public interface Segment extends MappingNode {
 	 * @see #isSetMinOccurs()
 	 * @see #unsetMinOccurs()
 	 * @see #setMinOccurs(int)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getSegment_MinOccurs()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getSegment_MinOccurs()
 	 * @model default="1" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
 	 *        extendedMetaData="kind='attribute' name='minOccurs'"
 	 * @generated
@@ -189,7 +189,7 @@ public interface Segment extends MappingNode {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Segcode</em>' attribute.
 	 * @see #setSegcode(String)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getSegment_Segcode()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getSegment_Segcode()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
 	 *        extendedMetaData="kind='attribute' name='segcode'"
 	 * @generated
@@ -219,7 +219,7 @@ public interface Segment extends MappingNode {
 	 * @see #isSetTruncatable()
 	 * @see #unsetTruncatable()
 	 * @see #setTruncatable(boolean)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getSegment_Truncatable()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getSegment_Truncatable()
 	 * @model default="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='truncatable'"
 	 * @generated

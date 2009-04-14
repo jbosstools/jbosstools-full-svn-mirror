@@ -28,6 +28,8 @@ import org.jboss.tools.smooks.model.csv.CsvFactory;
 import org.jboss.tools.smooks.model.csv.CsvPackage;
 import org.jboss.tools.smooks.model.dbrouting.DbroutingFactory;
 import org.jboss.tools.smooks.model.dbrouting.DbroutingPackage;
+import org.jboss.tools.smooks.model.edi.EdiFactory;
+import org.jboss.tools.smooks.model.edi.EdiPackage;
 import org.jboss.tools.smooks.model.fileRouting.FileRoutingFactory;
 import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerFactory;
@@ -53,9 +55,8 @@ import org.jboss.tools.smooks.model.xsl.provider.Xsl1EditPlugin;
  * 
  * @generated
  */
-public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvider implements
-		IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
-		IItemLabelProvider, IItemPropertySource {
+public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvider implements IEditingDomainItemProvider,
+		IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
@@ -92,14 +93,11 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 	 * @generated
 	 */
 	protected void addDefaultConditionRefPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory)
-				.getRootAdapterFactory(), getResourceLocator(),
-				getString("_UI_SmooksResourceListType_defaultConditionRef_feature"), getString(
-						"_UI_PropertyDescriptor_description",
-						"_UI_SmooksResourceListType_defaultConditionRef_feature",
-						"_UI_SmooksResourceListType_type"),
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_CONDITION_REF, true, false, false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(), getString("_UI_SmooksResourceListType_defaultConditionRef_feature"), getString(
+						"_UI_PropertyDescriptor_description", "_UI_SmooksResourceListType_defaultConditionRef_feature",
+						"_UI_SmooksResourceListType_type"), SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_CONDITION_REF, true, false,
+				false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -109,13 +107,10 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 	 * @generated
 	 */
 	protected void addDefaultSelectorPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory)
-				.getRootAdapterFactory(), getResourceLocator(),
-				getString("_UI_SmooksResourceListType_defaultSelector_feature"), getString(
-						"_UI_PropertyDescriptor_description",
-						"_UI_SmooksResourceListType_defaultSelector_feature",
-						"_UI_SmooksResourceListType_type"),
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR, true, false, false,
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(), getString("_UI_SmooksResourceListType_defaultSelector_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_SmooksResourceListType_defaultSelector_feature",
+						"_UI_SmooksResourceListType_type"), SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR, true, false, false,
 				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
@@ -126,14 +121,11 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 	 * @generated
 	 */
 	protected void addDefaultSelectorNamespacePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory)
-				.getRootAdapterFactory(), getResourceLocator(),
-				getString("_UI_SmooksResourceListType_defaultSelectorNamespace_feature"), getString(
-						"_UI_PropertyDescriptor_description",
-						"_UI_SmooksResourceListType_defaultSelectorNamespace_feature",
-						"_UI_SmooksResourceListType_type"),
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR_NAMESPACE, true, false,
-				false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(), getString("_UI_SmooksResourceListType_defaultSelectorNamespace_feature"), getString(
+						"_UI_PropertyDescriptor_description", "_UI_SmooksResourceListType_defaultSelectorNamespace_feature",
+						"_UI_SmooksResourceListType_type"), SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR_NAMESPACE, true,
+				false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -143,14 +135,11 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 	 * @generated
 	 */
 	protected void addDefaultTargetProfilePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory)
-				.getRootAdapterFactory(), getResourceLocator(),
-				getString("_UI_SmooksResourceListType_defaultTargetProfile_feature"), getString(
-						"_UI_PropertyDescriptor_description",
-						"_UI_SmooksResourceListType_defaultTargetProfile_feature",
-						"_UI_SmooksResourceListType_type"),
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_TARGET_PROFILE, true, false, false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(), getString("_UI_SmooksResourceListType_defaultTargetProfile_feature"), getString(
+						"_UI_PropertyDescriptor_description", "_UI_SmooksResourceListType_defaultTargetProfile_feature",
+						"_UI_SmooksResourceListType_type"), SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_TARGET_PROFILE, true, false,
+				false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -171,8 +160,7 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 			childrenFeatures.add(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__CONDITIONS);
 			childrenFeatures.add(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__PROFILES);
 			childrenFeatures.add(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP);
-			childrenFeatures
-					.add(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP);
+			childrenFeatures.add(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP);
 		}
 		return childrenFeatures;
 	}
@@ -211,8 +199,8 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 	@Override
 	public String getText(Object object) {
 		String label = ((SmooksResourceListType) object).getDefaultSelectorNamespace();
-		return label == null || label.length() == 0 ? getString("_UI_SmooksResourceListType_type")
-				: getString("_UI_SmooksResourceListType_type") + " " + label;
+		return label == null || label.length() == 0 ? getString("_UI_SmooksResourceListType_type") : getString("_UI_SmooksResourceListType_type")
+				+ " " + label;
 	}
 
 	/**
@@ -256,90 +244,66 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__PARAMS, SmooksFactory.eINSTANCE
-						.createParamsType()));
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__PARAMS, SmooksFactory.eINSTANCE
+				.createParamsType()));
 
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__CONDITIONS, SmooksFactory.eINSTANCE
-						.createConditionsType()));
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__CONDITIONS, SmooksFactory.eINSTANCE
+				.createConditionsType()));
 
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__PROFILES, SmooksFactory.eINSTANCE
-						.createProfilesType()));
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__PROFILES, SmooksFactory.eINSTANCE
+				.createProfilesType()));
 
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
-						.createEntry(SmooksPackage.Literals.DOCUMENT_ROOT__READER, SmooksFactory.eINSTANCE
-								.createReaderType())));
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
+				.createEntry(SmooksPackage.Literals.DOCUMENT_ROOT__READER, SmooksFactory.eINSTANCE.createReaderType())));
+
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(SmooksPackage.Literals.DOCUMENT_ROOT__IMPORT, SmooksFactory.eINSTANCE.createImportType())));
+
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE_CONFIG, SmooksFactory.eINSTANCE.createResourceConfigType())));
+		/***********************************************/
 		// for CSV
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
-						.createEntry(CsvPackage.Literals.DOCUMENT_ROOT__READER, CsvFactory.eINSTANCE
-								.createReader())));
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
+				.createEntry(CsvPackage.Literals.DOCUMENT_ROOT__READER, CsvFactory.eINSTANCE.createReader())));
+		// for EDI
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
+				.createEntry(EdiPackage.Literals.EDI_DOCUMENT_ROOT__READER, EdiFactory.eINSTANCE.createEDIReader())));
 
 		// for JSON
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
-						.createEntry(JsonPackage.Literals.DOCUMENT_ROOT__READER, JsonFactory.eINSTANCE
-								.createReader())));
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
+				.createEntry(JsonPackage.Literals.DOCUMENT_ROOT__READER, JsonFactory.eINSTANCE.createReader())));
 
 		// for javabean
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
-				FeatureMapUtil.createEntry(JavabeanPackage.Literals.DOCUMENT_ROOT__BINDINGS,
-						JavabeanFactory.eINSTANCE.createBindingsType())));
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(JavabeanPackage.Literals.DOCUMENT_ROOT__BINDINGS, JavabeanFactory.eINSTANCE.createBindingsType())));
 		// for xsl
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
-				FeatureMapUtil.createEntry(XslPackage.Literals.DOCUMENT_ROOT__XSL, XslFactory.eINSTANCE
-						.createXsl())));
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(XslPackage.Literals.DOCUMENT_ROOT__XSL, XslFactory.eINSTANCE.createXsl())));
 		// for freemarker
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
-				FeatureMapUtil.createEntry(FreemarkerPackage.Literals.DOCUMENT_ROOT__FREEMARKER,
-						FreemarkerFactory.eINSTANCE.createFreemarker())));
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(FreemarkerPackage.Literals.DOCUMENT_ROOT__FREEMARKER, FreemarkerFactory.eINSTANCE.createFreemarker())));
 
 		// for DB routing
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
-				FeatureMapUtil.createEntry(DbroutingPackage.Literals.DOCUMENT_ROOT__EXECUTOR,
-						DbroutingFactory.eINSTANCE.createExecutor())));
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(DbroutingPackage.Literals.DOCUMENT_ROOT__EXECUTOR, DbroutingFactory.eINSTANCE.createExecutor())));
 
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
-				FeatureMapUtil.createEntry(DbroutingPackage.Literals.DOCUMENT_ROOT__RESULT_SET_ROW_SELECTOR,
-						DbroutingFactory.eINSTANCE.createResultSetRowSelector())));
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(DbroutingPackage.Literals.DOCUMENT_ROOT__RESULT_SET_ROW_SELECTOR, DbroutingFactory.eINSTANCE
+						.createResultSetRowSelector())));
 
 		// for IO routing
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
-				FeatureMapUtil.createEntry(IoroutingPackage.Literals.DOCUMENT_ROOT__ROUTER,
-						IoroutingFactory.eINSTANCE.createRouter())));
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(IoroutingPackage.Literals.DOCUMENT_ROOT__ROUTER, IoroutingFactory.eINSTANCE.createRouter())));
 
 		// for JMS routing
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
-				FeatureMapUtil.createEntry(JmsroutingPackage.Literals.DOCUMENT_ROOT__ROUTER,
-						JmsroutingFactory.eINSTANCE.createRouter())));
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(JmsroutingPackage.Literals.DOCUMENT_ROOT__ROUTER, JmsroutingFactory.eINSTANCE.createRouter())));
 
 		// for File routing
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
-				FeatureMapUtil.createEntry(FileRoutingPackage.Literals.DOCUMENT_ROOT__OUTPUT_STREAM,
-						FileRoutingFactory.eINSTANCE.createOutputStream())));
-		
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(FileRoutingPackage.Literals.DOCUMENT_ROOT__OUTPUT_STREAM, FileRoutingFactory.eINSTANCE.createOutputStream())));
+
 		/***********************************************/
-
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
-				FeatureMapUtil.createEntry(SmooksPackage.Literals.DOCUMENT_ROOT__IMPORT,
-						SmooksFactory.eINSTANCE.createImportType())));
-
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
-				FeatureMapUtil.createEntry(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE_CONFIG,
-						SmooksFactory.eINSTANCE.createResourceConfigType())));
 	}
 
 	/**

@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.MappingNode;
 
 /**
@@ -67,7 +67,7 @@ public class MappingNodeImpl extends AbstractAnyTypeImpl implements MappingNode 
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return EdiPackage.Literals.MAPPING_NODE;
+		return MEdiPackage.Literals.MAPPING_NODE;
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class MappingNodeImpl extends AbstractAnyTypeImpl implements MappingNode 
 		String oldXmltag = xmltag;
 		xmltag = newXmltag;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EdiPackage.MAPPING_NODE__XMLTAG, oldXmltag, xmltag));
+			eNotify(new ENotificationImpl(this, Notification.SET, MEdiPackage.MAPPING_NODE__XMLTAG, oldXmltag, xmltag));
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class MappingNodeImpl extends AbstractAnyTypeImpl implements MappingNode 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EdiPackage.MAPPING_NODE__XMLTAG:
+			case MEdiPackage.MAPPING_NODE__XMLTAG:
 				return getXmltag();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -113,7 +113,7 @@ public class MappingNodeImpl extends AbstractAnyTypeImpl implements MappingNode 
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EdiPackage.MAPPING_NODE__XMLTAG:
+			case MEdiPackage.MAPPING_NODE__XMLTAG:
 				setXmltag((String)newValue);
 				return;
 		}
@@ -128,7 +128,7 @@ public class MappingNodeImpl extends AbstractAnyTypeImpl implements MappingNode 
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EdiPackage.MAPPING_NODE__XMLTAG:
+			case MEdiPackage.MAPPING_NODE__XMLTAG:
 				setXmltag(XMLTAG_EDEFAULT);
 				return;
 		}
@@ -143,7 +143,7 @@ public class MappingNodeImpl extends AbstractAnyTypeImpl implements MappingNode 
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EdiPackage.MAPPING_NODE__XMLTAG:
+			case MEdiPackage.MAPPING_NODE__XMLTAG:
 				return XMLTAG_EDEFAULT == null ? xmltag != null : !XMLTAG_EDEFAULT.equals(xmltag);
 		}
 		return super.eIsSet(featureID);

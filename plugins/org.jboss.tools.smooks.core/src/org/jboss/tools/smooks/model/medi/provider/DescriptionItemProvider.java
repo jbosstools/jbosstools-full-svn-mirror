@@ -24,7 +24,7 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
 import org.jboss.tools.smooks.model.medi.Description;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 
 
 /**
@@ -81,7 +81,7 @@ public class DescriptionItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Description_name_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Description_name_feature", "_UI_Description_type"),
-				 EdiPackage.Literals.DESCRIPTION__NAME,
+				 MEdiPackage.Literals.DESCRIPTION__NAME,
 				 true,
 				 false,
 				 false,
@@ -103,7 +103,7 @@ public class DescriptionItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Description_version_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Description_version_feature", "_UI_Description_type"),
-				 EdiPackage.Literals.DESCRIPTION__VERSION,
+				 MEdiPackage.Literals.DESCRIPTION__VERSION,
 				 true,
 				 false,
 				 false,
@@ -149,8 +149,8 @@ public class DescriptionItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Description.class)) {
-			case EdiPackage.DESCRIPTION__NAME:
-			case EdiPackage.DESCRIPTION__VERSION:
+			case MEdiPackage.DESCRIPTION__NAME:
+			case MEdiPackage.DESCRIPTION__VERSION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

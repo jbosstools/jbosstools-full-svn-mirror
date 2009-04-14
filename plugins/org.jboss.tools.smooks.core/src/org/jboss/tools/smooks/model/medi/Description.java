@@ -21,7 +21,7 @@ import org.jboss.tools.smooks.model.common.AbstractAnyType;
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.medi.EdiPackage#getDescription()
+ * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getDescription()
  * @model extendedMetaData="name='Description' kind='empty'"
  * @generated
  */
@@ -36,7 +36,7 @@ public interface Description extends AbstractAnyType {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getDescription_Name()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getDescription_Name()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
 	 *        extendedMetaData="kind='attribute' name='name'"
 	 * @generated
@@ -63,7 +63,7 @@ public interface Description extends AbstractAnyType {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Version</em>' attribute.
 	 * @see #setVersion(String)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getDescription_Version()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getDescription_Version()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
 	 *        extendedMetaData="kind='attribute' name='version'"
 	 * @generated

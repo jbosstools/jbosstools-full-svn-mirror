@@ -21,7 +21,7 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.SubComponent;
 
 /**
@@ -77,7 +77,7 @@ public class SubComponentItemProvider
 				 getResourceLocator(),
 				 getString("_UI_SubComponent_required_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_SubComponent_required_feature", "_UI_SubComponent_type"),
-				 EdiPackage.Literals.SUB_COMPONENT__REQUIRED,
+				 MEdiPackage.Literals.SUB_COMPONENT__REQUIRED,
 				 true,
 				 false,
 				 false,
@@ -123,7 +123,7 @@ public class SubComponentItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(SubComponent.class)) {
-			case EdiPackage.SUB_COMPONENT__REQUIRED:
+			case MEdiPackage.SUB_COMPONENT__REQUIRED:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

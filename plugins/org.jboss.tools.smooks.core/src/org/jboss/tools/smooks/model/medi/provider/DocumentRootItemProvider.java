@@ -23,8 +23,8 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.jboss.tools.smooks.model.medi.DocumentRoot;
-import org.jboss.tools.smooks.model.medi.EdiFactory;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiFactory;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 
 /**
  * This is the item provider adapter for a {@link edi.DocumentRoot} object.
@@ -77,7 +77,7 @@ public class DocumentRootItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(EdiPackage.Literals.DOCUMENT_ROOT__EDIMAP);
+			childrenFeatures.add(MEdiPackage.Literals.DOCUMENT_ROOT__EDIMAP);
 		}
 		return childrenFeatures;
 	}
@@ -129,7 +129,7 @@ public class DocumentRootItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(DocumentRoot.class)) {
-			case EdiPackage.DOCUMENT_ROOT__EDIMAP:
+			case MEdiPackage.DOCUMENT_ROOT__EDIMAP:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -149,8 +149,8 @@ public class DocumentRootItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(EdiPackage.Literals.DOCUMENT_ROOT__EDIMAP,
-				 EdiFactory.eINSTANCE.createEdiMap()));
+				(MEdiPackage.Literals.DOCUMENT_ROOT__EDIMAP,
+				 MEdiFactory.eINSTANCE.createEdiMap()));
 	}
 
 	/**

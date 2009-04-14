@@ -20,7 +20,7 @@ import org.eclipse.emf.common.util.EList;
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.medi.EdiPackage#getSegments()
+ * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getSegments()
  * @model extendedMetaData="name='Segments' kind='elementOnly'"
  * @generated
  */
@@ -35,7 +35,7 @@ public interface Segments extends MappingNode {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Segment</em>' containment reference list.
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getSegments_Segment()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getSegments_Segment()
 	 * @model containment="true" required="true"
 	 *        extendedMetaData="kind='element' name='segment' namespace='##targetNamespace'"
 	 * @generated

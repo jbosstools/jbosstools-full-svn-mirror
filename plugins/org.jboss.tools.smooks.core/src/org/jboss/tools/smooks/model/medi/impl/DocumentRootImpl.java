@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.jboss.tools.smooks.model.medi.DocumentRoot;
 import org.jboss.tools.smooks.model.medi.EdiMap;
-import org.jboss.tools.smooks.model.medi.EdiPackage;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -90,7 +90,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return EdiPackage.Literals.DOCUMENT_ROOT;
+		return MEdiPackage.Literals.DOCUMENT_ROOT;
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 */
 	public FeatureMap getMixed() {
 		if (mixed == null) {
-			mixed = new BasicFeatureMap(this, EdiPackage.DOCUMENT_ROOT__MIXED);
+			mixed = new BasicFeatureMap(this, MEdiPackage.DOCUMENT_ROOT__MIXED);
 		}
 		return mixed;
 	}
@@ -112,7 +112,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 */
 	public EMap<String, String> getXMLNSPrefixMap() {
 		if (xMLNSPrefixMap == null) {
-			xMLNSPrefixMap = new EcoreEMap<String,String>(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, EdiPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
+			xMLNSPrefixMap = new EcoreEMap<String,String>(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, MEdiPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
 		}
 		return xMLNSPrefixMap;
 	}
@@ -124,7 +124,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 */
 	public EMap<String, String> getXSISchemaLocation() {
 		if (xSISchemaLocation == null) {
-			xSISchemaLocation = new EcoreEMap<String,String>(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, EdiPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
+			xSISchemaLocation = new EcoreEMap<String,String>(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, MEdiPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
 		}
 		return xSISchemaLocation;
 	}
@@ -135,7 +135,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public EdiMap getEdimap() {
-		return (EdiMap)getMixed().get(EdiPackage.Literals.DOCUMENT_ROOT__EDIMAP, true);
+		return (EdiMap)getMixed().get(MEdiPackage.Literals.DOCUMENT_ROOT__EDIMAP, true);
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public NotificationChain basicSetEdimap(EdiMap newEdimap, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(EdiPackage.Literals.DOCUMENT_ROOT__EDIMAP, newEdimap, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(MEdiPackage.Literals.DOCUMENT_ROOT__EDIMAP, newEdimap, msgs);
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public void setEdimap(EdiMap newEdimap) {
-		((FeatureMap.Internal)getMixed()).set(EdiPackage.Literals.DOCUMENT_ROOT__EDIMAP, newEdimap);
+		((FeatureMap.Internal)getMixed()).set(MEdiPackage.Literals.DOCUMENT_ROOT__EDIMAP, newEdimap);
 	}
 
 	/**
@@ -164,13 +164,13 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EdiPackage.DOCUMENT_ROOT__MIXED:
+			case MEdiPackage.DOCUMENT_ROOT__MIXED:
 				return ((InternalEList<?>)getMixed()).basicRemove(otherEnd, msgs);
-			case EdiPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case MEdiPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				return ((InternalEList<?>)getXMLNSPrefixMap()).basicRemove(otherEnd, msgs);
-			case EdiPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case MEdiPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				return ((InternalEList<?>)getXSISchemaLocation()).basicRemove(otherEnd, msgs);
-			case EdiPackage.DOCUMENT_ROOT__EDIMAP:
+			case MEdiPackage.DOCUMENT_ROOT__EDIMAP:
 				return basicSetEdimap(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -184,16 +184,16 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EdiPackage.DOCUMENT_ROOT__MIXED:
+			case MEdiPackage.DOCUMENT_ROOT__MIXED:
 				if (coreType) return getMixed();
 				return ((FeatureMap.Internal)getMixed()).getWrapper();
-			case EdiPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case MEdiPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				if (coreType) return getXMLNSPrefixMap();
 				else return getXMLNSPrefixMap().map();
-			case EdiPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case MEdiPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				if (coreType) return getXSISchemaLocation();
 				else return getXSISchemaLocation().map();
-			case EdiPackage.DOCUMENT_ROOT__EDIMAP:
+			case MEdiPackage.DOCUMENT_ROOT__EDIMAP:
 				return getEdimap();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -207,16 +207,16 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EdiPackage.DOCUMENT_ROOT__MIXED:
+			case MEdiPackage.DOCUMENT_ROOT__MIXED:
 				((FeatureMap.Internal)getMixed()).set(newValue);
 				return;
-			case EdiPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case MEdiPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				((EStructuralFeature.Setting)getXMLNSPrefixMap()).set(newValue);
 				return;
-			case EdiPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case MEdiPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				((EStructuralFeature.Setting)getXSISchemaLocation()).set(newValue);
 				return;
-			case EdiPackage.DOCUMENT_ROOT__EDIMAP:
+			case MEdiPackage.DOCUMENT_ROOT__EDIMAP:
 				setEdimap((EdiMap)newValue);
 				return;
 		}
@@ -231,16 +231,16 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EdiPackage.DOCUMENT_ROOT__MIXED:
+			case MEdiPackage.DOCUMENT_ROOT__MIXED:
 				getMixed().clear();
 				return;
-			case EdiPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case MEdiPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				getXMLNSPrefixMap().clear();
 				return;
-			case EdiPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case MEdiPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				getXSISchemaLocation().clear();
 				return;
-			case EdiPackage.DOCUMENT_ROOT__EDIMAP:
+			case MEdiPackage.DOCUMENT_ROOT__EDIMAP:
 				setEdimap((EdiMap)null);
 				return;
 		}
@@ -255,13 +255,13 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EdiPackage.DOCUMENT_ROOT__MIXED:
+			case MEdiPackage.DOCUMENT_ROOT__MIXED:
 				return mixed != null && !mixed.isEmpty();
-			case EdiPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case MEdiPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				return xMLNSPrefixMap != null && !xMLNSPrefixMap.isEmpty();
-			case EdiPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case MEdiPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				return xSISchemaLocation != null && !xSISchemaLocation.isEmpty();
-			case EdiPackage.DOCUMENT_ROOT__EDIMAP:
+			case MEdiPackage.DOCUMENT_ROOT__EDIMAP:
 				return getEdimap() != null;
 		}
 		return super.eIsSet(featureID);

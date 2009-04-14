@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.EList;
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.medi.EdiPackage#getComponent()
+ * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getComponent()
  * @model extendedMetaData="name='Component' kind='elementOnly'"
  * @generated
  */
@@ -37,7 +37,7 @@ public interface Component extends MappingNode {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Sub Component</em>' containment reference list.
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getComponent_SubComponent()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getComponent_SubComponent()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='sub-component' namespace='##targetNamespace'"
 	 * @generated
@@ -57,7 +57,7 @@ public interface Component extends MappingNode {
 	 * @see #isSetRequired()
 	 * @see #unsetRequired()
 	 * @see #setRequired(boolean)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getComponent_Required()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getComponent_Required()
 	 * @model default="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='required'"
 	 * @generated
@@ -112,7 +112,7 @@ public interface Component extends MappingNode {
 	 * @see #isSetTruncatable()
 	 * @see #unsetTruncatable()
 	 * @see #setTruncatable(boolean)
-	 * @see org.jboss.tools.smooks.model.medi.EdiPackage#getComponent_Truncatable()
+	 * @see org.jboss.tools.smooks.model.medi.MEdiPackage#getComponent_Truncatable()
 	 * @model default="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='truncatable'"
 	 * @generated
