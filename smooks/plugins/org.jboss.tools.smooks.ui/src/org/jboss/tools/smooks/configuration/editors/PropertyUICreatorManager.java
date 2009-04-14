@@ -13,6 +13,10 @@ package org.jboss.tools.smooks.configuration.editors;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jboss.tools.smooks.configuration.editors.csv.CsvReaderUICreator;
+import org.jboss.tools.smooks.configuration.editors.dbrouting.ExecutorUICreator;
+import org.jboss.tools.smooks.configuration.editors.dbrouting.ResultSetRowSelectorUICreator;
+import org.jboss.tools.smooks.configuration.editors.dbrouting.ResultSetUICreator;
 import org.jboss.tools.smooks.configuration.editors.edi.ComponentUICreator;
 import org.jboss.tools.smooks.configuration.editors.edi.DelimitersUICreator;
 import org.jboss.tools.smooks.configuration.editors.edi.DescriptionUICreator;
@@ -22,6 +26,7 @@ import org.jboss.tools.smooks.configuration.editors.edi.MappingNodeUICreator;
 import org.jboss.tools.smooks.configuration.editors.edi.SegmentUICreator;
 import org.jboss.tools.smooks.configuration.editors.edi.SegmentsUICreator;
 import org.jboss.tools.smooks.configuration.editors.edi.SubComponentUICreator;
+import org.jboss.tools.smooks.configuration.editors.edireader.EDIReaderUICreator;
 import org.jboss.tools.smooks.configuration.editors.filerouting.HighWaterMarkUICreator;
 import org.jboss.tools.smooks.configuration.editors.filerouting.OutputStreamUICreator;
 import org.jboss.tools.smooks.configuration.editors.freemarker.FreemarkerUICreator;
@@ -29,9 +34,18 @@ import org.jboss.tools.smooks.configuration.editors.freemarker.InlineUICreator;
 import org.jboss.tools.smooks.configuration.editors.freemarker.UseUICreator;
 import org.jboss.tools.smooks.configuration.editors.groovy.GroovyUICreator;
 import org.jboss.tools.smooks.configuration.editors.groovy.ScriptUICreator;
+import org.jboss.tools.smooks.configuration.editors.iorouting.IORouterUICreator;
 import org.jboss.tools.smooks.configuration.editors.javabean.BindingsPropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanValueUICreator;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanWiringUICreator;
+import org.jboss.tools.smooks.configuration.editors.jms.ConnectionUICreator;
+import org.jboss.tools.smooks.configuration.editors.jms.JmsRouterUICreator;
+import org.jboss.tools.smooks.configuration.editors.jms.JndiUICreator;
+import org.jboss.tools.smooks.configuration.editors.jms.MessageUICreator;
+import org.jboss.tools.smooks.configuration.editors.jms.SessionUICreator;
+import org.jboss.tools.smooks.configuration.editors.json.JsonReaderUICreator;
+import org.jboss.tools.smooks.configuration.editors.json.KeyMapUICreator;
+import org.jboss.tools.smooks.configuration.editors.json.KeyUICreator;
 import org.jboss.tools.smooks.configuration.editors.smooks.ConditionTypeUICreator;
 import org.jboss.tools.smooks.configuration.editors.smooks.ImportTypeUICreator;
 import org.jboss.tools.smooks.configuration.editors.smooks.ParamTypeUICreator;
@@ -41,6 +55,11 @@ import org.jboss.tools.smooks.configuration.editors.xsl.BindToUICreator;
 import org.jboss.tools.smooks.configuration.editors.xsl.OutputToUICreator;
 import org.jboss.tools.smooks.configuration.editors.xsl.TemplateUICreator;
 import org.jboss.tools.smooks.configuration.editors.xsl.XslUICreator;
+import org.jboss.tools.smooks.model.csv.impl.CsvReaderImpl;
+import org.jboss.tools.smooks.model.dbrouting.impl.ExecutorImpl;
+import org.jboss.tools.smooks.model.dbrouting.impl.ResultSetImpl;
+import org.jboss.tools.smooks.model.dbrouting.impl.ResultSetRowSelectorImpl;
+import org.jboss.tools.smooks.model.edi.impl.EDIReaderImpl;
 import org.jboss.tools.smooks.model.fileRouting.impl.HighWaterMarkImpl;
 import org.jboss.tools.smooks.model.fileRouting.impl.OutputStreamImpl;
 import org.jboss.tools.smooks.model.freemarker.impl.FreemarkerImpl;
@@ -48,9 +67,18 @@ import org.jboss.tools.smooks.model.freemarker.impl.InlineImpl;
 import org.jboss.tools.smooks.model.freemarker.impl.UseImpl;
 import org.jboss.tools.smooks.model.groovy.impl.GroovyImpl;
 import org.jboss.tools.smooks.model.groovy.impl.ScriptTypeImpl;
+import org.jboss.tools.smooks.model.iorouting.impl.IORouterImpl;
 import org.jboss.tools.smooks.model.javabean.impl.BindingsTypeImpl;
 import org.jboss.tools.smooks.model.javabean.impl.ValueTypeImpl;
 import org.jboss.tools.smooks.model.javabean.impl.WiringTypeImpl;
+import org.jboss.tools.smooks.model.jmsrouting.impl.ConnectionImpl;
+import org.jboss.tools.smooks.model.jmsrouting.impl.JmsRouterImpl;
+import org.jboss.tools.smooks.model.jmsrouting.impl.JndiImpl;
+import org.jboss.tools.smooks.model.jmsrouting.impl.MessageImpl;
+import org.jboss.tools.smooks.model.jmsrouting.impl.SessionImpl;
+import org.jboss.tools.smooks.model.json.impl.JsonReaderImpl;
+import org.jboss.tools.smooks.model.json.impl.KeyImpl;
+import org.jboss.tools.smooks.model.json.impl.KeyMapImpl;
 import org.jboss.tools.smooks.model.medi.impl.ComponentImpl;
 import org.jboss.tools.smooks.model.medi.impl.DelimitersImpl;
 import org.jboss.tools.smooks.model.medi.impl.DescriptionImpl;
@@ -109,24 +137,24 @@ public class PropertyUICreatorManager {
 
 		// for freemarker
 		map.put(org.jboss.tools.smooks.model.freemarker.impl.BindToImpl.class,
-			new org.jboss.tools.smooks.configuration.editors.freemarker.BindToUICreator());
+				new org.jboss.tools.smooks.configuration.editors.freemarker.BindToUICreator());
 		map.put(FreemarkerImpl.class, new FreemarkerUICreator());
 		map.put(InlineImpl.class, new InlineUICreator());
 		map.put(org.jboss.tools.smooks.model.freemarker.impl.OutputToImpl.class,
-			new org.jboss.tools.smooks.configuration.editors.freemarker.OutputToUICreator());
+				new org.jboss.tools.smooks.configuration.editors.freemarker.OutputToUICreator());
 		map.put(org.jboss.tools.smooks.model.freemarker.impl.TemplateImpl.class,
-			new org.jboss.tools.smooks.configuration.editors.freemarker.TemplateUICreator());
+				new org.jboss.tools.smooks.configuration.editors.freemarker.TemplateUICreator());
 		map.put(UseImpl.class, new UseUICreator());
-		
+
 		// for groovy
 		map.put(GroovyImpl.class, new GroovyUICreator());
 		map.put(ScriptTypeImpl.class, new ScriptUICreator());
-		
+
 		// for filerouting
 		map.put(HighWaterMarkImpl.class, new HighWaterMarkUICreator());
 		map.put(OutputStreamImpl.class, new OutputStreamUICreator());
-		
-		// for edi
+
+		// for medi
 		map.put(ComponentImpl.class, new ComponentUICreator());
 		map.put(DelimitersImpl.class, new DelimitersUICreator());
 		map.put(DescriptionImpl.class, new DescriptionUICreator());
@@ -136,6 +164,35 @@ public class PropertyUICreatorManager {
 		map.put(SegmentImpl.class, new SegmentUICreator());
 		map.put(SegmentsImpl.class, new SegmentsUICreator());
 		map.put(SubComponentImpl.class, new SubComponentUICreator());
+
+		// for edi
+		map.put(EDIReaderImpl.class, new EDIReaderUICreator());
+
+		// for Json
+		map.put(KeyImpl.class, new KeyUICreator());
+		map.put(KeyMapImpl.class, new KeyMapUICreator());
+		map.put(JsonReaderImpl.class, new JsonReaderUICreator());
+		
+		// for CSV
+		map.put(CsvReaderImpl.class, new CsvReaderUICreator());
+		
+		// for IO Routing
+		map.put(IORouterImpl.class, new IORouterUICreator());
+		
+		// for JMS
+		map.put(ConnectionImpl.class, new ConnectionUICreator());
+		map.put(HighWaterMarkImpl.class, new HighWaterMarkUICreator());
+		map.put(JndiImpl.class, new JndiUICreator());
+		map.put(MessageImpl.class, new MessageUICreator());
+		map.put(JmsRouterImpl.class, new JmsRouterUICreator());
+		map.put(SessionImpl.class, new SessionUICreator());
+		
+		// for DB routing
+		map.put(ExecutorImpl.class, new ExecutorUICreator());
+		map.put(ResultSetImpl.class, new ResultSetUICreator());
+		map.put(ResultSetRowSelectorImpl.class, new ResultSetRowSelectorUICreator());
+
+
 
 		/*
 		 * up if for smooks1.1

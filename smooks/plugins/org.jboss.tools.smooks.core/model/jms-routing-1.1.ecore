@@ -96,7 +96,7 @@
       <details key="baseType" value="deliveryMode"/>
     </eAnnotations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DocumentRoot">
+  <eClassifiers xsi:type="ecore:EClass" name="JmsDocumentRoot">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value=""/>
       <details key="kind" value="mixed"/>
@@ -125,7 +125,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="router" upperBound="-2"
-        eType="#//Router" volatile="true" transient="true" derived="true" containment="true"
+        eType="#//JmsRouter" volatile="true" transient="true" derived="true" containment="true"
         resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;&#x9;   &#x9;&#x9;&#x9;JMS router configuration&#xA;    &#x9;&#x9;&#x9;The JMS router routes messages to a JMS destination (Queue or Topic).&#xA;    &#x9;&#x9;&#x9;The message payload is created from a bean out of the bean context. It is possible&#xA;    &#x9;&#x9;&#x9;to send Text or Object messages. The correlation id can be generated out of a FreeMarker&#xA;    &#x9;&#x9;&#x9;template.&#xA;&#x9;   &#x9;&#x9;"/>
@@ -304,7 +304,7 @@
       <details key="baseType" value="messageType"/>
     </eAnnotations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Router" eSuperTypes="smooks-1.1.ecore#//ElementVisitor">
+  <eClassifiers xsi:type="ecore:EClass" name="JmsRouter" eSuperTypes="smooks-1.1.ecore#//ElementVisitor">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="&#xA;    &#x9;&#x9;&#x9;JMS Router&#xA;    &#x9;&#x9;"/>
     </eAnnotations>
