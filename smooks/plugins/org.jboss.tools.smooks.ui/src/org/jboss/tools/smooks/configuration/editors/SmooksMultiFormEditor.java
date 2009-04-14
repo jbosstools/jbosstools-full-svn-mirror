@@ -75,6 +75,7 @@ import org.jboss.tools.smooks.model.jmsrouting.provider.JmsroutingItemProviderAd
 import org.jboss.tools.smooks.model.json.provider.JsonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.validate.SmooksModelValidator;
 import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
 
@@ -142,7 +143,8 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 			}
 			int newEndIndex = newContent.length() - 1;
 			int oldEndIndex = oldContent.length() - 1;
-			while (newEndIndex >= startIndex && oldEndIndex >= startIndex && newContent.charAt(newEndIndex) == oldContent.charAt(oldEndIndex)) {
+			while (newEndIndex >= startIndex && oldEndIndex >= startIndex
+					&& newContent.charAt(newEndIndex) == oldContent.charAt(oldEndIndex)) {
 				--newEndIndex;
 				--oldEndIndex;
 			}
@@ -327,36 +329,42 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 			textEditor.doSave(monitor);
 			((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
 			firePropertyChange(PROP_DIRTY);
-			return;
-		}
-		Map<?, ?> options = Collections.emptyMap();
-		initSaveOptions(options);
-		if (editingDomain != null) {
-			ResourceSet resourceSet = editingDomain.getResourceSet();
-			List<Resource> resourceList = resourceSet.getResources();
-			monitor.beginTask("Saving Smooks config file", resourceList.size());
-			try {
-				for (Iterator<Resource> iterator = resourceList.iterator(); iterator.hasNext();) {
-					Resource resource = (Resource) iterator.next();
-					resource.save(options);
-					monitor.worked(1);
+		} else {
+			Map<?, ?> options = Collections.emptyMap();
+			initSaveOptions(options);
+			if (editingDomain != null) {
+				ResourceSet resourceSet = editingDomain.getResourceSet();
+				List<Resource> resourceList = resourceSet.getResources();
+				monitor.beginTask("Saving Smooks config file", resourceList.size());
+				try {
+					for (Iterator<Resource> iterator = resourceList.iterator(); iterator.hasNext();) {
+						Resource resource = (Resource) iterator.next();
+						resource.save(options);
+						monitor.worked(1);
+					}
+					((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
+					textEditor.doRevertToSaved();
+					firePropertyChange(PROP_DIRTY);
+				} catch (IOException e) {
+					SmooksConfigurationActivator.getDefault().log(e);
+				} finally {
+					monitor.done();
 				}
-				((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
-				textEditor.doRevertToSaved();
-				firePropertyChange(PROP_DIRTY);
-			} catch (IOException e) {
-				SmooksConfigurationActivator.getDefault().log(e);
-			} finally {
-				monitor.done();
 			}
+		}
+		if(this.smooksModel != null){
+			List<Object> lists = new ArrayList<Object>();
+			lists.add(smooksModel);
+			SmooksModelValidator validator = new SmooksModelValidator(lists,getEditingDomain());
+			validator.validate(monitor);
 		}
 	}
 
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
 		IFile file = ((IFileEditorInput) input).getFile();
-		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(URI.createPlatformResourceURI(file.getFullPath().toPortableString(),
-				false));
+		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(URI.createPlatformResourceURI(file
+				.getFullPath().toPortableString(), false));
 		try {
 			smooksResource.load(Collections.emptyMap());
 			smooksModel = smooksResource.getContents().get(0);

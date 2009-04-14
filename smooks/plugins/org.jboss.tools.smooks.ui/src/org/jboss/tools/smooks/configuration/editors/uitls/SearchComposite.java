@@ -36,10 +36,10 @@ public class SearchComposite extends Composite {
 		super(parent, style);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		GridLayout gl = new GridLayout();
-		gl.marginWidth = 2;
+		gl.marginWidth = 0;
 		gl.numColumns = 2;
 		gl.makeColumnsEqualWidth = false;
-		gl.marginHeight = 2;
+		gl.marginHeight = 0;
 		this.setLayout(gl);
 		if (toolkit != null) {
 			text = toolkit.createText(this, "");

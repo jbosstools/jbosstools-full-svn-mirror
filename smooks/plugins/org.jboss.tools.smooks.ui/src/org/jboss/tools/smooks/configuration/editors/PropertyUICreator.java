@@ -24,12 +24,13 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.uitls.IFieldDialog;
@@ -117,7 +118,6 @@ public class PropertyUICreator implements IPropertyUICreator {
 
 	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
 			SmooksMultiFormEditor formEditor) {
-
 	}
 
 	public boolean isFileSelectionFeature(EAttribute attribute) {
@@ -190,8 +190,8 @@ public class PropertyUICreator implements IPropertyUICreator {
 			SmooksResourceListType smooksResourceList = getSmooksResourceList((EObject) model);
 			if (smooksResourceList != null) {
 				String displayName = propertyDescriptor.getDisplayName(model);
-				toolkit.createLabel(parent, displayName + " :");
-				final CCombo combo = new CCombo(parent, SWT.BORDER);
+				toolkit.createLabel(parent, displayName + " :").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
+				final Combo combo = new Combo(parent, SWT.BORDER);
 				GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 				combo.setLayoutData(gd);
 				Object editValue = SmooksUIUtils.getEditValue(propertyDescriptor, model);
