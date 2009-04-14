@@ -13,20 +13,17 @@ import java.util.List;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
-import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
-import org.jboss.tools.smooks.model.groovy.GroovyPackage;
-import org.jboss.tools.smooks.model.medi.MEdiPackage;
+import org.jboss.tools.smooks.model.dbrouting.DbroutingPackage;
 
 public class Codegenerator {
-	String basePath = "/home/Dart/Works/eclipse_wtp.3.0.4/eclipse/workspace/jbosstools/org.jboss.tools.smooks.ui/src/org/jboss/tools/smooks/configuration/editors/uitls/temp/";
+	String basePath = "/home/DartPeng/Work/eclipse/smooks-configuration-workspace/org.jboss.tools.smooks.ui/src/org/jboss/tools/smooks/configuration/editors/uitls/temp/";
 	String tempContents = "";
 
 	public Codegenerator() {
 		try {
 			FileReader reader = new FileReader(
 				new File(
-					"/home/Dart/Works/eclipse_wtp.3.0.4/eclipse/workspace/jbosstools/org.jboss.tools.smooks.ui/src/org/jboss/tools/smooks/configuration/editors/Template.txt"));
+					"/home/DartPeng/Work/eclipse/smooks-configuration-workspace/org.jboss.tools.smooks.ui/src/org/jboss/tools/smooks/configuration/editors/Template.txt"));
 			BufferedReader r = new BufferedReader(reader);
 			String line = r.readLine();
 			while (line != null) {
@@ -46,7 +43,7 @@ public class Codegenerator {
 	public static void main(String[] args) {
 		Codegenerator g = new Codegenerator();
 		try {
-			g.generateCodes(MEdiPackage.eINSTANCE);
+			g.generateCodes(DbroutingPackage.eINSTANCE);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {

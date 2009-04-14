@@ -264,14 +264,14 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 		/***********************************************/
 		// for CSV
 		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
-				.createEntry(CsvPackage.Literals.DOCUMENT_ROOT__READER, CsvFactory.eINSTANCE.createReader())));
+				.createEntry(CsvPackage.Literals.CSV_DOCUMENT_ROOT__READER, CsvFactory.eINSTANCE.createCsvReader())));
 		// for EDI
 		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
 				.createEntry(EdiPackage.Literals.EDI_DOCUMENT_ROOT__READER, EdiFactory.eINSTANCE.createEDIReader())));
 
 		// for JSON
 		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
-				.createEntry(JsonPackage.Literals.DOCUMENT_ROOT__READER, JsonFactory.eINSTANCE.createReader())));
+				.createEntry(JsonPackage.Literals.JSON_DOCUMENT_ROOT__READER, JsonFactory.eINSTANCE.createJsonReader())));
 
 		// for javabean
 		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
@@ -293,11 +293,11 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 
 		// for IO routing
 		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-				.createEntry(IoroutingPackage.Literals.DOCUMENT_ROOT__ROUTER, IoroutingFactory.eINSTANCE.createRouter())));
+				.createEntry(IoroutingPackage.Literals.IO_DOCUMENT_ROOT__ROUTER, IoroutingFactory.eINSTANCE.createIORouter())));
 
 		// for JMS routing
 		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-				.createEntry(JmsroutingPackage.Literals.DOCUMENT_ROOT__ROUTER, JmsroutingFactory.eINSTANCE.createRouter())));
+				.createEntry(JmsroutingPackage.Literals.JMS_DOCUMENT_ROOT__ROUTER, JmsroutingFactory.eINSTANCE.createJmsRouter())));
 
 		// for File routing
 		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil

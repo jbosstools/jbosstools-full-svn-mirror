@@ -6,7 +6,7 @@
   <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
     <details key="documentation" value="Smooks IO Routing Configuration"/>
   </eAnnotations>
-  <eClassifiers xsi:type="ecore:EClass" name="DocumentRoot">
+  <eClassifiers xsi:type="ecore:EClass" name="IODocumentRoot">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value=""/>
       <details key="kind" value="mixed"/>
@@ -35,7 +35,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="router" upperBound="-2"
-        eType="#//Router" volatile="true" transient="true" derived="true" containment="true"
+        eType="#//IORouter" volatile="true" transient="true" derived="true" containment="true"
         resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -45,7 +45,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Router" eSuperTypes="smooks-1.1.ecore#//ElementVisitor">
+  <eClassifiers xsi:type="ecore:EClass" name="IORouter" eSuperTypes="smooks-1.1.ecore#//ElementVisitor">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="&#xA;    &#x9;&#x9;&#x9;Output stream router&#xA;    &#x9;&#x9;"/>
     </eAnnotations>
