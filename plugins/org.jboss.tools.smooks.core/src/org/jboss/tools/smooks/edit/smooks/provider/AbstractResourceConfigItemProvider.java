@@ -19,8 +19,8 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.jboss.tools.smooks.edit.common.provider.AbstractAnyTypeItemProvider;
-import org.jboss.tools.smooks.edit.xsl.provider.Xsl1EditPlugin;
+import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
+import org.jboss.tools.smooks.model.xsl.provider.Xsl1EditPlugin;
 
 
 

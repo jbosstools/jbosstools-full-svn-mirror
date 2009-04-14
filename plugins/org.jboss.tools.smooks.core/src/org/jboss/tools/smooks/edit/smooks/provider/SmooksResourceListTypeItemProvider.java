@@ -24,8 +24,7 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.jboss.tools.smooks.edit.common.provider.AbstractAnyTypeItemProvider;
-import org.jboss.tools.smooks.edit.xsl.provider.Xsl1EditPlugin;
+import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
 import org.jboss.tools.smooks.model.fileRouting.FileRoutingFactory;
 import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerFactory;
@@ -37,6 +36,7 @@ import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.xsl.XslFactory;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
+import org.jboss.tools.smooks.model.xsl.provider.Xsl1EditPlugin;
 
 
 

@@ -22,10 +22,10 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.jboss.tools.smooks.edit.common.provider.AbstractAnyTypeItemProvider;
-import org.jboss.tools.smooks.edit.xsl.provider.Xsl1EditPlugin;
+import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.xsl.provider.Xsl1EditPlugin;
 
 
 
