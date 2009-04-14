@@ -23,11 +23,11 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.jboss.tools.smooks.edit.smooks.provider.ElementVisitorItemProvider;
 import org.jboss.tools.smooks.model.groovy.Groovy;
 import org.jboss.tools.smooks.model.groovy.GroovyFactory;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
+import org.jboss.tools.smooks.model.smooks.provider.ElementVisitorItemProvider;
 
 /**
  * This is the item provider adapter for a {@link groovy.Groovy} object.
