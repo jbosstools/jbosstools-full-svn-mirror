@@ -49,6 +49,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -79,19 +80,19 @@ public class SmooksUIUtils {
 
 	public static final String XSL_NAMESPACE = " xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" ";
 
-	public static void createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
-			Object model) {
+	public static void createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
+			FormToolkit toolkit, Composite parent, Object model) {
 		createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, false, 0);
 	}
 
-	public static void createMultiMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-			Composite parent, Object model, int height) {
+	public static void createMultiMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
+			FormToolkit toolkit, Composite parent, Object model, int height) {
 		createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, true, height);
 	}
 
-	public static void createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
-			Object model, boolean multiText, int height) {
-		toolkit.createLabel(parent, label + " :");
+	public static void createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
+			FormToolkit toolkit, Composite parent, Object model, boolean multiText, int height) {
+		toolkit.createLabel(parent, label + " :").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		int textType = SWT.FLAT;
 		if (multiText) {
@@ -132,19 +133,21 @@ public class SmooksUIUtils {
 	 * @param parent
 	 * @param model
 	 */
-	public static void createFilePathFieldEditor(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model) {
+	public static void createFilePathFieldEditor(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+			Composite parent, Object model) {
 		// IHyperlinkListener link
 	}
 
-	public static void createLinkMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
-			Object model, boolean multiText, int height, boolean linkLabel, IHyperlinkListener listener) {
+	public static void createLinkMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
+			FormToolkit toolkit, Composite parent, Object model, boolean multiText, int height, boolean linkLabel,
+			IHyperlinkListener listener) {
 		if (linkLabel) {
 			Hyperlink link = toolkit.createHyperlink(parent, label, SWT.NONE);
 			if (listener != null) {
 				link.addHyperlinkListener(listener);
 			}
 		} else {
-			toolkit.createLabel(parent, label + " :");
+			toolkit.createLabel(parent, label + " :").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
 		}
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		int textType = SWT.FLAT;
@@ -181,15 +184,15 @@ public class SmooksUIUtils {
 	}
 
 	public static void createLinkTextValueFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
-			IItemPropertyDescriptor propertyDescriptor, FormToolkit toolkit, Composite parent, Object model, boolean multiText, int height,
-			boolean linkLabel, IHyperlinkListener listener) {
+			IItemPropertyDescriptor propertyDescriptor, FormToolkit toolkit, Composite parent, Object model,
+			boolean multiText, int height, boolean linkLabel, IHyperlinkListener listener) {
 		if (linkLabel) {
 			Hyperlink link = toolkit.createHyperlink(parent, label, SWT.NONE);
 			if (listener != null) {
 				link.addHyperlinkListener(listener);
 			}
 		} else {
-			toolkit.createLabel(parent, label + " :");
+			toolkit.createLabel(parent, label + " :").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
 		}
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		int textType = SWT.FLAT;
@@ -244,8 +247,8 @@ public class SmooksUIUtils {
 		return path;
 	}
 
-	public static Composite createSelectorFieldEditor(FormToolkit toolkit, Composite parent, final IItemPropertyDescriptor propertyDescriptor,
-			Object model, final SmooksGraphicsExtType extType) {
+	public static Composite createSelectorFieldEditor(FormToolkit toolkit, Composite parent,
+			final IItemPropertyDescriptor propertyDescriptor, Object model, final SmooksGraphicsExtType extType) {
 		return createDialogFieldEditor(parent, toolkit, propertyDescriptor, "Browse", new IFieldDialog() {
 			public Object open(Shell shell) {
 				SelectoreSelectionDialog dialog = new SelectoreSelectionDialog(shell, extType);
@@ -265,15 +268,15 @@ public class SmooksUIUtils {
 			}
 
 			public void setModelProcesser(IModelProcsser processer) {
-				
+
 			}
 
 		}, (EObject) model);
 	}
 
 	public static SmooksGraphicsExtType loadSmooksGraphicsExt(IFile file) throws IOException {
-		Resource resource = new SmooksGraphicsExtResourceFactoryImpl().createResource(URI.createPlatformResourceURI(file.getFullPath()
-				.toPortableString(), false));
+		Resource resource = new SmooksGraphicsExtResourceFactoryImpl().createResource(URI.createPlatformResourceURI(
+				file.getFullPath().toPortableString(), false));
 		resource.load(Collections.emptyMap());
 		if (resource.getContents().size() > 0) {
 			Object obj = resource.getContents().get(0);
@@ -284,9 +287,10 @@ public class SmooksUIUtils {
 		return null;
 	}
 
-	public static void createCDATAFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
-			Object model) {
+	public static void createCDATAFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
+			FormToolkit toolkit, Composite parent, Object model) {
 		Label label1 = toolkit.createLabel(parent, label + " :");
+		label1.setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
 		GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 		label1.setLayoutData(gd);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -316,9 +320,10 @@ public class SmooksUIUtils {
 		});
 	}
 
-	public static void createCommentFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
-			Object model) {
+	public static void createCommentFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
+			FormToolkit toolkit, Composite parent, Object model) {
 		Label label1 = toolkit.createLabel(parent, label + " :");
+		label1.setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
 		GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 		label1.setLayoutData(gd);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -348,8 +353,8 @@ public class SmooksUIUtils {
 		});
 	}
 
-	public static Composite createJavaTypeSearchFieldEditor(Composite parent, FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor,
-			final EObject model) {
+	public static Composite createJavaTypeSearchFieldEditor(Composite parent, FormToolkit toolkit,
+			final IItemPropertyDescriptor propertyDescriptor, final EObject model) {
 		if (model instanceof EObject) {
 			final Resource resource = ((EObject) model).eResource();
 			URI uri = resource.getURI();
@@ -367,7 +372,8 @@ public class SmooksUIUtils {
 				fillLayout.marginHeight = 0;
 				fillLayout.marginWidth = 0;
 				classTextComposite.setLayout(fillLayout);
-				final SearchComposite searchComposite = new SearchComposite(classTextComposite, toolkit, "Search Class", dialog, SWT.NONE);
+				final SearchComposite searchComposite = new SearchComposite(classTextComposite, toolkit,
+						"Search Class", dialog, SWT.NONE);
 				Object editValue = getEditValue(propertyDescriptor, model);
 				if (editValue != null) {
 					searchComposite.getText().setText(editValue.toString());
@@ -403,8 +409,9 @@ public class SmooksUIUtils {
 								if (result != null)
 									JavaUI.openInEditor(result);
 								else {
-									MessageDialog.openInformation(classTextComposite.getShell(), "Can't find type", "Can't find type \"" + typeName
-											+ "\" in \"" + javaProject.getProject().getName() + "\" project.");
+									MessageDialog.openInformation(classTextComposite.getShell(), "Can't find type",
+											"Can't find type \"" + typeName + "\" in \""
+													+ javaProject.getProject().getName() + "\" project.");
 								}
 							}
 						} catch (PartInitException ex) {
@@ -453,15 +460,17 @@ public class SmooksUIUtils {
 		return null;
 	}
 
-	public static Composite createJavaMethodSearchFieldEditor(BindingsType container, Composite parent, FormToolkit toolkit,
-			final IItemPropertyDescriptor propertyDescriptor, String buttonName, final EObject model) {
+	public static Composite createJavaMethodSearchFieldEditor(BindingsType container, Composite parent,
+			FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor, String buttonName,
+			final EObject model) {
 		String classString = ((BindingsType) container).getClass_();
 		IJavaProject project = getJavaProject(container);
 		try {
 			ProjectClassLoader classLoader = new ProjectClassLoader(project);
 			Class<?> clazz = classLoader.loadClass(classString);
 			JavaMethodsSelectionDialog dialog = new JavaMethodsSelectionDialog(project, clazz);
-			return SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor, "Select method", dialog, (EObject) model);
+			return SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor, "Select method", dialog,
+					(EObject) model);
 		} catch (Exception e) {
 			// ignore
 		}
@@ -508,7 +517,8 @@ public class SmooksUIUtils {
 		return generateFullPath(node, sperator);
 	}
 
-	public static String generatePath(IXMLStructuredObject startNode, IXMLStructuredObject stopNode, final String sperator, boolean includeContext) {
+	public static String generatePath(IXMLStructuredObject startNode, IXMLStructuredObject stopNode,
+			final String sperator, boolean includeContext) {
 		String name = "";
 		if (startNode == stopNode) {
 			return startNode.getNodeName();
@@ -536,15 +546,17 @@ public class SmooksUIUtils {
 		return name.trim();
 	}
 
-	public static Composite createJavaPropertySearchFieldEditor(BindingsType container, Composite parent, FormToolkit toolkit,
-			final IItemPropertyDescriptor propertyDescriptor, String buttonName, final EObject model) {
+	public static Composite createJavaPropertySearchFieldEditor(BindingsType container, Composite parent,
+			FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor, String buttonName,
+			final EObject model) {
 		String classString = ((BindingsType) container).getClass_();
 		IJavaProject project = getJavaProject(container);
 		try {
 			ProjectClassLoader classLoader = new ProjectClassLoader(project);
 			Class<?> clazz = classLoader.loadClass(classString);
 			JavaPropertiesSelectionDialog dialog = new JavaPropertiesSelectionDialog(project, clazz);
-			return SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor, "Select property", dialog, (EObject) model);
+			return SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor, "Select property",
+					dialog, (EObject) model);
 		} catch (Exception e) {
 			// ignore
 		}
@@ -560,15 +572,16 @@ public class SmooksUIUtils {
 		return null;
 	}
 
-	public static Composite createDialogFieldEditor(Composite parent, FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor,
-			String buttonName, IFieldDialog dialog, final EObject model) {
+	public static Composite createDialogFieldEditor(Composite parent, FormToolkit toolkit,
+			final IItemPropertyDescriptor propertyDescriptor, String buttonName, IFieldDialog dialog,
+			final EObject model) {
 		return createDialogFieldEditor(parent, toolkit, propertyDescriptor, buttonName, dialog, model, false, null);
 	}
 
+	public static Composite createDialogFieldEditor(Composite parent, FormToolkit toolkit,
+			final IItemPropertyDescriptor propertyDescriptor, String buttonName, IFieldDialog dialog,
+			final EObject model, boolean labelLink, IHyperlinkListener listener) {
 
-	public static Composite createDialogFieldEditor(Composite parent, FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor,
-			String buttonName, IFieldDialog dialog, final EObject model, boolean labelLink, IHyperlinkListener listener) {
-		
 		String displayName = propertyDescriptor.getDisplayName(model);
 		if (labelLink) {
 			Hyperlink link = toolkit.createHyperlink(parent, displayName + " :", SWT.NONE);
@@ -576,7 +589,8 @@ public class SmooksUIUtils {
 				link.addHyperlinkListener(listener);
 			}
 		} else {
-			toolkit.createLabel(parent, displayName + " :");
+			toolkit.createLabel(parent, displayName + " :").setForeground(
+					toolkit.getColors().getColor(IFormColors.TITLE));
 		}
 		final Composite classTextComposite = toolkit.createComposite(parent);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -585,7 +599,8 @@ public class SmooksUIUtils {
 		fillLayout.marginHeight = 0;
 		fillLayout.marginWidth = 0;
 		classTextComposite.setLayout(fillLayout);
-		final SearchComposite searchComposite = new SearchComposite(classTextComposite, toolkit, buttonName, dialog, SWT.NONE);
+		final SearchComposite searchComposite = new SearchComposite(classTextComposite, toolkit, buttonName, dialog,
+				SWT.NONE);
 		Object editValue = getEditValue(propertyDescriptor, model);
 		if (editValue != null) {
 			searchComposite.getText().setText(editValue.toString());

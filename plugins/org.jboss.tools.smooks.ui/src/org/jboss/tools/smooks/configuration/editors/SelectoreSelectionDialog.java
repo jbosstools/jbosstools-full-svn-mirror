@@ -212,8 +212,8 @@ public class SelectoreSelectionDialog extends Dialog {
 										list.add(model);
 									}
 								}
-							} finally {
-
+							} catch(Throwable e){
+								
 							}
 						}
 					}

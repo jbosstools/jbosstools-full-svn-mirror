@@ -25,7 +25,6 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 
-//import org.eclipse.emf.edit.ui.EMFEditUIPlugin;
 
 /**
  * @author Dart (dpeng@redhat.com)
