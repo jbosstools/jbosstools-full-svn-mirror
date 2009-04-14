@@ -21,6 +21,7 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
@@ -29,10 +30,10 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.uitls.IFieldDialog;
+import org.jboss.tools.smooks.configuration.editors.uitls.IModelProcsser;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
@@ -47,6 +48,12 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
  */
 public class PropertyUICreator implements IPropertyUICreator {
 
+	protected IModelProcsser fileFiledEditorModelProcess;
+
+	protected IHyperlinkListener fileFiledEditorLinkListener;
+	
+	protected List<ViewerFilter> viewerFilters = null;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -56,29 +63,48 @@ public class PropertyUICreator implements IPropertyUICreator {
 	 * org.eclipse.emf.edit.provider.IItemPropertyDescriptor, java.lang.Object,
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
-	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
-		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-		SmooksMultiFormEditor formEditor) {
+	public Composite createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
+			EAttribute feature, SmooksMultiFormEditor formEditor) {
 		if (isBeanIDRefFieldFeature(feature)) {
-			return createBeanIDRefFieldEditor(toolkit, parent, propertyDescriptor, model, feature,
-				formEditor);
+			return createBeanIDRefFieldEditor(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 		}
 		if (isSelectorFeature(feature)) {
-			return createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, feature,
-				formEditor);
+			return createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 		}
 		if (isJavaTypeFeature(feature)) {
-			return createJavaTypeSearchEditor(toolkit, parent, propertyDescriptor, model, feature,
-				formEditor);
+			return createJavaTypeSearchEditor(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 		}
 		if (isFileSelectionFeature(feature)) {
-			return createFileSelectionFieldEditor(toolkit, parent, propertyDescriptor, model,
-				feature, formEditor);
+			return createFileSelectionFieldEditor(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 		}
 		if (feature == SmooksPackage.eINSTANCE.getAbstractReader_TargetProfile()) {
 
 		}
 		return null;
+	}
+
+	public IHyperlinkListener getFileFiledEditorLinkListener() {
+		return fileFiledEditorLinkListener;
+	}
+
+	public void setFileFiledEditorLinkListener(IHyperlinkListener fileFiledEditorLinkListener) {
+		this.fileFiledEditorLinkListener = fileFiledEditorLinkListener;
+	}
+
+	public IModelProcsser getFileFiledEditorModelProcess() {
+		return fileFiledEditorModelProcess;
+	}
+
+	public void setFileFiledEditorModelProcess(IModelProcsser fileFiledEditorModelProcess) {
+		this.fileFiledEditorModelProcess = fileFiledEditorModelProcess;
+	}
+
+	public List<ViewerFilter> getFileDialogViewerFilters() {
+		return viewerFilters;
+	}
+
+	public void setDialogViewerFilters(List<ViewerFilter> viewerFilters) {
+		this.viewerFilters = viewerFilters;
 	}
 
 	public IResource getResource(EObject model) {
@@ -89,61 +115,56 @@ public class PropertyUICreator implements IPropertyUICreator {
 		return SmooksUIUtils.getJavaProject(model);
 	}
 
-	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-		Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+			SmooksMultiFormEditor formEditor) {
 
 	}
 
 	public boolean isFileSelectionFeature(EAttribute attribute) {
 		return false;
 	}
+	
 
-	public Composite createFileSelectionFieldEditor(FormToolkit toolkit, Composite parent,
-		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-		SmooksMultiFormEditor formEditor) {
+	public Composite createFileSelectionFieldEditor(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
+			EAttribute feature, SmooksMultiFormEditor formEditor) {
 		IFieldDialog dialog = new IFieldDialog() {
 			public Object open(Shell shell) {
 				FileSelectionWizard wizard = new FileSelectionWizard();
+				wizard.setViewerFilters(getFileDialogViewerFilters());
 				WizardDialog dialog = new WizardDialog(shell, wizard);
 				if (dialog.open() == Dialog.OK) {
-					return wizard.getFilePath();
+					IModelProcsser p = getModelProcesser();
+					String path = wizard.getFilePath();
+					if (p != null) {
+						path = p.processModel(path).toString();
+					}
+					return path;
 				}
 				return null;
 			}
+
+			public IModelProcsser getModelProcesser() {
+				return getFileFiledEditorModelProcess();
+			}
+
+			public void setModelProcesser(IModelProcsser processer) {
+
+			}
+
 		};
-		final IItemPropertyDescriptor fp = propertyDescriptor;
-		final Object fm = model;
-		IHyperlinkListener listener = new IHyperlinkListener() {
-
-			public void linkActivated(HyperlinkEvent e) {
-				Object value = SmooksUIUtils.getEditValue(fp, fm);
-				System.out.println(value);
-			}
-
-			public void linkEntered(HyperlinkEvent e) {
-
-			}
-
-			public void linkExited(HyperlinkEvent e) {
-
-			}
-		};
-
-		return SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor, "Browse",
-			dialog, (EObject) model, true, listener);
+		return SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor, "Browse", dialog, (EObject) model, true,
+				getFileFiledEditorLinkListener());
 	}
 
 	public boolean isSelectorFeature(EAttribute attribute) {
 		return false;
 	}
 
-	public Composite createSelectorFieldEditor(FormToolkit toolkit, Composite parent,
-		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-		SmooksMultiFormEditor formEditor) {
+	public Composite createSelectorFieldEditor(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
+			EAttribute feature, SmooksMultiFormEditor formEditor) {
 		SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
 		if (ext != null) {
-			return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor,
-				model, ext);
+			return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, ext);
 		}
 		return null;
 	}
@@ -152,11 +173,10 @@ public class PropertyUICreator implements IPropertyUICreator {
 		return false;
 	}
 
-	public Composite createJavaTypeSearchEditor(FormToolkit toolkit, Composite parent,
-		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-		SmooksMultiFormEditor formEditor) {
-		if (model instanceof EObject) return SmooksUIUtils.createJavaTypeSearchFieldEditor(parent,
-			toolkit, propertyDescriptor, (EObject) model);
+	public Composite createJavaTypeSearchEditor(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
+			EAttribute feature, SmooksMultiFormEditor formEditor) {
+		if (model instanceof EObject)
+			return SmooksUIUtils.createJavaTypeSearchFieldEditor(parent, toolkit, propertyDescriptor, (EObject) model);
 		return null;
 	}
 
@@ -164,9 +184,8 @@ public class PropertyUICreator implements IPropertyUICreator {
 		return false;
 	}
 
-	public Composite createBeanIDRefFieldEditor(FormToolkit toolkit, Composite parent,
-		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-		SmooksMultiFormEditor formEditor) {
+	public Composite createBeanIDRefFieldEditor(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
+			EAttribute feature, SmooksMultiFormEditor formEditor) {
 		if (model instanceof EObject) {
 			SmooksResourceListType smooksResourceList = getSmooksResourceList((EObject) model);
 			if (smooksResourceList != null) {
@@ -220,11 +239,11 @@ public class PropertyUICreator implements IPropertyUICreator {
 		List<AbstractResourceConfig> rlist = resourceList.getAbstractResourceConfig();
 		List<String> beanIdList = new ArrayList<String>();
 		for (Iterator<?> iterator = rlist.iterator(); iterator.hasNext();) {
-			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator
-				.next();
+			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
 			if (abstractResourceConfig instanceof BindingsType) {
 				String beanId = ((BindingsType) abstractResourceConfig).getBeanId();
-				if (beanId == null) continue;
+				if (beanId == null)
+					continue;
 				beanIdList.add(beanId);
 			}
 		}
