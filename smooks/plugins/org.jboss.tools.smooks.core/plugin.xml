@@ -192,7 +192,27 @@
             uri="http://www.milyn.org/xsd/smooks/edi-1.1.xsd">
       </package>
    </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.jboss.tools.smooks.model.datasource.DatasourcePackage"
+            genModel="model/datasource-1.1.genmodel"
+            uri="http://www.milyn.org/xsd/smooks/datasource-1.1.xsd">
+      </package>
+   </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.milyn.org/xsd/smooks/calc-1.1.xsd"
+            class="org.jboss.tools.smooks.model.calc.CalcPackage"
+            genModel="model/calc-1.1.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="calc"
+            class="org.jboss.tools.smooks.model.calc.util.CalcResourceFactoryImpl"/>
+   </extension>
    
    
    
