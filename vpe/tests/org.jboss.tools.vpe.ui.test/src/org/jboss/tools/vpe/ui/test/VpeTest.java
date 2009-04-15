@@ -323,4 +323,32 @@ public class VpeTest extends TestCase implements ILogListener {
 			}
 		}
     }
+
+	/**
+	 * Opens specified file in the VPE editor.
+	 * 
+	 * @param projectName the name of the project
+	 * @param fileName the name of the file
+	 * 
+	 * @return VpeController
+	 * @throws Throwable
+	 */
+	protected VpeController openInVpe(String projectName, String fileName)
+				throws Throwable {
+		// get test page path
+		final IFile file =
+			(IFile) TestUtil.getComponentPath(fileName, projectName);
+		assertNotNull("Could not open specified file."		//$NON-NLS-1$
+				+ " componentPage = " + fileName			//$NON-NLS-1$
+				+ ";projectName = " + projectName, file);	//$NON-NLS-1$
+
+		final IEditorInput input = new FileEditorInput(file);
+		assertNotNull("Editor input is null", input);		//$NON-NLS-1$
+
+		// open and get the editor
+		final JSPMultiPageEditor part = openEditor(input);
+
+		final VpeController vpeController = TestUtil.getVpeController(part);
+		return vpeController;
+	}
 }
