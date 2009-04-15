@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
@@ -29,6 +30,7 @@ import org.jboss.tools.common.xml.XMLUtilities;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.template.custom.CustomTLDReference;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
@@ -257,6 +259,9 @@ public class VpeTemplateManager {
 	
 	private static final String ATTRIBUTE_TEMPLATE_NAME="attribute"; //$NON-NLS-1$
 	
+	//mareshkau, contains a name of custom template
+	private static final String CUSTOM_TEMPLATE_NAME="vpeCustomTemplate"; //$NON-NLS-1$
+	
 	/**
 	 * added by Max Areshkau, JBIDE-1494
 	 * Contains default text formating data
@@ -280,7 +285,6 @@ public class VpeTemplateManager {
 	 *  so to render h:column we should load the specific class for h:column from richfaces template
 	 */
 	private static final String NAMESPACE_IDENTIFIER_ATTRIBUTE = "namespaceIdentifier"; //$NON-NLS-1$
-	
 
 	private VpeTemplateManager() {
 		// singleton
@@ -368,10 +372,14 @@ public class VpeTemplateManager {
 			}
 			
 			String sourceNodeUri = sourceNodeTaglib.getUri();
+			if(sourceNodeUri!=null && CustomTLDReference.isExistInCustomTlds(pageContext,sourceNodeUri)){
+				return VpeTemplateManager.CUSTOM_TEMPLATE_NAME;
+			}
+			
 			String templateTaglibPrefix = getTemplateTaglibPrefix(sourceNodeUri);
 
 			if(templateTaglibPrefix != null) {
-				return templateTaglibPrefix + ":" + sourceNode.getLocalName(); //$NON-NLS-1$
+				return templateTaglibPrefix + ":" + sourceNode.getLocalName(); //$NON-NLS-1
 			}
 			return null;
 		default : 

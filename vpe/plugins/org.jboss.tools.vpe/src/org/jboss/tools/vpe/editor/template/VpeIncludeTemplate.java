@@ -113,7 +113,7 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 		return true;
 	}
 	
-	private VpeCreationData createInclude(Document sourceDocument, nsIDOMDocument visualDocument) {
+	protected VpeCreationData createInclude(Document sourceDocument, nsIDOMDocument visualDocument) {
 		nsIDOMElement visualNewElement = visualDocument.createElement(HTML.TAG_DIV);
 		VpeVisualDomBuilder.markIncludeElement(visualNewElement);
 		VpeCreationData creationData = new VpeCreationData(visualNewElement);
@@ -136,7 +136,7 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 		return creationData;
 	}
 	
-	private VpeCreationData createStub(String fileName, nsIDOMDocument visualDocument) {
+	protected VpeCreationData createStub(String fileName, nsIDOMDocument visualDocument) {
 		nsIDOMElement visualNewElement = visualDocument.createElement(HTML.TAG_DIV);
 		visualNewElement.setAttribute("style", "background-color:#ECF3FF;cursor:pointer;padding:0 5px;margin:3px 0;font-style:italic;color:#0051DD;");
 		VpeVisualDomBuilder.markIncludeElement(visualNewElement);

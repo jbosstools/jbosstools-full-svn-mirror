@@ -86,7 +86,7 @@ public abstract class ComponentContentTest extends VpeTest {
 
 		// get document
 		Document xmlTestDocument = TestDomUtil.getDocument(xmlTestFile);
-		assertNotNull(xmlTestDocument);
+		assertNotNull("Can't get test file, possibly file not exists "+xmlTestFile,xmlTestDocument); //$NON-NLS-1$
 
 		List<String> ids = TestDomUtil.getTestIds(xmlTestDocument);
 
@@ -116,7 +116,7 @@ public abstract class ComponentContentTest extends VpeTest {
 
 		// get element by id
 		nsIDOMElement vpeElement = findElementById(controller, elementId);
-		assertNotNull(vpeElement);
+		assertNotNull("Cann't find element with id="+elementId,vpeElement); //$NON-NLS-1$
 
 		// DOMTreeDumper dumper = new DOMTreeDumper(
 		// VpeDebug.VISUAL_DUMP_PRINT_HASH);
