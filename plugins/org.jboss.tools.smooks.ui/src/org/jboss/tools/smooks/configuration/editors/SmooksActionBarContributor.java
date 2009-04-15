@@ -15,10 +15,14 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.action.ControlAction;
+import org.eclipse.emf.edit.ui.action.CopyAction;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.action.CreateSiblingAction;
+import org.eclipse.emf.edit.ui.action.CutAction;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
-import org.eclipse.emf.edit.ui.action.LoadResourceAction;
+import org.eclipse.emf.edit.ui.action.PasteAction;
+import org.eclipse.emf.edit.ui.action.RedoAction;
+import org.eclipse.emf.edit.ui.action.UndoAction;
 import org.eclipse.emf.edit.ui.action.ValidateAction;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
@@ -37,8 +41,15 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionFactory;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 
 /**
@@ -238,6 +249,73 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 					.getSelection()));
 			}
 		}
+	}
+	
+	
+
+	@Override
+	public void init(IActionBars actionBars) {
+		super.init(actionBars);
+		ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
+	    cutAction = new CutAction(){
+
+			public void runWithEvent(Event event) {
+				Widget widget = event.widget;
+				if(widget instanceof Text){
+					((Text)widget).cut();
+					return;
+				}
+				super.runWithEvent(event);
+			}
+	    	
+	    };
+	    cutAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_CUT));
+	    actionBars.setGlobalActionHandler(ActionFactory.CUT.getId(), cutAction);
+
+	    copyAction = new CopyAction(){
+
+			public void runWithEvent(Event event) {
+				Widget widget = event.widget;
+				if(widget instanceof Text){
+					((Text)widget).copy();
+					return;
+				}
+				super.runWithEvent(event);
+			}
+	    	
+	    };
+	    copyAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_COPY));
+	    actionBars.setGlobalActionHandler(ActionFactory.COPY.getId(), copyAction);
+
+	    pasteAction = new PasteAction(){
+
+			public void runWithEvent(Event event) {
+				Widget widget = event.widget;
+				if(widget instanceof Text){
+					((Text)widget).paste();
+					return;
+				}
+				super.runWithEvent(event);
+			}
+
+			@Override
+			public boolean updateSelection(IStructuredSelection selection) {
+				super.updateSelection(selection);
+				return true;
+			}
+			
+	    	
+	    };
+	    pasteAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE));
+	    actionBars.setGlobalActionHandler(ActionFactory.PASTE.getId(), pasteAction);
+
+	    undoAction = new UndoAction();
+	    undoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
+	    actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(), undoAction);
+
+	    redoAction = new RedoAction();
+	    redoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
+	    actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(), redoAction);
 	}
 
 	/**
