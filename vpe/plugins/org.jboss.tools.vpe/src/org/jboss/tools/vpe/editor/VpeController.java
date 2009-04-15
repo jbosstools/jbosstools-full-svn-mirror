@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.bindings.Binding;
@@ -469,13 +470,12 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 							monitor.worked((int) (100 / getChangeEvents().size()));
 							VpeEventBean eventBean = getChangeEvents().getFirst();
 							if (monitor.isCanceled()) {
-								/* 
-								 * Yahor Radtsevich: the following line is commented 
+								/* Yahor Radtsevich: the following line is commented 
 								 * as fix of JBIDE-3758: VPE autorefresh is broken in some cases.
-								 * Now if the change events queue should be cleared, the user have to do it explicitly.
+								 * Now if the change events queue should be cleared, the programmer
+								 * have to do it explicitly.
 								 */
-								// getChangeEvents().clear();
-								
+								// getChangeEvents().clear();								
 								return Status.CANCEL_STATUS;
 							}
 							try {
@@ -490,8 +490,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 								// JBIDE-675 we will get this exception if user
 								// close editor,
 								// when update visual editor job is running, we
-								// shoud ignore this
-								// exception
+								// should ignore this exception
 								break;
 							} catch (NullPointerException ex) {
 								if (switcher != null) {
@@ -1388,7 +1387,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					return Status.OK_STATUS;
 				}
 			};
-
+			visualRefreshJob.setRule(new GreedyRule());
 			visualRefreshJob.setPriority(Job.SHORT);
 			visualRefreshJob.schedule();
 		}
@@ -2665,6 +2664,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				return Status.OK_STATUS;
 			}
 		};
+		reinitJob.setRule(new GreedyRule());
 		reinitJob.schedule();
 	}
 
@@ -2752,5 +2752,19 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	public ISelectionManager getSelectionManager() {
 		return selectionManager;
 	}
-	
+
+	/**
+	 * Jobs with different instances of {@code GreedyRule}
+	 * are never run in parallel.
+	 *
+	 * @author yradtsevich
+	 */
+	private class GreedyRule implements ISchedulingRule {
+		public boolean contains(ISchedulingRule rule) {
+			return this == rule;
+		}
+		public boolean isConflicting(ISchedulingRule rule) {
+			return this.getClass() == rule.getClass();
+		}
+	}
 }
