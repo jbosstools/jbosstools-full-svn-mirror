@@ -1387,7 +1387,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					return Status.OK_STATUS;
 				}
 			};
-			visualRefreshJob.setRule(new GreedyRule());
+			visualRefreshJob.setRule(new GreedyRule(this));
 			visualRefreshJob.setPriority(Job.SHORT);
 			visualRefreshJob.schedule();
 		}
@@ -2664,7 +2664,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				return Status.OK_STATUS;
 			}
 		};
-		reinitJob.setRule(new GreedyRule());
+		reinitJob.setRule(new GreedyRule(this));
 		reinitJob.schedule();
 	}
 
@@ -2755,16 +2755,25 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	/**
 	 * Jobs with different instances of {@code GreedyRule}
-	 * are never run in parallel.
+	 * but the same {@code grredyObject} are
+	 * never run concurrently.
 	 *
 	 * @author yradtsevich
 	 */
-	private class GreedyRule implements ISchedulingRule {
+	private final class GreedyRule implements ISchedulingRule {
+		private Object greedyObject;
+		public GreedyRule(Object greedyObject) {
+			this.greedyObject = greedyObject;
+		}
 		public boolean contains(ISchedulingRule rule) {
 			return this == rule;
 		}
 		public boolean isConflicting(ISchedulingRule rule) {
-			return this.getClass() == rule.getClass();
+			if (rule instanceof GreedyRule) {
+				return ((GreedyRule) rule).greedyObject == this.greedyObject;
+			} else {
+				return false;
+			}
 		}
 	}
 }
