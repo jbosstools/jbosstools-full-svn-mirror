@@ -11,7 +11,6 @@
 package org.jboss.tools.smooks.configuration.editors;
 
 import java.lang.reflect.Method;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.Enumerator;
@@ -30,22 +29,20 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.IDetailsPage;
-import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IFormPart;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
-import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.editors.uitls.IModelProcsser;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 
 /**
  * 
@@ -73,16 +70,13 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage {
 	public SmooksStuffPropertyDetailPage(SmooksMultiFormEditor formEditor) {
 		super();
 		this.formEditor = formEditor;
-		editingDomain = (AdapterFactoryEditingDomain) formEditor
-				.getEditingDomain();
-		labelProvider = new AdapterFactoryLabelProvider(editingDomain
-				.getAdapterFactory());
+		editingDomain = (AdapterFactoryEditingDomain) formEditor.getEditingDomain();
+		labelProvider = new AdapterFactoryLabelProvider(editingDomain.getAdapterFactory());
 	}
 
 	public void createContents(Composite parent) {
 		parent.setLayout(new FillLayout());
-		section = formToolkit.createSection(parent, Section.DESCRIPTION
-				| Section.TITLE_BAR);
+		section = formToolkit.createSection(parent, Section.DESCRIPTION | Section.TITLE_BAR);
 
 		Composite client = formToolkit.createComposite(section);
 		section.setLayout(new FillLayout());
@@ -106,10 +100,8 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage {
 			GridLayout layout = new GridLayout();
 			layout.numColumns = 2;
 			detailsComposite.setLayout(layout);
-			IPropertyUICreator creator = PropertyUICreatorManager.getInstance()
-					.getPropertyUICreator(getModel());
-			List<IItemPropertyDescriptor> propertyDes = itemPropertySource
-					.getPropertyDescriptors(getModel());
+			IPropertyUICreator creator = PropertyUICreatorManager.getInstance().getPropertyUICreator(getModel());
+			List<IItemPropertyDescriptor> propertyDes = itemPropertySource.getPropertyDescriptors(getModel());
 			for (int i = 0; i < propertyDes.size(); i++) {
 				IItemPropertyDescriptor pd = propertyDes.get(i);
 				EAttribute attribute = (EAttribute) pd.getFeature(getModel());
@@ -125,9 +117,8 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage {
 				}
 			}
 			if (creator != null) {
-				creator.createExtendUI((AdapterFactoryEditingDomain) formEditor
-						.getEditingDomain(), formToolkit, detailsComposite,
-						getModel(), getFormEditor());
+				creator.createExtendUI((AdapterFactoryEditingDomain) formEditor.getEditingDomain(), formToolkit, detailsComposite, getModel(),
+						getFormEditor());
 			}
 			formToolkit.paintBordersFor(detailsComposite);
 			detailsComposite.pack();
@@ -137,20 +128,16 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage {
 		}
 	}
 
-	protected void createAttributeUI(Composite detailsComposite,
-			IItemPropertyDescriptor propertyDescriptor,
-			IPropertyUICreator creator) {
+	protected void createAttributeUI(Composite detailsComposite, IItemPropertyDescriptor propertyDescriptor, IPropertyUICreator creator) {
 		final IItemPropertyDescriptor itemPropertyDescriptor = propertyDescriptor;
-		EAttribute feature = (EAttribute) itemPropertyDescriptor
-				.getFeature(getModel());
+		EAttribute feature = (EAttribute) itemPropertyDescriptor.getFeature(getModel());
 		boolean createDefault = true;
 		if (creator != null) {
 			if (creator.ignoreProperty(feature)) {
 				return;
 			}
-			Composite composite = creator.createPropertyUI(formToolkit,
-					detailsComposite, itemPropertyDescriptor, getModel(),
-					feature, getFormEditor());
+			Composite composite = creator.createPropertyUI(formToolkit, detailsComposite, itemPropertyDescriptor, getModel(), feature,
+					getFormEditor());
 			if (composite != null) {
 				createDefault = false;
 			}
@@ -159,24 +146,18 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage {
 			EClassifier typeClazz = feature.getEType();
 			boolean hasCreated = false;
 			if (typeClazz instanceof EEnum) {
-				createEnumFieldEditor(detailsComposite, feature,
-						(EEnum) typeClazz, formToolkit, itemPropertyDescriptor);
+				createEnumFieldEditor(detailsComposite, feature, (EEnum) typeClazz, formToolkit, itemPropertyDescriptor);
 				hasCreated = true;
 			}
 			if (typeClazz.getInstanceClass() == String.class) {
-				createStringFieldEditor(detailsComposite, feature, formToolkit,
-						itemPropertyDescriptor);
+				createStringFieldEditor(detailsComposite, feature, formToolkit, itemPropertyDescriptor);
 			}
-			if (typeClazz.getInstanceClass() == Boolean.class
-					|| typeClazz.getInstanceClass() == boolean.class) {
-				createBooleanFieldEditor(detailsComposite, feature,
-						formToolkit, itemPropertyDescriptor);
+			if (typeClazz.getInstanceClass() == Boolean.class || typeClazz.getInstanceClass() == boolean.class) {
+				createBooleanFieldEditor(detailsComposite, feature, formToolkit, itemPropertyDescriptor);
 				hasCreated = true;
 			}
-			if (typeClazz.getInstanceClass() == Integer.class
-					|| typeClazz.getInstanceClass() == int.class) {
-				createIntegerFieldEditor(detailsComposite, feature,
-						formToolkit, itemPropertyDescriptor);
+			if (typeClazz.getInstanceClass() == Integer.class || typeClazz.getInstanceClass() == int.class) {
+				createStringFieldEditor(detailsComposite, feature, formToolkit, itemPropertyDescriptor);
 				hasCreated = true;
 			}
 			if (!hasCreated) {
@@ -187,197 +168,127 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage {
 		}
 	}
 
-	protected void createEnumFieldEditor(Composite propertyComposite,
-			EAttribute feature, final EEnum typeClass, FormToolkit formToolKit,
+	protected Control createEnumFieldEditor(Composite propertyComposite, EAttribute feature, final EEnum typeClass, FormToolkit formToolKit,
 			final IItemPropertyDescriptor itemPropertyDescriptor) {
-		String displayName = itemPropertyDescriptor.getDisplayName(getModel());
-		if (feature.isRequired()) {
-			displayName = "*" + displayName;
-		}
-		formToolKit.createLabel(propertyComposite, displayName + " :")
-				.setForeground(
-						formToolKit.getColors().getColor(IFormColors.TITLE));
-		final Combo combo = new Combo(propertyComposite, SWT.BORDER
-				| SWT.READ_ONLY);
-		formToolKit.adapt(combo, true, false);
 		List<EEnumLiteral> literalList = typeClass.getELiterals();
-		for (Iterator<EEnumLiteral> iterator = literalList.iterator(); iterator
-				.hasNext();) {
-			EEnumLiteral enumLiteral = (EEnumLiteral) iterator.next();
-			combo.add(enumLiteral.getName());
+		String[] items = new String[literalList.size()];
+		for (int i = 0; i < literalList.size(); i++) {
+			EEnumLiteral enumLiteral = (EEnumLiteral) literalList.get(i);
+			items[i] = (enumLiteral.getName());
 		}
-		Object value = itemPropertyDescriptor.getPropertyValue(getModel());
-		if (value != null && value instanceof PropertyValueWrapper) {
-			Object editValue = ((PropertyValueWrapper) value)
-					.getEditableValue(getModel());
-			if (editValue != null && editValue instanceof Enumerator) {
-				String[] strings = combo.getItems();
-				for (int i = 0; i < strings.length; i++) {
-					String item = strings[i];
-					if (item.equals(((Enumerator) editValue).getName())) {
-						combo.select(i);
-						break;
-					}
-				}
-			}
-		}
-		combo.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				try {
-					Object value = itemPropertyDescriptor
-							.getPropertyValue(getModel());
-					Method method = typeClass.getInstanceClass().getMethod(
-							"get", new Class<?>[] { String.class });
-					// it's static method
-					Object v = method.invoke(null, combo.getText());
-					if (value != null && value instanceof PropertyValueWrapper) {
-						Object editValue = ((PropertyValueWrapper) value)
-								.getEditableValue(getModel());
-						if (editValue != null) {
+		final IItemPropertyDescriptor fip = itemPropertyDescriptor;
+		IModelProcsser processer = new IModelProcsser() {
 
-							if (!editValue.equals(v)) {
-								itemPropertyDescriptor.setPropertyValue(
-										getModel(), v);
-							}
-						} else {
-							itemPropertyDescriptor.setPropertyValue(getModel(),
-									v);
-						}
-					} else {
-						itemPropertyDescriptor.setPropertyValue(getModel(), v);
+			public Object unwrapValue(Object model) {
+				Object editValue = SmooksUIUtils.getEditValue(fip, getModel());
+				if (editValue instanceof Enumerator) {
+					return ((Enumerator) editValue).getName();
+				}
+				return null;
+			}
+
+			public Object wrapValue(Object model) {
+				String name = model.toString();
+				Object v = null;
+				try {
+					Method method = typeClass.getInstanceClass().getMethod("get", new Class<?>[] { String.class });
+					// it's static method
+					if (method != null) {
+						v = method.invoke(null, name);
 					}
 				} catch (Throwable t) {
-					SmooksConfigurationActivator.getDefault().log(t);
 				}
+				return v;
 			}
-		});
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		combo.setLayoutData(gd);
+
+		};
+		return SmooksUIUtils.createChoiceFieldEditor(propertyComposite, formToolkit, itemPropertyDescriptor, getModel(), items, processer, true);
 	}
 
-	protected void createBooleanFieldEditor(final Composite propertyComposite,
-			EAttribute feature, FormToolkit formToolkit,
+	protected void createBooleanFieldEditor(final Composite propertyComposite, EAttribute feature, FormToolkit formToolkit,
 			final IItemPropertyDescriptor itemPropertyDescriptor) {
-		String displayName = itemPropertyDescriptor.getDisplayName(getModel());
-		displayName += " :";
-		if (feature.isRequired()) {
-			displayName = "*" + displayName;
-		}
-		formToolkit.createLabel(propertyComposite, displayName + " :")
-				.setForeground(
-						formToolkit.getColors().getColor(IFormColors.TITLE));
-		Object value = itemPropertyDescriptor.getPropertyValue(getModel());
-		final Combo combo = new Combo(propertyComposite, SWT.BORDER
-				| SWT.READ_ONLY);
-		combo.add("TRUE");
-		combo.add("FALSE");
-		// combo.setEditable(false);
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		combo.setLayoutData(gd);
-		Object editValue = null;
-		if (value != null && value instanceof PropertyValueWrapper) {
-			editValue = ((PropertyValueWrapper) value)
-					.getEditableValue(getModel());
-			if (editValue != null && editValue instanceof Boolean) {
-				if ((Boolean) editValue) {
-					combo.select(0);
-				} else {
-					combo.select(1);
+		IModelProcsser processer = new IModelProcsser() {
+
+			public Object unwrapValue(Object model) {
+				if (model instanceof Boolean) {
+					if ((Boolean) model) {
+						return "TRUE";
+					} else {
+						return "FALSE";
+					}
 				}
-			}
-		}
-		combo.addModifyListener(new ModifyListener() {
-
-			public void modifyText(ModifyEvent e) {
-				boolean bv = Boolean.valueOf(combo.getText());
-				itemPropertyDescriptor.setPropertyValue(getModel(), bv);
+				return "FALSE";
 			}
 
-		});
+			public Object wrapValue(Object model) {
+				try {
+					return Boolean.parseBoolean(model.toString());
+				} catch (Throwable t) {
+				}
+				return Boolean.FALSE;
+			}
+
+		};
+		SmooksUIUtils.createChoiceFieldEditor(propertyComposite, formToolkit, itemPropertyDescriptor, getModel(), new String[] { "TRUE", "FALSE" },
+				processer, true);
 	}
 
-	protected void createStringFieldEditor(final Composite propertyComposite,
-			EAttribute feature, FormToolkit formToolKit,
+	protected Text createStringFieldEditor(final Composite propertyComposite, EAttribute feature, FormToolkit formToolKit,
 			final IItemPropertyDescriptor itemPropertyDescriptor) {
-		String displayName = itemPropertyDescriptor.getDisplayName(getModel());
-		if (feature.isRequired()) {
-			displayName = "*" + displayName;
-		}
-		formToolKit.createLabel(propertyComposite, displayName + " :")
-				.setForeground(
-						formToolKit.getColors().getColor(IFormColors.TITLE));
-		final Text text = formToolKit.createText(propertyComposite, "",
-				SWT.NONE);
+		SmooksUIUtils.createFiledEditorLabel(propertyComposite, formToolKit, itemPropertyDescriptor, getModel(), false);
+		final Text text = formToolKit.createText(propertyComposite, "", SWT.NONE);
 		Object value = itemPropertyDescriptor.getPropertyValue(getModel());
 		if (value != null && value instanceof PropertyValueWrapper) {
-			Object editValue = ((PropertyValueWrapper) value)
-					.getEditableValue(getModel());
+			Object editValue = ((PropertyValueWrapper) value).getEditableValue(getModel());
 			if (editValue != null)
 				text.setText(editValue.toString());
 		}
 		text.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				Object value = itemPropertyDescriptor
-						.getPropertyValue(getModel());
+				Object value = itemPropertyDescriptor.getPropertyValue(getModel());
 				if (value != null && value instanceof PropertyValueWrapper) {
-					Object editValue = ((PropertyValueWrapper) value)
-							.getEditableValue(getModel());
+					Object editValue = ((PropertyValueWrapper) value).getEditableValue(getModel());
 					if (editValue != null) {
 						if (!editValue.equals(text.getText())) {
-							itemPropertyDescriptor.setPropertyValue(getModel(),
-									text.getText());
+							itemPropertyDescriptor.setPropertyValue(getModel(), text.getText());
 						}
 					} else {
-						itemPropertyDescriptor.setPropertyValue(getModel(),
-								text.getText());
+						itemPropertyDescriptor.setPropertyValue(getModel(), text.getText());
 					}
 				} else {
-					itemPropertyDescriptor.setPropertyValue(getModel(), text
-							.getText());
+					itemPropertyDescriptor.setPropertyValue(getModel(), text.getText());
 				}
 			}
 		});
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		text.setLayoutData(gd);
+		return text;
 	}
 
-	protected void createIntegerFieldEditor(final Composite propertyComposite,
-			EAttribute feature, FormToolkit formToolKit,
+	protected void createIntegerFieldEditor(final Composite propertyComposite, EAttribute feature, FormToolkit formToolKit,
 			final IItemPropertyDescriptor itemPropertyDescriptor) {
-		String displayName = itemPropertyDescriptor.getDisplayName(getModel());
-		if (feature.isRequired()) {
-			displayName = "*" + displayName;
-		}
-		formToolKit.createLabel(propertyComposite, displayName + " :")
-				.setForeground(
-						formToolKit.getColors().getColor(IFormColors.TITLE));
+		SmooksUIUtils.createFiledEditorLabel(propertyComposite, formToolKit, itemPropertyDescriptor, getModel(), false);
 		final Spinner spinner = new Spinner(propertyComposite, SWT.BORDER);
 		Object value = itemPropertyDescriptor.getPropertyValue(getModel());
 		if (value != null && value instanceof PropertyValueWrapper) {
-			Object editValue = ((PropertyValueWrapper) value)
-					.getEditableValue(getModel());
+			Object editValue = ((PropertyValueWrapper) value).getEditableValue(getModel());
 			if (editValue != null && editValue instanceof Integer)
 				spinner.setSelection((Integer) editValue);
 		}
 		spinner.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				Object value = itemPropertyDescriptor
-						.getPropertyValue(getModel());
+				Object value = itemPropertyDescriptor.getPropertyValue(getModel());
 				if (value != null && value instanceof PropertyValueWrapper) {
-					Object editValue = ((PropertyValueWrapper) value)
-							.getEditableValue(getModel());
+					Object editValue = ((PropertyValueWrapper) value).getEditableValue(getModel());
 					if (editValue != null) {
 						if (!editValue.equals(spinner.getSelection())) {
-							itemPropertyDescriptor.setPropertyValue(getModel(),
-									spinner.getSelection());
+							itemPropertyDescriptor.setPropertyValue(getModel(), spinner.getSelection());
 						}
 					} else {
-						itemPropertyDescriptor.setPropertyValue(getModel(),
-								spinner.getSelection());
+						itemPropertyDescriptor.setPropertyValue(getModel(), spinner.getSelection());
 					}
 				} else {
-					itemPropertyDescriptor.setPropertyValue(getModel(), spinner
-							.getSelection());
+					itemPropertyDescriptor.setPropertyValue(getModel(), spinner.getSelection());
 				}
 			}
 		});
@@ -397,16 +308,13 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage {
 		setOldModel(oldModel);
 		this.selection = selection;
 		this.formPart = part;
-		this.itemPropertySource = (IItemPropertySource) editingDomain
-				.getAdapterFactory().adapt(getModel(),
-						IItemPropertySource.class);
+		this.itemPropertySource = (IItemPropertySource) editingDomain.getAdapterFactory().adapt(getModel(), IItemPropertySource.class);
 		if (getOldModel() == getModel())
 			return;
 		if (getOldModel() != getModel()) {
 			if (propertyComposite != null) {
 				propertyComposite.dispose();
-				propertyComposite = new Composite(propertyMainComposite,
-						SWT.NONE);
+				propertyComposite = new Composite(propertyMainComposite, SWT.NONE);
 			}
 			createStuffDetailsComposite(propertyComposite);
 		}
@@ -469,9 +377,10 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage {
 	protected void refreshWhenSelectionChanged() {
 		Object model = getModel();
 		if (model instanceof EObject) {
-			String text = labelProvider.getText(model);
+			String text = ((EObject) model).eClass().getName();
 			section.setText(text);
-			section.setDescription("Details of " + text);
+			section.setDescription("Details of " + text + ". Required fields are denoted by \"*\".");
+			section.layout();
 		}
 	}
 

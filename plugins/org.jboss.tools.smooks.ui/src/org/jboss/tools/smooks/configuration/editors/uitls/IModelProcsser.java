@@ -8,5 +8,6 @@ package org.jboss.tools.smooks.configuration.editors.uitls;
  *
  */
 public interface IModelProcsser {
-	Object processModel(Object model);
+	Object unwrapValue(Object model);
+	Object wrapValue(Object model);
 }

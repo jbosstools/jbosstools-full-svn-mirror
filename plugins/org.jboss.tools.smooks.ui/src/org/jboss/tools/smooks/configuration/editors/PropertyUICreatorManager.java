@@ -13,7 +13,10 @@ package org.jboss.tools.smooks.configuration.editors;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jboss.tools.smooks.configuration.editors.calc.CounterUICreator;
 import org.jboss.tools.smooks.configuration.editors.csv.CsvReaderUICreator;
+import org.jboss.tools.smooks.configuration.editors.datasource.DataSourceJndiUICreator;
+import org.jboss.tools.smooks.configuration.editors.datasource.DirectUICreator;
 import org.jboss.tools.smooks.configuration.editors.dbrouting.ExecutorUICreator;
 import org.jboss.tools.smooks.configuration.editors.dbrouting.ResultSetRowSelectorUICreator;
 import org.jboss.tools.smooks.configuration.editors.dbrouting.ResultSetUICreator;
@@ -66,7 +69,10 @@ import org.jboss.tools.smooks.configuration.editors.xsl.BindToUICreator;
 import org.jboss.tools.smooks.configuration.editors.xsl.OutputToUICreator;
 import org.jboss.tools.smooks.configuration.editors.xsl.TemplateUICreator;
 import org.jboss.tools.smooks.configuration.editors.xsl.XslUICreator;
+import org.jboss.tools.smooks.model.calc.impl.CounterImpl;
 import org.jboss.tools.smooks.model.csv.impl.CsvReaderImpl;
+import org.jboss.tools.smooks.model.datasource.impl.DataSourceJndiImpl;
+import org.jboss.tools.smooks.model.datasource.impl.DirectImpl;
 import org.jboss.tools.smooks.model.dbrouting.impl.ExecutorImpl;
 import org.jboss.tools.smooks.model.dbrouting.impl.ResultSetImpl;
 import org.jboss.tools.smooks.model.dbrouting.impl.ResultSetRowSelectorImpl;
@@ -226,10 +232,15 @@ public class PropertyUICreatorManager {
 		map.put(ResultSetImpl.class, new ResultSetUICreator());
 		map.put(ResultSetRowSelectorImpl.class, new ResultSetRowSelectorUICreator());
 
-
+		// for calc
+		map.put(CounterImpl.class, new CounterUICreator());
+		
+		// for datasource
+		map.put(DirectImpl.class, new DirectUICreator());
+		map.put(DataSourceJndiImpl.class, new DataSourceJndiUICreator());
 
 		/*
-		 * up if for smooks1.1
+		 * up is for smooks1.1
 		 */
 
 	}

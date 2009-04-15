@@ -138,8 +138,8 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		configurationSection = tool.createSection(rootMainControl, Section.TITLE_BAR
 			| Section.DESCRIPTION);
 		configurationSection
-			.setDescription("Define Smooks stuffes for configuration file in the following section.");
-		configurationSection.setText("All Smooks Stuffes");
+			.setDescription("Define Smooks elements for configuration file in the following section.");
+		configurationSection.setText("Smooks elements");
 		sectionPart = new SectionPart(configurationSection);
 		managedForm.addPart(sectionPart);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);

@@ -30,7 +30,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.uitls.IFieldDialog;
@@ -52,7 +51,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 	protected IModelProcsser fileFiledEditorModelProcess;
 
 	protected IHyperlinkListener fileFiledEditorLinkListener;
-	
+
 	protected List<ViewerFilter> viewerFilters = null;
 
 	/*
@@ -78,10 +77,18 @@ public class PropertyUICreator implements IPropertyUICreator {
 		if (isFileSelectionFeature(feature)) {
 			return createFileSelectionFieldEditor(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 		}
+		if(isConditionSelectionFeature(feature)){
+			SmooksUIUtils.createContionsChoiceFieldEditor(parent, toolkit, propertyDescriptor, model);
+			return parent;
+		}
 		if (feature == SmooksPackage.eINSTANCE.getAbstractReader_TargetProfile()) {
 
 		}
 		return null;
+	}
+
+	protected boolean isConditionSelectionFeature(EAttribute feature) {
+		return false;
 	}
 
 	public IHyperlinkListener getFileFiledEditorLinkListener() {
@@ -120,10 +127,9 @@ public class PropertyUICreator implements IPropertyUICreator {
 			SmooksMultiFormEditor formEditor) {
 	}
 
-	public boolean isFileSelectionFeature(EAttribute attribute) {
+	protected boolean isFileSelectionFeature(EAttribute attribute) {
 		return false;
 	}
-	
 
 	public Composite createFileSelectionFieldEditor(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
 			EAttribute feature, SmooksMultiFormEditor formEditor) {
@@ -136,7 +142,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 					IModelProcsser p = getModelProcesser();
 					String path = wizard.getFilePath();
 					if (p != null) {
-						path = p.processModel(path).toString();
+						path = p.unwrapValue(path).toString();
 					}
 					return path;
 				}
@@ -156,7 +162,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 				getFileFiledEditorLinkListener());
 	}
 
-	public boolean isSelectorFeature(EAttribute attribute) {
+	protected boolean isSelectorFeature(EAttribute attribute) {
 		return false;
 	}
 
@@ -180,7 +186,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 		return null;
 	}
 
-	public boolean isBeanIDRefFieldFeature(EAttribute attribute) {
+	protected boolean isBeanIDRefFieldFeature(EAttribute attribute) {
 		return false;
 	}
 
@@ -189,8 +195,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 		if (model instanceof EObject) {
 			SmooksResourceListType smooksResourceList = getSmooksResourceList((EObject) model);
 			if (smooksResourceList != null) {
-				String displayName = propertyDescriptor.getDisplayName(model);
-				toolkit.createLabel(parent, displayName + " :").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
+				SmooksUIUtils.createFiledEditorLabel(parent, toolkit, propertyDescriptor, model, false);
 				final Combo combo = new Combo(parent, SWT.BORDER);
 				GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 				combo.setLayoutData(gd);

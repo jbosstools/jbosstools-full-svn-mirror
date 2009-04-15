@@ -8,22 +8,20 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors.smooks;
+package org.jboss.tools.smooks.configuration.editors.calc;
 
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.calc.CalcPackage;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
  */
-public class ParamTypeUICreator extends PropertyUICreator {
+public class CounterUICreator extends PropertyUICreator {
 
 	/*
 	 * (non-Javadoc)
@@ -34,19 +32,38 @@ public class ParamTypeUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.edit.provider.IItemPropertyDescriptor, java.lang.Object,
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
-	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
-			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,SmooksMultiFormEditor formEditor) {
-		if (feature == SmooksPackage.eINSTANCE.getParamType_Name()) {
+	public Composite createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
+			EAttribute feature, SmooksMultiFormEditor formEditor) {
+		
+		if (feature == CalcPackage.eINSTANCE.getCounter_StartExpression()) {
 		}
-		if (feature == SmooksPackage.eINSTANCE.getParamType_Type()) {
+		if (feature == CalcPackage.eINSTANCE.getCounter_AmountExpression()) {
+		}
+		if (feature == CalcPackage.eINSTANCE.getCounter_ResetCondition()) {
+		}
+		if (feature == CalcPackage.eINSTANCE.getCounter_Amount()) {
+		}
+		if (feature == CalcPackage.eINSTANCE.getCounter_BeanId()) {
+		}
+		if (feature == CalcPackage.eINSTANCE.getCounter_CountOnElementNS()) {
+		}
+		if (feature == CalcPackage.eINSTANCE.getCounter_Direction()) {
+		}
+		if (feature == CalcPackage.eINSTANCE.getCounter_ExecuteAfter()) {
+		}
+		if (feature == CalcPackage.eINSTANCE.getCounter_Start()) {
 		}
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
 	@Override
-	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
-		SmooksUIUtils.createMixedTextFieldEditor("Text Value", editingdomain, toolkit, parent, model , false , 500);
-		SmooksUIUtils.createCDATAFieldEditor("CDATA Value", editingdomain, toolkit, parent, model);
+	public boolean isSelectorFeature(EAttribute attribute) {
+		if (attribute == CalcPackage.eINSTANCE.getCounter_CountOnElement()) {
+			return true;
+		}
+		return super.isSelectorFeature(attribute);
 	}
+	
+	
+
 }
