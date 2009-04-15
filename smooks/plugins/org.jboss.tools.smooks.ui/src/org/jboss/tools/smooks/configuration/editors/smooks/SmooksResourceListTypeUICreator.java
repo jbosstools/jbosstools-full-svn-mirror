@@ -32,15 +32,13 @@ public class SmooksResourceListTypeUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.edit.provider.IItemPropertyDescriptor, java.lang.Object,
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
-	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
-			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-			SmooksMultiFormEditor formEditor) {
+	public Composite createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
+			EAttribute feature, SmooksMultiFormEditor formEditor) {
 		if (feature == SmooksPackage.eINSTANCE.getSmooksResourceListType_AbstractReaderGroup()) {
 		}
 		if (feature == SmooksPackage.eINSTANCE.getSmooksResourceListType_AbstractResourceConfigGroup()) {
 		}
-		if (feature == SmooksPackage.eINSTANCE.getSmooksResourceListType_DefaultConditionRef()) {
-		}
+
 		if (feature == SmooksPackage.eINSTANCE.getSmooksResourceListType_DefaultSelectorNamespace()) {
 		}
 		if (feature == SmooksPackage.eINSTANCE.getSmooksResourceListType_DefaultTargetProfile()) {
@@ -55,6 +53,14 @@ public class SmooksResourceListTypeUICreator extends PropertyUICreator {
 			return true;
 		}
 		return super.isSelectorFeature(attribute);
+	}
+
+	@Override
+	protected boolean isConditionSelectionFeature(EAttribute feature) {
+		if (feature == SmooksPackage.eINSTANCE.getSmooksResourceListType_DefaultConditionRef()) {
+			return true;
+		}
+		return super.isConditionSelectionFeature(feature);
 	}
 
 }

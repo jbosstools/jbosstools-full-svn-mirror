@@ -48,8 +48,9 @@ public class TemplateUICreator extends PropertyUICreator {
 	@Override
 	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 		Composite parent, Object model, SmooksMultiFormEditor formEditor) {
-		SmooksUIUtils.createMixedTextFieldEditor("Value", editingdomain, toolkit, parent, model);
-		SmooksUIUtils.createCDATAFieldEditor("Template Contents", editingdomain, toolkit, parent, model);
+		SmooksUIUtils.createMixedTextFieldEditor("Text Value", editingdomain, toolkit, parent, model);
+		SmooksUIUtils.createCDATAFieldEditor("Template Contents(CDATA)", editingdomain, toolkit, parent, model);
+		SmooksUIUtils.createCommentFieldEditor("Template Contents(Comment)", editingdomain, toolkit, parent, model);
 	}
 
 	@Override

@@ -61,8 +61,10 @@ import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.wizards.SmooksConfigurationFileNewWizard;
+import org.jboss.tools.smooks.model.calc.provider.CalcItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.common.provider.CommonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.csv.provider.CsvItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.datasource.provider.DatasourceItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.dbrouting.provider.DbroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.edi.provider.EdiItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.fileRouting.provider.FileRoutingItemProviderAdapterFactory;
@@ -188,6 +190,8 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		adapterFactory.addAdapterFactory(new JmsroutingItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new DbroutingItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new CsvItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new DatasourceItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new CalcItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new GroovyItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new FileRoutingItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
@@ -220,7 +224,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		configurationPage = createSmooksConfigurationFormPage();
 		try {
 			int index = this.addPage(configurationPage);
-			setPageText(index, "Configuraion");
+			setPageText(index, "Design");
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
@@ -309,7 +313,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 	}
 
 	protected SmooksConfigurationFormPage createSmooksConfigurationFormPage() {
-		return new SmooksConfigurationFormPage(this, "ConfigurationPage", "Configuration Page");
+		return new SmooksConfigurationFormPage(this, "DesignPage", "Design Page");
 	}
 
 	protected void initSaveOptions(Map<?, ?> options) {

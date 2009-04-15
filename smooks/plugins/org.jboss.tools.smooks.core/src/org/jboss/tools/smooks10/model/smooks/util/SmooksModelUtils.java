@@ -31,6 +31,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtFactory;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
+import org.jboss.tools.smooks.model.smooks.ConditionType;
+import org.jboss.tools.smooks.model.smooks.ConditionsType;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.ParamType;
 import org.jboss.tools.smooks10.model.smooks.ResourceConfigType;
 import org.jboss.tools.smooks10.model.smooks.ResourceType;
@@ -480,6 +483,14 @@ public class SmooksModelUtils {
 			}
 		}
 		return null;
+	}
+	
+	public static List<ConditionType> collectConditionType(SmooksResourceListType resourceList){
+		ConditionsType conditions = resourceList.getConditions();
+		if(conditions != null){
+			return conditions.getCondition();
+		}
+		return Collections.emptyList();
 	}
 
 }

@@ -133,7 +133,7 @@ public class SmooksConfigurationFormPage extends FormPage {
 		tableComposite.setBackground(GraphicsConstants.BORDER_CORLOER);
 		tableComposite.setLayout(fillLayout);
 
-		inputDataViewer = new TableViewer(tableComposite, SWT.MULTI);
+		inputDataViewer = new TableViewer(tableComposite, SWT.MULTI | SWT.FULL_SELECTION);
 		TableColumn header = new TableColumn(inputDataViewer.getTable(), SWT.NONE);
 		header.setText("Type");
 		header.setWidth(100);

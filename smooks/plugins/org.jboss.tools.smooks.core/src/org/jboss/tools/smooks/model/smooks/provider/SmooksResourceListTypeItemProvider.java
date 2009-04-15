@@ -23,9 +23,13 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.jboss.tools.smooks.model.calc.CalcFactory;
+import org.jboss.tools.smooks.model.calc.CalcPackage;
 import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
 import org.jboss.tools.smooks.model.csv.CsvFactory;
 import org.jboss.tools.smooks.model.csv.CsvPackage;
+import org.jboss.tools.smooks.model.datasource.DatasourceFactory;
+import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
 import org.jboss.tools.smooks.model.dbrouting.DbroutingFactory;
 import org.jboss.tools.smooks.model.dbrouting.DbroutingPackage;
 import org.jboss.tools.smooks.model.edi.EdiFactory;
@@ -272,6 +276,17 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 		// for JSON
 		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
 				.createEntry(JsonPackage.Literals.JSON_DOCUMENT_ROOT__READER, JsonFactory.eINSTANCE.createJsonReader())));
+
+		// for calc
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(CalcPackage.Literals.CALC_DOCUMENT_ROOT__COUNTER, CalcFactory.eINSTANCE.createCounter())));
+
+		// for datasource
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(DatasourcePackage.Literals.DATA_SOURCE_DOCUMENT_ROOT__DIRECT, DatasourceFactory.eINSTANCE.createDirect())));
+
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(DatasourcePackage.Literals.DATA_SOURCE_DOCUMENT_ROOT__JNDI, DatasourceFactory.eINSTANCE.createDataSourceJndi())));
 
 		// for javabean
 		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
