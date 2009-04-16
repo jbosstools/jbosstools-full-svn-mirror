@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor.PropertyValueWrapper;
+import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
@@ -53,6 +55,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
@@ -60,6 +63,8 @@ import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.Section;
+import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.SelectorAttributes;
@@ -89,17 +94,17 @@ public class SmooksUIUtils {
 	public static final String XSL_NAMESPACE = " xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" ";
 
 	public static void createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
-			Object model) {
-		createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, false, 0);
+			Object model,boolean linkLabel, IHyperlinkListener listener) {
+		createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, false, 0,linkLabel,listener);
 	}
 
 	public static void createMultiMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, int height) {
-		createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, true, height);
+		createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, true, height,false,null);
 	}
 
 	public static void createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
-			Object model, boolean multiText, int height) {
+			Object model, boolean multiText, int height, boolean linkLabel, IHyperlinkListener listener) {
 		GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 		Section section = null;
 		Composite textContainer = null;
@@ -123,7 +128,14 @@ public class SmooksUIUtils {
 			section.setLayoutData(gd);
 			textContainer = textComposite;
 		} else {
-			toolkit.createLabel(parent, label + " :").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
+			if (linkLabel) {
+				Hyperlink link = toolkit.createHyperlink(parent, label + " :", SWT.NONE);
+				if (listener != null) {
+					link.addHyperlinkListener(listener);
+				}
+			} else {
+				toolkit.createLabel(parent, label + " :").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
+			}
 			textContainer = parent;
 		}
 		gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -237,14 +249,13 @@ public class SmooksUIUtils {
 	public static void createLinkTextValueFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
 			IItemPropertyDescriptor propertyDescriptor, FormToolkit toolkit, Composite parent, Object model, boolean multiText, int height,
 			boolean linkLabel, IHyperlinkListener listener) {
+		Control control = createFiledEditorLabel(parent, toolkit, propertyDescriptor, model, linkLabel);
 		if (linkLabel) {
-			Hyperlink link = toolkit.createHyperlink(parent, label, SWT.NONE);
+			Hyperlink link = (Hyperlink)control;
 			if (listener != null) {
 				link.addHyperlinkListener(listener);
 			}
-		} else {
-			toolkit.createLabel(parent, label + " :").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
-		}
+		} 
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		int textType = SWT.FLAT;
 		if (multiText) {
@@ -760,6 +771,51 @@ public class SmooksUIUtils {
 		});
 		toolkit.paintBordersFor(classTextComposite);
 		return classTextComposite;
+	}
+
+	public static void openFile(String uri, IProject project) throws PartInitException {
+		openFile(uri, project, null);
+	}
+
+	public static void openFile(String uri, IProject project, String editorID) throws PartInitException {
+		if (uri.charAt(0) == '\\' || uri.charAt(0) == '/') {
+			uri = uri.substring(1);
+		}
+		IFile file = project.getFile(uri);
+		IWorkbenchWindow window = SmooksConfigurationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow();
+		// it's workspace resource
+		if (file.exists()) {
+
+		} else {
+			// maybe it's a classpath resource
+			try {
+				IJavaProject javaProject = JavaCore.create(project);
+				if (javaProject != null) {
+					IClasspathEntry[] classPathEntrys = javaProject.getRawClasspath();
+					for (int i = 0; i < classPathEntrys.length; i++) {
+						IClasspathEntry entry = classPathEntrys[i];
+						IFolder folder = ResourcesPlugin.getWorkspace().getRoot().getFolder(entry.getPath());
+						if (folder != null && folder.exists()) {
+							IFile temp = folder.getFile(new Path(uri));
+							if (temp != null && temp.exists()) {
+								file = temp;
+								break;
+							}
+						}
+					}
+				}
+			} catch (Exception e) {
+
+			}
+		}
+		if (file.exists()) {
+			FileEditorInput editorInput = new FileEditorInput(file);
+			if (editorID != null) {
+				window.getActivePage().openEditor(editorInput, editorID);
+			} else {
+				IDE.openEditor(window.getActivePage(), file);
+			}
+		}
 	}
 
 	public static void showErrorDialog(Shell shell, Status status) {
