@@ -603,7 +603,16 @@ public class VpeStyleUtil {
 	 */
 	public static String addFullPathToImgSrc(String path,
 			VpePageContext pageContext, boolean showUnresolvedImage) {
-
+	    
+	    	if (path == null) {
+	    	    if (showUnresolvedImage) {
+	    			return FILE_PROTOCOL + SLASH + SLASH
+						+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH).replace('\\', '/');
+	    	    } else {
+	    			return EMPTY_STRING;
+	    	    }
+	    	}
+	    
 		IPath tagPath = new Path(path);
 		if (tagPath.isEmpty()) {
 			if (showUnresolvedImage) {
@@ -613,8 +622,6 @@ public class VpeStyleUtil {
 				return path.replace('\\', '/');
 			}
 		}
-		
-		
 
 		String device = (tagPath.getDevice() == null ? tagPath.segment(0)
 				: tagPath.getDevice());
