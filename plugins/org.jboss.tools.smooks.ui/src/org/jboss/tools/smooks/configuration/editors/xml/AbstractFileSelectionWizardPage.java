@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jboss.tools.smooks.configuration.editors.IFilePathProcessor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 
 /**
@@ -46,6 +47,8 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	protected Object[] initSelections;
 	protected List<ViewerFilter> filters = null;
 	protected boolean multiSelect =false;
+	
+	private IFilePathProcessor filePathProcessor = null;
 	
 	public AbstractFileSelectionWizardPage(String pageName,boolean multiSelect , Object[] initSelections,List<ViewerFilter> filters) {
 		super(pageName);
@@ -74,6 +77,16 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	public String getFilePath(){
 		return filePath;
 	}
+	
+	
+	public IFilePathProcessor getFilePathProcessor() {
+		return filePathProcessor;
+	}
+
+	public void setFilePathProcessor(IFilePathProcessor filePathProcessor) {
+		this.filePathProcessor = filePathProcessor;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -174,11 +187,23 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	}
 	
 	protected String processFileSystemFilePath(String path){
+		if(filePathProcessor != null){
+			String s = filePathProcessor.processFileSystemPath(path);
+			if(s != null){
+				return s;
+			}
+		}
 		path = SmooksUIUtils.FILE_PRIX + path;
 		return path;
 	}
 	
 	protected String processWorkSpaceFilePath(IFile file){
+		if(filePathProcessor != null){
+			String s =  filePathProcessor.processWorkBenchPath(file);
+			if(s != null){
+				return s;
+			}
+		}
 		String s = file.getFullPath().toPortableString();
 		s = SmooksUIUtils.WORKSPACE_PRIX + s;
 		return s;

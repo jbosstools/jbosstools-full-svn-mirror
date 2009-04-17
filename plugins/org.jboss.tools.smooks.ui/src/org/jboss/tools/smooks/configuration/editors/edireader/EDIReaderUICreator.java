@@ -10,14 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.edireader;
 
-import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.forms.events.HyperlinkEvent;
-import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
@@ -30,20 +25,6 @@ import org.jboss.tools.smooks.model.edi.EdiPackage;
 public class EDIReaderUICreator extends PropertyUICreator {
 
 	public EDIReaderUICreator() {
-	}
-
-	private void openFile(IItemPropertyDescriptor propertyDescriptor, Object model) {
-		Object path = SmooksUIUtils.getEditValue(propertyDescriptor, model);
-		String p = null;
-		if (path != null && path instanceof String) {
-			p = ((String) path).trim();
-		}
-		try {
-			IResource resource = SmooksUIUtils.getResource((EObject) model);
-			SmooksUIUtils.openFile(p, resource.getProject(), SmooksMultiFormEditor.EDITOR_ID);
-		} catch (Exception e) {
-
-		}
 	}
 
 	/*
@@ -60,25 +41,8 @@ public class EDIReaderUICreator extends PropertyUICreator {
 		if (feature == EdiPackage.eINSTANCE.getEDIReader_Encoding()) {
 		}
 		if (feature == EdiPackage.eINSTANCE.getEDIReader_MappingModel()) {
-			final Object fm = model;
-			final IItemPropertyDescriptor fpd = propertyDescriptor;
-			IHyperlinkListener listener = new IHyperlinkListener() {
-
-				public void linkActivated(HyperlinkEvent e) {
-					openFile(fpd, fm);
-				}
-
-				public void linkEntered(HyperlinkEvent e) {
-
-				}
-
-				public void linkExited(HyperlinkEvent e) {
-
-				}
-
-			};
-			SmooksUIUtils.createLinkTextValueFieldEditor("Mapping Model", (AdapterFactoryEditingDomain) formEditor.getEditingDomain(), propertyDescriptor,
-					toolkit, parent, model, false, 0, true, listener);
+			SmooksUIUtils.createFileSelectionTextFieldEditor(null, parent, null, toolkit, propertyDescriptor, model, SmooksUIUtils.VALUE_TYPE_VALUE,
+					SmooksMultiFormEditor.EDITOR_ID);
 			return parent;
 		}
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
@@ -86,9 +50,9 @@ public class EDIReaderUICreator extends PropertyUICreator {
 
 	@Override
 	public boolean isFileSelectionFeature(EAttribute attribute) {
-//		if (attribute == EdiPackage.eINSTANCE.getEDIReader_MappingModel()) {
-//			return true;
-//		}
+		// if (attribute == EdiPackage.eINSTANCE.getEDIReader_MappingModel()) {
+		// return true;
+		// }
 		return super.isFileSelectionFeature(attribute);
 	}
 

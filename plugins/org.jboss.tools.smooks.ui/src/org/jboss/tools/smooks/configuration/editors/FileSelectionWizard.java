@@ -33,6 +33,8 @@ public class FileSelectionWizard extends Wizard implements INewWizard {
 	private Object[] initSelections = null;
 	
 	private boolean multiSelect = false;
+	
+	private IFilePathProcessor filePathProcessor = null;
 
 	@Override
 	public void addPages() {
@@ -40,6 +42,7 @@ public class FileSelectionWizard extends Wizard implements INewWizard {
 		fileSelectionWizardPage.setFilters(viewerFilters);
 		fileSelectionWizardPage.setInitSelections(getInitSelections());
 		fileSelectionWizardPage.setMultiSelect(isMultiSelect());
+		fileSelectionWizardPage.setFilePathProcessor(getFilePathProcessor());
 		this.addPage(fileSelectionWizardPage);
 	}
 
@@ -90,7 +93,12 @@ public class FileSelectionWizard extends Wizard implements INewWizard {
 	public void setViewerFilters(List<ViewerFilter> viewerFilters) {
 		this.viewerFilters = viewerFilters;
 	}
-	
-	
 
+	public void setFilePathProcessor(IFilePathProcessor filePathProcessor) {
+		this.filePathProcessor = filePathProcessor;
+	}
+
+	public IFilePathProcessor getFilePathProcessor() {
+		return filePathProcessor;
+	}
 }

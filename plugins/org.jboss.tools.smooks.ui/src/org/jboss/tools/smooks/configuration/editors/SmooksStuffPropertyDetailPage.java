@@ -23,7 +23,6 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor.PropertyValueWrapper;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -57,7 +56,6 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage {
 	private IFormPart formPart;
 	private Section section;
 	private SmooksMultiFormEditor formEditor;
-	private AdapterFactoryLabelProvider labelProvider = null;
 	private AdapterFactoryEditingDomain editingDomain = null;
 	private IItemPropertySource itemPropertySource = null;
 
@@ -71,7 +69,6 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage {
 		super();
 		this.formEditor = formEditor;
 		editingDomain = (AdapterFactoryEditingDomain) formEditor.getEditingDomain();
-		labelProvider = new AdapterFactoryLabelProvider(editingDomain.getAdapterFactory());
 	}
 
 	public void createContents(Composite parent) {
@@ -235,39 +232,12 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage {
 
 	protected Text createStringFieldEditor(final Composite propertyComposite, EAttribute feature, FormToolkit formToolKit,
 			final IItemPropertyDescriptor itemPropertyDescriptor) {
-		SmooksUIUtils.createFiledEditorLabel(propertyComposite, formToolKit, itemPropertyDescriptor, getModel(), false);
-		final Text text = formToolKit.createText(propertyComposite, "", SWT.NONE);
-		Object value = itemPropertyDescriptor.getPropertyValue(getModel());
-		if (value != null && value instanceof PropertyValueWrapper) {
-			Object editValue = ((PropertyValueWrapper) value).getEditableValue(getModel());
-			if (editValue != null)
-				text.setText(editValue.toString());
-		}
-		text.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				Object value = itemPropertyDescriptor.getPropertyValue(getModel());
-				if (value != null && value instanceof PropertyValueWrapper) {
-					Object editValue = ((PropertyValueWrapper) value).getEditableValue(getModel());
-					if (editValue != null) {
-						if (!editValue.equals(text.getText())) {
-							itemPropertyDescriptor.setPropertyValue(getModel(), text.getText());
-						}
-					} else {
-						itemPropertyDescriptor.setPropertyValue(getModel(), text.getText());
-					}
-				} else {
-					itemPropertyDescriptor.setPropertyValue(getModel(), text.getText());
-				}
-			}
-		});
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		text.setLayoutData(gd);
-		return text;
+		return SmooksUIUtils.createStringFieldEditor(propertyComposite, formToolKit, itemPropertyDescriptor, getModel(), false, false, null);
 	}
 
 	protected void createIntegerFieldEditor(final Composite propertyComposite, EAttribute feature, FormToolkit formToolKit,
 			final IItemPropertyDescriptor itemPropertyDescriptor) {
-		SmooksUIUtils.createFiledEditorLabel(propertyComposite, formToolKit, itemPropertyDescriptor, getModel(), false);
+		SmooksUIUtils.createFieldEditorLabel(propertyComposite, formToolKit, itemPropertyDescriptor, getModel(), false);
 		final Spinner spinner = new Spinner(propertyComposite, SWT.BORDER);
 		Object value = itemPropertyDescriptor.getPropertyValue(getModel());
 		if (value != null && value instanceof PropertyValueWrapper) {
