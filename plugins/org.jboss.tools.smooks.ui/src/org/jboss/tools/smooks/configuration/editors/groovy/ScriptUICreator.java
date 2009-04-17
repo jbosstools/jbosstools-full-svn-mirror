@@ -11,19 +11,20 @@
 package org.jboss.tools.smooks.configuration.editors.groovy;
 
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.jboss.tools.smooks.configuration.actions.OpenEditorEditInnerContentsAction;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 
 /**
- * @author Dart Peng (dpeng@redhat.com)
- * Date Apr 13, 2009
+ * @author Dart Peng (dpeng@redhat.com) Date Apr 13, 2009
  */
-public class ScriptUICreator  extends PropertyUICreator {
+public class ScriptUICreator extends PropertyUICreator {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -33,16 +34,16 @@ public class ScriptUICreator  extends PropertyUICreator {
 	 * org.eclipse.emf.edit.provider.IItemPropertyDescriptor, java.lang.Object,
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
-	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
-		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-		SmooksMultiFormEditor formEditor) {
+	public Composite createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
+			EAttribute feature, SmooksMultiFormEditor formEditor) {
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
 	@Override
-	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-		Composite parent, Object model, SmooksMultiFormEditor formEditor) {
-		SmooksUIUtils.createCommentFieldEditor("Script Contents",editingdomain, toolkit, parent, model);
+	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+			SmooksMultiFormEditor formEditor) {
+		OpenEditorEditInnerContentsAction action2 = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "groovy");
+		SmooksUIUtils.createCommentFieldEditor("Script Contents", editingdomain, toolkit, parent, model, action2);
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public class EDIReaderUICreator extends PropertyUICreator {
 		}
 		if (feature == EdiPackage.eINSTANCE.getEDIReader_MappingModel()) {
 			SmooksUIUtils.createFileSelectionTextFieldEditor(null, parent, null, toolkit, propertyDescriptor, model, SmooksUIUtils.VALUE_TYPE_VALUE,
-					SmooksMultiFormEditor.EDITOR_ID);
+					SmooksMultiFormEditor.EDITOR_ID,null);
 			return parent;
 		}
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);

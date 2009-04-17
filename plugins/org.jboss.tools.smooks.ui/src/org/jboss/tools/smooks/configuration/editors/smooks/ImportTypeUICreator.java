@@ -37,7 +37,7 @@ public class ImportTypeUICreator extends PropertyUICreator {
 			EAttribute feature, SmooksMultiFormEditor formEditor) {
 		if (feature == SmooksPackage.eINSTANCE.getImportType_File()) {
 			SmooksUIUtils.createFileSelectionTextFieldEditor(null, parent, null, toolkit, propertyDescriptor, model, SmooksUIUtils.VALUE_TYPE_VALUE,
-					SmooksMultiFormEditor.EDITOR_ID);
+					SmooksMultiFormEditor.EDITOR_ID,null);
 			return parent;
 		}
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
