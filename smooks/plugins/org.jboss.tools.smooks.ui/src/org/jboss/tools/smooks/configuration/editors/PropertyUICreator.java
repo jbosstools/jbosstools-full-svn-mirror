@@ -195,7 +195,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 		if (model instanceof EObject) {
 			SmooksResourceListType smooksResourceList = getSmooksResourceList((EObject) model);
 			if (smooksResourceList != null) {
-				SmooksUIUtils.createFiledEditorLabel(parent, toolkit, propertyDescriptor, model, false);
+				SmooksUIUtils.createFieldEditorLabel(parent, toolkit, propertyDescriptor, model, false);
 				final Combo combo = new Combo(parent, SWT.BORDER);
 				GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 				combo.setLayoutData(gd);

@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor.PropertyValueWrapper;
 import org.eclipse.jdt.core.IClasspathEntry;
@@ -42,12 +43,17 @@ import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -66,7 +72,11 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.editors.ClassPathFileProcessor;
+import org.jboss.tools.smooks.configuration.editors.CurrentProjecViewerFilter;
+import org.jboss.tools.smooks.configuration.editors.FileSelectionWizard;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
+import org.jboss.tools.smooks.configuration.editors.OpenFileHyperLinkListener;
 import org.jboss.tools.smooks.configuration.editors.SelectorAttributes;
 import org.jboss.tools.smooks.configuration.editors.SelectoreSelectionDialog;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaMethodsSelectionDialog;
@@ -93,87 +103,30 @@ public class SmooksUIUtils {
 
 	public static final String XSL_NAMESPACE = " xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" ";
 
+	public static int VALUE_TYPE_VALUE = 1;
+
+	public static int VALUE_TYPE_TEXT = 2;
+
+	public static int VALUE_TYPE_COMMENT = 3;
+
+	public static int VALUE_TYPE_CDATA = 0;
+
 	public static void createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
-			Object model,boolean linkLabel, IHyperlinkListener listener) {
-		createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, false, 0,linkLabel,listener);
+			Object model, boolean linkLabel, IHyperlinkListener listener) {
+		createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, false, 0, linkLabel, false, listener);
 	}
 
 	public static void createMultiMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, int height) {
-		createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, true, height,false,null);
+		createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, true, height, false, false, null);
 	}
 
 	public static void createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
-			Object model, boolean multiText, int height, boolean linkLabel, IHyperlinkListener listener) {
-		GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
-		Section section = null;
-		Composite textContainer = null;
-		if (multiText) {
-			Composite space = toolkit.createComposite(parent);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			gd.horizontalSpan = 2;
-			gd.heightHint = 10;
-			space.setLayoutData(gd);
-
-			section = toolkit.createSection(parent, Section.TITLE_BAR | Section.TWISTIE);
-			FillLayout layout = new FillLayout();
-			section.setLayout(layout);
-			section.setText(label);
-
-			Composite textComposite = toolkit.createComposite(section);
-			section.setClient(textComposite);
-			textComposite.setLayout(new GridLayout());
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			gd.horizontalSpan = 2;
-			section.setLayoutData(gd);
-			textContainer = textComposite;
-		} else {
-			if (linkLabel) {
-				Hyperlink link = toolkit.createHyperlink(parent, label + " :", SWT.NONE);
-				if (listener != null) {
-					link.addHyperlinkListener(listener);
-				}
-			} else {
-				toolkit.createLabel(parent, label + " :").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
-			}
-			textContainer = parent;
-		}
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		int textType = SWT.FLAT;
-		if (multiText) {
-			textType = SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL;
-		}
-		final Text valueText = toolkit.createText(textContainer, "", textType);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		if (multiText && height > 0) {
-			gd.heightHint = height;
-		}
-		valueText.setLayoutData(gd);
-		if (model instanceof AnyType) {
-			String text = SmooksModelUtils.getAnyTypeText((AnyType) model);
-			if (text != null) {
-				valueText.setText(text);
-				if (text.length() > 0 && section != null) {
-					section.setExpanded(true);
-				}
-			}
-		}
-		final Object fm = model;
-		final AdapterFactoryEditingDomain fEditingDomain = editingdomain;
-		valueText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				if (!(fm instanceof AnyType)) {
-					return;
-				}
-				String text = SmooksModelUtils.getAnyTypeText((AnyType) fm);
-				if (!valueText.getText().equals(text)) {
-					SmooksModelUtils.setTextToSmooksType(fEditingDomain, (AnyType) fm, valueText.getText());
-				}
-			}
-		});
+			Object model, boolean multiText, int height, boolean linkLabel, boolean openFile, IHyperlinkListener listener) {
+		createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, multiText, linkLabel, openFile, height, listener, VALUE_TYPE_TEXT);
 	}
 
-	public static Control createFiledEditorLabel(Composite parent, FormToolkit formToolKit, IItemPropertyDescriptor itemPropertyDescriptor,
+	public static Control createFieldEditorLabel(Composite parent, FormToolkit formToolKit, IItemPropertyDescriptor itemPropertyDescriptor,
 			Object model, boolean isLink) {
 		String displayName = itemPropertyDescriptor.getDisplayName(model);
 		EAttribute feature = (EAttribute) itemPropertyDescriptor.getFeature(model);
@@ -249,13 +202,13 @@ public class SmooksUIUtils {
 	public static void createLinkTextValueFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
 			IItemPropertyDescriptor propertyDescriptor, FormToolkit toolkit, Composite parent, Object model, boolean multiText, int height,
 			boolean linkLabel, IHyperlinkListener listener) {
-		Control control = createFiledEditorLabel(parent, toolkit, propertyDescriptor, model, linkLabel);
+		Control control = createFieldEditorLabel(parent, toolkit, propertyDescriptor, model, linkLabel);
 		if (linkLabel) {
-			Hyperlink link = (Hyperlink)control;
+			Hyperlink link = (Hyperlink) control;
 			if (listener != null) {
 				link.addHyperlinkListener(listener);
 			}
-		} 
+		}
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		int textType = SWT.FLAT;
 		if (multiText) {
@@ -309,6 +262,194 @@ public class SmooksUIUtils {
 		return path;
 	}
 
+	public static Text createStringFieldEditor(final Composite parent, FormToolkit toolkit, final IItemPropertyDescriptor itemPropertyDescriptor,
+			Object model, boolean linkLabel, boolean openFile, IHyperlinkListener listener) {
+		return createStringFieldEditor(null, parent, null, toolkit, itemPropertyDescriptor, model, false, linkLabel, openFile, 0, listener,
+				VALUE_TYPE_VALUE);
+	}
+
+	public static Text createFileSelectionTextFieldEditor(String label, final Composite parent, EditingDomain editingdomain, FormToolkit toolkit,
+			final IItemPropertyDescriptor itemPropertyDescriptor, final Object model, int valueType , String editorID) {
+		OpenFileHyperLinkListener listener = new OpenFileHyperLinkListener(valueType,itemPropertyDescriptor,model,editorID);
+		return createStringFieldEditor(label, parent, editingdomain, toolkit, itemPropertyDescriptor, model, false, true, true, 0, listener,
+				valueType);
+	}
+
+	public static Text createStringFieldEditor(String label, final Composite parent, EditingDomain editingdomain, FormToolkit toolkit,
+			final IItemPropertyDescriptor itemPropertyDescriptor, Object model, boolean multiText, boolean linkLabel, boolean openFile, int height,
+			IHyperlinkListener listener, int valueType) {
+		GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+		Section section = null;
+		Composite textContainer = null;
+		final Object fm = model;
+		final EditingDomain fEditingDomain = editingdomain;
+		if(label == null && itemPropertyDescriptor != null){
+			label = itemPropertyDescriptor.getDisplayName(model);
+			EAttribute feature = (EAttribute) itemPropertyDescriptor.getFeature(model);
+			if (feature.isRequired()) {
+				label = "*" + label;
+			}
+		}
+		if (multiText) {
+			Composite space = toolkit.createComposite(parent);
+			gd = new GridData(GridData.FILL_HORIZONTAL);
+			gd.horizontalSpan = 2;
+			gd.heightHint = 10;
+			space.setLayoutData(gd);
+
+			section = toolkit.createSection(parent, Section.TITLE_BAR | Section.TWISTIE);
+			FillLayout layout = new FillLayout();
+			section.setLayout(layout);
+			section.setText(label);
+
+			Composite textComposite = toolkit.createComposite(section);
+			section.setClient(textComposite);
+			textComposite.setLayout(new GridLayout());
+			gd = new GridData(GridData.FILL_HORIZONTAL);
+			gd.horizontalSpan = 2;
+			section.setLayoutData(gd);
+			textContainer = textComposite;
+		} else {
+			if (linkLabel) {
+				Hyperlink link = toolkit.createHyperlink(parent, label + " :", SWT.NONE);
+				if (listener != null) {
+					link.addHyperlinkListener(listener);
+				}
+			} else {
+				toolkit.createLabel(parent, label + " :").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
+			}
+			if (openFile) {
+				Composite fileSelectionComposite = toolkit.createComposite(parent);
+				GridLayout gl = new GridLayout();
+				gl.numColumns = 2;
+				gd = new GridData(GridData.FILL_HORIZONTAL);
+				fileSelectionComposite.setLayoutData(gd);
+				gl.marginHeight = 0;
+				gl.marginWidth = 0;
+				fileSelectionComposite.setLayout(gl);
+				textContainer = fileSelectionComposite;
+			} else {
+				textContainer = parent;
+			}
+		}
+		String editValue = null;
+		if (valueType == VALUE_TYPE_TEXT && model instanceof AnyType) {
+			editValue = SmooksModelUtils.getAnyTypeText((AnyType) model);
+		}
+		if (valueType == VALUE_TYPE_COMMENT && model instanceof AnyType) {
+			editValue = SmooksModelUtils.getAnyTypeComment((AnyType) model);
+		}
+		if (valueType == VALUE_TYPE_CDATA && model instanceof AnyType) {
+			editValue = SmooksModelUtils.getAnyTypeCDATA((AnyType) model);
+		}
+		if (valueType == VALUE_TYPE_VALUE) {
+			Object value = getEditValue(itemPropertyDescriptor, model);
+			if (value != null) {
+				editValue = value.toString();
+			}
+		}
+
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		int textType = SWT.FLAT;
+		if (multiText) {
+			textType = SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL;
+		}
+		final Text valueText = toolkit.createText(textContainer, "", textType);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		if (multiText && height > 0) {
+			gd.heightHint = height;
+		}
+		valueText.setLayoutData(gd);
+		toolkit.paintBordersFor(textContainer);
+		if (openFile) {
+			Button fileBrowseButton = toolkit.createButton(textContainer, "Browse", SWT.NONE);
+			fileBrowseButton.addSelectionListener(new SelectionAdapter() {
+
+				public void widgetSelected(SelectionEvent e) {
+					FileSelectionWizard wizard = new FileSelectionWizard();
+					IResource resource = getResource((EObject) fm);
+					Object[] initSelections = new Object[] {};
+					if (resource != null) {
+						initSelections = new Object[] { resource };
+					}
+					wizard.setFilePathProcessor(new ClassPathFileProcessor());
+					wizard.setInitSelections(initSelections);
+					List<ViewerFilter> filterList = new ArrayList<ViewerFilter>();
+					filterList.add(new CurrentProjecViewerFilter(resource));
+					wizard.setViewerFilters(filterList);
+					WizardDialog dialog = new WizardDialog(parent.getShell(), wizard);
+					if (dialog.open() == Dialog.OK) {
+						valueText.setText(wizard.getFilePath());
+					}
+				}
+
+			});
+		}
+		if (editValue != null) {
+			valueText.setText(editValue);
+			if (editValue.length() > 0 && section != null) {
+				section.setExpanded(true);
+			}
+		}
+		if (valueType == VALUE_TYPE_TEXT && model instanceof AnyType && fEditingDomain != null) {
+			valueText.addModifyListener(new ModifyListener() {
+				public void modifyText(ModifyEvent e) {
+					if (!(fm instanceof AnyType)) {
+						return;
+					}
+					String text = SmooksModelUtils.getAnyTypeText((AnyType) fm);
+					if (!valueText.getText().equals(text)) {
+						SmooksModelUtils.setTextToSmooksType(fEditingDomain, (AnyType) fm, valueText.getText());
+					}
+				}
+			});
+		}
+		if (valueType == VALUE_TYPE_COMMENT && model instanceof AnyType && fEditingDomain != null) {
+			valueText.addModifyListener(new ModifyListener() {
+				public void modifyText(ModifyEvent e) {
+					if (!(fm instanceof AnyType)) {
+						return;
+					}
+					String text = SmooksModelUtils.getAnyTypeComment((AnyType) fm);
+					if (!valueText.getText().equals(text)) {
+						SmooksModelUtils.setCommentToSmooksType(fEditingDomain, (AnyType) fm, valueText.getText());
+					}
+				}
+			});
+		}
+		if (valueType == VALUE_TYPE_CDATA && model instanceof AnyType && fEditingDomain != null) {
+			valueText.addModifyListener(new ModifyListener() {
+				public void modifyText(ModifyEvent e) {
+					if (!(fm instanceof AnyType)) {
+						return;
+					}
+					String text = SmooksModelUtils.getAnyTypeCDATA((AnyType) fm);
+					if (!valueText.getText().equals(text)) {
+						SmooksModelUtils.setCDATAToSmooksType(fEditingDomain, (AnyType) fm, valueText.getText());
+					}
+				}
+			});
+		}
+		if (valueType == VALUE_TYPE_VALUE) {
+			if (itemPropertyDescriptor != null) {
+				valueText.addModifyListener(new ModifyListener() {
+					public void modifyText(ModifyEvent e) {
+						Object editValue = getEditValue(itemPropertyDescriptor, fm);
+						if (editValue != null) {
+							if (!editValue.equals(valueText.getText())) {
+								itemPropertyDescriptor.setPropertyValue(fm, valueText.getText());
+							}
+						} else {
+							itemPropertyDescriptor.setPropertyValue(fm, valueText.getText());
+						}
+
+					}
+				});
+			}
+		}
+		return valueText;
+	}
+
 	public static Composite createSelectorFieldEditor(FormToolkit toolkit, Composite parent, final IItemPropertyDescriptor propertyDescriptor,
 			Object model, final SmooksGraphicsExtType extType) {
 		return createDialogFieldEditor(parent, toolkit, propertyDescriptor, "Browse", new IFieldDialog() {
@@ -351,101 +492,12 @@ public class SmooksUIUtils {
 
 	public static void createCDATAFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
 			Object model) {
-		GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
-		Composite space = toolkit.createComposite(parent);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 2;
-		gd.heightHint = 10;
-		space.setLayoutData(gd);
-
-		Section section = toolkit.createSection(parent, Section.TITLE_BAR | Section.TWISTIE | Section.DESCRIPTION);
-		FillLayout layout = new FillLayout();
-		section.setLayout(layout);
-		section.setText(label);
-
-		Composite textComposite = toolkit.createComposite(section);
-		section.setClient(textComposite);
-		textComposite.setLayout(new GridLayout());
-		final Text cdataText = toolkit.createText(textComposite, "", SWT.MULTI | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 2;
-		section.setLayoutData(gd);
-		toolkit.paintBordersFor(textComposite);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.heightHint = 300;
-		cdataText.setLayoutData(gd);
-
-		if (model instanceof AnyType) {
-			String cdata = SmooksModelUtils.getAnyTypeCDATA((AnyType) model);
-			if (cdata != null) {
-				cdataText.setText(cdata);
-				if (cdata.length() > 0) {
-					section.setExpanded(true);
-				}
-			}
-		}
-
-		final Object fm = model;
-		final AdapterFactoryEditingDomain fEditingDomain = editingdomain;
-		cdataText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				if (!(fm instanceof AnyType)) {
-					return;
-				}
-				String text = SmooksModelUtils.getAnyTypeCDATA((AnyType) fm);
-				if (!cdataText.getText().equals(text)) {
-					SmooksModelUtils.setCDATAToSmooksType(fEditingDomain, (AnyType) fm, cdataText.getText());
-				}
-			}
-		});
+		createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300, null, VALUE_TYPE_CDATA);
 	}
 
 	public static void createCommentFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
 			Object model) {
-		GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
-		Composite space = toolkit.createComposite(parent);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 2;
-		gd.heightHint = 10;
-		space.setLayoutData(gd);
-
-		Section section = toolkit.createSection(parent, Section.TITLE_BAR | Section.TWISTIE | Section.DESCRIPTION);
-		FillLayout layout = new FillLayout();
-		section.setLayout(layout);
-		section.setText(label);
-
-		Composite textComposite = toolkit.createComposite(section);
-		section.setClient(textComposite);
-		textComposite.setLayout(new GridLayout());
-		final Text cdataText = toolkit.createText(textComposite, "", SWT.MULTI | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 2;
-		section.setLayoutData(gd);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.heightHint = 300;
-		cdataText.setLayoutData(gd);
-
-		if (model instanceof AnyType) {
-			String comment = SmooksModelUtils.getAnyTypeComment((AnyType) model);
-			if (comment != null) {
-				cdataText.setText(comment);
-				if (comment.length() > 0)
-					section.setExpanded(true);
-			}
-		}
-		final Object fm = model;
-		final AdapterFactoryEditingDomain fEditingDomain = editingdomain;
-		cdataText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				if (!(fm instanceof AnyType)) {
-					return;
-				}
-				String text = SmooksModelUtils.getAnyTypeCDATA((AnyType) fm);
-				if (!cdataText.getText().equals(text)) {
-					SmooksModelUtils.setCommentToSmooksType(fEditingDomain, (AnyType) fm, cdataText.getText());
-				}
-			}
-		});
+		createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300, null, VALUE_TYPE_COMMENT);
 	}
 
 	public static Composite createJavaTypeSearchFieldEditor(Composite parent, FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor,
@@ -458,7 +510,7 @@ public class SmooksUIUtils {
 				String path = uri.toPlatformString(true);
 				workspaceResource = ResourcesPlugin.getWorkspace().getRoot().findMember(new Path(path));
 				JavaTypeFieldDialog dialog = new JavaTypeFieldDialog(workspaceResource);
-				Hyperlink link = (Hyperlink) createFiledEditorLabel(parent, toolkit, propertyDescriptor, model, true);
+				Hyperlink link = (Hyperlink) createFieldEditorLabel(parent, toolkit, propertyDescriptor, model, true);
 				final Composite classTextComposite = toolkit.createComposite(parent);
 				GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 				classTextComposite.setLayoutData(gd);
@@ -666,7 +718,7 @@ public class SmooksUIUtils {
 
 	public static Control createChoiceFieldEditor(Composite parent, FormToolkit formToolkit, IItemPropertyDescriptor itemPropertyDescriptor,
 			Object model, String[] items, IModelProcsser processer, boolean readOnly) {
-		SmooksUIUtils.createFiledEditorLabel(parent, formToolkit, itemPropertyDescriptor, model, false);
+		SmooksUIUtils.createFieldEditorLabel(parent, formToolkit, itemPropertyDescriptor, model, false);
 		Object editValue = getEditValue(itemPropertyDescriptor, model);
 		if (processer != null) {
 			editValue = processer.unwrapValue(editValue);
@@ -740,7 +792,7 @@ public class SmooksUIUtils {
 
 	public static Composite createDialogFieldEditor(Composite parent, FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor,
 			String buttonName, IFieldDialog dialog, final EObject model, boolean labelLink, IHyperlinkListener listener) {
-		Control label = createFiledEditorLabel(parent, toolkit, propertyDescriptor, model, labelLink);
+		Control label = createFieldEditorLabel(parent, toolkit, propertyDescriptor, model, labelLink);
 		if (label instanceof Hyperlink && listener != null) {
 			((Hyperlink) label).addHyperlinkListener(listener);
 		}
