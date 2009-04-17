@@ -9,9 +9,9 @@
             chaining inference based rules engine, more correctly known as a production rule system,
             using an enhanced implementation of the Rete algorithm.</para>
 
-        <para> In this guide we are going to get you familiar with Drools Eclipse plugin which provides
-            development tools for creating, executing and debugging Drools processes and rules from
-            within Eclipse.</para>
+        <para> In this guide we are going to get you familiar with Drools Eclipse plugin which
+            provides development tools for creating, executing and debugging Drools processes and
+            rules from within Eclipse.</para>
 
         <note>
             <title>Note:</title>
@@ -22,14 +22,15 @@
         </note>
 
         <para><property>Drools Tools</property> come bundled with <property>JBoss Tools</property>
-            set of Eclipse plugins. How to install <property>JBoss Tools</property> you can find in the 
-                <ulink url="&gsglink;#JBossToolsInstall">Getting Started Guide</ulink>.</para>
+            set of Eclipse plugins. How to install <property>JBoss Tools</property> you can find in
+            the <ulink url="&gsglink;#JBossToolsInstall">Getting Started Guide</ulink>.</para>
     </section>
 
     <section id="drools_key_features">
         <title>Drools Tools Key Features</title>
 
-        <para>The following table lists all valuable features of the <property>Drools Tools</property>.</para>
+        <para>The following table lists all valuable features of the <property>Drools
+                Tools</property>.</para>
         <table>
             <title>Key Functionality of Drools Tools</title>
             <tgroup cols="3">
@@ -160,10 +161,9 @@
             </listitem>
 
             <listitem>
-                <para>
-                    <ulink url="http://www.jboss.com/products/devstudio/docs">Stable JBossTools/JBDS
-                        documentation</ulink> (supplied with the latest JBDS release, 1.1.0 GA
-                    currently) </para>
+                <para>All <property>JBoss Tools/JBDS</property> documentation you can find on the
+                        <ulink url="http://docs.jboss.org/tools/">documentation release
+                    page</ulink>.</para>
             </listitem>
         </itemizedlist>
 
