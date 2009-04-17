@@ -141,7 +141,7 @@
 
     <vpe:tag name="jsp:text" case-sensitive="yes">
 	    <vpe:template children="yes" modify="yes">
-			<span/>
+			<span class="vpe-text"/>
            	 <vpe:dnd>
 				<vpe:drag start-enable="yes"/>
 				<vpe:drop container="no"/>

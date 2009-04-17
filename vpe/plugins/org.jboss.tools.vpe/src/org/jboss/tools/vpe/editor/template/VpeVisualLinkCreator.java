@@ -20,6 +20,7 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderExcept
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -138,10 +139,11 @@ public class VpeVisualLinkCreator extends VpeAbstractCreator {
         if (valueExpr != null) {
             String value = valueExpr.exec(pageContext, sourceNode).stringValue();
             if (value != null && value.length() > 0) {
-                nsIDOMElement span = visualDocument.createElement(HTML.TAG_SPAN);
-                a.appendChild(span);
+                nsIDOMElement textContainer = VisualDomUtil
+						.createBorderlessContainer(visualDocument);
+                a.appendChild(textContainer);
                 nsIDOMText text = visualDocument.createTextNode(value);
-                span.appendChild(text);
+                textContainer.appendChild(text);
             }
         }
 
