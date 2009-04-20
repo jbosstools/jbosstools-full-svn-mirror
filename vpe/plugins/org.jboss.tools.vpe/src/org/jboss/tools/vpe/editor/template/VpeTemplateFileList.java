@@ -38,7 +38,8 @@ public class VpeTemplateFileList {
 	void load() {
 		VpeTemplateFile newAutoTemplateFile = null;
 		try {
-			newAutoTemplateFile = new VpeTemplateFile(VpeTemplateManager.AUTO_TEMPLATES_FILE_NAME, null);
+			newAutoTemplateFile = new VpeTemplateFile(
+					VpeTemplateManager.getAutoTemplates(), null);
 		} catch (IOException e) {
 			VpePlugin.getPluginLog().logError("Default template for unknown tags loading error ",e);
 		}
@@ -103,16 +104,12 @@ public class VpeTemplateFileList {
 
 	static IPath getFilePath(String name, IConfigurationElement confElement) throws IOException {
 		VpePlugin plugin = VpePlugin.getDefault();
-		Bundle bundle = 
-			confElement==null?plugin.getBundle():Platform.getBundle(confElement.getContributor().getName());
+		Bundle bundle = confElement == null 
+				? plugin.getBundle()
+				: Platform.getBundle(confElement.getContributor().getName());
 		URL url = bundle.getEntry("/"); //$NON-NLS-1$
 		IPath path = new Path(FileLocator.toFileURL(url).getFile());
 		path = path.append(name);
 		return path;
-	}
-	
-	static String getAutoTemplateFileName() throws IOException {
-		IPath path = getFilePath(VpeTemplateManager.AUTO_TEMPLATES_FILE_NAME, null);
-		return path.toOSString();
 	}
 }

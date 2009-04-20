@@ -11,9 +11,12 @@
 package org.jboss.tools.vpe.editor.template;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,7 +45,10 @@ import org.w3c.dom.NodeList;
 
 public class VpeTemplateManager {
 	
-	static final String AUTO_TEMPLATES_FILE_NAME = "templates/vpe-templates-auto.xml"; //$NON-NLS-1$
+	private static final String AUTO_TEMPLATES_DEFAULT_FILE 
+			= "templates/vpe-templates-auto.xml"; //$NON-NLS-1$
+	private static final String AUTO_TEMPLATES_WORKSPACE_FILE 
+			= "templates/vpe-templates-auto.xml"; //$NON-NLS-1$
 	static final String TEMPLATES_FOLDER = File.separator + "templates" + File.separator; //$NON-NLS-1$
 	public static final String VPE_PREFIX = "vpe:"; //$NON-NLS-1$
 
@@ -564,7 +570,7 @@ public class VpeTemplateManager {
 		root = appendTaglib(prefixSet, document, root, data);
 
 		try {
-			IPath path = VpeTemplateFileList.getFilePath(AUTO_TEMPLATES_FILE_NAME,null);
+			IPath path = getAutoTemplates();
 			XMLUtilities.serialize(root, path.toOSString());
 		} catch(IOException e) {
 			VpePlugin.reportProblem(e);
@@ -761,7 +767,7 @@ public class VpeTemplateManager {
 			}
 
 			try {
-				IPath path = VpeTemplateFileList.getFilePath(AUTO_TEMPLATES_FILE_NAME, null);
+				IPath path = getAutoTemplates();
 				// fixed bug [EFWPE-869] - uncomment this line
 				XMLUtilities.serialize(root, path.toOSString());
 			} catch(IOException e) {
@@ -815,7 +821,7 @@ public class VpeTemplateManager {
 
 	private Element loadAutoTemplate() {
 		try {
-			IPath path = VpeTemplateFileList.getFilePath(AUTO_TEMPLATES_FILE_NAME, null);
+			IPath path = getAutoTemplates();
 			Element root = XMLUtilities.getElement(path.toFile(), null);
 			if (root != null && TAG_TEMPLATES.equals(root.getNodeName())) {
 				return root;
@@ -1025,4 +1031,53 @@ public class VpeTemplateManager {
 
 		return defaultTextFormattingData;
 	}
+
+	/**
+	 * Returns the user's template file path.
+	 * <P>
+	 * If the file does not exist in the workspace, it is created
+	 * by copying the default user template file to the workspace.
+	 * </P>
+	 * 
+	 * @return user's template file path
+	 * @throws IOException
+	 * 
+	 * @see <a href="https://jira.jboss.org/jira/browse/JBIDE-4131" >
+				JBIDE-4131: Change saving of vpe auto templates</a> 
+	 */
+	public static IPath getAutoTemplates() throws IOException {
+		final IPath workspaceTemplatePath = VpePlugin.getDefault()
+				.getStateLocation().append(AUTO_TEMPLATES_WORKSPACE_FILE);
+
+		final File workspaceTemplateFile = workspaceTemplatePath.toFile();
+		if (!workspaceTemplateFile.exists()) {
+			final IPath dafaultTemplatePath = VpeTemplateFileList
+					.getFilePath(AUTO_TEMPLATES_DEFAULT_FILE, null);
+			final File defaultTemplateFile = dafaultTemplatePath.toFile();
+			copy(defaultTemplateFile, workspaceTemplateFile);
+		}
+
+		return workspaceTemplatePath;
+	}
+
+    /** 
+     * Copies {@code src} file to {@code dst} file.
+     * If the {@code dst} file does not exist, it is created.
+     */
+    private static void copy(File src, File dst) throws IOException {
+    	// make sure the parent directory of the dst file is exist
+    	dst.getParentFile().mkdirs();
+
+        final InputStream in = new FileInputStream(src);
+        final OutputStream out = new FileOutputStream(dst);
+
+        // Transfer bytes from in to out
+        final byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        in.close();
+        out.close();
+    }
 }

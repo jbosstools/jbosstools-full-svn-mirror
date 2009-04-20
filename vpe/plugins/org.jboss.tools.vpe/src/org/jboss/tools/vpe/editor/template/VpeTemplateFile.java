@@ -22,14 +22,18 @@ public class VpeTemplateFile {
 	IConfigurationElement configElement;
 	
 	VpeTemplateFile(String fileName,IConfigurationElement element) throws IOException {
+		this(VpeTemplateFileList.getFilePath(fileName, element), element);
+	}
+
+	VpeTemplateFile(final IPath path, final IConfigurationElement element) {
 		this(element);
-		path = VpeTemplateFileList.getFilePath(fileName,element);
-		File file = path.toFile();
+		this.path = path;
+		final File file = path.toFile();
 		if (file.exists() && file.isFile()) {
 			stamp = file.lastModified();
-		} 
+		}
 	}
-	
+
 	VpeTemplateFile(IConfigurationElement element) {
 		configElement = element;
 	}

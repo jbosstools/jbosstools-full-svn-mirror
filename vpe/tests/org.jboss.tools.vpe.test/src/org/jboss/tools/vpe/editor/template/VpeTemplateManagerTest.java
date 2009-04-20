@@ -10,17 +10,24 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
 import junit.framework.TestCase;
+
+import org.eclipse.core.runtime.IPath;
+import org.jboss.tools.vpe.test.VpeTestPlugin;
 
 /**
  * Test for Template Manager
  * @author mareshkau
  */
 public class VpeTemplateManagerTest extends TestCase {
-
+	private static final String MANDATORY_TEMPLATE_FILE_ENTRY
+			= "<vpe:templates"; 
 	private List<VpeAnyData> oldTemplates;
 	
 	/* (non-Javadoc)
@@ -73,4 +80,57 @@ public class VpeTemplateManagerTest extends TestCase {
 		assertNotNull("TemplateManager.getDefTemplate() cannot return null",template); //$NON-NLS-1$
 	}
 	
+	/**
+	 * Tests {@link VpeTemplateManager#getAutoTemplates()}
+	 */
+	public void testGetAutoTemplates() {
+		final String workspacePath = VpeTestPlugin.getDefault()
+				.getStateLocation().makeAbsolute().removeLastSegments(1)
+				.toPortableString();
+		try {
+			final IPath autoTemplate1 = VpeTemplateManager
+					.getAutoTemplates().makeAbsolute();
+			
+			// check if the file is in the workspace
+			assertTrue(
+					autoTemplate1.toPortableString().startsWith(workspacePath));
+			
+			// ensure the file is deleted
+			assertTrue("Cannot delete user's templates file.", //$NON-NLS-1$
+					autoTemplate1.toFile().delete());
+
+			final IPath autoTemplate2 = VpeTemplateManager
+					.getAutoTemplates().makeAbsolute();
+
+			// check if the new file has the same path as the old one
+			assertEquals("The path of the user's templates file" //$NON-NLS-1$
+						+ "is changed.", //$NON-NLS-1$ 
+					autoTemplate1, autoTemplate2);
+			
+			final BufferedReader in = new BufferedReader(
+					new FileReader(autoTemplate2.toFile()));
+			boolean hasMandatoryEntry = false;
+			String line;
+			while (!hasMandatoryEntry 
+					&& (line = in.readLine()) != null) {
+				if (line.contains(MANDATORY_TEMPLATE_FILE_ENTRY)) {
+					hasMandatoryEntry = true;
+				}
+			}
+			// check if the file contains MANDATORY_TEMPLATE_FILE_ENTRY
+			assertTrue(
+					"File '" + autoTemplate2.toPortableString() //$NON-NLS-1$
+						+ "' does not contain string '" //$NON-NLS-1$
+						+ MANDATORY_TEMPLATE_FILE_ENTRY + "'.", //$NON-NLS-1$
+					hasMandatoryEntry);
+
+			in.close();
+			
+			// delete the file on exit and check if it is deleted
+			assertTrue("Cannot delete user's templates file.", //$NON-NLS-1$
+					autoTemplate2.toFile().delete());
+		} catch (IOException e) {
+			fail(e.toString());
+		}
+	}
 }
