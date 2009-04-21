@@ -26,7 +26,7 @@ public abstract class AbstractContainerWrapper extends AbstractNodeWrapper imple
     public void addElement(NodeWrapper element) {
         internalAddElement(element);
         localAddElement(element);
-        notifyListeners(ADD_ELEMENT, element);
+        notifyListeners(ADD_ELEMENT, "node", this, null, element);
     }
     
     public void localAddElement(NodeWrapper element) {
@@ -40,12 +40,12 @@ public abstract class AbstractContainerWrapper extends AbstractNodeWrapper imple
         internalRemoveElement(element);
         elements.remove(element);
         element.setParent(null);
-        notifyListeners(REMOVE_ELEMENT, element);
+        notifyListeners(REMOVE_ELEMENT, "node", this, element, null);
     }
     
     protected abstract void internalRemoveElement(NodeWrapper element);
     
-    public List<NodeWrapper> getElements() {
+    public List<NodeWrapper> getNodeWrappers() {
         return elements;
     }
     

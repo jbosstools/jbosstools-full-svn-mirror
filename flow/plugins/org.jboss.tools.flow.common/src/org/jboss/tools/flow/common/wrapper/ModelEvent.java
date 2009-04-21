@@ -23,24 +23,47 @@ package org.jboss.tools.flow.common.wrapper;
  */
 public class ModelEvent {
 	
-	private int change;
+	private int changeType;
+	private Object changeDiscriminator;
 	private Object changedObject;
+	private Object oldValue;
+	private Object newValue;
     
-    public ModelEvent(int change) {
-        this.change = change;
-    }
+//    public ModelEvent(int changeType) {
+//        this.changeType = changeType;
+//    }
     
-    public ModelEvent(int change, Object changedObject) {
-    	this.change = change;
+//    public ModelEvent(int changeType, Object changedObject) {
+//    	this.changeType = changeType;
+//    	this.changedObject = changedObject;
+//    }
+    
+    public ModelEvent(int changeType, Object changeDiscriminator, Object changedObject, Object oldValue, Object newValue) {
+    	this.changeType = changeType;
+    	this.changeDiscriminator = changeDiscriminator;
     	this.changedObject = changedObject;
+    	this.oldValue = oldValue;
+    	this.newValue = newValue;
     }
     
-    public int getChange() {
-        return change;
+    public int getChangeType() {
+        return changeType;
+    }
+    
+    public Object getChangeDiscriminator() {
+    	return changeDiscriminator;
     }
     
     public Object getChangedObject() {
     	return changedObject;
+    }
+    
+    public Object getOldValue() {
+    	return oldValue;
+    }
+    
+    public Object getNewValue() {
+    	return newValue;
     }
     
 }

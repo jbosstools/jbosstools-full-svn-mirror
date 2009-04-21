@@ -67,7 +67,7 @@ public class VerticalAutoLayoutAction extends Action implements IAction {
         for (Map.Entry<String, Node> entry: mapping.entrySet()) {
             Node node = entry.getValue();
             NodeWrapper nodeWrapper = 
-            	((FlowWrapper)diagramViewer.getContents().getModel()).getElement(entry.getKey());
+            	((FlowWrapper)diagramViewer.getContents().getModel()).getNodeWrapper(entry.getKey());
             nodeWrapper.setConstraint(new Rectangle(node.x, node.y, node.width, node.height));
         }
     }
@@ -76,7 +76,7 @@ public class VerticalAutoLayoutAction extends Action implements IAction {
     protected DirectedGraph createDirectedGraph(Map<String, Node> mapping) {
         DirectedGraph graph = new DirectedGraph();
         FlowWrapper processWrapper = (FlowWrapper)diagramViewer.getContents().getModel();
-        for (NodeWrapper elementWrapper: processWrapper.getElements()) {
+        for (NodeWrapper elementWrapper: processWrapper.getNodeWrappers()) {
             Node node = new Node();
             Integer width = (Integer) elementWrapper.getConstraint().width;
             Integer height = (Integer) elementWrapper.getConstraint().height;
@@ -90,7 +90,7 @@ public class VerticalAutoLayoutAction extends Action implements IAction {
             graph.nodes.add(node);
             mapping.put(elementWrapper.getId(), node);
         }
-        for (NodeWrapper elementWrapper: processWrapper.getElements()) {
+        for (NodeWrapper elementWrapper: processWrapper.getNodeWrappers()) {
             for (ConnectionWrapper connection: elementWrapper.getIncomingConnections()) {
                 Node source = mapping.get(connection.getSource().getId());
                 Node target = mapping.get(connection.getTarget().getId());

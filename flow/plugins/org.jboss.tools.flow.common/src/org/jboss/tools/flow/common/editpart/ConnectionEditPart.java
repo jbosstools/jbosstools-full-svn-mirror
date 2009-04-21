@@ -94,7 +94,7 @@ public class ConnectionEditPart extends AbstractConnectionEditPart implements Mo
     }
     
     public void modelChanged(ModelEvent event) {
-        if (event.getChange() == ConnectionWrapper.CHANGE_BENDPOINTS) {
+        if (event.getChangeType() == ConnectionWrapper.CHANGE_BENDPOINTS) {
             refreshBendpoints();
         }
     }

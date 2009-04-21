@@ -68,7 +68,7 @@ public class RootEditPart extends AbstractGraphicalEditPart implements ModelList
     }
 
     protected List<NodeWrapper> getModelChildren() {
-        return getWrapper().getElements();
+        return getWrapper().getNodeWrappers();
     }
     
     public void activate() {
@@ -82,11 +82,11 @@ public class RootEditPart extends AbstractGraphicalEditPart implements ModelList
     }
 
     public void modelChanged(ModelEvent event) {
-        if (event.getChange() == ContainerWrapper.ADD_ELEMENT) {
+        if (event.getChangeType() == ContainerWrapper.ADD_ELEMENT) {
         	refreshChildren();
-        } else if (event.getChange() == ContainerWrapper.REMOVE_ELEMENT) {
+        } else if (event.getChangeType() == ContainerWrapper.REMOVE_ELEMENT) {
             refreshChildren();
-        } else if (event.getChange() == FlowWrapper.CHANGE_VISUAL) {
+        } else if (event.getChangeType() == FlowWrapper.CHANGE_VISUAL) {
     		refreshVisuals();
     	}
     }

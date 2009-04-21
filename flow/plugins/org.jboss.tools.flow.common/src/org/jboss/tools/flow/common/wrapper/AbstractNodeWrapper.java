@@ -47,9 +47,10 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
     private List<ConnectionWrapper> outgoingConnections = new ArrayList<ConnectionWrapper>();
    
 	public void setConstraint(Rectangle constraint) {
+		Rectangle oldConstraint = this.constraint;
 	    this.constraint = constraint;
 		internalSetConstraint(constraint);
-		notifyListeners(CHANGE_VISUAL, this);
+		notifyListeners(CHANGE_VISUAL, "constraint", this, oldConstraint, constraint);
 	}
 	
 	protected abstract void internalSetConstraint(Rectangle constraint);
@@ -90,7 +91,7 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 	public void addIncomingConnection(ConnectionWrapper connection) {
 	    localAddIncomingConnection(connection);
 		internalAddIncomingConnection(connection);
-		notifyListeners(ADD_INCOMING_CONNECTION, connection);
+		notifyListeners(ADD_ELEMENT, "incomingConnection", this, null, connection);
 	}
 	
 	public void localAddIncomingConnection(ConnectionWrapper connection) {
@@ -103,7 +104,7 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 	public void removeIncomingConnection(ConnectionWrapper connection) {
 		incomingConnections.remove(connection);
 		internalRemoveIncomingConnection(connection);
-		notifyListeners(REMOVE_INCOMING_CONNECTION, connection);
+		notifyListeners(REMOVE_ELEMENT, "incomingConnection", this, connection, null);
 	}
 
 	protected void internalRemoveIncomingConnection(ConnectionWrapper connection) {
@@ -112,7 +113,7 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 	public void addOutgoingConnection(ConnectionWrapper connection) {
 	    localAddOutgoingConnection(connection);
 		internalAddOutgoingConnection(connection);
-		notifyListeners(ADD_OUTGOING_CONNECTION, connection);
+		notifyListeners(ADD_ELEMENT, "outgoingConnection", this, null, connection);
 	}
 
     public void localAddOutgoingConnection(ConnectionWrapper connection) {
@@ -125,15 +126,16 @@ public abstract class AbstractNodeWrapper extends AbstractWrapper implements Nod
 	public void removeOutgoingConnection(ConnectionWrapper connection) {
 		outgoingConnections.remove(connection);
 		internalRemoveOutgoingConnection(connection);
-		notifyListeners(REMOVE_OUTGOING_CONNECTION, connection);
+		notifyListeners(REMOVE_ELEMENT, "outgoingConnection", this, connection, null);
 	}
 
 	protected void internalRemoveOutgoingConnection(ConnectionWrapper connection) {
 	}
 
-	public void setName(String name) {
-		internalSetName(name);
-		notifyListeners(CHANGE_VISUAL, this);
+	public void setName(String newLocation) {
+		String oldName = getName();
+		internalSetName(newLocation);
+		notifyListeners(CHANGE_VISUAL, "name", this, oldName, newLocation);
 	}
 
 	protected void internalSetName(String name) {

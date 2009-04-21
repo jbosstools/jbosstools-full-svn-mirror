@@ -26,7 +26,7 @@ public interface ContainerWrapper extends Wrapper {
     
     void removeElement(NodeWrapper element);
     
-    List<NodeWrapper> getElements();
+    List<NodeWrapper> getNodeWrappers();
     
     FlowWrapper getFlowWrapper();
     

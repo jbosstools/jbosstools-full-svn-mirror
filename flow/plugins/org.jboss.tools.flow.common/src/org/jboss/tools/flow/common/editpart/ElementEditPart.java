@@ -99,15 +99,15 @@ public abstract class ElementEditPart extends AbstractGraphicalEditPart implemen
     }
     
     public void modelChanged(ModelEvent event) {
-        if (event.getChange() == NodeWrapper.ADD_INCOMING_CONNECTION) {
+        if (event.getChangeType() == NodeWrapper.ADD_ELEMENT && "incomingConnection".equals(event.getChangeDiscriminator())) {
             refreshTargetConnections();
-        } else if (event.getChange() == NodeWrapper.REMOVE_INCOMING_CONNECTION) {
+        } else if (event.getChangeType() == NodeWrapper.REMOVE_ELEMENT && "incomingConnection".equals(event.getChangeDiscriminator())) {
         	refreshTargetConnections();
-        } else if (event.getChange() == NodeWrapper.ADD_OUTGOING_CONNECTION) {
+        } else if (event.getChangeType() == NodeWrapper.ADD_ELEMENT && "outgoingConnection".equals(event.getChangeDiscriminator())) {
             refreshSourceConnections();
-        } else if (event.getChange() == NodeWrapper.REMOVE_OUTGOING_CONNECTION) {
+        } else if (event.getChangeType() == NodeWrapper.REMOVE_ELEMENT && "outgoingConnection".equals(event.getChangeDiscriminator())) {
         	refreshSourceConnections();
-        } else if (event.getChange() == NodeWrapper.CHANGE_VISUAL) {
+        } else if (event.getChangeType() == NodeWrapper.CHANGE_VISUAL) {
             refreshVisuals();
         }
     }

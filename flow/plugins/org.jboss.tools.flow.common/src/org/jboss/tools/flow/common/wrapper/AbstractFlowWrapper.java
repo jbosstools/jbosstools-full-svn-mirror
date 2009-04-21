@@ -29,39 +29,39 @@ import java.util.Map;
  */
 public abstract class AbstractFlowWrapper extends AbstractWrapper implements FlowWrapper {
 
-    private Map<String, NodeWrapper> elementMap = new HashMap<String, NodeWrapper>();
-    private List<NodeWrapper> elementList = new ArrayList<NodeWrapper>();
-    private transient List<ModelListener> listeners = new ArrayList<ModelListener>();
+    private Map<String, NodeWrapper> nodeWrapperMap = new HashMap<String, NodeWrapper>();
+    private List<NodeWrapper> nodeWrapperList = new ArrayList<NodeWrapper>();
     
     public abstract Integer getRouterLayout();
     
-    public void setRouterLayout(Integer routerLayout) {
-    	internalSetRouterLayout(routerLayout);
-    	notifyListeners(CHANGE_VISUAL, null);
+    public void setRouterLayout(Integer newLayout) {
+    	Integer oldLayout = getRouterLayout();
+    	internalSetRouterLayout(newLayout);
+    	notifyListeners(CHANGE_VISUAL, "routerLayout", this, oldLayout, newLayout);
     }
     
     protected void internalSetRouterLayout(Integer routerLayout) {
     }
 
-    public List<NodeWrapper> getElements() {
+    public List<NodeWrapper> getNodeWrappers() {
         return Collections.unmodifiableList(
-            new ArrayList<NodeWrapper>(elementList));
+            new ArrayList<NodeWrapper>(nodeWrapperList));
     }
     
-    public NodeWrapper getElement(String id) {
-        return (NodeWrapper) elementMap.get(id);
+    public NodeWrapper getNodeWrapper(String id) {
+        return (NodeWrapper) nodeWrapperMap.get(id);
     }
     
-    public void addElement(NodeWrapper element) {
-    	if (!acceptsElement(element)) return;
-        internalAddElement(element);
-		localAddElement(element);
-		notifyListeners(ADD_ELEMENT, element);
+    public void addElement(NodeWrapper nodeWrapper) {
+    	if (!acceptsElement(nodeWrapper)) return;
+        internalAddElement(nodeWrapper);
+		localAddElement(nodeWrapper);
+		notifyListeners(ADD_ELEMENT, "node", this, null, nodeWrapper);
     }
     
     public void localAddElement(NodeWrapper element) {
-        elementMap.put(element.getId(), element);
-        elementList.add(element);
+        nodeWrapperMap.put(element.getId(), element);
+        nodeWrapperList.add(element);
         element.setParent(this);
     }
     
@@ -72,35 +72,20 @@ public abstract class AbstractFlowWrapper extends AbstractWrapper implements Flo
     protected abstract void internalAddElement(NodeWrapper element);
     
     public void localRemoveElement(NodeWrapper element) {
-        elementMap.remove(element.getId());
-        elementList.remove(element);    	
+        nodeWrapperMap.remove(element.getId());
+        nodeWrapperList.remove(element);    	
     }
     
     public void removeElement(NodeWrapper element) {
     	localRemoveElement(element);
         internalRemoveElement(element);
-        notifyListeners(REMOVE_ELEMENT, element);
+        notifyListeners(REMOVE_ELEMENT, "node", this, element, null);
     }
     
     protected abstract void internalRemoveElement(NodeWrapper element);
     
     public FlowWrapper getFlowWrapper() {
         return this;
-    }
-    
-    public void addListener(ModelListener listener) {
-        listeners.add(listener);
-    }
-
-    public void removeListener(ModelListener listener) {
-        listeners.remove(listener);
-    }
-    
-    protected void notifyListeners(int change, NodeWrapper wrapper) {
-        ModelEvent event = new ModelEvent(change, wrapper);
-        for (ModelListener listener: listeners) {
-        	listener.modelChanged(event);
-        }
     }
     
 }

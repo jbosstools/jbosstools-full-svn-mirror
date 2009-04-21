@@ -16,9 +16,10 @@ public abstract class AbstractLabelWrapper extends AbstractWrapper implements
 		return null;
 	}
 
-	public void setLocation(Point location) {
-		this.location = location;
-		notifyListeners(CHANGE_VISUAL, this);
+	public void setLocation(Point newLocation) {
+		Point oldLocation = this.location;
+		this.location = newLocation;
+		notifyListeners(CHANGE_VISUAL, "location", this, oldLocation, newLocation);
 	}
 
 	public void setText(String text) {

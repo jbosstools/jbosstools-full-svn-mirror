@@ -47,7 +47,7 @@ public class ContainerEditPart extends ElementEditPart {
     }
     
     public void modelChanged(ModelEvent event) {
-        if (event.getChange() == ContainerWrapper.ADD_ELEMENT) {
+        if (event.getChangeType() == ContainerWrapper.ADD_ELEMENT) {
         	refreshChildren();
         	Object changedObject = event.getChangedObject();
         	if (changedObject != null) {
@@ -56,7 +56,7 @@ public class ContainerEditPart extends ElementEditPart {
         			((ElementEditPart)editPart).performDirectEdit();
         		}
         	}
-        } else if (event.getChange() == ContainerWrapper.REMOVE_ELEMENT) {
+        } else if (event.getChangeType() == ContainerWrapper.REMOVE_ELEMENT) {
             refreshChildren();
         } else {
             super.modelChanged(event);
@@ -72,7 +72,7 @@ public class ContainerEditPart extends ElementEditPart {
     }
     
     protected List<NodeWrapper> getModelChildren() {
-        return getElementContainerElementWrapper().getElements();
+        return getElementContainerElementWrapper().getNodeWrappers();
     }
 
     public IFigure getContentPane() {

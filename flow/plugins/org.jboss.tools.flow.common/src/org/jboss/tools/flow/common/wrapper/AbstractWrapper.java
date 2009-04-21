@@ -1,7 +1,9 @@
 package org.jboss.tools.flow.common.wrapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -11,6 +13,7 @@ public abstract class AbstractWrapper implements Wrapper {
 
     private Element element;
     private transient List<ModelListener> listeners = new ArrayList<ModelListener>();
+    private transient Map<Object, List<Element>> children = new HashMap<Object, List<Element>>();
     
     public void setElement(Element element) {
         this.element = element;
@@ -18,6 +21,39 @@ public abstract class AbstractWrapper implements Wrapper {
 
     public Element getElement() {
         return element;
+    }
+    
+	public void addChild(Object type, Element element) {
+		List<Element> childList = children.get(type);
+		if (childList == null) {
+			childList = new ArrayList<Element>();
+			children.put(type, childList);
+		}
+		childList.add(element);
+		notifyListeners(ADD_ELEMENT, type, this, null, element);
+	}
+	
+	public void removeChild(Object type, Element element) {
+		List<Element> childList = children.get(type);
+		if (childList == null) return;
+		childList.remove(element);
+		if (childList.isEmpty()) {
+			children.remove(type);
+		}
+		notifyListeners(REMOVE_ELEMENT, type, this, element, null);
+	}
+	
+    public void setMetaData(String name, Object value) {
+    	if (element != null) {
+    		element.setMetaData(name, value);
+    	}
+    }
+    
+    public Object getMetaData(String name) {
+    	if (element != null) {
+    		return element.getMetaData(name);
+    	}
+    	return null;
     }
     
 	public void addListener(ModelListener listener) {
@@ -28,15 +64,18 @@ public abstract class AbstractWrapper implements Wrapper {
 		listeners.remove(listener);
 	}
 	
-	public void notifyListeners(int change, Object object) {
-		ModelEvent event = new ModelEvent(change, object);
+	public void notifyListeners(int type, Object discriminator, Object object, Object oldValue, Object newValue) {
+		notifyListeners(new ModelEvent(type, discriminator, object, oldValue, newValue));
+	}
+	
+	public void notifyListeners(ModelEvent event) {
 		for (ModelListener listener: listeners) {
 			listener.modelChanged(event);
 		}
 	}
 	
 	public void notifyListeners(int change) {
-		notifyListeners(change, null);
+		notifyListeners(change, null, null, null, null);
 	}
 
 	public Object getEditableValue() {
@@ -73,10 +112,11 @@ public abstract class AbstractWrapper implements Wrapper {
 		}
 	}
 
-	public void setPropertyValue(Object id, Object value) {
+	public void setPropertyValue(Object id, Object newValue) {
 		if (getPropertySource() != null) {
-			getPropertySource().setPropertyValue(id, value);
-			notifyListeners(CHANGE_PROPERTY, id);
+			Object oldValue = getPropertySource().getPropertyValue(id);
+			getPropertySource().setPropertyValue(id, newValue);
+			notifyListeners(CHANGE_PROPERTY, id, this, oldValue, newValue);
 		}		
 	}
 	

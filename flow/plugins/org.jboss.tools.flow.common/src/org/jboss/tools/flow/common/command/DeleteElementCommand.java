@@ -62,7 +62,7 @@ public class DeleteElementCommand extends Command {
     private void initializeEmbeddedCommands() {
     	embeddedCommands = new ArrayList<DeleteElementCommand>();
     	ContainerWrapper container = (ContainerWrapper)child;
-    	List<NodeWrapper> children = container.getElements();
+    	List<NodeWrapper> children = container.getNodeWrappers();
     	for (NodeWrapper w : children) {
     		DeleteElementCommand c = new DeleteElementCommand();
     		c.setParent(container);

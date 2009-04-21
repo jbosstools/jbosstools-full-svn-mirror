@@ -7,7 +7,7 @@ public interface FlowWrapper extends ContainerWrapper {
     Integer ROUTER_LAYOUT_SHORTEST_PATH = new Integer(2);
 
 
-	NodeWrapper getElement(String id);
+	NodeWrapper getNodeWrapper(String id);
 
 	Object getRouterLayout();
 

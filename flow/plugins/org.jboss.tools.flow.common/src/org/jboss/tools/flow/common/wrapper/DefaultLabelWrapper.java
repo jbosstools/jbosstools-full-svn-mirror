@@ -23,7 +23,7 @@ public class DefaultLabelWrapper extends AbstractLabelWrapper implements ModelLi
 	}
 	
 	public void modelChanged(ModelEvent event) {
-		notifyListeners(event.getChange(), event.getChangedObject());
+		notifyListeners(event);
 	}
     
     protected IPropertySource getPropertySource() {
