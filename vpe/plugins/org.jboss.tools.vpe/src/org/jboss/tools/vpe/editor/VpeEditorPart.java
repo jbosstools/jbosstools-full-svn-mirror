@@ -492,7 +492,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		cmpEd.setLayoutData(new GridData(GridData.FILL_BOTH));
 		// /////////////////////////////////////////////////////////////////
 		//container = new SashForm(cmpEd, SWT.VERTICAL);
-		container = new CustomSashForm(cmpEd, SWT.VERTICAL);
+		String editorsSplitting = VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue();
+		container = new CustomSashForm(cmpEd, (CustomSashForm.LAYOUT_HORIZONTAL
+			.equalsIgnoreCase(editorsSplitting) ? SWT.HORIZONTAL : SWT.VERTICAL));
 		if (editorSettings != null)
 			editorSettings.addSetting(new SashSetting(container));
 

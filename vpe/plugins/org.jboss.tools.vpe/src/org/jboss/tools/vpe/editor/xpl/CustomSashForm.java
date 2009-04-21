@@ -44,7 +44,8 @@ import org.jboss.tools.vpe.messages.VpeUIMessages;
 public class CustomSashForm extends SashForm {
 
 	public static final String copyright = "(c) Copyright IBM Corporation 2002."; //$NON-NLS-1$
-	
+	public static final String LAYOUT_HORIZONTAL = "Horizontal"; //$NON-NLS-1$
+	public static final String LAYOUT_VERTICAL = "VERTICAL"; //$NON-NLS-1$
 	/**
 	 * Custom style bits. They set whether max to one side of the other
 	 * is not permitted. For example, if NO_MAX_UP, then there will be only
