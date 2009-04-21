@@ -492,9 +492,14 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		cmpEd.setLayoutData(new GridData(GridData.FILL_BOTH));
 		// /////////////////////////////////////////////////////////////////
 		//container = new SashForm(cmpEd, SWT.VERTICAL);
-		String editorsSplitting = VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue();
+		String sashOrientation = VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue();
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4152
+		 * Sash orientation can be changed to either vertical or horizontal.
+		 */
 		container = new CustomSashForm(cmpEd, (CustomSashForm.LAYOUT_HORIZONTAL
-			.equalsIgnoreCase(editorsSplitting) ? SWT.HORIZONTAL : SWT.VERTICAL));
+			.equalsIgnoreCase(sashOrientation) ? SWT.HORIZONTAL : SWT.VERTICAL));
+		container.setSashOrientation(sashOrientation);
 		if (editorSettings != null)
 			editorSettings.addSetting(new SashSetting(container));
 
@@ -678,6 +683,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 			public void nodeChanged(XModelTreeEvent event) {
 				selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
+				container.changeOrientation();
 			}
 
 			public void structureChanged(XModelTreeEvent event) {

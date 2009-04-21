@@ -29,6 +29,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Sash;
+import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 /**
@@ -45,7 +47,7 @@ public class CustomSashForm extends SashForm {
 
 	public static final String copyright = "(c) Copyright IBM Corporation 2002."; //$NON-NLS-1$
 	public static final String LAYOUT_HORIZONTAL = "Horizontal"; //$NON-NLS-1$
-	public static final String LAYOUT_VERTICAL = "VERTICAL"; //$NON-NLS-1$
+	public static final String LAYOUT_VERTICAL = "Vertical"; //$NON-NLS-1$
 	/**
 	 * Custom style bits. They set whether max to one side of the other
 	 * is not permitted. For example, if NO_MAX_UP, then there will be only
@@ -109,6 +111,11 @@ public class CustomSashForm extends SashForm {
 		Y_INDEX = 3,
 		WIDTH_INDEX = 4,
 		HEIGHT_INDEX = 5;
+	
+	/*
+	 * Stores current sash orientation
+	 */
+	private String sashOrientation = Constants.EMPTY;
 	
 	/**
 	 * Constructor for CustomSashForm.
@@ -441,7 +448,6 @@ public class CustomSashForm extends SashForm {
 							break;
 						}
 					}
-					
 					currentSashInfo.sash.redraw();	// Make sure stipple goes away from the mouse up if not over an arrow button.
 					fireDividerMoved();
 				}
@@ -935,6 +941,25 @@ public class CustomSashForm extends SashForm {
 
 	public void removeWeightsChangeListener(PropertyChangeListener listener) {
 		listeners.removePropertyChangeListener(listener);
+	}
+
+	public String getSashOrientation() {
+	    return sashOrientation;
+	}
+
+	public void setSashOrientation(String sashOrientation) {
+	    this.sashOrientation = sashOrientation;
+	}
+	
+	public boolean changeOrientation() {
+	    String orientation = VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue();
+	    if (!getSashOrientation().equalsIgnoreCase(orientation)) {
+		setOrientation(CustomSashForm.LAYOUT_HORIZONTAL
+			.equalsIgnoreCase(orientation) ? SWT.HORIZONTAL : SWT.VERTICAL);
+		setSashOrientation(orientation);
+		return true;
+	    }
+	    return false;
 	}
 	
 }
