@@ -13,7 +13,7 @@ public abstract class AbstractWrapper implements Wrapper {
 
     private Element element;
     private transient List<ModelListener> listeners = new ArrayList<ModelListener>();
-    private transient Map<Object, List<Element>> children = new HashMap<Object, List<Element>>();
+    private Map<Object, List<Element>> children = new HashMap<Object, List<Element>>();
     
     public void setElement(Element element) {
         this.element = element;
@@ -24,23 +24,51 @@ public abstract class AbstractWrapper implements Wrapper {
     }
     
 	public void addChild(Object type, Element element) {
+		localAddChild(type, element);
+		internalAddChild(type, element);
+		notifyListeners(ADD_ELEMENT, type, this, null, element);
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected void internalAddChild(Object type, Element element) {
+		Object childList = getPropertyValue(type);
+		if (childList == null || !(childList instanceof List)) return;
+		((List)childList).add(element);
+	}
+	
+	public void localAddChild(Object type, Element element) {
 		List<Element> childList = children.get(type);
 		if (childList == null) {
 			childList = new ArrayList<Element>();
 			children.put(type, childList);
 		}
 		childList.add(element);
-		notifyListeners(ADD_ELEMENT, type, this, null, element);
 	}
 	
 	public void removeChild(Object type, Element element) {
+		localRemoveChild(type, element);
+		internalRemoveChild(type, element);
+		notifyListeners(REMOVE_ELEMENT, type, this, element, null);
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected void internalRemoveChild(Object type, Element element) {
+		Object childList = getPropertyValue(type);
+		if (childList == null || !(childList instanceof List)) return;
+		((List)childList).remove(element);
+	}
+	
+	public void localRemoveChild(Object type, Element element) {
 		List<Element> childList = children.get(type);
 		if (childList == null) return;
 		childList.remove(element);
 		if (childList.isEmpty()) {
 			children.remove(type);
 		}
-		notifyListeners(REMOVE_ELEMENT, type, this, element, null);
+	}
+	
+	public List<Element> getChildren(Object type) {
+		return children.get(type);
 	}
 	
     public void setMetaData(String name, Object value) {
