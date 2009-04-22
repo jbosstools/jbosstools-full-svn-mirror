@@ -1,5 +1,7 @@
 package org.jboss.tools.flow.common.wrapper;
 
+import java.util.List;
+
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.flow.common.model.Element;
@@ -23,6 +25,7 @@ public interface Wrapper extends IAdaptable, IPropertySource, Element {
 	
 	void addChild(Object type, Element element);
 	void removeChild(Object type, Element element);
+	List<Element> getChildren(Object type);
 	
     void addListener(ModelListener listener);
     void removeListener(ModelListener listener);
