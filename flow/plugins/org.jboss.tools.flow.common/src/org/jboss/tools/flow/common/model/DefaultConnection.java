@@ -1,10 +1,8 @@
 package org.jboss.tools.flow.common.model;
 
-import java.util.HashMap;
 
-public class DefaultConnection implements Connection {
+public class DefaultConnection extends DefaultElement implements Connection {
 	
-	private HashMap<String, Object> metaData = new HashMap<String, Object>();
 	private Node from, to;
 	
 	public DefaultConnection() {
@@ -16,14 +14,6 @@ public class DefaultConnection implements Connection {
 		setTo(to);
 	}
 
-	public Object getMetaData(String key) {
-		return metaData.get(key);
-	}
-
-	public void setMetaData(String key, Object value) {
-		metaData.put(key, value);
-	}
-	
 	public Node getFrom() {
 		return from;
 	}

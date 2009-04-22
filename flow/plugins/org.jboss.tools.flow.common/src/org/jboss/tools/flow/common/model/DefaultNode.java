@@ -5,13 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DefaultNode implements Node {
+public class DefaultNode extends DefaultElement implements Node {
 	
 	private long id;
 	private String name;
 	private Container container;
-	
-	private HashMap<String, Object> metaData = new HashMap<String, Object>();
 	
 	private List<Connection> incomingConnections = new ArrayList<Connection>();
 	private List<Connection> outgoingConnections = new ArrayList<Connection>();
@@ -30,14 +28,6 @@ public class DefaultNode implements Node {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public void setMetaData(String key, Object value) {
-		metaData.put(key, value);
-	}
-
-	public Object getMetaData(String key) {
-		return metaData.get(key);
 	}
 
 	public Container getNodeContainer() {
