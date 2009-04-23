@@ -273,17 +273,13 @@
 
       <para>The complete information on how to manage JBoss AS from JBoss Developer Studio you can
         read in a <link linkend="manage">corresponding chapter</link>.</para>
-      <para>Now you just need to start the server by clicking on green circle/triangle icon in the
-        JBoss Server View.</para>
-
-      <figure>
-        <title>Starting the Server</title>
-        <mediaobject>
+      <para>Now you just need to start the server by clicking on the Start the server icon ( 
+        <inlinemediaobject>
           <imageobject>
-            <imagedata fileref="images/first_seam/first_seam15.png"/>
+            <imagedata fileref="images/first_seam/first_seam50.png"/>
           </imageobject>
-        </mediaobject>
-      </figure>
+        </inlinemediaobject> ) in the
+        JBoss Server View.</para>
 
       <para>Then run the project by selecting the project and use <emphasis><property>Run As... >
             Run on Server</property>.</emphasis></para>
