@@ -375,17 +375,15 @@
 			<itemizedlist>
 				<listitem>
 					<para>Start JBoss Server from <ulink url="&aslink;#JBossServerView">JBoss
-							Server view</ulink> by clicking the Start icon.</para>
+						Server view</ulink> by clicking the Start the server icon (
+						<inlinemediaobject>
+							<imageobject>
+								<imagedata fileref="images/jsp_application/jsp_application_18.png"/>
+							</imageobject>
+						</inlinemediaobject> ) .</para>
 				</listitem>
 			</itemizedlist>
-			<figure>
-				<title>Starting Server</title>
-				<mediaobject>
-					<imageobject>
-						<imagedata fileref="images/jsp_application/jsp_application_15.png"/>
-					</imageobject>
-				</mediaobject>
-			</figure>
+
 			<itemizedlist>
 				<listitem>
 					<para>Click the Run icon or right click your project folder and select <emphasis>
@@ -396,17 +394,15 @@
 						clicking the <emphasis>
 							<property>hello.jsp</property>
 						</emphasis> page and selecting <emphasis>
-							<property>Run on the Server</property>. </emphasis></para>
+							<property>Run on the Server</property> </emphasis>( 
+						<inlinemediaobject>
+								<imageobject>
+									<imagedata fileref="images/jsp_application/jsp_application_16.png"/>
+								</imageobject>
+						</inlinemediaobject> ).</para>
 				</listitem>
 			</itemizedlist>
-			<figure>
-				<title>Run Project</title>
-				<mediaobject>
-					<imageobject>
-						<imagedata fileref="images/jsp_application/jsp_application_16.png"/>
-					</imageobject>
-				</mediaobject>
-			</figure>
+			
 			<para>You should see the next page in a Browser :</para>
 			<figure>
 				<title>Running Project</title>
