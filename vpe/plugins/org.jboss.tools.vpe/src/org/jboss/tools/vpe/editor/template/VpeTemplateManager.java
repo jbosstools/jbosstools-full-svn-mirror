@@ -45,9 +45,9 @@ import org.w3c.dom.NodeList;
 
 public class VpeTemplateManager {
 	
-	private static final String AUTO_TEMPLATES_DEFAULT_FILE 
-			= "templates/vpe-templates-auto.xml"; //$NON-NLS-1$
-	private static final String AUTO_TEMPLATES_WORKSPACE_FILE 
+	private static final String EMPTY_VPE_TEMPLATES_AUTO 
+			= "templates/empty-vpe-templates-auto.xml"; //$NON-NLS-1$
+	private static final String VPE_TEMPLATES_AUTO 
 			= "templates/vpe-templates-auto.xml"; //$NON-NLS-1$
 	static final String TEMPLATES_FOLDER = File.separator + "templates" + File.separator; //$NON-NLS-1$
 	public static final String VPE_PREFIX = "vpe:"; //$NON-NLS-1$
@@ -1047,12 +1047,12 @@ public class VpeTemplateManager {
 	 */
 	public static IPath getAutoTemplates() throws IOException {
 		final IPath workspaceTemplatePath = VpePlugin.getDefault()
-				.getStateLocation().append(AUTO_TEMPLATES_WORKSPACE_FILE);
+				.getStateLocation().append(VPE_TEMPLATES_AUTO);
 
 		final File workspaceTemplateFile = workspaceTemplatePath.toFile();
 		if (!workspaceTemplateFile.exists()) {
 			final IPath dafaultTemplatePath = VpeTemplateFileList
-					.getFilePath(AUTO_TEMPLATES_DEFAULT_FILE, null);
+					.getFilePath(EMPTY_VPE_TEMPLATES_AUTO, null);
 			final File defaultTemplateFile = dafaultTemplatePath.toFile();
 			copy(defaultTemplateFile, workspaceTemplateFile);
 		}
