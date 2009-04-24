@@ -5,12 +5,14 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            name="Smooks Configuration Editor"
-            extensions="xml"
-            icon="icons/smooks-sm.gif"
-            contributorClass="org.jboss.tools.smooks.configuration.editors.SmooksActionBarContributor"
             class="org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor"
-            id="org.jboss.tools.smooks.configuration.editors.MultiPageEditor">
+            contributorClass="org.jboss.tools.smooks.configuration.editors.SmooksActionBarContributor"
+            icon="icons/smooks-sm.gif"
+            id="org.jboss.tools.smooks.configuration.editors.MultiPageEditor"
+            name="Smooks Configuration Editor">
+         <contentTypeBinding
+               contentTypeId="org.jboss.tools.smooks.ui.smooks.contentType">
+         </contentTypeBinding>
       </editor>
    </extension>
    <extension
@@ -32,6 +34,7 @@
          point="org.eclipse.core.contenttype.contentTypes">
       <content-type
             base-type="org.eclipse.core.runtime.xml"
+            describer="org.jboss.tools.smooks.configuration.editors.SmooksConfigfileContentDescriber"
             file-extensions="xml"
             id="org.jboss.tools.smooks.ui.smooks.contentType"
             name="Smooks Configuration File"
