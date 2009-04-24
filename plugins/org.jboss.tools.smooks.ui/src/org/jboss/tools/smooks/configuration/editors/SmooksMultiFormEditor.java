@@ -328,19 +328,20 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 	 */
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		IEditorPart activeEditor = getActiveEditor();
-		if (activeEditor != null && activeEditor == textEditor) {
-			textEditor.doSave(monitor);
-			((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
-			firePropertyChange(PROP_DIRTY);
-		} else {
-			Map<?, ?> options = Collections.emptyMap();
-			initSaveOptions(options);
-			if (editingDomain != null) {
-				ResourceSet resourceSet = editingDomain.getResourceSet();
-				List<Resource> resourceList = resourceSet.getResources();
-				monitor.beginTask("Saving Smooks config file", resourceList.size());
-				try {
+		try {
+			IEditorPart activeEditor = getActiveEditor();
+			if (activeEditor != null && activeEditor == textEditor) {
+				textEditor.doSave(monitor);
+				((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
+				firePropertyChange(PROP_DIRTY);
+			} else {
+				Map<?, ?> options = Collections.emptyMap();
+				initSaveOptions(options);
+				if (editingDomain != null) {
+					ResourceSet resourceSet = editingDomain.getResourceSet();
+					List<Resource> resourceList = resourceSet.getResources();
+					monitor.beginTask("Saving Smooks config file", resourceList.size());
+
 					for (Iterator<Resource> iterator = resourceList.iterator(); iterator.hasNext();) {
 						Resource resource = (Resource) iterator.next();
 						resource.save(options);
@@ -349,18 +350,18 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 					((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
 					textEditor.doRevertToSaved();
 					firePropertyChange(PROP_DIRTY);
-				} catch (IOException e) {
-					SmooksConfigurationActivator.getDefault().log(e);
-				} finally {
-					monitor.done();
 				}
 			}
-		}
-		if(this.smooksModel != null){
-			List<Object> lists = new ArrayList<Object>();
-			lists.add(smooksModel);
-			SmooksModelValidator validator = new SmooksModelValidator(lists,getEditingDomain());
-			validator.validate(monitor);
+			if (this.smooksModel != null) {
+				List<Object> lists = new ArrayList<Object>();
+				lists.add(smooksModel);
+				SmooksModelValidator validator = new SmooksModelValidator(lists, getEditingDomain());
+				validator.validate(monitor);
+			}
+		} catch (IOException e) {
+			SmooksConfigurationActivator.getDefault().log(e);
+		} finally {
+			monitor.done();
 		}
 	}
 
@@ -380,6 +381,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		// if success to open editor , check if there isn't ext file and create
 		// a new one
 		String extFileName = file.getName() + SmooksConstants.SMOOKS_GRAPHICSEXT_EXTENTION_NAME_WITHDOT;
+		setPartName(file.getName());
 		IContainer container = file.getParent();
 		if (container != null && container.exists()) {
 			IFile extFile = container.getFile(new Path(extFileName));
