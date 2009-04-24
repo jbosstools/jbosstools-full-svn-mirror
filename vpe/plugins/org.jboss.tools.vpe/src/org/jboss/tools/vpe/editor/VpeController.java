@@ -1387,7 +1387,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					return Status.OK_STATUS;
 				}
 			};
-			visualRefreshJob.setRule(new GreedyRule(this));
+//			visualRefreshJob.setRule(new GreedyRule(this));
 			visualRefreshJob.setPriority(Job.SHORT);
 			visualRefreshJob.schedule();
 		}
@@ -2664,7 +2664,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				return Status.OK_STATUS;
 			}
 		};
-		reinitJob.setRule(new GreedyRule(this));
+//		reinitJob.setRule(new GreedyRule(this));
 		reinitJob.schedule();
 	}
 

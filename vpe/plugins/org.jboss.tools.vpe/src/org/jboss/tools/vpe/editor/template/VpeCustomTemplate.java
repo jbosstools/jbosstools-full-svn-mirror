@@ -10,19 +10,26 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.ide.IDE;
+import org.jboss.tools.common.el.core.ELReferenceList;
+import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeIncludeInfo;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.custom.CustomTLDReference;
 import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMNode;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 /**
@@ -45,12 +52,16 @@ public class VpeCustomTemplate extends VpeIncludeTemplate {
 
 		IPath pathToFile = CustomTLDReference
 				.getCustomElementPath(sourceNode, pageContext);
-
 		if (pathToFile != null) {
+				//add attributes to EL list
 
-				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(
+				
+				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
 						pathToFile);
 				if (file != null && file.exists()) {
+					
+					
+					
 					if (!pageContext.getVisualBuilder().isFileInIncludeStack(
 							file)) {
 						Document document = pageContext.getVisualBuilder()
@@ -65,7 +76,8 @@ public class VpeCustomTemplate extends VpeIncludeTemplate {
 						if (document != null) {
 							VpeCreationData creationData = createInclude(
 									document, visualDocument);
-							creationData.setData(file);
+							ResourceReference [] oldResourceReferences = VpeCustomTemplate.addAttributesToELExcpressions(sourceNode, file);
+							creationData.setData(new TransferObject(oldResourceReferences, file));
 							pageContext.getVisualBuilder().pushIncludeStack(
 									new VpeIncludeInfo((Element) sourceNode,
 											file, document));
@@ -92,6 +104,45 @@ public class VpeCustomTemplate extends VpeIncludeTemplate {
 			}
 		}
 	}
+	
+	@Override
+	public void validate(VpePageContext pageContext, Node sourceNode,
+			nsIDOMDocument visualDocument, VpeCreationData data){
+		
+		if(data.getData() instanceof TransferObject) {
+			TransferObject trObject = (TransferObject) data.getData();
+			ELReferenceList.getInstance().setAllResources(trObject.getCustomFile(), trObject.getResourceReferebces());
+			data.setData(trObject.getCustomFile());
+		}
+		
+		super.validate(pageContext, sourceNode, visualDocument, data);
+	}
+
+	/**
+	 * Temparary add to attribute for custom el expressions
+	 * @param pageContext Page Context
+	 * @param sourceNode source Node
+	 * @param processedFile processed File
+	 * @return resourceReferences - unchanged resource references
+	 */
+	private static final ResourceReference[] addAttributesToELExcpressions(final Node sourceNode,
+			final IFile processedFile){
+				
+		//obtain old resource references for this file
+		ResourceReference[] resourceReferences = ELReferenceList.getInstance().getAllResources(processedFile);	
+		//obtain attribute resource references for file
+		NamedNodeMap attributesMap = sourceNode.getAttributes();
+		List<ResourceReference>  addedAttrToElExpressions = new ArrayList<ResourceReference>();
+		for(int i=0;i<attributesMap.getLength();i++) {
+			Attr attr = (Attr) attributesMap.item(i);
+			//adds attribute if such attribute not exists for page
+				ResourceReference resRef = new ResourceReference(attr.getName(), ResourceReference.FILE_SCOPE);
+				resRef.setProperties(attr.getValue());
+				addedAttrToElExpressions.add(resRef);
+		}
+		ELReferenceList.getInstance().setAllResources(processedFile,addedAttrToElExpressions.toArray(new ResourceReference[0]));
+		return resourceReferences;
+	}
 	/**
 	 * Looks for file to open on each editor, for open on click
 	 * @param pageContext
@@ -105,15 +156,60 @@ public class VpeCustomTemplate extends VpeIncludeTemplate {
 		IFile file =null;
 		
 		if(pathToFile!=null) {
-			file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(
+			file = ResourcesPlugin.getWorkspace().getRoot().getFile(
 				pathToFile);
 		}
 		//if we cann't find source file, then just open tld definition file
 		if(file==null || !file.exists()) {
 			pathToFile = CustomTLDReference.getCustomTLDPath(pageContext, sourceElement);
-			file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(
+			file = ResourcesPlugin.getWorkspace().getRoot().getFile(
 					pathToFile);
 		}
 		return file;
 	}
+	
+	@Override
+	public void beforeRemove(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
+		IFile file = null;
+		if(data instanceof TransferObject) {
+			file = ((TransferObject)data).getCustomFile();
+		} else if(data instanceof IFile) {
+			file = (IFile) data;
+		}
+		super.beforeRemove(pageContext, sourceNode, visualNode, file);
+	}
+
+	/**
+	 * Object which used to passing argument throw template event processing,
+	 * restore el expressions after processing custom template
+	 * 
+	 * @author mareshkau
+	 *
+	 */
+	private class TransferObject {
+		private ResourceReference [] resourceReferebces;
+		private IFile customFile;
+		
+		/**
+		 * @param resourceReferebces
+		 * @param customFile
+		 */
+		public TransferObject(ResourceReference[] resourceReferebces,
+				IFile customFile) {
+			this.resourceReferebces = resourceReferebces;
+			this.customFile = customFile;
+		}
+		/**
+		 * @return the resourceReferebces
+		 */
+		public ResourceReference[] getResourceReferebces() {
+			return this.resourceReferebces;
+		}
+		/**
+		 * @return the customFile
+		 */
+		public IFile getCustomFile() {
+			return this.customFile;
+		}
+	};
 }

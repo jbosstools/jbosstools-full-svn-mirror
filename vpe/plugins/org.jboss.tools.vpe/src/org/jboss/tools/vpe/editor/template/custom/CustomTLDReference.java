@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IEditorInput;
@@ -59,7 +60,7 @@ public class CustomTLDReference {
 		if (customTLDData == null) {
 			return null;
 		}
-		IPath pathToSourceFile = (IPath) customTLDData.getTldFilePath();
+		IPath pathToSourceFile = customTLDData.getTldFilePath();
 		pathToSourceFile = pathToSourceFile.removeLastSegments(1);
 		String sourceParamValue = CustomTLDParser.getSourceValuetInTag(
 				customTLDData.getTldFilePath(), sourceNode.getLocalName());
@@ -129,8 +130,13 @@ public class CustomTLDReference {
 						for (String faceletLib : libs) {
 							IPath rootPath = VpeStyleUtil
 									.getRootPath(iEditorInput);
+							IPath projectPath = ((IFileEditorInput)iEditorInput).getFile().getProject().getLocation();
+							
 							IPath pathToCustonTld = new Path(faceletLib);
+							
 							pathToCustonTld = rootPath.append(pathToCustonTld);
+							pathToCustonTld = pathToCustonTld.makeRelativeTo(projectPath);
+							pathToCustonTld = ((IFileEditorInput)iEditorInput).getFile().getProject().getFile(pathToCustonTld).getFullPath();
 							CustomTLDData customTLDData = new CustomTLDData(
 									pathToCustonTld, CustomTLDParser
 											.getNameSpace(pathToCustonTld));

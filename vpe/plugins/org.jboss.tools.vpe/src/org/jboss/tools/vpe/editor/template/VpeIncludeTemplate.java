@@ -93,6 +93,7 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 		return creationData;
 	}
 
+	@Override
 	public void validate(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, VpeCreationData data) {
 		if (data.getData() != null) {
 			VpeIncludeInfo includeInfo = pageContext.getVisualBuilder().popIncludeStack();
@@ -102,15 +103,12 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 		}
 	}
 
+	@Override
 	public void beforeRemove(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
 		IFile file = (IFile)data;
 		if (file != null) {
 			pageContext.getEditPart().getController().getIncludeList().removeIncludeModel(file);
 		}
-	}
-
-	public boolean recreateAtAttrChange(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMElement visualNode, Object data, String name, String value) {
-		return true;
 	}
 	
 	protected VpeCreationData createInclude(Document sourceDocument, nsIDOMDocument visualDocument) {
@@ -146,6 +144,7 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 		return new VpeCreationData(visualNewElement);
 	}
 
+	@Override
 	public void openIncludeEditor(VpePageContext pageContext, Element sourceElement, Object data) {
 		if (sourceElement != null && fileNameExpression != null) {
 			VpeValue vpeValue;

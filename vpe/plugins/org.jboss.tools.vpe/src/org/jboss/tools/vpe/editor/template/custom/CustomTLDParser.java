@@ -42,7 +42,7 @@ public class CustomTLDParser {
 	 */
 	public static final String getNameSpace(IPath pathToFile){
 		
-		IFile  file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(pathToFile);
+		IFile  file = ResourcesPlugin.getWorkspace().getRoot().getFile(pathToFile);
 		if(file!=null && file.exists()) {
 			Document document=null;
 			try {
@@ -71,7 +71,7 @@ public class CustomTLDParser {
 	 * @return source value if exists or null otherwise
 	 */
 	public static final String getSourceValuetInTag(IPath pathToFile, String name){
-		IFile  file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(pathToFile);
+		IFile  file = ResourcesPlugin.getWorkspace().getRoot().getFile(pathToFile);
 		Document document=null;
 		if(file!=null &&file.exists()) {
 		try{

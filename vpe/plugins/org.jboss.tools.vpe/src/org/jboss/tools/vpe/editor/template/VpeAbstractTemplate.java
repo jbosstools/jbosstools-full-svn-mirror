@@ -414,7 +414,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * <code>create</code>
 	 * @param pageContext Contains the information on edited page.
 	 */
-	public void validate(VpePageContext pageContext, Node sourceNode,
+	public  void validate(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument, VpeCreationData data) {
 	}
 

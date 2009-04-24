@@ -385,7 +385,7 @@ public class VpeTemplateManager {
 			String templateTaglibPrefix = getTemplateTaglibPrefix(sourceNodeUri);
 
 			if(templateTaglibPrefix != null) {
-				return templateTaglibPrefix + ":" + sourceNode.getLocalName(); //$NON-NLS-1
+				return templateTaglibPrefix + ":" + sourceNode.getLocalName();  //$NON-NLS-1$
 			}
 			return null;
 		default : 
