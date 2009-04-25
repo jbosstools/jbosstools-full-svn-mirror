@@ -46,8 +46,10 @@ import org.jboss.tools.vpe.messages.VpeUIMessages;
 public class CustomSashForm extends SashForm {
 
 	public static final String copyright = "(c) Copyright IBM Corporation 2002."; //$NON-NLS-1$
-	public static final String LAYOUT_HORIZONTAL = "Horizontal"; //$NON-NLS-1$
-	public static final String LAYOUT_VERTICAL = "Vertical"; //$NON-NLS-1$
+	public static final String LAYOUT_VERTICAL_SOURCE_TOP = "Vertical Source on top"; //$NON-NLS-1$
+	public static final String LAYOUT_VERTICAL_VISUAL_TOP = "Vertical Visual on top"; //$NON-NLS-1$
+	public static final String LAYOUT_HORIZONTAL_SOURCE_LEFT = "Horizontal Source to the left"; //$NON-NLS-1$
+	public static final String LAYOUT_HORIZONTAL_VISUAL_LEFT = "Horizontal Visual to the left"; //$NON-NLS-1$
 	/**
 	 * Custom style bits. They set whether max to one side of the other
 	 * is not permitted. For example, if NO_MAX_UP, then there will be only
@@ -111,11 +113,6 @@ public class CustomSashForm extends SashForm {
 		Y_INDEX = 3,
 		WIDTH_INDEX = 4,
 		HEIGHT_INDEX = 5;
-	
-	/*
-	 * Stores current sash orientation
-	 */
-	private String sashOrientation = Constants.EMPTY;
 	
 	/**
 	 * Constructor for CustomSashForm.
@@ -942,24 +939,22 @@ public class CustomSashForm extends SashForm {
 	public void removeWeightsChangeListener(PropertyChangeListener listener) {
 		listeners.removePropertyChangeListener(listener);
 	}
-
-	public String getSashOrientation() {
-	    return sashOrientation;
-	}
-
-	public void setSashOrientation(String sashOrientation) {
-	    this.sashOrientation = sashOrientation;
+	
+	public void changeOrientation() {
+	    int prefsOrientation = getSplittingFromPreferences();
+	    if (getOrientation() != prefsOrientation) {
+		setOrientation(prefsOrientation);
+	    } 
 	}
 	
-	public boolean changeOrientation() {
-	    String orientation = VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue();
-	    if (!getSashOrientation().equalsIgnoreCase(orientation)) {
-		setOrientation(CustomSashForm.LAYOUT_HORIZONTAL
-			.equalsIgnoreCase(orientation) ? SWT.HORIZONTAL : SWT.VERTICAL);
-		setSashOrientation(orientation);
-		return true;
+	public static int getSplittingFromPreferences() {
+	    String splitting = VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue();
+	    if (LAYOUT_HORIZONTAL_SOURCE_LEFT.equalsIgnoreCase(splitting)
+		    || LAYOUT_HORIZONTAL_VISUAL_LEFT.equalsIgnoreCase(splitting)) {
+		return SWT.HORIZONTAL;
+	    } else {
+		return SWT.VERTICAL;
 	    }
-	    return false;
 	}
 	
 }

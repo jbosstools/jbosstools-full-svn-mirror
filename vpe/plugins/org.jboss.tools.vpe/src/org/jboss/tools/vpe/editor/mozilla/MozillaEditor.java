@@ -13,6 +13,10 @@ package org.jboss.tools.vpe.editor.mozilla;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
@@ -53,6 +57,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.part.EditorPart;
+import org.jboss.tools.common.model.XModelException;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
@@ -65,6 +70,7 @@ import org.jboss.tools.vpe.editor.toolbar.format.TextFormattingToolBar;
 import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.xpl.CustomSashForm;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.VpeResourcesDialog;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
@@ -103,6 +109,24 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private Link link = null;
 	private boolean isRefreshPage = false;
 	private String doctype;
+	
+	private static Map<String, String> layoutIcons;
+	private static List<String> layoutNames;
+	static {
+	    layoutIcons = new HashMap<String, String>();
+	    layoutIcons.put(CustomSashForm.LAYOUT_HORIZONTAL_SOURCE_LEFT, "icons/source_left.gif"); //$NON-NLS-1$
+	    layoutIcons.put(CustomSashForm.LAYOUT_VERTICAL_SOURCE_TOP, "icons/source_top.gif"); //$NON-NLS-1$
+	    layoutIcons.put(CustomSashForm.LAYOUT_HORIZONTAL_VISUAL_LEFT, "icons/source_right.gif"); //$NON-NLS-1$
+	    layoutIcons.put(CustomSashForm.LAYOUT_VERTICAL_VISUAL_TOP, "icons/source_bottom.gif"); //$NON-NLS-1$
+	    
+	    layoutNames = new ArrayList<String>();
+	    layoutNames.add(CustomSashForm.LAYOUT_HORIZONTAL_SOURCE_LEFT);
+	    layoutNames.add(CustomSashForm.LAYOUT_VERTICAL_SOURCE_TOP);
+	    layoutNames.add(CustomSashForm.LAYOUT_HORIZONTAL_VISUAL_LEFT);
+	    layoutNames.add(CustomSashForm.LAYOUT_VERTICAL_VISUAL_TOP);
+
+	}
+	
 	/**
 	 * Used for manupalation of browser in design mode,
 	 * for example enable or disable readOnlyMode
@@ -270,7 +294,53 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				}
 			}
 		});
-		
+
+
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4152
+		 * Compute initial icon state and add it to the tool bar.
+		 */
+		int currentOrientationIndex = layoutNames.indexOf(VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue());
+		int newIndx = currentOrientationIndex+1;
+		if (newIndx == layoutNames.size()) {
+		    newIndx = newIndx % layoutNames.size();
+		}
+		String newOrientation = layoutNames.get(newIndx);
+
+		final ToolItem rotateEditorsItem = createToolItem(verBar, SWT.BUTTON1,
+			layoutIcons.get(newOrientation), newOrientation);
+		rotateEditorsItem.addListener(SWT.Selection, new Listener() {
+		    public void handleEvent(Event event) {
+			try {
+			    /*
+			     * Rotate editors orientation clockwise.
+			     * Store this new orientation to the preferences.
+			     */
+			    int currentOrientationIndex = layoutNames.indexOf(VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue());
+			    int newIndx = currentOrientationIndex+1;
+			    if (newIndx == layoutNames.size()) {
+				newIndx = newIndx % layoutNames.size();
+			    }
+			    String newOrientation = layoutNames.get(newIndx);
+			    VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.setValue(newOrientation);
+
+			    /*
+			     * Compute next step orientation and display appropriate icon.
+			     */
+			    currentOrientationIndex = layoutNames.indexOf(VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue());
+			    newIndx = currentOrientationIndex+1;
+			    if (newIndx == layoutNames.size()) {
+				newIndx = newIndx % layoutNames.size();
+			    }
+			    newOrientation = layoutNames.get(newIndx);
+			    rotateEditorsItem.setImage(ImageDescriptor
+				    .createFromFile(MozillaEditor.class, layoutIcons.get(newOrientation)).createImage());
+			    rotateEditorsItem.setToolTipText(newOrientation);
+			} catch (XModelException e) {
+			    VpePlugin.getPluginLog().logError(e);
+			}
+		    }
+		});
 
 		verBar.pack();
 		

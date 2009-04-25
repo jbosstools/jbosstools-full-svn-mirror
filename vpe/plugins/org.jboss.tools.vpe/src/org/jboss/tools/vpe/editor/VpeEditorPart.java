@@ -97,11 +97,13 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	private IContextActivation fContextActivation;
 	private IHandlerActivation sourceActivation,visualActivation, jumpingActivation;
 	private IHandler sourceMaxmin,visualMaxmin, jumping;
+	private Composite cmpEd;
 	private CustomSashForm container;
 	protected EditorSettings editorSettings;
 	private StructuredTextEditor sourceEditor = null;
 	private MozillaEditor visualEditor;
 	private IEditorPart activeEditor;
+	private ControlListener controlListener;
 	private XModelTreeListener listener;
 	private XModelObject optionsObject;
 	private SelectionBar selectionBar = new SelectionBar();
@@ -479,7 +481,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		cmpEdTl.setLayout(layoutEdTl);
 		cmpEdTl.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		Composite cmpEd = new Composite(cmpEdTl, SWT.NATIVE);
+		cmpEd = new Composite(cmpEdTl, SWT.NATIVE);
 		GridLayout layoutEd = new GridLayout(1, false);
 		layoutEd.marginBottom = 0;
 		layoutEd.marginHeight = 1;
@@ -492,22 +494,32 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		cmpEd.setLayoutData(new GridData(GridData.FILL_BOTH));
 		// /////////////////////////////////////////////////////////////////
 		//container = new SashForm(cmpEd, SWT.VERTICAL);
-		String sashOrientation = VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue();
 		/*
-		 * https://jira.jboss.org/jira/browse/JBIDE-4152
-		 * Sash orientation can be changed to either vertical or horizontal.
+		 * https://jira.jboss.org/jira/browse/JBIDE-4152 
+		 * Editors orientation is based on preference's settings.
 		 */
-		container = new CustomSashForm(cmpEd, (CustomSashForm.LAYOUT_HORIZONTAL
-			.equalsIgnoreCase(sashOrientation) ? SWT.HORIZONTAL : SWT.VERTICAL));
-		container.setSashOrientation(sashOrientation);
-		if (editorSettings != null)
-			editorSettings.addSetting(new SashSetting(container));
+		container = new CustomSashForm(cmpEd, CustomSashForm
+			.getSplittingFromPreferences());
+		if (editorSettings != null) {
+		    editorSettings.addSetting(new SashSetting(container));
+		}
 
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		sourceContent = new Composite(container, SWT.NONE);
+		String splitting = VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING
+			.getValue();
+		if (CustomSashForm.LAYOUT_HORIZONTAL_SOURCE_LEFT
+			.equalsIgnoreCase(splitting)
+			|| CustomSashForm.LAYOUT_VERTICAL_SOURCE_TOP
+				.equalsIgnoreCase(splitting)) {
+		    sourceContent = new Composite(container, SWT.NONE);
+		    visualContent = new Composite(container, SWT.NONE);
+		} else {
+		    visualContent = new Composite(container, SWT.NONE);
+		    sourceContent = new Composite(container, SWT.NONE);
+		}
 		sourceContent.setLayout(new FillLayout());
-		visualContent = new Composite(container, SWT.NONE);
 		visualContent.setLayout(new FillLayout());
+
 
 		// Create a preview content
 		previewContent = new Composite(container, SWT.NONE);
@@ -543,11 +555,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			}
 			
 		});
-		final ControlListener controlListener = new ControlListener() {
-			public void controlMoved(ControlEvent event) {
-
-			}
-
+		controlListener = new ControlListener() {
+			public void controlMoved(ControlEvent event) {}
 			public void controlResized(ControlEvent event) {
 				container.layout();
 			}
@@ -682,8 +691,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		listener = new XModelTreeListener() {
 
 			public void nodeChanged(XModelTreeEvent event) {
-				selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
-				container.changeOrientation();
+			    fillContainer();
+			    selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
 			}
 
 			public void structureChanged(XModelTreeEvent event) {
@@ -756,6 +765,93 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			}
 		};
 	}
+	
+	private void fillContainer() {
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4152
+		 * 
+		 * To re-layout editors new sash form will be created.
+		 * Source, visual and preview content will stay the same,
+		 * cause there are no changes to the model.
+		 * 
+		 * Content should be added to a new container.
+		 */
+		CustomSashForm newContainer = new CustomSashForm(cmpEd, CustomSashForm
+			.getSplittingFromPreferences());
+		/*
+		 * Reset editor's settings. 
+		 */
+		if (editorSettings != null) {
+		    editorSettings.dispose();
+		    editorSettings.addSetting(new SashSetting(newContainer));
+		}
+		newContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		/*
+		 * Read stored preference settings. 
+		 * Correct layout by selecting the order of components adding.
+		 * All three editors should be added to the new container.
+		 */
+		String splitting = VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING
+			.getValue();
+		if (CustomSashForm.LAYOUT_HORIZONTAL_SOURCE_LEFT
+			.equalsIgnoreCase(splitting)
+			|| CustomSashForm.LAYOUT_VERTICAL_SOURCE_TOP
+				.equalsIgnoreCase(splitting)) {
+		    sourceContent.setParent(newContainer);
+		    visualContent.setParent(newContainer);
+		} else {
+		    visualContent.setParent(newContainer);
+		    sourceContent.setParent(newContainer);
+		}
+		previewContent.setParent(newContainer);
+		
+		/*
+		 * Dispose the old container:
+		 * it'll be excluded from parent composite's layout.
+		 */
+		if (null != container) {
+		    container.dispose();
+		}
+		
+		/*
+		 * Reset the container.
+		 */
+		container = newContainer;
+		int[] weights = loadSplitterPosition();
+		if (weights != null) {
+		    container.setWeights(weights);
+		}
+		container.setSashBorders(new boolean[] { true, true, true });
+
+		/*
+		 * Reinit listeners on the new container.
+		 */
+		final PropertyChangeListener weightsChangeListener = new PropertyChangeListener() {
+		    public void propertyChange(PropertyChangeEvent event) {
+			saveSplitterPosition(container.getWeights());
+		    }
+		};
+		container.addWeightsChangeListener(weightsChangeListener);
+		container.addDisposeListener(new DisposeListener() {
+		    public void widgetDisposed(DisposeEvent e) {
+			container.removeWeightsChangeListener(weightsChangeListener);
+			container.removeDisposeListener(this);
+		    }
+
+		});
+		controlListener = new ControlListener() {
+		    public void controlMoved(ControlEvent event) {}
+		    public void controlResized(ControlEvent event) {
+			container.layout();
+		    }
+		};
+
+		/*
+		 * Layout parent composite.
+		 */
+		cmpEd.layout(true, true);
+	    }
 
 	public void createVisualEditor() {
 		visualEditor = new MozillaEditor();
