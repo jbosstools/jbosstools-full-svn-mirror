@@ -413,17 +413,6 @@ public abstract class AbstractActionManager extends BaseActionManager {
 		}
 	}
 
-	public void fillContextMenu(IMenuManager menuManager, ISelection selection) {
-		List selectionList = new ArrayList();
-		if (selection instanceof IStructuredSelection) {
-			IStructuredSelection es = (IStructuredSelection) selection;
-			for (Iterator i = es.iterator(); i.hasNext();) {
-				selectionList.add(i.next());
-			}
-		}
-		contributeActions(menuManager, selectionList);
-	}
-
 	public void fillContextMenuForVpe(IMenuManager menuManager,
 		ISelection selection) {
 		List selectionList = new ArrayList();

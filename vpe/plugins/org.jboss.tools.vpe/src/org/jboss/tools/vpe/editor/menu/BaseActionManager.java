@@ -30,7 +30,6 @@ import org.eclipse.wst.xml.core.internal.contentmodel.modelquery.ModelQuery;
 import org.eclipse.wst.xml.core.internal.contentmodel.modelquery.ModelQueryAction;
 import org.eclipse.wst.xml.core.internal.contentmodel.modelqueryimpl.ModelQueryActionHelper;
 import org.eclipse.wst.xml.core.internal.contentmodel.modelqueryimpl.ModelQueryImpl;
-import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.ui.internal.actions.MenuBuilder;
 import org.eclipse.wst.xml.ui.internal.util.XMLCommonResources;
 import org.w3c.dom.Attr;
@@ -53,9 +52,8 @@ public abstract class BaseActionManager {
 	public static final String INSERT_AROUND_MENU = "Insert Around";
 	public static final String INSERT_BEFORE_MENU = "Insert Before";
 	public static final String INSERT_AFTER_MENU = "Insert After";
+	public static final String REPLACE_TAG_MENU = "Replace With";
 	public static final String INSERT_TAG_MENU = "Insert Tag";
-	public static final String REPLACE_TAG_MENU = XMLCommonResources
-	.getInstance().getString("_UI_MENU_REPLACE_WITH"); //$NON-NLS-1$
 	
 
 	private ActionHelper actionHelper;
@@ -100,54 +98,12 @@ public abstract class BaseActionManager {
 
 	abstract protected Action createDeleteAction(List selection);
 
-	public void contributeActions(IMenuManager menu, List selection) {
-		int editMode = modelQuery.getEditMode();
-		int ic = (editMode == ModelQuery.EDIT_MODE_CONSTRAINED_STRICT) ? ModelQuery.INCLUDE_CHILD_NODES
-				| ModelQuery.INCLUDE_SEQUENCE_GROUPS
-				: ModelQuery.INCLUDE_CHILD_NODES;
-		int vc = (editMode == ModelQuery.EDIT_MODE_CONSTRAINED_STRICT) ? ModelQuery.VALIDITY_STRICT
-				: ModelQuery.VALIDITY_NONE;
-
-		List implicitlySelectedNodeList = null;
-
-		if (selection.size() > 0) {
-			implicitlySelectedNodeList = getSelectedNodes(selection, true);
-
-			// contribute delete actions
-			contributeDeleteActions(menu, implicitlySelectedNodeList, ic, vc);
-		}
-
-		if (selection.size() == 1) {
-			Node node = (Node) selection.get(0);
-
-			// contribute edit actions
-			contributeEditActions(menu, node);
-
-			// contribute add child actions
-			contributeAddChildActions(menu, node, ic, vc);
-
-			// contribute add before actions
-			contributeAddSiblingActions(menu, node, ic, vc, false);
-		}
-
-		if (selection.size() > 0) {
-			// contribute replace actions
-			contributeReplaceActions(menu, implicitlySelectedNodeList, ic, vc);
-		}
-
-		if (selection.size() == 0) {
-			Document document = ((IDOMModel) model).getDocument();
-			contributeAddDocumentChildActions(menu, document, ic, vc);
-			contributeEditGrammarInformationActions(menu, document);
-		}
-	}
-
 	public void contributeActionsForVpe(IMenuManager menu, List selection) {
 		int editMode = modelQuery.getEditMode();
-		int ic = (editMode == ModelQuery.EDIT_MODE_CONSTRAINED_STRICT) ? ModelQuery.INCLUDE_CHILD_NODES
+		int includeOptions = (editMode == ModelQuery.EDIT_MODE_CONSTRAINED_STRICT) ? ModelQuery.INCLUDE_CHILD_NODES
 				| ModelQuery.INCLUDE_SEQUENCE_GROUPS
 				: ModelQuery.INCLUDE_CHILD_NODES;
-		int vc = (editMode == ModelQuery.EDIT_MODE_CONSTRAINED_STRICT) ? ModelQuery.VALIDITY_STRICT
+		int validityChecking = (editMode == ModelQuery.EDIT_MODE_CONSTRAINED_STRICT) ? ModelQuery.VALIDITY_STRICT
 				: ModelQuery.VALIDITY_NONE;
 
 		List implicitlySelectedNodeList = null;
@@ -158,12 +114,12 @@ public abstract class BaseActionManager {
 				Node node = (Node) selection.get(0);
 
 				// contribute add before actions
-				contributeAddSiblingActions(menu, node, ic, vc, true);
+				contributeAddSiblingActions(menu, node, true);
 			}
 
 			// contribute replace actions
-			contributeReplaceActions(menu, implicitlySelectedNodeList, ic, vc);
-		} else if (selection.size() == 0) {
+			contributeReplaceActions(menu, implicitlySelectedNodeList, includeOptions, validityChecking);
+		} else {
 			IMenuManager addTagMenu = new MyMenuManager(INSERT_TAG_MENU, true);
 			menu.add(addTagMenu);
 		}
@@ -171,10 +127,10 @@ public abstract class BaseActionManager {
 
 	public void contributeDeleteActionForVpe(IMenuManager menu, List selection) {
 		int editMode = modelQuery.getEditMode();
-		int ic = (editMode == ModelQuery.EDIT_MODE_CONSTRAINED_STRICT) ? ModelQuery.INCLUDE_CHILD_NODES
+		int includeOptions = (editMode == ModelQuery.EDIT_MODE_CONSTRAINED_STRICT) ? ModelQuery.INCLUDE_CHILD_NODES
 				| ModelQuery.INCLUDE_SEQUENCE_GROUPS
 				: ModelQuery.INCLUDE_CHILD_NODES;
-		int vc = (editMode == ModelQuery.EDIT_MODE_CONSTRAINED_STRICT) ? ModelQuery.VALIDITY_STRICT
+		int validityChecking = (editMode == ModelQuery.EDIT_MODE_CONSTRAINED_STRICT) ? ModelQuery.VALIDITY_STRICT
 				: ModelQuery.VALIDITY_NONE;
 
 		List implicitlySelectedNodeList = null;
@@ -184,7 +140,7 @@ public abstract class BaseActionManager {
 
 			menu.add(new Separator());
 			// contribute delete actions
-			contributeDeleteActions(menu, implicitlySelectedNodeList, ic, vc);
+			contributeDeleteActions(menu, implicitlySelectedNodeList, includeOptions, validityChecking);
 		}
 	}
 
@@ -227,7 +183,7 @@ public abstract class BaseActionManager {
 	}
 
 	protected void contributeAddChildActions(IMenuManager menu, Node node,
-			int ic, int vc) {
+			int includeOptions, int validityChecking) {
 		int nodeType = node.getNodeType();
 
 		if (nodeType == Node.ELEMENT_NODE) {
@@ -251,14 +207,14 @@ public abstract class BaseActionManager {
 				List modelQueryActionList = new ArrayList();
 				modelQuery
 						.getInsertActions(element, ed, -1,
-								ModelQuery.INCLUDE_ATTRIBUTES, vc,
+								ModelQuery.INCLUDE_ATTRIBUTES, validityChecking,
 								modelQueryActionList);
 				addActionHelper(addAttributeMenu, modelQueryActionList, 2);
 
 				// add insert child node actions
 				//
 				modelQueryActionList = new ArrayList();
-				modelQuery.getInsertActions(element, ed, -1, ic, vc,
+				modelQuery.getInsertActions(element, ed, -1, includeOptions, validityChecking,
 						modelQueryActionList);
 				addActionHelper(addChildMenu, modelQueryActionList, 2);
 			}
@@ -280,87 +236,17 @@ public abstract class BaseActionManager {
 	}
 
 	protected void contributeAddSiblingActions(IMenuManager menu, Node node,
-			int ic, int vc, boolean visible) {
+			boolean visible) {
 		IMenuManager addAroundMenu = new MyMenuManager(INSERT_AROUND_MENU, visible);
 		IMenuManager addBeforeMenu = new MyMenuManager(INSERT_BEFORE_MENU, visible);
 		IMenuManager addAfterMenu = new MyMenuManager(INSERT_AFTER_MENU, visible);
 		menu.add(addAroundMenu);
 		menu.add(addBeforeMenu);
 		menu.add(addAfterMenu);
-
-//		Node parentNode = node.getParentNode();
-//		if (parentNode != null) {
-//			int index = getIndex(parentNode, node);
-//			if (textNodeSplitter != null)
-//				index = textNodeSplitter.getSplitIndex(index);
-//			if (parentNode.getNodeType() == Node.ELEMENT_NODE) {
-//				Element parentElement = (Element) parentNode;
-//				CMElementDeclaration parentED = modelQuery
-//						.getCMElementDeclaration(parentElement);
-//				if (parentED != null) {
-//					// 'Add Before...' and 'Add After...' actions
-//					//
-//
-//					List modelQueryActionList = new ArrayList();
-//					modelQuery.getInsertActions(parentElement, parentED, index,
-//							ic, vc, modelQueryActionList);
-//					modelQueryActionList = actionHelper
-//							.modifyActionList(modelQueryActionList);
-//					addActionHelper(addAroundMenu, modelQueryActionList, 1);
-//
-//					modelQueryActionList = new ArrayList();
-//					modelQuery.getInsertActions(parentElement, parentED, index,
-//							ic, vc, modelQueryActionList);
-//					addActionHelper(addBeforeMenu, modelQueryActionList, 2);
-//
-//					modelQueryActionList = new ArrayList();
-//					ActionHelper helper = new ActionHelper(
-//							(ModelQueryImpl) modelQuery);
-//					if (textNodeSplitter != null)
-//						helper.getInsertActions(parentElement, parentED, index,
-//								ic, vc, modelQueryActionList);
-//					else
-//						helper.getInsertActions(parentElement, parentED,
-//								index + 1, ic, vc, modelQueryActionList);
-//					addActionHelper(addAfterMenu, modelQueryActionList, 3);
-//				}
-//				contributeUnconstrainedAddElementAction(addBeforeMenu,
-//						parentElement, parentED, index);
-//				contributeUnconstrainedAddElementAction(addAfterMenu,
-//						parentElement, parentED, index + 1);
-//			} else if (parentNode.getNodeType() == Node.DOCUMENT_NODE) {
-//				Document document = (Document) parentNode;
-//				CMDocument cmDocument = modelQuery
-//						.getCorrespondingCMDocument(parentNode);
-//				if (cmDocument != null) {
-//					// add possible root element insertions
-//					//        
-//					List modelQueryActionList = new ArrayList();
-//					modelQuery.getInsertActions(document, cmDocument, index,
-//							ic, vc, modelQueryActionList);
-//					modelQueryActionList = actionHelper
-//							.modifyActionList(modelQueryActionList);
-//					addActionHelper(addAroundMenu, modelQueryActionList, 1);
-//
-//					modelQueryActionList = new ArrayList();
-//					modelQuery.getInsertActions(document, cmDocument, index,
-//							ic, vc, modelQueryActionList);
-//					addActionHelper(addAfterMenu, modelQueryActionList, 2);
-//
-//					modelQueryActionList = new ArrayList();
-//					modelQuery.getInsertActions(document, cmDocument,
-//							index + 1, ic, vc, modelQueryActionList);
-//					addActionHelper(addAfterMenu, modelQueryActionList, 3);
-//				}
-//
-//				contributeUnconstrainedAddElementAction(addBeforeMenu, document, index);
-//				contributeUnconstrainedAddElementAction(addAfterMenu, document, index + 1);
-//			}
-//		}
 	}
 
 	protected void contributeAddDocumentChildActions(IMenuManager menu,
-			Document document, int ic, int vc) {
+			Document document) {
 		IMenuManager addChildMenu = new MyMenuManager(XMLCommonResources
 				.getInstance().getString("_UI_MENU_ADD_CHILD")); //$NON-NLS-1$
 		menu.add(addChildMenu);
@@ -373,7 +259,7 @@ public abstract class BaseActionManager {
 	}
 
 	protected void contributeReplaceActions(IMenuManager menu,
-			List selectedNodeList, int ic, int vc) {
+			List selectedNodeList, int includeOptions, int validityChecking) {
 		// 'Replace With...' actions
 		//                        
 		//Fix for JBIDE-3428
@@ -393,7 +279,8 @@ public abstract class BaseActionManager {
 				if (parentED != null) {
 					List replaceActionList = new Vector();
 					modelQuery.getReplaceActions(parentElement, parentED,
-							selectedNodeList, ic, vc, replaceActionList);
+							selectedNodeList, includeOptions, validityChecking,
+							replaceActionList);
 					addActionHelper(replaceWithMenu, replaceActionList, 2);
 				}
 			}
@@ -407,8 +294,8 @@ public abstract class BaseActionManager {
 	}
 
 	protected void contributeDeleteActions(IMenuManager menu, List list,
-			int ic, int vc) {
-		boolean canRemove = modelQuery.canRemove(list, vc);
+			int includeOptions, int validityChecking) {
+		boolean canRemove = modelQuery.canRemove(list, validityChecking);
 
 		// a delete action with an empty list will produce a disabled menu item
 		//
@@ -451,7 +338,9 @@ public abstract class BaseActionManager {
 			Element parentElement, CMElementDeclaration parentEd, int index) {
 		if (isUnconstrainedActionAllowed()) {
 			if (parentEd == null
-					|| parentEd.getProperty("isInferred") == Boolean.TRUE || (modelQuery.getEditMode() != ModelQuery.EDIT_MODE_CONSTRAINED_STRICT && isElementAllowed(parentEd))) { //$NON-NLS-1$
+					|| parentEd.getProperty("isInferred") == Boolean.TRUE 
+					|| ( modelQuery.getEditMode() != ModelQuery.EDIT_MODE_CONSTRAINED_STRICT 
+							&& isElementAllowed(parentEd) )) { //$NON-NLS-1$
 				contributeAction(menu, createAddElementAction(parentElement,
 						null, index, 2));
 			}

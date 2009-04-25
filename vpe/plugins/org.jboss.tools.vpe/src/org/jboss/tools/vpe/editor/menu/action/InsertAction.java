@@ -28,7 +28,9 @@ import org.jboss.tools.vpe.editor.util.SelectionUtil;
  * Class is used to handle insert action.
  *
  * @author Igor Zhukov (izhukov@exadel.com)
+ * @deprecated use {@link InsertAction2} instead.
  */
+@Deprecated
 public class InsertAction extends Action {
 	private XModelObject item;
 	private Point region;
@@ -45,8 +47,8 @@ public class InsertAction extends Action {
 	 * @param pageContext the VpePageContext element
 	 * @param sourceEditor the StructuredTextEditor element
 	 */
-	public InsertAction(String title, Point region, XModelObject item, VpePageContext pageContext,
-			StructuredTextEditor sourceEditor) {
+	public InsertAction(String title, Point region, XModelObject item,
+			VpePageContext pageContext,	StructuredTextEditor sourceEditor) {
 		this(title, region, item, pageContext, sourceEditor, false);
 	}
 	
@@ -59,7 +61,8 @@ public class InsertAction extends Action {
 	 * @param pageContext the VpePageContext element
 	 * @param sourceEditor the StructuredTextEditor element
 	 */
-	public InsertAction(String title, Point region, XModelObject item, VpePageContext pageContext,
+	public InsertAction(String title, Point region,
+			XModelObject item, VpePageContext pageContext,
 			StructuredTextEditor sourceEditor, boolean replace) {
 		super(title);
 		this.item = item;
@@ -78,8 +81,12 @@ public class InsertAction extends Action {
 
 		XModelObject parent = item.getParent();
 		String uri = (parent == null) ? Constants.EMPTY : parent.getAttributeValue(URIConstants.LIBRARY_URI);
-		String libraryVersion = (parent == null) ? Constants.EMPTY : parent.getAttributeValue(URIConstants.LIBRARY_VERSION);
-		String defaultPrefix = (parent == null) ? Constants.EMPTY : parent.getAttributeValue(URIConstants.DEFAULT_PREFIX);
+		String libraryVersion = (parent == null) 
+				? Constants.EMPTY 
+				: parent.getAttributeValue(URIConstants.LIBRARY_VERSION);
+		String defaultPrefix = (parent == null) 
+				? Constants.EMPTY
+				: parent.getAttributeValue(URIConstants.DEFAULT_PREFIX);
 
 		/*
 		 * Fixes https://jira.jboss.org/jira/browse/JBIDE-1363. Fixes
@@ -88,8 +95,10 @@ public class InsertAction extends Action {
 		 * instead of VpeSelectionProvider. It helps automatically update
 		 * selection range after taglib insertion.
 		 */
-		String startText = Constants.EMPTY + item.getAttributeValue("start text"); //$NON-NLS-1$
-		String endText = Constants.EMPTY + item.getAttributeValue("end text"); //$NON-NLS-1$
+		String startText = Constants.EMPTY 
+				+ item.getAttributeValue("start text"); //$NON-NLS-1$
+		String endText = Constants.EMPTY
+				+ item.getAttributeValue("end text"); //$NON-NLS-1$
 		
 		if (region != null) {
 			if (this.replace) {

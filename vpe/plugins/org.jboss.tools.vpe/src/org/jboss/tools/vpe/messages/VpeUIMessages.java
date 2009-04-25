@@ -83,6 +83,7 @@ public class VpeUIMessages extends NLS {
 	public static String INSERT_AROUND;
 	public static String INSERT_BEFORE;
 	public static String INSERT_AFTER;
+	public static String INSERT_INTO;
 	public static String REPLACE_WITH;
 	public static String FROM_PALETTE;
 	public static String PAGE_DESIGN_OPTIONS_ABOUT;
