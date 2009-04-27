@@ -22,7 +22,7 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
-import org.jboss.tools.flow.common.command.AddElementCommand;
+import org.jboss.tools.flow.common.command.AddNodeCommand;
 import org.jboss.tools.flow.common.command.ChangeConstraintCommand;
 import org.jboss.tools.flow.common.wrapper.ContainerWrapper;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
@@ -35,7 +35,7 @@ import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 public class ElementContainerLayoutEditPolicy extends XYLayoutEditPolicy {
     
     protected Command getCreateCommand(CreateRequest request) {
-        AddElementCommand command = new AddElementCommand();
+        AddNodeCommand command = new AddNodeCommand();
         command.setParent((ContainerWrapper) getHost().getModel());
         NodeWrapper element = (NodeWrapper) request.getNewObject();
         element.setConstraint((Rectangle) getConstraintFor(request));

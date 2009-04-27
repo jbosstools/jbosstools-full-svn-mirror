@@ -29,12 +29,12 @@ import org.jboss.tools.flow.common.wrapper.NodeWrapper;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
-public class DeleteElementCommand extends Command {
+public class DeleteNodeCommand extends Command {
 
     private NodeWrapper child;
     private ContainerWrapper parent;
     
-    private List<DeleteElementCommand> embeddedCommands;
+    private List<DeleteNodeCommand> embeddedCommands;
     
     private List<NodeWrapper> incomingElementWrappers = new ArrayList<NodeWrapper>();
     private List<NodeWrapper> outgoingElementWrappers = new ArrayList<NodeWrapper>();
@@ -60,11 +60,11 @@ public class DeleteElementCommand extends Command {
     }
     
     private void initializeEmbeddedCommands() {
-    	embeddedCommands = new ArrayList<DeleteElementCommand>();
+    	embeddedCommands = new ArrayList<DeleteNodeCommand>();
     	ContainerWrapper container = (ContainerWrapper)child;
     	List<NodeWrapper> children = container.getNodeWrappers();
     	for (NodeWrapper w : children) {
-    		DeleteElementCommand c = new DeleteElementCommand();
+    		DeleteNodeCommand c = new DeleteNodeCommand();
     		c.setParent(container);
     		c.setChild(w);
     		embeddedCommands.add(c);
@@ -75,7 +75,7 @@ public class DeleteElementCommand extends Command {
     	if (embeddedCommands == null) {
     		initializeEmbeddedCommands();
     	}
-    	for (DeleteElementCommand c : embeddedCommands) {
+    	for (DeleteNodeCommand c : embeddedCommands) {
     		c.execute();
     	}
     }
@@ -114,7 +114,7 @@ public class DeleteElementCommand extends Command {
     }
     
     private void undoEmbeddedCommands() {
-        for (DeleteElementCommand c : embeddedCommands) {
+        for (DeleteNodeCommand c : embeddedCommands) {
         	c.undo();
         }
     }

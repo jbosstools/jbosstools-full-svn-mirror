@@ -19,7 +19,7 @@ package org.jboss.tools.flow.common.policy;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 import org.eclipse.gef.requests.GroupRequest;
-import org.jboss.tools.flow.common.command.DeleteElementCommand;
+import org.jboss.tools.flow.common.command.DeleteNodeCommand;
 import org.jboss.tools.flow.common.wrapper.ContainerWrapper;
 import org.jboss.tools.flow.common.wrapper.NodeWrapper;
 
@@ -32,7 +32,7 @@ public class ElementEditPolicy extends ComponentEditPolicy {
 
     protected Command createDeleteCommand(GroupRequest deleteRequest) {
         ContainerWrapper parent = (ContainerWrapper) getHost().getParent().getModel();
-        DeleteElementCommand deleteCmd = new DeleteElementCommand();
+        DeleteNodeCommand deleteCmd = new DeleteNodeCommand();
         deleteCmd.setParent(parent);
         deleteCmd.setChild((NodeWrapper) (getHost().getModel()));
         return deleteCmd;

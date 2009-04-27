@@ -25,7 +25,7 @@ import org.jboss.tools.flow.common.wrapper.NodeWrapper;
  * 
  * @author <a href="mailto:kris_verlaenen@hotmail.com">Kris Verlaenen</a>
  */
-public class AddElementCommand extends Command {
+public class AddNodeCommand extends Command {
 
     private NodeWrapper child;
     private ContainerWrapper parent;
