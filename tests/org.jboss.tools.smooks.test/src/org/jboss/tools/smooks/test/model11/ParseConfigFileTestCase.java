@@ -39,6 +39,12 @@ public class ParseConfigFileTestCase extends AbstractSmooks11ModelTestCase {
 		return null;
 	}
 
+	@Override
+	protected String getFilePath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private void loadFile(File file) throws IOException {
 		if (file.exists() && file.isDirectory()) {
 			File[] configFiles = file.listFiles();
