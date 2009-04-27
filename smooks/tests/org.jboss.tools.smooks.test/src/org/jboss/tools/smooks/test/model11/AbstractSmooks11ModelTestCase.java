@@ -51,9 +51,12 @@ import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
 import org.jboss.tools.smooks.model.jmsrouting.provider.JmsroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.json.JsonPackage;
 import org.jboss.tools.smooks.model.json.provider.JsonItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.medi.DocumentRoot;
 import org.jboss.tools.smooks.model.medi.MEdiPackage;
+import org.jboss.tools.smooks.model.medi.MappingNode;
 import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
 import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
@@ -69,8 +72,8 @@ public abstract class AbstractSmooks11ModelTestCase extends TestCase {
 	protected ComposedAdapterFactory adapterFactory;
 	protected AdapterFactoryEditingDomain editingDomain;
 	protected EObject smooksModel;
-	
-	static{
+
+	static {
 		// regist emf model uri mapping
 		Registry.INSTANCE.put(SmooksPackage.eNS_URI, SmooksPackage.eINSTANCE);
 		Registry.INSTANCE.put(CalcPackage.eNS_URI, CalcPackage.eINSTANCE);
@@ -89,8 +92,13 @@ public abstract class AbstractSmooks11ModelTestCase extends TestCase {
 		Registry.INSTANCE.put(JsonPackage.eNS_URI, JsonPackage.eINSTANCE);
 		Registry.INSTANCE.put(MEdiPackage.eNS_URI, MEdiPackage.eINSTANCE);
 		Registry.INSTANCE.put(XslPackage.eNS_URI, XslPackage.eINSTANCE);
-		
-		Registry.INSTANCE.put(org.jboss.tools.smooks10.model.smooks.SmooksPackage.eNS_URI, org.jboss.tools.smooks10.model.smooks.SmooksPackage.eINSTANCE);
+
+		Registry.INSTANCE.put(org.jboss.tools.smooks10.model.smooks.SmooksPackage.eNS_URI,
+				org.jboss.tools.smooks10.model.smooks.SmooksPackage.eINSTANCE);
+	}
+
+	public void testModel() {
+		// do nothing
 	}
 
 	@Override
@@ -105,9 +113,10 @@ public abstract class AbstractSmooks11ModelTestCase extends TestCase {
 		adapterFactory.addAdapterFactory(new JavabeanItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new CommonItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new SmooksItemProviderAdapterFactory());
-		
-		adapterFactory.addAdapterFactory(new org.jboss.tools.smooks10.model.smooks.provider.SmooksItemProviderAdapterFactory());
-		
+
+		adapterFactory
+				.addAdapterFactory(new org.jboss.tools.smooks10.model.smooks.provider.SmooksItemProviderAdapterFactory());
+
 		adapterFactory.addAdapterFactory(new MEdiItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new EdiItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new IoroutingItemProviderAdapterFactory());
@@ -120,21 +129,25 @@ public abstract class AbstractSmooks11ModelTestCase extends TestCase {
 		adapterFactory.addAdapterFactory(new GroovyItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new FileRoutingItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
-		
+
 		BasicCommandStack commandStack = new BasicCommandStack();
 		editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
-		
-		loadConfigFile() ;
+
+		loadConfigFile();
 	}
 
-	protected void loadConfigFile() throws IOException{
+	protected void loadConfigFile() throws IOException {
 		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(null);
-		smooksResource.load(getConfigFileContents() , Collections.emptyMap());
+		smooksResource.load(getConfigFileContents(), Collections.emptyMap());
 		smooksModel = smooksResource.getContents().get(0);
 		editingDomain.getResourceSet().getResources().add(smooksResource);
 	}
-	
-	abstract protected InputStream getConfigFileContents();
+
+	protected InputStream getConfigFileContents() {
+		return this.getClass().getClassLoader().getResourceAsStream(getFilePath());
+	}
+
+	abstract protected String getFilePath();
 
 	@Override
 	protected void tearDown() throws Exception {
@@ -165,6 +178,34 @@ public abstract class AbstractSmooks11ModelTestCase extends TestCase {
 		this.smooksModel = smooksModel;
 	}
 	
+	public MappingNode getMappingNode10(){
+		EObject root = this.getSmooksModel();
+		if (root instanceof DocumentRoot) {
+			DocumentRoot documentRoot = (DocumentRoot) root;
+			MappingNode mapping = (MappingNode) documentRoot.eContents().get(0);
+			return mapping;
+		}
+		return null;
+	}
+
+	public SmooksResourceListType getSmooksResourceList11() {
+		EObject root = this.getSmooksModel();
+		if (root instanceof org.jboss.tools.smooks.model.smooks.DocumentRoot) {
+			org.jboss.tools.smooks.model.smooks.DocumentRoot documentRoot = (org.jboss.tools.smooks.model.smooks.DocumentRoot) root;
+			SmooksResourceListType resourceConfig = (SmooksResourceListType) documentRoot.eContents().get(0);
+			return resourceConfig;
+		}
+		return null;
+	}
 	
+	public org.jboss.tools.smooks10.model.smooks.SmooksResourceListType getSmooksResourceList10() {
+		EObject root = this.getSmooksModel();
+		if (root instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
+			org.jboss.tools.smooks10.model.smooks.DocumentRoot documentRoot = (org.jboss.tools.smooks10.model.smooks.DocumentRoot) root;
+			org.jboss.tools.smooks10.model.smooks.SmooksResourceListType resourceConfig = (org.jboss.tools.smooks10.model.smooks.SmooksResourceListType) documentRoot.eContents().get(0);
+			return resourceConfig;
+		}
+		return null;
+	}
 
 }
