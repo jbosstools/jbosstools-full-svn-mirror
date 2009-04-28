@@ -171,7 +171,10 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 	}
 
 	public void setSmooksModel(EObject smooksModel) {
-		this.smooksModel = smooksModel;
+		if (this.smooksModel != smooksModel) {
+			this.smooksModel = smooksModel;
+			handleEMFModelChange();
+		}
 	}
 
 	private void initEditingDomain() {

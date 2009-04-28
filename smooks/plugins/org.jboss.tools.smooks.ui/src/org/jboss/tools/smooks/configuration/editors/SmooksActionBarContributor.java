@@ -9,7 +9,10 @@ package org.jboss.tools.smooks.configuration.editors;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -51,6 +54,13 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.model.medi.EdiMap;
+import org.jboss.tools.smooks.model.medi.MEdiFactory;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
+import org.jboss.tools.smooks.model.smooks.DocumentRoot;
+import org.jboss.tools.smooks.model.smooks.SmooksFactory;
+import org.jboss.tools.smooks.model.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
  * This is the action bar contributor for the Smooks model editor. <!--
@@ -58,8 +68,9 @@ import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
  * 
  * @generated
  */
-public class SmooksActionBarContributor extends EditingDomainActionBarContributor implements
-	ISelectionChangedListener {
+public class SmooksActionBarContributor extends EditingDomainActionBarContributor implements ISelectionChangedListener {
+
+	protected ISelection selection;
 	/**
 	 * This keeps track of the active editor. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
@@ -91,6 +102,33 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 				SmooksConfigurationActivator.getDefault().log(exception);
 			}
 		}
+	};
+
+	protected IAction addSmooks11ResourceListAction = new Action("Add Smooks Resource List") {
+
+		@Override
+		public void run() {
+			addSmooks11ResourceList();
+		}
+
+	};
+
+	protected IAction addSmooks10ResourceListAction = new Action("Add Smooks Resource List") {
+
+		@Override
+		public void run() {
+			addSmooks10ResourceList();
+		}
+
+	};
+
+	protected IAction addMap10ResourceListAction = new Action("Add MappNode") {
+
+		@Override
+		public void run() {
+			addMapNode();
+		}
+
 	};
 
 	/**
@@ -163,9 +201,49 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 */
 	public SmooksActionBarContributor() {
 		super(ADDITIONS_LAST_STYLE);
-//		loadResourceAction = new LoadResourceAction();
+		// loadResourceAction = new LoadResourceAction();
 		validateAction = new ValidateAction();
 		controlAction = new ControlAction();
+	}
+
+	protected void addMapNode() {
+		SmooksMultiFormEditor formEditor = (SmooksMultiFormEditor) this.getActiveEditor();
+		EObject model = formEditor.getSmooksModel();
+		if (model instanceof org.jboss.tools.smooks.model.medi.DocumentRoot) {
+			EdiMap mappingNode = MEdiFactory.eINSTANCE.createEdiMap();
+			Command command = AddCommand.create(formEditor.getEditingDomain(), model, MEdiPackage.eINSTANCE
+					.getMappingNode(), mappingNode);
+			formEditor.getEditingDomain().getCommandStack().execute(command);
+		}
+	}
+
+	protected void addSmooks10ResourceList() {
+		SmooksMultiFormEditor formEditor = (SmooksMultiFormEditor) this.getActiveEditor();
+		EObject model = formEditor.getSmooksModel();
+		if (model instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
+			org.jboss.tools.smooks10.model.smooks.SmooksResourceListType resourceList = org.jboss.tools.smooks10.model.smooks.SmooksFactory.eINSTANCE
+					.createSmooksResourceListType();
+			Command command = AddCommand.create(formEditor.getEditingDomain(), model,
+					org.jboss.tools.smooks10.model.smooks.SmooksPackage.eINSTANCE.getSmooksResourceListType(),
+					resourceList);
+			formEditor.getEditingDomain().getCommandStack().execute(command);
+		}
+	}
+
+	protected void addSmooks11ResourceList() {
+		SmooksMultiFormEditor formEditor = (SmooksMultiFormEditor) this.getActiveEditor();
+		EObject model = formEditor.getSmooksModel();
+		if (model instanceof DocumentRoot) {
+			SmooksResourceListType resourceList = SmooksFactory.eINSTANCE.createSmooksResourceListType();
+			Command command = AddCommand.create(formEditor.getEditingDomain(), model, SmooksPackage.eINSTANCE
+					.getSmooksResourceListType(), resourceList);
+			formEditor.getEditingDomain().getCommandStack().execute(command);
+		}
+	}
+
+	@Override
+	public void update() {
+		super.update();
 	}
 
 	/**
@@ -208,6 +286,8 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		createSiblingMenuManager = new MenuManager("New Sibling");
 		submenuManager.insertBefore("additions", createSiblingMenuManager);
 
+		submenuManager.insertBefore("additions", addSmooks11ResourceListAction);
+
 		// Force an update because Eclipse hides empty menus now.
 		//
 		submenuManager.addMenuListener(new IMenuListener() {
@@ -245,54 +325,51 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 			// Fake a selection changed event to update the menus.
 			//
 			if (selectionProvider.getSelection() != null) {
-				selectionChanged(new SelectionChangedEvent(selectionProvider, selectionProvider
-					.getSelection()));
+				selectionChanged(new SelectionChangedEvent(selectionProvider, selectionProvider.getSelection()));
 			}
 		}
 	}
-	
-	
 
 	@Override
 	public void init(IActionBars actionBars) {
 		super.init(actionBars);
 		ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
-	    cutAction = new CutAction(){
+		cutAction = new CutAction() {
 
 			public void runWithEvent(Event event) {
 				Widget widget = event.widget;
-				if(widget instanceof Text){
-					((Text)widget).cut();
+				if (widget instanceof Text) {
+					((Text) widget).cut();
 					return;
 				}
 				super.runWithEvent(event);
 			}
-	    	
-	    };
-	    cutAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_CUT));
-	    actionBars.setGlobalActionHandler(ActionFactory.CUT.getId(), cutAction);
 
-	    copyAction = new CopyAction(){
+		};
+		cutAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_CUT));
+		actionBars.setGlobalActionHandler(ActionFactory.CUT.getId(), cutAction);
+
+		copyAction = new CopyAction() {
 
 			public void runWithEvent(Event event) {
 				Widget widget = event.widget;
-				if(widget instanceof Text){
-					((Text)widget).copy();
+				if (widget instanceof Text) {
+					((Text) widget).copy();
 					return;
 				}
 				super.runWithEvent(event);
 			}
-	    	
-	    };
-	    copyAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_COPY));
-	    actionBars.setGlobalActionHandler(ActionFactory.COPY.getId(), copyAction);
 
-	    pasteAction = new PasteAction(){
+		};
+		copyAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_COPY));
+		actionBars.setGlobalActionHandler(ActionFactory.COPY.getId(), copyAction);
+
+		pasteAction = new PasteAction() {
 
 			public void runWithEvent(Event event) {
 				Widget widget = event.widget;
-				if(widget instanceof Text){
-					((Text)widget).paste();
+				if (widget instanceof Text) {
+					((Text) widget).paste();
 					return;
 				}
 				super.runWithEvent(event);
@@ -303,19 +380,19 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 				super.updateSelection(selection);
 				return true;
 			}
-			
-	    	
-	    };
-	    pasteAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE));
-	    actionBars.setGlobalActionHandler(ActionFactory.PASTE.getId(), pasteAction);
 
-	    undoAction = new UndoAction();
-	    undoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
-	    actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(), undoAction);
+		};
+		pasteAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE));
+		actionBars.setGlobalActionHandler(ActionFactory.PASTE.getId(), pasteAction);
 
-	    redoAction = new RedoAction();
-	    redoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
-	    actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(), redoAction);
+		undoAction = new UndoAction();
+		undoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
+		actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(), undoAction);
+
+		redoAction = new RedoAction();
+		redoAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
+		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(), redoAction);
+
 	}
 
 	/**
@@ -341,17 +418,18 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		// Query the new selection for appropriate new child/sibling descriptors
 		//
 		Collection<?> newChildDescriptors = null;
-//		Collection<?> newSiblingDescriptors = null;
+		// Collection<?> newSiblingDescriptors = null;
 
 		ISelection selection = event.getSelection();
-		if (selection instanceof IStructuredSelection
-			&& ((IStructuredSelection) selection).size() == 1) {
+		this.selection = selection;
+		if (selection instanceof IStructuredSelection && ((IStructuredSelection) selection).size() == 1) {
 			Object object = ((IStructuredSelection) selection).getFirstElement();
 			object = AdapterFactoryEditingDomain.unwrap(object);
 			EditingDomain domain = ((IEditingDomainProvider) activeEditorPart).getEditingDomain();
 
 			newChildDescriptors = domain.getNewChildDescriptors(object, null);
-//			newSiblingDescriptors = domain.getNewChildDescriptors(null, object);
+			// newSiblingDescriptors = domain.getNewChildDescriptors(null,
+			// object);
 		}
 
 		// Generate actions for selection; populate and redraw the menus.
@@ -377,17 +455,19 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 * 
 	 * @generated
 	 */
-	protected Collection<IAction> generateCreateChildActions(Collection<?> descriptors,
-		ISelection selection) {
+	protected Collection<IAction> generateCreateChildActions(Collection<?> descriptors, ISelection selection) {
 		Collection<IAction> actions = new ArrayList<IAction>();
-//		if (selection != null && selection.isEmpty() && descriptors != null) {
-//			CommandParameter cp = createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE,
-//				SmooksFactory.eINSTANCE.createSmooksResourceListType());
-//			CommandParameter cp2 = createChildParameter(EdiPackage.Literals.EDI_MAP,
-//				EdiFactory.eINSTANCE.createEdiMap());
-//			descriptors.add(cp);
-//			descriptors.add(cp2);
-//		}
+		// if (selection != null && selection.isEmpty() && descriptors != null)
+		// {
+		// CommandParameter cp =
+		// createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE,
+		// SmooksFactory.eINSTANCE.createSmooksResourceListType());
+		// CommandParameter cp2 =
+		// createChildParameter(EdiPackage.Literals.EDI_MAP,
+		// EdiFactory.eINSTANCE.createEdiMap());
+		// descriptors.add(cp);
+		// descriptors.add(cp2);
+		// }
 		if (descriptors != null) {
 			for (Object descriptor : descriptors) {
 				actions.add(new CreateChildAction(activeEditorPart, selection, descriptor));
@@ -408,8 +488,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 * 
 	 * @generated
 	 */
-	protected Collection<IAction> generateCreateSiblingActions(Collection<?> descriptors,
-		ISelection selection) {
+	protected Collection<IAction> generateCreateSiblingActions(Collection<?> descriptors, ISelection selection) {
 		Collection<IAction> actions = new ArrayList<IAction>();
 		if (descriptors != null) {
 			for (Object descriptor : descriptors) {
@@ -430,8 +509,8 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 * 
 	 * @generated
 	 */
-	protected void populateManager(IContributionManager manager,
-		Collection<? extends IAction> actions, String contributionID) {
+	protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions,
+			String contributionID) {
 		if (actions != null) {
 			for (IAction action : actions) {
 				if (contributionID != null) {
@@ -452,8 +531,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 * 
 	 * @generated
 	 */
-	protected void depopulateManager(IContributionManager manager,
-		Collection<? extends IAction> actions) {
+	protected void depopulateManager(IContributionManager manager, Collection<? extends IAction> actions) {
 		if (actions != null) {
 			IContributionItem[] items = manager.getItems();
 			for (int i = 0; i < items.length; i++) {
@@ -487,6 +565,20 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		super.menuAboutToShow(menuManager);
 		MenuManager submenuManager = null;
 
+		updateRootElementAddAction();
+
+		if (addSmooks11ResourceListAction.isEnabled()) {
+			menuManager.insertBefore("edit", addSmooks11ResourceListAction);
+		}
+
+		if (addSmooks10ResourceListAction.isEnabled()) {
+			menuManager.insertBefore("edit", addSmooks10ResourceListAction);
+		}
+
+		if (addMap10ResourceListAction.isEnabled()) {
+			menuManager.insertBefore("edit", addMap10ResourceListAction);
+		}
+
 		submenuManager = new MenuManager("Create Child");
 		populateManager(submenuManager, createChildActions, null);
 		menuManager.insertBefore("edit", submenuManager);
@@ -494,6 +586,37 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		submenuManager = new MenuManager("Create Sibling");
 		populateManager(submenuManager, createSiblingActions, null);
 		menuManager.insertBefore("edit", submenuManager);
+
+	}
+
+	protected void updateRootElementAddAction() {
+		addSmooks11ResourceListAction.setEnabled(false);
+		addMap10ResourceListAction.setEnabled(false);
+		addSmooks10ResourceListAction.setEnabled(false);
+
+		SmooksMultiFormEditor formEditor = (SmooksMultiFormEditor) this.getActiveEditor();
+		EObject model = formEditor.getSmooksModel();
+		if (model instanceof DocumentRoot) {
+			SmooksResourceListType resourceList = SmooksFactory.eINSTANCE.createSmooksResourceListType();
+			Command command = AddCommand.create(formEditor.getEditingDomain(), model, SmooksPackage.eINSTANCE
+					.getSmooksResourceListType(), resourceList);
+			addSmooks11ResourceListAction.setEnabled(command.canExecute());
+		}
+
+		if (model instanceof org.jboss.tools.smooks.model.medi.DocumentRoot) {
+			EdiMap mappingNode = MEdiFactory.eINSTANCE.createEdiMap();
+			Command command = AddCommand.create(formEditor.getEditingDomain(), model,
+					MEdiPackage.eINSTANCE.getEdiMap(), mappingNode);
+			addMap10ResourceListAction.setEnabled(command.canExecute());
+		}
+		if (model instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
+			org.jboss.tools.smooks10.model.smooks.SmooksResourceListType resourceList = org.jboss.tools.smooks10.model.smooks.SmooksFactory.eINSTANCE
+					.createSmooksResourceListType();
+			Command command = AddCommand.create(formEditor.getEditingDomain(), model,
+					org.jboss.tools.smooks10.model.smooks.SmooksPackage.eINSTANCE.getSmooksResourceListType(),
+					resourceList);
+			addSmooks10ResourceListAction.setEnabled(command.canExecute());
+		}
 	}
 
 	/**
