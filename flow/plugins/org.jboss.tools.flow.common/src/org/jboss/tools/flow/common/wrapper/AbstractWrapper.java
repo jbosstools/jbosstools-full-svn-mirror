@@ -154,6 +154,8 @@ public abstract class AbstractWrapper implements Wrapper {
 	public Object getAdapter(Class adapter) {
     	if (adapter == Element.class) {
     		return element;
+    	} else if (adapter == IPropertySource.class) {
+    		return getPropertySource();
     	}
     	return null;
     }
