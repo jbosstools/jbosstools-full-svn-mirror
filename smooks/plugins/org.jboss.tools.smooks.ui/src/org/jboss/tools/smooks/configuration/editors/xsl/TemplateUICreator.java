@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.actions.OpenEditorEditInnerContentsAction;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
@@ -64,12 +65,14 @@ public class TemplateUICreator extends PropertyUICreator {
 	@Override
 	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
 			SmooksMultiFormEditor formEditor) {
-		OpenEditorEditInnerContentsAction action1 = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_CDATA, "xsl");
-		OpenEditorEditInnerContentsAction action2 = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "xsl");
+		OpenEditorEditInnerContentsAction openCdataEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_CDATA, "xsl");
+		OpenEditorEditInnerContentsAction openCommentEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "xsl");
 		SmooksUIUtils.createFileSelectionTextFieldEditor("Text Value", parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
 				null, null);
-		SmooksUIUtils.createCDATAFieldEditor("Template Contents (CDATA)", editingdomain, toolkit, parent, model, action1);
-		SmooksUIUtils.createCommentFieldEditor("Template Contents (Comment)", editingdomain, toolkit, parent, model, action2);
+		Text text1 = SmooksUIUtils.createCDATAFieldEditor("Template Contents (CDATA)", editingdomain, toolkit, parent, model, openCdataEditorAction);
+		Text text2 = SmooksUIUtils.createCommentFieldEditor("Template Contents (Comment)", editingdomain, toolkit, parent, model, openCommentEditorAction);
+		openCdataEditorAction.setRelateText(text1);
+		openCommentEditorAction.setRelateText(text2);
 	}
 
 }

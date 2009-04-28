@@ -516,14 +516,14 @@ public class SmooksUIUtils {
 		return null;
 	}
 
-	public static void createCDATAFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
+	public static Text createCDATAFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
 			Object model,OpenEditorEditInnerContentsAction action) {
-		createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300, null, VALUE_TYPE_CDATA,action);
+		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300, null, VALUE_TYPE_CDATA,action);
 	}
 
-	public static void createCommentFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
+	public static Text createCommentFieldEditor(String label, AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent,
 			Object model,OpenEditorEditInnerContentsAction action) {
-		createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300, null, VALUE_TYPE_COMMENT,action);
+		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300, null, VALUE_TYPE_COMMENT,action);
 	}
 
 	public static Composite createJavaTypeSearchFieldEditor(Composite parent, FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor,
