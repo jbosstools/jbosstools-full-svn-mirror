@@ -8,6 +8,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -23,6 +25,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.action.Action;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.ISharedImages;
@@ -40,6 +43,8 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  * 
  */
 public class OpenEditorEditInnerContentsAction extends Action {
+
+	private static Map<Object, Map<String, OpenEditorEditInnerContentsAction>> elementTempFileMap = new HashMap<Object, Map<String, OpenEditorEditInnerContentsAction>>();
 
 	private AnyType model;
 
@@ -61,7 +66,12 @@ public class OpenEditorEditInnerContentsAction extends Action {
 
 	private IFile tempFile;
 
-	public OpenEditorEditInnerContentsAction(EditingDomain domain, AnyType model, int textType, String fileExtensionName, String editorID) {
+	private Map<String, OpenEditorEditInnerContentsAction> actionMap;
+
+	private Text relateText;
+
+	public OpenEditorEditInnerContentsAction(EditingDomain domain, AnyType model, int textType,
+			String fileExtensionName, String editorID) {
 		super();
 		this.model = model;
 		this.editingDomain = domain;
@@ -69,13 +79,66 @@ public class OpenEditorEditInnerContentsAction extends Action {
 		this.fileExtensionName = fileExtensionName;
 		this.editorID = editorID;
 		tempFileListener = new TempFileChangeListener();
-		 setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_FILE));
+		setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_FILE));
 		setDescription("Open an editor to edit inner contents");
 		setText("Open Editor");
+
+		actionMap = elementTempFileMap.get(model);
+		if (actionMap != null) {
+			OpenEditorEditInnerContentsAction oldAction = actionMap.get(getTypeKey());
+			if (oldAction != null) {
+				tempFile = oldAction.getTempFile();
+				// clean old listener
+				cleanOldActionListeners(oldAction);
+				if (tempFile != null) {
+					tempEditorlistener = createNewPartListener();
+					SmooksConfigurationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage()
+							.addPartListener(tempEditorlistener);
+					ResourcesPlugin.getWorkspace().addResourceChangeListener(tempFileListener);
+				}
+			}
+		} else {
+			actionMap = new HashMap<String, OpenEditorEditInnerContentsAction>();
+			elementTempFileMap.put(model, actionMap);
+		}
+		
+		actionMap.put(getTypeKey(), this);
 	}
 
 	public OpenEditorEditInnerContentsAction(EditingDomain domain, AnyType model, int textType, String fileExtensionName) {
 		this(domain, model, textType, fileExtensionName, null);
+	}
+
+	public TempFileChangeListener getTempFileListener() {
+		return tempFileListener;
+	}
+
+	public void setTempFileListener(TempFileChangeListener tempFileListener) {
+		this.tempFileListener = tempFileListener;
+	}
+
+	public IPartListener getTempEditorlistener() {
+		return tempEditorlistener;
+	}
+
+	public void setTempEditorlistener(IPartListener tempEditorlistener) {
+		this.tempEditorlistener = tempEditorlistener;
+	}
+
+	public IFile getTempFile() {
+		return tempFile;
+	}
+
+	public void setTempFile(IFile tempFile) {
+		this.tempFile = tempFile;
+	}
+
+	public Text getRelateText() {
+		return relateText;
+	}
+
+	public void setRelateText(Text relateText) {
+		this.relateText = relateText;
 	}
 
 	private void setContent(AnyType model, String contents, int textType) {
@@ -98,6 +161,87 @@ public class OpenEditorEditInnerContentsAction extends Action {
 				SmooksModelUtils.setCDATAToSmooksType(editingDomain, (AnyType) model, contents);
 			}
 		}
+
+		if (getRelateText() != null && contents != null) {
+			try {
+				Text relateText = getRelateText();
+				if (relateText != null) {
+					relateText.setText(contents);
+				}
+			} catch (Throwable t) {
+				t.printStackTrace();
+			}
+		}
+	}
+
+	private String getTypeKey() {
+		if (textType == SmooksUIUtils.VALUE_TYPE_TEXT) {
+			return "text";
+		}
+		if (textType == SmooksUIUtils.VALUE_TYPE_COMMENT) {
+			return "comment";
+		}
+		if (textType == SmooksUIUtils.VALUE_TYPE_CDATA) {
+			return "cdata";
+		}
+		return "";
+	}
+
+	private void cleanOldActionListeners(OpenEditorEditInnerContentsAction action) {
+		IPartListener pl = action.getTempEditorlistener();
+		IResourceChangeListener rl = action.getTempFileListener();
+		if (pl != null) {
+			SmooksConfigurationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage()
+					.removePartListener(pl);
+		}
+		if (rl != null) {
+			ResourcesPlugin.getWorkspace().removeResourceChangeListener(rl);
+		}
+	}
+
+	private IPartListener createNewPartListener() {
+		IPartListener partListener = new IPartListener() {
+
+			public void partActivated(IWorkbenchPart part) {
+
+			}
+
+			public void partBroughtToTop(IWorkbenchPart part) {
+
+			}
+
+			public void partClosed(IWorkbenchPart part) {
+				if (tempEditor != null && part == tempEditor) {
+					SmooksConfigurationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage()
+							.removePartListener(tempEditorlistener);
+					ResourcesPlugin.getWorkspace().removeResourceChangeListener(tempFileListener);
+					try {
+						tempFile.delete(true, new NullProgressMonitor());
+						tempFile.refreshLocal(0, null);
+						if (actionMap != null) {
+							actionMap.remove(getTypeKey());
+						}
+						if (actionMap.isEmpty()) {
+							elementTempFileMap.remove(model);
+							actionMap = null;
+						}
+						tempFile = null;
+					} catch (CoreException e) {
+//						e.printStackTrace();
+						// ignore
+					}
+				}
+			}
+
+			public void partDeactivated(IWorkbenchPart part) {
+
+			}
+
+			public void partOpened(IWorkbenchPart part) {
+
+			}
+		};
+		return partListener;
 	}
 
 	@Override
@@ -111,11 +255,11 @@ public class OpenEditorEditInnerContentsAction extends Action {
 				} else {
 					tempEditor = IDE.openEditor(window.getActivePage(), tempFile);
 				}
-				return ;
+				return;
 			}
 			if (tempEditorlistener != null) {
-				SmooksConfigurationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().removePartListener(
-						tempEditorlistener);
+				SmooksConfigurationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage()
+						.removePartListener(tempEditorlistener);
 			}
 			if (tempFileListener != null) {
 				ResourcesPlugin.getWorkspace().removeResourceChangeListener(tempFileListener);
@@ -152,46 +296,14 @@ public class OpenEditorEditInnerContentsAction extends Action {
 						tempEditor = IDE.openEditor(window.getActivePage(), tempFile);
 					}
 
-					tempEditorlistener = new IPartListener() {
-
-						public void partActivated(IWorkbenchPart part) {
-
-						}
-
-						public void partBroughtToTop(IWorkbenchPart part) {
-
-						}
-
-						public void partClosed(IWorkbenchPart part) {
-							if (tempEditor != null && part == tempEditor) {
-								SmooksConfigurationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage()
-										.removePartListener(tempEditorlistener);
-								ResourcesPlugin.getWorkspace().removeResourceChangeListener(tempFileListener);
-								try {
-									tempFile.delete(true, new NullProgressMonitor());
-									tempFile.refreshLocal(0, null);
-									tempFile = null;
-								} catch (CoreException e) {
-									e.printStackTrace();
-								}
-							}
-						}
-
-						public void partDeactivated(IWorkbenchPart part) {
-
-						}
-
-						public void partOpened(IWorkbenchPart part) {
-
-						}
-					};
-					SmooksConfigurationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().addPartListener(
-							tempEditorlistener);
+					tempEditorlistener = createNewPartListener();
+					SmooksConfigurationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage()
+							.addPartListener(tempEditorlistener);
 					ResourcesPlugin.getWorkspace().addResourceChangeListener(tempFileListener);
 				}
 			}
 		} catch (Exception e) {
-			
+
 		}
 	}
 
@@ -244,19 +356,10 @@ public class OpenEditorEditInnerContentsAction extends Action {
 			IResource res = delta.getResource();
 			switch (delta.getKind()) {
 			case IResourceDelta.ADDED:
-				System.out.print("Resource ");
-				System.out.print(res.getFullPath());
-				System.out.println(" was added.");
 				break;
 			case IResourceDelta.REMOVED:
-				System.out.print("Resource ");
-				System.out.print(res.getFullPath());
-				System.out.println(" was removed.");
 				break;
 			case IResourceDelta.CHANGED:
-				System.out.print("Resource ");
-				System.out.print(delta.getFullPath());
-				System.out.println(" has changed.");
 				if (res instanceof IFile) {
 					if (((IFile) res).getLocation().equals(tempFile.getLocation())) {
 						try {
@@ -271,10 +374,8 @@ public class OpenEditorEditInnerContentsAction extends Action {
 
 				}
 				if ((flags & IResourceDelta.REPLACED) != 0) {
-					System.out.println("--> Content Replaced");
 				}
 				if ((flags & IResourceDelta.MARKERS) != 0) {
-					System.out.println("--> Marker Change");
 					// IMarkerDelta[] markers = delta.getMarkerDeltas();
 					// if interested in markers, check these deltas
 				}
