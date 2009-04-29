@@ -21,6 +21,7 @@ import org.jboss.tools.flow.common.wrapper.DefaultContainerWrapper;
 import org.jboss.tools.flow.common.wrapper.DefaultFlowWrapper;
 import org.jboss.tools.flow.common.wrapper.DefaultLabelWrapper;
 import org.jboss.tools.flow.common.wrapper.DefaultNodeWrapper;
+import org.jboss.tools.flow.common.wrapper.DefaultWrapper;
 import org.jboss.tools.flow.common.wrapper.Wrapper;
 
 public class ElementRegistry {
@@ -41,7 +42,10 @@ public class ElementRegistry {
 	private static Wrapper createWrapper(IConfigurationElement configurationElement) 
 			throws CoreException {
 		IConfigurationElement[] children = configurationElement.getChildren();
-		if (children.length != 1) return null;
+		if (children.length > 1) return null;
+		if (children.length == 0) {
+			return createDefault(configurationElement);
+		}
 		String type = children[0].getName();
 		if ("flow".equals(type)) {
 			return createFlow(configurationElement); 
@@ -54,6 +58,20 @@ public class ElementRegistry {
 		} else {
 			return null;
 		}
+	}
+	
+	private static Wrapper createDefault(IConfigurationElement configurationElement) 
+			throws CoreException {
+		Object element = configurationElement.createExecutableExtension("class");
+		if (!(element instanceof Element)) {
+			String message = "Expecting to instantiate a org.jboss.tools.flow.common.model.Element instance.";
+			Logger.logError(message, new RuntimeException(message));
+			return null;
+		}
+		((Element)element).setMetaData("configurationElement", configurationElement);
+		DefaultWrapper result = new DefaultWrapper();
+		result.setElement((Element)element);
+		return result;
 	}
 	
 	private static Wrapper createConnection(IConfigurationElement configurationElement)
