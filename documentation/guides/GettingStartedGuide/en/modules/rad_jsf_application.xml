@@ -571,25 +571,24 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             <para>The Visual Page Editor will open in a screen split between source code along the
                 top and a WYSIWIG view along the bottom. You can see that some JSF code will be
                 already generated as we choose a template when creating the page.</para>
-            <para>At the beginning it's necessary to create a <emphasis role="bold">
-                    <property>&lt;h:form&gt;</property>
-                </emphasis> component where all others components are put.</para>
+            <para>At the beginning it's necessary to create a 
+                    <code>&lt;h:form&gt;</code>
+                 component where all others components are put.</para>
             <itemizedlist>
                 <listitem>
-                    <para>Place the mouse cursor inside <emphasis role="bold">
-                            <property>&lt;f:view&gt;</property>
-                        </emphasis><emphasis role="bold">
-                            <property>&lt;/f:view&gt;</property>
-                        </emphasis></para>
+                    <para>Place the mouse cursor inside 
+                            <code>&lt;f:view&gt;
+                            &lt;/f:view&gt;</code>
+                     </para>
                 </listitem>
                 <listitem>
                     <para>Go to JBoss Tools Palette and expand JSF HTML folder by selecting
                     it</para>
                 </listitem>
                 <listitem>
-                    <para>Click on <emphasis role="bold">
-                            <property>&lt;h:form&gt;</property>
-                        </emphasis> tag <figure>
+                    <para>Click on 
+                            <code>&lt;h:form&gt;</code>
+                        tag <figure>
                             <title>Insert h:form</title>
                             <mediaobject>
                                 <imageobject>
@@ -720,11 +719,11 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             </figure>
             <itemizedlist>
                 <listitem>
-                    <para>Switch to Source mode and insert <emphasis role="bold">
-                            <property>&lt;br/&gt;</property>
-                        </emphasis> tag after <emphasis role="bold">
-                            <property>&lt;h:outputText&gt;</property>
-                        </emphasis> component to make a new line.</para>
+                    <para>Switch to Source mode and insert 
+                            <code>&lt;br/&gt;</code>
+                         tag after 
+                            <code>&lt;h:outputText&gt;</code>
+                         component to make a new line.</para>
                 </listitem>
                 <listitem>
                     <para>Click <emphasis>
@@ -737,11 +736,11 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
                         editor, and drop it inside the editor after the text.</para>
                 </listitem>
                 <listitem>
-                    <para>Switch to a Source mode and insert <emphasis role="bold">
-                            <property>&lt;br/&gt;</property>
-                        </emphasis> tag after <emphasis role="bold">
-                            <property>&lt;h:outputText&gt;</property>
-                        </emphasis> component to make a new line</para>
+                    <para>Switch to a Source mode and insert
+                        <code>&lt;br/&gt;</code>
+                        tag after 
+                        <code>&lt;h:outputText&gt;</code>
+                        component to make a new line</para>
                 </listitem>
                 <listitem>
                     <para>Click <emphasis>
@@ -826,9 +825,9 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
                     <para>Go to Source mode</para>
                 </listitem>
                 <listitem>
-                    <para>Add the validation attribute to <emphasis role="bold">
-                            <property>&lt;f:validateLongRange&gt;</property>
-                        </emphasis> for user input validation</para>
+                    <para>Add the validation attribute to 
+                            <code>&lt;f:validateLongRange&gt;</code>
+                        for user input validation</para>
                 </listitem>
             </itemizedlist>
             <programlisting role="XML"><![CDATA[<h:inputText id="userNumber" value="#{NumberBean.userNumber}" required="true">
@@ -890,15 +889,13 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
                         </emphasis></para>
                 </listitem>
                 <listitem>
-                    <para>In Source mode add <emphasis role="bold">
-                            <property>&lt;br/&gt;</property>
-                        </emphasis> tags between <emphasis role="bold">
-                            <property>&lt;outputText&gt;</property>
-                        </emphasis>, <emphasis role="bold">
-                            <property>&lt;inputText&gt;</property>
-                        </emphasis> and <emphasis role="bold">
-                            <property>&lt;commandButton&gt;</property>
-                        </emphasis> components to place them on different lines</para>
+                    <para>In Source mode add 
+                         <code>&lt;br/&gt;</code>
+                         tags between 
+                          <code>&lt;outputText&gt;</code>
+                        , <code>&lt;inputText&gt;</code>
+                         and <code>&lt;commandButton&gt;</code>
+                         components to place them on different lines</para>
                 </listitem>
             </itemizedlist>
             <para>inputnumber.jsp page should look like this:</para>
@@ -957,13 +954,11 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
                 </mediaobject>
             </figure>
             <para>This page, success.jsp, is shown if you correctly guessed the number. The
-                    <emphasis role="bold">
-                    <property>&lt;h:outputFormat&gt;</property>
-                </emphasis> tag will get the value of success_text from the properties file. The {0}
+                <code>&lt;h:outputFormat&gt;</code>
+                tag will get the value of success_text from the properties file. The {0}
                 in success_text will be substituted for by the value of the value attribute within
-                the <emphasis role="bold">
-                    <property>&lt;f:param&gt;</property>
-                </emphasis> tag during runtime.</para>
+                the <code>&lt;f:param&gt;</code>
+                 tag during runtime.</para>
             <para>At the end, you have a button which allows you to replay the game. The action
                 value references a backing bean method. In this case, the method only terminates the
                 current session so that when you are shown the first page, the input text box is
