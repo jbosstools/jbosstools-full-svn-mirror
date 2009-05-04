@@ -8,6 +8,7 @@ package org.jboss.tools.smooks.configuration.editors;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
@@ -19,7 +20,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.action.ControlAction;
 import org.eclipse.emf.edit.ui.action.CopyAction;
-import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.action.CreateSiblingAction;
 import org.eclipse.emf.edit.ui.action.CutAction;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
@@ -54,13 +54,26 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.actions.AddSmooksResourceAction;
+import org.jboss.tools.smooks.model.datasource.DataSourceJndi;
+import org.jboss.tools.smooks.model.datasource.Direct;
+import org.jboss.tools.smooks.model.dbrouting.Executor;
+import org.jboss.tools.smooks.model.dbrouting.ResultSetRowSelector;
+import org.jboss.tools.smooks.model.fileRouting.OutputStream;
+import org.jboss.tools.smooks.model.freemarker.Freemarker;
+import org.jboss.tools.smooks.model.groovy.ScriptType;
+import org.jboss.tools.smooks.model.iorouting.IORouter;
+import org.jboss.tools.smooks.model.javabean.BindingsType;
+import org.jboss.tools.smooks.model.jmsrouting.JmsRouter;
 import org.jboss.tools.smooks.model.medi.EdiMap;
 import org.jboss.tools.smooks.model.medi.MEdiFactory;
 import org.jboss.tools.smooks.model.medi.MEdiPackage;
+import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks.model.xsl.Xsl;
 
 /**
  * This is the action bar contributor for the Smooks model editor. <!--
@@ -278,7 +291,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 
 		// Prepare for CreateChild item addition or removal.
 		//
-		createChildMenuManager = new MenuManager("New Child");
+		createChildMenuManager = new MenuManager("Add Smooks Resource");
 		submenuManager.insertBefore("additions", createChildMenuManager);
 
 		// Prepare for CreateSibling item addition or removal.
@@ -470,7 +483,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		// }
 		if (descriptors != null) {
 			for (Object descriptor : descriptors) {
-				actions.add(new CreateChildAction(activeEditorPart, selection, descriptor));
+				actions.add(new AddSmooksResourceAction(activeEditorPart, selection, descriptor));
 			}
 		}
 		return actions;
@@ -579,14 +592,165 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 			menuManager.insertBefore("edit", addMap10ResourceListAction);
 		}
 
-		submenuManager = new MenuManager("Create Child");
-		populateManager(submenuManager, createChildActions, null);
+		submenuManager = new MenuManager("Add Smooks Resource");
+		if (isSmooksResourceListElement()) {
+			groupActions(submenuManager,createChildActions);
+		} else {
+			populateManager(submenuManager, createChildActions, null);
+		}
 		menuManager.insertBefore("edit", submenuManager);
 
 		submenuManager = new MenuManager("Create Sibling");
 		populateManager(submenuManager, createSiblingActions, null);
 		menuManager.insertBefore("edit", submenuManager);
+	}
 
+	private boolean isSmooksResourceListElement() {
+		if (this.selection != null && selection instanceof IStructuredSelection) {
+			Object element = ((IStructuredSelection) selection).getFirstElement();
+			if (element instanceof SmooksResourceListType) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	protected void groupActions(MenuManager manager,Collection<?> createChildActions) {
+		MenuManager readers = new MenuManager("Readers");
+		manager.add(readers);
+
+		MenuManager templating = new MenuManager("Templating");
+		manager.add(templating);
+
+		MenuManager jbinding = new MenuManager("Java Binding");
+		manager.add(jbinding);
+
+		MenuManager datasources = new MenuManager("Datasources");
+		manager.add(datasources);
+
+		MenuManager scripting = new MenuManager("Scripting");
+		manager.add(scripting);
+
+		MenuManager fragmentRouting = new MenuManager("Fragment Routing");
+		manager.add(fragmentRouting);
+
+		for (Iterator<?> iterator = createChildActions.iterator(); iterator.hasNext();) {
+			boolean added = false;
+			AddSmooksResourceAction action = (AddSmooksResourceAction) iterator.next();
+			Object descriptor = action.getDescriptor();
+			if (isReader(descriptor)) {
+				readers.add(action);
+				added = true;
+			}
+			if (isTemplate(descriptor)) {
+				templating.add(action);added = true;
+			}
+			if (isJavaBinding(descriptor)) {
+				jbinding.add(action);added = true;
+			}
+			if (isDatasources(descriptor)) {
+				datasources.add(action);added = true;
+			}
+			if (isScripting(descriptor)) {
+				scripting.add(action);added = true;
+			}
+			if (isFragmentRouting(descriptor)) {
+				fragmentRouting.add(action);added = true;
+			}
+			if(!added){
+				manager.add(action);
+			}
+		}
+	}
+
+	private boolean isFragmentRouting(Object descriptor) {
+		if(descriptor instanceof CommandParameter){
+			CommandParameter parameter = (CommandParameter)descriptor;
+			if(parameter.getValue() != null){
+				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof JmsRouter){
+					return true;
+				}
+				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof OutputStream){
+					return true;
+				}
+				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof IORouter){
+					return true;
+				}
+				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Executor){
+					return true;
+				}
+				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof ResultSetRowSelector){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean isScripting(Object descriptor) {
+		if(descriptor instanceof CommandParameter){
+			CommandParameter parameter = (CommandParameter)descriptor;
+			if(parameter.getValue() != null){
+				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof ScriptType){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean isDatasources(Object descriptor) {
+		if(descriptor instanceof CommandParameter){
+			CommandParameter parameter = (CommandParameter)descriptor;
+			if(parameter.getValue() != null){
+				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof DataSourceJndi){
+					return true;
+				}
+				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Direct){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean isJavaBinding(Object descriptor) {
+		if(descriptor instanceof CommandParameter){
+			CommandParameter parameter = (CommandParameter)descriptor;
+			if(parameter.getValue() != null){
+				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof BindingsType){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean isTemplate(Object descriptor) {
+		if(descriptor instanceof CommandParameter){
+			CommandParameter parameter = (CommandParameter)descriptor;
+			if(parameter.getValue() != null){
+				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Freemarker){
+					return true;
+				}
+				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Xsl){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean isReader(Object descriptor) {
+		if(descriptor instanceof CommandParameter){
+			CommandParameter parameter = (CommandParameter)descriptor;
+			if(parameter.getValue() != null){
+				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof AbstractReader){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	protected void updateRootElementAddAction() {
