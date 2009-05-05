@@ -901,23 +901,29 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             <para>inputnumber.jsp page should look like this:</para>
             <programlisting role="XML"><![CDATA[<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
-<f:loadBundle basename="game.messages" var="msg"/>
-
+<f:loadBundle basename="game.messages" var="msg" />
 <html>
- <f:view>
-     <h:form id="inputNumbers">
-      <h:outputText value="#{msg.how_to_play}"/>
-      <br/>
-      <h:messages style="color: blue"/>
-      <br/>
-      <h:inputText id="userNumber" value="#{NumberBean.userNumber}" required="true">
-           <f:validateLongRange minimum="0" maximum="100"/>
-      </h:inputText>
-     <br/><br/>
-     <h:commandButton value=
-             "#{msg.makeguess_button}" action="#{NumberBean.checkGuess}"/>  
-   </h:form>
- </f:view>
+<head>
+<title></title>
+</head>
+	<body>
+		<f:view>
+			<h:form id="inputNumbers">
+				<h:outputText value="#{msg.how_to_play}" />
+				<br />
+				<h:messages style="color: blue" />
+				<br />
+				<h:inputText value="#{NumberBean.userNumber}" id="userNumber"
+					required="true">
+					<f:validateLongRange minimum="0" maximum="100" />
+				</h:inputText>
+				<br />
+				<br />
+				<h:commandButton value="#{msg.makeguess_button}"
+					action="#{NumberBean.checkGuess}" />
+			</h:form>
+		</f:view>
+	</body>
 </html>
 ]]></programlisting>
         </section>
@@ -931,17 +937,24 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 <f:loadBundle basename="game.messages" var="msg"/>
 
 <html>
- <f:view>
-   <h:form id="result">
-     <h:outputFormat value="#{msg.success_text}">
-       <f:param value="#{NumberBean.userNumber}"/>
-     </h:outputFormat>
-     <br/><br/>
-     <h:commandButton value=
-             "#{msg.trayagain_button}" action="#{NumberBean.playagain}"/>
-   </h:form>
- </f:view>
+	<head>
+		<title></title>
+	</head>
+	<body>
+		<f:view>
+			<h:form id="result">
+				<h:outputFormat value="#{msg.success_text}">
+				<f:param value="#{NumberBean.userNumber}" />
+				</h:outputFormat>
+				<br />
+				<br />
+				<h:commandButton value="#{msg.trayagain_button}"
+					action="#{NumberBean.playagain}" />
+			</h:form>
+		</f:view>
+	</body>
 </html>
+
 ]]></programlisting>
             <para>Again you can use code assist provided by JBDS when editing jsp page:</para>
             <figure>
