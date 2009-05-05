@@ -19,6 +19,7 @@ import java.util.Map;
 import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.ILogListener;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -331,10 +332,10 @@ public class VpeTest extends TestCase implements ILogListener {
 	 * @param fileName the name of the file
 	 * 
 	 * @return VpeController
-	 * @throws Throwable
+	 * @throws CoreException 
 	 */
-	protected VpeController openInVpe(String projectName, String fileName)
-				throws Throwable {
+	protected VpeController openInVpe(String projectName, String fileName) throws CoreException
+				 {
 		// get test page path
 		final IFile file =
 			(IFile) TestUtil.getComponentPath(fileName, projectName);

@@ -16,7 +16,6 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.PlatformUI;
@@ -30,8 +29,6 @@ import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.menu.action.InsertAction2;
 import org.jboss.tools.vpe.editor.util.Constants;
-import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
-import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.w3c.dom.Node;
@@ -142,7 +139,7 @@ public class InsertContributionItem extends ContributionItem {
 								+ RIGHT_ANGLE_BRACKET;
 
 						manager.add(new InsertAction2(name, modelObjectChild,
-								pageContext, sourceEditor, insertionType));
+								sourceEditor, insertionType));
 					}
 				} else {
 					final MenuManager subMenu = new InsertSubMenuManager(

@@ -13,6 +13,10 @@ package org.jboss.tools.vpe.editor.menu.action;
 import java.util.Properties;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.text.IUndoManager;
+import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
@@ -20,7 +24,6 @@ import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.ui.views.palette.PaletteInsertHelper;
 import org.jboss.tools.jst.web.tld.TLDToPaletteHelper;
 import org.jboss.tools.jst.web.tld.URIConstants;
-import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.menu.InsertType;
 import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
@@ -38,7 +41,6 @@ import org.w3c.dom.Node;
 public class InsertAction2 extends Action {
 
 	private final XModelObject item;
-	private final VpePageContext pageContext;
 	private final StructuredTextEditor sourceEditor;
 	private final InsertType insertType;
 
@@ -53,11 +55,9 @@ public class InsertAction2 extends Action {
 	 * @param insertType the type of the action
 	 */
 	public InsertAction2(String title, XModelObject item,
-			VpePageContext pageContext, StructuredTextEditor sourceEditor,
-			InsertType insertType) {
+			StructuredTextEditor sourceEditor, InsertType insertType) {
 		super(title);
 		this.item = item;
-		this.pageContext = pageContext;
 		this.sourceEditor = sourceEditor;
 		this.insertType = insertType;
 	}
@@ -67,29 +67,44 @@ public class InsertAction2 extends Action {
 	 */
 	@Override
 	public void run() {
-		prepareInsertion();
-		doInsertion();
+		final Point userSelection = SelectionUtil
+				.getSourceSelectionRange(sourceEditor);
+		
+		/* we must clear the selection before an element is inserted 
+		 * (https://jira.jboss.org/jira/browse/JBIDE-3519)            */
+		getSourceEditor().getTextViewer().getTextWidget().setSelection(
+				userSelection.x);
+
+		final IUndoManager undoManager = sourceEditor.getTextViewer()
+				.getUndoManager();
+		try {
+			undoManager.beginCompoundChange();
+			
+			prepareInsertion(userSelection);
+			doInsertion();
+		} finally {
+			undoManager.endCompoundChange();
+		}
 	}
 
 	/**
 	 * Sets the cursor to an appropriate position. 
-	 * If REPLACE_WITH action is selected, it removes the selected text.
+	 * If REPLACE_WITH action is chosen, it removes 
+	 * the selected tag.
 	 */
-	private void prepareInsertion() {
-		final Point selectionRange = SelectionUtil
-				.getSourceSelectionRange(sourceEditor);
-		int start = selectionRange.x;
-		int length = selectionRange.y;
+	private void prepareInsertion(final Point userSelection) {
+		int start = userSelection.x;
+		int length = userSelection.y;
 
 		final Node firstNode = SelectionUtil
-				.getNodeBySourcePosition(sourceEditor, selectionRange.x);
+				.getNodeBySourcePosition(sourceEditor, userSelection.x);
 		final Node endNode = SelectionUtil
 				.getNodeBySourcePosition(sourceEditor, 
-						selectionRange.x + selectionRange.y);
+						userSelection.x + userSelection.y);
 
 		if (firstNode != null) {
 			if (firstNode.getNodeType() == Node.TEXT_NODE) {
-				start = selectionRange.x;
+				start = userSelection.x;
 			} else {
 				start = NodesManagingUtil.getStartOffsetNode(firstNode);
 			}
@@ -97,7 +112,7 @@ public class InsertAction2 extends Action {
 
 		if (endNode != null) {
 			if (endNode.getNodeType() == Node.TEXT_NODE) {
-				length = (selectionRange.x - start) + selectionRange.y;
+				length = (userSelection.x - start) + userSelection.y;
 			} else {
 				length = NodesManagingUtil.getEndOffsetNode(endNode) - start;
 			}
@@ -115,23 +130,22 @@ public class InsertAction2 extends Action {
 			insertionLength = 0;
 			break;
 		case INSERT_INTO:
-			if (endNode.getNodeType() == Node.ELEMENT_NODE) {
-				final Element endElement = (Element) endNode;
-				Node prevNode = endElement
+			if (firstNode != null
+					&& firstNode.getNodeType() == Node.ELEMENT_NODE) {
+				final Element firstElement = (Element) firstNode;
+				Node prevNode = firstElement
 						.getOwnerDocument().createTextNode(""); //$NON-NLS-1$
 				try {
-					endElement.appendChild(prevNode);
+					firstElement.appendChild(prevNode);
 				} catch(DOMException e) {
-					prevNode = endElement;
+					prevNode = firstNode;
 				}
 
-				insertionStart
-						= NodesManagingUtil.getEndOffsetNode(prevNode);
-				insertionLength = 0;
+				insertionStart = NodesManagingUtil.getEndOffsetNode(prevNode);
 			} else {
 				insertionStart = start + length;
-				insertionLength = 0;
 			}
+			insertionLength = 0;
 			break;
 		default:
 			insertionStart = start;
@@ -140,18 +154,20 @@ public class InsertAction2 extends Action {
 		}
 
 		if (insertType == InsertType.REPLACE_WITH) {
-			getSourceEditor().getTextViewer().getTextWidget()
-					.replaceTextRange(insertionStart, insertionLength,
-							""); //$NON-NLS-1$
+			sourceEditor.getTextViewer().getTextWidget().replaceTextRange(
+					insertionStart, insertionLength, ""); //$NON-NLS-1$
 		} else {
 			// set source selection
-			SelectionUtil.setSourceSelection(pageContext,
-					insertionStart, insertionLength);
+			sourceEditor.getTextViewer().getTextWidget().setSelection(
+					insertionStart, insertionStart + insertionLength);
+//			SelectionUtil.setSourceSelection(pageContext,
+//					insertionStart, insertionLength);
 		}
+
 	}
 	
 	/**
-	 * Inserts selected tag at the cursor. 
+	 * Inserts chosen tag at the cursor. 
 	 */
 	private void doInsertion() {
 		String tagName = item.getAttributeValue("name"); //$NON-NLS-1$
@@ -175,21 +191,21 @@ public class InsertAction2 extends Action {
 		 * selection range after taglib insertion.
 		 */
 		String startText = Constants.EMPTY 
-				+ item.getAttributeValue("start text"); //$NON-NLS-1$
+				+ item.getAttributeValue(TLDToPaletteHelper.START_TEXT);
 		String endText = Constants.EMPTY
-				+ item.getAttributeValue("end text"); //$NON-NLS-1$
+				+ item.getAttributeValue(TLDToPaletteHelper.END_TEXT);
 		
 
 		// Gets source editor's selection provider with updated text selection.
-		ISelectionProvider selProvider = sourceEditor.getSelectionProvider();
+		ISelectionProvider selectionProvider
+				= sourceEditor.getSelectionProvider();
 
 		Properties p = new Properties();
-		p.setProperty("tag name", tagName); //$NON-NLS-1$
-		p.setProperty("start text", startText); //$NON-NLS-1$
-		p.setProperty("end text", endText); //$NON-NLS-1$
-		p.setProperty("automatically reformat tag body", //$NON-NLS-1$
-				item.getAttributeValue(
-						"automatically reformat tag body")); //$NON-NLS-1$
+		p.setProperty(PaletteInsertHelper.PROPOPERTY_TAG_NAME, tagName);
+		p.setProperty(PaletteInsertHelper.PROPOPERTY_START_TEXT, startText);
+		p.setProperty(PaletteInsertHelper.PROPOPERTY_END_TEXT, endText);
+		p.setProperty(PaletteInsertHelper.PROPOPERTY_REFORMAT_BODY,
+				item.getAttributeValue(TLDToPaletteHelper.REFORMAT));
 		p.setProperty(URIConstants.LIBRARY_URI, uri);
 		p.setProperty(URIConstants.LIBRARY_VERSION, libraryVersion);
 		String addTaglib = item.getParent().getAttributeValue(
@@ -200,15 +216,9 @@ public class InsertAction2 extends Action {
 		 * Added by Dzmitry Sakovich Fix for JBIDE-1626
 		 */
 		// if(((Node)region).getNodeType() == Node.ELEMENT_NODE)
-		p.put("selectionProvider", selProvider); //$NON-NLS-1$
+		p.put(PaletteInsertHelper.PROPOPERTY_SELECTION_PROVIDER,
+				selectionProvider);
 		PaletteInsertHelper.insertIntoEditor(sourceEditor.getTextViewer(), p);
-	}
-
-	/**
-	 * @return the pageContext
-	 */
-	protected VpePageContext getPageContext() {
-		return pageContext;
 	}
 
 	/**
@@ -217,6 +227,4 @@ public class InsertAction2 extends Action {
 	protected StructuredTextEditor getSourceEditor() {
 		return sourceEditor;
 	}
-	
-
 }

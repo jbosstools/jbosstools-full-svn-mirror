@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.editor.menu.action;
 import java.util.Properties;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.text.IUndoManager;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
@@ -77,6 +78,21 @@ public class InsertAction extends Action {
 	 */
 	@Override
 	public void run() {
+		final IUndoManager undoManager = sourceEditor.getTextViewer()
+				.getUndoManager();
+		try {
+			undoManager.beginCompoundChange();
+			insert();
+		} finally {
+			undoManager.endCompoundChange();
+		}
+	}
+
+	/**
+	 * Inserts the specified {@code item} into the 
+	 * {@code sourceEditor}. 
+	 */
+	private void insert() {
 		String tagName = item.getAttributeValue("name"); //$NON-NLS-1$
 
 		XModelObject parent = item.getParent();
