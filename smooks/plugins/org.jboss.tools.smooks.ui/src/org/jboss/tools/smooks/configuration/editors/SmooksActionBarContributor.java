@@ -18,7 +18,6 @@ import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
-import org.eclipse.emf.edit.ui.action.ControlAction;
 import org.eclipse.emf.edit.ui.action.CopyAction;
 import org.eclipse.emf.edit.ui.action.CreateSiblingAction;
 import org.eclipse.emf.edit.ui.action.CutAction;
@@ -216,7 +215,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		super(ADDITIONS_LAST_STYLE);
 		// loadResourceAction = new LoadResourceAction();
 		validateAction = new ValidateAction();
-		controlAction = new ControlAction();
+//		controlAction = new ControlAction();
 	}
 
 	protected void addMapNode() {
@@ -575,7 +574,25 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 */
 	@Override
 	public void menuAboutToShow(IMenuManager menuManager) {
-		super.menuAboutToShow(menuManager);
+		menuManager.add(new Separator("edit"));
+		menuManager.add(new ActionContributionItem(undoAction));
+	    menuManager.add(new ActionContributionItem(redoAction));
+	    menuManager.add(new Separator());
+	    menuManager.add(new ActionContributionItem(deleteAction));
+	    menuManager.add(new Separator());
+	    menuManager.add(new ActionContributionItem(cutAction));
+	    menuManager.add(new ActionContributionItem(copyAction));
+	    menuManager.add(new ActionContributionItem(pasteAction));
+	    menuManager.add(new Separator());
+
+//	    if ((style & ADDITIONS_LAST_STYLE) != 0)
+//	    {
+//	      menuManager.add(new Separator("additions"));
+//	      menuManager.add(new Separator());
+//	    }
+	    // Add our other standard marker.
+	    //
+	    menuManager.add(new Separator("additions-end"));
 		MenuManager submenuManager = null;
 
 		updateRootElementAddAction();
@@ -603,6 +620,10 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		submenuManager = new MenuManager("Create Sibling");
 		populateManager(submenuManager, createSiblingActions, null);
 		menuManager.insertBefore("edit", submenuManager);
+		// don't show properties that
+//		menuManager.insertAfter("additions-end", showPropertiesViewAction);
+		menuManager.insertAfter("additions-end", validateAction);
+		this.addGlobalActions(menuManager);
 	}
 
 	private boolean isSmooksResourceListElement() {
@@ -791,13 +812,13 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 */
 	@Override
 	protected void addGlobalActions(IMenuManager menuManager) {
-		menuManager.insertAfter("additions-end", new Separator("ui-actions"));
-		menuManager.insertAfter("ui-actions", showPropertiesViewAction);
+//		menuManager.insertAfter("additions-end", new Separator("ui-actions"));
+//		menuManager.insertAfter("additions-end", showPropertiesViewAction);
 
-		refreshViewerAction.setEnabled(refreshViewerAction.isEnabled());
-		menuManager.insertAfter("ui-actions", refreshViewerAction);
+//		refreshViewerAction.setEnabled(refreshViewerAction.isEnabled());
+//		menuManager.insertAfter("ui-actions", refreshViewerAction);
 
-		super.addGlobalActions(menuManager);
+//		super.addGlobalActions(menuManager);
 	}
 
 	/**

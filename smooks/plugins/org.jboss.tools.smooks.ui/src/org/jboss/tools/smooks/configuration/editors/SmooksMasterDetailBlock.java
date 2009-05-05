@@ -29,7 +29,6 @@ import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -262,15 +261,15 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 	}
 
 	private void createMenuForViewer(TreeViewer smooksTreeViewer2) {
-		MenuManager contextMenu = new MenuManager("#PopUp");
-		contextMenu.add(new Separator("additions"));
+		MenuManager contextMenu = new MenuManager();
+//		contextMenu.add(new Separator("additions"));
 		contextMenu.setRemoveAllWhenShown(true);
 		contextMenu.addMenuListener(this);
 
 		Menu menu = contextMenu.createContextMenu(smooksTreeViewer2.getControl());
 		smooksTreeViewer2.getControl().setMenu(menu);
-		formEditor.getSite().registerContextMenu(contextMenu,
-			new UnwrappingSelectionProvider(smooksTreeViewer2));
+//		formEditor.getSite().registerContextMenu(contextMenu,
+//			new UnwrappingSelectionProvider(smooksTreeViewer2));
 	}
 
 	public TreeViewer getSmooksTreeViewer() {
