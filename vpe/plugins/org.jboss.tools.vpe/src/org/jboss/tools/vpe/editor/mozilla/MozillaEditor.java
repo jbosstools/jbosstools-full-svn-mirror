@@ -69,6 +69,7 @@ import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.toolbar.format.TextFormattingToolBar;
 import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
+import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.xpl.CustomSashForm;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
@@ -92,6 +93,21 @@ import org.mozilla.interfaces.nsIPlaintextEditor;
 public class MozillaEditor extends EditorPart implements IReusableEditor {
 	protected static final String INIT_URL = /*"file://" +*/ (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath(); //$NON-NLS-1$ //$NON-NLS-2$
 	public static final String CONTENT_AREA_ID = "__content__area__"; //$NON-NLS-1$
+	
+	/*
+	 * Paths for tool bar icons
+	 */
+	public static final String ICON_PREFERENCE = "icons/preference.gif"; //$NON-NLS-1$
+	public static final String ICON_PREFERENCE_DISABLED = "icons/preference_disabled.gif"; //$NON-NLS-1$
+	public static final String ICON_REFRESH = "icons/refresh.gif"; //$NON-NLS-1$
+	public static final String ICON_REFRESH_DISABLED = "icons/refresh_disabled.gif"; //$NON-NLS-1$
+	public static final String ICON_PAGE_DESIGN_OPTIONS = "icons/point_to_css.gif"; //$NON-NLS-1$
+	public static final String ICON_PAGE_DESIGN_OPTIONS_DISABLED = "icons/point_to_css_disabled.gif"; //$NON-NLS-1$
+	public static final String ICON_ORIENTATION_SOURCE_LEFT = "icons/source_left.gif"; //$NON-NLS-1$
+	public static final String ICON_ORIENTATION_SOURCE_TOP = "icons/source_top.gif"; //$NON-NLS-1$
+	public static final String ICON_ORIENTATION_SOURCE_RIGHT = "icons/source_right.gif"; //$NON-NLS-1$
+	public static final String ICON_ORIENTATION_SOURCE_BOTTOM = "icons/source_bottom.gif"; //$NON-NLS-1$
+	public static final String ICON_ORIENTATION_SOURCE_LEFT_DISABLED = "icons/source_left_disabled.gif"; //$NON-NLS-1$
 
 	static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
 	private XulRunnerEditor xulRunnerEditor;
@@ -113,10 +129,10 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private static List<String> layoutNames;
 	static {
 	    layoutIcons = new HashMap<String, String>();
-	    layoutIcons.put(CustomSashForm.LAYOUT_HORIZONTAL_SOURCE_LEFT, "icons/source_left.gif"); //$NON-NLS-1$
-	    layoutIcons.put(CustomSashForm.LAYOUT_VERTICAL_SOURCE_TOP, "icons/source_top.gif"); //$NON-NLS-1$
-	    layoutIcons.put(CustomSashForm.LAYOUT_HORIZONTAL_VISUAL_LEFT, "icons/source_right.gif"); //$NON-NLS-1$
-	    layoutIcons.put(CustomSashForm.LAYOUT_VERTICAL_VISUAL_TOP, "icons/source_bottom.gif"); //$NON-NLS-1$
+	    layoutIcons.put(CustomSashForm.LAYOUT_HORIZONTAL_SOURCE_LEFT, ICON_ORIENTATION_SOURCE_LEFT);
+	    layoutIcons.put(CustomSashForm.LAYOUT_VERTICAL_SOURCE_TOP, ICON_ORIENTATION_SOURCE_TOP);
+	    layoutIcons.put(CustomSashForm.LAYOUT_HORIZONTAL_VISUAL_LEFT, ICON_ORIENTATION_SOURCE_RIGHT);
+	    layoutIcons.put(CustomSashForm.LAYOUT_VERTICAL_VISUAL_TOP, ICON_ORIENTATION_SOURCE_BOTTOM);
 	    
 	    layoutNames = new ArrayList<String>();
 	    layoutNames.add(CustomSashForm.LAYOUT_HORIZONTAL_SOURCE_LEFT);
@@ -263,14 +279,16 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		});
 		
 		ToolItem item = null;
-		item = createToolItem(verBar, SWT.BUTTON1, "icons/preference.gif", VpeUIMessages.PREFERENCES); //$NON-NLS-1$
+		item = createToolItem(verBar, SWT.BUTTON1, ICON_PREFERENCE,
+			ICON_PREFERENCE_DISABLED, VpeUIMessages.PREFERENCES, true);
 		item.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				VpeEditorPreferencesPage.openPreferenceDialog();
 			}
 		});
 
-		item = createToolItem(verBar, SWT.BUTTON1, "icons/refresh.gif", VpeUIMessages.REFRESH); //$NON-NLS-1$
+		item = createToolItem(verBar, SWT.BUTTON1, ICON_REFRESH,
+			ICON_REFRESH_DISABLED, VpeUIMessages.REFRESH, true);
 		item.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				if(controller!=null) {
@@ -278,7 +296,26 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				}
 			}
 		});
-		item = createToolItem(verBar, SWT.BUTTON1, "icons/point_to_css.gif", VpeUIMessages.PAGE_DESIGN_OPTIONS); //$NON-NLS-1$
+		
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-3966
+		 * Disabling Page Design Options for external files. 
+		 */
+		IEditorInput input = getEditorInput();
+		IFile file = null;
+		if (input instanceof IFileEditorInput) {
+			file = ((IFileEditorInput) input).getFile();
+		} else if (input instanceof ILocationProvider) {
+			ILocationProvider provider = (ILocationProvider) input;
+			IPath path = provider.getPath(input);
+			if (path != null) {
+			    file = FileUtil.getFile(input, path.lastSegment());
+			}
+		}
+		boolean fileExistsInWorkspace = ((file != null) && (file.exists()));
+		item = createToolItem(verBar, SWT.BUTTON1, ICON_PAGE_DESIGN_OPTIONS,
+			ICON_PAGE_DESIGN_OPTIONS_DISABLED,
+			VpeUIMessages.PAGE_DESIGN_OPTIONS, fileExistsInWorkspace);
 		item.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				IEditorInput input = getEditorInput();
@@ -294,7 +331,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			}
 		});
 
-
 		/*
 		 * https://jira.jboss.org/jira/browse/JBIDE-4152
 		 * Compute initial icon state and add it to the tool bar.
@@ -307,7 +343,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		String newOrientation = layoutNames.get(newIndx);
 
 		final ToolItem rotateEditorsItem = createToolItem(verBar, SWT.BUTTON1,
-			layoutIcons.get(newOrientation), newOrientation);
+			layoutIcons.get(newOrientation),
+			ICON_ORIENTATION_SOURCE_LEFT_DISABLED, newOrientation, true);
 		rotateEditorsItem.addListener(SWT.Selection, new Listener() {
 		    public void handleEvent(Event event) {
 			try {
@@ -483,13 +520,16 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		fill.setLayoutData(new GridData(GridData.FILL_BOTH));
 	}
 
-	private ToolItem createToolItem(ToolBar parent, int type, String image,
-			String toolTipText) {
+	private ToolItem createToolItem(ToolBar parent, int type, String image, String disabledImage,
+		String toolTipText, boolean isEnabled) {
+	    
 		ToolItem item = new ToolItem(parent, type);
 		item.setImage(ImageDescriptor
 				.createFromFile(MozillaEditor.class, image).createImage());
 		item.setToolTipText(toolTipText);
-
+		item.setDisabledImage(ImageDescriptor
+			.createFromFile(MozillaEditor.class, disabledImage).createImage());
+		item.setEnabled(isEnabled);
 		// add dispose listener
 		item.addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
