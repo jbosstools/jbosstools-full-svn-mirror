@@ -10,24 +10,12 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.mozilla;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.BusyIndicator;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Link;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
-import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.VpePreviewDomBuilder;
 import org.jboss.tools.vpe.editor.VpeSourceDomBuilder;
@@ -37,7 +25,6 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
-import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 
@@ -96,43 +83,7 @@ public class MozillaPreview extends MozillaEditor {
 					getEditorInput()));
 			getXulRunnerEditor().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		} catch (XulRunnerException e) {
-	        Label title = new Label(parent, SWT.WRAP);
-	        title.setText(VpeUIMessages.MOZILLA_LOADING_ERROR);
-	        title.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-	        setLink(new Link(parent, SWT.WRAP));
-	        getLink().setText(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK_TEXT);
-	        getLink().setToolTipText(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK);
-	        getLink().setForeground(getLink().getDisplay().getSystemColor(SWT.COLOR_BLUE));
-	        getLink().addMouseListener(new MouseListener() {
-	        	public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
-	                BusyIndicator.showWhile(getLink().getDisplay(), new Runnable() {
-	                    public void run() {
-	                        URL theURL=null;;
-							try {
-								theURL = new URL(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK);
-							} catch (MalformedURLException e) {
-								VpePlugin.reportProblem(e);
-							}
-	                        IWorkbenchBrowserSupport support = PlatformUI.getWorkbench().getBrowserSupport();
-	                        try {
-								support.getExternalBrowser().openURL(theURL);
-							} catch (PartInitException e) {
-								VpePlugin.reportProblem(e);
-							}
-	                    }
-	                });
-	            }
-
-				public void mouseDoubleClick(MouseEvent e) {
-				}
-
-				public void mouseUp(MouseEvent e) {
-				}
-	        });
-	        getLink().setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-	        Label fill = new Label(parent, SWT.WRAP);		
-	        fill.setLayoutData(new GridData(GridData.FILL_BOTH));	        
+			showXulRunnerException(parent, e);
 		}		
 	}
 

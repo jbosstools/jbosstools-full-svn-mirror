@@ -106,7 +106,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private IVpeToolBarManager vpeToolBarManager;
 	private FormatControllerManager formatControllerManager = new FormatControllerManager();
 	private VpeController controller;
-	private Link link = null;
 	private boolean isRefreshPage = false;
 	private String doctype;
 	
@@ -422,50 +421,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			
 		}
 		catch (XulRunnerException e) {
-			VpePlugin.getPluginLog().logError(e);
-			
-	        layout.verticalSpacing = 10;
-	        Label title = new Label(cmpEd, SWT.WRAP);
-	        title.setText(VpeUIMessages.MOZILLA_LOADING_ERROR);
-	        title.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-	        link = new Link(cmpEd, SWT.WRAP);
-	        link.setText(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK_TEXT);
-	        link.setToolTipText(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK);
-	        link.setForeground(link.getDisplay().getSystemColor(SWT.COLOR_BLUE));
-	        link.addMouseListener(new MouseListener() {
-	        	public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
-	                BusyIndicator.showWhile(link.getDisplay(), new Runnable() {
-	                    public void run() {
-	                        URL theURL=null;;
-							try {
-								theURL = new URL(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK);
-							} catch (MalformedURLException e) {
-								VpePlugin.reportProblem(e);
-							}
-	                        IWorkbenchBrowserSupport support = PlatformUI.getWorkbench().getBrowserSupport();
-	                        try {
-								support.getExternalBrowser().openURL(theURL);
-							} catch (PartInitException e) {
-								VpePlugin.reportProblem(e);
-							}
-	                    }
-	                });
-	            }
-
-				public void mouseDoubleClick(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				public void mouseUp(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-	        });
-	        link.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-	        Label fill = new Label(cmpEd, SWT.WRAP);		
-	        fill.setLayoutData(new GridData(GridData.FILL_BOTH));
+			layout.verticalSpacing = 10;
+			showXulRunnerException(cmpEd, e);
 		}
 		
 		/*
@@ -477,6 +434,53 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		sc.setExpandHorizontal(true);
 		sc.setExpandVertical(true);
 		sc.setMinSize(totalSize);
+	}
+
+	/**
+	 * Logs given {@code exception} and shows error message in 
+	 * the {@code parent} composite.
+	 */
+	protected void showXulRunnerException(Composite parent,
+			XulRunnerException exception) {
+		VpePlugin.getPluginLog().logError(
+				VpeUIMessages.MOZILLA_LOADING_ERROR_LOG_ENTRY, exception);
+
+		Label title = new Label(parent, SWT.WRAP);
+		title.setText(VpeUIMessages.MOZILLA_LOADING_ERROR);
+		title.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		final Link link = new Link(parent, SWT.WRAP);
+		link.setText(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK_TEXT);
+		link.setToolTipText(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK);
+		link.setForeground(link.getDisplay().getSystemColor(SWT.COLOR_BLUE));
+		link.addMouseListener(new MouseListener() {
+			public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
+		        BusyIndicator.showWhile(link.getDisplay(), new Runnable() {
+		            public void run() {
+		                URL theURL=null;;
+						try {
+							theURL = new URL(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK);
+						} catch (MalformedURLException e) {
+							VpePlugin.reportProblem(e);
+						}
+		                IWorkbenchBrowserSupport support = PlatformUI.getWorkbench().getBrowserSupport();
+		                try {
+							support.getExternalBrowser().openURL(theURL);
+						} catch (PartInitException e) {
+							VpePlugin.reportProblem(e);
+						}
+		            }
+		        });
+		    }
+
+			public void mouseDoubleClick(MouseEvent e) {
+			}
+			public void mouseUp(MouseEvent e) {
+			}
+		});
+		link.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		Label fill = new Label(parent, SWT.WRAP);		
+		fill.setLayoutData(new GridData(GridData.FILL_BOTH));
 	}
 
 	private ToolItem createToolItem(ToolBar parent, int type, String image,
@@ -749,20 +753,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 */
 	public VpeController getController() {
 		return controller;
-	}
-
-	/**
-	 * @return the link
-	 */
-	protected Link getLink() {
-		return link;
-	}
-
-	/**
-	 * @param link the link to set
-	 */
-	protected void setLink(Link link) {
-		this.link = link;
 	}
 
 	/**
