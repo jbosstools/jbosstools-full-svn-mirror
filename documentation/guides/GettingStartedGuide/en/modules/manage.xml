@@ -151,7 +151,7 @@
             <title>JBoss AS Installation</title>
             <itemizedlist>
                 <listitem>
-                    <para>Download the binary package of <property>JBoss 4.2.3</property> and save
+                    <para>Download the binary package of JBoss AS, e.g. <property>JBoss 4.2.3</property> and save
                         it on your computer: <ulink url="http://labs.jboss.com/jbossas/downloads"
                             >http://labs.jboss.com/jbossas/downloads</ulink></para>
                 </listitem>
