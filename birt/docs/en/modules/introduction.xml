@@ -87,16 +87,16 @@
                         >JBoss Tools Installation</link> section)</para>
             </listitem>
             <listitem>
-                <para>BIRT Report Designer (BIRT Report Designer 2.3.2 (the latest stable version)
+                <para>BIRT Report Designer (BIRT Report Designer 2.3.2 
                     you can download from <ulink
                         url="http://www.eclipse.org/downloads/download.php?file=/birt/downloads/drops/R-R1-2_3_2-200902181355/birt-report-framework-2_3_2.zip"
-                        >here</ulink>)</para>
+                        >Eclipse downloads site</ulink>)</para>
             </listitem>
             <listitem>
                 <para>BIRT Web Tools Integration ( BIRT WTP Integration 2.3.2 you can download from
                         <ulink
                         url="http://www.eclipse.org/downloads/download.php?file=/birt/downloads/drops/R-R1-2_3_2-200902181355/birt-wtp-integration-sdk-2_3_2.zip"
-                        >here</ulink>)</para>
+                            >Eclipse downloads site</ulink>)</para>
             </listitem>
         </itemizedlist>
 

@@ -19,11 +19,11 @@
 
     <tip>
         <title>Tip:</title>
-        <para><ulink
+        <para>We used<ulink
                 url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777"
                 >JBoss Seam 2.0.1 GA</ulink> and <ulink
                 url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777"
-                >JBoss Application Server 4.2.2 GA</ulink> are required.</para>
+                    >JBoss Application Server 4.2.2 GA</ulink> in examples of this guide.</para>
     </tip>
 
     <section id="creatin_project_with_birt">
