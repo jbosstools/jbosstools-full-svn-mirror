@@ -47,5 +47,24 @@
              class="org.jboss.tools.smooks.configuration.editors.SmooksToolsStartup">
        </startup>
     </extension>
+    <extension
+          point="org.eclipse.ui.decorators">
+       <decorator
+             adaptable="false"
+             class="org.jboss.tools.smooks.configuration.validate.ValidateResultLabelDecorator"
+             id="org.jboss.tools.smooks.ui.configurationPage.decorator"
+             label="Smooks Configuration Page Viewer Decorator"
+             lightweight="true"
+             state="false">
+          <description>
+             Decorate smooks configuration page viewer
+          </description>
+          <enablement>
+             <objectClass
+                   name="org.jboss.tools.smooks.model.common.AbstractAnyType">
+             </objectClass>
+          </enablement>
+       </decorator>
+    </extension>
 
 </plugin>

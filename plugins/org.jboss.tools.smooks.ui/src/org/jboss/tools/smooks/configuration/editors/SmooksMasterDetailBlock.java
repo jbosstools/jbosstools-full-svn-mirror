@@ -28,6 +28,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -52,6 +53,7 @@ import org.eclipse.ui.forms.SectionPart;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
@@ -156,10 +158,14 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		tableComposite.setLayout(fillLayout);
 		smooksTreeViewer = new TreeViewer(tableComposite, SWT.NONE);
 		smooksTreeViewer.addSelectionChangedListener(this);
+		
 		smooksTreeViewer.setContentProvider(new AdapterFactoryContentProvider(editingDomain
 			.getAdapterFactory()));
-		smooksTreeViewer.setLabelProvider(new AdapterFactoryLabelProvider(editingDomain
-			.getAdapterFactory()));
+		
+		smooksTreeViewer.setLabelProvider(new DecoratingLabelProvider(new AdapterFactoryLabelProvider(editingDomain
+				.getAdapterFactory()),
+				SmooksConfigurationActivator.getDefault().getWorkbench()
+						.getDecoratorManager().getLabelDecorator()));
 		smooksTreeViewer.setFilters(new ViewerFilter[] { new TextEObjectModelFilter() });
 		Object smooksModel = ((SmooksMultiFormEditor) this.formEditor).getSmooksModel();
 		if (smooksModel != null) {

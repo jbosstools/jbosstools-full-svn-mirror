@@ -20,9 +20,15 @@ public interface IFieldMarker {
 	
 	int TYPE_WARINING = 2;
 	
+	int TYPE_NONE = 0;
+	
 	void setMessage(String message);
 	
 	void setMarkerType(int type);
+	
+	int getMarkerType();
+	
+	String getMessage();
 	
 	void clean();
 }

@@ -30,12 +30,12 @@ public class FieldMarkerComposite extends Canvas implements IFieldMarker, PaintL
 
 //	private Image informationImage = null;
 
-	private int type = -1;
+	private int type = TYPE_NONE;
 
 	public FieldMarkerComposite(Composite parent, int style) {
 		super(parent, style);
-		errorImage = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_ERROR);
-		waringImage = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_WARNING);
+		errorImage = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_OVR_ERROR);
+		waringImage = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_OVR_WARING);
 		this.addPaintListener(this);
 	}
 
@@ -49,6 +49,10 @@ public class FieldMarkerComposite extends Canvas implements IFieldMarker, PaintL
 		this.type = type;
 		this.redraw();
 	}
+	
+	public int getMarkerType(){
+		return type;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -59,9 +63,15 @@ public class FieldMarkerComposite extends Canvas implements IFieldMarker, PaintL
 	public void setMessage(String message) {
 		this.setToolTipText(message);
 	}
+	
+	public String getMessage(){
+		return getToolTipText();
+	}
 
 	public void clean() {
+		setMarkerType(TYPE_NONE);
 		this.setToolTipText(null);
+		this.redraw();
 	}
 
 	public void paintControl(PaintEvent e) {

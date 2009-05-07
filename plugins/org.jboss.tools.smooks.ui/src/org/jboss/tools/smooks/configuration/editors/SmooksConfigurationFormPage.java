@@ -287,7 +287,6 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 	}
 
 	public void validateEnd(Diagnostic diagnosticResult) {
-		System.out.println(diagnosticResult);
 	}
 
 	public void validateStart() {
