@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
@@ -51,7 +52,7 @@ public class BindingsPropertyUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.edit.provider.IItemPropertyDescriptor, java.lang.Object,
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
-	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
+	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,SmooksMultiFormEditor formEditor) {
 		if (feature == JavabeanPackage.eINSTANCE.getBindingsType_Class()) {
 			return createBeanClassTextWithButton(parent, toolkit, propertyDescriptor, model);
@@ -69,7 +70,7 @@ public class BindingsPropertyUICreator extends PropertyUICreator {
 		return super.isSelectorFeature(attribute);
 	}
 
-	protected Composite createBeanClassTextWithButton(Composite composite, FormToolkit toolkit,
+	protected AttributeFieldEditPart createBeanClassTextWithButton(Composite composite, FormToolkit toolkit,
 			final IItemPropertyDescriptor propertyDescriptor, final Object model) {
 		return SmooksUIUtils.createJavaTypeSearchFieldEditor(composite, toolkit, propertyDescriptor, (EObject)model);
 	}

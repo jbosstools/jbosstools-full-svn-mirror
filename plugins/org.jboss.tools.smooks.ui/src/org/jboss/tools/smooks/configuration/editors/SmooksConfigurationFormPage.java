@@ -18,6 +18,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -48,14 +49,16 @@ import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtFactory;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
+import org.jboss.tools.smooks.model.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 1, 2009
  */
-public class SmooksConfigurationFormPage extends FormPage {
+public class SmooksConfigurationFormPage extends FormPage implements ISmooksModelValidateListener{
 
 	private SmooksMasterDetailBlock masterDetailBlock = null;
+	
 	private TableViewer inputDataViewer;
 
 	public SmooksConfigurationFormPage(FormEditor editor, String id, String title) {
@@ -111,7 +114,7 @@ public class SmooksConfigurationFormPage extends FormPage {
 	protected void createExtentionArea(IManagedForm managedForm) {
 		FormToolkit toolkit = managedForm.getToolkit();
 		final ScrolledForm form = managedForm.getForm();
-		Section section = toolkit.createSection(form.getBody(), Section.TITLE_BAR | Section.TWISTIE);
+		Section section = toolkit.createSection(form.getBody(), Section.TITLE_BAR | Section.TWISTIE | Section.EXPANDED);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		section.setLayoutData(gd);
 		section.setText("Input Data");
@@ -281,6 +284,14 @@ public class SmooksConfigurationFormPage extends FormPage {
 			};
 			runnable.run();
 		}
+	}
+
+	public void validateEnd(Diagnostic diagnosticResult) {
+		System.out.println(diagnosticResult);
+	}
+
+	public void validateStart() {
+		
 	}
 
 }

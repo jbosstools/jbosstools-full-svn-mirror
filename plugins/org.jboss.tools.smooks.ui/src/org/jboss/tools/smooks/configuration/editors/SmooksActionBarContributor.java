@@ -54,6 +54,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.actions.AddSmooksResourceAction;
+import org.jboss.tools.smooks.configuration.actions.ValidateSmooksAction;
 import org.jboss.tools.smooks.model.datasource.DataSourceJndi;
 import org.jboss.tools.smooks.model.datasource.Direct;
 import org.jboss.tools.smooks.model.dbrouting.Executor;
@@ -204,6 +205,8 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 * @generated
 	 */
 	protected IMenuManager createSiblingMenuManager;
+	
+	private ValidateSmooksAction validateSmooksAction;
 
 	/**
 	 * This creates an instance of the contributor. <!-- begin-user-doc --> <!--
@@ -346,6 +349,10 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	public void init(IActionBars actionBars) {
 		super.init(actionBars);
 		ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
+		
+		validateSmooksAction = new ValidateSmooksAction();
+		validateSmooksAction.setText("Validate");
+		
 		cutAction = new CutAction() {
 
 			public void runWithEvent(Event event) {
@@ -440,6 +447,9 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 			EditingDomain domain = ((IEditingDomainProvider) activeEditorPart).getEditingDomain();
 
 			newChildDescriptors = domain.getNewChildDescriptors(object, null);
+			
+			validateSmooksAction.setResource(domain.getResourceSet().getResources().get(0));
+			validateSmooksAction.setEditingDomain(domain);
 			// newSiblingDescriptors = domain.getNewChildDescriptors(null,
 			// object);
 		}
@@ -622,7 +632,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		menuManager.insertBefore("edit", submenuManager);
 		// don't show properties that
 //		menuManager.insertAfter("additions-end", showPropertiesViewAction);
-		menuManager.insertAfter("additions-end", validateAction);
+		menuManager.insertAfter("additions-end", validateSmooksAction);
 		this.addGlobalActions(menuManager);
 	}
 

@@ -10,11 +10,14 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.model.validate;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
@@ -24,7 +27,7 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
-
+import org.eclipse.swt.widgets.Display;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -35,10 +38,34 @@ public class SmooksModelValidator {
 
 	Collection<?> selectedObjects;
 	EditingDomain domain;
-	
-	public SmooksModelValidator(Collection<?> selectedObjects,EditingDomain domain){
+	private boolean starting = false;
+	private boolean waiting = false;
+	private Object lock = new Object();
+
+	private List<ISmooksModelValidateListener> listeners = new ArrayList<ISmooksModelValidateListener>();
+
+	public SmooksModelValidator(Collection<?> selectedObjects, EditingDomain domain) {
 		this.selectedObjects = selectedObjects;
 		this.domain = domain;
+	}
+
+	public SmooksModelValidator() {
+
+	}
+
+	public void addValidateListener(ISmooksModelValidateListener l) {
+		if (!listeners.contains(l))
+			listeners.add(l);
+	}
+
+	public void removeValidateListener(ISmooksModelValidateListener l) {
+		listeners.remove(l);
+	}
+
+	public Diagnostic validate(Collection<?> selectedObjects, EditingDomain editingDomain) {
+		this.selectedObjects = selectedObjects;
+		domain = editingDomain;
+		return validate(new NullProgressMonitor());
 	}
 
 	public Diagnostic validate(final IProgressMonitor progressMonitor) {
@@ -79,5 +106,70 @@ public class SmooksModelValidator {
 		progressMonitor.setTaskName("Validating...");
 
 		return diagnostician.validate(eObject);
+	}
+
+	public void startValidate(final Collection<?> selectedObjects, final EditingDomain editingDomain) {
+		Thread thread = new Thread() {
+			public void run() {
+				if (starting) {
+					synchronized (lock) {
+						waiting = true;
+					}
+					return;
+				} else {
+					synchronized (lock) {
+						starting = true;
+						waiting = true;
+					}
+					while (waiting) {
+						try {
+							waiting = false;
+							Thread.sleep(1000);
+							Thread.yield();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					try {
+						for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
+							final ISmooksModelValidateListener l = (ISmooksModelValidateListener) iterator.next();
+							Display.getDefault().syncExec(new Runnable(){
+
+								/* (non-Javadoc)
+								 * @see java.lang.Runnable#run()
+								 */
+								public void run() {
+									l.validateStart();
+								}
+								
+							});
+							
+						}
+						
+						final Diagnostic d = validate(selectedObjects, editingDomain);
+
+						for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
+							final ISmooksModelValidateListener l = (ISmooksModelValidateListener) iterator.next();
+							Display.getDefault().syncExec(new Runnable(){
+
+								/* (non-Javadoc)
+								 * @see java.lang.Runnable#run()
+								 */
+								public void run() {
+									l.validateEnd(d);
+								}
+								
+							});
+						}
+					} finally {
+						waiting = false;
+						starting = false;
+					}
+				}
+
+			}
+		};
+		thread.setName("Validate Smooks model");
+		thread.start();
 	}
 }
