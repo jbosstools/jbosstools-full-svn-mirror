@@ -853,7 +853,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
         <?dbhtml filename="JBossInstances.html"?>
         <title>How to Use Your Own JBoss AS Instance with JBDS</title>
         <para>Although <property moreinfo="none">JBoss Developer Studio</property> works closely with
-                <property moreinfo="none">JBoss EAP 4.2</property> we do not ultimately tie you to any particular
+                <property moreinfo="none">JBoss EAP 4.3</property> we do not ultimately tie you to any particular
             server for deployment. There are some servers that Studio supports directly (via the
             bundled Eclipse WTP plug-ins). In this section we discuss how to manage self-installed
             JBoss AS. Suppose you want to deploy the application to <property moreinfo="none">JBoss 4.2.3

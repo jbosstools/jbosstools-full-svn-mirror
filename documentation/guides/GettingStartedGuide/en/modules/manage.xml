@@ -141,7 +141,7 @@
         <?dbhtml filename="JBossInstances.html"?>
         <title>How to Use Your Own JBoss AS Instance with JBDS</title>
         <para>Although <property>JBoss Developer Studio</property> works closely with
-                <property>JBoss EAP 4.2</property> we do not ultimately tie you to any particular
+                <property>JBoss EAP 4.3</property> we do not ultimately tie you to any particular
             server for deployment. There are some servers that Studio supports directly (via the
             bundled Eclipse WTP plug-ins). In this section we discuss how to manage self-installed
             JBoss AS. Suppose you want to deploy the application to <property>JBoss 4.2.3
