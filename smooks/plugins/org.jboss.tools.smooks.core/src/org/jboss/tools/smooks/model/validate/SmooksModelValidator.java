@@ -124,7 +124,7 @@ public class SmooksModelValidator {
 					while (waiting) {
 						try {
 							waiting = false;
-							Thread.sleep(1000);
+							Thread.sleep(700);
 							Thread.yield();
 						} catch (InterruptedException e) {
 							e.printStackTrace();

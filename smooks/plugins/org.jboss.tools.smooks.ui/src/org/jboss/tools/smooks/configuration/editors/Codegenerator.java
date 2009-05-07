@@ -13,7 +13,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.jboss.tools.smooks.model.calc.CalcPackage;
 import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
 
 public class Codegenerator {

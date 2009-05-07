@@ -10,6 +10,10 @@ public final class GraphicsConstants {
 	
 	public static final String IMAGE_JAVA_OBJECT = "java_object";
 	
+	public static final String IMAGE_OVR_ERROR = "icons/full/ovr16/error_co.gif";
+	
+	public static final String IMAGE_OVR_WARING = "icons/full/ovr16/warning_co.gif";
+	
 	public static final String IMAGE_JAVA_INTERFACE = "icons/full/obj16/int_obj.gif";
 	
 	public static final String IMAGE_JAVA_COLLECTION = "icons/full/obj16/javalistmodel.gif";

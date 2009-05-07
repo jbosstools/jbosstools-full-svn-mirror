@@ -53,7 +53,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -157,7 +156,6 @@ public class SmooksUIUtils {
 			}
 		}
 		Composite labelComposite = formToolKit.createComposite(parent);
-		labelComposite.setBackground(new Color(null, 128, 132, 132));
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
 		layout.marginLeft = 0;
@@ -166,6 +164,7 @@ public class SmooksUIUtils {
 		labelComposite.setLayout(layout);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		Control labelControl = null;
+		
 		if (!isLink) {
 			Label label = formToolKit.createLabel(labelComposite, displayName + " :");
 			label.setForeground(formToolKit.getColors().getColor(IFormColors.TITLE));
@@ -174,6 +173,7 @@ public class SmooksUIUtils {
 			Hyperlink link = formToolKit.createHyperlink(labelComposite, displayName + " :", SWT.NONE);
 			labelControl = link;
 		}
+		gd = new GridData();
 		labelControl.setLayoutData(gd);
 
 		FieldMarkerComposite notificationComposite = new FieldMarkerComposite(labelComposite, SWT.NONE);
@@ -183,6 +183,7 @@ public class SmooksUIUtils {
 		gd.horizontalAlignment = GridData.BEGINNING;
 		gd.verticalAlignment = GridData.BEGINNING;
 		notificationComposite.setLayoutData(gd);
+		
 		wrapper.setLabelControl(labelControl);
 		wrapper.setMarker(notificationComposite);
 		return wrapper;

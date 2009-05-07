@@ -33,6 +33,7 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -77,6 +78,7 @@ import org.jboss.tools.smooks.model.jmsrouting.provider.JmsroutingItemProviderAd
 import org.jboss.tools.smooks.model.json.provider.JsonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.model.validate.SmooksModelValidator;
 import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
@@ -85,7 +87,7 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
  * 
  * @author Dart Peng (dpeng@redhat.com) Date Apr 1, 2009
  */
-public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainProvider {
+public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainProvider , ISmooksModelValidateListener{
 
 	public static final String EDITOR_ID = "org.jboss.tools.smooks.configuration.editors.MultiPageEditor";
 
@@ -106,6 +108,8 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 	private EObject smooksModel;
 
 	private boolean handleEMFModelChange;
+	
+	private Diagnostic diagnostic;
 
 	public SmooksMultiFormEditor() {
 		super();
@@ -221,6 +225,14 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 			configurationPage.setSelectionToViewer(newList);
 		}
 	}
+	
+	public void addValidateListener(ISmooksModelValidateListener listener){
+		validator.addValidateListener(listener);
+	}
+	
+	public void removeValidateListener(ISmooksModelValidateListener listener){
+		validator.removeValidateListener(listener);
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -230,7 +242,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 	@Override
 	protected void addPages() {
 		configurationPage = createSmooksConfigurationFormPage();
-		validator.addValidateListener(configurationPage);
+		addValidateListener(configurationPage);
 		try {
 			int index = this.addPage(configurationPage);
 			setPageText(index, "Design");
@@ -364,10 +376,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 				}
 			}
 			if (this.smooksModel != null) {
-				List<Object> lists = new ArrayList<Object>();
-				lists.add(smooksModel);
-//				SmooksModelValidator validator = new SmooksModelValidator(lists, getEditingDomain());
-//				validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
+				validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
 			}
 		} catch (IOException e) {
 			SmooksConfigurationActivator.getDefault().log(e);
@@ -391,6 +400,9 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		super.init(site, input);
 		
 		validator = new SmooksModelValidator();
+		addValidateListener(this);
+		setDiagnostic(validator.validate(smooksModel.eResource().getContents(), editingDomain));
+		
 		// if success to open editor , check if there isn't ext file and create
 		// a new one
 		String extFileName = file.getName() + SmooksConstants.SMOOKS_GRAPHICSEXT_EXTENTION_NAME_WITHDOT;
@@ -447,6 +459,20 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		this.editingDomain = editingDomain;
 	}
 
+	/**
+	 * @return the diagnostic
+	 */
+	public Diagnostic getDiagnostic() {
+		return diagnostic;
+	}
+
+	/**
+	 * @param diagnostic the diagnostic to set
+	 */
+	public void setDiagnostic(Diagnostic diagnostic) {
+		this.diagnostic = diagnostic;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -454,6 +480,14 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 	 */
 	public boolean isSaveAsAllowed() {
 		return false;
+	}
+
+	public void validateEnd(Diagnostic diagnosticResult) {
+		setDiagnostic(diagnosticResult);
+	}
+
+	public void validateStart() {
+		
 	}
 
 }
