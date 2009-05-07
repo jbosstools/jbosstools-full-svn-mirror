@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.actions.OpenEditorEditInnerContentsAction;
+import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
@@ -37,7 +38,7 @@ public class TemplateUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.edit.provider.IItemPropertyDescriptor, java.lang.Object,
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
-	public Composite createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
+	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
 			EAttribute feature, SmooksMultiFormEditor formEditor) {
 		if (feature == XslPackage.eINSTANCE.getTemplate_Value()) {
 		}
@@ -69,10 +70,10 @@ public class TemplateUICreator extends PropertyUICreator {
 		OpenEditorEditInnerContentsAction openCommentEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "xsl");
 		SmooksUIUtils.createFileSelectionTextFieldEditor("Text Value", parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
 				null, null);
-		Text text1 = SmooksUIUtils.createCDATAFieldEditor("Template Contents (CDATA)", editingdomain, toolkit, parent, model, openCdataEditorAction);
-		Text text2 = SmooksUIUtils.createCommentFieldEditor("Template Contents (Comment)", editingdomain, toolkit, parent, model, openCommentEditorAction);
-		openCdataEditorAction.setRelateText(text1);
-		openCommentEditorAction.setRelateText(text2);
+		AttributeFieldEditPart text1 = SmooksUIUtils.createCDATAFieldEditor("Template Contents (CDATA)", editingdomain, toolkit, parent, model, openCdataEditorAction);
+		AttributeFieldEditPart text2 = SmooksUIUtils.createCommentFieldEditor("Template Contents (Comment)", editingdomain, toolkit, parent, model, openCommentEditorAction);
+		openCdataEditorAction.setRelateText((Text)text1.getContentControl());
+		openCommentEditorAction.setRelateText((Text)text2.getContentControl());
 	}
 
 }

@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.actions.OpenEditorEditInnerContentsAction;
+import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
@@ -36,7 +37,7 @@ public class TemplateUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.edit.provider.IItemPropertyDescriptor, java.lang.Object,
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
-	public Composite createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
+	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
 			EAttribute feature, SmooksMultiFormEditor formEditor) {
 		if (feature == FreemarkerPackage.eINSTANCE.getTemplate_Value()) {
 		}
@@ -54,11 +55,11 @@ public class TemplateUICreator extends PropertyUICreator {
 
 		SmooksUIUtils.createFileSelectionTextFieldEditor("Text Value", parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
 				null, null);
-		Text cdatatext = SmooksUIUtils.createCDATAFieldEditor("Template Contents(CDATA)", editingdomain, toolkit, parent, model, openCDATAEditorAction);
-		Text commenttext = SmooksUIUtils.createCommentFieldEditor("Template Contents(Comment)", editingdomain, toolkit, parent, model, openCommentEditorAction);
+		AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Template Contents(CDATA)", editingdomain, toolkit, parent, model, openCDATAEditorAction);
+		AttributeFieldEditPart commenttext = SmooksUIUtils.createCommentFieldEditor("Template Contents(Comment)", editingdomain, toolkit, parent, model, openCommentEditorAction);
 		
-		openCDATAEditorAction.setRelateText(cdatatext);
-		openCommentEditorAction.setRelateText(commenttext);
+		openCDATAEditorAction.setRelateText((Text)cdatatext.getContentControl());
+		openCommentEditorAction.setRelateText((Text)commenttext.getContentControl());
 	}
 
 	@Override

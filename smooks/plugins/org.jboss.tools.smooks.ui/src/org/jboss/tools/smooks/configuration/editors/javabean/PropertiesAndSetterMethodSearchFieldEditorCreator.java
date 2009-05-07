@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
@@ -26,7 +27,7 @@ import org.jboss.tools.smooks.model.javabean.BindingsType;
 public class PropertiesAndSetterMethodSearchFieldEditorCreator extends PropertyUICreator {
 
 	@Override
-	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
+	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,SmooksMultiFormEditor formEditor) {
 		if(canCreatePropertiesSearchFieldEditor(feature)){
 			return createPropertiesSearchFieldEditor(toolkit, parent, propertyDescriptor, model);
@@ -53,7 +54,7 @@ public class PropertiesAndSetterMethodSearchFieldEditorCreator extends PropertyU
 		return "Search setter method";
 	}
 
-	protected Composite createPropertiesSearchFieldEditor(FormToolkit toolkit, Composite parent,
+	protected AttributeFieldEditPart createPropertiesSearchFieldEditor(FormToolkit toolkit, Composite parent,
 		IItemPropertyDescriptor propertyDescriptor, Object model) {
 		if (model instanceof EObject) {
 			EObject container = ((EObject) model).eContainer();
@@ -65,7 +66,7 @@ public class PropertiesAndSetterMethodSearchFieldEditorCreator extends PropertyU
 		return null;
 	}
 	
-	protected Composite createMethodsSearchFieldEditor(FormToolkit toolkit, Composite parent,
+	protected AttributeFieldEditPart createMethodsSearchFieldEditor(FormToolkit toolkit, Composite parent,
 		IItemPropertyDescriptor propertyDescriptor, Object model) {
 		if (model instanceof EObject) {
 			EObject container = ((EObject) model).eContainer();

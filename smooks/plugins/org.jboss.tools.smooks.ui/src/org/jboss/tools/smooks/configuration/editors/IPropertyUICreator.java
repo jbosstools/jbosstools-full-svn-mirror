@@ -22,7 +22,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
  *         Apr 7, 2009
  */
 public interface IPropertyUICreator {
-	public Composite createPropertyUI(FormToolkit toolkit, Composite parent,
+	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 			SmooksMultiFormEditor formEditor);
 

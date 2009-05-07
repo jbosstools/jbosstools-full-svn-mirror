@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.actions.OpenEditorEditInnerContentsAction;
+import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
@@ -35,7 +36,7 @@ public class ScriptUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.edit.provider.IItemPropertyDescriptor, java.lang.Object,
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
-	public Composite createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
+	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
 			EAttribute feature, SmooksMultiFormEditor formEditor) {
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
@@ -44,8 +45,8 @@ public class ScriptUICreator extends PropertyUICreator {
 	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
 			SmooksMultiFormEditor formEditor) {
 		OpenEditorEditInnerContentsAction action2 = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "groovy");
-		Text text = SmooksUIUtils.createCommentFieldEditor("Script Contents", editingdomain, toolkit, parent, model, action2);
-		action2.setRelateText(text);
+		AttributeFieldEditPart editPart = SmooksUIUtils.createCommentFieldEditor("Script Contents", editingdomain, toolkit, parent, model, action2);
+		action2.setRelateText((Text)editPart.getContentControl());
 	}
 
 	@Override

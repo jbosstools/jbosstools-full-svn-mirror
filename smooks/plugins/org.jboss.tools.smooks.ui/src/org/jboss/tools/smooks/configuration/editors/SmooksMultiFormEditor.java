@@ -100,6 +100,8 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 	private PropertySheetPage propertySheetPage = null;
 
 	private SmooksGraphicsExtType smooksGraphicsExt = null;
+	
+	private SmooksModelValidator validator = null;
 
 	private EObject smooksModel;
 
@@ -155,6 +157,9 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 			int length = oldEndIndex - startIndex + 1;
 			handleEMFModelChange = true;
 			document.replace(startIndex, length, replacement);
+			
+			validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
+			
 		} catch (Exception exception) {
 			SmooksConfigurationActivator.getDefault().log(exception);
 		}
@@ -225,6 +230,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 	@Override
 	protected void addPages() {
 		configurationPage = createSmooksConfigurationFormPage();
+		validator.addValidateListener(configurationPage);
 		try {
 			int index = this.addPage(configurationPage);
 			setPageText(index, "Design");
@@ -313,6 +319,8 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 			SmooksConfigurationActivator.getDefault().log(e);
 		}
 		configurationPage.setSmooksModel(this.smooksModel);
+		
+		validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
 	}
 
 	protected SmooksConfigurationFormPage createSmooksConfigurationFormPage() {
@@ -358,8 +366,8 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 			if (this.smooksModel != null) {
 				List<Object> lists = new ArrayList<Object>();
 				lists.add(smooksModel);
-				SmooksModelValidator validator = new SmooksModelValidator(lists, getEditingDomain());
-				validator.validate(monitor);
+//				SmooksModelValidator validator = new SmooksModelValidator(lists, getEditingDomain());
+//				validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
 			}
 		} catch (IOException e) {
 			SmooksConfigurationActivator.getDefault().log(e);
@@ -381,6 +389,8 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		}
 		editingDomain.getResourceSet().getResources().add(smooksResource);
 		super.init(site, input);
+		
+		validator = new SmooksModelValidator();
 		// if success to open editor , check if there isn't ext file and create
 		// a new one
 		String extFileName = file.getName() + SmooksConstants.SMOOKS_GRAPHICSEXT_EXTENTION_NAME_WITHDOT;
