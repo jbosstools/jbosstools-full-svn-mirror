@@ -344,17 +344,32 @@ public class CustomSashForm extends SashForm {
 							if (currentSashInfo.cursorOver != i) {
 								currentSashInfo.cursorOver = i;
 								currentSashInfo.sash.redraw();
+								String splitting = VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue();
 								switch (locs[ARROW_TYPE_INDEX]) {
-									case UP_ARROW:
-									case DOWN_ARROW:
-										currentSashInfo.sash.setToolTipText(VpeUIMessages.RESTORE_PREVIOUS_LOCATION);
-										break;
-									case UP_MAX_ARROW:
-										currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_VISUAL_PANE);
-										break;
-									case DOWN_MAX_ARROW:
-										currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_SOURCE_PANE);
-										break;
+								case UP_ARROW:
+								case DOWN_ARROW:
+								    currentSashInfo.sash.setToolTipText(VpeUIMessages.RESTORE_PREVIOUS_LOCATION);
+								    break;
+								case UP_MAX_ARROW:
+								    /*
+								     * https://jira.jboss.org/jira/browse/JBIDE-4270
+								     * Tooltip text should correspond panes position.
+								     */
+								    if (LAYOUT_HORIZONTAL_SOURCE_LEFT.equalsIgnoreCase(splitting)
+									    || LAYOUT_VERTICAL_SOURCE_TOP.equalsIgnoreCase(splitting)) {
+									currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_VISUAL_PANE);
+								    } else {
+									currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_SOURCE_PANE);
+								    }
+								    break;
+								case DOWN_MAX_ARROW:
+								    if (LAYOUT_HORIZONTAL_SOURCE_LEFT.equalsIgnoreCase(splitting)
+									    || LAYOUT_VERTICAL_SOURCE_TOP.equalsIgnoreCase(splitting)) {
+									currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_SOURCE_PANE);
+								    } else {
+									currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_VISUAL_PANE);
+								    }
+								    break;
 								}
 							}
 							return;
@@ -545,7 +560,7 @@ public class CustomSashForm extends SashForm {
 		weights[0] = 1000-sashinfo.weight;	// Assume weights are always in units of 1000.
 		weights[1] = sashinfo.weight;
 		sashinfo.weight = NO_WEIGHT;
-		
+
 		setWeights(weights);	
 		fireDividerMoved();
 	}
@@ -566,6 +581,7 @@ public class CustomSashForm extends SashForm {
 		setWeights(weights);
 		if (upperFocus)
 			children[1].setFocus();	
+
 		fireDividerMoved();
 	}
 
@@ -576,7 +592,7 @@ public class CustomSashForm extends SashForm {
 		weights[0] = 1000-sashinfo.weight;	// Assume weights are always in units of 1000.
 		weights[1] = sashinfo.weight;
 		sashinfo.weight = NO_WEIGHT;
-		
+
 		setWeights(weights);
 		fireDividerMoved();
 	}
@@ -595,7 +611,8 @@ public class CustomSashForm extends SashForm {
 		boolean lowerFocus = isFocusAncestorA(children[1]);
 		setWeights(weights);
 		if (lowerFocus)
-			children[0].setFocus();		
+			children[0].setFocus();
+
 		fireDividerMoved();
 	}
 	
