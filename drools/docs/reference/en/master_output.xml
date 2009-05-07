@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.docbook.org/xml/4.3/docbookx.dtd"
+
+[<!ENTITY introduction SYSTEM "modules/introduction.xml">
+<!ENTITY create_new_project SYSTEM "modules/create_new_project.xml">
+<!ENTITY create_new SYSTEM "modules/create_new.xml">
+<!ENTITY debugging_rules SYSTEM "modules/debugging_rules.xml">
+<!ENTITY views SYSTEM "modules/views.xml">
+<!ENTITY editors SYSTEM "modules/editors.xml">
+
+<!ENTITY seamlink "../../seam/html_single/index.html">
+<!ENTITY aslink "../../as/html_single/index.html">
+<!ENTITY esblink "../../esb_ref_guide/html_single/index.html">
+<!ENTITY gsglink "../../GettingStartedGuide/html_single/index.html">
+<!ENTITY hibernatelink "../../hibernatetools/html_single/index.html">
+<!ENTITY jbpmlink "../../jbpm/html_single/index.html">
+<!ENTITY jsflink "../../jsf/html_single/index.html">
+<!ENTITY jsfreflink "../../jsf_tools_ref_guide/html_single/index.html">
+<!ENTITY jsftutoriallink "../../jsf_tools_tutorial/html_single/index.html">
+<!ENTITY strutsreflink "../../struts_tools_ref_guide/html_single/index.html">
+<!ENTITY strutstutoriallink "../../struts_tools_tutorial/html_single/index.html">                         
+
+]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
+    
+     <bookinfo>
+         <title>Drools Tools Reference Guide</title>
+
+            <author><firstname>Olga</firstname><surname>Chikvina</surname></author>    
+         
+         <pubdate>April 2008</pubdate>
+	                       <copyright>
+			             <year>2007</year>
+	                           <year>2009</year>
+	                           <holder>JBoss, a division of Red Hat</holder>
+	                       </copyright>
+          <releaseinfo><diffmk:wrapper diffmk:change="changed">
+              Version: 5.0.0.CR1
+          </diffmk:wrapper></releaseinfo>
+<abstract>
+   <title></title>
+       <para>
+           <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/as/pdf/AS_Reference_Guide.pdf">PDF version</ulink>
+       </para>
+</abstract>
+
+    </bookinfo>
+	
+    
+    <toc></toc> 
+    
+<chapter id="introduction" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/drools/docs/reference/en/modules/introduction.xml" xreflabel="introduction">
+    <title>Introduction</title>
+
+    <section id="whatisDrools">
+        <title>What is Drools?</title>
+
+        <para><property moreinfo="none">Drools</property> is a business rule management system (BRMS) with a forward
+            chaining inference based rules engine, more correctly known as a production rule system,
+            using an enhanced implementation of the Rete algorithm.</para>
+
+        <para><diffmk:wrapper diffmk:change="changed"> In this guide we are going to get you familiar with Drools Eclipse plugin which
+            provides development tools for creating, executing and debugging Drools processes and
+            rules from within Eclipse.</diffmk:wrapper></para>
+
+        <note>
+            <title>Note:</title>
+            <para>It is assumed that you has some familiarity with rule engines and Drools in
+                particular. If no, we suggest that you look carefully through the <ulink url="http://downloads.jboss.com/drools/docs/4.0.7.19894.GA/html_single/index.html">Drools Documentation</ulink>.</para>
+        </note>
+
+        <para><property moreinfo="none">Drools Tools</property> come bundled with <property moreinfo="none">JBoss Tools</property>
+            set of Eclipse plugins. How to install <property moreinfo="none">JBoss Tools</property><diffmk:wrapper diffmk:change="changed"> you can find in
+            the </diffmk:wrapper><ulink url="../../GettingStartedGuide/html_single/index.html#JBossToolsInstall">Getting Started Guide</ulink>.</para>
+    </section>
+
+    <section id="drools_key_features">
+        <title>Drools Tools Key Features</title>
+
+        <para>The following table lists all valuable features of the <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Drools
+                Tools</diffmk:wrapper></property>.</para>
+        <table>
+            <title>Key Functionality of Drools Tools</title>
+            <tgroup cols="3">
+
+                <colspec align="left" colnum="1" colwidth="1*"></colspec>
+                <colspec colnum="2" colwidth="5*"></colspec>
+                <colspec align="left" colnum="3" colwidth="1*"></colspec>
+
+                <thead>
+                    <row>
+                        <entry>Feature</entry>
+                        <entry>Benefit</entry>
+                        <entry>Chapter</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+
+                    <row>
+                        <entry>
+                            <para>Wizard for creating a new Drools Project</para>
+                        </entry>
+                        <entry>
+                            <para>The wizard allows to create a sample project to easy get started
+                                with Drools</para>
+                        </entry>
+                        <entry>
+                            <link linkend="sample_drools_project">Creating a Sample Drools
+                                Project</link>
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <para>Wizards for creation new Drools resources</para>
+                        </entry>
+                        <entry>
+                            <para>A set of wizards are provided with the Drools Eclipse tools to
+                                quickly create a new Rule resource, a new Domain Specific language,
+                                Decision Table and Business rule</para>
+                        </entry>
+                        <entry>
+                            <link linkend="creating_rule">Creating a New Rule</link>
+                            <!--link linkend="creating_dsl">Creating a New DSL</link>
+                            <link linkend="creating_decision_table">Creating a New Decision
+                                Table</link>
+                            <link linkend="creating_business_rule">Creating a New Business
+                                Rule</link-->
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <para>The Rule editor</para>
+                        </entry>
+                        <entry>
+                            <para>An editor that is aware of DRL syntax and provides content
+                                assistance and synchronizing with the Outline view</para>
+                        </entry>
+                        <entry>
+                            <link linkend="textual_rule_editor">The Rule Editor</link>
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <para>The Domain Specific Language editor</para>
+                        </entry>
+                        <entry>
+                            <para>The editor allows to create and manage mappings from users
+                                language to the rule language</para>
+                        </entry>
+                        <entry>
+                            <!--link linkend="dsl_editor">The Domain Specific Language Editor</link-->
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <para>The Guided editor</para>
+                        </entry>
+                        <entry>
+                            <para>This guided editor for rules allows you to build rules in a GUI
+                                driven fashion based on your object model</para>
+                        </entry>
+                        <entry>
+                            <!--link linkend="guided_editor">The Guided Editor</link-->
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <para>The Rule Flow graphical editor</para>
+                        </entry>
+                        <entry>
+                            <para>The editor is meant for editing visual graphs which represent a
+                                process (a rule flow)</para>
+                        </entry>
+                        <entry>
+                            <!--link linkend="ruleflow_editor">The Rule Flow Graphical Editor</link-->
+                        </entry>
+                    </row>
+
+                </tbody>
+            </tgroup>
+        </table>
+    </section>
+
+    <section>
+        <title>Other relevant resources on the topic</title>
+
+        <itemizedlist>
+            <listitem>
+                <para>Drools on <ulink url="http://www.jboss.org/drools/">JBoss.org</ulink></para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <ulink url="http://www.jboss.org/tools/">JBoss Tools Home Page</ulink>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">The latest
+                        JBossTools/JBDS documentation builds</ulink>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para><diffmk:wrapper diffmk:change="added">All </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Tools/JBDS</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> documentation you can find on the
+                        </diffmk:wrapper><ulink diffmk:change="added" url="http://docs.jboss.org/tools/"><diffmk:wrapper diffmk:change="added">documentation release
+                    page</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+            </listitem>
+        </itemizedlist>
+
+    </section>
+</chapter>
+
+    
+<chapter id="create_new_project" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/drools/docs/reference/en/modules/create_new_project.xml" xreflabel="create_new_project">
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Tools</keyword>
+            <keyword>Drools Tools</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>Creating a New Drools Project</title>
+
+    <para>In this chapter we are going to show you how to setup an executable sample Drools project
+        to start using rules immediately.</para>
+
+
+
+    <section id="sample_drools_project">
+        <title>Creating a Sample Drools Project</title>
+
+        <para>First, we suggest that you use <property moreinfo="none">Drools perspective</property> which is aimed
+            at work with Drools specific resources.</para>
+
+        <para>To create a new Drools project follow to <emphasis>
+                <property moreinfo="none">File &gt; New &gt; Drools Project</property>. </emphasis> This will open
+                <property moreinfo="none">New Drools Project wizard</property> like on the figure below.</para>
+
+        <para>On the first page type the project name and click
+                <emphasis><property moreinfo="none">Next</property>.</emphasis></para>
+
+        <figure float="0">
+            <title>Creating a New Drools Project</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_project/create_new_project1.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Next you have a choice to add some default artifacts to it like sample rules, decision
+            tables or ruleflows and Java classes for them. Let's select first two check
+            boxes and press <emphasis>
+                <property moreinfo="none">Next</property>. </emphasis></para>
+
+        <figure float="0">
+            <title>Selecting Drools Project Elements</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_project/create_new_project2.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Next page asks you to specify a Drools runtime. If you have not yet set it up, you
+            should do this now by clicking the <emphasis>
+                <property moreinfo="none">Configure Workspace Settings</property>
+            </emphasis> link.</para>
+
+        <figure float="0">
+            <title>Configuring Drools Runtime</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_project/create_new_project3.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>You should see the <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Preferences window</diffmk:wrapper></property> where you can configure the
+            workspace settings for Drools runtimes. To create a new runtime, press the <emphasis>
+                <property moreinfo="none">Add</property>
+            </emphasis> button. The appeared dialog prompts you to enter a
+            name for a new runtime and a path to the Drools runtime on your file system.</para>
+
+        <note>
+            <title>Note:</title>
+            <para>A Drools runtime is a collection of jars on your file system that represent one
+                specific release of the Drools project jars. While creating a new runtime, you must
+                either point to the release of your choice, or you can simply create a new runtime
+                on your file system from the jars included in the Drools Eclipse plugin.</para>
+        </note>
+
+        <figure float="0">
+            <title>Adding a New Drools Runtime</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_project/create_new_project4.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <para>Let's simply create a new Drools 5 runtime from the jars embedded in the
+            Drools Eclipse plugin. Thus, you should press <emphasis>
+                <property moreinfo="none">Create a new Drools 5 runtime</property>
+            </emphasis> button and select the folder where you want this runtime to be created and
+            hit <emphasis>
+                <property moreinfo="none">OK</property>.</emphasis></para>
+
+        <para>You will see the newly created runtime show up in your list of Drools runtimes. Check
+            it and press <emphasis>
+                <property moreinfo="none">OK</property>.</emphasis></para>
+
+        <figure float="0">
+            <title>Selecting a Drools Runtime</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_project/create_new_project5.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Now press <emphasis>
+                <property moreinfo="none">Finish</property>
+            </emphasis> to complete the project creation.</para>
+
+        <figure float="0">
+            <title>Completing the Drools Project Creation</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_project/create_new_project6.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>This will setup a basic structure, classpath and sample rules and test case to get you
+            started.</para>
+    </section>
+
+
+    <section id="structure_overview">
+        <title>Drools Project Structure Overview</title>
+
+        <para>Now let's look at the structure of the organized project. In the
+                <property moreinfo="none">Package Explorer</property> you should see the following:</para>
+
+        <figure float="0">
+            <title>Drools Project in the Package Explorer</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_project/create_new_project7.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>The newly created project contains an example rule file <emphasis>
+                <property moreinfo="none">Sample.drl</property>
+            </emphasis> in the <emphasis>
+                <property moreinfo="none">src/main/rules</property>
+            </emphasis> directory and an example java file <emphasis>
+                <property moreinfo="none">DroolsTest.java</property>
+            </emphasis> that can be used to execute the rules in a Drools engine in the folder <emphasis>
+                <property moreinfo="none">src/main/java</property>
+            </emphasis>, in the <emphasis>
+                <property moreinfo="none">com.sample</property>
+            </emphasis> package. All the others jar's that are necessary during execution
+            are also added to the classpath in a custom classpath container called <property moreinfo="none">Drools
+                Library</property>.</para>
+
+        <tip>
+            <title>Tip:</title>
+            <para>Rules do not have to be kept in Java projects at all, this is just a convenience
+                for people who are already using eclipse as their Java IDE.</para>
+        </tip>
+
+    </section>
+
+    <section id="creating_rule">
+        <title>Creating a New Rule</title>
+
+        <para>Now we are going to add a new Rule resource to the project.</para>
+
+        <para>You can either create an empty text <emphasis>
+                <property moreinfo="none">.drl</property>
+            </emphasis> file or make use of the special <property moreinfo="none">New Rule Resource
+                wizard</property> to do it.</para>
+
+        <para>To open the wizard follow to <emphasis>
+                <property moreinfo="none">File &gt; New &gt; Rule Resource</property>
+            </emphasis> or use the menu with the JBoss Drools icon on the toolbar.</para>
+
+        <figure float="0">
+            <title>Opening the New Rule Resource Wizard</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_project/create_new_project8.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>On the wizard page first select <emphasis>
+                <property moreinfo="none">/rules</property>
+            </emphasis> as a top level directory to store your rules and type the rule name. Next
+            it's mandatory to specify the rule package name. It defines a namespace that
+            groups rules together.</para>
+
+        <figure float="0">
+            <title>New Rule Resource Wizard</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_project/create_new_project9.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>As a result the wizard generates a rule skeleton to get you started.</para>
+
+        <figure float="0">
+            <title>New Rule</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_project/create_new_project10.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+    </section>
+
+</chapter>
+
+    
+<chapter id="debugging_rules" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/drools/docs/reference/en/modules/debugging_rules.xml" xreflabel="debugging_rules">
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Tools</keyword>
+			<keyword>Drools Tools</keyword>
+		</keywordset>
+	</chapterinfo>
+
+	<title>Debugging rules</title>
+	
+	<para>This chapter describes how to debug rules during the execution of your Drools application.</para>
+
+	<section id="creating_breakpoints">
+		<title>Creating Breakpoints</title>
+		
+		<para>At first, we'll focus on how to add
+		breakpoints in the consequences of your rules.</para>
+		
+		<para>Whenever such a breakpoint is uncounted
+			during the execution of the rules, the execution is halted. It's possible then inspect the
+			variables known at that point and use any of the default debugging actions to decide what
+			should happen next (step over, continue, etc). To inspect
+			the content of the working memory and agenda the Debug views can be used.</para>
+
+		<para>You can add/remove rule breakpoints in <emphasis>
+				<property moreinfo="none">.drl</property>
+			</emphasis> files in two ways, similar to adding breakpoints to Java files:</para>
+
+		<itemizedlist>
+			<listitem>
+				<para>Double-click the ruler in the <property moreinfo="none">Rule editor</property> at the line
+					where you want to add a breakpoint.</para>
+				<tip>
+					<title>Tip:</title>
+					<para>Note that rule breakpoints can only be created in the consequence of a
+						rule. Double-clicking on a line where no breakpoint is allowed will do
+						nothing.</para>
+				</tip>
+				<para>A breakpoint can be removed by double-clicking the ruler once more. </para>
+			</listitem>
+
+			<listitem>
+				<para>Right-click the ruler. Select <emphasis>
+						<property moreinfo="none">Toggle Breakpoint</property>
+					</emphasis> action in the appeared popup menu. Clicking the action will add a
+					breakpoint at the selected line or remove it if there is one already.</para>
+			</listitem>
+		</itemizedlist>
+
+		<figure float="0">
+			<title>Adding Breakpoints</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/debugging_rules/debugging_rules1.png"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<para>The <property moreinfo="none">Debug perspective</property> contains a <property moreinfo="none">Breakpoints
+				view</property> which can be used to see all defined breakpoints, get their
+			properties, enable/disable or remove them, etc. You can switch to it by navigating to <emphasis>
+				<property moreinfo="none">Window &gt; Perspective &gt; Others &gt; Debug</property>.</emphasis></para>
+	</section>
+
+	<section id="debugging">
+		<title>Debugging</title>
+
+		<para>Drools breakpoints are only enabled if you debug your application as a Drools
+			Application. To do this you should perform one of the actions:</para>
+
+		<itemizedlist>
+			<listitem>
+				<para>Select the main class of your application. Right click it and select <emphasis>
+						<property moreinfo="none">Debug As &gt; Drools Application</property>.</emphasis></para>
+			</listitem>
+		</itemizedlist>
+		<figure float="0">
+			<title>Debugging Drools Application</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/debugging_rules/debugging_rules2.png"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<itemizedlist>
+			<listitem>
+				<para>Alternatively, you can also go to <emphasis>
+						<property moreinfo="none">Debug As &gt; Debug Configuration</property>
+					</emphasis> to open a new dialog for creating, managing and running debug
+					configurations.</para>
+
+				<para>Select the <emphasis>
+						<property moreinfo="none">Drools Application</property>
+					</emphasis> item in the left tree and click the <emphasis>
+						<property moreinfo="none">New launch configuration</property>
+					</emphasis> button (leftmost icon in the toolbar above the tree). This will
+					create a new configuration and already fill in some of the properties (like the
+					Project and Main class) based on main class you selected in the beginning. All
+					properties shown here are the same as any standard Java program.</para>
+			</listitem>
+		</itemizedlist>
+
+		<figure float="0">
+			<title>New Debug Configuration</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/debugging_rules/debugging_rules3.png"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<tip>
+			<title>Tip:</title>
+			<para>Remember to change the name of your debug configuration to something meaningful.</para>
+		</tip>
+		
+		<para>Next
+			click the <emphasis>
+				<property moreinfo="none">Debug</property>
+			</emphasis> button on the bottom to start debugging your application. </para>
+
+		<para>After enabling the debugging, the application starts executing and will halt if
+			any breakpoint is encountered. This can be a Drools rule breakpoint, or any other
+			standard Java breakpoint. Whenever a Drools rule breakpoint is encountered, the
+			corresponding <emphasis>
+				<property moreinfo="none">.drl</property></emphasis> file is opened and the active line is highlighted. The Variables view
+			also contains all rule parameters and their value. You can then use the default Java
+			debug actions to decide what to do next (resume, terminate, step over, etc.). The debug
+			views can also be used to determine the contents of the working memory and agenda at
+			that time as well (you don't have to select a working memory now, the current executing
+			working memory is automatically shown).</para>
+		
+		
+	</section>
+</chapter>
+
+    
+<chapter id="editors" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/drools/docs/reference/en/modules/editors.xml" xreflabel="editors">
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Tools</keyword>
+            <keyword>Drools Tools</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>Editors</title>
+
+    <section id="textual_rule_editor">
+        <title>The Rule Editor</title>
+
+        <para>The <property moreinfo="none">Rule editor</property> works on files that have a <emphasis>
+                <property moreinfo="none">.drl</property>
+            </emphasis> (or <emphasis>
+                <property moreinfo="none">.rule</property>
+            </emphasis> in the case of spreading rules across multiple rule files) extension.</para>
+
+        <figure float="0">
+            <title>New Rule</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/editors/editors1.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>The editor follows the pattern of a normal text editor in eclipse, with all the normal
+            features of a text editor:</para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <link linkend="rules_editor_content_assist">Content Assist</link>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <link linkend="rules_editor_code_folding">Code Folding</link>
+                </para>
+            </listitem>
+
+            <!--      <listitem>
+                <para>
+                    <link linkend="rules_editor_error_reporting">Error Reporting</link>
+                </para>
+            </listitem>-->
+
+            <listitem>
+                <para>
+                    <link linkend="rules_editor_sync_with_outline">Synchronization with Outline
+                        View</link>
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <section id="rules_editor_content_assist">
+            <title>Content Assist</title>
+
+            <para>While working in the <property moreinfo="none">Rule editor</property> you can get a content
+                assistance the usual way by pressing <emphasis>
+                    <property moreinfo="none">Ctrl + Space</property>.</emphasis></para>
+
+            <para>Content Assist shows all possible keywords for the current cursor position.</para>
+
+            <figure float="0">
+                <title>Content Assist Demonstration</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors2.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <para>Content Assist inside of the <emphasis>
+                    <property moreinfo="none">Message</property>
+                </emphasis> suggests all available fields.</para>
+
+            <figure float="0">
+                <title>Content Assist Demonstration</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors3.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+        </section>
+
+        <section id="rules_editor_code_folding">
+            <title>Code Folding</title>
+
+            <para>Code folding is also available in the <property moreinfo="none">Rule editor</property>. To
+                hide/show sections of the file use the icons with minus/plus on the left vertical
+                line of the editor.</para>
+
+            <figure float="0">
+                <title>Code Folding</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors4.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+        </section>
+
+        <!--section id="rules_editor_error_reporting">
+            <title>Error Reporting</title>
+
+        </section-->
+
+        <section id="rules_editor_sync_with_outline">
+            <title>Synchronization with Outline View</title>
+
+            <para>The <property moreinfo="none">Rule editor</property> works in synchronization with the
+                    <property moreinfo="none">Outline view</property> which shows the structure of the rules,
+                imports in the file and also globals and functions if the file has them.</para>
+
+            <figure float="0">
+                <title>Synchronization with Outline View</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors5.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <para>The view is updated on save. It provides a quick way of navigating around rules by
+                names in a file which may have hundreds of rules. The items are sorted
+                alphabetically by default.</para>
+        </section>
+
+        <section id="rete_view">
+            <title>The Rete Tree View</title>
+
+            <para>The <property moreinfo="none">Rete Tree view</property> shows you the current Rete Network for
+                your <emphasis>
+                    <property moreinfo="none">.drl</property>
+                </emphasis> file. Just click on the <emphasis>
+                    <property moreinfo="none">Rete Tree tab</property>
+                </emphasis> at the bottom of the <property moreinfo="none">Rule editor</property>.</para>
+
+            <figure float="0">
+                <title>Rete Tree</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors6.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <para>Afterwards you can generate the current Rete Network visualization. You can push
+                and pull the nodes to arrange your optimal network overview.</para>
+            <para>If you got hundreds of nodes, select some of them with a frame. Then you can pull
+                groups of them.</para>
+
+            <figure float="0">
+                <title>Selecting the nodes in the Rete Tree with Frame</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors7.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <para>You can zoom in and out the Rete tree in case not all nodes are shown in the
+                current view. For this use the combo box or "+" and "-" icons on the toolbar.</para>
+
+            <figure float="0">
+                <title>Rete Tree Zooming</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors8.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <note>
+                <title>Note:</title>
+
+                <para>The <property moreinfo="none">Rete Tree view</property> works only in Drools Rule Projects,
+                    where the Drools Builder is set in the project properties.</para>
+            </note>
+            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">We hope, this guide helped you to get started with the JBoss BPMN Convert module. Besides, for additional information you are welcome on </diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.com/index.html?module=bb&op=viewforum&f=201"><diffmk:wrapper diffmk:change="added">JBoss forum</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+        </section>
+        
+    </section>
+   
+</chapter>
+
+    
+    
+</book>
