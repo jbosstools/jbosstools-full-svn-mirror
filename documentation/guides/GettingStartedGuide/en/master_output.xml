@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 [
@@ -728,7 +728,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     <para>In this chapter we'll focus more on how to operate the <property moreinfo="none">JBoss
             AS</property> from <property moreinfo="none">JBoss Developer Studio</property>.</para>
     <para><property moreinfo="none">JBoss Developer Studio</property> ships with <property moreinfo="none">JBoss EAP
-            v.4.2</property> bundled. When you followed the default installation of <property moreinfo="none">JBoss
+            v.4.3</property> bundled. When you followed the default installation of <property moreinfo="none">JBoss
             Developer Studio</property>, you should already have a JBoss EAP 4.3 Server installed and
         defined. To run JBoss AS you need JDK 1.5, JDK 6 is not formally supported yet, although
         you may be able to start the server with it.</para>
