@@ -94,11 +94,11 @@
                     </cssResource>
                     
 			<formats>
-				<!--format>
+				<format>
 					<formatName>pdf</formatName>
 					<stylesheetResource>${xsl-pdf}</stylesheetResource>
 					<finalName>${pom.name}.pdf</finalName>
-				</format-->
+				</format>
 				<format>
 					<formatName>html</formatName>
 					<stylesheetResource>${xsl-chunked}</stylesheetResource>

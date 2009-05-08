@@ -417,7 +417,7 @@ Version: 2.0.1.GA
 	<para>The migration process is completed</para>
     
     <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If there's anything we didn't cover or you can't figure
-      out, please feel free to visit our </diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.com/index.html?module=bb&op=viewforum&f=258"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio Users Forum</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> or </diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.com/index.html?module=bb&op=viewforum&f=201"><diffmk:wrapper diffmk:change="added">JBoss Tools Users Forum</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> to ask questions. There we are also looking for
+     out, please feel free to visit our </diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio Users Forum</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> or </diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"><diffmk:wrapper diffmk:change="added">JBoss Tools Users Forum</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> to ask questions. There we are also looking for
       your suggestions and comments.</diffmk:wrapper></para>
   </section>
    
