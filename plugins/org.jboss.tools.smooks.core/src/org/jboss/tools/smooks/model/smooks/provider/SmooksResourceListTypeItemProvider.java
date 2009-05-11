@@ -38,6 +38,8 @@ import org.jboss.tools.smooks.model.fileRouting.FileRoutingFactory;
 import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerFactory;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
+import org.jboss.tools.smooks.model.groovy.GroovyFactory;
+import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.iorouting.IoroutingFactory;
 import org.jboss.tools.smooks.model.iorouting.IoroutingPackage;
 import org.jboss.tools.smooks.model.javabean.JavabeanFactory;
@@ -280,6 +282,11 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 		// for calc
 		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
 				.createEntry(CalcPackage.Literals.CALC_DOCUMENT_ROOT__COUNTER, CalcFactory.eINSTANCE.createCounter())));
+		
+		// for groovy
+		
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(GroovyPackage.Literals.DOCUMENT_ROOT__GROOVY, GroovyFactory.eINSTANCE.createGroovy())));
 
 		// for datasource
 		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil

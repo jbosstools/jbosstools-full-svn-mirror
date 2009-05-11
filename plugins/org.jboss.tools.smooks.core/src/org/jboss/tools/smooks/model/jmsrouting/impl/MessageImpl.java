@@ -61,10 +61,10 @@ public class MessageImpl extends EObjectImpl implements Message {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getDeliveryMode()
-	 * @generated
+	 * @generated not
 	 * @ordered
 	 */
-	protected static final DeliveryMode DELIVERY_MODE_EDEFAULT = DeliveryMode.PERSISTENT;
+	protected static final DeliveryMode DELIVERY_MODE_EDEFAULT = null;//DeliveryMode.PERSISTENT;
 
 	/**
 	 * The cached value of the '{@link #getDeliveryMode() <em>Delivery Mode</em>}' attribute.
@@ -148,10 +148,10 @@ public class MessageImpl extends EObjectImpl implements Message {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getType()
-	 * @generated
+	 * @generated not
 	 * @ordered
 	 */
-	protected static final MessageType TYPE_EDEFAULT = MessageType.TEXT_MESSAGE;
+	protected static final MessageType TYPE_EDEFAULT = null;//MessageType.TEXT_MESSAGE;
 
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.

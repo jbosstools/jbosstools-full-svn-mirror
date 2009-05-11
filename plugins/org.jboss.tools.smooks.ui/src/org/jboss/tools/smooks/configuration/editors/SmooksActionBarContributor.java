@@ -61,7 +61,7 @@ import org.jboss.tools.smooks.model.dbrouting.Executor;
 import org.jboss.tools.smooks.model.dbrouting.ResultSetRowSelector;
 import org.jboss.tools.smooks.model.fileRouting.OutputStream;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.groovy.ScriptType;
+import org.jboss.tools.smooks.model.groovy.Groovy;
 import org.jboss.tools.smooks.model.iorouting.IORouter;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.jmsrouting.JmsRouter;
@@ -669,6 +669,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 			boolean added = false;
 			AddSmooksResourceAction action = (AddSmooksResourceAction) iterator.next();
 			Object descriptor = action.getDescriptor();
+
 			if (isReader(descriptor)) {
 				readers.add(action);
 				added = true;
@@ -722,7 +723,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		if(descriptor instanceof CommandParameter){
 			CommandParameter parameter = (CommandParameter)descriptor;
 			if(parameter.getValue() != null){
-				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof ScriptType){
+				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Groovy){
 					return true;
 				}
 			}

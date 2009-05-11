@@ -58,10 +58,10 @@ public class ResultSetImpl extends EObjectImpl implements ResultSet {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getScope()
-	 * @generated
+	 * @generated not
 	 * @ordered
 	 */
-	protected static final ResultSetScopeType SCOPE_EDEFAULT = ResultSetScopeType.EXECUTION;
+	protected static final ResultSetScopeType SCOPE_EDEFAULT = null;// ResultSetScopeType.EXECUTION;
 
 	/**
 	 * The cached value of the '{@link #getScope() <em>Scope</em>}' attribute.

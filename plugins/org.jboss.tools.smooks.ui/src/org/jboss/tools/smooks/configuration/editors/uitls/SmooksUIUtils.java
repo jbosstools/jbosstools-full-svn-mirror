@@ -164,7 +164,7 @@ public class SmooksUIUtils {
 		labelComposite.setLayout(layout);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		Control labelControl = null;
-		
+
 		if (!isLink) {
 			Label label = formToolKit.createLabel(labelComposite, displayName + " :");
 			label.setForeground(formToolKit.getColors().getColor(IFormColors.TITLE));
@@ -183,7 +183,7 @@ public class SmooksUIUtils {
 		gd.horizontalAlignment = GridData.BEGINNING;
 		gd.verticalAlignment = GridData.BEGINNING;
 		notificationComposite.setLayoutData(gd);
-		
+
 		wrapper.setLabelControl(labelControl);
 		wrapper.setMarker(notificationComposite);
 		return wrapper;
@@ -473,8 +473,12 @@ public class SmooksUIUtils {
 						return;
 					}
 					String text = SmooksModelUtils.getAnyTypeText((AnyType) fm);
-					if (!valueText.getText().equals(text)) {
-						SmooksModelUtils.setTextToSmooksType(fEditingDomain, (AnyType) fm, valueText.getText());
+					if (valueText.getText() == null || valueText.getText().length() == 0) {
+						SmooksModelUtils.setTextToSmooksType(fEditingDomain, (AnyType) fm, null);
+					} else {
+						if (!valueText.getText().equals(text)) {
+							SmooksModelUtils.setTextToSmooksType(fEditingDomain, (AnyType) fm, valueText.getText());
+						}
 					}
 				}
 			});
@@ -486,8 +490,12 @@ public class SmooksUIUtils {
 						return;
 					}
 					String text = SmooksModelUtils.getAnyTypeComment((AnyType) fm);
-					if (!valueText.getText().equals(text)) {
-						SmooksModelUtils.setCommentToSmooksType(fEditingDomain, (AnyType) fm, valueText.getText());
+					if (valueText.getText() == null || valueText.getText().length() == 0) {
+						SmooksModelUtils.setCommentToSmooksType(fEditingDomain, (AnyType) fm, null);
+					} else {
+						if (!valueText.getText().equals(text)) {
+							SmooksModelUtils.setCommentToSmooksType(fEditingDomain, (AnyType) fm, valueText.getText());
+						}
 					}
 				}
 			});
@@ -499,8 +507,12 @@ public class SmooksUIUtils {
 						return;
 					}
 					String text = SmooksModelUtils.getAnyTypeCDATA((AnyType) fm);
-					if (!valueText.getText().equals(text)) {
-						SmooksModelUtils.setCDATAToSmooksType(fEditingDomain, (AnyType) fm, valueText.getText());
+					if (valueText.getText() == null || valueText.getText().length() == 0) {
+						SmooksModelUtils.setCDATAToSmooksType(fEditingDomain, (AnyType) fm, null);
+					} else {
+						if (!valueText.getText().equals(text)) {
+							SmooksModelUtils.setCDATAToSmooksType(fEditingDomain, (AnyType) fm, valueText.getText());
+						}
 					}
 				}
 			});
@@ -511,8 +523,12 @@ public class SmooksUIUtils {
 					public void modifyText(ModifyEvent e) {
 						Object editValue = getEditValue(itemPropertyDescriptor, fm);
 						if (editValue != null) {
-							if (!editValue.equals(valueText.getText())) {
-								itemPropertyDescriptor.setPropertyValue(fm, valueText.getText());
+							if (valueText.getText() == null || valueText.getText().length() == 0) {
+								itemPropertyDescriptor.setPropertyValue(fm, null);
+							} else {
+								if (!editValue.equals(valueText.getText())) {
+									itemPropertyDescriptor.setPropertyValue(fm, valueText.getText());
+								}
 							}
 						} else {
 							itemPropertyDescriptor.setPropertyValue(fm, valueText.getText());
@@ -614,6 +630,11 @@ public class SmooksUIUtils {
 						Object value = propertyDescriptor.getPropertyValue(model);
 						if (value != null && value instanceof PropertyValueWrapper) {
 							Object editValue = ((PropertyValueWrapper) value).getEditableValue(model);
+							if (searchComposite.getText().getText() == null
+									|| searchComposite.getText().getText().length() == 0) {
+								propertyDescriptor.setPropertyValue(model, null);
+								return;
+							}
 							if (editValue != null) {
 								if (!editValue.equals(searchComposite.getText().getText())) {
 									propertyDescriptor.setPropertyValue(model, searchComposite.getText().getText());
@@ -825,11 +846,12 @@ public class SmooksUIUtils {
 			style = style | SWT.READ_ONLY;
 		}
 		final Combo combo = new Combo(parent, style);
+		combo.add("");
 		if (items != null) {
 			for (int i = 0; i < items.length; i++) {
 				combo.add(items[i]);
 				if (items[i].equals(editValue)) {
-					currentSelect = i;
+					currentSelect = i + 1;
 				}
 			}
 		}
@@ -844,6 +866,10 @@ public class SmooksUIUtils {
 		combo.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				String text = combo.getText();
+				if (text == null || text.length() == 0) {
+					fipd.setPropertyValue(fm, null);
+					return;
+				}
 				Object setValue = text;
 				if (fp != null) {
 					setValue = fp.wrapValue(text);
@@ -916,13 +942,17 @@ public class SmooksUIUtils {
 		searchComposite.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				Object editValue = getEditValue(propertyDescriptor, model);
-				Object value = searchComposite.getText().getText();
-				if (editValue != null) {
-					if (!editValue.equals(value)) {
+				String value = searchComposite.getText().getText();
+				if (value == null || value.length() == 0) {
+					propertyDescriptor.setPropertyValue(model, null);
+				} else {
+					if (editValue != null) {
+						if (!editValue.equals(value)) {
+							propertyDescriptor.setPropertyValue(model, value);
+						}
+					} else {
 						propertyDescriptor.setPropertyValue(model, value);
 					}
-				} else {
-					propertyDescriptor.setPropertyValue(model, value);
 				}
 			}
 		});

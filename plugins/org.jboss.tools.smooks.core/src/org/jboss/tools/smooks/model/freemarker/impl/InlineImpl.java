@@ -37,10 +37,10 @@ public class InlineImpl extends AbstractAnyTypeImpl implements Inline {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getDirective()
-	 * @generated
+	 * @generated not
 	 * @ordered
 	 */
-	protected static final InlineDirective DIRECTIVE_EDEFAULT = InlineDirective.ADDTO;
+	protected static final InlineDirective DIRECTIVE_EDEFAULT = null;// InlineDirective.ADDTO;
 
 	/**
 	 * The cached value of the '{@link #getDirective() <em>Directive</em>}' attribute.

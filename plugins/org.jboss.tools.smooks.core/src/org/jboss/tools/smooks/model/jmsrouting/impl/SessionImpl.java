@@ -37,10 +37,10 @@ public class SessionImpl extends EObjectImpl implements Session {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getAcknowledgeMode()
-	 * @generated
+	 * @generated not
 	 * @ordered
 	 */
-	protected static final AcknowledgeMode ACKNOWLEDGE_MODE_EDEFAULT = AcknowledgeMode.AUTOACKNOWLEDGE;
+	protected static final AcknowledgeMode ACKNOWLEDGE_MODE_EDEFAULT = null;// AcknowledgeMode.AUTOACKNOWLEDGE;
 
 	/**
 	 * The cached value of the '{@link #getAcknowledgeMode() <em>Acknowledge Mode</em>}' attribute.
