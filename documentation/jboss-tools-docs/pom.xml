@@ -12,6 +12,7 @@
 
 	<modules>
                 <module>../jbosstools-docbook-xslt</module>
+		<!--module>../jbosstools-jdocbook-style</module-->
 		<module>../guides/Exadel-migration</module>
 		<module>../guides/GettingStartedGuide</module>
 		<module>../../as/docs/reference</module>
