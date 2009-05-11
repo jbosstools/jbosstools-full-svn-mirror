@@ -157,6 +157,7 @@ public class GroovyImpl extends ElementVisitorImpl implements Groovy {
 	 */
 	protected GroovyImpl() {
 		super();
+		this.setExecuteBefore(false);
 	}
 
 	/**

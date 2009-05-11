@@ -67,34 +67,32 @@ public class SmooksModelUtils {
 
 	public static final String BINDINGS = "bindings";
 
-	public static EStructuralFeature ATTRIBUTE_PROPERTY = ExtendedMetaData.INSTANCE.demandFeature(
-		null, "property", false);
+	public static EStructuralFeature ATTRIBUTE_PROPERTY = ExtendedMetaData.INSTANCE.demandFeature(null, "property",
+			false);
 
-	public static EStructuralFeature ATTRIBUTE_SELECTOR = ExtendedMetaData.INSTANCE.demandFeature(
-		null, "selector", false);
+	public static EStructuralFeature ATTRIBUTE_SELECTOR = ExtendedMetaData.INSTANCE.demandFeature(null, "selector",
+			false);
 
-	public static EStructuralFeature ATTRIBUTE_TYPE = ExtendedMetaData.INSTANCE.demandFeature(null,
-		"type", false);
+	public static EStructuralFeature ATTRIBUTE_TYPE = ExtendedMetaData.INSTANCE.demandFeature(null, "type", false);
 
 	public static EStructuralFeature ELEMENT_BINDING = ExtendedMetaData.INSTANCE.demandFeature(
-		"http://www.milyn.org/xsd/smooks-1.0.xsd", "binding", true);
+			"http://www.milyn.org/xsd/smooks-1.0.xsd", "binding", true);
 
-	public static AnyType addBindingTypeToParamType(ParamType param, String property,
-		String selector, String type, String uri) {
+	public static AnyType addBindingTypeToParamType(ParamType param, String property, String selector, String type,
+			String uri) {
 		AnyType binding = createBindingType(property, selector, type, uri);
 		param.getMixed().add(ELEMENT_BINDING, binding);
 		return binding;
 	}
 
-	public static List<Object> getBindingListFromResourceConfigType(
-		ResourceConfigType resourceConfig) {
+	public static List<Object> getBindingListFromResourceConfigType(ResourceConfigType resourceConfig) {
 		List<ParamType> paramList = resourceConfig.getParam();
 		for (Iterator<ParamType> iterator = paramList.iterator(); iterator.hasNext();) {
 			ParamType param = iterator.next();
 			if ("bindings".equals(param.getName())) {
-				if (param.eContents().isEmpty()) continue;
-				List<Object> bindingList = (List<Object>) param.getMixed().get(
-					SmooksModelUtils.ELEMENT_BINDING, false);
+				if (param.eContents().isEmpty())
+					continue;
+				List<Object> bindingList = (List<Object>) param.getMixed().get(SmooksModelUtils.ELEMENT_BINDING, false);
 				return bindingList;
 			}
 		}
@@ -103,17 +101,18 @@ public class SmooksModelUtils {
 
 	public static boolean isBeanPopulatorResource(ResourceConfigType type) {
 		ResourceType resource = type.getResource();
-		if (resource == null) return false;
+		if (resource == null)
+			return false;
 		String value = resource.getStringValue();
-		if (value != null) value = value.trim();
+		if (value != null)
+			value = value.trim();
 		if (SmooksModelConstants.BEAN_POPULATOR.equals(value)) {
 			return true;
 		}
 		return false;
 	}
 
-	public static void setPropertyValueToAnyType(Object value, EStructuralFeature attribute,
-		AnyType anyType) {
+	public static void setPropertyValueToAnyType(Object value, EStructuralFeature attribute, AnyType anyType) {
 		anyType.getAnyAttribute().set(attribute, value);
 	}
 
@@ -122,7 +121,8 @@ public class SmooksModelUtils {
 		for (Iterator iterator = bindingList.iterator(); iterator.hasNext();) {
 			AnyType binding = (AnyType) iterator.next();
 			String pro = getAttributeValueFromAnyType(binding, ATTRIBUTE_PROPERTY);
-			if (pro != null) pro = pro.trim();
+			if (pro != null)
+				pro = pro.trim();
 			if (property.equals(pro)) {
 				return binding;
 			}
@@ -132,21 +132,26 @@ public class SmooksModelUtils {
 
 	public static boolean isInnerFileContents(ResourceConfigType resourceConfig) {
 		ResourceType resource = resourceConfig.getResource();
-		if (resource == null) return false;
+		if (resource == null)
+			return false;
 		String type = resource.getType();
-		if (type != null) type = type.trim();
+		if (type != null)
+			type = type.trim();
 		for (int i = 0; i < TEMPLATE_TYPES.length; i++) {
 			String type1 = TEMPLATE_TYPES[i];
-			if (type1.equalsIgnoreCase(type)) return true;
+			if (type1.equalsIgnoreCase(type))
+				return true;
 		}
 		return false;
 	}
 
 	public static boolean isDateTypeSelector(ResourceConfigType type) {
 		ResourceType resource = type.getResource();
-		if (resource == null) return false;
+		if (resource == null)
+			return false;
 		String value = resource.getStringValue();
-		if (value != null) value = value.trim();
+		if (value != null)
+			value = value.trim();
 		for (int i = 0; i < SmooksModelConstants.DECODER_CLASSES.length; i++) {
 			String decoderClass = SmooksModelConstants.DECODER_CLASSES[i];
 			if (decoderClass.equals(value)) {
@@ -158,13 +163,15 @@ public class SmooksModelUtils {
 
 	public static String getTransformType(ResourceConfigType resourceConfig) {
 		ParamType typeParam = null;
-		if (resourceConfig == null) return "";
+		if (resourceConfig == null)
+			return "";
 		if (isTransformTypeResourceConfig(resourceConfig)) {
 			List paramList = resourceConfig.getParam();
 			for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
 				ParamType param = (ParamType) iterator.next();
 				String name = param.getName();
-				if (name != null) name = name.trim();
+				if (name != null)
+					name = name.trim();
 				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(name)) {
 					typeParam = param;
 					break;
@@ -178,7 +185,8 @@ public class SmooksModelUtils {
 	}
 
 	public static void setTransformType(ResourceConfigType resourceConfig, String type) {
-		if (type == null) type = "";
+		if (type == null)
+			type = "";
 		if (isTransformTypeResourceConfig(resourceConfig)) {
 			List paramList = resourceConfig.getParam();
 			for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
@@ -209,7 +217,8 @@ public class SmooksModelUtils {
 
 	public static boolean isTransformTypeResourceConfig(ResourceConfigType resourceConfig) {
 		String selector = resourceConfig.getSelector();
-		if (selector != null) selector = selector.trim();
+		if (selector != null)
+			selector = selector.trim();
 		if (!SmooksModelConstants.GLOBAL_PARAMETERS.equals(selector)) {
 			return false;
 		}
@@ -221,7 +230,8 @@ public class SmooksModelUtils {
 			for (Iterator iterator = paramList.iterator(); iterator.hasNext();) {
 				ParamType p = (ParamType) iterator.next();
 				String paramName = p.getName();
-				if (paramName != null) paramName = paramName.trim();
+				if (paramName != null)
+					paramName = paramName.trim();
 				if (SmooksModelConstants.STREAM_FILTER_TYPE.equals(paramName)) {
 					return true;
 				}
@@ -230,14 +240,14 @@ public class SmooksModelUtils {
 		}
 	}
 
-	public static void setParamText(String paramName, String value,
-		ResourceConfigType resourceConfigType) {
+	public static void setParamText(String paramName, String value, ResourceConfigType resourceConfigType) {
 		List<ParamType> list = resourceConfigType.getParam();
 		ParamType param = null;
 		for (Iterator<ParamType> iterator = list.iterator(); iterator.hasNext();) {
 			ParamType paramType = (ParamType) iterator.next();
 			String n = paramType.getName();
-			if (n == null) continue;
+			if (n == null)
+				continue;
 			n = n.trim();
 			if (n.equalsIgnoreCase(paramName)) {
 				param = paramType;
@@ -257,7 +267,8 @@ public class SmooksModelUtils {
 		for (Iterator iterator = plist.iterator(); iterator.hasNext();) {
 			ParamType p = (ParamType) iterator.next();
 			String n = p.getName();
-			if (n == null) continue;
+			if (n == null)
+				continue;
 			n = n.trim();
 			if (paramName.equalsIgnoreCase(n)) {
 				return getAnyTypeText(p);
@@ -272,8 +283,7 @@ public class SmooksModelUtils {
 	}
 
 	public static String getAnyTypeText(AnyType anyType) {
-		Object value = anyType.getMixed().get(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT,
-			true);
+		Object value = anyType.getMixed().get(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, true);
 		if (value != null) {
 			if (value instanceof List && !((List) value).isEmpty()) {
 				return ((List) value).get(0).toString().trim();
@@ -284,8 +294,7 @@ public class SmooksModelUtils {
 	}
 
 	public static String getAnyTypeCDATA(AnyType anyType) {
-		Object value = anyType.getMixed().get(
-			XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, true);
+		Object value = anyType.getMixed().get(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, true);
 		if (value != null) {
 			if (value instanceof List && !((List) value).isEmpty()) {
 				return ((List) value).get(0).toString().trim();
@@ -296,8 +305,7 @@ public class SmooksModelUtils {
 	}
 
 	public static String getAnyTypeComment(AnyType anyType) {
-		Object value = anyType.getMixed().get(
-			XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT, true);
+		Object value = anyType.getMixed().get(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT, true);
 		if (value != null) {
 			if (value instanceof List && !((List) value).isEmpty()) {
 				return ((List) value).get(0).toString().trim();
@@ -307,8 +315,7 @@ public class SmooksModelUtils {
 		return null;
 	}
 
-	public static AnyType createBindingType(String property, String selector, String type,
-		String uri) {
+	public static AnyType createBindingType(String property, String selector, String type, String uri) {
 		if (uri == null) {
 			uri = SmooksPackage.eNS_URI;
 		}
@@ -331,52 +338,19 @@ public class SmooksModelUtils {
 		smooksModel.getMixed().add(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, text);
 	}
 
-	public static void setTextToSmooksType(EditingDomain editingDomain, AnyType smooksModel,
-		String text) {
+	public static void setTextToSmooksType(EditingDomain editingDomain, AnyType smooksModel, String text) {
 		CompoundCommand ccommand = new CompoundCommand();
-		List<String> listValue = new ArrayList<String>();
-		listValue.add(text);
-		Command addCommand = AddCommand.create(editingDomain, smooksModel,
-			XMLTypePackage.Literals.ANY_TYPE__MIXED, FeatureMapUtil.createEntry(
-				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, text));
-		Object removeValue = (smooksModel.getMixed().get(
-			XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, true));
+		Command addCommand = null;
+		if (text != null) {
+			addCommand = AddCommand.create(editingDomain, smooksModel, XMLTypePackage.Literals.ANY_TYPE__MIXED,
+					FeatureMapUtil.createEntry(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, text));
+		}
+		Object removeValue = (smooksModel.getMixed().get(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, true));
 		if (removeValue != null && removeValue instanceof Collection<?>) {
 			List<Object> rList = new ArrayList<Object>();
-			for (Iterator<?> iterator = ((Collection<?>) removeValue).iterator(); iterator
-				.hasNext();) {
+			for (Iterator<?> iterator = ((Collection<?>) removeValue).iterator(); iterator.hasNext();) {
 				Object string = (Object) iterator.next();
-				rList.add(FeatureMapUtil.createEntry(
-					XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, string));
-			}
-			Command cc = RemoveCommand.create(editingDomain, smooksModel, null, rList);
-			if (cc != null && cc.canExecute()) {
-				ccommand.append(cc);
-			}
-		}
-		if (addCommand != null && addCommand.canExecute()) {
-			ccommand.append(addCommand);
-		}
-		editingDomain.getCommandStack().execute(ccommand);
-	}
-	
-	public static void setCommentToSmooksType(EditingDomain editingDomain, AnyType smooksModel,
-		String cdata) {
-		CompoundCommand ccommand = new CompoundCommand();
-		List<String> listValue = new ArrayList<String>();
-		listValue.add(cdata);
-		Command addCommand = AddCommand.create(editingDomain, smooksModel,
-			XMLTypePackage.Literals.ANY_TYPE__MIXED, FeatureMapUtil.createEntry(
-				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT, cdata));
-		Object removeValue = (smooksModel.getMixed().get(
-			XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT, true));
-		if (removeValue != null && removeValue instanceof Collection<?>) {
-			List<Object> rList = new ArrayList<Object>();
-			for (Iterator<?> iterator = ((Collection<?>) removeValue).iterator(); iterator
-				.hasNext();) {
-				Object string = (Object) iterator.next();
-				rList.add(FeatureMapUtil.createEntry(
-					XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT, string));
+				rList.add(FeatureMapUtil.createEntry(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, string));
 			}
 			Command cc = RemoveCommand.create(editingDomain, smooksModel, null, rList);
 			if (cc != null && cc.canExecute()) {
@@ -389,23 +363,44 @@ public class SmooksModelUtils {
 		editingDomain.getCommandStack().execute(ccommand);
 	}
 
-	public static void setCDATAToSmooksType(EditingDomain editingDomain, AnyType smooksModel,
-		String cdata) {
+	public static void setCommentToSmooksType(EditingDomain editingDomain, AnyType smooksModel, String comment) {
 		CompoundCommand ccommand = new CompoundCommand();
-		List<String> listValue = new ArrayList<String>();
-		listValue.add(cdata);
-		Command addCommand = AddCommand.create(editingDomain, smooksModel,
-			XMLTypePackage.Literals.ANY_TYPE__MIXED, FeatureMapUtil.createEntry(
-				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, cdata));
-		Object removeValue = (smooksModel.getMixed().get(
-			XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, true));
+		Command addCommand = null;
+		if (comment != null) {
+			addCommand = AddCommand.create(editingDomain, smooksModel, XMLTypePackage.Literals.ANY_TYPE__MIXED,
+					FeatureMapUtil.createEntry(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT, comment));
+		}
+		Object removeValue = (smooksModel.getMixed().get(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT, true));
 		if (removeValue != null && removeValue instanceof Collection<?>) {
 			List<Object> rList = new ArrayList<Object>();
-			for (Iterator<?> iterator = ((Collection<?>) removeValue).iterator(); iterator
-				.hasNext();) {
+			for (Iterator<?> iterator = ((Collection<?>) removeValue).iterator(); iterator.hasNext();) {
 				Object string = (Object) iterator.next();
-				rList.add(FeatureMapUtil.createEntry(
-					XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, string));
+				rList.add(FeatureMapUtil.createEntry(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT, string));
+			}
+			Command cc = RemoveCommand.create(editingDomain, smooksModel, null, rList);
+			if (cc != null && cc.canExecute()) {
+				ccommand.append(cc);
+			}
+		}
+		if (addCommand != null && addCommand.canExecute()) {
+			ccommand.append(addCommand);
+		}
+		editingDomain.getCommandStack().execute(ccommand);
+	}
+
+	public static void setCDATAToSmooksType(EditingDomain editingDomain, AnyType smooksModel, String cdata) {
+		CompoundCommand ccommand = new CompoundCommand();
+		Command addCommand = null;
+		if (cdata != null) {
+			addCommand = AddCommand.create(editingDomain, smooksModel, XMLTypePackage.Literals.ANY_TYPE__MIXED,
+					FeatureMapUtil.createEntry(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, cdata));
+		}
+		Object removeValue = (smooksModel.getMixed().get(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, true));
+		if (removeValue != null && removeValue instanceof Collection<?>) {
+			List<Object> rList = new ArrayList<Object>();
+			for (Iterator<?> iterator = ((Collection<?>) removeValue).iterator(); iterator.hasNext();) {
+				Object string = (Object) iterator.next();
+				rList.add(FeatureMapUtil.createEntry(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, string));
 			}
 			Command cc = RemoveCommand.create(editingDomain, smooksModel, null, rList);
 			if (cc != null && cc.canExecute()) {
@@ -433,24 +428,22 @@ public class SmooksModelUtils {
 	}
 
 	public static void cleanTextToSmooksType(AnyType smooksModel) {
-		Object obj = smooksModel.getMixed().get(
-			XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, true);
+		Object obj = smooksModel.getMixed().get(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, true);
 		if (obj instanceof List) {
 			((List) obj).clear();
 		}
 	}
 
 	public static void cleanCDATAToSmooksType(AnyType smooksModel) {
-		Object obj = smooksModel.getMixed().get(
-			XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, true);
+		Object obj = smooksModel.getMixed().get(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, true);
 		if (obj instanceof List) {
 			((List) obj).clear();
 		}
 	}
 
 	public static CommandParameter createTextCommandParamter(Object owner, String value) {
-		return createChildParameter(owner, XMLTypePackage.Literals.ANY_TYPE__MIXED, FeatureMapUtil
-			.createEntry(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, value));
+		return createChildParameter(owner, XMLTypePackage.Literals.ANY_TYPE__MIXED, FeatureMapUtil.createEntry(
+				XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, value));
 	}
 
 	public static CommandParameter createChildParameter(Object owner, Object feature, Object child) {
@@ -460,8 +453,7 @@ public class SmooksModelUtils {
 	public static void addJavaInput(SmooksGraphicsExtType ext, String className) {
 		InputType javaInput = SmooksGraphicsExtFactory.eINSTANCE.createInputType();
 		javaInput.setType(INPUT_TYPE_JAVA);
-		org.jboss.tools.smooks.model.graphics.ext.ParamType p = SmooksGraphicsExtFactory.eINSTANCE
-			.createParamType();
+		org.jboss.tools.smooks.model.graphics.ext.ParamType p = SmooksGraphicsExtFactory.eINSTANCE.createParamType();
 		p.setName(PARAM_NAME_CLASS);
 		p.setValue(className);
 		javaInput.getParam().add(p);
@@ -471,23 +463,24 @@ public class SmooksModelUtils {
 	public static String getInputPath(InputType input) {
 		List<org.jboss.tools.smooks.model.graphics.ext.ParamType> list = input.getParam();
 		if (INPUT_TYPE_JAVA.equals(input.getType()) || INPUT_TYPE_XML.equals(input.getType())
-			|| INPUT_TYPE_XSD.equals(input.getType())) {
+				|| INPUT_TYPE_XSD.equals(input.getType())) {
 			for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 				org.jboss.tools.smooks.model.graphics.ext.ParamType paramType = (org.jboss.tools.smooks.model.graphics.ext.ParamType) iterator
-					.next();
+						.next();
 				if ("path".equals(paramType.getName())) {
 					String value = paramType.getValue();
-					if (value != null) value = value.trim();
+					if (value != null)
+						value = value.trim();
 					return value;
 				}
 			}
 		}
 		return null;
 	}
-	
-	public static List<ConditionType> collectConditionType(SmooksResourceListType resourceList){
+
+	public static List<ConditionType> collectConditionType(SmooksResourceListType resourceList) {
 		ConditionsType conditions = resourceList.getConditions();
-		if(conditions != null){
+		if (conditions != null) {
 			return conditions.getCondition();
 		}
 		return Collections.emptyList();

@@ -195,10 +195,10 @@ public class CounterImpl extends ElementVisitorImpl implements Counter {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getDirection()
-	 * @generated
+	 * @generated not
 	 * @ordered
 	 */
-	protected static final CountDirection DIRECTION_EDEFAULT = CountDirection.INCREMENT;
+	protected static final CountDirection DIRECTION_EDEFAULT = null;// CountDirection.INCREMENT;
 
 	/**
 	 * The cached value of the '{@link #getDirection() <em>Direction</em>}' attribute.

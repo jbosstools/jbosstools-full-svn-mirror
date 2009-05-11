@@ -135,11 +135,10 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 
 	protected void createSmooksTreeViewer(FormToolkit tool, final IManagedForm managedForm,
 		Composite rootMainControl) {
-		configurationSection = tool.createSection(rootMainControl, Section.TITLE_BAR
-			| Section.DESCRIPTION);
+		configurationSection = tool.createSection(rootMainControl, Section.TITLE_BAR);
 		configurationSection
 			.setDescription("Define Smooks elements for configuration file in the following section.");
-		configurationSection.setText("Smooks elements");
+		configurationSection.setText("Message Filtering Resources");
 		sectionPart = new SectionPart(configurationSection);
 		managedForm.addPart(sectionPart);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
