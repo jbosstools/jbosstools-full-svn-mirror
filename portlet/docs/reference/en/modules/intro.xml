@@ -124,10 +124,7 @@
             </listitem>
 
             <listitem>
-                <para>
-                    <ulink url="http://www.jboss.com/products/devstudio/docs">Stable JBossTools/JBDS
-                        documentation</ulink> (supplied with the latest JBDS release, 1.1.0 GA
-                    currently) </para>
+                <para>JBoss Developer Studio/JBoss Tools release documentation you can find at<ulink url="http://docs.jboss.org/tools/">http://docs.jboss.org/tools</ulink> in the corresponding release directory.</para>
             </listitem>
         </itemizedlist>
 

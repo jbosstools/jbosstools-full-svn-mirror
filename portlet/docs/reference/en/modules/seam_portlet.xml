@@ -70,7 +70,7 @@
 
             <para>Thus you should have JBoss Portlet Bridge downloaded and extracted somewhere on
                 your hard drive. You can download JBoss Portlet Bridge 1.0.0.B4 from <ulink
-                    url="http://www.jboss.org/portletbridge/download/">here</ulink>.</para>
+                    url="http://www.jboss.org/portletbridge/download/">www.jboss.org/portletbridge/download</ulink>.</para>
         </tip>
 
         <para>Now, to add Seam Portlet to the project you should follow to <emphasis>
