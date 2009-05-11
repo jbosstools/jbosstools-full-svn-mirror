@@ -54,6 +54,7 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
@@ -162,9 +163,25 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 			.getAdapterFactory()));
 		
 		smooksTreeViewer.setLabelProvider(new DecoratingLabelProvider(new AdapterFactoryLabelProvider(editingDomain
-				.getAdapterFactory()),
-				SmooksConfigurationActivator.getDefault().getWorkbench()
-						.getDecoratorManager().getLabelDecorator()));
+				.getAdapterFactory()) {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider#
+			 * getText(java.lang.Object)
+			 */
+			@Override
+			public String getText(Object object) {
+				Object obj = AdapterFactoryEditingDomain.unwrap(object);
+				if (obj instanceof AbstractAnyType) {
+					return super.getText(obj);
+				}
+				return super.getText(object);
+			}
+
+		}, SmooksConfigurationActivator.getDefault().getWorkbench().getDecoratorManager().getLabelDecorator()));
 		smooksTreeViewer.setFilters(new ViewerFilter[] { new TextEObjectModelFilter() });
 		Object smooksModel = ((SmooksMultiFormEditor) this.formEditor).getSmooksModel();
 		if (smooksModel != null) {
