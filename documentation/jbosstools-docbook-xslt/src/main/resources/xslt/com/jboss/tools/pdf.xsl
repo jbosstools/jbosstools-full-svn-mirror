@@ -78,4 +78,11 @@
      <xsl:value-of select="."/><xsl:text> </xsl:text>
     </fo:inline>
 </xsl:template>
+   <!--avoid page sequence  to generate blank pages after even page numbers -->
+   
+   <xsl:template name="force.page.count">
+      <xsl:param name="element" select="local-name(.)"/>
+      <xsl:param name="master-reference" select="''"/>
+      <xsl:text>no-force</xsl:text>
+   </xsl:template>
 </xsl:stylesheet>
