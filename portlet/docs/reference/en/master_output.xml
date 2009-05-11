@@ -33,11 +33,11 @@
          <pubdate>September 2008</pubdate>
 	                       <copyright>
 	                           <year>2008</year>
-	                           <year diffmk:change="added"><diffmk:wrapper diffmk:change="added">2009</diffmk:wrapper></year>
-	                           <holder><diffmk:wrapper diffmk:change="changed">JBoss, a division of Red Hat</diffmk:wrapper></holder>
+	                           <year>2009</year>
+	                           <holder>JBoss, a division of Red Hat</holder>
 	                       </copyright>
           <releaseinfo><diffmk:wrapper diffmk:change="changed">
-            Version: 1.0.0.GA
+            Version: 1.0.1.GA
           </diffmk:wrapper></releaseinfo>
 	
 <abstract>
@@ -258,11 +258,11 @@
                 <property moreinfo="none">New</property>
             </emphasis> button in the <emphasis>
                 <property moreinfo="none">Target Runtime</property>
-            </emphasis><diffmk:wrapper diffmk:change="changed"> section to specify a new Target Runtime. Choose </diffmk:wrapper><emphasis>
-                <property moreinfo="none"><diffmk:wrapper diffmk:change="changed"> JBoss Community &gt; JBoss 4.2 Runtime</diffmk:wrapper></property>
-            </emphasis><diffmk:wrapper diffmk:change="added"> and select the </diffmk:wrapper><emphasis diffmk:change="added">
-                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Create a new local server</diffmk:wrapper></property>
-            </emphasis><diffmk:wrapper diffmk:change="added"> checkbox. Click </diffmk:wrapper><emphasis>
+            </emphasis> section to specify a new Target Runtime. Choose <emphasis>
+                <property moreinfo="none"> JBoss Community &gt; JBoss 4.2 Runtime</property>
+            </emphasis> and select the <emphasis>
+                <property moreinfo="none">Create a new local server</property>
+            </emphasis> checkbox. Click <emphasis>
                 <property moreinfo="none">Next</property>.</emphasis></para>
 
         <figure float="0">
@@ -279,11 +279,11 @@
             </emphasis>, and then point it to the location of your JBoss AS + Portal
             installation.</para>
 
-        <figure diffmk:change="added" float="0">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">New Server Runtime Environment</diffmk:wrapper></title>
-            <mediaobject diffmk:change="added">
-                <imageobject diffmk:change="added">
-                    <imagedata diffmk:change="added" fileref="images/starting_project/server_runtime_environment.png"></imagedata>
+        <figure float="0">
+            <title>New Server Runtime Environment</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/server_runtime_environment.png"></imagedata>
                 </imageobject>
             </mediaobject>
         </figure>
@@ -296,13 +296,13 @@
                 version 2.0 (JSR-268), you have to choose JBoss Portal 2.7.</para>
         </note>
 
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">At this point a new JBoss Server instance will be created. Here you can verify the
-            defined runtime information. If something is incorrect, press </diffmk:wrapper><emphasis diffmk:change="added">
-                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Back</diffmk:wrapper></property>
-            </emphasis><diffmk:wrapper diffmk:change="added"> to return on the previous wizard page.</diffmk:wrapper></para>
+        <para>At this point a new JBoss Server instance will be created. Here you can verify the
+            defined runtime information. If something is incorrect, press <emphasis>
+                <property moreinfo="none">Back</property>
+            </emphasis> to return on the previous wizard page.</para>
 
         <figure float="0">
-            <title><diffmk:wrapper diffmk:change="changed">Target Server</diffmk:wrapper></title>
+            <title>Target Server</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/starting_project/starting_project_3.png"></imagedata>
@@ -342,31 +342,31 @@
             </mediaobject>
         </figure>
 
-        <note diffmk:change="added">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Note:</diffmk:wrapper></title>
-            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If the portlet libraries aren't available in the runtime you targeted,
-                JBoss Portlet facets will be hidden on this page.</diffmk:wrapper></para>
-            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">To made portal functionality always visible no matter what the runtime support,
-                you should go to </diffmk:wrapper><emphasis diffmk:change="added">
-                    <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Window &gt; Preferences</diffmk:wrapper></property>
-                </emphasis><diffmk:wrapper diffmk:change="added"> and then </diffmk:wrapper><emphasis diffmk:change="added">
-                    <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Tools &gt; JBoss Portlet</diffmk:wrapper></property>
-                </emphasis><diffmk:wrapper diffmk:change="added"> and deselect </diffmk:wrapper><emphasis diffmk:change="added">
-                    <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Check runtimes for Portlet Components</diffmk:wrapper></property>
-                </emphasis><diffmk:wrapper diffmk:change="added"> checkbox (see figure below).</diffmk:wrapper></para>
+        <note>
+            <title>Note:</title>
+            <para>If the portlet libraries aren't available in the runtime you targeted,
+                JBoss Portlet facets will be hidden on this page.</para>
+            <para>To made portal functionality always visible no matter what the runtime support,
+                you should go to <emphasis>
+                    <property moreinfo="none">Window &gt; Preferences</property>
+                </emphasis> and then <emphasis>
+                    <property moreinfo="none">JBoss Tools &gt; JBoss Portlet</property>
+                </emphasis> and deselect <emphasis>
+                    <property moreinfo="none">Check runtimes for Portlet Components</property>
+                </emphasis> checkbox (see figure below).</para>
         </note>
 
-        <figure diffmk:change="added" float="0">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Runtime Preferences</diffmk:wrapper></title>
-            <mediaobject diffmk:change="added">
-                <imageobject diffmk:change="added">
-                    <imagedata diffmk:change="added" fileref="images/starting_project/portlet_preferences.png"></imagedata>
+        <figure float="0">
+            <title>JBoss Runtime Preferences</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/portlet_preferences.png"></imagedata>
                 </imageobject>
             </mediaobject>
         </figure>
 
-        <para><diffmk:wrapper diffmk:change="changed">The next page is for configuring web modules. Here all values are set, so you can
-            leave everything as it is.</diffmk:wrapper></para>
+        <para>The next page is for configuring web modules. Here all values are set, so you can
+            leave everything as it is.</para>
 
         <figure float="0">
             <title>The Project Web Modules</title>
@@ -377,96 +377,96 @@
             </mediaobject>
         </figure>
 
-        <para><diffmk:wrapper diffmk:change="added">Finally, the last wizard page will ask you to add JBoss Portlet capabilities to your
+        <para>Finally, the last wizard page will ask you to add JBoss Portlet capabilities to your
             project. Here you can choose whether to set up user libraries, libraries provided by
-            server runtime or not include libraries at all.</diffmk:wrapper></para>
+            server runtime or not include libraries at all.</para>
         
-        <itemizedlist diffmk:change="added">
-            <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">To set up server runtime libraries, you need to select </diffmk:wrapper><emphasis>
-                <property moreinfo="none"><diffmk:wrapper diffmk:change="added">Libraries provided by server runtime</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> in the list box.</diffmk:wrapper></para>
+        <itemizedlist>
+            <listitem><para>To set up server runtime libraries, you need to select <emphasis>
+                <property moreinfo="none">Libraries provided by server runtime</property></emphasis> in the list box.</para>
             </listitem>
         </itemizedlist>
         
-        <figure diffmk:change="added" float="0">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Including Server Runtime Libraries</diffmk:wrapper></title>
-            <mediaobject diffmk:change="added">
-                <imageobject diffmk:change="added">
-                    <imagedata diffmk:change="added" fileref="images/starting_project/portlet_capabilities6.png"></imagedata>
+        <figure float="0">
+            <title>Including Server Runtime Libraries</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/portlet_capabilities6.png"></imagedata>
                 </imageobject>
             </mediaobject>
         </figure>
 
-        <itemizedlist diffmk:change="added">
-            <listitem diffmk:change="added">
-            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">For setting up user libraries, select </diffmk:wrapper><emphasis diffmk:change="added">
-                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">User library</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> in the list box and then press </diffmk:wrapper><emphasis diffmk:change="added">
-                    <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Add</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> in the </diffmk:wrapper><emphasis diffmk:change="added">
-                        <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">User Library</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> section.</diffmk:wrapper></para>
+        <itemizedlist>
+            <listitem>
+            <para>For setting up user libraries, select <emphasis>
+                <property moreinfo="none">User library</property></emphasis> in the list box and then press <emphasis>
+                    <property moreinfo="none">Add</property></emphasis> in the <emphasis>
+                        <property moreinfo="none">User Library</property></emphasis> section.</para>
             </listitem>
         </itemizedlist>
         
-        <figure diffmk:change="added" float="0">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Adding User Library</diffmk:wrapper></title>
-            <mediaobject diffmk:change="added">
-                <imageobject diffmk:change="added">
-                    <imagedata diffmk:change="added" fileref="images/starting_project/portlet_capabilities1.png"></imagedata>
+        <figure float="0">
+            <title>Adding User Library</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/portlet_capabilities1.png"></imagedata>
                 </imageobject>
             </mediaobject>
         </figure>
         
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Then press </diffmk:wrapper><emphasis diffmk:change="added">
-            <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">New</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> and type the user library name in the appeared dialog.</diffmk:wrapper></para>
+        <para>Then press <emphasis>
+            <property moreinfo="none">New</property></emphasis> and type the user library name in the appeared dialog.</para>
         
-        <figure diffmk:change="added" float="0">
-        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Adding User Library</diffmk:wrapper></title>
-        <mediaobject diffmk:change="added">
-            <imageobject diffmk:change="added">
-                <imagedata diffmk:change="added" fileref="images/starting_project/portlet_capabilities2.png"></imagedata>
+        <figure float="0">
+        <title>Adding User Library</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/starting_project/portlet_capabilities2.png"></imagedata>
             </imageobject>
         </mediaobject>
         </figure>
         
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Next add necessary jar's.</diffmk:wrapper></para>
+        <para>Next add necessary jar's.</para>
         
-        <figure diffmk:change="added" float="0">
-        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Adding the Portlet API Jar</diffmk:wrapper></title>
-        <mediaobject diffmk:change="added">
-            <imageobject diffmk:change="added">
-                <imagedata diffmk:change="added" fileref="images/starting_project/portlet_capabilities3.png"></imagedata>
+        <figure float="0">
+        <title>Adding the Portlet API Jar</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/starting_project/portlet_capabilities3.png"></imagedata>
             </imageobject>
         </mediaobject>
         </figure>
         
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Hit </diffmk:wrapper><emphasis diffmk:change="added">
-                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">OK</diffmk:wrapper></property>.</emphasis><diffmk:wrapper diffmk:change="added"> The user library will be added.
-        </diffmk:wrapper></para>
+        <para>Hit <emphasis>
+                <property moreinfo="none">OK</property>.</emphasis> The user library will be added.
+        </para>
         
-        <figure diffmk:change="added" float="0">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">User Library Added</diffmk:wrapper></title>
-            <mediaobject diffmk:change="added">
-                <imageobject diffmk:change="added">
-                    <imagedata diffmk:change="added" fileref="images/starting_project/portlet_capabilities4.png"></imagedata>
+        <figure float="0">
+            <title>User Library Added</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/portlet_capabilities4.png"></imagedata>
                 </imageobject>
             </mediaobject>
         </figure>
         
-        <itemizedlist diffmk:change="added">
-            <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If you don't need to include libraries at all, just deselect the </diffmk:wrapper><emphasis diffmk:change="added">
-                <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Enable implementation library</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> checkbox.</diffmk:wrapper></para>
+        <itemizedlist>
+            <listitem><para>If you don't need to include libraries at all, just deselect the <emphasis>
+                <property moreinfo="none">Enable implementation library</property></emphasis> checkbox.</para>
             </listitem>
         </itemizedlist>
         
-        <figure diffmk:change="added" float="0">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Disabling Implementation Libraries</diffmk:wrapper></title>
-            <mediaobject diffmk:change="added">
-                <imageobject diffmk:change="added">
-                    <imagedata diffmk:change="added" fileref="images/starting_project/portlet_capabilities5.png"></imagedata>
+        <figure float="0">
+            <title>Disabling Implementation Libraries</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/starting_project/portlet_capabilities5.png"></imagedata>
                 </imageobject>
             </mediaobject>
         </figure>
         
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">After setting JBoss Portlet capabilities press </diffmk:wrapper><emphasis diffmk:change="added">
-            <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Finish</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></emphasis></para>
+        <para>After setting JBoss Portlet capabilities press <emphasis>
+            <property moreinfo="none">Finish</property>.</emphasis></para>
 
         <para>That's it! Our base project is done.</para>
 
@@ -900,7 +900,7 @@
             <title>Tip:</title>
 
             <para>Thus you should have JBoss Portlet Bridge downloaded and extracted somewhere on
-                your hard drive. You can download JBoss Portlet Bridge 1.0.0.B4 from <ulink url="http://www.jboss.org/portletbridge/download/">here</ulink>.</para>
+                your hard drive. You can download JBoss Portlet Bridge 1.0.0.B4 from <ulink url="http://www.jboss.org/portletbridge/download/"><diffmk:wrapper diffmk:change="changed">www.jboss.org/portletbridge/download</diffmk:wrapper></ulink>.</para>
         </tip>
 
         <para>Now, to add Seam Portlet to the project you should follow to <emphasis>
