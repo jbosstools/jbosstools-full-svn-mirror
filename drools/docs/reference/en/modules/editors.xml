@@ -185,28 +185,10 @@
                 <para>The <property>Rete Tree view</property> works only in Drools Rule Projects,
                     where the Drools Builder is set in the project properties.</para>
             </note>
-
+            <para>We hope, this guide helped you to get started with the JBoss BPMN Convert module. Besides, for additional information you are welcome on <ulink
+                url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss forum</ulink>.</para>
         </section>
-    </section>
-    <!--
-    <section id="guided_editor">
-        <title>The Guided Editor</title>
-
-        <para>The <property>Guided editor</property> allows you to build rules in a GUI driven
-            fashion, based on your object model. </para>        
         
     </section>
-
-    <section id="dsl_editor">
-        <title>The Domain Specific Language Editor</title>
-
-        <para/>
-    </section>
-
-    <section id="ruleflow_editor">
-        <title>The Rule Flow Graphical Editor</title>
-
-        <para/>
-    </section>
-    -->
+   
 </chapter>
