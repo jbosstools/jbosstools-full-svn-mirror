@@ -12,7 +12,7 @@
 	<title>Quick Start</title>
 	<para> This "Quick Start" will show how to use the <property>Smooks tools</property> to create/edit the Smooks
 		configuration file for Java2Java data transformation.</para>
-	<para> This chapter should give you a brief understanding of the <property>Smooks dev tools</property>.</para>
+	<para> This chapter gives you a brief understanding of the <property>Smooks tools</property>.</para>
 	<section>
 		<title>Download Smooks Java-to-Java Example</title>
 		<para> Visit <ulink
@@ -21,14 +21,14 @@
 		<tip>
 			<title>Tip:</title>
 
-			<para> The example project is base on Maven, you suggest you to create a new eclipse
-				Java project and copy the example code and .jar files from the example project paste
+			<para> The example project is based on Maven, we suggest you to create a new eclipse
+				Java project, copy the example code and .jar files from the example project and paste
 				them into the eclipse Java project. </para>
 		</tip>
 	</section>
 	<section>
 		<title>Smooks Configuration File Wizard</title>
-		<para>Select the Smooks Java-to-Java example project what you created and right-click,
+		<para>Select the Smooks Java-to-Java example project that you created and right-click,
 			select the menu <emphasis><property>New > Other</property>,</emphasis> then find
 					<emphasis><property>Smooks > Smooks Configuration File</property>.</emphasis>
 			Click the <emphasis>
@@ -141,7 +141,7 @@
 							</entry>
 							<entry>
 								<para>If there are any errors when you are editing the file, the
-									Problems area will display them</para>
+									Problems area displays them</para>
 							</entry>
 						</row>
 
@@ -150,7 +150,7 @@
 								<para>Source data tree</para>
 							</entry>
 							<entry>
-								<para>The tree will display the structure of transformed source
+								<para>The tree displays a structure of the transformed source
 									data</para>
 							</entry>
 						</row>
@@ -160,7 +160,7 @@
 								<para>Target data tree</para>
 							</entry>
 							<entry>
-								<para>The tree will display the structure of transformed target
+								<para>The tree displays a structure of the transformed target
 									data</para>
 							</entry>
 						</row>
@@ -180,7 +180,7 @@
 							</entry>
 							<entry>
 								<para>Click the link, and <link linkend="graphicaleditor_datalink"
-										>Data Selection wizard</link> will be opened helping you to
+										>Data Selection wizard</link> is opened helping you to
 									choose the source/target data</para>
 							</entry>
 						</row>
@@ -209,11 +209,11 @@
 			</listitem>
 		</itemizedlist>
 
-		<para>After clicking the link the <property>Data Type Selection wizard</property> will be
+		<para>After clicking the link the <property>Data Type Selection wizard</property> is
 			opened, and there are two data types on the list: Java and XML.</para>
 		<note>
 			<title>Note</title>
-			<para> There will be more and more data types on the list as the development went on.
+			<para> There will become more and more data types on the list as the development goes on.
 			</para>
 		</note>
 
@@ -242,7 +242,7 @@
 
 		<para>When you select all the necessary java classes, click <emphasis>
 				<property>Finish</property>
-			</emphasis> and the structure of the java class will be displayed on the source/target
+			</emphasis> and the structure of the java class is displayed on the source/target
 			data tree.</para>
 		<figure>
 			<title>Displaying the Structure of the Transformed Data</title>
@@ -323,13 +323,13 @@
 		</figure>
 		<para> Please, click <emphasis>
 				<property>Yes</property>
-			</emphasis> to connect the root node. If you don&apos;t do that, this dialog will be
+			</emphasis> to connect the root node. If you don&apos;t do that, this dialog is
 			opened again when you connect other nodes.</para>
 		<note>
 			<title>Note:</title>
-			<para>Please, remember that: The root nodes of the source data and target data *MUST* be
+			<para>Please, remember that the root nodes of the source data and target data *MUST* be
 				connected.</para>
-			<para>This rule is not only for Java-to-Java, but the same is also relevant for
+			<para>This rule is not only for Java-to-Java, but also is relevant for
 				XML-to-Java </para>
 		</note>
 		<para> Now let&apos;s do the same operation with the <emphasis>
@@ -349,7 +349,7 @@
 				<property>&quot;price&quot;</property>
 			</emphasis> and drag it onto the <emphasis>
 				<property>&quot;unitPrice&quot;</property>
-			</emphasis> of the other side tree viewer. The Problems area will show an
+			</emphasis> of the other side tree viewer. The Problems area shows an
 			error:</para>
 		<figure>
 			<title>Connection Error 1</title>
@@ -417,7 +417,7 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>Now, you should save the file and the <property>Smooks tools</property> will generate the correct
+		<para>Now, you should save the file and the <property>Smooks tools</property> generate the correct
 			configuration file content.</para>
 		<para>OK, let run the test class: <property>example.Main</property>. (Please, make sure that the Smooks engine
 			loads the correct configuration file).</para>
