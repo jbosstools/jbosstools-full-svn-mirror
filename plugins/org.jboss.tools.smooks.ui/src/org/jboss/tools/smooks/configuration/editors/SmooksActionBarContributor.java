@@ -62,7 +62,6 @@ import org.jboss.tools.smooks.model.dbrouting.ResultSetRowSelector;
 import org.jboss.tools.smooks.model.fileRouting.OutputStream;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.groovy.Groovy;
-import org.jboss.tools.smooks.model.iorouting.IORouter;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.jmsrouting.JmsRouter;
 import org.jboss.tools.smooks.model.medi.EdiMap;
@@ -70,6 +69,7 @@ import org.jboss.tools.smooks.model.medi.MEdiFactory;
 import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
+import org.jboss.tools.smooks.model.smooks.ReaderType;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -205,7 +205,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 * @generated
 	 */
 	protected IMenuManager createSiblingMenuManager;
-	
+
 	private ValidateSmooksAction validateSmooksAction;
 
 	/**
@@ -218,7 +218,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		super(ADDITIONS_LAST_STYLE);
 		// loadResourceAction = new LoadResourceAction();
 		validateAction = new ValidateAction();
-//		controlAction = new ControlAction();
+		// controlAction = new ControlAction();
 	}
 
 	protected void addMapNode() {
@@ -349,10 +349,10 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	public void init(IActionBars actionBars) {
 		super.init(actionBars);
 		ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
-		
+
 		validateSmooksAction = new ValidateSmooksAction();
 		validateSmooksAction.setText("Validate");
-		
+
 		cutAction = new CutAction() {
 
 			public void runWithEvent(Event event) {
@@ -447,7 +447,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 			EditingDomain domain = ((IEditingDomainProvider) activeEditorPart).getEditingDomain();
 
 			newChildDescriptors = domain.getNewChildDescriptors(object, null);
-			
+
 			validateSmooksAction.setResource(domain.getResourceSet().getResources().get(0));
 			validateSmooksAction.setEditingDomain(domain);
 			// newSiblingDescriptors = domain.getNewChildDescriptors(null,
@@ -586,23 +586,23 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	public void menuAboutToShow(IMenuManager menuManager) {
 		menuManager.add(new Separator("edit"));
 		menuManager.add(new ActionContributionItem(undoAction));
-	    menuManager.add(new ActionContributionItem(redoAction));
-	    menuManager.add(new Separator());
-	    menuManager.add(new ActionContributionItem(deleteAction));
-	    menuManager.add(new Separator());
-	    menuManager.add(new ActionContributionItem(cutAction));
-	    menuManager.add(new ActionContributionItem(copyAction));
-	    menuManager.add(new ActionContributionItem(pasteAction));
-	    menuManager.add(new Separator());
+		menuManager.add(new ActionContributionItem(redoAction));
+		menuManager.add(new Separator());
+		menuManager.add(new ActionContributionItem(deleteAction));
+		menuManager.add(new Separator());
+		menuManager.add(new ActionContributionItem(cutAction));
+		menuManager.add(new ActionContributionItem(copyAction));
+		menuManager.add(new ActionContributionItem(pasteAction));
+		menuManager.add(new Separator());
 
-//	    if ((style & ADDITIONS_LAST_STYLE) != 0)
-//	    {
-//	      menuManager.add(new Separator("additions"));
-//	      menuManager.add(new Separator());
-//	    }
-	    // Add our other standard marker.
-	    //
-	    menuManager.add(new Separator("additions-end"));
+		// if ((style & ADDITIONS_LAST_STYLE) != 0)
+		// {
+		// menuManager.add(new Separator("additions"));
+		// menuManager.add(new Separator());
+		// }
+		// Add our other standard marker.
+		//
+		menuManager.add(new Separator("additions-end"));
 		MenuManager submenuManager = null;
 
 		updateRootElementAddAction();
@@ -621,7 +621,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 
 		submenuManager = new MenuManager("Add Smooks Resource");
 		if (isSmooksResourceListElement()) {
-			groupActions(submenuManager,createChildActions);
+			groupActions(submenuManager, createChildActions);
 		} else {
 			populateManager(submenuManager, createChildActions, null);
 		}
@@ -631,7 +631,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		populateManager(submenuManager, createSiblingActions, null);
 		menuManager.insertBefore("edit", submenuManager);
 		// don't show properties that
-//		menuManager.insertAfter("additions-end", showPropertiesViewAction);
+		// menuManager.insertAfter("additions-end", showPropertiesViewAction);
 		menuManager.insertAfter("additions-end", validateSmooksAction);
 		this.addGlobalActions(menuManager);
 	}
@@ -646,8 +646,8 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		return false;
 	}
 
-	protected void groupActions(MenuManager manager,Collection<?> createChildActions) {
-		MenuManager readers = new MenuManager("Readers");
+	protected void groupActions(MenuManager manager, Collection<?> createChildActions) {
+		MenuManager readers = new MenuManager("Reader");
 		manager.add(readers);
 
 		MenuManager templating = new MenuManager("Templating");
@@ -664,6 +664,9 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 
 		MenuManager fragmentRouting = new MenuManager("Fragment Routing");
 		manager.add(fragmentRouting);
+		
+		MenuManager database = new MenuManager("Database");
+		manager.add(database);
 
 		for (Iterator<?> iterator = createChildActions.iterator(); iterator.hasNext();) {
 			boolean added = false;
@@ -675,43 +678,123 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 				added = true;
 			}
 			if (isTemplate(descriptor)) {
-				templating.add(action);added = true;
+				templating.add(action);
+				added = true;
 			}
 			if (isJavaBinding(descriptor)) {
-				jbinding.add(action);added = true;
+				jbinding.add(action);
+				added = true;
 			}
 			if (isDatasources(descriptor)) {
-				datasources.add(action);added = true;
+				datasources.add(action);
+				added = true;
+			}
+			
+			if(isDatabaseDescriptor(descriptor)){
+				database.add(action);
+				added = true;
 			}
 			if (isScripting(descriptor)) {
-				scripting.add(action);added = true;
+				scripting.add(action);
+				added = true;
 			}
 			if (isFragmentRouting(descriptor)) {
-				fragmentRouting.add(action);added = true;
+				fragmentRouting.add(action);
+				added = true;
 			}
-			if(!added){
+			if (!added) {
 				manager.add(action);
+			}
+		}
+
+		orderReaderAction(readers);
+		orderTemplateAction(templating);
+		orderJBindingAction(jbinding);
+		orderDatasourceAction(datasources);
+		orderScriptAction(scripting);
+		orderFragmentAction(fragmentRouting);
+		orderDatabaseAction(database);
+	}
+
+	protected void orderDatabaseAction(MenuManager database) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void orderScriptAction(MenuManager scripting) {
+		// TODO Auto-generated method stub
+
+	}
+
+	protected void orderFragmentAction(MenuManager fragmentRouting) {
+		// TODO Auto-generated method stub
+
+	}
+
+	protected void orderDatasourceAction(MenuManager datasources) {
+		// TODO Auto-generated method stub
+
+	}
+
+	protected void orderJBindingAction(MenuManager jbinding) {
+		// TODO Auto-generated method stub
+
+	}
+
+	protected void orderTemplateAction(MenuManager templating) {
+		// TODO Auto-generated method stub
+
+	}
+
+	protected void orderReaderAction(MenuManager readers) {
+		IContributionItem[] items = readers.getItems();
+		for (int i = 0; i < items.length; i++) {
+			IContributionItem item = items[i];
+			if (item instanceof ActionContributionItem) {
+				IAction action = ((ActionContributionItem) item).getAction();
+				if (action instanceof AddSmooksResourceAction) {
+					AddSmooksResourceAction action1 = (AddSmooksResourceAction) action;
+					Object descriptor = action1.getDescriptor();
+					if (descriptor instanceof CommandParameter) {
+						CommandParameter parameter = (CommandParameter) descriptor;
+						if (parameter.getValue() != null) {
+							Object value = AdapterFactoryEditingDomain.unwrap(parameter.getValue());
+							if (value instanceof ReaderType) {
+								int index = items.length - 1;
+								readers.remove(item);
+								readers.insert(index, item);
+								return;
+							}
+						}
+					}
+				}
 			}
 		}
 	}
 
+	private boolean isDatabaseDescriptor(Object descriptor) {
+		if (descriptor instanceof CommandParameter) {
+			CommandParameter parameter = (CommandParameter) descriptor;
+			if (parameter.getValue() != null) {
+				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof ResultSetRowSelector) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	private boolean isFragmentRouting(Object descriptor) {
-		if(descriptor instanceof CommandParameter){
-			CommandParameter parameter = (CommandParameter)descriptor;
-			if(parameter.getValue() != null){
-				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof JmsRouter){
+		if (descriptor instanceof CommandParameter) {
+			CommandParameter parameter = (CommandParameter) descriptor;
+			if (parameter.getValue() != null) {
+				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof JmsRouter) {
 					return true;
 				}
-				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof OutputStream){
+				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof OutputStream) {
 					return true;
 				}
-				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof IORouter){
-					return true;
-				}
-				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Executor){
-					return true;
-				}
-				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof ResultSetRowSelector){
+				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Executor) {
 					return true;
 				}
 			}
@@ -720,10 +803,10 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	}
 
 	private boolean isScripting(Object descriptor) {
-		if(descriptor instanceof CommandParameter){
-			CommandParameter parameter = (CommandParameter)descriptor;
-			if(parameter.getValue() != null){
-				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Groovy){
+		if (descriptor instanceof CommandParameter) {
+			CommandParameter parameter = (CommandParameter) descriptor;
+			if (parameter.getValue() != null) {
+				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Groovy) {
 					return true;
 				}
 			}
@@ -732,13 +815,13 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	}
 
 	private boolean isDatasources(Object descriptor) {
-		if(descriptor instanceof CommandParameter){
-			CommandParameter parameter = (CommandParameter)descriptor;
-			if(parameter.getValue() != null){
-				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof DataSourceJndi){
+		if (descriptor instanceof CommandParameter) {
+			CommandParameter parameter = (CommandParameter) descriptor;
+			if (parameter.getValue() != null) {
+				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof DataSourceJndi) {
 					return true;
 				}
-				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Direct){
+				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Direct) {
 					return true;
 				}
 			}
@@ -747,10 +830,10 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	}
 
 	private boolean isJavaBinding(Object descriptor) {
-		if(descriptor instanceof CommandParameter){
-			CommandParameter parameter = (CommandParameter)descriptor;
-			if(parameter.getValue() != null){
-				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof BindingsType){
+		if (descriptor instanceof CommandParameter) {
+			CommandParameter parameter = (CommandParameter) descriptor;
+			if (parameter.getValue() != null) {
+				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof BindingsType) {
 					return true;
 				}
 			}
@@ -759,13 +842,13 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	}
 
 	private boolean isTemplate(Object descriptor) {
-		if(descriptor instanceof CommandParameter){
-			CommandParameter parameter = (CommandParameter)descriptor;
-			if(parameter.getValue() != null){
-				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Freemarker){
+		if (descriptor instanceof CommandParameter) {
+			CommandParameter parameter = (CommandParameter) descriptor;
+			if (parameter.getValue() != null) {
+				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Freemarker) {
 					return true;
 				}
-				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Xsl){
+				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Xsl) {
 					return true;
 				}
 			}
@@ -774,10 +857,10 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	}
 
 	private boolean isReader(Object descriptor) {
-		if(descriptor instanceof CommandParameter){
-			CommandParameter parameter = (CommandParameter)descriptor;
-			if(parameter.getValue() != null){
-				if(AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof AbstractReader){
+		if (descriptor instanceof CommandParameter) {
+			CommandParameter parameter = (CommandParameter) descriptor;
+			if (parameter.getValue() != null) {
+				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof AbstractReader) {
 					return true;
 				}
 			}
@@ -823,13 +906,14 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 */
 	@Override
 	protected void addGlobalActions(IMenuManager menuManager) {
-//		menuManager.insertAfter("additions-end", new Separator("ui-actions"));
-//		menuManager.insertAfter("additions-end", showPropertiesViewAction);
+		// menuManager.insertAfter("additions-end", new
+		// Separator("ui-actions"));
+		// menuManager.insertAfter("additions-end", showPropertiesViewAction);
 
-//		refreshViewerAction.setEnabled(refreshViewerAction.isEnabled());
-//		menuManager.insertAfter("ui-actions", refreshViewerAction);
+		// refreshViewerAction.setEnabled(refreshViewerAction.isEnabled());
+		// menuManager.insertAfter("ui-actions", refreshViewerAction);
 
-//		super.addGlobalActions(menuManager);
+		// super.addGlobalActions(menuManager);
 	}
 
 	/**

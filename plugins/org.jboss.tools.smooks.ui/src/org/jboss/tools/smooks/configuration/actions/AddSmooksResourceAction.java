@@ -10,11 +10,14 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.actions;
 
+import org.eclipse.emf.edit.command.CommandParameter;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
+import org.jboss.tools.smooks.model.smooks.AbstractReader;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -24,17 +27,17 @@ public class AddSmooksResourceAction extends CreateChildAction {
 
 	public AddSmooksResourceAction(EditingDomain editingDomain, ISelection selection, Object descriptor) {
 		super(editingDomain, selection, descriptor);
-		// TODO Auto-generated constructor stub
+		resetActionText();
 	}
 
 	public AddSmooksResourceAction(IEditorPart editorPart, ISelection selection, Object descriptor) {
 		super(editorPart, selection, descriptor);
-		// TODO Auto-generated constructor stub
+		resetActionText();
 	}
 
 	public AddSmooksResourceAction(IWorkbenchPart workbenchPart, ISelection selection, Object descriptor) {
 		super(workbenchPart, selection, descriptor);
-		// TODO Auto-generated constructor stub
+		resetActionText();
 	}
 
 	public Object getDescriptor() {
@@ -43,5 +46,23 @@ public class AddSmooksResourceAction extends CreateChildAction {
 
 	public void setDescriptor(Object descriptor) {
 		this.descriptor = descriptor;
+	}
+	
+	protected void resetActionText(){
+		if(descriptor instanceof CommandParameter){
+			CommandParameter parameter = (CommandParameter)descriptor;
+			if(parameter.getValue() != null){
+				Object value = AdapterFactoryEditingDomain.unwrap(parameter.getValue());
+				if(value instanceof AbstractReader){
+//					if(value instanceof JsonReader){
+//						setText("JSON Reader");
+//					}
+//					
+//					if(value instanceof ReaderType){
+//						setText("Custome Reader");
+//					}
+				}
+			}
+		}
 	}
 }
