@@ -72,10 +72,14 @@
 			<groupId>org.jboss.tools</groupId>
 			<artifactId>jbosstools-docbook-xslt</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
-		    </dependency>
+                    </dependency>
+                    <dependency> 
+                        <groupId>org.apache.xmlgraphics</groupId> 
+                        <artifactId>fop</artifactId> 
+                        <version>0.95</version> 
+                    </dependency> 
                 </dependencies>
-                
-                <configuration>
+                     <configuration>
                     <sourceDocumentName>${master}</sourceDocumentName>
                     <sourceDirectory>${pom.basedir}/en</sourceDirectory>
                     <imageResource>
@@ -90,11 +94,11 @@
                     </cssResource>
                     
 			<formats>
-				<format>
+				<!--format>
 					<formatName>pdf</formatName>
 					<stylesheetResource>${xsl-pdf}</stylesheetResource>
 					<finalName>${pom.name}.pdf</finalName>
-				</format>
+				</format-->
 				<format>
 					<formatName>html</formatName>
 					<stylesheetResource>${xsl-chunked}</stylesheetResource>

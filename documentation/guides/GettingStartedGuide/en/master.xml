@@ -26,6 +26,11 @@
 <!ENTITY jbossportallink "../../jboss_portal_tools_ref_guide/html_single/index.html"> 
 <!ENTITY migrationlink "../../Exadel-migration/html_single/index.html">                         
 <!ENTITY wslink "../../ws_ref_guide/html_single/index.html">
+<!ENTITY smookslink "../../jboss_smooks_plugin_ref_guide/html_single/index.html">
+<!ENTITY droolslink "../../drools_tools_ref_guide/html_single/index.html">
+<!ENTITY jmxlink "../../jmx_ref_guide/html_single/index.html">
+
+
 ]>
 
 <book>
@@ -37,7 +42,7 @@
    <year>2009</year>
    <holder>JBoss, a division of Red Hat</holder>
   </copyright>
-  <releaseinfo>Version: 2.0.0.GA</releaseinfo>
+  <releaseinfo>Version: 2.0.1.GA</releaseinfo>
  <abstract>
    <title/>
        <para>
