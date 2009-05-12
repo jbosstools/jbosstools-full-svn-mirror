@@ -10,12 +10,20 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors;
 
+import org.eclipse.jface.window.DefaultToolTip;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.ui.forms.FormColors;
+import org.eclipse.ui.forms.IFormColors;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 
 /**
@@ -28,15 +36,47 @@ public class FieldMarkerComposite extends Canvas implements IFieldMarker, PaintL
 
 	private Image waringImage = null;
 
-//	private Image informationImage = null;
+	// private Image informationImage = null;
 
 	private int type = TYPE_NONE;
 
+	private DefaultToolTip toolTip = null;
+	
+
 	public FieldMarkerComposite(Composite parent, int style) {
 		super(parent, style);
-		errorImage = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_OVR_ERROR);
-		waringImage = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_OVR_WARING);
+		errorImage = SmooksConfigurationActivator.getDefault().getImageRegistry()
+				.get(GraphicsConstants.IMAGE_OVR_ERROR);
+		waringImage = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
+				GraphicsConstants.IMAGE_OVR_WARING);
 		this.addPaintListener(this);
+		toolTip = new DefaultToolTip(this) {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.jface.window.DefaultToolTip#createToolTipContentArea
+			 * (org.eclipse.swt.widgets.Event,
+			 * org.eclipse.swt.widgets.Composite)
+			 */
+			@Override
+			protected Composite createToolTipContentArea(Event event, Composite parent) {
+				return super.createToolTipContentArea(event, parent);
+			}
+
+			public Point getLocation(Point tipSize, Event event) {
+				Point point = super.getLocation(tipSize, event);
+				point.y = ((Control) getToolTipArea(null)).toDisplay(0,0).y - 24;
+				point.x = ((Control) getToolTipArea(null)).toDisplay(0,0).x;
+				return point;
+			}
+
+		};
+		((DefaultToolTip)toolTip).setBackgroundColor(new Color(null,255,255,255));
+		FormColors colors = new FormColors(getDisplay());
+		((DefaultToolTip)toolTip).setForegroundColor(colors.getColor(IFormColors.TITLE));
+		toolTip.setStyle(SWT.NONE);
 	}
 
 	/*
@@ -49,8 +89,8 @@ public class FieldMarkerComposite extends Canvas implements IFieldMarker, PaintL
 		this.type = type;
 		this.redraw();
 	}
-	
-	public int getMarkerType(){
+
+	public int getMarkerType() {
 		return type;
 	}
 
@@ -61,10 +101,10 @@ public class FieldMarkerComposite extends Canvas implements IFieldMarker, PaintL
 	 * org.jboss.tools.smooks.configuration.editors.IFieldMarker#setMessage()
 	 */
 	public void setMessage(String message) {
-		this.setToolTipText(message);
+		toolTip.setText(message);
 	}
-	
-	public String getMessage(){
+
+	public String getMessage() {
 		return getToolTipText();
 	}
 
