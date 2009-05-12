@@ -1,0 +1,727 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<chapter id="functionality_overview" xreflabel="functionality_overview">
+    <?dbhtml filename="functionality_overview.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Tools</keyword>
+            <keyword>Eclipse Guvnor Tools</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>Functionality Overview</title>
+
+    <para>This chapter will introduce you to the <property>Guvnor Repository Exploring
+            perspective</property> and give an overview on all functionality the <property>Guvnor Tools</property> provides.</para>
+
+    <section id="guvnor_perspective">
+        <title>Guvnor Perspective</title>
+
+        <para>The <property>Guvnor Repository Exploring perspective</property> contains two views
+            supplied by <property>EGT</property> – <property>Repository Explorer</property> and
+                <property>Version History</property>, that will be the center of most interaction
+            with Guvnor, and Eclipse standard views such as <property>Properties</property> and
+                <property>Resource Navigator</property> that are also useful.</para>
+
+        <para>While each of these views can be opened and positioned independently within an Eclipse
+            workbench, the <property>Guvnor perspective</property> provides a convenient method of
+            getting a suggested layout. In the Eclipse workbench menu, choose <emphasis>
+                <property>Window &gt; Open Perspective &gt; Other</property>
+            </emphasis> to get the perspective list:</para>
+
+	<figure>
+		<title>Enabling the Guvnor Repository Perspective</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/open_guvnor_perspectine.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+
+        <para>And then choose <emphasis>
+                <property>Guvnor Repository Exploring</property>.</emphasis> This opens the
+                <property>Guvnor perspective</property>.</para>
+    </section>
+
+    <section id="connection_wizard">
+        <title>Guvnor Connection Wizard</title>
+
+        <para>After opening the <property>Guvnor perspective</property>, the first task is to make a
+            connection to a Guvnor repository. This is handled by the <property>Guvnor Connection
+                wizard</property>. This wizard appears in a number of places within the
+                <property>EGT</property> (as detailed below), but in this section we will cover only
+            the two most basic entry points.</para>
+
+        <para>The <property>Guvnor Connection wizard</property> can be started in the following
+            ways:</para>
+
+        <itemizedlist>
+            <listitem>
+                <para>using the Eclipse menu <emphasis>
+                        <property>File &gt; New &gt; Other &gt; Guvnor &gt; Guvnor
+                            repository location</property>
+                    </emphasis></para>
+
+		<figure>
+		<title>New Guvnor Repository Location</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/start_guvnor_connection1.png"/>
+			</imageobject>
+		</mediaobject>
+		</figure>
+            </listitem>
+
+            <listitem>
+                <para>in the <property>Guvnor Repositories view</property> using the drop-down menu</para>
+
+		<figure>
+		<title>Adding New Guvnor Connection</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/start_guvnor_connection2.png"/>
+			</imageobject>
+		</mediaobject>
+		</figure>
+            </listitem>
+
+            <listitem>
+                <para>using the menu button 
+			( <inlinemediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/functionality_overview/guvnor_connection_button.png"/>
+                            </imageobject>
+                        </inlinemediaobject> )
+		</para>
+            </listitem>
+        </itemizedlist>
+
+        <para>Choosing either of these will start the <property>Guvnor Connection
+            wizard</property>.</para>
+	
+	<figure id="guvnor_connection_wizard">
+		<title>Guvnor Connection Wizard</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/guvnor_connection_wizard.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+
+        <para>Default values appear in the <emphasis>
+                <property>Location</property>,</emphasis>
+            <emphasis>
+                <property>Port</property>,</emphasis> and <emphasis>
+                <property>Repository</property>
+            </emphasis> fields (See the <link linkend="guvnor_preferences">“Guvnor Preferences”</link> section below for 			details about how to
+            change these default values.) Of course, any of these fields can be edited by typing in
+            the corresponding text box. Drag-and-drop or paste into the <emphasis>
+                <property>Location</property>
+            </emphasis> field of a typical Guvnor repository URL such as:</para>
+
+        <para>
+            <emphasis>
+                <property>http://localhost:8080/drools-guvnor/org.drools.guvnor.Guvnor/webdav</property>
+            </emphasis>
+        </para>
+
+        <para>Results in the URL being parsed into the respective fields as well. The authentication
+            information (user name and password) can optionally be stored in the Eclipse
+            workbench&apos;s key-ring file based on the selection of <emphasis>
+                <property>Save user name and password</property>.</emphasis></para>
+
+        <note>
+            <title>Note:</title>
+            <para>If the authentication information is not stored in the key-ring, then the
+                    <property>EGT</property> uses a session authentication, what means that the
+                credentials supplied are used only for the lifetime of the Eclipse workbench
+                instance.</para>
+        </note>
+
+        <para>If authentication information is not stored in the key-ring or the authentication
+            information (key-ring or session) is not valid, the <property>EGT</property> will prompt
+            for authentication information when it has to access the Guvnor repository.</para>
+
+        <para>If authentication fails, the <property>EGT</property> will retry once and then issue
+            an authentication failure error.</para>
+
+        <tip>
+            <title>Tip:</title>
+            <para>If an authentication failure error occurs, you can retry the same operation and
+                supply different authentication information.</para>
+        </tip>
+
+        <para>Note that the <property>EGT</property> calls the Guvnor repository at various times,
+            such as when determining if resource updates are available. Thus if you use session
+            authentication, the authentication dialog will appear at different times during the
+            Eclipse workbench session, depending on what actions you take. For ease of use, we
+            recommend saving the authentication information in the Eclipse key-ring.</para>
+
+        <note>
+            <title>Note:</title>
+            <para>The Eclipse key-ring file is distinct from key-ring files found in some platforms
+                such as Mac OS X and many forms of Linux. Thus, sometimes if you access a Guvnor
+                repository outside the <property>EGT</property>, the key-ring files might become
+                unsynchronized and you will be unexpectedly prompted for authentication in Eclipse.
+                This is nuisance, but your usual credentials should apply in this case.</para>
+        </note>
+    </section>
+
+    <section id="guvnor_repositories_view">
+        <title>Guvnor Repositories View</title>
+
+        <para>The <property>Guvnor Repositories view</property> contains tree structures for Guvnor
+            repository contents.</para> 
+
+	<figure>
+		<title>Guvnor Repositories View</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/guvnor_repository.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+
+	<para>You can perform the following actions under the resources in the
+                <property>Guvnor Repositories view</property>:</para>
+
+        <itemizedlist>
+            <listitem>
+                <para>create a new Guvnor repository connection. How to do this is describe above in the <link linkend="connection_wizard">&quot;Guvnor Connection Wizard&quot;</link> section.</para>
+            </listitem>
+
+	    <listitem>
+                <para>remove a Guvnor repository connection. Use the Delete button 
+			( <inlinemediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/functionality_overview/delete_connection_button.png"/>
+                            </imageobject>
+                        </inlinemediaobject> ) in the tool-bar or the <emphasis>
+						<property>Delete</property></emphasis> option in the context menu to remove a repository connection.</para>
+            </listitem>
+
+	    <listitem>
+                <para>refresh Guvnor repository resorces. Use the <emphasis>
+						<property>Refresh</property></emphasis> context menu item to reload a tree content for the selected node.</para>
+            </listitem>
+
+	    <listitem>
+                <para>make use of &quot;drill-into&quot; functionality. It&apos;s represented by a number of tool-bar/context menu items such as <emphasis><property>Go Home</property></emphasis>
+			 ( <inlinemediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/functionality_overview/go_home_button.png"/>
+                            </imageobject>
+                        </inlinemediaobject> ), <emphasis><property>Go Back</property></emphasis>
+			 ( <inlinemediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/functionality_overview/go_back_button.png"/>
+                            </imageobject>
+                        </inlinemediaobject> ) and <emphasis>
+						<property>Go Into</property></emphasis>
+			 ( <inlinemediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/functionality_overview/go_into_button.png"/>
+                            </imageobject>
+                        </inlinemediaobject> ).</para>
+            </listitem>
+        </itemizedlist>
+
+        <para>Drill-down is useful when working with deeply nested tree structures and when you wish to concentrate on only branch of the tree. For example, drilling into the <emphasis>
+						<property>&quot;defaultPackage&quot;</property></emphasis> node changes the tree view to:</para>
+
+	<figure>
+		<title>Going Into the <emphasis>&quot;defaultPackage&quot;</emphasis></title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/go_into_defaultPackage.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+
+	<para>Clicking on the Go Home button ( <inlinemediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/functionality_overview/go_home_button.png"/>
+                            </imageobject>
+                        </inlinemediaobject> ) or selecting <emphasis>
+						<property>Go Home</property></emphasis> in the context menu returns the 	tree to the top-level structure shown in the previous picture above.
+	</para>
+
+	<para>There are a number of operations that can be performed on Guvnor repository files. Selecting a file in
+the Guvnor repository causes the Eclipse <property>Properties view</property> to update with details about that file:
+</para>
+
+	<figure>
+		<title>Guvnor Repository Files Properties</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/repository_files_properties.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+
+	<para></para>
+    </section>
+
+    <section id="local_copies">
+        <title>Local Copies of Guvnor Files</title>
+
+        <para>As mentioned in the <link linkend="introduction">&quot;Introduction&quot;</link>, the main purpose
+            of the <property>EGT</property> is to allow development using resources held in a Guvnor
+            repository. There are two method of getting local copies of Guvnor repository
+            resources:</para>
+
+        <orderedlist>
+            <listitem>
+                <para>Drag-and-drop from the <property>Guvnor Repositories view</property></para>
+            </listitem>
+            <listitem>
+                <para>Using the <link linkend="resources_from_guvnor">Import from Guvnor
+                        wizard</link>, as described further in this document</para>
+            </listitem>
+        </orderedlist>
+
+        <para>When local copies of Guvnor repository files are created, the <property>EGT</property>
+            sets an association between the local copy and the master file in the repository. This
+            information is kept in the (normally) hidden <emphasis>
+                <property>.guvnorinfo</property>
+            </emphasis> folder in the local project and, like all metadata, should not be changed by
+            end users.</para>
+
+	<figure>
+		<title>.guvnorinfo metadata</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/guvnorinfo.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+
+	<para>The association allows for operations such as update and commit in
+            synchronization with the master copy held in the Guvnor repository.</para>
+
+        <para>The <property>EGT</property> decorates local resources associated with Guvnor
+            repository master copies. This decoration appears in Eclipse views conforming to the
+            Eclipse Common Navigator framework, such as the Eclipse <property>Resource
+                Navigator</property> and the Java <property>Package Explorer</property>. On the image
+           above you can see the <emphasis>
+                <property>Dummy rule.drl</property></emphasis> file with the decoration in the <property>Resource Navigator</property>. The Guvnor icon decorator is on the top right of the file image, and the Guvnor
+            revision details are appended to the file name. (The presence/location of these can be
+            changed the <link linkend="resource_decoration_preferences">Guvnor
+            Preferences</link>.)</para>
+
+        <para>Here we see that, <emphasis><property>Dummy role.drl</property></emphasis> is associated with a Guvnor repository
+            resource and the local copy is based on revision 0, with a <code>02-10-2008, 4:21:53</code> date/time
+            stamp. The file <emphasis><property>Sample.drl</property>,</emphasis> however, is not associated with a Guvnor repository
+            file. Further details about the association can be found in the standard Eclipse
+            properties page, accessed via the <emphasis><property>Properties</property></emphasis> option in the context menu:</para>
+
+	<figure>
+		<title>Association Details</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/association_details.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+
+        <para>The <property>EGT</property> contributes a property page to the standard Eclipse
+            properties dialog, the contents of which are shown above. It displays the specific Guvnor
+            repository, the location within the repository, the version (date/time stamp) and
+            the revision number.</para>
+    </section>
+
+    <section id="actions">
+        <title>Actions for Local Guvnor Resources</title>
+
+        <para>The <property>EGT</property> provides a number of actions (available through the
+            <emphasis><property>Guvnor</property></emphasis> context menu on files) for working with files, both those associated with
+            Guvnor repository master copies and those not associated. The actions are:</para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <link linkend="update_action">Update</link>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link linkend="add_action">Add</link>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link linkend="commit_action">Commit</link>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link linkend="show_history_action">Show History</link>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link linkend="compare_with_version">Compare with Version</link>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link linkend="switch_to_version">Switch to Version</link>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link linkend="delete_action">Delete</link>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link linkend="disconnect_action">Disconnect</link>
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>Each of these actions is described below.</para>
+
+        <section id="update_action">
+            <title>Update Action</title>
+
+            <para>The <emphasis>
+                    <property>Update</property>
+                </emphasis> action is available for one or more Guvnor resources that are not in
+                synchronization with the Guvnor repository master copies. These resources would not
+                be in synchronization because either/both</para> 
+
+	   <orderedlist>
+		<listitem><para>There are local changes to these
+                resources</para></listitem>
+		<listitem><para>The master copies have been changed in the Guvnor repository</para></listitem>
+	   </orderedlist>
+
+            <para>Performing the <emphasis>
+                    <property>Update</property>
+                </emphasis> action replaces the local file contents with the current contents from
+                the Guvnor repository master copies (equivalent to <emphasis>
+                    <link linkend="switch_to_version">Switch to version</link>
+                </emphasis> for the latest version).</para>
+        </section>
+
+        <section id="add_action">
+            <title>Add Action</title>
+
+            <para>The <emphasis>
+                    <property>Add</property>
+                </emphasis> action is available for one or more local files that are not associated
+                with a Guvnor repository master copy. Choosing the <emphasis>
+                    <property>Add</property>
+                </emphasis> action launches the <property>Add to Guvnor wizard</property>:</para>
+
+	   <figure>
+		<title>Add to Guvnor Wizard</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/add_toGuvnor_wizard.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+
+            <para>The first page of the wizard asks for the selection of the target Guvnor
+                repository and gives the choice to create a new Guvnor repository connection (in
+                which case the second page is the same as the <link linkend="guvnor_connection_wizard"
+                    >Guvnor Connection wizard</link>). Once the target Guvnor repository is chosen,
+                the wizard then asks for the folder location to add the selection files:</para>
+
+	   <figure>
+		<title>Selecting a Target Folder</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/select_target_folder.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+
+            <para>Here the <emphasis>
+                    <property>&quot;defaultPackage&quot;</property></emphasis> folder is selected as the destination
+                location.</para>
+
+            <note>
+                <title>Note:</title>
+                <para>Note that the <emphasis>
+                    <property>&quot;snapshot&quot;</property></emphasis> folder in the Guvnor repository is read-only for
+                        <property>EGT</property>, and hence not visible as a candidate location in
+                    this wizard. The Guvnor repository web administration tools must be used to add
+                    snapshot content.</para>
+            </note>
+
+            <para>Clicking on <emphasis>
+                    <property>Finish</property>
+                </emphasis> adds the selected files to the Guvnor repository and creates an
+                association between the local and Guvnor repository files.</para>
+
+            <note>
+                <title>Note:</title>
+                <para>Note that the wizard will not allow for overwrite of existing Guvnor
+                    repository files. Another target location must be chosen.</para>
+            </note>
+        </section>
+
+        <section id="commit_action">
+            <title>Commit Action</title>
+
+            <para>The <emphasis>
+                    <property>Commit</property>
+                </emphasis> action is enabled for one or more Guvnor repository associated files
+                that have local changes. The <emphasis>
+                    <property>Commit</property>
+                </emphasis> action will write the local changes back to the associated Guvnor
+                repository files and update the association for the new revision created.</para>
+
+            <para>If a local change is based on an older revision of a file that is currently in the
+                Guvnor repository (for example, someone else changed the same file), then the <emphasis>
+                    <property>Commit</property>
+                </emphasis> action will<figure>
+		<title>Add to Guvnor Wizard</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/add_toGuvnor_wizard.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure> ask whether you wish to overwrite the current version in the
+                Guvnor repository with the local content. When such conflicts occur, however, you
+                should use the Eclipse Guvnor version tools, along with Eclipse standard tools, to
+                determine the differences and merge content based on the current version in the
+                Guvnor repository.</para>
+        </section>
+
+        <section id="show_history_action">
+            <title>Show History Action</title>
+
+            <para>The <emphasis>
+                    <property>Show History</property>
+                </emphasis> action is enable for one Guvnor repository associated file and causes
+                the <link linkend="guvnor_history_view">Guvnor Resource History view</link> to be
+                populated with revision history for the selected file.</para>
+        </section>
+
+        <section id="compare_with_version">
+            <title>Compare with Version Action</title>
+
+            <para>The <emphasis>
+                    <property>Compare with Version</property>
+                </emphasis> action is enabled for one Guvnor repository associated file. This action
+                first opens a wizard asking for the version for comparison (with the local file
+                contents):</para>
+
+	   <figure>
+		<title>Compare with Version Wizard</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/compare_with_version.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+
+            <para>Once the revision is selected, the action opens the Eclipse <property>Compare
+                    editor</property> (read-only):</para>
+	   <figure>
+		<title>Eclipse Compare Editor</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/compare_with_version2.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+
+            <para>This editor uses Eclipse-standard comparison techniques to show the differences in
+                the two versions. In cases where there are no differences, the editor will not open,
+                rather a dialog saying that there are no differences will appear.</para>
+	   <figure>
+		<title>Alert Dialog</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/compare_with_version3.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+        </section>
+
+        <section id="switch_to_version">
+            <title>Switch to Version Action</title>
+
+            <para>The <emphasis>
+                    <property>Switch to Version</property>
+                </emphasis> action is enabled for one Guvnor repository associated file.</para>
+            <para>First the <emphasis>
+                    <property>Switch to Version</property>
+                </emphasis> action prompts for selection of version:</para>
+
+	   <figure>
+		<title>Select Version Window</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/compare_with_version.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+
+            <para>Once the version is selected, the <emphasis>
+                    <property>Switch to Version</property>
+                </emphasis> action replaces the local file contents with those from the revision
+                selected.</para>
+        </section>
+
+        <section id="delete_action">
+            <title>Delete Action</title>
+
+            <para>The <emphasis>
+                    <property>Delete</property>
+                </emphasis> action is enabled for one or more Guvnor repository associated files.
+                After confirmation via a dialog, the <emphasis>
+                    <property>Delete</property>
+                </emphasis> action removes the files in the Guvnor repository and deletes local
+                metadata for the Guvnor repository association.</para>
+
+ 	   <figure>
+		<title>Comfirm Delete Dialog</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/confirm_delete.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+        </section>
+
+        <section id="disconnect_action">
+            <title>Disconnect Action</title>
+
+            <para>The <emphasis>
+                    <property>Disconnect</property>
+                </emphasis> action is enabled for one or more Guvnor repository associated files,
+                and removes local metadata for the Guvnor repository association.</para>
+        </section>
+    </section>
+
+    <section id="guvnor_history_view">
+        <title>Guvnor Resource History View</title>
+
+        <para>The <property>Guvnor Resource History view</property> should details about revision
+            history for selected files, both local and those in Guvnor repositories. The initial
+            state of this view is shown on the figure below.</para>
+
+	   <figure>
+		<title>Initial State of the Guvnor Resource History View</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/resource_history_view.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+
+        <para>The <property>Guvnor Resource History view</property> is populated by <emphasis>
+                <property>Show History</property>
+            </emphasis> actions in either the local <emphasis>
+                    <property>Guvnor</property></emphasis> context menu or in the context menu for
+            a Guvnor repository file in the <link linkend="guvnor_repositories_view">Guvnor
+                Repositories view</link>. Once this action is performed, the <property>Guvnor
+                Resource History view</property> updates to show the revision history:</para>
+
+	   <figure>
+		<title>IGuvnor Resource History View</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/resource_history_view2.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+
+        <para>Here we see that the file <emphasis>
+                <property>test.txt</property>
+            </emphasis> has three revisions. Double clicking on a revision row (or the context menu <emphasis>
+                <property>Open (Read only)</property>)</emphasis> opens an Eclipse read-only editor
+            with the revision contents.</para>
+
+	   <figure>
+		<title>Eclipse Read-only Editor with the Revision Contents</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/resource_history_view3.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+        <note>
+            <title>Note:</title>
+            <para>You can also use the <emphasis>
+                    <property>Save As...</property>
+                </emphasis> option when a file is open in a read-only editor to save a local
+                writable copy of the contents. Doing so, however, will not associate the file
+                created with its Guvnor source.</para>
+        </note>
+
+    </section>
+
+    <section id="resources_from_guvnor">
+        <title>Importing Guvnor Repository Resources</title>
+
+        <para>In addition to the single file drag-and-drop from the <property>Guvnor Repositories
+                view</property>, the <property>EGT</property> also includes a wizard for copying one
+            or more files from a Guvnor repository to the local workspace (and setting the
+            association with the Guvnor repository). This wizard is available from the <emphasis>
+                <property>File &gt; Import &gt; Guvnor &gt; Resource from
+                    Guvnor</property>
+            </emphasis> and the <emphasis>
+                <property>File &gt; New &gt; Other &gt; Guvnor &gt; Resource from
+                    Guvnor</property>
+            </emphasis> menu items.</para>
+        <note>
+            <title>Note:</title>
+
+            <para>Note that the wizard is identical but appears in both locations to accommodate
+                users who tend to view this functionality as being in either category.</para>
+        </note>
+
+        <para>The first page of the wizard asks for the selection of the source Guvnor repository
+            and gives the choice to create a new Guvnor repository connection (in which case the
+            second page is the same as the <link linkend="guvnor_connection_wizard">Guvnor Connection wizard</link>).</para>
+
+	   <figure>
+		<title>Resource from Guvnor Wizard</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/add_toGuvnor_wizard.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+        
+        <para>Once the source Guvnor repository is chosen, the wizard prompts for resource selection:</para>
+
+	   <figure>
+		<title>Resource Selection</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/resource_from_guvnor.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+        
+        <para>Finally, the target location in the local workspace should be chosen:</para>
+	   <figure>
+		<title>Choosing the Target Location</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/resource_from_guvnor2.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+        
+        <para>On completion the wizard copies the selected files from the Guvnor repository to the local workspace.
+            If a file with the same name already exists in the destination, the wizard uses the Eclipse standard
+            &quot;prompt for rename&quot; dialog:</para>
+
+	   <figure>
+		<title>Prompt for Rename Dialog</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/functionality_overview/resource_from_guvnor3.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+    </section>
+</chapter>

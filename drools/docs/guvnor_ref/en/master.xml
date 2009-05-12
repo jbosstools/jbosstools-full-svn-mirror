@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.docbook.org/xsd/4.3/docbook.xsd"
+
+[<!ENTITY introduction SYSTEM "modules/introduction.xml">
+<!ENTITY functionality_overview SYSTEM "modules/functionality_overview.xml">
+<!ENTITY guvnor_preferences SYSTEM "modules/guvnor_preferences.xml">
+<!ENTITY conclusion SYSTEM "modules/conclusion.xml">
+
+<!ENTITY seamlink "../../seam/html_single/index.html">
+<!ENTITY aslink "../../as/html_single/index.html">
+<!ENTITY esblink "../../esb_ref_guide/html_single/index.html">
+<!ENTITY gsglink "../../GettingStartedGuide/html_single/index.html">
+<!ENTITY hibernatelink "../../hibernatetools/html_single/index.html">
+<!ENTITY jbpmlink "../../jbpm/html_single/index.html">
+<!ENTITY jsflink "../../jsf/html_single/index.html">
+<!ENTITY jsfreflink "../../jsf_tools_ref_guide/html_single/index.html">
+<!ENTITY jsftutoriallink "../../jsf_tools_tutorial/html_single/index.html">
+<!ENTITY strutsreflink "../../struts_tools_ref_guide/html_single/index.html">
+<!ENTITY strutstutoriallink "../../struts_tools_tutorial/html_single/index.html">                         
+
+]>
+
+<book>
+    
+     <bookinfo>
+         <title>Eclipse Guvnor Tools Reference Guide</title>
+
+         <author><firstname>John</firstname><surname>Graham</surname><email>jgraham@redhat.com</email></author> 
+            <author><firstname>Olga</firstname><surname>Chikvina</surname></author>    
+         
+         <pubdate>April 2008</pubdate>
+	                       <copyright>
+	                           <year>2009</year>
+	                           <holder>JBoss, a division of Red Hat</holder>
+	                       </copyright>
+          <!--releaseinfo>
+            Version: 5.0.0.M5
+          </releaseinfo-->
+<abstract>
+   <title/>
+       <para>
+           <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/guvnor/pdf/Eclipse_Guvnor_Tools_Ref_Guide.pdf">PDF version</ulink>
+       </para>
+        </abstract>
+
+    </bookinfo>
+	
+    
+    <toc/> 
+    &introduction;
+    &functionality_overview;
+    &guvnor_preferences;
+    &conclusion;
+
+</book>    
