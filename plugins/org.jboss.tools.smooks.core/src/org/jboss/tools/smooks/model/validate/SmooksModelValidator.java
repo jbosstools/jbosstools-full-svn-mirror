@@ -119,7 +119,6 @@ public class SmooksModelValidator {
 		}
 		Thread thread = new Thread() {
 			public void run() {
-				long startTime = System.currentTimeMillis();
 				synchronized (lock) {
 					starting = true;
 					waiting = true;
@@ -171,8 +170,6 @@ public class SmooksModelValidator {
 				} finally {
 					waiting = false;
 					starting = false;
-					long engTime = System.currentTimeMillis();
-					System.out.println(engTime - startTime);
 				}
 			}
 		};
