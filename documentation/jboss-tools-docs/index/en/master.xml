@@ -126,7 +126,7 @@
 
 
         <indexentry>
-            <primaryie>JBoss Birt Plugin Reference Guide <ulink
+            <primaryie>Birt Plugin Integration Reference Guide<ulink
                 url="en/jboss_birt_plugin_ref_guide/html/index.html">(html)</ulink>
                 <ulink url="en/jboss_birt_plugin_ref_guide/html_single/index.html">(html single)</ulink>
                 <ulink url="en/jboss_birt_plugin_ref_guide/pdf/Birt_Reference_Guide.pdf"
@@ -143,7 +143,14 @@
             </primaryie>
         </indexentry>
 
-
+        <indexentry>
+            <primaryie>Eclipse Guvnor Tools Reference Guide<ulink
+                url="en/guvnor_tools_ref_guide/html/index.html">(html)</ulink>
+                <ulink url="en/guvnor_tools_ref_guide/html_single/index.html">(html single)</ulink>
+                <ulink url="en/guvnor_tools_ref_guide/pdf/Drools_Tools_Reference_Guide.pdf">(pdf)</ulink>
+            </primaryie>
+        </indexentry>
+        
         <indexentry>
             <primaryie>Exadel Studio Migration Guide <ulink
                     url="en/Exadel-migration/html/index.html">(html)</ulink>
@@ -154,7 +161,7 @@
         </indexentry>
         
         <indexentry>
-            <primaryie>Smooks Reference Guide <ulink
+            <primaryie>Smooks Reference Guide<ulink
                     url="en/jboss_smooks_plugin_ref_guide/html/index.html">(html)</ulink>
                 <ulink url="en/jboss_smooks_plugin_ref_guide/html_single/index.html">(html single)</ulink>
                 <ulink url="en/jboss_smooks_plugin_ref_guide/pdf/Smooks_Reference_Guide.pdf"
