@@ -27,6 +27,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -199,10 +200,30 @@ public class PropertyUICreator implements IPropertyUICreator {
 			if (smooksResourceList != null) {
 				FieldMarkerWrapper wrapper = SmooksUIUtils.createFieldEditorLabel(null,parent, toolkit, propertyDescriptor, model, false);
 				editPart.setFieldMarker(wrapper.getMarker());
-				final Combo combo = new Combo(parent, SWT.BORDER);
+				
+				Composite tcom = toolkit.createComposite(parent);
+				GridLayout layout = new GridLayout();
+				layout.numColumns = 2;
+				layout.marginLeft = 0;
+				layout.marginRight = 0;
+				layout.horizontalSpacing = 0;
+				tcom.setLayout(layout);
+				
+				FieldMarkerComposite notificationComposite = new FieldMarkerComposite(tcom, SWT.NONE);
+				GridData gd = new GridData();
+				gd.heightHint = 8;
+				gd.widthHint = 8;
+				gd.horizontalAlignment = GridData.BEGINNING;
+				gd.verticalAlignment = GridData.BEGINNING;
+				notificationComposite.setLayoutData(gd);
+				editPart.setFieldMarker(notificationComposite);
+				
+				final Combo combo = new Combo(tcom, SWT.BORDER);
 				editPart.setContentControl(combo);
-				GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+				gd = new GridData(GridData.FILL_HORIZONTAL);
 				combo.setLayoutData(gd);
+				tcom.setLayoutData(gd);
+				
 				Object editValue = SmooksUIUtils.getEditValue(propertyDescriptor, model);
 				if (editValue != null) {
 					combo.setText(editValue.toString());

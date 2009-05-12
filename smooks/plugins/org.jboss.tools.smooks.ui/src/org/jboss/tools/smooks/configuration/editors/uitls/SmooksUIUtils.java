@@ -152,17 +152,17 @@ public class SmooksUIUtils {
 			displayName = itemPropertyDescriptor.getDisplayName(model);
 			EAttribute feature = (EAttribute) itemPropertyDescriptor.getFeature(model);
 			if (feature.isRequired()) {
-				displayName = "*" + displayName;
+				displayName =  displayName + "*";
 			}
 		}
 		Composite labelComposite = formToolKit.createComposite(parent);
-		GridLayout layout = new GridLayout();
-		layout.numColumns = 2;
-		layout.marginLeft = 0;
-		layout.marginRight = 0;
-		layout.horizontalSpacing = 0;
-		labelComposite.setLayout(layout);
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+//		GridLayout layout = new GridLayout();
+//		layout.numColumns = 2;
+//		layout.marginLeft = 0;
+//		layout.marginRight = 0;
+//		layout.horizontalSpacing = 0;
+		labelComposite.setLayout(new FillLayout());
+//		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		Control labelControl = null;
 
 		if (!isLink) {
@@ -173,19 +173,19 @@ public class SmooksUIUtils {
 			Hyperlink link = formToolKit.createHyperlink(labelComposite, displayName + " :", SWT.NONE);
 			labelControl = link;
 		}
-		gd = new GridData();
-		labelControl.setLayoutData(gd);
+//		gd = new GridData();
+//		labelControl.setLayoutData(gd);
 
-		FieldMarkerComposite notificationComposite = new FieldMarkerComposite(labelComposite, SWT.NONE);
-		gd = new GridData();
-		gd.heightHint = 8;
-		gd.widthHint = 8;
-		gd.horizontalAlignment = GridData.BEGINNING;
-		gd.verticalAlignment = GridData.BEGINNING;
-		notificationComposite.setLayoutData(gd);
+//		FieldMarkerComposite notificationComposite = new FieldMarkerComposite(labelComposite, SWT.NONE);
+//		gd = new GridData();
+//		gd.heightHint = 8;
+//		gd.widthHint = 8;
+//		gd.horizontalAlignment = GridData.BEGINNING;
+//		gd.verticalAlignment = GridData.BEGINNING;
+//		notificationComposite.setLayoutData(gd);
 
 		wrapper.setLabelControl(labelControl);
-		wrapper.setMarker(notificationComposite);
+//		wrapper.setMarker(notificationComposite);
 		return wrapper;
 	}
 
@@ -429,12 +429,32 @@ public class SmooksUIUtils {
 		if (multiText) {
 			textType = SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL;
 		}
-		final Text valueText = toolkit.createText(textContainer, "", textType);
+		Composite tcom = toolkit.createComposite(textContainer);
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 2;
+		layout.marginLeft = 0;
+		layout.marginRight = 0;
+		layout.horizontalSpacing = 0;
+		tcom.setLayout(layout);
+		
+		FieldMarkerComposite notificationComposite = new FieldMarkerComposite(tcom, SWT.NONE);
+		gd = new GridData();
+		gd.heightHint = 8;
+		gd.widthHint = 8;
+		gd.horizontalAlignment = GridData.BEGINNING;
+		gd.verticalAlignment = GridData.BEGINNING;
+		notificationComposite.setLayoutData(gd);
+		fieldEditPart.setFieldMarker(notificationComposite);
+		
+		final Text valueText = toolkit.createText(tcom, "", textType);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		if (multiText && height > 0) {
 			gd.heightHint = height;
 		}
 		valueText.setLayoutData(gd);
+		
+		tcom.setLayoutData(gd);
+		
 		toolkit.paintBordersFor(textContainer);
 		if (openFile) {
 			Button fileBrowseButton = toolkit.createButton(textContainer, "Browse", SWT.NONE);
@@ -619,8 +639,29 @@ public class SmooksUIUtils {
 				fillLayout.marginHeight = 0;
 				fillLayout.marginWidth = 0;
 				classTextComposite.setLayout(fillLayout);
-				final SearchComposite searchComposite = new SearchComposite(classTextComposite, toolkit,
+				
+				Composite tcom = toolkit.createComposite(classTextComposite);
+				GridLayout layout = new GridLayout();
+				layout.numColumns = 2;
+				layout.marginLeft = 0;
+				layout.marginRight = 0;
+				layout.horizontalSpacing = 0;
+				tcom.setLayout(layout);
+				
+				FieldMarkerComposite notificationComposite = new FieldMarkerComposite(tcom, SWT.NONE);
+				gd = new GridData();
+				gd.heightHint = 8;
+				gd.widthHint = 8;
+				gd.horizontalAlignment = GridData.BEGINNING;
+				gd.verticalAlignment = GridData.BEGINNING;
+				notificationComposite.setLayoutData(gd);
+				editpart.setFieldMarker(notificationComposite);
+				
+				
+				final SearchComposite searchComposite = new SearchComposite(tcom, toolkit,
 						"Search Class", dialog, SWT.NONE);
+				gd = new GridData(GridData.FILL_HORIZONTAL);
+				searchComposite.setLayoutData(gd);
 				Object editValue = getEditValue(propertyDescriptor, model);
 				if (editValue != null) {
 					searchComposite.getText().setText(editValue.toString());
@@ -845,7 +886,25 @@ public class SmooksUIUtils {
 		if (readOnly) {
 			style = style | SWT.READ_ONLY;
 		}
-		final Combo combo = new Combo(parent, style);
+		
+		Composite tcom = formToolkit.createComposite(parent);
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 2;
+		layout.marginLeft = 0;
+		layout.marginRight = 0;
+		layout.horizontalSpacing = 0;
+		tcom.setLayout(layout);
+		
+		FieldMarkerComposite notificationComposite = new FieldMarkerComposite(tcom, SWT.NONE);
+		GridData gd = new GridData();
+		gd.heightHint = 8;
+		gd.widthHint = 8;
+		gd.horizontalAlignment = GridData.BEGINNING;
+		gd.verticalAlignment = GridData.BEGINNING;
+		notificationComposite.setLayoutData(gd);
+		fieldEditPart.setFieldMarker(notificationComposite);
+		
+		final Combo combo = new Combo(tcom, style);
 		combo.add("");
 		if (items != null) {
 			for (int i = 0; i < items.length; i++) {
@@ -855,8 +914,10 @@ public class SmooksUIUtils {
 				}
 			}
 		}
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		tcom.setLayoutData(gd);
 		combo.setLayoutData(gd);
+		
 		if (currentSelect != -1) {
 			combo.select(currentSelect);
 		}
@@ -933,8 +994,29 @@ public class SmooksUIUtils {
 		fillLayout.marginHeight = 0;
 		fillLayout.marginWidth = 0;
 		classTextComposite.setLayout(fillLayout);
-		final SearchComposite searchComposite = new SearchComposite(classTextComposite, toolkit, buttonName, dialog,
+		
+		Composite tcom = toolkit.createComposite(classTextComposite);
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 2;
+		layout.marginLeft = 0;
+		layout.marginRight = 0;
+		layout.horizontalSpacing = 0;
+		tcom.setLayout(layout);
+		
+		FieldMarkerComposite notificationComposite = new FieldMarkerComposite(tcom, SWT.NONE);
+		gd = new GridData();
+		gd.heightHint = 8;
+		gd.widthHint = 8;
+		gd.horizontalAlignment = GridData.BEGINNING;
+		gd.verticalAlignment = GridData.BEGINNING;
+		notificationComposite.setLayoutData(gd);
+		editpart.setFieldMarker(notificationComposite);
+		
+		final SearchComposite searchComposite = new SearchComposite(tcom, toolkit, buttonName, dialog,
 				SWT.NONE);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		searchComposite.setLayoutData(gd);
+		
 		Object editValue = getEditValue(propertyDescriptor, model);
 		if (editValue != null) {
 			searchComposite.getText().setText(editValue.toString());
@@ -956,6 +1038,8 @@ public class SmooksUIUtils {
 				}
 			}
 		});
+		
+		
 		toolkit.paintBordersFor(classTextComposite);
 		editpart.setContentControl(classTextComposite);
 		return editpart;
