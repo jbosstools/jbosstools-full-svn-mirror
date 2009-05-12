@@ -41,6 +41,8 @@ public class SmooksModelValidator {
 	private boolean starting = false;
 	private boolean waiting = false;
 	private Object lock = new Object();
+	
+	private long watingTime = 300;
 
 	private List<ISmooksModelValidateListener> listeners = new ArrayList<ISmooksModelValidateListener>();
 
@@ -109,64 +111,69 @@ public class SmooksModelValidator {
 	}
 
 	public void startValidate(final Collection<?> selectedObjects, final EditingDomain editingDomain) {
+		if (starting) {
+			synchronized (lock) {
+				waiting = true;
+			}
+			return;
+		}
 		Thread thread = new Thread() {
 			public void run() {
-				if (starting) {
-					synchronized (lock) {
-						waiting = true;
-					}
-					return;
-				} else {
-					synchronized (lock) {
-						starting = true;
-						waiting = true;
-					}
-					while (waiting) {
-						try {
-							waiting = false;
-							Thread.sleep(700);
-							Thread.yield();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
+				long startTime = System.currentTimeMillis();
+				synchronized (lock) {
+					starting = true;
+					waiting = true;
+				}
+				while (waiting) {
 					try {
-						for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
-							final ISmooksModelValidateListener l = (ISmooksModelValidateListener) iterator.next();
-							Display.getDefault().syncExec(new Runnable(){
-
-								/* (non-Javadoc)
-								 * @see java.lang.Runnable#run()
-								 */
-								public void run() {
-									l.validateStart();
-								}
-								
-							});
-							
-						}
-						
-						final Diagnostic d = validate(selectedObjects, editingDomain);
-
-						for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
-							final ISmooksModelValidateListener l = (ISmooksModelValidateListener) iterator.next();
-							Display.getDefault().syncExec(new Runnable(){
-
-								/* (non-Javadoc)
-								 * @see java.lang.Runnable#run()
-								 */
-								public void run() {
-									l.validateEnd(d);
-								}
-								
-							});
-						}
-					} finally {
 						waiting = false;
-						starting = false;
+						Thread.sleep(watingTime);
+						Thread.yield();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
 				}
+				try {
+					for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
+						final ISmooksModelValidateListener l = (ISmooksModelValidateListener) iterator.next();
+						Display.getDefault().syncExec(new Runnable() {
 
+							/*
+							 * (non-Javadoc)
+							 * 
+							 * @see java.lang.Runnable#run()
+							 */
+							public void run() {
+								l.validateStart();
+							}
+
+						});
+
+					}
+
+					final Diagnostic d = validate(selectedObjects, editingDomain);
+
+					for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
+						final ISmooksModelValidateListener l = (ISmooksModelValidateListener) iterator.next();
+						Display.getDefault().syncExec(new Runnable() {
+
+							/*
+							 * (non-Javadoc)
+							 * 
+							 * @see java.lang.Runnable#run()
+							 */
+							public void run() {
+								l.validateEnd(d);
+							}
+
+						});
+					}
+				} finally {
+					waiting = false;
+					starting = false;
+					long engTime = System.currentTimeMillis();
+					System.out.println(engTime - startTime);
+				}
 			}
 		};
 		thread.setName("Validate Smooks model");
