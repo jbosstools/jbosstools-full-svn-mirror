@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor.PropertyValueWrapper;
@@ -90,7 +91,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 
 	public void createContents(Composite parent) {
 		parent.setLayout(new FillLayout());
-		section = formToolkit.createSection(parent, Section.DESCRIPTION | Section.TITLE_BAR);
+		section = formToolkit.createSection(parent, Section.TITLE_BAR);
 
 		Composite client = formToolkit.createComposite(section);
 		section.setLayout(new FillLayout());
@@ -187,7 +188,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 						if (marker.getMarkerType() != IFieldMarker.TYPE_ERROR)
 							marker.setMarkerType(IFieldMarker.TYPE_ERROR);
 					}
-					
+
 					if (diagnostic.getSeverity() == Diagnostic.WARNING) {
 						if (marker.getMarkerType() != IFieldMarker.TYPE_WARINING)
 							marker.setMarkerType(IFieldMarker.TYPE_WARINING);
@@ -436,7 +437,12 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 	protected void refreshWhenSelectionChanged() {
 		Object model = getModel();
 		if (model instanceof EObject) {
-			String text = ((EObject) model).eClass().getName();
+			IItemLabelProvider labelProvider = (IItemLabelProvider) this.editingDomain.getAdapterFactory().adapt(model,
+					IItemLabelProvider.class);
+			String text = labelProvider.getText(model);
+			if (text == null || text.length() == 0) {
+				text = ((EObject) model).eClass().getName();
+			}
 			section.setText(text);
 			section.setDescription("Details of " + text + ". Required fields are denoted by \"*\".");
 			section.layout();

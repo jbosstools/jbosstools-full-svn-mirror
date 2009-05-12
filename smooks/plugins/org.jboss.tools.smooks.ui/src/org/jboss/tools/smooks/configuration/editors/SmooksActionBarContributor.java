@@ -55,6 +55,7 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.actions.AddSmooksResourceAction;
 import org.jboss.tools.smooks.configuration.actions.ValidateSmooksAction;
+import org.jboss.tools.smooks.model.calc.Counter;
 import org.jboss.tools.smooks.model.datasource.DataSourceJndi;
 import org.jboss.tools.smooks.model.datasource.Direct;
 import org.jboss.tools.smooks.model.dbrouting.Executor;
@@ -647,59 +648,66 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	}
 
 	protected void groupActions(MenuManager manager, Collection<?> createChildActions) {
-		MenuManager readers = new MenuManager("Reader");
-		manager.add(readers);
+		MenuManager readerMenu = new MenuManager("Reader");
+		manager.add(readerMenu);
 
-		MenuManager templating = new MenuManager("Templating");
-		manager.add(templating);
+		MenuManager templatingMenu = new MenuManager("Templating");
+		manager.add(templatingMenu);
 
-		MenuManager jbinding = new MenuManager("Java Binding");
-		manager.add(jbinding);
+		MenuManager jbindingMenu = new MenuManager("Java Binding");
+		manager.add(jbindingMenu);
 
-		MenuManager datasources = new MenuManager("Datasources");
-		manager.add(datasources);
+		MenuManager datasourcesMenu = new MenuManager("Datasources");
+		manager.add(datasourcesMenu);
 
-		MenuManager scripting = new MenuManager("Scripting");
-		manager.add(scripting);
+		MenuManager scriptingMenu = new MenuManager("Scripting");
+		manager.add(scriptingMenu);
 
-		MenuManager fragmentRouting = new MenuManager("Fragment Routing");
-		manager.add(fragmentRouting);
+		MenuManager fragmentRoutingMenu = new MenuManager("Fragment Routing");
+		manager.add(fragmentRoutingMenu);
 		
-		MenuManager database = new MenuManager("Database");
-		manager.add(database);
+		MenuManager databaseMenu = new MenuManager("Database");
+		manager.add(databaseMenu);
+		
+		MenuManager calcMenu = new MenuManager("Calc");
+		manager.add(calcMenu);
 
 		for (Iterator<?> iterator = createChildActions.iterator(); iterator.hasNext();) {
 			boolean added = false;
 			AddSmooksResourceAction action = (AddSmooksResourceAction) iterator.next();
 			Object descriptor = action.getDescriptor();
-
-			if (isReader(descriptor)) {
-				readers.add(action);
+			if (isCalcDescriptor(descriptor)) {
+				calcMenu.add(action);
 				added = true;
 			}
-			if (isTemplate(descriptor)) {
-				templating.add(action);
+			
+			if (isReaderDescriptor(descriptor)) {
+				readerMenu.add(action);
 				added = true;
 			}
-			if (isJavaBinding(descriptor)) {
-				jbinding.add(action);
+			if (isTemplateDescriptor(descriptor)) {
+				templatingMenu.add(action);
 				added = true;
 			}
-			if (isDatasources(descriptor)) {
-				datasources.add(action);
+			if (isJavaBindingDescriptor(descriptor)) {
+				jbindingMenu.add(action);
+				added = true;
+			}
+			if (isDatasourcesDescriptor(descriptor)) {
+				datasourcesMenu.add(action);
 				added = true;
 			}
 			
 			if(isDatabaseDescriptor(descriptor)){
-				database.add(action);
+				databaseMenu.add(action);
 				added = true;
 			}
-			if (isScripting(descriptor)) {
-				scripting.add(action);
+			if (isScriptingDescriptor(descriptor)) {
+				scriptingMenu.add(action);
 				added = true;
 			}
-			if (isFragmentRouting(descriptor)) {
-				fragmentRouting.add(action);
+			if (isFragmentRoutingDescriptor(descriptor)) {
+				fragmentRoutingMenu.add(action);
 				added = true;
 			}
 			if (!added) {
@@ -707,13 +715,19 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 			}
 		}
 
-		orderReaderAction(readers);
-		orderTemplateAction(templating);
-		orderJBindingAction(jbinding);
-		orderDatasourceAction(datasources);
-		orderScriptAction(scripting);
-		orderFragmentAction(fragmentRouting);
-		orderDatabaseAction(database);
+		orderReaderAction(readerMenu);
+		orderTemplateAction(templatingMenu);
+		orderJBindingAction(jbindingMenu);
+		orderDatasourceAction(datasourcesMenu);
+		orderScriptAction(scriptingMenu);
+		orderFragmentAction(fragmentRoutingMenu);
+		orderDatabaseAction(databaseMenu);
+		orderCalcAction(calcMenu);
+	}
+
+	protected void orderCalcAction(MenuManager database) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	protected void orderDatabaseAction(MenuManager database) {
@@ -771,6 +785,18 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 			}
 		}
 	}
+	
+	protected boolean isCalcDescriptor(Object descriptor) {
+		if (descriptor instanceof CommandParameter) {
+			CommandParameter parameter = (CommandParameter) descriptor;
+			if (parameter.getValue() != null) {
+				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Counter) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 	private boolean isDatabaseDescriptor(Object descriptor) {
 		if (descriptor instanceof CommandParameter) {
@@ -784,7 +810,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		return false;
 	}
 	
-	private boolean isFragmentRouting(Object descriptor) {
+	private boolean isFragmentRoutingDescriptor(Object descriptor) {
 		if (descriptor instanceof CommandParameter) {
 			CommandParameter parameter = (CommandParameter) descriptor;
 			if (parameter.getValue() != null) {
@@ -802,7 +828,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		return false;
 	}
 
-	private boolean isScripting(Object descriptor) {
+	private boolean isScriptingDescriptor(Object descriptor) {
 		if (descriptor instanceof CommandParameter) {
 			CommandParameter parameter = (CommandParameter) descriptor;
 			if (parameter.getValue() != null) {
@@ -814,7 +840,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		return false;
 	}
 
-	private boolean isDatasources(Object descriptor) {
+	private boolean isDatasourcesDescriptor(Object descriptor) {
 		if (descriptor instanceof CommandParameter) {
 			CommandParameter parameter = (CommandParameter) descriptor;
 			if (parameter.getValue() != null) {
@@ -829,7 +855,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		return false;
 	}
 
-	private boolean isJavaBinding(Object descriptor) {
+	private boolean isJavaBindingDescriptor(Object descriptor) {
 		if (descriptor instanceof CommandParameter) {
 			CommandParameter parameter = (CommandParameter) descriptor;
 			if (parameter.getValue() != null) {
@@ -841,7 +867,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		return false;
 	}
 
-	private boolean isTemplate(Object descriptor) {
+	private boolean isTemplateDescriptor(Object descriptor) {
 		if (descriptor instanceof CommandParameter) {
 			CommandParameter parameter = (CommandParameter) descriptor;
 			if (parameter.getValue() != null) {
@@ -856,7 +882,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		return false;
 	}
 
-	private boolean isReader(Object descriptor) {
+	private boolean isReaderDescriptor(Object descriptor) {
 		if (descriptor instanceof CommandParameter) {
 			CommandParameter parameter = (CommandParameter) descriptor;
 			if (parameter.getValue() != null) {
