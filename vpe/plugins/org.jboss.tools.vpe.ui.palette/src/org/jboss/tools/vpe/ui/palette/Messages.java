@@ -31,7 +31,13 @@ public class Messages {
 		try {
 			Field field = c.getDeclaredField(fieldName);
 			return (String) field.get(null);
-		} catch (Exception e) {
+		} catch (NoSuchFieldException e) {
+			PalettePlugin.getPluginLog().logError(e);
+			return "!" + fieldName + "!"; //$NON-NLS-1$ //$NON-NLS-2$
+		} catch (IllegalArgumentException e) {
+			PalettePlugin.getPluginLog().logError(e);
+			return "!" + fieldName + "!"; //$NON-NLS-1$ //$NON-NLS-2$
+		} catch (IllegalAccessException e) {
 			PalettePlugin.getPluginLog().logError(e);
 			return "!" + fieldName + "!"; //$NON-NLS-1$ //$NON-NLS-2$
 		}

@@ -50,8 +50,6 @@ public class CustomTLDParser {
 				Element rootElement = document.getDocumentElement();
 				NodeList nodeList = rootElement.getElementsByTagName(NAMESPACE);
 				return nodeList.item(0).getFirstChild().getNodeValue();
-			} catch (Exception e) {
-					VpePlugin.reportProblem(e);
 			} finally {
 				if(document!=null) {
 					VpeCreatorUtil.releaseDocumentFromRead(document);

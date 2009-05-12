@@ -188,7 +188,7 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 		double dVersion;
 		try {
 			dVersion = Double.parseDouble(parseableVersion);
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
 			VpePlugin.getPluginLog().logError(e);
 			dVersion = 0.0;
 		}

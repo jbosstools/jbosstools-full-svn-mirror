@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.util;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +50,7 @@ public class TextUtil {
 			}
 			is.close();
 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
