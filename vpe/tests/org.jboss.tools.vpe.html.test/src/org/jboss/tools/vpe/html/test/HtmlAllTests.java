@@ -35,7 +35,7 @@ public class HtmlAllTests {
 	
 	public static Test suite() {
 
-		TestSuite suite = new TestSuite("Tests for Vpe Jsf components"); //$NON-NLS-1$
+		TestSuite suite = new TestSuite("Tests for Vpe HTML components"); //$NON-NLS-1$
 		// $JUnit-BEGIN$
 		suite.addTestSuite(JBIDE3280Test.class);
 		suite.addTestSuite(HtmlComponentTest.class);
