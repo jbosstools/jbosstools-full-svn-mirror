@@ -301,6 +301,20 @@
 			</fileSet>
 			
 			<fileSet>
+				<directory>../../drools/docs/guvnor_ref/target/docbook/publish/en-US</directory>
+				<outputDirectory>/guvnor_tools_ref_guide</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			
+			<fileSet>
 				<directory>../../smooks/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/jboss_smooks_plugin_ref_guide</outputDirectory>
 				<filtered>false</filtered>

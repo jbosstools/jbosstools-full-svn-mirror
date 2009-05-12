@@ -29,6 +29,7 @@
 		<module>../../portlet/docs/reference</module>
 		<module>../../birt/docs</module>
 		<module>../../drools/docs/reference</module>
+		<module>../../drools/docs/guvnor_ref</module>
 		<module>../../smooks/docs/reference</module>
 		<module>../../jbpm/docs/converter_ref</module>
 		<module>../../jmx/docs/reference</module>
