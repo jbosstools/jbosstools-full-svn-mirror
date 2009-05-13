@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.model.validate;
+package org.jboss.tools.smooks.configuration.validate;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,6 +19,7 @@ import java.util.Map;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EClass;
@@ -34,7 +35,7 @@ import org.eclipse.swt.widgets.Display;
  *         <p>
  *         Apr 14, 2009
  */
-public class SmooksModelValidator {
+public class SmooksModelValidator implements ISmooksValidator{
 
 	Collection<?> selectedObjects;
 	EditingDomain domain;
@@ -45,14 +46,17 @@ public class SmooksModelValidator {
 	private long watingTime = 300;
 
 	private List<ISmooksModelValidateListener> listeners = new ArrayList<ISmooksModelValidateListener>();
+	
+	private List<ISmooksValidator> validatorList = new ArrayList<ISmooksValidator>();
 
 	public SmooksModelValidator(Collection<?> selectedObjects, EditingDomain domain) {
+		this();
 		this.selectedObjects = selectedObjects;
 		this.domain = domain;
 	}
 
 	public SmooksModelValidator() {
-
+		validatorList.add(new ClassFieldEditorValidator());
 	}
 
 	public void addValidateListener(ISmooksModelValidateListener l) {
@@ -64,13 +68,13 @@ public class SmooksModelValidator {
 		listeners.remove(l);
 	}
 
-	public Diagnostic validate(Collection<?> selectedObjects, EditingDomain editingDomain) {
+	public List<Diagnostic> validate(Collection<?> selectedObjects, EditingDomain editingDomain) {
 		this.selectedObjects = selectedObjects;
 		domain = editingDomain;
 		return validate(new NullProgressMonitor());
 	}
 
-	public Diagnostic validate(final IProgressMonitor progressMonitor) {
+	public List<Diagnostic> validate(final IProgressMonitor progressMonitor) {
 		EObject eObject = (EObject) selectedObjects.iterator().next();
 		int count = 0;
 		for (Iterator<?> i = eObject.eAllContents(); i.hasNext(); i.next()) {
@@ -107,7 +111,19 @@ public class SmooksModelValidator {
 
 		progressMonitor.setTaskName("Validating...");
 
-		return diagnostician.validate(eObject);
+		Diagnostic diagnostic = diagnostician.validate(eObject);
+		
+		List<Diagnostic> list = new ArrayList<Diagnostic>();
+		list.add(diagnostic);
+		for (Iterator<?> iterator = this.validatorList.iterator(); iterator.hasNext();) {
+			ISmooksValidator validator = (ISmooksValidator) iterator.next();
+			List<Diagnostic> d = validator.validate(selectedObjects, domain);
+			for (Iterator<?> iterator2 = d.iterator(); iterator2.hasNext();) {
+				Diagnostic diagnostic2 = (Diagnostic) iterator2.next();
+				((BasicDiagnostic)diagnostic).add(diagnostic2);
+			}
+		}
+		return list;
 	}
 
 	public void startValidate(final Collection<?> selectedObjects, final EditingDomain editingDomain) {
@@ -150,7 +166,7 @@ public class SmooksModelValidator {
 
 					}
 
-					final Diagnostic d = validate(selectedObjects, editingDomain);
+					final List<Diagnostic> d = validate(selectedObjects, editingDomain);
 
 					for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
 						final ISmooksModelValidateListener l = (ISmooksModelValidateListener) iterator.next();

@@ -144,7 +144,8 @@ public class ValidateResultLabelDecorator extends LabelDecorator implements ILab
 				}
 				SmooksMultiFormEditor editor = (SmooksMultiFormEditor) window.getActivePage().findEditor(
 						new FileEditorInput((IFile) resource));
-				int type = markErrorWarningPropertyUI(editor.getDiagnostic(), element);
+				int type = -1;
+//				int type = markErrorWarningPropertyUI(editor.getDiagnosticList(), element);
 				decoration.addOverlay(null, IDecoration.BOTTOM_RIGHT);
 				if (type == Diagnostic.ERROR) {
 					decoration.addOverlay(SmooksConfigurationActivator.getDefault().getImageRegistry().getDescriptor(

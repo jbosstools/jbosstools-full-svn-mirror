@@ -61,6 +61,9 @@ import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
+import org.jboss.tools.smooks.configuration.validate.SmooksMarkerHelper;
+import org.jboss.tools.smooks.configuration.validate.SmooksModelValidator;
 import org.jboss.tools.smooks.configuration.wizards.SmooksConfigurationFileNewWizard;
 import org.jboss.tools.smooks.model.calc.provider.CalcItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.common.provider.CommonItemProviderAdapterFactory;
@@ -78,8 +81,6 @@ import org.jboss.tools.smooks.model.jmsrouting.provider.JmsroutingItemProviderAd
 import org.jboss.tools.smooks.model.json.provider.JsonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.validate.ISmooksModelValidateListener;
-import org.jboss.tools.smooks.model.validate.SmooksModelValidator;
 import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
 
@@ -87,7 +88,7 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
  * 
  * @author Dart Peng (dpeng@redhat.com) Date Apr 1, 2009
  */
-public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainProvider , ISmooksModelValidateListener{
+public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainProvider, ISmooksModelValidateListener {
 
 	public static final String EDITOR_ID = "org.jboss.tools.smooks.configuration.editors.MultiPageEditor";
 
@@ -102,14 +103,16 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 	private PropertySheetPage propertySheetPage = null;
 
 	private SmooksGraphicsExtType smooksGraphicsExt = null;
-	
+
 	private SmooksModelValidator validator = null;
 
 	private EObject smooksModel;
 
 	private boolean handleEMFModelChange;
-	
-	private Diagnostic diagnostic;
+
+	private SmooksMarkerHelper markerHelper = new SmooksMarkerHelper();
+
+	private List<Diagnostic> diagnosticList;
 
 	public SmooksMultiFormEditor() {
 		super();
@@ -161,9 +164,9 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 			int length = oldEndIndex - startIndex + 1;
 			handleEMFModelChange = true;
 			document.replace(startIndex, length, replacement);
-			
+
 			validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
-			
+
 		} catch (Exception exception) {
 			SmooksConfigurationActivator.getDefault().log(exception);
 		}
@@ -225,12 +228,12 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 			configurationPage.setSelectionToViewer(newList);
 		}
 	}
-	
-	public void addValidateListener(ISmooksModelValidateListener listener){
+
+	public void addValidateListener(ISmooksModelValidateListener listener) {
 		validator.addValidateListener(listener);
 	}
-	
-	public void removeValidateListener(ISmooksModelValidateListener listener){
+
+	public void removeValidateListener(ISmooksModelValidateListener listener) {
 		validator.removeValidateListener(listener);
 	}
 
@@ -331,7 +334,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 			SmooksConfigurationActivator.getDefault().log(e);
 		}
 		configurationPage.setSmooksModel(this.smooksModel);
-		
+
 		validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
 	}
 
@@ -398,11 +401,11 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		}
 		editingDomain.getResourceSet().getResources().add(smooksResource);
 		super.init(site, input);
-		
+
 		validator = new SmooksModelValidator();
 		addValidateListener(this);
-		setDiagnostic(validator.validate(smooksModel.eResource().getContents(), editingDomain));
-		
+		setDiagnosticList(validator.validate(smooksModel.eResource().getContents(), editingDomain));
+
 		// if success to open editor , check if there isn't ext file and create
 		// a new one
 		String extFileName = file.getName() + SmooksConstants.SMOOKS_GRAPHICSEXT_EXTENTION_NAME_WITHDOT;
@@ -462,15 +465,31 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 	/**
 	 * @return the diagnostic
 	 */
-	public Diagnostic getDiagnostic() {
-		return diagnostic;
+	public List<Diagnostic> getDiagnosticList() {
+		return diagnosticList;
 	}
 
 	/**
-	 * @param diagnostic the diagnostic to set
+	 * @param diagnosticList
+	 *            the diagnostic to set
 	 */
-	public void setDiagnostic(Diagnostic diagnostic) {
-		this.diagnostic = diagnostic;
+	public void setDiagnosticList(List<Diagnostic> d) {
+		this.diagnosticList = d;
+		
+		if (markerHelper != null) {
+			Resource resource = editingDomain.getResourceSet().getResources().get(0);
+			if (resource != null) {
+				markerHelper.deleteMarkers(resource);
+			}
+			for (Iterator<?> iterator = d.iterator(); iterator.hasNext();) {
+				Diagnostic diagnostic = (Diagnostic) iterator.next();
+				if (resource != null && diagnostic.getSeverity() != Diagnostic.OK) {
+					for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
+						markerHelper.createMarkers(resource, childDiagnostic);
+					}
+				}
+			}
+		}
 	}
 
 	/*
@@ -482,12 +501,12 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		return false;
 	}
 
-	public void validateEnd(Diagnostic diagnosticResult) {
-		setDiagnostic(diagnosticResult);
+	public void validateEnd(List<Diagnostic> diagnosticResult) {
+		setDiagnosticList(diagnosticResult);
 	}
 
 	public void validateStart() {
-		
+
 	}
 
 }
