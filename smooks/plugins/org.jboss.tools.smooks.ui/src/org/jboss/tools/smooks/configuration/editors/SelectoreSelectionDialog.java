@@ -24,7 +24,6 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.IShellProvider;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -32,6 +31,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -95,11 +95,11 @@ public class SelectoreSelectionDialog extends Dialog {
 		
 		Label label = new Label(composite,SWT.NONE);
 		label.setText("Sperator Char : ");
-		final CCombo speratorCombo = new CCombo(composite,SWT.BORDER);
+		final Combo speratorCombo = new Combo(composite,SWT.BORDER|SWT.READ_ONLY);
 		speratorCombo.add(" ");
 		speratorCombo.add("/");
-		speratorCombo.select(0);
-		speratorCombo.setEditable(false);
+		speratorCombo.select(1);
+//		speratorCombo.setEditable(false);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		speratorCombo.setLayoutData(gd);
 		speratorCombo.addModifyListener(new ModifyListener(){

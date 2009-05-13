@@ -10,6 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.groovy;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -61,8 +64,9 @@ public class GroovyUICreator extends PropertyUICreator {
 
 
 	@Override
-	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 		Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+		return Collections.emptyList();
 //		SmooksUIUtils.createCommentFieldEditor("Script Contents",editingdomain, toolkit, parent, model);
 	}
 

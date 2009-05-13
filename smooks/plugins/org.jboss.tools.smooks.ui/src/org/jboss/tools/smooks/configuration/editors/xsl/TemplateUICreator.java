@@ -10,6 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.xsl;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -64,7 +67,7 @@ public class TemplateUICreator extends PropertyUICreator {
 	}
 
 	@Override
-	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
 			SmooksMultiFormEditor formEditor) {
 		OpenEditorEditInnerContentsAction openCdataEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_CDATA, "xsl");
 		OpenEditorEditInnerContentsAction openCommentEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "xsl");
@@ -74,6 +77,8 @@ public class TemplateUICreator extends PropertyUICreator {
 		AttributeFieldEditPart text2 = SmooksUIUtils.createCommentFieldEditor("Template Contents (Comment)", editingdomain, toolkit, parent, model, openCommentEditorAction);
 		openCdataEditorAction.setRelateText((Text)text1.getContentControl());
 		openCommentEditorAction.setRelateText((Text)text2.getContentControl());
+		
+		return Collections.emptyList();
 	}
 
 }

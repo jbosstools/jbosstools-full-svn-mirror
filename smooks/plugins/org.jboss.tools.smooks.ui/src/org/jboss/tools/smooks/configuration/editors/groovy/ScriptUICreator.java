@@ -10,6 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.groovy;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -42,11 +45,12 @@ public class ScriptUICreator extends PropertyUICreator {
 	}
 
 	@Override
-	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
 			SmooksMultiFormEditor formEditor) {
 		OpenEditorEditInnerContentsAction action2 = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "groovy");
 		AttributeFieldEditPart editPart = SmooksUIUtils.createCommentFieldEditor("Script Contents", editingdomain, toolkit, parent, model, action2);
 		action2.setRelateText((Text)editPart.getContentControl());
+		return Collections.emptyList();
 	}
 
 	@Override

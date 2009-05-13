@@ -139,8 +139,17 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				}
 			}
 			if (creator != null) {
-				creator.createExtendUI((AdapterFactoryEditingDomain) formEditor.getEditingDomain(), formToolkit,
+				List<AttributeFieldEditPart> list = creator.createExtendUI((AdapterFactoryEditingDomain) formEditor.getEditingDomain(), formToolkit,
 						detailsComposite, getModel(), getFormEditor());
+				if(list != null){
+					for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+						AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
+						Object attribute = attributeFieldEditPart.getAttribute();
+						if(attribute != null){
+							currentPropertyUIMap.put(attribute, attributeFieldEditPart);
+						}
+					}
+				}
 			}
 			formToolkit.paintBordersFor(detailsComposite);
 			detailsComposite.pack();

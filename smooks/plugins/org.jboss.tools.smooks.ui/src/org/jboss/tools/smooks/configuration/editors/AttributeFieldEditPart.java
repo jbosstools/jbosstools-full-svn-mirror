@@ -18,6 +18,8 @@ import org.eclipse.swt.widgets.Control;
  */
 public class AttributeFieldEditPart {
 	
+	private Object attribute;
+	
 	private IFieldMarker fieldMarker;
 	
 	private Control contentControl;
@@ -49,4 +51,20 @@ public class AttributeFieldEditPart {
 	public void setContentControl(Control contentControl) {
 		this.contentControl = contentControl;
 	}
+
+	/**
+	 * @return the attribute
+	 */
+	public Object getAttribute() {
+		return attribute;
+	}
+
+	/**
+	 * @param attribute the attribute to set
+	 */
+	public void setAttribute(Object attribute) {
+		this.attribute = attribute;
+	}
+	
+	
 }

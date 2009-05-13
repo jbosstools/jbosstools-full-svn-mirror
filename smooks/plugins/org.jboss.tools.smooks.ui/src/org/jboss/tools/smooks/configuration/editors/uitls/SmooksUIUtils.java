@@ -151,10 +151,12 @@ public class SmooksUIUtils {
 		String displayName = labelText;
 		if (itemPropertyDescriptor == null) {
 		} else {
-			displayName = itemPropertyDescriptor.getDisplayName(model);
-			EAttribute feature = (EAttribute) itemPropertyDescriptor.getFeature(model);
-			if (feature.isRequired()) {
-				displayName = displayName + "*";
+			if (displayName == null) {
+				displayName = itemPropertyDescriptor.getDisplayName(model);
+				EAttribute feature = (EAttribute) itemPropertyDescriptor.getFeature(model);
+				if (feature.isRequired()) {
+					displayName = displayName + "*";
+				}
 			}
 		}
 		Composite labelComposite = formToolKit.createComposite(parent);
@@ -344,7 +346,7 @@ public class SmooksUIUtils {
 			label = itemPropertyDescriptor.getDisplayName(model);
 			EAttribute feature = (EAttribute) itemPropertyDescriptor.getFeature(model);
 			if (feature.isRequired()) {
-				label = "*" + label;
+				label = label + "*";
 			}
 		}
 		if (multiText) {
@@ -573,7 +575,13 @@ public class SmooksUIUtils {
 
 	public static AttributeFieldEditPart createSelectorFieldEditor(FormToolkit toolkit, Composite parent,
 			final IItemPropertyDescriptor propertyDescriptor, Object model, final SmooksGraphicsExtType extType) {
-		return createDialogFieldEditor(parent, toolkit, propertyDescriptor, "Browse", new IFieldDialog() {
+		return createSelectorFieldEditor(null, toolkit, parent, propertyDescriptor, model, extType);
+	}
+
+	public static AttributeFieldEditPart createSelectorFieldEditor(String labelText, FormToolkit toolkit,
+			Composite parent, final IItemPropertyDescriptor propertyDescriptor, Object model,
+			final SmooksGraphicsExtType extType) {
+		return createDialogFieldEditor(labelText, parent, toolkit, propertyDescriptor, "Browse", new IFieldDialog() {
 			public Object open(Shell shell) {
 				SelectoreSelectionDialog dialog = new SelectoreSelectionDialog(shell, extType);
 				if (dialog.open() == Dialog.OK) {
@@ -989,11 +997,26 @@ public class SmooksUIUtils {
 		return createDialogFieldEditor(parent, toolkit, propertyDescriptor, buttonName, dialog, model, false, null);
 	}
 
+	public static AttributeFieldEditPart createDialogFieldEditor(String label, Composite parent, FormToolkit toolkit,
+			final IItemPropertyDescriptor propertyDescriptor, String buttonName, IFieldDialog dialog,
+			final EObject model) {
+		return createDialogFieldEditor(label, parent, toolkit, propertyDescriptor, buttonName, dialog, model, false,
+				null);
+	}
+
 	public static AttributeFieldEditPart createDialogFieldEditor(Composite parent, FormToolkit toolkit,
 			final IItemPropertyDescriptor propertyDescriptor, String buttonName, IFieldDialog dialog,
 			final EObject model, boolean labelLink, IHyperlinkListener listener) {
+		return createDialogFieldEditor(null, parent, toolkit, propertyDescriptor, buttonName, dialog, model, labelLink,
+				listener);
+	}
+
+	public static AttributeFieldEditPart createDialogFieldEditor(String labelText, Composite parent,
+			FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor, String buttonName,
+			IFieldDialog dialog, final EObject model, boolean labelLink, IHyperlinkListener listener) {
 		AttributeFieldEditPart editpart = new AttributeFieldEditPart();
-		FieldMarkerWrapper wrapper = createFieldEditorLabel(parent, toolkit, propertyDescriptor, model, labelLink);
+		FieldMarkerWrapper wrapper = createFieldEditorLabel(labelText, parent, toolkit, propertyDescriptor, model,
+				labelLink);
 		editpart.setFieldMarker(wrapper.getMarker());
 		Control label = wrapper.getLabelControl();
 		if (label instanceof Hyperlink && listener != null) {

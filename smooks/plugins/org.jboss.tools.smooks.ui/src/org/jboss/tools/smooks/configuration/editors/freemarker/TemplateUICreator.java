@@ -10,6 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.freemarker;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -48,7 +51,7 @@ public class TemplateUICreator extends PropertyUICreator {
 	}
 
 	@Override
-	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
 			SmooksMultiFormEditor formEditor) {
 		OpenEditorEditInnerContentsAction openCDATAEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_CDATA, "flt");
 		OpenEditorEditInnerContentsAction openCommentEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "flt");
@@ -60,6 +63,8 @@ public class TemplateUICreator extends PropertyUICreator {
 		
 		openCDATAEditorAction.setRelateText((Text)cdatatext.getContentControl());
 		openCommentEditorAction.setRelateText((Text)commenttext.getContentControl());
+		
+		return Collections.emptyList();
 	}
 
 	@Override
