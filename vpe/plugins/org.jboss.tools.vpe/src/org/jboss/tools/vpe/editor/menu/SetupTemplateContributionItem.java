@@ -25,7 +25,6 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.menu.action.SetupTemplateAction;
 import org.jboss.tools.vpe.editor.template.VpeHtmlTemplate;
-import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.w3c.dom.Element;
 
@@ -44,24 +43,13 @@ public class SetupTemplateContributionItem extends ActionContributionItem {
 	 */
 	public SetupTemplateContributionItem() {
 		super(new SetupTemplateAction());
-		JSPMultiPageEditor editor = (JSPMultiPageEditor) PlatformUI
+		final JSPMultiPageEditor editor = (JSPMultiPageEditor) PlatformUI
 				.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 				.getActiveEditor();
 		this.sourceEditor = editor.getSourceEditor();
 		this.pageContext = ((VpeEditorPart) editor.getVisualEditor())
 				.getController().getPageContext();
-		((SetupTemplateAction) getAction()).setPageContext(pageContext);
-	}
-
-	/**
-	 * 
-	 */
-	public SetupTemplateContributionItem(VpePageContext pageContext,
-			StructuredTextEditor sourceEditor) {
-		super(new SetupTemplateAction(pageContext));
-		this.pageContext = pageContext;
-		this.sourceEditor = sourceEditor;
-
+		getAction().setPageContext(pageContext);
 	}
 
 	@Override
@@ -77,14 +65,14 @@ public class SetupTemplateContributionItem extends ActionContributionItem {
 					.getDomMapping().getNodeMapping(element);
 			if (elementMapping != null
 					&& elementMapping.getTemplate() != null
-					&& elementMapping.getTemplate().getType() == VpeHtmlTemplate.TYPE_ANY) {
+					&& elementMapping.getTemplate().getType() 
+							== VpeHtmlTemplate.TYPE_ANY) {
 
-				((SetupTemplateAction) getAction()).setText(NLS.bind(
+				getAction().setText(NLS.bind(
 						VpeUIMessages.SETUP_TEMPLATE_FOR_MENU,
 						element.getNodeName()));
-				((SetupTemplateAction) getAction()).setActionNode(element);
-				((SetupTemplateAction) getAction()).setData(elementMapping
-						.getTemplate().getAnyData());
+				getAction().setActionNode(element);
+				getAction().setData(elementMapping.getTemplate().getAnyData());
 				MenuItem item = new MenuItem(menu, SWT.SEPARATOR, index );
 				super.fill(menu, index+1);
 			}
@@ -92,4 +80,8 @@ public class SetupTemplateContributionItem extends ActionContributionItem {
 
 	}
 
+	@Override
+	public SetupTemplateAction getAction() {
+		return (SetupTemplateAction) super.getAction();
+	}
 }

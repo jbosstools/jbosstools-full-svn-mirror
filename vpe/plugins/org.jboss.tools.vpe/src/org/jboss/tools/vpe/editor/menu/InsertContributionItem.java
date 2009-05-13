@@ -60,18 +60,18 @@ public class InsertContributionItem extends ContributionItem {
 				.getController().getPageContext();
 	}
 
-	public InsertContributionItem(StructuredTextEditor sourceEditor,
-			VpePageContext pageContext) {
-		this.sourceEditor = sourceEditor;
-		this.pageContext = pageContext;
-	}
-
 	@Override
 	public void fill(Menu menu, int index) {
 		for (final InsertType insertItem : InsertType.values()) {
+			final MenuItem item;
+			if (index < 0) {
+				item =  new MenuItem(menu, SWT.CASCADE);
+			} else {
+				item = new MenuItem(menu, SWT.CASCADE,
+						index + insertItem.ordinal());
+			}
+
 			final String itemName = insertItem.getMessage();
-			final MenuItem item = new MenuItem(menu,
-					SWT.CASCADE, index + insertItem.ordinal());
 			item.setText(itemName);
 
 			final Menu paletteManu = new Menu(menu);

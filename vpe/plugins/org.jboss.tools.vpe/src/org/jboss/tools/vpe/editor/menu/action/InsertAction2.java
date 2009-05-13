@@ -14,9 +14,6 @@ import java.util.Properties;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.text.IUndoManager;
-import org.eclipse.jface.text.TextSelection;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;

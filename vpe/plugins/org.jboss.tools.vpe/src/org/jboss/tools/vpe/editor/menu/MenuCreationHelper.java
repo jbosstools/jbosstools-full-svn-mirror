@@ -17,8 +17,6 @@ import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.text.TextUtilities;
-import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -66,6 +64,7 @@ import org.w3c.dom.Text;
  * This is helper class is used to create context menu for VPE.
  *
  * @author Igor Zhukov (izhukov@exadel.com)
+ * @deprecated use {@link VpeMenuCreator} instead
  */
 public class MenuCreationHelper {
 

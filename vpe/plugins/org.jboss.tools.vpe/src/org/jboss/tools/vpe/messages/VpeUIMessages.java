@@ -13,13 +13,18 @@ package org.jboss.tools.vpe.messages;
 import org.eclipse.osgi.util.NLS;
 
 public class VpeUIMessages extends NLS {
-	private static final String BUNDLE_NAME = "org.jboss.tools.vpe.messages.messages";//$NON-NLS-1$
+	private static final String BUNDLE_NAME
+			= "org.jboss.tools.vpe.messages.messages";//$NON-NLS-1$
 	static {
 		// load message values from bundle file
 		NLS.initializeMessages(BUNDLE_NAME, VpeUIMessages.class);		
 	}
 	private VpeUIMessages(){}
 
+	public static String ATTRIBUTES_MENU_ITEM;
+	public static String SELECT_THIS_TAG_MENU_ITEM;
+	public static String STRIP_TAG_MENU_ITEM;
+	public static String PARENT_TAG_MENU_ITEM;
 	public static String NAMESPACE_NOT_DEFINED;
 	public static String PREFERENCES;
 	public static String REFRESH;
