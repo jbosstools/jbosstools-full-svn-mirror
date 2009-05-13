@@ -11,6 +11,7 @@
 package org.jboss.tools.smooks.configuration.editors;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,6 +27,7 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
@@ -33,6 +35,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.editors.uitls.FieldMarkerWrapper;
 import org.jboss.tools.smooks.configuration.editors.uitls.IFieldDialog;
 import org.jboss.tools.smooks.configuration.editors.uitls.IModelProcsser;
@@ -65,8 +68,9 @@ public class PropertyUICreator implements IPropertyUICreator {
 	 * org.eclipse.emf.edit.provider.IItemPropertyDescriptor, java.lang.Object,
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
-	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
-			EAttribute feature, SmooksMultiFormEditor formEditor) {
+	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
+			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
+			SmooksMultiFormEditor formEditor) {
 		if (isBeanIDRefFieldFeature(feature)) {
 			return createBeanIDRefFieldEditor(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 		}
@@ -79,9 +83,9 @@ public class PropertyUICreator implements IPropertyUICreator {
 		if (isFileSelectionFeature(feature)) {
 			return createFileSelectionFieldEditor(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 		}
-		if(isConditionSelectionFeature(feature)){
+		if (isConditionSelectionFeature(feature)) {
 			return SmooksUIUtils.createConditionsChoiceFieldEditor(parent, toolkit, propertyDescriptor, model);
-//			return parent;
+			// return parent;
 		}
 		if (feature == SmooksPackage.eINSTANCE.getAbstractReader_TargetProfile()) {
 
@@ -125,16 +129,18 @@ public class PropertyUICreator implements IPropertyUICreator {
 		return SmooksUIUtils.getJavaProject(model);
 	}
 
-	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
-			SmooksMultiFormEditor formEditor) {
+	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+		return Collections.emptyList();
 	}
 
 	protected boolean isFileSelectionFeature(EAttribute attribute) {
 		return false;
 	}
 
-	public AttributeFieldEditPart createFileSelectionFieldEditor(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
-			EAttribute feature, SmooksMultiFormEditor formEditor) {
+	public AttributeFieldEditPart createFileSelectionFieldEditor(FormToolkit toolkit, Composite parent,
+			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
+			SmooksMultiFormEditor formEditor) {
 		IFieldDialog dialog = new IFieldDialog() {
 			public Object open(Shell shell) {
 				FileSelectionWizard wizard = new FileSelectionWizard();
@@ -160,16 +166,17 @@ public class PropertyUICreator implements IPropertyUICreator {
 			}
 
 		};
-		return SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor, "Browse", dialog, (EObject) model, true,
-				getFileFiledEditorLinkListener());
+		return SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor, "Browse", dialog,
+				(EObject) model, true, getFileFiledEditorLinkListener());
 	}
 
 	protected boolean isSelectorFeature(EAttribute attribute) {
 		return false;
 	}
 
-	public AttributeFieldEditPart createSelectorFieldEditor(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
-			EAttribute feature, SmooksMultiFormEditor formEditor) {
+	public AttributeFieldEditPart createSelectorFieldEditor(FormToolkit toolkit, Composite parent,
+			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
+			SmooksMultiFormEditor formEditor) {
 		SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
 		if (ext != null) {
 			return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, ext);
@@ -181,8 +188,9 @@ public class PropertyUICreator implements IPropertyUICreator {
 		return false;
 	}
 
-	public AttributeFieldEditPart createJavaTypeSearchEditor(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
-			EAttribute feature, SmooksMultiFormEditor formEditor) {
+	public AttributeFieldEditPart createJavaTypeSearchEditor(FormToolkit toolkit, Composite parent,
+			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
+			SmooksMultiFormEditor formEditor) {
 		if (model instanceof EObject)
 			return SmooksUIUtils.createJavaTypeSearchFieldEditor(parent, toolkit, propertyDescriptor, (EObject) model);
 		return null;
@@ -192,15 +200,17 @@ public class PropertyUICreator implements IPropertyUICreator {
 		return false;
 	}
 
-	public AttributeFieldEditPart createBeanIDRefFieldEditor(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
-			EAttribute feature, SmooksMultiFormEditor formEditor) {
+	public AttributeFieldEditPart createBeanIDRefFieldEditor(FormToolkit toolkit, Composite parent,
+			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
+			SmooksMultiFormEditor formEditor) {
 		if (model instanceof EObject) {
 			AttributeFieldEditPart editPart = new AttributeFieldEditPart();
 			SmooksResourceListType smooksResourceList = getSmooksResourceList((EObject) model);
 			if (smooksResourceList != null) {
-				FieldMarkerWrapper wrapper = SmooksUIUtils.createFieldEditorLabel(null,parent, toolkit, propertyDescriptor, model, false);
+				FieldMarkerWrapper wrapper = SmooksUIUtils.createFieldEditorLabel(null, parent, toolkit,
+						propertyDescriptor, model, false);
 				editPart.setFieldMarker(wrapper.getMarker());
-				
+
 				Composite tcom = toolkit.createComposite(parent);
 				GridLayout layout = new GridLayout();
 				layout.numColumns = 2;
@@ -208,7 +218,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 				layout.marginRight = 0;
 				layout.horizontalSpacing = 0;
 				tcom.setLayout(layout);
-				
+
 				FieldMarkerComposite notificationComposite = new FieldMarkerComposite(tcom, SWT.NONE);
 				GridData gd = new GridData();
 				gd.heightHint = 8;
@@ -217,13 +227,13 @@ public class PropertyUICreator implements IPropertyUICreator {
 				gd.verticalAlignment = GridData.BEGINNING;
 				notificationComposite.setLayoutData(gd);
 				editPart.setFieldMarker(notificationComposite);
-				
+
 				final Combo combo = new Combo(tcom, SWT.BORDER);
 				editPart.setContentControl(combo);
 				gd = new GridData(GridData.FILL_HORIZONTAL);
 				combo.setLayoutData(gd);
 				tcom.setLayoutData(gd);
-				
+
 				Object editValue = SmooksUIUtils.getEditValue(propertyDescriptor, model);
 				if (editValue != null) {
 					combo.setText(editValue.toString());
@@ -284,4 +294,45 @@ public class PropertyUICreator implements IPropertyUICreator {
 		return false;
 	}
 
+	protected List<AttributeFieldEditPart> createElementSelectionSection(String sectionTitle,
+			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+			SmooksMultiFormEditor formEditor, IItemPropertyDescriptor createOnElementFeature,
+			IItemPropertyDescriptor createOnElementFeatureNS) {
+		Section section = toolkit.createSection(parent, Section.TITLE_BAR);
+		section.setText(sectionTitle);
+
+		FillLayout layout = new FillLayout();
+		layout.marginHeight = 0;
+		layout.marginWidth = 0;
+
+		section.setLayout(layout);
+
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.heightHint = 100;
+		gd.horizontalSpan = 2;
+		section.setLayoutData(gd);
+
+		Composite container = toolkit.createComposite(section);
+
+		section.setClient(container);
+
+		GridLayout glayout = new GridLayout();
+		glayout.numColumns = 2;
+		container.setLayout(glayout);
+
+		AttributeFieldEditPart editPart1 = SmooksUIUtils.createSelectorFieldEditor("Name", toolkit, container,
+				createOnElementFeature, model, formEditor.getSmooksGraphicsExt());
+		editPart1.setAttribute(createOnElementFeature.getFeature(model));
+
+		AttributeFieldEditPart editPart2 = SmooksUIUtils.createStringFieldEditor("Namespace", container, editingdomain,
+				toolkit, createOnElementFeatureNS, model, false, false, false, 0, null, SmooksUIUtils.VALUE_TYPE_VALUE,
+				null);
+		editPart2.setAttribute(createOnElementFeatureNS.getFeature(model));
+
+		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
+		list.add(editPart1);
+		list.add(editPart2);
+
+		return list;
+	}
 }

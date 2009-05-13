@@ -16,7 +16,7 @@ public class SelectorAttributes {
 	public static final String IGNORE_ROOT = "ignore_root";
 
 	public static final String INCLUDE_PARENT = "include_parent";
-	private String selectorSperator = " ";
+	private String selectorSperator = "/";
 	private String selectorPolicy = SelectorAttributes.FULL_PATH;
 	public String getSelectorSperator() {
 		return selectorSperator;

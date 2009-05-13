@@ -10,6 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.smooks;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -45,9 +48,11 @@ public class ParamTypeUICreator extends PropertyUICreator {
 	}
 
 	@Override
-	public void createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		SmooksUIUtils.createMixedTextFieldEditor("Text Value", editingdomain, toolkit, parent, model , false , 500,false,false,null,null);
 		SmooksUIUtils.createCDATAFieldEditor("CDATA Value", editingdomain, toolkit, parent, model,null);
+		
+		return Collections.emptyList();
 	}
 }
