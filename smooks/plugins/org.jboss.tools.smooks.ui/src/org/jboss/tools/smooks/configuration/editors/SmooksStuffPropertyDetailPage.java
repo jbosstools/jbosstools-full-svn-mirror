@@ -45,8 +45,8 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.editors.uitls.IModelProcsser;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
-import org.jboss.tools.smooks.model.validate.ISmooksModelValidateListener;
 
 /**
  * 
@@ -146,20 +146,23 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 			detailsComposite.pack();
 			propertyMainComposite.layout();
 
-			markPropertyUI(formEditor.getDiagnostic());
+			markPropertyUI(formEditor.getDiagnosticList());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	protected void markPropertyUI(Diagnostic diagnostic) {
+	protected void markPropertyUI(List<Diagnostic> diagnosticList) {
 		for (Iterator<?> iterator = currentPropertyUIMap.values().iterator(); iterator.hasNext();) {
 			AttributeFieldEditPart editPart = (AttributeFieldEditPart) iterator.next();
 			if (editPart.getFieldMarker() != null) {
 				editPart.getFieldMarker().clean();
 			}
 		}
-		markErrorWarningPropertyUI(diagnostic);
+		for (Iterator<?> iterator = diagnosticList.iterator(); iterator.hasNext();) {
+			Diagnostic diagnostic = (Diagnostic) iterator.next();
+			markErrorWarningPropertyUI(diagnostic);
+		}
 	}
 
 	protected void markErrorWarningPropertyUI(Diagnostic diagnostic) {
@@ -183,15 +186,20 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 					IFieldMarker marker = editPart.getFieldMarker();
 					if (marker == null)
 						return;
-					marker.setMessage(diagnostic.getMessage());
-					if (diagnostic.getSeverity() == Diagnostic.ERROR) {
-						if (marker.getMarkerType() != IFieldMarker.TYPE_ERROR)
-							marker.setMarkerType(IFieldMarker.TYPE_ERROR);
-					}
 
+					if (diagnostic.getSeverity() == Diagnostic.ERROR) {
+						if (marker.getMarkerType() != IFieldMarker.TYPE_ERROR) {
+							marker.setMarkerType(IFieldMarker.TYPE_ERROR);
+							marker.setMessage(diagnostic.getMessage());
+						}
+					}
 					if (diagnostic.getSeverity() == Diagnostic.WARNING) {
-						if (marker.getMarkerType() != IFieldMarker.TYPE_WARINING)
+						// if there is error already , don't mark warning
+						if (marker.getMarkerType() != IFieldMarker.TYPE_WARINING
+								&& marker.getMarkerType() != IFieldMarker.TYPE_ERROR) {
 							marker.setMarkerType(IFieldMarker.TYPE_WARINING);
+							marker.setMessage(diagnostic.getMessage());
+						}
 					}
 				}
 			}
@@ -469,7 +477,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 		this.isStale = isStale;
 	}
 
-	public void validateEnd(Diagnostic diagnosticResult) {
+	public void validateEnd(List<Diagnostic> diagnosticResult) {
 		markPropertyUI(diagnosticResult);
 	}
 

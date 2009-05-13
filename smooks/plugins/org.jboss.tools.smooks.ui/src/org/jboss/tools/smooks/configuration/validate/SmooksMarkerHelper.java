@@ -31,13 +31,15 @@ import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
  */
 public class SmooksMarkerHelper extends EditUIMarkerHelper {
 
+	public static final String MARKER_ID = "org.jboss.tools.smooks.ui.problem";
+	
 	public IRunnableWithProgress getWorkspaceModifyOperation(IRunnableWithProgress runnableWithProgress) {
 		return new WorkspaceModifyDelegatingOperation(runnableWithProgress);
 	}
 
 	@Override
 	protected String getMarkerID() {
-		return EValidator.MARKER;
+		return MARKER_ID;
 	}
 
 	public void createMarkers(Resource resource, Diagnostic diagnostic) {

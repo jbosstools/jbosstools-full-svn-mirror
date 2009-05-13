@@ -11,6 +11,8 @@
 package org.jboss.tools.smooks.configuration.actions;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -31,7 +33,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.validate.SmooksMarkerHelper;
-import org.jboss.tools.smooks.model.validate.SmooksModelValidator;
+import org.jboss.tools.smooks.configuration.validate.SmooksModelValidator;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -54,16 +56,24 @@ public class ValidateSmooksAction extends Action {
 			public void run(final IProgressMonitor progressMonitor) throws InvocationTargetException,
 					InterruptedException {
 				try {
-					final Diagnostic diagnostic = validate(progressMonitor);
-					shell.getDisplay().asyncExec(new Runnable() {
-						public void run() {
-							if (progressMonitor.isCanceled()) {
-								handleDiagnostic(Diagnostic.CANCEL_INSTANCE);
-							} else {
-								handleDiagnostic(diagnostic);
+					List<Diagnostic> lists = validate(progressMonitor);
+					Resource resource = editingDomain.getResourceSet().getResources().get(0);
+					if (resource != null) {
+						markerHelper.deleteMarkers(resource);
+					}
+					for (Iterator<?> iterator = lists.iterator(); iterator.hasNext();) {
+						final Diagnostic diagnostic = (Diagnostic) iterator.next();
+						shell.getDisplay().asyncExec(new Runnable() {
+							public void run() {
+								if (progressMonitor.isCanceled()) {
+									handleDiagnostic(Diagnostic.CANCEL_INSTANCE);
+								} else {
+									handleDiagnostic(diagnostic);
+								}
 							}
-						}
-					});
+						});
+					}
+
 				} finally {
 					progressMonitor.done();
 				}
@@ -85,67 +95,28 @@ public class ValidateSmooksAction extends Action {
 	}
 
 	protected void handleDiagnostic(Diagnostic diagnostic) {
-		int severity = diagnostic.getSeverity();
-		String title = null;
-		String message = null;
-
-		if (severity == Diagnostic.ERROR || severity == Diagnostic.WARNING) {
-			title = "Error";
-			message = "Validate Messages";
-		} else {
-			title = "Information";
-			message = "Validate success";
-		}
-
-		int result = 0;
+		
 		if (diagnostic.getSeverity() == Diagnostic.OK) {
-//			MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), title,
-//					message);
-//			result = Window.CANCEL;
 			return;
 		} else {
-			result = DiagnosticDialog.open(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), title,
-					message, diagnostic);
 		}
 
 		if (markerHelper != null) {
-			Resource resource = editingDomain.getResourceSet().getResources().get(0);
+
 			if (resource != null) {
-				markerHelper.deleteMarkers(resource);
-			}
-
-			if (result == Window.OK) {
-				if (!diagnostic.getChildren().isEmpty()) {
-					List<?> data = (diagnostic.getChildren().get(0)).getData();
-					if (!data.isEmpty() && data.get(0) instanceof EObject) {
-						Object part = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-								.getActivePart();
-						if (part instanceof ISetSelectionTarget) {
-							((ISetSelectionTarget) part).selectReveal(new StructuredSelection(data.get(0)));
-						} else if (part instanceof IViewerProvider) {
-							Viewer viewer = ((IViewerProvider) part).getViewer();
-							if (viewer != null) {
-								viewer.setSelection(new StructuredSelection(data.get(0)), true);
-							}
-						}
-					}
-				}
-
-				if (resource != null) {
-					for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
-						markerHelper.createMarkers(resource, childDiagnostic);
-					}
+				for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
+					markerHelper.createMarkers(resource, childDiagnostic);
 				}
 			}
 		}
 	}
 
-	protected Diagnostic validate(IProgressMonitor progressMonitor) {
+	protected List<Diagnostic> validate(IProgressMonitor progressMonitor) {
 		if (resource != null && editingDomain != null) {
 			validator = new SmooksModelValidator(resource.getContents(), editingDomain);
 			return validator.validate(progressMonitor);
 		}
-		return Diagnostic.OK_INSTANCE;
+		return Collections.emptyList();
 	}
 
 	public Resource getResource() {

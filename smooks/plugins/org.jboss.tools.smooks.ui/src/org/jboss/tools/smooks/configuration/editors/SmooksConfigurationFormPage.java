@@ -44,12 +44,12 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
 import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelectionWizard;
+import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtFactory;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks.model.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -286,7 +286,7 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 		}
 	}
 
-	public void validateEnd(Diagnostic diagnosticResult) {
+	public void validateEnd(List<Diagnostic> diagnosticResult) {
 	}
 
 	public void validateStart() {
