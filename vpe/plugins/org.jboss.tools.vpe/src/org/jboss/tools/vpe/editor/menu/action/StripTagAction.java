@@ -82,7 +82,7 @@ public class StripTagAction extends Action {
 			return false;
 		}
 		if (childrenLength == 1 
-				&& children.item(0).getNodeValue().trim().isEmpty()) {
+				&& children.item(0).getNodeValue().trim().length()==0) {
 			return false;
 		}
 
