@@ -39,6 +39,7 @@ import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
  */
 public class SmooksConfigurationFileNewWizard extends Wizard implements INewWizard {
 	private SmooksFileContainerSelectionPage containerSelectionPage;
+	private SmooksVersionSelectionPage versionSelectionPage;
 	private ISelection selection;
 
 	/**
@@ -58,6 +59,9 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		containerSelectionPage = new SmooksFileContainerSelectionPage("Smooks Configuration File",
 				(IStructuredSelection) selection);
 		addPage(containerSelectionPage);
+		
+		versionSelectionPage = new SmooksVersionSelectionPage("Smooks Version Selection");
+		addPage(versionSelectionPage);
 	}
 
 	/**
@@ -67,7 +71,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 	public boolean performFinish() {
 		final IPath containerPath = containerSelectionPage.getContainerFullPath();
 		final String fileName = containerSelectionPage.getFileName();
-		final String version = containerSelectionPage.getVersion();
+		final String version = versionSelectionPage.getVersion();
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException {
 				try {
