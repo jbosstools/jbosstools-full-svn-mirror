@@ -10,7 +10,10 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.smooks;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -33,8 +36,9 @@ public class SmooksResourceListTypeUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.edit.provider.IItemPropertyDescriptor, java.lang.Object,
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
-	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
-			EAttribute feature, SmooksMultiFormEditor formEditor) {
+	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
+			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
+			SmooksMultiFormEditor formEditor) {
 		if (feature == SmooksPackage.eINSTANCE.getSmooksResourceListType_AbstractReaderGroup()) {
 		}
 		if (feature == SmooksPackage.eINSTANCE.getSmooksResourceListType_AbstractResourceConfigGroup()) {
@@ -48,11 +52,45 @@ public class SmooksResourceListTypeUICreator extends PropertyUICreator {
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.configuration.editors.PropertyUICreator#createExtendUI
+	 * (org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain,
+	 * org.eclipse.ui.forms.widgets.FormToolkit,
+	 * org.eclipse.swt.widgets.Composite, java.lang.Object,
+	 * org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor)
+	 */
 	@Override
-	public boolean isSelectorFeature(EAttribute attribute) {
-		if (attribute == SmooksPackage.eINSTANCE.getSmooksResourceListType_DefaultSelector()) {
+	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+
+		return createElementSelectionSection("Default Selector", editingdomain, toolkit, parent, model, formEditor,
+				SmooksPackage.eINSTANCE.getSmooksResourceListType_DefaultSelector(), SmooksPackage.eINSTANCE
+						.getSmooksResourceListType_DefaultSelectorNamespace());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.configuration.editors.PropertyUICreator#ignoreProperty
+	 * (org.eclipse.emf.ecore.EAttribute)
+	 */
+	@Override
+	public boolean ignoreProperty(EAttribute feature) {
+		if (feature == SmooksPackage.eINSTANCE.getSmooksResourceListType_DefaultSelector()) {
 			return true;
 		}
+		if (feature == SmooksPackage.eINSTANCE.getSmooksResourceListType_DefaultSelectorNamespace()) {
+			return true;
+		}
+		return super.ignoreProperty(feature);
+	}
+
+	@Override
+	public boolean isSelectorFeature(EAttribute attribute) {
 		return super.isSelectorFeature(attribute);
 	}
 

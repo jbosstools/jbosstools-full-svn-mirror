@@ -10,8 +10,11 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.javabean;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -46,6 +49,24 @@ public class BindingsPropertyUICreator extends PropertyUICreator {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see
+	 * org.jboss.tools.smooks.configuration.editors.PropertyUICreator#ignoreProperty
+	 * (org.eclipse.emf.ecore.EAttribute)
+	 */
+	@Override
+	public boolean ignoreProperty(EAttribute feature) {
+		if (feature == JavabeanPackage.eINSTANCE.getBindingsType_CreateOnElement()) {
+			return true;
+		}
+		if (feature == JavabeanPackage.eINSTANCE.getBindingsType_CreateOnElementNS()) {
+			return true;
+		}
+		return super.ignoreProperty(feature);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @seeorg.jboss.tools.smooks.configuration.editors.IPropertyUICreator#
 	 * createPropertyUI(org.eclipse.ui.forms.widgets.FormToolkit,
 	 * org.eclipse.swt.widgets.Composite,
@@ -53,25 +74,39 @@ public class BindingsPropertyUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
-			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,SmooksMultiFormEditor formEditor) {
+			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
+			SmooksMultiFormEditor formEditor) {
 		if (feature == JavabeanPackage.eINSTANCE.getBindingsType_Class()) {
 			return createBeanClassTextWithButton(parent, toolkit, propertyDescriptor, model);
 		}
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
-	
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.configuration.editors.PropertyUICreator#createExtendUI
+	 * (org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain,
+	 * org.eclipse.ui.forms.widgets.FormToolkit,
+	 * org.eclipse.swt.widgets.Composite, java.lang.Object,
+	 * org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor)
+	 */
+	@Override
+	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+		return createElementSelectionSection("Create On Element", editingdomain, toolkit, parent, model, formEditor,
+				JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT,
+				JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT_NS);
+	}
 
 	@Override
 	public boolean isSelectorFeature(EAttribute attribute) {
-		if(attribute == JavabeanPackage.eINSTANCE.getBindingsType_CreateOnElement()){
-			return true;
-		}
 		return super.isSelectorFeature(attribute);
 	}
 
 	protected AttributeFieldEditPart createBeanClassTextWithButton(Composite composite, FormToolkit toolkit,
 			final IItemPropertyDescriptor propertyDescriptor, final Object model) {
-		return SmooksUIUtils.createJavaTypeSearchFieldEditor(composite, toolkit, propertyDescriptor, (EObject)model);
+		return SmooksUIUtils.createJavaTypeSearchFieldEditor(composite, toolkit, propertyDescriptor, (EObject) model);
 	}
 }

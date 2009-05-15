@@ -10,7 +10,10 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.smooks;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -41,8 +44,7 @@ public class ResourceConfigTypeUICreator extends PropertyUICreator {
 		if (feature == SmooksPackage.eINSTANCE.getResourceConfigType_Selector()) {
 			SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
 			if (ext != null) {
-				return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model,
-						ext);
+				return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, ext);
 			}
 		}
 		if (feature == SmooksPackage.eINSTANCE.getResourceConfigType_SelectorNamespace()) {
@@ -58,6 +60,42 @@ public class ResourceConfigTypeUICreator extends PropertyUICreator {
 			return true;
 		}
 		return super.isSelectorFeature(attribute);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.configuration.editors.PropertyUICreator#createExtendUI
+	 * (org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain,
+	 * org.eclipse.ui.forms.widgets.FormToolkit,
+	 * org.eclipse.swt.widgets.Composite, java.lang.Object,
+	 * org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor)
+	 */
+	@Override
+	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+		return createElementSelectionSection("Selector", editingdomain, toolkit, parent, model, formEditor,
+				SmooksPackage.eINSTANCE.getResourceConfigType_Selector(), SmooksPackage.eINSTANCE
+						.getResourceConfigType_SelectorNamespace());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.configuration.editors.PropertyUICreator#ignoreProperty
+	 * (org.eclipse.emf.ecore.EAttribute)
+	 */
+	@Override
+	public boolean ignoreProperty(EAttribute feature) {
+		if (feature == SmooksPackage.eINSTANCE.getResourceConfigType_Selector()) {
+			return true;
+		}
+		if (feature == SmooksPackage.eINSTANCE.getResourceConfigType_SelectorNamespace()) {
+			return true;
+		}
+		return super.ignoreProperty(feature);
 	}
 
 }

@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.groovy;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -38,20 +37,16 @@ public class GroovyUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
-		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-		SmooksMultiFormEditor formEditor) {
+			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
+			SmooksMultiFormEditor formEditor) {
 		if (feature == GroovyPackage.eINSTANCE.getGroovy_Imports()) {
 		}
 		if (feature == GroovyPackage.eINSTANCE.getGroovy_Script()) {
 		}
 		if (feature == GroovyPackage.eINSTANCE.getGroovy_ExecuteBefore()) {
 		}
-		if (feature == GroovyPackage.eINSTANCE.getGroovy_ExecuteOnElementNS()) {
-		}
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
-	
-	
 
 	@Override
 	public boolean isSelectorFeature(EAttribute attribute) {
@@ -61,17 +56,24 @@ public class GroovyUICreator extends PropertyUICreator {
 		return super.isSelectorFeature(attribute);
 	}
 
-
-
 	@Override
 	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-		Composite parent, Object model, SmooksMultiFormEditor formEditor) {
-		return Collections.emptyList();
-//		SmooksUIUtils.createCommentFieldEditor("Script Contents",editingdomain, toolkit, parent, model);
+			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+		return createElementSelectionSection("Execute On Element", editingdomain, toolkit, parent, model, formEditor,
+				GroovyPackage.eINSTANCE.getGroovy_ExecuteOnElement(), GroovyPackage.eINSTANCE
+						.getGroovy_ExecuteOnElementNS());
+		// SmooksUIUtils.createCommentFieldEditor("Script Contents",editingdomain,
+		// toolkit, parent, model);
 	}
 
 	@Override
 	public boolean ignoreProperty(EAttribute feature) {
+		if (feature == GroovyPackage.eINSTANCE.getGroovy_ExecuteOnElement()) {
+			return true;
+		}
+		if (feature == GroovyPackage.eINSTANCE.getGroovy_ExecuteOnElementNS()) {
+			return true;
+		}
 		return super.ignoreProperty(feature);
 	}
 }
