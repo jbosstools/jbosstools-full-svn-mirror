@@ -39,6 +39,7 @@ import org.jboss.tools.smooks.configuration.editors.groovy.GroovyUICreator;
 import org.jboss.tools.smooks.configuration.editors.groovy.ScriptUICreator;
 import org.jboss.tools.smooks.configuration.editors.iorouting.IORouterUICreator;
 import org.jboss.tools.smooks.configuration.editors.javabean.BindingsPropertyUICreator;
+import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanExpressionUICreator;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanValueUICreator;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanWiringUICreator;
 import org.jboss.tools.smooks.configuration.editors.jms.ConnectionUICreator;
@@ -86,6 +87,7 @@ import org.jboss.tools.smooks.model.groovy.impl.GroovyImpl;
 import org.jboss.tools.smooks.model.groovy.impl.ScriptTypeImpl;
 import org.jboss.tools.smooks.model.iorouting.impl.IORouterImpl;
 import org.jboss.tools.smooks.model.javabean.impl.BindingsTypeImpl;
+import org.jboss.tools.smooks.model.javabean.impl.ExpressionTypeImpl;
 import org.jboss.tools.smooks.model.javabean.impl.ValueTypeImpl;
 import org.jboss.tools.smooks.model.javabean.impl.WiringTypeImpl;
 import org.jboss.tools.smooks.model.jmsrouting.impl.ConnectionImpl;
@@ -149,6 +151,7 @@ public class PropertyUICreatorManager {
 		map.put(BindingsTypeImpl.class, new BindingsPropertyUICreator());
 		map.put(ValueTypeImpl.class, new JavabeanValueUICreator());
 		map.put(WiringTypeImpl.class, new JavabeanWiringUICreator());
+		map.put(ExpressionTypeImpl.class,new JavabeanExpressionUICreator());
 
 		// for smooks models
 		map.put(ConditionTypeImpl.class, new ConditionTypeUICreator());

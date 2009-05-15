@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -296,6 +297,31 @@ public class PropertyUICreator implements IPropertyUICreator {
 
 	protected List<AttributeFieldEditPart> createElementSelectionSection(String sectionTitle,
 			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+			SmooksMultiFormEditor formEditor, EAttribute nameAttribute, EAttribute namespaceAttribute) {
+		IItemPropertySource itemPropertySource = (IItemPropertySource) editingdomain.getAdapterFactory().adapt(model,
+				IItemPropertySource.class);
+		List<IItemPropertyDescriptor> propertyDes = itemPropertySource.getPropertyDescriptors(model);
+		IItemPropertyDescriptor createOnElementFeature = null;
+		IItemPropertyDescriptor createOnElementFeatureNS = null;
+		for (Iterator<?> iterator = propertyDes.iterator(); iterator.hasNext();) {
+			IItemPropertyDescriptor itemPropertyDescriptor = (IItemPropertyDescriptor) iterator.next();
+			if (itemPropertyDescriptor.getFeature(model) == nameAttribute) {
+				createOnElementFeature = itemPropertyDescriptor;
+			}
+			if (itemPropertyDescriptor.getFeature(model) == namespaceAttribute) {
+				createOnElementFeatureNS = itemPropertyDescriptor;
+			}
+		}
+		if (createOnElementFeature == null || createOnElementFeatureNS == null) {
+			return Collections.emptyList();
+		}
+
+		return createElementSelectionSection(sectionTitle, editingdomain, toolkit, parent, model, formEditor,
+				createOnElementFeature, createOnElementFeatureNS);
+	}
+
+	protected List<AttributeFieldEditPart> createElementSelectionSection(String sectionTitle,
+			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
 			SmooksMultiFormEditor formEditor, IItemPropertyDescriptor createOnElementFeature,
 			IItemPropertyDescriptor createOnElementFeatureNS) {
 		Section section = toolkit.createSection(parent, Section.TITLE_BAR);
@@ -319,12 +345,19 @@ public class PropertyUICreator implements IPropertyUICreator {
 		GridLayout glayout = new GridLayout();
 		glayout.numColumns = 2;
 		container.setLayout(glayout);
-
-		AttributeFieldEditPart editPart1 = SmooksUIUtils.createSelectorFieldEditor("Name", toolkit, container,
+		String name = "Name";
+		if (((EAttribute) createOnElementFeature.getFeature(model)).isRequired()) {
+			name += "*";
+		}
+		AttributeFieldEditPart editPart1 = SmooksUIUtils.createSelectorFieldEditor(name, toolkit, container,
 				createOnElementFeature, model, formEditor.getSmooksGraphicsExt());
 		editPart1.setAttribute(createOnElementFeature.getFeature(model));
 
-		AttributeFieldEditPart editPart2 = SmooksUIUtils.createStringFieldEditor("Namespace", container, editingdomain,
+		String namespace = "Namespace";
+		if (((EAttribute) createOnElementFeatureNS.getFeature(model)).isRequired()) {
+			namespace += "*";
+		}
+		AttributeFieldEditPart editPart2 = SmooksUIUtils.createStringFieldEditor(namespace, container, editingdomain,
 				toolkit, createOnElementFeatureNS, model, false, false, false, 0, null, SmooksUIUtils.VALUE_TYPE_VALUE,
 				null);
 		editPart2.setAttribute(createOnElementFeatureNS.getFeature(model));
