@@ -45,7 +45,7 @@ public class SmooksVersionSelectionPage extends WizardPage {
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		Label label = new Label(buttonComposite, SWT.NONE);
-		label.setText("Smooks Version");
+		label.setText("Smooks configuration file version");
 		
 
 		
@@ -80,13 +80,13 @@ public class SmooksVersionSelectionPage extends WizardPage {
 
 	public SmooksVersionSelectionPage(String pageName, String title, ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
-		this.setTitle("Smooks version selection");
+		this.setTitle("Smooks configuration file version selection");
 		this.setDescription("Please select Smooks configuration file version");
 	}
 
 	public SmooksVersionSelectionPage(String pageName) {
 		super(pageName);
-		this.setTitle("Smooks version selection");
+		this.setTitle("Smooks configuration file version selection");
 		this.setDescription("Please select Smooks configuration file version");
 	}
 
