@@ -2191,10 +2191,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		dropCommand.getDefaultModel().setPromptForTagAttributesRequired(
 				promptAttributes);
 
-		// because it is external, convert path to URL
-		final String mimeData = DropUtils.convertPathToUrl(data);
-
-		dropCommand.execute(new DropData(flavor, mimeData, sourceEditor
+		dropCommand.execute(new DropData(flavor, data, sourceEditor
 				.getEditorInput(), (ISourceViewer) sourceEditor
 				.getAdapter(ISourceViewer.class), new VpeSelectionProvider(
 				range.x, range.y), container));
@@ -2234,7 +2231,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
             nsIFile aFile = (nsIFile) aValue.queryInterface(nsIFile.NS_IFILE_IID);
             
             if (aValue != null) {
-                data = aFile.getPath();
+        		// because it is external, convert the path to URL
+                final String path = aFile.getPath();
+				data = path != null ? DropUtils.convertPathToUrl(path) 
+									: null;
                 aFlavor = DndUtil.kFileMime;
             }
 
