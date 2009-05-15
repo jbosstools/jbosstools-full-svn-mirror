@@ -333,7 +333,20 @@
 					feature of auto-redeploy. It means that you don&apos;t need to restart
 					<property>JBoss Server</property>. Any changes made in the application in
 					exploded format will trigger a redeployment on the server.</para>
+			
+				<para>You can also use the "Finger touch" button for a quick restart of the project without restarting the server:</para>
+				<figure>
+					<title>Finger Touch button</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/jsp_application/jsp_application_19_finger_touch.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>	        
+				<para>The "Finger" touches descriptors dependent on project (i.e. web.xml for WAR, application.xml for EAR,  jboss-esb.xml in ESB projects).</para>
+				
 			</section>
+			
 		</section>
 		
 		<section id="Previewtab">
