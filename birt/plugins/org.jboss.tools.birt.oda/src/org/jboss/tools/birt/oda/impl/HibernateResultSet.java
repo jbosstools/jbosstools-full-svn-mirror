@@ -25,6 +25,8 @@ import org.eclipse.datatools.connectivity.oda.IResultSet;
 import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
 import org.eclipse.osgi.util.NLS;
+import org.hibernate.Session;
+import org.jboss.tools.birt.oda.IOdaFactory;
 import org.jboss.tools.birt.oda.Messages;
 
 /**
@@ -38,12 +40,16 @@ public class HibernateResultSet implements IResultSet {
 	
 	private int rowNumber = -1;
 	private boolean wasNull;
+	private HibernateResult hibernateResult;
 	
 	private static DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");	 //$NON-NLS-1$
 
 	public HibernateResultSet(HibernateOdaQuery query) throws OdaException {
 		this.query = query;
-		query.getConnection().getOdaSessionFactory().executeQuery(query);
+		HibernateConnection connection = query.getConnection();
+		IOdaFactory odaSessionFactory = connection.getOdaSessionFactory();
+		Session session = connection.getSession();
+		hibernateResult = odaSessionFactory.executeQuery(query,session);
 	}
 
 	/*
@@ -75,7 +81,7 @@ public class HibernateResultSet implements IResultSet {
 	 */
 	public boolean next() throws OdaException {
 		if (getIterator().hasNext()) {
-			query.getConnection().getOdaSessionFactory().next();
+			hibernateResult.next();
 			rowNumber++;
 			return true;
 		}
@@ -84,22 +90,18 @@ public class HibernateResultSet implements IResultSet {
 	}
 
 	private Iterator getIterator() {
-		return query.getConnection().getOdaSessionFactory().getIterator();
+		return hibernateResult.getIterator();
 	}
 
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IResultSet#close()
 	 */
 	public void close() throws OdaException {
-		List result = getResult();
-		if (result != null)
-			result.clear();
-		query.getConnection().getOdaSessionFactory().close();
-		result = null;
+		hibernateResult.close();
 	}
 
 	private List getResult() {
-		return query.getConnection().getOdaSessionFactory().getResult();
+		return hibernateResult.getResult();
 	}
 
 	/*
@@ -111,7 +113,7 @@ public class HibernateResultSet implements IResultSet {
 	}
 
 	private Object getResult(int rstcol) throws OdaException {
-		return query.getConnection().getOdaSessionFactory().getResult(rstcol);
+		return hibernateResult.getResult(rstcol);
 	}
 
 	/*

@@ -21,6 +21,7 @@ import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
 import org.eclipse.datatools.connectivity.oda.SortSpec;
 import org.eclipse.datatools.connectivity.oda.spec.QuerySpecification;
+import org.hibernate.Session;
 
 /**
  * Implementation class of IQuery for an ODA runtime driver.
@@ -31,9 +32,11 @@ public class HibernateOdaQuery implements IQuery {
 	private HibernateConnection connection;
 	private HibernateResultSetMetaData resultSetMetaData;
 	private HibernateParameterMetaData parameterMetaData = new HibernateParameterMetaData();
+	private Session session;
 
 	public HibernateOdaQuery(HibernateConnection connection) {
 		this.connection = connection;
+		this.session = connection.getSession();
 	}
 
 	/*
@@ -42,7 +45,7 @@ public class HibernateOdaQuery implements IQuery {
 	 */
 	public void prepare(String queryText) throws OdaException {
 		this.resultSetMetaData = getConnection().getOdaSessionFactory()
-				.prepare(queryText);
+				.prepare(queryText,session);
 	}
 
 	/*
