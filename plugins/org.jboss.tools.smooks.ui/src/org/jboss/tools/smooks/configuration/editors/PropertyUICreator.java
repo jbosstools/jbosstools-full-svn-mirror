@@ -252,6 +252,10 @@ public class PropertyUICreator implements IPropertyUICreator {
 				final Object cmodel = model;
 				combo.addModifyListener(new ModifyListener() {
 					public void modifyText(ModifyEvent e) {
+						if(combo.getText() == null || combo.getText().length() ==0){
+							ip.setPropertyValue(cmodel, null);
+							return;
+						}
 						Object editValue = SmooksUIUtils.getEditValue(ip, cmodel);
 						if (combo.getText().equals(editValue)) {
 							return;

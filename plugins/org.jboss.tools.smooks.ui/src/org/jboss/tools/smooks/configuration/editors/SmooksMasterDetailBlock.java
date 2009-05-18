@@ -133,6 +133,10 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		detailsPart.registerPage(EObject.class, new SmooksStuffPropertyDetailPage(
 			(SmooksMultiFormEditor) this.formEditor));
 	}
+	
+	protected void refreshSmooksTreeViewer(){
+		smooksTreeViewer.refresh();
+	}
 
 	protected void createSmooksTreeViewer(FormToolkit tool, final IManagedForm managedForm,
 		Composite rootMainControl) {
@@ -158,6 +162,8 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		tableComposite.setLayout(fillLayout);
 		smooksTreeViewer = new TreeViewer(tableComposite, SWT.NONE);
 		smooksTreeViewer.addSelectionChangedListener(this);
+		
+		
 		
 		smooksTreeViewer.setContentProvider(new AdapterFactoryContentProvider(editingDomain
 			.getAdapterFactory()));

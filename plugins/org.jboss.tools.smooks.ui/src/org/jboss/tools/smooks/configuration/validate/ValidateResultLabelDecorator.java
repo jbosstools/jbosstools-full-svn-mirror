@@ -26,7 +26,9 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelDecorator;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
@@ -106,7 +108,7 @@ public class ValidateResultLabelDecorator extends LabelDecorator implements ILab
 
 	protected int markErrorWarningPropertyUI(Diagnostic diagnostic, Object model) {
 		if (diagnostic == null || diagnostic.getSeverity() == Diagnostic.OK) {
-			return Diagnostic.OK;
+			return -1;
 		}
 		List<?> data = diagnostic.getData();
 		for (Object object : data) {
@@ -128,36 +130,66 @@ public class ValidateResultLabelDecorator extends LabelDecorator implements ILab
 				return i;
 			}
 		}
-
 		return -1;
-
 	}
 
-	public void decorate(Object element, IDecoration decoration) {
+	protected int markErrorWarningPropertyUI(List<Diagnostic> Listdiagnostic, Object model) {
+		int type = -1;
+		for (Iterator<?> iterator = Listdiagnostic.iterator(); iterator.hasNext();) {
+			Diagnostic diagnostic = (Diagnostic) iterator.next();
+			type = markErrorWarningPropertyUI(diagnostic, model);
+			if (type == -1) {
+				continue;
+			}
+			if (type == Diagnostic.ERROR) {
+				return type;
+			}
+		}
+		return type;
+	}
+
+	public void decorate(Object element, IDecoration d) {
 		try {
 			element = AdapterFactoryEditingDomain.unwrap(element);
 			if (element instanceof AbstractAnyType) {
-				IResource resource = SmooksUIUtils.getResource((EObject) element);
-				IWorkbenchWindow window = SmooksConfigurationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow();
-				if (window == null) {
-					return;
-				}
-				SmooksMultiFormEditor editor = (SmooksMultiFormEditor) window.getActivePage().findEditor(
-						new FileEditorInput((IFile) resource));
-				int type = -1;
-//				int type = markErrorWarningPropertyUI(editor.getDiagnosticList(), element);
-				decoration.addOverlay(null, IDecoration.BOTTOM_RIGHT);
-				if (type == Diagnostic.ERROR) {
-					decoration.addOverlay(SmooksConfigurationActivator.getDefault().getImageRegistry().getDescriptor(
-							GraphicsConstants.IMAGE_OVR_ERROR), IDecoration.BOTTOM_RIGHT);
-				}
-				if (type == Diagnostic.WARNING) {
-					decoration.addOverlay(SmooksConfigurationActivator.getDefault().getImageRegistry().getDescriptor(
-							GraphicsConstants.IMAGE_OVR_WARING), IDecoration.BOTTOM_RIGHT);
-				}
+				final IResource resource = SmooksUIUtils.getResource((EObject) element);
+				final IDecoration decoration = d;
+				final Object fm = element;
+				Display.getDefault().syncExec(new Runnable() {
+
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see java.lang.Runnable#run()
+					 */
+					public void run() {
+						IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+						if (window == null) {
+							return;
+						}
+						SmooksMultiFormEditor editor = (SmooksMultiFormEditor) window.getActivePage().findEditor(
+								new FileEditorInput((IFile) resource));
+						if (editor == null)
+							return;
+						int type = -1;
+						type = markErrorWarningPropertyUI(editor.getDiagnosticList(), fm);
+						if (type == -1)
+							return;
+						decoration.addOverlay(null, IDecoration.BOTTOM_RIGHT);
+						if (type == Diagnostic.ERROR) {
+							decoration.addOverlay(SmooksConfigurationActivator.getDefault().getImageRegistry()
+									.getDescriptor(GraphicsConstants.IMAGE_OVR_ERROR), IDecoration.BOTTOM_RIGHT);
+						}
+						if (type == Diagnostic.WARNING) {
+							decoration.addOverlay(SmooksConfigurationActivator.getDefault().getImageRegistry()
+									.getDescriptor(GraphicsConstants.IMAGE_OVR_WARING), IDecoration.BOTTOM_RIGHT);
+						}
+					}
+
+				});
 			}
 		} catch (Exception e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 

@@ -55,10 +55,10 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 1, 2009
  */
-public class SmooksConfigurationFormPage extends FormPage implements ISmooksModelValidateListener{
+public class SmooksConfigurationFormPage extends FormPage implements ISmooksModelValidateListener {
 
 	private SmooksMasterDetailBlock masterDetailBlock = null;
-	
+
 	private TableViewer inputDataViewer;
 
 	public SmooksConfigurationFormPage(FormEditor editor, String id, String title) {
@@ -78,10 +78,10 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 		EObject smooksModel = ((SmooksMultiFormEditor) getEditor()).getSmooksModel();
 		if (smooksModel != null) {
 			EObject parent = smooksModel;
-			while(parent != null){
+			while (parent != null) {
 				EObject old = parent;
 				parent = parent.eContainer();
-				if(parent == null){
+				if (parent == null) {
 					parent = old;
 					break;
 				}
@@ -106,8 +106,8 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 	}
 
 	protected void createMasterDetailBlock(IManagedForm managedForm) {
-		masterDetailBlock = new SmooksMasterDetailBlock(getEditor(), (AdapterFactoryEditingDomain) ((SmooksMultiFormEditor) getEditor())
-				.getEditingDomain());
+		masterDetailBlock = new SmooksMasterDetailBlock(getEditor(),
+				(AdapterFactoryEditingDomain) ((SmooksMultiFormEditor) getEditor()).getEditingDomain());
 		masterDetailBlock.createContent(managedForm);
 	}
 
@@ -215,7 +215,8 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 		wizard.setInput(getEditorInput());
 		wizard.setSite(getEditorSite());
 		wizard.setForcePreviousAndNextButtons(true);
-		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(getEditorSite().getShell(), wizard);
+		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(
+				getEditorSite().getShell(), wizard);
 		if (dialog.open() == WizardDialog.OK) {
 			IStructuredDataSelectionWizard wizard1 = dialog.getCurrentCreationWizard();
 			String type = wizard1.getInputDataTypeID();
@@ -287,10 +288,12 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 	}
 
 	public void validateEnd(List<Diagnostic> diagnosticResult) {
+		if (masterDetailBlock != null)
+			masterDetailBlock.refreshSmooksTreeViewer();
 	}
 
 	public void validateStart() {
-		
+
 	}
 
 }
