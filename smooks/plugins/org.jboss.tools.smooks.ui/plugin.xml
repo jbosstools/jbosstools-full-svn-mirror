@@ -60,9 +60,17 @@
              Decorate smooks configuration page viewer
           </description>
           <enablement>
-             <objectClass
-                   name="org.jboss.tools.smooks.model.common.AbstractAnyType">
-             </objectClass>
+             <or>
+                <objectClass
+                      name="org.eclipse.emf.edit.provider.IWrapperItemProvider">
+                </objectClass>
+                <objectClass
+                      name="org.jboss.tools.smooks.model.common.AbstractAnyType">
+                </objectClass>
+                <objectClass
+                      name="org.eclipse.emf.ecore.util.FeatureMap$Entry">
+                </objectClass>
+             </or>
           </enablement>
        </decorator>
     </extension>
