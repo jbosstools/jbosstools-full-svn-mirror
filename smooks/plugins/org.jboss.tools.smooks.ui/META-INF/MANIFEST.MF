@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
+Bundle-Name: Smooks Tools UI Plug-in
 Bundle-SymbolicName: org.jboss.tools.smooks.ui;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jboss.tools.smooks.configuration.SmooksConfigurationActivator
@@ -21,6 +21,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Bundle-Vendor: %providerName
+Bundle-Vendor: JBoss, a division of Red Hat
 Bundle-ClassPath: libs/dom4j-1.6.1.jar,
  .
