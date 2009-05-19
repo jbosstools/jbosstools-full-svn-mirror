@@ -88,5 +88,27 @@
              name="uri">
        </attribute>
     </extension>
+    <extension
+          id="org.jboss.tools.smooks.configuration.validator"
+          name="Smooks File Validator"
+          point="org.eclipse.wst.validation.validatorV2">
+       <validator
+             build="true"
+             class="org.jboss.tools.smooks.configuration.validate.SmooksModelValidator"
+             manual="true"
+             version="1">
+          <include>
+             <rules>
+                <contentType
+                      exactMatch="true"
+                      id="org.jboss.tools.smooks.ui.smooks.contentType">
+                </contentType>
+             </rules>
+          </include>
+          <group
+                id="org.eclipse.wst.sse.core.structuredModelGroup">
+          </group>
+       </validator>
+    </extension>
 
 </plugin>

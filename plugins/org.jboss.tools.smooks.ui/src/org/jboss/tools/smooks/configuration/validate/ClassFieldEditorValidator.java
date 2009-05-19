@@ -16,7 +16,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -31,7 +30,7 @@ import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
  * @author Dart (dpeng@redhat.com)
  * 
  */
-public class ClassFieldEditorValidator implements ISmooksValidator {
+public class ClassFieldEditorValidator extends AbstractValidator {
 
 	private ProjectClassLoader classLoader;
 
@@ -59,6 +58,12 @@ public class ClassFieldEditorValidator implements ISmooksValidator {
 				BindingsType bindings = (BindingsType) object;
 				classLoader = getClassLoader(bindings);
 				String clazz = bindings.getClass_();
+				if (clazz != null) {
+					clazz = clazz.trim();
+					if (clazz.endsWith("[]")) {
+						clazz = clazz.substring(0, clazz.length() - 2);
+					}
+				}
 				Class<?> clazz1 = null;
 				if (clazz != null && classLoader != null) {
 					try {
@@ -69,8 +74,7 @@ public class ClassFieldEditorValidator implements ISmooksValidator {
 				}
 				String message = "Can't find class : \"" + clazz + "\"";
 				if (clazz1 == null) {
-					list.add(new BasicDiagnostic(Diagnostic.WARNING, "org.jboss.tools", 0, message, new Object[] {
-							bindings, JavabeanPackage.Literals.BINDINGS_TYPE__CLASS }));
+					list.add(newWaringDiagnostic(message, bindings, JavabeanPackage.Literals.BINDINGS_TYPE__CLASS));
 				}
 			}
 
