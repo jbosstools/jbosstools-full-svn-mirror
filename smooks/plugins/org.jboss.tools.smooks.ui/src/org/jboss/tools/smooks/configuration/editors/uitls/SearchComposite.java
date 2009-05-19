@@ -41,8 +41,12 @@ public class SearchComposite extends Composite {
 		gl.makeColumnsEqualWidth = false;
 		gl.marginHeight = 0;
 		this.setLayout(gl);
+		int textStyle = SWT.NONE;
+		if(SmooksUIUtils.isLinuxOS()){
+			textStyle = SWT.BORDER;
+		}
 		if (toolkit != null) {
-			text = toolkit.createText(this, "");
+			text = toolkit.createText(this, "" , textStyle);
 		} else {
 			text = new Text(this, SWT.BORDER);
 		}
