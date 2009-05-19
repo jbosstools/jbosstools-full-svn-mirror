@@ -41,6 +41,7 @@ import org.mozilla.interfaces.nsIWebProgress;
 import org.mozilla.interfaces.nsIWebProgressListener;
 import org.mozilla.xpcom.GREVersionRange;
 import org.mozilla.xpcom.Mozilla;
+import org.mozilla.xpcom.XPCOMException;
 import org.osgi.framework.Bundle;
 
 /**
@@ -70,6 +71,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	private Browser browser = null;
 	private nsIWebBrowser webBrowser = null;
 	private long chrome_flags = nsIWebBrowserChrome.CHROME_ALL;
+	protected static final long NS_ERROR_FAILURE = 0x80004005L;
 	
 	static {
 		XULRUNNER_BUNDLE = (new StringBuffer("org.mozilla.xulrunner")) // $NON-NLS-1$
@@ -170,7 +172,15 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
         nsIWebProgress webProgress = (nsIWebProgress) serviceManager
 		.getServiceByContractID("@mozilla.org/docloaderservice;1", // $NON-NLS-1$
 			nsIWebProgress.NS_IWEBPROGRESS_IID);
-        webProgress.removeProgressListener(this);
+        try {     	
+        	webProgress.removeProgressListener(this);
+        }  catch(XPCOMException xpcomException) {
+        	//this exception throws when progress listener already has been deleted,
+        	//so just ignore if error code NS_ERROR_FAILURE
+        	 if(xpcomException.errorcode!=XulRunnerBrowser.NS_ERROR_FAILURE) {
+        		 throw xpcomException;
+        	 }
+        }
         
 		browser.dispose();
 		browser = null;
