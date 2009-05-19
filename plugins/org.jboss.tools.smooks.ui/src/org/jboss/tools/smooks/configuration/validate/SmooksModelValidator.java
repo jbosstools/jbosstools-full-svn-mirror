@@ -39,7 +39,6 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.wst.validation.AbstractValidator;
 import org.eclipse.wst.validation.ValidationResult;
 import org.eclipse.wst.validation.ValidationState;
@@ -78,12 +77,15 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 	private boolean waiting = false;
 	private Object lock = new Object();
 	private AdapterFactoryEditingDomain innerEditingDomain;
+	
+	private SmooksMarkerHelper markerHelper = new SmooksMarkerHelper();
 
 	private long watingTime = 300;
 
 	private List<ISmooksModelValidateListener> listeners = new ArrayList<ISmooksModelValidateListener>();
 
 	private List<ISmooksValidator> validatorList = new ArrayList<ISmooksValidator>();
+	private ComposedAdapterFactory adapterFactory;
 
 	public SmooksModelValidator(Collection<?> selectedObjects, EditingDomain domain) {
 		this();
@@ -241,47 +243,49 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 	}
 
 	private AdapterFactoryEditingDomain newEditingDomain() {
-		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-
-		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new XslItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new FreemarkerItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new JavabeanItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new CommonItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new SmooksItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new MEdiItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new EdiItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new IoroutingItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new JsonItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new JmsroutingItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new DbroutingItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new CsvItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new DatasourceItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new CalcItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new GroovyItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new FileRoutingItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 		BasicCommandStack commandStack = new BasicCommandStack();
-		AdapterFactoryEditingDomain editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack,
+		AdapterFactoryEditingDomain editingDomain = new AdapterFactoryEditingDomain(getAdapterFactory(), commandStack,
 				new HashMap<Resource, Boolean>());
 		return editingDomain;
 	}
 
+	public ComposedAdapterFactory getAdapterFactory() {
+		if(adapterFactory == null){
+			adapterFactory = new ComposedAdapterFactory(
+					ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+
+			adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new XslItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new FreemarkerItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new JavabeanItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new CommonItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new SmooksItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new MEdiItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new EdiItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new IoroutingItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new JsonItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new JmsroutingItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new DbroutingItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new CsvItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new DatasourceItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new CalcItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new GroovyItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new FileRoutingItemProviderAdapterFactory());
+			adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+		}
+		return adapterFactory;
+	}
+
 	@Override
 	public ValidationResult validate(IResource resource, int kind, ValidationState state, IProgressMonitor monitor) {
-		System.out.println("validate file : " + resource.getFullPath().toOSString() + ", resource change type : "
-				+ kind);
-
-		AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) this.domain;
-		if (editingDomain == null) {
-			editingDomain = this.innerEditingDomain;
-		}
+		System.out.println("validate file : " + resource.getFullPath().toString() + ", change type is " + kind);
+		AdapterFactoryEditingDomain editingDomain = newEditingDomain();
 		if (editingDomain == null)
 			return null;
 		Object smooksModel = null;
 		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(URI.createPlatformResourceURI(resource
 				.getFullPath().toPortableString(), false));
+		editingDomain.getResourceSet().getResources().add(smooksResource);
 		try {
 			smooksResource.load(Collections.emptyMap());
 			smooksModel = smooksResource.getContents().get(0);
@@ -293,40 +297,21 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 		}
 		List<Object> list = new ArrayList<Object>();
 		list.add(smooksModel);
-		for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
-			final ISmooksModelValidateListener l = (ISmooksModelValidateListener) iterator.next();
-			Display.getDefault().syncExec(new Runnable() {
-
-				/*
-				 * (non-Javadoc)
-				 * 
-				 * @see java.lang.Runnable#run()
-				 */
-				public void run() {
-					l.validateStart();
-				}
-
-			});
-
-		}
-
+		
 		final List<Diagnostic> d = this.validate(list, editingDomain, monitor);
-		for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
-			final ISmooksModelValidateListener l = (ISmooksModelValidateListener) iterator.next();
-			Display.getDefault().syncExec(new Runnable() {
-
-				/*
-				 * (non-Javadoc)
-				 * 
-				 * @see java.lang.Runnable#run()
-				 */
-				public void run() {
-					l.validateEnd(d);
+		try{
+		markerHelper.deleteMarkers(smooksResource);
+		for (Iterator<?> iterator = d.iterator(); iterator.hasNext();) {
+			Diagnostic diagnostic = (Diagnostic) iterator.next();
+			if (resource != null && diagnostic.getSeverity() != Diagnostic.OK) {
+				for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
+					markerHelper.createMarkers(smooksResource, childDiagnostic);
 				}
-
-			});
+			}
 		}
-
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -335,6 +320,6 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 	}
 
 	public void validate(IValidationContext helper, IReporter reporter) throws ValidationException {
-
+		System.out.println("validate helper");
 	}
 }
