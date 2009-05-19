@@ -19,8 +19,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.edit.ui,
  org.eclipse.jdt.core,
  org.eclipse.jdt.ui,
- org.eclipse.wst.validation,
- org.eclipse.wst.validation.ui;bundle-version="1.2.2"
+ org.eclipse.wst.validation
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

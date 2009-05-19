@@ -331,6 +331,14 @@ public class SmooksUIUtils {
 		return createStringFieldEditor(label, parent, editingdomain, toolkit, itemPropertyDescriptor, model, false,
 				true, true, 0, listener, valueType, action);
 	}
+	
+	public static boolean isLinuxOS(){
+		Object osName = System.getProperties().get("os.name");
+		if(osName != null && "linux".equalsIgnoreCase(osName.toString())){
+			return true;
+		}
+		return false;
+	}
 
 	public static AttributeFieldEditPart createStringFieldEditor(String label, final Composite parent,
 			EditingDomain editingdomain, FormToolkit toolkit, final IItemPropertyDescriptor itemPropertyDescriptor,
@@ -430,7 +438,11 @@ public class SmooksUIUtils {
 		}
 
 		gd = new GridData(GridData.FILL_HORIZONTAL);
+		
 		int textType = SWT.FLAT;
+		if(isLinuxOS()){
+			textType = SWT.BORDER;
+		}
 		if (multiText) {
 			textType = SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL;
 		}
