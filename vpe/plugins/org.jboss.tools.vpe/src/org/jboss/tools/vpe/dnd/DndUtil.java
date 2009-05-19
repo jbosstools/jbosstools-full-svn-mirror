@@ -12,9 +12,13 @@
 
 package org.jboss.tools.vpe.dnd;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.swt.events.TypedEvent;
 import org.jboss.tools.common.model.ui.editors.dnd.context.DropContext;
 import org.jboss.tools.common.model.ui.editors.dnd.context.IDNDTextEditor;
+import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.mozilla.interfaces.nsIComponentManager;
@@ -84,9 +88,25 @@ public class DndUtil {
     public static final String kFilePromiseDirectoryMime = "application/x-moz-file-promise-dir"; //$NON-NLS-1$
 
     /** The Constant FLAVORS. */
-    public static final String[] FLAVORS = { kTextMime, kUnicodeMime, kHTMLMime, kAOLMailMime, kPNGImageMime, kJPEGImageMime,
-            kGIFImageMime, kFileMime, kURLMime, kURLDataMime, kURLDescriptionMime, kNativeImageMime, kNativeHTMLMime, kFilePromiseURLMime,
-            kFilePromiseMime, kFilePromiseDirectoryMime };
+    public static final String[] FLAVORS =  { 
+    	VpeController.MODEL_FLAVOR,
+    	kTextMime,
+    	kUnicodeMime,
+    	kHTMLMime,
+    	kAOLMailMime,
+    	kPNGImageMime,
+    	kJPEGImageMime,
+    	kGIFImageMime,
+    	kFileMime,
+    	kURLMime,
+    	kURLDataMime,
+    	kURLDescriptionMime,
+    	kNativeImageMime,
+    	kNativeHTMLMime,
+    	kFilePromiseURLMime,
+    	kFilePromiseMime,
+    	kFilePromiseDirectoryMime
+    };
 
     /**
      * The Constructor.
@@ -102,39 +122,91 @@ public class DndUtil {
      * @param event the event
      * @param textEditor the text editor
      */
-    public static void fireDnDEvent(DropContext dropContext, IDNDTextEditor textEditor, TypedEvent event) {
-
+    public static void fireDnDEvent(DropContext dropContext,
+    		IDNDTextEditor textEditor, TypedEvent event) {
         dropContext.runDropCommand(textEditor, event);
     }
 
     /**
-     * Gets the dn D file.
-     * 
-     * @param event the event
-     * 
-     * @return the dn D file
+     * Returns an instance of {@link DragTransferData}
+     * for the current DnD session.
      */
-    public static nsISupports getDnDValue(nsIDOMEvent event) {
-        nsIServiceManager serviceManager = Mozilla.getInstance().getServiceManager();
-        nsIComponentManager componentManager = Mozilla.getInstance().getComponentManager();
-        nsIDragService dragService = (nsIDragService) serviceManager.getServiceByContractID("@mozilla.org/widget/dragservice;1", //$NON-NLS-1$
-                nsIDragService.NS_IDRAGSERVICE_IID);
-        final nsIDragSession dragSession = dragService.getCurrentSession();
+    public static DragTransferData getDragTransferData() {
+        final nsIDragSession dragSession = getCurrentDragSession();
+        final List<String> supportedDataFlavors
+        		= getSupportedDataFlavors(dragSession);
 
-        final nsITransferable iTransferable = (nsITransferable) componentManager.createInstanceByContractID(
-                XPCOM.NS_TRANSFERABLE_CONTRACTID, null, nsITransferable.NS_ITRANSFERABLE_IID);
+        final nsITransferable iTransferable
+        		= createTransferable(supportedDataFlavors);
 
-        for (String flavor1 : FLAVORS) {
-            if (dragSession.isDataFlavorSupported(flavor1)) {
-                iTransferable.addDataFlavor(flavor1);
-            }
-        }
-        String[] aFlavor = { "" }; //$NON-NLS-1$
-        long[] aDataLen = { 0 };
-        nsISupports[] aData = { null };
+        String[] aFlavor = new String[1];
+        nsISupports[] aValue = new nsISupports[1];
+        long[] aDataLen = new long[1];
         
         dragSession.getData(iTransferable, 0);
-        iTransferable.getAnyTransferData(aFlavor, aData, aDataLen);
-        return aData[0];
+        iTransferable.getAnyTransferData(aFlavor, aValue, aDataLen);
+        return new DragTransferData(aFlavor[0], aValue[0], aDataLen[0]);
     }
+
+	public static nsITransferable createTransferable(
+			final List<String> supportedDataFlavors) {
+		final nsIComponentManager componentManager
+        		= Mozilla.getInstance().getComponentManager();
+
+        final nsITransferable iTransferable = (nsITransferable) 
+        		componentManager.createInstanceByContractID(
+        				XPCOM.NS_TRANSFERABLE_CONTRACTID, null,
+        				nsITransferable.NS_ITRANSFERABLE_IID);
+
+        for (final String flavor : supportedDataFlavors) {
+        	iTransferable.addDataFlavor(flavor);
+        }
+
+		return iTransferable;
+	}
+
+	private static List<String> getSupportedDataFlavors(
+			final nsIDragSession dragSession) {
+		final List<String> supportedDataFlavors = new ArrayList<String>();
+        for (final String flavor : FLAVORS) {
+        	if (dragSession.isDataFlavorSupported(flavor)) {
+        		supportedDataFlavors.add(flavor);
+        	}
+        }
+		return supportedDataFlavors;
+	}
+
+	public static nsIDragSession getCurrentDragSession() {
+		nsIServiceManager serviceManager = Mozilla.getInstance()
+				.getServiceManager();
+        nsIDragService dragService = (nsIDragService) serviceManager
+        		.getServiceByContractID(
+        				"@mozilla.org/widget/dragservice;1", //$NON-NLS-1$
+        				nsIDragService.NS_IDRAGSERVICE_IID);
+        final nsIDragSession dragSession = dragService.getCurrentSession();
+		return dragSession;
+	}
+	
+	public static class DragTransferData {
+		private final String flavor;
+		private final long dataLen;
+		private final nsISupports value;
+
+		public DragTransferData(final String flavor, final nsISupports value,
+				final long dataLen) {
+			this.flavor = flavor;
+			this.value = value;
+			this.dataLen = dataLen;
+		}
+
+		public String getFlavor() {
+			return flavor;
+		}
+		public nsISupports getValue() {
+			return value;
+		}
+		public long getDataLen() {
+			return dataLen;
+		}
+	}
 }

@@ -104,6 +104,7 @@ import org.jboss.tools.jst.web.tld.URIConstants;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.dnd.DndUtil;
+import org.jboss.tools.vpe.dnd.DndUtil.DragTransferData;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
@@ -2093,7 +2094,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
 			Node sourceNode = domMapping.getNearSourceNode(visualNode);
 			if (sourceNode != null) {
-				if (ModelTransfer.MODEL.equals(flavor)) { //$NON-NLS-1$
+				if (ModelTransfer.MODEL.equals(flavor)) {
 					// XModelObject object =
 					// PreferenceModelUtilities.getPreferenceModel().
 					// getModelBuffer().source();
@@ -2225,8 +2226,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
         // .getModelBuffer().source();
         // if(object == null)
 
-        nsISupports aValue = DndUtil.getDnDValue(mouseEvent);
-        String aFlavor = ""; //$NON-NLS-1$
+        final DragTransferData dragTransferData = DndUtil.getDragTransferData();
+		final nsISupports aValue = dragTransferData.getValue();
+
+        String aFlavor = "";
         if (VpeDndUtil.isNsIFileInstance(aValue)) {
             nsIFile aFile = (nsIFile) aValue.queryInterface(nsIFile.NS_IFILE_IID);
             
@@ -2245,7 +2248,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
         } else if (VpeDndUtil.isNsIStringInstance(aValue)) {
         	nsISupportsString aString =  (nsISupportsString) aValue.queryInterface(nsISupportsString.NS_ISUPPORTSSTRING_IID);
         	data = aString.getData();
-        	aFlavor = DndUtil.kURLMime;
+        	if (MODEL_FLAVOR.equals( dragTransferData.getFlavor() )) {
+        		aFlavor = dragTransferData.getFlavor();
+        	} else {
+        		aFlavor = DndUtil.kURLMime;
+        	}
         }
 
         // if (object.getFileType() == XModelObject.FILE
@@ -2603,7 +2610,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void dragDrop(nsIDOMEvent domEvent) {
-
 		visualBuilder.getDnd().dragDrop(domEvent, this);
 	}
 
