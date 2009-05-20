@@ -33,17 +33,19 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
+import org.eclipse.emf.common.command.CommandWrapper;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.DeleteCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IWrapperItemProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.jface.text.DocumentEvent;
@@ -56,7 +58,6 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.editor.FormEditor;
-import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
@@ -100,7 +101,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 
 	protected EditingDomain editingDomain = null;
 
-	private PropertySheetPage propertySheetPage = null;
+//	private PropertySheetPage propertySheetPage = null;
 
 	private SmooksGraphicsExtType smooksGraphicsExt = null;
 
@@ -126,13 +127,26 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 				handleEMFModelChange();
 				// Try to select the affected objects.
 				//
-				Command mostRecentCommand = ((CommandStack) event.getSource()).getMostRecentCommand();
-				if (mostRecentCommand != null && (mostRecentCommand instanceof AddCommand)) {
-					setSelectionToViewer(mostRecentCommand.getAffectedObjects());
-				}
-				if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed()) {
-					propertySheetPage.refresh();
-				}
+				final Command mostRecentCommand = ((CommandStack) event.getSource()).getMostRecentCommand();
+				getContainer().getDisplay().asyncExec
+				 (new Runnable() {
+					  public void run() {
+						  if (mostRecentCommand != null) {
+								Command rawCommand = mostRecentCommand;
+								while (rawCommand instanceof CommandWrapper) {
+									rawCommand = ((CommandWrapper) rawCommand).getCommand();
+								}
+								if (rawCommand instanceof SetCommand || rawCommand instanceof AddCommand || rawCommand instanceof DeleteCommand) {
+									setSelectionToViewer(mostRecentCommand.getAffectedObjects());
+								}
+							}
+					  }
+				 });
+				
+//				
+//				if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed()) {
+//					propertySheetPage.refresh();
+//				}
 			}
 		});
 	}
@@ -221,9 +235,10 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 			List<Object> newList = new ArrayList<Object>();
 			for (Iterator<?> iterator = theSelection.iterator(); iterator.hasNext();) {
 				Object object = (Object) iterator.next();
-				if (object instanceof IWrapperItemProvider) {
-					newList.add(((IWrapperItemProvider) object).getValue());
-				}
+				// if (object instanceof IWrapperItemProvider) {
+				// newList.add(((IWrapperItemProvider) object).getValue());
+				// }
+				newList.add(object);
 			}
 			configurationPage.setSelectionToViewer(newList);
 		}
@@ -475,7 +490,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 	 */
 	public void setDiagnosticList(List<Diagnostic> d) {
 		this.diagnosticList = d;
-		
+
 		if (markerHelper != null) {
 			Resource resource = editingDomain.getResourceSet().getResources().get(0);
 			if (resource != null) {
