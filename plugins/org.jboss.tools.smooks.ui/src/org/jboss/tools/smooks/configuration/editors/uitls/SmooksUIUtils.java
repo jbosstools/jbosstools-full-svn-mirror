@@ -45,6 +45,7 @@ import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
@@ -121,6 +122,8 @@ public class SmooksUIUtils {
 
 	public static int VALUE_TYPE_CDATA = 0;
 
+	public static final int SELECTOR_EXPAND_MAX_LEVEL = 5;
+	
 	public static void createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, boolean linkLabel, IHyperlinkListener listener) {
 		createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, false, 0, linkLabel, false, listener,
@@ -331,10 +334,10 @@ public class SmooksUIUtils {
 		return createStringFieldEditor(label, parent, editingdomain, toolkit, itemPropertyDescriptor, model, false,
 				true, true, 0, listener, valueType, action);
 	}
-	
-	public static boolean isLinuxOS(){
+
+	public static boolean isLinuxOS() {
 		Object osName = System.getProperties().get("os.name");
-		if(osName != null && "linux".equalsIgnoreCase(osName.toString())){
+		if (osName != null && "linux".equalsIgnoreCase(osName.toString())) {
 			return true;
 		}
 		return false;
@@ -438,9 +441,9 @@ public class SmooksUIUtils {
 		}
 
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		
+
 		int textType = SWT.FLAT;
-		if(isLinuxOS()){
+		if (isLinuxOS()) {
 			textType = SWT.BORDER;
 		}
 		if (multiText) {
@@ -1131,6 +1134,31 @@ public class SmooksUIUtils {
 				window.getActivePage().openEditor(editorInput, editorID);
 			} else {
 				IDE.openEditor(window.getActivePage(), file);
+			}
+		}
+	}
+	
+	private static void expandSelectorViewer(IXMLStructuredObject model,TreeViewer viewer , List<String> expandedModel , int level){
+		if(level >= SELECTOR_EXPAND_MAX_LEVEL) return;
+		level++;
+		if(expandedModel.contains(model.getNodeName())){
+			return;
+		}else{
+			expandedModel.add(model.getNodeName());
+			viewer.expandToLevel(model, 0);
+			List<IXMLStructuredObject> children = model.getChildren();
+			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+				IXMLStructuredObject structuredObject = (IXMLStructuredObject) iterator.next();
+				expandSelectorViewer(structuredObject, viewer,expandedModel,level);
+			}
+		}
+	}
+
+	public static void expandSelectorViewer(List<Object> models, TreeViewer viewer) {
+		for (Iterator<?> iterator = models.iterator(); iterator.hasNext();) {
+			Object model = (Object) iterator.next();
+			if (model instanceof IXMLStructuredObject) {
+				expandSelectorViewer((IXMLStructuredObject)model,viewer,new ArrayList<String>(),0);
 			}
 		}
 	}

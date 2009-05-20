@@ -283,6 +283,7 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 					}
 				}
 			};
+			
 			runnable.run();
 		}
 	}

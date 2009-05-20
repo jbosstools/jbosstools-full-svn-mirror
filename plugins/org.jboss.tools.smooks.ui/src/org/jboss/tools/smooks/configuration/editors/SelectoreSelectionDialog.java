@@ -112,7 +112,8 @@ public class SelectoreSelectionDialog extends Dialog {
 		viewer = new TreeViewer(composite, SWT.BORDER);
 		viewer.setContentProvider(new CompoundStructuredDataContentProvider());
 		viewer.setLabelProvider(new CompoundStructuredDataLabelProvider());
-		viewer.setInput(generateInputData());
+		List<Object> inputList = generateInputData();
+		viewer.setInput(inputList);
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
 				okPressed();
@@ -153,6 +154,9 @@ public class SelectoreSelectionDialog extends Dialog {
 		handleButtons();
 		
 		getShell().setText("Selector generate dialog");
+		
+		SmooksUIUtils.expandSelectorViewer(inputList, viewer);
+		
 		return composite;
 	}
 
@@ -172,7 +176,7 @@ public class SelectoreSelectionDialog extends Dialog {
 		});
 	}
 
-	protected List<?> generateInputData() {
+	protected List<Object> generateInputData() {
 		List<Object> list = new ArrayList<Object>();
 		if (this.graphicsExt != null) {
 			IJavaProject project = SmooksUIUtils.getJavaProject(graphicsExt);
