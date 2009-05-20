@@ -557,9 +557,15 @@
 <!--  -->
     <xsd:complexType name="HTML_PRE"/> 
 <!--  -->
-    <xsd:complexType name="HTML_LI"/>
+    <xsd:complexType name="HTML_UL">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="li" minOccurs="0"  type="vpe:HTML_LI" form="unqualified"/>
+        </xsd:choice>
+    	<xsd:attribute name="class" type="xsd:string" use="optional"/>
+    	<xsd:attribute name="style" type="xsd:string" use="optional"/>
+    </xsd:complexType>
 <!--  -->
-    <xsd:complexType name="HTML_UL"/>   
+    <xsd:complexType name="HTML_LI" mixed="true" />   
 <!--  -->
     <xsd:complexType name="HTML_P"/>
  <!--  -->
