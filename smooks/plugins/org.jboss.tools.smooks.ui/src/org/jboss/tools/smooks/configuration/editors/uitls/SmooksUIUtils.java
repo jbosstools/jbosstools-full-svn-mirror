@@ -68,6 +68,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.IFormColors;
@@ -123,7 +124,7 @@ public class SmooksUIUtils {
 	public static int VALUE_TYPE_CDATA = 0;
 
 	public static final int SELECTOR_EXPAND_MAX_LEVEL = 5;
-	
+
 	public static void createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, boolean linkLabel, IHyperlinkListener listener) {
 		createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, false, 0, linkLabel, false, listener,
@@ -589,16 +590,17 @@ public class SmooksUIUtils {
 	}
 
 	public static AttributeFieldEditPart createSelectorFieldEditor(FormToolkit toolkit, Composite parent,
-			final IItemPropertyDescriptor propertyDescriptor, Object model, final SmooksGraphicsExtType extType) {
-		return createSelectorFieldEditor(null, toolkit, parent, propertyDescriptor, model, extType);
+			final IItemPropertyDescriptor propertyDescriptor, Object model, final SmooksGraphicsExtType extType,
+			final IEditorPart currentEditorPart) {
+		return createSelectorFieldEditor(null, toolkit, parent, propertyDescriptor, model, extType, currentEditorPart);
 	}
 
 	public static AttributeFieldEditPart createSelectorFieldEditor(String labelText, FormToolkit toolkit,
 			Composite parent, final IItemPropertyDescriptor propertyDescriptor, Object model,
-			final SmooksGraphicsExtType extType) {
+			final SmooksGraphicsExtType extType, final IEditorPart currentEditorPart) {
 		return createDialogFieldEditor(labelText, parent, toolkit, propertyDescriptor, "Browse", new IFieldDialog() {
 			public Object open(Shell shell) {
-				SelectoreSelectionDialog dialog = new SelectoreSelectionDialog(shell, extType);
+				SelectoreSelectionDialog dialog = new SelectoreSelectionDialog(shell, extType, currentEditorPart);
 				if (dialog.open() == Dialog.OK) {
 					Object currentSelection = dialog.getCurrentSelection();
 					SelectorAttributes sa = dialog.getSelectorAttributes();
@@ -1137,19 +1139,21 @@ public class SmooksUIUtils {
 			}
 		}
 	}
-	
-	private static void expandSelectorViewer(IXMLStructuredObject model,TreeViewer viewer , List<String> expandedModel , int level){
-		if(level >= SELECTOR_EXPAND_MAX_LEVEL) return;
-		level++;
-		if(expandedModel.contains(model.getNodeName())){
+
+	private static void expandSelectorViewer(IXMLStructuredObject model, TreeViewer viewer, List<String> expandedModel,
+			int level) {
+		if (level >= SELECTOR_EXPAND_MAX_LEVEL)
 			return;
-		}else{
+		level++;
+		if (expandedModel.contains(model.getNodeName())) {
+			return;
+		} else {
 			expandedModel.add(model.getNodeName());
 			viewer.expandToLevel(model, 0);
 			List<IXMLStructuredObject> children = model.getChildren();
 			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
 				IXMLStructuredObject structuredObject = (IXMLStructuredObject) iterator.next();
-				expandSelectorViewer(structuredObject, viewer,expandedModel,level);
+				expandSelectorViewer(structuredObject, viewer, expandedModel, level);
 			}
 		}
 	}
@@ -1158,7 +1162,7 @@ public class SmooksUIUtils {
 		for (Iterator<?> iterator = models.iterator(); iterator.hasNext();) {
 			Object model = (Object) iterator.next();
 			if (model instanceof IXMLStructuredObject) {
-				expandSelectorViewer((IXMLStructuredObject)model,viewer,new ArrayList<String>(),0);
+				expandSelectorViewer((IXMLStructuredObject) model, viewer, new ArrayList<String>(), 0);
 			}
 		}
 	}

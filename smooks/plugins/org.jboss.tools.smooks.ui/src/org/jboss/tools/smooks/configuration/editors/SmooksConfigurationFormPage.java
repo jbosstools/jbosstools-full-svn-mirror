@@ -11,12 +11,9 @@
 package org.jboss.tools.smooks.configuration.editors;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Properties;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
@@ -25,7 +22,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -42,20 +38,17 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
-import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
 import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelectionWizard;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
+import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
-import org.jboss.tools.smooks.model.graphics.ext.ParamType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtFactory;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 1, 2009
  */
-public class SmooksConfigurationFormPage extends FormPage implements ISmooksModelValidateListener {
+public class SmooksConfigurationFormPage extends FormPage implements ISmooksModelValidateListener , ISmooksGraphChangeListener {
 
 	private SmooksMasterDetailBlock masterDetailBlock = null;
 
@@ -63,6 +56,7 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 
 	public SmooksConfigurationFormPage(FormEditor editor, String id, String title) {
 		super(editor, id, title);
+		((SmooksMultiFormEditor)editor).getSmooksGraphicsExt().addSmooksGraphChangeListener(this);
 	}
 
 	public SmooksConfigurationFormPage(String id, String title) {
@@ -216,54 +210,10 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 		wizard.setSite(getEditorSite());
 		wizard.setForcePreviousAndNextButtons(true);
 		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(
-				getEditorSite().getShell(), wizard);
-		if (dialog.open() == WizardDialog.OK) {
-			IStructuredDataSelectionWizard wizard1 = dialog.getCurrentCreationWizard();
-			String type = wizard1.getInputDataTypeID();
-			String path = wizard1.getStructuredDataSourcePath();
-			SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
-			if (type != null && path != null && extType != null) {
-				String[] values = path.split(";");
-				for (int i = 0; i < values.length; i++) {
-					String value = values[i];
-					value = value.trim();
-					if (value.length() == 0)
-						continue;
-					InputType input = SmooksGraphicsExtFactory.eINSTANCE.createInputType();
-					input.setType(type);
-					ParamType param = SmooksGraphicsExtFactory.eINSTANCE.createParamType();
-					param.setValue(value);
-					param.setName(SmooksModelUtils.PARAM_NAME_PATH);
-					input.getParam().add(param);
-					List<ParamType> params = generateExtParams(type, path, wizard1.getProperties());
-					input.getParam().addAll(params);
-					extType.getInput().add(input);
-				}
-				try {
-					extType.eResource().save(Collections.emptyMap());
-					inputDataViewer.refresh();
-				} catch (IOException e) {
-					SmooksConfigurationActivator.getDefault().log(e);
-				}
-			}
-		}
+				getEditorSite().getShell(), wizard , getSmooksGraphicsExtType());
+		dialog.show();
 	}
-
-	private List<ParamType> generateExtParams(String type, String path, Properties properties) {
-		List<ParamType> lists = new ArrayList<ParamType>();
-		if (properties != null) {
-			Enumeration<?> enumerations = properties.keys();
-			while (enumerations.hasMoreElements()) {
-				Object key = (Object) enumerations.nextElement();
-				ParamType param = SmooksGraphicsExtFactory.eINSTANCE.createParamType();
-				param.setValue(properties.getProperty(key.toString()));
-				param.setName(key.toString());
-				lists.add(param);
-			}
-		}
-		return lists;
-	}
-
+	
 	public void setSelectionToViewer(final Collection<?> collection) {
 		if (masterDetailBlock != null && masterDetailBlock.getSmooksTreeViewer() != null) {
 			// I don't know if this should be run this deferred
@@ -295,6 +245,10 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 
 	public void validateStart() {
 
+	}
+
+	public void saveComplete(SmooksGraphicsExtType extType) {
+		inputDataViewer.refresh();
 	}
 
 }

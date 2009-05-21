@@ -43,6 +43,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
@@ -362,7 +363,19 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 					((Text) widget).cut();
 					return;
 				}
+				if (widget instanceof Combo) {
+					((Combo) widget).cut();
+					return;
+				}
 				super.runWithEvent(event);
+			}
+
+			/* (non-Javadoc)
+			 * @see org.eclipse.jface.action.Action#isEnabled()
+			 */
+			@Override
+			public boolean isEnabled() {
+				return super.isEnabled();
 			}
 
 		};
@@ -375,6 +388,10 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 				Widget widget = event.widget;
 				if (widget instanceof Text) {
 					((Text) widget).copy();
+					return;
+				}
+				if (widget instanceof Combo) {
+					((Combo) widget).copy();
 					return;
 				}
 				super.runWithEvent(event);
@@ -390,6 +407,10 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 				Widget widget = event.widget;
 				if (widget instanceof Text) {
 					((Text) widget).paste();
+					return;
+				}
+				if (widget instanceof Combo) {
+					((Combo) widget).paste();
 					return;
 				}
 				super.runWithEvent(event);

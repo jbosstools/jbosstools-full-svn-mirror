@@ -44,7 +44,7 @@ public class ResourceConfigTypeUICreator extends PropertyUICreator {
 		if (feature == SmooksPackage.eINSTANCE.getResourceConfigType_Selector()) {
 			SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
 			if (ext != null) {
-				return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, ext);
+				return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, ext,formEditor);
 			}
 		}
 		if (feature == SmooksPackage.eINSTANCE.getResourceConfigType_SelectorNamespace()) {

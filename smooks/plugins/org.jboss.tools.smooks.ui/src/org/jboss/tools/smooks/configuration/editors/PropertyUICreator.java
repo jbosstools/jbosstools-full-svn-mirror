@@ -180,7 +180,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 			SmooksMultiFormEditor formEditor) {
 		SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
 		if (ext != null) {
-			return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, ext);
+			return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, ext,formEditor);
 		}
 		return null;
 	}
@@ -354,7 +354,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 			name += "*";
 		}
 		AttributeFieldEditPart editPart1 = SmooksUIUtils.createSelectorFieldEditor(name, toolkit, container,
-				createOnElementFeature, model, formEditor.getSmooksGraphicsExt());
+				createOnElementFeature, model, formEditor.getSmooksGraphicsExt(),formEditor);
 		editPart1.setAttribute(createOnElementFeature.getFeature(model));
 
 		String namespace = "Namespace";
