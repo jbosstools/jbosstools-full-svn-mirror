@@ -180,8 +180,6 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 			}
 
 		}, SmooksConfigurationActivator.getDefault().getWorkbench().getDecoratorManager().getLabelDecorator()));
-		if(true)
-		{
 		smooksTreeViewer.setComparer(new IElementComparer() {
 
 			/*
@@ -210,7 +208,6 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 			}
 
 		});
-		}
 
 		smooksTreeViewer.setFilters(new ViewerFilter[] { new TextEObjectModelFilter() });
 		Object smooksModel = ((SmooksMultiFormEditor) this.formEditor).getSmooksModel();

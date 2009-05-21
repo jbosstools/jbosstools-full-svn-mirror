@@ -6,6 +6,8 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext;
 
+import java.util.List;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -29,6 +31,13 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface SmooksGraphicsExtType extends EObject {
+	
+	List<ISmooksGraphChangeListener> getChangeListeners();
+	
+	void addSmooksGraphChangeListener(ISmooksGraphChangeListener listener);
+	
+	void removeSmooksGraphChangeListener(ISmooksGraphChangeListener listener);
+	
 	/**
 	 * Returns the value of the '<em><b>Input</b></em>' containment reference list.
 	 * The list contents are of type {@link org.jboss.tools.smooks.model.graphics.ext.InputType}.

@@ -6,7 +6,9 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -22,6 +24,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtPackage;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
@@ -42,6 +45,9 @@ import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
  * @generated
  */
 public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGraphicsExtType {
+	
+	private List<ISmooksGraphChangeListener> changeListeners;
+	
 	/**
 	 * The cached value of the '{@link #getInput() <em>Input</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -276,5 +282,33 @@ public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGrap
 		result.append(')');
 		return result.toString();
 	}
+
+	/**
+	 * @return the changeListeners
+	 */
+	public List<ISmooksGraphChangeListener> getChangeListeners() {
+		if(changeListeners == null){
+			changeListeners = new ArrayList<ISmooksGraphChangeListener>();
+		}
+		return changeListeners;
+	}
+
+	/**
+	 * @param changeListeners the changeListeners to set
+	 */
+	public void setChangeListeners(List<ISmooksGraphChangeListener> changeListeners) {
+		this.changeListeners = changeListeners;
+	}
+
+	public void addSmooksGraphChangeListener(ISmooksGraphChangeListener listener) {
+		this.getChangeListeners().add(listener);
+		
+	}
+
+	public void removeSmooksGraphChangeListener(ISmooksGraphChangeListener listener) {
+		this.getChangeListeners().remove(listener);
+	}
+	
+	
 
 } //SmooksGraphicsExtTypeImpl
