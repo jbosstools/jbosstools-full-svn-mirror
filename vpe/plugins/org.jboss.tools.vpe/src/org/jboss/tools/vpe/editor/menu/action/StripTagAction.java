@@ -69,23 +69,11 @@ public class StripTagAction extends Action {
 
 	@Override
 	public boolean isEnabled() {
-		if (node == null) {
+		if (node == null 
+				|| node.getNodeType() != Node.ELEMENT_NODE) {
 			return false;
+		} else {
+			return true;
 		}
-		if (node.getNodeType() != Node.ELEMENT_NODE) {
-			return false;
-		}
-
-		final NodeList children = node.getChildNodes();
-		final int childrenLength = children.getLength();
-		if (childrenLength <= 0) {
-			return false;
-		}
-		if (childrenLength == 1 
-				&& children.item(0).getNodeValue().trim().length()==0) {
-			return false;
-		}
-
-		return true;
 	}
 }
