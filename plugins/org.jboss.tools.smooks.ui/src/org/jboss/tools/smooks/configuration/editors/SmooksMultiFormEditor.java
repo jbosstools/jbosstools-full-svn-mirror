@@ -37,11 +37,8 @@ import org.eclipse.emf.common.command.CommandWrapper;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.DefaultDOMHandlerImpl;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -87,7 +84,6 @@ import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
-import org.w3c.dom.Node;
 
 /**
  * 
@@ -119,7 +115,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 
 	private List<Diagnostic> diagnosticList;
 	
-	private Object smooksDOMModel;
+//	private Object smooksDOMModel;
 
 	public SmooksMultiFormEditor() {
 		super();
@@ -427,17 +423,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		validator = new SmooksModelValidator();
 		addValidateListener(this);
 		setDiagnosticList(validator.validate(smooksModel.eResource().getContents(), editingDomain));
-//		((XMLResource)smooksResource).save(null, Collections.emptyMap(), new DefaultDOMHandlerImpl(){
-//
-//			/* (non-Javadoc)
-//			 * @see org.eclipse.emf.ecore.xmi.DOMHandler#recordValues(org.w3c.dom.Node, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)
-//			 */
-//			public void recordValues(Node node, EObject container, EStructuralFeature feature, Object value) {
-//				super.recordValues(node, container, feature, value);
-//				System.out.println(value + ":" + node);
-//			}
-//			
-//		});
+		
 
 		// if success to open editor , check if there isn't ext file and create
 		// a new one
