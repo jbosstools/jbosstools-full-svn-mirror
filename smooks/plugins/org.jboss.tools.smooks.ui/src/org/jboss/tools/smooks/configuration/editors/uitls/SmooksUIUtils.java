@@ -152,6 +152,10 @@ public class SmooksUIUtils {
 	public static FieldMarkerWrapper createFieldEditorLabel(String labelText, Composite parent,
 			FormToolkit formToolKit, IItemPropertyDescriptor itemPropertyDescriptor, Object model, boolean isLink) {
 		FieldMarkerWrapper wrapper = new FieldMarkerWrapper();
+		String description = labelText;
+		if (itemPropertyDescriptor != null) {
+			description = itemPropertyDescriptor.getDescription(model);
+		}
 		String displayName = labelText;
 		if (itemPropertyDescriptor == null) {
 		} else {
@@ -180,6 +184,9 @@ public class SmooksUIUtils {
 		} else {
 			Hyperlink link = formToolKit.createHyperlink(labelComposite, displayName + " :", SWT.NONE);
 			labelControl = link;
+		}
+		if (description != null) {
+			labelControl.setToolTipText(description);
 		}
 		// gd = new GridData();
 		// labelControl.setLayoutData(gd);
