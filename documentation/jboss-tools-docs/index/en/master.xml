@@ -47,9 +47,9 @@
         </indexentry>
 
         <indexentry>
-            <primaryie>jBPM Tools Reference Guide <ulink url="en/jbpm/html/index.html">(html)</ulink>
-                <ulink url="en/jbpm/html_single/index.html">(html single)</ulink>
-                <ulink url="en/jbpm/pdf/JBPM_Reference_Guide.pdf">(pdf)</ulink>
+            <primaryie>jBPM Tools Reference Guide <ulink url="en/jboss_jbpm_ref_guide/html/index.html">(html)</ulink>
+                <ulink url="en/jboss_jbpm_ref_guide/html_single/index.html">(html single)</ulink>
+                <ulink url="en/jboss_jbpm_ref_guide/pdf/JBPM_Reference_Guide.pdf">(pdf)</ulink>
             </primaryie>
         </indexentry>
 
@@ -147,7 +147,7 @@
             <primaryie>Eclipse Guvnor Tools Reference Guide<ulink
                 url="en/guvnor_tools_ref_guide/html/index.html">(html)</ulink>
                 <ulink url="en/guvnor_tools_ref_guide/html_single/index.html">(html single)</ulink>
-                <ulink url="en/guvnor_tools_ref_guide/pdf/Drools_Tools_Reference_Guide.pdf">(pdf)</ulink>
+                <ulink url="en/guvnor_tools_ref_guide/pdf/Guvnor_Tools_Reference_Guide.pdf">(pdf)</ulink>
             </primaryie>
         </indexentry>
         
