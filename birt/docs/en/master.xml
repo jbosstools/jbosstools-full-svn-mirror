@@ -13,6 +13,17 @@
     <bookinfo>
         <title>Birt Plugin Integration Reference Guide</title>
 
+        <corpauthor>
+            <inlinemediaobject>
+                <imageobject role="fo">
+                    <imagedata format="PNG" fileref="images/jbosstools_logo.png" />
+                </imageobject>	
+                <imageobject role="html">
+                    <imagedata/>
+                </imageobject>	
+            </inlinemediaobject>           
+        </corpauthor>
+        
         <author><firstname>Anastasiya</firstname><surname>Bogachuk</surname><email>abogachuk@exadel.com</email></author> 
         <author><firstname>Olga</firstname><surname>Chikvina</surname></author> 
         
