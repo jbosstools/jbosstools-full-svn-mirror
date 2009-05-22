@@ -214,4 +214,82 @@
       <xsl:param name="master-reference" select="''"/>
       <xsl:text>no-force</xsl:text>
    </xsl:template>
+   
+   <!-- adding corpauthor entry to the titlepage -->
+   
+   <xsl:template name="book.titlepage.recto">
+      <xsl:choose>
+         <xsl:when test="bookinfo/title">
+            <xsl:apply-templates mode="book.titlepage.recto.auto.mode"
+               select="bookinfo/title" />
+         </xsl:when>
+         
+         <xsl:when test="info/title">
+            <xsl:apply-templates mode="book.titlepage.recto.auto.mode"
+               select="info/title" />
+         </xsl:when>
+         <xsl:when test="title">
+            <xsl:apply-templates mode="book.titlepage.recto.auto.mode"
+               select="title" />
+         </xsl:when>
+      </xsl:choose>
+      
+      <xsl:apply-templates mode="book.titlepage.recto.auto.mode"
+         select="bookinfo/issuenum" />
+      <xsl:apply-templates mode="book.titlepage.recto.auto.mode"
+         select="info/issuenum" />
+      <xsl:apply-templates mode="book.titlepage.recto.auto.mode"
+         select="issuenum" />
+      <xsl:apply-templates mode="book.titlepage.recto.auto.mode" select="bookinfo/corpauthor"/>
+      
+      <xsl:choose>
+         <xsl:when test="bookinfo/subtitle">
+            <xsl:apply-templates mode="book.titlepage.recto.auto.mode"
+               select="bookinfo/subtitle" />
+         </xsl:when>
+         <xsl:when test="info/subtitle">
+            <xsl:apply-templates mode="book.titlepage.recto.auto.mode"
+               select="info/subtitle" />
+         </xsl:when>
+         <xsl:when test="subtitle">
+            <xsl:apply-templates mode="book.titlepage.recto.auto.mode"
+               select="subtitle" />
+         </xsl:when>
+      </xsl:choose>
+      
+      <fo:block xsl:use-attribute-sets="book.titlepage.recto.style"
+         font-size="14pt" space-before="15.552pt">
+         <xsl:apply-templates mode="book.titlepage.recto.auto.mode"
+            select="bookinfo/releaseinfo" />
+      </fo:block>
+      
+      <fo:block text-align="center" space-before="15.552pt">
+         <xsl:call-template name="person.name.list">
+            <xsl:with-param name="person.list" select="bookinfo/authorgroup/author|bookinfo/authorgroup/corpauthor" />
+            <xsl:with-param name="person.type" select="'author'"/>
+         </xsl:call-template>
+      </fo:block>
+      
+      <fo:block text-align="center" space-before="15.552pt">
+         <xsl:call-template name="person.name.list">
+            <xsl:with-param name="person.list" select="bookinfo/authorgroup/editor" />
+            <xsl:with-param name="person.type" select="'editor'"/>
+         </xsl:call-template>
+      </fo:block>
+      
+      <fo:block text-align="center" space-before="15.552pt">
+         <xsl:call-template name="person.name.list">
+            <xsl:with-param name="person.list" select="bookinfo/authorgroup/othercredit" />
+            <xsl:with-param name="person.type" select="'othercredit'"/>
+         </xsl:call-template>
+      </fo:block>
+      
+   </xsl:template>
+   
+   <xsl:template match="corpauthor" mode="book.titlepage.recto.mode">
+      <fo:block>
+         <xsl:apply-templates mode="book.titlepage.recto.mode"/>
+      </fo:block>
+   </xsl:template>
+   
 </xsl:stylesheet>
