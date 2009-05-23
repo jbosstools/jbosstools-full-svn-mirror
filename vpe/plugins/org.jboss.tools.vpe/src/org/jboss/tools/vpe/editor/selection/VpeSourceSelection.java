@@ -72,12 +72,16 @@ public class VpeSourceSelection {
 	}
 
 	private boolean inParents(Node node1, Node node2) {
-		Node p = node2.getParentNode();
-		while (p != null) {
-			if (p == node1) return true;
-			p = p.getParentNode();
+		if (node2 != null) {
+			Node p = node2.getParentNode();
+			while (p != null) {
+				if (p == node1)
+					return true;
+				p = p.getParentNode();
+			}
 		}
 		return false;
+
 	}
 
 	public Node getCommonAncestor() {
