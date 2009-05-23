@@ -144,7 +144,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 			public void widgetSelected(SelectionEvent event) {
 		    	CSSStyleDialog cssDialog = new CSSStyleDialog(composite.getShell(),txtStyle.getText());
 				if (cssDialog.open() == Window.OK) {
-				    txtStyle.setText(cssDialog.getNewStyle());
+				    txtStyle.setText(cssDialog.getStyle());
 				}
 		    }
 		});
