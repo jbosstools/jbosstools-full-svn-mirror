@@ -72,6 +72,7 @@ import org.jboss.tools.smooks.model.csv.provider.CsvItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.datasource.provider.DatasourceItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.dbrouting.provider.DbroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.edi.provider.EdiItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.esbrouting.provider.EsbroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.fileRouting.provider.FileRoutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.freemarker.provider.FreemarkerItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
@@ -226,6 +227,7 @@ public class SmooksMultiFormEditor extends FormEditor implements IEditingDomainP
 		adapterFactory.addAdapterFactory(new GroovyItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new FileRoutingItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new EsbroutingItemProviderAdapterFactory());
 		BasicCommandStack commandStack = new BasicCommandStack();
 		handleCommandStack(commandStack);
 		editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());

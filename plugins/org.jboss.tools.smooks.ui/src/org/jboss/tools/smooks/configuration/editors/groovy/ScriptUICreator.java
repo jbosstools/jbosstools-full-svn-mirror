@@ -45,7 +45,7 @@ public class ScriptUICreator extends PropertyUICreator {
 	}
 
 	@Override
-	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
 			SmooksMultiFormEditor formEditor) {
 		OpenEditorEditInnerContentsAction action2 = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "groovy");
 		AttributeFieldEditPart editPart = SmooksUIUtils.createCommentFieldEditor("Script Contents", editingdomain, toolkit, parent, model, action2);

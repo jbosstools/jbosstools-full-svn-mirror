@@ -67,16 +67,16 @@ public class TemplateUICreator extends PropertyUICreator {
 	}
 
 	@Override
-	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
 			SmooksMultiFormEditor formEditor) {
 		OpenEditorEditInnerContentsAction openCdataEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_CDATA, "xsl");
-		OpenEditorEditInnerContentsAction openCommentEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "xsl");
-		SmooksUIUtils.createFileSelectionTextFieldEditor("Text Value", parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
-				null, null);
-		AttributeFieldEditPart text1 = SmooksUIUtils.createCDATAFieldEditor("Template Contents (CDATA)", editingdomain, toolkit, parent, model, openCdataEditorAction);
-		AttributeFieldEditPart text2 = SmooksUIUtils.createCommentFieldEditor("Template Contents (Comment)", editingdomain, toolkit, parent, model, openCommentEditorAction);
+//		OpenEditorEditInnerContentsAction openCommentEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "xsl");
+		AttributeFieldEditPart text1 = SmooksUIUtils.createCDATAFieldEditor("Inline Template", editingdomain, toolkit, parent, model, openCdataEditorAction);
+//		AttributeFieldEditPart text2 = SmooksUIUtils.createCommentFieldEditor("Template Contents (Comment)", editingdomain, toolkit, parent, model, openCommentEditorAction);
 		openCdataEditorAction.setRelateText((Text)text1.getContentControl());
-		openCommentEditorAction.setRelateText((Text)text2.getContentControl());
+//		openCommentEditorAction.setRelateText((Text)text2.getContentControl());
+		SmooksUIUtils.createFileSelectionTextFieldEditor("External Template File", parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
+				null, null);
 		
 		return Collections.emptyList();
 	}

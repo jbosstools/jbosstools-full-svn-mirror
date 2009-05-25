@@ -234,14 +234,14 @@ public class SelectoreSelectionDialog extends Dialog {
 			}
 		});
 	}
-
-	protected List<Object> generateInputData() {
+	
+	public static List<Object> generateInputData(SmooksGraphicsExtType extType){
 		List<Object> list = new ArrayList<Object>();
-		if (this.graphicsExt != null) {
-			IJavaProject project = SmooksUIUtils.getJavaProject(graphicsExt);
+		if (extType != null) {
+			IJavaProject project = SmooksUIUtils.getJavaProject(extType);
 			try {
 				ProjectClassLoader classLoader = new ProjectClassLoader(project);
-				List<InputType> inputLists = graphicsExt.getInput();
+				List<InputType> inputLists = extType.getInput();
 				for (Iterator<?> iterator = inputLists.iterator(); iterator.hasNext();) {
 					InputType inputType = (InputType) iterator.next();
 					String type = inputType.getType();
@@ -286,6 +286,10 @@ public class SelectoreSelectionDialog extends Dialog {
 			}
 		}
 		return list;
+	}
+
+	protected List<Object> generateInputData() {
+		return generateInputData(graphicsExt);
 	}
 
 	protected void showInputDataWizard() {

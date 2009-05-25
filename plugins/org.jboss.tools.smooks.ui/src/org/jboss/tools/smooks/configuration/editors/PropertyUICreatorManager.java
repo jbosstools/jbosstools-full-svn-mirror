@@ -30,6 +30,7 @@ import org.jboss.tools.smooks.configuration.editors.edi.SegmentUICreator;
 import org.jboss.tools.smooks.configuration.editors.edi.SegmentsUICreator;
 import org.jboss.tools.smooks.configuration.editors.edi.SubComponentUICreator;
 import org.jboss.tools.smooks.configuration.editors.edireader.EDIReaderUICreator;
+import org.jboss.tools.smooks.configuration.editors.esbrouter.RouteBeanPropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.filerouting.HighWaterMarkUICreator;
 import org.jboss.tools.smooks.configuration.editors.filerouting.OutputStreamUICreator;
 import org.jboss.tools.smooks.configuration.editors.freemarker.FreemarkerUICreator;
@@ -78,6 +79,7 @@ import org.jboss.tools.smooks.model.dbrouting.impl.ExecutorImpl;
 import org.jboss.tools.smooks.model.dbrouting.impl.ResultSetImpl;
 import org.jboss.tools.smooks.model.dbrouting.impl.ResultSetRowSelectorImpl;
 import org.jboss.tools.smooks.model.edi.impl.EDIReaderImpl;
+import org.jboss.tools.smooks.model.esbrouting.impl.RouteBeanImpl;
 import org.jboss.tools.smooks.model.fileRouting.impl.HighWaterMarkImpl;
 import org.jboss.tools.smooks.model.fileRouting.impl.OutputStreamImpl;
 import org.jboss.tools.smooks.model.freemarker.impl.FreemarkerImpl;
@@ -242,6 +244,8 @@ public class PropertyUICreatorManager {
 		map.put(DirectImpl.class, new DirectUICreator());
 		map.put(DataSourceJndiImpl.class, new DataSourceJndiUICreator());
 
+		// for ESB router
+		map.put(RouteBeanImpl.class, new RouteBeanPropertyUICreator());
 		/*
 		 * up is for smooks1.1
 		 */

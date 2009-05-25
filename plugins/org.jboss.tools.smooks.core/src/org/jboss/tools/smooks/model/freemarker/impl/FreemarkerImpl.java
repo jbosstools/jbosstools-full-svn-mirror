@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
+import org.jboss.tools.smooks.model.freemarker.FreemarkerFactory;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks.model.freemarker.Use;
@@ -155,6 +156,7 @@ public class FreemarkerImpl extends ElementVisitorImpl implements Freemarker {
 	 */
 	protected FreemarkerImpl() {
 		super();
+		setTemplate(FreemarkerFactory.eINSTANCE.createTemplate());
 	}
 
 	/**

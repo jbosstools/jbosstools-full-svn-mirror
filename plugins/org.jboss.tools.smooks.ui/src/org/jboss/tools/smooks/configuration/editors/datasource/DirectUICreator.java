@@ -10,20 +10,45 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.datasource;
 
+import java.lang.reflect.InvocationTargetException;
+import java.sql.Driver;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
+import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.Hyperlink;
+import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
+import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
+import org.jboss.tools.smooks.model.datasource.Direct;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
@@ -86,7 +111,7 @@ public class DirectUICreator extends PropertyUICreator {
 	 * org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor)
 	 */
 	@Override
-	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		IItemPropertySource itemPropertySource = (IItemPropertySource) editingdomain.getAdapterFactory().adapt(model,
 				IItemPropertySource.class);
@@ -102,11 +127,134 @@ public class DirectUICreator extends PropertyUICreator {
 				createOnElementFeatureNS = itemPropertyDescriptor;
 			}
 		}
-		if(createOnElementFeature == null || createOnElementFeatureNS == null){
+		if (createOnElementFeature == null || createOnElementFeatureNS == null) {
 			return Collections.emptyList();
 		}
-		return this.createElementSelectionSection("Binding On Element", editingdomain, toolkit, parent, model, formEditor,
-				createOnElementFeature, createOnElementFeatureNS);
+		List<AttributeFieldEditPart> editPartList = this.createElementSelectionSection("Binding On Element",
+				editingdomain, toolkit, parent, model, formEditor, createOnElementFeature, createOnElementFeatureNS);
+
+		Composite spaceComposite = toolkit.createComposite(parent);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 2;
+		gd.heightHint = 20;
+		spaceComposite.setLayoutData(gd);
+
+		Composite linkComposite = toolkit.createComposite(parent);
+		gd.horizontalSpan = 2;
+		linkComposite.setLayoutData(gd);
+		GridLayout gl = new GridLayout();
+		gl.numColumns = 2;
+		gl.marginHeight = 0;
+		gl.marginWidth = 0;
+		gl.horizontalSpacing = 2;
+		linkComposite.setLayout(gl);
+
+		gd = new GridData();
+		gd.verticalAlignment = GridData.CENTER;
+		Label imageLabel = toolkit.createLabel(linkComposite, "");
+		imageLabel.setLayoutData(gd);
+		imageLabel.setImage(SmooksConfigurationActivator.getDefault().getImageRegistry().get(
+				GraphicsConstants.IMAGE_JAVA_ARRAY));
+		
+		gd = new GridData();
+		gd.verticalAlignment = GridData.CENTER;
+		gd.horizontalAlignment = GridData.BEGINNING;
+		Hyperlink testConnectLink = toolkit.createHyperlink(linkComposite, "DB Connection Test", SWT.NONE);
+		testConnectLink.setLayoutData(gd);
+		final Object fm = model;
+		final Shell shell = parent.getShell();
+		testConnectLink.addHyperlinkListener(new IHyperlinkListener(){
+
+			/* (non-Javadoc)
+			 * @see org.eclipse.ui.forms.events.IHyperlinkListener#linkActivated(org.eclipse.ui.forms.events.HyperlinkEvent)
+			 */
+			public void linkActivated(HyperlinkEvent e) {
+				if(fm instanceof Direct){
+					
+					ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
+					try {
+						dialog.run(true, true, new IRunnableWithProgress(){
+
+							/* (non-Javadoc)
+							 * @see org.eclipse.jface.operation.IRunnableWithProgress#run(org.eclipse.core.runtime.IProgressMonitor)
+							 */
+							public void run(IProgressMonitor monitor) throws InvocationTargetException,
+									InterruptedException {
+								monitor.beginTask("Test Connection", 2);
+								String driver = ((Direct)fm).getDriver();
+								String url = ((Direct)fm).getUrl();
+								String userName = ((Direct)fm).getUsername();
+								String password = ((Direct)fm).getPassword();
+								IResource resource = SmooksUIUtils.getResource((EObject)fm);
+								try {
+									if(monitor.isCanceled()){
+										throw new InterruptedException();
+									}
+									monitor.setTaskName("Load driver class and database connection properties...");
+									ProjectClassLoader classLoader = new ProjectClassLoader(JavaCore.create(resource.getProject()));
+									if(monitor.isCanceled()){
+										throw new InterruptedException();
+									}
+									Driver dri = (Driver) classLoader.loadClass(driver).newInstance();
+									monitor.worked(1);
+									if(monitor.isCanceled()){
+										throw new InterruptedException();
+									}
+									Properties pros = new Properties();
+									pros.setProperty("name", userName);
+									pros.setProperty("password", password);
+									if(monitor.isCanceled()){
+										throw new InterruptedException();
+									}
+									monitor.setTaskName("Try to connect database...");
+									dri.connect(url, pros);
+									monitor.worked(1);
+								} catch (JavaModelException e1) {
+									throw new InvocationTargetException(e1);
+								} catch (InstantiationException e1) {
+									throw new InvocationTargetException(e1);
+								} catch (IllegalAccessException e1) {
+									throw new InvocationTargetException(e1);
+								} catch (ClassNotFoundException e1) {
+									throw new InvocationTargetException(e1);
+								} catch (SQLException e1) {
+									throw new InvocationTargetException(e1);
+								}finally{
+									monitor.done();
+								}
+							}
+							
+						});
+					} catch (InvocationTargetException e2) {
+						SmooksUIUtils.showErrorDialog(shell, SmooksUIUtils.createErrorStatus(e2));
+						return;
+					} catch (InterruptedException e2) {
+						MessageDialog.openConfirm(shell, "User Cancle", "Connection test was cancled by users");
+						return;
+					}
+					MessageDialog.openConfirm(shell, "Test success", "Connection test success");
+				}
+			}
+
+			/* (non-Javadoc)
+			 * @see org.eclipse.ui.forms.events.IHyperlinkListener#linkEntered(org.eclipse.ui.forms.events.HyperlinkEvent)
+			 */
+			public void linkEntered(HyperlinkEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			/* (non-Javadoc)
+			 * @see org.eclipse.ui.forms.events.IHyperlinkListener#linkExited(org.eclipse.ui.forms.events.HyperlinkEvent)
+			 */
+			public void linkExited(HyperlinkEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		// testConnectLink.set
+		return editPartList;
 	}
 
 	@Override

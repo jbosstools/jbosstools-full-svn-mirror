@@ -26,6 +26,8 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
@@ -37,13 +39,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.jboss.tools.smooks.configuration.editors.uitls.FieldAssistDisposer;
 import org.jboss.tools.smooks.configuration.editors.uitls.FieldMarkerWrapper;
 import org.jboss.tools.smooks.configuration.editors.uitls.IFieldDialog;
 import org.jboss.tools.smooks.configuration.editors.uitls.IModelProcsser;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
@@ -130,7 +131,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 		return SmooksUIUtils.getJavaProject(model);
 	}
 
-	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		return Collections.emptyList();
 	}
@@ -239,7 +240,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 				if (editValue != null) {
 					combo.setText(editValue.toString());
 				}
-				List<String> list = getBeanIdList(smooksResourceList);
+				List<String> list = SmooksUIUtils.getBeanIdList(smooksResourceList);
 				for (Iterator<String> iterator = list.iterator(); iterator.hasNext();) {
 					String beanId = (String) iterator.next();
 					combo.add(beanId);
@@ -263,6 +264,20 @@ public class PropertyUICreator implements IPropertyUICreator {
 						ip.setPropertyValue(cmodel, combo.getText());
 					}
 				});
+				
+				final FieldAssistDisposer disposer = SmooksUIUtils.addBeanIdRefAssistToCombo(combo, (EObject)model);
+				
+				combo.addDisposeListener(new DisposeListener(){
+
+					/* (non-Javadoc)
+					 * @see org.eclipse.swt.events.DisposeListener#widgetDisposed(org.eclipse.swt.events.DisposeEvent)
+					 */
+					public void widgetDisposed(DisposeEvent e) {
+						disposer.dispose();
+					}
+					
+				});
+				
 				return editPart;
 			}
 		}
@@ -280,23 +295,22 @@ public class PropertyUICreator implements IPropertyUICreator {
 		return null;
 	}
 
-	protected List<String> getBeanIdList(SmooksResourceListType resourceList) {
-		List<AbstractResourceConfig> rlist = resourceList.getAbstractResourceConfig();
-		List<String> beanIdList = new ArrayList<String>();
-		for (Iterator<?> iterator = rlist.iterator(); iterator.hasNext();) {
-			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
-			if (abstractResourceConfig instanceof BindingsType) {
-				String beanId = ((BindingsType) abstractResourceConfig).getBeanId();
-				if (beanId == null)
-					continue;
-				beanIdList.add(beanId);
-			}
-		}
-		return beanIdList;
-	}
 
 	public boolean ignoreProperty(EAttribute feature) {
 		return false;
+	}
+	
+	public IItemPropertyDescriptor getPropertyDescriptor(AdapterFactoryEditingDomain editingDomain,EAttribute attribute , Object model){
+		IItemPropertySource itemPropertySource = (IItemPropertySource) editingDomain.getAdapterFactory().adapt(model,
+				IItemPropertySource.class);
+		List<IItemPropertyDescriptor> list = itemPropertySource.getPropertyDescriptors(model);
+		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+			IItemPropertyDescriptor itemPropertyDescriptor = (IItemPropertyDescriptor) iterator.next();
+			if(itemPropertyDescriptor.getFeature(model) == attribute){
+				return itemPropertyDescriptor;
+			}
+		}
+		return null;
 	}
 
 	protected List<AttributeFieldEditPart> createElementSelectionSection(String sectionTitle,
@@ -371,5 +385,10 @@ public class PropertyUICreator implements IPropertyUICreator {
 		list.add(editPart2);
 
 		return list;
+	}
+
+	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingDomain,
+			FormToolkit formToolkit, Composite detailsComposite, Object model, SmooksMultiFormEditor formEditor) {
+		return null;
 	}
 }
