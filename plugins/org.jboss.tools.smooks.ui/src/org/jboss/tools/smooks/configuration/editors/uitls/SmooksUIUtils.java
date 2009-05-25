@@ -748,6 +748,8 @@ public class SmooksUIUtils {
 				layout.marginRight = 0;
 				layout.horizontalSpacing = 0;
 				tcom.setLayout(layout);
+				
+				EAttribute attribute = (EAttribute) propertyDescriptor.getFeature(model);
 
 				FieldMarkerComposite notificationComposite = new FieldMarkerComposite(tcom, SWT.NONE);
 				gd = new GridData();
@@ -763,7 +765,7 @@ public class SmooksUIUtils {
 				gd = new GridData(GridData.FILL_HORIZONTAL);
 				searchComposite.setLayoutData(gd);
 				Object editValue = getEditValue(propertyDescriptor, model);
-				if (editValue != null) {
+				if (editValue != null && model.eIsSet(attribute)) {
 					searchComposite.getText().setText(editValue.toString());
 				}
 				searchComposite.addModifyListener(new ModifyListener() {
@@ -1251,6 +1253,7 @@ public class SmooksUIUtils {
 
 	public static void loadSelectorObject(IXMLStructuredObject model, List<String> loadedModelName,
 			List<IXMLStructuredObject> loadedModels, int level) {
+		loadedModels.add(model);
 		if (level >= SELECTOR_EXPAND_MAX_LEVEL)
 			return;
 		level++;
@@ -1258,7 +1261,6 @@ public class SmooksUIUtils {
 			return;
 		} else {
 			loadedModelName.add(model.getNodeName());
-			loadedModels.add(model);
 			List<IXMLStructuredObject> children = model.getChildren();
 			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
 				IXMLStructuredObject structuredObject = (IXMLStructuredObject) iterator.next();
