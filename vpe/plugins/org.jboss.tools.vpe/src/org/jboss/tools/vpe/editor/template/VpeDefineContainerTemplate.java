@@ -100,6 +100,15 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 
     private String replacePattern(String origStr, String target,
 	    String replacement) {
+	    
+	/*
+	 * https://jira.jboss.org/jira/browse/JBIDE-4311
+	 * target string could be null in some case. 
+	 */
+	if (null == origStr || null == target) {
+	    return origStr;
+	}
+	    
 	StringBuilder sb = new StringBuilder();
 	String word = "((\\w+)([\\.\\[\\]]*))";
 	Matcher m;
