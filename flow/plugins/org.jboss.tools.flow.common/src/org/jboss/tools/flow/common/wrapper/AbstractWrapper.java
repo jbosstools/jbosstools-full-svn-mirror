@@ -97,8 +97,8 @@ public abstract class AbstractWrapper implements Wrapper {
 	}
 	
 	public void notifyListeners(ModelEvent event) {
-		for (ModelListener listener: listeners) {
-			listener.modelChanged(event);
+		for (int i = 0; i < listeners.size(); i++) {
+			listeners.get(i).modelChanged(event);
 		}
 	}
 	
