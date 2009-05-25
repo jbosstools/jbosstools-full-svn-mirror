@@ -14,8 +14,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.text.hyperlink.IHyperlink;
+import org.eclipse.jface.text.hyperlink.IHyperlinkDetector;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Point;
@@ -29,7 +32,8 @@ import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMAttr;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
-import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.common.text.ext.hyperlink.AbstractHyperlink;
+import org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
@@ -250,6 +254,39 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		}
 	}
 	
+	/**
+	 * 
+	 *This method calls when openOn event occures in
+	 *visual part of VPE 
+	 * 
+	 * @param visualNode - node on which event has occured
+	 * 
+	 * @author mareshkau
+	 */
+	
+	public void openOn(nsIDOMNode visualNode) {
+		
+	VpeNodeMapping nodeMapping = NodesManagingUtil.getNodeMapping(
+				this.domMapping, visualNode);
+	if (nodeMapping != null
+			&& nodeMapping instanceof VpeElementMapping) {
+
+		VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
+		VpeTemplate template = elementMapping.getTemplate();
+		IRegion regionForOpenOn = template.getSourceRegionForOpenOn(this.pageContext, elementMapping.getSourceNode(), visualNode);
+		IHyperlinkDetector [] hyperlinkDetectors = ((JSPTextEditor)this.sourceEditor).getHyperlinkDetectors();
+		IHyperlink [] hyperLinks = null;
+			for (IHyperlinkDetector iHyperlinkDetector : hyperlinkDetectors) {
+				hyperLinks = iHyperlinkDetector.detectHyperlinks(this.sourceEditor.getTextViewer(), regionForOpenOn, true);
+				if(hyperLinks!=null && hyperLinks.length>0 && hyperLinks[0] instanceof AbstractHyperlink) {
+					AbstractHyperlink abstractHyperlink = (AbstractHyperlink) hyperLinks[0];
+					abstractHyperlink.open();
+					return;
+				}
+			}
+		}	
+	}
+	
 	boolean openBundleEditors(nsIDOMNode visualNode) {
 
 		VpeNodeMapping nodeMapping = NodesManagingUtil.getNodeMapping(
@@ -272,17 +309,17 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		return false;
 	}
 	
-	boolean openIncludeEditor(nsIDOMNode visualNode) {
-		Node sourceNode = domMapping.getNearSourceNode(visualNode);
-		if (sourceNode != null && sourceNode.getNodeType() == Node.ELEMENT_NODE) {
-			VpeElementMapping elementMapping = (VpeElementMapping)domMapping.getNodeMapping(sourceNode);
-			if (elementMapping != null) {
-				VpeTemplate template = elementMapping.getTemplate();
-				template.openIncludeEditor(pageContext, (Element)sourceNode, elementMapping.getData());
-			}
-		}
-		return false;
-	}
+//	boolean openIncludeEditor(nsIDOMNode visualNode) {
+//		Node sourceNode = domMapping.getNearSourceNode(visualNode);
+//		if (sourceNode != null && sourceNode.getNodeType() == Node.ELEMENT_NODE) {
+//			VpeElementMapping elementMapping = (VpeElementMapping)domMapping.getNodeMapping(sourceNode);
+//			if (elementMapping != null) {
+//				VpeTemplate template = elementMapping.getTemplate();
+//				template.openIncludeEditor(pageContext, (Element)sourceNode, elementMapping.getData());
+//			}
+//		}
+//		return false;
+//	}
 	
 	boolean isEmptyDocument() {
 		if (sourceDocument == null) return true;
@@ -392,7 +429,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		return null;
 	}
 
-	Point getSelectionRange() {
+	public Point getSelectionRange() {
 		return sourceEditor.getTextViewer().getSelectedRange();
 	}
 	

@@ -12,18 +12,18 @@ package org.jboss.tools.vpe.editor.template;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.ide.IDE;
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.Region;
 import org.jboss.tools.common.el.core.ELReferenceList;
 import org.jboss.tools.common.resref.core.ResourceReference;
-import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeIncludeInfo;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.custom.CustomTLDReference;
+import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Attr;
@@ -90,28 +90,10 @@ public class VpeCustomTemplate extends VpeIncludeTemplate {
 				visualDocument);
 		creationData.setData(null);
 		return creationData;
-	}
-	@Override
-	public void openIncludeEditor(VpePageContext pageContext,
-			Element sourceElement, Object data) {
-		
-		IFile file = getFileForOpenOn(pageContext, sourceElement);
-		
-		if(file!=null && file.exists()) {
-			IWorkbenchPage workbenchPage = VpePlugin.getDefault()
-					.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			try {
-				IDE.openEditor(workbenchPage, file,true);
-			} catch (PartInitException e) {
-						VpePlugin.reportProblem(e);
-			}
-		}
-	}
-	
+	}	
 	@Override
 	public void validate(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument, VpeCreationData data){
-		
 		if(data.getData() instanceof TransferObject) {
 			TransferObject trObject = (TransferObject) data.getData();
 			ELReferenceList.getInstance().setAllResources(
@@ -151,32 +133,6 @@ public class VpeCustomTemplate extends VpeIncludeTemplate {
 				addedAttrToElExpressions.toArray(new ResourceReference[0]));
 		return resourceReferences;
 	}
-	/**
-	 * Looks for file to open on each editor, for open on click
-	 * @param pageContext
-	 * @param sourceElement
-	 * @return file, if file has been founded or null otherwise
-	 */
-	private static IFile getFileForOpenOn(VpePageContext pageContext,
-			Element sourceElement) {
-		IPath pathToFile = CustomTLDReference
-		.getCustomElementPath(sourceElement, pageContext);
-		
-		IFile file =null;
-		
-		if(pathToFile!=null) {
-			file = ResourcesPlugin.getWorkspace().getRoot().getFile(
-				pathToFile);
-		}
-		//if we cann't find source file, then just open tld definition file
-		if(file==null || !file.exists()) {
-			pathToFile = CustomTLDReference.getCustomTLDPath(pageContext,
-					sourceElement);
-			file = ResourcesPlugin.getWorkspace().getRoot().getFile(
-					pathToFile);
-		}
-		return file;
-	}
 	
 	@Override
 	public void beforeRemove(VpePageContext pageContext, Node sourceNode,
@@ -188,6 +144,21 @@ public class VpeCustomTemplate extends VpeIncludeTemplate {
 			file = (IFile) data;
 		}
 		super.beforeRemove(pageContext, sourceNode, visualNode, file);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.vpe.editor.template.VpeTemplate#getSourceRegionForOpenOn(org.mozilla.interfaces.nsIDOMNode)
+	 *
+	 */
+	/**
+	 * @author mareshkau
+	 */
+	@Override
+	public IRegion getSourceRegionForOpenOn(VpePageContext pageContext, Node sourceNode ,nsIDOMNode domNode) {
+			int offset = NodesManagingUtil.getStartOffsetNode(sourceNode);
+			//calculate openOnPosition,prefixLengght+>+":"
+			offset+=sourceNode.getPrefix().length()+1+1;
+			return new Region(offset, 0); 
 	}
 
 	/**
@@ -222,5 +193,5 @@ public class VpeCustomTemplate extends VpeIncludeTemplate {
 		public IFile getCustomFile() {
 			return this.customFile;
 		}
-	};
+	}
 }

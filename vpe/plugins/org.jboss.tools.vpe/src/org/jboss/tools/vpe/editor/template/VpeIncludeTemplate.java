@@ -11,10 +11,13 @@
 package org.jboss.tools.vpe.editor.template;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.Region;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeIncludeInfo;
 import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.template.expression.VpeAttributeOperand;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
@@ -23,6 +26,7 @@ import org.jboss.tools.vpe.editor.template.expression.VpeValue;
 import org.jboss.tools.vpe.editor.util.FaceletUtil;
 import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -144,21 +148,39 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 		return new VpeCreationData(visualNewElement);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.vpe.editor.template.VpeAbstractTemplate#getSourceRegionForOpenOn(org.jboss.tools.vpe.editor.context.VpePageContext, org.w3c.dom.Node, org.mozilla.interfaces.nsIDOMNode)
+	 */
+	/**
+	 * @author mareshkau
+	 */
 	@Override
-	public void openIncludeEditor(VpePageContext pageContext, Element sourceElement, Object data) {
-		if (sourceElement != null && fileNameExpression != null) {
-			VpeValue vpeValue;
-			try {
-				vpeValue = fileNameExpression.exec(pageContext, sourceElement);
-				if (vpeValue != null && vpeValue.stringValue().length() > 0) {
-				    pageContext.openIncludeFile(vpeValue.stringValue());
-				}
-			} catch (VpeExpressionException e) {
-					
-					VpePlugin.reportProblem(e);
-			}
+	public IRegion getSourceRegionForOpenOn(VpePageContext pageContext,
+			Node sourceNode, nsIDOMNode domNode) {
+
+		if (sourceNode != null && this.fileNameExpression != null && this.fileNameExpression instanceof VpeAttributeOperand) {
+			Element sourceElement = (Element) sourceNode;
+			Node paramAttr = sourceElement.getAttributeNode(((VpeAttributeOperand)this.fileNameExpression).getAttributeName());
+			return new Region(NodesManagingUtil.getStartOffsetNode(paramAttr),0);			
 		}
+		return null;
 	}
+
+//	@Override
+//	public void openIncludeEditor(VpePageContext pageContext, Element sourceElement, Object data) {
+//		if (sourceElement != null && fileNameExpression != null) {
+//			VpeValue vpeValue;
+//			try {
+//				vpeValue = fileNameExpression.exec(pageContext, sourceElement);
+//				if (vpeValue != null && vpeValue.stringValue().length() > 0) {
+//				    pageContext.openIncludeFile(vpeValue.stringValue());
+//				}
+//			} catch (VpeExpressionException e) {
+//					
+//					VpePlugin.reportProblem(e);
+//			}
+//		}
+//	}
 
 	
 	

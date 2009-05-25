@@ -335,14 +335,14 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 
     }
 
-    @Override
-    public void openIncludeEditor(VpePageContext pageContext,
-	    Element sourceElement, Object data) {
-
-	if (data instanceof TemplateFileInfo) {
-	    FileUtil.openEditor(((TemplateFileInfo) data).getTemplateFile());
-	}
-    }
+//    @Override
+//    public void openIncludeEditor(VpePageContext pageContext,
+//	    Element sourceElement, Object data) {
+//
+//	if (data instanceof TemplateFileInfo) {
+//	    FileUtil.openEditor(((TemplateFileInfo) data).getTemplateFile());
+//	}
+//    }
 
     protected VpeCreationData createStub(String fileName,
 	    Node sourceElement, nsIDOMDocument visualDocument) {

@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
+import org.eclipse.jface.text.IRegion;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDropInfo;
@@ -360,18 +361,18 @@ public interface VpeTemplate {
 	void openBundleEditors(VpePageContext pageContext, Element sourceElement,
 			Object data);
 
-	/**
-	 * Opens editor of source file for include-element
-	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
-	 */
-	void openIncludeEditor(VpePageContext pageContext, Element sourceElement,
-			Object data);
+//	/**
+//	 * Opens editor of source file for include-element
+//	 * 
+//	 * @param pageContext
+//	 *            Contains the information on edited page.
+//	 * @param sourceElement
+//	 *            The current element of the source tree.
+//	 * @param data
+//	 *            The arbitrary data, built by a method <code>create</code>
+//	 */
+//	void openIncludeEditor(VpePageContext pageContext, Element sourceElement,
+//			Object data);
 
 	/**
 	 * @deprecated
@@ -486,5 +487,14 @@ public interface VpeTemplate {
 			int anchorPosition, VpeDomMapping domMapping);
 	
 	public boolean isInvisible();
+	
+	/**
+	 * Calculates and returns sourceRegion, on which we should
+	 * make openOn action
+	 * @param sourceNode - source node from element mapping
+	 * @param domNode
+	 * @return sourceRegion on which we should make openOn action
+	 */
+	public IRegion getSourceRegionForOpenOn(VpePageContext pageContext, Node sourceNode,nsIDOMNode domNode);
 	
 }

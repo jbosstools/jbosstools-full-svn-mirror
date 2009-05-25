@@ -1132,9 +1132,12 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		try {
 			nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
+			
 			if (visualNode != null) {
+				
 				if (!sourceBuilder.openBundleEditors(visualNode)) {
-					sourceBuilder.openIncludeEditor(visualNode);
+					sourceBuilder.openOn(visualNode);
+//					sourceBuilder.openIncludeEditor(visualNode);
 				}
 				if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
 					System.out.println("<<< mouseDblClick  visualNode: " + visualNode.getNodeName() + //$NON-NLS-1$

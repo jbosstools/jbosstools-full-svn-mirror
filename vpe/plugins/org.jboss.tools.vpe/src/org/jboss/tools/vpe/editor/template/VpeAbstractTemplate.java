@@ -1226,16 +1226,16 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 			Element sourceElement, Object data) {
 	}
 
-	/**
-	 * Opens editor of source file for include-element.
-	 * 
-	 * @param sourceElement The current element of the source tree.
-	 * @param data The arbitrary data, built by a method <code>create</code>
-	 * @param pageContext Contains the information on edited page.
-	 */
-	public void openIncludeEditor(VpePageContext pageContext,
-			Element sourceElement, Object data) {
-	}
+//	/**
+//	 * Opens editor of source file for include-element.
+//	 * 
+//	 * @param sourceElement The current element of the source tree.
+//	 * @param data The arbitrary data, built by a method <code>create</code>
+//	 * @param pageContext Contains the information on edited page.
+//	 */
+//	public void openIncludeEditor(VpePageContext pageContext,
+//			Element sourceElement, Object data) {
+//	}
 
 	/**
 	 * The unfilled element of an source tree can be mapped in the visiblis
@@ -1456,6 +1456,20 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 
 	public void setInvisible(boolean invisible) {
 		this.invisible = invisible;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.vpe.editor.template.VpeTemplate#getSourceRegionForOpenOn(org.mozilla.interfaces.nsIDOMNode)
+	 *
+	 */
+	/**
+	 * @author mareshkau
+	 */
+	public IRegion getSourceRegionForOpenOn(VpePageContext pageContext, Node sourceNode ,nsIDOMNode domNode) {
+			int offset = NodesManagingUtil.getStartOffsetNode(sourceNode);
+			//calculate openOnPosition,prefixLengght+>+":"
+			offset+=sourceNode.getPrefix().length()+1+1;
+			return new Region(offset, 0); 
 	}
     
 }

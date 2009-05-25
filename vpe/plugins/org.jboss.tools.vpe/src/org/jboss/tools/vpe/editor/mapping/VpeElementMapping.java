@@ -65,14 +65,6 @@ public class VpeElementMapping extends VpeNodeMapping {
 		return template;
 	}
 	
-//	public Map getXmlnsMap() {
-//		return xmlnsMap;
-//	}
-//	
-//	public void setXmlnsMap(Map xmlnsMap) {
-//		this.xmlnsMap = xmlnsMap;
-//	}
-	
 	/**
 	 * @deprecated - You must use elementData. If VpeElementData has not
 	 *             necessary functionality you must extend its

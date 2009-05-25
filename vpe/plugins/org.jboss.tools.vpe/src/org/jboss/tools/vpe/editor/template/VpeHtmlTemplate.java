@@ -13,6 +13,9 @@ package org.jboss.tools.vpe.editor.template;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.Region;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
@@ -24,10 +27,12 @@ import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMText;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -370,31 +375,6 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 			if (model != null)	model.releaseFromRead();
 		}
 	}
-
-	
-	/**
-	 * 
-	 * Deprecated
-	 */
-	@Override
-	public void openIncludeEditor(VpePageContext pageContext, Element sourceElement, Object data) {
-		openIncludeEditor(pageContext, sourceElement, (Map<?,?>) data);
-	}
-	
-	private void openIncludeEditor(VpePageContext pageContext, Element sourceElement, Map<?,?> visualNodeMap) {
-		if (sourceElement != null) {
-		    String file = null;
-		    if ("jsp:directive.include".equals(sourceElement.getNodeName())) {
-			    file = sourceElement.getAttribute("file");
-		    } else if ("jsp:include".equals(sourceElement.getNodeName())) {
-			    file = sourceElement.getAttribute("page");
-		    }
-		    if (file != null) {
-			    pageContext.openIncludeFile(file);
-		    }
-		}
-	}
-
 	/**
 	 * 
 	 * Deprecated
@@ -592,6 +572,30 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		
 		if (creator != null) {
 			return creator.getNodeForUpdate(pageContext, sourceNode, visualNode, (Map<VpeTemplate,?>)data);
+		}
+		return null;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.vpe.editor.template.VpeAbstractTemplate#getSourceRegionForOpenOn(org.jboss.tools.vpe.editor.context.VpePageContext, org.w3c.dom.Node, org.mozilla.interfaces.nsIDOMNode)
+	 */
+	/**
+	 * @author mareshkau
+	 */
+	@Override
+	public IRegion getSourceRegionForOpenOn(VpePageContext pageContext,
+			Node sourceNode, nsIDOMNode domNode) {
+		if(sourceNode != null && sourceNode instanceof Element) {
+		    Attr file = null;
+		    if ("jsp:directive.include".equals(sourceNode.getNodeName())) { //$NON-NLS-1$
+			    file = ((Element)sourceNode).getAttributeNode("file"); //$NON-NLS-1$
+		    } else if ("jsp:include".equals(sourceNode.getNodeName())) { //$NON-NLS-1$
+			    file = ((Element)sourceNode).getAttributeNode("page"); //$NON-NLS-1$
+		    }
+		    
+		    if(file!=null) {
+		    	return new Region(NodesManagingUtil.getStartOffsetNode(file),0);
+		    }
 		}
 		return null;
 	}

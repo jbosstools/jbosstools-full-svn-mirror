@@ -11,17 +11,22 @@
 
 package org.jboss.tools.vpe.html.template;
 
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.Region;
+import org.eclipse.swt.graphics.Point;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.NodeData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
+import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Node;
+import org.w3c.dom.ranges.RangeException;
 
 /**
  * @author mareshkau
@@ -55,4 +60,17 @@ public class HtmlTextTemplate extends VpeAbstractTemplate {
 	    
 	    return result;
 	}
+
+//	/* (non-Javadoc)
+//	 * @see org.jboss.tools.vpe.editor.template.VpeAbstractTemplate#getSourceRegionForOpenOn(org.w3c.dom.Node, org.mozilla.interfaces.nsIDOMNode)
+//	 */
+	@Override
+	public IRegion getSourceRegionForOpenOn(VpePageContext pageContext, Node sourceNode, nsIDOMNode domNode) {
+			
+		Point selection = pageContext.getSourceBuilder().getSelectionRange();
+		
+		return new Region(selection.x,0);
+	}
+	
+	
 }

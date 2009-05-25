@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.vpe,
  org.mozilla.xpcom,
  org.jboss.tools.jst.jsp,
- org.jboss.tools.common
+ org.jboss.tools.common,
+ org.eclipse.jface.text;bundle-version="3.5.0"
 Eclipse-LazyStart: true
 Bundle-Localization: plugin
 Export-Package: org.jboss.tools.vpe.html.template
