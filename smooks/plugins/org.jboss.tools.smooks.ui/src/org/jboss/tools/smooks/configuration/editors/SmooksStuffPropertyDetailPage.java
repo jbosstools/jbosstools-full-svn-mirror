@@ -91,7 +91,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 
 	public void createContents(Composite parent) {
 		parent.setLayout(new FillLayout());
-		section = formToolkit.createSection(parent, Section.TITLE_BAR);
+		section = formToolkit.createSection(parent, Section.TITLE_BAR|Section.DESCRIPTION);
 
 		Composite client = formToolkit.createComposite(section);
 		section.setLayout(new FillLayout());
@@ -475,7 +475,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				text = ((EObject) model).eClass().getName();
 			}
 			section.setText(text);
-			section.setDescription("Details of " + text + ". Required fields are denoted by \"*\".");
+//			section.setDescription("Details of " + text + ". Required fields are denoted by \"*\".");
 			section.layout();
 		}
 	}

@@ -41,6 +41,9 @@ public class SelectorContentProposalProvider implements IContentProposalProvider
 	 */
 	public IContentProposal[] getProposals(String contents, int position) {
 		List<Object> list = SelectoreSelectionDialog.generateInputData(extType);
+		if(list == null || list.isEmpty()){
+			return null;
+		}
 		List<IContentProposal> contentList = new ArrayList<IContentProposal>();
 		List<IXMLStructuredObject> models = new ArrayList<IXMLStructuredObject>();
 

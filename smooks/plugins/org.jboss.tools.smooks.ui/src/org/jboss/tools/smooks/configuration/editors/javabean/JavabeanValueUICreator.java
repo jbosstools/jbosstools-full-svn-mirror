@@ -73,7 +73,7 @@ public class JavabeanValueUICreator extends PropertiesAndSetterMethodSearchField
 	 * org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor)
 	 */
 	@Override
-	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		return createElementSelectionSection("Data", editingdomain, toolkit, parent, model, formEditor,
 				JavabeanPackage.eINSTANCE.getValueType_Data(), JavabeanPackage.eINSTANCE.getValueType_DataNS());

@@ -77,7 +77,7 @@ public class CounterUICreator extends PropertyUICreator {
 	 * org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor)
 	 */
 	@Override
-	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		return createElementSelectionSection("Count On Element", editingdomain, toolkit, parent, model, formEditor,
 				CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT, CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT_NS);

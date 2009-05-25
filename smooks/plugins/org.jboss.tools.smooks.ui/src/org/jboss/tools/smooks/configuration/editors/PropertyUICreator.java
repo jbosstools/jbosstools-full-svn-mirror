@@ -379,6 +379,20 @@ public class PropertyUICreator implements IPropertyUICreator {
 				toolkit, createOnElementFeatureNS, model, false, false, false, 0, null, SmooksUIUtils.VALUE_TYPE_VALUE,
 				null);
 		editPart2.setAttribute(createOnElementFeatureNS.getFeature(model));
+		
+//		gd = new GridData(GridData.FILL_HORIZONTAL);
+//		gd.horizontalSpan = 2;
+//		
+//		toolkit.createSeparator(parent, SWT.HORIZONTAL).setLayoutData(gd);
+		
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 2;
+		gd.heightHint = 8;
+		
+		Composite ccc = toolkit.createComposite(parent);
+		ccc.setLayoutData(gd);
+//		ccc.setBackground(new Color(null,128,128,128));
+		
 
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
 		list.add(editPart1);

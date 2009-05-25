@@ -96,6 +96,8 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 	public SmooksModelValidator() {
 		validatorList.add(new ClassFieldEditorValidator());
 		validatorList.add(new DuplicatedBeanIDValidator());
+		validatorList.add(new BeanIdRefValidator());
+		validatorList.add(new SelectorValidator());
 		innerEditingDomain = newEditingDomain();
 	}
 
@@ -244,9 +246,11 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 
 	private AdapterFactoryEditingDomain newEditingDomain() {
 		BasicCommandStack commandStack = new BasicCommandStack();
-		AdapterFactoryEditingDomain editingDomain = new AdapterFactoryEditingDomain(getAdapterFactory(), commandStack,
-				new HashMap<Resource, Boolean>());
-		return editingDomain;
+		if(innerEditingDomain == null){
+			innerEditingDomain = new AdapterFactoryEditingDomain(getAdapterFactory(), commandStack,
+					new HashMap<Resource, Boolean>());
+		}
+		return innerEditingDomain;
 	}
 
 	public ComposedAdapterFactory getAdapterFactory() {

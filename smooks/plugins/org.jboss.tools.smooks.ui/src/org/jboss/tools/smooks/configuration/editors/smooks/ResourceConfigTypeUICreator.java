@@ -73,7 +73,7 @@ public class ResourceConfigTypeUICreator extends PropertyUICreator {
 	 * org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor)
 	 */
 	@Override
-	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		return createElementSelectionSection("Selector", editingdomain, toolkit, parent, model, formEditor,
 				SmooksPackage.eINSTANCE.getResourceConfigType_Selector(), SmooksPackage.eINSTANCE

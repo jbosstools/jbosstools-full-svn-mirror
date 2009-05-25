@@ -13,8 +13,7 @@ package org.jboss.tools.smooks.configuration.editors.datasource;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Driver;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -24,7 +23,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -100,6 +98,13 @@ public class DirectUICreator extends PropertyUICreator {
 		return super.ignoreProperty(feature);
 	}
 
+	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
+			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+		return this.createElementSelectionSection("Binding On Element", editingdomain, toolkit, parent, model,
+				formEditor, DatasourcePackage.eINSTANCE.getDirect_BindOnElement(), DatasourcePackage.eINSTANCE
+						.getDirect_BindOnElementNS());
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -113,25 +118,7 @@ public class DirectUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
-		IItemPropertySource itemPropertySource = (IItemPropertySource) editingdomain.getAdapterFactory().adapt(model,
-				IItemPropertySource.class);
-		List<IItemPropertyDescriptor> propertyDes = itemPropertySource.getPropertyDescriptors(model);
-		IItemPropertyDescriptor createOnElementFeature = null;
-		IItemPropertyDescriptor createOnElementFeatureNS = null;
-		for (Iterator<?> iterator = propertyDes.iterator(); iterator.hasNext();) {
-			IItemPropertyDescriptor itemPropertyDescriptor = (IItemPropertyDescriptor) iterator.next();
-			if (itemPropertyDescriptor.getFeature(model) == DatasourcePackage.eINSTANCE.getDirect_BindOnElement()) {
-				createOnElementFeature = itemPropertyDescriptor;
-			}
-			if (itemPropertyDescriptor.getFeature(model) == DatasourcePackage.eINSTANCE.getDirect_BindOnElementNS()) {
-				createOnElementFeatureNS = itemPropertyDescriptor;
-			}
-		}
-		if (createOnElementFeature == null || createOnElementFeatureNS == null) {
-			return Collections.emptyList();
-		}
-		List<AttributeFieldEditPart> editPartList = this.createElementSelectionSection("Binding On Element",
-				editingdomain, toolkit, parent, model, formEditor, createOnElementFeature, createOnElementFeatureNS);
+		List<AttributeFieldEditPart> editPartList = new ArrayList<AttributeFieldEditPart>();
 
 		Composite spaceComposite = toolkit.createComposite(parent);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);

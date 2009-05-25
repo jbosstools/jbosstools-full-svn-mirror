@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.javabean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -46,10 +47,7 @@ public class JavabeanExpressionUICreator extends PropertyUICreator implements IP
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
-		List<AttributeFieldEditPart> list = createElementSelectionSection("Execute On Element", editingdomain, toolkit,
-				parent, model, formEditor, JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT,
-				JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS);
-
+		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
 		OpenEditorEditInnerContentsAction openCDATAEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,
 				(AnyType) model, SmooksUIUtils.VALUE_TYPE_TEXT, "txt");
 
@@ -64,6 +62,17 @@ public class JavabeanExpressionUICreator extends PropertyUICreator implements IP
 		
 		return list;
 	}
+	
+	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+		List<AttributeFieldEditPart> list = createElementSelectionSection("Execute On Element", editingdomain, toolkit,
+				parent, model, formEditor, JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT,
+				JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS);
+		
+		return list;
+	}
+	
+	
 
 	/*
 	 * (non-Javadoc)

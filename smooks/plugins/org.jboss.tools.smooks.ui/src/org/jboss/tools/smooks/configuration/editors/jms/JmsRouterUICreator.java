@@ -65,11 +65,24 @@ public class JmsRouterUICreator extends PropertyUICreator {
 	 * org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor)
 	 */
 	@Override
-	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		return createElementSelectionSection("Route On Element", editingdomain, toolkit, parent, model, formEditor,
 				JmsroutingPackage.eINSTANCE.getJmsRouter_RouteOnElement(), JmsroutingPackage.eINSTANCE
 						.getJmsRouter_RouteOnElementNS());
+	}
+	
+	
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.configuration.editors.PropertyUICreator#isBeanIDRefFieldFeature(org.eclipse.emf.ecore.EAttribute)
+	 */
+	@Override
+	protected boolean isBeanIDRefFieldFeature(EAttribute attribute) {
+		if(attribute == JmsroutingPackage.Literals.JMS_ROUTER__BEAN_ID){
+			return true;
+		}
+		return super.isBeanIDRefFieldFeature(attribute);
 	}
 
 	/*
