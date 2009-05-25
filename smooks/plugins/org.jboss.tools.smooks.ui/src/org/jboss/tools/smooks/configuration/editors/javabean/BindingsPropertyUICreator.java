@@ -93,7 +93,7 @@ public class BindingsPropertyUICreator extends PropertyUICreator {
 	 * org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor)
 	 */
 	@Override
-	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		return createElementSelectionSection("Create On Element", editingdomain, toolkit, parent, model, formEditor,
 				JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT,

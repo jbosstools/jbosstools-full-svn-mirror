@@ -25,6 +25,7 @@ import org.jboss.tools.smooks.model.smooks.impl.ElementVisitorImpl;
 import org.jboss.tools.smooks.model.xsl.Template;
 import org.jboss.tools.smooks.model.xsl.Use;
 import org.jboss.tools.smooks.model.xsl.Xsl;
+import org.jboss.tools.smooks.model.xsl.XslFactory;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
 
 
@@ -155,6 +156,7 @@ public class XslImpl extends ElementVisitorImpl implements Xsl {
 	 */
 	protected XslImpl() {
 		super();
+		setTemplate(XslFactory.eINSTANCE.createTemplate());
 	}
 
 	/**

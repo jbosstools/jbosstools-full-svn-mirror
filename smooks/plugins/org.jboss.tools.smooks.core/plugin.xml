@@ -213,6 +213,14 @@
             type="calc"
             class="org.jboss.tools.smooks.model.calc.util.CalcResourceFactoryImpl"/>
    </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.jboss.tools.smooks.model.esbrouting.EsbroutingPackage"
+            genModel="model/esbrouting-1.0.genmodel"
+            uri="http://www.jboss.org/xsd/jbossesb/smooks/routing-1.0.xsd">
+      </package>
+   </extension>
    
    
    

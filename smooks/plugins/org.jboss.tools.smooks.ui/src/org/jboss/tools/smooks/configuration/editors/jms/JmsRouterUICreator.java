@@ -65,7 +65,7 @@ public class JmsRouterUICreator extends PropertyUICreator {
 	 * org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor)
 	 */
 	@Override
-	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		return createElementSelectionSection("Route On Element", editingdomain, toolkit, parent, model, formEditor,
 				JmsroutingPackage.eINSTANCE.getJmsRouter_RouteOnElement(), JmsroutingPackage.eINSTANCE

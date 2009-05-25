@@ -118,6 +118,20 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 			detailsComposite.setLayout(layout);
 			IPropertyUICreator creator = PropertyUICreatorManager.getInstance().getPropertyUICreator(getModel());
 			List<IItemPropertyDescriptor> propertyDes = itemPropertySource.getPropertyDescriptors(getModel());
+			if (creator != null) {
+				List<AttributeFieldEditPart> list =  creator.createExtendUIOnTop((AdapterFactoryEditingDomain) formEditor
+						.getEditingDomain(), formToolkit, detailsComposite, getModel(), getFormEditor());
+				if (list != null) {
+					for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+						AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
+						Object attribute = attributeFieldEditPart.getAttribute();
+						if (attribute != null) {
+							currentPropertyUIMap.put(attribute, attributeFieldEditPart);
+						}
+					}
+				}
+			}
+
 			for (int i = 0; i < propertyDes.size(); i++) {
 				IItemPropertyDescriptor pd = propertyDes.get(i);
 				EAttribute attribute = (EAttribute) pd.getFeature(getModel());
@@ -139,13 +153,13 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				}
 			}
 			if (creator != null) {
-				List<AttributeFieldEditPart> list = creator.createExtendUI((AdapterFactoryEditingDomain) formEditor.getEditingDomain(), formToolkit,
-						detailsComposite, getModel(), getFormEditor());
-				if(list != null){
+				List<AttributeFieldEditPart> list = creator.createExtendUIOnBottom((AdapterFactoryEditingDomain) formEditor
+						.getEditingDomain(), formToolkit, detailsComposite, getModel(), getFormEditor());
+				if (list != null) {
 					for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 						AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
 						Object attribute = attributeFieldEditPart.getAttribute();
-						if(attribute != null){
+						if (attribute != null) {
 							currentPropertyUIMap.put(attribute, attributeFieldEditPart);
 						}
 					}

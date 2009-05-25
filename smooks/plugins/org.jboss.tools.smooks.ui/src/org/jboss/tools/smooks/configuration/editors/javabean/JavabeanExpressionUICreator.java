@@ -44,7 +44,7 @@ public class JavabeanExpressionUICreator extends PropertyUICreator implements IP
 	 * org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor)
 	 */
 	@Override
-	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		List<AttributeFieldEditPart> list = createElementSelectionSection("Execute On Element", editingdomain, toolkit,
 				parent, model, formEditor, JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT,

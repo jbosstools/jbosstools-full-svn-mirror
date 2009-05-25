@@ -61,6 +61,7 @@ import org.jboss.tools.smooks.model.datasource.DataSourceJndi;
 import org.jboss.tools.smooks.model.datasource.Direct;
 import org.jboss.tools.smooks.model.dbrouting.Executor;
 import org.jboss.tools.smooks.model.dbrouting.ResultSetRowSelector;
+import org.jboss.tools.smooks.model.esbrouting.RouteBean;
 import org.jboss.tools.smooks.model.fileRouting.OutputStream;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.groovy.Groovy;
@@ -842,6 +843,9 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 					return true;
 				}
 				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Executor) {
+					return true;
+				}
+				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof RouteBean) {
 					return true;
 				}
 			}

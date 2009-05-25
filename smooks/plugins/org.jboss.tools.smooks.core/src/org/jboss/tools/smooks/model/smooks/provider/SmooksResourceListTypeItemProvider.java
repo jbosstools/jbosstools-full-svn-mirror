@@ -34,6 +34,8 @@ import org.jboss.tools.smooks.model.dbrouting.DbroutingFactory;
 import org.jboss.tools.smooks.model.dbrouting.DbroutingPackage;
 import org.jboss.tools.smooks.model.edi.EdiFactory;
 import org.jboss.tools.smooks.model.edi.EdiPackage;
+import org.jboss.tools.smooks.model.esbrouting.EsbroutingFactory;
+import org.jboss.tools.smooks.model.esbrouting.EsbroutingPackage;
 import org.jboss.tools.smooks.model.fileRouting.FileRoutingFactory;
 import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerFactory;
@@ -324,6 +326,11 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 		// for File routing
 		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
 				.createEntry(FileRoutingPackage.Literals.DOCUMENT_ROOT__OUTPUT_STREAM, FileRoutingFactory.eINSTANCE.createOutputStream())));
+		
+		// for ESB routing
+		newChildDescriptors.add(createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+				.createEntry(EsbroutingPackage.Literals.ESB_ROUTING_DOCUMENT_ROOT__ROUTE_BEAN, EsbroutingFactory.eINSTANCE.createRouteBean())));
+
 
 		/***********************************************/
 	}

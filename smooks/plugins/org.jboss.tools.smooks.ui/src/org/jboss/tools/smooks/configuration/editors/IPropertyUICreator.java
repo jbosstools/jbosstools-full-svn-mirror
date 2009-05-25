@@ -28,8 +28,11 @@ public interface IPropertyUICreator {
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 			SmooksMultiFormEditor formEditor);
 
-	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, SmooksMultiFormEditor formEditor);
 	
 	public boolean ignoreProperty(EAttribute feature);
+
+	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingDomain,
+			FormToolkit formToolkit, Composite detailsComposite, Object model, SmooksMultiFormEditor formEditor);
 }

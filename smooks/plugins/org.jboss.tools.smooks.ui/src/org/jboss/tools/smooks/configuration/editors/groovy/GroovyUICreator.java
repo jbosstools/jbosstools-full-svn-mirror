@@ -57,7 +57,7 @@ public class GroovyUICreator extends PropertyUICreator {
 	}
 
 	@Override
-	public List<AttributeFieldEditPart> createExtendUI(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
+	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		return createElementSelectionSection("Execute On Element", editingdomain, toolkit, parent, model, formEditor,
 				GroovyPackage.eINSTANCE.getGroovy_ExecuteOnElement(), GroovyPackage.eINSTANCE

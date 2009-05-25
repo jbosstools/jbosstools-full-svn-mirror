@@ -37,6 +37,7 @@ import org.jboss.tools.smooks.model.dbrouting.DbroutingPackage;
 import org.jboss.tools.smooks.model.dbrouting.provider.DbroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.edi.EdiPackage;
 import org.jboss.tools.smooks.model.edi.provider.EdiItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.esbrouting.EsbroutingPackage;
 import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 import org.jboss.tools.smooks.model.fileRouting.provider.FileRoutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
@@ -92,7 +93,7 @@ public abstract class AbstractSmooks11ModelTestCase extends TestCase {
 		Registry.INSTANCE.put(JsonPackage.eNS_URI, JsonPackage.eINSTANCE);
 		Registry.INSTANCE.put(MEdiPackage.eNS_URI, MEdiPackage.eINSTANCE);
 		Registry.INSTANCE.put(XslPackage.eNS_URI, XslPackage.eINSTANCE);
-
+		Registry.INSTANCE.put(EsbroutingPackage.eNS_URI, EsbroutingPackage.eINSTANCE);
 		Registry.INSTANCE.put(org.jboss.tools.smooks10.model.smooks.SmooksPackage.eNS_URI,
 				org.jboss.tools.smooks10.model.smooks.SmooksPackage.eINSTANCE);
 	}
