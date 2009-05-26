@@ -110,11 +110,11 @@ public class VpeTest extends TestCase implements ILogListener {
     @Override
 	protected void tearDown() throws Exception {
 
-        super.tearDown();
-
         closeEditors();
 
         Platform.removeLogListener(this);
+        
+        super.tearDown();
 
     }
 
@@ -157,7 +157,7 @@ public class VpeTest extends TestCase implements ILogListener {
         IWorkbenchPart part = page.getViewReferences()[0].getPart(false);
         page.activate(part);
         // close
-        page.closeAllEditors(false);
+       	page.closeAllEditors(false);
 
     }
  
