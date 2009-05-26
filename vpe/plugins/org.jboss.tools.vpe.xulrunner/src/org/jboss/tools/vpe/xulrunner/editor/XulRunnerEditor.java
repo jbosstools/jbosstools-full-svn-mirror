@@ -396,7 +396,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 				}else {
 					getIFlasher().setColor(flasherHiddentElementColor);
 				}
-				getIFlasher().drawElementOutline(element);
+				drawElementOutline(element);
 			}else {
 				
 				getIFlasher().setColor(flasherHiddentElementColor);
@@ -404,7 +404,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 				
 				if(domElement!=null) {
 					
-					getIFlasher().drawElementOutline(domElement);
+				drawElementOutline(domElement);
 				}
 			}
 
@@ -561,17 +561,17 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 					getIFlasher().setColor(flasherHiddentElementColor);
 				}
 					
-				getIFlasher().drawElementOutline(getLastSelectedElement());
+				drawElementOutline(getLastSelectedElement());
 			}else {
 				
 				getIFlasher().setColor(flasherHiddentElementColor);
 				nsIDOMElement domElement = findVisbleParentElement(getLastSelectedElement());
 				
 				if(domElement!=null) {
-					getIFlasher().drawElementOutline(domElement);
+					drawElementOutline(domElement);
 				}
 			}
-		} else if(getIFlasher()!=null&&Platform.getOSArch().equals(Platform.OS_MACOSX)){
+		} else if(getIFlasher()!=null&&Platform.OS_MACOSX.equals(Platform.getOS())){
 			//Max Areshkau (bug on Mac OS X, when we switch to preview from other view, selection rectangle doesn't disappear
 			//TODO Max Areshkau (may be exist passability not draw selection on resize event when we switches to other view)
 			try {
@@ -653,6 +653,34 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		return null;
 	}
 	
+	/**
+	 * Decorator
+	 * @author mareshkau
+	 * @param domElement arround which border will be shown 
+	 * 
+	 */
+	private void drawElementOutline(nsIDOMElement domElement) {
+		//fix for JBIDE-3969
+		if(Platform.OS_MACOSX.equals(Platform.getOS())&&hasSelectInParenNodes(domElement.getParentNode())) {
+			return;
+		}
+		getIFlasher().drawElementOutline(domElement);
+	}
+	/**
+	 * Checks if node has select in parent node, if has it's cause crash 
+	 * on OSX and xulrunner 1.8.1.3
+	 * @param domElement
+	 * @return
+	 */
+	private boolean hasSelectInParenNodes(nsIDOMNode domNode){
+		if(domNode==null) {
+			return false;
+		}else if("select".equalsIgnoreCase(domNode.getNodeName())){
+			return true;
+		} else {
+			return hasSelectInParenNodes(domNode.getParentNode());
+		}
+	}
 }
 
 
