@@ -78,14 +78,14 @@ public class DBExtractTransformConfigFileTestCase extends AbstractSmooks11ModelT
 						Assert.assertEquals("DBExtractTransformLoadDS", executor.getDatasource());
 						Assert.assertEquals(false, executor.isExecuteBefore());
 						Assert.assertEquals("INSERT INTO ORDERS VALUES(${order.orderNum}, ${order.customerUname}, ${order.status}, ${order.net}, ${order.total}, ${message.date})", executor.getStatement().trim());
-						Assert.assertEquals("orderExistsRS.isEmpty()", executor.getCondition().getValue());
+						Assert.assertEquals("orderExistsRS.isEmpty()", executor.getCondition().getStringValue());
 					}
 					if(executorCount == 2){
 						Assert.assertEquals("order-item", executor.getExecuteOnElement());
 						Assert.assertEquals("DBExtractTransformLoadDS", executor.getDatasource());
 						Assert.assertEquals(false, executor.isExecuteBefore());
 						Assert.assertEquals("INSERT INTO ORDERITEMS VALUES (${order.orderNum}, ${orderItem.quantity}, ${orderItem.productId}, ${orderItem.title}, ${orderItem.price})", executor.getStatement().trim());
-						Assert.assertEquals("orderExistsRS.isEmpty()", executor.getCondition().getValue());
+						Assert.assertEquals("orderExistsRS.isEmpty()", executor.getCondition().getStringValue());
 					}
 					executorCount ++;
 				}

@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.validate;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -17,17 +18,13 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.SelectoreSelectionDialog;
-import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.groovy.GroovyUICreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.calc.CalcPackage;
@@ -78,8 +75,10 @@ public class SelectorValidator extends AbstractValidator {
 	public List<Diagnostic> validate(Collection<?> selectedObjects, EditingDomain editingDomain) {
 		list.clear();
 		Resource resource = editingDomain.getResourceSet().getResources().get(0);
+		if (resource.getContents().isEmpty()) {
+			return super.validate(selectedObjects, editingDomain);
+		}
 		Object obj = resource.getContents().get(0);
-		final SmooksGraphicsExtType[] extTypes = new SmooksGraphicsExtType[1];
 		if (obj instanceof DocumentRoot) {
 			SmooksResourceListType listType = ((DocumentRoot) obj).getSmooksResourceList();
 			IResource r = SmooksUIUtils.getResource(listType);
@@ -88,30 +87,15 @@ public class SelectorValidator extends AbstractValidator {
 				file = (IFile) r;
 			}
 			final IFile ff = file;
-			Display.getDefault().syncExec(new Runnable() {
+			String extName = ff.getName() + ".ext";
 
-				/*
-				 * (non-Javadoc)
-				 * 
-				 * @see java.lang.Runnable#run()
-				 */
-				public void run() {
-					IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-					if (window == null) {
-						return;
-					}
-					SmooksMultiFormEditor editor = (SmooksMultiFormEditor) window.getActivePage().findEditor(
-							new FileEditorInput((IFile) ff));
-					if (editor == null)
-						return;
-
-					SmooksGraphicsExtType extType = editor.getSmooksGraphicsExt();
-					extTypes[0] = extType;
-				}
-
-			});
+			IFile extFile = ff.getParent().getFile(new Path(extName));
+			try {
+				extType = SmooksUIUtils.loadSmooksGraphicsExt(extFile);
+			} catch (IOException e) {
+				// ignore
+			}
 		}
-		extType = extTypes[0];
 		if (extType != null) {
 			List<Object> l = SelectoreSelectionDialog.generateInputData(extType);
 			if (l != null) {
@@ -132,24 +116,37 @@ public class SelectorValidator extends AbstractValidator {
 	protected Diagnostic validateModel(Object model, EditingDomain editingDomain) {
 		EAttribute feature = getAttribute(model);
 		String path = getPath(model);
-//		if(feature != null && path == null){
-//			return newWaringDiagnostic("Selector '" +path+ "' isn't available", model, feature);
-//		}
+		if (path == null) {
+			return null;
+		}
+		// if(feature != null && path == null){
+		// return newWaringDiagnostic("Selector '" +path+ "' isn't available",
+		// model, feature);
+		// }
+		String sperator = "/";
+		if (path.indexOf('/') == -1) {
+			sperator = " ";
+		}
 		if (feature != null && path != null) {
 			Object node = null;
 			for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 				Object obj = (Object) iterator.next();
 				if (obj instanceof IXMLStructuredObject) {
-					if (node == null){
-						node = SmooksUIUtils.localXMLNodeWithPath(path, (IXMLStructuredObject) obj,"/" , false);
+					if (node == null) {
+						try {
+							node = SmooksUIUtils
+									.localXMLNodeWithPath(path, (IXMLStructuredObject) obj, sperator, false);
+						} catch (Throwable e) {
+							// ignore
+						}
 					}
-					if(node != null){
+					if (node != null) {
 						return null;
 					}
 				}
 			}
-			if(node == null){
-				return newWaringDiagnostic("Selector '" +path+ "' isn't available", model, feature);
+			if (node == null) {
+				return newWaringDiagnostic("Selector '" + path + "' isn't available", model, feature);
 			}
 		}
 		return super.validateModel(model, editingDomain);
@@ -162,91 +159,90 @@ public class SelectorValidator extends AbstractValidator {
 		if (model instanceof Counter) {
 			return CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT;
 		}
-		if(model instanceof Direct){
+		if (model instanceof Direct) {
 			return DatasourcePackage.Literals.DIRECT__BIND_ON_ELEMENT;
 		}
-		if(model instanceof RouteBean){
+		if (model instanceof RouteBean) {
 			return EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_ON_ELEMENT;
 		}
-		if(model instanceof OutputStream){
+		if (model instanceof OutputStream) {
 			return FileRoutingPackage.Literals.OUTPUT_STREAM__OPEN_ON_ELEMENT;
 		}
-		if(model instanceof Freemarker){
+		if (model instanceof Freemarker) {
 			return FreemarkerPackage.Literals.FREEMARKER__APPLY_ON_ELEMENT;
 		}
-		if(model instanceof Xsl){
+		if (model instanceof Xsl) {
 			return XslPackage.Literals.XSL__APPLY_ON_ELEMENT;
 		}
-		if(model instanceof GroovyUICreator){
+		if (model instanceof GroovyUICreator) {
 			return GroovyPackage.Literals.GROOVY__EXECUTE_ON_ELEMENT;
 		}
-		if(model instanceof JmsRouter){
+		if (model instanceof JmsRouter) {
 			return JmsroutingPackage.Literals.JMS_ROUTER__ROUTE_ON_ELEMENT;
 		}
-		
-		if(model instanceof ResourceConfigType){
-			return  SmooksPackage.Literals.RESOURCE_CONFIG_TYPE__SELECTOR;
+
+		if (model instanceof ResourceConfigType) {
+			return SmooksPackage.Literals.RESOURCE_CONFIG_TYPE__SELECTOR;
 		}
-		
-		if(model instanceof SmooksResourceListType){
+
+		if (model instanceof SmooksResourceListType) {
 			return SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR;
 		}
-		
-		if(model instanceof WiringType){
+
+		if (model instanceof WiringType) {
 			return JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
 		}
-		if(model instanceof ExpressionType){
+		if (model instanceof ExpressionType) {
 			return JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT;
 		}
-		if(model instanceof ValueType){
+		if (model instanceof ValueType) {
 			return JavabeanPackage.Literals.VALUE_TYPE__DATA;
 		}
 		return null;
 	}
 
 	private String getPath(Object model) {
-		if(model instanceof ExpressionType){
-			return ((ExpressionType)model).getExecOnElement();
+		if (model instanceof ExpressionType) {
+			return ((ExpressionType) model).getExecOnElement();
 		}
-		if(model instanceof ValueType){
-			return ((ValueType)model).getData();
+		if (model instanceof ValueType) {
+			return ((ValueType) model).getData();
 		}
-		if(model instanceof WiringType){
-			return ((WiringType)model).getWireOnElement();
+		if (model instanceof WiringType) {
+			return ((WiringType) model).getWireOnElement();
 		}
-		if(model instanceof SmooksResourceListType){
-			return ((SmooksResourceListType)model).getDefaultSelector();
+		if (model instanceof SmooksResourceListType) {
+			return ((SmooksResourceListType) model).getDefaultSelector();
 		}
-		if(model instanceof ResourceConfigType)
-		{
-			return ((ResourceConfigType)model).getSelector();
+		if (model instanceof ResourceConfigType) {
+			return ((ResourceConfigType) model).getSelector();
 		}
-		if(model instanceof JmsRouter){
-			return ((JmsRouter)model).getRouteOnElement();
+		if (model instanceof JmsRouter) {
+			return ((JmsRouter) model).getRouteOnElement();
 		}
-		if(model instanceof GroovyUICreator){
-			return ((Groovy)model).getExecuteOnElement();
+		if (model instanceof GroovyUICreator) {
+			return ((Groovy) model).getExecuteOnElement();
 		}
-		if(model instanceof Xsl){
-			return ((Xsl)model).getApplyOnElement();
+		if (model instanceof Xsl) {
+			return ((Xsl) model).getApplyOnElement();
 		}
 		if (model instanceof Counter) {
-			return ((Counter)model).getCountOnElement();
+			return ((Counter) model).getCountOnElement();
 		}
 		if (model instanceof BindingsType) {
 			return ((BindingsType) model).getCreateOnElement();
 		}
-		if(model instanceof Direct){
-			return ((Direct)model).getBindOnElement();
+		if (model instanceof Direct) {
+			return ((Direct) model).getBindOnElement();
 		}
-		if(model instanceof RouteBean){
-			return ((RouteBean)model).getRouteOnElement();
+		if (model instanceof RouteBean) {
+			return ((RouteBean) model).getRouteOnElement();
 		}
-		if(model instanceof OutputStream){
-			return  ((OutputStream)model).getOpenOnElement();
+		if (model instanceof OutputStream) {
+			return ((OutputStream) model).getOpenOnElement();
 		}
-		if(model instanceof Freemarker){
-			return ((Freemarker)model).getApplyOnElement();
+		if (model instanceof Freemarker) {
+			return ((Freemarker) model).getApplyOnElement();
 		}
 		return null;
 	}

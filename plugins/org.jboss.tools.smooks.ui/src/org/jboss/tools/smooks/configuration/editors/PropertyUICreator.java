@@ -30,15 +30,18 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.editors.uitls.FieldAssistDisposer;
 import org.jboss.tools.smooks.configuration.editors.uitls.FieldMarkerWrapper;
 import org.jboss.tools.smooks.configuration.editors.uitls.IFieldDialog;
@@ -131,8 +134,8 @@ public class PropertyUICreator implements IPropertyUICreator {
 		return SmooksUIUtils.getJavaProject(model);
 	}
 
-	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
+			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		return Collections.emptyList();
 	}
 
@@ -181,7 +184,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 			SmooksMultiFormEditor formEditor) {
 		SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
 		if (ext != null) {
-			return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, ext,formEditor);
+			return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, ext, formEditor);
 		}
 		return null;
 	}
@@ -253,7 +256,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 				final Object cmodel = model;
 				combo.addModifyListener(new ModifyListener() {
 					public void modifyText(ModifyEvent e) {
-						if(combo.getText() == null || combo.getText().length() ==0){
+						if (combo.getText() == null || combo.getText().length() == 0) {
 							ip.setPropertyValue(cmodel, null);
 							return;
 						}
@@ -264,20 +267,24 @@ public class PropertyUICreator implements IPropertyUICreator {
 						ip.setPropertyValue(cmodel, combo.getText());
 					}
 				});
-				
-				final FieldAssistDisposer disposer = SmooksUIUtils.addBeanIdRefAssistToCombo(combo, (EObject)model);
-				
-				combo.addDisposeListener(new DisposeListener(){
 
-					/* (non-Javadoc)
-					 * @see org.eclipse.swt.events.DisposeListener#widgetDisposed(org.eclipse.swt.events.DisposeEvent)
+				final FieldAssistDisposer disposer = SmooksUIUtils.addBeanIdRefAssistToCombo(combo, (EObject) model);
+
+				combo.addDisposeListener(new DisposeListener() {
+
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see
+					 * org.eclipse.swt.events.DisposeListener#widgetDisposed
+					 * (org.eclipse.swt.events.DisposeEvent)
 					 */
 					public void widgetDisposed(DisposeEvent e) {
 						disposer.dispose();
 					}
-					
+
 				});
-				
+
 				return editPart;
 			}
 		}
@@ -295,18 +302,18 @@ public class PropertyUICreator implements IPropertyUICreator {
 		return null;
 	}
 
-
 	public boolean ignoreProperty(EAttribute feature) {
 		return false;
 	}
-	
-	public IItemPropertyDescriptor getPropertyDescriptor(AdapterFactoryEditingDomain editingDomain,EAttribute attribute , Object model){
+
+	public IItemPropertyDescriptor getPropertyDescriptor(AdapterFactoryEditingDomain editingDomain,
+			EAttribute attribute, Object model) {
 		IItemPropertySource itemPropertySource = (IItemPropertySource) editingDomain.getAdapterFactory().adapt(model,
 				IItemPropertySource.class);
 		List<IItemPropertyDescriptor> list = itemPropertySource.getPropertyDescriptors(model);
 		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 			IItemPropertyDescriptor itemPropertyDescriptor = (IItemPropertyDescriptor) iterator.next();
-			if(itemPropertyDescriptor.getFeature(model) == attribute){
+			if (itemPropertyDescriptor.getFeature(model) == attribute) {
 				return itemPropertyDescriptor;
 			}
 		}
@@ -342,24 +349,50 @@ public class PropertyUICreator implements IPropertyUICreator {
 			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
 			SmooksMultiFormEditor formEditor, IItemPropertyDescriptor createOnElementFeature,
 			IItemPropertyDescriptor createOnElementFeatureNS) {
-		Section section = toolkit.createSection(parent, Section.TITLE_BAR);
-		section.setText(sectionTitle);
+		Group group = new Group(parent, SWT.NONE);
+		// Section section = toolkit.createSection(parent, Section.TITLE_BAR);
+		// section.setText(sectionTitle);
+		if (sectionTitle != null) {
+			sectionTitle = " " + sectionTitle + " ";
+		}
+		group.setText(sectionTitle);
+		// FontData fd = new FontData();
+		// fd.setStyle(SWT.BOLD);
+		// group.setForeground(toolkit.getColors().getForeground());
 
 		FillLayout layout = new FillLayout();
 		layout.marginHeight = 0;
 		layout.marginWidth = 0;
 
-		section.setLayout(layout);
+		// section.setLayout(layout);
+		group.setLayout(layout);
 
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.heightHint = 100;
+//		gd.heightHint = 100;
 		gd.horizontalSpan = 2;
-		section.setLayoutData(gd);
+		// section.setLayoutData(gd);
+		group.setLayoutData(gd);
+		group.setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
+		// Composite backComposite = toolkit.createComposite(section);
+		// section.setClient(backComposite);
+		// GridLayout gl = new GridLayout();
+		// gl.marginHeight = 0;
+		// gl.marginWidth = 0;
+		// gl.marginLeft = 1;
+		// gl.marginRight = 1;
+		// gl.marginBottom = 1;
+		// backComposite.setLayout(gl);
+		// backComposite.setBackground(toolkit.getColors().getColor(IFormColors.BORDER));
 
-		Composite container = toolkit.createComposite(section);
+		Composite container = toolkit.createComposite(group);
+		group.setBackground(container.getBackground());
 
-		section.setClient(container);
-
+		Font f = container.getFont();
+		if (f != null) {
+			FontData fd = f.getFontData()[0];
+			if (fd != null)
+				group.setFont(new Font(null, new FontData(fd.getName(), fd.getHeight(), SWT.BOLD)));
+		}
 		GridLayout glayout = new GridLayout();
 		glayout.numColumns = 2;
 		container.setLayout(glayout);
@@ -368,7 +401,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 			name += "*";
 		}
 		AttributeFieldEditPart editPart1 = SmooksUIUtils.createSelectorFieldEditor(name, toolkit, container,
-				createOnElementFeature, model, formEditor.getSmooksGraphicsExt(),formEditor);
+				createOnElementFeature, model, formEditor.getSmooksGraphicsExt(), formEditor);
 		editPart1.setAttribute(createOnElementFeature.getFeature(model));
 
 		String namespace = "Namespace";
@@ -379,20 +412,19 @@ public class PropertyUICreator implements IPropertyUICreator {
 				toolkit, createOnElementFeatureNS, model, false, false, false, 0, null, SmooksUIUtils.VALUE_TYPE_VALUE,
 				null);
 		editPart2.setAttribute(createOnElementFeatureNS.getFeature(model));
-		
-//		gd = new GridData(GridData.FILL_HORIZONTAL);
-//		gd.horizontalSpan = 2;
-//		
-//		toolkit.createSeparator(parent, SWT.HORIZONTAL).setLayoutData(gd);
-		
+
+		// gd = new GridData(GridData.FILL_HORIZONTAL);
+		// gd.horizontalSpan = 2;
+		//		
+		// toolkit.createSeparator(parent, SWT.HORIZONTAL).setLayoutData(gd);
+
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		gd.heightHint = 8;
-		
+
 		Composite ccc = toolkit.createComposite(parent);
 		ccc.setLayoutData(gd);
-//		ccc.setBackground(new Color(null,128,128,128));
-		
+		// ccc.setBackground(new Color(null,128,128,128));
 
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
 		list.add(editPart1);

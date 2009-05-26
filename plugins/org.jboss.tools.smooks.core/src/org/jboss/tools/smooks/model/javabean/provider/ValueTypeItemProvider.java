@@ -255,13 +255,10 @@ public class ValueTypeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((ValueType)object).getData();
-		if(label != null && label.length() > 12){
-			label = label.substring(0, 12) + "...";
-		}
+		String label = ((ValueType)object).getProperty();
 		return label == null || label.length() == 0 ?
 			getString("_UI_ValueType_type") :
-			getString("_UI_ValueType_type") + " " + label;
+			getString("_UI_ValueType_type") + " (" + label + ")";
 	}
 
 	/**

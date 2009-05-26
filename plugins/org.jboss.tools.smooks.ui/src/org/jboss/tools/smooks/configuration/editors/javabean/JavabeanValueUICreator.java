@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 
 /**
@@ -73,10 +74,17 @@ public class JavabeanValueUICreator extends PropertiesAndSetterMethodSearchField
 	 * org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor)
 	 */
 	@Override
-	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
-		return createElementSelectionSection("Data", editingdomain, toolkit, parent, model, formEditor,
-				JavabeanPackage.eINSTANCE.getValueType_Data(), JavabeanPackage.eINSTANCE.getValueType_DataNS());
+	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
+			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+		List<AttributeFieldEditPart> list = createElementSelectionSection("Data", editingdomain, toolkit, parent,
+				model, formEditor, JavabeanPackage.eINSTANCE.getValueType_Data(), JavabeanPackage.eINSTANCE
+						.getValueType_DataNS());
+		list.add(SmooksUIUtils.createStringFieldEditor(parent, toolkit, getPropertyDescriptor(editingdomain,
+				JavabeanPackage.Literals.VALUE_TYPE__DEFAULT, model), model, false, false, null));
+		
+		list.add(SmooksUIUtils.createStringFieldEditor(parent, toolkit, getPropertyDescriptor(editingdomain,
+				JavabeanPackage.Literals.VALUE_TYPE__DECODER, model), model, false, false, null));
+		return list;
 	}
 
 	/*
@@ -92,6 +100,12 @@ public class JavabeanValueUICreator extends PropertiesAndSetterMethodSearchField
 			return true;
 		}
 		if (feature == JavabeanPackage.eINSTANCE.getValueType_DataNS()) {
+			return true;
+		}
+		if (feature == JavabeanPackage.eINSTANCE.getValueType_Decoder()) {
+			return true;
+		}
+		if (feature == JavabeanPackage.eINSTANCE.getValueType_Default()) {
 			return true;
 		}
 		return super.ignoreProperty(feature);

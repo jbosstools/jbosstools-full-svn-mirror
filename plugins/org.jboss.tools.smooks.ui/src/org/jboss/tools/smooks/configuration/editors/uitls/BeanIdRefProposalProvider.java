@@ -49,7 +49,7 @@ public class BeanIdRefProposalProvider implements IContentProposalProvider {
 			return proposalList.toArray(new IContentProposal[]{});
 		}
 		
-		return null;
+		return new IContentProposal[]{};
 	}
 	
 	protected SmooksResourceListType getSmooksResourceList(EObject model) {

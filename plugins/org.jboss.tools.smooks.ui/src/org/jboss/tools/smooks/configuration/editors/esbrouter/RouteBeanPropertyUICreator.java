@@ -15,12 +15,16 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
@@ -116,18 +120,30 @@ public class RouteBeanPropertyUICreator extends PropertyUICreator {
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
-		Section section = toolkit.createSection(parent, Section.TITLE_BAR);
+		Group group  =new Group(parent,SWT.NONE);
+//		Section section = toolkit.createSection(parent, Section.TITLE_BAR);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
-		section.setText("Route To Serivce");
-		section.setLayoutData(gd);
+//		section.setText("Route To Serivce");
+		group.setText("Route To Serivce");
+//		section.setLayoutData(gd);
+		group.setLayoutData(gd);
 		FillLayout fl = new FillLayout();
 		fl.marginHeight = 0;
 		fl.marginWidth = 0;
 
-		section.setLayout(fl);
-		Composite composite = toolkit.createComposite(section);
-		section.setClient(composite);
+//		section.setLayout(fl);
+		group.setLayout(fl);
+		
+		Composite composite = toolkit.createComposite(group);
+//		section.setClient(composite);
+		group.setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
+		Font f = composite.getFont();
+		if (f != null) {
+			FontData fd = f.getFontData()[0];
+			if (fd != null)
+				group.setFont(new Font(null, new FontData(fd.getName(), fd.getHeight(), SWT.BOLD)));
+		}
 
 		GridLayout gl = new GridLayout();
 		gl.numColumns = 2;

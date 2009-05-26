@@ -200,10 +200,10 @@ public class ExpressionTypeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((ExpressionType)object).getValue();
+		String label = ((ExpressionType)object).getProperty();
 		return label == null || label.length() == 0 ?
 			getString("_UI_ExpressionType_type") :
-			getString("_UI_ExpressionType_type") + " " + label;
+			getString("_UI_ExpressionType_type") + " (" + label+")";
 	}
 
 	/**

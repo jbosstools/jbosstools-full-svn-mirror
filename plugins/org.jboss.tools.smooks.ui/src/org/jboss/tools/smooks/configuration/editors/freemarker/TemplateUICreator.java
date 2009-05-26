@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.freemarker;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -40,32 +40,39 @@ public class TemplateUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.edit.provider.IItemPropertyDescriptor, java.lang.Object,
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
-	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
-			EAttribute feature, SmooksMultiFormEditor formEditor) {
+	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
+			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
+			SmooksMultiFormEditor formEditor) {
 		if (feature == FreemarkerPackage.eINSTANCE.getTemplate_Value()) {
 		}
-		if (feature == FreemarkerPackage.eINSTANCE.getTemplate_Encoding()) {
-		}
-
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
 	@Override
-	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
-			SmooksMultiFormEditor formEditor) {
-		OpenEditorEditInnerContentsAction openCDATAEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_CDATA, "flt");
-//		OpenEditorEditInnerContentsAction openCommentEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "flt");
+	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
+			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
+		OpenEditorEditInnerContentsAction openCDATAEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,
+				(AnyType) model, SmooksUIUtils.VALUE_TYPE_CDATA, "flt");
+		// OpenEditorEditInnerContentsAction openCommentEditorAction = new
+		// OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model,
+		// SmooksUIUtils.VALUE_TYPE_COMMENT, "flt");
 
-				AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Inline Template", editingdomain, toolkit, parent, model, openCDATAEditorAction);
-//		AttributeFieldEditPart commenttext = SmooksUIUtils.createCommentFieldEditor("Template Contents(Comment)", editingdomain, toolkit, parent, model, openCommentEditorAction);
-		
-		openCDATAEditorAction.setRelateText((Text)cdatatext.getContentControl());
-//		openCommentEditorAction.setRelateText((Text)commenttext.getContentControl());
-		
-		SmooksUIUtils.createFileSelectionTextFieldEditor("External Template File", parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
-				null, null);
+		AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Inline Template", editingdomain,
+				toolkit, parent, model, openCDATAEditorAction, true);
+		list.add(cdatatext);
+		// AttributeFieldEditPart commenttext =
+		// SmooksUIUtils.createCommentFieldEditor("Template Contents(Comment)",
+		// editingdomain, toolkit, parent, model, openCommentEditorAction);
 
-		return Collections.emptyList();
+		openCDATAEditorAction.setRelateText((Text) cdatatext.getContentControl());
+		// openCommentEditorAction.setRelateText((Text)commenttext.getContentControl());
+
+		list.add(SmooksUIUtils.createFileSelectionTextFieldEditor("External Template File", parent, editingdomain,
+				toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT, null, null));
+		list.add(SmooksUIUtils.createStringFieldEditor(parent, toolkit, getPropertyDescriptor(editingdomain,
+				FreemarkerPackage.eINSTANCE.getTemplate_Encoding(), model), model, false, false, null));
+		return list;
 	}
 
 	@Override
@@ -73,6 +80,10 @@ public class TemplateUICreator extends PropertyUICreator {
 		if (feature == FreemarkerPackage.eINSTANCE.getTemplate_Value()) {
 			return true;
 		}
+		if (feature == FreemarkerPackage.eINSTANCE.getTemplate_Encoding()) {
+			return true;
+		}
+
 		return super.ignoreProperty(feature);
 	}
 
