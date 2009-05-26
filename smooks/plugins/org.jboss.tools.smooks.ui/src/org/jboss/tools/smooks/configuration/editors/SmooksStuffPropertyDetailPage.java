@@ -125,7 +125,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 					for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 						AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
 						Object attribute = attributeFieldEditPart.getAttribute();
-						if (attribute != null) {
+						if (attribute != null && attributeFieldEditPart != null) {
 							currentPropertyUIMap.put(attribute, attributeFieldEditPart);
 						}
 					}
@@ -137,7 +137,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				EAttribute attribute = (EAttribute) pd.getFeature(getModel());
 				if (attribute.isRequired()) {
 					AttributeFieldEditPart editPart = createAttributeUI(detailsComposite, pd, creator);
-					if (editPart != null) {
+					if (editPart != null  && attribute != null) {
 						currentPropertyUIMap.put(attribute, editPart);
 					}
 				}
@@ -147,7 +147,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				EAttribute attribute = (EAttribute) pd.getFeature(getModel());
 				if (!attribute.isRequired()) {
 					AttributeFieldEditPart editPart = createAttributeUI(detailsComposite, pd, creator);
-					if (editPart != null) {
+					if (editPart != null && attribute != null) {
 						currentPropertyUIMap.put(attribute, editPart);
 					}
 				}
@@ -159,7 +159,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 					for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 						AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
 						Object attribute = attributeFieldEditPart.getAttribute();
-						if (attribute != null) {
+						if (attribute != null && attributeFieldEditPart != null) {
 							currentPropertyUIMap.put(attribute, attributeFieldEditPart);
 						}
 					}

@@ -429,7 +429,10 @@ public class PropertyUICreator implements IPropertyUICreator {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
 		list.add(editPart1);
 		list.add(editPart2);
-
+		AttributeFieldEditPart dummyEditPart = new AttributeFieldEditPart();
+		dummyEditPart.setAttribute(null);
+		dummyEditPart.setContentControl(container);
+		list.add(dummyEditPart);
 		return list;
 	}
 

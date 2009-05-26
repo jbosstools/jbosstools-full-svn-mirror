@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.javabean;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -79,10 +80,18 @@ public class JavabeanValueUICreator extends PropertiesAndSetterMethodSearchField
 		List<AttributeFieldEditPart> list = createElementSelectionSection("Data", editingdomain, toolkit, parent,
 				model, formEditor, JavabeanPackage.eINSTANCE.getValueType_Data(), JavabeanPackage.eINSTANCE
 						.getValueType_DataNS());
-		list.add(SmooksUIUtils.createStringFieldEditor(parent, toolkit, getPropertyDescriptor(editingdomain,
+		Composite groupParent = parent;
+		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+			AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
+			if(attributeFieldEditPart.getAttribute() == null){
+				groupParent = (Composite) attributeFieldEditPart.getContentControl();
+				break;
+			}
+		}
+		list.add(SmooksUIUtils.createStringFieldEditor(groupParent, toolkit, getPropertyDescriptor(editingdomain,
 				JavabeanPackage.Literals.VALUE_TYPE__DEFAULT, model), model, false, false, null));
 		
-		list.add(SmooksUIUtils.createStringFieldEditor(parent, toolkit, getPropertyDescriptor(editingdomain,
+		list.add(SmooksUIUtils.createStringFieldEditor(groupParent, toolkit, getPropertyDescriptor(editingdomain,
 				JavabeanPackage.Literals.VALUE_TYPE__DECODER, model), model, false, false, null));
 		return list;
 	}
