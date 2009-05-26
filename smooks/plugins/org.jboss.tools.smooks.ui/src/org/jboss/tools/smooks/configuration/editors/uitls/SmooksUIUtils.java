@@ -148,7 +148,7 @@ public class SmooksUIUtils {
 			'F', 'g', 'G', 'h', 'H', 'i', 'I', 'j', 'J', 'k', 'K', 'l', 'L', 'm', 'M', 'n', 'N', 'o', 'O', 'p', 'P',
 			'q', 'Q', 'r', 'R', 's', 'S', 't', 'T', 'u', 'U', 'v', 'V', 'w', 'W', 'x', 'X', 'y', 'Y' };
 
-	public static final String[] SELECTOR_SPERATORS = new String[]{" " , "/"};
+	public static final String[] SELECTOR_SPERATORS = new String[] { " ", "/" };
 
 	public static List<String> getBeanIdList(SmooksResourceListType resourceList) {
 		List<AbstractResourceConfig> rlist = resourceList.getAbstractResourceConfig();
@@ -395,6 +395,15 @@ public class SmooksUIUtils {
 			EditingDomain editingdomain, FormToolkit toolkit, final IItemPropertyDescriptor itemPropertyDescriptor,
 			Object model, boolean multiText, boolean linkLabel, boolean openFile, int height,
 			IHyperlinkListener listener, int valueType, OpenEditorEditInnerContentsAction openEditorAction) {
+		return createStringFieldEditor(label, parent, editingdomain, toolkit, itemPropertyDescriptor, model, multiText,
+				linkLabel, openFile, height, listener, valueType, openEditorAction, false);
+	}
+
+	public static AttributeFieldEditPart createStringFieldEditor(String label, final Composite parent,
+			EditingDomain editingdomain, FormToolkit toolkit, final IItemPropertyDescriptor itemPropertyDescriptor,
+			Object model, boolean multiText, boolean linkLabel, boolean openFile, int height,
+			IHyperlinkListener listener, int valueType, OpenEditorEditInnerContentsAction openEditorAction,
+			boolean expandEditor) {
 		AttributeFieldEditPart fieldEditPart = new AttributeFieldEditPart();
 		GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 		Section section = null;
@@ -416,6 +425,7 @@ public class SmooksUIUtils {
 			space.setLayoutData(gd);
 
 			section = toolkit.createSection(parent, Section.TITLE_BAR | Section.TWISTIE);
+			section.setExpanded(expandEditor);
 			FillLayout layout = new FillLayout();
 			section.setLayout(layout);
 			section.setText(label);
@@ -554,9 +564,9 @@ public class SmooksUIUtils {
 		}
 		if (editValue != null && valueIsSet) {
 			valueText.setText(editValue);
-			if (editValue.length() > 0 && section != null) {
-				section.setExpanded(true);
-			}
+//			if (editValue.length() > 0 && section != null) {
+//				section.setExpanded(true);
+//			}
 		}
 		if (valueType == VALUE_TYPE_TEXT && model instanceof AnyType && fEditingDomain != null) {
 			valueText.addModifyListener(new ModifyListener() {
@@ -710,12 +720,26 @@ public class SmooksUIUtils {
 		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300,
 				null, VALUE_TYPE_CDATA, action);
 	}
+	
+	public static AttributeFieldEditPart createCDATAFieldEditor(String label,
+			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+			OpenEditorEditInnerContentsAction action,boolean expanedEditor) {
+		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300,
+				null, VALUE_TYPE_CDATA, action,expanedEditor);
+	}
 
 	public static AttributeFieldEditPart createCommentFieldEditor(String label,
 			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
 			OpenEditorEditInnerContentsAction action) {
 		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300,
 				null, VALUE_TYPE_COMMENT, action);
+	}
+	
+	public static AttributeFieldEditPart createCommentFieldEditor(String label,
+			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+			OpenEditorEditInnerContentsAction action,boolean expandEditor) {
+		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300,
+				null, VALUE_TYPE_COMMENT, action,expandEditor);
 	}
 
 	public static AttributeFieldEditPart createJavaTypeSearchFieldEditor(Composite parent, FormToolkit toolkit,
@@ -748,7 +772,7 @@ public class SmooksUIUtils {
 				layout.marginRight = 0;
 				layout.horizontalSpacing = 0;
 				tcom.setLayout(layout);
-				
+
 				EAttribute attribute = (EAttribute) propertyDescriptor.getFeature(model);
 
 				FieldMarkerComposite notificationComposite = new FieldMarkerComposite(tcom, SWT.NONE);

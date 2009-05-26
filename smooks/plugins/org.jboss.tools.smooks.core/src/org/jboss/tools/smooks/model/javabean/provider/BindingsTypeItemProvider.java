@@ -233,10 +233,10 @@ public class BindingsTypeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((BindingsType)object).getTargetProfile();
+		String label = ((BindingsType)object).getBeanId();
 		return label == null || label.length() == 0 ?
 			getString("_UI_BindingsType_type") :
-			getString("_UI_BindingsType_type") + " " + label;
+			getString("_UI_BindingsType_type") + " (" + label+")";
 	}
 
 	/**

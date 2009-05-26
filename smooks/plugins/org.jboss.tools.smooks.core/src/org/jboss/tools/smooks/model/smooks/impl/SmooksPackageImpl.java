@@ -1417,7 +1417,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		   source, 
 		   new String[] {
 			 "name", "condition_._type",
-			 "kind", "simple"
+			 "kind", "mixed"
 		   });		
 		addAnnotation
 		  (getConditionType_Value(), 
