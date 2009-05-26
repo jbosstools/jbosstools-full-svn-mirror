@@ -303,12 +303,9 @@ public class DocTypeUtil {
 	 * @param editorInput
 	 * @return
 	 */
-	public static String prepareInitFile(String initFilePath,
+	public static String prepareInitFile(File initFile,
 			IEditorInput editorInput) {
-
-		return getDoctype(editorInput)
-				+ getContentInitFile(new File(initFilePath));
-
+		return getDoctype(editorInput) + getContentInitFile(initFile);
 	}
 
 	/**

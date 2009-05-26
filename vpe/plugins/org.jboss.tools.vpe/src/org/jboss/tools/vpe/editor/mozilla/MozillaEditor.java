@@ -11,6 +11,9 @@
 package org.jboss.tools.vpe.editor.mozilla;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -91,7 +94,7 @@ import org.mozilla.interfaces.nsIHTMLObjectResizer;
 import org.mozilla.interfaces.nsIPlaintextEditor;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
-	protected static final String INIT_URL = /*"file://" +*/ (new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html")).getAbsolutePath(); //$NON-NLS-1$ //$NON-NLS-2$
+	protected static final File INIT_FILE = new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html"); //$NON-NLS-1$ //$NON-NLS-2$
 	public static final String CONTENT_AREA_ID = "__content__area__"; //$NON-NLS-1$
 	
 	/*
@@ -445,9 +448,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				
 			});
 			
-			doctype = DocTypeUtil.getDoctype(getEditorInput());
-			xulRunnerEditor.setText(doctype
-					+ DocTypeUtil.getContentInitFile(new File(INIT_URL)));
+			setInitialContent();
 			// Wait while visual part is loaded
 			//commented by mareshkau, fix for jbide-3032
 //			while (!loaded) {
@@ -471,6 +472,49 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		sc.setExpandHorizontal(true);
 		sc.setExpandVertical(true);
 		sc.setMinSize(totalSize);
+	}
+
+	/**
+	 * Sets initial content to the {@link xulRunnerEditor}.
+	 *
+	 * @see #INIT_FILE
+	 */
+	protected void setInitialContent() {
+		final String html = DocTypeUtil.prepareInitFile(
+				INIT_FILE, getEditorInput());
+		
+		// Workaround of JBIDE-4345.
+		// Due to a bug in org.eclipse.swt.browser.Mozilla we cannot simply
+		// set initial html code as xulRunnerEditor.setText(html).
+		// Instead of it we create a temporary file containing 
+		// the html code and set it to the Mozilla browser as URL.		
+		File tmp = null;
+		Writer out = null;
+		try {
+			tmp = File.createTempFile(
+					"temp", ".html"); //$NON-NLS-1$//$NON-NLS-2$
+			tmp.deleteOnExit();
+			out = new FileWriter(tmp);
+			out.write(html);
+		} catch (IOException e) {
+			VpePlugin.getPluginLog().logError(e);
+		} finally {
+			try {
+				if (out != null) {
+					out.close();
+					if (tmp != null) {
+						xulRunnerEditor.setURL("file://"	//$NON-NLS-1$
+								+ tmp.getCanonicalPath());
+					}
+				}
+			} catch (IOException e) {
+				VpePlugin.getPluginLog().logError(e);
+			} finally {
+				if (tmp != null) {
+					tmp.delete();
+				}
+			}
+		}
 	}
 
 	/**
@@ -851,8 +895,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		doctype = DocTypeUtil.getDoctype(getEditorInput());
 		//coused page to be refreshed
 		setRefreshPage(true);
-		xulRunnerEditor.setText(doctype
-				+ DocTypeUtil.getContentInitFile(new File(INIT_URL)));
+		setInitialContent();
 	}
 	/**
 	 * Initialized design mode in visual refresh
