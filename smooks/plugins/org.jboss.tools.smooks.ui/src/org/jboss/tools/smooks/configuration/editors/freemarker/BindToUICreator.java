@@ -42,4 +42,14 @@ public class BindToUICreator extends PropertyUICreator {
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.configuration.editors.PropertyUICreator#isBeanIDRefFieldFeature(org.eclipse.emf.ecore.EAttribute)
+	 */
+	@Override
+	protected boolean isBeanIDRefFieldFeature(EAttribute attribute) {
+		if (attribute == FreemarkerPackage.eINSTANCE.getBindTo_Id()) {
+			return true;
+		}
+		return super.isBeanIDRefFieldFeature(attribute);
+	}
 }

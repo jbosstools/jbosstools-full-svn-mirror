@@ -111,7 +111,7 @@ public class BindToItemProvider
 		String label = ((BindTo)object).getId();
 		return label == null || label.length() == 0 ?
 			getString("_UI_BindTo_type") :
-			getString("_UI_BindTo_type") + " " + label;
+			getString("_UI_BindTo_type") + " (" + label + ")";
 	}
 
 	/**
