@@ -255,8 +255,8 @@ public class SelectoreSelectionDialog extends Dialog {
 								if (model != null) {
 									list.add(model);
 								}
-							} finally {
-
+							}catch(Throwable t){
+								// ignore
 							}
 						}
 						if (SmooksModelUtils.INPUT_TYPE_XML.equals(type)) {

@@ -37,7 +37,7 @@ public class BeanIdRefProposalProvider implements IContentProposalProvider {
 		List<IContentProposal> proposalList = new ArrayList<IContentProposal>();
 		SmooksResourceListType listType = getSmooksResourceList(model);
 		if(listType != null){
-			List<String> idList = SmooksUIUtils.getBeanIdList(listType);
+			List<String> idList = SmooksUIUtils.getBeanIdStringList(listType);
 			
 			for (Iterator<String> iterator = idList.iterator(); iterator.hasNext();) {
 				String id = (String) iterator.next();

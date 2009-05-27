@@ -52,6 +52,7 @@ import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
+import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalListener;
 import org.eclipse.jface.fieldassist.IContentProposalListener2;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
@@ -105,16 +106,20 @@ import org.jboss.tools.smooks.configuration.editors.ClassPathFileProcessor;
 import org.jboss.tools.smooks.configuration.editors.CurrentProjecViewerFilter;
 import org.jboss.tools.smooks.configuration.editors.FieldMarkerComposite;
 import org.jboss.tools.smooks.configuration.editors.FileSelectionWizard;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.OpenFileHyperLinkListener;
 import org.jboss.tools.smooks.configuration.editors.SelectorAttributes;
 import org.jboss.tools.smooks.configuration.editors.SelectoreSelectionDialog;
+import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaMethodsSelectionDialog;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaPropertiesSelectionDialog;
+import org.jboss.tools.smooks.core.SmooksCoreActivator;
 import org.jboss.tools.smooks.model.graphics.ext.DocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.graphics.ext.util.SmooksGraphicsExtResourceFactoryImpl;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
+import org.jboss.tools.smooks.model.javabean.provider.Javabean1EditPlugin;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -150,7 +155,10 @@ public class SmooksUIUtils {
 
 	public static final String[] SELECTOR_SPERATORS = new String[] { " ", "/" };
 
-	public static List<String> getBeanIdList(SmooksResourceListType resourceList) {
+	public static List<String> getBeanIdStringList(SmooksResourceListType resourceList) {
+		if (resourceList == null) {
+			return null;
+		}
 		List<AbstractResourceConfig> rlist = resourceList.getAbstractResourceConfig();
 		List<String> beanIdList = new ArrayList<String>();
 		for (Iterator<?> iterator = rlist.iterator(); iterator.hasNext();) {
@@ -160,6 +168,21 @@ public class SmooksUIUtils {
 				if (beanId == null)
 					continue;
 				beanIdList.add(beanId);
+			}
+		}
+		return beanIdList;
+	}
+
+	public static List<BindingsType> getBeanIdList(SmooksResourceListType resourceList) {
+		if (resourceList == null) {
+			return null;
+		}
+		List<AbstractResourceConfig> rlist = resourceList.getAbstractResourceConfig();
+		List<BindingsType> beanIdList = new ArrayList<BindingsType>();
+		for (Iterator<?> iterator = rlist.iterator(); iterator.hasNext();) {
+			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
+			if (abstractResourceConfig instanceof BindingsType) {
+				beanIdList.add((BindingsType) abstractResourceConfig);
 			}
 		}
 		return beanIdList;
@@ -564,9 +587,9 @@ public class SmooksUIUtils {
 		}
 		if (editValue != null && valueIsSet) {
 			valueText.setText(editValue);
-//			if (editValue.length() > 0 && section != null) {
-//				section.setExpanded(true);
-//			}
+			// if (editValue.length() > 0 && section != null) {
+			// section.setExpanded(true);
+			// }
 		}
 		if (valueType == VALUE_TYPE_TEXT && model instanceof AnyType && fEditingDomain != null) {
 			valueText.addModifyListener(new ModifyListener() {
@@ -579,7 +602,11 @@ public class SmooksUIUtils {
 						SmooksModelUtils.setTextToSmooksType(fEditingDomain, (AnyType) fm, null);
 					} else {
 						if (!valueText.getText().equals(text)) {
-							SmooksModelUtils.setTextToSmooksType(fEditingDomain, (AnyType) fm, valueText.getText());
+							String vt = valueText.getText();
+							if (vt != null) {
+								vt = vt.replaceAll("\r", "");
+							}
+							SmooksModelUtils.setTextToSmooksType(fEditingDomain, (AnyType) fm, vt);
 						}
 					}
 				}
@@ -596,7 +623,11 @@ public class SmooksUIUtils {
 						SmooksModelUtils.setCommentToSmooksType(fEditingDomain, (AnyType) fm, null);
 					} else {
 						if (!valueText.getText().equals(text)) {
-							SmooksModelUtils.setCommentToSmooksType(fEditingDomain, (AnyType) fm, valueText.getText());
+							String vt = valueText.getText();
+							if (vt != null) {
+								vt = vt.replaceAll("\r", "");
+							}
+							SmooksModelUtils.setCommentToSmooksType(fEditingDomain, (AnyType) fm, vt);
 						}
 					}
 				}
@@ -613,7 +644,11 @@ public class SmooksUIUtils {
 						SmooksModelUtils.setCDATAToSmooksType(fEditingDomain, (AnyType) fm, null);
 					} else {
 						if (!valueText.getText().equals(text)) {
-							SmooksModelUtils.setCDATAToSmooksType(fEditingDomain, (AnyType) fm, valueText.getText());
+							String vt = valueText.getText();
+							if (vt != null) {
+								vt = vt.replaceAll("\r", "");
+							}
+							SmooksModelUtils.setCDATAToSmooksType(fEditingDomain, (AnyType) fm, vt);
 						}
 					}
 				}
@@ -720,12 +755,12 @@ public class SmooksUIUtils {
 		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300,
 				null, VALUE_TYPE_CDATA, action);
 	}
-	
+
 	public static AttributeFieldEditPart createCDATAFieldEditor(String label,
 			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
-			OpenEditorEditInnerContentsAction action,boolean expanedEditor) {
+			OpenEditorEditInnerContentsAction action, boolean expanedEditor) {
 		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300,
-				null, VALUE_TYPE_CDATA, action,expanedEditor);
+				null, VALUE_TYPE_CDATA, action, expanedEditor);
 	}
 
 	public static AttributeFieldEditPart createCommentFieldEditor(String label,
@@ -734,12 +769,12 @@ public class SmooksUIUtils {
 		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300,
 				null, VALUE_TYPE_COMMENT, action);
 	}
-	
+
 	public static AttributeFieldEditPart createCommentFieldEditor(String label,
 			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
-			OpenEditorEditInnerContentsAction action,boolean expandEditor) {
+			OpenEditorEditInnerContentsAction action, boolean expandEditor) {
 		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300,
-				null, VALUE_TYPE_COMMENT, action,expandEditor);
+				null, VALUE_TYPE_COMMENT, action, expandEditor);
 	}
 
 	public static AttributeFieldEditPart createJavaTypeSearchFieldEditor(Composite parent, FormToolkit toolkit,
@@ -784,8 +819,7 @@ public class SmooksUIUtils {
 				notificationComposite.setLayoutData(gd);
 				editpart.setFieldMarker(notificationComposite);
 
-				final SearchComposite searchComposite = new SearchComposite(tcom, toolkit, "Search Class", dialog,
-						SWT.NONE);
+				final SearchComposite searchComposite = new SearchComposite(tcom, toolkit, "Browse", dialog, SWT.NONE);
 				gd = new GridData(GridData.FILL_HORIZONTAL);
 				searchComposite.setLayoutData(gd);
 				Object editValue = getEditValue(propertyDescriptor, model);
@@ -874,7 +908,11 @@ public class SmooksUIUtils {
 	}
 
 	public static IResource getResource(EObject model) {
+		if (model == null)
+			return null;
 		final Resource resource = ((EObject) model).eResource();
+		if (resource == null)
+			return null;
 		URI uri = resource.getURI();
 		IResource workspaceResource = null;
 		if (uri.isPlatformResource()) {
@@ -898,16 +936,40 @@ public class SmooksUIUtils {
 			final EObject model) {
 		String classString = ((BindingsType) container).getClass_();
 		IJavaProject project = getJavaProject(container);
+		Class<?> clazz = null;
 		try {
 			ProjectClassLoader classLoader = new ProjectClassLoader(project);
-			Class<?> clazz = classLoader.loadClass(classString);
-			JavaMethodsSelectionDialog dialog = new JavaMethodsSelectionDialog(project, clazz);
-			return SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor, "Select method", dialog,
-					(EObject) model);
+			clazz = classLoader.loadClass(classString);
 		} catch (Exception e) {
 			// ignore
 		}
-		return null;
+		JavaMethodsSelectionDialog dialog = new JavaMethodsSelectionDialog(project, clazz);
+		AttributeFieldEditPart editPart = SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor,
+				buttonName, dialog, (EObject) model);
+
+		Control c = editPart.getContentControl();
+		if (c instanceof SearchComposite) {
+			Text text = ((SearchComposite) c).getText();
+			IResource resource = getResource(model);
+			if (resource != null) {
+				final FieldAssistDisposer disposer = addJavaSetterMethodFieldAssistToText(text, clazz);
+				text.addDisposeListener(new DisposeListener() {
+
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see
+					 * org.eclipse.swt.events.DisposeListener#widgetDisposed
+					 * (org.eclipse.swt.events.DisposeEvent)
+					 */
+					public void widgetDisposed(DisposeEvent e) {
+						disposer.dispose();
+					}
+
+				});
+			}
+		}
+		return editPart;
 	}
 
 	public static String generateFullPath(IXMLStructuredObject node, final String sperator) {
@@ -1095,16 +1157,33 @@ public class SmooksUIUtils {
 			final EObject model) {
 		String classString = ((BindingsType) container).getClass_();
 		IJavaProject project = getJavaProject(container);
-		try {
-			ProjectClassLoader classLoader = new ProjectClassLoader(project);
-			Class<?> clazz = classLoader.loadClass(classString);
-			JavaPropertiesSelectionDialog dialog = new JavaPropertiesSelectionDialog(project, clazz);
-			return SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor, "Select property",
-					dialog, (EObject) model);
-		} catch (Exception e) {
-			// ignore
+		JavaPropertiesSelectionDialog dialog = new JavaPropertiesSelectionDialog(project, classString);
+		AttributeFieldEditPart editPart = SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor,
+				buttonName, dialog, (EObject) model);
+		Control c = editPart.getContentControl();
+		if (c instanceof SearchComposite) {
+			Text text = ((SearchComposite) c).getText();
+			IResource resource = getResource(model);
+			if (resource != null) {
+				final FieldAssistDisposer disposer = addJavaPropertiesFieldAssistToText(text, resource.getProject(),
+						classString);
+				text.addDisposeListener(new DisposeListener() {
+
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see
+					 * org.eclipse.swt.events.DisposeListener#widgetDisposed
+					 * (org.eclipse.swt.events.DisposeEvent)
+					 */
+					public void widgetDisposed(DisposeEvent e) {
+						disposer.dispose();
+					}
+
+				});
+			}
 		}
-		return null;
+		return editPart;
 	}
 
 	public static Object getEditValue(IItemPropertyDescriptor propertyDescriptor, Object model) {
@@ -1382,6 +1461,169 @@ public class SmooksUIUtils {
 
 	}
 
+	public static FieldAssistDisposer addJavaPropertiesFieldAssistToText(Text text, IProject project, String className) {
+		// Decorate the text widget with the light-bulb image denoting content
+		// assist
+		int bits = SWT.DOWN | SWT.LEFT;
+		ControlDecoration controlDecoration = new ControlDecoration(text, bits);
+		// Configure text widget decoration
+		// No margin
+		controlDecoration.setMarginWidth(0);
+		// Custom hover tip text
+		if (isLinuxOS()) {
+			controlDecoration.setDescriptionText("Content Assist Available (Ctrl + space)");
+		} else {
+			controlDecoration.setDescriptionText("Content Assist Available (Alt + /)");
+		}
+		// Custom hover properties
+		controlDecoration.setShowHover(true);
+		controlDecoration.setShowOnlyOnFocus(true);
+		// Hover image to use
+		FieldDecoration contentProposalImage = FieldDecorationRegistry.getDefault().getFieldDecoration(
+				FieldDecorationRegistry.DEC_CONTENT_PROPOSAL);
+		controlDecoration.setImage(contentProposalImage.getImage());
+
+		// Default text widget adapter for field assist
+		TextContentAdapter textContentAdapter = new TextContentAdapter();
+		// Content assist command
+		String command = "org.eclipse.ui.edit.text.contentAssist.proposals"; //$NON-NLS-1$
+
+		// Create the proposal provider
+		JavaPropertiesProposalProvider proposalProvider = new JavaPropertiesProposalProvider(project, className);
+		// Create the adapter
+		ContentAssistCommandAdapter adapter = new ContentAssistCommandAdapter(text, textContentAdapter,
+				proposalProvider, command, allEnglishCharas);
+		// Configure the adapter
+		// Add label provider
+		ILabelProvider labelProvider = new LabelProvider() {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
+			 */
+			@Override
+			public String getText(Object element) {
+				if (element instanceof XMLStructuredModelProposal) {
+					return ((XMLStructuredModelProposal) element).getLabel();
+				}
+				return super.getText(element);
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.jface.viewers.LabelProvider#getImage(java.lang.Object
+			 * )
+			 */
+			@Override
+			public Image getImage(Object element) {
+				if (element instanceof XMLStructuredModelProposal) {
+					if (((XMLStructuredModelProposal) element).getXmlStructuredObject() instanceof JavaBeanModel) {
+						return SmooksConfigurationActivator.getDefault().getImageRegistry().get(
+								GraphicsConstants.IMAGE_JAVA_ATTRIBUTE);
+					}
+				}
+				return super.getImage(element);
+			}
+
+		};
+		adapter.setLabelProvider(labelProvider);
+		// Replace text field contents with accepted proposals
+		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+		// Disable default filtering - custom filtering done
+		adapter.setFilterStyle(ContentProposalAdapter.FILTER_NONE);
+		// Add listeners required to reset state for custom filtering
+		SelectorConentProposalListener proposalListener = new SelectorConentProposalListener();
+		adapter.addContentProposalListener((IContentProposalListener) proposalListener);
+		adapter.addContentProposalListener((IContentProposalListener2) proposalListener);
+
+		return new FieldAssistDisposer(adapter, (IContentProposalListener) proposalListener,
+				(IContentProposalListener2) proposalListener);
+
+	}
+
+	public static FieldAssistDisposer addJavaSetterMethodFieldAssistToText(Text text, Class<?> clazz) {
+		// Decorate the text widget with the light-bulb image denoting content
+		// assist
+		int bits = SWT.DOWN | SWT.LEFT;
+		ControlDecoration controlDecoration = new ControlDecoration(text, bits);
+		// Configure text widget decoration
+		// No margin
+		controlDecoration.setMarginWidth(0);
+		// Custom hover tip text
+		if (isLinuxOS()) {
+			controlDecoration.setDescriptionText("Content Assist Available (Ctrl + space)");
+		} else {
+			controlDecoration.setDescriptionText("Content Assist Available (Alt + /)");
+		}
+		// Custom hover properties
+		controlDecoration.setShowHover(true);
+		controlDecoration.setShowOnlyOnFocus(true);
+		// Hover image to use
+		FieldDecoration contentProposalImage = FieldDecorationRegistry.getDefault().getFieldDecoration(
+				FieldDecorationRegistry.DEC_CONTENT_PROPOSAL);
+		controlDecoration.setImage(contentProposalImage.getImage());
+
+		// Default text widget adapter for field assist
+		TextContentAdapter textContentAdapter = new TextContentAdapter();
+		// Content assist command
+		String command = "org.eclipse.ui.edit.text.contentAssist.proposals"; //$NON-NLS-1$
+
+		// Create the proposal provider
+		SetterMethodProposalProvider proposalProvider = new SetterMethodProposalProvider(clazz);
+		// Create the adapter
+		ContentAssistCommandAdapter adapter = new ContentAssistCommandAdapter(text, textContentAdapter,
+				proposalProvider, command, allEnglishCharas);
+		// Configure the adapter
+		// Add label provider
+		ILabelProvider labelProvider = new LabelProvider() {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
+			 */
+			@Override
+			public String getText(Object element) {
+				if (element instanceof SetterMethodContentProposal) {
+					return ((SetterMethodContentProposal) element).getLabel();
+				}
+				return super.getText(element);
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.jface.viewers.LabelProvider#getImage(java.lang.Object
+			 * )
+			 */
+			@Override
+			public Image getImage(Object element) {
+				return SmooksConfigurationActivator.getDefault().getImageRegistry().get(
+						GraphicsConstants.IMAGE_JAVA_ATTRIBUTE);
+			}
+
+		};
+		adapter.setLabelProvider(labelProvider);
+		// Replace text field contents with accepted proposals
+		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+		// Disable default filtering - custom filtering done
+		adapter.setFilterStyle(ContentProposalAdapter.FILTER_NONE);
+		// Add listeners required to reset state for custom filtering
+		SelectorConentProposalListener proposalListener = new SelectorConentProposalListener();
+		adapter.addContentProposalListener((IContentProposalListener) proposalListener);
+		adapter.addContentProposalListener((IContentProposalListener2) proposalListener);
+
+		return new FieldAssistDisposer(adapter, (IContentProposalListener) proposalListener,
+				(IContentProposalListener2) proposalListener);
+
+	}
+
 	public static FieldAssistDisposer addBeanIdRefAssistToCombo(Combo combo, EObject model) {
 		// Decorate the text widget with the light-bulb image denoting content
 		// assist
@@ -1421,6 +1663,100 @@ public class SmooksUIUtils {
 		// adapter.setLabelProvider(labelProvider);
 		// Replace text field contents with accepted proposals
 		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+		// Disable default filtering - custom filtering done
+		adapter.setFilterStyle(ContentProposalAdapter.FILTER_NONE);
+		// Add listeners required to reset state for custom filtering
+		SelectorConentProposalListener proposalListener = new SelectorConentProposalListener();
+		adapter.addContentProposalListener((IContentProposalListener) proposalListener);
+		adapter.addContentProposalListener((IContentProposalListener2) proposalListener);
+
+		return new FieldAssistDisposer(adapter, (IContentProposalListener) proposalListener,
+				(IContentProposalListener2) proposalListener);
+	}
+
+	public static FieldAssistDisposer addBindingsContextAssistToText(Text text, SmooksResourceListType model) {
+		// Decorate the text widget with the light-bulb image denoting content
+		// assist
+		int bits = SWT.CENTER | SWT.LEFT;
+		ControlDecoration controlDecoration = new ControlDecoration(text, bits);
+		// Configure text widget decoration
+		// No margin
+		controlDecoration.setMarginWidth(0);
+		// Custom hover tip text
+		if (isLinuxOS()) {
+			controlDecoration.setDescriptionText("Content Assist Available (Ctrl + space)");
+		} else {
+			controlDecoration.setDescriptionText("Content Assist Available (Alt + /)");
+		}
+		// Custom hover properties
+		controlDecoration.setShowHover(true);
+		controlDecoration.setShowOnlyOnFocus(true);
+		// Hover image to use
+		FieldDecoration contentProposalImage = FieldDecorationRegistry.getDefault().getFieldDecoration(
+				FieldDecorationRegistry.DEC_CONTENT_PROPOSAL);
+		controlDecoration.setImage(contentProposalImage.getImage());
+
+		// Default text widget adapter for field assist
+		MultiTextContentAdapter textContentAdapter = new MultiTextContentAdapter();
+		// Content assist command
+		String command = "org.eclipse.ui.edit.text.contentAssist.proposals"; //$NON-NLS-1$
+		// Set auto activation character to be a '.'
+
+		// Create the proposal provider
+		BindingsContextProposalProvider proposalProvider = new BindingsContextProposalProvider(model, text);
+		// Create the adapter
+		char[] chars = new char[allEnglishCharas.length + 1];
+		System.arraycopy(allEnglishCharas, 0, chars, 0, allEnglishCharas.length);
+		chars[chars.length - 1] = '.';
+		ContentAssistCommandAdapter adapter = new ContentAssistCommandAdapter(text, textContentAdapter,
+				proposalProvider, command, chars);
+		// Configure the adapter
+		// Add label provider
+		ILabelProvider labelProvider = new LabelProvider() {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.jface.viewers.LabelProvider#getImage(java.lang.Object
+			 * )
+			 */
+			@Override
+			public Image getImage(Object element) {
+				if (element instanceof BindingsContextContentProposal) {
+					int type = ((BindingsContextContentProposal) element).getType();
+					switch (type) {
+					case BindingsContextContentProposal.BINDINGS:
+						return SmooksCoreActivator.getDefault().getImageRegistry().get("BindingsType");
+					case BindingsContextContentProposal.EXPRESSIONS:
+						return SmooksCoreActivator.getDefault().getImageRegistry().get("ExpressionType");
+					case BindingsContextContentProposal.PROPERTIES:
+						return SmooksCoreActivator.getDefault().getImageRegistry().get("ValueType");
+					case BindingsContextContentProposal.WIRTINGS:
+						return SmooksCoreActivator.getDefault().getImageRegistry().get("WiringType");
+					}
+				}
+				return super.getImage(element);
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
+			 */
+			@Override
+			public String getText(Object element) {
+				if (element instanceof IContentProposal) {
+					return ((IContentProposal) element).getLabel();
+				}
+				return super.getText(element);
+			}
+
+		};
+		adapter.setLabelProvider(labelProvider);
+		// Replace text field contents with accepted proposals
+		adapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_INSERT);
 		// Disable default filtering - custom filtering done
 		adapter.setFilterStyle(ContentProposalAdapter.FILTER_NONE);
 		// Add listeners required to reset state for custom filtering

@@ -282,7 +282,6 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 
 	@Override
 	public ValidationResult validate(IResource resource, int kind, ValidationState state, IProgressMonitor monitor) {
-		System.out.println("validate file : " + resource.getFullPath().toString() + ", change type is " + kind);
 		AdapterFactoryEditingDomain editingDomain = newEditingDomain();
 		if (editingDomain == null)
 			return null;
@@ -324,6 +323,5 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 	}
 
 	public void validate(IValidationContext helper, IReporter reporter) throws ValidationException {
-		System.out.println("validate helper");
 	}
 }

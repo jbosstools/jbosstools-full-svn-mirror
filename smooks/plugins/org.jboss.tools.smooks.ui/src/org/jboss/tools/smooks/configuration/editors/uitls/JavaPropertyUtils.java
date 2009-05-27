@@ -26,6 +26,9 @@ public class JavaPropertyUtils {
 	}
 	
 	public static Method[] getSetterMethods(Class<?> clazz){
+		if(clazz == null){
+			return new Method[]{};
+		}
 		Method[] methods = clazz.getMethods();
 		List<Method> mlist = new ArrayList<Method>();
 		for (int i = 0; i < methods.length; i++) {

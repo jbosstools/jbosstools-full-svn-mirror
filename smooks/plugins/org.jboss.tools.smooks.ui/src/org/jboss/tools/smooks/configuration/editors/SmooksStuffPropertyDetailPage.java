@@ -124,6 +124,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				if (list != null) {
 					for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 						AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
+						if(attributeFieldEditPart == null) continue;
 						Object attribute = attributeFieldEditPart.getAttribute();
 						if (attribute != null && attributeFieldEditPart != null) {
 							currentPropertyUIMap.put(attribute, attributeFieldEditPart);
@@ -158,6 +159,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				if (list != null) {
 					for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 						AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
+						if(attributeFieldEditPart == null) continue;
 						Object attribute = attributeFieldEditPart.getAttribute();
 						if (attribute != null && attributeFieldEditPart != null) {
 							currentPropertyUIMap.put(attribute, attributeFieldEditPart);

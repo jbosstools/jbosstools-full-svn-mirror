@@ -246,10 +246,19 @@ public class RouteBeanItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
+		
 		String label = ((RouteBean)object).getToServiceName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_RouteBean_type") :
-			getString("_UI_RouteBean_type") + " " + label;
+		String categoryName = ((RouteBean)object).getToServiceCategory();
+		boolean returnServiceName = false;
+		if(label != null && label.length() != 0 && categoryName != null && categoryName.length() != 0){
+			returnServiceName  = true;
+		}
+		if(returnServiceName){
+			return getString("_UI_RouteBean_type") + " (" + label+" : " + categoryName + ")";
+		}else{
+			return getString("_UI_RouteBean_type");
+		}
+		
 	}
 
 	/**

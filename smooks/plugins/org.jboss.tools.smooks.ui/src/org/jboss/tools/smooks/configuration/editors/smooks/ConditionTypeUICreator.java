@@ -13,15 +13,21 @@ package org.jboss.tools.smooks.configuration.editors.smooks;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
+import org.jboss.tools.smooks.configuration.editors.uitls.FieldAssistDisposer;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
@@ -69,8 +75,23 @@ public class ConditionTypeUICreator extends PropertyUICreator {
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
-		AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Condition Value", editingdomain,
+		AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Inline Condition", editingdomain,
 				toolkit, parent, model, null,true);
+		Control c = cdatatext.getContentControl();
+		
+		if(c instanceof Text){
+			final FieldAssistDisposer disposer = SmooksUIUtils.addBindingsContextAssistToText((Text)c, SmooksUIUtils.getSmooks11ResourceListType((EObject)model));
+			c.addDisposeListener(new DisposeListener(){
+
+				/* (non-Javadoc)
+				 * @see org.eclipse.swt.events.DisposeListener#widgetDisposed(org.eclipse.swt.events.DisposeEvent)
+				 */
+				public void widgetDisposed(DisposeEvent e) {
+					disposer.dispose();
+				}
+				
+			});
+		}
 		list.add(cdatatext);
 		return list;
 	}
@@ -85,6 +106,12 @@ public class ConditionTypeUICreator extends PropertyUICreator {
 	@Override
 	public boolean ignoreProperty(EAttribute feature) {
 		if (feature == SmooksPackage.eINSTANCE.getConditionType_Value()) {
+			return true;
+		}
+		if (feature == SmooksPackage.eINSTANCE.getConditionType_Evaluator()) {
+			return true;
+		}
+		if (feature == SmooksPackage.eINSTANCE.getConditionType_Id()) {
 			return true;
 		}
 		return super.ignoreProperty(feature);
