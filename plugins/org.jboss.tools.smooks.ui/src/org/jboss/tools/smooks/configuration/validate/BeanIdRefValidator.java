@@ -58,7 +58,7 @@ public class BeanIdRefValidator extends AbstractValidator {
 		Object obj = resource.getContents().get(0);
 		if (obj instanceof DocumentRoot) {
 			SmooksResourceListType listType = ((DocumentRoot) obj).getSmooksResourceList();
-			List<String> ids = SmooksUIUtils.getBeanIdList(listType);
+			List<String> ids = SmooksUIUtils.getBeanIdStringList(listType);
 			idList.addAll(ids);
 		}
 		if (idList.isEmpty()) {

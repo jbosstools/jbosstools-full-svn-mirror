@@ -243,7 +243,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 				if (editValue != null) {
 					combo.setText(editValue.toString());
 				}
-				List<String> list = SmooksUIUtils.getBeanIdList(smooksResourceList);
+				List<String> list = SmooksUIUtils.getBeanIdStringList(smooksResourceList);
 				for (Iterator<String> iterator = list.iterator(); iterator.hasNext();) {
 					String beanId = (String) iterator.next();
 					combo.add(beanId);

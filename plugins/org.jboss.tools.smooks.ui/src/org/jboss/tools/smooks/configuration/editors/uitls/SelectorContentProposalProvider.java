@@ -40,6 +40,9 @@ public class SelectorContentProposalProvider implements IContentProposalProvider
 	 * .lang.String, int)
 	 */
 	public IContentProposal[] getProposals(String contents, int position) {
+		if(contents.indexOf("h") != -1){
+			System.out.println();
+		}
 		List<Object> list = SelectoreSelectionDialog.generateInputData(extType);
 		if(list == null || list.isEmpty()){
 			return new IContentProposal[]{};

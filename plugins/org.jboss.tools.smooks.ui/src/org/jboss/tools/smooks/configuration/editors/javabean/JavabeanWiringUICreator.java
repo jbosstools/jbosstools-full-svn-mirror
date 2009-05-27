@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.javabean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -28,17 +29,18 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 
 	@Override
 	protected boolean canCreatePropertiesSearchFieldEditor(EAttribute feature) {
-		if (feature == JavabeanPackage.eINSTANCE.getWiringType_Property()) {
-			return true;
-		}
+		// if (feature == JavabeanPackage.eINSTANCE.getWiringType_Property()) {
+		// return true;
+		// }
 		return false;
 	}
 
 	@Override
 	protected boolean canCreateMethodsSearchFieldEditor(EAttribute feature) {
-		if (feature == JavabeanPackage.eINSTANCE.getWiringType_SetterMethod()) {
-			return true;
-		}
+		// if (feature ==
+		// JavabeanPackage.eINSTANCE.getWiringType_SetterMethod()) {
+		// return true;
+		// }
 		return super.canCreateMethodsSearchFieldEditor(feature);
 	}
 
@@ -57,6 +59,12 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 		if (feature == JavabeanPackage.eINSTANCE.getWiringType_WireOnElementNS()) {
 			return true;
 		}
+		if (feature == JavabeanPackage.eINSTANCE.getWiringType_Property()) {
+			return true;
+		}
+		if (feature == JavabeanPackage.eINSTANCE.getWiringType_SetterMethod()) {
+			return true;
+		}
 		return super.ignoreProperty(feature);
 	}
 
@@ -71,11 +79,21 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 	 * org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor)
 	 */
 	@Override
-	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
-		return createElementSelectionSection("Wrie On Element", editingdomain, toolkit, parent, model, formEditor,
+	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
+			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+
+		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
+
+		AttributeFieldEditPart pEditPart = createPropertiesSearchFieldEditor(toolkit, parent, getPropertyDescriptor(
+				editingdomain, JavabeanPackage.eINSTANCE.getWiringType_Property(), model), model);
+		AttributeFieldEditPart mEditPart = createMethodsSearchFieldEditor(toolkit, parent, getPropertyDescriptor(
+				editingdomain, JavabeanPackage.eINSTANCE.getWiringType_SetterMethod(), model), model);
+		list.add(pEditPart);
+		list.add(mEditPart);
+		list.addAll(createElementSelectionSection("Wrie On Element", editingdomain, toolkit, parent, model, formEditor,
 				JavabeanPackage.eINSTANCE.getWiringType_WireOnElement(),
-				JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT_NS);
+				JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT_NS));
+		return list;
 	}
 
 	@Override

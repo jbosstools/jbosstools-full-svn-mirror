@@ -14,16 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.actions.OpenEditorEditInnerContentsAction;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
+import org.jboss.tools.smooks.configuration.editors.uitls.FieldAssistDisposer;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 
@@ -60,6 +65,26 @@ public class TemplateUICreator extends PropertyUICreator {
 
 		AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Inline Template", editingdomain,
 				toolkit, parent, model, openCDATAEditorAction, true);
+		Control c = cdatatext.getContentControl();
+
+		if (c instanceof Text) {
+			final FieldAssistDisposer disposer = SmooksUIUtils.addBindingsContextAssistToText((Text) c, SmooksUIUtils
+					.getSmooks11ResourceListType((EObject) model));
+			c.addDisposeListener(new DisposeListener() {
+
+				/*
+				 * (non-Javadoc)
+				 * 
+				 * @see
+				 * org.eclipse.swt.events.DisposeListener#widgetDisposed(org
+				 * .eclipse.swt.events.DisposeEvent)
+				 */
+				public void widgetDisposed(DisposeEvent e) {
+					disposer.dispose();
+				}
+
+			});
+		}
 		list.add(cdatatext);
 		// AttributeFieldEditPart commenttext =
 		// SmooksUIUtils.createCommentFieldEditor("Template Contents(Comment)",

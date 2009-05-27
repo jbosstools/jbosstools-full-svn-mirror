@@ -1,5 +1,6 @@
 package org.jboss.tools.smooks.core;
 
+import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -47,4 +48,15 @@ public class SmooksCoreActivator extends AbstractUIPlugin {
 		return plugin;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#initializeImageRegistry(org.eclipse.jface.resource.ImageRegistry)
+	 */
+	@Override
+	protected void initializeImageRegistry(ImageRegistry reg) {
+		super.initializeImageRegistry(reg);
+		reg.put("BindingsType",imageDescriptorFromPlugin(PLUGIN_ID, "/icons/full/obj16/BindingsType.gif"));
+		reg.put("ExpressionType",imageDescriptorFromPlugin(PLUGIN_ID, "/icons/full/obj16/ExpressionType.gif"));
+		reg.put("ValueType",imageDescriptorFromPlugin(PLUGIN_ID, "/icons/full/obj16/ValueType.gif"));
+		reg.put("WiringType",imageDescriptorFromPlugin(PLUGIN_ID, "/icons/full/obj16/WiringType.gif"));
+	}
 }

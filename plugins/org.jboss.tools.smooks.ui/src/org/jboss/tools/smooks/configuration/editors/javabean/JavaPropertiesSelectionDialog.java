@@ -10,9 +10,10 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.javabean;
 
-import java.beans.PropertyDescriptor;
+import java.lang.reflect.Array;
 
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -39,7 +40,7 @@ import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.uitls.IFieldDialog;
 import org.jboss.tools.smooks.configuration.editors.uitls.IModelProcsser;
-import org.jboss.tools.smooks.configuration.editors.uitls.JavaPropertyUtils;
+import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -48,28 +49,54 @@ import org.jboss.tools.smooks.configuration.editors.uitls.JavaPropertyUtils;
  */
 public class JavaPropertiesSelectionDialog implements IFieldDialog {
 
-	private IJavaProject resource;
+	private IJavaProject project;
 
-	private Class<?> clazz;
+	private String className;
 
-	public JavaPropertiesSelectionDialog(IJavaProject resource, Class<?> clazz) {
+	public JavaPropertiesSelectionDialog(IJavaProject resource, String className) {
 		super();
-		this.resource = resource;
-		this.clazz = clazz;
+		this.project = resource;
+		this.className = className;
 	}
 
 	public Object open(Shell shell) {
-		if (resource != null && clazz != null) {
-			PropertySelectionDialog dialog = new PropertySelectionDialog(shell, resource, clazz);
-			if (dialog.open() == Dialog.OK) {
-				PropertyDescriptor pd = (PropertyDescriptor) dialog.getCurrentSelection();
-				return pd.getName();
-			}else{
-				return null;
-			}
+		String errorMessage = "";
+		if(project == null){
+			errorMessage = "Please make sure the project is the 'Java Project'";
 		}
-		MessageDialog.openInformation(shell, "Can't open dialog",
-				"Can't open java properties selection dialog.");
+		try {
+			if (project != null && className != null) {
+				Class<?> clazz = null;
+				ProjectClassLoader classLoader;
+
+				classLoader = new ProjectClassLoader(project);
+
+				if (className.endsWith("[]")) {
+					String arrayClassName = className.substring(0, className.length() - 2);
+					clazz = classLoader.loadClass(arrayClassName);
+					Object arrayInstance = Array.newInstance(clazz, 0);
+					clazz = arrayInstance.getClass();
+				} else {
+					clazz = classLoader.loadClass(className);
+				}
+				JavaBeanModel beanModel = JavaBeanModelFactory.getJavaBeanModel(clazz);
+				PropertySelectionDialog dialog = new PropertySelectionDialog(shell, project, beanModel);
+				if (dialog.open() == Dialog.OK) {
+					JavaBeanModel pd = (JavaBeanModel) dialog.getCurrentSelection();
+					if(pd == null){
+						return null;
+					}
+					return pd.getName();
+				} else {
+					return null;
+				}
+			}
+		} catch (JavaModelException e) {
+			errorMessage = "";
+		} catch (ClassNotFoundException e) {
+			errorMessage = "'" + className + "' can't be found.";
+		}
+		MessageDialog.openInformation(shell, "Can't open dialog", "Can't get properties of '" + className + "'.\n" + errorMessage);
 		return null;
 	}
 
@@ -77,19 +104,17 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 
 		private TableViewer viewer;
 
-		private Class<?> clazz;
-
 		private Object currentSelection;
 
-		
-		
+		private JavaBeanModel beanModel = null;
+
 		public PropertySelectionDialog(IShellProvider parentShell) {
 			super(parentShell);
 		}
 
-		public PropertySelectionDialog(Shell parentShell, IJavaProject project, Class<?> clazz) {
+		public PropertySelectionDialog(Shell parentShell, IJavaProject project, JavaBeanModel beanModel) {
 			super(parentShell);
-			this.clazz = clazz;
+			this.beanModel = beanModel;
 		}
 
 		@Override
@@ -103,7 +128,7 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 			fl.marginHeight = 10;
 			fl.marginWidth = 10;
 			composite.setLayout(fl);
-			viewer = new TableViewer(composite, SWT.BORDER);
+			viewer = new TableViewer(composite, SWT.BORDER|SWT.FULL_SELECTION);
 			Table table = viewer.getTable();
 			TableColumn nameColumn = new TableColumn(table, SWT.NONE);
 			nameColumn.setWidth(100);
@@ -114,9 +139,8 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 			table.setHeaderVisible(true);
 			viewer.setContentProvider(new PropertyDescriptorContentProvider());
 			viewer.setLabelProvider(new PropertyDescriptorLabelProvider());
-			PropertyDescriptor[] pds = JavaPropertyUtils.getPropertyDescriptor(clazz);
-			viewer.setInput(pds);
-			viewer.addDoubleClickListener(new IDoubleClickListener(){
+			viewer.setInput(beanModel);
+			viewer.addDoubleClickListener(new IDoubleClickListener() {
 				public void doubleClick(DoubleClickEvent event) {
 					okPressed();
 				}
@@ -126,7 +150,7 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 					currentSelection = ((IStructuredSelection) event.getSelection()).getFirstElement();
 				}
 			});
-			getShell().setText(clazz.getSimpleName() + "'s Properties");
+			getShell().setText(beanModel.getName() + "'s Properties");
 			return composite;
 		}
 
@@ -142,6 +166,9 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 	private class PropertyDescriptorContentProvider implements IStructuredContentProvider {
 
 		public Object[] getElements(Object inputElement) {
+			if (inputElement instanceof JavaBeanModel) {
+				return ((JavaBeanModel) inputElement).getChildren().toArray();
+			}
 			if (inputElement.getClass().isArray()) {
 				return (Object[]) inputElement;
 			}
@@ -168,17 +195,13 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 		}
 
 		public String getColumnText(Object element, int columnIndex) {
-			if (element instanceof PropertyDescriptor) {
-				PropertyDescriptor p = (PropertyDescriptor) element;
+			if (element instanceof JavaBeanModel) {
+				JavaBeanModel p = (JavaBeanModel) element;
 				switch (columnIndex) {
 				case 0:
 					return p.getName();
 				case 1:
-					Class<?> cla = p.getPropertyType();
-					if(cla.isArray()){
-						return cla.getComponentType().getName() + "[]";
-					}
-					return cla.getName();
+					return p.getBeanClassString();
 				}
 			}
 			return getText(element);
@@ -192,6 +215,6 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 
 	public void setModelProcesser(IModelProcsser processer) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

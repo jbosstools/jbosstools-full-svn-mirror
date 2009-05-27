@@ -63,13 +63,16 @@ public class JavaMethodsSelectionDialog implements IFieldDialog {
 			MethodSelectionDialog dialog = new MethodSelectionDialog(shell, resource, clazz);
 			if (dialog.open() == Dialog.OK) {
 				Method pd = (Method) dialog.getCurrentSelection();
+				if(pd == null){
+					return null;
+				}
 				return pd.getName();
 			}else{
 				return null;
 			}
 		}
 		MessageDialog.openInformation(shell, "Can't open dialog",
-				"Can't open java methods selection dialog.");
+				"Can't open java methods selection dialog.Please check the 'class' value of Java Object.");
 		return null;
 	}
 
@@ -103,7 +106,7 @@ public class JavaMethodsSelectionDialog implements IFieldDialog {
 			fl.marginHeight = 10;
 			fl.marginWidth = 10;
 			composite.setLayout(fl);
-			viewer = new TableViewer(composite, SWT.BORDER);
+			viewer = new TableViewer(composite, SWT.BORDER|SWT.FULL_SELECTION);
 			Table table = viewer.getTable();
 			TableColumn nameColumn = new TableColumn(table, SWT.NONE);
 			nameColumn.setWidth(100);

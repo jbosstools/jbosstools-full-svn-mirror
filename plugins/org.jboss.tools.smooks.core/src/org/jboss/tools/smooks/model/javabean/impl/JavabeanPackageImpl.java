@@ -890,7 +890,7 @@ public class JavabeanPackageImpl extends EPackageImpl implements JavabeanPackage
 		   source, 
 		   new String[] {
 			 "name", "expression_._type",
-			 "kind", "simple"
+			 "kind", "mixed"
 		   });		
 		addAnnotation
 		  (getExpressionType_Value(), 
