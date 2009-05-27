@@ -115,14 +115,17 @@ import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaMethodsSelectionDialog;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaPropertiesSelectionDialog;
 import org.jboss.tools.smooks.core.SmooksCoreActivator;
+import org.jboss.tools.smooks.model.freemarker.BindTo;
+import org.jboss.tools.smooks.model.freemarker.Freemarker;
+import org.jboss.tools.smooks.model.freemarker.Use;
 import org.jboss.tools.smooks.model.graphics.ext.DocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.graphics.ext.util.SmooksGraphicsExtResourceFactoryImpl;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.provider.Javabean1EditPlugin;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks.model.xsl.Xsl;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -167,7 +170,36 @@ public class SmooksUIUtils {
 				String beanId = ((BindingsType) abstractResourceConfig).getBeanId();
 				if (beanId == null)
 					continue;
-				beanIdList.add(beanId);
+				if (!beanIdList.contains(beanId))
+					beanIdList.add(beanId);
+			}
+			if (abstractResourceConfig instanceof Freemarker) {
+				Use use = ((Freemarker) abstractResourceConfig).getUse();
+				if (use != null) {
+					BindTo bindTo = use.getBindTo();
+					if (bindTo != null) {
+						String beanId = ((BindTo) bindTo).getId();
+						if (beanId == null)
+							continue;
+						if (!beanIdList.contains(beanId))
+							beanIdList.add(beanId);
+					}
+				}
+
+			}
+			if (abstractResourceConfig instanceof Xsl) {
+				org.jboss.tools.smooks.model.xsl.Use use = ((Xsl) abstractResourceConfig).getUse();
+				if (use != null) {
+					org.jboss.tools.smooks.model.xsl.BindTo bindTo = use.getBindTo();
+					if (bindTo != null) {
+						String beanId = ((org.jboss.tools.smooks.model.xsl.BindTo) bindTo).getId();
+						if (beanId == null)
+							continue;
+						if (!beanIdList.contains(beanId))
+							beanIdList.add(beanId);
+					}
+				}
+
 			}
 		}
 		return beanIdList;

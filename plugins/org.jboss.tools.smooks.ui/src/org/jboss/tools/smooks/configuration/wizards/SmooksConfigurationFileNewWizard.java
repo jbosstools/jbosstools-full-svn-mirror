@@ -183,9 +183,9 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		if (SmooksConstants.VERSION_1_1.equals(version)) {
 			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
 					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.1.xsd\">\n"//$NON-NLS-1$
-					+ "		<resource-config selector=\"global-parameters\">\n"//$NON-NLS-1$
+					+ "		<params>\n"//$NON-NLS-1$
 					+ "			<param name=\"stream.filter.type\">SAX</param>\n"//$NON-NLS-1$
-					+ "		</resource-config>\n"//$NON-NLS-1$
+					+ "		</params>\n"//$NON-NLS-1$
 					+ "</smooks-resource-list>"; //$NON-NLS-1$
 		}
 		return new ByteArrayInputStream(contents.getBytes());

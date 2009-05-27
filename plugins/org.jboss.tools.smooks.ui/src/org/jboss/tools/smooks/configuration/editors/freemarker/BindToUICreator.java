@@ -47,9 +47,9 @@ public class BindToUICreator extends PropertyUICreator {
 	 */
 	@Override
 	protected boolean isBeanIDRefFieldFeature(EAttribute attribute) {
-		if (attribute == FreemarkerPackage.eINSTANCE.getBindTo_Id()) {
-			return true;
-		}
+//		if (attribute == FreemarkerPackage.eINSTANCE.getBindTo_Id()) {
+//			return true;
+//		}
 		return super.isBeanIDRefFieldFeature(attribute);
 	}
 }
