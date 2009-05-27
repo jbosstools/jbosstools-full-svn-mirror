@@ -89,16 +89,16 @@ public class BindingsContextContentProposal implements IContentProposal {
 	public String getLabel() {
 		String name = "";
 		if(type == BINDINGS){
-			name = "Java Object";
+			name = "Bean";
 		}
 		if(type == PROPERTIES){
 			name = "Value Binding";
 		}
 		if(type == WIRTINGS){
-			name = "Wiring";
+			name = "Bean Binding";
 		}
 		if(type == EXPRESSIONS){
-			name = "Expression";
+			name = "Expression Binding";
 		}
 		if(name.length() != 0 && content != null){
 			return content + " - ( " + name + " )";

@@ -33,12 +33,20 @@ public class BindingsContextProposalProvider implements IContentProposalProvider
 
 	private List<BindingsType> bindingsList = null;
 
-	private List<String> bindingsIDList = null;
+	private List<String> bindingsIDList = new ArrayList<String>();
 
 	public BindingsContextProposalProvider(SmooksResourceListType listType, Text textControl) {
 		this.textControl = textControl;
 		bindingsList = SmooksUIUtils.getBeanIdList(listType);
-		bindingsIDList = SmooksUIUtils.getBeanIdStringList(listType);
+		if(bindingsList != null){
+			for (Iterator<?> iterator = bindingsList.iterator(); iterator.hasNext();) {
+				BindingsType bindings = (BindingsType) iterator.next();
+				String beanId = bindings.getBeanId();
+				if(beanId != null){
+					bindingsIDList.add(beanId);
+				}
+			}
+		}
 	}
 
 	/*
@@ -49,9 +57,6 @@ public class BindingsContextProposalProvider implements IContentProposalProvider
 	 * .lang.String, int)
 	 */
 	public IContentProposal[] getProposals(String contents, int position) {
-		if (contents.length() == 2) {
-			System.out.println();
-		}
 		if (bindingsList == null || bindingsList.isEmpty()) {
 			return new IContentProposal[] {};
 		}

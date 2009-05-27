@@ -18,8 +18,11 @@ import java.util.List;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.jboss.tools.smooks.model.freemarker.BindTo;
+import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
+import org.jboss.tools.smooks.model.xsl.XslPackage;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -39,7 +42,7 @@ public class DuplicatedBeanIDValidator extends AbstractValidator {
 	@Override
 	public List<Diagnostic> validate(Collection<?> selectedObjects, EditingDomain editingDomain) {
 		beanIdList.clear();
-		findDuplicatedBeanId(selectedObjects);
+		findDuplicatedBeanId(selectedObjects , new ArrayList<String>());
 		if(beanIdList.isEmpty()){
 			return null;
 		}
@@ -66,14 +69,29 @@ public class DuplicatedBeanIDValidator extends AbstractValidator {
 				}
 				continue;
 			}
+			if (object instanceof BindTo) {
+				String beanId = ((BindTo) object).getId();
+				if(isDuplicateBeanId(beanId)){
+					list.add(newWaringDiagnostic("Duplicated beanId : " + beanId, object,
+				FreemarkerPackage.Literals.BIND_TO__ID));
+				}
+				continue;
+			}
+			if (object instanceof org.jboss.tools.smooks.model.xsl.BindTo) {
+				String beanId = ((org.jboss.tools.smooks.model.xsl.BindTo) object).getId();
+				if(isDuplicateBeanId(beanId)){
+					list.add(newWaringDiagnostic("Duplicated beanId : " + beanId, object,
+				XslPackage.Literals.BIND_TO__ID));
+				}
+				continue;
+			}
 			if (object instanceof EObject) {
 				validateModel(((EObject) object).eContents() , list);
 			}
 		}
 	}
 
-	protected void findDuplicatedBeanId(Collection<?> selectedObjects) {
-		List<String> idlist = new ArrayList<String>();
+	protected void findDuplicatedBeanId(Collection<?> selectedObjects , List<String> idlist) {
 		for (Iterator<?> iterator = selectedObjects.iterator(); iterator.hasNext();) {
 			Object object = (Object) iterator.next();
 			if (object instanceof BindingsType) {
@@ -90,8 +108,36 @@ public class DuplicatedBeanIDValidator extends AbstractValidator {
 				}
 				continue;
 			}
+			if(object instanceof BindTo){
+				String beanId = ((BindTo) object).getId();
+				if (beanId != null) {
+					beanId = beanId.trim();
+				}
+				if (idlist.contains(beanId)) {
+					if (!beanIdList.contains(beanId)) {
+						beanIdList.add(beanId);
+					}
+				} else {
+					idlist.add(beanId);
+				}
+				continue;
+			}
+			if(object instanceof org.jboss.tools.smooks.model.xsl.BindTo){
+				String beanId = ((org.jboss.tools.smooks.model.xsl.BindTo) object).getId();
+				if (beanId != null) {
+					beanId = beanId.trim();
+				}
+				if (idlist.contains(beanId)) {
+					if (!beanIdList.contains(beanId)) {
+						beanIdList.add(beanId);
+					}
+				} else {
+					idlist.add(beanId);
+				}
+				continue;
+			}
 			if (object instanceof EObject) {
-				findDuplicatedBeanId(((EObject) object).eContents());
+				findDuplicatedBeanId(((EObject) object).eContents(),idlist);
 			}
 		}
 	}
