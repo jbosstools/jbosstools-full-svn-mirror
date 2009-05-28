@@ -113,14 +113,17 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 
 		public void handleEvent(Event event) {
 			Display.getCurrent().asyncExec(new Thread(){
+				@Override
 				public void run(){
 				    /*
 				     * https://jira.jboss.org/jira/browse/JBIDE-3917
 				     * Resizer should be updated together with selection rectangle.
 				     * Otherwise after window maximizing/restoring resizer shows old position.
 				     */
-				    showResizer();
-				    showSelectionRectangle();
+					if(getBrowser()!=null && !getBrowser().isDisposed()) {
+					    showResizer();
+					    showSelectionRectangle();
+					}
 				}
 			});
 		}};
