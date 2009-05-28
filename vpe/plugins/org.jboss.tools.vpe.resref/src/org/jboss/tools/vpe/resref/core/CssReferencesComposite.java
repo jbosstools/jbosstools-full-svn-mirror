@@ -19,7 +19,7 @@ import org.jboss.tools.common.resref.ui.ResourceReferencesTableProvider;
 public class CssReferencesComposite extends VpeResourceReferencesComposite {
 
 	protected String getEntity() {
-		return (file != null) ? "VPECSSReference" : "VPECSSReferenceExt";
+		return (file != null) ? "VPECSSReference" : "VPECSSReferenceExt"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	protected ResourceReferencesTableProvider createTableProvider(List dataList) {
