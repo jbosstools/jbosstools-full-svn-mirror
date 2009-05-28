@@ -77,7 +77,7 @@
 
 		<para> The Smooks tools was included by the <property>JBoss Tools</property> since 3.0.0
 			Beta1 version. You can download the <property>JBoss Tools</property> from <ulink
-				url="http://www.jboss.org/tools/download/index.html">JBoss download site</ulink>.</para>
+				url="http://jboss.org/tools/download.html">JBoss download site</ulink>.</para>
 		<para> Smooks tools (<property>JBoss Tools</property>) run with the latest Eclipse and
 			other required plug-ins (GEF, EMF, etc.).</para>
 		<para> You should download the latest IDE for Java EE developers from <ulink
