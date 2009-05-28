@@ -117,6 +117,16 @@
   </listitem>
   
   <listitem>
+    <para>
+      <emphasis role="bold">Eclipse Guvnor Tools Reference Guide</emphasis>
+      <ulink url="&guvnorlink;">(html)</ulink>
+    </para>
+    <para>The purpose of this guide is to describe briefly the functionality present in the Eclipse Guvnor Tools (EGT) for Drools 5.</para>
+  </listitem>
+  
+  
+  
+  <listitem>
   <para>
     <emphasis role="bold">JSF Tools Tutorial</emphasis>
     <ulink url="&jsftutoriallink;">(html)</ulink>

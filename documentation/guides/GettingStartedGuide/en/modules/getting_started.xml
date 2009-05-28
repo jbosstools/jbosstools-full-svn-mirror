@@ -467,7 +467,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      Instead we suggest that you download the full binary from <ulink url="http://www.eclipse.org/downloads/">here</ulink>.</para>
    </tip>
 
-   <para>If you can only use Eclipse 3.3 use <ulink url="http://www.jboss.org/tools/download/index.html#stable">JBoss Tools 2.1.2</ulink>, but
+   <para>If you can only use Eclipse 3.3 use <ulink url="http://www.jboss.org/tools/download.html">JBoss Tools 2.1.2</ulink>, but
     JBoss Tools 2.x will not have any of the new features.</para>
 
    <note>
