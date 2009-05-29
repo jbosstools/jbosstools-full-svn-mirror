@@ -1039,9 +1039,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		} else {
 			// Max Areshkau Why we need update parent node when we update text
 			// node?
-			// lookd like we haven't need do it.
+			// looks like we haven't need do it.
 			if (sourceNode.getNodeType() == Node.TEXT_NODE) {
 				updateNode(sourceNode.getParentNode());
+			}else if(HTML.TAG_LINK.equalsIgnoreCase(sourceNode.getNodeName())) {
+				addNode(sourceNode, null, getHeadNode());
 			}
 		}
 	}
