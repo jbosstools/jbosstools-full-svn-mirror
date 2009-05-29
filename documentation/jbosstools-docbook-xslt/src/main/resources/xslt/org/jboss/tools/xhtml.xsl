@@ -16,7 +16,7 @@
 		<script type="text/javascript" src="script/prototype-1.6.0.2.js"><xsl:comment>If you see this message, your web browser doesn't support JavaScript or JavaScript is disabled.</xsl:comment></script>
 		<script type="text/javascript" src="script/effects.js"><xsl:comment>If you see this message, your web browser doesn't support JavaScript or JavaScript is disabled.</xsl:comment></script>
 		<script type="text/javascript" src="script/scriptaculous.js"><xsl:comment>If you see this message, your web browser doesn't support JavaScript or JavaScript is disabled.</xsl:comment></script>
-		<script type="text/javascript" src="script/toggle.js"><xsl:comment>If you see this message, your web browser doesn't support JavaScript or JavaScript is disabled.</xsl:comment></script>
+		
 	</xsl:template>
 
   <xsl:template name="header.navigation">
@@ -34,6 +34,8 @@
 					<xsl:text> </xsl:text>
 				</div>
  
+				<!-- FEEDBACK -->
+				<xsl:call-template name="feedback" />
 				<p xmlns="http://www.w3.org/1999/xhtml">
 					<xsl:attribute name="id">
 						<xsl:text>title</xsl:text>

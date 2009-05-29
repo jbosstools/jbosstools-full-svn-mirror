@@ -15,6 +15,9 @@
       <div id="overlay">
          <xsl:text> </xsl:text>
       </div>
+      
+      <!-- FEEDBACK -->
+      <xsl:call-template name="feedback" />
       <p xmlns="http://www.w3.org/1999/xhtml">
          <xsl:attribute name="id">
             <xsl:text>title</xsl:text>
