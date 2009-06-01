@@ -44,9 +44,9 @@
 	                           <year>2009</year>
 	                           <holder>JBoss, a division of Red Hat</holder>
 	                       </copyright>
-          <!--releaseinfo>
-            Version: 5.0.0.M5
-          </releaseinfo-->
+          <releaseinfo>
+            Version: 3.1.0.M1
+          </releaseinfo>
 <abstract>
    <title/>
        <para>
