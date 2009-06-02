@@ -13,6 +13,53 @@
  <para>This document is intended to help you to migrate an existing Exadel JSF or Struts projects
   into <property>JBoss Developer Studio</property>. Preferences can be exported from Eclipse 3.2.0
   (3.2.1 or 3.2.2) and imported in Eclipse 3.4.x by the standard Eclipse means.</para>
+ 
+ <section>
+  <title>Key Features of Projects Migration to JBoss Developer Studio</title>
+  <para>For a start, we propose you to look through the table of main features of migrating projects to JBoss Developer Studio:</para>
+ 
+  <table>
+   
+   <title>Key Features of Project Migration to JBoss Developer Studio</title>
+   <tgroup cols="3">
+    
+    <colspec colnum="1" align="left" colwidth="2*"/>
+    <colspec colnum="2" colwidth="4*"/>
+    <colspec colnum="3" align="left" colwidth="2*"/>
+    
+    <thead>
+     <row>
+      <entry>Feature</entry>
+      <entry>Benefit</entry>
+      <entry>Chapter</entry>
+     </row>
+    </thead>
+    
+    <tbody>
+     
+     <row>
+      <entry><para>Import JSF Project Wizard</para></entry>
+      <entry><para>It simplifies the process of bringing your existing JSF applications into your JBoss Developer Studio workspace as JSF projects. The import is possible with *.war files.</para></entry>
+      <entry>
+       <link linkend="import_jsf">Migration of JSF project</link> and <link linkend="jsf_war">Migration of JSF project from *.war file</link>
+      </entry>
+     </row>
+     
+     <row>
+      <entry><para>Import Struts Project Wizard</para></entry>
+      <entry><para>It simplifies the process of bringing your existing Struts applications into your JBoss Developer Studio workspace as Struts projects. The import is possible with *.war files.</para></entry>
+      <entry>
+       <link linkend="struts_import">Migration of Struts project</link> and <link linkend="struts_war">Migration of Struts project from *.war file</link>
+      </entry>
+     </row>
+     
+    </tbody>
+    
+   </tgroup>
+  </table>
+ 
+ </section>
+ 
  <section>
   <title>Other relevant resources on the topic</title>
   <para>All JBoss Developer Studio/JBoss Tools release documentation you can find at<ulink url="http://docs.jboss.org/tools/">http://docs.jboss.org/tools</ulink> in the corresponding release directory.</para>

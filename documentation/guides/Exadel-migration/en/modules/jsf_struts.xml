@@ -90,7 +90,7 @@
   </figure>
  
  </section>
- <section>
+ <section id="struts_import">
   <title>Struts</title>
   <itemizedlist>
    <listitem><para><emphasis><property>Select File > Import...</property></emphasis> from the menu bar, and then select <emphasis><property>Other > Struts Project</property></emphasis> from the Import dialog box that appears.</para></listitem>

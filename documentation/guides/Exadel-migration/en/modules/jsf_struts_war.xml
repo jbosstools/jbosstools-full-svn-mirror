@@ -14,7 +14,7 @@
 
   <title>Migrate JSF and Struts projects from *.war file</title>
   <para>After you familiarized oneself with last chapter you can read this chapter. It looks as if you read in last chapter.</para>
-  <section>
+  <section id="jsf_war">
     <title>JSF</title>
 
     <itemizedlist>
@@ -91,7 +91,7 @@
     </itemizedlist>
   </section>
 
-  <section>
+  <section id="struts_war">
     <title>Struts</title>
 
     <itemizedlist>
