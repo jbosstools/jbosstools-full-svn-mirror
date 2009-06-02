@@ -52,6 +52,59 @@
             Eclipse BIRT you&apos;ll find out in the next sections.</para>
     </section>
 
+<section id="BIRT_key_features">
+    <title>Key Features of BIRT</title>
+    <para>For a start, we propose you to look through the table of main features of BIRT plugin:</para>
+
+    <table>
+        
+        <title>Key Functionality for BIRT Plugin</title>
+        <tgroup cols="3">
+            
+            <colspec colnum="1" align="left" colwidth="2*"/>
+            <colspec colnum="2" colwidth="4*"/>
+            <colspec colnum="3" align="left" colwidth="2*"/>
+            
+            <thead>
+                <row>
+                    <entry>Feature</entry>
+                    <entry>Benefit</entry>
+                    <entry>Chapter</entry>
+                </row>
+            </thead>
+            
+            <tbody>
+                
+                <row>
+                    <entry><para>Integration with Seam</para></entry>
+                    <entry><para>You can add a BIRT report to an .xhtml file or embed it in some Seam .xhtml page.</para></entry>
+                    <entry>
+                        <link linkend="integration">integration with Seam</link>
+                    </entry>
+                </row>
+                
+                <row>
+                    <entry><para>Hibernate ODA Data Source</para></entry>
+                    <entry><para>Hibernate ODA Data Source for the JBoss BIRT Integration feature is completely integrated with Hibernate Tools.</para></entry>
+                    <entry>
+                        <link linkend="hibernate_datasource">Hibernate ODA data source</link>
+                    </entry>
+                </row>
+                
+                                
+            </tbody>
+            
+        </tgroup>
+    </table>
+
+
+
+
+
+
+</section>
+    
+    
     <section>
         <title>JBoss BIRT Integration Functionality Overview</title>
 
