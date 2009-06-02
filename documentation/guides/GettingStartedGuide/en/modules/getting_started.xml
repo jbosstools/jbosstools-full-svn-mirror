@@ -25,6 +25,102 @@
    Tools.</para>
  </section>
 
+<section>
+ <title>Key Features of JBoss Developer Studio</title>
+ <para>For a start, we propose you to look through the table of main features of JBoss Developer Studio</para>
+
+ <table>
+  
+  <title>Key Functionality of JBoss Developer Studio</title>
+  <tgroup cols="3">
+   
+   <colspec colnum="1" align="left" colwidth="2*"/>
+   <colspec colnum="2" colwidth="4*"/>
+  
+   
+   <thead>
+    <row>
+     <entry>Feature</entry>
+     <entry>Benefit</entry>
+     
+    </row>
+   </thead>
+   
+   <tbody>
+    
+    <row>
+     <entry><para>JBoss Enterprise Application Platform</para></entry>
+     <entry><para>JBoss Developer Studio includes and integrates JBoss Enterprise Application Platform, the same version of the middleware platform that Red Hat supports in production for 5 years.</para></entry>
+    </row>
+    
+    <row>
+     <entry><para>New Seam Tools</para></entry>
+     <entry><para>JBoss Developer Studio includes brand new tools for Seam. They provide wizards for creating new Seam projects, validation tools, expression language code completion, testing tools, and wizards for generating entity objects.</para></entry>
+    </row>
+    
+    <row>
+     <entry><para>Visual Page Editor</para></entry>
+     <entry><para>JBoss Developer Studio includes a Visual Page Editor for combined visual and source editing of Web pages. The Visual Page Editor even renders AJAX-enabled RichFaces components.</para></entry>
+    </row>
+    
+    <row>
+     <entry><para>AJAX Capabilities</para></entry>
+     <entry><para>JBoss Developer Studio includes a Technology Preview of JBoss RichFaces. RichFaces provides nearly 70 skinnable components, including calendar, tree, dropdown menu, drag-and-drop components, and more. JBoss Developer Studio’s Visual Page Editor can render RichFaces components.</para></entry>
+    </row>
+    
+    <row>
+     <entry><para>JBoss Tools Palette</para></entry>
+     <entry><para>The JBoss Tools Palette contains a developer’s project tag libraries and enables inserting tags into a JSP with one click. The Tools Palette supports custom and 3rd party tags.</para></entry>
+    </row>
+    
+    <row>
+     <entry><para>JBoss jBPM Tools</para></entry>
+     <entry><para>JBoss Developer Studio includes jBPM tooling for defining Seam page flows.</para></entry>
+    </row>
+    
+    <row>
+     <entry><para>Spring Tools</para></entry>
+     <entry><para>JBoss Developer Studio includes Spring IDE for developing Spring applications.</para></entry>
+    </row>
+    
+    <row>
+     <entry><para>Struts Tools</para></entry>
+     <entry><para>JBoss Developer Studio includes Struts tools for Struts 1.x applications.</para></entry>
+    </row>
+    
+    <row>
+     <entry><para>Optimized JBoss Application Server adapter</para></entry>
+     <entry><para>JBoss Developer Studio’s advanced JBoss AS adapter includes features like incremental deployment for fast development and is pre-configured for the included JBoss Application server.</para></entry>
+    </row>
+    
+    <row>
+     <entry><para>Red Hat Enterprise Linux and RHN Access</para></entry>
+     <entry><para>JBoss Developer Studio includes access to Red Hat Enterprise Linux, Linux development tools, and Red Hat Network for development purposes.</para></entry>
+    </row>
+    
+    <row>
+     <entry><para>Business Intelligence Report Tool (BIRT)</para></entry>
+     <entry><para>JBoss Developer Studio includes Business Intelligence Report Tool, a reporting system that integrates with Java/J2EE, extracts certain information, analyzes it, and generates report summaries and charts.</para></entry>
+    </row>
+    
+    <row>
+     <entry><para>JBossWeb Service</para></entry>
+     <entry><para>JBoss WS is a web service framework developed as a part of the JBoss Application Server. It implements the JAX-WS specification that defines a programming model and run-time architecture for implementing web services in Java, targeted at the Java Platform, Enterprise Edition 5 (Java EE 5).</para></entry>
+    </row>
+    
+    
+   </tbody>
+   
+  </tgroup>
+ </table>
+ 
+</section>
+ 
+ 
+
+
+
+
  <section id="ConfigJavaEnvironment">
   <?dbhtml filename="ConfigJavaEnvironment.html"?>
   <title>Configuring Your Java Environment</title>
