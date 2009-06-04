@@ -23,10 +23,13 @@
 	</tr>
 	<tr>
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Richfaces
-		3.3.1</b></td>
+		Layout Tags</b></td>
 		<td valign="top">
-		<p>Richfaces 3.3.1 is now supported in code completion and visual
-		page editor.</p>
+		<p>Richfaces 3.3 have added a good set of improvements done in the area of layout. The Visual page Editor now supports the new tags in 3.3 especially the layout support (i.e. <code>rich:layoutPanel</code>).</p>
+
+<p>The visual page editor will obey the layout options that Richfaces provide and give a good approximation of how the Richfaces tags will render.</p>
+
+<p><img src="../images/richlayoutpanel.png"/></p>
 
 		<p><small><a
 			href="https://jira.jboss.org/jira/browse/JBIDE-4381">Related Jira</a></small></p>
@@ -40,28 +43,10 @@
 		</td>
 	</tr>
 	<tr>
-		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Context
-		menu adjustment</b></td>
-		<td valign="top">
-		<p>Additional actions (cut,add, past) have been added to menu of
-		parent tag.</p>
-
-		<p><img src="images/context-menu.png" /></p>
-
-		<p><small><a
-			href="https://jira.jboss.org/jira/browse/JBIDE-4226">Related Jira</a></small></p>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-		<hr />
-		</td>
-	</tr>
-	<tr>
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Vertical
 		and Horizontal Split</b></td>
 		<td valign="top">
-		<p>Visual/Source editor can be splitted vertically (on wide screen
+		<p>Visual/Source editor can now be splitted vertically (on wide screen
 		monitors it's more convenient) or horizontally.</p>
 
 		<p><img src="images/vpe-vertical-split.png"
@@ -78,11 +63,42 @@
 		</td>
 	</tr>
 	<tr>
-		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Rendering of facelet components</b></td>
+		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Context
+		menu adjustment</b></td>
 		<td valign="top">
-		<p>Visual rendering of custom facelet components has been added to
-		visual page editor.</p>
+		<p>In the visual editor the "Parent Tag" menu for the
+		context menu of elements now includes additional
+		actions (cut,copy and paste) to allow for easier
+		manipulation of the XML structure beneath.</p>
 
+		<p><img src="images/context-menu.png" /></p>
+
+		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4226">Related Jira</a></small></p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Custom facelet components</b></td>
+		<td valign="top">
+		<p>Custom facelet compontents defined via xhtml files are now rendered in the visual editor.</p>
+
+		<p>For example if you have a <code>facelets.taglib.xml</code> with the following content:</p>
+
+<code>
+  &lt;namespace&gt;http://mareshkau/tags&lt;/namespace&gt;<br/>
+ &lt;tag&gt;<br/>
+  &lt;tag-name&gt;echo&lt;/tag-name&gt;<br/>
+  &lt;source&gt;components/echo.xhtml&lt;/source&gt;<br/>
+ &lt;/tag&gt;<br/>
+</code>
+
+<p>Then when the visual editor see's a echo tag from the mareshkau namespace, it will include the components/echo.xhtml in the rendering of the page.</p>
+
+<p>It will even do the proper attribute reference replacements, which is shown in the following snapshot by having ${echo} be replaced with the contents of the echo attribute (in this case the string "Echo").</p>
 		<p><img src="images/vpe-custom-tags-rendering.png" /></p>
 
 		<p><small><a
@@ -99,8 +115,8 @@
 	<tr>
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>OpenOn for Richfaces</b></td>
 		<td valign="top">
-		<p>OpenOn works for HTML tags which has 'jsfc' attribute as if this tag was correspondent JSF tag.</p>
-		<p><img src="images/jsfcca.png"	alt="Vpe Vertilal split" /></p>
+		<p>Our OpenOn's will now also work for those who prefer to use 'jsfc' attribute instead of the XML based facelet format. </p>
+		<p><img src="images/jsfcca.png"	 /></p>
 
 		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-1739">Related Jira</a></small></p>
 		</td>
