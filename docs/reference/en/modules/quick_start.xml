@@ -55,8 +55,8 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>The second wizard page is a transform data type choose page.</para>
-		<para> As the quick start introduces how to create/edit the Java-to-Java Smooks
+		<para>The second wizard page is a Smooks configuration file version choose page.Select appropriate one and click finish.</para>
+		<!--<para> As the quick start introduces how to create/edit the Java-to-Java Smooks
 			configuration file, let&apos;s select the<emphasis>
 				<property>Java-to-Java</property>
 			</emphasis> type as the source/target transform data type. </para>
@@ -103,13 +103,13 @@
 				Smooks Configuration file. It&apos;s possible to <link
 					linkend="graphicaleditor_datalink">select source/target data</link> afterwards
 				in the Smooks Graph editor.</para>
-		</tip>
+		</tip>-->
 	</section>
 	<section id="quickstart_formeditor">
 		<title>Smooks Editor</title>
 
 		<para>When all the wizard steps are passed, a new Smooks Configuration file is created and
-			the <property>Smooks Editor</property> will be opened automatically:</para>
+			the <property>Smooks Configuration  Editor</property> will be opened automatically:</para>
 		<figure>
 			<title>Smooks Editor</title>
 			<mediaobject>
@@ -119,7 +119,7 @@
 			</mediaobject>
 		</figure>
 
-		<para> This editor contains several parts: <table>
+		<!--<para> This editor contains several parts: <table>
 				<title>The Smooks Editor Parts</title>
 				<tgroup cols="2">
 
@@ -187,29 +187,14 @@
 					</tbody>
 				</tgroup>
 			</table>
-		</para>
+		</para>-->
 	</section>
 
 	<section id="graphicaleditor_datalink">
-		<title>Choosing the Source/Target Data</title>
+		<title>Choosing the transform data</title>
 
-		<para>To choose the transform data you should make use of the data selection links:</para>
-
-		<itemizedlist>
-			<listitem>
-				<para><emphasis>
-						<property>Source Select</property>
-					</emphasis> for selecting source data</para>
-			</listitem>
-
-			<listitem>
-				<para><emphasis>
-						<property>Target Select</property>
-					</emphasis> for selecting target data</para>
-			</listitem>
-		</itemizedlist>
-
-		<para>After clicking the link the <property>Data Type Selection wizard</property> is
+		<para>To choose the transform data you should click add button in the Input Data section.</para>
+		<para>After clicking the button the <property>Data Type Selection wizard</property> is
 			opened, and there are two data types on the list: Java and XML.</para>
 		<note>
 			<title>Note</title>
@@ -240,10 +225,10 @@
 			</mediaobject>
 		</figure>
 
-		<para>When you select all the necessary java classes, click <emphasis>
+		<para> Let's select the Order class from the example project as the source JavaBean class and the ListOrder class as the target JavaBean class.When you selected  the necessary java classes, click <emphasis>
 				<property>Finish</property>
-			</emphasis> and the structure of the java class is displayed on the source/target
-			data tree.</para>
+			</emphasis> and you should see all added java classes  displayed in the Input Data Section
+			.</para>
 		<figure>
 			<title>Displaying the Structure of the Transformed Data</title>
 			<mediaobject>
@@ -257,8 +242,8 @@
 	<section id="quickstart_mapping">
 		<title>Mapping</title>
 
-		<para> As you see, the source/target data tree displays the structure of the java class. </para>
-		<para>How to map it?</para>
+
+		<para>How to map the java class just added?</para>
 		
 		<para>First, you should know what to transform:</para>
 
@@ -300,49 +285,52 @@
 			</listitem>
 		</orderedlist>
 
-		<para> Make sense?</para>
-		<para> OK, let&apos;s select the <emphasis>
-				<property>&quot;customerName&quot;</property>
-			</emphasis> item of the <emphasis>
-				<property>&quot;header&quot;</property>
-			</emphasis> item on the source data tree and start to drag it. When the drag item
-			crosses the Mapping graphical area, you will see a connection line. Drop the item onto
-			the <emphasis>
-				<property>&quot;customerName&quot;</property>
-			</emphasis> of the <property>LineOrder</property> on the target data
-			view.</para>
-		<para> Now a dialog is opened asking you to connect the root node:</para>
-
+		<para> Make sense?
+You should right click Resource List , select Add Smooks Resource>Java Binding>Bindings  
+			</para>
+		<para>First of all, you should bind Order to LineOrder. To do this one Bindings Item should be added to the Resource List.</para>
+			<figure>
+				<title>Mapping</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/quick_start/quick_start10.png" scale="90"/>
+					</imageobject>
+				</mediaobject>
+			</figure><para>Click on it and you should see Bindings  Section to the right of Message Filtering Resources.Write <emphasis> <property>lineOrder</property></emphasis> in the Bean id field.</para>
+		<para>Select example.trgmodel.LineOrder in the Class field and example.srcmodel.Order in the Name field.Your >Smooks Configuration Editor should look like this: </para>
 		<figure>
-			<title>Dialog Asking You to Connect to the Root Nodes</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start10.png" scale="90"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para> Please, click <emphasis>
-				<property>Yes</property>
-			</emphasis> to connect the root node. If you don&apos;t do that, this dialog is
-			opened again when you connect other nodes.</para>
-		<note>
-			<title>Note:</title>
-			<para>Please, remember that the root nodes of the source data and target data *MUST* be
-				connected.</para>
-			<para>This rule is not only for Java-to-Java, but also is relevant for
-				XML-to-Java </para>
-		</note>
-		<para> Now let&apos;s do the same operation with the <emphasis>
-				<property>&quot;customerNumber&quot;</property>,</emphasis> that is what you
-			should see:</para>
-		<figure>
-			<title>Correctly Mapping Editor</title>
+			<title>Mapping</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/quick_start/quick_start11.png" scale="90"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
+		
+		<para>Now you should bind two values <emphasis> <property>&quot;customerNumber&quot;</property>
+		</emphasis> property of the <property>Order#header</property> to the <emphasis>
+			<property>&quot;customerId&quot;</property>
+		</emphasis> property of <property>LineOrder</property>.To do this  right click your just created <emphasis>
+			<property>Bindings Item >Add Smooks Resource>Value</property></emphasis>
+		.</para>
+		
+		<figure>
+			<title> Mapping Editor</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start12.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure><note>
+			<title>Note:</title>
+			<para>Please, remember that the root nodes of the source data and target data *MUST* be
+				connected.</para>
+			<para>This rule is not only for Java-to-Java, but also is relevant for
+				XML-to-Java </para>
+		</note>
+		<para> Do the same operation with the 
+				other properties in this and other classes.</para>
+<!--
 		<para>Next, you are going to bind the properties of the <property>OrderItem</property> to
 			the properties of the <property>LineItem</property>.</para>
 		<para>Select the <emphasis>
@@ -416,7 +404,7 @@
 					<imagedata fileref="images/quick_start/quick_start15.png" scale="90"/>
 				</imageobject>
 			</mediaobject>
-		</figure>
+		</figure>-->
 		<para>Now, you should save the file and the <property>Smooks tools</property> generate the correct
 			configuration file content.</para>
 		<para>OK, let run the test class: <property>example.Main</property>. (Please, make sure that the Smooks engine
