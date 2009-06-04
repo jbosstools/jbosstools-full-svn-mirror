@@ -51,7 +51,7 @@
 	<toc/>
 	&introduction;
 	&quickstart;
-	&smooksformeditor_graphicaltab;
+	<!--&smooksformeditor_graphicaltab;-->
 	&smooksformeditor_configurationtab;
 	&smooksformeditor_sourcetab;
 </book>    
