@@ -286,7 +286,8 @@
 		</orderedlist>
 
 		<para> Make sense?
-You should right click Resource List , select Add Smooks Resource>Java Binding>Bindings  
+			You should right click Resource List , select <emphasis>
+				<property>Add Smooks Resource>Java Binding>Bindings</property></emphasis>.  
 			</para>
 		<para>First of all, you should bind Order to LineOrder. To do this one Bindings Item should be added to the Resource List.</para>
 			<figure>
@@ -297,7 +298,7 @@ You should right click Resource List , select Add Smooks Resource>Java Binding>B
 					</imageobject>
 				</mediaobject>
 			</figure><para>Click on it and you should see Bindings  Section to the right of Message Filtering Resources.Write <emphasis> <property>lineOrder</property></emphasis> in the Bean id field.</para>
-		<para>Select example.trgmodel.LineOrder in the Class field and example.srcmodel.Order in the Name field.Your >Smooks Configuration Editor should look like this: </para>
+		<para>Select example.trgmodel.LineOrder in the Class field and example.srcmodel.Order in the Name field.Your <emphasis> <property>Smooks Configuration Editor</property></emphasis> should look like this: </para>
 		<figure>
 			<title>Mapping</title>
 			<mediaobject>
