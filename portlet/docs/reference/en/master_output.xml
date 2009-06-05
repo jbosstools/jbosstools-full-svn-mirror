@@ -24,7 +24,16 @@
     
      <bookinfo>
          <title>JBoss Portal Tools Reference Guide</title>
-            
+             <corpauthor diffmk:change="added">
+                 <inlinemediaobject diffmk:change="added">
+                     <imageobject diffmk:change="added" role="fo">
+                         <imagedata diffmk:change="added" fileref="images/jbosstools_logo.png" format="PNG"></imagedata>
+                     </imageobject>	
+                     <imageobject diffmk:change="added" role="html">
+                         <imagedata diffmk:change="added"></imagedata>
+                     </imageobject>	
+                 </inlinemediaobject>           
+             </corpauthor>
             <author><firstname>Olga</firstname><surname>Chikvina</surname></author>
             <author><firstname>Snjezana</firstname><surname>Peco</surname><email>snjezana.peco@redhat.com</email></author>
              <author><firstname>Svetlana</firstname><surname>Mukhina</surname><email>smukhina@exadel.com</email></author>
@@ -37,7 +46,7 @@
 	                           <holder>JBoss, a division of Red Hat</holder>
 	                       </copyright>
           <releaseinfo><diffmk:wrapper diffmk:change="changed">
-            Version: 1.0.1.GA
+              Version: 1.1.0.M1
           </diffmk:wrapper></releaseinfo>
 	
 <abstract>
@@ -164,7 +173,7 @@
 
             <listitem>
                 <para>
-                    <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Forum</ulink>
+                    <ulink url="http://www.jboss.com/index.html?module=bb&apos;op=viewforum&apos;f=201">JBoss Tools Forum</ulink>
                 </para>
             </listitem>
 
@@ -176,10 +185,7 @@
             </listitem>
 
             <listitem>
-                <para>
-                    <ulink url="http://www.jboss.com/products/devstudio/docs">Stable JBossTools/JBDS
-                        documentation</ulink> (supplied with the latest JBDS release, 1.1.0 GA
-                    currently) </para>
+                <para>JBoss Developer Studio/JBoss Tools release documentation you can find at<ulink url="http://docs.jboss.org/tools/">http://docs.jboss.org/tools</ulink> in the corresponding release directory.</para>
             </listitem>
         </itemizedlist>
 
@@ -207,7 +213,7 @@
         </listitem>
 
         <listitem>
-            <para>Next, download the JBoss Portal + JBoss AS bundle from <ulink url="http://www.jboss.org/jbossportal/download/index.html">JBoss Portal Download
+            <para>Next, download the JBoss Portal + JBoss AS bundle from <ulink url="http://www.jboss.org/jbossportal/download.html">JBoss Portal Download
                     page</ulink></para>
 
             <note>
@@ -900,7 +906,7 @@
             <title>Tip:</title>
 
             <para>Thus you should have JBoss Portlet Bridge downloaded and extracted somewhere on
-                your hard drive. You can download JBoss Portlet Bridge 1.0.0.B4 from <ulink url="http://www.jboss.org/portletbridge/download/"><diffmk:wrapper diffmk:change="changed">www.jboss.org/portletbridge/download</diffmk:wrapper></ulink>.</para>
+                your hard drive. You can download JBoss Portlet Bridge 1.0.0.B4 from <ulink url="http://www.jboss.org/portletbridge/download/">www.jboss.org/portletbridge/download</ulink>.</para>
         </tip>
 
         <para>Now, to add Seam Portlet to the project you should follow to <emphasis>
@@ -987,7 +993,7 @@
         portlets which includes a sample staff and deploy it onto the <property moreinfo="none">JBoss
             Portal</property>.</para>
     
-    <para>If you still have questions or suggestions you are always welcome on our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">Forum</ulink>. Your feedback will be very much appreciated.</para>
+    <para>If you still have questions or suggestions you are always welcome on our <ulink url="http://www.jboss.com/index.html?module=bb&apos;op=viewforum&apos;f=201">Forum</ulink>. Your feedback will be very much appreciated.</para>
     
 </chapter>
 
