@@ -30,9 +30,9 @@
             <year>2009</year>
             <holder>JBoss, a division of Red Hat</holder>
 	    </copyright>
-          <releaseinfo><diffmk:wrapper diffmk:change="changed">
+          <releaseinfo>
 Version: 2.0.1.GA
-</diffmk:wrapper></releaseinfo>
+</releaseinfo>
 
 <abstract>
    <title></title>
@@ -47,7 +47,7 @@ Version: 2.0.1.GA
 	<toc></toc>  
 
 <chapter id="introduction" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/Exadel-migration/en/modules/introduction.xml" xreflabel="introduction">
- 
+ <?dbhtml filename="introduction.html"?>
  <chapterinfo>
   <keywordset>
    <keyword>JBoss Developer Studio</keyword>
@@ -57,13 +57,60 @@ Version: 2.0.1.GA
  </chapterinfo>
 
  <title>Introduction </title>
- <para><diffmk:wrapper diffmk:change="changed">This document is intended to help you to migrate an existing Exadel JSF or Struts projects
-  into </diffmk:wrapper><property moreinfo="none">JBoss Developer Studio</property><diffmk:wrapper diffmk:change="changed">. Preferences can be exported from Eclipse 3.2.0
-  (3.2.1 or 3.2.2) and imported in Eclipse 3.4.x by the standard Eclipse means.</diffmk:wrapper></para>
+ <para>This document is intended to help you to migrate an existing Exadel JSF or Struts projects
+  into <property moreinfo="none">JBoss Developer Studio</property>. Preferences can be exported from Eclipse 3.2.0
+  (3.2.1 or 3.2.2) and imported in Eclipse 3.4.x by the standard Eclipse means.</para>
+ 
  <section diffmk:change="added">
+  <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Key Features of Projects Migration to JBoss Developer Studio</diffmk:wrapper></title>
+  <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">For a start, we propose you to look through the table of main features of migrating projects to JBoss Developer Studio:</diffmk:wrapper></para>
+ 
+  <table diffmk:change="added">
+   
+   <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Key Features of Project Migration to JBoss Developer Studio</diffmk:wrapper></title>
+   <tgroup cols="3" diffmk:change="added">
+    
+    <colspec align="left" colnum="1" colwidth="2*" diffmk:change="added"></colspec>
+    <colspec colnum="2" colwidth="4*" diffmk:change="added"></colspec>
+    <colspec align="left" colnum="3" colwidth="2*" diffmk:change="added"></colspec>
+    
+    <thead diffmk:change="added">
+     <row diffmk:change="added">
+      <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Feature</diffmk:wrapper></entry>
+      <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Benefit</diffmk:wrapper></entry>
+      <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Chapter</diffmk:wrapper></entry>
+     </row>
+    </thead>
+    
+    <tbody diffmk:change="added">
+     
+     <row diffmk:change="added">
+      <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Import JSF Project Wizard</diffmk:wrapper></para></entry>
+      <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">It simplifies the process of bringing your existing JSF applications into your JBoss Developer Studio workspace as JSF projects. The import is possible with *.war files.</diffmk:wrapper></para></entry>
+      <entry diffmk:change="added">
+       <link diffmk:change="added" linkend="import_jsf"><diffmk:wrapper diffmk:change="added">Migration of JSF project</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> and </diffmk:wrapper><link diffmk:change="added" linkend="jsf_war"><diffmk:wrapper diffmk:change="added">Migration of JSF project from *.war file</diffmk:wrapper></link>
+      </entry>
+     </row>
+     
+     <row diffmk:change="added">
+      <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Import Struts Project Wizard</diffmk:wrapper></para></entry>
+      <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">It simplifies the process of bringing your existing Struts applications into your JBoss Developer Studio workspace as Struts projects. The import is possible with *.war files.</diffmk:wrapper></para></entry>
+      <entry diffmk:change="added">
+       <link diffmk:change="added" linkend="struts_import"><diffmk:wrapper diffmk:change="added">Migration of Struts project</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> and </diffmk:wrapper><link diffmk:change="added" linkend="struts_war"><diffmk:wrapper diffmk:change="added">Migration of Struts project from *.war file</diffmk:wrapper></link>
+      </entry>
+     </row>
+     
+    </tbody>
+    
+   </tgroup>
+  </table>
+ 
+ </section>
+ 
+ <section>
   <title>Other relevant resources on the topic</title>
-  <para><diffmk:wrapper diffmk:change="changed">All JBoss Developer Studio/JBoss Tools release documentation you can find at</diffmk:wrapper><diffmk:wrapper diffmk:change="changed">http://docs.jboss.org/tools</diffmk:wrapper><diffmk:wrapper diffmk:change="changed"> in the corresponding release directory.</diffmk:wrapper></para>
-  <para><diffmk:wrapper diffmk:change="changed">The latest documentation builds are available at </diffmk:wrapper><ulink url="http://download.jboss.org/jbosstools/nightly-docs/"><diffmk:wrapper diffmk:change="changed">http://download.jboss.org/jbosstools/nightly-docs</diffmk:wrapper></ulink>.</para>
+  <para>All JBoss Developer Studio/JBoss Tools release documentation you can find at<ulink url="http://docs.jboss.org/tools/">http://docs.jboss.org/tools</ulink> in the corresponding release directory.</para>
+  <para>The latest documentation builds are available at <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">http://download.jboss.org/jbosstools/nightly-docs</ulink>.</para>
 
  </section>
 
@@ -177,7 +224,7 @@ Version: 2.0.1.GA
   </figure>
  
  </section>
- <section>
+ <section id="struts_import">
   <title>Struts</title>
   <itemizedlist>
    <listitem><para><emphasis><property moreinfo="none">Select File &gt; Import...</property></emphasis> from the menu bar, and then select <emphasis><property moreinfo="none">Other &gt; Struts Project</property></emphasis> from the Import dialog box that appears.</para></listitem>
@@ -285,7 +332,7 @@ Version: 2.0.1.GA
 
   <title>Migrate JSF and Struts projects from *.war file</title>
   <para>After you familiarized oneself with last chapter you can read this chapter. It looks as if you read in last chapter.</para>
-  <section>
+  <section id="jsf_war">
     <title>JSF</title>
 
     <itemizedlist>
@@ -362,7 +409,7 @@ Version: 2.0.1.GA
     </itemizedlist>
   </section>
 
-  <section>
+  <section id="struts_war">
     <title>Struts</title>
 
     <itemizedlist>
@@ -416,9 +463,9 @@ Version: 2.0.1.GA
     </itemizedlist>
 	<para>The migration process is completed</para>
     
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If there's anything we didn't cover or you can't figure
-     out, please feel free to visit our </diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio Users Forum</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> or </diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"><diffmk:wrapper diffmk:change="added">JBoss Tools Users Forum</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> to ask questions. There we are also looking for
-      your suggestions and comments.</diffmk:wrapper></para>
+    <para>If there's anything we didn't cover or you can't figure
+      out, please feel free to visit our <ulink url="http://www.jboss.com/index.html?module=bb&apos;op=viewforum&apos;f=258">JBoss Developer Studio Users Forum</ulink> or <ulink url="http://www.jboss.com/index.html?module=bb&apos;op=viewforum&apos;f=201">JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
+      your suggestions and comments.</para>
   </section>
    
 </chapter>   
