@@ -25,7 +25,16 @@
     
      <bookinfo>
          <title>Drools Tools Reference Guide</title>
-
+             <corpauthor diffmk:change="added">
+                 <inlinemediaobject diffmk:change="added">
+                     <imageobject diffmk:change="added" role="fo">
+                         <imagedata diffmk:change="added" fileref="images/jbosstools_logo.png" format="PNG"></imagedata>
+                     </imageobject>	
+                     <imageobject diffmk:change="added" role="html">
+                         <imagedata diffmk:change="added"></imagedata>
+                     </imageobject>	
+                 </inlinemediaobject>           
+             </corpauthor>
             <author><firstname>Olga</firstname><surname>Chikvina</surname></author>    
          
          <pubdate>April 2008</pubdate>
@@ -35,7 +44,7 @@
 	                           <holder>JBoss, a division of Red Hat</holder>
 	                       </copyright>
           <releaseinfo><diffmk:wrapper diffmk:change="changed">
-              Version: 5.0.0.CR1
+              Version: 5.1.0.trunk
           </diffmk:wrapper></releaseinfo>
 <abstract>
    <title></title>
@@ -59,9 +68,9 @@
             chaining inference based rules engine, more correctly known as a production rule system,
             using an enhanced implementation of the Rete algorithm.</para>
 
-        <para><diffmk:wrapper diffmk:change="changed"> In this guide we are going to get you familiar with Drools Eclipse plugin which
+        <para> In this guide we are going to get you familiar with Drools Eclipse plugin which
             provides development tools for creating, executing and debugging Drools processes and
-            rules from within Eclipse.</diffmk:wrapper></para>
+            rules from within Eclipse.</para>
 
         <note>
             <title>Note:</title>
@@ -70,15 +79,15 @@
         </note>
 
         <para><property moreinfo="none">Drools Tools</property> come bundled with <property moreinfo="none">JBoss Tools</property>
-            set of Eclipse plugins. How to install <property moreinfo="none">JBoss Tools</property><diffmk:wrapper diffmk:change="changed"> you can find in
-            the </diffmk:wrapper><ulink url="../../GettingStartedGuide/html_single/index.html#JBossToolsInstall">Getting Started Guide</ulink>.</para>
+            set of Eclipse plugins. How to install <property moreinfo="none">JBoss Tools</property> you can find in
+            the <ulink url="../../GettingStartedGuide/html_single/index.html#JBossToolsInstall">Getting Started Guide</ulink>.</para>
     </section>
 
     <section id="drools_key_features">
         <title>Drools Tools Key Features</title>
 
-        <para>The following table lists all valuable features of the <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Drools
-                Tools</diffmk:wrapper></property>.</para>
+        <para>The following table lists all valuable features of the <property moreinfo="none">Drools
+                Tools</property>.</para>
         <table>
             <title>Key Functionality of Drools Tools</title>
             <tgroup cols="3">
@@ -209,9 +218,9 @@
             </listitem>
 
             <listitem>
-                <para><diffmk:wrapper diffmk:change="added">All </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Tools/JBDS</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> documentation you can find on the
-                        </diffmk:wrapper><ulink diffmk:change="added" url="http://docs.jboss.org/tools/"><diffmk:wrapper diffmk:change="added">documentation release
-                    page</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+                <para>All <property moreinfo="none">JBoss Tools/JBDS</property> documentation you can find on the
+                        <ulink url="http://docs.jboss.org/tools/">documentation release
+                    page</ulink>.</para>
             </listitem>
         </itemizedlist>
 
@@ -284,7 +293,7 @@
             </mediaobject>
         </figure>
 
-        <para>You should see the <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Preferences window</diffmk:wrapper></property> where you can configure the
+        <para>You should see the <property moreinfo="none">Preferences window</property> where you can configure the
             workspace settings for Drools runtimes. To create a new runtime, press the <emphasis>
                 <property moreinfo="none">Add</property>
             </emphasis> button. The appeared dialog prompts you to enter a
@@ -760,7 +769,7 @@
                 <para>The <property moreinfo="none">Rete Tree view</property> works only in Drools Rule Projects,
                     where the Drools Builder is set in the project properties.</para>
             </note>
-            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">We hope, this guide helped you to get started with the JBoss BPMN Convert module. Besides, for additional information you are welcome on </diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"><diffmk:wrapper diffmk:change="added">JBoss forum</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+            <para>We hope, this guide helped you to get started with the JBoss BPMN Convert module. Besides, for additional information you are welcome on <ulink url="http://www.jboss.com/index.html?module=bb&op=viewforum&f=201">JBoss forum</ulink>.</para>
         </section>
         
     </section>
