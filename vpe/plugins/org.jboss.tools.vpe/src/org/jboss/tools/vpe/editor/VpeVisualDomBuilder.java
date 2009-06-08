@@ -1697,10 +1697,20 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 						new VpeSourceInnerDragInfo(dragNode, 0, 0),
 						new VpeSourceInnerDropInfo(container, offset, true));
 			} else {
-				((VpeElementMapping) oldMapping).getTemplate().innerDrop(
-						pageContext,
-						new VpeSourceInnerDragInfo(dragNode, 0, 0),
-						new VpeSourceInnerDropInfo(container, offset, true));
+				if (oldMapping instanceof VpeElementMapping) {
+					((VpeElementMapping) oldMapping).getTemplate().innerDrop(
+							pageContext,
+							new VpeSourceInnerDragInfo(dragNode, 0, 0),
+							new VpeSourceInnerDropInfo(container, offset, true));
+				} else {
+					/* TODO: implement this case or completely
+					 * remove this method?
+					 * At the time of writing this comment 
+					 * the implementation of template.innerDrop() method above
+					 * was empty, so there are no differences between
+					 * calling this method and doing nothing.
+					 */
+				}
 			}
 			// }
 
