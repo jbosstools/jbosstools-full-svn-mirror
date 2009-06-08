@@ -23,9 +23,15 @@
   </tr>
   <tr>
     <td valign="top" align="left">
-      <p><b>View-id refactoring in pages.xml</b></p></td>
-      <td valign="top"><p>view-id's are updated in pages.xml now if correspondent xhtml was renamed.</p>
-    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3808">Related Jira</a></small></p>
+      <p><b>Seam component refactoring</b></p></td>
+      <td valign="top"><p>You can now rename Seam components and Seam tools will refactor the name changes in pages.xml, xhtml and java.</p>
+<p>The refactoring is available in the context menu of classes that has a @Name annotation, in components.xml and from Seam components view.</p>
+
+<p><img src="../images/renameseamcomponent.png"/></p>
+
+<p>Note: This feature is still experimental and we don't cover all possible combinations yet. If you bump into a problem please report it in jira or speak up in the forums.</p>
+
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-1077">Related Jira</a></small></p>
     </td>
   </tr>
   <tr>
@@ -35,8 +41,19 @@
 	<hr/>
     </td>
   </tr>
+
   <tr>
-    <td colspan="2"><hr />
+    <td valign="top" align="left">
+      <p><b>View-id refactoring in pages.xml</b></p></td>
+      <td valign="top"><p>view-id's are updated in pages.xml now if correspondent xhtml was renamed.</p>
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3808">Related Jira</a></small></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Open On's</h3>
+	<hr/>
     </td>
   </tr>
   <tr>
@@ -54,8 +71,6 @@
   <tr>
     <td colspan="2">
       <hr/>
-      <h3>Java Editor</h3>
-	<hr/>
     </td>
   </tr>
   <tr>
@@ -69,13 +84,11 @@
   <tr>
     <td colspan="2">
       <hr/>
-      <h3>Visual Editor</h3>
-	<hr/>
     </td>
   </tr>
   <tr>
     <td valign="top" align="left">
-      <p><b>OpenOn</b></p></td>
+      <p><b>Image and templates</b></p></td>
       <td valign="top"><p>Image file can now be navigated to directly via OpenOn's from &lt;s:graphicImage@value&gt;.</p>
       <p>Also OpenOn works for template attribute of &lt;s:decorate&gt; tags.</p>
 

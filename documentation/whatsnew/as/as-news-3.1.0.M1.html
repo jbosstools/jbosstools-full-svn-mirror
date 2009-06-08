@@ -7,39 +7,11 @@
 
 <body>
 
-<h1>JBoss AS Tools 2.0.0.M1 - New and Noteworthy</h1>
+<h1>JBoss AS Tools 3.1.0.M1 - New and Noteworthy</h1>
 
-  <p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../seam/seam-news-3.0.0.GA.html">JBoss Seam Tools &gt;</a></p>
+  <p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../vpe/vpe-news-3.1.0.M1.html">Visual Page Editor &gt;</a></p>
 
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
-
-  <tr>
-    <td colspan="2">
-      <hr/>
-      <h3>Project Archives</h3>
-      <hr/>
-    </td>
-  </tr>
-
-  <tr>
-    <td valign="top" align="left">
-      <p align="right">
-	<b>User Libraries fileset</b></td>
-    <td valign="top">
-      <p>If you use use User Libraries in your projects you can now also refer to these from project archives and have all the .jar/.zip files they refer included into the archive.</p>
-
-      <p><img src="../images/projectarchivelibs.png"/></p>
-
-      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-122">Related jira</a></small></p>
-    </td>
-  </tr>
-
-  <tr>
-    <td colspan="2">
-      <hr/>
-    </td>
-  </tr>
-
 
   <tr>
     <td colspan="2">
@@ -90,11 +62,52 @@
   </tr>
 
   <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>1 second publishing interval</b></td>
+    <td valign="top">
+      <p>JBoss AS servers now have a default 1 second publishing interval between file changed and publish to circumvent that Eclipse WebTools in recent releases started having a 15 second interval.</p>
+
+<p>This makes the development turnaround much better out-of-the-box. Of course if you prefer longer wait time you can open the server editor and set the value to what you wish.</p>
+
+<p><img src="../images/1secdefaultpublish.png"/></p>
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4085">Related jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
     <td colspan="2">
       <hr/>
     </td>
   </tr>
 
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Project Archives</h3>
+      <hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>User Libraries fileset</b></td>
+    <td valign="top">
+      <p>If you use use User Libraries in your projects you can now also refer to these from project archives and have all the .jar/.zip files they refer included into the archive.</p>
+
+      <p><img src="../images/projectarchivelibs.png"/></p>
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-122">Related jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
 
   
 </table>
