@@ -28,6 +28,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jdt.core.dom.ThisExpression;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.jboss.tools.common.xml.XMLUtilities;
 import org.jboss.tools.jst.web.tld.TaglibData;
@@ -36,6 +37,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.custom.CustomTLDReference;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.util.SourceDomUtil;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.osgi.framework.Bundle;
 import org.w3c.dom.Document;
@@ -315,12 +317,17 @@ public class VpeTemplateManager {
 		VpeTemplate template = getTemplateImpl(pageContext, sourceNode, dependencySet);
 		if (template != null) {
 			return template;
-		} else {
-			return defTemplate;
 		}
+		return this.defTemplate;
 	}
 
 	private VpeTemplate getTemplateImpl(VpePageContext pageContext, Node sourceNode, Set<?> dependencySet) {
+		//Fix for JBIDE-4179, mareshkau
+		if((sourceNode instanceof Element) &&
+				SourceDomUtil.isRenderedAttrEqFalse(pageContext,(Element) sourceNode)){
+			return  VpeRenderingTemplate.getInstance();
+		}
+		
 		String name = getTemplateName(pageContext, sourceNode);
 		if (name == null) {
 			return null;
