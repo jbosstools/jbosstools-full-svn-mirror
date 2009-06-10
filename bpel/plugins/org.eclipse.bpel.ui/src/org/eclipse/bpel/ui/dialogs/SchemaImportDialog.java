@@ -525,8 +525,14 @@ public class SchemaImportDialog extends SelectionStatusDialog {
 		fWSILTreeViewer.setInput ( 	wsilDoc ) ;
 		if (wsilDoc == null || wsilDoc instanceof Throwable  ) {
 			fBtnWSIL.setEnabled(false);
-			// that's always available.
-			KIND = BID_BROWSE_RESOURCE;
+			
+			
+			// delete KIND = BID_BROWSE_RESOURCE; by Grid.Qian
+			// because if not, the dialog always display the resource Control
+			// regardless last time if user choose the resource button
+			
+			/*// that's always available.
+			KIND = BID_BROWSE_RESOURCE;*/
 		}
 		
 		
