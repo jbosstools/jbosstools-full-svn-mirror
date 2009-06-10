@@ -652,14 +652,19 @@ public class SchemaImportDialog extends SelectionStatusDialog {
 			@Override
 			protected IStatus run (IProgressMonitor monitor) {
 				monitor.beginTask(msg, 1);				
-				
-				fInput = attemptLoad(fRunnableLoadURI);
-				monitor.worked(1);	
-				if (fBrowseButton != null && fBrowseButton.isDisposed() == false ) {
+				// move this to asyncExec() as below because the method will
+				// modify UI element, if not, will have a invalid access error.
+
+				/* fInput = attemptLoad(fRunnableLoadURI); */
+
+				monitor.worked(1);
+				if (fBrowseButton != null
+						&& fBrowseButton.isDisposed() == false) {
 					fBrowseButton.getDisplay().asyncExec(new Runnable() {
 						public void run() {
-							loadDone();						
-						}						
+							fInput = attemptLoad(fRunnableLoadURI);
+							loadDone();
+						}
 					});
 				}
 				
