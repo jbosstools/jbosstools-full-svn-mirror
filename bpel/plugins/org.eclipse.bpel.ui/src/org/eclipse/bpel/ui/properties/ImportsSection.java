@@ -10,10 +10,13 @@
  *******************************************************************************/
 package org.eclipse.bpel.ui.properties;
 
+import java.util.List;
+
 import org.eclipse.bpel.common.ui.details.IDetailsAreaConstants;
 import org.eclipse.bpel.common.ui.flatui.FlatFormAttachment;
 import org.eclipse.bpel.common.ui.flatui.FlatFormData;
 import org.eclipse.bpel.model.Import;
+import org.eclipse.bpel.model.Process;
 import org.eclipse.bpel.ui.IBPELUIConstants;
 import org.eclipse.bpel.ui.IHelpContextIds;
 import org.eclipse.bpel.ui.Messages;
@@ -66,24 +69,42 @@ public class ImportsSection extends BPELPropertySection {
 
 	protected TableCursor tableCursor = null;
 
-	
 	/**
-	 * Make this section use all the vertical space it can get. 
+	 * Make this section use all the vertical space it can get.
 	 * 
 	 */
 	@Override
-	public boolean shouldUseExtraSpace() { 
+	public boolean shouldUseExtraSpace() {
 		return true;
 	}
-	
-	
-	
+
+	/**
+	 * Override the super-class because the input is Process not Import
+	 * If use super-class's directly, when change the import attributes
+	 * the properties section do not change.
+	 */
 	@Override
-	protected MultiObjectAdapter[] createAdapters() {		
+	protected void addAllAdapters() {
+		super.addAllAdapters();
+		if (fAdapters.length > 0) {
+			if (getModel() != null) {
+				EObject obj = getModel();
+				if (obj instanceof Process) {
+					List<Import> list = ((Process) obj).getImports();
+					for (int i = 0; i < list.size(); i++) {
+						fAdapters[0].addToObject((Import) list.get(i));
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	protected MultiObjectAdapter[] createAdapters() {
 		return new MultiObjectAdapter[] { new MultiObjectAdapter() {
 			@Override
 			public void notify(Notification n) {
-				importViewer.setInput(getInput());				
+				importViewer.setInput(getInput());
 			}
 		}, };
 	}
@@ -92,23 +113,24 @@ public class ImportsSection extends BPELPropertySection {
 
 		FlatFormData data;
 
-		Button browseWSDL = fWidgetFactory.createButton(parent, Messages.ImportsSection_0,
-				SWT.PUSH);
-		Button browseXSD = fWidgetFactory.createButton(parent, Messages.ImportsSection_1,
-				SWT.PUSH);
-		final Button removeImport = fWidgetFactory.createButton(parent, Messages.ImportsSection_2, SWT.PUSH);
+		Button browseWSDL = fWidgetFactory.createButton(parent,
+				Messages.ImportsSection_0, SWT.PUSH);
+		Button browseXSD = fWidgetFactory.createButton(parent,
+				Messages.ImportsSection_1, SWT.PUSH);
+		final Button removeImport = fWidgetFactory.createButton(parent,
+				Messages.ImportsSection_2, SWT.PUSH);
 		removeImport.setEnabled(false);
-		
-		removeImport.addSelectionListener( new SelectionListener () {
 
-			public void widgetDefaultSelected(SelectionEvent e) {				
+		removeImport.addSelectionListener(new SelectionListener() {
+
+			public void widgetDefaultSelected(SelectionEvent e) {
 			}
 
 			public void widgetSelected(SelectionEvent e) {
-				removeImport();				
-			}			
+				removeImport();
+			}
 		});
-		
+
 		browseWSDL.addSelectionListener(new SelectionListener() {
 
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -148,7 +170,8 @@ public class ImportsSection extends BPELPropertySection {
 		data.top = new FlatFormAttachment(0, IDetailsAreaConstants.VSPACE);
 		browseWSDL.setLayoutData(data);
 
-		importLabel = fWidgetFactory.createLabel(parent, Messages.ImportDetails_Imports_20);
+		importLabel = fWidgetFactory.createLabel(parent,
+				Messages.ImportDetails_Imports_20);
 		data = new FlatFormData();
 		data.left = new FlatFormAttachment(0, IDetailsAreaConstants.HSPACE);
 		data.top = new FlatFormAttachment(browseWSDL,
@@ -156,8 +179,8 @@ public class ImportsSection extends BPELPropertySection {
 		importLabel.setLayoutData(data);
 
 		// create table
-		importTable = fWidgetFactory.createTable(parent, SWT.FULL_SELECTION | SWT.V_SCROLL
-				| SWT.READ_ONLY);
+		importTable = fWidgetFactory.createTable(parent, SWT.FULL_SELECTION
+				| SWT.V_SCROLL | SWT.READ_ONLY);
 
 		data = new FlatFormData();
 		data.left = new FlatFormAttachment(0, IDetailsAreaConstants.HSPACE);
@@ -171,7 +194,7 @@ public class ImportsSection extends BPELPropertySection {
 		// set up table
 		importTable.setLinesVisible(true);
 		importTable.setHeaderVisible(true);
-		
+
 		tableProvider = new ColumnTableProvider();
 		tableProvider.add(new LocationColumn());
 		tableProvider.add(new NamespaceColumn());
@@ -185,12 +208,14 @@ public class ImportsSection extends BPELPropertySection {
 		importViewer.setColumnProperties(tableProvider.getColumnProperties());
 		importViewer.setCellEditors(tableProvider
 				.createCellEditors(importTable));
-		
-		importViewer.addPostSelectionChangedListener( new ISelectionChangedListener () {
-			public void selectionChanged(SelectionChangedEvent event) {
-				removeImport.setEnabled( ! event.getSelection().isEmpty() );				
-			}		
-		});
+
+		importViewer
+				.addPostSelectionChangedListener(new ISelectionChangedListener() {
+					public void selectionChanged(SelectionChangedEvent event) {
+						removeImport
+								.setEnabled(!event.getSelection().isEmpty());
+					}
+				});
 
 		tableCursor = BPELUtil.createTableCursor(importTable, importViewer);
 	}
@@ -205,7 +230,7 @@ public class ImportsSection extends BPELPropertySection {
 		@Override
 		public String getProperty() {
 			return "Namespace"; //$NON-NLS-1$
-		} 
+		}
 
 		@Override
 		public int getInitialWeight() {
@@ -263,18 +288,15 @@ public class ImportsSection extends BPELPropertySection {
 			return (s == null) ? "" : s; //$NON-NLS-1$			
 		}
 	}
-	
-	
 
 	@Override
-	protected void basicSetInput(EObject newInput) {		
+	protected void basicSetInput(EObject newInput) {
 		super.basicSetInput(newInput);
-		
+
 		if (getInput() != null) {
 			importViewer.setInput(getInput());
 		}
 	}
-	
 
 	@Override
 	protected void createClient(Composite parent) {
@@ -299,30 +321,29 @@ public class ImportsSection extends BPELPropertySection {
 		}
 	}
 
-	void removeImport () {
-		
+	void removeImport() {
+
 		ISelection selection = importViewer.getSelection();
 		if (selection.isEmpty()) {
-			return ;
-		}
-		IStructuredSelection ssel = null;
-		if ( (selection instanceof IStructuredSelection) == false) {
 			return;
 		}
-		
-		ssel = (IStructuredSelection) selection;		
+		IStructuredSelection ssel = null;
+		if ((selection instanceof IStructuredSelection) == false) {
+			return;
+		}
+
+		ssel = (IStructuredSelection) selection;
 		Object obj = ssel.getFirstElement();
-		
-		RemoveImportCommand cmd = new RemoveImportCommand ( 
-				ModelHelper.getProcess( getInput() ), 
-				obj,
+
+		RemoveImportCommand cmd = new RemoveImportCommand(ModelHelper
+				.getProcess(getInput()), obj,
 				IBPELUIConstants.CMD_REMOVE_IMPORT);
-		
+
 		if (cmd.canDoExecute()) {
-			getCommandFramework().execute( cmd );
+			getCommandFramework().execute(cmd);
 		}
 	}
-	
+
 	void browseAndImportWSDL() {
 
 		SchemaImportDialog dialog = new SchemaImportDialog(importLabel
@@ -363,24 +384,19 @@ public class ImportsSection extends BPELPropertySection {
 		}
 	}
 
-	
-	
 	@Override
 	public void gotoMarker(IMarker marker) {
 		// TODO Auto-generated method stub
 		super.gotoMarker(marker);
 	}
-	
+
 	/**
 	 * 
 	 */
-	
 
 	@Override
 	public boolean isValidMarker(IMarker marker) {
 		return super.isValidMarker(marker);
 	}
 
-	
-	
 }
