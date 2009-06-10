@@ -1162,7 +1162,7 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 
 	@Override
 	public boolean isDirty() {
-		return fTextEditor.isDirty();
+		return fTextEditor.isDirty() || fDesignViewer.isDirty();
 	}
 
 	@Override
