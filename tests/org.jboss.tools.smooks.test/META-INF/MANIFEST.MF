@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name.0
 Bundle-SymbolicName: org.jboss.tools.smooks.test
 Bundle-Version: 1.0.0
-Bundle-Activator: org.jboss.tools.smooks.test.Activator
 Require-Bundle: org.junit,
  org.eclipse.ui,
  org.eclipse.core.runtime,
