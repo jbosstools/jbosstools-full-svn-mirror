@@ -39,6 +39,13 @@ import org.w3c.dom.NodeList;
 
 
 public class VisualDomUtil {
+	
+	public static String JSF_CORE_URI = "http://java.sun.com/jsf/core"; //$NON-NLS-1$
+    public static String JSF_HTML_URI = "http://java.sun.com/jsf/html"; //$NON-NLS-1$
+    public static String RICH_FACES_URI = "http://richfaces.org/rich"; //$NON-NLS-1$
+    public static String A4J_URI = "http://richfaces.org/a4j"; //$NON-NLS-1$
+    public static String FACELETS_URI = "http://java.sun.com/jsf/facelets"; //$NON-NLS-1$
+
 	private static final String ACCESSIBILITY_SERVICE_CONTRACT_ID = "@mozilla.org/accessibilityService;1";
 	private static Reference<nsIAccessibilityService> accessibilityServiceCache = null;
 

@@ -38,6 +38,7 @@ import org.eclipse.wst.xml.core.internal.document.NodeImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.dnd.VpeDnD;
@@ -66,6 +67,7 @@ import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
+import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.jboss.tools.vpe.resref.core.CSSReferenceList;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerVpeUtils;
@@ -213,8 +215,13 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		refreshExternalLinks();
 		
 //		if (isFacelet()) {
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4398
+		 * Additional check for facelet's taglibs should be added
+		 * to distinguish it from custom tags and pages without facelets support.
+		 */
 		Element root = FaceletUtil.findComponentElement(sourceDocument.getDocumentElement());
-		if (root != null) {
+		if ((root != null) && (isFacelet(root))){
 				addNode(root, null, getContentArea());
 		} else {
 			addChildren(null, sourceDocument, getContentArea());
@@ -415,7 +422,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 */
 	protected nsIDOMNode createNode(Node sourceNode,
 			nsIDOMNode visualOldContainer) {
-
+			
 		boolean registerFlag = isCurrentMainDocument();
 
 		//it's check for initialization visualController,
@@ -2222,14 +2229,22 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return visualEditor.getDomDocument();
 	}
 
-//	/**
-//	 * Check this file is facelet
-//	 * 
-//	 * @return this if file is facelet, otherwize false
-//	 */
-//	private boolean isFacelet() {
-//		boolean isFacelet = false;
-//
+	/**
+	 * Check this file is facelet
+	 * 
+	 * @return this if file is facelet, otherwize false
+	 */
+	private boolean isFacelet(Node sourceNode) {
+		boolean isFacelet = false;
+		String sourcePrefix = sourceNode.getPrefix();
+		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode, pageContext);
+		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix, taglibs);
+		if (null != sourceNodeTaglib) {
+			String sourceNodeUri = sourceNodeTaglib.getUri();
+			if (VisualDomUtil.FACELETS_URI.equalsIgnoreCase(sourceNodeUri)) {
+				isFacelet = true;
+			}
+		}
 //		IEditorInput iEditorInput = pageContext.getEditPart().getEditorInput();
 //		if (iEditorInput instanceof IFileEditorInput) {
 //			IFileEditorInput iFileEditorInput = (IFileEditorInput) iEditorInput;
@@ -2252,9 +2267,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 //				}
 //			}
 //		}
-//
-//		return isFacelet;
-//	}
+
+		return isFacelet;
+	}
 
 	/**
 	 * @return the xulRunnerEditor
