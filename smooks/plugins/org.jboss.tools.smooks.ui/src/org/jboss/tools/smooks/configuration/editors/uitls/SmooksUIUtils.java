@@ -768,6 +768,20 @@ public class SmooksUIUtils {
 		return fieldEditPart;
 	}
 
+	public static Class<?> loadClass(String className, IResource resource) throws JavaModelException,
+			ClassNotFoundException {
+		if (resource == null)
+			return null;
+
+		IProject project = resource.getProject();
+		if (project != null) {
+			ProjectClassLoader loader = new ProjectClassLoader(JavaCore.create(project));
+			return loader.loadClass(className);
+		}
+
+		return null;
+	}
+
 	public static SmooksGraphicsExtType loadSmooksGraphicsExt(IFile file) throws IOException {
 		Resource resource = new SmooksGraphicsExtResourceFactoryImpl().createResource(URI.createPlatformResourceURI(
 				file.getFullPath().toPortableString(), false));
@@ -812,7 +826,6 @@ public class SmooksUIUtils {
 	public static AttributeFieldEditPart createJavaTypeSearchFieldEditor(Composite parent, FormToolkit toolkit,
 			final IItemPropertyDescriptor propertyDescriptor, final EObject model) {
 		if (model instanceof EObject) {
-			IContentProposalProvider provider;
 			AttributeFieldEditPart editpart = new AttributeFieldEditPart();
 			final Resource resource = ((EObject) model).eResource();
 			URI uri = resource.getURI();

@@ -69,6 +69,8 @@ public class SelectoreSelectionDialog extends Dialog {
 	private Button fullPathButton;
 	private SelectorAttributes selectorAttributes = null;
 	private IEditorPart editorPart = null;
+	
+	private FormToolkit toolkit;
 
 	public SelectoreSelectionDialog(IShellProvider parentShell) {
 		super(parentShell);
@@ -105,7 +107,7 @@ public class SelectoreSelectionDialog extends Dialog {
 		Label viewerLabel = new Label(composite, SWT.NONE);
 		viewerLabel.setText("Input Message:");
 
-		FormToolkit toolkit = new FormToolkit(getShell().getDisplay());
+		toolkit = new FormToolkit(getShell().getDisplay());
 
 		Hyperlink link = toolkit.createHyperlink(composite, "Click to add Input Data", SWT.NONE);// new
 		// Hyperlink(composite,SWT.NONE);
@@ -319,4 +321,17 @@ public class SelectoreSelectionDialog extends Dialog {
 	public SelectorAttributes getSelectorAttributes() {
 		return selectorAttributes;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.Dialog#close()
+	 */
+	@Override
+	public boolean close() {
+		if(toolkit != null){
+			toolkit.dispose();
+		}
+		return super.close();
+	}
+	
+	
 }
