@@ -26,7 +26,7 @@
 				them into the eclipse Java project. </para>
 		</tip>
 	</section>
-	<section>
+	<section id="config_file_wizzard">
 		<title>Smooks Configuration File Wizard</title>
 		<para>Select the Smooks Java-to-Java example project that you created and right-click,
 			select the menu <emphasis><property>New > Other</property>,</emphasis> then find

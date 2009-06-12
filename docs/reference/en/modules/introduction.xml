@@ -10,6 +10,56 @@
 	</chapterinfo>
 	<title>Introduction</title>
 	<para>This chapter give you a short introduction to Smooks, Smooks tools and its installation</para>
+	<para>First, have a look at the key features of Smooks tools:</para>
+	<section>
+		<title>Key Features of Smooks Tools</title>
+		<para>Here, we provide you with a key functionality which is integrated in Smooks tools.</para>
+		<table>
+			
+			<title>Key Functionality for Smooks Tools</title>
+			<tgroup cols="3">
+				
+				<colspec colnum="1" align="left" colwidth="2*"/>
+				<colspec colnum="2" colwidth="4*"/>
+				<colspec colnum="3" align="left" colwidth="2*"/>
+				
+				<thead>
+					<row>
+						<entry>Feature</entry>
+						<entry>Benefit</entry>
+						<entry>Chapter</entry>
+					</row>
+				</thead>
+				
+				<tbody>
+					
+					<row>
+						<entry><para>Smooks Configuration File Wizard</para></entry>
+						<entry><para>Smooks tools allows to create/edit the Smooks configuration file for Java2Java data transformation.</para></entry>
+						<entry>
+							<link linkend="config_file_wizzard">Smooks Configuration File Wizard</link>
+						</entry>
+					</row>
+					
+					<row>
+						<entry><para>Smooks Editor</para></entry>
+						<entry><para>Smooks Editor helps configure the created Smooks configuration file.</para></entry>
+						<entry>
+							<link linkend="quickstart_formeditor">Smooks Editor</link>
+						</entry>
+					</row>
+					
+				</tbody>
+				
+			</tgroup>
+		</table>
+		
+		
+	
+	</section>
+	
+	
+	
 	<section>
 		<title>What is Smooks?</title>
 
