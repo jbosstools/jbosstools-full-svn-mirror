@@ -16,7 +16,7 @@
 	<section>
 		<title>Download Smooks Java-to-Java Example</title>
 		<para> Visit <ulink
-				url="http://www.smooks.org/documentation/documentation-smooks-1-1-x/examples/example---java-to-java"
+			url="http://svn.codehaus.org/milyn/tags/Smooks_V1.1.2/smooks-examples/java-to-java/"
 				>here</ulink> to download the "java-to-java" example project. </para>
 		<tip>
 			<title>Tip:</title>
@@ -45,7 +45,7 @@
 		<para>The first wizard page is a file path creation page. Select the <emphasis>
 				<property>src</property>
 			</emphasis> folder to be the files container, and input the name
-					<emphasis><property>newConfig.smooks</property>.</emphasis> Click
+					<emphasis><property>smooks-config.xml</property>.</emphasis> Click
 					<emphasis><property>Next</property>.</emphasis></para>
 		<figure>
 			<title>Choosing the configuration file container and the file name</title>
@@ -330,10 +330,38 @@
 				XML-to-Java </para>
 		</note>
 		<para> Do the same operation with the 
-				other properties in this and other classes.</para>
+		other properties in this and other classes.</para>
+		<para>It's also  necessary to bind  <emphasis>
+			<property>orderItems</property></emphasis> property of the <emphasis>
+				<property>Order</property></emphasis> to <emphasis>
+					<property>lineItems</property></emphasis> property of <emphasis>
+						<property>LineOrder</property></emphasis>.The difference from the previous steps is that the  <emphasis>
+							<property>orderItems</property></emphasis> is presented by the list of <emphasis>
+								<property>Order</property></emphasis> and <emphasis>
+									<property>lineItems</property></emphasis> is the massive of <emphasis>
+										<property>LineItem</property></emphasis> .To do the binding,you should use <emphasis>
+										<property>Wiring Item</property></emphasis>.First you should create a new Binding item.   This is a configuration that allows you to construct an object graph .Select <emphasis>
+												<property>example.trgmodel.LineItem[]</property></emphasis> in the Class field and orderItems in the Name field,in bean Id write lineItems.
+			Your Smooks Configuration Editor should look like this: 
+		</para>
+		<figure>
+			<title> Creating Wiring Item</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start13a.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para> Then you should right click <emphasis>
+			<property>lineOrder</property></emphasis> binding item<emphasis>
+				<property>>Add Smooks Resource>Wiring</property></emphasis>.Select <emphasis>
+					<property>lineItem</property></emphasis> in Bean id Ref.
+		</para>
+		<para>The final step is to add new Wiring item to lineOrder Binding.In the Bean id Ref select lineItems and in Property select <emphasis>
+			<property>lineItems</property></emphasis>.</para>
 <!--
 		<para>Next, you are going to bind the properties of the <property>OrderItem</property> to
-			the properties of the <property>LineItem</property>.</para>
+			the properties of the <property>LineItem</property>.</paa>
 		<para>Select the <emphasis>
 				<property>&quot;price&quot;</property>
 			</emphasis> and drag it onto the <emphasis>
