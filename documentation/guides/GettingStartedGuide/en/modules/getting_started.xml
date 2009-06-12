@@ -27,12 +27,12 @@
 
 <section>
  <title>Key Features of JBoss Developer Studio</title>
- <para>For a start, we propose you to look through the table of main features of JBoss Developer Studio</para>
+ <para>For a start, we propose you to look through the table of main features of JBoss Developer Studio:</para>
 
  <table>
   
   <title>Key Functionality of JBoss Developer Studio</title>
-  <tgroup cols="3">
+  <tgroup cols="2">
    
    <colspec colnum="1" align="left" colwidth="2*"/>
    <colspec colnum="2" colwidth="4*"/>
