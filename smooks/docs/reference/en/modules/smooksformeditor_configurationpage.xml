@@ -19,7 +19,7 @@
 			</imageobject>
 		</mediaobject>
 	</figure>
-	<para>This page consists of 3 setions:Message Filtering Resources,Input Data and Section devoted to the configurations of a selected in a Message Filtering Resources section Item.</para>
+	<para>This page consists of 3 setions: Message Filtering Resources, Input Data and Section devoted to the configurations of a selected in a Message Filtering Resources section Item.</para>
 	<para> You can bind classes <link linkend="quickstart_mapping">using Bindings item
 			</link> on the Design page of the <property>Smooks Editor</property>. </para>
 	<para> The configuration editor also edits the <link linkend="configurationpage_parsetype">Smooks parse
@@ -29,7 +29,7 @@
 	<section id="configurationpage_parsetype">
 
 		<title>Smooks Parse Type</title>
-		<para>If your config file doesn't contain Global Parametres item yet,you should add it by right click Resource List>Add Smooks Resource>Global Parametres.After this step you should add Param to just created Global Parametres. </para>
+		<para>If your config file doesn't contain Global Parametres item yet, you should add it by right click Resource List>Add Smooks Resource>Global Parametres.After this step you should add Param to just created Global Parametres. </para>
 		<figure>
 			<title>Smooks Parse Types</title>
 			<mediaobject>
@@ -40,7 +40,7 @@
 		</figure>
 		<para>Then left click  <emphasis>
 				<property>Param</property>
-		</emphasis>and in the Param section,you will see  a set of text fields:Name,Type and Text.Name value is required.To set a parse type you should write SAX/DOM to the 
+		</emphasis>and in the Param section, you will see  a set of text fields: Name,Type and Text.Name value is required. To set a parse type you should write SAX/DOM to the 
 			<emphasis>
 			<property>Text</property></emphasis> field.</para>
 
