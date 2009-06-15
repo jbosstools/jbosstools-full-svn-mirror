@@ -100,7 +100,11 @@ public class CorrSetImplSection extends BPELPropertySection  {
 			// Update the UnusedPropertyFilter with the proper contents.
 			propertyFilter.setCandidates(((CorrelationSet)getInput()).getProperties(),
 				Collections.singletonList(element));
-			return true;
+			
+			// change true to false by Grid.Qian
+			// because the cell editor is null, if the column can be modified,
+			// when the system will active the cell editor, will get a null exception
+			return false;
 		}
 		public Object getValue(Object element, String property) {
 			return element;
@@ -148,8 +152,8 @@ public class CorrSetImplSection extends BPELPropertySection  {
 	@Override
 	protected void addAllAdapters() {
 		super.addAllAdapters();
-		List corrList = ((CorrelationSet)getInput()).getProperties();
-		for (Iterator it = corrList.iterator(); it.hasNext(); ) {
+		List<Property> corrList = ((CorrelationSet)getInput()).getProperties();
+		for (Iterator<Property> it = corrList.iterator(); it.hasNext(); ) {
 			Property property = (Property)it.next();
 			fAdapters[1].addToObject(property);
 		}
