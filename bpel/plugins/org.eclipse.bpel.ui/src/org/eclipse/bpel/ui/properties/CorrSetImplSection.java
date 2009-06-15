@@ -100,7 +100,6 @@ public class CorrSetImplSection extends BPELPropertySection  {
 			// Update the UnusedPropertyFilter with the proper contents.
 			propertyFilter.setCandidates(((CorrelationSet)getInput()).getProperties(),
 				Collections.singletonList(element));
-			
 			return true;
 		}
 		public Object getValue(Object element, String property) {
