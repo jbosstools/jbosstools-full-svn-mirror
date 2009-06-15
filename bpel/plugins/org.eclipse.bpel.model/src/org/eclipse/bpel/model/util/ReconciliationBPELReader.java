@@ -1049,12 +1049,15 @@ public class ReconciliationBPELReader extends BPELReader implements
 		Element messageExchangesElements = ReconciliationHelper
 				.getBPELChildElementByLocalName(processElement,
 						"messageExchanges");
+		
 		if (messageExchangesElements != null
 				&& (process.getMessageExchanges() == null || process
-						.getMessageExchanges().getChildren() == null)) {
+						.getMessageExchanges().getChildren() == null
+						)) {
 			process.setMessageExchanges(xml2MessageExchanges(process
 					.getMessageExchanges(), messageExchangesElements));
-		} else {
+		} else if(messageExchangesElements == null){
+			// add if(messageExchangesElements == null) by Grid.Qian
 			process.setMessageExchanges(null);
 		}
 
