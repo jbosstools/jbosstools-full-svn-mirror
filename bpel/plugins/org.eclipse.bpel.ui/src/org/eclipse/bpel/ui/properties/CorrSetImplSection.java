@@ -101,10 +101,7 @@ public class CorrSetImplSection extends BPELPropertySection  {
 			propertyFilter.setCandidates(((CorrelationSet)getInput()).getProperties(),
 				Collections.singletonList(element));
 			
-			// change true to false by Grid.Qian
-			// because the cell editor is null, if the column can be modified,
-			// when the system will active the cell editor, will get a null exception
-			return false;
+			return true;
 		}
 		public Object getValue(Object element, String property) {
 			return element;
