@@ -636,7 +636,13 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 
 	@Override
 	protected void handleEmptyList() {
-		fTreeViewer.setInput ( null );		
+		fTreeViewer.setInput ( null );	
+		
+		// added by Grid.Qian
+		// the tree view's input is null, but the selection maybe not 0
+		// for example the input is a list and we select a element, then
+		// set the input = null, this time, the selection is not 0
+		fFilteredList.setSelection(new int[0]);
 		super.handleEmptyList();
 	}
 
