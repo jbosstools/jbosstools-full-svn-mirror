@@ -31,7 +31,6 @@ public class VpeUIMessages extends NLS {
 	public static String PAGE_DESIGN_OPTIONS;
 	public static String HIDE_SELECTION_BAR;
 	public static String SHOW_SELECTION_BAR;
-	public static String MOZILLA_LOADING_ERROR_LOG_ENTRY;
 	public static String MOZILLA_LOADING_ERROR;
 	public static String MOZILLA_LOADING_ERROR_LINK_TEXT;
 	public static String MOZILLA_LOADING_ERROR_LINK;

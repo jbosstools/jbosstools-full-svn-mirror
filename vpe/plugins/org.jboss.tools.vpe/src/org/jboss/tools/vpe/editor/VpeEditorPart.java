@@ -83,7 +83,6 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.mozilla.EditorLoadWindowListener;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.mozilla.MozillaPreview;
-import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.xpl.CustomSashForm;
 import org.jboss.tools.vpe.editor.xpl.EditorSettings;
 import org.jboss.tools.vpe.editor.xpl.SashSetting;
@@ -860,21 +859,19 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		} catch (PartInitException e) {
 			VpePlugin.reportProblem(e);
 		}
-		if (visualEditor != null) {
-			visualEditor.setEditorLoadWindowListener(new EditorLoadWindowListener() {
-						public void load() {
-							visualEditor.setEditorLoadWindowListener(null);
-							visualEditor.setController(new VpeController(
-									VpeEditorPart.this));
-							selectionBar.setVpeController(visualEditor.getController());
-							visualEditor.getController().setSelectionBarController(selectionBar);
-							createShowSelectionBarMenuItem();
-							visualEditor.getController().init(sourceEditor, visualEditor);
-						}
+		visualEditor.setEditorLoadWindowListener(new EditorLoadWindowListener() {
+			public void load() {
+				visualEditor.setEditorLoadWindowListener(null);
+				visualEditor.setController(new VpeController(
+						VpeEditorPart.this));
+				selectionBar.setVpeController(visualEditor.getController());
+				visualEditor.getController().setSelectionBarController(selectionBar);
+				createShowSelectionBarMenuItem();
+				visualEditor.getController().init(sourceEditor, visualEditor);
+			}
 
-					});
-			visualEditor.createPartControl(visualContent);
-		}
+		});
+		visualEditor.createPartControl(visualContent);
 	}
 
 	/**

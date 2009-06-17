@@ -24,7 +24,6 @@ import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
-import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 
 /**
@@ -79,7 +78,7 @@ public class MozillaPreview extends MozillaEditor {
 			});
 			setInitialContent();
 			getXulRunnerEditor().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		} catch (XulRunnerException e) {
+		} catch (Throwable e) {
 			showXulRunnerException(parent, e);
 		}		
 	}

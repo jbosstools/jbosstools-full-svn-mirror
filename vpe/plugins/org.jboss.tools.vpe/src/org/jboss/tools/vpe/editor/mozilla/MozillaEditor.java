@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,8 @@ import java.util.Map;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.ProgressEvent;
@@ -44,7 +47,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -59,6 +61,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.editors.text.ILocationProvider;
+import org.eclipse.ui.internal.part.StatusPart;
 import org.eclipse.ui.part.EditorPart;
 import org.jboss.tools.common.model.XModelException;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
@@ -78,7 +81,6 @@ import org.jboss.tools.vpe.editor.xpl.CustomSashForm;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.VpeResourcesDialog;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
-import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -159,6 +161,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
+		super.setSite(site);
 		super.setInput(input);
 	}
 
@@ -457,10 +460,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 //			}
 			xulRunnerEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 			
-		}
-		catch (XulRunnerException e) {
-			layout.verticalSpacing = 10;
-			showXulRunnerException(cmpEd, e);
+		} catch (Throwable t) {
+			showXulRunnerException(cmpEd, t);
 		}
 		
 		/*
@@ -518,22 +519,38 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 
 	/**
-	 * Logs given {@code exception} and shows error message in 
+	 * Logs given {@code throwable} and shows error message in 
 	 * the {@code parent} composite.
 	 */
 	protected void showXulRunnerException(Composite parent,
-			XulRunnerException exception) {
-		VpePlugin.getPluginLog().logError(
-				VpeUIMessages.MOZILLA_LOADING_ERROR_LOG_ENTRY, exception);
+			Throwable throwable) {
+		String errorMessage = MessageFormat.format(
+				VpeUIMessages.MOZILLA_LOADING_ERROR, throwable.getMessage());
 
-		Label title = new Label(parent, SWT.WRAP);
-		title.setText(VpeUIMessages.MOZILLA_LOADING_ERROR);
-		title.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		VpePlugin.getPluginLog().logError(errorMessage, throwable);
+
+		parent.setLayout(new GridLayout());
+		Composite statusComposite = new Composite(parent, SWT.NONE);
+		Color bgColor= parent.getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND);
+		Color fgColor= parent.getDisplay().getSystemColor(SWT.COLOR_LIST_FOREGROUND);
+		parent.setBackground(bgColor);
+		parent.setForeground(fgColor);
+		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gridData.widthHint = 0;
+		gridData.heightHint = 0;
+		statusComposite.setLayoutData(gridData);
+
+		IStatus displayStatus = new Status(IStatus.ERROR,
+				VpePlugin.PLUGIN_ID, errorMessage, throwable);
+		new StatusPart(statusComposite, displayStatus);
 
 		final Link link = new Link(parent, SWT.WRAP);
+		link.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END));
+		link.setBackground(bgColor);
 		link.setText(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK_TEXT);
 		link.setToolTipText(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK);
 		link.setForeground(link.getDisplay().getSystemColor(SWT.COLOR_BLUE));
+
 		link.addMouseListener(new MouseListener() {
 			public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
 		        BusyIndicator.showWhile(link.getDisplay(), new Runnable() {
@@ -559,9 +576,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			public void mouseUp(MouseEvent e) {
 			}
 		});
-		link.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		Label fill = new Label(parent, SWT.WRAP);		
-		fill.setLayoutData(new GridData(GridData.FILL_BOTH));
 	}
 
 	private ToolItem createToolItem(ToolBar parent, int type, String image, String disabledImage,
