@@ -68,11 +68,13 @@ public class ModelQuery extends ModelQueryImpl {
 		case SUPPORT_QUERY_LANGUAGE :		
 			return 
 			IConstants.XMLNS_XPATH_QUERY_LANGUAGE.equals ( value ) ||
+			IConstants.XMLNS_XPATH_QUERY_LANGUAGE_XPATH2.equals ( value ) ||
 			IConstants.XMLNS_XPATH_QUERY_LANGUAGE_2.equals( value );
 		
 		case SUPPORT_EXPRESSION_LANGUAGE :
 			return 
 			IConstants.XMLNS_XPATH_EXPRESSION_LANGUAGE.equals ( value ) ||
+			IConstants.XMLNS_XPATH_EXPRESSION_LANGUAGE_XPATH2.equals( value ) ||
 			IConstants.XMLNS_XPATH_EXPRESSION_LANGUAGE_2.equals( value );			
 
 		case SUPPORT_IMPORT_TYPE :

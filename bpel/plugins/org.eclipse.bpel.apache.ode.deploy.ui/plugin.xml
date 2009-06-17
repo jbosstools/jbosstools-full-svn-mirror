@@ -7,7 +7,7 @@
       <editor
             class="org.eclipse.bpel.apache.ode.deploy.ui.editors.ODEDeployMultiPageEditor"
             contributorClass="org.eclipse.bpel.apache.ode.deploy.ui.editors.ODEDeployMultiPageEditorContributor"
-            filenames="deploy.xml"
+            filenames="bpel-deploy.xml,deploy.xml"
             icon="icons/obj16/ode.gif"
             id="org.eclipse.bpel.apache.ode.deploy.ui.editors.ODEDeployMultiPageEditor"
             name="ODE Deployment Descriptor Editor">

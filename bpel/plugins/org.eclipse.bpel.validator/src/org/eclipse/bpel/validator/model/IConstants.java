@@ -59,12 +59,14 @@ public interface IConstants {
 	
 	/** The default expression language */
 	public static final String XMLNS_XPATH_EXPRESSION_LANGUAGE  = "urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"; //$NON-NLS-1$
+	public static final String XMLNS_XPATH_EXPRESSION_LANGUAGE_XPATH2  = "urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"; //$NON-NLS-1$
 
 	/** A variant from previous spec iterations */
 	public static final String XMLNS_XPATH_EXPRESSION_LANGUAGE_2 = "http://www.w3.org/TR/1999/REC-xpath-19991116"; //$NON-NLS-1$
 	
 	/** The default query language */
 	public static final String XMLNS_XPATH_QUERY_LANGUAGE = "urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0";
+	public static final String XMLNS_XPATH_QUERY_LANGUAGE_XPATH2 = "urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0";
 
 	public static final String XMLNS_XPATH_QUERY_LANGUAGE_2 = "http://www.w3.org/TR/1999/REC-xpath-19991116";
 	
