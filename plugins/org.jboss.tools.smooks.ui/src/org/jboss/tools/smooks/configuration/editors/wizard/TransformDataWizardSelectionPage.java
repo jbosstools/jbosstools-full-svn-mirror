@@ -35,6 +35,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 
 /**
  * @author Dart Peng
@@ -60,13 +61,21 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 		GridLayout gridLayout = new GridLayout();
 		main.setLayout(gridLayout);
 
-		viewer = new TreeViewer(main, SWT.NONE);
+		Label label = new Label(main, SWT.NONE);
+		label.setText("Input Data Type");
+
+		viewer = new TreeViewer(main, SWT.BORDER);
 		viewer.setContentProvider(new WizardNodeContentProvider());
 		viewer.setLabelProvider(new WizardNodeLabelProvider());
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		viewer.getTree().setLayoutData(gd);
 		createAllExtentionWizard();
-
+		
+		Composite separatorComposite = new Composite(main,SWT.NONE);
+		gd = new GridData();
+		gd.heightHint = 12;
+		separatorComposite.setLayoutData(gd);
+		
 		desLabel = new Label(main, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		desLabel.setLayoutData(gd);
@@ -150,8 +159,8 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 
 	public TransformDataWizardSelectionPage(String pageName) {
 		super(pageName);
-		setDescription("Selection data type"); //$NON-NLS-1$
-		setTitle("Selection data type"); //$NON-NLS-1$
+		setDescription("Choose \"Input Data Type\" to open wizard dialog to select the input data."); //$NON-NLS-1$
+		setTitle("Input Data Selection"); //$NON-NLS-1$
 
 	}
 
@@ -161,16 +170,17 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 
 	private class WizardNodeLabelProvider extends LabelProvider {
 
-		private HashMap<Object,Object> map = new HashMap<Object,Object>();
+		private HashMap<Object, Object> map = new HashMap<Object, Object>();
 
 		@Override
 		public Image getImage(Object element) {
 			if (element instanceof TransformSelectWizardNode) {
 				String path = ((TransformSelectWizardNode) element).getIconPath();
 				if (path != null) {
-					Image icon = (Image) map.get(path);
+					Image icon = SmooksConfigurationActivator.getDefault().getImageRegistry().get(path);
 					if (icon == null) {
-
+					}else{
+						return icon;
 					}
 				}
 			}
@@ -187,6 +197,12 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 
 		@Override
 		public void dispose() {
+			if(!map.values().isEmpty()){
+				for (Iterator<?> iterator = map.values().iterator(); iterator.hasNext();) {
+					Image img = (Image) iterator.next();
+					img.dispose();
+				}
+			}
 			super.dispose();
 		}
 	}

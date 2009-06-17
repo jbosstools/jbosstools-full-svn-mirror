@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.uitls;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -55,7 +56,6 @@ import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalListener;
 import org.eclipse.jface.fieldassist.IContentProposalListener2;
-import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -401,6 +401,9 @@ public class SmooksUIUtils {
 	}
 
 	public static String parseFilePath(String path) throws InvocationTargetException {
+		if(new File(path).exists()){
+			return path;
+		}
 		int index = path.indexOf(FILE_PRIX);
 		if (index != -1) {
 			path = path.substring(index + FILE_PRIX.length(), path.length());

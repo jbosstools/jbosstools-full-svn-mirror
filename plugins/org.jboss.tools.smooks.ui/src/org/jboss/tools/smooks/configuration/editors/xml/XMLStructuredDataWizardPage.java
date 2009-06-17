@@ -9,7 +9,7 @@ package org.jboss.tools.smooks.configuration.editors.xml;
 public class XMLStructuredDataWizardPage extends AbstractFileSelectionWizardPage {
 
 	public XMLStructuredDataWizardPage(String pageName) {
-		super(pageName);
+		super(pageName,new String[]{"xml","xsd","wsdl","xsl"});
 		setPageText();
 	}
 
@@ -28,8 +28,9 @@ public class XMLStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 	 */
 	@Override
 	protected Object loadedTheObject(String path) throws Exception {
-		XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();
-		TagList doc = analyzer.analyze(path, null);
-		return doc;
+		return null;
+//		XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();
+//		TagList doc = analyzer.analyze(path, null);
+//		return doc;
 	}
 }

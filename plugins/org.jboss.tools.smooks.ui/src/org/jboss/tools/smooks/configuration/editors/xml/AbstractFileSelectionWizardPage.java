@@ -3,6 +3,7 @@
  */
 package org.jboss.tools.smooks.configuration.editors.xml;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -33,8 +35,7 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
  * 
  * @author Dart Peng Date : 2008-8-13
  */
-public abstract class AbstractFileSelectionWizardPage extends WizardPage
-		implements SelectionListener {
+public abstract class AbstractFileSelectionWizardPage extends WizardPage implements SelectionListener {
 	protected IStructuredSelection selection;
 	protected Object returnObject = null;
 	protected Text fileText;
@@ -45,27 +46,59 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	protected Button workspaceBrowseButton;
 	private String filePath = null;
 	protected Object[] initSelections;
-	protected List<ViewerFilter> filters = null;
-	protected boolean multiSelect =false;
-	
+	protected List<ViewerFilter> filters = new ArrayList<ViewerFilter>();
+	protected boolean multiSelect = false;
+
 	private IFilePathProcessor filePathProcessor = null;
-	
-	public AbstractFileSelectionWizardPage(String pageName,boolean multiSelect , Object[] initSelections,List<ViewerFilter> filters) {
+
+	private String[] fileExtensionNames;
+
+	public AbstractFileSelectionWizardPage(String pageName, boolean multiSelect, Object[] initSelections,
+			List<ViewerFilter> filters) {
 		super(pageName);
 		this.initSelections = initSelections;
-		this.filters = filters;
+		if (filters != null) {
+			this.filters.addAll(filters);
+		}
 		this.multiSelect = multiSelect;
 	}
-	
-	public AbstractFileSelectionWizardPage(String pageName){
-		this(pageName,false,null,Collections.EMPTY_LIST);
+
+	public AbstractFileSelectionWizardPage(String pageName, String[] fileExtensionNames) {
+		this(pageName, false, null, Collections.EMPTY_LIST);
+		this.fileExtensionNames = fileExtensionNames;
+		if (this.fileExtensionNames != null) {
+			ViewerFilter extensionNameFilter = new ViewerFilter() {
+				/*
+				 * (non-Javadoc)
+				 * 
+				 * @see
+				 * org.eclipse.jface.viewers.ViewerFilter#select(org.eclipse
+				 * .jface.viewers.Viewer, java.lang.Object, java.lang.Object)
+				 */
+				@Override
+				public boolean select(Viewer viewer, Object parentElement, Object element) {
+					if (element instanceof IFile && AbstractFileSelectionWizardPage.this.fileExtensionNames != null) {
+						String extName = ((IFile) element).getFileExtension();
+						for (int i = 0; i < AbstractFileSelectionWizardPage.this.fileExtensionNames.length; i++) {
+							String name = AbstractFileSelectionWizardPage.this.fileExtensionNames[i];
+							if (name.equalsIgnoreCase(extName)) {
+								return true;
+							}
+						}
+						return false;
+					}
+					return true;
+				}
+			};
+			this.filters.add(extensionNameFilter);
+		}
 	}
-	
 
 	public Object getReturnValue() {
 		try {
 			String path = getFilePath();
-			if(path == null) return null;
+			if (path == null)
+				return null;
 			path = SmooksUIUtils.parseFilePath(path);
 			returnObject = this.loadedTheObject(path);
 		} catch (Exception e) {
@@ -73,12 +106,11 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		}
 		return returnObject;
 	}
-	
-	public String getFilePath(){
+
+	public String getFilePath() {
 		return filePath;
 	}
-	
-	
+
 	public IFilePathProcessor getFilePathProcessor() {
 		return filePathProcessor;
 	}
@@ -90,7 +122,9 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
+	 * @see
+	 * org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets
+	 * .Composite)
 	 */
 	public void createControl(Composite parent) {
 
@@ -117,8 +151,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		// xsdButton = new Button(mainComposite, SWT.RADIO);
 		// xsdButton.setText("Select a XSD file");
 
-		Composite xsdComposite = this
-				.createFileSelectionComposite(mainComposite);
+		createFileSelectionComposite(mainComposite);
 
 		// init the panel status (XSD file selection composite is disabled)
 		// xsdButton.setSelection(true);
@@ -167,12 +200,10 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 
 		};
 
-		workspaceBrowseButton
-				.addSelectionListener(wbrowseButtonSelectionAdapter);
+		workspaceBrowseButton.addSelectionListener(wbrowseButtonSelectionAdapter);
 		// xmlFileSystemBrowseButton
 		// .addSelectionListener(browseButtonSelectionAdapter);
-		fileSystemBrowseButton
-				.addSelectionListener(browseButtonSelectionAdapter);
+		fileSystemBrowseButton.addSelectionListener(browseButtonSelectionAdapter);
 	}
 
 	protected void openWorkSpaceSelection(Text relationT) {
@@ -185,28 +216,47 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 			relationT.setText(s);
 		}
 	}
-	
-	protected String processFileSystemFilePath(String path){
-		if(filePathProcessor != null){
+
+	protected String processFileSystemFilePath(String path) {
+		if (filePathProcessor != null) {
 			String s = filePathProcessor.processFileSystemPath(path);
-			if(s != null){
+			if (s != null) {
 				return s;
 			}
 		}
 		path = SmooksUIUtils.FILE_PRIX + path;
 		return path;
 	}
-	
-	protected String processWorkSpaceFilePath(IFile file){
-		if(filePathProcessor != null){
-			String s =  filePathProcessor.processWorkBenchPath(file);
-			if(s != null){
+
+	protected String processWorkSpaceFilePath(IFile file) {
+		if (filePathProcessor != null) {
+			String s = filePathProcessor.processWorkBenchPath(file);
+			if (s != null) {
 				return s;
 			}
 		}
 		String s = file.getFullPath().toPortableString();
 		s = SmooksUIUtils.WORKSPACE_PRIX + s;
 		return s;
+	}
+
+	protected Text createFilePathText(Composite parent) {
+		fileTextComposite = new Composite(parent, SWT.NONE);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.grabExcessHorizontalSpace = true;
+		fileTextComposite.setLayoutData(gd);
+		GridLayout xsdtgl = new GridLayout();
+		xsdtgl.marginWidth = 0;
+		xsdtgl.marginHeight = 0;
+		xsdtgl.numColumns = 1;
+		fileTextComposite.setLayout(xsdtgl);
+
+		Text fileText = new Text(fileTextComposite, SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		fileText.setLayoutData(gd);
+		gd.grabExcessHorizontalSpace = true;
+
+		return fileText;
 	}
 
 	protected Composite createFileSelectionComposite(Composite parent) {
@@ -220,40 +270,42 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 
 		Label nfileLanel = new Label(xsdComposite, SWT.NONE);
 		nfileLanel.setText("File : "); //$NON-NLS-1$
-		fileTextComposite = new Composite(xsdComposite, SWT.NONE);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.grabExcessHorizontalSpace = true;
-		fileTextComposite.setLayoutData(gd);
-		GridLayout xsdtgl = new GridLayout();
-		xsdtgl.marginWidth = 0;
-		xsdtgl.marginHeight = 0;
-		xsdtgl.numColumns = 1;
-		fileTextComposite.setLayout(xsdtgl);
+		// fileTextComposite = new Composite(xsdComposite, SWT.NONE);
+		// gd = new GridData(GridData.FILL_HORIZONTAL);
+		// gd.grabExcessHorizontalSpace = true;
+		// fileTextComposite.setLayoutData(gd);
+		// GridLayout xsdtgl = new GridLayout();
+		// xsdtgl.marginWidth = 0;
+		// xsdtgl.marginHeight = 0;
+		// xsdtgl.numColumns = 1;
+		// fileTextComposite.setLayout(xsdtgl);
+		//
+		// fileText = new Text(fileTextComposite, SWT.BORDER);
+		// gd = new GridData(GridData.FILL_HORIZONTAL);
+		// fileText.setLayoutData(gd);
+		// gd.grabExcessHorizontalSpace = true;
 
-		fileText = new Text(fileTextComposite, SWT.BORDER);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		fileText.setLayoutData(gd);
-		gd.grabExcessHorizontalSpace = true;
+		fileText = createFilePathText(xsdComposite);
 
-//		final Button loadXSDButton = new Button(fileTextComposite, SWT.NONE);
-//		loadXSDButton.setText("Load");
-//		loadXSDButton.addSelectionListener(new SelectionAdapter() {
-//
-//			@Override
-//			public void widgetSelected(SelectionEvent e) {
-//				super.widgetSelected(e);
-//				reasourceLoaded = false;
-//				try {
-//					returnObject = loadedTheObject(fileText.getText());
-//					reasourceLoaded = true;
-//				} catch (Throwable e2) {
-//					// ignore
-//					e2.printStackTrace();
-//				}
-//				changeWizardPageStatus();
-//			}
-//
-//		});
+		// final Button loadXSDButton = new Button(fileTextComposite, SWT.NONE);
+		// loadXSDButton.setText("Load");
+		// loadXSDButton.addSelectionListener(new SelectionAdapter() {
+		//
+		// @Override
+		// public void widgetSelected(SelectionEvent e) {
+		// super.widgetSelected(e);
+		// reasourceLoaded = false;
+		// try {
+		// returnObject = loadedTheObject(fileText.getText());
+		// reasourceLoaded = true;
+		// } catch (Throwable e2) {
+		// // ignore
+		// e2.printStackTrace();
+		// }
+		// changeWizardPageStatus();
+		// }
+		//
+		// });
 
 		Composite browseButtonComposite = new Composite(xsdComposite, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -287,27 +339,27 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	abstract protected Object loadedTheObject(String path) throws Exception;
 
 	protected void initTableViewer() {
-//		tableViewer.addCheckStateListener(new ICheckStateListener() {
-//			boolean flag = true;
-//
-//			public void checkStateChanged(CheckStateChangedEvent event) {
-//				if (flag) {
-//					Object checkObject = event.getElement();
-//					boolean check = event.getChecked();
-//					flag = false;
-//					tableViewer.setAllChecked(false);
-//					tableViewer.setChecked(checkObject, check);
-//					flag = true;
-//					changeWizardPageStatus();
-//				}
-//			}
-//		});
-//		tableViewer.setContentProvider(new XSDStructuredModelContentProvider());
-//		tableViewer.setLabelProvider(new XSDStructuredModelLabelProvider());
+		// tableViewer.addCheckStateListener(new ICheckStateListener() {
+		// boolean flag = true;
+		//
+		// public void checkStateChanged(CheckStateChangedEvent event) {
+		// if (flag) {
+		// Object checkObject = event.getElement();
+		// boolean check = event.getChecked();
+		// flag = false;
+		// tableViewer.setAllChecked(false);
+		// tableViewer.setChecked(checkObject, check);
+		// flag = true;
+		// changeWizardPageStatus();
+		// }
+		// }
+		// });
+		// tableViewer.setContentProvider(new
+		// XSDStructuredModelContentProvider());
+		// tableViewer.setLabelProvider(new XSDStructuredModelLabelProvider());
 	}
 
-	protected void setCompositeChildrenEnabled(Composite composite,
-			boolean enabled) {
+	protected void setCompositeChildrenEnabled(Composite composite, boolean enabled) {
 		Control[] children = composite.getChildren();
 		for (int i = 0; i < children.length; i++) {
 			Control child = children[i];
@@ -325,11 +377,22 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 
 	protected void openFileSelection(Text relationText) {
 		FileDialog dialog = new FileDialog(this.getShell());
+		if (fileExtensionNames != null) {
+			String s = "";
+			for (int i = 0; i < fileExtensionNames.length; i++) {
+				String exname = fileExtensionNames[i];
+				s += "*." + exname + ";";
+			}
+			if (s.length() != 0) {
+				s = s.substring(0, s.length() - 1);
+				dialog.setFilterExtensions(new String[]{s,"*.*"});
+			}
+		}
 		String path = dialog.open();
 		if (path != null) {
 			path = processFileSystemFilePath(path);
 			relationText.setText(path);
-		} 
+		}
 	}
 
 	protected void changeWizardPageStatus() {
@@ -337,15 +400,15 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 		String error = null;
 		if (text == null || "".equals(text)) //$NON-NLS-1$
 			error = "File's name can be null"; //$NON-NLS-1$
-		
-//		File tempFile = new File(text);
-//		if(!tempFile.exists()){
-//			error = "Can't find the file , please select another one.";
-//		}
-		
-//		if (!reasourceLoaded) {
-//			error = "Resource must be loaded";
-//		}
+
+		// File tempFile = new File(text);
+		// if(!tempFile.exists()){
+		// error = "Can't find the file , please select another one.";
+		// }
+
+		// if (!reasourceLoaded) {
+		// error = "Resource must be loaded";
+		// }
 		this.setErrorMessage(error);
 		this.setPageComplete(error == null);
 
@@ -398,7 +461,5 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage
 	public void setMultiSelect(boolean multiSelect) {
 		this.multiSelect = multiSelect;
 	}
-	
-	
 
 }

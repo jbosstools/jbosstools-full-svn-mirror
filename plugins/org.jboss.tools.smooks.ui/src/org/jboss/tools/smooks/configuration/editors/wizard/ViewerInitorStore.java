@@ -16,12 +16,14 @@ import java.util.Map;
 
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanContentProvider;
-import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanlabelProvider;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanStrucutredDataWizard;
+import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanlabelProvider;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataContentProvider;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataLabelProvider;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataWizard;
+import org.jboss.tools.smooks.configuration.editors.xml.XSDStructuredDataWizard;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -127,7 +129,7 @@ public class ViewerInitorStore {
 		// for java
 		BaseViewerInitor javabeanViewerInitor = new BaseViewerInitor();
 		String name = "Java";
-		String description = "Browse a Java type";
+		String description = "Select a Java type(class,interface) as the input data.";
 		String iconPath = null;
 		String typeID = SmooksModelUtils.INPUT_TYPE_JAVA;
 
@@ -138,13 +140,14 @@ public class ViewerInitorStore {
 		javabeanViewerInitor.setLabelProvider(new JavabeanlabelProvider());
 		javabeanViewerInitor.setTreeContentProvider(new JavabeanContentProvider());
 		javabeanViewerInitor.setStructuredDataLoadWizard(new JavabeanStrucutredDataWizard());
+		javabeanViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
 		map.put(typeID, javabeanViewerInitor);
 
 		// for XML
 
 		BaseViewerInitor xmlViewerInitor = new BaseViewerInitor();
 		name = "XML";
-		description = "Select a xml file ";
+		description = "Select a XML file to be the input data. ";
 		iconPath = null;
 		typeID = SmooksModelUtils.INPUT_TYPE_XML;
 
@@ -155,8 +158,28 @@ public class ViewerInitorStore {
 		xmlViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
 		xmlViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
 		xmlViewerInitor.setStructuredDataLoadWizard(new XMLStructuredDataWizard());
+		xmlViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_XML_FILE);
 		map.put(typeID, xmlViewerInitor);
 
+		// for XSD
+
+		BaseViewerInitor xsdViewerInitor = new BaseViewerInitor();
+		name = "XSD/WSDL";
+		description = "Select a XSD file to be the input data. Need to figure out a Root Element. ";
+		iconPath = null;
+		typeID = SmooksModelUtils.INPUT_TYPE_XSD;
+
+		xsdViewerInitor.setName(name);
+		xsdViewerInitor.setDescription(description);
+		xsdViewerInitor.setWizardIconPath(iconPath);
+		xsdViewerInitor.setTypeID(typeID);
+		xsdViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
+		xsdViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
+		xsdViewerInitor.setStructuredDataLoadWizard(new XSDStructuredDataWizard());
+		xsdViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_XSD_FILE);
+		map.put(typeID, xsdViewerInitor);
+
+		
 		return map;
 	}
 }

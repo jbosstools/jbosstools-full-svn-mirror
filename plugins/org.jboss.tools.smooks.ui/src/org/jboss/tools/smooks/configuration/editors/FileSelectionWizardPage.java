@@ -21,7 +21,7 @@ public class FileSelectionWizardPage extends AbstractFileSelectionWizardPage {
 	private ProtableFileStringProcessor processor = null;
 	
 	public FileSelectionWizardPage(String pageName) {
-		super(pageName);
+		super(pageName , new String[]{});
 		processor = new ProtableFileStringProcessor();
 		setFilePathProcessor(processor);
 		setTitle("File Selection");

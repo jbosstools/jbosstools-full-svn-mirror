@@ -67,6 +67,10 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 		reg.put(GraphicsConstants.JAVA_PROPERTY_ICON,
 				getImageDescriptor(GraphicsConstants.JAVA_PROPERTY_ICON_PATH));
 		
+		reg.put(GraphicsConstants.IMAGE_UNKNOWN_OBJ, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_UNKNOWN_OBJ));
+
+		
 		// regist ovr images
 		reg.put(GraphicsConstants.IMAGE_OVR_ERROR, getImageDescriptor(GraphicsConstants.IMAGE_OVR_ERROR));
 		reg.put(GraphicsConstants.IMAGE_OVR_WARING, getImageDescriptor(GraphicsConstants.IMAGE_OVR_WARING));
@@ -91,8 +95,18 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 				GraphicsConstants.IMAGE_JAVA_ARRAY));
 		reg.put(GraphicsConstants.IMAGE_JAVA_COLLECTION, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_JAVA_COLLECTION));
+		reg.put(GraphicsConstants.IMAGE_JAVA_FILE, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_JAVA_FILE));
+
 
 		// for the xml2xml line
+		reg.put(GraphicsConstants.IMAGE_XML_FILE, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_XML_FILE));
+		
+		reg.put(GraphicsConstants.IMAGE_XSD_FILE, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_XSD_FILE));
+
+
 		reg.put(GraphicsConstants.IMAGE_BINDING_LINE, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_BINDING_LINE));
 
