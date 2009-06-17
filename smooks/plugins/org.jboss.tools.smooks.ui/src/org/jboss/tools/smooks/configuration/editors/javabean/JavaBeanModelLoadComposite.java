@@ -144,13 +144,13 @@ public class JavaBeanModelLoadComposite extends Composite implements SelectionLi
 		TableColumn nameColumn = new TableColumn(listViewer.getTable(), SWT.NONE);
 		nameColumn.setText("Class");
 		TableColumn isArrayColumn = new TableColumn(listViewer.getTable(), SWT.NONE);
-		isArrayColumn.setText("Array");
-		TableColumn isListColumn = new TableColumn(listViewer.getTable(), SWT.NONE);
-		isListColumn.setText("List");
+		isArrayColumn.setText("Is Array");
+//		TableColumn isListColumn = new TableColumn(listViewer.getTable(), SWT.NONE);
+//		isListColumn.setText("List");
 
 		nameColumn.setWidth(400);
 		isArrayColumn.setWidth(60);
-		isListColumn.setWidth(60);
+//		isListColumn.setWidth(60);
 
 		listViewer.getTable().setHeaderVisible(true);
 

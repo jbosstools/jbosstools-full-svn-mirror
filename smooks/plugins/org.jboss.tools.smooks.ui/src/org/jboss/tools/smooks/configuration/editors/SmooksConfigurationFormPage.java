@@ -137,6 +137,12 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 		TableColumn pathColumn = new TableColumn(inputDataViewer.getTable(), SWT.NONE);
 		pathColumn.setText("Path");
 		pathColumn.setWidth(300);
+		
+		TableColumn extColumn = new TableColumn(inputDataViewer.getTable(), SWT.NONE);
+		extColumn.setText("Extension Paramers");
+		extColumn.setWidth(400);
+		
+		
 		inputDataViewer.setContentProvider(new ExtentionInputContentProvider());
 		inputDataViewer.setLabelProvider(new ExtentionInputLabelProvider());
 		inputDataViewer.getTable().setHeaderVisible(true);

@@ -10,11 +10,15 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
+import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -38,12 +42,18 @@ public class ExtentionInputLabelProvider extends LabelProvider implements ITable
 			case 0:
 				if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(type)) {
 					return SmooksConfigurationActivator.getDefault().getImageRegistry().get(
-							GraphicsConstants.IMAGE_JAVA_OBJECT);
+							GraphicsConstants.IMAGE_JAVA_FILE);
 				}
 				if (SmooksModelUtils.INPUT_TYPE_XML.equals(type)) {
 					return SmooksConfigurationActivator.getDefault().getImageRegistry().get(
-							GraphicsConstants.IMAGE_XML_ELEMENT);
+							GraphicsConstants.IMAGE_XML_FILE);
 				}
+				if (SmooksModelUtils.INPUT_TYPE_XSD.equals(type)) {
+					return SmooksConfigurationActivator.getDefault().getImageRegistry().get(
+							GraphicsConstants.IMAGE_XSD_FILE);
+				}
+				return SmooksConfigurationActivator.getDefault().getImageRegistry().get(
+						GraphicsConstants.IMAGE_UNKNOWN_OBJ);
 			}
 		}
 		return null;
@@ -61,11 +71,25 @@ public class ExtentionInputLabelProvider extends LabelProvider implements ITable
 			String value = SmooksModelUtils.getInputPath((InputType) element);
 			if (value == null)
 				value = "";
+			String extValue = "";
+			List<ParamType> paramers = ((InputType) element).getParam();
+			for (Iterator<?> iterator = paramers.iterator(); iterator.hasNext();) {
+				ParamType paramType = (ParamType) iterator.next();
+				if ("path".equals(paramType.getName())) {
+					continue;
+				}
+				extValue += paramType.getName() + "=" + paramType.getValue() + ",";
+			}
+			if (extValue.length() != 0) {
+				extValue = extValue.substring(0, extValue.length() - 1);
+			}
 			switch (columnIndex) {
 			case 0:
 				return ((InputType) element).getType();
 			case 1:
 				return value;
+			case 2:
+				return extValue;
 			}
 		}
 		return "";

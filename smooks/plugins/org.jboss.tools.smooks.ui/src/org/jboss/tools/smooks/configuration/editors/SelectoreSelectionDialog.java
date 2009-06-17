@@ -51,7 +51,9 @@ import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelecti
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
+import org.jboss.tools.smooks.configuration.editors.xml.XSDObjectAnalyzer;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
+import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
@@ -69,7 +71,7 @@ public class SelectoreSelectionDialog extends Dialog {
 	private Button fullPathButton;
 	private SelectorAttributes selectorAttributes = null;
 	private IEditorPart editorPart = null;
-	
+
 	private FormToolkit toolkit;
 
 	public SelectoreSelectionDialog(IShellProvider parentShell) {
@@ -220,7 +222,6 @@ public class SelectoreSelectionDialog extends Dialog {
 		return composite;
 	}
 
-
 	private void handleButtons() {
 		fullPathButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -236,8 +237,8 @@ public class SelectoreSelectionDialog extends Dialog {
 			}
 		});
 	}
-	
-	public static List<Object> generateInputData(SmooksGraphicsExtType extType){
+
+	public static List<Object> generateInputData(SmooksGraphicsExtType extType) {
 		List<Object> list = new ArrayList<Object>();
 		if (extType != null) {
 			IJavaProject project = SmooksUIUtils.getJavaProject(extType);
@@ -257,13 +258,38 @@ public class SelectoreSelectionDialog extends Dialog {
 								if (model != null) {
 									list.add(model);
 								}
-							}catch(Throwable t){
+							} catch (Throwable t) {
 								// ignore
+							}
+						}
+						if (SmooksModelUtils.INPUT_TYPE_XSD.equals(type)) {
+							try {
+								path = SmooksUIUtils.parseFilePath(path);
+								String rootElementName = null;
+								List<ParamType> paramers = inputType.getParam();
+								for (Iterator<?> iterator2 = paramers.iterator(); iterator2.hasNext();) {
+									ParamType paramType = (ParamType) iterator2.next();
+									if ("rootElement".equals(paramType.getName())) {
+										rootElementName = paramType.getValue();
+										break;
+									}
+								}
+								if (rootElementName != null) {
+									rootElementName = rootElementName.trim();
+									list.add(new XSDObjectAnalyzer().loadElement(path, rootElementName));
+								}
+							} catch (Throwable tt) {
+								// ingore
 							}
 						}
 						if (SmooksModelUtils.INPUT_TYPE_XML.equals(type)) {
 							try {
 								path = SmooksUIUtils.parseFilePath(path);
+
+								// XMLObjectAnalyzer analyzer = new
+								// XMLObjectAnalyzer();
+								// TagList doc = analyzer.analyze(path, null);
+
 								AbstractXMLObject model = new XMLObjectAnalyzer().analyze(path, null);
 								if (model != null) {
 									if (model instanceof TagList) {
@@ -304,7 +330,7 @@ public class SelectoreSelectionDialog extends Dialog {
 		wizard.setForcePreviousAndNextButtons(true);
 		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(this.getShell(), wizard,
 				this.graphicsExt);
-		if(dialog.show() == WizardDialog.OK){
+		if (dialog.show() == WizardDialog.OK) {
 			List<Object> input = this.generateInputData();
 			this.viewer.setInput(input);
 			SmooksUIUtils.expandSelectorViewer(input, viewer);
@@ -322,16 +348,17 @@ public class SelectoreSelectionDialog extends Dialog {
 		return selectorAttributes;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.jface.dialogs.Dialog#close()
 	 */
 	@Override
 	public boolean close() {
-		if(toolkit != null){
+		if (toolkit != null) {
 			toolkit.dispose();
 		}
 		return super.close();
 	}
-	
-	
+
 }
