@@ -153,6 +153,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 */
 	private nsIEditor editor;
 	private VpeDropDownMenu dropDownMenu = null;
+	private ToolBar verBar = null;
 
 	public void doSave(IProgressMonitor monitor) {
 	}
@@ -184,105 +185,10 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		formatControllerManager.setVpeController(controller);
 		controller.setToolbarFormatControllerManager(formatControllerManager);
 	}
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
-	 */
-	@Override
-	public void createPartControl(final Composite parent) {
-
-	    	//Setting  Layout for the parent Composite
-		parent.setLayout(new FillLayout());
-		
-		/*
-		 * https://jira.jboss.org/jira/browse/JBIDE-4062
-		 * Creating scrollable eclipse element.
-		 */
-		ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-		sc.setLayout(new FillLayout());
-		Composite composite = new Composite(sc, SWT.NATIVE);
-
-	    	GridLayout layout = new GridLayout(2,false);
-		layout.marginHeight = 0;
-		layout.marginWidth = 2;
-		layout.verticalSpacing = 2;
-		layout.horizontalSpacing = 2;
-		layout.marginBottom = 0;
-		composite.setLayout(layout);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		// Composite for the left Vertical toolbar
-		Composite cmpVerticalToolbar = new Composite(composite, SWT.NONE);
-		layout = new GridLayout(1,false);
-		layout.marginHeight = 2;
-		layout.marginWidth = 0;
-		layout.verticalSpacing = 0;		
-		cmpVerticalToolbar.setLayout(layout);
-		cmpVerticalToolbar.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		
-		// Editors and Toolbar composite 
-		Composite cmpEdTl = new Composite(composite, SWT.NONE);
-		GridLayout layoutEdTl = new GridLayout(1, false);
-		layoutEdTl.verticalSpacing = 0;
-		layoutEdTl.marginHeight = 0;
-		layoutEdTl.marginBottom = 3;
-		layoutEdTl.marginWidth = 0;
-		cmpEdTl.setLayout(layoutEdTl);
-		cmpEdTl.setLayoutData(new GridData(GridData.FILL_BOTH));
-
-
-		ToolBar verBar = new ToolBar(cmpVerticalToolbar, SWT.VERTICAL|SWT.FLAT);
+	
+	public ToolBar createVisualToolbar(Composite parent) {
+		verBar = new ToolBar(parent, SWT.VERTICAL|SWT.FLAT);
 		verBar.setLayoutData(new GridData(GridData.FILL_VERTICAL));
-		
-		dropDownMenu = new VpeDropDownMenu(verBar, VpeUIMessages.MENU); 
-		
-		 // Use vpeToolBarManager to create a horizontal toolbar.
-		vpeToolBarManager = new VpeToolBarManager(dropDownMenu
-				.getDropDownMenu());
-		if (vpeToolBarManager != null) {
-			vpeToolBarManager.createToolBarComposite(cmpEdTl);
-			vpeToolBarManager.addToolBar(new TextFormattingToolBar(
-					formatControllerManager));
-		}
-
-		// add Invisible tags support to menu
-
-		// create menu item
-		MenuItem menuItem = new MenuItem(dropDownMenu.getDropDownMenu(),
-				SWT.PUSH);
-
-		// get default value of flag
-		boolean showInvisibleTags = Constants.YES_STRING
-				.equals(VpePreference.SHOW_INVISIBLE_TAGS.getValue());
-
-		// set text
-		menuItem.setText(showInvisibleTags ? VpeUIMessages.HIDE_NON_VISUAL_TAGS
-										   : VpeUIMessages.SHOW_NON_VISUAL_TAGS);
-
-		// add listener
-		menuItem.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				MenuItem selectedItem = (MenuItem) e.widget;
-
-				// get current value of flag
-				boolean showInvisibleTags = !controller.getVisualBuilder()
-						.isShowInvisibleTags();
-
-				// change text
-				selectedItem
-						.setText((showInvisibleTags ? VpeUIMessages.HIDE
-								: VpeUIMessages.SHOW)
-								+ Constants.WHITE_SPACE
-								+ VpeUIMessages.NON_VISUAL_TAGS);
-
-				// change flag
-				controller.getVisualBuilder().setShowInvisibleTags(
-						showInvisibleTags);
-				// update vpe
-				controller.visualRefresh();
-			}
-		});
 		
 		ToolItem item = null;
 		item = createToolItem(verBar, SWT.BUTTON1, ICON_PREFERENCE,
@@ -385,6 +291,99 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		});
 
 		verBar.pack();
+		return verBar;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	public void createPartControl(final Composite parent) {
+    	//Setting  Layout for the parent Composite
+		parent.setLayout(new FillLayout());
+		
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4062
+		 * Creating scrollable eclipse element.
+		 */
+		ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		sc.setLayout(new FillLayout());
+		Composite composite = new Composite(sc, SWT.NATIVE);
+
+	    GridLayout layout = new GridLayout(2,false);
+		layout.marginHeight = 0;
+		layout.marginWidth = 2;
+		layout.verticalSpacing = 2;
+		layout.horizontalSpacing = 2;
+		layout.marginBottom = 0;
+		composite.setLayout(layout);
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		
+		// Editors and Toolbar composite 
+		Composite cmpEdTl = new Composite(composite, SWT.NONE);
+		GridLayout layoutEdTl = new GridLayout(1, false);
+		layoutEdTl.verticalSpacing = 0;
+		layoutEdTl.marginHeight = 0;
+		layoutEdTl.marginBottom = 3;
+		layoutEdTl.marginWidth = 0;
+		cmpEdTl.setLayout(layoutEdTl);
+		cmpEdTl.setLayoutData(new GridData(GridData.FILL_BOTH));
+
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4429
+		 * Toolbar was moved to VpeEditorPart.
+		 *  'verBar' should be created in createVisualToolbar(..) in VpeEditorPart
+		 *  and only after that MozillaEditor should be created itself. 
+		 */
+		if (null != verBar) {
+			dropDownMenu = new VpeDropDownMenu(verBar, VpeUIMessages.MENU); 
+			// add Invisible tags support to menu
+			// create menu item
+			MenuItem menuItem = new MenuItem(dropDownMenu.getDropDownMenu(), SWT.PUSH);
+			// get default value of flag
+			boolean showInvisibleTags = Constants.YES_STRING
+			.equals(VpePreference.SHOW_INVISIBLE_TAGS.getValue());
+			
+			// set text
+			menuItem.setText(showInvisibleTags ? VpeUIMessages.HIDE_NON_VISUAL_TAGS
+					: VpeUIMessages.SHOW_NON_VISUAL_TAGS);
+			
+			// add listener
+			menuItem.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					MenuItem selectedItem = (MenuItem) e.widget;
+					
+					// get current value of flag
+					boolean showInvisibleTags = !controller.getVisualBuilder()
+					.isShowInvisibleTags();
+					
+					// change text
+					selectedItem
+					.setText((showInvisibleTags ? VpeUIMessages.HIDE
+							: VpeUIMessages.SHOW)
+							+ Constants.WHITE_SPACE
+							+ VpeUIMessages.NON_VISUAL_TAGS);
+					
+					// change flag
+					controller.getVisualBuilder().setShowInvisibleTags(
+							showInvisibleTags);
+					// update vpe
+					controller.visualRefresh();
+				}
+			});
+			// Use vpeToolBarManager to create a horizontal toolbar.
+			vpeToolBarManager = new VpeToolBarManager(dropDownMenu
+					.getDropDownMenu());
+			if (vpeToolBarManager != null) {
+				vpeToolBarManager.createToolBarComposite(cmpEdTl);
+				vpeToolBarManager.addToolBar(new TextFormattingToolBar(formatControllerManager));
+			}
+		}
+
+		
 		
 		//Create a composite to the Editor
 		Composite cmpEd = new Composite (cmpEdTl, SWT.NATIVE);

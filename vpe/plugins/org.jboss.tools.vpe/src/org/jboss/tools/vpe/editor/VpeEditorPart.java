@@ -13,12 +13,14 @@ package org.jboss.tools.vpe.editor;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.compare.Splitter;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.action.IAction;
@@ -44,6 +46,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -121,8 +124,15 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	/** default web-browser */
 	private MozillaPreview previewWebBrowser = null;
 
-	/** preview content */
+	/*
+	 * VPE visual components.
+	 */
+	private Composite sourceContent = null;
+	private Composite visualContent = null;
 	private Composite previewContent = null;
+	private Splitter verticalToolbarSplitter = null;
+	private Composite verticalToolbarEmpty = null;
+	private ToolBar toolBar = null;
 
 	public StructuredTextEditor getSourceEditor() {
 		return sourceEditor;
@@ -362,13 +372,11 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		}
 	}
 
-	Composite sourceContent = null;
-	Composite visualContent = null;
-
 	public void setVisualMode(int type) {
 		switch (type) {
 		case VISUALSOURCE_MODE:
 			selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
+			setVerticalToolbarVisible(true);
 			/*
 			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-3140
 			 * author Denis Maliarevich.
@@ -396,6 +404,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 		case SOURCE_MODE:
 			selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
+			setVerticalToolbarVisible(false);
 			if (sourceContent != null) {
 				sourceContent.setVisible(true);
 				/*
@@ -427,6 +436,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			if (selectionBar != null) {
 				selectionBar.setVisible(false);
 			}
+			setVerticalToolbarVisible(false);
 			/*
 			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-3140
 			 * author Denis Maliarevich.
@@ -462,17 +472,39 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	public int getVisualMode() {
 		return visualMode;
 	}
-
+	
+	/**
+	 * Sets the visibility of the vertical toolbar for visual editor part.
+	 * 
+	 * @param visible if visible
+	 */
+	public void setVerticalToolbarVisible(boolean visible) {
+		if ((null == verticalToolbarSplitter) || (null == verticalToolbarEmpty)
+				|| (null == toolBar)) {
+			return;
+		}
+		if (visible) {
+			verticalToolbarSplitter.setVisible(toolBar, true);
+			verticalToolbarSplitter.setVisible(verticalToolbarEmpty, false);
+		} else {
+			verticalToolbarSplitter.setVisible(toolBar, false);
+			verticalToolbarSplitter.setVisible(verticalToolbarEmpty, true);
+		}
+		verticalToolbarSplitter.getParent().layout(true, true);
+	}
+	
 	public void createPartControl(final Composite parent) {
+		
 		controlCount++;
 		if (controlCount > 1)
 			return;
 		
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, IVpeHelpContextIds.VISUAL_PAGE_EDITOR);
-		// //////////////////////////////////////////////////////////////
-
+		/*
+		 * Container composite for editor part
+		 */
 		Composite cmpEdTl = new Composite(parent, SWT.NONE);
-		GridLayout layoutEdTl = new GridLayout(1, false);
+		GridLayout layoutEdTl = new GridLayout(2, false);
 		layoutEdTl.verticalSpacing = 0;
 		layoutEdTl.marginHeight = 0;
 		layoutEdTl.marginBottom = 3;
@@ -480,7 +512,36 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		cmpEdTl.setLayout(layoutEdTl);
 		cmpEdTl.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		cmpEd = new Composite(cmpEdTl, SWT.NATIVE);
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4429
+		 *  Composite for the left vertical toolbar
+		 */
+		verticalToolbarSplitter = new Splitter(cmpEdTl, SWT.NONE);
+		GridLayout layout = new GridLayout(1,false);
+		layout.marginHeight = 2;
+		layout.marginWidth = 0;
+		layout.verticalSpacing = 0;		
+		layout.horizontalSpacing = 0;		
+		verticalToolbarSplitter.setLayout(layout);
+		verticalToolbarSplitter.setLayoutData(new GridData(SWT.CENTER, SWT.TOP | SWT.FILL, false, true, 1, 2));
+		
+		/*
+		 * The empty vertical toolbar component
+		 */
+		verticalToolbarEmpty = new Composite(verticalToolbarSplitter, SWT.NONE) {
+			public Point computeSize(int wHint, int hHint, boolean changed) {
+				Point point = super.computeSize(wHint, hHint, changed);
+				point.x = 1;
+				return point;
+			}
+		};
+		verticalToolbarEmpty.setLayoutData(new GridData(GridData.FILL_VERTICAL));
+		verticalToolbarEmpty.setVisible(true);
+		
+		/*
+		 * The Visual Page Editor itself
+		 */
+		cmpEd = new Composite(cmpEdTl, SWT.BORDER);
 		GridLayout layoutEd = new GridLayout(1, false);
 		layoutEd.marginBottom = 0;
 		layoutEd.marginHeight = 1;
@@ -490,8 +551,13 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		layoutEd.verticalSpacing = 0;
 		layoutEd.horizontalSpacing = 0;
 		cmpEd.setLayout(layoutEd);
-		cmpEd.setLayoutData(new GridData(GridData.FILL_BOTH));
-		// /////////////////////////////////////////////////////////////////
+		cmpEd.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		/*
+		 * Creating selection bar at the bottom of the editor
+		 */
+		selectionBar.createToolBarComposite(cmpEdTl, true);
+		
 		//container = new SashForm(cmpEd, SWT.VERTICAL);
 		/*
 		 * https://jira.jboss.org/jira/browse/JBIDE-4152 
@@ -525,10 +591,6 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		//previewContent.setLayout(new FillLayout());
 		previewContent.setLayout(new GridLayout());
 
-		// ////////////////////////////////////////////////////
-
-		selectionBar.createToolBarComposite(cmpEdTl, true);
-		// ///////////////////////////////////////////////////
 		if (sourceEditor == null)
 			sourceEditor = new StructuredTextEditor() {
 				public void safelySanityCheckState(IEditorInput input) {
@@ -869,9 +931,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				createShowSelectionBarMenuItem();
 				visualEditor.getController().init(sourceEditor, visualEditor);
 			}
-
 		});
-		visualEditor.createPartControl(visualContent);
+		
+			toolBar = visualEditor.createVisualToolbar(verticalToolbarSplitter);
+			visualEditor.createPartControl(visualContent);
 	}
 
 	/**
