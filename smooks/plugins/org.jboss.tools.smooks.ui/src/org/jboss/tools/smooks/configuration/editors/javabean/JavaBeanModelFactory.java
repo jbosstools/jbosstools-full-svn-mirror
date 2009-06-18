@@ -49,6 +49,11 @@ public class JavaBeanModelFactory {
 		return m;
 	}
 	
+	/**
+	 * @deprecated
+	 * @param beanClass
+	 * @return
+	 */
 	public synchronized static JavaBeanModel getJavaBeanModel(Class<?> beanClass ) {
 		JavaBeanModel m = new JavaBeanModel(beanClass,false);
 		m.setRootClassModel(true);
