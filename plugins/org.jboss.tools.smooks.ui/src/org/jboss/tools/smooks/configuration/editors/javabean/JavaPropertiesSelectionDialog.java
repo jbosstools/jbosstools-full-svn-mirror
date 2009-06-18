@@ -79,7 +79,7 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 				} else {
 					clazz = classLoader.loadClass(className);
 				}
-				JavaBeanModel beanModel = JavaBeanModelFactory.getJavaBeanModel(clazz);
+				JavaBeanModel beanModel = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
 				PropertySelectionDialog dialog = new PropertySelectionDialog(shell, project, beanModel);
 				if (dialog.open() == Dialog.OK) {
 					JavaBeanModel pd = (JavaBeanModel) dialog.getCurrentSelection();

@@ -48,7 +48,7 @@ public class JavaPropertiesProposalProvider implements IContentProposalProvider 
 				} else {
 					clazz = classLoader.loadClass(className);
 				}
-				beanModel = JavaBeanModelFactory.getJavaBeanModel(clazz);
+				beanModel = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
 			}
 		} catch (JavaModelException e) {
 		} catch (ClassNotFoundException e) {
