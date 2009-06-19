@@ -22,6 +22,16 @@
 	<para>This page consists of 3 setions: Message Filtering Resources, Input Data and Section devoted to the configurations of a selected in a Message Filtering Resources section Item.</para>
 	<para> You can bind classes <link linkend="quickstart_mapping">using Bindings item
 			</link> on the Design page of the <property>Smooks Editor</property>. </para>
+	<para><emphasis>
+		<property>Resource list</property></emphasis> item in <emphasis>
+			<property>Message Filtering Resources</property></emphasis> corresponds to the root element of the smooks-config.xml file.You can configurate  the next two  properties using corresponding fields:</para>
+	<itemizedlist>
+		<listitem><para><emphasis>
+			<property>default-target-profile</property></emphasis>: Default target profile that will be applied to all resources in the smooks configuration file, where a <emphasis>
+				<property>target-profile</property></emphasis> is not defined. </para></listitem>
+		<listitem><para><emphasis>
+			<property>default-condition-ref</property></emphasis>:The condition is applied to resources where an empty "condition" element (i.e. <code>&lt;condition/&gt;</code>)is defined.The condition element does not reference a globally defined condition. </para></listitem>
+	</itemizedlist>
 	<para> The configuration editor also edits the <link linkend="configurationpage_parsetype">Smooks parse
 			type</link> and manages the <link linkend="configurationpage_importfile">Import
 			Files</link>.</para>
@@ -59,32 +69,28 @@
 	<section id="configurationpage_importfile">
 
 		<title>Import Data</title>
-		<para> Open the <emphasis>
-				<property>Input Data</property>
-			</emphasis> section, there is an <emphasis>
-				<property>Import Files</property>
-			</emphasis> list at the bottom of the Design tab (see the figure below).</para>
+		<para> Right click <emphasis>
+			<property>Resource List>Add Smooks Resource>Import Smooks Configuration</property>
+			</emphasis>, then you should see a new  <emphasis>
+				<property>Import Smooks Configuration</property>
+			</emphasis>item in the  list  (see the figure below).</para>
 		
 		<figure>
-			<title>Smooks Parse Types</title>
+			<title>Import Data</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/config_page/config_page3a.png" scale="90"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>There are two buttons on the right side of the <emphasis>
-				<property>File Import</property>
-			</emphasis> list. You can click those to add/remove the import files.</para>
-
-		<tip>
-
-			<title>Tip:</title>
-			<para> If the import file doesn&amp;t exist, the image of the import file is changed to
-				"Error Image". If you double-click the import file in the Import File list, the file
-				is opened with a new default editor. </para>
-
-		</tip>
+		<para>Left click the added item and to the left of <emphasis>
+			<property>Message Filtering Resources  Import Smooks Configuration </property></emphasis> section should appear. Click the  <emphasis>
+				<property>Browse</property>
+			</emphasis> button and select the file you want to import. </para>
+		<para>Click <emphasis>
+			<property>Save</property></emphasis> and the <code>&lt;import&gt;</code> tag with the corresponding file path as a <emphasis>
+				<property>file</property></emphasis> property will be addded to the <emphasis>
+					<property>smooks-config.xml</property></emphasis>.</para>
 	</section>
 	<!--<section id="configurationpage_datedecoder">
 		<title>Date Decoder Detail Page</title>
