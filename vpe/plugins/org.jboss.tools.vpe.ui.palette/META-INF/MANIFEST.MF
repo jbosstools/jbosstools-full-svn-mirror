@@ -1,7 +1,6 @@
 Manifest-Version: 1.0
 Eclipse-LazyStart: true
 Bundle-Name: %pluginName
-Bundle-ClassPath: palettegef.jar
 Bundle-Activator: org.jboss.tools.vpe.ui.palette.PalettePlugin
 Bundle-Vendor: %providerName
 Bundle-SymbolicName: org.jboss.tools.vpe.ui.palette
