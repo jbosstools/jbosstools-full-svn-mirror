@@ -21,7 +21,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.internal.core.JavaProject;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IEditorInput;
@@ -142,8 +141,8 @@ public class JavabeanStrucutredDataWizard extends Wizard implements
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		if (selection != null) {
 			Object obj = selection.getFirstElement();
-			if (obj instanceof JavaProject) {
-				this.project = (JavaProject) obj;
+			if (obj instanceof IJavaProject) {
+				this.project = (IJavaProject) obj;
 			}
 			if (obj instanceof IResource) {
 				IProject project = ((IResource) obj).getProject();
@@ -169,7 +168,15 @@ public class JavabeanStrucutredDataWizard extends Wizard implements
 			JavaBeanModel javaBeanModel = (JavaBeanModel) iterator.next();
 			Class<?> clazz = javaBeanModel.getBeanClass();
 			if (clazz != null) {
-				buffer.append(clazz.getName());
+				boolean isArray = "array".equals(javaBeanModel
+						.getExtendProperty("many"));
+//				boolean isList = "list".equals(javaBeanModel
+//						.getExtendProperty("many"));
+				String cname = clazz.getName();
+				if(isArray){
+					cname = cname+ "[]";
+				}
+				buffer.append(cname);
 			}
 		}
 		return buffer.toString();

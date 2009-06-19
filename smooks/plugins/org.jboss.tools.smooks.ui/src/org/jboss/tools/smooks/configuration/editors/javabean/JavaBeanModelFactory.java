@@ -15,15 +15,14 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * @author Dart Peng
  * 
  */
 public class JavaBeanModelFactory {
-	
+
 	private static final List<Object> PRIMITIVE_CLASSES = new ArrayList<Object>();
-	static{
+	static {
 		PRIMITIVE_CLASSES.add(Integer.class);
 		PRIMITIVE_CLASSES.add(Double.class);
 		PRIMITIVE_CLASSES.add(Float.class);
@@ -37,25 +36,25 @@ public class JavaBeanModelFactory {
 		PRIMITIVE_CLASSES.add(Byte.class);
 		PRIMITIVE_CLASSES.add(java.util.Calendar.class);
 	}
-	
+
 	/**
 	 * @param beanClass
 	 * @param modelName
 	 * @return
 	 */
-	public synchronized static JavaBeanModel getJavaBeanModelWithLazyLoad(Class<?> beanClass ) {
-		JavaBeanModel m = new JavaBeanModel(beanClass,true);
+	public synchronized static JavaBeanModel getJavaBeanModelWithLazyLoad(Class<?> beanClass) {
+		JavaBeanModel m = new JavaBeanModel(beanClass, true);
 		m.setRootClassModel(true);
 		return m;
 	}
-	
+
 	/**
 	 * @deprecated
 	 * @param beanClass
 	 * @return
 	 */
-	public synchronized static JavaBeanModel getJavaBeanModel(Class<?> beanClass ) {
-		JavaBeanModel m = new JavaBeanModel(beanClass,false);
+	public synchronized static JavaBeanModel getJavaBeanModel(Class<?> beanClass) {
+		JavaBeanModel m = new JavaBeanModel(beanClass, false);
 		m.setRootClassModel(true);
 		return m;
 	}

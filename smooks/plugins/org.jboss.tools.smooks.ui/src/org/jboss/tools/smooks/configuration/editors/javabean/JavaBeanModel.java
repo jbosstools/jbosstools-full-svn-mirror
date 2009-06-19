@@ -16,6 +16,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -137,6 +138,14 @@ public class JavaBeanModel implements IXMLStructuredObject, Cloneable {
 			String s = clazz.getComponentType().getName();
 			return s + "[]"; //$NON-NLS-1$
 		}
+//		if(this.isList()){
+//			String cs = "<"+System.currentTimeMillis()+">";
+//			Class componentClazz = this.getComponentClass();
+//			if(componentClazz != null){
+//				cs = "<" + componentClazz.getName() +">";
+//			}
+//			return clazz.getName() + cs;
+//		}
 
 		return clazz.getName();
 	}
@@ -172,9 +181,23 @@ public class JavaBeanModel implements IXMLStructuredObject, Cloneable {
 					Type returnType = rmethod.getGenericReturnType();
 					if (returnType instanceof ParameterizedType) {
 						Type gtype = ((ParameterizedType) returnType).getActualTypeArguments()[0];
-						Class beanType = (Class) gtype;
-						componentClass = beanType;
-						setGenericType(true);
+						if(gtype instanceof Class){
+							Class beanType = (Class) gtype;
+							componentClass = beanType;
+							setGenericType(true);
+						}
+						if(gtype instanceof WildcardType){
+							Type[] upperBounds = ((WildcardType)gtype).getUpperBounds();
+							Type[] lowerBounds = ((WildcardType)gtype).getLowerBounds();
+							if(upperBounds.length != 0){
+								componentClass = (Class<?>) upperBounds[0];
+								setGenericType(true);
+							}
+							if(lowerBounds.length != 0){
+								componentClass = (Class<?>) lowerBounds[0];
+								setGenericType(true);
+							}
+						}
 					}
 				}
 			}
@@ -509,6 +532,10 @@ public class JavaBeanModel implements IXMLStructuredObject, Cloneable {
 	}
 
 	public Object getID() {
+		Class<?> clazz = getBeanClass();
+		if(Collection.class.isAssignableFrom(clazz)){
+			return getBeanClassString() + getName();
+		}
 		return getBeanClass();
 	}
 
