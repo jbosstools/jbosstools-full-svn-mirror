@@ -45,7 +45,6 @@ import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModelFactory;
-import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelectionWizard;
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
@@ -243,7 +242,6 @@ public class SelectoreSelectionDialog extends Dialog {
 		if (extType != null) {
 			IJavaProject project = SmooksUIUtils.getJavaProject(extType);
 			try {
-				ProjectClassLoader classLoader = new ProjectClassLoader(project);
 				List<InputType> inputLists = extType.getInput();
 				for (Iterator<?> iterator = inputLists.iterator(); iterator.hasNext();) {
 					InputType inputType = (InputType) iterator.next();
@@ -253,8 +251,8 @@ public class SelectoreSelectionDialog extends Dialog {
 						path = path.trim();
 						if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(type)) {
 							try {
-								JavaBeanModel model = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(classLoader
-										.loadClass(path));
+								Class<?> clazz = SmooksUIUtils.loadClass(path, project);
+								JavaBeanModel model = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
 								if (model != null) {
 									list.add(model);
 								}

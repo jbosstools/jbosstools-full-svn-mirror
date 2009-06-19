@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.SelectoreSelectionDialog;
 import org.jboss.tools.smooks.configuration.editors.groovy.GroovyUICreator;
@@ -137,7 +138,7 @@ public class SelectorValidator extends AbstractValidator {
 							node = SmooksUIUtils
 									.localXMLNodeWithPath(path, (IXMLStructuredObject) obj, sperator, false);
 						} catch (Throwable e) {
-							// ignore
+							SmooksConfigurationActivator.getDefault().log(e);
 						}
 					}
 					if (node != null) {

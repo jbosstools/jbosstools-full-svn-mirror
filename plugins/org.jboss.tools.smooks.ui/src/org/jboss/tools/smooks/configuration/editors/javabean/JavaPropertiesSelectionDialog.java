@@ -41,6 +41,7 @@ import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.uitls.IFieldDialog;
 import org.jboss.tools.smooks.configuration.editors.uitls.IModelProcsser;
 import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -61,34 +62,24 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 
 	public Object open(Shell shell) {
 		String errorMessage = "";
-		if(project == null){
+		if (project == null) {
 			errorMessage = "Please make sure the project is the 'Java Project'";
 		}
 		try {
 			if (project != null && className != null) {
-				Class<?> clazz = null;
-				ProjectClassLoader classLoader;
-
-				classLoader = new ProjectClassLoader(project);
-
-				if (className.endsWith("[]")) {
-					String arrayClassName = className.substring(0, className.length() - 2);
-					clazz = classLoader.loadClass(arrayClassName);
-					Object arrayInstance = Array.newInstance(clazz, 0);
-					clazz = arrayInstance.getClass();
-				} else {
-					clazz = classLoader.loadClass(className);
-				}
-				JavaBeanModel beanModel = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
-				PropertySelectionDialog dialog = new PropertySelectionDialog(shell, project, beanModel);
-				if (dialog.open() == Dialog.OK) {
-					JavaBeanModel pd = (JavaBeanModel) dialog.getCurrentSelection();
-					if(pd == null){
+				Class<?> clazz = SmooksUIUtils.loadClass(className, project);
+				if (clazz != null) {
+					JavaBeanModel beanModel = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
+					PropertySelectionDialog dialog = new PropertySelectionDialog(shell, project, beanModel);
+					if (dialog.open() == Dialog.OK) {
+						JavaBeanModel pd = (JavaBeanModel) dialog.getCurrentSelection();
+						if (pd == null) {
+							return null;
+						}
+						return pd.getName();
+					} else {
 						return null;
 					}
-					return pd.getName();
-				} else {
-					return null;
 				}
 			}
 		} catch (JavaModelException e) {
@@ -96,7 +87,8 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 		} catch (ClassNotFoundException e) {
 			errorMessage = "'" + className + "' can't be found.";
 		}
-		MessageDialog.openInformation(shell, "Can't open dialog", "Can't get properties of '" + className + "'.\n" + errorMessage);
+		MessageDialog.openInformation(shell, "Can't open dialog", "Can't get properties of '" + className + "'.\n"
+				+ errorMessage);
 		return null;
 	}
 
@@ -128,7 +120,7 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 			fl.marginHeight = 10;
 			fl.marginWidth = 10;
 			composite.setLayout(fl);
-			viewer = new TableViewer(composite, SWT.BORDER|SWT.FULL_SELECTION);
+			viewer = new TableViewer(composite, SWT.BORDER | SWT.FULL_SELECTION);
 			Table table = viewer.getTable();
 			TableColumn nameColumn = new TableColumn(table, SWT.NONE);
 			nameColumn.setWidth(100);

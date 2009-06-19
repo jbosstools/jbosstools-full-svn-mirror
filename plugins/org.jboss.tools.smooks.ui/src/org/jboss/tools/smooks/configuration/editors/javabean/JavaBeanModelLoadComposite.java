@@ -140,7 +140,7 @@ public class JavaBeanModelLoadComposite extends Composite implements SelectionLi
 		gd.horizontalSpan = 2;
 		listViewerComposite.setLayoutData(gd);
 
-		listViewer = new TableViewer(listViewerComposite, SWT.BORDER);
+		listViewer = new TableViewer(listViewerComposite, SWT.BORDER |SWT.FULL_SELECTION);
 		TableColumn nameColumn = new TableColumn(listViewer.getTable(), SWT.NONE);
 		nameColumn.setText("Class");
 		TableColumn isArrayColumn = new TableColumn(listViewer.getTable(), SWT.NONE);

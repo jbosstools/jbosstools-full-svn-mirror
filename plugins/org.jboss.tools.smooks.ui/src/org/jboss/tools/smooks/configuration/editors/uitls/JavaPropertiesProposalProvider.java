@@ -35,19 +35,7 @@ public class JavaPropertiesProposalProvider implements IContentProposalProvider 
 	public JavaPropertiesProposalProvider(IProject project,String className){
 		try {
 			if (project != null && className != null) {
-				Class<?> clazz = null;
-				ProjectClassLoader classLoader;
-
-				classLoader = new ProjectClassLoader(JavaCore.create(project));
-
-				if (className.endsWith("[]")) {
-					String arrayClassName = className.substring(0, className.length() - 2);
-					clazz = classLoader.loadClass(arrayClassName);
-					Object arrayInstance = Array.newInstance(clazz, 0);
-					clazz = arrayInstance.getClass();
-				} else {
-					clazz = classLoader.loadClass(className);
-				}
+				Class<?> clazz = SmooksUIUtils.loadClass(className, project);
 				beanModel = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
 			}
 		} catch (JavaModelException e) {

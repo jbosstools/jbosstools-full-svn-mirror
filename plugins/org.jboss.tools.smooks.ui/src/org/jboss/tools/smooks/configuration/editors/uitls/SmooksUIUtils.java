@@ -12,6 +12,7 @@ package org.jboss.tools.smooks.configuration.editors.uitls;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -401,7 +402,7 @@ public class SmooksUIUtils {
 	}
 
 	public static String parseFilePath(String path) throws InvocationTargetException {
-		if(new File(path).exists()){
+		if (new File(path).exists()) {
 			return path;
 		}
 		int index = path.indexOf(FILE_PRIX);
@@ -771,14 +772,30 @@ public class SmooksUIUtils {
 		return fieldEditPart;
 	}
 
-	public static Class<?> loadClass(String className, IResource resource) throws JavaModelException,
+	public static Class<?> loadClass(String className, Object resource) throws JavaModelException,
 			ClassNotFoundException {
 		if (resource == null)
 			return null;
-
-		IProject project = resource.getProject();
-		if (project != null) {
-			ProjectClassLoader loader = new ProjectClassLoader(JavaCore.create(project));
+		IJavaProject jp = null;
+		if (resource instanceof IJavaProject) {
+			jp = (IJavaProject) resource;
+		}
+		if (resource instanceof IResource) {
+			IProject project = ((IResource) resource).getProject();
+			if (project != null) {
+				jp = JavaCore.create(project);
+			}
+		}
+		if (jp != null) {
+			ProjectClassLoader loader = new ProjectClassLoader(jp);
+			if(className.endsWith("[]")){
+				className = className.substring(0,className.length() - 2);
+				Class<?> clazz = loader.loadClass(className);
+				Object arrayInstance = Array.newInstance(clazz, 0);
+				clazz = arrayInstance.getClass();
+				arrayInstance = null;
+				return clazz;
+			}
 			return loader.loadClass(className);
 		}
 
@@ -1935,7 +1952,11 @@ public class SmooksUIUtils {
 				if (usedNodeMap.get(child.getID()) != null) {
 					continue;
 				}
-				result = localXMLNodeWithNodeName(name, child, usedNodeMap);
+				try {
+					result = localXMLNodeWithNodeName(name, child, usedNodeMap);
+				} catch (Throwable t) {
+					t.printStackTrace();
+				}
 				if (result != null) {
 					return result;
 				}
