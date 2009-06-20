@@ -55,7 +55,7 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>The second wizard page is a Smooks configuration file version choose page.Select appropriate one and click finish.</para>
+		<para>The second wizard page is a Smooks configuration file version choose page.Select appropriate one and click <emphasis><property>Finish</property></emphasis>.</para>
 		<!--<para> As the quick start introduces how to create/edit the Java-to-Java Smooks
 			configuration file, let&apos;s select the<emphasis>
 				<property>Java-to-Java</property>
@@ -193,9 +193,10 @@
 	<section id="graphicaleditor_datalink">
 		<title>Choosing the transform data</title>
 
-		<para>To choose the transform data you should click add button in the Input Data section.</para>
+		<para>To choose the transform data you should click <emphasis>
+			<property>Add</property></emphasis> button in the Input Data section.</para>
 		<para>After clicking the button the <property>Data Type Selection wizard</property> is
-			opened, and there are two data types on the list: Java and XML.</para>
+			opened, and there are two data types in the list: Java and XML.</para>
 		<note>
 			<title>Note</title>
 			<para> There will become more and more data types on the list as the development goes on.
@@ -289,7 +290,10 @@
 			You should right click Resource List , select <emphasis>
 				<property>Add Smooks Resource>Java Binding>Bindings</property></emphasis>.  
 			</para>
-		<para>First of all, you should bind Order to LineOrder. To do this one Bindings Item should be added to the Resource List.</para>
+		<para>First of all, you should bind <emphasis>
+			<property>Order</property></emphasis> to <emphasis>
+				<property>LineOrder</property></emphasis>. To do this one <emphasis>
+					<property>Bindings</property></emphasis> Item should be added to the Resource List.</para>
 			<figure>
 				<title>Mapping</title>
 				<mediaobject>
@@ -297,8 +301,15 @@
 						<imagedata fileref="images/quick_start/quick_start10.png" scale="90"/>
 					</imageobject>
 				</mediaobject>
-			</figure><para>Click on it and you should see Bindings  Section to the right of Message Filtering Resources.Write <emphasis> <property>lineOrder</property></emphasis> in the Bean id field.</para>
-		<para>Select example.trgmodel.LineOrder in the Class field and example.srcmodel.Order in the Name field.Your <emphasis> <property>Smooks Configuration Editor</property></emphasis> should look like this: </para>
+			</figure><para>Click on it and you should see <emphasis>
+				<property>Bindings</property></emphasis> Section to the right of <emphasis>
+					<property>Message Filtering Resources</property></emphasis>.Write <emphasis> <property>lineOrder</property></emphasis> in the <emphasis>
+						<property>Bean id</property></emphasis> field.</para>
+		<para>Select <emphasis>
+			<property>example.trgmodel.LineOrder</property></emphasis> in the <emphasis>
+				<property>Class</property></emphasis> field and <emphasis>
+					<property>example.srcmodel.Order</property></emphasis> in the <emphasis>
+						<property>Name</property></emphasis> field.Your <emphasis> <property>Smooks Configuration Editor</property></emphasis> should look like this: </para>
 		<figure>
 			<title>Mapping</title>
 			<mediaobject>
@@ -355,9 +366,12 @@
 		<para> Then you should right click <emphasis>
 			<property>lineOrder</property></emphasis> binding item<emphasis>
 				<property>>Add Smooks Resource>Wiring</property></emphasis>.Select <emphasis>
-					<property>lineItem</property></emphasis> in Bean id Ref.
+					<property>lineItem</property></emphasis> in <emphasis>
+						<property>Bean id Ref</property></emphasis>.
 		</para>
-		<para>The final step is to add new Wiring item to lineOrder Binding.In the Bean id Ref select lineItems and in Property select <emphasis>
+		<para>The final step is to add new Wiring item to lineOrder <property>Binding</property>.In the <property>Bean id Ref</property> select <emphasis>
+			<property>lineItems</property></emphasis> and in <emphasis>
+				<property>Property</property></emphasis> select <emphasis>
 			<property>lineItems</property></emphasis>.</para>
 <!--
 		<para>Next, you are going to bind the properties of the <property>OrderItem</property> to
