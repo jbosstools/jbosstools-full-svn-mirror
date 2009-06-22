@@ -40,7 +40,36 @@
 	<para> The configuration editor also edits the <link linkend="configurationpage_parsetype">Smooks parse
 			type</link> and manages the <link linkend="configurationpage_importfile">Import
 			Files</link>.</para>
-
+	<section id="selector-dialog">
+		<title>Selector generate dialog</title>
+		<para>Using <emphasis>
+			<property>Selector generate dialog</property></emphasis> you can allow the user to select a node for generation <property>"selector"</property> for smooks-config file.
+			To open the dialog you should left click <property>Browse</property> button in <emphasis>
+				<property>Default Selector</property></emphasis> section.
+		</para>
+		<figure>
+			<title>Selector generate dialog</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/config_page/config_page2a.png" scale="90"/>
+			</imageobject>
+		</mediaobject>
+		</figure>
+		<para>	When the dialog is opened  you should click <property>"Click to add input data"</property>to set the selector.
+			In the opened  <emphasis>
+				<property>Data Type Selection</property></emphasis> Wizard you should choose the type of the file and the file itself you want to load to the <emphasis>
+					<property>Selector generate dialog</property></emphasis>.After that your dialog should look nearly like that:</para>
+		<figure>
+			<title>Selector generate dialog</title>
+			<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/config_page/config_page2b.png" scale="90"/>
+			</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The final step is to choose the node you want to make a selector for <emphasis>
+			<property>smooks-config.xml</property></emphasis>.</para>	
+	</section>	
 	<section id="configurationpage_parsetype">
 
 		<title>Smooks Parse Type</title>
