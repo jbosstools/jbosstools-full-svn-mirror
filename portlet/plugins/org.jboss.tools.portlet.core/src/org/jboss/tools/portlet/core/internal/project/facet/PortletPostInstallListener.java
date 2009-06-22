@@ -218,7 +218,7 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 		});
 		String clientURI = ""; //$NON-NLS-1$
 		for (File file : earJars) {
-			clientURI += " " + file.getName(); //$NON-NLS-1$ //$NON-NLS-2$
+			clientURI += " " + file.getName(); //$NON-NLS-1$
 		}
 		
 		try {

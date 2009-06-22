@@ -8,7 +8,7 @@ public abstract class BasePortletClasspathContainer extends
 		AbstractClasspathContainer {
 
 	protected static final String PORTLET_FOLDER = "portlet"; //$NON-NLS-1$
-	public final static String SUFFIX = PORTLET_FOLDER;//$NON-NLS-1$
+	public final static String SUFFIX = PORTLET_FOLDER;
 	public final static String PREFIX = "org.jboss.tools.portlet.core"; //$NON-NLS-1$
 
 	public BasePortletClasspathContainer(IJavaProject project, IPath path,

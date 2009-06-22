@@ -32,11 +32,11 @@ public class XULRunnerInitializer {
 					.toString();
 			Bundle xulRunnerBundle = Platform.getBundle(XULRUNNER_BUNDLE);
 			if (xulRunnerBundle == null) {
-				System.out.println(NLS.bind(Messages.XULRunnerInitializer_Bundle_is_not_found, XULRUNNER_BUNDLE )); //$NON-NLS-2$
+				System.out.println(NLS.bind(Messages.XULRunnerInitializer_Bundle_is_not_found, XULRUNNER_BUNDLE ));
 			} else {
 				URL url = xulRunnerBundle.getEntry(XULRUNNER_ENTRY);
 				if (url == null) {
-					System.out.println(NLS.bind(Messages.XULRunnerInitializer_Bundle_doesnt_contain, new Object[] {XULRUNNER_BUNDLE,XULRUNNER_ENTRY})); //$NON-NLS-2$
+					System.out.println(NLS.bind(Messages.XULRunnerInitializer_Bundle_doesnt_contain, new Object[] {XULRUNNER_BUNDLE,XULRUNNER_ENTRY}));
 				} else {
 					File xulrunnerFile;
 					try {

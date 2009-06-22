@@ -54,7 +54,7 @@ public class JSFPortlet10LibrariesContainerInitializer extends
 
 	private class JSFPortlet10ClasspathContainer extends AbstractClasspathContainer {
 		
-		public final static String SUFFIX = PortletCoreActivator.JSFPORTLET_FOLDER;//$NON-NLS-1$
+		public final static String SUFFIX = PortletCoreActivator.JSFPORTLET_FOLDER;
 		public final static String PREFIX = "org.jboss.tools.portlet.core"; //$NON-NLS-1$
 
 		public JSFPortlet10ClasspathContainer(IPath path, IJavaProject javaProject) {
