@@ -30,6 +30,7 @@ import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.FieldAssistDisposer;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.editors.uitls.TextTypeSwicher;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 
 /**
@@ -63,6 +64,9 @@ public class TemplateUICreator extends PropertyUICreator {
 		// OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model,
 		// SmooksUIUtils.VALUE_TYPE_COMMENT, "flt");
 
+		TextTypeSwicher swicher = new TextTypeSwicher();
+		swicher.createSwicherGUI("External Template File", "Inline Template", parent, toolkit);
+
 		AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Inline Template", editingdomain,
 				toolkit, parent, model, openCDATAEditorAction, true);
 		Control c = cdatatext.getContentControl();
@@ -93,8 +97,14 @@ public class TemplateUICreator extends PropertyUICreator {
 		openCDATAEditorAction.setRelateText((Text) cdatatext.getContentControl());
 		// openCommentEditorAction.setRelateText((Text)commenttext.getContentControl());
 
-		list.add(SmooksUIUtils.createFileSelectionTextFieldEditor("External Template File", parent, editingdomain,
-				toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT, null, null));
+		AttributeFieldEditPart textFieldEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor(
+				"External Template File", parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
+				null, null);
+
+		list.add(textFieldEditPart);
+
+		swicher.hookSwicher(textFieldEditPart, cdatatext, editingdomain, model);
+
 		list.add(SmooksUIUtils.createStringFieldEditor(parent, toolkit, getPropertyDescriptor(editingdomain,
 				FreemarkerPackage.eINSTANCE.getTemplate_Encoding(), model), model, false, false, null));
 		return list;

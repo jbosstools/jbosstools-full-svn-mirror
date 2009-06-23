@@ -41,7 +41,7 @@ public class BeanIdRefValidator extends AbstractValidator {
 	 */
 	@Override
 	protected void preStartValidation() {
-		
+
 	}
 
 	/*
@@ -59,10 +59,12 @@ public class BeanIdRefValidator extends AbstractValidator {
 		if (obj instanceof DocumentRoot) {
 			SmooksResourceListType listType = ((DocumentRoot) obj).getSmooksResourceList();
 			List<String> ids = SmooksUIUtils.getBeanIdStringList(listType);
-			idList.addAll(ids);
+			if (ids != null){
+				idList.addAll(ids);
+			}
 		}
 		if (idList.isEmpty()) {
-//			return null;
+			// return null;
 		}
 		return super.validate(selectedObjects, editingDomain);
 	}
@@ -83,9 +85,9 @@ public class BeanIdRefValidator extends AbstractValidator {
 						JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF);
 			}
 		}
-		
-		if(model instanceof JmsRouter){
-			String idRef = ((JmsRouter)model).getBeanId();
+
+		if (model instanceof JmsRouter) {
+			String idRef = ((JmsRouter) model).getBeanId();
 			if (!idList.contains(idRef)) {
 				return newWaringDiagnostic("Reference BeanId '" + idRef + "' dosen't exist.", model,
 						JmsroutingPackage.Literals.JMS_ROUTER__BEAN_ID);
