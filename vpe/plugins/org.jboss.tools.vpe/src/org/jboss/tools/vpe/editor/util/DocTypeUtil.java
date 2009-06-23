@@ -11,7 +11,9 @@
 
 package org.jboss.tools.vpe.editor.util;
 
+
 import java.io.File;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -22,10 +24,15 @@ import org.eclipse.core.filebuffers.ITextFileBuffer;
 import org.eclipse.core.filebuffers.ITextFileBufferManager;
 import org.eclipse.core.filebuffers.LocationKind;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.internal.core.JarEntryFile;
+import org.eclipse.jdt.internal.ui.javaeditor.JarEntryEditorInput;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
@@ -44,6 +51,8 @@ import org.w3c.dom.NodeList;
 
 public class DocTypeUtil {
 
+	private static final String TEMP_FILE_NAME = "VPE-Temporally-"; //$NON-NLS-1$ 
+	
 	static private List<String> urlTags;
 
 	static {
@@ -65,24 +74,97 @@ public class DocTypeUtil {
 	 * @return
 	 */
 	public static String getDoctype(IEditorInput editorInput) {
-
-
-		// if opened file is located in eclipse workspace
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4510
+		 * Doctype string should always have some value:
+		 * empty value or doctype value, but not 'null'
+		 * because this string is displayed on VPE page.
+		 */
+		String doctype = Constants.EMPTY;
+		/*
+		 * if opened file is located in eclipse workspace
+		 */
 		if (editorInput instanceof IFileEditorInput) {
 			IFile f = ((IFileEditorInput) editorInput).getFile();
-			return (f == null || !f.exists()) ? null : getDoctype(f,null);
+			if ((f != null) && f.exists()) {
+				doctype = getDoctype(f,null);
+			}
 		}
-		// if opened file is not located in eclipse workspace
+		/*
+		 *  if opened file is not located in eclipse workspace
+		 */
 		else if (editorInput instanceof ILocationProvider) {
 			IPath path = ((ILocationProvider) editorInput).getPath(editorInput);
-			if (path == null || path.segmentCount() < 1)
-				return null;
-			//TODO SDzmitrovich Fix This Method, convert to IPath to IFile,
-			//or smht. else, should be only one getDoctype(IFile, List<IFile>); 
-			return getDoctype(path.toFile());
+			if (path != null && path.segmentCount() > 0) {
+				//TODO SDzmitrovich Fix This Method, convert to IPath to IFile,
+				//or smht. else, should be only one getDoctype(IFile, List<IFile>); 
+				doctype = getDoctype(path.toFile()); 
+			}
+		} 
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4510
+		 * When file is opened from jar archive.
+		 */
+		else if (editorInput instanceof JarEntryEditorInput) {
+			/*
+			 * To determine the doctype of a file from jar archive
+			 * by means of eclipse's StructuredModelManager
+			 * file should be an IFile type and should exists in the workspace.
+			 * To achieve that conditions temporally IFile will be created
+			 * in the root project folder.
+			 * After doctype processing temporally file will be deleted. 
+			 */
+			JarEntryEditorInput input = ((JarEntryEditorInput) editorInput);
+			IStorage storage = input.getStorage();
+			JarEntryFile jarFile = null;
+			IFile iFile = null;
+			if (storage instanceof JarEntryFile) {
+				jarFile = (JarEntryFile) storage;
+				try {
+					/*
+					 * Get the content of a file from jar archive.
+					 */
+					InputStream is = jarFile.getContents();
+					/*
+					 * Find the eclipse project that contains selected jar archive.
+					 */
+					IJavaProject javaProject = jarFile.getPackageFragmentRoot().getJavaProject();
+					if (javaProject != null) {
+						IProject project = javaProject.getProject();
+						/*
+						 * Create temporally IFile.
+						 */
+						iFile = project.getFile(TEMP_FILE_NAME + jarFile.getName());
+						/*
+						 * Delete any previously saved file.
+						 */
+						if ((iFile != null) && (iFile.exists())){
+							iFile.delete(true, false, null);
+						}
+						/*
+						 * Create new file with a content of the file from jar library.
+						 */
+						iFile.create(is, true, null);
+						/*
+						 * Get doctype for this file, store it.
+						 */
+						doctype = getDoctype(iFile, null);
+						/*
+						 * Delete temporally file.
+						 */
+						if (iFile != null) {
+							iFile.delete(true, false, null);
+						}
+					}
+				} catch (CoreException e) {
+					/*
+					 * Log any possible errors.
+					 */
+					VpePlugin.getPluginLog().logError(e);
+				} 
+			} 
 		}
-		return null; 
-
+		return doctype; 
 	}
 
 	/**
@@ -92,83 +174,59 @@ public class DocTypeUtil {
 	 * @return
 	 */
 	private static String getDoctype(IFile file, List<IFile> previousFiles) {
-
-		String docTypeValue = null;
-
-		// get document
+		String docTypeValue = Constants.EMPTY;
 		Document document = null;
 		try	{ 
-		
 			document = VpeCreatorUtil.getDocumentForRead(file);
-
 		if (document != null) {
-
-			/*
-			 * if there is "component" element (ui:composition or ui:component )
-			 * so we don't use doctype from current page (as all text outside
-			 * this elements will be removed)
-			 */
-
 			// find "component" element
 			Element componentElement = FaceletUtil
 					.findComponentElement(document.getDocumentElement());
 
-			// if "component" element was not found return doctype from current
-			// page
-			if (componentElement == null) {
-
-				IDOMDocumentType documentType = (IDOMDocumentType) document
-						.getDoctype();
-
-				if (documentType != null)
-					docTypeValue = documentType.getSource();
-
-			}
-
-			// if "component" element was not found return doctype from current
-			// page
-			else if ((componentElement != null)
-					&& (FaceletUtil.TAG_COMPOSITION.equals(componentElement
-							.getLocalName()))
-					&& (componentElement
-							.hasAttribute(FaceletUtil.ATTR_TEMPLATE))) {
-
+			/*
+			 * if there is "component" element (ui:composition or ui:component)
+			 * so we don't use doctype from current page 
+			 * (as all text outside this elements will be removed)
+			 */
+			 if ((componentElement != null)
+					&& (FaceletUtil.TAG_COMPOSITION.equals(componentElement.getLocalName()))
+					&& (componentElement.hasAttribute(FaceletUtil.ATTR_TEMPLATE))) {
 				// get attribute "template"
 				Attr attr = ((Element) componentElement)
 						.getAttributeNode(FaceletUtil.ATTR_TEMPLATE);
-
 				if (attr.getNodeValue().trim().length() > 0) {
-
 					// get name of template file
 					String fileName = attr.getNodeValue().trim();
-
 					// get file
 					IFile templateFile = FileUtil.getFile(fileName, file);
-
 					if (templateFile != null) {
 						//if it's was first call of DOCTYPE function
 						if(previousFiles==null) {
-							
 							previousFiles = new ArrayList<IFile>();
 						}
 						//Added by Max Areshkau JBIDE-2434
 						if(!previousFiles.contains(templateFile)) {
-							
-						previousFiles.add(templateFile);	
-						docTypeValue = getDoctype(templateFile,previousFiles);
+							previousFiles.add(templateFile);	
+							docTypeValue = getDoctype(templateFile,previousFiles);
 						}
 					}
 				}
-
+			} else {
+				/*
+				 * if "component" element was not found
+				 * return doctype from current page 
+				 */
+				IDOMDocumentType documentType = (IDOMDocumentType) document.getDoctype();
+				if (documentType != null)
+					docTypeValue = documentType.getSource();
 			}
 		}
 		} finally {
 			if(document!=null) {
-				
 				VpeCreatorUtil.releaseDocumentFromRead(document);
 			}
 		}
-		return docTypeValue != null ? docTypeValue.trim() : ""; //$NON-NLS-1$
+		return (docTypeValue != null) ? docTypeValue.trim() : Constants.EMPTY;
 	}
 
 	/**
@@ -178,65 +236,45 @@ public class DocTypeUtil {
 	 * @return
 	 */
 	private static String getDoctype(File file) {
-
-		String docTypeValue = null;
-
-		// get document
+		String docTypeValue = Constants.EMPTY;
 		IDOMDocument document = getDocument(file);
-
 		if (document != null) {
-
-			/*
-			 * if there is "component" element (ui:composition or ui:component )
-			 * so we don't use doctype from current page (as all text outside
-			 * this elements will be removed)
-			 */
-
 			// find "component" element
 			Element componentElement = FaceletUtil
 					.findComponentElement(document.getDocumentElement());
-
-			// if "component" element was not found return doctype from current
-			// page
-			if (componentElement == null) {
-
-				IDOMDocumentType documentType = (IDOMDocumentType) document
-						.getDoctype();
-
-				if (documentType != null)
-					docTypeValue = documentType.getSource();
-
-			}
-
-			// if "component" element was not found return doctype from current
-			// page
-			else if ((componentElement != null)
+			/*
+			 * if there is "component" element (ui:composition or ui:component)
+			 * so we don't use doctype from current page 
+			 * (as all text outside this elements will be removed)
+			 */
+			 if ((componentElement != null)
 					&& (FaceletUtil.TAG_COMPOSITION.equals(componentElement
 							.getLocalName()))
 					&& (componentElement
 							.hasAttribute(FaceletUtil.ATTR_TEMPLATE))) {
-
 				// get attribute "template"
 				Attr attr = ((Element) componentElement)
 						.getAttributeNode(FaceletUtil.ATTR_TEMPLATE);
-
 				if (attr.getNodeValue().trim().length() > 0) {
-
 					// get name of template file
 					String fileName = attr.getNodeValue().trim();
-
 					// get file
 					File templateFile = new File(file.getParent(), fileName);
-
-					if (templateFile.exists())
+					if (templateFile.exists()) {
 						docTypeValue = getDoctype(templateFile);
-
+					}
 				}
-
+			} else {
+				/*
+				 * if "component" element was not found
+				 * return doctype from current page 
+				 */
+				IDOMDocumentType documentType = (IDOMDocumentType) document.getDoctype();
+				if (documentType != null)
+					docTypeValue = documentType.getSource();
 			}
 		}
-		return docTypeValue != null ? docTypeValue.trim() : ""; //$NON-NLS-1$
-
+		return (docTypeValue != null) ? docTypeValue.trim() : Constants.EMPTY;
 	}
 
 	/**
@@ -266,25 +304,20 @@ public class DocTypeUtil {
 		// return null;
 
 		IDOMModel model = null;
-
 		ITextFileBufferManager bufferManager = FileBuffers
 				.getTextFileBufferManager();
 		IPath location = new Path(file.getAbsolutePath());
-
 		try {
 			bufferManager.connect(location, LocationKind.LOCATION,
 					new NullProgressMonitor());
-
 			ITextFileBuffer buffer = bufferManager.getTextFileBuffer(location,
 					LocationKind.LOCATION);
 			if (buffer != null) {
-
 				IDocument bufferDocument = buffer.getDocument();
 				if (bufferDocument instanceof IStructuredDocument) {
 					model = (IDOMModel) FileBufferModelManager.getInstance()
 							.getModel((IStructuredDocument) bufferDocument);
 				} else {
-
 					bufferManager.disconnect(location, LocationKind.IFILE,
 							new NullProgressMonitor());
 				}
@@ -292,7 +325,6 @@ public class DocTypeUtil {
 		} catch (CoreException e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
-
 		return model.getDocument();
 	}
 
@@ -315,50 +347,33 @@ public class DocTypeUtil {
 	 * @return
 	 */
 	public static String getContentInitFile(File initFile) {
-
 		IDOMDocument document = getDocument(initFile);
-
 		if (document != null) {
 			// for each tag's name
 			for (String tag : urlTags) {
-
 				NodeList list = document.getElementsByTagName(tag);
-
 				for (int i = 0; i < list.getLength(); i++) {
-
 					Element element = (Element) list.item(i);
-
 					// for each attribute's name
 					for (String attributeName : urlAttributes) {
-
 						if (element.hasAttribute(attributeName)) {
-
 							Attr attr = element.getAttributeNode(attributeName);
-							
 							try {
 								URI uri = new URI(attr.getValue().replace('\\', '/'));
 								if (!uri.isAbsolute()) {
 									// corrected path
 									attr.setValue(Constants.FILE_PREFIX + initFile.getParent()
 											+ File.separator + attr.getValue());
-
 								}
 							} catch (URISyntaxException e) {
 								VpePlugin.getPluginLog().logError(e.getMessage());
 							}
-							
 						}
-
 					}
-
 				}
-
 			}
-
-			return (document).getSource();
+			return document.getSource();
 		}
-
-		return ""; //$NON-NLS-1$
-
+		return Constants.EMPTY;
 	}
 }
