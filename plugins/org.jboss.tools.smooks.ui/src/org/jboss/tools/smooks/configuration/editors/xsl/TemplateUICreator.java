@@ -25,6 +25,7 @@ import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.editors.uitls.TextTypeSwicher;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
 
 /**
@@ -79,16 +80,23 @@ public class TemplateUICreator extends PropertyUICreator {
 		// OpenEditorEditInnerContentsAction openCommentEditorAction = new
 		// OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model,
 		// SmooksUIUtils.VALUE_TYPE_COMMENT, "xsl");
-		AttributeFieldEditPart text1 = SmooksUIUtils.createCDATAFieldEditor("Inline Template", editingdomain, toolkit,
-				parent, model, openCdataEditorAction,true);
+		TextTypeSwicher swicher = new TextTypeSwicher();
+		swicher.createSwicherGUI("External Template File", "Inline Template", parent, toolkit);
+		AttributeFieldEditPart cdataFieldEditPart = SmooksUIUtils.createCDATAFieldEditor("Inline Template", editingdomain, toolkit,
+				parent, model, openCdataEditorAction, true);
 		// AttributeFieldEditPart text2 =
 		// SmooksUIUtils.createCommentFieldEditor("Template Contents (Comment)",
 		// editingdomain, toolkit, parent, model, openCommentEditorAction);
-		openCdataEditorAction.setRelateText((Text) text1.getContentControl());
+		openCdataEditorAction.setRelateText((Text) cdataFieldEditPart.getContentControl());
 		// openCommentEditorAction.setRelateText((Text)text2.getContentControl());
-		list.add(SmooksUIUtils.createFileSelectionTextFieldEditor("External Template File", parent, editingdomain,
-				toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT, null, null));
-		list.add(text1);
+		AttributeFieldEditPart textFieldEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor(
+				"External Template File", parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
+				null, null);
+		list.add(textFieldEditPart);
+		list.add(cdataFieldEditPart);
+		
+		swicher.hookSwicher(textFieldEditPart, cdataFieldEditPart, editingdomain, model);
+		
 		list.add(SmooksUIUtils.createStringFieldEditor(parent, toolkit, getPropertyDescriptor(editingdomain,
 				XslPackage.eINSTANCE.getTemplate_Encoding(), model), model, false, false, null));
 		return list;

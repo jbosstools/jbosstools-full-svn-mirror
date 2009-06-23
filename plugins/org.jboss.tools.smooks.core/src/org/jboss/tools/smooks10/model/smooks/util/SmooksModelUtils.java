@@ -285,8 +285,11 @@ public class SmooksModelUtils {
 	public static String getAnyTypeText(AnyType anyType) {
 		Object value = anyType.getMixed().get(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT, true);
 		if (value != null) {
-			if (value instanceof List && !((List) value).isEmpty()) {
-				return ((List) value).get(0).toString().trim();
+			if (value instanceof List && !((List<?>) value).isEmpty()) {
+				Object v = ((List<?>) value).get(0);
+				if (v != null) {
+					return v.toString().trim();
+				}
 			}
 			// return value.toString();
 		}
@@ -297,7 +300,10 @@ public class SmooksModelUtils {
 		Object value = anyType.getMixed().get(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, true);
 		if (value != null) {
 			if (value instanceof List && !((List) value).isEmpty()) {
-				return ((List) value).get(0).toString().trim();
+				Object v = ((List) value).get(0);
+				if (v != null) {
+					return v.toString().trim();
+				}
 			}
 			// return value.toString();
 		}
@@ -307,8 +313,11 @@ public class SmooksModelUtils {
 	public static String getAnyTypeComment(AnyType anyType) {
 		Object value = anyType.getMixed().get(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT, true);
 		if (value != null) {
-			if (value instanceof List && !((List) value).isEmpty()) {
-				return ((List) value).get(0).toString().trim();
+			if (value instanceof List && !((List<?>) value).isEmpty()) {
+				Object v = ((List<?>) value).get(0);
+				if (v != null) {
+					return v.toString().trim();
+				}
 			}
 			// return value.toString();
 		}
@@ -417,11 +426,21 @@ public class SmooksModelUtils {
 		smooksModel.getMixed().add(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, text);
 	}
 
+	/**
+	 * @deprecated
+	 * @param smooksModel
+	 * @param text
+	 */
 	public static void setTextToAnyType(AnyType smooksModel, String text) {
 		cleanTextToSmooksType(smooksModel);
 		appendTextToSmooksType(smooksModel, text);
 	}
 
+	/**
+	 * @deprecated
+	 * @param smooksModel
+	 * @param text
+	 */
 	public static void setCDATAToAnyType(AnyType smooksModel, String text) {
 		cleanCDATAToSmooksType(smooksModel);
 		appendCDATAToSmooksType(smooksModel, text);

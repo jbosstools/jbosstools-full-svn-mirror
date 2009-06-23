@@ -221,22 +221,22 @@ public class SmooksUIUtils {
 		return beanIdList;
 	}
 
-	public static void createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
+	public static AttributeFieldEditPart createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, boolean linkLabel, IHyperlinkListener listener) {
-		createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, false, 0, linkLabel, false, listener,
+		return createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, false, 0, linkLabel, false, listener,
 				null);
 	}
 
-	public static void createMultiMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
+	public static AttributeFieldEditPart createMultiMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, int height, OpenEditorEditInnerContentsAction action) {
-		createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, true, height, false, false, null,
+		return createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, true, height, false, false, null,
 				action);
 	}
 
-	public static void createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
+	public static AttributeFieldEditPart createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, boolean multiText, int height, boolean linkLabel,
 			boolean openFile, IHyperlinkListener listener, OpenEditorEditInnerContentsAction action) {
-		createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, multiText, linkLabel, openFile,
+		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, multiText, linkLabel, openFile,
 				height, listener, VALUE_TYPE_TEXT, action);
 	}
 
@@ -623,9 +623,9 @@ public class SmooksUIUtils {
 		}
 		if (editValue != null && valueIsSet) {
 			valueText.setText(editValue);
-			// if (editValue.length() > 0 && section != null) {
-			// section.setExpanded(true);
-			// }
+			 if (editValue.length() > 0 && section != null) {
+				section.setExpanded(true);
+			}
 		}
 		if (valueType == VALUE_TYPE_TEXT && model instanceof AnyType && fEditingDomain != null) {
 			valueText.addModifyListener(new ModifyListener() {
