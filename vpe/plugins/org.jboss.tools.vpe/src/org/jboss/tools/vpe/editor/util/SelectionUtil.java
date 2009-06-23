@@ -280,7 +280,6 @@ public class SelectionUtil {
 
 	public static Node getNodeBySourcePosition(
 			StructuredTextEditor sourceEditor, int position) {
-		Point range = sourceEditor.getTextViewer().getSelectedRange();
 
 		IDocument document = sourceEditor.getTextViewer().getDocument();
 

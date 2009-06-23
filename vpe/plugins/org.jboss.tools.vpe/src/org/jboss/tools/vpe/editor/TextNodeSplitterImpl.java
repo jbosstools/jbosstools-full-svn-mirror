@@ -75,7 +75,6 @@ public class TextNodeSplitterImpl implements ITextNodeSplitter  {
 			if(type == INSERT_AROUND){
 				if(split1 && split2){
 					node1 = ((Text)node).splitText(offset1);
-					node2 = ((Text)node1).splitText(offset2);
 				}else if(split1){
 					node1 = ((Text)node).splitText(offset1);
 				}else{

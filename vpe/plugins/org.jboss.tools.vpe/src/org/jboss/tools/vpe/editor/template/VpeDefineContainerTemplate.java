@@ -174,8 +174,6 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 
 		    int lastPos = 0;
 		    StringBuilder sb = new StringBuilder();
-		    lastPos = 0;
-		    sb = new StringBuilder();
 		    curlyBracketMatcher.reset(nodeValue);
 		    boolean firstFind = false;
 		    boolean find = curlyBracketMatcher.find();

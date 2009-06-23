@@ -57,11 +57,11 @@ public class TextUtil {
 
 	public static boolean containsKey(char key) {
 
-		return textSet.containsKey(new Character(key));
+		return textSet.containsKey(key);
 	}
 
 	public static String getValue(char key) {
-		return (String) textSet.get(new Character(key));
+		return (String) textSet.get(key);
 	}
 
 	/**
@@ -217,7 +217,7 @@ public class TextUtil {
 		int sourceIndex = 0;
 		int visualIndex = 0;
 		for (visualIndex = 0; visualIndex < s3.length(); visualIndex++) {
-			ch = new Character(s3.charAt(visualIndex));
+			ch = s3.charAt(visualIndex);
 
 			String value = (String) textSet.get(ch);
 			char sourceChar = sourceText.charAt(sourceIndex);
@@ -402,14 +402,11 @@ public class TextUtil {
 	}
 
 	public static boolean isWhitespace(char sourceString) {
-		String visualString = visualText((new Character(sourceString))
-				.toString());
 		return SPCHARS.indexOf(sourceString) != -1;
 	}
 
 	public static boolean isWhitespaceText(String sourceString) {
 		if (sourceString != null && sourceString.length() > 0) {
-			char[] chars = sourceString.toCharArray();
 			for (int i = 0; i < sourceString.length(); i++) {
 				if (!TextUtil.isWhitespace(sourceString.charAt(i)))
 					return false;

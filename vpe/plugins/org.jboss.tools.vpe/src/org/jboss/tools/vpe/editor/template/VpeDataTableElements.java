@@ -268,7 +268,6 @@ public class VpeDataTableElements {
 
 	public static class VisualDataTableElements {
 		private nsIDOMElement caption;
-		private nsIDOMElement tableCaptionTag;
 
 		private nsIDOMElement tableHeader;
 		private nsIDOMElement tableHeaderRow;

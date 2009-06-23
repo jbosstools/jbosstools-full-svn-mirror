@@ -40,9 +40,7 @@ public class VpeVisualInnerDragInfo {
 		return length;
 	}
 	
-	public void Release() {
-		if (node != null) {
+	public void release() {
 			node = null;
-		}
 	}
 }

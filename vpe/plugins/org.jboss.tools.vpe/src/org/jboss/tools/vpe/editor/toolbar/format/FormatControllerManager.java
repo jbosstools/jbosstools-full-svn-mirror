@@ -223,9 +223,6 @@ public class FormatControllerManager {
 		if(nodeMapping instanceof VpeElementMapping) {
 			VpeElementMapping elementMapping = (VpeElementMapping)nodeMapping;
 
-			if(elementMapping==null) {
-				return null;
-			}
 			VpeTemplate template = elementMapping.getTemplate();
 			if(template!=null) {
 				return template.getTextFormattingData();

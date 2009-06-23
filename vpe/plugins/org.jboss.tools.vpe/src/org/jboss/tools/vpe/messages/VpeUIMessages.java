@@ -12,7 +12,7 @@ package org.jboss.tools.vpe.messages;
 
 import org.eclipse.osgi.util.NLS;
 
-public class VpeUIMessages extends NLS {
+public final class VpeUIMessages extends NLS {
 	private static final String BUNDLE_NAME
 			= "org.jboss.tools.vpe.messages.messages";//$NON-NLS-1$
 	static {

@@ -57,7 +57,6 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 	private String valueStr;
 	private String styleStr;
 	private boolean showIconBool;
-	private boolean children;
 
 	VpeAnyCreator(Element element, VpeDependencyMap dependencyMap, boolean caseSensitive) {
 		build(element, dependencyMap);

@@ -73,7 +73,6 @@ public class SetupTemplateContributionItem extends ActionContributionItem {
 						element.getNodeName()));
 				getAction().setActionNode(element);
 				getAction().setData(elementMapping.getTemplate().getAnyData());
-				MenuItem item = new MenuItem(menu, SWT.SEPARATOR, index );
 				super.fill(menu, index+1);
 			}
 		}

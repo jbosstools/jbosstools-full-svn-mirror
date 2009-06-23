@@ -58,8 +58,6 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 
 	private void build(Element gridElement, VpeDependencyMap dependencyMap) {
 
-		NamedNodeMap map = gridElement.getAttributes();
-
 		Attr tableSizeAttr = gridElement
 				.getAttributeNode(VpeTemplateManager.ATTR_PANELGRID_TABLE_SIZE);
 		if (tableSizeAttr != null) {
@@ -242,8 +240,8 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 			Node node = children.item(i);
 			int type = node.getNodeType();
 			if ((type == Node.ELEMENT_NODE)
-				|| ((type == Node.TEXT_NODE) && (node != null)
-					&& (node.getNodeValue() != null) 
+				|| ((type == Node.TEXT_NODE) 
+						&& (node.getNodeValue() != null) 
 						&& (node.getNodeValue().trim().length() > 0))) {
 			    switch (VpeCreatorUtil.getFacetType(node, pageContext)) {
 			    case VpeCreatorUtil.FACET_TYPE_HEADER:

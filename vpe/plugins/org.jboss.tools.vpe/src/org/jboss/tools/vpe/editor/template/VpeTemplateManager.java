@@ -938,8 +938,6 @@ public class VpeTemplateManager {
 				.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_CLASS);
 		String nameSpaceIdentifyer = templateElement
 				.getAttribute(VpeTemplateManager.NAMESPACE_IDENTIFIER_ATTRIBUTE);
-		String isInvisibleTemplate = templateElement
-				.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_INVISIBLE);
 		if (templateClassName != null && templateClassName.length() > 0) {
 			try {
 				Bundle bundle;

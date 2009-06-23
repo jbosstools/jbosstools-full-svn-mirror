@@ -323,16 +323,6 @@ public class VpeSelectionBuilder {
 		sourceBuilder.setSelection(sourceNode, 0, 0);
 	}
 	
-	void setClickSelection(nsIDOMMouseEvent mouseEvent) {
-		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
-		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
-		nsIDOMNode anchorNode = selection.getAnchorNode();
-		nsIDOMNode focusNode = selection.getFocusNode();
-		if (focusNode != null) {
-			
-		}
-	}
-	
 	void _setClickContentAreaSelection() {
 		Node sourceNode = sourceBuilder.getSelectedNode();
 		if (sourceNode != null) {
@@ -1170,7 +1160,6 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 			return dragElement;
 		}
 
-		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
 		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 		//FIX FOR JBIDE-1468 added by Sergey Dzmitrovich
 		if (visualNode != null
@@ -1294,14 +1283,14 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 			if (anchorNode != null) {
 				System.out.println("  ## anchorNode: " + anchorNode.getNodeName() + " (" + anchorNode + ")  offset: " + selection.getAnchorOffset()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			} else {
-				System.out.println("  ## anchorNode: " + anchorNode); //$NON-NLS-1$
+				System.out.println("  ## anchorNode: null"); //$NON-NLS-1$
 			}
 		}
 		nsIDOMNode focusNode = selection.getFocusNode();
 		if (focusNode != null) {
 			System.out.println("  ## focusNode: " + focusNode.getNodeName() + " (" + focusNode + ")  offset: " + selection.getFocusOffset()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		} else {
-			System.out.println("  ## focusNode: " + focusNode); //$NON-NLS-1$
+			System.out.println("  ## focusNode: null"); //$NON-NLS-1$
 		}
 	}
 	

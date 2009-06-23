@@ -335,8 +335,6 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	private static final String PREFIX_SEPARATOR = ":";
 
 	private String getPageLocale(VpePageContext pageContext, IDOMElement sourceElement) {
-		IStructuredModel model = null;
-		try {
 
 			List<TaglibData> taglibs = pageContext.getTagLibs(sourceElement);
 			// Find F tracker
@@ -371,9 +369,6 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 			String locale = jsfCoreViewTag.getAttribute(LOCALE_ATTRNAME);
 			if (locale == null || locale.length() == 0) return null;
 			return locale;
-		} finally {
-			if (model != null)	model.releaseFromRead();
-		}
 	}
 	/**
 	 * 

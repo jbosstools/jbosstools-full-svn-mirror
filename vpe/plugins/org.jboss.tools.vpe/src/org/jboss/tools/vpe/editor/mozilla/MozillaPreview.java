@@ -247,7 +247,7 @@ public class MozillaPreview extends MozillaEditor {
 	@Override
 	public MozillaDomEventListener getContentAreaEventListener() {
 		
-		if(this.contentAreaEventListener==null||!(contentAreaEventListener instanceof PreviewDomEventListener)){
+		if(this.contentAreaEventListener==null){
 			
 			contentAreaEventListener = new PreviewDomEventListener();
 		}

@@ -205,10 +205,6 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		return data.isChanged() || isChanged;
 	}
 
-	private boolean isChanged(VpeAnyData data, boolean oldValue, boolean newValue) {
-		return data.isChanged() || (oldValue != newValue);
-	}
-
 	/**
 	 * Sets the message for this dialog with an indication of what type of
 	 * message it is.

@@ -45,9 +45,7 @@ public class VpeVisualInnerDropInfo {
 		return mouseY;
 	}
 	
-	public void Release() {
-		if (dropContainer != null) {
+	public void release() {
 			dropContainer = null;
-		}
 	}
 }

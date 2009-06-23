@@ -376,7 +376,6 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 //					}
 					//Added by Max Areshkau in scope of bug JBIDE-1209
 				} else  {
-					IndexedRegion region = (IndexedRegion)sourceParent;
 					String text = sourceParent.getNodeValue();
 					int start= TextUtil.sourcePosition(text, visualText.getNodeValue(), offset);
 					int end =TextUtil.sourcePosition(text, visualText.getNodeValue(), offset+length);

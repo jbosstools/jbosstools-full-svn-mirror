@@ -69,8 +69,8 @@ public class VpeResourcesDialogView extends AbstractQueryWizardView {
 	
 	Composite compositeControl = new Composite(tabFolder, SWT.NONE);
 	compositeControl.setLayout(new GridLayout(1, false));
-	Control absControl = absFolder.createControl(compositeControl);
-	Control relControl = relFolder.createControl(compositeControl);
+	absFolder.createControl(compositeControl);
+	relFolder.createControl(compositeControl);
 	
 	Control cssControl = css.createControl(tabFolder);
 	Control tldControl = tld.createControl(tabFolder);

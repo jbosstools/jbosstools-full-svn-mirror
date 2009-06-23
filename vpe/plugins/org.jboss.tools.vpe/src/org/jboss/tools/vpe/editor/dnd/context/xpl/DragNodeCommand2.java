@@ -51,7 +51,7 @@ public class DragNodeCommand2 extends DefaultDragAndDropCommand {
 	protected void beginModelChange(Node node, boolean batchUpdate) {
 		IStructuredModel structuredModel = getStructuredModel(node);
 		if (structuredModel != null) {
-			String undoDesc = new String();
+			String undoDesc = ""; //$NON-NLS-1$
 			if (getOperation() == DND.DROP_MOVE) {
 				undoDesc = XMLUIMessages.DragNodeCommand_0;
 			} else if (getOperation() == DND.DROP_COPY) {
@@ -59,9 +59,6 @@ public class DragNodeCommand2 extends DefaultDragAndDropCommand {
 			}
 			
 			structuredModel.beginRecording(this, undoDesc);
-			if (batchUpdate) {
-				//  structuredModel.aboutToChangeModel();
-			}
 		}
 	}
 

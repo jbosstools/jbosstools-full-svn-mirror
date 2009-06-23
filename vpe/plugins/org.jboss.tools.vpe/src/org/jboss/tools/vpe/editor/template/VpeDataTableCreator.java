@@ -11,6 +11,8 @@
 package org.jboss.tools.vpe.editor.template;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -555,7 +557,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		if (value != null) {
 			return value.split(","); //$NON-NLS-1$
 		}
-		return null;
+		return new String[0];
 	}
 
 	private void setCellsClass(nsIDOMElement row, String value) {

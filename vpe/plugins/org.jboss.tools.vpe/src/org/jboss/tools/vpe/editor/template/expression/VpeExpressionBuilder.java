@@ -315,9 +315,7 @@ public class VpeExpressionBuilder {
 		throw new VpeExpressionBuilderException(originalText, message, pos);
 	}
 	
-	private void error(String message) throws VpeExpressionBuilderException {
-		error(message, currentPosition());
-	}
+
 	
 	private void undefinedCharacter(int pos) throws VpeExpressionBuilderException {
 		error("Undefined character \'" + originalText.charAt(pos) + '\'', pos);

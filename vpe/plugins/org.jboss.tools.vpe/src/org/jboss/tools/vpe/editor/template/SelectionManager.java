@@ -274,9 +274,6 @@ public class SelectionManager implements ISelectionManager {
 			Point range = SelectionUtil
 					.getSourceSelectionRange(getSourceEditor());
 
-			ISelection selection = getSourceEditor().getTextViewer()
-					.getSelection();
-
 			if (range == null)
 				return;
 

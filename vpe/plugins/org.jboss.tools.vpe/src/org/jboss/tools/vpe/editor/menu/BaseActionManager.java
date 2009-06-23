@@ -544,14 +544,14 @@ public abstract class BaseActionManager {
 
 	static HashSet noContainerTags = new HashSet();
 	static {
-		noContainerTags.add(new String("basefont"));
-		noContainerTags.add(new String("bgsound"));
-		noContainerTags.add(new String("br"));
-		noContainerTags.add(new String("img"));
-		noContainerTags.add(new String("input"));
-		noContainerTags.add(new String("isindex"));
-		noContainerTags.add(new String("script"));
-		noContainerTags.add(new String("wbr"));
+		noContainerTags.add("basefont");
+		noContainerTags.add("bgsound");
+		noContainerTags.add("br");
+		noContainerTags.add("img");
+		noContainerTags.add("input");
+		noContainerTags.add("isindex");
+		noContainerTags.add("script");
+		noContainerTags.add("wbr");
 	}
 
 	public class ActionHelper extends ModelQueryActionHelper {

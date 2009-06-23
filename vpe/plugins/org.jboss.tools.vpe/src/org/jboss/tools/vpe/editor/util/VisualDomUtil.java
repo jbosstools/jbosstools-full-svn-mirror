@@ -160,7 +160,7 @@ public class VisualDomUtil {
 			String subAttributeValue) {
 		String attributeValue = element.getAttribute(attributeName);
 		if (attributeValue == null) {
-		    attributeValue = new String();
+		    attributeValue = ""; //$NON-NLS-1$
 		} else {// remove old sub-attribute from the attributeValue
 		    attributeValue = VpeStyleUtil.deleteFromString(attributeValue, 
 		    		subAttributeName, Constants.SEMICOLON);

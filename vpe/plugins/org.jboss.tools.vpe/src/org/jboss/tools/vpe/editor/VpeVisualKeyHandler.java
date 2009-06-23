@@ -1136,9 +1136,6 @@ public class VpeVisualKeyHandler {
 
 			Node focusNode = selection.getFocusNode();
 			
-			int formatStart = 0;
-			formatStart = ((IDOMNode)focusNode).getStartOffset();
-		
 			VpeNodeMapping parentMapping = domMapping.getNearParentMapping(focusNode);
 			if (parentMapping != null) {
 				boolean handled = false;
@@ -1585,13 +1582,6 @@ public class VpeVisualKeyHandler {
 		VpePlugin.getDefault().logInfo("MoveEnd");
 		// TODO Max Areshkau figure out
 //		frameSelection.intraLineMove(true, extend);
-		return true;
-	}
-
-	private boolean moveLeft(boolean extend) {
-		// TODO Max Areshkau figure out
-		VpePlugin.getDefault().logInfo("MoveLeft");
-//		frameSelection.characterMove(false, extend);
 		return true;
 	}
 	

@@ -1029,7 +1029,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			// nsIDOMElement visualDragElement = selectionBuilder
 			// .getDragElement(mouseEvent);
 			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-				nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 				System.out.println("<<< mouseDown  targetNode: " /* //$NON-NLS-1$
 																 * +visualNode.
 																 * getNodeName()
@@ -1909,7 +1908,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			System.out.print("<<<<<< canInnerDrag"); //$NON-NLS-1$
 		}
 		if (innerDragInfo != null) {
-			innerDragInfo.Release();
+			innerDragInfo.release();
 			innerDragInfo = null;
 		}
 		boolean canDrag = false;
@@ -1922,10 +1921,14 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						.print(" dragNode: " + dragNode.getNodeName() + "(" + dragNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
 			switch (dragNode.getNodeType()) {
-			case nsIDOMNode.ELEMENT_NODE:
-				canDrag = visualBuilder.canInnerDrag((nsIDOMElement) dragNode);
-			case nsIDOMNode.TEXT_NODE:
+			case nsIDOMNode.ELEMENT_NODE: {
+				canDrag = visualBuilder.canInnerDrag((nsIDOMElement) dragNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
+				break;
+			}
+			case nsIDOMNode.TEXT_NODE: {
 				canDrag = visualBuilder.isTextEditable(dragNode);
+				break;
+				}
 			}
 			if (canDrag) {
 				VpeSourceInnerDragInfo sourceInnerDragInfo = visualBuilder
@@ -1943,7 +1946,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				}
 			}
 			if (!canDrag) {
-				dragInfo.Release();
+				dragInfo.release();
 			}
 		}
 		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
@@ -2022,7 +2025,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					}
 				}
 			}
-			visualDropInfo.Release();
+			visualDropInfo.release();
 		}
 		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 			System.out.println("  canDrop: " + canDrop); //$NON-NLS-1$
@@ -2066,7 +2069,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						visualBuilder.innerDrop(sourceInnerDragInfo,
 								sourceDropInfo);
 						if (innerDragInfo != null) {
-							innerDragInfo.Release();
+							innerDragInfo.release();
 							innerDragInfo = null;
 						}
 					}
@@ -2155,7 +2158,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						}
 					}
 				}
-				visualDropInfo.Release();
+				visualDropInfo.release();
 			}
 		} else if (XulRunnerEditor.TRANS_FLAVOR_kFileMime.equals(flavor)
 				|| XulRunnerEditor.TRANS_FLAVOR_kURLMime.equals(flavor)) {
@@ -2222,8 +2225,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
         VpeVisualInnerDropInfo visualDropInfo = selectionBuilder.getInnerDropInfo(mouseEvent);
         Point range = selectionBuilder.getSourceSelectionRangeAtVisualNode(visualDropInfo.getDropContainer(), (int) visualDropInfo
                 .getDropOffset());
-        VpeSourceInnerDropInfo sourceDropInfo = null;
-
+        
         // if (MODEL_FLAVOR.equals(flavor)) {
         // XModelObject object = PreferenceModelUtilities.getPreferenceModel()
         // .getModelBuffer().source();
@@ -2236,13 +2238,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
         if (VpeDndUtil.isNsIFileInstance(aValue)) {
             nsIFile aFile = (nsIFile) aValue.queryInterface(nsIFile.NS_IFILE_IID);
             
-            if (aValue != null) {
         		// because it is external, convert the path to URL
-                final String path = aFile.getPath();
-				data = path != null ? DropUtils.convertPathToUrl(path) 
+            final String path = aFile.getPath();
+			data = path != null ? DropUtils.convertPathToUrl(path) 
 									: null;
-                aFlavor = DndUtil.kFileMime;
-            }
+			aFlavor = DndUtil.kFileMime;
 
         } else if (VpeDndUtil.isNsICStringInstance(aValue)) {
             nsISupportsCString aString = (nsISupportsCString) aValue.queryInterface(nsISupportsCString.NS_ISUPPORTSCSTRING_IID);
@@ -2285,10 +2285,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
             if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
                 System.out.println("  drop!  container: " + visualDropInfo.getDropContainer().getNodeName()); //$NON-NLS-1$
             }
-            externalDropAny(aFlavor, data, range, sourceDropInfo == null ? null : sourceDropInfo.getContainer());
-
-            DropContext dropContext = new DropContext();
-            IDNDTextEditor textEditor = (IDNDTextEditor) VpeController.this.editPart.getSourceEditor();
+            externalDropAny(aFlavor, data, range,null);
 
             // TypedEvent tEvent = new TypedEvent(mouseEvent);
             // tEvent.data = data;

@@ -381,7 +381,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			}
 			border.appendChild(visualNode);
 		}
-		if (VpeStyleUtil.getAbsolute((Element) sourceNode) && border != null) {
+		if (VpeStyleUtil.getAbsolute((Element) sourceNode)) {
 			int top = VpeStyleUtil.getSizeFromStyle((Element) sourceNode,
 					VpeStyleUtil.ATTRIBUTE_STYLE + VpeStyleUtil.DOT_STRING
 							+ VpeStyleUtil.PARAMETER_TOP);
@@ -1873,26 +1873,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			}
 		}
 	}
-
-	private void resetTooltip(Element sourceElement, nsIDOMElement visualElement) {
-		if (visualElement != null && sourceElement != null
-				&& !((ElementImpl) sourceElement).isJSPTag()) {
-			if (HTML.TAG_HTML.equalsIgnoreCase(sourceElement.getNodeName()))
-				return;
-			String titleValue = getTooltip(sourceElement);
-
-			if (titleValue != null) {
-				titleValue = titleValue.replaceAll("&", "&amp;"); //$NON-NLS-1$//$NON-NLS-2$
-				titleValue = titleValue.replaceAll("<", "&lt;"); //$NON-NLS-1$//$NON-NLS-2$
-				titleValue = titleValue.replaceAll(">", "&gt;"); //$NON-NLS-1$//$NON-NLS-2$
-			}
-
-			if (titleValue != null) {
-				resetTooltip(visualElement, titleValue);
-			}
-		}
-	}
-
+	
 	private void resetTooltip(nsIDOMElement visualElement, String titleValue) {
 		visualElement.setAttribute(HTML.ATTR_TITLE, titleValue);
 		nsIDOMNodeList children = visualElement.getChildNodes();

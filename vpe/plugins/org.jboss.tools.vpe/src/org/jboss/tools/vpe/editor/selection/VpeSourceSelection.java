@@ -24,8 +24,6 @@ public class VpeSourceSelection {
 	private Node endNode;
 	private int endOffset;
 	private List selectedNodes;
-	private Node focusNode;
-	private int focusOffset;
 	private Attr focusAttribute;
 	private Point focusAttributeRange;
 

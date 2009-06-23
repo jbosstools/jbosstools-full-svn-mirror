@@ -138,9 +138,6 @@ public class ActionHelper {
 			CMElementDeclaration ed, int index, int includeOptions,
 			int validityChecking, List actionList) {
 		// get actions for each insertable attribute
-		int size = parent.getChildNodes().getLength();
-		List contentSpecificationList = modelQuery.getValidator()
-				.createContentSpecificationList(parent, ed);
 		List availableChildNodeList = modelQuery.getAvailableContent(parent,
 				ed, includeOptions);
 
@@ -180,8 +177,6 @@ public class ActionHelper {
 			CMElementDeclaration ed, int includeOptions, int validityChecking,
 			List actionList) {
 		int size = parent.getChildNodes().getLength();
-		List contentSpecificationList = modelQuery.getValidator()
-				.createContentSpecificationList(parent, ed);
 		List availableChildNodeList = modelQuery.getAvailableContent(parent,
 				ed, includeOptions);
 
@@ -317,7 +312,6 @@ public class ActionHelper {
 			List selectedNodeList) {
 		boolean result = true;
 		NodeList nodeList = parent.getChildNodes();
-		int nodeListLength = nodeList.getLength();
 		for (int i = range[0]; i < range[1]; i++) {
 			Node node = nodeList.item(i);
 			if (!isWhitespaceNode(node) && !selectedNodeList.contains(node)) {

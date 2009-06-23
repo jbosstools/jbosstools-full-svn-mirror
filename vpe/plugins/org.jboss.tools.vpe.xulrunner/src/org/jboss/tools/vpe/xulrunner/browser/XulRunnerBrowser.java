@@ -212,8 +212,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 			}*/ 
 			// JBIDE-1222 end
 			
-			if (xulRunnerFile == null
-					|| !xulRunnerFile.exists()) {
+
 				Bundle xulRunnerBundle = Platform.getBundle(getXulRunnerBundle());
 				if (xulRunnerBundle == null) {
 					throw new XulRunnerException("Bundle " + getXulRunnerBundle() + " is not found."); //$NON-NLS-1$ //$NON-NLS-2$
@@ -237,8 +236,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 				} catch (IOException ioe) {
 					throw new XulRunnerException("Cannot get path to XULRunner from bundle " + getXulRunnerBundle(), ioe); // $NON-NLS-1$
 				}
-			}
-			
+				
 			xulRunnerPath = xulRunnerFile.getAbsolutePath();
 			System.setProperty(XULRUNNER_PATH, xulRunnerPath);
 		}

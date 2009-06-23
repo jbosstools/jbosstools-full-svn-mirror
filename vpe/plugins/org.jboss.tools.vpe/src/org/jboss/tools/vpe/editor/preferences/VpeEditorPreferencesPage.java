@@ -33,7 +33,6 @@ public class VpeEditorPreferencesPage extends TabbedPreferencesPage implements I
 
 	public static void openPreferenceDialog() {
 
-        Preferences preferences = VpePlugin.getDefault().getPluginPreferences();
         PreferenceDialog prefsdlg = PreferencesUtil.createPreferenceDialogOn(
                 PlatformUI.getWorkbench().getDisplay().getActiveShell(),
                 ID, new String[] {

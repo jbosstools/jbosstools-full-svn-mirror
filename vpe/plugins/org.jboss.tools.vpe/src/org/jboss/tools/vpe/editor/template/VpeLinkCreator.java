@@ -70,7 +70,6 @@ public class VpeLinkCreator extends VpeAbstractCreator {
 	@Override
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		String href_value = getExprValue(pageContext, hrefExpr, sourceNode);
-		String rel_value = getExprValue(pageContext, relExpr, sourceNode);
 
 		nsIDOMNode newNode = pageContext.getVisualBuilder().addLinkNodeToHead(href_value, "no", false);
 		visualNodeMap.put(this, newNode);
@@ -88,7 +87,6 @@ public class VpeLinkCreator extends VpeAbstractCreator {
 
     public void refreshElement(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
 		String href_value = getExprValue(pageContext, hrefExpr, sourceElement);
-		String rel_value = getExprValue(pageContext, relExpr, sourceElement);
 
 		nsIDOMNode oldNode = (nsIDOMNode)visualNodeMap.get(this);
 		nsIDOMNode newNode;

@@ -96,7 +96,7 @@ public class VpeCreatorUtil {
 				pageName = ((Element)includeNode).getAttribute("file");
 			}
 			if (pageName != null) {
-				IDOMModel wtpModel = wtpModel = getWtpModelForRead(pageName, pageContext);
+				IDOMModel wtpModel = getWtpModelForRead(pageName, pageContext);
 				if (wtpModel != null) {
 					return wtpModel.getDocument();												
 				}

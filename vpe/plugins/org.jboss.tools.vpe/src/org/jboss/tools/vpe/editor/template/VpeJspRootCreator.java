@@ -10,20 +10,13 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-
 import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 public class VpeJspRootCreator extends VpeAbstractCreator {
 	private static final String ATTR_PREFIX = "xmlns:";
@@ -41,18 +34,6 @@ public class VpeJspRootCreator extends VpeAbstractCreator {
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 //		setTaglib(pageContext, (Element)sourceNode);
 		return null;
-	}
-
-	public void setAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name, String value) {
-//		setTaglib(pageContext, sourceElement);
-	}
-
-	public void removeAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name) {
-	    int address = getAddress(name);
-//	    if (address > 0) {
-//		    pageContext.setTaglib(address, null, null, true);
-//	    }
-//		setTaglib(pageContext, sourceElement);
 	}
 	
 //	private void setTaglib(VpePageContext pageContext, Element sourceElement) {
