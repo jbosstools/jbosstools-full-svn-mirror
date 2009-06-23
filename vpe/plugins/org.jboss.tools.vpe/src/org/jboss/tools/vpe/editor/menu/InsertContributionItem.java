@@ -11,6 +11,7 @@ package org.jboss.tools.vpe.editor.menu;
 import java.util.List;
 
 import org.eclipse.jface.action.ContributionItem;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -27,7 +28,9 @@ import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.jst.web.tld.URIConstants;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.menu.action.ComplexAction;
 import org.jboss.tools.vpe.editor.menu.action.InsertAction2;
+import org.jboss.tools.vpe.editor.menu.action.SelectThisTagAction;
 import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
@@ -35,10 +38,11 @@ import org.w3c.dom.Node;
 
 /**
  * @author Sergey Dzmitrovich
- *
+ * @author yradtsevich
  */
 public class InsertContributionItem extends ContributionItem {
 
+	private final Node node;
 	private final StructuredTextEditor sourceEditor;
 	private final VpePageContext pageContext;
 	private final static String NAME_PROPERTY = "name";			//$NON-NLS-1$
@@ -51,10 +55,24 @@ public class InsertContributionItem extends ContributionItem {
 	private final static String LEFT_ANGLE_BRACKET = "<";		//$NON-NLS-1$
 	private final static String RIGHT_ANGLE_BRACKET = ">";		//$NON-NLS-1$
 
+	/**
+	 * Creates an {@code InsertContributionItem}
+	 * to make insert actions on the currently selected node.
+	 */
 	public InsertContributionItem() {
-		final JSPMultiPageEditor editor = (JSPMultiPageEditor) PlatformUI
-				.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-				.getActiveEditor();
+		this(null);
+	}
+
+	/**
+	 * Creates an {@code InsertContributionItem}
+	 * to make insert actions on the given {@code node}.
+	 */
+	public InsertContributionItem(final Node node) {
+		this.node = node;
+
+		final JSPMultiPageEditor editor = (JSPMultiPageEditor)
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+				.getActivePage().getActiveEditor();
 		this.sourceEditor = editor.getSourceEditor();
 		this.pageContext = ((VpeEditorPart) editor.getVisualEditor())
 				.getController().getPageContext();
@@ -115,6 +133,9 @@ public class InsertContributionItem extends ContributionItem {
 				prefix = getPrefix(modelObject);
 			}
 
+			final IAction selectNodeAction =
+					node == null ? null : new SelectThisTagAction(node);					
+
 			for (final XModelObject modelObjectChild : modelObjectChildren) {
 				if (Constants.YES_STRING.equals(
 						modelObjectChild.getAttributeValue(HIDDEN_PROPERTY))) {
@@ -138,8 +159,18 @@ public class InsertContributionItem extends ContributionItem {
 										.getAttributeValue(NAME_PROPERTY)
 								+ RIGHT_ANGLE_BRACKET;
 
-						manager.add(new InsertAction2(name, modelObjectChild,
-								sourceEditor, insertionType));
+						final InsertAction2 insertAction = new InsertAction2(
+								name, modelObjectChild,
+								sourceEditor, insertionType);
+
+						final IAction action;
+						if (selectNodeAction == null) {
+							action = insertAction;
+						} else {
+							action = new ComplexAction(insertAction.getText(),
+									selectNodeAction, insertAction);
+						}
+						manager.add(action);
 					}
 				} else {
 					final MenuManager subMenu = new InsertSubMenuManager(

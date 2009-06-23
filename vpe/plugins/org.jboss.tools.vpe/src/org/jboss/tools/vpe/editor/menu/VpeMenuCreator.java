@@ -83,7 +83,7 @@ public class VpeMenuCreator {
 		}
 		addSeparator();
 
-		menuManager.add(new InsertContributionItem());
+		menuManager.add(new InsertContributionItem(node));
 		addIfEnabled(new StripTagAction(node));
 		addSeparator();
 
