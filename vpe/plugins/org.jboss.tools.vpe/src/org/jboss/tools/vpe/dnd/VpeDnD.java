@@ -178,11 +178,8 @@ public class VpeDnD {
 		}
       //sets possability to drop current element here
 		//Added by estherbin fix jbide-1046
-		VpeController controller = null;
-		
-        if (editorDomEventListener instanceof VpeController) {
-            controller = (VpeController) editorDomEventListener;
-        }
+		VpeController controller = (VpeController) editorDomEventListener;
+
         VpeSelectionController selectionController = controller.getVisualSelectionController();
         final VpeVisualCaretInfo visualCaretInfo = controller.getSelectionBuilder().getVisualCaretInfo(event);
 

@@ -23,17 +23,15 @@ import org.jboss.tools.vpe.editor.menu.ITextNodeSplitter;
  *
  */
 public class TextNodeSplitterImpl implements ITextNodeSplitter  {
-	private Point range;
 	private Text node;
 	private Node parent;
 	private IndexedRegion region;
 	
 	private int offset1 = 0, offset2=0;
 	private boolean split1=true,split2=true;
-	private boolean next=false;
+
 
 	public TextNodeSplitterImpl(Point range, Text node){
-		this.range = range;
 		this.node = node;
 		parent = node.getParentNode();
 		region = (IndexedRegion)node;
@@ -57,11 +55,9 @@ public class TextNodeSplitterImpl implements ITextNodeSplitter  {
 	public int getSplitIndex(int index) {
 		int nodeIndex = getIndex(parent, node);
 		if(nodeIndex == index){
-			next = false;
 			if(split1)return index+1;
 			else return index;
 		}else if(nodeIndex == index+1){
-			next = true;
 			if(split1 && split2) return index+1;
 			else return index;
 		}

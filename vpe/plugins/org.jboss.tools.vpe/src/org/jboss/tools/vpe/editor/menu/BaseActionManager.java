@@ -56,7 +56,6 @@ public abstract class BaseActionManager {
 	public static final String INSERT_TAG_MENU = "Insert Tag";
 	
 
-	private ActionHelper actionHelper;
 
 	static public void setTextNodeSplitter(ITextNodeSplitter splitter) {
 		textNodeSplitter = splitter;
@@ -65,7 +64,6 @@ public abstract class BaseActionManager {
 	protected BaseActionManager(IStructuredModel model, ModelQuery modelQuery) {
 		this.model = model;
 		this.modelQuery = modelQuery;
-		this.actionHelper = new ActionHelper((ModelQueryImpl) modelQuery);
 	}
 
 	abstract protected Action createAddAttributeAction(Element parent, CMAttributeDeclaration ad);

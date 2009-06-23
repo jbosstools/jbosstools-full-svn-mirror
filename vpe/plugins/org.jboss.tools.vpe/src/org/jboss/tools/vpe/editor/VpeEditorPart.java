@@ -685,33 +685,19 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 			if (sourceContent != null) {
 				sourceEditor.createPartControl(sourceContent);
-			}
-			
-
-			/*if (previewWebBrowser != null) {
-				previewWebBrowser
-						.setEditorLoadWindowListener(new EditorLoadWindowListener() {
-							public void load() {
-								previewWebBrowser
-										.setEditorLoadWindowListener(null);
-								previewWebBrowser.buildDom();
+				sourceContent.addListener(SWT.Activate, new Listener() {
+					public void handleEvent(Event event) {
+						if (event.type == SWT.Activate) {
+							if (activeEditor != sourceEditor) {
+								activeEditor = sourceEditor;
+								setFocus();
 							}
-						});
-				previewWebBrowser.createPartControl(previewContent);
-			}
-*/
-			activeEditor = sourceEditor;
-
-			sourceContent.addListener(SWT.Activate, new Listener() {
-				public void handleEvent(Event event) {
-					if (event.type == SWT.Activate) {
-						if (activeEditor != sourceEditor) {
-							activeEditor = sourceEditor;
-							setFocus();
 						}
 					}
-				}
-			});
+				});
+			}
+			
+			activeEditor = sourceEditor;
 
 			visualContent.addListener(SWT.Activate, new Listener() {
 				public void handleEvent(Event event) {

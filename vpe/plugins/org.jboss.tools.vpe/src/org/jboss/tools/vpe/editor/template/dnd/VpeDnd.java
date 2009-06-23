@@ -38,7 +38,6 @@ public class VpeDnd {
 	private boolean isContainer = false;
 	private HashSet enabledTags = null;
 	
-	String tagName="";
 	
 	
 	public VpeDnd(){
@@ -49,12 +48,10 @@ public class VpeDnd {
 		this.dragEnabled = dragEnabled;
 		this.isContainer = isContainer;
 		enabledTags = null;
-		tagName="Document";
 	}
 	
 	public void setDndData(Element node){
 		enabledTags = null;
-		tagName = ((Element)node.getParentNode().getParentNode()).getAttribute("name");
 		NodeList children = node.getChildNodes();
 		if (children != null) {
 			int len = children.getLength();

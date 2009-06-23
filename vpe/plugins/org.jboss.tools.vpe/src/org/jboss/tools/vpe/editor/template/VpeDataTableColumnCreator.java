@@ -27,10 +27,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class VpeDataTableColumnCreator extends VpeAbstractCreator {
-	private boolean caseSensitive;
+
 
 	VpeDataTableColumnCreator(Element element, VpeDependencyMap dependencyMap, boolean caseSensitive) {
-		this.caseSensitive = caseSensitive;
 	}
 
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {

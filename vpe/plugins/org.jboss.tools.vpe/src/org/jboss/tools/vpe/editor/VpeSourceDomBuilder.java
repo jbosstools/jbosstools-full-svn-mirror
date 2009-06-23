@@ -54,7 +54,6 @@ import org.w3c.dom.NodeList;
 
 public class VpeSourceDomBuilder extends VpeDomBuilder {
 	private StructuredTextViewer structuredTextViewer;
-	private IContentOutlinePage outline;
 	private ISelectionProvider selectionManager;
 	IDOMModel model;
 	private Document sourceDocument;
@@ -65,8 +64,6 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		super(domMapping, sorceAdapter);
 		this.sourceEditor = sourceEditor;
 		structuredTextViewer = sourceEditor.getTextViewer();
-		outline = (IContentOutlinePage)sourceEditor.getAdapter(IContentOutlinePage.class);
-//		selectionManager = sourceEditor.getViewerSelectionManager();
 		selectionManager = sourceEditor.getSelectionProvider();
 		model = (IDOMModel)sourceEditor.getModel();
 		if (model != null) {

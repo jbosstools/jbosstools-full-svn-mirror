@@ -31,7 +31,6 @@ import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
 import org.jboss.tools.common.model.ui.editors.dnd.context.DropContext;
 import org.jboss.tools.common.model.ui.editors.dnd.context.InnerDragBuffer;
 import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
-import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.dnd.context.xpl.DragNodeCommand2;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
@@ -42,11 +41,10 @@ import org.w3c.dom.NodeList;
  */
 
 public class JSPViewerDropAdapter extends ViewerDropAdapter {
-	Transfer sourceTransfer = null;
 	protected DropContext dropContext;
 
 	public JSPViewerDropAdapter(Transfer sourceTransfer, Viewer viewer, IJSPTextEditor editor, Transfer transfer, DropContext dropContext) {
-		super(viewer, new JSPDragAndDropManager(editor, transfer, dropContext));
+		super(viewer, new JSPDragAndDropManager(editor, dropContext));
 		this.dropContext = dropContext; 
 	}
 	
@@ -81,12 +79,10 @@ public class JSPViewerDropAdapter extends ViewerDropAdapter {
 
 class JSPDragAndDropManager extends XMLDragAndDropManager {
 	IJSPTextEditor editor;
-	Transfer sourceTransfer = null;
 	DropContext dropContext;
 
-	public JSPDragAndDropManager(IJSPTextEditor editor, Transfer sourceTransfer, DropContext dropContext) {
+	public JSPDragAndDropManager(IJSPTextEditor editor, DropContext dropContext) {
 		this.editor = editor;
-		this.sourceTransfer = sourceTransfer;
 		this.dropContext = dropContext;
 	}
 

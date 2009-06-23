@@ -107,35 +107,4 @@ public class VpeCreationData {
 		this.elementData = elementData;
 	}
 
-	/**
-	 * Added method for creation copy which will placed in cash to improve
-	 * perfomance of VPE Added by Max Areshkau JBIDE-675. Here copyed only
-	 * nsI****
-	 * 
-	 * @return
-	 */
-	public VpeCreationData createHashCopy() {
-		nsIDOMNode node = null;
-		if (this.node != null) {
-			node = XmlUtil.createClone(this.node);
-		} else {
-			VpeDebugUtil.debugInfo("Node is Null");
-		}
-		if (node.getNodeType() != nsIDOMNode.ELEMENT_NODE) {
-			VpeDebugUtil.debugInfo("It's Not Element");
-		}
-
-		VpeCreationData data = new VpeCreationData(node);
-		if (this.childrenInfoList != null) {
-			data.childrenInfoList = new ArrayList<VpeChildrenInfo>();
-			for (VpeChildrenInfo childrenInfo : this.childrenInfoList) {
-				data.childrenInfoList.add(childrenInfo.createCashCopy());
-			}
-		}
-		data.illegalChildren = this.illegalChildren;
-		data.data = this.data;
-		data.elementData = this.elementData;
-		return data;
-	}
-
 }

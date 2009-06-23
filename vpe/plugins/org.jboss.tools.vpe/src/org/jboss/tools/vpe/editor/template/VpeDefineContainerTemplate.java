@@ -41,7 +41,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
-    int count = 0;
     private static Set<Node> defineContainer = new HashSet<Node>();
 
     @Override
@@ -254,11 +253,7 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 	TemplateFileInfo templateFileInfo = (TemplateFileInfo) creationData
 		.getData();
 	if (templateFileInfo != null) {
-	    VpeIncludeInfo includeInfo = pageContext.getVisualBuilder()
-		    .popIncludeStack();
-	    if (includeInfo != null) {
-		// VpeCreatorUtil.releaseDocumentFromRead(includeInfo.getDocument());
-	    }
+	   pageContext.getVisualBuilder().popIncludeStack();
 	}
 	defineContainer.remove(sourceNode);
     }

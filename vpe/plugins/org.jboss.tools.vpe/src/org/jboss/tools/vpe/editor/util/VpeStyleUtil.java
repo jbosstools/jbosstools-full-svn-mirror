@@ -93,7 +93,7 @@ public class VpeStyleUtil {
 
     // sets parameter position in absolute value
     public static String setAbsolute(String styleString) {
-	String style = new String(styleString);
+	String style = styleString;
 	if (style == null) {
 	    style = EMPTY_STRING;
 	} else { // remove old sizes

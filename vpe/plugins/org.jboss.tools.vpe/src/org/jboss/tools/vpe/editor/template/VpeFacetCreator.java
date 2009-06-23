@@ -13,21 +13,18 @@ package org.jboss.tools.vpe.editor.template;
 import java.util.Map;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
-import org.mozilla.interfaces.nsIDOMNodeList;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class VpeFacetCreator extends VpeAbstractCreator {
-	private boolean caseSensitive;
+
 
 	VpeFacetCreator(Element element, VpeDependencyMap dependencyMap, boolean caseSensitive) {
-		this.caseSensitive = caseSensitive;
 	}
 
 	@Override
@@ -47,33 +44,6 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		if (isHeader || isFooter) {
 			Node sourceParent = sourceNode.getParentNode();
 			if (sourceParent != null) {
-				nsIDOMNode visualParent = null;
-				VpeDomMapping domMapping = pageContext.getDomMapping();
-				if (sourceParent != null && domMapping != null) {
-					visualParent = pageContext.getDomMapping().getVisualNode(sourceParent);
-				}
-
-				nsIDOMNode header = null;
-				nsIDOMNode footer = null;
-
-				if (visualParent != null && visualParent.getNodeName().equalsIgnoreCase("table")) {
-					nsIDOMNodeList children = visualParent.getChildNodes();
-					long count = children != null ? children.getLength() : 0;
-					if (count > 0) {
-						for (long i = 0; i < count; i++) {
-							nsIDOMNode node = children.item(i);
-							if (node.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-								if (isHeader && HTML.TAG_THEAD.equalsIgnoreCase(node.getNodeName())) {
-									header = node;
-									break;
-								} else if (isFooter && HTML.TAG_TFOOT.equalsIgnoreCase(node.getNodeName())) {
-									footer = node;
-									break;
-								}
-							}
-						}
-					}
-				}
 
 				nsIDOMElement cell = null;
 				int columnsCount = getColumnsCount(sourceParent);

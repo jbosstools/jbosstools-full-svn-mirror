@@ -33,7 +33,7 @@ public abstract class SplitToolBar implements IVpeToolBar {
 		comp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		final ToolBar horBar = new ToolBar(comp, SWT.FLAT);
-		items = createItems(horBar);
+		createItems(horBar);
 
 //		final Button  button = new Button(parent, SWT.FLAT|SWT.PUSH);
 //		button.setImage(ImageDescriptor.createFromFile(MozillaEditor.class, "icons/arrow_more.gif").createImage());

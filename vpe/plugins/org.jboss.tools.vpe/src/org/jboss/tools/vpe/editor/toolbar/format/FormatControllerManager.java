@@ -96,9 +96,10 @@ public class FormatControllerManager {
 				 } else {
 					 currentSelectedTagValue = null;
 				 }
+			this.currentSelectedNode = newNodeInfo.getNode();
 			}
 			currentSelectedNodeInfo = newNodeInfo;
-			currentSelectedNode = newNodeInfo.getNode();
+
 			currentSelectedElement = currentSelectedNode;
 			TextFormatingData textFormatingData = getFormatTemplateForSelectedNode();
 			if(textFormatingData!=null) {

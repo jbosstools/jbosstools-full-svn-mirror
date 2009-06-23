@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -309,35 +310,34 @@ public class BundleMap {
 	}
 	
 	private void refreshUsedKeys(){
-		UsedKey key;
-		UsedKey[] array = new UsedKey[0];
-		array = (UsedKey[])usedKeys.values().toArray(array);
+		UsedKey keyValue;
+		Set<String> usedKeysSet  = this.usedKeys.keySet();
 		
-		for(int i=0; i<array.length;i++){
-			key = (UsedKey)array[i];
-			BundleEntry entry = getBundle(key.prefix);
+		for(String key:usedKeysSet){
+			keyValue =this.usedKeys.get(key);
+			BundleEntry entry = getBundle(keyValue.prefix);
 			if(entry != null){
 				String value;
 				try{
-					value = (String)entry.bundle.getObject(key.key);
+					value = (String)entry.bundle.getObject(keyValue.key);
 				}catch(MissingResourceException ex){
 					value = null;
-					fireBundleKeyChanged(key.prefix, key.key, value);
-					usedKeys.remove(key);
+					fireBundleKeyChanged(keyValue.prefix, keyValue.key, value);
+					this.usedKeys.remove(key);
 					continue;
 				}
-				if((value == null && key.value != null) || (value != null && key.value == null)){
-					key.value = value;
-					fireBundleKeyChanged(key.prefix, key.key, value);
+				if((value == null && keyValue.value != null) || (value != null && keyValue.value == null)){
+					keyValue.value = value;
+					fireBundleKeyChanged(keyValue.prefix, keyValue.key, value);
 					continue;
-				}else if(value != null && key.value != null && !value.equals(key.value)){
-					key.value = value;
-					fireBundleKeyChanged(key.prefix, key.key, value);
+				}else if(value != null && keyValue.value != null && !value.equals(keyValue.value)){
+					keyValue.value = value;
+					fireBundleKeyChanged(keyValue.prefix, keyValue.key, value);
 					continue;
 				}
 			} else{
-				key.value = null;
-				fireBundleKeyChanged(key.prefix, key.key, null);
+				keyValue.value = null;
+				fireBundleKeyChanged(keyValue.prefix, keyValue.key, null);
 			}
 		}
 	}
@@ -363,7 +363,7 @@ public class BundleMap {
 				ELInvocationExpression expr = (ELInvocationExpression)i.getExpression();
 				String[] values = getCall(expr);
 				if(values != null) {
-					String value = (values == null) ? null : getBundleValue(values[0], values[1]);
+					String value = getBundleValue(values[0], values[1]);
 					if(value != null) {
 						sb.append(value);
 						index = i.getEndPosition();
@@ -457,7 +457,7 @@ public class BundleMap {
 		public String propertyName;
 	}
 	
-	class BundleEntry{
+    class BundleEntry{
 		public ResourceBundle bundle;
 		public String uri;
 		public String prefix;

@@ -34,8 +34,6 @@ import org.w3c.dom.Node;
  * @author A. Yukhovich
  */
 public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
-
-	boolean rebuildFlag = false;
 	
 	/**
 	 * 

@@ -42,10 +42,7 @@ import org.w3c.dom.Node;
 public class VpeDataTableCreator extends VpeAbstractCreator {
 	private boolean caseSensitive;
 
-	private VpeExpression headerClassExpr;
-	private VpeExpression footerClassExpr;
-	private VpeExpression rowClassesExpr;
-	private VpeExpression columnClassesExpr;
+
 	private final String REDUNDANT_TEXT_SEPARATOR = "\n\n"; //$NON-NLS-1$
 	private final String EMPTY = ""; //$NON-NLS-1$
 	private final String NONE = "none"; //$NON-NLS-1$
@@ -84,7 +81,6 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				VpeExpressionInfo info = VpeExpressionBuilder
 						.buildCompletedExpression(headerClassAttr.getValue(),
 								caseSensitive);
-				headerClassExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
 			} catch (VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
@@ -98,7 +94,6 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				VpeExpressionInfo info = VpeExpressionBuilder
 						.buildCompletedExpression(footerClassAttr.getValue(),
 								caseSensitive);
-				footerClassExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
 			} catch (VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
@@ -112,7 +107,6 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				VpeExpressionInfo info = VpeExpressionBuilder
 						.buildCompletedExpression(rowClassesAttr.getValue(),
 								caseSensitive);
-				rowClassesExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
 			} catch (VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
@@ -126,7 +120,6 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				VpeExpressionInfo info = VpeExpressionBuilder
 						.buildCompletedExpression(columnClassesAttr.getValue(),
 								caseSensitive);
-				columnClassesExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
 			} catch (VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);

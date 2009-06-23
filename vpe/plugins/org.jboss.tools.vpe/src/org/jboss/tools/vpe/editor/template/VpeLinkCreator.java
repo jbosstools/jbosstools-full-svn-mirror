@@ -30,12 +30,10 @@ import org.w3c.dom.Node;
 public class VpeLinkCreator extends VpeAbstractCreator {
 	private boolean caseSensitive;
 	private VpeExpression hrefExpr;
-	private VpeExpression relExpr;
 
 	private String hrefStr;
 	private String relStr;
 
-	private Set dependencySet;
 
 	VpeLinkCreator(Element taglibElement, VpeDependencyMap dependencyMap, boolean caseSensitive) {
 		this.caseSensitive = caseSensitive;
@@ -49,7 +47,6 @@ public class VpeLinkCreator extends VpeAbstractCreator {
 				hrefStr = hrefAttr.getValue();
 				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(hrefStr, caseSensitive);
 				hrefExpr = info.getExpression();
-				dependencySet = info.getDependencySet();
 				dependencyMap.setCreator(this, info.getDependencySet());
 			} catch(VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
@@ -61,7 +58,6 @@ public class VpeLinkCreator extends VpeAbstractCreator {
 			try {
 			    relStr = relAttr.getValue();
 				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(relStr, caseSensitive);
-				relExpr = info.getExpression();
 			} catch(VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
 			}

@@ -351,7 +351,6 @@ public class VpePanelLayoutCreator extends VpeAbstractCreator {
 
 		VpeCreatorInfo creatorInfo;
 
-		Document sourceDocument;
 
 
 		public PanelLayoutTable(nsIDOMDocument visualDocument, Node source) {
@@ -364,7 +363,6 @@ public class VpePanelLayoutCreator extends VpeAbstractCreator {
 			right = tr.createCell();
 			tr = table.crateRow();
 			bottom = tr.createCell(2);
-			sourceDocument = source.getOwnerDocument();
 		}
 
 		public void setTop(Node node, String[][] styleMap) {
@@ -493,11 +491,10 @@ public class VpePanelLayoutCreator extends VpeAbstractCreator {
 	}
 
 	public class Td extends DefaultNodeWrapper {
-		nsIDOMElement cell = null;
+
 
 		public Td(nsIDOMElement cellNode) {
 			super(cellNode);
-			cell =  cellNode;
 		}
 	}
 
