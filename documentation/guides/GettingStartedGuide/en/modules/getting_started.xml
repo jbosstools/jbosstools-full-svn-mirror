@@ -521,7 +521,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </section>
 
   <section id="JBossToolsInstall">
-   <title>JBoss Tools Installation</title>
+   <title>JBoss Tools Installation and Update</title>
    <para>Here, let&apos;s consider the installation of the <property>JBoss Tools</property>
     modules.</para>
    <para><property>JBoss Tools</property> is an umbrella project for the JBoss developed plugins
@@ -606,7 +606,31 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     with eclipse -clean to make sure it starts clean and rereads the new list of plugins.</para>
 
    <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read
-    about dependencies between standalone plug-ins.</para>
+   about dependencies between standalone plug-ins.</para>
+   
+   <para>You can update Jboss Tools and install a new version with the help of "Install" wizard (Help > Install New Software...)</para>
+   
+   <figure>
+    <title>Updating Jboss Tools</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="images/getting_started/update_wizard_1.png"/>
+     </imageobject>
+    </mediaobject>
+   </figure>
+  
+   <para>In "Work with" field add the path to the source to update from (e.g. http://download.jboss.org/jbosstools/updates/development), check the necessary software to install, more information about chosen software can be found in "Details" section.</para>
+<para>Follow "Available Software Sites" link to find more site to update from</para>
+     
+   <figure>
+    <title>Available Software Sites</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="images/getting_started/update_wizard_2.png"/>
+     </imageobject>
+    </mediaobject>
+   </figure>
+     
   </section>
 
  </section>
