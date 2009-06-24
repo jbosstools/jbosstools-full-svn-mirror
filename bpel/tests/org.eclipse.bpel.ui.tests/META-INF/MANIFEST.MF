@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.jboss.bpel.ui.tests
-Bundle-SymbolicName: org.jboss.bpel.ui.tests
+Bundle-Name: org.jboss.tools.bpel.ui.tests
+Bundle-SymbolicName: org.jboss.tools.bpel.ui.tests
 Bundle-Version: 1.0.0
-Bundle-Activator: org.jboss.bpel.ui.tests.Activator
+Bundle-Activator: org.jboss.tools.bpel.ui.tests.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.junit;bundle-version="3.8.2"
