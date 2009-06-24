@@ -183,6 +183,7 @@ public class TextUtil {
 					isoCode = Integer.parseInt(text.substring(offcet, end),
 							radix);
 				} catch (NumberFormatException exception) {
+					//just ignore
 				}
 
 				// if escape sequence is iso code

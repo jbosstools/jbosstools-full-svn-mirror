@@ -42,30 +42,24 @@ import org.w3c.dom.Node;
 public class VpeDataTableCreator extends VpeAbstractCreator {
 	private boolean caseSensitive;
 
+	private final static String EMPTY = ""; //$NON-NLS-1$
+	private final static String NONE = "none"; //$NON-NLS-1$
+	private final static String DISPLAY_STYLE_NAME = "display:"; //$NON-NLS-1$
+	private final static String ZERO = "0"; //$NON-NLS-1$
+	private final static String ONE = "1"; //$NON-NLS-1$
+	private final static String HUNDRED_PERCENTS = "100%"; //$NON-NLS-1$
 
-	private final String REDUNDANT_TEXT_SEPARATOR = "\n\n"; //$NON-NLS-1$
-	private final String EMPTY = ""; //$NON-NLS-1$
-	private final String NONE = "none"; //$NON-NLS-1$
-	private final String DISPLAY_STYLE_NAME = "display:"; //$NON-NLS-1$
-	private final String ZERO = "0"; //$NON-NLS-1$
-	private final String ONE = "1"; //$NON-NLS-1$
-	private final String HUNDRED_PERCENTS = "100%"; //$NON-NLS-1$
+	private final static String ATTR_CAPTION_STYLE = "captionStyle"; //$NON-NLS-1$
+	private final static String ATTR_CAPTION_CLASS = "captionClass"; //$NON-NLS-1$
+	private final static String ATTR_HEADER_CLASS = "headerClass"; //$NON-NLS-1$
+	private final static String ATTR_FOOTER_CLASS = "footerClass"; //$NON-NLS-1$
+	private final static String ATTR_RULES = "rules"; //$NON-NLS-1$
+	private final static String ATTR_RULES_VALUE_ROWS = "rows"; //$NON-NLS-1$
+	private final static String TD_HIDDEN_BORDER_STYLE = "padding: 0px; border: 0px hidden;"; //$NON-NLS-1$
+	private final static String TD_RULES_ROWS_BORDER_STYLE = "padding: 0px;"; //$NON-NLS-1$
+	private final static String RULES_HIDDEN_BORDER_STYLE = "border: 0px hidden;"; //$NON-NLS-1$
 
-	private final String ATTR_CAPTION_STYLE = "captionStyle"; //$NON-NLS-1$
-	private final String ATTR_CAPTION_CLASS = "captionClass"; //$NON-NLS-1$
-	private final String ATTR_HEADER_CLASS = "headerClass"; //$NON-NLS-1$
-	private final String ATTR_FOOTER_CLASS = "footerClass"; //$NON-NLS-1$
-	private final String ATTR_STYLE = "style"; //$NON-NLS-1$
-	private final String ATTR_CLASS = "class"; //$NON-NLS-1$
-	private final String ATTR_WIDTH = "width"; //$NON-NLS-1$
-	private final String ATTR_BORDER = "border"; //$NON-NLS-1$
-	private final String ATTR_RULES = "rules"; //$NON-NLS-1$
-	private final String ATTR_RULES_VALUE_ROWS = "rows"; //$NON-NLS-1$
-	private final String TD_HIDDEN_BORDER_STYLE = "padding: 0px; border: 0px hidden;"; //$NON-NLS-1$
-	private final String TD_RULES_ROWS_BORDER_STYLE = "padding: 0px;"; //$NON-NLS-1$
-	private final String RULES_HIDDEN_BORDER_STYLE = "border: 0px hidden;"; //$NON-NLS-1$
-
-	private List propertyCreators;
+	private List<VpeCreator> propertyCreators;
 
 	VpeDataTableCreator(Element gridElement, VpeDependencyMap dependencyMap,
 			boolean caseSensitive) {
@@ -132,7 +126,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				Attr attr = element.getAttributeNode(attrName);
 				if (attr != null) {
 					if (propertyCreators == null)
-						propertyCreators = new ArrayList();
+						propertyCreators = new ArrayList<VpeCreator>();
 					propertyCreators.add(new VpeAttributeCreator(attrName, attr
 							.getValue(), dependencyMap, caseSensitive));
 				}
@@ -213,11 +207,11 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			Node attr = sourceNode.getAttributes().getNamedItem(
 					ATTR_CAPTION_STYLE);
 			if (attr != null) {
-				caption.setAttribute(ATTR_STYLE, attr.getNodeValue());
+				caption.setAttribute(HTML.ATTR_STYLE, attr.getNodeValue());
 			}
 			attr = sourceNode.getAttributes().getNamedItem(ATTR_CAPTION_CLASS);
 			if (attr != null) {
-				caption.setAttribute(ATTR_CLASS, attr.getNodeValue());
+				caption.setAttribute(HTML.ATTR_CLASS, attr.getNodeValue());
 			}
 			outterTable.appendChild(caption);
 			visualElements.setCaption(caption);
@@ -311,9 +305,9 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 		 * To create appropriate visual appearance borders of the body cell and
 		 * content table were set via styles.
 		 */
-		outterTD.setAttribute(ATTR_STYLE, TD_HIDDEN_BORDER_STYLE);
-		visualTable.setAttribute(ATTR_WIDTH, HUNDRED_PERCENTS);
-		visualTable.setAttribute(ATTR_BORDER, ZERO);
+		outterTD.setAttribute(HTML.ATTR_STYLE, TD_HIDDEN_BORDER_STYLE);
+		visualTable.setAttribute(HTML.ATTR_WIDTH, HUNDRED_PERCENTS);
+		visualTable.setAttribute(HTML.ATTR_BORDER, ZERO);
 
 		outterTD.appendChild(visualTable);
 		outterTR.appendChild(outterTD);
@@ -385,7 +379,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 					/*
 					 * Skip setting content table border
 					 */
-					if (ATTR_BORDER.equalsIgnoreCase(attr.getNodeName())) {
+					if (HTML.ATTR_BORDER.equalsIgnoreCase(attr.getNodeName())) {
 
 						/*
 						 * If attribute border is set then table cells have
@@ -403,8 +397,8 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 							}
 						}
 						if (val > 0) {
-							visualTable.setAttribute(ATTR_BORDER, ONE);
-							visualTable.setAttribute(ATTR_STYLE,
+							visualTable.setAttribute(HTML.ATTR_BORDER, ONE);
+							visualTable.setAttribute(HTML.ATTR_STYLE,
 									RULES_HIDDEN_BORDER_STYLE);
 						}
 
@@ -418,7 +412,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 					if (ATTR_RULES.equalsIgnoreCase(attr.getNodeName())) {
 						if (ATTR_RULES_VALUE_ROWS.equalsIgnoreCase(attr
 								.getNodeValue())) {
-							outterTD.setAttribute(ATTR_STYLE,
+							outterTD.setAttribute(HTML.ATTR_STYLE,
 									TD_RULES_ROWS_BORDER_STYLE);
 						}
 					}
@@ -567,7 +561,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 					try {
 						nsIDOMHTMLTableCellElement cell = (nsIDOMHTMLTableCellElement) child
 								.queryInterface(nsIDOMHTMLTableCellElement.NS_IDOMHTMLTABLECELLELEMENT_IID);
-						cell.setAttribute(ATTR_CLASS, classes[ind]);
+						cell.setAttribute(HTML.ATTR_CLASS, classes[ind]);
 						ind = ind < (classes.length - 1) ? ind + 1 : 0;
 					} catch (XPCOMException ex) {
 						// just ignore this exception
@@ -588,7 +582,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 					try {
 						nsIDOMHTMLTableCellElement cell = (nsIDOMHTMLTableCellElement) child
 								.queryInterface(nsIDOMHTMLTableCellElement.NS_IDOMHTMLTABLECELLELEMENT_IID);
-						cell.removeAttribute(ATTR_CLASS);
+						cell.removeAttribute(HTML.ATTR_CLASS);
 					} catch (XPCOMException ex) {
 						// just ignore this exception
 					}
@@ -603,23 +597,23 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			String rowClass = (rowClasses != null && rowClasses.length > 0) ? rowClasses[0]
 					: null;
 			if (rowClass.trim().length() > 0) {
-				row.setAttribute(ATTR_CLASS, rowClass);
+				row.setAttribute(HTML.ATTR_CLASS, rowClass);
 			} else {
-				row.removeAttribute(ATTR_CLASS);
+				row.removeAttribute(HTML.ATTR_CLASS);
 			}
 		}
 	}
 
 	private void setRowDisplayStyle(nsIDOMElement row, boolean visible) {
 		if (row != null) {
-			row.setAttribute(ATTR_STYLE, DISPLAY_STYLE_NAME
+			row.setAttribute(HTML.ATTR_STYLE, DISPLAY_STYLE_NAME
 					+ (visible ? EMPTY : NONE));
 		}
 	}
 
 	private void removeRowClass(nsIDOMElement row) {
 		if (row != null) {
-			row.removeAttribute(ATTR_CLASS);
+			row.removeAttribute(HTML.ATTR_CLASS);
 		}
 	}
 

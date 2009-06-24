@@ -24,8 +24,6 @@ import org.eclipse.swt.widgets.ToolBar;
  */
 public abstract class SplitToolBar implements IVpeToolBar {
 
-	private IItems[] items;
-
 	public abstract IItems[] createItems(ToolBar bar);
 
 	public void createToolBarControl(Composite parent) {
