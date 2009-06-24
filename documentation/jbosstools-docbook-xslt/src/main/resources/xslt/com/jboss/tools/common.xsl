@@ -22,7 +22,7 @@
         </a>
       </h3>
       <iframe id='feedback-iFrame' name="feedback-iFrame"><xsl:text> </xsl:text></iframe>
-      <form onsubmit="return validate_form()" id="feedback-mailform" method="post" action="https://jira.jboss.org/jira/secure/CreateIssueDetails!init.jspa?pid=12310341&amp;issuetype=3" target="feedback-iFrame">
+      <form onsubmit="return validate_form()" id="feedback-mailform" method="post" action="https://jira.jboss.org/jira/secure/CreateIssueDetails!init.jspa?pid=12310500&amp;issuetype=3" target="feedback-iFrame">
         <input type="hidden" id="priority" name="priority" value="3" />
         <input type="hidden" id="components" name="components" value="12311170" />
         <input type="hidden" id="versions" name="versions" value="12312451" />
@@ -42,7 +42,7 @@
         <label for="feedback-environment">Environment</label>
         <textarea id="feedback-environment" name="feedback-environment" title="Describe your environment"><xsl:text> </xsl:text></textarea>
       </form>
-      <div id="guide_words">This will launch the RichFaces Jira page - to complete your feedback please login if needed, and submit the Jira.</div>
+      <div id="guide_words">This will launch the JBDS Jira page - to complete your feedback please login if needed, and submit the Jira.</div>
       <input type="button" id="feedback-submit" value="Proceed to Jira" name="submit" class="feedback-formbutton" title="Proceed to create new issue" onclick="fillForm('feedback-mailform'); submitForm('feedback-mailform', 'feedback-iFrame', 'feedback-submit', 'feedback-maincontainer');"/>
     </div>
     <div id="feedback-wrapper">
