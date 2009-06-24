@@ -168,7 +168,7 @@ public class VpeCustomTemplate extends VpeIncludeTemplate {
 	 * @author mareshkau
 	 *
 	 */
-	private class TransferObject {
+	private static class TransferObject {
 		private ResourceReference [] resourceReferebces;
 		private IFile customFile;
 		

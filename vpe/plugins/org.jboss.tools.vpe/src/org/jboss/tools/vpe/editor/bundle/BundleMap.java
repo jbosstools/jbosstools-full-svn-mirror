@@ -53,12 +53,8 @@ import org.jboss.tools.jst.web.project.list.WebPromptingProvider;
 import org.jboss.tools.vpe.VpePlugin;
 
 public class BundleMap {
-//	private static final String BEGIN_BUNDLE = "#{";
-//	private static final String END_BUNDLE = "}";
-//	private static final String BEGIN_ARRAY_STYLE_PROPERTY_NAME_SEPARATOR = "['";
-//	private static final String END_ARRAY_STYLE_PROPERTY_NAME_SEPARATOR = "']";
 
-	public static final String TITLE_ATTRIBUTE_NAME = "title";
+	public static final String TITLE_ATTRIBUTE_NAME = "title"; //$NON-NLS-1$
 	
 	private BundleMapListener[] bundleMapListeners = new BundleMapListener[0];
 	private StructuredTextEditor editor;
@@ -452,12 +448,12 @@ public class BundleMap {
 		}
 	}
 	
-	class Expression{
+static	class Expression{
 		public String prefix;
 		public String propertyName;
 	}
 	
-    class BundleEntry{
+static    class BundleEntry{
 		public ResourceBundle bundle;
 		public String uri;
 		public String prefix;
@@ -471,7 +467,7 @@ public class BundleMap {
 			}
 	}
 	
-	class UsedKey{
+static	class UsedKey{
 		public int hashCode;
 		public String uri;
 		public String prefix;

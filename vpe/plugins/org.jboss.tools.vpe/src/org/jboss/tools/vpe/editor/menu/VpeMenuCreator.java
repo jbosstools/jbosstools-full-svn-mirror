@@ -184,7 +184,7 @@ public class VpeMenuCreator {
 	/**
 	 * Test action. For the debugging purposes only.
 	 */
-	public class TestAction extends Action {
+	public static class TestAction extends Action {
 		public TestAction() {
 			setText("Test Action"); //$NON-NLS-1$
 		}

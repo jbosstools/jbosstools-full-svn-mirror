@@ -11,8 +11,6 @@
 package org.jboss.tools.vpe.editor.template;
 
 import java.util.Map;
-import java.util.Set;
-
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
@@ -32,7 +30,6 @@ public class VpeLinkCreator extends VpeAbstractCreator {
 	private VpeExpression hrefExpr;
 
 	private String hrefStr;
-	private String relStr;
 
 
 	VpeLinkCreator(Element taglibElement, VpeDependencyMap dependencyMap, boolean caseSensitive) {
@@ -48,16 +45,6 @@ public class VpeLinkCreator extends VpeAbstractCreator {
 				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(hrefStr, caseSensitive);
 				hrefExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());
-			} catch(VpeExpressionBuilderException e) {
-				VpePlugin.reportProblem(e);
-			}
-		}
-
-		Attr relAttr = element.getAttributeNode(VpeTemplateManager.ATTR_LINK_REL);
-		if (relAttr != null) {
-			try {
-			    relStr = relAttr.getValue();
-				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(relStr, caseSensitive);
 			} catch(VpeExpressionBuilderException e) {
 				VpePlugin.reportProblem(e);
 			}

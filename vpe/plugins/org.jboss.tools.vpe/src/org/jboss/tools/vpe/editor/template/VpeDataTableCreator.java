@@ -596,7 +596,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 			String[] rowClasses = getClasses(value);
 			String rowClass = (rowClasses != null && rowClasses.length > 0) ? rowClasses[0]
 					: null;
-			if (rowClass.trim().length() > 0) {
+			if (rowClass!=null && rowClass.trim().length() > 0) {
 				row.setAttribute(HTML.ATTR_CLASS, rowClass);
 			} else {
 				row.removeAttribute(HTML.ATTR_CLASS);

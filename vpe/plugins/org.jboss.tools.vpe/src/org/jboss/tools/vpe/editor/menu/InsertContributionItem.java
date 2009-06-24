@@ -217,7 +217,7 @@ public class InsertContributionItem extends ContributionItem {
 	 * 
 	 * @author Sergey Dzmitrovich
 	 */
-	public class InsertSubMenuManager extends MenuManager {
+	public static class InsertSubMenuManager extends MenuManager {
 
 		public InsertSubMenuManager(String text) {
 			super(text);

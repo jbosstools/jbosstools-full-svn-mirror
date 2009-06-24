@@ -1477,7 +1477,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		
 	}
 
-	private class PseudoInfo {
+	private static class PseudoInfo {
 		private nsIDOMNode pseudoNode;
 		private boolean isElements;
 

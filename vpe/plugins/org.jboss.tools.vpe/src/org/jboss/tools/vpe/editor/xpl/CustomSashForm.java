@@ -165,7 +165,7 @@ public class CustomSashForm extends SashForm {
 		if (noMaxUp & noMaxDown)
 			return;	// If you can't max up or down, there there is no need for arrows.
 				
-		SASH_WIDTH = 3+ getOrientation() == SWT.VERTICAL ? ARROW_HEIGHT : ARROW_SIZE;
+		SASH_WIDTH =  ARROW_SIZE;
 		
 		arrowColor = new Color(parent.getDisplay(), 99, 101, 156);
 		//arrowColor = new Color(parent.getDisplay(), 0, 0, 0);

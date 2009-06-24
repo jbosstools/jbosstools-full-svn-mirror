@@ -100,7 +100,7 @@ public class VpeSourceSelection {
 		return startNode == endNode;
 	}
 
-	public class VpeNodeIterator {
+	public static class VpeNodeIterator {
 		private Node nextNode;
 		private Node endNode;
 

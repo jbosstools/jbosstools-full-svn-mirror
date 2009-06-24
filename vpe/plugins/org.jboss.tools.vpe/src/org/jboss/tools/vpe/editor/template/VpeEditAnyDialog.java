@@ -219,7 +219,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		}
 	}
 
-	private class CheckControl {
+	private static class CheckControl {
 		private Label label;
 		private Button button;
 

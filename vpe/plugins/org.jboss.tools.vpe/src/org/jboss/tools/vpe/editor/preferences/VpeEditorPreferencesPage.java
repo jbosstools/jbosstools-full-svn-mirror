@@ -41,7 +41,7 @@ public class VpeEditorPreferencesPage extends TabbedPreferencesPage implements I
         prefsdlg.open();
 	}
 
-	class GeneralPage extends XMOBasedPreferencesPage {
+	static class GeneralPage extends XMOBasedPreferencesPage {
 		public GeneralPage() {
 			super(ModelUtilities.getPreferenceModel().getByPath(VpePreference.VPE_EDITOR_PATH));
 		}

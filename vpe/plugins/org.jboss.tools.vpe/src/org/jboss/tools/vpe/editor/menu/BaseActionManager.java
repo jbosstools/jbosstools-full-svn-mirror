@@ -552,7 +552,7 @@ public abstract class BaseActionManager {
 		noContainerTags.add("wbr");
 	}
 
-	public class ActionHelper extends ModelQueryActionHelper {
+	public static class ActionHelper extends ModelQueryActionHelper {
 		public ActionHelper(ModelQueryImpl query) {
 			super(query);
 		}
