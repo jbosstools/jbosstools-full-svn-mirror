@@ -18,7 +18,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.eclipse.core.filebuffers.FileBuffers;
 import org.eclipse.core.filebuffers.ITextFileBuffer;
 import org.eclipse.core.filebuffers.ITextFileBufferManager;
@@ -237,7 +236,9 @@ public class DocTypeUtil {
 	 */
 	private static String getDoctype(File file) {
 		String docTypeValue = Constants.EMPTY;
-		IDOMDocument document = getDocument(file);
+		IDOMDocument document= null;
+		try {
+		document = getDocument(file);
 		if (document != null) {
 			// find "component" element
 			Element componentElement = FaceletUtil
@@ -274,34 +275,25 @@ public class DocTypeUtil {
 					docTypeValue = documentType.getSource();
 			}
 		}
+		}finally {
+			//added by Max Areshkau, we should always release document
+			if(document!=null) {
+				FileBufferModelManager.getInstance().releaseModel(document.getStructuredDocument());
+			}
+		}
 		return (docTypeValue != null) ? docTypeValue.trim() : Constants.EMPTY;
 	}
 
 	/**
+	 * Maksim Areshkau
+	 * After using document model should be always released!
+	 * 
 	 * get document by {@link File}
 	 * 
 	 * @param file
 	 * @return
 	 */
 	static private IDOMDocument getDocument(File file) {
-
-		// if (file.exists()) {
-		//
-		// String content = org.jboss.tools.common.util.FileUtil
-		// .readFile(file);
-		//
-		// IStructuredDocument newStructuredDocument = StructuredDocumentFactory
-		// .getNewStructuredDocumentInstance(new JSPSourceParser());
-		//
-		// newStructuredDocument.set(content);
-		//
-		// IDOMModel modelForJSP = new DOMModelForJSP();
-		// modelForJSP.setStructuredDocument(newStructuredDocument);
-		//
-		// return modelForJSP.getDocument();
-		//
-		// }
-		// return null;
 
 		IDOMModel model = null;
 		ITextFileBufferManager bufferManager = FileBuffers
@@ -325,7 +317,7 @@ public class DocTypeUtil {
 		} catch (CoreException e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
-		return model.getDocument();
+		return model==null?null:model.getDocument();
 	}
 
 	/**
@@ -347,7 +339,10 @@ public class DocTypeUtil {
 	 * @return
 	 */
 	public static String getContentInitFile(File initFile) {
-		IDOMDocument document = getDocument(initFile);
+		IDOMDocument document = null;
+		String result = Constants.EMPTY;
+		try {
+		document = getDocument(initFile);
 		if (document != null) {
 			// for each tag's name
 			for (String tag : urlTags) {
@@ -372,8 +367,13 @@ public class DocTypeUtil {
 					}
 				}
 			}
-			return document.getSource();
+			result = document.getSource();
 		}
-		return Constants.EMPTY;
+		} finally {
+			if(document!=null) {
+				FileBufferModelManager.getInstance().releaseModel(document.getStructuredDocument());
+			}
+		}
+		return result;
 	}
 }
