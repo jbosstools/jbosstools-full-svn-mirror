@@ -22,70 +22,70 @@
    </url>
 
    <plugin
-         id="org.jboss.bpel.apache.ode.deploy.model"
+         id="org.eclipse.bpel.apache.ode.deploy.model"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.jboss.bpel.apache.ode.deploy.ui"
+         id="org.eclipse.bpel.apache.ode.deploy.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.jboss.bpel.apache.ode.runtime"
+         id="org.eclipse.bpel.apache.ode.runtime"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.jboss.bpel.common.model"
+         id="org.eclipse.bpel.common.model"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
-         id="org.jboss.bpel.common.ui"
+         id="org.eclipse.bpel.common.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
-         id="org.jboss.bpel.model"
+         id="org.eclipse.bpel.model"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
-         id="org.jboss.bpel.runtimes"
+         id="org.eclipse.bpel.runtimes"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
-         id="org.jboss.bpel.ui"
+         id="org.eclipse.bpel.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
-         id="org.jboss.bpel.validator"
+         id="org.eclipse.bpel.validator"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
-         id="org.jboss.bpel.wsil.model"
+         id="org.eclipse.bpel.wsil.model"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
-         id="org.jboss.bpel.xpath10"
+         id="org.eclipse.bpel.xpath10"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
