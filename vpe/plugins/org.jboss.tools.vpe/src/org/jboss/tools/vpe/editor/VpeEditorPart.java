@@ -854,6 +854,14 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		previewContent.setParent(newContainer);
 		
 		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4513
+		 * New container should have all properties from the old container set.
+		 */
+		if (null != container.getMaximizedControl()) {
+			newContainer.setMaximizedControl(container.getMaximizedControl());
+		}
+		
+		/*
 		 * Dispose the old container:
 		 * it'll be excluded from parent composite's layout.
 		 */
