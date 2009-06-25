@@ -676,20 +676,7 @@ public class VpeVisualKeyHandler {
 			}
 			if (focusNodeOffset > 0) {
 				focusNodeOffset--;
-				return getSourceNodeAt(focusNodeOffset);
-			}
-		}
-		return null;
-	}
-	
-	private Node getSourceNodeAt(int offset) {
-		if (sourceEditor != null && sourceEditor.getModel() != null) {
-			IndexedRegion node = sourceEditor.getModel().getIndexedRegion(offset);
-			if (node == null) {
-				node = sourceEditor.getModel().getIndexedRegion(offset - 1);
-			}
-			if (node instanceof Node) {
-				return (Node) node;
+				return VpeSourceSelectionBuilder.getSourceNodeAt(this.sourceEditor,focusNodeOffset);
 			}
 		}
 		return null;
@@ -1150,8 +1137,8 @@ public class VpeVisualKeyHandler {
 					if (focusNode.getNodeType() == Node.TEXT_NODE) {
 						if (focusNode.getParentNode().getNodeType() == Node.DOCUMENT_NODE) {
 							Point range = sourceEditor.getTextViewer().getSelectedRange();
-							Node p1 = focusNode.getOwnerDocument().createElement("p");
-							Node p2 = focusNode.getOwnerDocument().createElement("p");
+							Node p1 = focusNode.getOwnerDocument().createElement(HTML.TAG_P);
+							Node p2 = focusNode.getOwnerDocument().createElement(HTML.TAG_P);
 							Text newNode = ((Text)focusNode).splitText(getSourceNodeOffset(focusNode, range.x));
 							focusNode.getParentNode().insertBefore(p1, focusNode);
 							focusNode.getParentNode().insertBefore(p2, newNode);

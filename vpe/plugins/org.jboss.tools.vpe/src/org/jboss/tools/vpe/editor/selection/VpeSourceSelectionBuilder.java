@@ -42,7 +42,7 @@ public class VpeSourceSelectionBuilder {
 			anchorPosition = focusPosition;
 			focusPosition = range.x;
 		}
-		Node focusNode = getSourceNodeAt(focusPosition);
+		Node focusNode = getSourceNodeAt(this.sourceEditor,focusPosition);
 		if (focusNode == null) {
 			return null;
 		}
@@ -51,7 +51,7 @@ public class VpeSourceSelectionBuilder {
 		Node anchorNode = null;
 		int anchorOffset = 0;
 		if (extendFlag) {
-			anchorNode = getSourceNodeAt(anchorPosition);
+			anchorNode = getSourceNodeAt(this.sourceEditor,anchorPosition);
 			anchorOffset = getSourceNodeOffset(anchorNode, anchorPosition, reversionFlag);
 		} else {
 			anchorNode = focusNode;
@@ -105,11 +105,11 @@ public class VpeSourceSelectionBuilder {
 		return selection;
 	}
 
-	private Node getSourceNodeAt(int offset) {
-		if (sourceEditor != null && sourceEditor.getModel() != null) {
-			IndexedRegion node = sourceEditor.getModel().getIndexedRegion(offset);
+	public static Node getSourceNodeAt(StructuredTextEditor srcEditor,int offset) {
+		if (srcEditor != null && srcEditor.getModel() != null) {
+			IndexedRegion node = srcEditor.getModel().getIndexedRegion(offset);
 			if (node == null) {
-				node = sourceEditor.getModel().getIndexedRegion(offset - 1);
+				node = srcEditor.getModel().getIndexedRegion(offset - 1);
 			}
 			if (node instanceof Node) {
 				return (Node) node;

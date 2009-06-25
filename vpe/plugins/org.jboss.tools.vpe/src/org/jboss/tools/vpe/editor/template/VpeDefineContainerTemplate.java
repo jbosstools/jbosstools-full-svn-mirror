@@ -16,19 +16,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.eclipse.core.resources.IFile;
 import org.jboss.tools.vpe.editor.VpeIncludeInfo;
 import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
-import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
-import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
-import org.jboss.tools.vpe.editor.template.VpeCreationData;
-import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
-import org.jboss.tools.vpe.editor.template.VpeTemplate;
-import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
-import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -336,15 +328,6 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 	return false;
 
     }
-
-//    @Override
-//    public void openIncludeEditor(VpePageContext pageContext,
-//	    Element sourceElement, Object data) {
-//
-//	if (data instanceof TemplateFileInfo) {
-//	    FileUtil.openEditor(((TemplateFileInfo) data).getTemplateFile());
-//	}
-//    }
 
     protected VpeCreationData createStub(String fileName,
 	    Node sourceElement, nsIDOMDocument visualDocument) {

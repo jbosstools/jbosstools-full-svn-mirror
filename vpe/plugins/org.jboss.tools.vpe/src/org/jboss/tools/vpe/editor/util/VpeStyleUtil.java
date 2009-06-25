@@ -226,32 +226,6 @@ public class VpeStyleUtil {
 
     // sets value of parameter described in sizeAttribute, for example
     // "style.width"
-    public static void setSizeInStyle(Element sourceElement,
-	    String sizeAttribute, int size) {
-	int dotPosition = sizeAttribute.indexOf(DOT_STRING);
-	String attribute = sizeAttribute.substring(0, dotPosition);
-	String parameter = sizeAttribute.substring(dotPosition + 1,
-		sizeAttribute.length());
-
-	String style = sourceElement.getAttribute(attribute);
-	if (style == null) {
-	    style = EMPTY_STRING;
-	} else { // remove old sizes
-	    style = deleteFromString(style, parameter, SEMICOLON_STRING);
-	}
-	if (style.length() > 0) {
-	    if (!style.endsWith(SEMICOLON_STRING))
-		style += SEMICOLON_STRING;
-	}
-
-	style += SPACE_STRING + parameter + SPACE_STRING + COLON_STRING
-		+ SPACE_STRING + size + PX_STRING + SEMICOLON_STRING;
-
-	sourceElement.setAttribute(attribute, style);
-    }
-
-    // sets value of parameter described in sizeAttribute, for example
-    // "style.width"
     public static void setParameterInStyle(Element sourceElement,
 	    String sizeAttribute, String value) {
 	int dotPosition = sizeAttribute.indexOf(DOT_STRING);
@@ -401,22 +375,6 @@ public class VpeStyleUtil {
 
 			String filePath = urls[i].substring(startPathIndex + 1,
 					endPathIndex);
-//			if (filePath.indexOf(FILE_PROTOCOL) != -1) {
-//				continue;
-//			}
-//
-//			if (!new File(filePath).isAbsolute()) {
-//				filePath = getFilePath(input, filePath);
-//			}
-//
-//			filePath = FILE_PROTOCOL + SLASH + SLASH + filePath.replace('\\', '/');
-//			URL url = null;
-//			try {
-//				url = new URL(filePath);
-//			} catch (MalformedURLException e) {
-//				continue;
-//			}
-//			filePath = url.toString();
 			
 			IFile file = null;
 			if (pageContext.getVisualBuilder().getCurrentIncludeInfo() != null)

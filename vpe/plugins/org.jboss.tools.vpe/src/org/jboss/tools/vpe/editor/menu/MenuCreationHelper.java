@@ -41,6 +41,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.menu.BaseActionManager.MyMenuManager;
+import org.jboss.tools.vpe.editor.menu.action.EditAttributesAction;
 import org.jboss.tools.vpe.editor.menu.action.InsertAction;
 import org.jboss.tools.vpe.editor.menu.action.VpeMenuListener;
 import org.jboss.tools.vpe.editor.menu.action.VpeTextOperationAction;
@@ -393,39 +394,12 @@ public class MenuCreationHelper {
 	 * @param node the Node object
 	 */
 	private void showProperties(Node node) {
-		ExtendedProperties p = createExtendedProperties(node);
+		ExtendedProperties p = EditAttributesAction.createExtendedProperties(node);
 		if (p != null) {
 			ExtendedPropertiesWizard.run(p);
 		}
 	}
 
-	/**
-	 * Create extended properties list for the node passed by parameter.
-	 *
-	 * @param node the Node to be processed
-	 * @return an extended properties
-	 */
-	private ExtendedProperties createExtendedProperties(Node node) {
-		Class c = ModelFeatureFactory.getInstance().getFeatureClass(
-				"org.jboss.tools.jst.jsp.outline.VpeProperties"); //$NON-NLS-1$
-		try {
-			return (ExtendedProperties) c.getDeclaredConstructor(
-					new Class[] { Node.class }).newInstance(new Object[] { node });
-		} catch (IllegalArgumentException e) {
-			VpePlugin.getPluginLog().logError(e);
-		} catch (SecurityException e) {
-			VpePlugin.getPluginLog().logError(e);
-		} catch (InstantiationException e) {
-			VpePlugin.getPluginLog().logError(e);
-		} catch (IllegalAccessException e) {
-			VpePlugin.getPluginLog().logError(e);
-		} catch (InvocationTargetException e) {
-			VpePlugin.getPluginLog().logError(e);
-		} catch (NoSuchMethodException e) {
-			VpePlugin.getPluginLog().logError(e);
-		}
-		return null;
-	}
 
 	/**
 	 * Method is used to print dump mapping.

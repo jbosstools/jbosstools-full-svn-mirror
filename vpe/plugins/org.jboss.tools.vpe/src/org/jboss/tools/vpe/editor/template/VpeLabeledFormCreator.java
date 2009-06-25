@@ -79,6 +79,7 @@ public class VpeLabeledFormCreator extends VpeAbstractCreator {
 		}
 	}
 
+	@Override
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) throws VpeExpressionException {
 		String labelAttrName = VpeTemplateManager.ATTR_LABELED_FORM_DEFAULT_LABEL;
 		if (labelNameExpr != null) {

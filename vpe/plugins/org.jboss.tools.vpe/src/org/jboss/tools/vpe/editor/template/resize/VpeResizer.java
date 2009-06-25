@@ -166,10 +166,10 @@ public class VpeResizer {
 		String positionAttribute = resizeData.getPositionAttribute();
 		if(absolute && resizeData.isAbsolutePositionEnabled()){
 			VpeStyleUtil.setAbsolute(sourceElement);
-			VpeStyleUtil.setSizeInStyle(sourceElement, VpeStyleUtil.ATTRIBUTE_STYLE+VpeStyleUtil.DOT_STRING+positionAttribute, position);			
+			VpeStyleUtil.setParameterInStyle(sourceElement, VpeStyleUtil.ATTRIBUTE_STYLE+VpeStyleUtil.DOT_STRING+positionAttribute, position+VpeStyleUtil.PX_STRING);			
 		}else{
 			if(VpeStyleUtil.getAbsolute(sourceElement)){
-				VpeStyleUtil.setSizeInStyle(sourceElement, VpeStyleUtil.ATTRIBUTE_STYLE+VpeStyleUtil.DOT_STRING+positionAttribute, position);
+				VpeStyleUtil.setParameterInStyle(sourceElement, VpeStyleUtil.ATTRIBUTE_STYLE+VpeStyleUtil.DOT_STRING+positionAttribute, position+VpeStyleUtil.PX_STRING);
 			}
 		}
 		if(resizeData.getTagXpath() != null){
@@ -178,14 +178,14 @@ public class VpeResizer {
 				if(sizeAttribute.indexOf(VpeStyleUtil.DOT_STRING) < 0){
 					ancestor.setAttribute(sizeAttribute, ""+size);
 				}else{
-					VpeStyleUtil.setSizeInStyle(ancestor, sizeAttribute, size);					
+					VpeStyleUtil.setParameterInStyle(ancestor, sizeAttribute, size+VpeStyleUtil.PX_STRING);					
 				}
 			}
 		}else{
 			if(sizeAttribute.indexOf(VpeStyleUtil.DOT_STRING) < 0){
 				sourceElement.setAttribute(sizeAttribute, ""+size);
 			}else{
-				VpeStyleUtil.setSizeInStyle(sourceElement, sizeAttribute, size);					
+				VpeStyleUtil.setParameterInStyle(sourceElement, sizeAttribute, size+VpeStyleUtil.PX_STRING);					
 			}
 		}
 	}

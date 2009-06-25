@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.menu.action;
 
+import java.awt.Menu;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 
@@ -20,6 +21,7 @@ import org.jboss.tools.common.model.util.ModelFeatureFactory;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
+import org.jboss.tools.vpe.editor.menu.MenuCreationHelper;
 import org.jboss.tools.vpe.editor.menu.VpeMenuUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.w3c.dom.Node;
@@ -80,7 +82,7 @@ public class EditAttributesAction extends Action {
 	 * @param node the Node object
 	 */
 	private void showProperties(Node node) {
-		ExtendedProperties p = createExtendedProperties(node);
+		ExtendedProperties p = EditAttributesAction.createExtendedProperties(node);
 		if (p != null) {
 			ExtendedPropertiesWizard.run(p);
 		}
@@ -92,7 +94,7 @@ public class EditAttributesAction extends Action {
 	 * @param node the Node to be processed
 	 * @return an extended properties
 	 */
-	private ExtendedProperties createExtendedProperties(Node node) {
+	public static ExtendedProperties createExtendedProperties(Node node) {
 		final Class<?> c = ModelFeatureFactory.getInstance().getFeatureClass(
 				"org.jboss.tools.jst.jsp.outline.VpeProperties"); //$NON-NLS-1$
 		try {
