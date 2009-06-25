@@ -133,7 +133,7 @@ public class DocTypeUtil {
 						/*
 						 * Create temporally IFile.
 						 */
-						iFile = project.getFile(TEMP_FILE_NAME + jarFile.getName());
+						iFile = project.getFile(TEMP_FILE_NAME + jarFile.getFullPath().lastSegment());
 						/*
 						 * Delete any previously saved file.
 						 */
