@@ -208,8 +208,114 @@
    </xsl:template> 
    
    <!--avoid page sequence  to generate blank pages after even page numbers -->
+   <!--<xsl:param name="page.margin.top">0.1in</xsl:param>
+   <xsl:param name="region.before.extent">0.6in</xsl:param>
+   <xsl:param name="body.margin.top">0.9in</xsl:param>--> 
+  
+   <xsl:attribute-set name="header.content.properties">
+      <xsl:attribute name="font-family">Helvetica</xsl:attribute>
+      <xsl:attribute name="font-size">9pt</xsl:attribute>
+      <xsl:attribute name="font-weight">bold</xsl:attribute>
+      
+   </xsl:attribute-set>
+   <xsl:template name="header.content">  
+      <xsl:param name="pageclass" select="''"/>
+      <xsl:param name="sequence" select="''"/>
+      <xsl:param name="position" select="''"/>
+      <xsl:param name="gentext-key" select="''"/>
+      <fo:block> 
+         <!-- sequence can be odd, even, first, blank
+          position can be left, center, right-->
+    <xsl:choose>
+            
+            <xsl:when test="$sequence = 'odd' and $position = 'left'">
+               <xsl:apply-templates select="." 
+                  mode="object.title.markup"/>
+            </xsl:when>
+            
+            <xsl:when test="$sequence = 'odd' and $position = 'center'">
+               <xsl:call-template name="draft.text"/>
+            </xsl:when>
+            
+            <xsl:when test="$sequence = 'odd' and $position = 'right'">
+               
+            </xsl:when>
+            
+            <xsl:when test="$sequence = 'even' and $position = 'left'">  
+               <xsl:apply-templates select="." 
+                  mode="object.title.markup"/>
+            </xsl:when>
+            
+            <xsl:when test="$sequence = 'even' and $position = 'center'">
+               <xsl:call-template name="draft.text"/>
+            </xsl:when>
+            
+            <xsl:when test="$sequence = 'even' and $position = 'right'">
+             
+            </xsl:when>
+            
+            <xsl:when test="$sequence = 'first' and $position = 'left'">
+               <xsl:apply-templates select="." 
+                  mode="object.title.markup"/>
+             </xsl:when>
+            
+            <xsl:when test="$sequence = 'first' and $position = 'right'">
+        
+            </xsl:when>
+            
+            <xsl:when test="$sequence = 'first' and $position = 'center'"> 
+               <xsl:value-of 
+                  select="ancestor-or-self::book/bookinfo/corpauthor"/>
+       
+            </xsl:when>
+            
+            <xsl:when test="$sequence = 'blank' and $position = 'left'">
+               <fo:page-number/>
+            
+            </xsl:when>
+            
+            <xsl:when test="$sequence = 'blank' and $position = 'center'">
+               <xsl:text>This page intentionally left blank</xsl:text>
+            </xsl:when>
+            
+            <xsl:when test="$sequence = 'blank' and $position = 'right'">
+            </xsl:when>
+            
+         </xsl:choose>
+      </fo:block>
+   </xsl:template>
    
-   <xsl:template name="force.page.count">
+   <xsl:template name="footer.content">
+      <xsl:param name="pageclass" select="''"/>
+      <xsl:param name="sequence" select="''"/>
+      <xsl:param name="position" select="''"/>
+      <xsl:param name="gentext-key" select="''"/>
+      
+      <!--
+         <fo:block>
+         <xsl:value-of select="$pageclass"/>
+         <xsl:text>, </xsl:text>
+         <xsl:value-of select="$sequence"/>
+         <xsl:text>, </xsl:text>
+         <xsl:value-of select="$position"/>
+         <xsl:text>, </xsl:text>
+         <xsl:value-of select="$gentext-key"/>
+         </fo:block>
+      -->
+      
+      <fo:block>
+         <!-- pageclass can be front, body, back -->
+         <!-- sequence can be odd, even, first, blank -->
+         <!-- position can be left, center, right -->
+         <xsl:choose>
+            <xsl:when test="($sequence = 'odd'or $sequence = 'even' or $sequence = 'blank' or $sequence = 'first') and $position = 'right'">
+               <fo:page-number/>
+            </xsl:when>
+         </xsl:choose>
+      </fo:block>
+   </xsl:template>
+   <!--added-->
+  <xsl:template name="force.page.count">
       <xsl:param name="element" select="local-name(.)"/>
       <xsl:param name="master-reference" select="''"/>
       <xsl:text>no-force</xsl:text>
