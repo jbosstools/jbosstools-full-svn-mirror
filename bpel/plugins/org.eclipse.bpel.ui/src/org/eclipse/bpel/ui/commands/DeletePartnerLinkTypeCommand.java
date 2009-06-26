@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.eclipse.bpel.ui.commands;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.bpel.model.partnerlinktype.PartnerLinkType;
 import org.eclipse.bpel.ui.IBPELUIConstants;
+import org.eclipse.bpel.ui.util.ModelHelper;
 
 
 /**
@@ -25,5 +29,21 @@ public class DeletePartnerLinkTypeCommand extends DeleteWSDLExtensibilityElement
 
 	public DeletePartnerLinkTypeCommand(PartnerLinkType plt) {
 		super(plt);
+	}
+	
+	/**
+	 * Override super's method because we should not delete other partner link
+	 */
+	@Override
+	public void doExecute() {
+		fDefinition = fElement.getEnclosingDefinition();
+	
+		Set<Object> modelRootSet = new HashSet<Object>();
+		modelRootSet.add(fElement.eResource());		
+		modelRootSet.add(ModelHelper.getBPELEditor(fElement).getResource());
+		
+		fElement.setEnclosingDefinition(null);
+		fDefinition.getEExtensibilityElements().remove(fElement);
+
 	}
 }

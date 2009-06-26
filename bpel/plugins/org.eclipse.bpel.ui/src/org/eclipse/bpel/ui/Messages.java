@@ -702,6 +702,9 @@ public final class Messages extends NLS {
 
     public static String OutlinePage_showOverviewView;
     public static String OutlinePage_showOutlineView;
+    
+	public static String DeletePartnerLinkTypeWarningMessage;
+	public static String DeletePartnerLinkTypeWarningDialogTitle;
 
 	static {
 		
