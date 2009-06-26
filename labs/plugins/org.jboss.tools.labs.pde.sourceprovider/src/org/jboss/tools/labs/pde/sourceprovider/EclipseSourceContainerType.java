@@ -51,7 +51,7 @@ public class EclipseSourceContainerType extends AbstractSourceContainerTypeDeleg
 	}
 	
 	public static class EclipseSourceContainer extends AbstractSourceContainer {
-		public static final String TYPE_ID = "org.jboss.tools.labs.pde.sourceprovider.eclipseSourceContainerType";
+		public static final String TYPE_ID = "org.jboss.tools.labs.pde.sourceprovider.eclipseSourceContainerType"; //$NON-NLS-1$
 		protected File root;
 		protected HashMap<String,ExternalArchiveSourceContainer> pathToContainer;
 		public EclipseSourceContainer(File f) {
@@ -66,7 +66,7 @@ public class EclipseSourceContainerType extends AbstractSourceContainerTypeDeleg
 			for( int i = 0; i < kids.length; i++ ) {
 				if( kids[i].isDirectory()) {
 					search(kids[i]);
-				} else if( kids[i].getName().endsWith("src.zip")) {
+				} else if( kids[i].getName().endsWith("src.zip")) { //$NON-NLS-1$
 					// add the match
 					pathToContainer.put(kids[i].toString(), new ExternalArchiveSourceContainer(kids[i].getAbsolutePath(), true));
 				}
@@ -108,7 +108,7 @@ public class EclipseSourceContainerType extends AbstractSourceContainerTypeDeleg
 			String s = d.open();
 			if( s != null ) {
 				IPath p = new Path(s);
-				if( p.append("plugins").toFile().exists()) {
+				if( p.append("plugins").toFile().exists()) { //$NON-NLS-1$
 					return new ISourceContainer[] {new EclipseSourceContainer(p.toFile())};
 				}
 			}
