@@ -255,19 +255,20 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		sourceModel.addModelLifecycleListener(this);
 
 		IEditorInput editorInput = pageContext.getEditPart().getEditorInput();
-		if(editorInput instanceof IFileEditorInput) {
-			XModel xm = null;
-			IProject project = ((IFileEditorInput) editorInput).getFile()
-					.getProject();
-			IModelNature mn = EclipseResourceUtil.getModelNature(project);
-			if (mn != null) {
-				xm = mn.getModel();
-			}
-			if (xm != null) {
-				WebProject.getInstance(xm).getTaglibMapping().revalidate(
-						WebAppHelper.getWebApp(xm));
-			}
-		}
+		//commented by Maksim Areshkau, as fix for https://jira.jboss.org/jira/browse/JBIDE-4534
+//		if(editorInput instanceof IFileEditorInput) {
+//			XModel xm = null;
+//			IProject project = ((IFileEditorInput) editorInput).getFile()
+//					.getProject();
+//			IModelNature mn = EclipseResourceUtil.getModelNature(project);
+//			if (mn != null) {
+//				xm = mn.getModel();
+//			}
+//			if (xm != null) {
+//				WebProject.getInstance(xm).getTaglibMapping().revalidate(
+//						WebAppHelper.getWebApp(xm));
+//			}
+//		}
 
 		IDOMDocument sourceDocument = sourceModel.getDocument();
 		// FIXED FOR JBIDE-3799 by sdzmitrovich, moved calling of this method to buid dom 

@@ -61,7 +61,7 @@ public class TestUtil {
     protected final static String EDITOR_ID = "org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor"; //$NON-NLS-1$
 
 	/** The Constant MAX_IDLE. */
-	private static final long MAX_IDLE = 15*1000L;
+	public static final long MAX_IDLE = 15*1000L;
 
 
 	/**
