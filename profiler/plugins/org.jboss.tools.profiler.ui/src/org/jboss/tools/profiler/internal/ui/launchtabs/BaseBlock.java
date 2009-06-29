@@ -1,6 +1,7 @@
 package org.jboss.tools.profiler.internal.ui.launchtabs;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.resources.IContainer;
@@ -108,23 +109,24 @@ public abstract class BaseBlock {
 							.getStringVariableManager()
 							.performStringSubstitution(getLocation(), false);
 					File f = new File(path);
-					if (f.exists())
+					if (f.exists()) {
 						Program.launch(f.getCanonicalPath());
-					else
-						MessageDialog.openWarning(JBossProfilerUiPlugin
-								.getActiveWorkbenchShell(),
-								isFile() ? Messages.BaseBlock_open_file : Messages.BaseBlock_open_directory,
-								isFile() ? Messages.BaseBlock_file_not_found
-										: Messages.BaseBlock_directory_not_found);
-				} catch (Exception ex) {
-					MessageDialog
-							.openWarning(
-									JBossProfilerUiPlugin
-											.getActiveWorkbenchShell(),
-									isFile() ? Messages.BaseBlock_open_file : Messages.BaseBlock_open_directory,
-									isFile() ? Messages.BaseBlock_cannot_open_file
-											: Messages.BaseBlock_cannot_open_directory);
+					} else {
+						openWarning();
+					}
+				} catch (CoreException ex) {
+					openWarning();
+				} catch (IOException ioex) {
+					openWarning();
 				}
+			}
+
+			private void openWarning() {
+				MessageDialog.openWarning(JBossProfilerUiPlugin
+						.getActiveWorkbenchShell(),
+						isFile() ? Messages.BaseBlock_open_file : Messages.BaseBlock_open_directory,
+						isFile() ? Messages.BaseBlock_file_not_found
+								: Messages.BaseBlock_directory_not_found);
 			}
 		});
 
