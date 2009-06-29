@@ -7,6 +7,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
@@ -50,7 +51,7 @@ public class OpenFileHyperLinkListener implements IHyperlinkListener {
 		try {
 			IResource resource = SmooksUIUtils.getResource((EObject) model);
 			SmooksUIUtils.openFile(path, resource.getProject(), editorID);
-		} catch (Exception e1) {
+		} catch (PartInitException e1) {
 
 		}
 	}
