@@ -8,21 +8,21 @@
 	<classpathentry kind="lib" path="libs/groovy-all-1.5.0.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-lgpl-0.9.3.jar"/>
 	<classpathentry kind="lib" path="libs/jline-0.9.93.jar"/>
-	<classpathentry kind="lib" path="libs/milyn-commons-1.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/milyn-commons-1.1.2.jar"/>
 	<classpathentry kind="lib" path="libs/milyn-edisax-parser-1.1.2.jar"/>
 	<classpathentry kind="lib" path="libs/milyn-magger-1.1.2.jar"/>
-	<classpathentry kind="lib" path="libs/milyn-smooks-core-1.1.2.jar"/>
-	<classpathentry kind="lib" path="libs/milyn-smooks-css-1.1.2.jar"/>
-	<classpathentry kind="lib" path="libs/milyn-smooks-csv-1.1.2.jar"/>
-	<classpathentry kind="lib" path="libs/milyn-smooks-edi-1.1.2.jar"/>
-	<classpathentry kind="lib" path="libs/milyn-smooks-javabean-1.1.2.jar"/>
-	<classpathentry kind="lib" path="libs/milyn-smooks-json-1.1.2.jar"/>
-	<classpathentry kind="lib" path="libs/milyn-smooks-misc-1.1.2.jar"/>
-	<classpathentry kind="lib" path="libs/milyn-smooks-routing-1.1.2.jar"/>
-	<classpathentry kind="lib" path="libs/milyn-smooks-scripting-1.1.2.jar"/>
-	<classpathentry kind="lib" path="libs/milyn-smooks-servlet-1.1.2.jar"/>
-	<classpathentry kind="lib" path="libs/milyn-smooks-templating-1.1.2.jar"/>
-	<classpathentry kind="lib" path="libs/milyn-tinak-1.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/milyn-smooks-core-1.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/milyn-smooks-css-1.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/milyn-smooks-csv-1.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/milyn-smooks-edi-1.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/milyn-smooks-javabean-1.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/milyn-smooks-json-1.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/milyn-smooks-misc-1.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/milyn-smooks-routing-1.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/milyn-smooks-scripting-1.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/milyn-smooks-servlet-1.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/milyn-smooks-templating-1.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/milyn-tinak-1.1.2.jar"/>
 	<classpathentry kind="lib" path="libs/mvel-1.3.12-java1.5.jar"/>
 	<classpathentry kind="lib" path="libs/nekohtml-0.9.5.jar"/>
 	<classpathentry kind="lib" path="libs/ognl-2.6.9.jar"/>
