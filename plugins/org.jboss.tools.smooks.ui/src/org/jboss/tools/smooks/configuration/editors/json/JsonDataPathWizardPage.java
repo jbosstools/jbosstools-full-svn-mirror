@@ -24,13 +24,13 @@ public class JsonDataPathWizardPage extends AbstractFileSelectionWizardPage {
 	public JsonDataPathWizardPage(String pageName, boolean multiSelect, Object[] initSelections,
 			List<ViewerFilter> filters) {
 		super(pageName, multiSelect, initSelections, filters);
-		// TODO Auto-generated constructor stub
 	}
 
 	public JsonDataPathWizardPage(String pageName, String[] fileExtensionNames) {
 		super(pageName, fileExtensionNames);
-		// TODO Auto-generated constructor stub
 	}
+	
+	
 
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.smooks.configuration.editors.xml.AbstractFileSelectionWizardPage#loadedTheObject(java.lang.String)
@@ -39,5 +39,22 @@ public class JsonDataPathWizardPage extends AbstractFileSelectionWizardPage {
 	protected Object loadedTheObject(String path) throws Exception {
 		return null;
 	}
-	
+
+	@Override
+	protected void changeWizardPageStatus() {
+		super.changeWizardPageStatus();
+	}
+
+	@Override
+	public boolean canFlipToNextPage() {
+		return super.canFlipToNextPage();
+//		String filePath = this.getFilePath();
+//		try {
+//			filePath = SmooksUIUtils.parseFilePath(filePath);
+//			if(filePath == null) return false;
+//			return new File(filePath).exists();
+//		} catch (InvocationTargetException e) {
+//			return false;
+//		}
+	}
 }
