@@ -48,6 +48,8 @@ import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
 public class SmooksModelUtils {
 
 	public static final String INPUT_TYPE_JAVA = "java";
+	
+	public static final String INPUT_TYPE_JSON = "json";
 
 	public static final String PARAM_NAME_CLASS = "class";
 

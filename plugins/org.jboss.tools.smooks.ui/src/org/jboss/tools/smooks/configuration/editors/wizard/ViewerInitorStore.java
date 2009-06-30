@@ -20,6 +20,7 @@ import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanContentProvider;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanStrucutredDataWizard;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanlabelProvider;
+import org.jboss.tools.smooks.configuration.editors.json.JsonDataWizard;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataContentProvider;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataLabelProvider;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataWizard;
@@ -53,7 +54,16 @@ public class ViewerInitorStore {
 		IViewerInitor initor = this.getInitorMap().get(typeID);
 		if (initor == null)
 			return null;
-		return initor.getStructuredDataLoadWizard();
+	    IStructuredDataSelectionWizard wizard = initor.getStructuredDataLoadWizard();
+	    if(wizard != null){
+	    	try {
+				return wizard.getClass().newInstance();
+			} catch (Throwable t){
+				t.printStackTrace();
+				return wizard;
+			}
+	    }
+	    return null;
 	}
 
 	public ILabelProvider getLabelProvider(String typeID) {
@@ -125,13 +135,31 @@ public class ViewerInitorStore {
 
 	protected HashMap<String, IViewerInitor> createNewInitorMap() {
 		HashMap<String, IViewerInitor> map = new HashMap<String, IViewerInitor>();
+		
+		// for json
+		BaseViewerInitor jsonViewerInitor = new BaseViewerInitor();
+		String name = "Json";
+		String description = "Select Json data file as the input data.";
+		String iconPath = null;
+		String typeID = SmooksModelUtils.INPUT_TYPE_JSON;
+
+		jsonViewerInitor.setName(name);
+		jsonViewerInitor.setDescription(description);
+		jsonViewerInitor.setWizardIconPath(iconPath);
+		jsonViewerInitor.setTypeID(typeID);
+		jsonViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
+		jsonViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
+		jsonViewerInitor.setStructuredDataLoadWizard(new JsonDataWizard());
+//		jsonViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
+		map.put(typeID, jsonViewerInitor);
+
 
 		// for java
 		BaseViewerInitor javabeanViewerInitor = new BaseViewerInitor();
-		String name = "Java";
-		String description = "Select a Java type(class,interface) as the input data.";
-		String iconPath = null;
-		String typeID = SmooksModelUtils.INPUT_TYPE_JAVA;
+	    name = "Java";
+		description = "Select a Java type(class,interface) as the input data.";
+		iconPath = null;
+		typeID = SmooksModelUtils.INPUT_TYPE_JAVA;
 
 		javabeanViewerInitor.setName(name);
 		javabeanViewerInitor.setDescription(description);
