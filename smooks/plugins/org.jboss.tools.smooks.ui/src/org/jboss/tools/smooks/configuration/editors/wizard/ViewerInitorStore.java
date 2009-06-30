@@ -55,15 +55,16 @@ public class ViewerInitorStore {
 		if (initor == null)
 			return null;
 	    IStructuredDataSelectionWizard wizard = initor.getStructuredDataLoadWizard();
-	    if(wizard != null){
-	    	try {
-				return wizard.getClass().newInstance();
-			} catch (Throwable t){
-				t.printStackTrace();
-				return wizard;
-			}
-	    }
-	    return null;
+	    return wizard;
+//	    if(wizard != null){
+//	    	try {
+//				return wizard.getClass().newInstance();
+//			} catch (Throwable t){
+//				t.printStackTrace();
+//				return wizard;
+//			}
+//	    }
+//	    return null;
 	}
 
 	public ILabelProvider getLabelProvider(String typeID) {

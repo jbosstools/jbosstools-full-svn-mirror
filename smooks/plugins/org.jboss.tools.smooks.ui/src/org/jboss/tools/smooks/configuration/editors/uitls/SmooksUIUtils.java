@@ -402,6 +402,7 @@ public class SmooksUIUtils {
 	}
 
 	public static String parseFilePath(String path) throws InvocationTargetException {
+		if(path == null) return null;
 		if (new File(path).exists()) {
 			return path;
 		}

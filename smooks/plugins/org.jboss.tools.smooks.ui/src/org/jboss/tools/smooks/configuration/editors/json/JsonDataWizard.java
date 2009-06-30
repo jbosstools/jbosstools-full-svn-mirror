@@ -19,12 +19,14 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart (dpeng@redhat.com)
  * 
  */
-public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWizard, INewWizard {
+public class JsonDataWizard extends Wizard implements
+		IStructuredDataSelectionWizard, INewWizard {
 
 	private JsonDataPathWizardPage pathPage = null;
 
@@ -32,23 +34,36 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 
 	public JsonDataWizard() {
 		super();
-		pathPage = new JsonDataPathWizardPage("Json Input Data Selection ", new String[]{});
-		configPage = new JsonDataConfiguraitonWizardPage("Json data configuration page");
 	}
 
-	
-	
-	/* (non-Javadoc)
+	public boolean canFinish() {
+		if (configPage != null && pathPage != null) {
+			if (configPage.isPageComplete() && pathPage.isPageComplete())
+				return true;
+		}
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
 	@Override
 	public void addPages() {
 		super.addPages();
+		if (pathPage == null) {
+			pathPage = new JsonDataPathWizardPage("Json Input Data Selection ",
+					new String[] {});
+
+		}
+		if (configPage == null) {
+			configPage = new JsonDataConfiguraitonWizardPage(
+					"Json data configuration page");
+		}
 		this.addPage(pathPage);
 		this.addPage(configPage);
 	}
-
-
 
 	/*
 	 * (non-Javadoc)
@@ -80,7 +95,7 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 	 */
 	public String getInputDataTypeID() {
 		// TODO Auto-generated method stub
-		return null;
+		return SmooksModelUtils.INPUT_TYPE_JSON;
 	}
 
 	/*
@@ -90,8 +105,48 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 	 * IStructuredDataSelectionWizard#getProperties()
 	 */
 	public Properties getProperties() {
-		// TODO Auto-generated method stub
-		return null;
+		Properties properties = new Properties();
+		fillProperties(properties);
+		return properties;
+	}
+
+	private void fillProperties(Properties p) {
+		if (configPage != null) {
+			String aen = configPage.getArrayElementName();
+			if (aen != null && aen.length() != 0) {
+				p.setProperty("arrayElementName", aen);
+			}
+
+			String rn = configPage.getRootName();
+			if (rn != null && rn.length() != 0) {
+				p.setProperty("rootName", rn);
+			}
+
+			String encoding = configPage.getEncoding();
+			if (encoding != null && encoding.length() != 0) {
+				p.setProperty("encoding", encoding);
+			}
+
+			String sr = configPage.getKeyWhitspaceReplacement();
+			if (sr != null && sr.length() != 0) {
+				p.setProperty("spaceReplace", sr);
+			}
+
+			String pon = configPage.getKeyPrefixOnNumeric();
+			if (pon != null && pon.length() != 0) {
+				p.setProperty("prefixOnNumeric", pon);
+			}
+
+			String nvr = configPage.getNullValueReplacement();
+			if (nvr != null && nvr.length() != 0) {
+				p.setProperty("nullReplace", nvr);
+			}
+
+			String ier = configPage.getIllegalElementNameCharReplacement();
+			if (ier != null && ier.length() != 0) {
+				p.setProperty("illegalReplace", ier);
+			}
+		}
 	}
 
 	/*
@@ -112,6 +167,9 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 	 * IStructuredDataSelectionWizard#getStructuredDataSourcePath()
 	 */
 	public String getStructuredDataSourcePath() {
+		if (pathPage != null) {
+			return pathPage.getFilePath();
+		}
 		return null;
 	}
 

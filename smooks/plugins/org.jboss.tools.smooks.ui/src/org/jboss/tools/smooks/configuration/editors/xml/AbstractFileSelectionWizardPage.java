@@ -66,7 +66,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 	public AbstractFileSelectionWizardPage(String pageName, String[] fileExtensionNames) {
 		this(pageName, false, null, Collections.EMPTY_LIST);
 		this.fileExtensionNames = fileExtensionNames;
-		if (this.fileExtensionNames != null) {
+		if (this.fileExtensionNames != null && fileExtensionNames.length != 0) {
 			ViewerFilter extensionNameFilter = new ViewerFilter() {
 				/*
 				 * (non-Javadoc)
@@ -332,7 +332,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 		gd.grabExcessHorizontalSpace = true;
 		gd.horizontalAlignment = GridData.END;
 		fileSystemBrowseButton.setLayoutData(gd);
-
+		changeWizardPageStatus();
 		return xsdComposite;
 	}
 
@@ -411,7 +411,6 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 		// }
 		this.setErrorMessage(error);
 		this.setPageComplete(error == null);
-
 	}
 
 	public void widgetDefaultSelected(SelectionEvent e) {
