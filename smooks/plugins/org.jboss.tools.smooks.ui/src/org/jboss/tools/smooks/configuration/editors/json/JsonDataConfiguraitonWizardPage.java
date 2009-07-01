@@ -282,11 +282,11 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 
-		addButton = new Button(buttonComposite, SWT.BORDER);
+		addButton = new Button(buttonComposite, SWT.NONE);
 		addButton.setLayoutData(gd);
 		addButton.setText("Add");
 
-		removeButton = new Button(buttonComposite, SWT.BORDER);
+		removeButton = new Button(buttonComposite, SWT.NONE);
 		removeButton.setLayoutData(gd);
 		removeButton.setText("Remove");
 

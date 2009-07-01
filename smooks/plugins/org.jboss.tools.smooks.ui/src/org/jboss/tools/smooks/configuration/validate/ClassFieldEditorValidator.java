@@ -91,4 +91,9 @@ public class ClassFieldEditorValidator extends AbstractValidator {
 	public List<Diagnostic> validate(Collection<?> selectedObjects, EditingDomain editingDomain) {
 		return validate(selectedObjects);
 	}
+
+	public void initValidator(Collection<?> selectedObjects, EditingDomain editingDomain) {
+		// TODO Auto-generated method stub
+		
+	}
 }

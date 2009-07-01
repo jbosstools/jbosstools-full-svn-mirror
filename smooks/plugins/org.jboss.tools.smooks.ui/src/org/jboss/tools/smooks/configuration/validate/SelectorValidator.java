@@ -74,36 +74,6 @@ public class SelectorValidator extends AbstractValidator {
 	 */
 	@Override
 	public List<Diagnostic> validate(Collection<?> selectedObjects, EditingDomain editingDomain) {
-		list.clear();
-		Resource resource = editingDomain.getResourceSet().getResources().get(0);
-		if (resource.getContents().isEmpty()) {
-			return super.validate(selectedObjects, editingDomain);
-		}
-		Object obj = resource.getContents().get(0);
-		SmooksResourceListType listType = null;
-		if (obj instanceof DocumentRoot) {
-			listType = ((DocumentRoot) obj).getSmooksResourceList();
-			IResource r = SmooksUIUtils.getResource(listType);
-			IFile file = null;
-			if (r instanceof IFile) {
-				file = (IFile) r;
-			}
-			final IFile ff = file;
-			String extName = ff.getName() + ".ext";
-
-			IFile extFile = ff.getParent().getFile(new Path(extName));
-			try {
-				extType = SmooksUIUtils.loadSmooksGraphicsExt(extFile);
-			} catch (IOException e) {
-				// ignore
-			}
-		}
-		if (extType != null) {
-			List<Object> l = SelectoreSelectionDialog.generateInputData(extType, listType);
-			if (l != null) {
-				list.addAll(l);
-			}
-		}
 		return super.validate(selectedObjects, editingDomain);
 	}
 
@@ -247,6 +217,39 @@ public class SelectorValidator extends AbstractValidator {
 			return ((Freemarker) model).getApplyOnElement();
 		}
 		return null;
+	}
+
+	public void initValidator(Collection<?> selectedObjects, EditingDomain editingDomain) {
+		list.clear();
+		Resource resource = editingDomain.getResourceSet().getResources().get(0);
+		if (resource.getContents().isEmpty()) {
+			return;
+		}
+		Object obj = resource.getContents().get(0);
+		SmooksResourceListType listType = null;
+		if (obj instanceof DocumentRoot) {
+			listType = ((DocumentRoot) obj).getSmooksResourceList();
+			IResource r = SmooksUIUtils.getResource(listType);
+			IFile file = null;
+			if (r instanceof IFile) {
+				file = (IFile) r;
+			}
+			final IFile ff = file;
+			String extName = ff.getName() + ".ext";
+
+			IFile extFile = ff.getParent().getFile(new Path(extName));
+			try {
+				extType = SmooksUIUtils.loadSmooksGraphicsExt(extFile);
+			} catch (IOException e) {
+				// ignore
+			}
+		}
+		if (extType != null) {
+			List<Object> l = SelectoreSelectionDialog.generateInputData(extType, listType);
+			if (l != null) {
+				list.addAll(l);
+			}
+		}
 	}
 
 }
