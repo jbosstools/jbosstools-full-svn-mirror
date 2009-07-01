@@ -41,11 +41,6 @@ public class DuplicatedBeanIDValidator extends AbstractValidator {
 	 */
 	@Override
 	public List<Diagnostic> validate(Collection<?> selectedObjects, EditingDomain editingDomain) {
-		beanIdList.clear();
-		findDuplicatedBeanId(selectedObjects , new ArrayList<String>());
-		if(beanIdList.isEmpty()){
-			return null;
-		}
 		List<Diagnostic> list = new ArrayList<Diagnostic>();
 		validateModel(selectedObjects, list);//, editingDomain)
 		return list;
@@ -139,6 +134,14 @@ public class DuplicatedBeanIDValidator extends AbstractValidator {
 			if (object instanceof EObject) {
 				findDuplicatedBeanId(((EObject) object).eContents(),idlist);
 			}
+		}
+	}
+
+	public void initValidator(Collection<?> selectedObjects, EditingDomain editingDomain) {
+		beanIdList.clear();
+		findDuplicatedBeanId(selectedObjects , new ArrayList<String>());
+		if(beanIdList.isEmpty()){
+			return ;
 		}
 	}
 }

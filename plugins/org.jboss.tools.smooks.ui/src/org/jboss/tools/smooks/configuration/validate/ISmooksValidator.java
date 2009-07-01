@@ -21,5 +21,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
  * 
  */
 public interface ISmooksValidator {
+	
+	public void initValidator(Collection<?> selectedObjects, EditingDomain editingDomain);
+	
 	public List<Diagnostic> validate(Collection<?> selectedObjects, EditingDomain editingDomain);
 }

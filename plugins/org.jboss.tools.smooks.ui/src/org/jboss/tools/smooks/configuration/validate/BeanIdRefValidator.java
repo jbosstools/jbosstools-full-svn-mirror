@@ -53,19 +53,6 @@ public class BeanIdRefValidator extends AbstractValidator {
 	 */
 	@Override
 	public List<Diagnostic> validate(Collection<?> selectedObjects, EditingDomain editingDomain) {
-		idList.clear();
-		Resource resource = editingDomain.getResourceSet().getResources().get(0);
-		Object obj = resource.getContents().get(0);
-		if (obj instanceof DocumentRoot) {
-			SmooksResourceListType listType = ((DocumentRoot) obj).getSmooksResourceList();
-			List<String> ids = SmooksUIUtils.getBeanIdStringList(listType);
-			if (ids != null){
-				idList.addAll(ids);
-			}
-		}
-		if (idList.isEmpty()) {
-			// return null;
-		}
 		return super.validate(selectedObjects, editingDomain);
 	}
 
@@ -94,6 +81,22 @@ public class BeanIdRefValidator extends AbstractValidator {
 			}
 		}
 		return super.validateModel(model, editingDomain);
+	}
+
+	public void initValidator(Collection<?> selectedObjects, EditingDomain editingDomain) {
+		idList.clear();
+		Resource resource = editingDomain.getResourceSet().getResources().get(0);
+		Object obj = resource.getContents().get(0);
+		if (obj instanceof DocumentRoot) {
+			SmooksResourceListType listType = ((DocumentRoot) obj).getSmooksResourceList();
+			List<String> ids = SmooksUIUtils.getBeanIdStringList(listType);
+			if (ids != null) {
+				idList.addAll(ids);
+			}
+		}
+		if (idList.isEmpty()) {
+			// return
+		}
 	}
 
 }

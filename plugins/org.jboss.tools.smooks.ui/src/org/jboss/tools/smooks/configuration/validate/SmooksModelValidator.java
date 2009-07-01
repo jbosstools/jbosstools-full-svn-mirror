@@ -166,6 +166,7 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 		list.add(diagnostic);
 		for (Iterator<?> iterator = this.validatorList.iterator(); iterator.hasNext();) {
 			ISmooksValidator validator = (ISmooksValidator) iterator.next();
+			validator.initValidator(selectedObjects, domain);
 			List<Diagnostic> d = validator.validate(selectedObjects, domain);
 			if (d != null) {
 				for (Iterator<?> iterator2 = d.iterator(); iterator2.hasNext();) {
@@ -323,5 +324,10 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 	}
 
 	public void validate(IValidationContext helper, IReporter reporter) throws ValidationException {
+	}
+
+	public void initValidator(Collection<?> selectedObjects, EditingDomain editingDomain) {
+		// TODO Auto-generated method stub
+		
 	}
 }
