@@ -216,7 +216,7 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 		wizard.setSite(getEditorSite());
 		wizard.setForcePreviousAndNextButtons(true);
 		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(
-				getEditorSite().getShell(), wizard , getSmooksGraphicsExtType());
+				getEditorSite().getShell(), wizard , getSmooksGraphicsExtType(),(SmooksMultiFormEditor)getEditor());
 		dialog.show();
 	}
 	

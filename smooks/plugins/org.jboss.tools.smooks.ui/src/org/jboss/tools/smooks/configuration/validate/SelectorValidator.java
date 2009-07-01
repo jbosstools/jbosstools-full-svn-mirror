@@ -80,8 +80,9 @@ public class SelectorValidator extends AbstractValidator {
 			return super.validate(selectedObjects, editingDomain);
 		}
 		Object obj = resource.getContents().get(0);
+		SmooksResourceListType listType = null;
 		if (obj instanceof DocumentRoot) {
-			SmooksResourceListType listType = ((DocumentRoot) obj).getSmooksResourceList();
+			listType = ((DocumentRoot) obj).getSmooksResourceList();
 			IResource r = SmooksUIUtils.getResource(listType);
 			IFile file = null;
 			if (r instanceof IFile) {
@@ -98,7 +99,7 @@ public class SelectorValidator extends AbstractValidator {
 			}
 		}
 		if (extType != null) {
-			List<Object> l = SelectoreSelectionDialog.generateInputData(extType);
+			List<Object> l = SelectoreSelectionDialog.generateInputData(extType, listType);
 			if (l != null) {
 				list.addAll(l);
 			}

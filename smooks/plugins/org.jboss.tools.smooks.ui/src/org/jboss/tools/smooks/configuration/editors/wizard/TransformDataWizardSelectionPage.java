@@ -36,6 +36,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 
 /**
  * @author Dart Peng
@@ -183,6 +184,8 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 						return icon;
 					}
 				}
+				return SmooksConfigurationActivator.getDefault().getImageRegistry().get(
+						GraphicsConstants.IMAGE_UNKNOWN_OBJ);
 			}
 			return super.getImage(element);
 		}
@@ -225,7 +228,7 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 		}
 
 		public Object[] getElements(Object inputElement) {
-			if (inputElement instanceof List) {
+			if (inputElement instanceof List<?>) {
 				return ((List<?>) inputElement).toArray();
 			}
 			return new Object[] {};

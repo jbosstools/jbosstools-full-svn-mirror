@@ -11,14 +11,14 @@
 package org.jboss.tools.smooks.configuration.editors.json;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -28,10 +28,14 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
@@ -54,8 +58,6 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 
 	private String nullValueReplacement = "";
 
-	private Map<String, String> keyMap;
-
 	private String encoding = "UTF-8";
 
 	private Text rootNameText;
@@ -76,8 +78,18 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 
 	private ArrayList<KeyValueModel> keyValueList;
 
+	private Button addButton;
+
+	private Button removeButton;
+
+	private Button createJsonReaderButton;
+
+	protected boolean createJsonReader = true;
+
 	private void initValue() {
 		rootName = null;
+
+		createJsonReader = true;
 
 		arrayElementName = "element";
 
@@ -87,14 +99,13 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 
 		illegalElementNameCharReplacement = null;
 		nullValueReplacement = "";
-		keyMap = new HashMap<String, String>();
 		encoding = "UTF-8";
-		keyValueList = new ArrayList<KeyValueModel>();
-		
-		keyValueList.add(new KeyValueModel("ket", "aaaa"));
-		keyValueList.add(new KeyValueModel("12", "4"));
-		keyValueList.add(new KeyValueModel("fg", "1a"));
-		keyValueList.add(new KeyValueModel("g", "y4"));
+		if (keyValueList != null) {
+			keyValueList.clear();
+		} else {
+			keyValueList = new ArrayList<KeyValueModel>();
+		}
+
 	}
 
 	/*
@@ -116,12 +127,6 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 		mainComposite.setLayoutData(gd);
 
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		/**
-		 * String rootName, String arrayElementName, String
-		 * keyWhitspaceReplacement, String keyPrefixOnNumeric, String
-		 * illegalElementNameCharReplacement, String nullValueReplacement,
-		 * Map<String, String> keyMap, String encoding
-		 */
 		Label rootnameLabel = new Label(mainComposite, SWT.NONE);
 		rootnameLabel.setText("Root Element Name");
 		rootNameText = new Text(mainComposite, SWT.BORDER);
@@ -173,58 +178,174 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 		gd.horizontalSpan = 2;
 		keyMapLabel.setLayoutData(gd);
 
-		keyMapViewer = new TableViewer(mainComposite, SWT.BORDER);
-		
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.horizontalSpan = 2;
+
+		Composite keyMapComposite = new Composite(mainComposite, SWT.NONE);
+		keyMapComposite.setLayoutData(gd);
+
+		GridLayout kgl = new GridLayout();
+		kgl.numColumns = 2;
+		keyMapComposite.setLayout(kgl);
+
+		gd = new GridData(GridData.FILL_BOTH);
+
+		keyMapViewer = new TableViewer(keyMapComposite, SWT.BORDER | SWT.MULTI);
 		keyMapViewer.getControl().setLayoutData(gd);
 		keyMapViewer.getTable().setHeaderVisible(true);
 		keyMapViewer.getTable().setLinesVisible(true);
 		keyMapViewer.setContentProvider(new KeyMapContentProvider());
 		keyMapViewer.setLabelProvider(new KeyMapLabelProvider());
-		keyMapViewer.setInput(keyValueList);
-		
-		CellEditor keyCellEditor = new TextCellEditor(keyMapViewer.getTable(),SWT.BORDER);
-		
-		CellEditor valueCellEditor = new TextCellEditor(keyMapViewer.getTable(),SWT.BORDER);
-		
-		
-		keyMapViewer.setCellEditors(new CellEditor[]{keyCellEditor,valueCellEditor});
-		
-		keyMapViewer.setColumnProperties(new String[]{"key","value"});
-		
+
+		CellEditor keyCellEditor = new TextCellEditor(keyMapViewer.getTable(),
+				SWT.BORDER);
+
+		CellEditor valueCellEditor = new TextCellEditor(
+				keyMapViewer.getTable(), SWT.BORDER);
+
+		keyMapViewer.setCellEditors(new CellEditor[] { keyCellEditor,
+				valueCellEditor });
+
+		keyMapViewer.setColumnProperties(new String[] { "key", "value" });
+
 		keyMapViewer.setCellModifier(new ICellModifier() {
-			
+
 			public void modify(Object element, String property, Object value) {
-				// TODO Auto-generated method stub
-				
+				Object el = null;
+				if (element instanceof Item) {
+					el = ((Item) element).getData();
+				}
+				if (el == null)
+					return;
+				if (el instanceof KeyValueModel && value instanceof String) {
+					if (property.equals("key")) {
+						((KeyValueModel) el).setKey(value.toString());
+					}
+					if (property.equals("value")) {
+						((KeyValueModel) el).setValue(value.toString());
+					}
+					keyMapViewer.refresh(el);
+				}
 			}
-			
+
 			public Object getValue(Object element, String property) {
-				// TODO Auto-generated method stub
-				return "ggg";
+				// Object el = null;
+				// if(element instanceof Item){
+				// el = ((Item)element).getData();
+				// }
+				// if(el == null) return null;
+				if (element instanceof KeyValueModel) {
+					if (property.equals("key")) {
+						return ((KeyValueModel) element).getKey();
+					}
+					if (property.equals("value")) {
+						return ((KeyValueModel) element).getValue();
+					}
+				}
+
+				return null;
 			}
-			
+
 			public boolean canModify(Object element, String property) {
-				return true;
+				// Object el = null;
+				// if(element instanceof Item){
+				// el = ((Item)element).getData();
+				// }
+				// if(el == null) return false;
+				if (element instanceof KeyValueModel) {
+					if (property.equals("key") || property.equals("value")) {
+						return true;
+					}
+				}
+				return false;
 			}
 		});
-		
+
 		TableColumn keyColumn = new TableColumn(keyMapViewer.getTable(),
-				SWT.NONE);
+				SWT.BORDER);
 		keyColumn.setWidth(150);
 		keyColumn.setText("Key");
+
 		TableColumn replaceColumn = new TableColumn(keyMapViewer.getTable(),
-				SWT.NONE);
+				SWT.BORDER);
 		replaceColumn.setWidth(150);
 		replaceColumn.setText("Replace");
 
+		keyMapViewer.setInput(keyValueList);
+
+		Composite buttonComposite = new Composite(keyMapComposite, SWT.NONE);
+		gd = new GridData(GridData.FILL_VERTICAL);
+		buttonComposite.setLayoutData(gd);
+
+		GridLayout bgl = new GridLayout();
+		buttonComposite.setLayout(bgl);
+
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+
+		addButton = new Button(buttonComposite, SWT.BORDER);
+		addButton.setLayoutData(gd);
+		addButton.setText("Add");
+
+		removeButton = new Button(buttonComposite, SWT.BORDER);
+		removeButton.setLayoutData(gd);
+		removeButton.setText("Remove");
+
+		createJsonReaderButton = new Button(mainComposite, SWT.CHECK);
+		createJsonReaderButton.setText("Create a JSON Reader");
+
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 2;
+		createJsonReaderButton.setLayoutData(gd);
+		createJsonReaderButton.setSelection(true);
 		hookControls();
 		changePageStatus();
 		this.setControl(mainComposite);
 	}
 
 	private void hookControls() {
+
+		addButton.addSelectionListener(new SelectionListener() {
+
+			public void widgetSelected(SelectionEvent e) {
+				keyValueList.add(new KeyValueModel("key", "value"));
+				keyMapViewer.refresh();
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+
+		removeButton.addSelectionListener(new SelectionListener() {
+
+			public void widgetSelected(SelectionEvent e) {
+				IStructuredSelection selection = (IStructuredSelection) keyMapViewer
+						.getSelection();
+				List<?> selections = selection.toList();
+				for (Iterator<?> iterator = selections.iterator(); iterator
+						.hasNext();) {
+					Object object = (Object) iterator.next();
+					keyValueList.remove(object);
+				}
+				keyMapViewer.refresh();
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		createJsonReaderButton.addSelectionListener(new SelectionListener() {
+
+			public void widgetSelected(SelectionEvent e) {
+				createJsonReader = createJsonReaderButton.getSelection();
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
+
 		encodingText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
@@ -369,13 +490,13 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 		this.nullValueReplacement = nullValueReplacement;
 	}
 
-	public Map<String, String> getKeyMap() {
-		return keyMap;
-	}
-
-	public void setKeyMap(Map<String, String> keyMap) {
-		this.keyMap = keyMap;
-	}
+//	public Map<String, String> getKeyMap() {
+//		return keyMap;
+//	}
+//
+//	public void setKeyMap(Map<String, String> keyMap) {
+//		this.keyMap = keyMap;
+//	}
 
 	public String getEncoding() {
 		return encoding;
@@ -384,67 +505,88 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 	public void setEncoding(String encoding) {
 		this.encoding = encoding;
 	}
-	
-	
-	private class KeyMapLabelProvider extends LabelProvider implements ITableLabelProvider{
+
+	public ArrayList<KeyValueModel> getKeyValueList() {
+		return keyValueList;
+	}
+
+	public void setKeyValueList(ArrayList<KeyValueModel> keyValueList) {
+		this.keyValueList = keyValueList;
+	}
+
+	public boolean isCreateJsonReader() {
+		return createJsonReader;
+	}
+
+	public void setCreateJsonReader(boolean createJsonReader) {
+		this.createJsonReader = createJsonReader;
+	}
+
+
+
+	private class KeyMapLabelProvider extends LabelProvider implements
+			ITableLabelProvider {
 
 		public Image getColumnImage(Object element, int columnIndex) {
 			return null;
 		}
 
 		public String getColumnText(Object element, int columnIndex) {
-//			if(element instanceof KeyValueModel){
-//				switch(columnIndex){
-//				case 0:
-//					return ((KeyValueModel)element).getKey();
-//				case 1:
-//					return ((KeyValueModel)element).getValue();
-//				}
-//			}
+			if (element instanceof KeyValueModel) {
+				switch (columnIndex) {
+				case 0:
+					return ((KeyValueModel) element).getKey();
+				case 1:
+					return ((KeyValueModel) element).getValue();
+				}
+			}
 			return getText(element);
 		}
-		
+
 	}
-	
-	private class KeyMapContentProvider implements IStructuredContentProvider{
+
+	private class KeyMapContentProvider implements IStructuredContentProvider {
 
 		public Object[] getElements(Object inputElement) {
-			if(inputElement instanceof List<?>){
-				return ((List<?>)inputElement).toArray();
+			if (inputElement instanceof List<?>) {
+				return ((List<?>) inputElement).toArray();
 			}
 			// TODO Auto-generated method stub
-			return new Object[]{};
+			return new Object[] {};
 		}
 
 		public void dispose() {
-			
+
 		}
 
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 	}
-	
-	private class KeyValueModel{
+
+	public class KeyValueModel {
 		private String key;
 		private String value;
-		
-		public KeyValueModel(String key , String value){
+
+		public KeyValueModel(String key, String value) {
 			this.key = key;
 			this.value = value;
 		}
-		
+
 		public String getKey() {
 			return key;
 		}
+
 		public void setKey(String key) {
 			this.key = key;
 		}
+
 		public String getValue() {
 			return value;
 		}
+
 		public void setValue(String value) {
 			this.value = value;
 		}

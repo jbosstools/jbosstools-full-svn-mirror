@@ -75,7 +75,7 @@ public class ExtentionInputLabelProvider extends LabelProvider implements ITable
 			List<ParamType> paramers = ((InputType) element).getParam();
 			for (Iterator<?> iterator = paramers.iterator(); iterator.hasNext();) {
 				ParamType paramType = (ParamType) iterator.next();
-				if ("path".equals(paramType.getName())) {
+				if ("path".equalsIgnoreCase(paramType.getName())) {
 					continue;
 				}
 				extValue += paramType.getName() + "=" + paramType.getValue() + ",";

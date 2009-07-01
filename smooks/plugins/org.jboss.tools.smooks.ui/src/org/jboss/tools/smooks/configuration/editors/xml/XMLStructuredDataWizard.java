@@ -12,6 +12,7 @@ package org.jboss.tools.smooks.configuration.editors.xml;
 
 import java.util.Properties;
 
+import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -48,5 +49,10 @@ public class XMLStructuredDataWizard extends AbstractStructuredDdataWizard {
 
 	public Properties getProperties() {
 		return properties;
+	}
+
+	public void complate(SmooksMultiFormEditor formEditor) {
+		// TODO Auto-generated method stub
+		
 	}
 }
