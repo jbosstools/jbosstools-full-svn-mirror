@@ -73,7 +73,11 @@ public class SetupTemplateContributionItem extends ActionContributionItem {
 						element.getNodeName()));
 				getAction().setActionNode(element);
 				getAction().setData(elementMapping.getTemplate().getAnyData());
-				super.fill(menu, index+1);
+				/*
+				 * https://jira.jboss.org/jira/browse/JBIDE-4541
+				 * Index should be used as is.
+				 */
+				super.fill(menu, index);
 			}
 		}
 
