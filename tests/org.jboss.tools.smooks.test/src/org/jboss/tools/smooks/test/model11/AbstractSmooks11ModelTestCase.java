@@ -15,51 +15,31 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 
-import junit.framework.TestCase;
-
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.calc.CalcPackage;
 import org.jboss.tools.smooks.model.calc.provider.CalcItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.common.CommonPackage;
 import org.jboss.tools.smooks.model.common.provider.CommonItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.csv.CsvPackage;
 import org.jboss.tools.smooks.model.csv.provider.CsvItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
 import org.jboss.tools.smooks.model.datasource.provider.DatasourceItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.dbrouting.DbroutingPackage;
 import org.jboss.tools.smooks.model.dbrouting.provider.DbroutingItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.edi.EdiPackage;
 import org.jboss.tools.smooks.model.edi.provider.EdiItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.esbrouting.EsbroutingPackage;
-import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 import org.jboss.tools.smooks.model.fileRouting.provider.FileRoutingItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.freemarker.provider.FreemarkerItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.groovy.provider.GroovyItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.iorouting.IoroutingPackage;
 import org.jboss.tools.smooks.model.iorouting.provider.IoroutingItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.javabean.provider.JavabeanItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
 import org.jboss.tools.smooks.model.jmsrouting.provider.JmsroutingItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.json.JsonPackage;
 import org.jboss.tools.smooks.model.json.provider.JsonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.medi.DocumentRoot;
-import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.MappingNode;
 import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.xsl.XslPackage;
 import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
 
@@ -68,35 +48,11 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
  * @author Dart (dpeng@redhat.com)
  * 
  */
-public abstract class AbstractSmooks11ModelTestCase extends TestCase {
+public abstract class AbstractSmooks11ModelTestCase extends BaseTestCase {
 
 	protected ComposedAdapterFactory adapterFactory;
 	protected AdapterFactoryEditingDomain editingDomain;
 	protected EObject smooksModel;
-
-	static {
-		// regist emf model uri mapping
-		Registry.INSTANCE.put(SmooksPackage.eNS_URI, SmooksPackage.eINSTANCE);
-		Registry.INSTANCE.put(CalcPackage.eNS_URI, CalcPackage.eINSTANCE);
-		Registry.INSTANCE.put(CommonPackage.eNS_URI, CommonPackage.eINSTANCE);
-		Registry.INSTANCE.put(CsvPackage.eNS_URI, CsvPackage.eINSTANCE);
-		Registry.INSTANCE.put(DatasourcePackage.eNS_URI, DatasourcePackage.eINSTANCE);
-		Registry.INSTANCE.put(DbroutingPackage.eNS_URI, DbroutingPackage.eINSTANCE);
-		Registry.INSTANCE.put(EdiPackage.eNS_URI, EdiPackage.eINSTANCE);
-		Registry.INSTANCE.put(FileRoutingPackage.eNS_URI, FileRoutingPackage.eINSTANCE);
-
-		Registry.INSTANCE.put(FreemarkerPackage.eNS_URI, FreemarkerPackage.eINSTANCE);
-		Registry.INSTANCE.put(GroovyPackage.eNS_URI, GroovyPackage.eINSTANCE);
-		Registry.INSTANCE.put(IoroutingPackage.eNS_URI, IoroutingPackage.eINSTANCE);
-		Registry.INSTANCE.put(JavabeanPackage.eNS_URI, JavabeanPackage.eINSTANCE);
-		Registry.INSTANCE.put(JmsroutingPackage.eNS_URI, JmsroutingPackage.eINSTANCE);
-		Registry.INSTANCE.put(JsonPackage.eNS_URI, JsonPackage.eINSTANCE);
-		Registry.INSTANCE.put(MEdiPackage.eNS_URI, MEdiPackage.eINSTANCE);
-		Registry.INSTANCE.put(XslPackage.eNS_URI, XslPackage.eINSTANCE);
-		Registry.INSTANCE.put(EsbroutingPackage.eNS_URI, EsbroutingPackage.eINSTANCE);
-		Registry.INSTANCE.put(org.jboss.tools.smooks10.model.smooks.SmooksPackage.eNS_URI,
-				org.jboss.tools.smooks10.model.smooks.SmooksPackage.eINSTANCE);
-	}
 
 	public void testModel() {
 		// do nothing
