@@ -246,17 +246,40 @@ public abstract class CollapsableEditPart extends CompositeActivityEditPart impl
 			// figures
 			refreshChildren();
 			
-			// Manually remove the rest of the children
+			
+			// changed by Grid.Qian
+			// when use figure.remove() to remove the children element
+			// we will change the list of figure.getChildren()
+			// so we will get the a error.
+			int size = figure.getChildren().size();
+			for(int i = 0; i < size; i++){
+				figure.remove((IFigure)figure.getChildren().get(0));
+			}
+			
+			/*// Manually remove the rest of the children
 			for (Object o : figure.getChildren()) {
 				figure.remove((IFigure)o);
-			}
+			}*/
+			
+			
 			// Now restore the collapsed children, border and layout
 			addCollapsedContents(figure);
 		} else {
-			// Manually remove the children
+			
+			// changed by Grid.Qian
+			// when use figure.remove() to remove the children element
+			// we will change the list of figure.getChildren()
+			// so we will get the a error.
+			int size = figure.getChildren().size();
+			for(int i = 0; i < size; i++){
+				figure.remove((IFigure)figure.getChildren().get(0));
+			}
+			
+			/*// Manually remove the children
 			for (Object o : figure.getChildren()) {
 				figure.remove((IFigure)o);
-			}
+			}*/
+			
 			// Now restore the expanded children, border and layout
 			configureExpandedFigure(figure);
 			refreshChildren();
