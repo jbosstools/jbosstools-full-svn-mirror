@@ -221,23 +221,26 @@ public class SmooksUIUtils {
 		return beanIdList;
 	}
 
-	public static AttributeFieldEditPart createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
-			FormToolkit toolkit, Composite parent, Object model, boolean linkLabel, IHyperlinkListener listener) {
-		return createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, false, 0, linkLabel, false, listener,
-				null);
+	public static AttributeFieldEditPart createMixedTextFieldEditor(String label,
+			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+			boolean linkLabel, IHyperlinkListener listener) {
+		return createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, false, 0, linkLabel, false,
+				listener, null);
 	}
 
-	public static AttributeFieldEditPart createMultiMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
-			FormToolkit toolkit, Composite parent, Object model, int height, OpenEditorEditInnerContentsAction action) {
-		return createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, true, height, false, false, null,
-				action);
+	public static AttributeFieldEditPart createMultiMixedTextFieldEditor(String label,
+			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model, int height,
+			OpenEditorEditInnerContentsAction action) {
+		return createMixedTextFieldEditor(label, editingdomain, toolkit, parent, model, true, height, false, false,
+				null, action);
 	}
 
-	public static AttributeFieldEditPart createMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
-			FormToolkit toolkit, Composite parent, Object model, boolean multiText, int height, boolean linkLabel,
-			boolean openFile, IHyperlinkListener listener, OpenEditorEditInnerContentsAction action) {
-		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, multiText, linkLabel, openFile,
-				height, listener, VALUE_TYPE_TEXT, action);
+	public static AttributeFieldEditPart createMixedTextFieldEditor(String label,
+			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+			boolean multiText, int height, boolean linkLabel, boolean openFile, IHyperlinkListener listener,
+			OpenEditorEditInnerContentsAction action) {
+		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, multiText, linkLabel,
+				openFile, height, listener, VALUE_TYPE_TEXT, action);
 	}
 
 	public static FieldMarkerWrapper createFieldEditorLabel(Composite parent, FormToolkit formToolKit,
@@ -402,7 +405,8 @@ public class SmooksUIUtils {
 	}
 
 	public static String parseFilePath(String path) throws InvocationTargetException {
-		if(path == null) return null;
+		if (path == null)
+			return null;
 		if (new File(path).exists()) {
 			return path;
 		}
@@ -624,7 +628,7 @@ public class SmooksUIUtils {
 		}
 		if (editValue != null && valueIsSet) {
 			valueText.setText(editValue);
-			 if (editValue.length() > 0 && section != null) {
+			if (editValue.length() > 0 && section != null) {
 				section.setExpanded(true);
 			}
 		}
@@ -755,7 +759,8 @@ public class SmooksUIUtils {
 
 		SearchComposite sc = (SearchComposite) fieldEditPart.getContentControl();
 
-		final FieldAssistDisposer disposer = addSelectorFieldAssistToText(sc.getText(), extType);
+		final FieldAssistDisposer disposer = addSelectorFieldAssistToText(sc.getText(), extType,
+				getSmooks11ResourceListType((EObject) model));
 		sc.addDisposeListener(new DisposeListener() {
 
 			/*
@@ -789,8 +794,8 @@ public class SmooksUIUtils {
 		}
 		if (jp != null) {
 			ProjectClassLoader loader = new ProjectClassLoader(jp);
-			if(className.endsWith("[]")){
-				className = className.substring(0,className.length() - 2);
+			if (className.endsWith("[]")) {
+				className = className.substring(0, className.length() - 2);
 				Class<?> clazz = loader.loadClass(className);
 				Object arrayInstance = Array.newInstance(clazz, 0);
 				clazz = arrayInstance.getClass();
@@ -1447,7 +1452,8 @@ public class SmooksUIUtils {
 		return loadedNodes;
 	}
 
-	public static FieldAssistDisposer addSelectorFieldAssistToText(Text text, SmooksGraphicsExtType extType) {
+	public static FieldAssistDisposer addSelectorFieldAssistToText(Text text, SmooksGraphicsExtType extType,
+			SmooksResourceListType resourceList) {
 		// Decorate the text widget with the light-bulb image denoting content
 		// assist
 		int bits = SWT.DOWN | SWT.LEFT;
@@ -1477,7 +1483,7 @@ public class SmooksUIUtils {
 		char[] autoActivationChars = new char[] { '/' };
 
 		// Create the proposal provider
-		SelectorContentProposalProvider proposalProvider = new SelectorContentProposalProvider(extType);
+		SelectorContentProposalProvider proposalProvider = new SelectorContentProposalProvider(extType, resourceList);
 		// Create the adapter
 		ContentAssistCommandAdapter adapter = new ContentAssistCommandAdapter(text, textContentAdapter,
 				proposalProvider, command, autoActivationChars);

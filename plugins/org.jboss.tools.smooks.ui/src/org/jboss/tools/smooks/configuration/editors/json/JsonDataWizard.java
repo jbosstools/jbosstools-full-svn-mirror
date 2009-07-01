@@ -10,15 +10,29 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.json;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
+import org.jboss.tools.smooks.configuration.editors.json.JsonDataConfiguraitonWizardPage.KeyValueModel;
+import org.jboss.tools.smooks.configuration.editors.uitls.JsonInputDataParser;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
+import org.jboss.tools.smooks.model.json.JsonFactory;
+import org.jboss.tools.smooks.model.json.JsonReader;
+import org.jboss.tools.smooks.model.json.Key;
+import org.jboss.tools.smooks.model.json.KeyMap;
+import org.jboss.tools.smooks.model.smooks.DocumentRoot;
+import org.jboss.tools.smooks.model.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -73,7 +87,7 @@ public class JsonDataWizard extends Wizard implements
 	@Override
 	public boolean performFinish() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	/*
@@ -112,39 +126,56 @@ public class JsonDataWizard extends Wizard implements
 
 	private void fillProperties(Properties p) {
 		if (configPage != null) {
+
+			boolean createJsonReader = configPage.isCreateJsonReader();
+
+			if (createJsonReader) {
+				p.setProperty(JsonInputDataParser.LINK_JSON_READER, "true");
+				return;
+			}
+
+			List<KeyValueModel> keyMapList = configPage.getKeyValueList();
+			for (Iterator<?> iterator = keyMapList.iterator(); iterator
+					.hasNext();) {
+				KeyValueModel keyValueModel = (KeyValueModel) iterator.next();
+				String key = keyValueModel.getKey();
+				String value = keyValueModel.getValue();
+				p.setProperty(JsonInputDataParser.KEY + key, value);
+			}
+
 			String aen = configPage.getArrayElementName();
 			if (aen != null && aen.length() != 0) {
-				p.setProperty("arrayElementName", aen);
+				p.setProperty(JsonInputDataParser.ARRAY_ELEMENT_NAME, aen);
 			}
 
 			String rn = configPage.getRootName();
 			if (rn != null && rn.length() != 0) {
-				p.setProperty("rootName", rn);
+				p.setProperty(JsonInputDataParser.ROOT_NAME, rn);
 			}
 
 			String encoding = configPage.getEncoding();
 			if (encoding != null && encoding.length() != 0) {
-				p.setProperty("encoding", encoding);
+				p.setProperty(JsonInputDataParser.ENCODING2, encoding);
 			}
 
 			String sr = configPage.getKeyWhitspaceReplacement();
 			if (sr != null && sr.length() != 0) {
-				p.setProperty("spaceReplace", sr);
+				p.setProperty(JsonInputDataParser.SPACE_REPLACE, sr);
 			}
 
 			String pon = configPage.getKeyPrefixOnNumeric();
 			if (pon != null && pon.length() != 0) {
-				p.setProperty("prefixOnNumeric", pon);
+				p.setProperty(JsonInputDataParser.PREFIX_ON_NUMERIC, pon);
 			}
 
 			String nvr = configPage.getNullValueReplacement();
 			if (nvr != null && nvr.length() != 0) {
-				p.setProperty("nullReplace", nvr);
+				p.setProperty(JsonInputDataParser.NULL_REPLACE, nvr);
 			}
 
 			String ier = configPage.getIllegalElementNameCharReplacement();
 			if (ier != null && ier.length() != 0) {
-				p.setProperty("illegalReplace", ier);
+				p.setProperty(JsonInputDataParser.ILLEGAL_REPLACE, ier);
 			}
 		}
 	}
@@ -182,5 +213,78 @@ public class JsonDataWizard extends Wizard implements
 	 */
 	public void init(IEditorSite site, IEditorInput input) {
 
+	}
+
+	public void complate(SmooksMultiFormEditor formEditor) {
+		if (configPage != null && configPage.isCreateJsonReader()) {
+			List<KeyValueModel> keyMapList = configPage.getKeyValueList();
+
+			JsonReader reader = JsonFactory.eINSTANCE.createJsonReader();
+			if (keyMapList != null && !keyMapList.isEmpty()) {
+				KeyMap map = JsonFactory.eINSTANCE.createKeyMap();
+				for (Iterator<?> iterator = keyMapList.iterator(); iterator
+						.hasNext();) {
+					KeyValueModel keyValueModel = (KeyValueModel) iterator
+							.next();
+					String key = keyValueModel.getKey();
+					String value = keyValueModel.getValue();
+					Key k = JsonFactory.eINSTANCE.createKey();
+					k.setFrom(key);
+					k.setTo(value);
+					map.getKey().add(k);
+				}
+				reader.setKeyMap(map);
+			}
+
+			String aen = configPage.getArrayElementName();
+			if (aen != null && aen.length() != 0) {
+				reader.setArrayElementName(aen);
+			}
+
+			String rn = configPage.getRootName();
+			if (rn != null && rn.length() != 0) {
+				reader.setRootName(rn);
+			}
+
+			String encoding = configPage.getEncoding();
+			if (encoding != null && encoding.length() != 0) {
+				reader.setEncoding(encoding);
+			}
+
+			String sr = configPage.getKeyWhitspaceReplacement();
+			if (sr != null && sr.length() != 0) {
+				reader.setKeyWhitspaceReplacement(sr);
+			}
+
+			String pon = configPage.getKeyPrefixOnNumeric();
+			if (pon != null && pon.length() != 0) {
+				reader.setKeyPrefixOnNumeric(pon);
+			}
+
+			String nvr = configPage.getNullValueReplacement();
+			if (nvr != null && nvr.length() != 0) {
+				reader.setNullValueReplacement(nvr);
+			}
+
+			String ier = configPage.getIllegalElementNameCharReplacement();
+			if (ier != null && ier.length() != 0) {
+				reader.setIllegalElementNameCharReplacement(ier);
+			}
+
+			SmooksResourceListType resourceList = null;
+			Object smooksModel = formEditor.getSmooksModel();
+			if (smooksModel instanceof DocumentRoot) {
+				resourceList = ((DocumentRoot) smooksModel)
+						.getSmooksResourceList();
+			}
+			Command command = AddCommand
+					.create(
+							formEditor.getEditingDomain(),
+							resourceList,
+							SmooksPackage.eINSTANCE
+									.getSmooksResourceListType_AbstractReader(),
+							reader);
+			formEditor.getEditingDomain().getCommandStack().execute(command);
+		}
 	}
 }

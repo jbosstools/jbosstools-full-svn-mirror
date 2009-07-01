@@ -45,6 +45,7 @@ import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModelFactory;
+import org.jboss.tools.smooks.configuration.editors.uitls.JsonInputDataParser;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelectionWizard;
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
@@ -54,6 +55,8 @@ import org.jboss.tools.smooks.configuration.editors.xml.XSDObjectAnalyzer;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
+import org.jboss.tools.smooks.model.smooks.DocumentRoot;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -237,7 +240,8 @@ public class SelectoreSelectionDialog extends Dialog {
 		});
 	}
 
-	public static List<Object> generateInputData(SmooksGraphicsExtType extType) {
+	public static List<Object> generateInputData(SmooksGraphicsExtType extType,
+			SmooksResourceListType smooksResourceListType) {
 		List<Object> list = new ArrayList<Object>();
 		if (extType != null) {
 			IJavaProject project = SmooksUIUtils.getJavaProject(extType);
@@ -249,6 +253,21 @@ public class SelectoreSelectionDialog extends Dialog {
 					String path = SmooksModelUtils.getInputPath(inputType);
 					if (type != null && path != null) {
 						path = path.trim();
+						if (SmooksModelUtils.INPUT_TYPE_JSON.equals(type)) {
+							try {
+								JsonInputDataParser parser = new JsonInputDataParser();
+								IXMLStructuredObject tagList = parser.parseJsonFile(SmooksUIUtils.parseFilePath(path),
+										inputType, smooksResourceListType);
+								if (tagList instanceof TagList) {
+									list.addAll(((TagList) tagList).getChildren());
+								} else {
+									list.add(tagList);
+								}
+							} catch (Throwable tt) {
+								// ignore
+//								SmooksConfigurationActivator.getDefault().log(tt);
+							}
+						}
 						if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(type)) {
 							try {
 								Class<?> clazz = SmooksUIUtils.loadClass(path, project);
@@ -291,12 +310,7 @@ public class SelectoreSelectionDialog extends Dialog {
 								AbstractXMLObject model = new XMLObjectAnalyzer().analyze(path, null);
 								if (model != null) {
 									if (model instanceof TagList) {
-										List<IXMLStructuredObject> children = ((TagList) model).getChildren();
-										for (Iterator<?> iterator2 = children.iterator(); iterator2.hasNext();) {
-											IXMLStructuredObject structuredObject = (IXMLStructuredObject) iterator2
-													.next();
-											list.add(structuredObject);
-										}
+										list.addAll(((TagList) model).getChildren());
 									} else {
 										list.add(model);
 									}
@@ -315,7 +329,12 @@ public class SelectoreSelectionDialog extends Dialog {
 	}
 
 	protected List<Object> generateInputData() {
-		return generateInputData(graphicsExt);
+		Object obj = ((SmooksMultiFormEditor) editorPart).getSmooksModel();
+		SmooksResourceListType resourceList = null;
+		if (obj instanceof DocumentRoot) {
+			resourceList = ((DocumentRoot) obj).getSmooksResourceList();
+		}
+		return generateInputData(graphicsExt, resourceList);
 	}
 
 	protected void showInputDataWizard() {
@@ -326,8 +345,12 @@ public class SelectoreSelectionDialog extends Dialog {
 		}
 
 		wizard.setForcePreviousAndNextButtons(true);
+		SmooksMultiFormEditor formEditor = null;
+		if (this.editorPart != null && this.editorPart instanceof SmooksMultiFormEditor) {
+			formEditor = (SmooksMultiFormEditor) editorPart;
+		}
 		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(this.getShell(), wizard,
-				this.graphicsExt);
+				this.graphicsExt, formEditor);
 		if (dialog.show() == WizardDialog.OK) {
 			List<Object> input = this.generateInputData();
 			this.viewer.setInput(input);

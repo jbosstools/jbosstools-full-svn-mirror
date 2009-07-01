@@ -38,10 +38,13 @@ public class StructuredDataSelectionWizardDailog extends WizardDialog {
 
 	protected SmooksGraphicsExtType smooksGraphicsExtType;
 	
+	private SmooksMultiFormEditor formEditor;
+	
 	public StructuredDataSelectionWizardDailog(Shell parentShell,
-			IWizard newWizard,SmooksGraphicsExtType extType) {
+			IWizard newWizard,SmooksGraphicsExtType extType , SmooksMultiFormEditor formEditor) {
 		super(parentShell, newWizard);
 		this.setSmooksGraphicsExtType(extType);
+		this.formEditor = formEditor;
 	}
 	
 	public IStructuredDataSelectionWizard getCurrentCreationWizard(){
@@ -53,7 +56,14 @@ public class StructuredDataSelectionWizardDailog extends WizardDialog {
 	}
 	
 	
-	
+	public SmooksMultiFormEditor getFormEditor() {
+		return formEditor;
+	}
+
+	public void setFormEditor(SmooksMultiFormEditor formEditor) {
+		this.formEditor = formEditor;
+	}
+
 	/**
 	 * @return the smooksGraphicsExtType
 	 */
@@ -91,9 +101,15 @@ public class StructuredDataSelectionWizardDailog extends WizardDialog {
 			IStructuredDataSelectionWizard wizard1 = this.getCurrentCreationWizard();
 			String type = wizard1.getInputDataTypeID();
 			String path = wizard1.getStructuredDataSourcePath();
+			
+			wizard1.complate(this.getFormEditor());
+			
 			SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
 			if (type != null && path != null && extType != null) {
 				String[] values = path.split(";");
+				if(values == null || values.length == 0){
+					values = new String[]{path};
+				}
 				for (int i = 0; i < values.length; i++) {
 					String value = values[i];
 					value = value.trim();

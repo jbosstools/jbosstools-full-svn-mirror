@@ -15,6 +15,7 @@ import java.util.Properties;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 
 /**
  * @author Dart Peng
@@ -31,5 +32,7 @@ public interface IStructuredDataSelectionWizard extends IWizard {
 	public Properties getProperties();
 	
 	public String getStructuredDataSourcePath();
+
+	public void complate(SmooksMultiFormEditor formEditor);
 	
 }
