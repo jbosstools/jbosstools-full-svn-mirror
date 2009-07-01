@@ -12,8 +12,8 @@ public class SubProcessNode extends NodeImpl {
 	public SubProcessNode(org.drools.workflow.core.node.SubProcessNode node) {
 		super(node);
 		// TODO XML should contain this meta-data
-		setMetaData("configurationElement", 
-			ElementRegistry.getConfigurationElement("org.jboss.tools.flow.ruleflow.subProcess"));
+		setMetaData("configurationElement",  //$NON-NLS-1$
+			ElementRegistry.getConfigurationElement("org.jboss.tools.flow.ruleflow.subProcess")); //$NON-NLS-1$
 	}
 
 }

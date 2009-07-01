@@ -29,8 +29,8 @@ public class ConnectionImpl implements Connection {
 	public ConnectionImpl(org.drools.workflow.core.Connection connection, Node from, Node to) {
 		this.connection = (org.drools.workflow.core.impl.ConnectionImpl) connection;
 		// TODO XML should contain this meta-data
-		setMetaData("configurationElement", 
-			ElementRegistry.getConfigurationElement("org.jboss.tools.flow.ruleflow.connection"));
+		setMetaData("configurationElement",  //$NON-NLS-1$
+			ElementRegistry.getConfigurationElement("org.jboss.tools.flow.ruleflow.connection")); //$NON-NLS-1$
 		this.from = from;
 		this.to = to;
 	}

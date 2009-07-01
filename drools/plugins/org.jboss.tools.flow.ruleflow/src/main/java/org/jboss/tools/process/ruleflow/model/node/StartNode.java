@@ -12,8 +12,8 @@ public class StartNode extends NodeImpl {
 	public StartNode(org.drools.workflow.core.node.StartNode node) {
 		super(node);
 		// TODO XML should contain this meta-data
-		setMetaData("configurationElement", 
-			ElementRegistry.getConfigurationElement("org.jboss.tools.flow.ruleflow.start"));
+		setMetaData("configurationElement",  //$NON-NLS-1$
+			ElementRegistry.getConfigurationElement("org.jboss.tools.flow.ruleflow.start")); //$NON-NLS-1$
 	}
 
 }

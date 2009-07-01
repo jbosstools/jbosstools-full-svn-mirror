@@ -29,7 +29,7 @@ public class PICollectorFiltration implements ICollectorFiltration
 		boolean isInclude;
 		JVMVersionDetector jvmVersionDetector = new JVMVersionDetector(configuration);
 		String version = jvmVersionDetector.retrieveVersionOutput();		
-		isInclude = version.indexOf("1.3") >0 || version.indexOf("1.4") >0 || version.indexOf("1.5") >0;
+		isInclude = version.indexOf("1.3") >0 || version.indexOf("1.4") >0 || version.indexOf("1.5") >0; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		return isInclude;
 	}
 }

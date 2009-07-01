@@ -1,6 +1,7 @@
 package org.jboss.tools.labs.pde.sourceprovider;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -31,13 +32,13 @@ public class EclipseSourceContainerType extends AbstractSourceContainerTypeDeleg
 			if ("eclipseHome".equals(element.getNodeName())) { //$NON-NLS-1$
 				String string = element.getAttribute("path"); //$NON-NLS-1$
 				if (string == null || string.length() == 0) {
-					abort("Eclipse Home Not Found", null); 
+					abort(Messages.EclipseSourceContainerType_EclipseHomeNotFonud, null); 
 				}
 				return new EclipseSourceContainer(new File(string));
 			} 
-			abort("Error unserializing memento", null); 
+			abort(Messages.EclipseSourceContainerType_ErrorUnserializing, null); 
 		}
-		abort("Error unserializing memento", null); 
+		abort(Messages.EclipseSourceContainerType_ErrorUnserializing, null); 
 		return null;
 	}
 
@@ -87,7 +88,7 @@ public class EclipseSourceContainerType extends AbstractSourceContainerTypeDeleg
 		}
 
 		public String getName() {
-			return "Eclipse Installation " + root.getAbsolutePath().toString();
+			return MessageFormat.format(Messages.EclipseSourceContainerType_EclipseInstallationName, root.getAbsolutePath().toString());
 		}
 
 		public ISourceContainerType getType() {

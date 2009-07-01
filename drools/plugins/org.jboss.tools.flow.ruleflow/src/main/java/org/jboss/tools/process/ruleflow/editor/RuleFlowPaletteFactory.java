@@ -28,6 +28,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.jboss.tools.flow.common.editor.PaletteFactory;
 import org.jboss.tools.flow.common.registry.ElementRegistry;
 import org.jboss.tools.process.ruleflow.Activator;
+import org.jboss.tools.process.ruleflow.Messages;
 
 /**
  * Factory for creating a RuleFlow palette.
@@ -44,11 +45,11 @@ public class RuleFlowPaletteFactory extends PaletteFactory {
 
     protected PaletteEntry createConnectionEntry() {
         return new ConnectionCreationToolEntry(
-            "Connection",
-            "Creating a new connection",
-            ElementRegistry.getCreationFactory("org.jboss.tools.flow.ruleflow.connection"),                
-            ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/connection.gif")),
-            ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/connection.gif"))
+            Messages.RuleFlowPaletteFactory_ConnectionLabel,
+            Messages.RuleFlowPaletteFactory_ConnectionDesc,
+            ElementRegistry.getCreationFactory("org.jboss.tools.flow.ruleflow.connection"),                 //$NON-NLS-1$
+            ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/connection.gif")), //$NON-NLS-1$
+            ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/connection.gif")) //$NON-NLS-1$
         );
     }
     
@@ -56,22 +57,22 @@ public class RuleFlowPaletteFactory extends PaletteFactory {
         List<PaletteEntry> entries = new ArrayList<PaletteEntry>();
         
         CombinedTemplateCreationEntry combined = new CombinedTemplateCreationEntry(
-            "Start",
-            "Create a new start node",
-            "org.jboss.tools.flow.ruleflow.start",
-            ElementRegistry.getCreationFactory("org.jboss.tools.flow.ruleflow.start"),
-            ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/start.gif")),
-            ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/start.gif"))
+            Messages.RuleFlowPaletteFactory_StartLabel,
+            Messages.RuleFlowPaletteFactory_StartDesc,
+            "org.jboss.tools.flow.ruleflow.start", //$NON-NLS-1$
+            ElementRegistry.getCreationFactory("org.jboss.tools.flow.ruleflow.start"), //$NON-NLS-1$
+            ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/start.gif")), //$NON-NLS-1$
+            ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/start.gif")) //$NON-NLS-1$
         );
         entries.add(combined);
         
         combined = new CombinedTemplateCreationEntry(
-            "SubProcess",
-            "Create a new sub process node",
-            "org.jboss.tools.flow.ruleflow.subProcess",
-            ElementRegistry.getCreationFactory("org.jboss.tools.flow.ruleflow.subProcess"),                
-            ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/process.gif")),
-            ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/process.gif"))
+            Messages.RuleFlowPaletteFactory_SubProcessLabel,
+            Messages.RuleFlowPaletteFactory_SubProcessDesc,
+            "org.jboss.tools.flow.ruleflow.subProcess", //$NON-NLS-1$
+            ElementRegistry.getCreationFactory("org.jboss.tools.flow.ruleflow.subProcess"),                 //$NON-NLS-1$
+            ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/process.gif")), //$NON-NLS-1$
+            ImageDescriptor.createFromURL(Activator.getDefault().getBundle().getEntry("icons/process.gif")) //$NON-NLS-1$
         );
         entries.add(combined);
                                   

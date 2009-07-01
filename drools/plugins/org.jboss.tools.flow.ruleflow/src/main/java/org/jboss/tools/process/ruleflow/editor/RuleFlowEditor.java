@@ -43,7 +43,7 @@ public class RuleFlowEditor extends GenericModelEditor {
     }
 
     protected Object createModel() {
-    	return ElementRegistry.createWrapper("org.jboss.tools.flow.ruleflow.process");
+    	return ElementRegistry.createWrapper("org.jboss.tools.flow.ruleflow.process"); //$NON-NLS-1$
     }
     
     protected void writeModel(OutputStream os) throws IOException {

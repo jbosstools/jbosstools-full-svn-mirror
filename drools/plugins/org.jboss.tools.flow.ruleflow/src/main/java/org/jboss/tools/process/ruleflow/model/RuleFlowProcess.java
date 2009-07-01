@@ -24,8 +24,8 @@ public class RuleFlowProcess implements Flow {
 	public RuleFlowProcess(org.drools.ruleflow.core.RuleFlowProcess process) {
 		this.process = process;
 		// TODO XML should contain this meta-data
-		setMetaData("configurationElement", 
-			ElementRegistry.getConfigurationElement("org.jboss.tools.flow.ruleflow.process"));
+		setMetaData("configurationElement",  //$NON-NLS-1$
+			ElementRegistry.getConfigurationElement("org.jboss.tools.flow.ruleflow.process")); //$NON-NLS-1$
 		List<org.drools.workflow.core.Connection> connections = new ArrayList<org.drools.workflow.core.Connection>();
 		for (org.drools.workflow.core.Node node: process.getNodes()) {
 			Node newNode = null;
@@ -35,7 +35,7 @@ public class RuleFlowProcess implements Flow {
 				newNode = new SubProcessNode((org.drools.workflow.core.node.SubProcessNode) node);
 			}
 			if (newNode == null) {
-				throw new IllegalArgumentException("Could not find NodeImpl for node " + newNode);
+				throw new IllegalArgumentException("Could not find NodeImpl for node " + newNode); //$NON-NLS-1$
 			}
 			this.nodes.put(node.getId(), newNode);
 			for (List<org.drools.workflow.core.Connection> inConnections: node.getIncomingConnections().values()) {

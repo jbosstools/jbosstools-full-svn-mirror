@@ -161,7 +161,7 @@ public class NewJavaClassWizardPageEx extends DataModelWizardPage {
 	private void addProjectNameGroup(Composite parent) {
 		// set up project name label
 		projectNameLabel = new Label(parent, SWT.NONE);
-		projectNameLabel.setText(J2EEUIMessages.getResourceString(J2EEUIMessages.MODULES_DEPENDENCY_PAGE_TABLE_PROJECT)); //$NON-NLS-1$
+		projectNameLabel.setText(J2EEUIMessages.getResourceString(J2EEUIMessages.MODULES_DEPENDENCY_PAGE_TABLE_PROJECT));
 		GridData data = new GridData();
 		projectNameLabel.setLayoutData(data);
 		// set up project name entry field
