@@ -14,7 +14,7 @@ import org.eclipse.osgi.util.NLS;
 
 public final class Messages extends NLS {
 
-	private static final String BUNDLE_NAME = "org.eclipse.bpel.ui.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.eclipse.bpel.ui.messages";//$NON-NLS-1		
 	
 
 	private Messages() {
@@ -702,9 +702,6 @@ public final class Messages extends NLS {
 
     public static String OutlinePage_showOverviewView;
     public static String OutlinePage_showOutlineView;
-    
-	public static String DeletePartnerLinkTypeWarningMessage;
-	public static String DeletePartnerLinkTypeWarningDialogTitle;
 
 	static {
 		
