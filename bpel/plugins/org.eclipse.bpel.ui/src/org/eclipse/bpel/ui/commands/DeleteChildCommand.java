@@ -182,25 +182,28 @@ public class DeleteChildCommand extends AutoUndoCommand {
 		HashSet deletingSet = new HashSet();
 		ModelHelper.addSubtreeToCollection(fChild, deletingSet);
 
-		// We should ask the user if delete the partner link type
-		if (MessageDialog.openQuestion(PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getShell(),
-				Messages.DeletePartnerLinkTypeWarningDialogTitle,
-				Messages.DeletePartnerLinkTypeWarningMessage)) {
-			// If we are deleting any PartnerLinks which reference PLTs in the
-			// Artifacts WSDL
-			// file, also delete the referenced PLTs.
-			Set<PartnerLinkType> partnerLinkTypes = null;
-			Definition artifactsDefinition = bpelEditor
-					.getArtifactsDefinition();
+		// If we are deleting any PartnerLinks which reference PLTs in the
+		// Artifacts WSDL
+		// file, also delete the referenced PLTs.
+		Set<PartnerLinkType> partnerLinkTypes = null;
+		Definition artifactsDefinition = bpelEditor.getArtifactsDefinition();
 
-			for (Iterator it = deletingSet.iterator(); it.hasNext();) {
-				Object object = it.next();
-				if (object instanceof PartnerLink) {
-					PartnerLinkType plt = ((PartnerLink) object)
-							.getPartnerLinkType();
-					if ((plt != null)
-							&& (plt.getEnclosingDefinition() == artifactsDefinition)) {
+		for (Iterator it = deletingSet.iterator(); it.hasNext();) {
+			Object object = it.next();
+			if (object instanceof PartnerLink) {
+				PartnerLinkType plt = ((PartnerLink) object)
+						.getPartnerLinkType();
+				if ((plt != null)
+						&& (plt.getEnclosingDefinition() == artifactsDefinition)) {
+					// We should ask the user if delete the partner link type
+					if (MessageDialog
+							.openQuestion(
+									PlatformUI.getWorkbench()
+											.getActiveWorkbenchWindow()
+											.getShell(),
+									Messages.DeletePartnerLinkTypeWarningDialogTitle,
+									NLS.bind(Messages.DeletePartnerLinkTypeWarningMessage,
+											 (new Object[] {((PartnerLink) object).getName(), plt.getName() })))) {
 						if (partnerLinkTypes == null)
 							partnerLinkTypes = new HashSet<PartnerLinkType>();
 						if (partnerLinkTypes.add(plt)) {
