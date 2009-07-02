@@ -123,6 +123,7 @@ import org.jboss.tools.smooks.model.graphics.ext.DocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.graphics.ext.util.SmooksGraphicsExtResourceFactoryImpl;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
+import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -2066,5 +2067,17 @@ public class SmooksUIUtils {
 			}
 		}
 		return null;
+	}
+	
+	public static boolean hasReaderAlready(Class<?> readerClass,SmooksResourceListType resourceList){
+		if(resourceList == null || readerClass == null) return false;
+		List<AbstractReader> readerList = resourceList.getAbstractReader();
+		for (Iterator<?> iterator = readerList.iterator(); iterator.hasNext();) {
+			AbstractReader abstractReader = (AbstractReader) iterator.next();
+			if (abstractReader.getClass() == readerClass) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

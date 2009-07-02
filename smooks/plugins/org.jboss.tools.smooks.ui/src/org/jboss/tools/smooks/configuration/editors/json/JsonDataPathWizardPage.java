@@ -28,6 +28,8 @@ public class JsonDataPathWizardPage extends AbstractFileSelectionWizardPage {
 
 	public JsonDataPathWizardPage(String pageName, String[] fileExtensionNames) {
 		super(pageName, fileExtensionNames);
+		this.setTitle("JSON file selection");
+		this.setDescription("Select a JSON data file");
 	}
 	
 	

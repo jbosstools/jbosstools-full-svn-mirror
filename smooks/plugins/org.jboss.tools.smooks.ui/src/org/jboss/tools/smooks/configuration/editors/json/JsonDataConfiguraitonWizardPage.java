@@ -35,10 +35,15 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.model.json.JsonReader;
+import org.jboss.tools.smooks.model.json.impl.JsonReaderImpl;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -86,7 +91,31 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 
 	protected boolean createJsonReader = true;
 
+	private Button newReaderConfigButton;
+
+	private Button useAvailableReaderConfigButton;
+
+	private SmooksResourceListType resourceList;
+
+	private boolean hasReader = false;
+
+	private boolean useAvailabelReader = false;
+
+	private Composite configComposite;
+
+	private Composite keyMapComposite;
+	
+	
+
 	private void initValue() {
+		hasReader = false;
+		if (SmooksUIUtils.hasReaderAlready(JsonReaderImpl.class, resourceList)
+				|| SmooksUIUtils.hasReaderAlready(JsonReader.class, resourceList)) {
+			hasReader = true;
+		}
+		
+		useAvailabelReader= false;
+
 		rootName = null;
 
 		createJsonReader = true;
@@ -104,6 +133,11 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 			keyValueList.clear();
 		} else {
 			keyValueList = new ArrayList<KeyValueModel>();
+		}
+
+		if (hasReader) {
+			useAvailabelReader = true;
+			createJsonReader = false;
 		}
 
 	}
@@ -126,53 +160,85 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 		gd.grabExcessVerticalSpace = true;
 		mainComposite.setLayoutData(gd);
 
+		Composite radioButtonComposite = new Composite(mainComposite, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		Label rootnameLabel = new Label(mainComposite, SWT.NONE);
+		gd.horizontalSpan = 2;
+		radioButtonComposite.setLayoutData(gd);
+
+		GridLayout rgl = new GridLayout();
+		rgl.numColumns = 2;
+		rgl.marginHeight = 0;
+		rgl.marginWidth = 0;
+		radioButtonComposite.setLayout(rgl);
+
+		Composite spaceComposite = new Composite(mainComposite, SWT.NONE);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 2;
+		gd.heightHint = 20;
+		spaceComposite.setLayoutData(gd);
+
+		newReaderConfigButton = new Button(radioButtonComposite, SWT.RADIO);
+		newReaderConfigButton.setText("Create new JSON reader configurations");
+		newReaderConfigButton.setSelection(true);
+
+		useAvailableReaderConfigButton = new Button(radioButtonComposite, SWT.RADIO);
+		useAvailableReaderConfigButton.setText("Use available JSON reader configurations");
+
+		configComposite = new Composite(mainComposite, SWT.NONE);
+		gd = new GridData(GridData.FILL_BOTH);
+		gd.horizontalSpan = 2;
+		configComposite.setLayoutData(gd);
+
+		GridLayout cgl = new GridLayout();
+		cgl.marginHeight = 0;
+		cgl.marginWidth = 0;
+		cgl.numColumns = 2;
+		configComposite.setLayout(cgl);
+
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		Label rootnameLabel = new Label(configComposite, SWT.NONE);
 		rootnameLabel.setText("Root Element Name");
-		rootNameText = new Text(mainComposite, SWT.BORDER);
+		rootNameText = new Text(configComposite, SWT.BORDER);
 		rootNameText.setLayoutData(gd);
 
-		Label arrayElementNameLabel = new Label(mainComposite, SWT.NONE);
+		Label arrayElementNameLabel = new Label(configComposite, SWT.NONE);
 		arrayElementNameLabel.setText("Array Element Name");
-		arrayElementNameText = new Text(mainComposite, SWT.BORDER);
+		arrayElementNameText = new Text(configComposite, SWT.BORDER);
 		arrayElementNameText.setLayoutData(gd);
 		arrayElementNameText.setText(arrayElementName);
 
-		Label keyWhitspaceReplacementLabel = new Label(mainComposite, SWT.NONE);
+		Label keyWhitspaceReplacementLabel = new Label(configComposite, SWT.NONE);
 		keyWhitspaceReplacementLabel.setText("Space Replacement");
-		keyWhitspaceReplacementText = new Text(mainComposite, SWT.BORDER);
+		keyWhitspaceReplacementText = new Text(configComposite, SWT.BORDER);
 		keyWhitspaceReplacementText.setLayoutData(gd);
 		if (keyWhitspaceReplacement == null) {
 			keyWhitspaceReplacement = "";
 		}
 		keyWhitspaceReplacementText.setText(keyWhitspaceReplacement);
 
-		Label keyPrefixOnNumeric = new Label(mainComposite, SWT.NONE);
+		Label keyPrefixOnNumeric = new Label(configComposite, SWT.NONE);
 		keyPrefixOnNumeric.setText("Prefix On Numeric");
-		keyPrefixOnNumericText = new Text(mainComposite, SWT.BORDER);
+		keyPrefixOnNumericText = new Text(configComposite, SWT.BORDER);
 		keyPrefixOnNumericText.setLayoutData(gd);
 
-		Label illegalElementNameCharReplacementLabel = new Label(mainComposite,
-				SWT.NONE);
-		illegalElementNameCharReplacementLabel
-				.setText("IllegalChar Replacement");
-		illegalElementNameCharReplacementText = new Text(mainComposite,
-				SWT.BORDER);
+		Label illegalElementNameCharReplacementLabel = new Label(configComposite, SWT.NONE);
+		illegalElementNameCharReplacementLabel.setText("IllegalChar Replacement");
+		illegalElementNameCharReplacementText = new Text(configComposite, SWT.BORDER);
 		illegalElementNameCharReplacementText.setLayoutData(gd);
 
-		Label nullValueReplacementlabel = new Label(mainComposite, SWT.NONE);
+		Label nullValueReplacementlabel = new Label(configComposite, SWT.NONE);
 		nullValueReplacementlabel.setText("NullValue Replacement");
-		nullValueReplacementText = new Text(mainComposite, SWT.BORDER);
+		nullValueReplacementText = new Text(configComposite, SWT.BORDER);
 		nullValueReplacementText.setLayoutData(gd);
 		nullValueReplacementText.setText(nullValueReplacement);
 
-		Label encodingLabel = new Label(mainComposite, SWT.NONE);
+		Label encodingLabel = new Label(configComposite, SWT.NONE);
 		encodingLabel.setText("Encoding");
-		encodingText = new Text(mainComposite, SWT.BORDER);
+		encodingText = new Text(configComposite, SWT.BORDER);
 		encodingText.setLayoutData(gd);
 		encodingText.setText(encoding);
 
-		Label keyMapLabel = new Label(mainComposite, SWT.NONE);
+		Label keyMapLabel = new Label(configComposite, SWT.NONE);
 		keyMapLabel.setText("Key Map:");
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
@@ -181,7 +247,7 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.horizontalSpan = 2;
 
-		Composite keyMapComposite = new Composite(mainComposite, SWT.NONE);
+		keyMapComposite = new Composite(configComposite, SWT.NONE);
 		keyMapComposite.setLayoutData(gd);
 
 		GridLayout kgl = new GridLayout();
@@ -197,14 +263,11 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 		keyMapViewer.setContentProvider(new KeyMapContentProvider());
 		keyMapViewer.setLabelProvider(new KeyMapLabelProvider());
 
-		CellEditor keyCellEditor = new TextCellEditor(keyMapViewer.getTable(),
-				SWT.BORDER);
+		CellEditor keyCellEditor = new TextCellEditor(keyMapViewer.getTable(), SWT.BORDER);
 
-		CellEditor valueCellEditor = new TextCellEditor(
-				keyMapViewer.getTable(), SWT.BORDER);
+		CellEditor valueCellEditor = new TextCellEditor(keyMapViewer.getTable(), SWT.BORDER);
 
-		keyMapViewer.setCellEditors(new CellEditor[] { keyCellEditor,
-				valueCellEditor });
+		keyMapViewer.setCellEditors(new CellEditor[] { keyCellEditor, valueCellEditor });
 
 		keyMapViewer.setColumnProperties(new String[] { "key", "value" });
 
@@ -261,13 +324,11 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 			}
 		});
 
-		TableColumn keyColumn = new TableColumn(keyMapViewer.getTable(),
-				SWT.BORDER);
+		TableColumn keyColumn = new TableColumn(keyMapViewer.getTable(), SWT.BORDER);
 		keyColumn.setWidth(150);
 		keyColumn.setText("Key");
 
-		TableColumn replaceColumn = new TableColumn(keyMapViewer.getTable(),
-				SWT.BORDER);
+		TableColumn replaceColumn = new TableColumn(keyMapViewer.getTable(), SWT.BORDER);
 		replaceColumn.setWidth(150);
 		replaceColumn.setText("Replace");
 
@@ -290,19 +351,80 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 		removeButton.setLayoutData(gd);
 		removeButton.setText("Remove");
 
-		createJsonReaderButton = new Button(mainComposite, SWT.CHECK);
+		createJsonReaderButton = new Button(configComposite, SWT.CHECK);
 		createJsonReaderButton.setText("Create a JSON Reader");
 
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		createJsonReaderButton.setLayoutData(gd);
-		createJsonReaderButton.setSelection(true);
+		createJsonReaderButton.setSelection(createJsonReader);
+		
+		if (hasReader) {
+			createJsonReaderButton.setEnabled(false);
+			newReaderConfigButton.setSelection(false);
+			useAvailableReaderConfigButton.setSelection(true);
+			setConfigCompositeStates(false);
+//			configComposite.setEnabled(false);
+		}
 		hookControls();
 		changePageStatus();
 		this.setControl(mainComposite);
 	}
+	
+	private void setConfigCompositeStates(boolean enabled){
+		configComposite.setEnabled(enabled);
+		Control[] controls = configComposite.getChildren();
+		for (int i = 0; i < controls.length; i++) {
+			Control c = controls[i];
+			if(c == createJsonReaderButton){
+				if(hasReader){
+					c.setEnabled(false);
+					continue;
+				}
+			}
+			if(c == keyMapComposite){
+				Control[] cs = ((Composite)c).getChildren();
+				for (int j = 0; j < cs.length; j++) {
+					Control cc = cs[j];
+					cc.setEnabled(enabled);
+				}
+			}
+			c.setEnabled(enabled);
+		}
+	}
 
 	private void hookControls() {
+
+		newReaderConfigButton.addSelectionListener(new SelectionListener() {
+
+			public void widgetSelected(SelectionEvent e) {
+				if (newReaderConfigButton.getSelection()) {
+					useAvailabelReader = false;
+					changePageStatus();
+					setConfigCompositeStates(true);
+				}
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		useAvailableReaderConfigButton.addSelectionListener(new SelectionListener() {
+
+			public void widgetSelected(SelectionEvent e) {
+				if (useAvailableReaderConfigButton.getSelection()) {
+					useAvailabelReader = true;
+					changePageStatus();
+					setConfigCompositeStates(false);
+				}
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+
+			}
+		});
 
 		addButton.addSelectionListener(new SelectionListener() {
 
@@ -318,11 +440,9 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 		removeButton.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection selection = (IStructuredSelection) keyMapViewer
-						.getSelection();
+				IStructuredSelection selection = (IStructuredSelection) keyMapViewer.getSelection();
 				List<?> selections = selection.toList();
-				for (Iterator<?> iterator = selections.iterator(); iterator
-						.hasNext();) {
+				for (Iterator<?> iterator = selections.iterator(); iterator.hasNext();) {
 					Object object = (Object) iterator.next();
 					keyValueList.remove(object);
 				}
@@ -362,15 +482,13 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 			}
 		});
 
-		illegalElementNameCharReplacementText
-				.addModifyListener(new ModifyListener() {
+		illegalElementNameCharReplacementText.addModifyListener(new ModifyListener() {
 
-					public void modifyText(ModifyEvent e) {
-						illegalElementNameCharReplacement = illegalElementNameCharReplacementText
-								.getText();
-						changePageStatus();
-					}
-				});
+			public void modifyText(ModifyEvent e) {
+				illegalElementNameCharReplacement = illegalElementNameCharReplacementText.getText();
+				changePageStatus();
+			}
+		});
 
 		keyPrefixOnNumericText.addModifyListener(new ModifyListener() {
 
@@ -407,6 +525,11 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 
 	private void changePageStatus() {
 		String error = null;
+		if (useAvailabelReader) {
+			setErrorMessage(null);
+			setPageComplete(true);
+			return;
+		}
 		rootName = rootNameText.getText();
 		if (rootName == null || rootName.length() == 0) {
 			error = "Root Name can't be null";
@@ -431,14 +554,14 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 		setPageComplete(error == null);
 	}
 
-	public JsonDataConfiguraitonWizardPage(String pageName, String title,
-			ImageDescriptor titleImage) {
+	public JsonDataConfiguraitonWizardPage(String pageName, String title, ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
-		// TODO Auto-generated constructor stub
 	}
 
 	public JsonDataConfiguraitonWizardPage(String pageName) {
 		super(pageName);
+		this.setTitle("JSON Reader configurations");
+		this.setDescription("Set the configurations for parsing JSON file.");
 	}
 
 	public String getRootName() {
@@ -477,8 +600,7 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 		return illegalElementNameCharReplacement;
 	}
 
-	public void setIllegalElementNameCharReplacement(
-			String illegalElementNameCharReplacement) {
+	public void setIllegalElementNameCharReplacement(String illegalElementNameCharReplacement) {
 		this.illegalElementNameCharReplacement = illegalElementNameCharReplacement;
 	}
 
@@ -490,16 +612,35 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 		this.nullValueReplacement = nullValueReplacement;
 	}
 
-//	public Map<String, String> getKeyMap() {
-//		return keyMap;
-//	}
-//
-//	public void setKeyMap(Map<String, String> keyMap) {
-//		this.keyMap = keyMap;
-//	}
+	// public Map<String, String> getKeyMap() {
+	// return keyMap;
+	// }
+	//
+	// public void setKeyMap(Map<String, String> keyMap) {
+	// this.keyMap = keyMap;
+	// }
+	
+	
 
 	public String getEncoding() {
 		return encoding;
+	}
+	
+	
+	public boolean isUseAvailabelReader() {
+		return useAvailabelReader;
+	}
+
+	public void setUseAvailabelReader(boolean useAvailabelReader) {
+		this.useAvailabelReader = useAvailabelReader;
+	}
+
+	public SmooksResourceListType getSmooksResourceList() {
+		return resourceList;
+	}
+
+	public void setSmooksResourceList(SmooksResourceListType resourceList) {
+		this.resourceList = resourceList;
 	}
 
 	public void setEncoding(String encoding) {
@@ -522,10 +663,7 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 		this.createJsonReader = createJsonReader;
 	}
 
-
-
-	private class KeyMapLabelProvider extends LabelProvider implements
-			ITableLabelProvider {
+	private class KeyMapLabelProvider extends LabelProvider implements ITableLabelProvider {
 
 		public Image getColumnImage(Object element, int columnIndex) {
 			return null;
