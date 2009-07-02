@@ -26,6 +26,13 @@ public class XMLStructuredDataWizard extends AbstractStructuredDdataWizard {
 	String filePath = null;
 
 	public static final String XML_FILE = "xmlFile";
+	
+	
+
+	public XMLStructuredDataWizard() {
+		super();
+		setWindowTitle("XML File Input Data Wizard");
+	}
 
 	@Override
 	protected AbstractFileSelectionWizardPage createAbstractFileSelectionWizardPage() {
