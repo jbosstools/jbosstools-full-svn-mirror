@@ -105,7 +105,6 @@ public abstract class GenericModelEditor extends GraphicalEditorWithPalette {
 	public void init(IEditorSite site, IEditorInput input)
 			throws PartInitException {
 		super.init(site, input);
-		initializeEditDomain();
 		initializeLanguage();
 	}
 	
