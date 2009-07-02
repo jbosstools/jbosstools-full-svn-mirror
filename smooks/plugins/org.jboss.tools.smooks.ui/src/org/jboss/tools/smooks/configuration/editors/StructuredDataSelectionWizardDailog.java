@@ -102,7 +102,7 @@ public class StructuredDataSelectionWizardDailog extends WizardDialog {
 			String type = wizard1.getInputDataTypeID();
 			String path = wizard1.getStructuredDataSourcePath();
 			
-			wizard1.complate(this.getFormEditor());
+//			wizard1.complate(this.getFormEditor());
 			
 			SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
 			if (type != null && path != null && extType != null) {
