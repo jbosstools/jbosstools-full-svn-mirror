@@ -40,6 +40,13 @@ public class JavabeanStrucutredDataWizard extends Wizard implements
 		IStructuredDataSelectionWizard, INewWizard {
 	JavaBeanConfigWizardPage page = null;
 	IJavaProject project = null;
+	
+	
+	public JavabeanStrucutredDataWizard() {
+		super();
+		this.setWindowTitle("JavaBean Model Wizard");
+	}
+
 	public IJavaProject getProject() {
 		return project;
 	}

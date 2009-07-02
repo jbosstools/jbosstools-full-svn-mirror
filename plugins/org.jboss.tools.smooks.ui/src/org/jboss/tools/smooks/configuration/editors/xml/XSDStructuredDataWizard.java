@@ -20,8 +20,13 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  *
  */
 public class XSDStructuredDataWizard extends AbstractStructuredDdataWizard {
-
 	
+	
+	public XSDStructuredDataWizard() {
+		super();
+		setWindowTitle("XSD/WSDL Input Data Wizard");
+	}
+
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.smooks.configuration.editors.xml.AbstractStructuredDdataWizard#createAbstractFileSelectionWizardPage()
 	 */

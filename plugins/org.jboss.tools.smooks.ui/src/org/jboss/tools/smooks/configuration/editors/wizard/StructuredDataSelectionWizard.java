@@ -27,6 +27,14 @@ public class StructuredDataSelectionWizard extends Wizard {
 	IEditorSite site;
 	
 	IEditorInput input;
+	
+	
+	
+	public StructuredDataSelectionWizard() {
+		super();
+		setWindowTitle("Smooks Input Data Selection Wizard");
+	}
+
 	/**
 	 * @return the site
 	 */
