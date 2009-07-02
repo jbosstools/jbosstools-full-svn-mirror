@@ -33,6 +33,10 @@ public interface IStructuredDataSelectionWizard extends IWizard {
 	
 	public String getStructuredDataSourcePath();
 
+	/**
+	 * @deprecated
+	 * @param formEditor
+	 */
 	public void complate(SmooksMultiFormEditor formEditor);
 	
 }
