@@ -17,6 +17,7 @@ import java.util.Map;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
+import org.jboss.tools.smooks.configuration.editors.csv.CSVInputDataWizard;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanContentProvider;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanStrucutredDataWizard;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanlabelProvider;
@@ -54,17 +55,17 @@ public class ViewerInitorStore {
 		IViewerInitor initor = this.getInitorMap().get(typeID);
 		if (initor == null)
 			return null;
-	    IStructuredDataSelectionWizard wizard = initor.getStructuredDataLoadWizard();
-	    return wizard;
-//	    if(wizard != null){
-//	    	try {
-//				return wizard.getClass().newInstance();
-//			} catch (Throwable t){
-//				t.printStackTrace();
-//				return wizard;
-//			}
-//	    }
-//	    return null;
+		IStructuredDataSelectionWizard wizard = initor.getStructuredDataLoadWizard();
+		return wizard;
+		// if(wizard != null){
+		// try {
+		// return wizard.getClass().newInstance();
+		// } catch (Throwable t){
+		// t.printStackTrace();
+		// return wizard;
+		// }
+		// }
+		// return null;
 	}
 
 	public ILabelProvider getLabelProvider(String typeID) {
@@ -136,7 +137,7 @@ public class ViewerInitorStore {
 
 	protected HashMap<String, IViewerInitor> createNewInitorMap() {
 		HashMap<String, IViewerInitor> map = new HashMap<String, IViewerInitor>();
-		
+
 		// for json
 		BaseViewerInitor jsonViewerInitor = new BaseViewerInitor();
 		String name = "Json";
@@ -151,13 +152,12 @@ public class ViewerInitorStore {
 		jsonViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
 		jsonViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
 		jsonViewerInitor.setStructuredDataLoadWizard(new JsonDataWizard());
-//		jsonViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
+		// jsonViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
 		map.put(typeID, jsonViewerInitor);
-
 
 		// for java
 		BaseViewerInitor javabeanViewerInitor = new BaseViewerInitor();
-	    name = "Java";
+		name = "Java";
 		description = "Select a Java type(class,interface) as the input data.";
 		iconPath = null;
 		typeID = SmooksModelUtils.INPUT_TYPE_JAVA;
@@ -208,7 +208,23 @@ public class ViewerInitorStore {
 		xsdViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_XSD_FILE);
 		map.put(typeID, xsdViewerInitor);
 
-		
+		// for Csv
+		BaseViewerInitor csvViewerInitor = new BaseViewerInitor();
+		name = "CSV";
+		description = "Select CSV data file as the input data.";
+		iconPath = null;
+		typeID = SmooksModelUtils.INPUT_TYPE_CSV;
+
+		csvViewerInitor.setName(name);
+		csvViewerInitor.setDescription(description);
+		csvViewerInitor.setWizardIconPath(iconPath);
+		csvViewerInitor.setTypeID(typeID);
+		csvViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
+		csvViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
+		csvViewerInitor.setStructuredDataLoadWizard(new CSVInputDataWizard());
+		// jsonViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
+		map.put(typeID, csvViewerInitor);
+
 		return map;
 	}
 }

@@ -66,7 +66,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 	public AbstractFileSelectionWizardPage(String pageName, String[] fileExtensionNames) {
 		this(pageName, false, null, Collections.EMPTY_LIST);
 		this.fileExtensionNames = fileExtensionNames;
-		if (this.fileExtensionNames != null && fileExtensionNames.length != 0) {
+		if (this.fileExtensionNames != null && this.fileExtensionNames.length != 0) {
 			ViewerFilter extensionNameFilter = new ViewerFilter() {
 				/*
 				 * (non-Javadoc)
