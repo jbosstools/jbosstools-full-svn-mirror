@@ -190,4 +190,208 @@
       <xsl:param name="master-reference" select="''"/>
       <xsl:text>no-force</xsl:text>
    </xsl:template>
+   <!-- ################################################## -->
+   <xsl:template name="process.image">
+      <!-- When this template is called, the current node should be  -->
+      <!-- a graphic, inlinegraphic, imagedata, or videodata. All    -->
+      <!-- those elements have the same set of attributes, so we can -->
+      <!-- handle them all in one place.                             -->
+      
+      <xsl:variable name="scalefit">
+         <xsl:choose>
+            <xsl:when test="$ignore.image.scaling != 0">0</xsl:when>
+            <xsl:when test="@contentwidth">0</xsl:when>
+            <xsl:when test="@contentdepth and 
+               @contentdepth != '100%'">0</xsl:when>
+            <xsl:when test="@scale">0</xsl:when>
+            <xsl:when test="@scalefit"><xsl:value-of select="@scalefit"/></xsl:when>
+            <xsl:when test="@width or @depth">1</xsl:when>
+            <xsl:otherwise>1</xsl:otherwise>
+         </xsl:choose>
+      </xsl:variable>
+      
+      <xsl:variable name="scale">
+         <xsl:choose>
+            <xsl:when test="$ignore.image.scaling != 0">0</xsl:when>
+            <xsl:when test="@contentwidth or @contentdepth">1.0</xsl:when>
+            <xsl:when test="@scale">
+               <xsl:value-of select="@scale div 100.0"/>
+            </xsl:when>
+            <xsl:otherwise>1.0</xsl:otherwise>
+         </xsl:choose>
+      </xsl:variable>
+      
+      <xsl:variable name="filename">
+         <xsl:choose>
+            <xsl:when test="local-name(.) = 'graphic'
+               or local-name(.) = 'inlinegraphic'">
+               <!-- handle legacy graphic and inlinegraphic by new template --> 
+               <xsl:call-template name="mediaobject.filename">
+                  <xsl:with-param name="object" select="."/>
+               </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+               <!-- imagedata, videodata, audiodata -->
+               <xsl:call-template name="mediaobject.filename">
+                  <xsl:with-param name="object" select=".."/>
+               </xsl:call-template>
+            </xsl:otherwise>
+         </xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="content-type">
+         <xsl:if test="@format">
+            <xsl:call-template name="graphic.format.content-type">
+               <xsl:with-param name="format" select="@format"/>
+            </xsl:call-template>
+         </xsl:if>
+      </xsl:variable>
+      <fo:external-graphic >
+         <xsl:attribute name="src">
+            <xsl:call-template name="fo-external-image">
+               <xsl:with-param name="filename">
+                  <xsl:if test="$img.src.path != '' and
+                     not(starts-with($filename, '/')) and
+                     not(contains($filename, '://'))">
+                     <xsl:value-of select="$img.src.path"/>
+                  </xsl:if>
+                  <xsl:value-of select="$filename"/>
+               </xsl:with-param>
+            </xsl:call-template>
+         </xsl:attribute>
+         <xsl:attribute name="width">
+            100%
+         </xsl:attribute>
+         
+         <xsl:attribute name="content-width">
+            scale-down-to-fit
+         </xsl:attribute>
+         <xsl:attribute name="content-height">
+            100%
+            
+         </xsl:attribute>
+         <xsl:attribute name="scaling">
+            uniform
+         </xsl:attribute>     
+         
+         <xsl:attribute name="height">
+            <xsl:choose>
+               <xsl:when test="$ignore.image.scaling != 0">auto</xsl:when>
+               <xsl:when test="contains(@depth,'%')">
+                  <xsl:value-of select="@depth"/>
+               </xsl:when>
+               <xsl:when test="@depth">
+                  <xsl:call-template name="length-spec">
+                     <xsl:with-param name="length" select="@depth"/>
+                     <xsl:with-param name="default.units" select="'px'"/>
+                  </xsl:call-template>
+               </xsl:when>
+               <xsl:otherwise>auto</xsl:otherwise>
+            </xsl:choose>
+         </xsl:attribute>
+         <xsl:if test="$content-type != ''">
+            <xsl:attribute name="content-type">
+               <xsl:value-of select="concat('content-type:',$content-type)"/>
+            </xsl:attribute>
+         </xsl:if>
+         
+         <xsl:if test="@align">
+            <xsl:attribute name="text-align">
+               <xsl:value-of select="@align"/>
+            </xsl:attribute>
+         </xsl:if>
+         
+         <xsl:if test="@valign">
+            <xsl:attribute name="display-align">
+               <xsl:choose>
+                  <xsl:when test="@valign = 'top'">before</xsl:when>
+                  <xsl:when test="@valign = 'middle'">center</xsl:when>
+                  <xsl:when test="@valign = 'bottom'">after</xsl:when>
+                  <xsl:otherwise>auto</xsl:otherwise>
+               </xsl:choose>
+            </xsl:attribute>
+         </xsl:if>
+      </fo:external-graphic>
+   </xsl:template>
+   <!--#################################remove column-width unspecified  Warning########-->
+   <xsl:template name="generate.col">
+      <!-- generate the table-column for column countcol -->
+      <xsl:param name="countcol">1</xsl:param>
+      <xsl:param name="colspecs" select="./colspec"/>
+      <xsl:param name="count">1</xsl:param>
+      <xsl:param name="colnum">1</xsl:param>
+      
+      <xsl:choose>
+         <xsl:when test="$count>count($colspecs)">
+            <fo:table-column column-number="{$countcol}" column-width="proportional-column-width(1)">
+               <xsl:variable name="colwidth">
+                  <xsl:call-template name="calc.column.width"/>
+               </xsl:variable>
+               <xsl:if test="$colwidth != 'proportional-column-width(1)'">
+                  <xsl:attribute name="column-width">
+                     <xsl:value-of select="$colwidth"/>
+                  </xsl:attribute>
+               </xsl:if>
+            </fo:table-column>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:variable name="colspec" select="$colspecs[$count=position()]"/>
+            
+            <xsl:variable name="colspec.colnum">
+               <xsl:choose>
+                  <xsl:when test="$colspec/@colnum">
+                     <xsl:value-of select="$colspec/@colnum"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                     <xsl:value-of select="$colnum"/>
+                  </xsl:otherwise>
+               </xsl:choose>
+            </xsl:variable>
+            
+            <xsl:variable name="colspec.colwidth">
+               <xsl:choose>
+                  <xsl:when test="$colspec/@colwidth">
+                     <xsl:value-of select="$colspec/@colwidth"/>
+                  </xsl:when>
+                  <xsl:otherwise>1*</xsl:otherwise>
+               </xsl:choose>
+            </xsl:variable>
+            
+            <xsl:choose>
+               <xsl:when test="$colspec.colnum=$countcol">
+                  <fo:table-column column-number="{$countcol}" column-width="proportional-column-width(1)">
+                     <xsl:variable name="colwidth">
+                        <xsl:call-template name="calc.column.width">
+                           <xsl:with-param name="colwidth">
+                              <xsl:value-of select="$colspec.colwidth"/>
+                           </xsl:with-param>
+                        </xsl:call-template>
+                     </xsl:variable>
+                     <xsl:if test="$colwidth != 'proportional-column-width(1)'">
+                        <xsl:attribute name="column-width">
+                           <xsl:value-of select="$colwidth"/>
+                        </xsl:attribute>
+                     </xsl:if>
+                  </fo:table-column>
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:call-template name="generate.col">
+                     <xsl:with-param name="countcol" select="$countcol"/>
+                     <xsl:with-param name="colspecs" select="$colspecs"/>
+                     <xsl:with-param name="count" select="$count+1"/>
+                     <xsl:with-param name="colnum">
+                        <xsl:choose>
+                           <xsl:when test="$colspec/@colnum">
+                              <xsl:value-of select="$colspec/@colnum + 1"/>
+                           </xsl:when>
+                           <xsl:otherwise>
+                              <xsl:value-of select="$colnum + 1"/>
+                           </xsl:otherwise>
+                        </xsl:choose>
+                     </xsl:with-param>
+                  </xsl:call-template>
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:otherwise>
+      </xsl:choose>
+   </xsl:template>
 </xsl:stylesheet>
