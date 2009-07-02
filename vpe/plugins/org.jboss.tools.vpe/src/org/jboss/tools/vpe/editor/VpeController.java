@@ -181,6 +181,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	private boolean mouseUpSelectionReasonFlag;
 	private boolean mouseDownSelectionFlag;
 	private boolean sourceChangeFlag;
+	private boolean commentNodeChanged;
 	private VpePageContext pageContext;
 	private BundleMap bundle;
 	private VpeEditorPart editPart;
@@ -616,19 +617,47 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				break;
 
 			case INodeNotifier.ADD:
-				// we should remove all parent nodes from vpe cash
-				visualBuilder.removeNode((Node) newValue);
+				/*
+				 * https://jira.jboss.org/jira/browse/JBIDE-4102
+				 * Do nothing on comment node adding,
+				 * it is already updated in {@code INodeNotifier.REMOVE} case. 
+				 */
+				if (Node.COMMENT_NODE != ((Node) newValue).getNodeType()) {
+					/*
+					 * we should remove all parent nodes from vpe cash
+					 */
+					visualBuilder.removeNode((Node) newValue);
+				}
 				break;
 
 			case INodeNotifier.REMOVE:
-				visualBuilder.stopToggle((Node) feature);
-				visualBuilder.removeNode((Node) feature);
+				/*
+				 * https://jira.jboss.org/jira/browse/JBIDE-4102
+				 * When comment is changed there is no need
+				 * to update its parent or the whole structure, 
+				 * only the comment node should be updated.
+				 */
+				if (Node.COMMENT_NODE == ((Node) feature).getNodeType()) {
+					visualBuilder.updateNode((Node) feature);
+					commentNodeChanged = true;
+				} else {
+					visualBuilder.stopToggle((Node) feature);
+					visualBuilder.removeNode((Node) feature);
+				}
 				break;
 
 			case INodeNotifier.STRUCTURE_CHANGED:
-				visualEditor.hideResizer();
-				visualBuilder.setSelectionRectangle(null);
-				visualBuilder.updateNode((Node) notifier);
+				/*
+				 * https://jira.jboss.org/jira/browse/JBIDE-4102
+				 * Do not update parent tag when a comment was changed,
+				 */
+				if (!commentNodeChanged) {
+					visualEditor.hideResizer();
+					visualBuilder.setSelectionRectangle(null);
+					visualBuilder.updateNode((Node) notifier);
+				} else {
+					commentNodeChanged = false;
+				}
 				break;
 			case INodeNotifier.CONTENT_CHANGED:
 				if (!sourceChangeFlag) {

@@ -963,9 +963,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		case Node.DOCUMENT_NODE:
 			rebuildDom((Document) sourceNode);
 			break;
-		// case Node.COMMENT_NODE:
-		// updateComment(sourceNode);
-		// break;
 		default:
 			updateElement(getNodeForUpdate(sourceNode));
 		}
