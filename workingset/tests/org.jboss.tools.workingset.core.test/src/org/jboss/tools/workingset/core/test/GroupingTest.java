@@ -6,6 +6,7 @@ import org.jboss.tools.workingset.internal.core.NameToWorkingSet;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+@SuppressWarnings("nls")
 public class GroupingTest {
 
 	static NameToWorkingSet nws = new NameToWorkingSet();

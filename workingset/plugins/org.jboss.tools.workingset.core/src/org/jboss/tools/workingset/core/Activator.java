@@ -31,7 +31,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jboss.tools.workingset.core";
+	public static final String PLUGIN_ID = "org.jboss.tools.workingset.core"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;
@@ -143,7 +143,7 @@ public class Activator extends AbstractUIPlugin {
 
 				IWorkingSet newWs = wsManager.createWorkingSet(name, projects
 						.toArray(new IProject[projects.size()]));
-				newWs.setId("org.eclipse.jdt.ui.JavaWorkingSetPage");
+				newWs.setId("org.eclipse.jdt.ui.JavaWorkingSetPage"); //$NON-NLS-1$
 				wsManager.addWorkingSet(newWs);
 			}
 		}
@@ -204,9 +204,9 @@ public class Activator extends AbstractUIPlugin {
 
 					String newValue = (String) event.getNewValue();
 					
-					String[] lines = newValue.split(";");
+					String[] lines = newValue.split(";"); //$NON-NLS-1$
 					for (int i = 0; i < lines.length; i++) {
-						String[] string = lines[i].split(",");
+						String[] string = lines[i].split(","); //$NON-NLS-1$
 						try {
 							x.add(string[0], string[1], Boolean.parseBoolean(string[2]));
 						} catch(Exception e) {
