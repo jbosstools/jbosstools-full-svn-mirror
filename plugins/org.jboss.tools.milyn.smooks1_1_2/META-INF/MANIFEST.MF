@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: org.jboss.tools.milyn.smooks1_1_2
+Bundle-SymbolicName: org.jboss.tools.smooks.runtime
 Bundle-Version: 1.1.2
 Require-Bundle: org.eclipse.core.runtime,
  org.antlr.runtime,
