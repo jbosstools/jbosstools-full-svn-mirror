@@ -58,3 +58,4 @@ Export-Package: org.eclipse.bpel.common,
  org.eclipse.bpel.names
 Bundle-Vendor: eclipse.org
 Bundle-ClassPath: bin
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

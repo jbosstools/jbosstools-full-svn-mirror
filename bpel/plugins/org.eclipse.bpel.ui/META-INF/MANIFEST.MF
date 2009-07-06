@@ -66,3 +66,4 @@ Export-Package: org.eclipse.bpel.ui,
  org.eclipse.bpel.ui.util.marker,
  org.eclipse.bpel.ui.wizards
 Bundle-ClassPath: bin
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

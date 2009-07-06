@@ -7,3 +7,4 @@ Bundle-Vendor: %BundleVendor
 Fragment-Host: org.eclipse.swt
 Require-Bundle: org.eclipse.core.runtime
 Bundle-Localization: initializer
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
