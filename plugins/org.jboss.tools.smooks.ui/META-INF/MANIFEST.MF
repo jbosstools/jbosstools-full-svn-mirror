@@ -25,7 +25,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.wst.wsdl,
  org.apache.xerces,
  javax.wsdl,
- org.jboss.tools.smooks.runtime;bundle-version="1.1.2"
+ org.jboss.tools.smooks.runtime;bundle-version="1.1.2",
+ org.eclipse.gef
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
