@@ -42,9 +42,9 @@
 	                           <year>2009</year>
 	                           <holder>JBoss, a division of Red Hat</holder>
 	                       </copyright>
-          <releaseinfo>
+          <releaseinfo><diffmk:wrapper diffmk:change="changed">
               Version: 5.1.0.trunk
-          </releaseinfo>
+          </diffmk:wrapper></releaseinfo>
 <abstract>
    <title></title>
        <para>

@@ -28,7 +28,7 @@
         <copyright>
             <year>2007</year>
             <year>2009</year>
-            <holder>JBoss, a division of Red Hat</holder>
+            <holder><diffmk:wrapper diffmk:change="changed">JBoss by Red Hat</diffmk:wrapper></holder>
 	    </copyright>
           <releaseinfo>
 Version: 2.0.1.GA
@@ -61,42 +61,42 @@ Version: 2.0.1.GA
   into <property moreinfo="none">JBoss Developer Studio</property>. Preferences can be exported from Eclipse 3.2.0
   (3.2.1 or 3.2.2) and imported in Eclipse 3.4.x by the standard Eclipse means.</para>
  
- <section diffmk:change="added">
-  <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Key Features of Projects Migration to JBoss Developer Studio</diffmk:wrapper></title>
-  <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">For a start, we propose you to look through the table of main features of migrating projects to JBoss Developer Studio:</diffmk:wrapper></para>
+ <section>
+  <title>Key Features of Projects Migration to JBoss Developer Studio</title>
+  <para>For a start, we propose you to look through the table of main features of migrating projects to JBoss Developer Studio:</para>
  
-  <table diffmk:change="added">
+  <table>
    
-   <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Key Features of Project Migration to JBoss Developer Studio</diffmk:wrapper></title>
-   <tgroup cols="3" diffmk:change="added">
+   <title>Key Features of Project Migration to JBoss Developer Studio</title>
+   <tgroup cols="3">
     
-    <colspec align="left" colnum="1" colwidth="2*" diffmk:change="added"></colspec>
-    <colspec colnum="2" colwidth="4*" diffmk:change="added"></colspec>
-    <colspec align="left" colnum="3" colwidth="2*" diffmk:change="added"></colspec>
+    <colspec align="left" colnum="1" colwidth="2*"></colspec>
+    <colspec colnum="2" colwidth="4*"></colspec>
+    <colspec align="left" colnum="3" colwidth="2*"></colspec>
     
-    <thead diffmk:change="added">
-     <row diffmk:change="added">
-      <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Feature</diffmk:wrapper></entry>
-      <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Benefit</diffmk:wrapper></entry>
-      <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Chapter</diffmk:wrapper></entry>
+    <thead>
+     <row>
+      <entry>Feature</entry>
+      <entry>Benefit</entry>
+      <entry>Chapter</entry>
      </row>
     </thead>
     
-    <tbody diffmk:change="added">
+    <tbody>
      
-     <row diffmk:change="added">
-      <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Import JSF Project Wizard</diffmk:wrapper></para></entry>
-      <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">It simplifies the process of bringing your existing JSF applications into your JBoss Developer Studio workspace as JSF projects. The import is possible with *.war files.</diffmk:wrapper></para></entry>
-      <entry diffmk:change="added">
-       <link diffmk:change="added" linkend="import_jsf"><diffmk:wrapper diffmk:change="added">Migration of JSF project</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> and </diffmk:wrapper><link diffmk:change="added" linkend="jsf_war"><diffmk:wrapper diffmk:change="added">Migration of JSF project from *.war file</diffmk:wrapper></link>
+     <row>
+      <entry><para>Import JSF Project Wizard</para></entry>
+      <entry><para>It simplifies the process of bringing your existing JSF applications into your JBoss Developer Studio workspace as JSF projects. The import is possible with *.war files.</para></entry>
+      <entry>
+       <link linkend="import_jsf">Migration of JSF project</link> and <link linkend="jsf_war">Migration of JSF project from *.war file</link>
       </entry>
      </row>
      
-     <row diffmk:change="added">
-      <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Import Struts Project Wizard</diffmk:wrapper></para></entry>
-      <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">It simplifies the process of bringing your existing Struts applications into your JBoss Developer Studio workspace as Struts projects. The import is possible with *.war files.</diffmk:wrapper></para></entry>
-      <entry diffmk:change="added">
-       <link diffmk:change="added" linkend="struts_import"><diffmk:wrapper diffmk:change="added">Migration of Struts project</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> and </diffmk:wrapper><link diffmk:change="added" linkend="struts_war"><diffmk:wrapper diffmk:change="added">Migration of Struts project from *.war file</diffmk:wrapper></link>
+     <row>
+      <entry><para>Import Struts Project Wizard</para></entry>
+      <entry><para>It simplifies the process of bringing your existing Struts applications into your JBoss Developer Studio workspace as Struts projects. The import is possible with *.war files.</para></entry>
+      <entry>
+       <link linkend="struts_import">Migration of Struts project</link> and <link linkend="struts_war">Migration of Struts project from *.war file</link>
       </entry>
      </row>
      
@@ -464,7 +464,7 @@ Version: 2.0.1.GA
 	<para>The migration process is completed</para>
     
     <para>If there's anything we didn't cover or you can't figure
-      out, please feel free to visit our <ulink url="http://www.jboss.com/index.html?module=bb&apos;op=viewforum&apos;f=258">JBoss Developer Studio Users Forum</ulink> or <ulink url="http://www.jboss.com/index.html?module=bb&apos;op=viewforum&apos;f=201">JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
+      out, please feel free to visit our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Developer Studio Users Forum</ulink> or <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
       your suggestions and comments.</para>
   </section>
    

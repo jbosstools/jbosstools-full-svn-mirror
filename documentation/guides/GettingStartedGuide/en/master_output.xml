@@ -82,87 +82,87 @@
    Tools.</para>
  </section>
 
-<section diffmk:change="added">
- <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Key Features of JBoss Developer Studio</diffmk:wrapper></title>
- <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">For a start, we propose you to look through the table of main features of JBoss Developer Studio</diffmk:wrapper></para>
+<section>
+ <title>Key Features of JBoss Developer Studio</title>
+ <para><diffmk:wrapper diffmk:change="changed">For a start, we propose you to look through the table of main features of JBoss Developer Studio:</diffmk:wrapper></para>
 
- <table diffmk:change="added">
+ <table>
   
-  <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Key Functionality of JBoss Developer Studio</diffmk:wrapper></title>
-  <tgroup cols="3" diffmk:change="added">
+  <title>Key Functionality of JBoss Developer Studio</title>
+  <tgroup cols="2">
    
-   <colspec align="left" colnum="1" colwidth="2*" diffmk:change="added"></colspec>
-   <colspec colnum="2" colwidth="4*" diffmk:change="added"></colspec>
+   <colspec align="left" colnum="1" colwidth="2*"></colspec>
+   <colspec colnum="2" colwidth="4*"></colspec>
   
    
-   <thead diffmk:change="added">
-    <row diffmk:change="added">
-     <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Feature</diffmk:wrapper></entry>
-     <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Benefit</diffmk:wrapper></entry>
+   <thead>
+    <row>
+     <entry>Feature</entry>
+     <entry>Benefit</entry>
      
     </row>
    </thead>
    
-   <tbody diffmk:change="added">
+   <tbody>
     
-    <row diffmk:change="added">
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Enterprise Application Platform</diffmk:wrapper></para></entry>
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio includes and integrates JBoss Enterprise Application Platform, the same version of the middleware platform that Red Hat supports in production for 5 years.</diffmk:wrapper></para></entry>
+    <row>
+     <entry><para>JBoss Enterprise Application Platform</para></entry>
+     <entry><para>JBoss Developer Studio includes and integrates JBoss Enterprise Application Platform, the same version of the middleware platform that Red Hat supports in production for 5 years.</para></entry>
     </row>
     
-    <row diffmk:change="added">
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">New Seam Tools</diffmk:wrapper></para></entry>
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio includes brand new tools for Seam. They provide wizards for creating new Seam projects, validation tools, expression language code completion, testing tools, and wizards for generating entity objects.</diffmk:wrapper></para></entry>
+    <row>
+     <entry><para>New Seam Tools</para></entry>
+     <entry><para>JBoss Developer Studio includes brand new tools for Seam. They provide wizards for creating new Seam projects, validation tools, expression language code completion, testing tools, and wizards for generating entity objects.</para></entry>
     </row>
     
-    <row diffmk:change="added">
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Visual Page Editor</diffmk:wrapper></para></entry>
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio includes a Visual Page Editor for combined visual and source editing of Web pages. The Visual Page Editor even renders AJAX-enabled RichFaces components.</diffmk:wrapper></para></entry>
+    <row>
+     <entry><para>Visual Page Editor</para></entry>
+     <entry><para>JBoss Developer Studio includes a Visual Page Editor for combined visual and source editing of Web pages. The Visual Page Editor even renders AJAX-enabled RichFaces components.</para></entry>
     </row>
     
-    <row diffmk:change="added">
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">AJAX Capabilities</diffmk:wrapper></para></entry>
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio includes a Technology Preview of JBoss RichFaces. RichFaces provides nearly 70 skinnable components, including calendar, tree, dropdown menu, drag-and-drop components, and more. JBoss Developer Studio’s Visual Page Editor can render RichFaces components.</diffmk:wrapper></para></entry>
+    <row>
+     <entry><para>AJAX Capabilities</para></entry>
+     <entry><para>JBoss Developer Studio includes a Technology Preview of JBoss RichFaces. RichFaces provides nearly 70 skinnable components, including calendar, tree, dropdown menu, drag-and-drop components, and more. JBoss Developer Studio’s Visual Page Editor can render RichFaces components.</para></entry>
     </row>
     
-    <row diffmk:change="added">
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Tools Palette</diffmk:wrapper></para></entry>
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The JBoss Tools Palette contains a developer’s project tag libraries and enables inserting tags into a JSP with one click. The Tools Palette supports custom and 3rd party tags.</diffmk:wrapper></para></entry>
+    <row>
+     <entry><para>JBoss Tools Palette</para></entry>
+     <entry><para>The JBoss Tools Palette contains a developer’s project tag libraries and enables inserting tags into a JSP with one click. The Tools Palette supports custom and 3rd party tags.</para></entry>
     </row>
     
-    <row diffmk:change="added">
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss jBPM Tools</diffmk:wrapper></para></entry>
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio includes jBPM tooling for defining Seam page flows.</diffmk:wrapper></para></entry>
+    <row>
+     <entry><para>JBoss jBPM Tools</para></entry>
+     <entry><para>JBoss Developer Studio includes jBPM tooling for defining Seam page flows.</para></entry>
     </row>
     
-    <row diffmk:change="added">
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Spring Tools</diffmk:wrapper></para></entry>
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio includes Spring IDE for developing Spring applications.</diffmk:wrapper></para></entry>
+    <row>
+     <entry><para>Spring Tools</para></entry>
+     <entry><para>JBoss Developer Studio includes Spring IDE for developing Spring applications.</para></entry>
     </row>
     
-    <row diffmk:change="added">
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Struts Tools</diffmk:wrapper></para></entry>
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio includes Struts tools for Struts 1.x applications.</diffmk:wrapper></para></entry>
+    <row>
+     <entry><para>Struts Tools</para></entry>
+     <entry><para>JBoss Developer Studio includes Struts tools for Struts 1.x applications.</para></entry>
     </row>
     
-    <row diffmk:change="added">
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Optimized JBoss Application Server adapter</diffmk:wrapper></para></entry>
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio’s advanced JBoss AS adapter includes features like incremental deployment for fast development and is pre-configured for the included JBoss Application server.</diffmk:wrapper></para></entry>
+    <row>
+     <entry><para>Optimized JBoss Application Server adapter</para></entry>
+     <entry><para>JBoss Developer Studio’s advanced JBoss AS adapter includes features like incremental deployment for fast development and is pre-configured for the included JBoss Application server.</para></entry>
     </row>
     
-    <row diffmk:change="added">
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Red Hat Enterprise Linux and RHN Access</diffmk:wrapper></para></entry>
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio includes access to Red Hat Enterprise Linux, Linux development tools, and Red Hat Network for development purposes.</diffmk:wrapper></para></entry>
+    <row>
+     <entry><para>Red Hat Enterprise Linux and RHN Access</para></entry>
+     <entry><para>JBoss Developer Studio includes access to Red Hat Enterprise Linux, Linux development tools, and Red Hat Network for development purposes.</para></entry>
     </row>
     
-    <row diffmk:change="added">
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Business Intelligence Report Tool (BIRT)</diffmk:wrapper></para></entry>
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Developer Studio includes Business Intelligence Report Tool, a reporting system that integrates with Java/J2EE, extracts certain information, analyzes it, and generates report summaries and charts.</diffmk:wrapper></para></entry>
+    <row>
+     <entry><para>Business Intelligence Report Tool (BIRT)</para></entry>
+     <entry><para>JBoss Developer Studio includes Business Intelligence Report Tool, a reporting system that integrates with Java/J2EE, extracts certain information, analyzes it, and generates report summaries and charts.</para></entry>
     </row>
     
-    <row diffmk:change="added">
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBossWeb Service</diffmk:wrapper></para></entry>
-     <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss WS is a web service framework developed as a part of the JBoss Application Server. It implements the JAX-WS specification that defines a programming model and run-time architecture for implementing web services in Java, targeted at the Java Platform, Enterprise Edition 5 (Java EE 5).</diffmk:wrapper></para></entry>
+    <row>
+     <entry><para>JBossWeb Service</para></entry>
+     <entry><para>JBoss WS is a web service framework developed as a part of the JBoss Application Server. It implements the JAX-WS specification that defines a programming model and run-time architecture for implementing web services in Java, targeted at the Java Platform, Enterprise Edition 5 (Java EE 5).</para></entry>
     </row>
     
     
@@ -577,7 +577,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </section>
 
   <section id="JBossToolsInstall">
-   <title>JBoss Tools Installation</title>
+   <title><diffmk:wrapper diffmk:change="changed">JBoss Tools Installation and Update</diffmk:wrapper></title>
    <para>Here, let's consider the installation of the <property moreinfo="none">JBoss Tools</property>
     modules.</para>
    <para><property moreinfo="none">JBoss Tools</property> is an umbrella project for the JBoss developed plugins
@@ -658,8 +658,32 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     </emphasis> directory and it will be readily available. It might be necessary to start Eclipse
     with eclipse -clean to make sure it starts clean and rereads the new list of plugins.</para>
 
-   <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read
-    about dependencies between standalone plug-ins.</para>
+   <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink><diffmk:wrapper diffmk:change="changed"> page to read
+   about dependencies between standalone plug-ins.</diffmk:wrapper></para>
+   
+   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">You can update Jboss Tools and install a new version with the help of "Install" wizard (Help &gt; Install New Software...)</diffmk:wrapper></para>
+   
+   <figure diffmk:change="added" float="0">
+    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Updating Jboss Tools</diffmk:wrapper></title>
+    <mediaobject diffmk:change="added">
+     <imageobject diffmk:change="added">
+      <imagedata diffmk:change="added" fileref="images/getting_started/update_wizard_1.png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+  
+   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">In "Work with" field add the path to the source to update from (e.g. http://download.jboss.org/jbosstools/updates/development), check the necessary software to install, more information about chosen software can be found in "Details" section.</diffmk:wrapper></para>
+<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Follow "Available Software Sites" link to find more site to update from</diffmk:wrapper></para>
+     
+   <figure diffmk:change="added" float="0">
+    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Available Software Sites</diffmk:wrapper></title>
+    <mediaobject diffmk:change="added">
+     <imageobject diffmk:change="added">
+      <imagedata diffmk:change="added" fileref="images/getting_started/update_wizard_2.png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure>
+     
   </section>
 
  </section>
@@ -773,7 +797,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <section id="Support">
   <?dbhtml filename="Support.html"?>
   <title>Support</title>
-  <para>If you have comments or questions, you can discuss them at our <ulink url="http://www.jboss.com/index.html?module=bb&apos;op=viewforum&apos;f=258">JBoss
+  <para>If you have comments or questions, you can discuss them at our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
     Developer Studio Forum</ulink>.</para>
   <para>When writing to the forum for questions, please include the following information:</para>
   <orderedlist continuation="restarts" inheritnum="ignore">
@@ -797,7 +821,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <title>Other relevant resources on the topic</title>
   <para>JBDS on JBoss: <ulink url="http://labs.jboss.com/rhdevstudio/">JBoss Developer
    Studio</ulink></para>
-  <para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&apos;op=viewforum&apos;f=258">JBoss
+  <para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
    Forum</ulink></para>
   <para>Subscription: <ulink url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">JBDS
    Subscription</ulink></para>
@@ -2437,16 +2461,16 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
 					<property moreinfo="none">JBoss Server</property>. Any changes made in the application in
 					exploded format will trigger a redeployment on the server.</para>
 			
-				<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">You can also use the "Finger touch" button for a quick restart of the project without restarting the server:</diffmk:wrapper></para>
-				<figure diffmk:change="added" float="0">
-					<title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Finger Touch button</diffmk:wrapper></title>
-					<mediaobject diffmk:change="added">
-						<imageobject diffmk:change="added">
-							<imagedata diffmk:change="added" fileref="images/jsp_application/jsp_application_19_finger_touch.png"></imagedata>
+				<para>You can also use the "Finger touch" button for a quick restart of the project without restarting the server:</para>
+				<figure float="0">
+					<title>Finger Touch button</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/jsp_application/jsp_application_19_finger_touch.png"></imagedata>
 						</imageobject>
 					</mediaobject>
 				</figure>	        
-				<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The "Finger" touches descriptors dependent on project (i.e. web.xml for WAR, application.xml for EAR,  jboss-esb.xml in ESB projects).</diffmk:wrapper></para>
+				<para>The "Finger" touches descriptors dependent on project (i.e. web.xml for WAR, application.xml for EAR,  jboss-esb.xml in ESB projects).</para>
 				
 			</section>
 			
@@ -3797,25 +3821,25 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
                 <para>Open the JBDS perspective. If you see the Help view open, close it and restart
                     JBDS</para>
             </listitem>
-            <listitem><para diffmk:change="added"><diffmk:wrapper diffmk:change="added"> If it doesn't help and you use Fedora Core Linux and Eclipse Version: 3.4.1,the issue can be produced because libswt-xulrunner-gtk-3449.so file doesn't present
+            <listitem><para> If it doesn't help and you use Fedora Core Linux and Eclipse Version: 3.4.1,the issue can be produced because libswt-xulrunner-gtk-3449.so file doesn't present
                 in eclipse-swt-3.4.1-5.fc10.x86_64.rpm/eclipse/plugins/org.eclipse.swt.gtk.linux.x86_64_3.4.1.v3449c.jar.To add this file to eclipse you should: 
-            </diffmk:wrapper></para>
-            <itemizedlist diffmk:change="added">
-                <listitem diffmk:change="added">
-                    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Decompress eclipse/plugins/org.eclipse.swt.gtk.linux.x86_3.4.1.v3449c.jar form eclipse-SDK-3.4.1-linux-gtk-x86_64.tar.gz</diffmk:wrapper></para>
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>Decompress eclipse/plugins/org.eclipse.swt.gtk.linux.x86_3.4.1.v3449c.jar form eclipse-SDK-3.4.1-linux-gtk-x86_64.tar.gz</para>
                 </listitem>  
-                <listitem diffmk:change="added">
-                    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Copy </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">libswt-xulrunner-gtk-3449.so</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> file to your Fedora Eclipse location.</diffmk:wrapper></para>
+                <listitem>
+                    <para>Copy <property moreinfo="none">libswt-xulrunner-gtk-3449.so</property> file to your Fedora Eclipse location.</para>
                 </listitem>  
                 
-                <listitem diffmk:change="added">
-                    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Open the file eclipse.ini,which can be found in your Fedora Eclipse location and add the following line: </diffmk:wrapper></para>
-                    <programlisting diffmk:change="added" format="linespecific" role="JAVA"><diffmk:wrapper diffmk:change="added"><![CDATA[-Dswt.library.path=/usr/lib/eclipse 
-]]></diffmk:wrapper></programlisting><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">,where </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">/usr/lib/eclipse</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> is the path to your eclipse folder.</diffmk:wrapper></para>
+                <listitem>
+                    <para>Open the file eclipse.ini,which can be found in your Fedora Eclipse location and add the following line: </para>
+                    <programlisting format="linespecific" role="JAVA"><![CDATA[-Dswt.library.path=/usr/lib/eclipse 
+]]></programlisting><para>,where <code>/usr/lib/eclipse</code> is the path to your eclipse folder.</para>
                 </listitem>     
             </itemizedlist>
             </listitem>
-            <listitem diffmk:change="added">
+            <listitem>
                 <para>If none of these work, do the following:</para>
                 <itemizedlist>
                     <listitem>
@@ -4097,16 +4121,16 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   </listitem>
   
   <listitem>
-    <para diffmk:change="added">
-      <emphasis diffmk:change="added" role="bold"><diffmk:wrapper diffmk:change="added">Eclipse Guvnor Tools Reference Guide</diffmk:wrapper></emphasis>
-      <ulink diffmk:change="added" url="../../guvnor_tools_ref_guide/html_single/index.html"><diffmk:wrapper diffmk:change="added">(html)</diffmk:wrapper></ulink>
+    <para>
+      <emphasis role="bold">Eclipse Guvnor Tools Reference Guide</emphasis>
+      <ulink url="../../guvnor_tools_ref_guide/html_single/index.html">(html)</ulink>
     </para>
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The purpose of this guide is to describe briefly the functionality present in the Eclipse Guvnor Tools (EGT) for Drools 5.</diffmk:wrapper></para>
+    <para>The purpose of this guide is to describe briefly the functionality present in the Eclipse Guvnor Tools (EGT) for Drools 5.</para>
   </listitem>
   
   
   
-  <listitem diffmk:change="added">
+  <listitem>
   <para>
     <emphasis role="bold">JSF Tools Tutorial</emphasis>
     <ulink url="../../jsf_tools_tutorial/html_single/index.html">(html)</ulink>
@@ -4156,7 +4180,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
     </listitem>
 </itemizedlist>
 
-<para>If there's anything we didn't cover in this guide, please feel free to visit our <ulink url="http://www.jboss.com/index.html?module=bb&apos;op=viewforum&apos;f=258">JBoss Developer Studio Users Forum</ulink> or <ulink url="http://www.jboss.com/index.html?module=bb&apos;op=viewforum&apos;f=201">JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
+<para>If there's anything we didn't cover in this guide, please feel free to visit our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Developer Studio Users Forum</ulink> or <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
     your suggestions and comments.</para>
 </chapter>
  

@@ -13,13 +13,13 @@
     <bookinfo>
         <title>Birt Plugin Integration Reference Guide</title>
 
-        <corpauthor diffmk:change="added">
-            <inlinemediaobject diffmk:change="added">
-                <imageobject diffmk:change="added" role="fo">
-                    <imagedata diffmk:change="added" fileref="images/jbosstools_logo.png" format="PNG"></imagedata>
+        <corpauthor>
+            <inlinemediaobject>
+                <imageobject role="fo">
+                    <imagedata fileref="images/jbosstools_logo.png" format="PNG"></imagedata>
                 </imageobject>	
-                <imageobject diffmk:change="added" role="html">
-                    <imagedata diffmk:change="added"></imagedata>
+                <imageobject role="html">
+                    <imagedata></imagedata>
                 </imageobject>	
             </inlinemediaobject>           
         </corpauthor>
@@ -34,7 +34,7 @@
             <holder>JBoss, a division of Red Hat</holder>
         </copyright>
         <releaseinfo><diffmk:wrapper diffmk:change="changed">
-            Version: 1.1.0.M1
+            Version: 1.1.0.M2
         </diffmk:wrapper></releaseinfo>
   
 
@@ -103,42 +103,42 @@
             Eclipse BIRT you'll find out in the next sections.</para>
     </section>
 
-<section diffmk:change="added" id="BIRT_key_features">
-    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Key Features of BIRT</diffmk:wrapper></title>
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">For a start, we propose you to look through the table of main features of BIRT plugin:</diffmk:wrapper></para>
+<section id="BIRT_key_features">
+    <title>Key Features of BIRT</title>
+    <para>For a start, we propose you to look through the table of main features of BIRT plugin:</para>
 
-    <table diffmk:change="added">
+    <table>
         
-        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Key Functionality for BIRT Plugin</diffmk:wrapper></title>
-        <tgroup cols="3" diffmk:change="added">
+        <title>Key Functionality for BIRT Plugin</title>
+        <tgroup cols="3">
             
-            <colspec align="left" colnum="1" colwidth="2*" diffmk:change="added"></colspec>
-            <colspec colnum="2" colwidth="4*" diffmk:change="added"></colspec>
-            <colspec align="left" colnum="3" colwidth="2*" diffmk:change="added"></colspec>
+            <colspec align="left" colnum="1" colwidth="2*"></colspec>
+            <colspec colnum="2" colwidth="4*"></colspec>
+            <colspec align="left" colnum="3" colwidth="2*"></colspec>
             
-            <thead diffmk:change="added">
-                <row diffmk:change="added">
-                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Feature</diffmk:wrapper></entry>
-                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Benefit</diffmk:wrapper></entry>
-                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Chapter</diffmk:wrapper></entry>
+            <thead>
+                <row>
+                    <entry>Feature</entry>
+                    <entry>Benefit</entry>
+                    <entry>Chapter</entry>
                 </row>
             </thead>
             
-            <tbody diffmk:change="added">
+            <tbody>
                 
-                <row diffmk:change="added">
-                    <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Integration with Seam</diffmk:wrapper></para></entry>
-                    <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">You can add a BIRT report to an .xhtml file or embed it in some Seam .xhtml page.</diffmk:wrapper></para></entry>
-                    <entry diffmk:change="added">
-                        <link diffmk:change="added" linkend="integration"><diffmk:wrapper diffmk:change="added">integration with Seam</diffmk:wrapper></link>
+                <row>
+                    <entry><para>Integration with Seam</para></entry>
+                    <entry><para>You can add a BIRT report to an .xhtml file or embed it in some Seam .xhtml page.</para></entry>
+                    <entry>
+                        <link linkend="integration">integration with Seam</link>
                     </entry>
                 </row>
                 
-                <row diffmk:change="added">
-                    <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Hibernate ODA Data Source</diffmk:wrapper></para></entry>
-                    <entry diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Hibernate ODA Data Source for the JBoss BIRT Integration feature is completely integrated with Hibernate Tools.</diffmk:wrapper></para></entry>
-                    <entry diffmk:change="added">
-                        <link diffmk:change="added" linkend="hibernate_datasource"><diffmk:wrapper diffmk:change="added">Hibernate ODA data source</diffmk:wrapper></link>
+                <row>
+                    <entry><para>Hibernate ODA Data Source</para></entry>
+                    <entry><para>Hibernate ODA Data Source for the JBoss BIRT Integration feature is completely integrated with Hibernate Tools.</para></entry>
+                    <entry>
+                        <link linkend="hibernate_datasource">Hibernate ODA data source</link>
                     </entry>
                 </row>
                 
@@ -235,7 +235,7 @@
 
     <tip>
         <title>Tip:</title>
-        <para>We used<ulink url="http://sourceforge.net/project/showfiles.php?group_id=22866&apos;package_id=163777">JBoss Seam 2.0.1 GA</ulink> and <ulink url="http://sourceforge.net/project/showfiles.php?group_id=22866&apos;package_id=163777">JBoss Application Server 4.2.2 GA</ulink> in examples of this guide.</para>
+        <para>We used<ulink url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777">JBoss Seam 2.0.1 GA</ulink> and <ulink url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777">JBoss Application Server 4.2.2 GA</ulink> in examples of this guide.</para>
     </tip>
 
     <section id="creatin_project_with_birt">
@@ -895,7 +895,7 @@
     </note>
     <para>In conclusion, the main goal of this document is to get you know with a full featureset
         that <property moreinfo="none">JBoss BIRT Tools</property> provide. Thus if you have some questions,
-        comments or suggestions on the topic, please feel free to ask in the <ulink url="http://www.jboss.org/index.html?module=bb&apos;op=viewforum&apos;f=201">JBoss
+        comments or suggestions on the topic, please feel free to ask in the <ulink url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss
             Tools Forum</ulink>. You can also influence on how you want to see JBoss Tools docs in
         future leaving your vote on our page <ulink url="http://www.jboss.org/community/docs/DOC-10795">here</ulink>.</para>
 
