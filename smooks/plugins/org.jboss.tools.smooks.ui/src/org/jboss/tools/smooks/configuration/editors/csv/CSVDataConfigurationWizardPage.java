@@ -3,14 +3,20 @@
  */
 package org.jboss.tools.smooks.configuration.editors.csv;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableColorProvider;
+import org.eclipse.jface.viewers.ITableFontProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -22,6 +28,9 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -30,8 +39,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
-import org.jboss.tools.smooks.configuration.editors.json.JsonDataConfiguraitonWizardPage.KeyValueModel;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.csv.CsvReader;
 import org.jboss.tools.smooks.model.csv.impl.CsvReaderImpl;
@@ -57,13 +66,15 @@ public class CSVDataConfigurationWizardPage extends WizardPage {
 	private Button removeButton;
 	private Button createCSVReaderButton;
 
+	private String filePath = null;
+
 	private boolean useAvailabelReader = false;
 
 	private boolean hasReader = false;
 
 	private boolean createCSVReader = true;
 
-	private String speartor;
+	private String separator;
 
 	private String skipLines;
 
@@ -178,15 +189,27 @@ public class CSVDataConfigurationWizardPage extends WizardPage {
 		fieldsComposite.setLayout(kgl);
 
 		gd = new GridData(GridData.FILL_BOTH);
+		gd.heightHint = 200;
 
-		fieldsViewer = new TableViewer(fieldsComposite, SWT.BORDER | SWT.MULTI);
+		fieldsViewer = new TableViewer(fieldsComposite, SWT.BORDER | SWT.MULTI | SWT.FULL_SELECTION);
 		fieldsViewer.getControl().setLayoutData(gd);
-//		fieldsViewer.getTable().setHeaderVisible(true);
+		// fieldsViewer.getTable().setHeaderVisible(true);
 		fieldsViewer.getTable().setLinesVisible(true);
 		fieldsViewer.setContentProvider(new FieldsContentProvider());
 		fieldsViewer.setLabelProvider(new FieldsLabelProvider());
 
 		CellEditor fieldCellEditor = new TextCellEditor(fieldsViewer.getTable(), SWT.BORDER);
+
+		TableColumn fieldColumn = new TableColumn(fieldsViewer.getTable(), SWT.NONE);
+		fieldColumn.setText("Field");
+		fieldColumn.setWidth(150);
+
+		TableColumn exampleValueColumn = new TableColumn(fieldsViewer.getTable(), SWT.NONE);
+		exampleValueColumn.setText("Example Value");
+		exampleValueColumn.setWidth(150);
+
+		fieldsViewer.getTable().setHeaderVisible(true);
+		fieldsViewer.getTable().setLinesVisible(true);
 
 		fieldsViewer.setCellEditors(new CellEditor[] { fieldCellEditor });
 
@@ -207,6 +230,7 @@ public class CSVDataConfigurationWizardPage extends WizardPage {
 					}
 					fieldsViewer.refresh(el);
 				}
+				changePageStatus();
 			}
 
 			public Object getValue(Object element, String property) {
@@ -243,7 +267,9 @@ public class CSVDataConfigurationWizardPage extends WizardPage {
 
 		Composite buttonComposite = new Composite(fieldsComposite, SWT.NONE);
 		gd = new GridData(GridData.FILL_VERTICAL);
+		gd.widthHint = 0;
 		buttonComposite.setLayoutData(gd);
+		buttonComposite.setVisible(false);
 
 		GridLayout bgl = new GridLayout();
 		buttonComposite.setLayout(bgl);
@@ -272,10 +298,10 @@ public class CSVDataConfigurationWizardPage extends WizardPage {
 			createCSVReaderButton.setEnabled(false);
 			setConfigCompositeStates(false);
 		}
-		
+
 		changePageStatus();
 		hookControls();
-		
+
 		this.setControl(mainComposite);
 	}
 
@@ -313,7 +339,8 @@ public class CSVDataConfigurationWizardPage extends WizardPage {
 		this.separatorText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
-				speartor = separatorText.getText();
+				separator = separatorText.getText();
+				resetViewerContent();
 				changePageStatus();
 			}
 		});
@@ -341,6 +368,33 @@ public class CSVDataConfigurationWizardPage extends WizardPage {
 			}
 		});
 
+		this.createCSVReaderButton.addSelectionListener(new SelectionListener() {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.swt.events.SelectionListener#widgetDefaultSelected
+			 * (org.eclipse.swt.events.SelectionEvent)
+			 */
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse
+			 * .swt.events.SelectionEvent)
+			 */
+			public void widgetSelected(SelectionEvent e) {
+				createCSVReader = createCSVReaderButton.getSelection();
+			}
+
+		});
+
 		this.addButton.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
@@ -358,7 +412,7 @@ public class CSVDataConfigurationWizardPage extends WizardPage {
 		this.removeButton.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection s = (IStructuredSelection)fieldsViewer.getSelection();
+				IStructuredSelection s = (IStructuredSelection) fieldsViewer.getSelection();
 				fieldsList.removeAll(s.toList());
 				fieldsViewer.refresh();
 			}
@@ -369,31 +423,82 @@ public class CSVDataConfigurationWizardPage extends WizardPage {
 		});
 	}
 
+	private void resetViewerContent() {
+		try {
+			fieldsList.clear();
+			if (filePath != null && separator != null && separator.length() == 1) {
+				
+				filePath = SmooksUIUtils.parseFilePath(filePath);
+				
+				FileReader fr = new FileReader(filePath);
+				BufferedReader br = new BufferedReader(fr);
+
+				String content = br.readLine();
+				if (content != null) {
+					String[] exampleValues = content.split(separator);
+					if (exampleValues != null) {
+						List<FieldString> list = new ArrayList<FieldString>();
+						for (int i = 0; i < exampleValues.length; i++) {
+							String s = exampleValues[i];
+							if (s != null) {
+								if (s.length() == 0)
+									s = "<Null>";
+								FieldString fs = new FieldString("");
+								fs.setExampleValue(s);
+								list.add(fs);
+							}
+						}
+						if(!list.isEmpty()){
+							fieldsList.addAll(list);
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			this.setErrorMessage("Occurs an error when parse CSV file");
+		}
+		fieldsViewer.refresh();
+	}
+
 	private void changePageStatus() {
 		if (useAvailabelReader) {
+			setErrorMessage(null);
+			setPageComplete(true);
 			return;
 		}
 		String error = null;
 
-		if (speartor == null || speartor.length() == 0) {
+		if (separator == null || separator.length() == 0) {
 			error = "Sperator can't be null";
 		}
-
-		if (quoteChar == null || quoteChar.length() == 0) {
-			error = "Quote char can't be null";
+		if (separator != null && separator.length() > 1) {
+			error = "Sperator needs only one char";
 		}
-		
+		if (quoteChar == null || quoteChar.length() == 0) {
+			error = "QuoteChar can't be null";
+		}
+		if (quoteChar != null && quoteChar.length() > 1) {
+			error = "QuoteChar needs only one char";
+		}
+
 		if (encoding == null || encoding.length() == 0) {
 			error = "Encoding can't be null";
 		}
 
 		if (skipLines == null || skipLines.length() == 0) {
-			error = "Skip lines can't be null";
+//			error = "Skip lines can't be null";
 		} else {
 			try {
 				Integer.parseInt(skipLines);
 			} catch (Throwable t) {
 				error = "Skip lines text must be the number";
+			}
+		}
+		
+		for (Iterator<?> iterator = fieldsList.iterator(); iterator.hasNext();) {
+			FieldString field = (FieldString) iterator.next();
+			if(field.getText() == null || field.getText().length() == 0 ){
+				error = "Fields can't be null";
 			}
 		}
 
@@ -423,8 +528,115 @@ public class CSVDataConfigurationWizardPage extends WizardPage {
 		}
 	}
 
+	/**
+	 * @return the separator
+	 */
+	public String getSeparator() {
+		return separator;
+	}
+
+	/**
+	 * @param separator
+	 *            the separator to set
+	 */
+	public void setSeparator(String separator) {
+		this.separator = separator;
+	}
+
+	/**
+	 * @return the fieldsList
+	 */
+	public List<FieldString> getFieldsList() {
+		return fieldsList;
+	}
+
+	/**
+	 * @param fieldsList
+	 *            the fieldsList to set
+	 */
+	public void setFieldsList(List<FieldString> fieldsList) {
+		this.fieldsList = fieldsList;
+	}
+
+	/**
+	 * @return the useAvailabelReader
+	 */
+	public boolean isUseAvailabelReader() {
+		return useAvailabelReader;
+	}
+
+	/**
+	 * @param useAvailabelReader
+	 *            the useAvailabelReader to set
+	 */
+	public void setUseAvailabelReader(boolean useAvailabelReader) {
+		this.useAvailabelReader = useAvailabelReader;
+	}
+
+	/**
+	 * @return the createCSVReader
+	 */
+	public boolean isCreateCSVReader() {
+		return createCSVReader;
+	}
+
+	/**
+	 * @param createCSVReader
+	 *            the createCSVReader to set
+	 */
+	public void setCreateCSVReader(boolean createCSVReader) {
+		this.createCSVReader = createCSVReader;
+	}
+
+	/**
+	 * @return the skipLines
+	 */
+	public String getSkipLines() {
+		return skipLines;
+	}
+
+	/**
+	 * @param skipLines
+	 *            the skipLines to set
+	 */
+	public void setSkipLines(String skipLines) {
+		this.skipLines = skipLines;
+	}
+
+	/**
+	 * @return the quoteChar
+	 */
+	public String getQuoteChar() {
+		return quoteChar;
+	}
+
+	/**
+	 * @param quoteChar
+	 *            the quoteChar to set
+	 */
+	public void setQuoteChar(String quoteChar) {
+		this.quoteChar = quoteChar;
+	}
+
+	/**
+	 * @return the encoding
+	 */
+	public String getEncoding() {
+		return encoding;
+	}
+
+	/**
+	 * @param encoding
+	 *            the encoding to set
+	 */
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+
 	private void initValue() {
 		useAvailabelReader = false;
+		
+		filePath = null;
 
 		hasReader = false;
 
@@ -437,7 +649,7 @@ public class CSVDataConfigurationWizardPage extends WizardPage {
 
 		encoding = "UTF-8";
 
-		speartor = null;
+		separator = null;
 
 		skipLines = null;
 
@@ -455,12 +667,44 @@ public class CSVDataConfigurationWizardPage extends WizardPage {
 		return smooksResourceList;
 	}
 
+	/**
+	 * @return the filePath
+	 */
+	public String getFilePath() {
+		return filePath;
+	}
+
+	/**
+	 * @param filePath
+	 *            the filePath to set
+	 */
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
 	public void setSmooksResourceList(SmooksResourceListType smooksResourceList) {
 		this.smooksResourceList = smooksResourceList;
 	}
 
-	private class FieldString {
+	public class FieldString {
 		private String text = null;
+
+		private String exampleValue;
+
+		/**
+		 * @return the exampleValue
+		 */
+		public String getExampleValue() {
+			return exampleValue;
+		}
+
+		/**
+		 * @param exampleValue
+		 *            the exampleValue to set
+		 */
+		public void setExampleValue(String exampleValue) {
+			this.exampleValue = exampleValue;
+		}
 
 		public FieldString(String text) {
 			this.setText(text);
@@ -475,17 +719,61 @@ public class CSVDataConfigurationWizardPage extends WizardPage {
 		}
 	}
 
-	private class FieldsLabelProvider extends LabelProvider implements ITableLabelProvider {
+	private class FieldsLabelProvider extends LabelProvider implements ITableLabelProvider, ITableFontProvider,
+			ITableColorProvider {
+
+		private Font font = null;
+
+		public void dispose() {
+			if (font != null) {
+				font.dispose();
+			}
+			super.dispose();
+		}
+
+		public FieldsLabelProvider() {
+			FontData fd = new FontData();
+			fd.setName("Arial");
+			fd.setStyle(SWT.BOLD);
+			font = new Font(null, fd);
+		}
 
 		public Image getColumnImage(Object element, int columnIndex) {
 			return null;
 		}
 
 		public String getColumnText(Object element, int columnIndex) {
-			if(element instanceof FieldString){
-				return ((FieldString)element).getText();
+			if (element instanceof FieldString) {
+				switch(columnIndex){
+				case 0 :
+					return ((FieldString) element).getText();
+				case 1:
+					return ((FieldString) element).getExampleValue();
+				}
+				return ((FieldString) element).getText();
 			}
 			return getText(element);
+		}
+
+		public Font getFont(Object element, int columnIndex) {
+			if (columnIndex == 0) {
+				return font;
+			}
+			return null;
+		}
+
+		public Color getBackground(Object element, int columnIndex) {
+			if (columnIndex == 1) {
+				return ColorConstants.lightGray;
+			}
+			return null;
+		}
+
+		public Color getForeground(Object element, int columnIndex) {
+			if (columnIndex == 1) {
+				return org.eclipse.draw2d.ColorConstants.darkGray;
+			}
+			return null;
 		}
 
 	}

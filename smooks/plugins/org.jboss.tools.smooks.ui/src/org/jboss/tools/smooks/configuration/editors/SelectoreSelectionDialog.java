@@ -43,6 +43,7 @@ import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.editors.csv.CSVDataParser;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModelFactory;
 import org.jboss.tools.smooks.configuration.editors.uitls.JsonInputDataParser;
@@ -253,6 +254,17 @@ public class SelectoreSelectionDialog extends Dialog {
 					String path = SmooksModelUtils.getInputPath(inputType);
 					if (type != null && path != null) {
 						path = path.trim();
+						if (SmooksModelUtils.INPUT_TYPE_CSV.equals(type)) {
+							CSVDataParser parser = new CSVDataParser();
+							try {
+								TagList tl = parser.parseCSV(path, inputType, smooksResourceListType);
+								if (tl != null) {
+									list.addAll(((TagList) tl).getChildren());
+								}
+							} catch (Throwable t) {
+								t.printStackTrace();
+							}
+						}
 						if (SmooksModelUtils.INPUT_TYPE_JSON.equals(type)) {
 							try {
 								JsonInputDataParser parser = new JsonInputDataParser();
@@ -265,7 +277,7 @@ public class SelectoreSelectionDialog extends Dialog {
 								}
 							} catch (Throwable tt) {
 								// ignore
-//								SmooksConfigurationActivator.getDefault().log(tt);
+								// SmooksConfigurationActivator.getDefault().log(tt);
 							}
 						}
 						if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(type)) {
