@@ -12,7 +12,10 @@ package org.jboss.tools.vpe.editor.util;
 
 import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -46,25 +49,30 @@ public class VisualDomUtil {
     public static String A4J_URI = "http://richfaces.org/a4j"; //$NON-NLS-1$
     public static String FACELETS_URI = "http://java.sun.com/jsf/facelets"; //$NON-NLS-1$
 
-	private static final String ACCESSIBILITY_SERVICE_CONTRACT_ID = "@mozilla.org/accessibilityService;1";
+	private static final String ACCESSIBILITY_SERVICE_CONTRACT_ID = "@mozilla.org/accessibilityService;1"; //$NON-NLS-1$
 	private static Reference<nsIAccessibilityService> accessibilityServiceCache = null;
+	
+	private static Set<String> escapedTags;
+	
+	static {
+		escapedTags = new HashSet<String>();
+		escapedTags.add("f:facet"); //$NON-NLS-1$
+		escapedTags.add("f:selectItem"); //$NON-NLS-1$
+		escapedTags.add("f:selectItems"); //$NON-NLS-1$
+	}
 
 	static public nsIDOMNode getAncestorNode(nsIDOMNode visualNode, String tagName){
 		if (tagName == null) return null;
 		nsIDOMNode element = visualNode;
-		
 		while (true){
 			if (tagName.equalsIgnoreCase(element.getNodeName())) {
 				return element;
 			}
-			
 			element = element.getParentNode();
-			
 			if (element == null) {
 				break;
 			}
 		}
-		
 		return null;
 	}
 
@@ -179,8 +187,6 @@ public class VisualDomUtil {
 	/**
 	 * Copies all attributes from source node to visual node.
 	 * 
-	 * @param visualNode      *
-	 * param sourceNode the source node
 	 * @param sourceNode the source node
 	 * @param visualElement the visual element
 	 */
@@ -205,12 +211,10 @@ public class VisualDomUtil {
 	}
 
 	/**
-	 * Copies attributes from source node to visual node.
+	 * Copies all attributes from source node to visual node.
 	 * 
 	 * @param sourceElement the source element
-	 * @param attributes - list names of attributes which will copy
-	 * @param visualNode      *
-	 * param sourceNode * @param visualElement the visual element
+	 * @param attributes list names of attributes which will copy
 	 * @param visualElement the visual element
 	 */
 	public static void copyAttributes(Element sourceElement, List<String> attributes, nsIDOMElement visualElement) {
@@ -281,15 +285,31 @@ public class VisualDomUtil {
 	 * <P>
 	 * It can be used to wrap visual HTML elements and text nodes without
 	 * changing of their view in VPE.
-	 * 
+	 * <P>
+	 * Tag <code>span</code> is used as a default container.
+	 *   
 	 * @param visualDocument the visual document. It is used to create the container.
-	 * @return created borderless container   
-	 * 
+	 * @return created borderless container
 	 * @author yradtsevich
+	 * @see #createBorderlessContainer(nsIDOMDocument, String)
 	 */
 	public static nsIDOMElement createBorderlessContainer(
 			nsIDOMDocument visualDocument) {
-		nsIDOMElement element = visualDocument.createElement(HTML.TAG_SPAN);
+		return createBorderlessContainer(visualDocument, HTML.TAG_SPAN);
+	}
+	
+	/**
+	 * Creates a HTML tag that is used as a borderless container 
+	 * for other elements. 
+	 * 
+	 * @param visualDocument the visual document.
+	 * @param containerName the name of the tag, that will be used as a container.
+	 * 
+	 * @return created borderless container
+	 */
+	public static nsIDOMElement createBorderlessContainer(
+			nsIDOMDocument visualDocument, String containerName) {
+		nsIDOMElement element = visualDocument.createElement(containerName);
 	    element.setAttribute(HTML.ATTR_CLASS, HTML.CLASS_VPE_TEXT);
 		return element;
 	}
@@ -316,5 +336,53 @@ public class VisualDomUtil {
 		}
 
 		creationData.addChildrenInfo(childrenInfo);
+	}
+
+	/**
+	 * Creates visual tag with additional text container
+	 * 
+	 * @param sourceElement
+	 *            the source element
+	 * @param templateContainer
+	 *            visual tag that contains template element
+	 * @param borderlessContainerName
+	 *            the name of the borderless container
+	 * @param visualDocument
+	 *            the visual document
+	 * @return created {@code VpeCreationData} based on specified container name
+	 *         or template container.
+	 */
+	public static VpeCreationData createTemplateWithTextContainer(
+			Element sourceElement, nsIDOMElement templateContainer,
+			String borderlessContainerName, nsIDOMDocument visualDocument) {
+		List<Node> children = new ArrayList<Node>();
+		VpeCreationData creationData = null;
+        NodeList nodeList = sourceElement.getChildNodes();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node child = nodeList.item(i);
+            /*
+             * Do not display escaped tags.
+             * These tags are correct and should be processed 
+             * by templates themselves. 
+             */
+            if (!escapedTags.contains(child.getNodeName()) ) {
+                children.add(child);
+            }
+        }
+		if (children != null && children.size() > 0) {
+	        nsIDOMElement topContainer = createBorderlessContainer(visualDocument, borderlessContainerName);
+	        nsIDOMElement textContainer = createBorderlessContainer(visualDocument, borderlessContainerName);
+			topContainer.appendChild(textContainer);
+			topContainer.appendChild(templateContainer);
+			creationData = new VpeCreationData(topContainer);
+			VpeChildrenInfo textInfo = new VpeChildrenInfo(textContainer);
+			creationData.addChildrenInfo(textInfo);
+			for (Node child : children) {
+				textInfo.addSourceChild(child);
+			}
+		} else {
+			creationData = new VpeCreationData(templateContainer);
+		}
+		return creationData;
 	}
 }
