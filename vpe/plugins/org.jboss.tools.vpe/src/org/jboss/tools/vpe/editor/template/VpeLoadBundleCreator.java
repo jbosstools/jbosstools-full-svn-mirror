@@ -24,8 +24,8 @@ import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 
 public class VpeLoadBundleCreator extends VpeAbstractCreator {
-	private static final String ATTR_BASENAME = "basename";
-	private static final String ATTR_VAR = "var";
+	private static final String ATTR_BASENAME = "basename"; //$NON-NLS-1$
+	private static final String ATTR_VAR = "var"; //$NON-NLS-1$
 
 	VpeLoadBundleCreator(Element bundleElement, VpeDependencyMap dependencyMap) {
 		build(bundleElement, dependencyMap);
@@ -40,10 +40,18 @@ public class VpeLoadBundleCreator extends VpeAbstractCreator {
 		setBundle(pageContext, (Element)sourceNode);
 		return null;
 	}
-
+	
+	
 	public void removeElement(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
-		BundleMap bundle = pageContext.getBundle();
-		bundle.removeBundle(sourceElement.hashCode());
+		/*
+		 * Was commented to fix https://jira.jboss.org/jira/browse/JBIDE-4552
+		 * Because after text formatting on Ctrl+Shift+F bundle gets unnecessary deleted
+		 * from bundle map, that caused message displaying error.
+		 * All necessary bundle refreshing job is done by VpeController, 
+		 * and there is no need to perform any additional work on removing a bundle.
+		 */
+//		BundleMap bundle = pageContext.getBundle();
+//		bundle.removeBundle(sourceElement.hashCode());
 	}
 
 	public void setAttribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap, String name, String value) {
