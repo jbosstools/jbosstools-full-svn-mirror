@@ -205,18 +205,6 @@ public class VpePageContext implements IVisualContext {
 		return editPart;
 	}
 
-	public void openIncludeFile(String file) {
-		IEditorInput input = editPart.getEditorInput();
-		IWorkbenchPage workbenchPage = VpePlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		try{
-		    IFile f = FileUtil.getFile(input, file);
-		    if (f != null) {
-				IDE.openEditor(workbenchPage, f, true);
-		    }
-		}catch(PartInitException ex){
-			VpePlugin.reportProblem(ex);
-		}
-	}
 
 	public List<TaglibData> getIncludeTaglibs() {
 		if (getEditPart() == null) {
@@ -237,32 +225,6 @@ public class VpePageContext implements IVisualContext {
 			taglibData.add(new TaglibData(0,resourceReference.getLocation(), resourceReference.getProperties()));
 		}
 	    return taglibData;
-	}
-
-	public ResourceReference[] getIncludeCss() {
-		IEditorInput input = getEditPart().getEditorInput();
-		IFile file = null;
-		if (input instanceof IFileEditorInput) {
-	        file = ((IFileEditorInput)input).getFile();
-	    }
-		ResourceReference[] resourceReferences = new ResourceReference[0];
-		if (file != null) {
-		    resourceReferences = CSSReferenceList.getInstance().getAllResources(file);
-		}
-		return resourceReferences;
-	}
-
-	public void installIncludeElements() {
-//		ResourceReference[] list = getIncludeTaglibs();
-//		for (int i = 0; i < list.length; i++) {
-//			ResourceReference reference = list[i];
-////			setTaglib(i, reference.getLocation(), reference.getProperties(), false);
-//		}
-
-		ResourceReference[] list = getIncludeCss();
-		for (int i = 0; i < list.length; i++) {
-			visualBuilder.addLinkNodeToHead(list[i].getLocation(), "yes", false);
-		}
 	}
 
 	public ResourceReference getRuntimeRelativeFolder(IFile file) {
@@ -307,16 +269,6 @@ public class VpePageContext implements IVisualContext {
 	public List<TaglibData> getTagLibs(Node sourceNode) {
 		
 		return XmlUtil.getTaglibsForNode(sourceNode, this);
-	}
-
-	public void removeTaglibListener(VpeTaglibListener listener) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setReferenceNode(Node node) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	/**
