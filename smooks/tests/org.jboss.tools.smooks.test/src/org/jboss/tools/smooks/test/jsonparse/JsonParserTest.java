@@ -55,7 +55,9 @@ public class JsonParserTest extends BaseTestCase {
 				reader = (JsonReader)object;
 			}
 		}
+		try{
 		IXMLStructuredObject model = parser.parseJsonFile(JsonParserTest.class.getResourceAsStream("input-message.jsn"), reader);
+		
 		List<IXMLStructuredObject> children = model.getChildren();
 		assertEquals(children.size(), 1);
 		IXMLStructuredObject rootModel = children.get(0);
@@ -68,6 +70,9 @@ public class JsonParserTest extends BaseTestCase {
 		assertEquals(children.size(), 1);
 		rootModel = children.get(0);
 		checkModel(rootModel);
+		}catch(Throwable t){
+			t.printStackTrace();
+		}
 	}
 	
 	private void checkModel(IXMLStructuredObject model){

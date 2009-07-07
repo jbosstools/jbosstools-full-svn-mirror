@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<smooks-graphics-ext xmlns="http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd">
+  <input type="csv">
+    <param name="path">Workspace://java_project/csv-to-xml/input-message.csv</param>
+    <param name="linkCSVReader">true</param>
+  </input>
+  <input type="csv">
+    <param name="path">Workspace://java_project/csv-to-xml/input-message.csv</param>
+    <param name="fields">a,b,c,d,e</param>
+    <param name="quoteChar">&quot;</param>
+    <param name="encoding">UTF-8</param>
+    <param name="separator">,</param>
+  </input>
+</smooks-graphics-ext>
