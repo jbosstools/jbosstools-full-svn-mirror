@@ -1,5 +1,7 @@
 package org.jboss.tools.smooks.configuration.editors.javabean;
 
+import java.util.Collection;
+
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -36,6 +38,9 @@ public class JavabeanContentProvider implements ITreeContentProvider,
 	public Object[] getElements(Object arg0) {
 		if (arg0 instanceof JavaBeanList) {
 			return ((JavaBeanList) arg0).getChildren().toArray();
+		}
+		if(arg0 instanceof Collection){
+			return ((Collection<?>)arg0).toArray();
 		}
 		return new Object[]{};
 	}
