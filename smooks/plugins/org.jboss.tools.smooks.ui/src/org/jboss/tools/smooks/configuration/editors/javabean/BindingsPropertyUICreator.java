@@ -141,7 +141,7 @@ public class BindingsPropertyUICreator extends PropertyUICreator {
 		gd.horizontalSpan = 2;
 		separator.setLayoutData(gd);
 
-		Hyperlink link = toolkit.createHyperlink(parent, "Add Value binding and Wiring binidng", SWT.NONE);
+		Hyperlink link = toolkit.createHyperlink(parent, "Add Value binding and Bean binding automatically", SWT.NONE);
 		final Composite fp = parent;
 		final BindingsType fb = (BindingsType)model;
 		final SmooksMultiFormEditor ff = formEditor;

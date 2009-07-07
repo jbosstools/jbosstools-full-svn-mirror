@@ -10,7 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.javabean;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -86,11 +88,11 @@ public class ValueWiringBindingSelectionDialog extends Dialog {
 		// TableColumn nameColumn = new TableColumn(viewer.getTable(),SWT.NONE);
 		viewer.setContentProvider(new JavabeanContentProvider());
 		viewer.setLabelProvider(new JavaBeanTableLabelProvider());
-		JavaBeanList list = new JavaBeanList();
+		List<JavaBeanModel> list = new ArrayList<JavaBeanModel>();
 		for (Iterator<?> iterator = beanModel.getChildren().iterator(); iterator.hasNext();) {
 			Object child = (Object) iterator.next();
 			if (child instanceof JavaBeanModel && !ignoreProperty((JavaBeanModel) child)) {
-				list.addJavaBean((JavaBeanModel) child);
+				list.add((JavaBeanModel) child);
 			}
 		}
 		viewer.setInput(list);
