@@ -18,13 +18,16 @@ Bundle-ClassPath: .,
  libs/milyn-commons-1.1.2.jar,
  libs/milyn-smooks-csv-1.1.2.jar,
  libs/milyn-smooks-json-1.1.2.jar,
- libs/opencsv-1.8.jar,
  libs/milyn-smooks-core-1.1.2.jar,
- libs/jackson-lgpl-0.9.3.jar
+ libs/jackson-lgpl-0.9.3.jar,
+ libs/milyn-smooks-edi-1.1.2.jar,
+ libs/milyn-edisax-parser-1.1.2.jar,
+ libs/opencsv-1.8.jar
 Bundle-Localization: plugin
 Bundle-Vendor: %providerName
 Export-Package: org.milyn,
  org.milyn.cdr,
  org.milyn.csv,
  org.milyn.json,
+ org.milyn.smooks.edi,
  org.milyn.xml
