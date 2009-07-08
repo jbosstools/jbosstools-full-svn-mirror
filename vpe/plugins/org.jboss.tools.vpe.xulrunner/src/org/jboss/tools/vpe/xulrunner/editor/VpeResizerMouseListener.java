@@ -82,7 +82,7 @@ public class VpeResizerMouseListener implements nsIDOMEventListener {
 	private void mouseDown(nsIDOMMouseEvent mouseEvent) {
 		boolean isContextClick = false;
 
-		if (Platform.getOS().equals("SunOS")) {
+		if (Platform.getOS().equals("SunOS")) { //$NON-NLS-1$
 			isContextClick = mouseEvent.getCtrlKey();
 		} else {
 			isContextClick = (mouseEvent.getButton() == 2);
