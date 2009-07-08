@@ -122,7 +122,7 @@ public class ReplyValidator extends CPartnerActivityValidator {
 	 * 4) operation -> "input" message must be set.
 	 */
 	
-	INode fInputMessage ;
+	INode fOutMessage ;
 	
 	/** 
 	 * Checks the Input Message for the receive. This just makes
@@ -132,8 +132,8 @@ public class ReplyValidator extends CPartnerActivityValidator {
 	
 	
 	public void rule_CheckOutputMessage_12 () {		
-		fInputMessage = findMessageType (fPortTypeFromRole,fOperation,WSDL_ND_INPUT, true );
-		setValue("input.message.type", fInputMessage);
+		fOutMessage = findMessageType (fPortTypeFromRole,fOperation,WSDL_ND_OUTPUT, true );
+		setValue("input.message.type", fOutMessage);
 	}
 	
 	
@@ -155,7 +155,7 @@ public class ReplyValidator extends CPartnerActivityValidator {
 	{
 		IProblem problem;
 		
-		if (isUndefined(fInputMessage)  || isUndefined(fVariable )) {
+		if (isUndefined(fOutMessage)  || isUndefined(fVariable )) {
 			return ;
 		}
 	
@@ -167,14 +167,14 @@ public class ReplyValidator extends CPartnerActivityValidator {
 		}
 		
 		// source -> destination		
-		if (mModelQuery.check( IModelQueryLookups.TEST_COMPATIBLE_PARTNER_ACTIVITY_MESSAGE, varType, fInputMessage ) == false) {
+		if (mModelQuery.check( IModelQueryLookups.TEST_COMPATIBLE_PARTNER_ACTIVITY_MESSAGE, varType, fOutMessage ) == false) {
 				
 			problem = createError( );
 			problem.fill( "BPELC_PA__MESSAGE_TYPE_MISMATCH",  //$NON-NLS-1$
 					toString(mNode.nodeName()),
 					AT_VARIABLE,
 					fVariable.getAttribute( AT_NAME ),
-					fInputMessage,
+					fOutMessage,
 					varType
 			);
 		}

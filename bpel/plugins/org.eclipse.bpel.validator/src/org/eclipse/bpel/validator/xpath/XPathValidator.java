@@ -916,9 +916,9 @@ public class XPathValidator extends Validator {
 		if (isEmptyOrWhitespace(prefix)) {
 			return true;
 		}
-
+		
 		String nsURI = lookupNamespace(prefix);
-
+		
 		if (isEmpty(nsURI)) {
 			IProblem problem = createError();
 			problem.fill("XPATH_UNRESOLVED_NAMESPACE_PREFIX", //$NON-NLS-1$

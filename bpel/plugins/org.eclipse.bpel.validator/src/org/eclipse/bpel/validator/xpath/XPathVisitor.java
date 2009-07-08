@@ -394,7 +394,7 @@ public class XPathVisitor  {
 	 */
 	public void visit ( Object obj ) {
 		
-		if (obj instanceof PathExpr) {
+		if (obj instanceof PathExpr) {;
 			visit((PathExpr) obj);
 		} else if (obj instanceof LocationPath) {
 			visit((LocationPath) obj);

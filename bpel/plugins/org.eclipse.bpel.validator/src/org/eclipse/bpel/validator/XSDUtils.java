@@ -224,7 +224,12 @@ public class XSDUtils {
 	 */
 	public static List<XSDParticleContent> getChildElements (XSDComplexTypeDefinition bo) 
 	{
-   		return getChildElements( getModelGroup(bo) );
+		List<XSDParticleContent> children = new ArrayList<XSDParticleContent>();
+		children.addAll(getChildElements(getModelGroup(bo)));
+		if(bo.getBaseTypeDefinition() instanceof XSDComplexTypeDefinition){
+			children.addAll(getChildElements(getModelGroup((XSDComplexTypeDefinition)bo.getBaseTypeDefinition())));
+		}
+   		return children;//getChildElements( getModelGroup(bo) );
 	}
 
 	/**

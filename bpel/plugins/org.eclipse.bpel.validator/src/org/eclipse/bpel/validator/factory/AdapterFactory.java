@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.xml.namespace.QName;
+
 import org.eclipse.bpel.model.adapters.AdapterRegistry;
 import org.eclipse.bpel.validator.Activator;
 import org.eclipse.bpel.validator.IBPELMarker;
@@ -220,7 +222,14 @@ public class AdapterFactory implements IAdapterFactory {
 		
 		// href.context refers to the problem context, expressed  
 		// in the model object space context. 
-		props.put( "href.context", problem.getAttribute(IProblem.CONTEXT ));
+		Object context = problem.getAttribute(IProblem.CONTEXT );
+		if( context instanceof QName){
+			QName qname = (QName)context;
+			props.put( "href.context", qname.getLocalPart());	
+		}
+		else{
+			props.put( "href.context", problem.getAttribute(IProblem.CONTEXT ));
+		}
 		
 		
 		// do not save this marker
@@ -231,7 +240,7 @@ public class AdapterFactory implements IAdapterFactory {
 		try {
 			marker = resource.createMarker( IBPELMarker.ID );
 			marker.setAttributes( props );
-		} catch (CoreException ex) {
+		} catch (Exception ex) {
 			// can't create marker ... ?
 			Activator.log(ex);
 			return null;

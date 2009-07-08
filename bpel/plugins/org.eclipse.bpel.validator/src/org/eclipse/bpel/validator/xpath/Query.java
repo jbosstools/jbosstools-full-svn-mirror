@@ -10,14 +10,19 @@
  *******************************************************************************/
 package org.eclipse.bpel.validator.xpath;
 
+import java.util.Iterator;
+import java.util.Map;
+
 import org.eclipse.bpel.validator.model.ARule;
 import org.eclipse.bpel.validator.model.INode;
 import org.eclipse.bpel.validator.model.IProblem;
-
+import org.eclipse.bpel.validator.model.Problem;
 import org.eclipse.bpel.xpath10.Expr;
 import org.eclipse.bpel.xpath10.FunctionCallExpr;
 import org.eclipse.bpel.xpath10.LocationPath;
+import org.eclipse.bpel.xpath10.UnaryExpr;
 import org.eclipse.bpel.xpath10.VariableReferenceExpr;
+import org.eclipse.bpel.xpath10.parser.XPath10Parser.unaryExpr_return;
 
 /**
  * @author Michal Chmielewski (michal.chmielewski@oracle.com)
@@ -60,7 +65,8 @@ public class Query extends XPathValidator {
 		IProblem problem;
 		Expr expr = xpathExpr ;
 		
-		if (expr instanceof LocationPath) {
+		if (expr instanceof UnaryExpr && ((UnaryExpr)expr).getExpr() instanceof LocationPath) {
+			expr = ((UnaryExpr)expr).getExpr();
 			
 			Object obj = mVisitor.contextPeek();
 			if (obj instanceof INode) {
@@ -78,7 +84,9 @@ public class Query extends XPathValidator {
 					exprStringTrimmed,
 					toString(mNode.nodeName())
 				);	
+			
 			repointOffsets(problem, expr);
+			
 		}			
 		
 		// Don't run anything else.

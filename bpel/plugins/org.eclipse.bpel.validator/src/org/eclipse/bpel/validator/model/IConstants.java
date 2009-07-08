@@ -128,6 +128,8 @@ public interface IConstants {
     public static final String REQUEST = "request";
     public static final String RESPONSE = "response";
     public static final String REQUEST_RESPONSE = "request-response";
+    public static final String IN = "in";
+    public static final String OUT = "out";
     //
     
     public static final String PARTNER_ROLE = "partnerRole";
@@ -338,7 +340,7 @@ public interface IConstants {
     
     public static final String ENDPOINT_VALUES [] = { MY_ROLE, PARTNER_ROLE };
     
-    public static final String PATTERN_VALUES [] = { REQUEST , RESPONSE, REQUEST_RESPONSE };
+    public static final String PATTERN_VALUES [] = { REQUEST , RESPONSE, REQUEST_RESPONSE, IN, OUT };
     
     public static final QName REPEATABLE_NODES [] = { 
     	ND_WHILE, ND_REPEAT_UNTIL, ND_FOR_EACH, ND_EVENT_HANDLERS, ND_COMPENSATION_HANDLER }; 
