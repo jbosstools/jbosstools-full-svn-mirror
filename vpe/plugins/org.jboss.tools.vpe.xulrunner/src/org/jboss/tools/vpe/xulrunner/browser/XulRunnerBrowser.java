@@ -72,9 +72,9 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	protected static final long NS_ERROR_FAILURE = 0x80004005L; 
 	
 	static {
-		XULRUNNER_BUNDLE = (new StringBuffer("org.mozilla.xulrunner")) // $NON-NLS-1$
-			.append(".").append(Platform.getWS()) // $NON-NLS-1$
-			.append(".").append(Platform.getOS()) // $NON-NLS-1$
+		XULRUNNER_BUNDLE = (new StringBuffer("org.mozilla.xulrunner")) //$NON-NLS-1$
+			.append(".").append(Platform.getWS()) //$NON-NLS-1$
+			.append(".").append(Platform.getOS()) //$NON-NLS-1$
 			.append(Platform.OS_MACOSX.equals(Platform.getOS()) ? "" : (new StringBuffer(".")).append(Platform.getOSArch()).toString()) //$NON-NLS-1$ //$NON-NLS-2$
 			.toString();
 		
@@ -88,7 +88,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	    
 	    webBrowser = (nsIWebBrowser) browser.getWebBrowser();
             if (webBrowser == null) {
-                throw new XulRunnerException("nsIWebBrowser is not available"); // $NON-NLS-1$
+                throw new XulRunnerException("nsIWebBrowser is not available"); //$NON-NLS-1$
             }
 
             setBoolRootPref(PREFERENCE_DISABLEOPENDURINGLOAD, true);
@@ -117,7 +117,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 			File file = new File(xulRunnerPath);
 			mozilla.initialize(file);
 			mozilla.initEmbedding(file, file, new AppFileLocProvider(file));
-			System.setProperty(XULRUNNER_INITIALIZED, "true"); // $NON-NLS-1$
+			System.setProperty(XULRUNNER_INITIALIZED, "true"); //$NON-NLS-1$
 		}
 	}
 
@@ -234,7 +234,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 					URL url1 = FileLocator.resolve(url);
 					xulRunnerFile = new File(FileLocator.toFileURL(url1).getFile());
 				} catch (IOException ioe) {
-					throw new XulRunnerException("Cannot get path to XULRunner from bundle " + getXulRunnerBundle(), ioe); // $NON-NLS-1$
+					throw new XulRunnerException("Cannot get path to XULRunner from bundle " + getXulRunnerBundle(), ioe); //$NON-NLS-1$
 				}
 				
 			xulRunnerPath = xulRunnerFile.getAbsolutePath();

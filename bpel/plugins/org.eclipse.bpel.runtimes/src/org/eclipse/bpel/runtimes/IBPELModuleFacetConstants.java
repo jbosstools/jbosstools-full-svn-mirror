@@ -21,8 +21,8 @@ public interface IBPELModuleFacetConstants {
 	public final static String BPEL20_MODULE_TYPE = "bpel.module"; //$NON-NLS-1$
 	
 	// module type versions
-	public final static String BPEL11_MODULE_VERSION = "1.1"; // $NON-NLS-1$
-	public final static String BPEL20_MODULE_VERSION = "2.0"; // $NON-NLS-1$
+	public final static String BPEL11_MODULE_VERSION = "1.1"; //$NON-NLS-1$
+	public final static String BPEL20_MODULE_VERSION = "2.0"; //$NON-NLS-1$
 	
 	// facet template
 	public final static String BPEL20_FACET_TEMPLATE = "template.bpel.core";  //$NON-NLS-1$

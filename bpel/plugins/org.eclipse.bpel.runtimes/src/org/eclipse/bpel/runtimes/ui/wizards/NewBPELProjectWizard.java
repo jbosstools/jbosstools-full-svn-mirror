@@ -102,7 +102,7 @@ public class NewBPELProjectWizard extends NewProjectDataModelFacetWizard
 	 */
 	@Override
 	protected IWizardPage createFirstPage() {
-		return new NewBPELProjectWizardPage1(model, "newBPELProject"); // $NON-NLS-1$
+		return new NewBPELProjectWizardPage1(model, "newBPELProject"); //$NON-NLS-1$
 	}
 	
 
