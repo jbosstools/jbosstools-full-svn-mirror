@@ -141,7 +141,7 @@ public class BindingsPropertyUICreator extends PropertyUICreator {
 		gd.horizontalSpan = 2;
 		separator.setLayoutData(gd);
 
-		Hyperlink link = toolkit.createHyperlink(parent, "Add Value binding and Bean binding automatically", SWT.NONE);
+		Hyperlink link = toolkit.createHyperlink(parent, "Add Binding", SWT.NONE);
 		final Composite fp = parent;
 		final BindingsType fb = (BindingsType)model;
 		final SmooksMultiFormEditor ff = formEditor;
@@ -217,8 +217,8 @@ public class BindingsPropertyUICreator extends PropertyUICreator {
 	private void generateValueWiringModel(Object[] models,SmooksMultiFormEditor editor , BindingsType owner){
 		EditingDomain domain = editor.getEditingDomain();
 		CompoundCommand command = new CompoundCommand();
-		command.setDescription("Add Value binding and Bean binding");
-		command.setLabel("Auto add Value/Bean binding");
+		command.setDescription("Add Binding");
+		command.setLabel("Auto add binding");
 		for (int i = 0; i < models.length; i++) {
 			Object model = models[i];
 			if(model instanceof JavaBeanModel){
