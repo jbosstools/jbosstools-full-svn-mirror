@@ -14,7 +14,7 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.jboss.tools.common.resref.core.ResourceReferenceList;
 
 public class CSSReferenceList extends ResourceReferenceList {
-	private static QualifiedName PROPERTY_NAME = new QualifiedName("", "org.jboss.tools.vpe.editor.css.CSSList");
+	private static QualifiedName PROPERTY_NAME = new QualifiedName("", "org.jboss.tools.vpe.editor.css.CSSList"); //$NON-NLS-1$ //$NON-NLS-2$
 	static CSSReferenceList instance = new CSSReferenceList();
 	
 	public static CSSReferenceList getInstance() {

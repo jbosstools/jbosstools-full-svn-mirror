@@ -36,28 +36,28 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	
 
 	/** RESIZER_MARKER_STRING_TOPLEFT */
-	final static private String RESIZER_MARKER_STRING_TOPLEFT = "nw";
+	final static private String RESIZER_MARKER_STRING_TOPLEFT = "nw"; //$NON-NLS-1$
 	
 	/** RESIZER_MARKER_STRING_TOP */
-	final static private String RESIZER_MARKER_STRING_TOP  = "n";
+	final static private String RESIZER_MARKER_STRING_TOP  = "n"; //$NON-NLS-1$
 	
 	/** RESIZER_MARKER_STRING_TOPRIGHT */	
-	final static private String RESIZER_MARKER_STRING_TOPRIGHT = "ne";
+	final static private String RESIZER_MARKER_STRING_TOPRIGHT = "ne"; //$NON-NLS-1$
 	
 	/** RESIZER_MARKER_STRING_LEFT */
-	final static private String RESIZER_MARKER_STRING_LEFT = "w";
+	final static private String RESIZER_MARKER_STRING_LEFT = "w"; //$NON-NLS-1$
 	
 	/** RESIZER_MARKER_STRING_BOTTOMLEFT */
-	final static private String RESIZER_MARKER_STRING_RIGHT = "e";
+	final static private String RESIZER_MARKER_STRING_RIGHT = "e"; //$NON-NLS-1$
 	
 	/** RESIZER_MARKER_STRING_BOTTOMLEFT */
-	final static private String RESIZER_MARKER_STRING_BOTTOMLEFT = "sw";
+	final static private String RESIZER_MARKER_STRING_BOTTOMLEFT = "sw"; //$NON-NLS-1$
 	
 	/** RESIZER_MARKER_STRING_BOTTOM */
-	final static private String RESIZER_MARKER_STRING_BOTTOM = "s";
+	final static private String RESIZER_MARKER_STRING_BOTTOM = "s"; //$NON-NLS-1$
 	
 	/** RESIZER_MARKER_STRING_BOTTOMRIGHT */
-	final static private String RESIZER_MARKER_STRING_BOTTOMRIGHT = "se";
+	final static private String RESIZER_MARKER_STRING_BOTTOMRIGHT = "se"; //$NON-NLS-1$
 
 	/** MAX_SIZE */
 	final static private int MAX_SIZE = 20000000; 
@@ -518,7 +518,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		
 		nsIDOMEventTarget eventTarget = (nsIDOMEventTarget) domDocument.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
 		if (eventTarget == null) {
-			throw new RuntimeException("nsIDOMEventTarget is null");
+			throw new RuntimeException("nsIDOMEventTarget is null"); //$NON-NLS-1$
 		}
 		
 		return eventTarget;
@@ -703,7 +703,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	 * @param aValue
 	 */
 	private void setStylePropertyPixels(nsIDOMElement aElement, String aProperty, int aValue) {
-		setStyle(aElement, aProperty, aValue + "px");
+		setStyle(aElement, aProperty, aValue + "px"); //$NON-NLS-1$
 	}
 	
 	/**

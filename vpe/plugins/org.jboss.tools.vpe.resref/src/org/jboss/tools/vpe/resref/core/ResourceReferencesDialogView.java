@@ -33,9 +33,9 @@ import org.jboss.tools.common.resref.ui.BaseAddReferenceSupport;
 import org.jboss.tools.common.resref.ui.ResourceReferencesTableProvider;
 
 public abstract class ResourceReferencesDialogView extends AbstractQueryWizardView {
-	static String ADD = "Add";
-	static String EDIT = "Edit";
-	static String REMOVE = "Remove";
+	static String ADD = Messages.ResourceReferencesDialogView_Add;
+	static String EDIT = Messages.ResourceReferencesDialogView_Edit;
+	static String REMOVE = Messages.ResourceReferencesDialogView_Remove;
 	protected XTable table = new XTable();
 	protected CommandBar bar = new CommandBar();
 	protected ResourceReferencesTableProvider tableProvider;// = new TemplatesTableProvider();
@@ -64,8 +64,8 @@ public abstract class ResourceReferencesDialogView extends AbstractQueryWizardVi
 	public void setObject(Object object) {
 		super.setObject(object);
 		Properties p = findProperties(object);
-		file = (IFile)p.get("file");
-		path = (IPath)p.get("path");
+		file = (IFile)p.get("file"); //$NON-NLS-1$
+		path = (IPath)p.get("path"); //$NON-NLS-1$
 		ResourceReference[] rs = (file != null) ? getReferenceList().getAllResources(file) :
 							(path != null) ? getReferenceList().getAllResources(path)
 							               : new ResourceReference[0];
@@ -124,7 +124,7 @@ public abstract class ResourceReferencesDialogView extends AbstractQueryWizardVi
 	}
 
 	protected void add(int index) {
-		ResourceReference css = new ResourceReference("", ResourceReference.FOLDER_SCOPE);
+		ResourceReference css = new ResourceReference("", ResourceReference.FOLDER_SCOPE); //$NON-NLS-1$
 		boolean ok = BaseAddReferenceSupport.add(file, css, getReferenceArray(), getEntity());
 		if(!ok) return;
 		dataList.add(css);

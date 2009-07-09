@@ -65,10 +65,10 @@ public class VpeDebug {
 		VISUAL_DUMP_PRINT_HASH = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/dump_print_hash")); //$NON-NLS-1$ //$NON-NLS-2$
 		VISUAL_DUMP_IGNORED_ATTRIBUTES = Platform
 				.getDebugOption(VpePlugin.PLUGIN_ID
-						+ "/debug/visual/ignored_attributes") != null ? Arrays
+						+ "/debug/visual/ignored_attributes") != null ? Arrays //$NON-NLS-1$
 				.asList(Platform.getDebugOption(
 						VpePlugin.PLUGIN_ID
-								+ "/debug/visual/ignored_attributes").split(
+								+ "/debug/visual/ignored_attributes").split( //$NON-NLS-1$
 						Constants.COMMA)) : null; 
 		VISUAL_CONTEXTMENU_TEST = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/contextmenu/show_test")); //$NON-NLS-1$ //$NON-NLS-2$
 

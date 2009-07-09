@@ -18,7 +18,7 @@ import org.eclipse.osgi.util.NLS;
  * 
  * @author Eugene Stherbin
  */
-public final class Messages {
+public final class Messages extends NLS {
     
     /** The Constant BUNDLE_NAME. */
     private static final String BUNDLE_NAME = "org.jboss.tools.vpe.resref.core.messages";//$NON-NLS-1$
@@ -42,4 +42,7 @@ public final class Messages {
     public static String ACTUAL_RUN_TIME_RELATIVE_FOLDER;
     public static String INVALID_EL_EXPRESSION;
     public static String EL_EXPRESSION_ALREADY_EXISTS;
+	public static String ResourceReferencesDialogView_Add;
+	public static String ResourceReferencesDialogView_Edit;
+	public static String ResourceReferencesDialogView_Remove;
 }

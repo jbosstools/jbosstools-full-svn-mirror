@@ -14,7 +14,7 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.jboss.tools.common.resref.core.ResourceReferenceList;
 
 public class TaglibReferenceList extends ResourceReferenceList {
-	private static QualifiedName PROPERTY_NAME = new QualifiedName("", "org.jboss.tools.vpe.editor.css.TLDList");
+	private static QualifiedName PROPERTY_NAME = new QualifiedName("", "org.jboss.tools.vpe.editor.css.TLDList"); //$NON-NLS-1$ //$NON-NLS-2$
 	static TaglibReferenceList instance = new TaglibReferenceList();
 	
 	public static TaglibReferenceList getInstance() {

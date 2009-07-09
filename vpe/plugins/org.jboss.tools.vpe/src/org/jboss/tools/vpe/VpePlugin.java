@@ -109,7 +109,7 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 		Bundle bundle = Platform.getBundle(PLUGIN_ID);
 		URL url = null;
 		try {
-			url = bundle == null ? null : FileLocator.resolve(bundle.getEntry("/ve"));
+			url = bundle == null ? null : FileLocator.resolve(bundle.getEntry("/ve")); //$NON-NLS-1$
 		} catch (IOException e) {
 			VpePlugin.getPluginLog().logError(e);
 		}

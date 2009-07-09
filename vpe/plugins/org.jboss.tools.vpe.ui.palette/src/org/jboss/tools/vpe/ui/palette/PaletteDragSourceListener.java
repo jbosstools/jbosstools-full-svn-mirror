@@ -56,18 +56,18 @@ public class PaletteDragSourceListener extends DragSourceAdapter {
 			XModelObject object = (list.size() == 0) ? null : getObject(list.get(0));
 			if(object != null) {
 				String[] d = new String[2];
-				d[0] = object.getAttributeValue("start text");
-				if(d[0] == null) d[0] = "";
-				d[1] = object.getAttributeValue("end text");
-				if(d[1] == null) d[1] = "";
+				d[0] = object.getAttributeValue("start text"); //$NON-NLS-1$
+				if(d[0] == null) d[0] = ""; //$NON-NLS-1$
+				d[1] = object.getAttributeValue("end text"); //$NON-NLS-1$
+				if(d[1] == null) d[1] = ""; //$NON-NLS-1$
 				
-				String defaultPrefix = object.getAttributeValue("default prefix");
-				String tag = object.getAttributeValue("name");
+				String defaultPrefix = object.getAttributeValue("default prefix"); //$NON-NLS-1$
+				String tag = object.getAttributeValue("name"); //$NON-NLS-1$
 				if(defaultPrefix == null) {
-					defaultPrefix = object.getParent().getAttributeValue("default prefix");
+					defaultPrefix = object.getParent().getAttributeValue("default prefix"); //$NON-NLS-1$
 				}
 				if(defaultPrefix != null && tag != null) {
-					PaletteInsertHelper.applyPrefix(d, "", tag, "xxx", defaultPrefix);
+					PaletteInsertHelper.applyPrefix(d, "", tag, "xxx", defaultPrefix); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				int i = d[0].indexOf('|');
 				if(i >= 0) d[0] = d[0].substring(0, i) + d[0].substring(i + 1);

@@ -38,7 +38,7 @@ public class LargeImageDescriptor extends ImageDescriptor {
 	public Image createImage(boolean returnMissingImageOnError, Device device) {
 		int code = xicon.getHash(object);
 		if (code == 0) return null;
-		String key = "" + code;
+		String key = "" + code; //$NON-NLS-1$
 		Image img = (Image)imageCache.get(key);
 		if (img != null) return img;
 		img = xicon.getImage(object);

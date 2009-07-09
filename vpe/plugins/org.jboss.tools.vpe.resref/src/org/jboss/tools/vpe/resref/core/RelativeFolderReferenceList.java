@@ -14,7 +14,7 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.jboss.tools.common.resref.core.ResourceReferenceList;
 
 public class RelativeFolderReferenceList extends ResourceReferenceList {
-	private static QualifiedName PROPERTY_NAME = new QualifiedName("", "org.jboss.tools.vpe.editor.css.RelativeFolder");
+	private static QualifiedName PROPERTY_NAME = new QualifiedName("", "org.jboss.tools.vpe.editor.css.RelativeFolder"); //$NON-NLS-1$ //$NON-NLS-2$
 	static RelativeFolderReferenceList instance = new RelativeFolderReferenceList();
 	
 	public static RelativeFolderReferenceList getInstance() {

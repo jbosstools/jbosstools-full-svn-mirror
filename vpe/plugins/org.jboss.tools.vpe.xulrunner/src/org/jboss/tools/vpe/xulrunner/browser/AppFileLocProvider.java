@@ -44,7 +44,7 @@ public class AppFileLocProvider implements IAppFileLocProvider {
 		}
 
 		if (BrowserPlugin.DEBUG_BROWSERSTART) {
-			System.out.println("AppFileLocProvider.getFile(" + prop + ")=\"" + (resultFile == null ? "null" : resultFile.toString()) + "\"");
+			System.out.println("AppFileLocProvider.getFile(" + prop + ")=\"" + (resultFile == null ? "null" : resultFile.toString()) + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		}
 		
 		return resultFile;
@@ -60,11 +60,11 @@ public class AppFileLocProvider implements IAppFileLocProvider {
 			if (resultFiles != null) {
 				int size = resultFiles.length;
 
-				System.out.print("AppFileLocProvider.getFiles(" + prop + ")={\"");
+				System.out.print("AppFileLocProvider.getFiles(" + prop + ")={\""); //$NON-NLS-1$ //$NON-NLS-2$
 				for(int i=0; i<size; i++) {
-					System.out.print((i > 0 ? ", " : "") + resultFiles[i].toString());
+					System.out.print((i > 0 ? ", " : "") + resultFiles[i].toString()); //$NON-NLS-1$ //$NON-NLS-2$
 				}
-				System.out.println("\"}");
+				System.out.println("\"}"); //$NON-NLS-1$
 			}
 		}
 		

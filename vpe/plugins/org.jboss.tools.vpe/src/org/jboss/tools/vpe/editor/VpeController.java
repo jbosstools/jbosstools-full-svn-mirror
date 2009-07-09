@@ -549,7 +549,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			job.cancel();
 		}
 
-		job = new UIJob("NotifyChangedJob") {
+		job = new UIJob("NotifyChangedJob") { //$NON-NLS-1$
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				// we checks is job was canceled and if is it true we cancel job
@@ -684,7 +684,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			if (switcher != null) {
 				switcher.stopActiveEditor();
 			} else {
-				throw new VpeDisposeException("VpeController already disposed");
+				throw new VpeDisposeException("VpeController already disposed"); //$NON-NLS-1$
 			}
 		}
 	}
@@ -1059,7 +1059,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			// nsIDOMElement visualDragElement = selectionBuilder
 			// .getDragElement(mouseEvent);
 			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-				System.out.println("<<< mouseDown  targetNode: " /* //$NON-NLS-1$
+				System.out.println("<<< mouseDown  targetNode: " //$NON-NLS-1$
+																/*
 																 * +visualNode.
 																 * getNodeName()
 																 * + " (" +
@@ -2023,7 +2024,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					.getInnerDropInfo(event);
 			if (visualDropInfo.getDropContainer() != null) {
 				if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
-					System.out.print("  x: " + visualDropInfo.getMouseX() 
+					System.out.print(
+							"  x: "  //$NON-NLS-1$
+							+ visualDropInfo.getMouseX() 
 							+ "  y: "			//$NON-NLS-1$
 							+ visualDropInfo.getMouseY() 
 							+ "  container: " 	//$NON-NLS-1$
@@ -2076,10 +2079,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 					System.out
 							.print("  container: " + visualDropInfo.getDropContainer().getNodeName() + //$NON-NLS-1$
-									"(" + visualDropInfo.getDropContainer()
-									+ ")" + //$NON-NLS-1$ //$NON-NLS-2$
-									"  offset: "
-									+ visualDropInfo.getDropOffset()); //$NON-NLS-1$
+									"(" + visualDropInfo.getDropContainer() //$NON-NLS-1$
+									+ ")" + //$NON-NLS-1$
+									"  offset: " //$NON-NLS-1$
+									+ visualDropInfo.getDropOffset());
 				}
 
 				VpeSourceInnerDragInfo sourceInnerDragInfo = visualBuilder
@@ -2223,7 +2226,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		IDropCommand dropCommand = DropCommandFactory.getInstance()
 				.getDropCommand(flavor, JSPTagProposalFactory.getInstance());
 
-		boolean promptAttributes = "yes"
+		boolean promptAttributes = "yes" //$NON-NLS-1$
 				.equals(VpePreference.ALWAYS_REQUEST_FOR_ATTRIBUTE.getValue());
 		dropCommand.getDefaultModel().setPromptForTagAttributesRequired(
 				promptAttributes);
@@ -2264,7 +2267,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
         final DragTransferData dragTransferData = DndUtil.getDragTransferData();
 		final nsISupports aValue = dragTransferData.getValue();
 
-        String aFlavor = "";
+        String aFlavor = ""; //$NON-NLS-1$
         if (VpeDndUtil.isNsIFileInstance(aValue)) {
             nsIFile aFile = (nsIFile) aValue.queryInterface(nsIFile.NS_IFILE_IID);
             
@@ -2499,7 +2502,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	public VpeIncludeList getIncludeList() {
 
 		if (includeList == null)
-				VpePlugin.getPluginLog().logError("includeList - NULL!!!");
+				VpePlugin.getPluginLog().logError("includeList - NULL!!!"); //$NON-NLS-1$
 
 		return includeList;
 	}

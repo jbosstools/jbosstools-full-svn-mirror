@@ -13,7 +13,7 @@ package org.jboss.tools.vpe;
 public interface IVpeHelpContextIds {
 	public static final String PREFIX = VpePlugin.PLUGIN_ID + '.';
 
-	public static final String VISUAL_PAGE_EDITOR = PREFIX + "visual_page_editor";
+	public static final String VISUAL_PAGE_EDITOR = PREFIX + "visual_page_editor"; //$NON-NLS-1$
 	
-	public static final String REFERENCE_TO_RESOURCES = PREFIX + "references_to_resources";
+	public static final String REFERENCE_TO_RESOURCES = PREFIX + "references_to_resources"; //$NON-NLS-1$
 }

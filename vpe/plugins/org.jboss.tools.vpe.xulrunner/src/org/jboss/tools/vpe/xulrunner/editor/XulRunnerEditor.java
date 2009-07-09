@@ -69,19 +69,19 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * color which used for highlight parent elements for elements which user 
 	 * can't see. 
 	 */
-	public static final String flasherHiddentElementColor = "red";
+	public static final String flasherHiddentElementColor = "red"; //$NON-NLS-1$
 	
 	/**
 	 * Contains name of attribute for inIFLasher drawing
 	 */
-	public static String VPEFLASHERCOLORATTRIBUTE="vpeFlasherColorAttribute";
+	public static String VPEFLASHERCOLORATTRIBUTE="vpeFlasherColorAttribute"; //$NON-NLS-1$
 
-	public static final String TRANS_FLAVOR_kHTMLMime = "text/html";
-	public static final String TRANS_FLAVOR_kURLDataMime = "text/x-moz-url-data";
-	public static final String TRANS_FLAVOR_kFileMime = "application/x-moz-file";
-	public static final String TRANS_FLAVOR_kURLMime = "text/x-moz-url";
-	public static final String TRANS_FLAVOR_kUnicodeMime = "text/unicode";
-	public static final String TRANS_FLAVOR_kNativeHTMLMime = "application/x-moz-nativehtml";
+	public static final String TRANS_FLAVOR_kHTMLMime = "text/html"; //$NON-NLS-1$
+	public static final String TRANS_FLAVOR_kURLDataMime = "text/x-moz-url-data"; //$NON-NLS-1$
+	public static final String TRANS_FLAVOR_kFileMime = "application/x-moz-file"; //$NON-NLS-1$
+	public static final String TRANS_FLAVOR_kURLMime = "text/x-moz-url"; //$NON-NLS-1$
+	public static final String TRANS_FLAVOR_kUnicodeMime = "text/unicode"; //$NON-NLS-1$
+	public static final String TRANS_FLAVOR_kNativeHTMLMime = "application/x-moz-nativehtml"; //$NON-NLS-1$
 	
 	/**
 	 * xpcom flasher component which used to  draw lines
@@ -92,12 +92,12 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	/**
 	 * RegExp for find expression 'display : none' in style string
 	 */
-	private static final  Pattern  PATTERN = Pattern.compile(".*\\s*(display)\\s*:\\s*(none)\\s*;.*",Pattern.CASE_INSENSITIVE+Pattern.DOTALL);
+	private static final  Pattern  PATTERN = Pattern.compile(".*\\s*(display)\\s*:\\s*(none)\\s*;.*",Pattern.CASE_INSENSITIVE+Pattern.DOTALL); //$NON-NLS-1$
 
 	/**
 	 * Contains attribute name for style
 	 */
-	private static final String STYLE_ATTR="style";
+	private static final String STYLE_ATTR="style"; //$NON-NLS-1$
 
 //	private nsIDOMElement lastSelectedElement;
 	private nsIDOMNode lastSelectedNode;
@@ -285,12 +285,12 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	
 	public void showDragCaret(nsIDOMNode node, long offcet) {
 		// TODO Sergey Vasilyev figure out with caret
-		System.out.println("Show drag caret for " + node.getNodeName() + ":" + offcet);
+		System.out.println("Show drag caret for " + node.getNodeName() + ":" + offcet); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 	
 	public void hideDragCaret() {
 		// TODO Sergey Vasilyev figure out with caret
-		System.out.println("Hide drag caret");
+		System.out.println("Hide drag caret"); //$NON-NLS-1$
 	}
 	
 	public nsITransferable createTransferable() {
@@ -380,7 +380,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 						nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
 			} catch (XPCOMException ex) {
 				// just ignore its
-				BrowserPlugin.getDefault().logInfo("repaint failed", ex);
+				BrowserPlugin.getDefault().logInfo("repaint failed", ex); //$NON-NLS-1$
 			}
 
 		} else if (element != null) {
@@ -581,7 +581,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 			((nsIBaseWindow)getWebBrowser().queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
 			} catch(XPCOMException ex) {
 				//just ignore its
-				BrowserPlugin.getDefault().logInfo("repaint failed", ex);
+				BrowserPlugin.getDefault().logInfo("repaint failed", ex); //$NON-NLS-1$
 			}
 		}
 	}
@@ -678,7 +678,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	private boolean hasSelectInParenNodes(nsIDOMNode domNode){
 		if(domNode==null) {
 			return false;
-		}else if("select".equalsIgnoreCase(domNode.getNodeName())){
+		}else if("select".equalsIgnoreCase(domNode.getNodeName())){ //$NON-NLS-1$
 			return true;
 		} else {
 			return hasSelectInParenNodes(domNode.getParentNode());

@@ -45,23 +45,23 @@ public abstract class FolderReferenceComposite {
 	}
 	
 	public void setObject(Properties p) {
-		file = (IFile)p.get("file");
-		path = (IPath)p.get("path");
+		file = (IFile)p.get("file"); //$NON-NLS-1$
+		path = (IPath)p.get("path"); //$NON-NLS-1$
 		rs = (file != null) ? getReferenceList().getAllResources(file) :
 							(path != null) ? getReferenceList().getAllResources(path)
 							               : new ResourceReference[0];
 		if(rs.length == 0) {
 			rs = new ResourceReference[1];
-			rs[0] = new ResourceReference("", ResourceReference.FILE_SCOPE);
+			rs[0] = new ResourceReference("", ResourceReference.FILE_SCOPE); //$NON-NLS-1$
 		}
 		current = rs[0];
-		object.setAttributeValue("location", current.getLocation());
-		object.setAttributeValue("scope", current.getScopeName());
+		object.setAttributeValue("location", current.getLocation()); //$NON-NLS-1$
+		object.setAttributeValue("scope", current.getScopeName()); //$NON-NLS-1$
 
 		data = XEntityDataImpl.create(new String[][]{
-			{getEntity(), "yes"},
-			{"location", "no"},
-			{"scope", "no"}
+			{getEntity(), "yes"}, //$NON-NLS-1$
+			{"location", "no"}, //$NON-NLS-1$ //$NON-NLS-2$
+			{"scope", "no"} //$NON-NLS-1$ //$NON-NLS-2$
 		});
 
 		data.getAttributeData()[0].setValue(current.getLocation());
@@ -75,7 +75,7 @@ public abstract class FolderReferenceComposite {
 	}
 
 	protected String getEntity() {
-		return (file != null) ? "VPEFolderReference" : "VPEFolderReferenceExt";
+		return (file != null) ? "VPEFolderReference" : "VPEFolderReferenceExt"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	protected abstract ResourceReferenceList getReferenceList();
@@ -90,7 +90,7 @@ public abstract class FolderReferenceComposite {
 		g.setText(getTitle());
 		Control c = support.createControl(g);
 		if(file != null) {
-			DirectoryFieldEditorEx f = (DirectoryFieldEditorEx)support.getFieldEditorByName("location");
+			DirectoryFieldEditorEx f = (DirectoryFieldEditorEx)support.getFieldEditorByName("location"); //$NON-NLS-1$
 			f.setLastPath(file.getProject().getLocation().toString());
 		}
 		data = new GridData(GridData.FILL_BOTH);

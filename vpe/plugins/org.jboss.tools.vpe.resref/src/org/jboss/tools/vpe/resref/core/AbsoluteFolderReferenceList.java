@@ -14,7 +14,7 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.jboss.tools.common.resref.core.ResourceReferenceList;
 
 public class AbsoluteFolderReferenceList extends ResourceReferenceList {
-	private static QualifiedName PROPERTY_NAME = new QualifiedName("", "org.jboss.tools.vpe.editor.css.AbsoluteFolder");
+	private static QualifiedName PROPERTY_NAME = new QualifiedName("", "org.jboss.tools.vpe.editor.css.AbsoluteFolder"); //$NON-NLS-1$ //$NON-NLS-2$
 	static AbsoluteFolderReferenceList instance = new AbsoluteFolderReferenceList();
 	
 	public static AbsoluteFolderReferenceList getInstance() {

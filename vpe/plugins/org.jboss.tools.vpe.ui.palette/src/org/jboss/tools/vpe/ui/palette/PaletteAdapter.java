@@ -18,7 +18,6 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.gef.ui.palette.PaletteContextMenuProvider;
 import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
@@ -120,7 +119,7 @@ public class PaletteAdapter implements IPaletteAdapter {
 	
 	private class PaletteEditAction extends Action {
 		public PaletteEditAction() {
-			super(PaletteUIMessages.PALETTE_EDITOR, PaletteAdapter.this.getImageDescriptor("palette_editor.gif")); //$NON-NLS-2$ //$NON-NLS-1$
+			super(PaletteUIMessages.PALETTE_EDITOR, PaletteAdapter.this.getImageDescriptor("palette_editor.gif")); //$NON-NLS-1$
 			setToolTipText(PaletteUIMessages.PALETTE_EDITOR);
 		}
 		
@@ -131,7 +130,7 @@ public class PaletteAdapter implements IPaletteAdapter {
 	
 	private class ShowHideTabsAction extends Action {
 		public ShowHideTabsAction() {
-			super(PaletteUIMessages.SHOW_HIDE_TABS, PaletteAdapter.this.getImageDescriptor("visibility.gif")); //$NON-NLS-2$ //$NON-NLS-1$
+			super(PaletteUIMessages.SHOW_HIDE_TABS, PaletteAdapter.this.getImageDescriptor("visibility.gif")); //$NON-NLS-1$
 			setToolTipText(PaletteUIMessages.SHOW_HIDE);
 		}
 		public void run() {
@@ -141,7 +140,7 @@ public class PaletteAdapter implements IPaletteAdapter {
 
 	private class ImportTLDAction extends Action {
 		public ImportTLDAction() {
-			super(PaletteUIMessages.IMPORT_TLD, PaletteAdapter.this.getImageDescriptor("tld_import.gif")); //$NON-NLS-2$ //$NON-NLS-1$
+			super(PaletteUIMessages.IMPORT_TLD, PaletteAdapter.this.getImageDescriptor("tld_import.gif")); //$NON-NLS-1$
 			setToolTipText(PaletteUIMessages.IMPORT);
 		}
 		public void run() {
