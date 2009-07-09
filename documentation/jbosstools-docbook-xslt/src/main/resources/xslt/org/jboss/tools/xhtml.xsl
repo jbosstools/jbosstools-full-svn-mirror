@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 
 <!--
-   Copyright 2008 JBoss, a division of Red Hat
+   Copyright 2009 JBoss by Red Hat
    License: LGPL
    Author: Mark Newton <mark.newton@jboss.org>
 -->
