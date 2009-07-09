@@ -32,10 +32,10 @@ public class MultiPropertyValue extends Token {
 	}
 
 	private void parse(String value) {
-		StringTokenizer tokenizer = new StringTokenizer(value, " ", true);
+		StringTokenizer tokenizer = new StringTokenizer(value, " ", true); //$NON-NLS-1$
 		while(tokenizer.hasMoreTokens()) {
 			String token = tokenizer.nextToken();
-			if(token.equals(" ")) {
+			if(token.equals(" ")) { //$NON-NLS-1$
 				tokens.add(new Token(token));
 			} else {
 				tokens.add(new SinglePropertyValue(token));
@@ -80,8 +80,8 @@ public class MultiPropertyValue extends Token {
 		SinglePropertyValue propertyValue = getSinglePropertyValue(value);
 		if(propertyValue==null) {
 			String newValue = value;
-			if(!((Token)tokens.get(tokens.size()-1)).getDirtyValue().endsWith(" ")) {
-				newValue = " " + newValue;
+			if(!((Token)tokens.get(tokens.size()-1)).getDirtyValue().endsWith(" ")) { //$NON-NLS-1$
+				newValue = " " + newValue; //$NON-NLS-1$
 			}
 			return tokens.add(new SinglePropertyValue(newValue));
 		}

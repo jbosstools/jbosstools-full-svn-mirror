@@ -62,9 +62,9 @@ public abstract class SimpleTagHandler extends FormatHandler implements IFormatI
 			return null;
 		    if (parentNode instanceof ElementImpl) {
 			ElementImpl element = (ElementImpl) parentNode;
-			String attr = element.getAttribute("style");
+			String attr = element.getAttribute("style"); //$NON-NLS-1$
 			if (attr != null) {
-			    attr = attr.replaceAll(" ", "");
+			    attr = attr.replaceAll(" ", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			    if(equalsWrappingTagStyle(attr)) {
 				return parentNode;
 			    }

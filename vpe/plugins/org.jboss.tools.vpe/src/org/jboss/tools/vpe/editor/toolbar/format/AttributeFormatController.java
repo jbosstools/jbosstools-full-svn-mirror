@@ -140,7 +140,7 @@ abstract public class AttributeFormatController extends FormatController {
 	}
 
 	protected Attr getStyleAttributeFromSelectedNode(boolean ignoreCase) {
-		return getAttributeFromSelectedNode("style", ignoreCase);
+		return getAttributeFromSelectedNode("style", ignoreCase); //$NON-NLS-1$
 	}
 
 	protected static Attr createAttribute(Node node, FormatAttributeData data) {
@@ -151,7 +151,7 @@ abstract public class AttributeFormatController extends FormatController {
 				String message = "Wrong vpe template for tag " + node.getNodeName() + ". Attribute 'name' or 'type' of <vpe:formatAttribute> must be set.";
 				VpePlugin.getDefault().getLog().log(new Status(Status.ERROR, VpePlugin.PLUGIN_ID, Status.OK, message, new Exception(message)));
 			}
-			element.setAttribute(name, "");
+			element.setAttribute(name, ""); //$NON-NLS-1$
 			return element.getAttributeNode(name);
 		}
 		return null;

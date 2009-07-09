@@ -44,7 +44,7 @@ public class BlockFormatHandler extends FormatHandler {
 	}
 
 	boolean normal = false;
-	if ("normal".equals(tagName)) {
+	if ("normal".equals(tagName)) { //$NON-NLS-1$
 	    normal = true;
 	}
 

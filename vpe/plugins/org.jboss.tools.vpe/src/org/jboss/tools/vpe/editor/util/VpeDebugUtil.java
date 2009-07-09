@@ -24,7 +24,7 @@ public class VpeDebugUtil {
 	
 	private static final SimpleDateFormat formatter = new SimpleDateFormat();
 	static {
-		formatter.applyPattern("hh:mm:ss.SSS");
+		formatter.applyPattern("hh:mm:ss.SSS"); //$NON-NLS-1$
 	}
 	/**
 	 * Prints debug info on console
@@ -34,7 +34,7 @@ public class VpeDebugUtil {
 		
 		if(Platform.inDebugMode()) {
 
-			System.out.print(formatter.format(new Date())+":"+ msg);
+			System.out.print(formatter.format(new Date())+":"+ msg); //$NON-NLS-1$
 		}
 	}
 	/**
@@ -43,7 +43,7 @@ public class VpeDebugUtil {
 	public static void debugVPEDnDEvents(String msg) {
 		if(VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
 			
-			System.out.println(formatter.format(new Date())+":"+ msg);
+			System.out.println(formatter.format(new Date())+":"+ msg); //$NON-NLS-1$
 		}
 	}
 }

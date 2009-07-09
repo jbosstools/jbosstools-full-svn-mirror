@@ -34,8 +34,8 @@ public class SashForm extends Composite {
 	private Control[] controls = new Control[0];
 	private Control maxControl = null;
 	private Listener sashListener;
-	private final static String LAYOUT_RATIO = "layout ratio";
-	private final static String WEIGHTS = "weights";
+	private final static String LAYOUT_RATIO = "layout ratio"; //$NON-NLS-1$
+	private final static String WEIGHTS = "weights"; //$NON-NLS-1$
 	protected PropertyChangeSupport listeners = new PropertyChangeSupport(this);
 
 	public SashForm(Composite parent, int style) {

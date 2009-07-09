@@ -37,10 +37,10 @@ public class StyleProperty extends Token {
 	}
 
 	private void parse(String value) {
-		StringTokenizer tokenizer = new StringTokenizer(value, ":", true);
+		StringTokenizer tokenizer = new StringTokenizer(value, ":", true); //$NON-NLS-1$
 		while(tokenizer.hasMoreTokens()) {
 			String token = tokenizer.nextToken();
-			if(token.equals(":")) {
+			if(token.equals(":")) { //$NON-NLS-1$
 				tokens.add(new Token(token));
 			} else if(name==null) {
 				name = new Token(token);
@@ -124,7 +124,7 @@ public class StyleProperty extends Token {
 		if(singlePropertyValue==null) {
 			MultiPropertyValue propertyValue = getPropertyValue();
 			if(propertyValue==null) {
-				MultiPropertyValue newPropertyValue = new MultiPropertyValue(" " + value);
+				MultiPropertyValue newPropertyValue = new MultiPropertyValue(" " + value); //$NON-NLS-1$
 				tokens.add(newPropertyValue);
 				return true;
 			}

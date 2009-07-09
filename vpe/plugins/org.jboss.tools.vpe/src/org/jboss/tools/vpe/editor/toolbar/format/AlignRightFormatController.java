@@ -20,7 +20,7 @@ import org.jboss.tools.vpe.editor.template.textformating.FormatAttributeData;
  */
 public class AlignRightFormatController extends ToolItemFormatController {
 
-	public static String TYPE = "AlignRightFormat";
+	public static String TYPE = "AlignRightFormat"; //$NON-NLS-1$
 
 	/**
 	 * @param manager

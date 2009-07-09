@@ -22,9 +22,9 @@ public class VpeResourcesDialog extends AbstractQueryWizard {
 	public static boolean run(IFile file) {
 		VpeResourcesDialog dialog = new VpeResourcesDialog();
 		Properties p = new Properties();
-		p.setProperty("help", "VpeResourcesDialog");
-		p.put("file", file);
-		p.put("model", PreferenceModelUtilities.getPreferenceModel());
+		p.setProperty("help", "VpeResourcesDialog"); //$NON-NLS-1$ //$NON-NLS-2$
+		p.put("file", file); //$NON-NLS-1$
+		p.put("model", PreferenceModelUtilities.getPreferenceModel()); //$NON-NLS-1$
 		dialog.setObject(p);
 		int code = dialog.execute();
 		return code == 0;
@@ -33,9 +33,9 @@ public class VpeResourcesDialog extends AbstractQueryWizard {
 	public static boolean run(IPath path) {
 		VpeResourcesDialog dialog = new VpeResourcesDialog();
 		Properties p = new Properties();
-		p.setProperty("help", "VpeResourcesDialog");
-		p.put("path", path);
-		p.put("model", PreferenceModelUtilities.getPreferenceModel());
+		p.setProperty("help", "VpeResourcesDialog"); //$NON-NLS-1$ //$NON-NLS-2$
+		p.put("path", path); //$NON-NLS-1$
+		p.put("model", PreferenceModelUtilities.getPreferenceModel()); //$NON-NLS-1$
 		dialog.setObject(p);
 		int code = dialog.execute();
 		return code == 0;

@@ -800,9 +800,9 @@ public class VpeStyleUtil {
 
 		Path path = new Path(resolvedValue);
 
-		if (resolvedValue.startsWith("/")
+		if (resolvedValue.startsWith("/") //$NON-NLS-1$
 				&& path.segment(0).equals(file.getProject().getName())) {
-			resolvedValue = "/"
+			resolvedValue = "/" //$NON-NLS-1$
 					+ path.removeFirstSegments(1).toPortableString();
 
 		}

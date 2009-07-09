@@ -107,19 +107,19 @@ abstract public class FormatHandler implements IFormatHandler {
 
 		Properties p = new Properties();
 		p.setProperty(PaletteInsertHelper.PROPOPERTY_TAG_NAME, elementName);
-		p.setProperty(PaletteInsertHelper.PROPOPERTY_START_TEXT, "<" + elementName + ">");
-		p.setProperty(PaletteInsertHelper.PROPOPERTY_END_TEXT, "</" + elementName + ">");
+		p.setProperty(PaletteInsertHelper.PROPOPERTY_START_TEXT, "<" + elementName + ">"); //$NON-NLS-1$ //$NON-NLS-2$
+		p.setProperty(PaletteInsertHelper.PROPOPERTY_END_TEXT, "</" + elementName + ">"); //$NON-NLS-1$ //$NON-NLS-2$
 		if(format) {
-			p.setProperty(PaletteInsertHelper.PROPOPERTY_REFORMAT_BODY, "yes");
+			p.setProperty(PaletteInsertHelper.PROPOPERTY_REFORMAT_BODY, "yes"); //$NON-NLS-1$
 		}
-		p.setProperty(PaletteInsertHelper.PROPOPERTY_TAGLIBRARY_URI, "http://www.w3.org/TR/REC-html40");
-		p.setProperty(PaletteInsertHelper.PROPOPERTY_DEFAULT_PREFIX, "");
+		p.setProperty(PaletteInsertHelper.PROPOPERTY_TAGLIBRARY_URI, "http://www.w3.org/TR/REC-html40"); //$NON-NLS-1$
+		p.setProperty(PaletteInsertHelper.PROPOPERTY_DEFAULT_PREFIX, ""); //$NON-NLS-1$
 
 		ITextSelection sel = new TextSelection(startOffcet, length);
 		ISelectionProvider selProvider = viewer.getSelectionProvider();
 		selProvider.setSelection(sel);
 
-		p.put("selectionProvider", selProvider);
+		p.put("selectionProvider", selProvider); //$NON-NLS-1$
 
 		PaletteInsertHelper.insertIntoEditor(viewer, p);
 
@@ -165,7 +165,7 @@ abstract public class FormatHandler implements IFormatHandler {
 		if(element!=selectedNode) {
 			newStartOffset = newStartOffset + body.indexOf(selectedSource);
 		}
-		if(body.startsWith("\r\n") || body.startsWith("\n")) {
+		if(body.startsWith("\r\n") || body.startsWith("\n")) { //$NON-NLS-1$ //$NON-NLS-2$
 			//most probably, in this case white spaces were used 
 			//for formatting inside parent tag, and this formatting must be removed 
 			body = body.trim();
@@ -173,7 +173,7 @@ abstract public class FormatHandler implements IFormatHandler {
 		try {
 			document.replace(element.getStartOffset(), length, body);
 		} catch (BadLocationException e) {
-			VpePlugin.getPluginLog().logError("Can't format text", e);
+			VpePlugin.getPluginLog().logError("Can't format text", e); //$NON-NLS-1$
 		}
 
 		viewer.setSelectedRange(newStartOffset, 0);
@@ -185,7 +185,7 @@ abstract public class FormatHandler implements IFormatHandler {
 		IDocument document = viewer.getDocument();
 
 		// Append start part - "<tag";
-		StringBuffer resultNode = new StringBuffer("<").append(newName);
+		StringBuffer resultNode = new StringBuffer("<").append(newName); //$NON-NLS-1$
 
 		int endOffcet = element.getEndOffset() - element.getStartOffset();
 		int startEndOffcet = element.getStartEndOffset() - element.getStartOffset();
@@ -202,7 +202,7 @@ abstract public class FormatHandler implements IFormatHandler {
 			String endtagName = element.getEndTagName();
 			if(endtagName!=null) {
 				// Append - "</tag";
-				resultNode.append("</").append(newName);
+				resultNode.append("</").append(newName); //$NON-NLS-1$
 				// Append - ">";
 				resultNode.append(source.substring(endStartOffcet + 2 + endtagName.length()));
 			}
@@ -216,7 +216,7 @@ abstract public class FormatHandler implements IFormatHandler {
 		try {
 			document.replace(element.getStartOffset(), length, newElement);
 		} catch (BadLocationException e) {
-			VpePlugin.getPluginLog().logError("Can't format text", e);
+			VpePlugin.getPluginLog().logError("Can't format text", e); //$NON-NLS-1$
 		}
 
 		viewer.setSelectedRange(newStartOffset, 0);

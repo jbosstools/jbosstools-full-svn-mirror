@@ -19,7 +19,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jst.j2ee.web.componentcore.util.WebArtifactEdit;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
@@ -69,7 +68,7 @@ public class FileUtil {
 		if(project != null && project.isOpen()) {
 			IModelNature modelNature = EclipseResourceUtil.getModelNature(project);
 			XModel model = (modelNature == null) ? null : modelNature.getModel();
-			XModelObject webRoot = (model == null) ? null : model.getByPath("FileSystems/WEB-ROOT");
+			XModelObject webRoot = (model == null) ? null : model.getByPath("FileSystems/WEB-ROOT"); //$NON-NLS-1$
 			IResource webRootResource = (webRoot == null) ? null : EclipseResourceUtil.getResource(webRoot);
 			return (webRootResource instanceof IContainer) ? (IContainer)webRootResource : null;
 		}
@@ -100,7 +99,7 @@ public class FileUtil {
 					return null;
 				}
 				IVirtualFolder webRootFolder = com.getRootFolder().getFolder(
-						new Path("/"));
+						new Path("/")); //$NON-NLS-1$
 				IContainer folder = webRootFolder.getUnderlyingFolder();
 				IPath path = folder.getFullPath().append(fileName);
 				file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);

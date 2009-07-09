@@ -475,11 +475,11 @@ public class SelectionBar extends Layout implements SelectionListener {
 	}
 
     public String toString() {
-		StringBuffer st = new StringBuffer("CountItem: ");
+		StringBuffer st = new StringBuffer("CountItem: "); //$NON-NLS-1$
 		st.append(itemCount);
-		st.append(" Parent Composite: " + cmpToolBar.getBounds().width);
-		st.append(" Midle composite: " + cmpBar.getBounds().width);
-		st.append(" Bar : " + selBar.getBounds().width);
+		st.append(" Parent Composite: " + cmpToolBar.getBounds().width); //$NON-NLS-1$
+		st.append(" Midle composite: " + cmpBar.getBounds().width); //$NON-NLS-1$
+		st.append(" Bar : " + selBar.getBounds().width); //$NON-NLS-1$
 		return st.toString();
 	}
 }

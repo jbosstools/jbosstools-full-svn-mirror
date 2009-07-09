@@ -40,10 +40,10 @@ public class StyleAttribute {
 
 	private void parse(String value) {
 		tokens.clear();
-		StringTokenizer tokenizer = new StringTokenizer(value, ";", true);
+		StringTokenizer tokenizer = new StringTokenizer(value, ";", true); //$NON-NLS-1$
 		while(tokenizer.hasMoreTokens()) {
 			String token = tokenizer.nextToken();
-			if(token.equals(";")) {
+			if(token.equals(";")) { //$NON-NLS-1$
 				tokens.add(new Token(token));
 			} else {
 				tokens.add(new StyleProperty(token));
@@ -58,14 +58,14 @@ public class StyleAttribute {
 	public boolean addStyleProperty(String name, String value) {
 		StyleProperty property = getProperty(name);
 		if(property==null) {
-			String space = "";
+			String space = ""; //$NON-NLS-1$
 			if(tokens.size()>0) {
 				Token token = (Token)tokens.get(0);
-				if(!token.toString().startsWith(" ")) {
-					space = " ";
+				if(!token.toString().startsWith(" ")) { //$NON-NLS-1$
+					space = " "; //$NON-NLS-1$
 				}
 			}
-			StyleProperty newProperty = new StyleProperty(name + ": " + value + ";" + space);
+			StyleProperty newProperty = new StyleProperty(name + ": " + value + ";" + space); //$NON-NLS-1$ //$NON-NLS-2$
 			tokens.add(0, newProperty);
 		} else {
 			SinglePropertyValue propertyValue = property.getSinglePropertyValue(value);
@@ -122,7 +122,7 @@ public class StyleAttribute {
 			int index = tokens.indexOf(property) + 1;
 			if(index<tokens.size()) {
 				Token nextToken = (Token)tokens.get(index);
-				if(nextToken.getDirtyValue().equals(";")) {
+				if(nextToken.getDirtyValue().equals(";")) { //$NON-NLS-1$
 					tokens.remove(index);
 				}
 			}
