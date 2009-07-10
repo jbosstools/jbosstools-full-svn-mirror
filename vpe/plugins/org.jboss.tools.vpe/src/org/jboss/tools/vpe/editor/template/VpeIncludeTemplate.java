@@ -140,7 +140,7 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 	
 	protected VpeCreationData createStub(String fileName, nsIDOMDocument visualDocument) {
 		nsIDOMElement visualNewElement = visualDocument.createElement(HTML.TAG_DIV);
-		visualNewElement.setAttribute("style", "background-color:#ECF3FF;cursor:pointer;padding:0 5px;margin:3px 0;font-style:italic;color:#0051DD;");
+		visualNewElement.setAttribute("style", "background-color:#ECF3FF;cursor:pointer;padding:0 5px;margin:3px 0;font-style:italic;color:#0051DD;"); //$NON-NLS-1$ //$NON-NLS-2$
 		VpeVisualDomBuilder.markIncludeElement(visualNewElement);
 		if (fileName != null) {
 			visualNewElement.appendChild(visualDocument.createTextNode(fileName));

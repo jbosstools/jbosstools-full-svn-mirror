@@ -25,26 +25,26 @@ import org.jboss.tools.vpe.editor.util.HTML;
  */
 public class BlockFormatController extends ComboFormatController {
 
-    public static String TYPE = "BlockFormat";
+    public static String TYPE = "BlockFormat"; //$NON-NLS-1$
     public static HashMap TAGS = new HashMap();
     static {
-	TAGS.put("address", "Address");
-	TAGS.put("h1", "Heading 1");
-	TAGS.put("h2", "Heading 2");
-	TAGS.put("h3", "Heading 3");
-	TAGS.put("h4", "Heading 4");
-	TAGS.put("h5", "Heading 5");
-	TAGS.put("h6", "Heading 6");
+	TAGS.put("address", "Address"); //$NON-NLS-1$ //$NON-NLS-2$
+	TAGS.put("h1", "Heading 1"); //$NON-NLS-1$ //$NON-NLS-2$
+	TAGS.put("h2", "Heading 2"); //$NON-NLS-1$ //$NON-NLS-2$
+	TAGS.put("h3", "Heading 3"); //$NON-NLS-1$ //$NON-NLS-2$
+	TAGS.put("h4", "Heading 4"); //$NON-NLS-1$ //$NON-NLS-2$
+	TAGS.put("h5", "Heading 5"); //$NON-NLS-1$ //$NON-NLS-2$
+	TAGS.put("h6", "Heading 6"); //$NON-NLS-1$ //$NON-NLS-2$
     }
     public static HashMap TEXTS = new HashMap();
     static {
-	TEXTS.put("Address", "address");
-	TEXTS.put("Heading 1", "h1");
-	TEXTS.put("Heading 2", "h2");
-	TEXTS.put("Heading 3", "h3");
-	TEXTS.put("Heading 4", "h4");
-	TEXTS.put("Heading 5", "h5");
-	TEXTS.put("Heading 6", "h6");
+	TEXTS.put("Address", "address"); //$NON-NLS-1$ //$NON-NLS-2$
+	TEXTS.put("Heading 1", "h1"); //$NON-NLS-1$ //$NON-NLS-2$
+	TEXTS.put("Heading 2", "h2"); //$NON-NLS-1$ //$NON-NLS-2$
+	TEXTS.put("Heading 3", "h3"); //$NON-NLS-1$ //$NON-NLS-2$
+	TEXTS.put("Heading 4", "h4"); //$NON-NLS-1$ //$NON-NLS-2$
+	TEXTS.put("Heading 5", "h5"); //$NON-NLS-1$ //$NON-NLS-2$
+	TEXTS.put("Heading 6", "h6"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private String tagName;
@@ -77,7 +77,7 @@ public class BlockFormatController extends ComboFormatController {
 	selectionText = comboBlockFormat.getText();
 	tagName = (String) TEXTS.get(selectionText);
 	if (tagName == null) {
-	    tagName = "normal";
+	    tagName = "normal"; //$NON-NLS-1$
 	}
 	super.handleEvent(event);
     }

@@ -33,7 +33,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class VpeGridCreator extends VpeAbstractCreator {
-	static final String VAL_PAGE_DIRECTION = "pageDirection";
+	static final String VAL_PAGE_DIRECTION = "pageDirection"; //$NON-NLS-1$
 
 	private boolean caseSensitive;
 	private VpeExpression layoutExpr;

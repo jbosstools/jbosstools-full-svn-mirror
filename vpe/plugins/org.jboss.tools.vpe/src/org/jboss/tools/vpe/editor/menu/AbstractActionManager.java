@@ -458,7 +458,7 @@ public abstract class AbstractActionManager extends BaseActionManager {
 		List list = builder.getResult();
 
 		if (list.size() > 0
-				&& ((Node) list.get(0)).getNodeName().equals("HTML")) {
+				&& ((Node) list.get(0)).getNodeName().equals("HTML")) { //$NON-NLS-1$
 			Node node = (Node) list.get(0);
 			Node child = node.getFirstChild();
 			while (child != null) {

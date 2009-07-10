@@ -62,6 +62,14 @@ public final class VpeUIMessages extends NLS {
 	public static String CONFIRM_SELECTION_BAR_DIALOG_TOGGLE_MESSAGE;
 	public static String VPE_UPDATE_JOB_TITLE;
 	public static String VPE_VISUAL_REFRESH_JOB;
+	public static String VpeExpressionBuilder_ClosingApostropheNotFound;
+	public static String VpeExpressionBuilder_ClosingBracketNotFound;
+	public static String VpeExpressionBuilder_FunctionNotFound;
+	public static String VpeExpressionBuilder_UndefinedCharacter;
+	public static String VpeExpressionBuilder_UndefinedName;
+	public static String VpeExpressionBuilderException_Message;
+	public static String VpeTextPseudoContentCreator_InsertContent;
+	public static String VpeTextPseudoContentCreator_InsertContentFor;
 	public static String NON_VISUAL_TAGS;
 	public static String SHOW_NON_VISUAL_TAGS;
 	public static String HIDE_NON_VISUAL_TAGS;
@@ -71,6 +79,9 @@ public final class VpeUIMessages extends NLS {
 	public static String HIDE;
 	public static String TAG_FOR_DISPLAY_IS_NOT_VALID;
 	public static String TAG_FOR_DISPLAY;
+	public static String MenuCreationHelper_Cut;
+	public static String MenuCreationHelper_Paste;
+	public static String MenuCreationHelper_Test;
 	public static String TemplatesPreferencePage_Edit;
 	public static String TemplatesPreferencePage_Remove;
 	public static String TemplatesTableProvider_Children;
@@ -84,6 +95,11 @@ public final class VpeUIMessages extends NLS {
 	public static String MAX_VISUAL_PANE;
 	public static String RESTORE_PREVIOUS_LOCATION;
 	public static String BACKGROUND_COLOR_TIP;
+	public static String BaseActionManager_InsertAfter;
+	public static String BaseActionManager_InsertAround;
+	public static String BaseActionManager_InsertBefore;
+	public static String BaseActionManager_InsertTag;
+	public static String BaseActionManager_ReplaceWith;
 	public static String SETUP_TEMPLATE_FOR_MENU;
 	public static String INSERT_AROUND;
 	public static String INSERT_BEFORE;

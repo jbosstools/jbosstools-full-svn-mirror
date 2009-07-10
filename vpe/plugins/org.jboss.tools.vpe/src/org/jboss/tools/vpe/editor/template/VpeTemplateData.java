@@ -71,8 +71,8 @@ public class VpeTemplateData {
 	}
 
 	public String getPrefix() {
-		if (name != null && name.indexOf(":") > 0) {
-			return name.substring(0, name.indexOf(":"));
+		if (name != null && name.indexOf(":") > 0) { //$NON-NLS-1$
+			return name.substring(0, name.indexOf(":")); //$NON-NLS-1$
 		}
 		return null;
 	}

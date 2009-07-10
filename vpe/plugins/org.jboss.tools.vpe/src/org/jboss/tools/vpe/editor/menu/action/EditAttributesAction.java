@@ -48,7 +48,7 @@ public class EditAttributesAction extends Action {
 	private void init() {
 		final String name = MessageFormat.format(
 				VpeUIMessages.ATTRIBUTES_MENU_ITEM, 
-				node != null ? node.getNodeName() : "");
+				node != null ? node.getNodeName() : ""); //$NON-NLS-1$
 		setText(name);			
 	}
 

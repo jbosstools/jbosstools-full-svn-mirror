@@ -20,7 +20,7 @@ import org.jboss.tools.vpe.editor.template.textformating.FormatAttributeData;
  */
 public class JustifyFormatController extends ToolItemFormatController {
 
-	public static String TYPE = "JustifyFormat";
+	public static String TYPE = "JustifyFormat"; //$NON-NLS-1$
 
 	/**
 	 * @param manager

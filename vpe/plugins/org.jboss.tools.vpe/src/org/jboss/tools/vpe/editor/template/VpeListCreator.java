@@ -91,7 +91,7 @@ public class VpeListCreator extends VpeAbstractCreator{
 			}
 		}
 		
-		nsIDOMElement visualList = visualDocument.createElement("true".equals(strValue)?HTML.TAG_OL:HTML.TAG_UL);
+		nsIDOMElement visualList = visualDocument.createElement("true".equals(strValue)?HTML.TAG_OL:HTML.TAG_UL); //$NON-NLS-1$
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(visualList);
 
 		for (int i = 0; i < propertyCreators.size(); i++) {

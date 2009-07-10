@@ -15,22 +15,21 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public abstract class VpePseudoContentCreator {
-	private static final String PSEUDO_CONTENT_ATTR = "vpe:pseudo-element";
+	private static final String PSEUDO_CONTENT_ATTR = "vpe:pseudo-element"; //$NON-NLS-1$
 	
 	public abstract void setPseudoContent(VpePageContext pageContext, Node sourceContainer, nsIDOMNode visualContainer, nsIDOMDocument visualDocument) throws VpeExpressionException;
 	
 	public static void setPseudoAttribute(nsIDOMElement visualPseudoElement) {
-		visualPseudoElement.setAttribute(PSEUDO_CONTENT_ATTR, "yes");
-		visualPseudoElement.setAttribute("style", "font-style:italic; color:green");
+		visualPseudoElement.setAttribute(PSEUDO_CONTENT_ATTR, "yes"); //$NON-NLS-1$
+		visualPseudoElement.setAttribute("style", "font-style:italic; color:green"); //$NON-NLS-1$ //$NON-NLS-2$
 		VpeHtmlTemplate.makeModify(visualPseudoElement, false);
 	}
 	
 	public static boolean isPseudoElement(nsIDOMNode visualNode) {
-		return visualNode != null && visualNode.getNodeType() == Node.ELEMENT_NODE && "yes".equalsIgnoreCase(((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)).getAttribute(PSEUDO_CONTENT_ATTR));
+		return visualNode != null && visualNode.getNodeType() == Node.ELEMENT_NODE && "yes".equalsIgnoreCase(((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)).getAttribute(PSEUDO_CONTENT_ATTR)); //$NON-NLS-1$
 	}
 	
 	public static nsIDOMNode getContainerForPseudoContent(nsIDOMNode visualNode) {

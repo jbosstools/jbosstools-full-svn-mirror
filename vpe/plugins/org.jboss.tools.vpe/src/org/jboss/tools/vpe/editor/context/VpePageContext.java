@@ -75,7 +75,7 @@ public class VpePageContext implements IVisualContext {
 	}
 	
 	public boolean isAbsolutePosition(){
-		if("yes".equals(VpePreference.USE_ABSOLUTE_POSITION.getValue()))return true;
+		if("yes".equals(VpePreference.USE_ABSOLUTE_POSITION.getValue()))return true; //$NON-NLS-1$
 		else return false;
 	}
 	

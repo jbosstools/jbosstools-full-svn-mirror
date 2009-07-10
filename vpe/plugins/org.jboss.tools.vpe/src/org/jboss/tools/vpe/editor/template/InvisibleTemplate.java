@@ -38,7 +38,7 @@ public class InvisibleTemplate extends VpeAbstractTemplate {
 		nsIDOMElement div = visualDocument.createElement(HTML.TAG_SPAN);
 
 		div.setAttribute(HTML.TAG_STYLE,
-				"border: solid 1px #0037FF;color:#0037FF;font-size:12px;");
+				"border: solid 1px #0037FF;color:#0037FF;font-size:12px;"); //$NON-NLS-1$
 
 		nsIDOMText text = visualDocument.createTextNode(sourceNode
 				.getNodeName());

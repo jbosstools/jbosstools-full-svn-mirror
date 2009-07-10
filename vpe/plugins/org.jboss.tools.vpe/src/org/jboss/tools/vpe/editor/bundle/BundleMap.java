@@ -64,7 +64,7 @@ public class BundleMap {
     private BundleEntry[] bundles = new BundleEntry[0];
     private Map<String,UsedKey> usedKeys = new HashMap<String,UsedKey>();
     
-    boolean isShowBundleUsageAsEL = "yes".equals(VpePreference.SHOW_RESOURCE_BUNDLES.getValue());
+    boolean isShowBundleUsageAsEL = "yes".equals(VpePreference.SHOW_RESOURCE_BUNDLES.getValue()); //$NON-NLS-1$
     XModelTreeListener modelListener = new ML();
 	
 	public void init(StructuredTextEditor editor){
@@ -89,7 +89,7 @@ public class BundleMap {
 		while(it.hasNext()) {
 			String uri = it.next().toString();
 			String prefix = map.get(uri).toString();
-			int hash = (prefix + ":" + uri).hashCode();
+			int hash = (prefix + ":" + uri).hashCode(); //$NON-NLS-1$
 			removeBundle(hash);
 			addBundle(hash, prefix, uri, true);
 		}
@@ -153,7 +153,7 @@ public class BundleMap {
 				XModel model = EclipseResourceUtil.getModelNature(project).getModel();
 				String prefix2 = prefix;
 				if(propertyName != null && prefix != null) {
-					prefix2 = prefix + "." + propertyName;
+					prefix2 = prefix + "." + propertyName; //$NON-NLS-1$
 				}
 				WebPromptingProvider.getInstance().getList(model, WebPromptingProvider.JSF_BEAN_OPEN, prefix2, null);
 			}
@@ -180,7 +180,7 @@ public class BundleMap {
 	public IFile getBundleFile(String uri){
 		IEditorInput input = editor.getEditorInput();
 		IProject project = ((FileEditorInput)input).getFile().getProject();
-		String name = uri.replace('.','/')+".properties";
+		String name = uri.replace('.','/')+".properties"; //$NON-NLS-1$
 		
 		if(project == null || !project.isOpen()) return null;
 		try {
@@ -189,7 +189,7 @@ public class BundleMap {
 			IClasspathEntry[] es = javaProject.getResolvedClasspath(true);
 			for (int i = 0; i < es.length; i++) {
 				if(es[i].getEntryKind() != IClasspathEntry.CPE_SOURCE) continue;
-				IFile file = (IFile)project.getWorkspace().getRoot().getFolder(es[i].getPath()).findMember("/"+name);
+				IFile file = (IFile)project.getWorkspace().getRoot().getFolder(es[i].getPath()).findMember("/"+name); //$NON-NLS-1$
 				if(file != null && file.exists()) return file;
 			}
 		} catch (CoreException e) {
@@ -395,10 +395,10 @@ public class BundleMap {
 		if(expr instanceof ELPropertyInvocation) {
 			return new String[]{left.getText(), name};
 		} else if(expr instanceof ELArgumentInvocation) {
-			if(name.startsWith("\"") || name.startsWith("'")) {
+			if(name.startsWith("\"") || name.startsWith("'")) { //$NON-NLS-1$ //$NON-NLS-2$
 				name = name.substring(1);
 			}
-			if(name.endsWith("\"") || name.endsWith("'")) {
+			if(name.endsWith("\"") || name.endsWith("'")) { //$NON-NLS-1$ //$NON-NLS-2$
 				name = name.substring(0, name.length() - 1);
 			}
 			if(name.length() == 0) return null;
@@ -411,7 +411,7 @@ public class BundleMap {
 		String bundleValue = null;
 		BundleEntry entry = getBundle(prefix);
 		if (entry != null) {
-			String name = prefix + "." + propertyName;
+			String name = prefix + "." + propertyName; //$NON-NLS-1$
 			try {
 				bundleValue = (String) entry.bundle.getObject(propertyName);
 				if (!usedKeys.containsKey(name))
@@ -503,7 +503,7 @@ public class BundleMap {
 	class ML implements XModelTreeListener {
 
 		public void nodeChanged(XModelTreeEvent event) {
-		    boolean b = "yes".equals(VpePreference.SHOW_RESOURCE_BUNDLES.getValue());	
+		    boolean b = "yes".equals(VpePreference.SHOW_RESOURCE_BUNDLES.getValue());	 //$NON-NLS-1$
 			if(isShowBundleUsageAsEL != b) {
 				isShowBundleUsageAsEL = b;
 				refresh();

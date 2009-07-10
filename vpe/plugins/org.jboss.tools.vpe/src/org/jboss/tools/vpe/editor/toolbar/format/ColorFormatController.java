@@ -52,17 +52,17 @@ abstract public class ColorFormatController extends ToolItemFormatController {
 		StringBuffer buf = new StringBuffer();
 		String c = Integer.toHexString(newColor.red);
 		if(c.length()<2) {
-			buf.append("0");
+			buf.append("0"); //$NON-NLS-1$
 		}
 		buf.append(c);
 		c = Integer.toHexString(newColor.green);
 		if(c.length()<2) {
-			buf.append("0");
+			buf.append("0"); //$NON-NLS-1$
 		}
 		buf.append(c);
 		c = Integer.toHexString(newColor.blue);
 		if(c.length()<2) {
-			buf.append("0");
+			buf.append("0"); //$NON-NLS-1$
 		}
 		buf.append(c);
 		color = buf.toString();
@@ -73,7 +73,7 @@ abstract public class ColorFormatController extends ToolItemFormatController {
 
 	protected String createStylePropertyValue() {
 		if(color!=null && color.trim().length()>0) {
-			return "#" + color;
+			return "#" + color; //$NON-NLS-1$
 		}
 		return null;
 	}

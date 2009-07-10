@@ -101,7 +101,7 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 	}
 	    
 	StringBuilder sb = new StringBuilder();
-	String word = "((\\w+)([\\.\\[\\]]*))";
+	String word = "((\\w+)([\\.\\[\\]]*))"; //$NON-NLS-1$
 	Matcher m;
 	String variable;
 	String signs;
@@ -134,7 +134,7 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 	    sb.append(origStr.substring(endIndex, origStr.length()));
 	}
 
-	if (!"".equals(sb.toString())) {
+	if (!"".equals(sb.toString())) { //$NON-NLS-1$
 	    return sb.toString();
 	}
 	return origStr;
@@ -144,18 +144,18 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 	Set<String> keys = paramsMap.keySet();
 	if (null != node) {
 	    String nodeValue = node.getNodeValue();
-	    String curlyBracketResultPattern = "(" + Pattern.quote("#")
-		    + "\\{(.+?)\\})+?";
+	    String curlyBracketResultPattern = "(" + Pattern.quote("#") //$NON-NLS-1$ //$NON-NLS-2$
+		    + "\\{(.+?)\\})+?"; //$NON-NLS-1$
 	    int matcherGroupWithVariable = 2;
 
-	    if ((null != nodeValue) && (!"".equals(nodeValue))) {
+	    if ((null != nodeValue) && (!"".equals(nodeValue))) { //$NON-NLS-1$
 		for (String key : keys) {
 		    Matcher curlyBracketMatcher = Pattern.compile(
 			    curlyBracketResultPattern).matcher(nodeValue);
 
 		    String replacement = paramsMap.get(key);
-		    if (replacement.startsWith("#{")
-			    && replacement.endsWith("}")) {
+		    if (replacement.startsWith("#{") //$NON-NLS-1$
+			    && replacement.endsWith("}")) { //$NON-NLS-1$
 			// remove first 2 signs '#{'
 			replacement = replacement.substring(2);
 			// remove last '}' sign
@@ -231,7 +231,7 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 	for (int i = 0; i < len; i++) {
 	    Node sourceChild = sourceChildren.item(i);
 	    if (sourceChild.getNodeType() == Node.ELEMENT_NODE
-		    && "param".equals(sourceChild.getLocalName())) {
+		    && "param".equals(sourceChild.getLocalName())) { //$NON-NLS-1$
 		String name = ((Element) sourceChild)
 			.getAttribute(HTML.ATTR_NAME);
 		String value = ((Element) sourceChild)
@@ -275,7 +275,7 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 	for (int i = 0; i < len; i++) {
 	    Node sourceChild = sourceChildren.item(i);
 	    if (sourceChild.getNodeType() == Node.ELEMENT_NODE
-		    && "define".equals(sourceChild.getLocalName())) {
+		    && "define".equals(sourceChild.getLocalName())) { //$NON-NLS-1$
 		if (template == null) {
 		    VpeTemplateManager templateManager = pageContext
 			    .getVisualBuilder().getTemplateManager();
@@ -333,12 +333,12 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 	    Node sourceElement, nsIDOMDocument visualDocument) {
 	
 	nsIDOMElement container = visualDocument.createElement(HTML.TAG_DIV);
-	container.setAttribute("style", "border: 1px dashed #2A7F00");
+	container.setAttribute("style", "border: 1px dashed #2A7F00"); //$NON-NLS-1$ //$NON-NLS-2$
 	VpeVisualDomBuilder.markIncludeElement(container);
 
 	nsIDOMElement title = visualDocument.createElement(HTML.TAG_DIV);
 	nsIDOMElement tag = visualDocument.createElement(HTML.TAG_SPAN);
-	tag.setAttribute("class", "__any__tag__caption");
+	tag.setAttribute("class", "__any__tag__caption"); //$NON-NLS-1$ //$NON-NLS-2$
 	tag.appendChild(visualDocument.createTextNode(sourceElement.getNodeName()));
 	title.appendChild(tag);
 	if (fileName != null) {
@@ -354,7 +354,7 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 	for (int i = 0; i < len; i++) {
 		Node sourceChild = sourceChildren.item(i);
 		if (sourceChild.getNodeType() == Node.ELEMENT_NODE
-		    && "define".equals(sourceChild.getLocalName())) {
+		    && "define".equals(sourceChild.getLocalName())) { //$NON-NLS-1$
 			childrenInfo.addSourceChild(sourceChild);
 		}
 	}

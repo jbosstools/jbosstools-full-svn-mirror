@@ -1179,7 +1179,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		nsIDOMAttr toggleLookupAttr = visualElement
 				.getAttributeNode(VPE_USER_TOGGLE_LOOKUP_PARENT);
 		if (toggleLookupAttr != null) {
-			toggleLookup = "true".equals(toggleLookupAttr.getNodeValue());
+			toggleLookup = "true".equals(toggleLookupAttr.getNodeValue()); //$NON-NLS-1$
 		}
 
 		nsIDOMElement selectedElem = getLastSelectedElement();
@@ -1221,7 +1221,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		toggleLookupAttr = selectedElem
 				.getAttributeNode(VPE_USER_TOGGLE_LOOKUP_PARENT);
 		if (toggleLookupAttr != null) {
-			toggleLookup = "true".equals(toggleLookupAttr.getNodeValue());
+			toggleLookup = "true".equals(toggleLookupAttr.getNodeValue()); //$NON-NLS-1$
 		}
 		// end of fix
 
@@ -1346,7 +1346,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			String ext_val) {
 		nsIDOMElement linkNode = null;
 		if ((ATTR_REL_STYLESHEET_VALUE.equalsIgnoreCase(rel_val))
-				&& href_val.startsWith("file:")) {
+				&& href_val.startsWith("file:")) { //$NON-NLS-1$
 			/*
 			 * Because of the Mozilla caches the linked css files we replace tag
 			 * <link rel="styleseet" href="file://..."> with tag <style
@@ -1757,22 +1757,22 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					&& parent.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 				nsIDOMElement element = (nsIDOMElement) parent
 						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-				nsIDOMAttr style = element.getAttributeNode("style");
+				nsIDOMAttr style = element.getAttributeNode("style"); //$NON-NLS-1$
 				if (style != null) {
 					String styleValue = style.getNodeValue();
-					String[] items = styleValue.split(";");
+					String[] items = styleValue.split(";"); //$NON-NLS-1$
 					for (int i = 0; i < items.length; i++) {
-						String[] item = items[i].split(":");
-						if ("-moz-user-modify".equals(item[0].trim())
-								&& "read-only".equals(item[1].trim())) {
+						String[] item = items[i].split(":"); //$NON-NLS-1$
+						if ("-moz-user-modify".equals(item[0].trim()) //$NON-NLS-1$
+								&& "read-only".equals(item[1].trim())) { //$NON-NLS-1$
 							return false;
 						}
 					}
 				}
-				nsIDOMAttr classAttr = element.getAttributeNode("class");
+				nsIDOMAttr classAttr = element.getAttributeNode("class"); //$NON-NLS-1$
 				if (classAttr != null) {
 					String classValue = classAttr.getNodeValue().trim();
-					if ("__any__tag__caption".equals(classValue)) {
+					if ("__any__tag__caption".equals(classValue)) { //$NON-NLS-1$
 						return false;
 					}
 				}
@@ -1845,9 +1845,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			String titleValue = getTooltip(sourceElement);
 
 			if (titleValue != null) {
-				titleValue = titleValue.replaceAll("&", "&amp;");
-				titleValue = titleValue.replaceAll("<", "&lt;");
-				titleValue = titleValue.replaceAll(">", "&gt;");
+				titleValue = titleValue.replaceAll("&", "&amp;"); //$NON-NLS-1$ //$NON-NLS-2$
+				titleValue = titleValue.replaceAll("<", "&lt;"); //$NON-NLS-1$ //$NON-NLS-2$
+				titleValue = titleValue.replaceAll(">", "&gt;"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 
 			if (titleValue != null) {

@@ -229,16 +229,16 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 */
 	public void init(Element templateElement, boolean caseSensitive) {
 		this.caseSensitive = caseSensitive;
-		children = Constants.YES_STRING.equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_CHILDREN)); //$NON-NLS-1$
-		modify = Constants.YES_STRING.equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_MODIFY)); //$NON-NLS-1$
-		invisible = Constants.YES_STRING.equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_INVISIBLE)); //$NON-NLS-1$
+		children = Constants.YES_STRING.equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_CHILDREN));
+		modify = Constants.YES_STRING.equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_MODIFY));
+		invisible = Constants.YES_STRING.equals(templateElement.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_INVISIBLE));
 
 		String strHasImaginaryBorder = templateElement
 				.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_HAS_IMAGINARY_BORDER);
 
 		if (strHasImaginaryBorder != null
 				&& strHasImaginaryBorder.length() != 0) {
-			hasImaginaryBorder = Constants.YES_STRING.equalsIgnoreCase(strHasImaginaryBorder); //$NON-NLS-1$			
+			hasImaginaryBorder = Constants.YES_STRING.equalsIgnoreCase(strHasImaginaryBorder);
 		} else {
 			hasImaginaryBorder = false;
 		}
@@ -721,16 +721,16 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 					Node p1 = null, p2 = null;
 					Node parentParent = parent.getParentNode();
 					if (parentParent != null) {
-						if (!parentParent.getNodeName().equalsIgnoreCase("p")) {
+						if (!parentParent.getNodeName().equalsIgnoreCase("p")) { //$NON-NLS-1$
 							if (parentParent.getNodeType() != Node.DOCUMENT_NODE) {
 								p1 = parentParent.getOwnerDocument()
-										.createElement("p");
+										.createElement("p"); //$NON-NLS-1$
 								parentParent.insertBefore(p1, parent);
 								parent = parentParent.removeChild(parent);
 								p1.appendChild(parent);
 							} else {
 								p1 = ((Document) parentParent)
-										.createElement("p");
+										.createElement("p"); //$NON-NLS-1$
 								parentParent.insertBefore(p1, parent);
 								parent = parentParent.removeChild(parent);
 								p1.appendChild(parent);
@@ -1260,7 +1260,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 		}
 		} catch (VpeExpressionException ex) {
 			
-			VpeExpressionException exception = new VpeExpressionException(sourceContainer+" ",ex);
+			VpeExpressionException exception = new VpeExpressionException(sourceContainer+" ",ex); //$NON-NLS-1$
 			VpePlugin.reportProblem(exception);
 		}
 	}

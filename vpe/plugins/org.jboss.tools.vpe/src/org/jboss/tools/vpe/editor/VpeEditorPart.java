@@ -113,11 +113,11 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	private int visualMode = 0;
 	private EditorPart multiPageEditor;
 	private static final QualifiedName SPLITTER_POSITION_KEY1 = new QualifiedName(
-			"", "splitter_position1");
+			"", "splitter_position1"); //$NON-NLS-1$ //$NON-NLS-2$
 	private static final QualifiedName SPLITTER_POSITION_KEY2 = new QualifiedName(
-			"", "splitter_position2");
+			"", "splitter_position2"); //$NON-NLS-1$ //$NON-NLS-2$
 	private static final QualifiedName SPLITTER_POSITION_KEY3 = new QualifiedName(
-			"", "splitter_position3");
+			"", "splitter_position3"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private int controlCount = 0;
 
@@ -1043,10 +1043,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 	private class ActivationListener extends ShellAdapter implements
 			IPartListener {
-		private static final String VPE_EDITOR_CONTEXT = "org.jboss.tools.vpe.editorContext";
-		private static final String VPE_VISUAL_MAXMIN = "org.jboss.tools.vpe.visual.maxmin";
-		private static final String VPE_SOURCE_MAXMIN = "org.jboss.tools.vpe.source.maxmin";
-		private static final String VPE_JUMPING = "org.jboss.tools.vpe.jumping";
+		private static final String VPE_EDITOR_CONTEXT = "org.jboss.tools.vpe.editorContext"; //$NON-NLS-1$
+		private static final String VPE_VISUAL_MAXMIN = "org.jboss.tools.vpe.visual.maxmin"; //$NON-NLS-1$
+		private static final String VPE_SOURCE_MAXMIN = "org.jboss.tools.vpe.source.maxmin"; //$NON-NLS-1$
+		private static final String VPE_JUMPING = "org.jboss.tools.vpe.jumping"; //$NON-NLS-1$
 		private IWorkbenchPart fActivePart;
 		private boolean fIsHandlingActivation = false;
 

@@ -149,10 +149,10 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 				}
 			}
 		}
-		Attr attr = element.getAttributeNode("title");
+		Attr attr = element.getAttributeNode("title"); //$NON-NLS-1$
 		if (attr == null) {
 			if (propertyCreators == null) propertyCreators  = new ArrayList();
-			propertyCreators.add(new VpeAttributeCreator("title", "{tagstring()}", dependencyMap, true));
+			propertyCreators.add(new VpeAttributeCreator("title", "{tagstring()}", dependencyMap, true)); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 	@Override

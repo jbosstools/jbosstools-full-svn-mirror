@@ -99,7 +99,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 			sourceNode = domMapping.getNearSourceNode(visualNode);
 			if (sourceNode != null) {
 				if (sourceNode.getNodeType() == Node.COMMENT_NODE) {
-					sourceNode.setNodeValue("");
+					sourceNode.setNodeValue(""); //$NON-NLS-1$
 				}
 			}
 		}
@@ -391,7 +391,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		IDOMAttr xmlAttr = (IDOMAttr)sourceAttr;
 		int start = xmlAttr.getValueRegionStartOffset() + offset;
 		String value = xmlAttr.getValueRegionText();
-		if (value.startsWith("\"") || value.startsWith("\'")) {
+		if (value.startsWith("\"") || value.startsWith("\'")) { //$NON-NLS-1$ //$NON-NLS-2$
 			start++;
 		}
 		int end = xmlAttr.getEndOffset();

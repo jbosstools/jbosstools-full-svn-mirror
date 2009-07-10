@@ -23,11 +23,11 @@ import org.jboss.tools.vpe.editor.toolbar.format.css.StyleProperty;
  */
 public class UnderlineFormatController extends ToolItemFormatController {
 
-	public static String TYPE = "UnderlineFormat";
+	public static String TYPE = "UnderlineFormat"; //$NON-NLS-1$
 
-	private static String STYLE_PROPERTY_NAME = "TEXT-DECORATION";
-	private static String STYLE_PROPERTY_UNDERLINE_VALUE = "underline";
-	private static String STYLE_PROPERTY_NORMAL_VALUE = "none";
+	private static String STYLE_PROPERTY_NAME = "TEXT-DECORATION"; //$NON-NLS-1$
+	private static String STYLE_PROPERTY_UNDERLINE_VALUE = "underline"; //$NON-NLS-1$
+	private static String STYLE_PROPERTY_NORMAL_VALUE = "none"; //$NON-NLS-1$
 
 	/**
 	 * @param manager

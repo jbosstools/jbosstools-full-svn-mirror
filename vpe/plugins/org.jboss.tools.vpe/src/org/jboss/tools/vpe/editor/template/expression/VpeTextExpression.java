@@ -23,7 +23,7 @@ public class VpeTextExpression implements VpeExpression {
 
 	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
 		if (text == null) {
-			return new VpeValue("");
+			return new VpeValue(""); //$NON-NLS-1$
 		} else {
 			return new VpeValue(text);
 		}

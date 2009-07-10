@@ -36,7 +36,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class ActionHelper {
-	public static final String copyright = "(c) Copyright IBM Corporation 2002.";
+	public static final String copyright = "(c) Copyright IBM Corporation 2002."; //$NON-NLS-1$
 	protected ModelQueryImpl modelQuery;
 
 	protected static class Action implements ModelQueryAction {
@@ -283,9 +283,9 @@ public class ActionHelper {
 							.getOrigin(childElement);
 
 					CMNodeList cmNodeList = childOrigin != null ? (CMNodeList) childOrigin
-							.getProperty("SubstitutionGroup")
+							.getProperty("SubstitutionGroup") //$NON-NLS-1$
 							: (CMNodeList) childEd
-									.getProperty("SubstitutionGroup");
+									.getProperty("SubstitutionGroup"); //$NON-NLS-1$
 
 					if (cmNodeList != null && cmNodeList.getLength() > 1) {
 						int replaceIndex = getIndex(parent, childElement);
@@ -294,7 +294,7 @@ public class ActionHelper {
 							CMNode substitution = cmNodeList.item(i);
 							if (!substitution.getNodeName().equals(childEdName)
 									&& !Boolean.TRUE.equals(substitution
-											.getProperty("Abstract"))) {
+											.getProperty("Abstract"))) { //$NON-NLS-1$
 								Action action = new Action(Action.REPLACE,
 										parent, cmNodeList.item(i),
 										replaceIndex, replaceIndex);
@@ -429,7 +429,7 @@ public class ActionHelper {
 
 			String cmNodeName = matchModelNode.cmNode != null ? matchModelNode.cmNode
 					.getNodeName()
-					: "null";
+					: "null"; //$NON-NLS-1$
 
 			indent += 2;
 			for (Iterator iterator = matchModelNode.children.iterator(); iterator

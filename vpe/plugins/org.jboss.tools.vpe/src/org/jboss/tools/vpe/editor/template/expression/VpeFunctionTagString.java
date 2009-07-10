@@ -17,6 +17,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeFunctionTagString extends VpeFunction {
 
+	@SuppressWarnings("nls")
 	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
 		String tagString = " <" + sourceNode.getNodeName();
 		NamedNodeMap attrs = sourceNode.getAttributes();

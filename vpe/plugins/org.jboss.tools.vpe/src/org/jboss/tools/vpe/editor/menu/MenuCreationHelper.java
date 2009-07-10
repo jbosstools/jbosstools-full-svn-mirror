@@ -69,11 +69,11 @@ import org.w3c.dom.Text;
  */
 public class MenuCreationHelper {
 
-	public static final String CUT_ACTION = "Cut";
+	public static final String CUT_ACTION = VpeUIMessages.MenuCreationHelper_Cut;
 	public static final String COPY_ACTION = JFaceResources.getString("copy"); //$NON-NLS-1$
-	public static final String PASTE_ACTION = "Paste";
+	public static final String PASTE_ACTION = VpeUIMessages.MenuCreationHelper_Paste;
 	public static final String DELETE_ACTION = JFaceResources.getString("Delete"); //$NON-NLS-1$
-	public static final String TEST_ACTION = "Test";
+	public static final String TEST_ACTION = VpeUIMessages.MenuCreationHelper_Test;
 
 	private VpeDomMapping domMapping = null;
 	private VpePageContext pageContext = null;

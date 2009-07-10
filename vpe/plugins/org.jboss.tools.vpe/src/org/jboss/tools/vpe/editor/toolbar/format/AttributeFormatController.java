@@ -148,7 +148,7 @@ abstract public class AttributeFormatController extends FormatController {
 			Element element = (Element)node;
 			String name = data.getName();
 			if(name==null) {
-				String message = "Wrong vpe template for tag " + node.getNodeName() + ". Attribute 'name' or 'type' of <vpe:formatAttribute> must be set.";
+				String message = "Wrong vpe template for tag " + node.getNodeName() + ". Attribute 'name' or 'type' of <vpe:formatAttribute> must be set."; //$NON-NLS-1$ //$NON-NLS-2$
 				VpePlugin.getDefault().getLog().log(new Status(Status.ERROR, VpePlugin.PLUGIN_ID, Status.OK, message, new Exception(message)));
 			}
 			element.setAttribute(name, ""); //$NON-NLS-1$

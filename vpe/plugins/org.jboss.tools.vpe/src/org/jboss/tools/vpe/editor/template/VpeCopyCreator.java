@@ -30,7 +30,7 @@ import org.w3c.dom.NodeList;
 
 public class VpeCopyCreator extends VpeAbstractCreator {
 	
-	private static String STYLE_ATTR_NAME = "style";
+	private static String STYLE_ATTR_NAME = "style"; //$NON-NLS-1$
 	
 	private boolean caseSensitive;
 	private HashSet attrSet;
@@ -49,7 +49,7 @@ public class VpeCopyCreator extends VpeAbstractCreator {
 		if (attrsAttr != null) {
 			attrSet = new HashSet();
 			String attrsValue = attrsAttr.getValue();
-			String[] attrsArr = attrsValue.split(",");
+			String[] attrsArr = attrsValue.split(","); //$NON-NLS-1$
 			for (int i = 0; i < attrsArr.length; i++) {
 				String attr = attrsArr[i].trim();
 				if (attr.length() > 0) {

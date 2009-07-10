@@ -28,6 +28,6 @@ public class VpeFunctionParentName extends VpeFunction {
 		
 		String parentTemplateName = VpeTemplateManager.getInstance().getTemplateName(pageContext, parentNode);
 			
-		return new VpeValue(parentTemplateName != null ? parentTemplateName : "");
+		return new VpeValue(parentTemplateName != null ? parentTemplateName : ""); //$NON-NLS-1$
 	}
 }

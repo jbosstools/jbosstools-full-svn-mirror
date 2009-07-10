@@ -10,12 +10,13 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
-import org.w3c.dom.Document;
+import java.text.MessageFormat;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -51,9 +52,9 @@ public class VpeTextPseudoContentCreator extends VpePseudoContentCreator {
 				if (name == null || attrName.length() <= 0) {
 					name = ((Element)sourceContainer).getNodeName();
 				}
-				text = "Insert Content for " + name;
+				text = MessageFormat.format(VpeUIMessages.VpeTextPseudoContentCreator_InsertContentFor, name);
 			} else {
-				text = "Insert Content";
+				text = VpeUIMessages.VpeTextPseudoContentCreator_InsertContent;
 			}
 		}
 		nsIDOMText newTextNode = visualDocument.createTextNode(text);

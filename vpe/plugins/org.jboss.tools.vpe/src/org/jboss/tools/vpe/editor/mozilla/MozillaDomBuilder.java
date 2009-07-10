@@ -40,7 +40,7 @@ public class MozillaDomBuilder {
 		int len = nodes.getLength();
 		for (int i = 0; i < len; i++) {
 			Node node = nodes.item(i);
-			if (node.getNodeType() == Node.ELEMENT_NODE && "BODY".equalsIgnoreCase(node.getNodeName())) {
+			if (node.getNodeType() == Node.ELEMENT_NODE && "BODY".equalsIgnoreCase(node.getNodeName())) { //$NON-NLS-1$
 				return (Element)node;
 			}
 		}

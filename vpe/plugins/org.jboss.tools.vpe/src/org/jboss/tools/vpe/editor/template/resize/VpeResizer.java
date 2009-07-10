@@ -33,16 +33,16 @@ import org.w3c.dom.NodeList;
  */
 public class VpeResizer {
 	/** TAG_WIDTH */
-	private static final String TAG_WIDTH  = VpeTemplateManager.VPE_PREFIX + "width";
+	private static final String TAG_WIDTH  = VpeTemplateManager.VPE_PREFIX + "width"; //$NON-NLS-1$
 	
 	/** TAG_HEIGHT */
-	private static final String TAG_HEIGHT = VpeTemplateManager.VPE_PREFIX + "height";
+	private static final String TAG_HEIGHT = VpeTemplateManager.VPE_PREFIX + "height"; //$NON-NLS-1$
 	
-	private static final String ATTRIBUTE_WIDTH                     = "width-attr";
-	private static final String ATTRIBUTE_HEIGHT                    = "height-attr";
-	private static final String ATTRIBUTE_TAG_XPATH                 = "tag-xpath";
-	private static final String ATTRIBUTE_TEST                      = "test";
-	private static final String ATTRIBUTE_DISABLE_ABSOLUTE_POSITION = "disable-absolute-position";
+	private static final String ATTRIBUTE_WIDTH                     = "width-attr"; //$NON-NLS-1$
+	private static final String ATTRIBUTE_HEIGHT                    = "height-attr"; //$NON-NLS-1$
+	private static final String ATTRIBUTE_TAG_XPATH                 = "tag-xpath"; //$NON-NLS-1$
+	private static final String ATTRIBUTE_TEST                      = "test"; //$NON-NLS-1$
+	private static final String ATTRIBUTE_DISABLE_ABSOLUTE_POSITION = "disable-absolute-position"; //$NON-NLS-1$
 	
 	private TemplateResizeData horizontalData;
 	private TemplateResizeData verticalData;
@@ -176,14 +176,14 @@ public class VpeResizer {
 			Element ancestor = (Element)SourceDomUtil.getAncestorNode(sourceElement, resizeData.getTagXpath());
 			if(ancestor != null){
 				if(sizeAttribute.indexOf(VpeStyleUtil.DOT_STRING) < 0){
-					ancestor.setAttribute(sizeAttribute, ""+size);
+					ancestor.setAttribute(sizeAttribute, ""+size); //$NON-NLS-1$
 				}else{
 					VpeStyleUtil.setParameterInStyle(ancestor, sizeAttribute, size+VpeStyleUtil.PX_STRING);					
 				}
 			}
 		}else{
 			if(sizeAttribute.indexOf(VpeStyleUtil.DOT_STRING) < 0){
-				sourceElement.setAttribute(sizeAttribute, ""+size);
+				sourceElement.setAttribute(sizeAttribute, ""+size); //$NON-NLS-1$
 			}else{
 				VpeStyleUtil.setParameterInStyle(sourceElement, sizeAttribute, size+VpeStyleUtil.PX_STRING);					
 			}

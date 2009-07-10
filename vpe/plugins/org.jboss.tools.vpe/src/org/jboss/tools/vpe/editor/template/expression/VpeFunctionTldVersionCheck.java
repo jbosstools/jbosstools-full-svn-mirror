@@ -170,12 +170,12 @@ public class VpeFunctionTldVersionCheck extends VpeFunction{
 	 * version-comparator like [<a href="http://maven.apache.org/ref/current/maven-artifact/apidocs/org/apache/maven/artifact/versioning/package-summary.html">http://maven.apache.org/ref/current/maven-artifact/apidocs/org/apache/maven/artifact/versioning/package-summary.html</a>] 
 	 */
 	private double stringVersionToDouble(String sVersion) {
-		String tokens[] = sVersion.split("\\.");
+		String tokens[] = sVersion.split("\\."); //$NON-NLS-1$
 
 		String parseableVersion;
 		switch (tokens.length) {
 		case 0:
-			parseableVersion = "0"; //$NON-NLS-N$
+			parseableVersion = "0"; //$NON-NLS-1$
 			break;
 		case 1:
 			parseableVersion = tokens[0];

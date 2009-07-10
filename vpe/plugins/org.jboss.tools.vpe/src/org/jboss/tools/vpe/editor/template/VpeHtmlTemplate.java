@@ -61,11 +61,11 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	public static final int PANEL_LAYOUT = 17;
 	public static final int TYPE_A = 18;
 
-	static final String ATTR_STYLE = "style";
-	public static final String ATTR_STYLE_MODIFY_NAME = "-moz-user-modify";
-	public static final String ATTR_STYLE_MODIFY_READ_WRITE_VALUE = "read-write";
-	public static final String ATTR_STYLE_MODIFY_READ_ONLY_VALUE = "read-only";
-	static final String ATTR_CURSOR_POINTER = "cursor:pointer;";
+	static final String ATTR_STYLE = "style"; //$NON-NLS-1$
+	public static final String ATTR_STYLE_MODIFY_NAME = "-moz-user-modify"; //$NON-NLS-1$
+	public static final String ATTR_STYLE_MODIFY_READ_WRITE_VALUE = "read-write"; //$NON-NLS-1$
+	public static final String ATTR_STYLE_MODIFY_READ_ONLY_VALUE = "read-only"; //$NON-NLS-1$
+	static final String ATTR_CURSOR_POINTER = "cursor:pointer;"; //$NON-NLS-1$
 
 	private int type = TYPE_NONE;
 	private VpeCreator creator = null;
@@ -330,9 +330,9 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		}
 	}
 
-	private static final String VIEW_TAGNAME = "view";
-	private static final String LOCALE_ATTRNAME = "locale";
-	private static final String PREFIX_SEPARATOR = ":";
+	private static final String VIEW_TAGNAME = "view"; //$NON-NLS-1$
+	private static final String LOCALE_ATTRNAME = "locale"; //$NON-NLS-1$
+	private static final String PREFIX_SEPARATOR = ":"; //$NON-NLS-1$
 
 	private String getPageLocale(VpePageContext pageContext, IDOMElement sourceElement) {
 
@@ -341,7 +341,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 			TaglibData fTD = null;
 			for (int i = 0; i < taglibs.size(); i++) {
 				TaglibData td = (TaglibData)taglibs.get(i);
-				if ("http://java.sun.com/jsf/core".equals(td.getUri())) fTD = td;
+				if ("http://java.sun.com/jsf/core".equals(td.getUri())) fTD = td; //$NON-NLS-1$
 			}
 	
 			if (fTD == null || fTD.getPrefix() == null || fTD.getPrefix().length() == 0) return null;
@@ -435,22 +435,22 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	}
 	
 	static void makeModify(nsIDOMElement visualElement, boolean modify) {
-		String s = ATTR_STYLE_MODIFY_NAME + ":" + 
+		String s = ATTR_STYLE_MODIFY_NAME + ":" +  //$NON-NLS-1$
 				(modify ? ATTR_STYLE_MODIFY_READ_WRITE_VALUE : ATTR_STYLE_MODIFY_READ_ONLY_VALUE);
 		String style = visualElement.getAttribute(ATTR_STYLE);
 		if (style != null && style.length() > 0) {
 			if (style.indexOf(ATTR_STYLE_MODIFY_NAME) >= 0) {
-				String[] items =  style.split(";");
-				style = "";
+				String[] items =  style.split(";"); //$NON-NLS-1$
+				style = ""; //$NON-NLS-1$
 				for (int i = 0; i < items.length; i++) {
-					String[] item = items[i].split(":");
+					String[] item = items[i].split(":"); //$NON-NLS-1$
 					if (ATTR_STYLE_MODIFY_NAME.trim().equalsIgnoreCase(item[0].trim())) {
 						item[1] = modify ? ATTR_STYLE_MODIFY_READ_WRITE_VALUE : ATTR_STYLE_MODIFY_READ_ONLY_VALUE;
 					}
-					style += item[0] + ":" + item[1] + ";";
+					style += item[0] + ":" + item[1] + ";"; //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			} else {
-				if (!";".equals(style.substring(style.length() - 1)))  style += ";";
+				if (!";".equals(style.substring(style.length() - 1)))  style += ";"; //$NON-NLS-1$ //$NON-NLS-2$
 				style += s;
 			}
 		} else {
@@ -561,7 +561,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	@Override
 	public Node getNodeForUpdate(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
 		// TODO Sergey Vasilyev redevelop JSF's facet template
-		if (sourceNode.getNodeName().endsWith(":facet")) {
+		if (sourceNode.getNodeName().endsWith(":facet")) { //$NON-NLS-1$
 			return sourceNode.getParentNode();
 		}
 		

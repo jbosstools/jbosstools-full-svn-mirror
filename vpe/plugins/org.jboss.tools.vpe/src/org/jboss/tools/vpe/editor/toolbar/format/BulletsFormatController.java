@@ -20,7 +20,7 @@ import org.jboss.tools.vpe.editor.template.textformating.FormatAttributeData;
  */
 public class BulletsFormatController extends ToolItemFormatController {
 
-	public static String TYPE = "BulletsFormat";
+	public static String TYPE = "BulletsFormat"; //$NON-NLS-1$
 
 	/**
 	 * @param manager

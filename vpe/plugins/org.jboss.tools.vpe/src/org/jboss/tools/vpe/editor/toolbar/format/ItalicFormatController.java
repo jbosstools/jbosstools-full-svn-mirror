@@ -20,11 +20,11 @@ import org.jboss.tools.vpe.editor.template.textformating.FormatAttributeData;
  */
 public class ItalicFormatController extends ToolItemFormatController {
 
-	public static String TYPE = "ItalicFormat";
+	public static String TYPE = "ItalicFormat"; //$NON-NLS-1$
 
-	private static String STYLE_PROPERTY_NAME = "FONT-STYLE";
-	private static String STYLE_PROPERTY_ITALIC_VALUE = "italic";
-	private static String STYLE_PROPERTY_NORMAL_VALUE = "normal";
+	private static String STYLE_PROPERTY_NAME = "FONT-STYLE"; //$NON-NLS-1$
+	private static String STYLE_PROPERTY_ITALIC_VALUE = "italic"; //$NON-NLS-1$
+	private static String STYLE_PROPERTY_NORMAL_VALUE = "normal"; //$NON-NLS-1$
 
 	/**
 	 * @param manager

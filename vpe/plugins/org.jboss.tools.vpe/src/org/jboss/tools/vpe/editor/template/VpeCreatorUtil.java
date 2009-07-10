@@ -37,14 +37,14 @@ public class VpeCreatorUtil {
 
 	public static boolean isFacet(Node node) {
 		if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
-			return "facet".equals(node.getLocalName());
+			return "facet".equals(node.getLocalName()); //$NON-NLS-1$
 		}
 		return false;
 	}
 
 	public static String getFacetName(Node node) {
 		if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
-			return ((Element)node).getAttribute("name");
+			return ((Element)node).getAttribute("name"); //$NON-NLS-1$
 		}
 		return null;
 	}
@@ -52,15 +52,15 @@ public class VpeCreatorUtil {
 	public static int getFacetType(Node node) {
 		String value = getFacetName(node);
 		if (value != null) {
-			if ("header".equals(value)) {
+			if ("header".equals(value)) { //$NON-NLS-1$
 				return FACET_TYPE_HEADER;
-			} else if ("footer".equals(value)) {
+			} else if ("footer".equals(value)) { //$NON-NLS-1$
 				return FACET_TYPE_FOOTER;
-			} else if ("body".equals(value)) {
+			} else if ("body".equals(value)) { //$NON-NLS-1$
 				return FACET_TYPE_BODY;
-			} else if ("navigation".equals(value)) {
+			} else if ("navigation".equals(value)) { //$NON-NLS-1$
 				return FACET_TYPE_NAVIGATION;
-			} else if ("caption".equals(value)) {
+			} else if ("caption".equals(value)) { //$NON-NLS-1$
 				return FACET_TYPE_CAPTION;
 			}
 		}
@@ -69,7 +69,7 @@ public class VpeCreatorUtil {
 
 	public static boolean isInclude(Node node) {
 		if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
-			return node.getNodeName().indexOf("jsp:include") >=0 || node.getNodeName().indexOf("jsp:directive.include")>=0;
+			return node.getNodeName().indexOf("jsp:include") >=0 || node.getNodeName().indexOf("jsp:directive.include")>=0; //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		return false;
 	}
@@ -91,9 +91,9 @@ public class VpeCreatorUtil {
 
 	public static Document getIncludeDocument(Node includeNode, VpePageContext pageContext) {
 		if (isInclude(includeNode)) {
-			String pageName = ((Element)includeNode).getAttribute("page");
+			String pageName = ((Element)includeNode).getAttribute("page"); //$NON-NLS-1$
 			if (pageName == null) {
-				pageName = ((Element)includeNode).getAttribute("file");
+				pageName = ((Element)includeNode).getAttribute("file"); //$NON-NLS-1$
 			}
 			if (pageName != null) {
 				IDOMModel wtpModel = getWtpModelForRead(pageName, pageContext);

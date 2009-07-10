@@ -103,7 +103,7 @@ public class VpeSelectionBuilder {
 					visualSelectedNode = visualNode;
 				}
 				if (VpeDebug.PRINT_VISUAL_SELECTION_EVENT) {
-					System.out.println("      visualNode: " + visualSelectedNode.getNodeName() + "(" + visualSelectedNode + ")  sourceNode: " + (sourceNode == null ? null : sourceNode.getNodeName()) + "  node: " + node);
+					System.out.println("      visualNode: " + visualSelectedNode.getNodeName() + "(" + visualSelectedNode + ")  sourceNode: " + (sourceNode == null ? null : sourceNode.getNodeName()) + "  node: " + node); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				}
 				if (sourceNode != null) {
 					switch (visualSelectedNode.getNodeType()) {
@@ -664,7 +664,7 @@ public class VpeSelectionBuilder {
 			}
 			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 				System.out.println("setVisualSelection"); //$NON-NLS-1$
-				System.out.println("                     visualAnchorNode: " + visualAnchorNode.getNodeName() + "(" + visualAnchorNode + ")  visualAnchorContainer: " + visualAnchorContainer.getNodeName() + "(" + visualAnchorContainer + ")  visualAnchorOffset: " + visualAnchorOffset +  "  anchorStartFlag: " + anchorStartFlag); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				System.out.println("                     visualAnchorNode: " + visualAnchorNode.getNodeName() + "(" + visualAnchorNode + ")  visualAnchorContainer: " + visualAnchorContainer.getNodeName() + "(" + visualAnchorContainer + ")  visualAnchorOffset: " + visualAnchorOffset +  "  anchorStartFlag: " + anchorStartFlag); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 			}
 			
 			nsIDOMNode visualFocusContainer = null;
@@ -705,12 +705,12 @@ public class VpeSelectionBuilder {
 				if (!focusStartFlag) visualFocusOffset++;
 			}
 			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-				System.out.println("                     visualFocusNode: " +
+				System.out.println("                     visualFocusNode: " + //$NON-NLS-1$
 						(visualFocusNode != null ? 
-								visualFocusNode.getNodeName() + "(" + visualFocusNode + ")" : null) + 
-						"  visualFocusContainer: " +
+								visualFocusNode.getNodeName() + "(" + visualFocusNode + ")" : null) +  //$NON-NLS-1$ //$NON-NLS-2$
+						"  visualFocusContainer: " + //$NON-NLS-1$
 						(visualFocusContainer != null ?
-								visualFocusContainer.getNodeName() + "(" + visualFocusContainer + ") visualFocusOffset: " + visualFocusOffset + "  focusStartFlag: " + focusStartFlag : null));
+								visualFocusContainer.getNodeName() + "(" + visualFocusContainer + ") visualFocusOffset: " + visualFocusOffset + "  focusStartFlag: " + focusStartFlag : null)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
 			
 // Ed tmp

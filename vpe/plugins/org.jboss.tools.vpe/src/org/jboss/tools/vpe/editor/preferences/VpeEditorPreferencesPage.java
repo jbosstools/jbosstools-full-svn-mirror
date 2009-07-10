@@ -25,7 +25,7 @@ import org.jboss.tools.vpe.messages.VpeUIMessages;
 public class VpeEditorPreferencesPage extends TabbedPreferencesPage implements IWorkbenchPreferencePage {
 
 	
-	public static final String ID = "org.jboss.tools.vpe.editor"; 
+	public static final String ID = "org.jboss.tools.vpe.editor";  //$NON-NLS-1$
 	public VpeEditorPreferencesPage() {
 		addPreferencePage(new GeneralPage());
 		addPreferencePage(new TemplatesPreferencePage());

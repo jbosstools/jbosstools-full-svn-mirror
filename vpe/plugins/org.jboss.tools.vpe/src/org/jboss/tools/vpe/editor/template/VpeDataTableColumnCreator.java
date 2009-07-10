@@ -62,7 +62,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 				}
 				creatorInfo.addChildrenInfo(info);
 				
-				String styleClass = "";
+				String styleClass = ""; //$NON-NLS-1$
 				String tableHeaderClass = getNodeAttrValue(sourceNode.getParentNode(), VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS);
 				String columnHeaderClass = getNodeAttrValue(sourceNode, VpeTemplateManager.ATTR_DATATABLE_HEADER_CLASS);
 				if (null != columnHeaderClass) {
@@ -80,7 +80,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 				}
 				creatorInfo.addChildrenInfo(info);
 				
-				styleClass = "";
+				styleClass = ""; //$NON-NLS-1$
 				String tableFooterClass = getNodeAttrValue(sourceNode.getParentNode(), VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS);
 				String columnFooterClass = getNodeAttrValue(sourceNode, VpeTemplateManager.ATTR_DATATABLE_FOOTER_CLASS);
 				if (null != columnFooterClass) {
@@ -100,9 +100,9 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 					for (int i = 0; i < cnt; i++) {
 						Node node = list.item(i);
 						if (node.getNodeType() == Node.ELEMENT_NODE) {
-							boolean isFacet = namesIsEquals("facet", node.getNodeName());
-							Node attrName = node.getAttributes().getNamedItem("name");
-							if (!isFacet || (attrName != null && !"header".equals(attrName.getNodeValue()) && !"footer".equals(attrName.getNodeValue()))) {
+							boolean isFacet = namesIsEquals("facet", node.getNodeName()); //$NON-NLS-1$
+							Node attrName = node.getAttributes().getNamedItem("name"); //$NON-NLS-1$
+							if (!isFacet || (attrName != null && !"header".equals(attrName.getNodeValue()) && !"footer".equals(attrName.getNodeValue()))) { //$NON-NLS-1$ //$NON-NLS-2$
 								info.addSourceChild(node);
 								useTextNodeAsBody = false;
 							}
@@ -133,7 +133,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 		int index = 0;
 		Node prevNode = sourceNode.getPreviousSibling();
 		while (prevNode != null) {
-			if((sourceNode.getNodeName().indexOf("column") >= 0 || sourceNode.getNodeName().indexOf("treeColumn") >= 0) && (prevNode.getNodeName().indexOf("column") >= 0 || prevNode.getNodeName().indexOf("treeColumn") >= 0)){
+			if((sourceNode.getNodeName().indexOf("column") >= 0 || sourceNode.getNodeName().indexOf("treeColumn") >= 0) && (prevNode.getNodeName().indexOf("column") >= 0 || prevNode.getNodeName().indexOf("treeColumn") >= 0)){ //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				index++;
 			}else if (prevNode.getNodeName().equals(sourceNode.getNodeName())) {
 				index++;
@@ -179,7 +179,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 	}
 
 	private static boolean namesIsEquals(String name1, String name2) {
-		int ind = name2.indexOf(":");
+		int ind = name2.indexOf(":"); //$NON-NLS-1$
 		return ind < name2.length() && name1.equals(name2.substring(ind >= 0 ? ind + 1 : 0));
 	}
 	
@@ -197,7 +197,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 			if ((null != classes) && (classes.length > 0)) {
 				int classesCount = classes.length;
 				int columnCount = index + 1;
-				String className = "";
+				String className = ""; //$NON-NLS-1$
 
 				// Finds correct css style class index
 				// for the column
@@ -209,7 +209,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 					className = classes[classesIndex];
 				}
 				if (className.trim().length() > 0) {
-					cell.setAttribute("class", className);
+					cell.setAttribute("class", className); //$NON-NLS-1$
 				}
 			}
 
@@ -225,7 +225,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 	 */
 	private String[] splitClasses(String value) {
 		if (value != null) {
-			return value.split(",");
+			return value.split(","); //$NON-NLS-1$
 		}
 		return null;
 	}
@@ -239,7 +239,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 	private void setCellClass(nsIDOMElement cell, String className) {
 		if (cell != null) {
 			if (className != null && className.trim().length() > 0) {
-				cell.setAttribute("class", className);
+				cell.setAttribute("class", className); //$NON-NLS-1$
 			}
 		}
 	}

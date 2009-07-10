@@ -311,7 +311,7 @@ public class VpeDomMapping {
 	
 	//for debug
 	public void printMapping() {
-		System.out.println("Source DOM Mapping ------------------------------------");
+		System.out.println("Source DOM Mapping ------------------------------------"); //$NON-NLS-1$
 		Set entrySet = sourceMap.entrySet();
 		Iterator iter = entrySet.iterator();
 		while (iter.hasNext()) {
@@ -319,9 +319,9 @@ public class VpeDomMapping {
 			VpeNodeMapping nodeMapping = (VpeNodeMapping)entry.getValue(); 
 			Node sourceNode = nodeMapping.getSourceNode();
 			nsIDOMNode visualNode = nodeMapping.getVisualNode(); 
-			System.out.println("sourceNode: " + sourceNode.getNodeName() + " (" + sourceNode.hashCode() + ")    visualNode: " + (visualNode != null ? visualNode.getNodeName() + " (" + visualNode.hashCode() + ")" : null));
+			System.out.println("sourceNode: " + sourceNode.getNodeName() + " (" + sourceNode.hashCode() + ")    visualNode: " + (visualNode != null ? visualNode.getNodeName() + " (" + visualNode.hashCode() + ")" : null)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		}
-		System.out.println("Visual DOM Mapping ------------------------------------");
+		System.out.println("Visual DOM Mapping ------------------------------------"); //$NON-NLS-1$
 		entrySet = visualMap.entrySet();
 		iter = entrySet.iterator();
 		while (iter.hasNext()) {
@@ -329,7 +329,7 @@ public class VpeDomMapping {
 			VpeNodeMapping nodeMapping = (VpeNodeMapping)entry.getValue(); 
 			Node sourceNode = nodeMapping.getSourceNode();
 			nsIDOMNode visualNode = nodeMapping.getVisualNode(); 
-			System.out.println("sourceNode: " + (sourceNode != null ? sourceNode.getNodeName() + " (" + sourceNode.hashCode() + ")" : null) + "    visualNode: " + visualNode.getNodeName() + " (" + visualNode.hashCode() + ")");
+			System.out.println("sourceNode: " + (sourceNode != null ? sourceNode.getNodeName() + " (" + sourceNode.hashCode() + ")" : null) + "    visualNode: " + visualNode.getNodeName() + " (" + visualNode.hashCode() + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 		}
 	}
 

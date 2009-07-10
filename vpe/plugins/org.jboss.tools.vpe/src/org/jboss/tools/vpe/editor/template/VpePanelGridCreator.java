@@ -390,7 +390,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 			nsIDOMElement visualRow = visualDocument.createElement(HTML.TAG_TR);
 			visualHead.appendChild(visualRow);
 			nsIDOMElement visualCell = visualDocument.createElement(cellTag);
-			visualCell.setAttribute(HTML.ATTR_COLSPAN, "" + tableSize);
+			visualCell.setAttribute(HTML.ATTR_COLSPAN, "" + tableSize); //$NON-NLS-1$
 			if (headerClassExpr != null && header.getParentNode() != null) {
 				String headerClass = headerClassExpr.exec(pageContext,
 						header.getParentNode()).stringValue();

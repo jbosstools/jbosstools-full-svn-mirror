@@ -24,15 +24,15 @@ import org.w3c.dom.Text;
 
 
 public class VpeDnd {
-	static final String TAG_DRAG            = VpeTemplateManager.VPE_PREFIX + "drag";
-	static final String TAG_DROP            = VpeTemplateManager.VPE_PREFIX + "drop";
-	static final String TAG_CONTAINER_CHILD = VpeTemplateManager.VPE_PREFIX + "container-child";
+	static final String TAG_DRAG            = VpeTemplateManager.VPE_PREFIX + "drag"; //$NON-NLS-1$
+	static final String TAG_DROP            = VpeTemplateManager.VPE_PREFIX + "drop"; //$NON-NLS-1$
+	static final String TAG_CONTAINER_CHILD = VpeTemplateManager.VPE_PREFIX + "container-child"; //$NON-NLS-1$
 	
-	static final String ATTRIBUTE_START_ENABLE  = "start-enable";
-	static final String ATTRIBUTE_CONTAINER     = "container";
-	static final String ATTRIBUTE_TAG_NAME      = "tag-name";
+	static final String ATTRIBUTE_START_ENABLE  = "start-enable"; //$NON-NLS-1$
+	static final String ATTRIBUTE_CONTAINER     = "container"; //$NON-NLS-1$
+	static final String ATTRIBUTE_TAG_NAME      = "tag-name"; //$NON-NLS-1$
 	
-	static final String STRING_YES              = "yes";
+	static final String STRING_YES              = "yes"; //$NON-NLS-1$
 	
 	private boolean dragEnabled = false;
 	private boolean isContainer = false;

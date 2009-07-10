@@ -20,11 +20,11 @@ import org.jboss.tools.vpe.editor.template.textformating.FormatAttributeData;
  */
 public class BoldFormatController extends ToolItemFormatController {
 
-	public static String TYPE = "BoldFormat";
+	public static String TYPE = "BoldFormat"; //$NON-NLS-1$
 
-	private static String STYLE_PROPERTY_NAME = "FONT-WEIGHT";
-	private static String STYLE_PROPERTY_BOLD_VALUE = "bold";
-	private static String STYLE_PROPERTY_NORMAL_VALUE = "normal";
+	private static String STYLE_PROPERTY_NAME = "FONT-WEIGHT"; //$NON-NLS-1$
+	private static String STYLE_PROPERTY_BOLD_VALUE = "bold"; //$NON-NLS-1$
+	private static String STYLE_PROPERTY_NORMAL_VALUE = "normal"; //$NON-NLS-1$
 
 	/**
 	 * @param manager

@@ -25,21 +25,21 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class VpeCommentCreator extends VpeAbstractCreator implements VpeOutputComment {
-	public static final String SIGNATURE_VPE_COMMENT = ":vpe:comment";
-	private static final String COMMENT_STYLE = "font-style:italic; color:green";
-	private static final String COMMENT_PREFIX = "";
-	private static final String COMMENT_SUFFIX = "";
+	public static final String SIGNATURE_VPE_COMMENT = ":vpe:comment"; //$NON-NLS-1$
+	private static final String COMMENT_STYLE = "font-style:italic; color:green"; //$NON-NLS-1$
+	private static final String COMMENT_PREFIX = ""; //$NON-NLS-1$
+	private static final String COMMENT_SUFFIX = ""; //$NON-NLS-1$
 
 	VpeCommentCreator(Element element, VpeDependencyMap dependencyMap, boolean caseSensitive) {
 		dependencyMap.setCreator(this, SIGNATURE_VPE_COMMENT);
 	}
 
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
-		if(!"yes".equals(VpePreference.SHOW_COMMENTS.getValue())) {
+		if(!"yes".equals(VpePreference.SHOW_COMMENTS.getValue())) { //$NON-NLS-1$
 			return null;
 		}
 		nsIDOMElement div = visualDocument.createElement(HTML.TAG_DIV);
-		div.setAttribute("style", COMMENT_STYLE);
+		div.setAttribute("style", COMMENT_STYLE); //$NON-NLS-1$
 		String value = COMMENT_PREFIX + sourceNode.getNodeValue() + COMMENT_SUFFIX;
 		nsIDOMText text = visualDocument.createTextNode(value);
 		div.appendChild(text);
@@ -48,7 +48,7 @@ public class VpeCommentCreator extends VpeAbstractCreator implements VpeOutputCo
 	}
 
 	public void setOutputCommentValue(VpePageContext pageContext, Comment sourceComment, Map visualNodeMap) {
-		String commentValue = "";
+		String commentValue = ""; //$NON-NLS-1$
 		nsIDOMElement div = (nsIDOMElement)visualNodeMap.get(this);
 		if (div != null) {
 			nsIDOMNodeList children = div.getChildNodes();

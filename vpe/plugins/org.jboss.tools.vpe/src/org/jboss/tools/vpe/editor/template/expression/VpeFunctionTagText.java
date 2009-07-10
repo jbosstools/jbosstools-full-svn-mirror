@@ -12,7 +12,6 @@ package org.jboss.tools.vpe.editor.template.expression;
 
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMText;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -20,6 +19,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeFunctionTagText extends VpeFunction {
 
+	@SuppressWarnings("nls")
 	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
 		String tagText = "";
 		

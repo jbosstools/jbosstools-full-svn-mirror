@@ -19,6 +19,7 @@ public class TemplateResizeData {
 	
 	private TemplateResizeData next=null;
 	
+	@SuppressWarnings("nls")
 	public TemplateResizeData(String attribute, String position, String xPath, String test, String enabledString){
 		sizeAttribute = attribute;
 		if("".equals(sizeAttribute)) sizeAttribute = null;

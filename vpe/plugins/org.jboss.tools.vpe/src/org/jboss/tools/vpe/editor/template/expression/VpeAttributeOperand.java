@@ -10,7 +10,6 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template.expression;
 
-import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -29,7 +28,7 @@ public class VpeAttributeOperand extends VpeOperand {
 	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
 		String value = null; 
 		value = ((Element)sourceNode).getAttribute(name);
-		return new VpeValue((value == null ? "" : value));
+		return new VpeValue((value == null ? "" : value)); //$NON-NLS-1$
 	}
 	
 	public String getAttributeName() {

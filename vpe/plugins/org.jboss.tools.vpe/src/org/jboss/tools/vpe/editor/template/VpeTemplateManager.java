@@ -998,7 +998,7 @@ public class VpeTemplateManager {
 			String nameSpaceIdentifyer, Exception e) {
 		String message = e.getMessage();
 		if(message==null) {
-			message = "Can't get VPE template class: " + templateClassName + ", from bundle:" + nameSpaceIdentifyer; //$NON-NLS-1$
+			message = "Can't get VPE template class: " + templateClassName + ", from bundle:" + nameSpaceIdentifyer; //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		VpePlugin.getPluginLog().logError(message, e);
 	}

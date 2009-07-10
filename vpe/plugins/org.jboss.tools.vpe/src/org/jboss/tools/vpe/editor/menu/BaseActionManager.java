@@ -32,6 +32,7 @@ import org.eclipse.wst.xml.core.internal.contentmodel.modelqueryimpl.ModelQueryA
 import org.eclipse.wst.xml.core.internal.contentmodel.modelqueryimpl.ModelQueryImpl;
 import org.eclipse.wst.xml.ui.internal.actions.MenuBuilder;
 import org.eclipse.wst.xml.ui.internal.util.XMLCommonResources;
+import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
@@ -49,13 +50,11 @@ public abstract class BaseActionManager {
 
 	protected static ITextNodeSplitter textNodeSplitter;
 
-	public static final String INSERT_AROUND_MENU = "Insert Around";
-	public static final String INSERT_BEFORE_MENU = "Insert Before";
-	public static final String INSERT_AFTER_MENU = "Insert After";
-	public static final String REPLACE_TAG_MENU = "Replace With";
-	public static final String INSERT_TAG_MENU = "Insert Tag";
-	
-
+	public static final String INSERT_AROUND_MENU = VpeUIMessages.BaseActionManager_InsertAround;
+	public static final String INSERT_BEFORE_MENU = VpeUIMessages.BaseActionManager_InsertBefore;
+	public static final String INSERT_AFTER_MENU = VpeUIMessages.BaseActionManager_InsertAfter;
+	public static final String REPLACE_TAG_MENU = VpeUIMessages.BaseActionManager_ReplaceWith;
+	public static final String INSERT_TAG_MENU = VpeUIMessages.BaseActionManager_InsertTag;
 
 	static public void setTextNodeSplitter(ITextNodeSplitter splitter) {
 		textNodeSplitter = splitter;
@@ -336,9 +335,9 @@ public abstract class BaseActionManager {
 			Element parentElement, CMElementDeclaration parentEd, int index) {
 		if (isUnconstrainedActionAllowed()) {
 			if (parentEd == null
-					|| parentEd.getProperty("isInferred") == Boolean.TRUE 
+					|| parentEd.getProperty("isInferred") == Boolean.TRUE  //$NON-NLS-1$
 					|| ( modelQuery.getEditMode() != ModelQuery.EDIT_MODE_CONSTRAINED_STRICT 
-							&& isElementAllowed(parentEd) )) { //$NON-NLS-1$
+							&& isElementAllowed(parentEd) )) {
 				contributeAction(menu, createAddElementAction(parentElement,
 						null, index, 2));
 			}
@@ -380,8 +379,8 @@ public abstract class BaseActionManager {
 			Element parentElement, CMElementDeclaration parentEd) {
 		if (isUnconstrainedActionAllowed()) {
 			if (parentEd == null
-					|| parentEd.getProperty("isInferred") == Boolean.TRUE
-					|| modelQuery.getEditMode() != ModelQuery.EDIT_MODE_CONSTRAINED_STRICT) { //$NON-NLS-1$
+					|| parentEd.getProperty("isInferred") == Boolean.TRUE //$NON-NLS-1$
+					|| modelQuery.getEditMode() != ModelQuery.EDIT_MODE_CONSTRAINED_STRICT) {
 				contributeAction(menu, createAddAttributeAction(parentElement,
 						null));
 			}
@@ -542,14 +541,14 @@ public abstract class BaseActionManager {
 
 	static HashSet noContainerTags = new HashSet();
 	static {
-		noContainerTags.add("basefont");
-		noContainerTags.add("bgsound");
-		noContainerTags.add("br");
-		noContainerTags.add("img");
-		noContainerTags.add("input");
-		noContainerTags.add("isindex");
-		noContainerTags.add("script");
-		noContainerTags.add("wbr");
+		noContainerTags.add("basefont"); //$NON-NLS-1$
+		noContainerTags.add("bgsound"); //$NON-NLS-1$
+		noContainerTags.add("br"); //$NON-NLS-1$
+		noContainerTags.add("img"); //$NON-NLS-1$
+		noContainerTags.add("input"); //$NON-NLS-1$
+		noContainerTags.add("isindex"); //$NON-NLS-1$
+		noContainerTags.add("script"); //$NON-NLS-1$
+		noContainerTags.add("wbr"); //$NON-NLS-1$
 	}
 
 	public static class ActionHelper extends ModelQueryActionHelper {

@@ -55,14 +55,14 @@ public class VpeDataTableElements {
 					}
 					
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
-						boolean isColumn = node.getNodeName().indexOf(":column") > 0 || node.getNodeName().indexOf(":treeColumn") > 0;
-						boolean isFacet = !isColumn && node.getNodeName().indexOf(":facet") > 0;
-						Node attrName = node.getAttributes().getNamedItem("name");
-						if (!isColumn && isFacet && attrName != null && "header".equals(attrName.getNodeValue())) {
+						boolean isColumn = node.getNodeName().indexOf(":column") > 0 || node.getNodeName().indexOf(":treeColumn") > 0; //$NON-NLS-1$ //$NON-NLS-2$
+						boolean isFacet = !isColumn && node.getNodeName().indexOf(":facet") > 0; //$NON-NLS-1$
+						Node attrName = node.getAttributes().getNamedItem("name"); //$NON-NLS-1$
+						if (!isColumn && isFacet && attrName != null && "header".equals(attrName.getNodeValue())) { //$NON-NLS-1$
 							tableHeader = node;
-						} else if (!isColumn && isFacet && attrName != null && "footer".equals(attrName.getNodeValue())) {
+						} else if (!isColumn && isFacet && attrName != null && "footer".equals(attrName.getNodeValue())) { //$NON-NLS-1$
 							tableFooter = node;
-						} else if (!isColumn && isFacet && attrName != null && "caption".equals(attrName.getNodeValue())) {
+						} else if (!isColumn && isFacet && attrName != null && "caption".equals(attrName.getNodeValue())) { //$NON-NLS-1$
 							tableCaption = node;
 						} else if (isColumn) {
 							if (columns == null) columns = new ArrayList<SourceColumnElements>();
@@ -188,11 +188,11 @@ public class VpeDataTableElements {
 				for (int i = 0; i < cnt; i++) {
 					Node node = list.item(i);
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
-						boolean isFacet = node.getNodeName().indexOf(":facet") > 0;
-						Node attrName = node.getAttributes().getNamedItem("name");
-						if (isFacet && attrName != null && "header".equals(attrName.getNodeValue())) {
+						boolean isFacet = node.getNodeName().indexOf(":facet") > 0; //$NON-NLS-1$
+						Node attrName = node.getAttributes().getNamedItem("name"); //$NON-NLS-1$
+						if (isFacet && attrName != null && "header".equals(attrName.getNodeValue())) { //$NON-NLS-1$
 							header = node;
-						} else if (isFacet && attrName != null && "footer".equals(attrName.getNodeValue())) {
+						} else if (isFacet && attrName != null && "footer".equals(attrName.getNodeValue())) { //$NON-NLS-1$
 							footer = node;
 						} else {
 							getBody().add(node);
@@ -461,12 +461,12 @@ public class VpeDataTableElements {
 					VpeDataTableElements.getNamedChild(visualParent, HTML.TAG_TFOOT)
 			);
 
-		visualDataTableElements.setCaption(VpeDataTableElements.getNamedChild(visualDataTableElements.getCaption(), "caption"));
-		visualDataTableElements.setTableHeaderRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getTableHeader(), "tr"));
-		visualDataTableElements.setColumnsHeaderRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getColumnsHeader(), "tr"));
-		visualDataTableElements.setBodyRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getBody(), "tr"));
-		visualDataTableElements.setColumnsFooterRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getColumnsFooter(), "tr"));
-		visualDataTableElements.setTableFooterRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getTableFooter(), "tr"));
+		visualDataTableElements.setCaption(VpeDataTableElements.getNamedChild(visualDataTableElements.getCaption(), "caption")); //$NON-NLS-1$
+		visualDataTableElements.setTableHeaderRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getTableHeader(), "tr")); //$NON-NLS-1$
+		visualDataTableElements.setColumnsHeaderRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getColumnsHeader(), "tr")); //$NON-NLS-1$
+		visualDataTableElements.setBodyRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getBody(), "tr")); //$NON-NLS-1$
+		visualDataTableElements.setColumnsFooterRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getColumnsFooter(), "tr")); //$NON-NLS-1$
+		visualDataTableElements.setTableFooterRow(VpeDataTableElements.getNamedChild(visualDataTableElements.getTableFooter(), "tr")); //$NON-NLS-1$
 
 		return visualDataTableElements;
 	}

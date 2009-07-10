@@ -34,11 +34,11 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		boolean isHeader = false;
 		boolean isFooter = false;
 
-		Node nameAttr = sourceNode.getAttributes().getNamedItem("name");
+		Node nameAttr = sourceNode.getAttributes().getNamedItem("name"); //$NON-NLS-1$
 		if (nameAttr != null) {
 			String name = nameAttr.getNodeValue();
-			isHeader = name.equals("header");
-			isFooter = name.equals("footer");
+			isHeader = name.equals("header"); //$NON-NLS-1$
+			isFooter = name.equals("footer"); //$NON-NLS-1$
 		}
 
 		if (isHeader || isFooter) {
@@ -54,9 +54,9 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 				}
 				if (cell != null) {
 					if (isHeader) {
-						setCellClass(cell, getTableAttrValue(sourceParent, "headerClass"));
+						setCellClass(cell, getTableAttrValue(sourceParent, "headerClass")); //$NON-NLS-1$
 					} else if (isFooter) {
-						setCellClass(cell, getTableAttrValue(sourceParent, "footerClass"));
+						setCellClass(cell, getTableAttrValue(sourceParent, "footerClass")); //$NON-NLS-1$
 					}
 					creatorInfo = new VpeCreatorInfo(cell);
 				}
@@ -84,7 +84,7 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 	private void setCellClass(nsIDOMElement cell, String className) {
 		if (cell != null) {
 			if (className != null && className.trim().length() > 0) {
-				cell.setAttribute("class", className);
+				cell.setAttribute("class", className); //$NON-NLS-1$
 			}
 		}
 	}
@@ -105,7 +105,7 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 		int length = childs != null ? childs.getLength() : 0;
 		for (int i = 0; i < length; i++) {
 			Node child = childs.item(i);
-			if (child.getNodeType() == Node.ELEMENT_NODE && child.getNodeName().indexOf(":column") > 0) {
+			if (child.getNodeType() == Node.ELEMENT_NODE && child.getNodeName().indexOf(":column") > 0) { //$NON-NLS-1$
 				count++;
 			}
 		}
@@ -115,7 +115,7 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 	private nsIDOMElement makeCell(int columnCount, String cellTag, nsIDOMDocument visualDocument) {
 		nsIDOMElement visualCell = visualDocument.createElement(cellTag);
 		if (columnCount > 1) {
-			visualCell.setAttribute("colspan", "" + columnCount);
+			visualCell.setAttribute("colspan", "" + columnCount); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		return visualCell;
 	}

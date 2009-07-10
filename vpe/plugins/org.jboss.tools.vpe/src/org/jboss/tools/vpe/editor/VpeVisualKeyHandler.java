@@ -97,7 +97,7 @@ public class VpeVisualKeyHandler {
 			handled = nonctrlKeyPressHandler(keyEvent);
 		}
 		if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
-			System.out.println("    handled: " + handled);
+			System.out.println("    handled: " + handled); //$NON-NLS-1$
 		}
 		if (handled) {
 			keyEvent.stopPropagation();
@@ -263,7 +263,7 @@ public class VpeVisualKeyHandler {
 
 			Node focusNode = selection.getFocusNode();
 			if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
-				System.out.println(">>>   1. VpeVisualKeyHandler.deleteRight(): focusNode = " + focusNode + "   |   focusOffset = " + selection.getFocusOffset());
+				System.out.println(">>>   1. VpeVisualKeyHandler.deleteRight(): focusNode = " + focusNode + "   |   focusOffset = " + selection.getFocusOffset()); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			if (focusNode != null) {
 				if (focusNode.getNodeType() == Node.TEXT_NODE && 
@@ -390,7 +390,7 @@ public class VpeVisualKeyHandler {
 						String escString = TextUtil.isEcsToRight(sourceText, offset);
 						if(escString != null){
 							Point range = sourceEditor.getTextViewer().getSelectedRange();
-							sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x, escString.length(), "");
+							sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x, escString.length(), ""); //$NON-NLS-1$
 							atLeastOneCharIsDeleted = true;
 							continue;
 						}
@@ -418,7 +418,7 @@ public class VpeVisualKeyHandler {
 					endPos++;
 				}
 				Point range = sourceEditor.getTextViewer().getSelectedRange();
-				sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x, endPos, "");
+				sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x, endPos, ""); //$NON-NLS-1$
 				selection = sourceSelectionBuilder.getSelection();
 				atLeastOneCharIsDeleted = true;
 				break;
@@ -532,7 +532,7 @@ public class VpeVisualKeyHandler {
 
 			Node focusNode = selection.getFocusNode();
 			if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
-				System.out.println(">>>   1. VpeVisualKeyHandler.deleteLeft(): focusNode = " + focusNode + "   |   focusOffset = " + selection.getFocusOffset());
+				System.out.println(">>>   1. VpeVisualKeyHandler.deleteLeft(): focusNode = " + focusNode + "   |   focusOffset = " + selection.getFocusOffset()); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			if (focusNode != null) {
 				if (focusNode.getNodeType() == Node.TEXT_NODE && selection.getFocusOffset() >= 0) {
@@ -720,7 +720,7 @@ public class VpeVisualKeyHandler {
 
 						if(escString != null){
 							Point range = sourceEditor.getTextViewer().getSelectedRange();
-							sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x-escString.length(), escString.length(), "");
+							sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x-escString.length(), escString.length(), ""); //$NON-NLS-1$
 
 							atLeastOneCharIsDeleted = true;
 							return selection;
@@ -739,7 +739,7 @@ public class VpeVisualKeyHandler {
 					endPos--;
 					if(endPos!=0){
 					Point range = sourceEditor.getTextViewer().getSelectedRange();
-					sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x-endPos, endPos, "");
+					sourceEditor.getTextViewer().getTextWidget().replaceTextRange(range.x-endPos, endPos, ""); //$NON-NLS-1$
 					selection = sourceSelectionBuilder.getSelection();
 					atLeastOneCharIsDeleted = true;
 					}
@@ -880,7 +880,7 @@ public class VpeVisualKeyHandler {
 
 		nsIDOMNode visualNode = domMapping.getVisualNode(node);
 		if (visualNode.getNodeType() == Node.ELEMENT_NODE) {
-			nsIDOMNode styleAttr = visualNode.getAttributes().getNamedItem("style");
+			nsIDOMNode styleAttr = visualNode.getAttributes().getNamedItem("style"); //$NON-NLS-1$
 			if (styleAttr != null) {
 				String style = styleAttr.getNodeValue();
 				if (style != null) {
@@ -999,7 +999,7 @@ public class VpeVisualKeyHandler {
 					nsIDOMNode visualNode = mapping.getVisualNode(sourceNode);
 					if (visualNode != null) {
 						if (visualNode.getNodeType() == Node.ELEMENT_NODE) {
-							nsIDOMNode styleAttr = visualNode.getAttributes().getNamedItem("style");
+							nsIDOMNode styleAttr = visualNode.getAttributes().getNamedItem("style"); //$NON-NLS-1$
 							if (styleAttr != null) {
 								String style = styleAttr.getNodeValue();
 								if (style != null) {
@@ -1164,8 +1164,8 @@ public class VpeVisualKeyHandler {
 								}
 							}
 							Text newNode = ((Text)focusNode).splitText(focusOffset);
-							Node br = focusNode.getParentNode().insertBefore(focusNode.getOwnerDocument().createElement("br"), newNode);
-							Text newNode1 = (Text)focusNode.getParentNode().insertBefore(focusNode.getOwnerDocument().createTextNode("\r\n" + getLinePrefix(n1Start + focusOffset) + newNode.getData()), newNode);
+							Node br = focusNode.getParentNode().insertBefore(focusNode.getOwnerDocument().createElement("br"), newNode); //$NON-NLS-1$
+							Text newNode1 = (Text)focusNode.getParentNode().insertBefore(focusNode.getOwnerDocument().createTextNode("\r\n" + getLinePrefix(n1Start + focusOffset) + newNode.getData()), newNode); //$NON-NLS-1$
 							focusNode.getParentNode().removeChild(newNode);
 							newNode = newNode1;
 							setCursor(pageContext, newNode);
@@ -1209,7 +1209,7 @@ public class VpeVisualKeyHandler {
 			return linePrefix.substring(0, linePrefixLength);
 		} catch (BadLocationException e) {
 			VpePlugin.getPluginLog().logError(e);
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 	}
 	
@@ -1566,7 +1566,7 @@ public class VpeVisualKeyHandler {
 
 	private boolean moveEnd(boolean extend) {
 		
-		VpePlugin.getDefault().logInfo("MoveEnd");
+		VpePlugin.getDefault().logInfo("MoveEnd"); //$NON-NLS-1$
 		// TODO Max Areshkau figure out
 //		frameSelection.intraLineMove(true, extend);
 		return true;

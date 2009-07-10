@@ -20,7 +20,7 @@ import org.jboss.tools.vpe.editor.template.textformating.FormatAttributeData;
  */
 public class CenterFormatController extends ToolItemFormatController {
 
-	public static String TYPE = "CenterFormat";
+	public static String TYPE = "CenterFormat"; //$NON-NLS-1$
 
 	/**
 	 * @param manager

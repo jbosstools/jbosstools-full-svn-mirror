@@ -57,7 +57,7 @@ public class VpeValueCreator extends VpeAbstractCreator implements VpeOutputAttr
 		if (expression != null) {
 			value = expression.exec(pageContext, sourceNode).stringValue();
 		} else {
-			value = "";
+			value = ""; //$NON-NLS-1$
 		}
 		nsIDOMText valueNode = visualDocument.createTextNode(value);
 		visualNodeMap.put(this, valueNode);
