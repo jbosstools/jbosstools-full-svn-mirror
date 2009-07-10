@@ -71,7 +71,7 @@
                
             </xsl:when>
             
-            <xsl:when test="$sequence = 'blank' and $position = 'left'">
+            <!--<xsl:when test="$sequence = 'blank' and $position = 'left'">
                <fo:page-number/>
                
             </xsl:when>
@@ -81,7 +81,7 @@
             </xsl:when>
             
             <xsl:when test="$sequence = 'blank' and $position = 'right'">
-            </xsl:when>
+            </xsl:when>-->
             
          </xsl:choose>
       </fo:block>
@@ -191,6 +191,7 @@
       <xsl:text>no-force</xsl:text>
    </xsl:template>
    <!-- ################################################## -->
+   
    <xsl:template name="process.image">
       <!-- When this template is called, the current node should be  -->
       <!-- a graphic, inlinegraphic, imagedata, or videodata. All    -->
@@ -394,4 +395,88 @@
          </xsl:otherwise>
       </xsl:choose>
    </xsl:template>
+   
+   <xsl:template name="process.menuchoice">
+      <xsl:param name="nodelist" select="guibutton|guiicon|guilabel|guimenu|guimenuitem|guisubmenu|interface"/><!-- not(shortcut) -->
+      <xsl:param name="count" select="1"/>
+      
+      <xsl:variable name="mm.separator">
+         <xsl:choose>
+            <xsl:when test="($fop.extensions != 0 or $fop1.extensions != 0 ) and
+               contains($menuchoice.menu.separator, '&#x2192;')">
+               <fo:inline font-family="Symbol" font-weight="normal">
+                  <xsl:copy-of select="$menuchoice.menu.separator"/>
+               </fo:inline>
+            </xsl:when>
+            <xsl:otherwise>
+               <xsl:copy-of select="$menuchoice.menu.separator"/>
+            </xsl:otherwise>
+         </xsl:choose>
+      </xsl:variable>
+      
+      <xsl:choose>
+         <xsl:when test="$count>count($nodelist)"></xsl:when>
+         <xsl:when test="$count=1">
+            <xsl:apply-templates select="$nodelist[$count=position()]"/>
+            <xsl:call-template name="process.menuchoice">
+               <xsl:with-param name="nodelist" select="$nodelist"/>
+               <xsl:with-param name="count" select="$count+1"/>
+            </xsl:call-template>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:variable name="node" select="$nodelist[$count=position()]"/>
+            <xsl:choose>
+               <xsl:when test="local-name($node)='guimenuitem'
+                  or local-name($node)='guisubmenu'">
+                  <xsl:copy-of select="$mm.separator"/>
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="$menuchoice.separator"/>
+               </xsl:otherwise>
+            </xsl:choose>
+            <xsl:apply-templates select="$node"/>
+            <xsl:call-template name="process.menuchoice">
+               <xsl:with-param name="nodelist" select="$nodelist"/>
+               <xsl:with-param name="count" select="$count+1"/>
+            </xsl:call-template>
+         </xsl:otherwise>
+      </xsl:choose>
+   </xsl:template>
+   <!-- ########################numeration correction####################### -->
+   <xsl:template name="initial.page.number">
+      <xsl:param name="element" select="local-name(.)"/>
+      <xsl:param name="master-reference" select="''"/>
+      
+      <!-- Select the first content that the stylesheet places
+         after the TOC -->
+      <xsl:variable name="first.book.content" 
+         select="ancestor::book/*[
+         not(self::title or
+         self::subtitle or
+         self::titleabbrev or
+         self::bookinfo or
+         self::info or
+         self::dedication or
+         self::preface or
+         self::toc or
+         self::lot)][1]"/>
+      <xsl:choose>
+         <xsl:when test="$element = 'toc'">auto</xsl:when>
+         <xsl:when test="$element = 'book'">1</xsl:when>
+         <xsl:when test="$element = 'preface'">auto</xsl:when>
+         <xsl:when test="($element = 'dedication' or $element = 'article') and
+            not(preceding::chapter
+            or preceding::preface
+            or preceding::appendix
+            or preceding::article
+            or preceding::dedication
+            or parent::part
+            or parent::reference)">1</xsl:when>
+         <xsl:when test="generate-id($first.book.content) =
+            generate-id(.)">1</xsl:when>
+         
+         <xsl:otherwise>auto</xsl:otherwise>
+      </xsl:choose>
+   </xsl:template>
+ 
 </xsl:stylesheet>

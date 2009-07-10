@@ -282,7 +282,7 @@
        
             </xsl:when>
             
-            <xsl:when test="$sequence = 'blank' and $position = 'left'">
+            <!--<xsl:when test="$sequence = 'blank' and $position = 'left'">
                <fo:page-number/>
             
             </xsl:when>
@@ -292,7 +292,7 @@
             </xsl:when>
             
             <xsl:when test="$sequence = 'blank' and $position = 'right'">
-            </xsl:when>
+            </xsl:when>-->
             
          </xsl:choose>
       </fo:block>
@@ -616,5 +616,40 @@
          </xsl:otherwise>
       </xsl:choose>
    </xsl:template>
-   
+   <!-- ########################numeration correction####################### -->
+   <xsl:template name="initial.page.number">
+      <xsl:param name="element" select="local-name(.)"/>
+      <xsl:param name="master-reference" select="''"/>
+      
+      <!-- Select the first content that the stylesheet places
+         after the TOC -->
+      <xsl:variable name="first.book.content" 
+         select="ancestor::book/*[
+         not(self::title or
+         self::subtitle or
+         self::titleabbrev or
+         self::bookinfo or
+         self::info or
+         self::dedication or
+         self::preface or
+         self::toc or
+         self::lot)][1]"/>
+      <xsl:choose>
+         <xsl:when test="$element = 'toc'">auto</xsl:when>
+         <xsl:when test="$element = 'book'">1</xsl:when>
+         <xsl:when test="$element = 'preface'">auto</xsl:when>
+         <xsl:when test="($element = 'dedication' or $element = 'article') and
+            not(preceding::chapter
+            or preceding::preface
+            or preceding::appendix
+            or preceding::article
+            or preceding::dedication
+            or parent::part
+            or parent::reference)">1</xsl:when>
+         <xsl:when test="generate-id($first.book.content) =
+            generate-id(.)">1</xsl:when>
+         
+         <xsl:otherwise>auto</xsl:otherwise>
+      </xsl:choose>
+   </xsl:template>
 </xsl:stylesheet>
