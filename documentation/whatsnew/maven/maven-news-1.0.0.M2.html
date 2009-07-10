@@ -12,7 +12,7 @@
 <h1>Maven Tools</h1>
 
 <p align="right"><a href="../index.html">&lt; Main Index</a> <a
-	href="../seam/seam-news-3.1.0.M1.html">Seam Tools &gt;</a></p>
+	href="../vpe/vpe-news-3.1.0.M2.html">VPE Tools &gt;</a></p>
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
 	<tr>
 		<td colspan="2">
@@ -26,9 +26,18 @@
 		<td valign="top">
 		<p>This release introduces an optional integration with m2eclipse to provide Maven support for projects created by JBoss Tools and to some extent core WTP projects too.</p>
 
+<p><img src="../images/m2_facet.png"/></p>
+
 <p>The first integration is to provide a Maven facet for WTP projects which for now just integrates with the Seam facet to let Maven get the libraries instead of using the Seam runtime.</p>
 
-<p><img src="../images/"/></p>
+<p>Here is a screencast showing it in action for Seam projects: <a href="http://screencast.com/t/bOv02ocE">Screencast showing Maven</a></p>
+
+<p>Note: shortly before M2 release, m2eclipse released a 0.9.9 on their
+update-dev updatesite which changed the API we dependent on. We have
+fixed that in M3/trunk build, so for M2 it is important to use
+m2eclipse <a href="http://m2eclipse.sonatype.org/update/">stable updatesite</a> or the <a href="http://m2eclipse.sonatype.org/releases/0.9.9.200906081351">latest integration build</a> we
+developed M2 against. 
+</p>
 
 		<p><small><a
 			href="https://jira.jboss.org/jira/browse/JBIDE-3874">Related Jira</a></small></p>
