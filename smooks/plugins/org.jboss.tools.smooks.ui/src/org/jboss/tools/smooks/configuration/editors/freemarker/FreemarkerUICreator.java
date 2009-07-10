@@ -16,10 +16,11 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
-import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 
 /**
@@ -38,7 +39,7 @@ public class FreemarkerUICreator extends PropertyUICreator {
 	 */
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-			SmooksMultiFormEditor formEditor) {
+			ISmooksModelProvider formEditor, IEditorPart part) {
 		if (feature == FreemarkerPackage.eINSTANCE.getFreemarker_ApplyBefore()) {
 		}
 		// if (feature ==
@@ -53,7 +54,7 @@ public class FreemarkerUICreator extends PropertyUICreator {
 		if (feature == FreemarkerPackage.eINSTANCE.getFreemarker_ApplyOnElementNS()) {
 		}
 
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
 	}
 
 	@Override
@@ -76,8 +77,8 @@ public class FreemarkerUICreator extends PropertyUICreator {
 	 */
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
-		return createElementSelectionSection("Apply On Element", editingdomain, toolkit, parent, model, formEditor,
+			Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
+		return createElementSelectionSection("Apply On Element", editingdomain, toolkit, parent, model, formEditor,part,
 				FreemarkerPackage.Literals.FREEMARKER__APPLY_ON_ELEMENT,
 				FreemarkerPackage.Literals.FREEMARKER__APPLY_ON_ELEMENT_NS);
 	}

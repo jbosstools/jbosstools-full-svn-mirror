@@ -153,6 +153,9 @@ public class CSVDataParser {
 		Smooks smooks = new Smooks();
 		SmooksResourceConfiguration readerConfig = new SmooksResourceConfiguration("org.xml.sax.driver",
 				CSVReader.class.getName());
+		if((quoteChar == null) || (encoding == null) || (fields == null)){
+			return null;
+		}
 		if(quoteChar == null) quoteChar = "\"";
 		if(skiplines == null) skiplines = "0";
 		if(encoding == null) encoding = "UTF-8";

@@ -22,12 +22,13 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.IPropertyUICreator;
-import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.FieldAssistDisposer;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 
 /**
@@ -49,26 +50,31 @@ public class JavabeanExpressionUICreator extends PropertiesAndSetterMethodSearch
 	 */
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
-			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
 		AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Expression", editingdomain, toolkit,
 				parent, model, null, true);
 		if (cdatatext != null) {
 			list.add(cdatatext);
-			
-			Control c = cdatatext.getContentControl();
-			
-			if(c instanceof Text){
-				final FieldAssistDisposer disposer = SmooksUIUtils.addBindingsContextAssistToText((Text)c, SmooksUIUtils.getSmooks11ResourceListType((EObject)model));
-				c.addDisposeListener(new DisposeListener(){
 
-					/* (non-Javadoc)
-					 * @see org.eclipse.swt.events.DisposeListener#widgetDisposed(org.eclipse.swt.events.DisposeEvent)
+			Control c = cdatatext.getContentControl();
+
+			if (c instanceof Text) {
+				final FieldAssistDisposer disposer = SmooksUIUtils.addBindingsContextAssistToText((Text) c,
+						SmooksUIUtils.getSmooks11ResourceListType((EObject) model));
+				c.addDisposeListener(new DisposeListener() {
+
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see
+					 * org.eclipse.swt.events.DisposeListener#widgetDisposed
+					 * (org.eclipse.swt.events.DisposeEvent)
 					 */
 					public void widgetDisposed(DisposeEvent e) {
 						disposer.dispose();
 					}
-					
+
 				});
 			}
 		}
@@ -76,7 +82,7 @@ public class JavabeanExpressionUICreator extends PropertiesAndSetterMethodSearch
 	}
 
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
-			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
 
@@ -87,7 +93,7 @@ public class JavabeanExpressionUICreator extends PropertiesAndSetterMethodSearch
 		list.add(pEditPart);
 		list.add(mEditPart);
 		list.addAll(createElementSelectionSection("Execute On Element", editingdomain, toolkit, parent, model,
-				formEditor, JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT,
+				formEditor, part,JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT,
 				JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS));
 
 		return list;
@@ -133,8 +139,8 @@ public class JavabeanExpressionUICreator extends PropertiesAndSetterMethodSearch
 	@Override
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-			SmooksMultiFormEditor formEditor) {
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
+			ISmooksModelProvider formEditor, IEditorPart part) {
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
 	}
 
 }

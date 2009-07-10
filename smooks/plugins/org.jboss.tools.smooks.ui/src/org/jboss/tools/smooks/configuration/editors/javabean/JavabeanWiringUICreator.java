@@ -17,9 +17,10 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
-import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 
 /**
@@ -80,7 +81,7 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 	 */
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
-			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
 
@@ -90,7 +91,7 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 				editingdomain, JavabeanPackage.eINSTANCE.getWiringType_SetterMethod(), model), model);
 		list.add(pEditPart);
 		list.add(mEditPart);
-		list.addAll(createElementSelectionSection("Wrie On Element", editingdomain, toolkit, parent, model, formEditor,
+		list.addAll(createElementSelectionSection("Wrie On Element", editingdomain, toolkit, parent, model, formEditor,part,
 				JavabeanPackage.eINSTANCE.getWiringType_WireOnElement(),
 				JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT_NS));
 		return list;
@@ -112,7 +113,7 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 	@Override
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-			SmooksMultiFormEditor formEditor) {
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
+			ISmooksModelProvider formEditor, IEditorPart part) {
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
 	}
 }

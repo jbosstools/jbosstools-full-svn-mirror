@@ -17,10 +17,11 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
-import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 
 /**
@@ -60,8 +61,8 @@ public class JavabeanValueUICreator extends PropertiesAndSetterMethodSearchField
 	@Override
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-			SmooksMultiFormEditor formEditor) {
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
+			ISmooksModelProvider formEditor, IEditorPart part) {
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
 	}
 
 	/*
@@ -76,9 +77,9 @@ public class JavabeanValueUICreator extends PropertiesAndSetterMethodSearchField
 	 */
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
-			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 		List<AttributeFieldEditPart> list = createElementSelectionSection("Data", editingdomain, toolkit, parent,
-				model, formEditor, JavabeanPackage.eINSTANCE.getValueType_Data(), JavabeanPackage.eINSTANCE
+				model, formEditor,part, JavabeanPackage.eINSTANCE.getValueType_Data(), JavabeanPackage.eINSTANCE
 						.getValueType_DataNS());
 		Composite groupParent = parent;
 		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {

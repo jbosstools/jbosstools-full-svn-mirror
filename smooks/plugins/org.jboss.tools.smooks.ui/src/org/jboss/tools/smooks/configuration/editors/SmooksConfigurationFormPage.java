@@ -40,6 +40,7 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelectionWizard;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
@@ -69,7 +70,7 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 		FormToolkit toolkit = managedForm.getToolkit();
 		toolkit.decorateFormHeading(form.getForm());
 		String title = getTitle();
-		EObject smooksModel = ((SmooksMultiFormEditor) getEditor()).getSmooksModel();
+		EObject smooksModel = ((ISmooksModelProvider) getEditor()).getSmooksModel();
 		if (smooksModel != null) {
 			EObject parent = smooksModel;
 			while (parent != null) {

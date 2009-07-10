@@ -14,6 +14,15 @@
                contentTypeId="org.jboss.tools.smooks.ui.smooks.contentType">
          </contentTypeBinding>
       </editor>
+      <editor
+            class="org.jboss.tools.smooks.edimap.editor.EDIMapFormEditor"
+            icon="icons/sample.gif"
+            id="org.jboss.tools.smooks.edimap.editors.MultiPageEditor"
+            name="EDI Message Mapping Editor">
+         <contentTypeBinding
+               contentTypeId="org.jboss.tools.smooks.ui.edimap.contentType">
+         </contentTypeBinding>
+      </editor>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
@@ -38,6 +47,14 @@
             file-extensions="xml"
             id="org.jboss.tools.smooks.ui.smooks.contentType"
             name="Smooks Configuration File"
+            priority="low">
+      </content-type>
+      <content-type
+            base-type="org.eclipse.core.runtime.xml"
+            describer="org.jboss.tools.smooks.edimap.editor.EDIMapFileContentDescriber"
+            file-extensions="xml"
+            id="org.jboss.tools.smooks.ui.edimap.contentType"
+            name="EDI Map File"
             priority="low">
       </content-type>
    </extension>

@@ -120,7 +120,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 			List<IItemPropertyDescriptor> propertyDes = itemPropertySource.getPropertyDescriptors(getModel());
 			if (creator != null) {
 				List<AttributeFieldEditPart> list =  creator.createExtendUIOnTop((AdapterFactoryEditingDomain) formEditor
-						.getEditingDomain(), formToolkit, detailsComposite, getModel(), getFormEditor());
+						.getEditingDomain(), formToolkit, detailsComposite, getModel(), getFormEditor(),getFormEditor());
 				if (list != null) {
 					for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 						AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
@@ -155,7 +155,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 			}
 			if (creator != null) {
 				List<AttributeFieldEditPart> list = creator.createExtendUIOnBottom((AdapterFactoryEditingDomain) formEditor
-						.getEditingDomain(), formToolkit, detailsComposite, getModel(), getFormEditor());
+						.getEditingDomain(), formToolkit, detailsComposite, getModel(), getFormEditor(),getFormEditor());
 				if (list != null) {
 					for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 						AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
@@ -249,7 +249,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				return null;
 			}
 			editPart = creator.createPropertyUI(formToolkit, detailsComposite, itemPropertyDescriptor, getModel(),
-					feature, getFormEditor());
+					feature, getFormEditor(),getFormEditor());
 			if (editPart != null) {
 				createDefault = false;
 			}

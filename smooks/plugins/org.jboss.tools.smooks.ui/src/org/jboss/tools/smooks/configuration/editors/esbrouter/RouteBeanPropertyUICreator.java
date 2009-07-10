@@ -23,13 +23,14 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
-import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.IModelProcsser;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.esbrouting.EsbroutingPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
@@ -51,9 +52,10 @@ public class RouteBeanPropertyUICreator extends PropertyUICreator {
 	 */
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingDomain,
-			FormToolkit formToolkit, Composite detailsComposite, Object model, SmooksMultiFormEditor formEditor) {
+			FormToolkit formToolkit, Composite detailsComposite, Object model, ISmooksModelProvider formEditor,
+			IEditorPart part) {
 		List<AttributeFieldEditPart> attributeEditPartList = createElementSelectionSection("Route On Element",
-				editingDomain, formToolkit, detailsComposite, model, formEditor,
+				editingDomain, formToolkit, detailsComposite, model, formEditor, part,
 				EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_ON_ELEMENT,
 				EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_ON_ELEMENT_NS);
 		return attributeEditPartList;
@@ -118,25 +120,25 @@ public class RouteBeanPropertyUICreator extends PropertyUICreator {
 	 */
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
-			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
-		Group group  =new Group(parent,SWT.NONE);
-//		Section section = toolkit.createSection(parent, Section.TITLE_BAR);
+		Group group = new Group(parent, SWT.NONE);
+		// Section section = toolkit.createSection(parent, Section.TITLE_BAR);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
-//		section.setText("Route To Serivce");
+		// section.setText("Route To Serivce");
 		group.setText("Route To Serivce");
-//		section.setLayoutData(gd);
+		// section.setLayoutData(gd);
 		group.setLayoutData(gd);
 		FillLayout fl = new FillLayout();
 		fl.marginHeight = 0;
 		fl.marginWidth = 0;
 
-//		section.setLayout(fl);
+		// section.setLayout(fl);
 		group.setLayout(fl);
-		
+
 		Composite composite = toolkit.createComposite(group);
-//		section.setClient(composite);
+		// section.setClient(composite);
 		group.setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
 		Font f = composite.getFont();
 		if (f != null) {

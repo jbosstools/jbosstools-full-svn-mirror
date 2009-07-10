@@ -13,11 +13,13 @@ package org.jboss.tools.smooks.configuration.editors.edireader;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.edi.EdiPackage;
 
 /**
@@ -38,14 +40,14 @@ public class EDIReaderUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
-			EAttribute feature, SmooksMultiFormEditor formEditor) {
+			EAttribute feature, ISmooksModelProvider formEditor, IEditorPart part) {
 		if (feature == EdiPackage.eINSTANCE.getEDIReader_Encoding()) {
 		}
 		if (feature == EdiPackage.eINSTANCE.getEDIReader_MappingModel()) {
 			return SmooksUIUtils.createFileSelectionTextFieldEditor(null, parent, null, toolkit, propertyDescriptor, model, SmooksUIUtils.VALUE_TYPE_VALUE,
 					SmooksMultiFormEditor.EDITOR_ID,null);
 		}
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
 	}
 
 	@Override

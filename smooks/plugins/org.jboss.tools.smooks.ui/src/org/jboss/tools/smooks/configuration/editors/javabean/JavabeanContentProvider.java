@@ -40,7 +40,7 @@ public class JavabeanContentProvider implements ITreeContentProvider,
 			return ((JavaBeanList) arg0).getChildren().toArray();
 		}
 		
-		if (arg0 instanceof Collection) {
+		if (arg0 instanceof Collection<?>) {
 			return ((Collection<?>) arg0).toArray();
 		}
 		return new Object[]{};

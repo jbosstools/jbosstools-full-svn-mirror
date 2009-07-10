@@ -16,10 +16,11 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
-import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 
 /**
@@ -38,7 +39,7 @@ public class OutputStreamUICreator extends PropertyUICreator {
 	 */
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-			SmooksMultiFormEditor formEditor) {
+			ISmooksModelProvider formEditor, IEditorPart part) {
 		if (feature == FileRoutingPackage.eINSTANCE.getOutputStream_FileNamePattern()) {
 		}
 		if (feature == FileRoutingPackage.eINSTANCE.getOutputStream_DestinationDirectoryPattern()) {
@@ -56,7 +57,7 @@ public class OutputStreamUICreator extends PropertyUICreator {
 		if (feature == FileRoutingPackage.eINSTANCE.getOutputStream_ResourceName()) {
 		}
 
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
 	}
 
 	/*
@@ -71,9 +72,9 @@ public class OutputStreamUICreator extends PropertyUICreator {
 	 */
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
-			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 
-		return createElementSelectionSection("Open On Element", editingdomain, toolkit, parent, model, formEditor,
+		return createElementSelectionSection("Open On Element", editingdomain, toolkit, parent, model, formEditor,part,
 				FileRoutingPackage.Literals.OUTPUT_STREAM__OPEN_ON_ELEMENT,
 				FileRoutingPackage.Literals.OUTPUT_STREAM__OPEN_ON_ELEMENT_NS);
 	}

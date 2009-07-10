@@ -13,7 +13,6 @@ package org.jboss.tools.smooks.configuration.editors.smooks;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -23,12 +22,13 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
-import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.FieldAssistDisposer;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 /**
@@ -47,7 +47,7 @@ public class ConditionTypeUICreator extends PropertyUICreator {
 	 */
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-			SmooksMultiFormEditor formEditor) {
+			ISmooksModelProvider formEditor,IEditorPart part) {
 		if (feature == SmooksPackage.eINSTANCE.getConditionType_Value()) {
 		}
 		if (feature == SmooksPackage.eINSTANCE.getConditionType_Evaluator()) {
@@ -58,7 +58,7 @@ public class ConditionTypeUICreator extends PropertyUICreator {
 		if (feature == SmooksPackage.eINSTANCE.getConditionType_IdRef()) {
 		}
 
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
 	}
 
 	/*
@@ -73,7 +73,7 @@ public class ConditionTypeUICreator extends PropertyUICreator {
 	 */
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
-			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor,IEditorPart part) {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
 		AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Inline Condition", editingdomain,
 				toolkit, parent, model, null,true);
