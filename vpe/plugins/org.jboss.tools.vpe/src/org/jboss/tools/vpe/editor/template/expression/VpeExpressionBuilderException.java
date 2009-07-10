@@ -10,9 +10,30 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template.expression;
 
+import java.text.MessageFormat;
+import org.jboss.tools.vpe.messages.VpeUIMessages;
+
 public class VpeExpressionBuilderException extends Exception {
 
+	private final String expression;
+	private final String localizedErrorText;
+	private final int pos;
+
+	public VpeExpressionBuilderException(String expression, String errorText, int pos, String localizedErrorText) {
+		super(MessageFormat.format("Expression: \"{0}\"  pos={1}  {2}", expression, pos, errorText)); //$NON-NLS-1$
+		this.expression = expression;
+		this.localizedErrorText = localizedErrorText;
+		this.pos = pos;
+	}
+	
+	@Deprecated // use constructor which supports localization
 	public VpeExpressionBuilderException(String expression, String message, int pos) {
-		super("Expression: \"" + expression + "\"  pos=" + pos + "  " + message);
+		this(expression, message, pos, message);
+	}
+	
+	@Override
+	public String getLocalizedMessage() {
+		return MessageFormat.format(VpeUIMessages.VpeExpressionBuilderException_Message, expression,
+				pos, localizedErrorText);
 	}
 }

@@ -10,16 +10,19 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template.expression;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jboss.tools.vpe.messages.VpeUIMessages;
+
 public class VpeExpressionBuilder {
 	public static final char ATTR_PREFIX = '@';
-	public static final String ATTR_PREFIX_S = "" + '@';
-	public static final String SIGNATURE_ANY_ATTR = ATTR_PREFIX + "*";
-	public static final String SIGNATURE_JSF_VALUE = "jsfvalue()";
+	public static final String ATTR_PREFIX_S = "" + '@'; //$NON-NLS-1$
+	public static final String SIGNATURE_ANY_ATTR = ATTR_PREFIX + "*"; //$NON-NLS-1$
+	public static final String SIGNATURE_JSF_VALUE = "jsfvalue()"; //$NON-NLS-1$
 
 	private static final char COMPL_EXPR_LEFT_BRACKET = '{';
 	private static final char COMPL_EXPR_RIGHT_BRACKET = '}';
@@ -30,7 +33,7 @@ public class VpeExpressionBuilder {
 	private static final char OPER_EQUAL = '=';
 	private static final char OPER_PLUS = '+';
 	private static final char OPER_OR = '|';
-	private static final String OPER_AND = "and";
+	private static final String OPER_AND = "and"; //$NON-NLS-1$
 	private static final char FUNC_BRACKET_LEFT = OPER_BRACKET_LEFT;
 	private static final char FUNC_BRACKET_RIGHT = OPER_BRACKET_RIGHT;
 	private static final char PARAM_SEPARATOR = ',';
@@ -167,7 +170,7 @@ public class VpeExpressionBuilder {
 		text = text.substring(1);
 		int pos = text.indexOf(OPER_STRING);
 		if (pos == -1) {
-			error("Closing apostrophe is not found", startPos);
+			error("Closing apostrophe is not found", VpeUIMessages.VpeExpressionBuilder_ClosingApostropheNotFound, startPos); //$NON-NLS-1$
 		}
 		VpeOperand operand = new VpeStringOperand(getToken(pos));
 		text = text.substring(1);
@@ -190,7 +193,7 @@ public class VpeExpressionBuilder {
 	private VpeOperand buildFunction(String name, int namePos) throws VpeExpressionBuilderException {
 		VpeFunction function = VpeFunctionFactory.getFunction(name);
 		if (function == null) {
-			error("Function \'" + name + "\' is not found", namePos); //$NON-NLS-1$ //$NON-NLS-2$
+			error(MessageFormat.format("Function \''{0}\'' is not found", name), MessageFormat.format(VpeUIMessages.VpeExpressionBuilder_FunctionNotFound, name), namePos); //$NON-NLS-1$
 		}
 		int bracketPos = currentPosition();
 		List<VpeOperand> params = new ArrayList<VpeOperand>();
@@ -311,14 +314,12 @@ public class VpeExpressionBuilder {
 		return attrSignature(attrName, caseSensitive);
 	}
 	
-	private void error(String message, int pos) throws VpeExpressionBuilderException {
-		throw new VpeExpressionBuilderException(originalText, message, pos);
+	private void error(String errorText, String localizedErrorText, int pos) throws VpeExpressionBuilderException {
+		throw new VpeExpressionBuilderException(originalText, errorText, pos, localizedErrorText);
 	}
 	
-
-	
 	private void undefinedCharacter(int pos) throws VpeExpressionBuilderException {
-		error("Undefined character \'" + originalText.charAt(pos) + '\'', pos);
+		error(MessageFormat.format("Undefined character \''{0}\''", originalText.charAt(pos)), MessageFormat.format(VpeUIMessages.VpeExpressionBuilder_UndefinedCharacter, originalText.charAt(pos)), pos); //$NON-NLS-1$
 	}
 	
 	private void undefinedCharacter() throws VpeExpressionBuilderException {
@@ -326,11 +327,11 @@ public class VpeExpressionBuilder {
 	}
 	
 	private void undefinedName(String name, int pos) throws VpeExpressionBuilderException {
-		error("Undefined name \"" + name + '\"', pos);
+		error(MessageFormat.format("Undefined name \"{0}\"", name), MessageFormat.format(VpeUIMessages.VpeExpressionBuilder_UndefinedName, name), pos); //$NON-NLS-1$
 	}
 	
 	private void bracketNotFound(int pos) throws VpeExpressionBuilderException {
-		error("Closing bracket is not found", pos);
+		error("Closing bracket is not found", VpeUIMessages.VpeExpressionBuilder_ClosingBracketNotFound, pos); //$NON-NLS-1$
 	}
 
 	public static String getOutputAttrName(String value) {
@@ -352,7 +353,7 @@ public class VpeExpressionBuilder {
 				return null;
 			}
 		}
-		if (value.startsWith("jsfvalue(")) {
+		if (value.startsWith("jsfvalue(")) { //$NON-NLS-1$
 			if (value.charAt(value.length() - 1) == OPER_BRACKET_RIGHT) {
 				value = value.substring(9, value.length() - 1);
 				if (value.length() <= 1) {
