@@ -34,6 +34,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -42,9 +43,9 @@ import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
-import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
 import org.jboss.tools.smooks.model.datasource.Direct;
 
@@ -64,7 +65,7 @@ public class DirectUICreator extends PropertyUICreator {
 	 */
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-			SmooksMultiFormEditor formEditor) {
+			ISmooksModelProvider formEditor, IEditorPart part) {
 		if (feature == DatasourcePackage.eINSTANCE.getDirect_AutoCommit()) {
 		}
 		if (feature == DatasourcePackage.eINSTANCE.getDirect_BindOnElementNS()) {
@@ -77,7 +78,7 @@ public class DirectUICreator extends PropertyUICreator {
 		}
 		if (feature == DatasourcePackage.eINSTANCE.getDirect_Username()) {
 		}
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
 	}
 
 	/*
@@ -99,9 +100,9 @@ public class DirectUICreator extends PropertyUICreator {
 	}
 
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
-			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 		return this.createElementSelectionSection("Binding On Element", editingdomain, toolkit, parent, model,
-				formEditor, DatasourcePackage.eINSTANCE.getDirect_BindOnElement(), DatasourcePackage.eINSTANCE
+				formEditor, part,DatasourcePackage.eINSTANCE.getDirect_BindOnElement(), DatasourcePackage.eINSTANCE
 						.getDirect_BindOnElementNS());
 	}
 
@@ -117,7 +118,7 @@ public class DirectUICreator extends PropertyUICreator {
 	 */
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-			Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+			Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 		List<AttributeFieldEditPart> editPartList = new ArrayList<AttributeFieldEditPart>();
 
 		Composite spaceComposite = toolkit.createComposite(parent);

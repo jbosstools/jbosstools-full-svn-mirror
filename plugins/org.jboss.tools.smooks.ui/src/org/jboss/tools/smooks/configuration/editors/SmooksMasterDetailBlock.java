@@ -55,6 +55,7 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
@@ -210,7 +211,7 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		});
 
 		smooksTreeViewer.setFilters(new ViewerFilter[] { new TextEObjectModelFilter() });
-		Object smooksModel = ((SmooksMultiFormEditor) this.formEditor).getSmooksModel();
+		Object smooksModel = ((ISmooksModelProvider) this.formEditor).getSmooksModel();
 		if (smooksModel != null) {
 			smooksTreeViewer.setInput(smooksModel);
 		}

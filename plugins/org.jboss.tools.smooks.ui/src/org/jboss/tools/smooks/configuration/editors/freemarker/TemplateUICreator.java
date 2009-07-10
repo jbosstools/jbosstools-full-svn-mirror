@@ -23,14 +23,15 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.actions.OpenEditorEditInnerContentsAction;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
-import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.FieldAssistDisposer;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.uitls.TextTypeSwicher;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 
 /**
@@ -48,15 +49,15 @@ public class TemplateUICreator extends PropertyUICreator {
 	 */
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-			SmooksMultiFormEditor formEditor) {
+			ISmooksModelProvider formEditor, IEditorPart part) {
 		if (feature == FreemarkerPackage.eINSTANCE.getTemplate_Value()) {
 		}
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
 	}
 
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
-			FormToolkit toolkit, Composite parent, Object model, SmooksMultiFormEditor formEditor) {
+			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
 		OpenEditorEditInnerContentsAction openCDATAEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,
 				(AnyType) model, SmooksUIUtils.VALUE_TYPE_CDATA, "flt");

@@ -16,7 +16,9 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -26,13 +28,13 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 public interface IPropertyUICreator {
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-			SmooksMultiFormEditor formEditor);
+			ISmooksModelProvider formEditor,IEditorPart editorPart);
 
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-			Composite parent, Object model, SmooksMultiFormEditor formEditor);
+			Composite parent, Object model, ISmooksModelProvider formEditor,IEditorPart editorPart);
 	
 	public boolean ignoreProperty(EAttribute feature);
 
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingDomain,
-			FormToolkit formToolkit, Composite detailsComposite, Object model, SmooksMultiFormEditor formEditor);
+			FormToolkit formToolkit, Composite detailsComposite, Object model, ISmooksModelProvider formEditor,IEditorPart editorPart);
 }

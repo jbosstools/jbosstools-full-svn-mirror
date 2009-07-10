@@ -19,12 +19,13 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.actions.OpenEditorEditInnerContentsAction;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
-import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 13, 2009
@@ -40,13 +41,13 @@ public class ScriptUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent, IItemPropertyDescriptor propertyDescriptor, Object model,
-			EAttribute feature, SmooksMultiFormEditor formEditor) {
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor);
+			EAttribute feature, ISmooksModelProvider formEditor, IEditorPart part) {
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
 	}
 
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
-			SmooksMultiFormEditor formEditor) {
+			ISmooksModelProvider formEditor, IEditorPart part) {
 		OpenEditorEditInnerContentsAction action2 = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "groovy");
 		AttributeFieldEditPart editPart = SmooksUIUtils.createCommentFieldEditor("Script Contents", editingdomain, toolkit, parent, model, action2);
 		action2.setRelateText((Text)editPart.getContentControl());
