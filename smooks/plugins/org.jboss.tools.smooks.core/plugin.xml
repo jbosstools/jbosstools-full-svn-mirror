@@ -136,7 +136,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd"
-            class="org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtPackage"
+            class="org.jboss.tools.smooks.model.graphics.ext.GraphPackage"
             genModel="model/smooks-graphics-ext.genmodel"/>
    </extension>
 

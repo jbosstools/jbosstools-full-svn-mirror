@@ -380,6 +380,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 					firePropertyChange(PROP_DIRTY);
 				}
 			}
+			
 			if (this.smooksModel != null) {
 				validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
 			}

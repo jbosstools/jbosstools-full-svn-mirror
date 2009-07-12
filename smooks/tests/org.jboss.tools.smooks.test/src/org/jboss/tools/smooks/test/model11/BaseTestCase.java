@@ -3,6 +3,8 @@
  */
 package org.jboss.tools.smooks.test.model11;
 
+import junit.framework.TestCase;
+
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.jboss.tools.smooks.model.calc.CalcPackage;
 import org.jboss.tools.smooks.model.common.CommonPackage;
@@ -13,7 +15,7 @@ import org.jboss.tools.smooks.model.edi.EdiPackage;
 import org.jboss.tools.smooks.model.esbrouting.EsbroutingPackage;
 import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtPackage;
+import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.iorouting.IoroutingPackage;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
@@ -23,8 +25,6 @@ import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
 
-import junit.framework.TestCase;
-
 /**
  * @author Dart
  *
@@ -32,7 +32,7 @@ import junit.framework.TestCase;
 public class BaseTestCase extends TestCase {
 	static {
 		// regist emf model uri mapping
-		Registry.INSTANCE.put(SmooksGraphicsExtPackage.eNS_URI, SmooksGraphicsExtPackage.eINSTANCE);
+		Registry.INSTANCE.put(GraphPackage.eNS_URI, GraphPackage.eINSTANCE);
 		Registry.INSTANCE.put(SmooksPackage.eNS_URI, SmooksPackage.eINSTANCE);
 		Registry.INSTANCE.put(CalcPackage.eNS_URI, CalcPackage.eINSTANCE);
 		Registry.INSTANCE.put(CommonPackage.eNS_URI, CommonPackage.eINSTANCE);

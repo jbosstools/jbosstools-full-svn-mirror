@@ -14,8 +14,10 @@
 	<xs:element name="smooks-graphics-ext">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="ext:input" minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="ext:input" minOccurs="0"
+					maxOccurs="unbounded">
 				</xs:element>
+				<xs:element ref="ext:graph" minOccurs="0" maxOccurs="1"></xs:element>
 			</xs:sequence>
 			<xs:attribute name="inputType" type="xs:string"></xs:attribute>
 			<xs:attribute name="outputType" type="xs:string"></xs:attribute>
@@ -46,4 +48,40 @@
 		</xs:complexType>
 	</xs:element>
 
+
+	<xs:element name="graph">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ext:figure" maxOccurs="unbounded"
+					minOccurs="0">
+				</xs:element>
+				<xs:element ref="ext:connection" minOccurs="0" maxOccurs="unbounded"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="figure">
+		<xs:complexType>
+			<xs:attribute name="id" type="xs:string"></xs:attribute>
+			<xs:attribute name="x" type="xs:string"></xs:attribute>
+			<xs:attribute name="y" type="xs:string"></xs:attribute>
+			<xs:attribute name="width" type="xs:string"></xs:attribute>
+			<xs:attribute name="height" type="xs:string"></xs:attribute>
+			<xs:attribute name="parentFigureId" type="xs:string"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="connection">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ext:source" minOccurs="1" maxOccurs="1"></xs:element>
+				<xs:element ref="ext:target" minOccurs="1" maxOccurs="1"></xs:element>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+    <xs:element name="source" type="xs:string"></xs:element>
+
+    <xs:element name="target" type="xs:string"></xs:element>
 </xs:schema>

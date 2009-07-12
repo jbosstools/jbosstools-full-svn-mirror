@@ -6,15 +6,15 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext.impl;
 
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.graphics.ext.ParamType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -108,7 +108,7 @@ public class ParamTypeImpl extends EObjectImpl implements ParamType {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return SmooksGraphicsExtPackage.Literals.PARAM_TYPE;
+		return GraphPackage.Literals.PARAM_TYPE;
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class ParamTypeImpl extends EObjectImpl implements ParamType {
 		String oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SmooksGraphicsExtPackage.PARAM_TYPE__VALUE, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.PARAM_TYPE__VALUE, oldValue, value));
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class ParamTypeImpl extends EObjectImpl implements ParamType {
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SmooksGraphicsExtPackage.PARAM_TYPE__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.PARAM_TYPE__NAME, oldName, name));
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class ParamTypeImpl extends EObjectImpl implements ParamType {
 		String oldType = type;
 		type = newType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SmooksGraphicsExtPackage.PARAM_TYPE__TYPE, oldType, type));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.PARAM_TYPE__TYPE, oldType, type));
 	}
 
 	/**
@@ -182,11 +182,11 @@ public class ParamTypeImpl extends EObjectImpl implements ParamType {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case SmooksGraphicsExtPackage.PARAM_TYPE__VALUE:
+			case GraphPackage.PARAM_TYPE__VALUE:
 				return getValue();
-			case SmooksGraphicsExtPackage.PARAM_TYPE__NAME:
+			case GraphPackage.PARAM_TYPE__NAME:
 				return getName();
-			case SmooksGraphicsExtPackage.PARAM_TYPE__TYPE:
+			case GraphPackage.PARAM_TYPE__TYPE:
 				return getType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -200,13 +200,13 @@ public class ParamTypeImpl extends EObjectImpl implements ParamType {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case SmooksGraphicsExtPackage.PARAM_TYPE__VALUE:
+			case GraphPackage.PARAM_TYPE__VALUE:
 				setValue((String)newValue);
 				return;
-			case SmooksGraphicsExtPackage.PARAM_TYPE__NAME:
+			case GraphPackage.PARAM_TYPE__NAME:
 				setName((String)newValue);
 				return;
-			case SmooksGraphicsExtPackage.PARAM_TYPE__TYPE:
+			case GraphPackage.PARAM_TYPE__TYPE:
 				setType((String)newValue);
 				return;
 		}
@@ -221,13 +221,13 @@ public class ParamTypeImpl extends EObjectImpl implements ParamType {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case SmooksGraphicsExtPackage.PARAM_TYPE__VALUE:
+			case GraphPackage.PARAM_TYPE__VALUE:
 				setValue(VALUE_EDEFAULT);
 				return;
-			case SmooksGraphicsExtPackage.PARAM_TYPE__NAME:
+			case GraphPackage.PARAM_TYPE__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case SmooksGraphicsExtPackage.PARAM_TYPE__TYPE:
+			case GraphPackage.PARAM_TYPE__TYPE:
 				setType(TYPE_EDEFAULT);
 				return;
 		}
@@ -242,11 +242,11 @@ public class ParamTypeImpl extends EObjectImpl implements ParamType {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case SmooksGraphicsExtPackage.PARAM_TYPE__VALUE:
+			case GraphPackage.PARAM_TYPE__VALUE:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
-			case SmooksGraphicsExtPackage.PARAM_TYPE__NAME:
+			case GraphPackage.PARAM_TYPE__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case SmooksGraphicsExtPackage.PARAM_TYPE__TYPE:
+			case GraphPackage.PARAM_TYPE__TYPE:
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 		}
 		return super.eIsSet(featureID);

@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtPackage#getInputType()
+ * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getInputType()
  * @model extendedMetaData="name='input_._type' kind='elementOnly'"
  * @generated
  */
@@ -38,7 +38,7 @@ public interface InputType extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Param</em>' containment reference list.
-	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtPackage#getInputType_Param()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getInputType_Param()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='param' namespace='##targetNamespace'"
 	 * @generated
@@ -55,7 +55,7 @@ public interface InputType extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' attribute.
 	 * @see #setType(String)
-	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtPackage#getInputType_Type()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getInputType_Type()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='type'"
 	 * @generated
