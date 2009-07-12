@@ -41,7 +41,6 @@ public class FieldMarkerComposite extends Canvas implements IFieldMarker, PaintL
 	private int type = TYPE_NONE;
 
 	private DefaultToolTip toolTip = null;
-	
 
 	public FieldMarkerComposite(Composite parent, int style) {
 		super(parent, style);
@@ -67,15 +66,15 @@ public class FieldMarkerComposite extends Canvas implements IFieldMarker, PaintL
 
 			public Point getLocation(Point tipSize, Event event) {
 				Point point = super.getLocation(tipSize, event);
-				point.y = ((Control) getToolTipArea(null)).toDisplay(0,0).y - 24;
-				point.x = ((Control) getToolTipArea(null)).toDisplay(0,0).x;
+				point.y = ((Control) getToolTipArea(null)).toDisplay(0, 0).y - 24;
+				point.x = ((Control) getToolTipArea(null)).toDisplay(0, 0).x;
 				return point;
 			}
 
 		};
-		((DefaultToolTip)toolTip).setBackgroundColor(new Color(null,255,255,255));
+		((DefaultToolTip) toolTip).setBackgroundColor(new Color(null, 255, 255, 255));
 		FormColors colors = new FormColors(getDisplay());
-		((DefaultToolTip)toolTip).setForegroundColor(colors.getColor(IFormColors.TITLE));
+		((DefaultToolTip) toolTip).setForegroundColor(colors.getColor(IFormColors.TITLE));
 		toolTip.setStyle(SWT.NONE);
 	}
 
@@ -87,6 +86,8 @@ public class FieldMarkerComposite extends Canvas implements IFieldMarker, PaintL
 	 */
 	public void setMarkerType(int type) {
 		this.type = type;
+		if (this.isDisposed())
+			return;
 		this.redraw();
 	}
 
@@ -110,6 +111,7 @@ public class FieldMarkerComposite extends Canvas implements IFieldMarker, PaintL
 
 	public void clean() {
 		setMarkerType(TYPE_NONE);
+		if(isDisposed()) return;
 		this.setToolTipText(null);
 		this.redraw();
 	}

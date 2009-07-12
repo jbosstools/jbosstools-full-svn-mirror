@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtPackage#getParamType()
+ * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getParamType()
  * @model extendedMetaData="name='param_._type' kind='simple'"
  * @generated
  */
@@ -37,7 +37,7 @@ public interface ParamType extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value</em>' attribute.
 	 * @see #setValue(String)
-	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtPackage#getParamType_Value()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getParamType_Value()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="name=':0' kind='simple'"
 	 * @generated
@@ -64,7 +64,7 @@ public interface ParamType extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtPackage#getParamType_Name()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getParamType_Name()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='name'"
 	 * @generated
@@ -91,7 +91,7 @@ public interface ParamType extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' attribute.
 	 * @see #setType(String)
-	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtPackage#getParamType_Type()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getParamType_Type()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='type'"
 	 * @generated

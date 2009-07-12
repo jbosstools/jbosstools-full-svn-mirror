@@ -16,9 +16,11 @@ import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -119,9 +121,13 @@ import org.jboss.tools.smooks.core.SmooksCoreActivator;
 import org.jboss.tools.smooks.model.freemarker.BindTo;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.Use;
-import org.jboss.tools.smooks.model.graphics.ext.DocumentRoot;
+import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
+import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
+import org.jboss.tools.smooks.model.graphics.ext.InputType;
+import org.jboss.tools.smooks.model.graphics.ext.ParamType;
+import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks.model.graphics.ext.util.SmooksGraphicsExtResourceFactoryImpl;
+import org.jboss.tools.smooks.model.graphics.ext.util.GraphResourceFactoryImpl;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
@@ -810,13 +816,13 @@ public class SmooksUIUtils {
 	}
 
 	public static SmooksGraphicsExtType loadSmooksGraphicsExt(IFile file) throws IOException {
-		Resource resource = new SmooksGraphicsExtResourceFactoryImpl().createResource(URI.createPlatformResourceURI(
-				file.getFullPath().toPortableString(), false));
+		Resource resource = new GraphResourceFactoryImpl().createResource(URI.createPlatformResourceURI(file
+				.getFullPath().toPortableString(), false));
 		resource.load(Collections.emptyMap());
 		if (resource.getContents().size() > 0) {
 			Object obj = resource.getContents().get(0);
-			if (obj instanceof DocumentRoot) {
-				return ((DocumentRoot) obj).getSmooksGraphicsExt();
+			if (obj instanceof SmooksGraphExtensionDocumentRoot) {
+				return ((SmooksGraphExtensionDocumentRoot) obj).getSmooksGraphicsExt();
 			}
 		}
 		return null;
@@ -2068,9 +2074,10 @@ public class SmooksUIUtils {
 		}
 		return null;
 	}
-	
-	public static boolean hasReaderAlready(Class<?> readerClass,SmooksResourceListType resourceList){
-		if(resourceList == null || readerClass == null) return false;
+
+	public static boolean hasReaderAlready(Class<?> readerClass, SmooksResourceListType resourceList) {
+		if (resourceList == null || readerClass == null)
+			return false;
 		List<AbstractReader> readerList = resourceList.getAbstractReader();
 		for (Iterator<?> iterator = readerList.iterator(); iterator.hasNext();) {
 			AbstractReader abstractReader = (AbstractReader) iterator.next();
@@ -2080,4 +2087,57 @@ public class SmooksUIUtils {
 		}
 		return false;
 	}
+
+	public static void recordInputDataInfomation(InputType input, SmooksGraphicsExtType extType, String type,
+			String path, Properties properties) {
+		if (type != null && path != null && extType != null) {
+			String[] values = path.split(";");
+			if (values == null || values.length == 0) {
+				values = new String[] { path };
+			}
+			for (int i = 0; i < values.length; i++) {
+				String value = values[i];
+				value = value.trim();
+				if (value.length() == 0)
+					continue;
+				if (input == null) {
+					input = GraphFactory.eINSTANCE.createInputType();
+				}
+				input.setType(type);
+				ParamType param = GraphFactory.eINSTANCE.createParamType();
+				param.setValue(value);
+				param.setName(SmooksModelUtils.PARAM_NAME_PATH);
+				input.getParam().add(param);
+				List<ParamType> params = generateExtParams(type, path, properties);
+				input.getParam().addAll(params);
+				extType.getInput().add(input);
+			}
+			try {
+				extType.eResource().save(Collections.emptyMap());
+				List<ISmooksGraphChangeListener> listeners = extType.getChangeListeners();
+				for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
+					ISmooksGraphChangeListener smooksGraphChangeListener = (ISmooksGraphChangeListener) iterator.next();
+					smooksGraphChangeListener.saveComplete(extType);
+				}
+			} catch (IOException e) {
+				SmooksConfigurationActivator.getDefault().log(e);
+			}
+		}
+	}
+
+	public static List<ParamType> generateExtParams(String type, String path, Properties properties) {
+		List<ParamType> lists = new ArrayList<ParamType>();
+		if (properties != null) {
+			Enumeration<?> enumerations = properties.keys();
+			while (enumerations.hasMoreElements()) {
+				Object key = (Object) enumerations.nextElement();
+				ParamType param = GraphFactory.eINSTANCE.createParamType();
+				param.setValue(properties.getProperty(key.toString()));
+				param.setName(key.toString());
+				lists.add(param);
+			}
+		}
+		return lists;
+	}
+
 }

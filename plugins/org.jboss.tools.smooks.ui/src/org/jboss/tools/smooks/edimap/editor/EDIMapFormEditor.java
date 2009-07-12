@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.edimap.editor;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
@@ -47,6 +48,36 @@ public class EDIMapFormEditor extends AbstractSmooksFormEditor {
 		}
 		super.addPages();
 	}
+	
+	
+	
+	
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.editor.AbstractSmooksFormEditor#handleDocumentChange()
+	 */
+	@Override
+	protected void handleDocumentChange() {
+		super.handleDocumentChange();
+		if(ediPage != null){
+			ediPage.rebuildGUI();
+		}
+	}
+
+
+
+
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.editor.AbstractSmooksFormEditor#doSave(org.eclipse.core.runtime.IProgressMonitor)
+	 */
+	@Override
+	public void doSave(IProgressMonitor monitor) {
+		super.doSave(monitor);
+		ediPage.doSave(monitor);
+	}
+
+
 
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.smooks.editor.AbstractSmooksFormEditor#init(org.eclipse.ui.IEditorSite, org.eclipse.ui.IEditorInput)

@@ -6,37 +6,35 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext.impl;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
+import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
+import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtPackage;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Type</b></em>'.
+ * An implementation of the model object '<em><b>Smooks Graphics Ext Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.impl.SmooksGraphicsExtTypeImpl#getInput <em>Input</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.impl.SmooksGraphicsExtTypeImpl#getGraph <em>Graph</em>}</li>
  *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.impl.SmooksGraphicsExtTypeImpl#getInputType <em>Input Type</em>}</li>
  *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.impl.SmooksGraphicsExtTypeImpl#getOutputType <em>Output Type</em>}</li>
  * </ul>
@@ -57,6 +55,16 @@ public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGrap
 	 * @ordered
 	 */
 	protected EList<InputType> input;
+
+	/**
+	 * The cached value of the '{@link #getGraph() <em>Graph</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGraph()
+	 * @generated
+	 * @ordered
+	 */
+	protected GraphType graph;
 
 	/**
 	 * The default value of the '{@link #getInputType() <em>Input Type</em>}' attribute.
@@ -114,7 +122,7 @@ public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGrap
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return SmooksGraphicsExtPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE;
+		return GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE;
 	}
 
 	/**
@@ -124,9 +132,52 @@ public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGrap
 	 */
 	public EList<InputType> getInput() {
 		if (input == null) {
-			input = new EObjectContainmentEList<InputType>(InputType.class, this, SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT);
+			input = new EObjectContainmentEList<InputType>(InputType.class, this, GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT);
 		}
 		return input;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GraphType getGraph() {
+		return graph;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetGraph(GraphType newGraph, NotificationChain msgs) {
+		GraphType oldGraph = graph;
+		graph = newGraph;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__GRAPH, oldGraph, newGraph);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGraph(GraphType newGraph) {
+		if (newGraph != graph) {
+			NotificationChain msgs = null;
+			if (graph != null)
+				msgs = ((InternalEObject)graph).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__GRAPH, null, msgs);
+			if (newGraph != null)
+				msgs = ((InternalEObject)newGraph).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__GRAPH, null, msgs);
+			msgs = basicSetGraph(newGraph, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__GRAPH, newGraph, newGraph));
 	}
 
 	/**
@@ -147,7 +198,7 @@ public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGrap
 		String oldInputType = inputType;
 		inputType = newInputType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE, oldInputType, inputType));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE, oldInputType, inputType));
 	}
 
 	/**
@@ -168,7 +219,7 @@ public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGrap
 		String oldOutputType = outputType;
 		outputType = newOutputType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE, oldOutputType, outputType));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE, oldOutputType, outputType));
 	}
 
 	/**
@@ -179,8 +230,10 @@ public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGrap
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT:
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT:
 				return ((InternalEList<?>)getInput()).basicRemove(otherEnd, msgs);
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__GRAPH:
+				return basicSetGraph(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -193,11 +246,13 @@ public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGrap
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT:
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT:
 				return getInput();
-			case SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE:
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__GRAPH:
+				return getGraph();
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE:
 				return getInputType();
-			case SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE:
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE:
 				return getOutputType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -212,14 +267,17 @@ public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGrap
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT:
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT:
 				getInput().clear();
 				getInput().addAll((Collection<? extends InputType>)newValue);
 				return;
-			case SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE:
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__GRAPH:
+				setGraph((GraphType)newValue);
+				return;
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE:
 				setInputType((String)newValue);
 				return;
-			case SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE:
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE:
 				setOutputType((String)newValue);
 				return;
 		}
@@ -234,13 +292,16 @@ public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGrap
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT:
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT:
 				getInput().clear();
 				return;
-			case SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE:
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__GRAPH:
+				setGraph((GraphType)null);
+				return;
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE:
 				setInputType(INPUT_TYPE_EDEFAULT);
 				return;
-			case SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE:
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE:
 				setOutputType(OUTPUT_TYPE_EDEFAULT);
 				return;
 		}
@@ -255,38 +316,19 @@ public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGrap
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT:
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT:
 				return input != null && !input.isEmpty();
-			case SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE:
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__GRAPH:
+				return graph != null;
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE:
 				return INPUT_TYPE_EDEFAULT == null ? inputType != null : !INPUT_TYPE_EDEFAULT.equals(inputType);
-			case SmooksGraphicsExtPackage.SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE:
+			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE:
 				return OUTPUT_TYPE_EDEFAULT == null ? outputType != null : !OUTPUT_TYPE_EDEFAULT.equals(outputType);
 		}
 		return super.eIsSet(featureID);
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (inputType: ");
-		result.append(inputType);
-		result.append(", outputType: ");
-		result.append(outputType);
-		result.append(')');
-		return result.toString();
-	}
-
-	/**
-	 * @return the changeListeners
-	 */
-	public List<ISmooksGraphChangeListener> getChangeListeners() {
+	
+		public List<ISmooksGraphChangeListener> getChangeListeners() {
 		if(changeListeners == null){
 			changeListeners = new ArrayList<ISmooksGraphChangeListener>();
 		}
@@ -308,7 +350,23 @@ public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGrap
 	public void removeSmooksGraphChangeListener(ISmooksGraphChangeListener listener) {
 		this.getChangeListeners().remove(listener);
 	}
-	
-	
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (inputType: ");
+		result.append(inputType);
+		result.append(", outputType: ");
+		result.append(outputType);
+		result.append(')');
+		return result.toString();
+	}
 
 } //SmooksGraphicsExtTypeImpl

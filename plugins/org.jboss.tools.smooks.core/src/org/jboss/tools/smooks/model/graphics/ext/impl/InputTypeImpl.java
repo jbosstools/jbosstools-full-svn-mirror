@@ -6,6 +6,7 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext.impl;
 
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -21,10 +22,9 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
+import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.ParamType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -60,6 +60,7 @@ public class InputTypeImpl extends EObjectImpl implements InputType {
 	 * @ordered
 	 */
 	protected static final String TYPE_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -86,7 +87,7 @@ public class InputTypeImpl extends EObjectImpl implements InputType {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return SmooksGraphicsExtPackage.Literals.INPUT_TYPE;
+		return GraphPackage.Literals.INPUT_TYPE;
 	}
 
 	/**
@@ -96,7 +97,7 @@ public class InputTypeImpl extends EObjectImpl implements InputType {
 	 */
 	public EList<ParamType> getParam() {
 		if (param == null) {
-			param = new EObjectContainmentEList<ParamType>(ParamType.class, this, SmooksGraphicsExtPackage.INPUT_TYPE__PARAM);
+			param = new EObjectContainmentEList<ParamType>(ParamType.class, this, GraphPackage.INPUT_TYPE__PARAM);
 		}
 		return param;
 	}
@@ -119,7 +120,7 @@ public class InputTypeImpl extends EObjectImpl implements InputType {
 		String oldType = type;
 		type = newType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SmooksGraphicsExtPackage.INPUT_TYPE__TYPE, oldType, type));
+			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.INPUT_TYPE__TYPE, oldType, type));
 	}
 
 	/**
@@ -130,7 +131,7 @@ public class InputTypeImpl extends EObjectImpl implements InputType {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case SmooksGraphicsExtPackage.INPUT_TYPE__PARAM:
+			case GraphPackage.INPUT_TYPE__PARAM:
 				return ((InternalEList<?>)getParam()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -144,9 +145,9 @@ public class InputTypeImpl extends EObjectImpl implements InputType {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case SmooksGraphicsExtPackage.INPUT_TYPE__PARAM:
+			case GraphPackage.INPUT_TYPE__PARAM:
 				return getParam();
-			case SmooksGraphicsExtPackage.INPUT_TYPE__TYPE:
+			case GraphPackage.INPUT_TYPE__TYPE:
 				return getType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -161,11 +162,11 @@ public class InputTypeImpl extends EObjectImpl implements InputType {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case SmooksGraphicsExtPackage.INPUT_TYPE__PARAM:
+			case GraphPackage.INPUT_TYPE__PARAM:
 				getParam().clear();
 				getParam().addAll((Collection<? extends ParamType>)newValue);
 				return;
-			case SmooksGraphicsExtPackage.INPUT_TYPE__TYPE:
+			case GraphPackage.INPUT_TYPE__TYPE:
 				setType((String)newValue);
 				return;
 		}
@@ -180,10 +181,10 @@ public class InputTypeImpl extends EObjectImpl implements InputType {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case SmooksGraphicsExtPackage.INPUT_TYPE__PARAM:
+			case GraphPackage.INPUT_TYPE__PARAM:
 				getParam().clear();
 				return;
-			case SmooksGraphicsExtPackage.INPUT_TYPE__TYPE:
+			case GraphPackage.INPUT_TYPE__TYPE:
 				setType(TYPE_EDEFAULT);
 				return;
 		}
@@ -198,9 +199,9 @@ public class InputTypeImpl extends EObjectImpl implements InputType {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case SmooksGraphicsExtPackage.INPUT_TYPE__PARAM:
+			case GraphPackage.INPUT_TYPE__PARAM:
 				return param != null && !param.isEmpty();
-			case SmooksGraphicsExtPackage.INPUT_TYPE__TYPE:
+			case GraphPackage.INPUT_TYPE__TYPE:
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 		}
 		return super.eIsSet(featureID);

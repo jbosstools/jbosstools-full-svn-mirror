@@ -11,8 +11,8 @@ import org.dom4j.DocumentException;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.uitls.JsonInputDataParser;
-import org.jboss.tools.smooks.model.graphics.ext.DocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
+import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.graphics.ext.util.SmooksGraphicsExtResourceFactoryImpl;
 import org.jboss.tools.smooks.model.json.JsonReader;
@@ -24,7 +24,7 @@ public class JsonParserTest extends BaseTestCase {
 	public void testParser1() throws IOException, ParserConfigurationException, DocumentException, InvocationTargetException {
 		Resource extResource = new SmooksGraphicsExtResourceFactoryImpl().createResource(null);
 		extResource.load(JsonParserTest.class.getResourceAsStream("smooks-config.xml.ext"), null);
-		SmooksGraphicsExtType extType = ((DocumentRoot) extResource.getContents().get(0)).getSmooksGraphicsExt();
+		SmooksGraphicsExtType extType = ((SmooksGraphExtensionDocumentRoot) extResource.getContents().get(0)).getSmooksGraphicsExt();
 		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(null);
 		
 		assertNotNull(extType);

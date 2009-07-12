@@ -28,8 +28,10 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.jboss.tools.smooks.model.graphics.ext.FigureType;
+import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
+import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtFactory;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
 import org.jboss.tools.smooks.model.smooks.ConditionsType;
@@ -70,6 +72,8 @@ public class SmooksModelUtils {
 	public static final String BEAN_ID = "beanId";
 
 	public static final String BINDINGS = "bindings";
+
+	public static final String INPUT_TYPE_EDI = "EDI";
 
 	public static EStructuralFeature ATTRIBUTE_PROPERTY = ExtendedMetaData.INSTANCE.demandFeature(null, "property",
 			false);
@@ -474,9 +478,9 @@ public class SmooksModelUtils {
 	}
 
 	public static void addJavaInput(SmooksGraphicsExtType ext, String className) {
-		InputType javaInput = SmooksGraphicsExtFactory.eINSTANCE.createInputType();
+		InputType javaInput = GraphFactory.eINSTANCE.createInputType();
 		javaInput.setType(INPUT_TYPE_JAVA);
-		org.jboss.tools.smooks.model.graphics.ext.ParamType p = SmooksGraphicsExtFactory.eINSTANCE.createParamType();
+		org.jboss.tools.smooks.model.graphics.ext.ParamType p = GraphFactory.eINSTANCE.createParamType();
 		p.setName(PARAM_NAME_CLASS);
 		p.setValue(className);
 		javaInput.getParam().add(p);
@@ -497,6 +501,17 @@ public class SmooksModelUtils {
 						value = value.trim();
 					return value;
 				}
+			}
+		}
+		return null;
+	}
+	
+	public static FigureType findFigureType(GraphType graph , String figureId){
+		List<FigureType> list = graph.getFigure();
+		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+			FigureType figureType = (FigureType) iterator.next();
+			if(figureId.equals(figureType.getId())){
+				return figureType;
 			}
 		}
 		return null;

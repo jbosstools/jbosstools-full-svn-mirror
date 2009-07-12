@@ -44,6 +44,34 @@ public class ModelPanelCreator {
 
 	private EObject model;
 
+	/**
+	 * @return the propertySource
+	 */
+	public IItemPropertySource getPropertySource() {
+		return propertySource;
+	}
+
+	/**
+	 * @param propertySource the propertySource to set
+	 */
+	public void setPropertySource(IItemPropertySource propertySource) {
+		this.propertySource = propertySource;
+	}
+
+	/**
+	 * @return the model
+	 */
+	public EObject getModel() {
+		return model;
+	}
+
+	/**
+	 * @param model the model to set
+	 */
+	public void setModel(EObject model) {
+		this.model = model;
+	}
+
 	private IItemPropertySource propertySource;
 	
 	public ModelPanelCreator(){
