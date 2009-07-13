@@ -10,8 +10,10 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.edimap.editor;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EventObject;
 import java.util.Iterator;
@@ -79,16 +81,19 @@ import org.jboss.tools.smooks.edimap.actions.AddComponentAction;
 import org.jboss.tools.smooks.edimap.actions.AddFieldAction;
 import org.jboss.tools.smooks.edimap.actions.AddSegmentAction;
 import org.jboss.tools.smooks.edimap.actions.AddSubComponentAction;
+import org.jboss.tools.smooks.edimap.models.EDIDataContainerGraphModel;
+import org.jboss.tools.smooks.edimap.models.EDIMappingNodeContainerGraphModel;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.common.RootModel;
+import org.jboss.tools.smooks.gef.tree.editparts.RootEditPart;
 import org.jboss.tools.smooks.gef.tree.figures.IMoveableModel;
-import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
+import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.medi.Delimiters;
 import org.jboss.tools.smooks.model.medi.Description;
@@ -102,7 +107,7 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  * 
  */
 public class EDIMapFormPage extends FormPage implements ISmooksModelValidateListener, ISmooksGraphChangeListener,
-		ISelectionChangedListener {
+		ISelectionChangedListener, ModifyListener {
 
 	private ISmooksModelProvider modelProvider;
 
@@ -213,15 +218,43 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		DocumentRoot root = (DocumentRoot) modelProvider.getSmooksModel();
 
 		Segments segments = root.getEdimap().getSegments();
-		TreeContainerModel container = new TreeContainerModel(segments, new AdapterFactoryContentProvider(editingDomain
-				.getAdapterFactory()), new EDIGraphicalTreeLabelProvider(editingDomain.getAdapterFactory()));
+		EDIMappingNodeContainerGraphModel container = new EDIMappingNodeContainerGraphModel(segments, new AdapterFactoryContentProvider(
+				editingDomain.getAdapterFactory()),
+				new EDIGraphicalTreeLabelProvider(editingDomain.getAdapterFactory()));
 		container.setHeaderVisable(true);
 
-		graphicalRootModel.getChildren().add(container);
+		graphicalRootModel.addTreeNode(container);
+
+		this.ediFilePath = getEDIFilePath();
+
+		createEDIDataGraphModel();
+
+		List<TreeNodeModel> linkedSourceModel = createLinkModel();
 
 		SmooksGraphicsExtType exttype = this.modelProvider.getSmooksGraphicsExt();
 		initModelGraphicsInformation(exttype);
 		getGraphicalViewer().setContents(graphicalRootModel);
+
+		expandSegmentNode(linkedSourceModel);
+
+	}
+
+	private void expandSegmentNode(List<TreeNodeModel> linkedSourceModel) {
+		EditPart editPart = getGraphicalViewer().getContents();
+		EDISegementsEditPart segmentsPart = null;
+		if (editPart instanceof RootEditPart) {
+			List<?> children = ((RootEditPart) editPart).getChildren();
+			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+				Object object = (Object) iterator.next();
+				if (object instanceof EDISegementsEditPart) {
+					segmentsPart = (EDISegementsEditPart) object;
+					break;
+				}
+			}
+		}
+		if (segmentsPart != null) {
+			SmooksUIUtils.expandGraphTree(linkedSourceModel, segmentsPart);
+		}
 	}
 
 	protected void initializeGraphicalViewer() {
@@ -321,20 +354,18 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 					modelProvider, getEditor());
 		}
 		descriptorComposite.getParent().layout();
-		
+
 		disposeCompositeControls(delimitersComposite, null);
-		
+
 		AttributeFieldEditPart pathEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor("EDI Mapping File",
 				delimitersComposite, editingDomain, toolkit, null, null, SmooksUIUtils.VALUE_TYPE_TEXT, null, null);
 		final Text ediFileText = (Text) pathEditPart.getContentControl();
-		ediFileText.addModifyListener(new ModifyListener() {
+		String filePath = getEDIFilePath();
+		if (filePath != null) {
+			ediFileText.setText(filePath);
+		}
+		ediFileText.addModifyListener(this);
 
-			public void modifyText(ModifyEvent e) {
-				ediFilePath = ediFileText.getText();
-				setDataViewerModel();
-			}
-		});
-		
 		if (delimitersCreator != null) {
 			IItemPropertySource itemPropertySource = (IItemPropertySource) editingDomain.getAdapterFactory().adapt(
 					delimiters, IItemPropertySource.class);
@@ -343,6 +374,39 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		}
 		delimitersComposite.getParent().layout();
 		initGraphicalModel();
+	}
+
+	private void removeEDIGraphModel() {
+		List<TreeNodeModel> children = this.graphicalRootModel.getChildren();
+		List<TreeNodeModel> temp = new ArrayList<TreeNodeModel>(children);
+		for (Iterator<?> iterator = temp.iterator(); iterator.hasNext();) {
+			TreeNodeModel treeNodeModel = (TreeNodeModel) iterator.next();
+			if (treeNodeModel.getData() instanceof TagObject) {
+				graphicalRootModel.removeTreeNode(treeNodeModel);
+			}
+		}
+		temp.clear();
+		temp = null;
+	}
+
+	private String getEDIFilePath() {
+		if (modelProvider != null) {
+			SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
+			List<InputType> inputList = ext.getInput();
+			for (Iterator<?> iterator = inputList.iterator(); iterator.hasNext();) {
+				InputType inputType = (InputType) iterator.next();
+				if (SmooksModelUtils.INPUT_TYPE_EDI.equals(inputType.getType())) {
+					List<ParamType> paramList = inputType.getParam();
+					for (Iterator<?> iterator2 = paramList.iterator(); iterator2.hasNext();) {
+						ParamType paramType = (ParamType) iterator2.next();
+						if (SmooksModelUtils.PARAM_NAME_PATH.equals(paramType.getName())) {
+							return paramType.getValue();
+						}
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	private ActionRegistry getActionRegistry() {
@@ -493,11 +557,10 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginHeight = 13;
 		gridLayout.numColumns = 2;
-		// gridLayout.makeColumnsEqualWidth = true;
+		gridLayout.makeColumnsEqualWidth = true;
 		form.getBody().setLayout(gridLayout);
 
-		Section descriptionSection = toolkit.createSection(form.getBody(), Section.TITLE_BAR | Section.TWISTIE
-				| Section.EXPANDED | Section.DESCRIPTION);
+		Section descriptionSection = toolkit.createSection(form.getBody(), Section.TITLE_BAR | Section.DESCRIPTION);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.verticalAlignment = GridData.BEGINNING;
 		descriptionSection.setLayoutData(gd);
@@ -515,8 +578,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			descriptionCreator.createModelPanel(toolkit, descriptorComposite, modelProvider, getEditor());
 		}
 
-		Section delimiterSection = toolkit.createSection(form.getBody(), Section.TITLE_BAR | Section.TWISTIE
-				| Section.EXPANDED | Section.DESCRIPTION);
+		Section delimiterSection = toolkit.createSection(form.getBody(), Section.TITLE_BAR | Section.DESCRIPTION);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.verticalAlignment = GridData.BEGINNING;
 		gd.verticalSpan = 2;
@@ -534,13 +596,11 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		AttributeFieldEditPart pathEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor("EDI Mapping File",
 				delimitersComposite, editingDomain, toolkit, null, null, SmooksUIUtils.VALUE_TYPE_TEXT, null, null);
 		final Text ediFileText = (Text) pathEditPart.getContentControl();
-		ediFileText.addModifyListener(new ModifyListener() {
-
-			public void modifyText(ModifyEvent e) {
-				ediFilePath = ediFileText.getText();
-				setDataViewerModel();
-			}
-		});
+		String filePath = getEDIFilePath();
+		if (filePath != null) {
+			ediFileText.setText(filePath);
+		}
+		ediFileText.addModifyListener(this);
 
 		if (delimitersCreator != null) {
 			delimitersCreator.createModelPanel(toolkit, delimitersComposite, modelProvider, getEditor());
@@ -606,19 +666,17 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		sashForm.setWeights(new int[] { 10, 3 });
 	}
 
-	private void setDataViewerModel() {
-		if (delimiters != null && ediFilePath != null) {
-			InputType inputType1 = null;
-			List<InputType> list = modelProvider.getSmooksGraphicsExt().getInput();
-			for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-				InputType inputType = (InputType) iterator.next();
-				if (SmooksModelUtils.INPUT_TYPE_EDI.equals(inputType.getType())) {
-					inputType1 = inputType;
-					break;
+	private void createEDIDataGraphModel() {
+		if (ediFilePath != null) {
+			try {
+				if (!new File(SmooksUIUtils.parseFilePath(ediFilePath)).exists()) {
+					return;
 				}
+			} catch (Throwable t) {
+				return;
 			}
-			SmooksUIUtils.recordInputDataInfomation(inputType1, modelProvider.getSmooksGraphicsExt(),
-					SmooksModelUtils.INPUT_TYPE_EDI, ediFilePath, null);
+		}
+		if (delimiters != null && ediFilePath != null) {
 			String segment = delimiters.getSegment();
 			String field = delimiters.getField();
 			String component = delimiters.getComponent();
@@ -653,13 +711,11 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 				List<?> children = tl.getChildren();
 				for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
 					Object object = (Object) iterator.next();
-					TreeContainerModel container = new TreeContainerModel(object,
+					EDIDataContainerGraphModel container = new EDIDataContainerGraphModel(object,
 							new XMLStructuredDataContentProvider(), new XMLStructuredDataLabelProvider());
 					container.setHeaderVisable(true);
 					graphicalRootModel.addTreeNode(container);
 				}
-
-				linkNode();
 			} catch (InvocationTargetException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -668,24 +724,72 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		}
 	}
 
-	private void linkNode() {
-		if (graphicalRootModel != null && segments != null) {
-			List<Segment> segmentList = segments.getSegment();
-			linkNode(segmentList);
+	private void disconnectSegement(List<Segment> segmentList) {
+		for (Iterator<?> iterator = segmentList.iterator(); iterator.hasNext();) {
+			Segment segment = (Segment) iterator.next();
+			TreeNodeModel segmentGraphicalModel = findSegmentGraphicalModel(segment);
+			List<TreeNodeConnection> sourceConnections = segmentGraphicalModel.getSourceConnections();
+			List<TreeNodeConnection> targetConnections = segmentGraphicalModel.getTargetConnections();
+			List<TreeNodeConnection> sourceConnectionsTemp = new ArrayList<TreeNodeConnection>(sourceConnections);
+			List<TreeNodeConnection> targetConnectionsTemp = new ArrayList<TreeNodeConnection>(targetConnections);
+			for (Iterator<?> iterator2 = targetConnectionsTemp.iterator(); iterator2.hasNext();) {
+				TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
+				treeNodeConnection.disconnect();
+			}
+			targetConnectionsTemp.clear();
+			targetConnectionsTemp = null;
+
+			for (Iterator<?> iterator2 = sourceConnectionsTemp.iterator(); iterator2.hasNext();) {
+				TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
+				treeNodeConnection.disconnect();
+			}
+			sourceConnectionsTemp.clear();
+			sourceConnectionsTemp = null;
+
+			disconnectSegement(segment.getSegment());
 		}
 	}
 
-	private void linkNode(List<Segment> segmentList) {
+	private void disconnectSegements() {
+		if (graphicalRootModel != null && segments != null) {
+			List<Segment> segmentList = segments.getSegment();
+			disconnectSegement(segmentList);
+		}
+	}
+
+	private List<TreeNodeModel> createLinkModel() {
+		if (graphicalRootModel != null && segments != null) {
+			List<Segment> segmentList = segments.getSegment();
+			return linkNode(segmentList);
+		}
+		return Collections.emptyList();
+	}
+
+	private List<TreeNodeModel> linkNode(List<Segment> segmentList) {
+		List<TreeNodeModel> sourceLinkedModel = new ArrayList<TreeNodeModel>();
 		for (Iterator<?> iterator = segmentList.iterator(); iterator.hasNext();) {
 			Segment segment = (Segment) iterator.next();
 			TreeNodeModel segmentGraphicalModel = findSegmentGraphicalModel(segment);
 			String code = segment.getSegcode();
 			TreeNodeModel model = findEDIDataGraphicalModel(code);
-			new TreeNodeConnection(model, segmentGraphicalModel).connect();
-			linkNode(segment.getSegment());
+			if (segmentGraphicalModel == null || model == null)
+				continue;
+			new TreeNodeConnection(segmentGraphicalModel, model).connect();
+			sourceLinkedModel.add(segmentGraphicalModel);
+			List<TreeNodeModel> linkedModel = linkNode(segment.getSegment());
+			if (linkedModel != null) {
+				sourceLinkedModel.addAll(linkedModel);
+			}
 		}
+		return sourceLinkedModel;
 	}
 
+	/**
+	 * it's dangerous , the method is dangerous
+	 * 
+	 * @param segment
+	 * @return
+	 */
 	private TreeNodeModel findSegmentGraphicalModel(Segment segment) {
 		if (graphicalRootModel != null) {
 			List<TreeNodeModel> treeNodeList = graphicalRootModel.getChildren();
@@ -784,5 +888,29 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			}
 			updateSelectionActions();
 		}
+	}
+
+	public void modifyText(ModifyEvent e) {
+		Text ediFileText = (Text) e.getSource();
+		ediFilePath = ediFileText.getText();
+		InputType inputType1 = null;
+		SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
+		List<InputType> list = ext.getInput();
+		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+			InputType inputType = (InputType) iterator.next();
+			if (SmooksModelUtils.INPUT_TYPE_EDI.equals(inputType.getType())) {
+				inputType1 = inputType;
+				break;
+			}
+		}
+		SmooksUIUtils.recordInputDataInfomation(inputType1, modelProvider.getSmooksGraphicsExt(),
+				SmooksModelUtils.INPUT_TYPE_EDI, ediFilePath, null);
+
+		disconnectSegements();
+		removeEDIGraphModel();
+		createEDIDataGraphModel();
+		initModelGraphicsInformation(ext);
+		List<TreeNodeModel> sourceLinkedModel = this.createLinkModel();
+		expandSegmentNode(sourceLinkedModel);
 	}
 }

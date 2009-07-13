@@ -13,15 +13,18 @@ import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.ConnectionEditPart;
+import org.eclipse.gef.DragTracker;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
+import org.eclipse.gef.tools.ConnectionDragCreationTool;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeGraphicalNodeEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeSelectEditPolicy;
 import org.jboss.tools.smooks.gef.tree.figures.ITreeFigureListener;
 import org.jboss.tools.smooks.gef.tree.figures.LeftOrRightAnchor;
+import org.jboss.tools.smooks.gef.tree.figures.TreeContainerFigure;
 import org.jboss.tools.smooks.gef.tree.figures.TreeFigureExpansionEvent;
 import org.jboss.tools.smooks.gef.tree.figures.TreeNodeFigure;
 import org.jboss.tools.smooks.gef.tree.model.IConnectableNode;
@@ -50,6 +53,30 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 		return figure;
 	}
 
+	/**
+	 * @return the dragLink
+	 */
+	protected boolean isDragLink() {
+		return false;
+	}
+
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.gef.editparts.AbstractGraphicalEditPart#getDragTracker(org
+	 * .eclipse.gef.Request)
+	 */
+	public DragTracker getDragTracker(Request request) {
+		if (isDragLink()) {
+			getViewer().select(this);
+			return new ConnectionDragCreationTool();
+		} else {
+			return super.getDragTracker(request);
+		}
+	}
+
 	public TreeContainerEditPart getTreeContainerEditPart() {
 		EditPart parent = this.getParent();
 		while (parent != null && (parent.getClass() != TreeContainerEditPart.class)) {
@@ -59,6 +86,20 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 			return (TreeContainerEditPart) parent;
 		}
 		return null;
+	}
+
+	public void expandNode() {
+		IFigure figure1 = getFigure();
+		if (figure1 instanceof TreeNodeFigure) {
+			((TreeNodeFigure) figure1).expandNode();
+		}
+	}
+
+	public void collapsedNode() {
+		IFigure figure1 = getFigure();
+		if (figure1 instanceof TreeNodeFigure) {
+			((TreeNodeFigure) figure1).collapsedNode();
+		}
 	}
 
 	public boolean isSourceLinkNodeEditPart() {
@@ -145,35 +186,35 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 			refreshTargetConnections();
 		}
 	}
-	
-	protected void recordBounds(SmooksGraphicsExtType graphicsExt,Rectangle bounds){
+
+	protected void recordBounds(SmooksGraphicsExtType graphicsExt, Rectangle bounds) {
 		GraphType graph = graphicsExt.getGraph();
-		if(graph == null ){
+		if (graph == null) {
 			graph = GraphFactory.eINSTANCE.createGraphType();
 			graphicsExt.setGraph(graph);
 		}
 		String figureId = generateFigureID();
-		if(figureId == null) return;
+		if (figureId == null)
+			return;
 		FigureType figure = SmooksModelUtils.findFigureType(graph, figureId);
-		
-		if(figure == null){
+
+		if (figure == null) {
 			figure = GraphFactory.eINSTANCE.createFigureType();
 			figure.setId(figureId);
 			graph.getFigure().add(figure);
 		}
-		recordFigureBounds(figure,bounds);
+		recordFigureBounds(figure, bounds);
 	}
-	
-	protected void recordFigureBounds(FigureType figureType,Rectangle bounds){
+
+	protected void recordFigureBounds(FigureType figureType, Rectangle bounds) {
 		figureType.setX(String.valueOf(bounds.getLocation().x));
 		figureType.setY(String.valueOf(bounds.getLocation().y));
-		
+
 		figureType.setHeight(String.valueOf(bounds.getSize().height));
 		figureType.setWidth(String.valueOf(bounds.getSize().width));
 	}
-	
-	
-	protected String generateFigureID(){
+
+	protected String generateFigureID() {
 		return null;
 	}
 
@@ -182,11 +223,12 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 			return anchorFigure;
 		else {
 			IFigure figure = getFigure();
+			anchorFigure = figure;
+			if (figure instanceof TreeContainerFigure) {
+				anchorFigure = ((TreeContainerFigure) figure).getLabel();
+			}
 			if (figure instanceof TreeNodeFigure) {
 				anchorFigure = ((TreeNodeFigure) figure).getLabel();
-				return anchorFigure;
-			} else {
-				anchorFigure = getFigure();
 			}
 		}
 		return anchorFigure;
@@ -196,9 +238,9 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 		anchorFigure = null;
 		EditPart parent = getParent();
 		List<TreeNodeEditPart> parentList = new ArrayList<TreeNodeEditPart>();
-		while (parent != null && parent.getClass() == TreeNodeEditPart.class) {
+		while (parent != null && parent instanceof TreeNodeEditPart) {
 			parentList.add((TreeNodeEditPart) parent);
-			if (parent.getParent() == null || parent.getParent().getClass() != TreeNodeEditPart.class) {
+			if (parent.getParent() == null || !(parent.getParent() instanceof TreeNodeEditPart)) {
 				break;
 			}
 			parent = parent.getParent();
@@ -235,7 +277,7 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 		List<?> childrenEditParts = getChildren();
 		for (Iterator<?> iterator = childrenEditParts.iterator(); iterator.hasNext();) {
 			EditPart child = (EditPart) iterator.next();
-			if (child.getClass() == TreeNodeEditPart.class) {
+			if (child instanceof TreeNodeEditPart) {
 				((TreeNodeEditPart) child).caculateAnchorFigure();
 			}
 		}
@@ -269,20 +311,18 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 	}
 
 	public ConnectionAnchor getSourceConnectionAnchor(ConnectionEditPart connection) {
-		return new LeftOrRightAnchor(getAnchorFigure(), false);
+		return new LeftOrRightAnchor(getAnchorFigure());
 	}
 
 	public ConnectionAnchor getSourceConnectionAnchor(Request request) {
-		return new LeftOrRightAnchor(getAnchorFigure(), false);
+		return new LeftOrRightAnchor(getAnchorFigure());
 	}
 
 	public ConnectionAnchor getTargetConnectionAnchor(ConnectionEditPart connection) {
-		boolean isLeft = !isSourceLinkNodeEditPart();
-		return new LeftOrRightAnchor(getAnchorFigure(), isLeft);
+		return new LeftOrRightAnchor(getAnchorFigure());
 	}
 
 	public ConnectionAnchor getTargetConnectionAnchor(Request request) {
-		boolean isLeft = !isSourceLinkNodeEditPart();
-		return new LeftOrRightAnchor(getAnchorFigure(), isLeft);
+		return new LeftOrRightAnchor(getAnchorFigure());
 	}
 }

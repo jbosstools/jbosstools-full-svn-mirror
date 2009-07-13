@@ -85,6 +85,11 @@ public class TreeNodeModel implements IConnectableNode {
 		this.labelProvider = labelProvider;
 	}
 
+	protected TreeNodeModel createChildModel(Object model, ITreeContentProvider contentProvider,
+			ILabelProvider labelProvider) {
+		return new TreeNodeModel(model, contentProvider, labelProvider);
+	}
+
 	public List<TreeNodeModel> getChildren() {
 		if (children == null) {
 			if (this.contentProvider != null && data != null) {
@@ -93,8 +98,9 @@ public class TreeNodeModel implements IConnectableNode {
 					children = new ArrayList<TreeNodeModel>();
 					for (int i = 0; i < models.length; i++) {
 						Object model = models[i];
-						TreeNodeModel n = new TreeNodeModel(model, contentProvider, labelProvider);
+						TreeNodeModel n = createChildModel(model, contentProvider, labelProvider);
 						children.add(n);
+						n.setParent(this);
 					}
 					return children;
 				}
@@ -107,9 +113,9 @@ public class TreeNodeModel implements IConnectableNode {
 					for (int i = 0; i < models.length; i++) {
 						Object model = models[i];
 						if (!childExsit(model)) {
-							TreeNodeModel n = new TreeNodeModel(model, contentProvider, labelProvider);
-//							this.addChild(n);
+							TreeNodeModel n = createChildModel(model, contentProvider, labelProvider);
 							children.add(n);
+							n.setParent(this);
 						}
 					}
 					List<TreeNodeModel> temp = new ArrayList<TreeNodeModel>(children);
@@ -117,8 +123,8 @@ public class TreeNodeModel implements IConnectableNode {
 						TreeNodeModel node = (TreeNodeModel) iterator.next();
 						Object data = node.getData();
 						if (!graphicalChildExist(data, models)) {
-//							this.removeChild(node);
 							children.remove(node);
+							node.setParent(null);
 						}
 					}
 					temp.clear();
@@ -238,6 +244,14 @@ public class TreeNodeModel implements IConnectableNode {
 
 	public void setLinkable(boolean linkable) {
 		this.linkable = linkable;
+	}
+
+	public boolean canLinkWithSource(Object model) {
+		return true;
+	}
+
+	public boolean canLinkWithTarget(Object model) {
+		return true;
 	}
 
 	public void setText(String text) {

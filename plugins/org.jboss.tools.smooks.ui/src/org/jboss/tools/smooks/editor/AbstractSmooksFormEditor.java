@@ -371,6 +371,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 					monitor.beginTask("Saving Smooks config file", resourceList.size());
 
 					for (Iterator<Resource> iterator = resourceList.iterator(); iterator.hasNext();) {
+						handleEMFModelChange = true;
 						Resource resource = (Resource) iterator.next();
 						resource.save(options);
 						monitor.worked(1);

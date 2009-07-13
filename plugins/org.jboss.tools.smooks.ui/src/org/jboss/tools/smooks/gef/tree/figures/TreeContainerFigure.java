@@ -70,6 +70,20 @@ public class TreeContainerFigure extends Figure {
 		this.setLayoutManager(new ToolbarLayout());
 	}
 
+	/**
+	 * @return the label
+	 */
+	public Label getLabel() {
+		return label;
+	}
+
+	/**
+	 * @param label the label to set
+	 */
+	public void setLabel(Label label) {
+		this.label = label;
+	}
+
 	public IFigure getContentFigure() {
 		return contentFigure;
 	}

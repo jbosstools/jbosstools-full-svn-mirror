@@ -34,7 +34,7 @@ import org.jboss.tools.smooks.model.medi.MappingNode;
 public class EDIEdiPartDirectEditManager extends DirectEditManager {
 	Font scaledFont;
 	protected VerifyListener verifyListener;
-	protected Label activityLabel;
+	protected Label textLabel;
 
 	/**
 	 * Creates a new ActivityDirectEditManager with the given attributes.
@@ -49,7 +49,7 @@ public class EDIEdiPartDirectEditManager extends DirectEditManager {
 	public EDIEdiPartDirectEditManager(GraphicalEditPart source, Class editorType, CellEditorLocator locator,
 			Label label) {
 		super(source, editorType, locator);
-		activityLabel = label;
+		textLabel = label;
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class EDIEdiPartDirectEditManager extends DirectEditManager {
 		if(model instanceof TreeNodeModel){
 			model = ((TreeNodeModel)model).getData();
 		}
-		String initialLabelText = activityLabel.getText();
+		String initialLabelText = textLabel.getText();
 		if(model instanceof MappingNode){
 			initialLabelText = ((MappingNode)model).getXmltag();
 		}
@@ -100,7 +100,7 @@ public class EDIEdiPartDirectEditManager extends DirectEditManager {
 		scaledFont = figure.getFont();
 		FontData data = scaledFont.getFontData()[0];
 		Dimension fontSize = new Dimension(0, data.getHeight());
-		activityLabel.translateToAbsolute(fontSize);
+		textLabel.translateToAbsolute(fontSize);
 		data.setHeight(fontSize.height);
 		scaledFont = new Font(null, data);
 
