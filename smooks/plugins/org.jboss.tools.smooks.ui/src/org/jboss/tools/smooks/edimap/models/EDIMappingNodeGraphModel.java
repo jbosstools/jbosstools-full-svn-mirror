@@ -41,8 +41,6 @@ public class EDIMappingNodeGraphModel extends TreeNodeModel {
 	public boolean canLinkWithSource(Object model) {
 		return false;
 	}
-	
-	
 
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#isLinkable()
@@ -70,6 +68,4 @@ public class EDIMappingNodeGraphModel extends TreeNodeModel {
 		}
 		return false;
 	}
-
-
 }
