@@ -30,6 +30,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
@@ -40,6 +41,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor.PropertyValueWrapper;
+import org.eclipse.gef.EditPart;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
@@ -118,6 +120,9 @@ import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaMethodsSelectionDialog;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaPropertiesSelectionDialog;
 import org.jboss.tools.smooks.core.SmooksCoreActivator;
+import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
+import org.jboss.tools.smooks.gef.tree.figures.TreeNodeFigure;
+import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.model.freemarker.BindTo;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.Use;
@@ -2104,10 +2109,22 @@ public class SmooksUIUtils {
 					input = GraphFactory.eINSTANCE.createInputType();
 				}
 				input.setType(type);
-				ParamType param = GraphFactory.eINSTANCE.createParamType();
-				param.setValue(value);
-				param.setName(SmooksModelUtils.PARAM_NAME_PATH);
-				input.getParam().add(param);
+				ParamType pathParam = null;
+				List<ParamType> paramList = input.getParam();
+				for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
+					ParamType paramType = (ParamType) iterator.next();
+					if (SmooksModelUtils.PARAM_NAME_PATH.equals(paramType.getName())) {
+						pathParam = paramType;
+						break;
+					}
+				}
+				if (pathParam == null) {
+					pathParam = GraphFactory.eINSTANCE.createParamType();
+					pathParam.setName(SmooksModelUtils.PARAM_NAME_PATH);
+				}
+				pathParam.setValue(value);
+
+				input.getParam().add(pathParam);
 				List<ParamType> params = generateExtParams(type, path, properties);
 				input.getParam().addAll(params);
 				extType.getInput().add(input);
@@ -2121,6 +2138,49 @@ public class SmooksUIUtils {
 				}
 			} catch (IOException e) {
 				SmooksConfigurationActivator.getDefault().log(e);
+			}
+		}
+	}
+
+	public static void expandGraphTree(List<TreeNodeModel> expandNodes, TreeNodeEditPart rootEditPart) {
+		for (Iterator<?> iterator = expandNodes.iterator(); iterator.hasNext();) {
+			TreeNodeModel treeNodeModel = (TreeNodeModel) iterator.next();
+			TreeNodeModel parent = treeNodeModel;
+			if (parent == null)
+				continue;
+			List<TreeNodeModel> parentList = new ArrayList<TreeNodeModel>();
+			boolean canExpand = true;
+			while (parent != rootEditPart.getModel()) {
+				parent = parent.getParent();
+				if (parent == null) {
+					canExpand = false;
+					break;
+				}
+				parentList.add(parent);
+			}
+			if (!canExpand) {
+				parentList.clear();
+				parentList = null;
+				continue;
+			}
+			parentList.remove(parentList.size() - 1);
+			((TreeNodeEditPart) rootEditPart).expandNode();
+			for (int i = parentList.size() - 1; i >= 0; i--) {
+				boolean expanded = false;
+				TreeNodeModel parentNode = parentList.get(i);
+				List<?> editParts = rootEditPart.getChildren();
+				for (Iterator<?> iterator2 = editParts.iterator(); iterator2.hasNext();) {
+					EditPart editPart = (EditPart) iterator2.next();
+					if (editPart instanceof TreeNodeEditPart && editPart.getModel() == parentNode) {
+						((TreeNodeEditPart) editPart).expandNode();
+						rootEditPart = (TreeNodeEditPart) editPart;
+						expanded = true;
+						break;
+					}
+				}
+				if (!expanded) {
+					break;
+				}
 			}
 		}
 	}

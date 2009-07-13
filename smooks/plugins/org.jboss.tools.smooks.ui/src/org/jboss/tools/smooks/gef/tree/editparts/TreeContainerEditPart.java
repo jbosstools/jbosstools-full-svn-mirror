@@ -6,17 +6,13 @@ package org.jboss.tools.smooks.gef.tree.editparts;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 
-import org.eclipse.draw2d.ChopboxAnchor;
 import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalEditPart;
-import org.eclipse.gef.Request;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeGraphicalNodeEditPolicy;
 import org.jboss.tools.smooks.gef.tree.figures.IMoveableModel;
 import org.jboss.tools.smooks.gef.tree.figures.TreeContainerFigure;
@@ -48,17 +44,17 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 			figure.setText(text);
 		}
 		boolean isSource = this.isSourceLinkNodeEditPart();
-		if(!isSource){
+		if (!isSource) {
 			IFigure figure = getFigure();
-			if(figure instanceof TreeContainerFigure){
-				((TreeContainerFigure)figure).setHeaderColor(ColorConstants.orange);
+			if (figure instanceof TreeContainerFigure) {
+				((TreeContainerFigure) figure).setHeaderColor(ColorConstants.orange);
 			}
 		}
 		Point location = model.getLocation();
 		Dimension size = getFigure().getPreferredSize();
 		try {
-			((GraphicalEditPart) this.getParent()).setLayoutConstraint(this, this
-	                .getFigure(),new Rectangle(location,size));
+			((GraphicalEditPart) this.getParent()).setLayoutConstraint(this, this.getFigure(), new Rectangle(location,
+					size));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -68,19 +64,19 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 		if (getFigure() instanceof TreeContainerFigure) {
 			TreeContainerFigure t = (TreeContainerFigure) getFigure();
 			return t.getContentFigure();
-		}else{
+		} else {
 			return getFigure();
 		}
 	}
-	
-	public TreeContainerEditPart getTreeContainerEditPart(){
+
+	public TreeContainerEditPart getTreeContainerEditPart() {
 		return this;
 	}
-	
-	public boolean isSourceLinkNodeEditPart(){
+
+	public boolean isSourceLinkNodeEditPart() {
 		Object model = getModel();
-		if(model != null && model instanceof TreeContainerModel){
-			return ((TreeContainerModel)model).isSourceLinkNode();
+		if (model != null && model instanceof TreeContainerModel) {
+			return ((TreeContainerModel) model).isSourceLinkNode();
 		}
 		return false;
 	}
@@ -91,51 +87,49 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 			refresh();
 		}
 	}
-	
+
 	@Override
 	protected void createEditPolicies() {
 		this.installEditPolicy(EditPolicy.NODE_ROLE, new TreeNodeGraphicalNodeEditPolicy());
 	}
-	
-	
 
-	@Override
-	public ConnectionAnchor getSourceConnectionAnchor(
-			ConnectionEditPart connection) {
-		return new ChopboxAnchor(getFigure());
-	}
-
-	@Override
-	public ConnectionAnchor getSourceConnectionAnchor(Request request) {
-		return new ChopboxAnchor(getFigure());
-	}
-
-	@Override
-	public ConnectionAnchor getTargetConnectionAnchor(
-			ConnectionEditPart connection) {
-		return new ChopboxAnchor(getFigure());
-	}
-
-	@Override
-	public ConnectionAnchor getTargetConnectionAnchor(Request request) {
-		return new ChopboxAnchor(getFigure());
-	}
+	// @Override
+	// public ConnectionAnchor getSourceConnectionAnchor(
+	// ConnectionEditPart connection) {
+	// return new ChopboxAnchor(getFigure());
+	// }
+	//
+	// @Override
+	// public ConnectionAnchor getSourceConnectionAnchor(Request request) {
+	// return new ChopboxAnchor(getFigure());
+	// }
+	//
+	// @Override
+	// public ConnectionAnchor getTargetConnectionAnchor(
+	// ConnectionEditPart connection) {
+	// return new ChopboxAnchor(getFigure());
+	// }
+	//
+	// @Override
+	// public ConnectionAnchor getTargetConnectionAnchor(Request request) {
+	// return new ChopboxAnchor(getFigure());
+	// }
 
 	@Override
 	public List<?> getModelChildren() {
 		TreeNodeModel node = (TreeNodeModel) getModel();
 		return node.getChildren();
-//		return super.getModelChildren();
+		// return super.getModelChildren();
 	}
 
 	@Override
 	public void treeCollapsed(TreeFigureExpansionEvent event) {
-		super.treeCollapsed(event);
+		// super.treeCollapsed(event);
 	}
 
 	@Override
 	public void treeExpanded(TreeFigureExpansionEvent event) {
-		super.treeExpanded(event);
+		// super.treeExpanded(event);
 	}
 
 }

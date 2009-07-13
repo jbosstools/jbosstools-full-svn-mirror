@@ -321,6 +321,16 @@ public class TreeNodeFigure extends Figure {
 			graphics.popState();
 		}
 	}
+	
+	public void expandNode(){
+		expand = false;
+		changeTreeExpansionState();
+	}
+	
+	public void collapsedNode(){
+		expand = true;
+		changeTreeExpansionState();
+	}
 
 	private void changeTreeExpansionState() {
 		try {

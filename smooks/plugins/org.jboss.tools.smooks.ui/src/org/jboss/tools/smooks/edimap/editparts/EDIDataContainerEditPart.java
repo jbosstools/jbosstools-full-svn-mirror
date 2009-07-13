@@ -8,15 +8,12 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.edimap.editor;
-
-import org.jboss.tools.smooks.edimap.editparts.EDITreeContainerEditPart;
-
+package org.jboss.tools.smooks.edimap.editparts;
 
 /**
  * @author Dart (dpeng@redhat.com)
  *
  */
-public class EDISegementsEditPart extends EDITreeContainerEditPart {
+public class EDIDataContainerEditPart extends EDITreeContainerEditPart {
 
 }

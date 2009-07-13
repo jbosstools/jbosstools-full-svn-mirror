@@ -38,7 +38,13 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 		TreeNodeConnection model = (TreeNodeConnection) getModel();
 		TreeNodeModel sourceModel = model.getSourceNode();
 		TreeNodeModel targetModel = model.getTargetNode();
-		PolylineConnection connection1 = new PolylineConnection();
+		PolylineConnection connection1 = new PolylineConnection(){
+			@Override
+			public void paintFigure(Graphics graphics) {
+				graphics.setAlpha(alpha);
+				super.paintFigure(graphics);
+			}
+		};
 		if (sourceModel instanceof TreeContainerModel || targetModel instanceof TreeContainerModel) {
 			// connection1.setConnectionRouter(new ManhattanConnectionRouter());
 			connection1.setTargetDecoration(new PolygonDecoration());
