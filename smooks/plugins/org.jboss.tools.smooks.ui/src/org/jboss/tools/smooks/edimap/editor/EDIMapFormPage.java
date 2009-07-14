@@ -27,7 +27,6 @@ import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.geometry.Point;
@@ -58,7 +57,6 @@ import org.eclipse.gef.ui.actions.UndoAction;
 import org.eclipse.gef.ui.actions.UpdateAction;
 import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
 import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
-import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -91,7 +89,6 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.ModelPanelCreator;
-import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
@@ -196,6 +193,8 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			descriptionCreator.markPropertyUI(modelProvider.getDiagnosticList());
 		}
 		if (segmentsCreator != null) {
+			if (getGraphicalViewer() == null)
+				return;
 			IStructuredSelection selection = (IStructuredSelection) getGraphicalViewer().getSelection();
 			if (selection.size() > 1)
 				return;
@@ -544,7 +543,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		this.description = root.getEdimap().getDescription();
 
 		this.segments = root.getEdimap().getSegments();
-		if(segments.getXmltag() == null){
+		if (segments.getXmltag() == null) {
 			segments.setXmltag("root");
 		}
 
@@ -633,7 +632,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		}
 
 		Hyperlink showTransformResultLink = toolkit.createHyperlink(desciptorContainer, "Test EDI transform", SWT.NONE);
-		showTransformResultLink.setVisible(false);
+		// showTransformResultLink.setVisible(false);
 		showTransformResultLink.addHyperlinkListener(new IHyperlinkListener() {
 
 			/*
@@ -1073,7 +1072,6 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	}
 
 	protected void testEDITransform() {
-		ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
 		try {
 			if (this.getEditor().isDirty()) {
 				MessageDialog.openInformation(getEditorSite().getShell(), "Info",
@@ -1097,17 +1095,19 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 				return;
 			}
 
-			IPath path1 = file.getFullPath().removeFirstSegments(1);
+			// IPath path1 = file.getFullPath().removeFirstSegments(1);
 
-			ProjectClassLoader classLoader = new ProjectClassLoader(JavaCore.create(file.getProject()));
-
-			Thread.currentThread().setContextClassLoader(classLoader);
+			// ProjectClassLoader classLoader = new
+			// ProjectClassLoader(JavaCore.create(file.getProject()));
+			//
+			// Thread.currentThread().setContextClassLoader(classLoader);
 			Smooks smooks = new Smooks();
 
 			SmooksResourceConfiguration readerConfig = new SmooksResourceConfiguration("org.xml.sax.driver",
 					SmooksEDIReader.class.getName());
+			File f = new File(file.getLocation().toOSString());
 
-			readerConfig.setParameter("mapping-model", path1.toString());
+			readerConfig.setParameter("mapping-model", f.toURI().toString());
 			readerConfig.setParameter("encoding", "UTF-8");
 
 			SmooksUtil.registerResource(readerConfig, smooks);
@@ -1120,6 +1120,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			// Filter the message through Smooks and capture the result as a DOM
 			// in
 			// the domResult instance...
+			// FileInputStream stream
 			smooks.filter(new StreamSource(new FileInputStream(ediFile)), domResult);
 
 			// Get the Document object from the domResult. This is the message
@@ -1134,10 +1135,13 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			StringWriter modelWriter = new StringWriter();
 			XmlUtil.serialize(model, true, modelWriter);
 			System.out.println(modelWriter);
+			EDIMappingResultDialog dialog = new EDIMappingResultDialog(getSite().getShell());
+			dialog.setText(modelWriter.toString());
+			dialog.open();
+			modelWriter.close();
 		} catch (Throwable t) {
 			SmooksUIUtils.showErrorDialog(getEditorSite().getShell(), SmooksUIUtils.createErrorStatus(t));
 		} finally {
-			Thread.currentThread().setContextClassLoader(oldClassLoader);
 		}
 	}
 
