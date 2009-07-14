@@ -13,13 +13,15 @@
    <!--            overwriting links properties                        -->
    <xsl:param name="ulink.show" select="0"></xsl:param>
 
-
+   <xsl:template name="book.titlepage.separator"/>
+   <xsl:template name="book.titlepage.verso"/>
+   <xsl:template name="book.titlepage3.recto"/>
    <xsl:attribute-set name="header.content.properties">
       <xsl:attribute name="font-family">Helvetica</xsl:attribute>
       <xsl:attribute name="font-size">9pt</xsl:attribute>
       <xsl:attribute name="font-weight">bold</xsl:attribute>
-      
    </xsl:attribute-set>
+   
    <xsl:template name="header.content">  
       <xsl:param name="pageclass" select="''"/>
       <xsl:param name="sequence" select="''"/>
@@ -478,5 +480,5 @@
          <xsl:otherwise>auto</xsl:otherwise>
       </xsl:choose>
    </xsl:template>
- 
-</xsl:stylesheet>
+   
+ </xsl:stylesheet>
