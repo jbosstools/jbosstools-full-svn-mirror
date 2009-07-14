@@ -18,6 +18,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
@@ -41,4 +42,14 @@ public class SegmentsUICreator extends PropertyUICreator {
 			formEditor,part);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.configuration.editors.PropertyUICreator#ignoreProperty(org.eclipse.emf.ecore.EAttribute)
+	 */
+	@Override
+	public boolean ignoreProperty(EAttribute feature) {
+		if(feature == MEdiPackage.Literals.MAPPING_NODE__XMLTAG){
+			return true;
+		}
+		return super.ignoreProperty(feature);
+	}
 }

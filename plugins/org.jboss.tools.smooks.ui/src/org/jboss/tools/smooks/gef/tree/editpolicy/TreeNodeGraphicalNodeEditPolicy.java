@@ -9,6 +9,7 @@ import org.eclipse.gef.editpolicies.GraphicalNodeEditPolicy;
 import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.ReconnectRequest;
 import org.jboss.tools.smooks.gef.tree.editparts.CreateConnectionCommand;
+import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 
 /**
@@ -33,7 +34,7 @@ public class TreeNodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 				if (!((TreeNodeModel) targetModel).canLinkWithSource(((CreateConnectionCommand) command).getSource()))
 					return null;
 				Object source = ((CreateConnectionCommand) command).getSource();
-				if(source instanceof TreeNodeModel){
+				if (source instanceof TreeNodeModel) {
 					if (!((TreeNodeModel) source).canLinkWithTarget(targetModel))
 						return null;
 				}
@@ -62,7 +63,14 @@ public class TreeNodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 		if (model != null && model instanceof TreeNodeModel) {
 			if (!((TreeNodeModel) model).isLinkable())
 				return null;
-			CreateConnectionCommand command = new CreateConnectionCommand();
+			EditPart hostPart = getHost();
+			CreateConnectionCommand command = null;
+			if (hostPart instanceof TreeNodeEditPart) {
+				command = ((TreeNodeEditPart) hostPart).createCreateConnectionCommand();
+			}
+			if (command == null) {
+				command = new CreateConnectionCommand();
+			}
 			command.setSource((TreeNodeModel) model);
 			request.setStartCommand(command);
 			return command;

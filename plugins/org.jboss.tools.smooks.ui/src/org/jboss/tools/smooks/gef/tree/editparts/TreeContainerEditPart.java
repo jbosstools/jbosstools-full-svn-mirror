@@ -6,7 +6,6 @@ package org.jboss.tools.smooks.gef.tree.editparts;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
@@ -47,7 +46,7 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 		if (!isSource) {
 			IFigure figure = getFigure();
 			if (figure instanceof TreeContainerFigure) {
-				((TreeContainerFigure) figure).setHeaderColor(ColorConstants.orange);
+//				((TreeContainerFigure) figure).setHeaderColor(ColorConstants.orange);
 			}
 		}
 		Point location = model.getLocation();

@@ -35,9 +35,9 @@ public class SegmentUICreator extends PropertyUICreator {
 	 * org.eclipse.emf.ecore.EAttribute)
 	 */
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
-		IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-		ISmooksModelProvider formEditor, IEditorPart part) {
-		
+			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
+			ISmooksModelProvider formEditor, IEditorPart part) {
+
 		if (feature == MEdiPackage.eINSTANCE.getSegment_MaxOccurs()) {
 		}
 		if (feature == MEdiPackage.eINSTANCE.getSegment_MinOccurs()) {
@@ -47,8 +47,25 @@ public class SegmentUICreator extends PropertyUICreator {
 		if (feature == MEdiPackage.eINSTANCE.getSegment_Truncatable()) {
 		}
 
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature,
-			formEditor,part);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor, part);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.configuration.editors.PropertyUICreator#ignoreProperty
+	 * (org.eclipse.emf.ecore.EAttribute)
+	 */
+	@Override
+	public boolean ignoreProperty(EAttribute feature) {
+		if (feature == MEdiPackage.Literals.MAPPING_NODE__XMLTAG) {
+			return true;
+		}
+		if (feature == MEdiPackage.Literals.SEGMENT__SEGCODE) {
+			return true;
+		}
+		return super.ignoreProperty(feature);
 	}
 
 }

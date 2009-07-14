@@ -37,6 +37,13 @@
             class="org.jboss.tools.smooks.configuration.wizards.SmooksConfigurationFileNewWizard"
             id="org.jboss.tools.smooks.configuration.wizards.NewConfigurationFileWizard">
       </wizard>
+      <wizard
+            category="org.jboss.tools.smooks.configuration"
+            class="org.jboss.tools.smooks.edimap.wizard.EDIMappingConfigFileWizard"
+            icon="icons/sample.gif"
+            id="org.jboss.tools.smooks.configuration.wizards.NewEDIMappingConfigurationFileWizard"
+            name="EDI Message Mapping Configuration File">
+      </wizard>
    </extension>
    
     <extension
@@ -119,6 +126,10 @@
                 <contentType
                       exactMatch="true"
                       id="org.jboss.tools.smooks.ui.smooks.contentType">
+                </contentType>
+                <contentType
+                      exactMatch="true"
+                      id="org.jboss.tools.smooks.ui.edimap.contentType">
                 </contentType>
              </rules>
           </include>
