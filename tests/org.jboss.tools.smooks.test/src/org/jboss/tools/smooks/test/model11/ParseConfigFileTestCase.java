@@ -46,7 +46,7 @@ public class ParseConfigFileTestCase extends AbstractSmooks11ModelTestCase {
 	}
 
 	private void loadFile(File file) throws IOException {
-		if (file.exists() && file.isDirectory()) {
+		if (file.exists() && file.isDirectory() && !file.getName().equals(".svn")) {
 			File[] configFiles = file.listFiles();
 			for (int i = 0; i < configFiles.length; i++) {
 				File configFile = configFiles[i];
