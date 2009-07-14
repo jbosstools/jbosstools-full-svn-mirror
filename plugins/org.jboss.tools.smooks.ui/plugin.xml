@@ -16,7 +16,7 @@
       </editor>
       <editor
             class="org.jboss.tools.smooks.edimap.editor.EDIMapFormEditor"
-            icon="icons/sample.gif"
+            icon="icons/edi-mapping.gif"
             id="org.jboss.tools.smooks.edimap.editors.MultiPageEditor"
             name="EDI Message Mapping Editor">
          <contentTypeBinding
@@ -40,7 +40,7 @@
       <wizard
             category="org.jboss.tools.smooks.configuration"
             class="org.jboss.tools.smooks.edimap.wizard.EDIMappingConfigFileWizard"
-            icon="icons/sample.gif"
+            icon="icons/edi-mapping.gif"
             id="org.jboss.tools.smooks.configuration.wizards.NewEDIMappingConfigurationFileWizard"
             name="EDI Message Mapping Configuration File">
       </wizard>
