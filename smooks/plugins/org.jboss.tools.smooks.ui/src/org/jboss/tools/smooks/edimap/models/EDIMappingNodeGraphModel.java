@@ -10,60 +10,169 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.edimap.models;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.Segment;
 
 /**
  * @author Dart (dpeng@redhat.com)
- *
+ * 
  */
 public class EDIMappingNodeGraphModel extends TreeNodeModel {
 
-	public EDIMappingNodeGraphModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider) {
+	IEditingDomainProvider domainProvider = null;
+
+	public EDIMappingNodeGraphModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider,
+			IEditingDomainProvider domainProvider) {
 		super(data, contentProvider, labelProvider);
+		this.domainProvider = domainProvider;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#createChildModel(java.lang.Object, org.eclipse.jface.viewers.ITreeContentProvider, org.eclipse.jface.viewers.ILabelProvider)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#createChildModel(
+	 * java.lang.Object, org.eclipse.jface.viewers.ITreeContentProvider,
+	 * org.eclipse.jface.viewers.ILabelProvider)
 	 */
 	@Override
 	protected TreeNodeModel createChildModel(Object model, ITreeContentProvider contentProvider,
 			ILabelProvider labelProvider) {
-		return new EDIMappingNodeGraphModel(model, contentProvider, labelProvider);
+		return new EDIMappingNodeGraphModel(model, contentProvider, labelProvider, domainProvider);
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#canLinkWithSource(java.lang.Object)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#canLinkWithSource
+	 * (java.lang.Object)
 	 */
 	@Override
 	public boolean canLinkWithSource(Object model) {
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#addSourceConnection
+	 * (org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection)
+	 */
+	@Override
+	public void addSourceConnection(TreeNodeConnection connection) {
+		super.addSourceConnection(connection);
+		if (getData() instanceof Segment) {
+			TreeNodeModel targetNode = connection.getTargetNode();
+			if (targetNode != null && targetNode.getData() instanceof EDIDataContainerModel) {
+				if (domainProvider != null) {
+					String segCode = ((EDIDataContainerModel) targetNode.getData()).getSegCode();
+					String sc = ((Segment) getData()).getSegcode();
+					if (sc != null && sc.equals(segCode)) {
+						return;
+					}
+					EditingDomain domain = domainProvider.getEditingDomain();
+					if (domain != null) {
+						Command command = SetCommand.create(domain, getData(), MEdiPackage.Literals.SEGMENT__SEGCODE,
+								segCode);
+						domain.getCommandStack().execute(command);
+					}
+				}
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#removeSourceConnection
+	 * (org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection)
+	 */
+	@Override
+	public void removeSourceConnection(TreeNodeConnection connection) {
+		super.removeSourceConnection(connection);
+		if (getData() instanceof Segment) {
+			String sc = ((Segment) getData()).getSegcode();
+			if (sc == null) {
+				return;
+			}
+			if (domainProvider != null) {
+				EditingDomain domain = domainProvider.getEditingDomain();
+				if (domain != null) {
+					Command command = SetCommand.create(domain, getData(), MEdiPackage.Literals.SEGMENT__SEGCODE, null);
+					domain.getCommandStack().execute(command);
+				}
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#removeTargetConnection
+	 * (org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection)
+	 */
+	@Override
+	public void removeTargetConnection(TreeNodeConnection connection) {
+		// TODO Auto-generated method stub
+		super.removeTargetConnection(connection);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#addTargetConnection
+	 * (org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection)
+	 */
+	@Override
+	public void addTargetConnection(TreeNodeConnection connection) {
+		super.addTargetConnection(connection);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#isLinkable()
 	 */
 	@Override
 	public boolean isLinkable() {
 		Object nodeModel = getData();
-		if(!(nodeModel instanceof Segment)){
+		if (!(nodeModel instanceof Segment)) {
 			return false;
+		}else{
+			if(!this.getSourceConnections().isEmpty()){
+				return false;
+			}
 		}
 		return super.isLinkable();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#canLinkWithTarget(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#canLinkWithTarget
+	 * (java.lang.Object)
 	 */
 	@Override
 	public boolean canLinkWithTarget(Object model) {
 		Object nodeModel = getData();
-		if(!(nodeModel instanceof Segment)){
+		if (!(nodeModel instanceof Segment)) {
 			return false;
 		}
-		if(model instanceof EDIDataContainerGraphModel){
+		if (model instanceof EDIDataContainerGraphModel) {
 			return true;
 		}
 		return false;

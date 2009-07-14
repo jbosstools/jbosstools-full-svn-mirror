@@ -29,7 +29,7 @@ public class RenameXmlTagNameCommand extends EDIGEFAdpaterCommand {
 	 */
 	@Override
 	protected void refreshEditPart() {
-		editPart.refresh();
+//		editPart.refresh();
 	}
 
 

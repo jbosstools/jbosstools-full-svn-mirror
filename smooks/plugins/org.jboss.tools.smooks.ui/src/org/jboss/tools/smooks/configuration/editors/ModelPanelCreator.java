@@ -52,7 +52,8 @@ public class ModelPanelCreator {
 	}
 
 	/**
-	 * @param propertySource the propertySource to set
+	 * @param propertySource
+	 *            the propertySource to set
 	 */
 	public void setPropertySource(IItemPropertySource propertySource) {
 		this.propertySource = propertySource;
@@ -66,16 +67,17 @@ public class ModelPanelCreator {
 	}
 
 	/**
-	 * @param model the model to set
+	 * @param model
+	 *            the model to set
 	 */
 	public void setModel(EObject model) {
 		this.model = model;
 	}
 
 	private IItemPropertySource propertySource;
-	
-	public ModelPanelCreator(){
-		
+
+	public ModelPanelCreator() {
+
 	}
 
 	public ModelPanelCreator(EObject model, IItemPropertySource propertySource) {
@@ -87,13 +89,14 @@ public class ModelPanelCreator {
 		currentPropertyUIMap.clear();
 	}
 
-	public void createModelPanel(FormToolkit formToolkit, Composite detailsComposite, ISmooksModelProvider provider,
-			IEditorPart part) {
-		this.createModelPanel(model, formToolkit, detailsComposite, propertySource, provider, part);
+	public Map<Object, Object> createModelPanel(FormToolkit formToolkit, Composite detailsComposite,
+			ISmooksModelProvider provider, IEditorPart part) {
+		return this.createModelPanel(model, formToolkit, detailsComposite, propertySource, provider, part);
 	}
 
-	public void createModelPanel(final EObject model, FormToolkit formToolkit, Composite detailsComposite,
-			IItemPropertySource itemPropertySource, ISmooksModelProvider provider, IEditorPart part) {
+	public Map<Object, Object> createModelPanel(final EObject model, FormToolkit formToolkit,
+			Composite detailsComposite, IItemPropertySource itemPropertySource, ISmooksModelProvider provider,
+			IEditorPart part) {
 		cleanCurrentPropertyUIMap();
 		IPropertyUICreator creator = PropertyUICreatorManager.getInstance().getPropertyUICreator(model);
 		List<IItemPropertyDescriptor> propertyDes = itemPropertySource.getPropertyDescriptors(model);
@@ -155,8 +158,13 @@ public class ModelPanelCreator {
 		// propertyMainComposite.layout();
 
 		markPropertyUI(provider.getDiagnosticList(), model);
+
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		// map.putAll(currentPropertyUIMap);
+
+		return map;
 	}
-	
+
 	public void markPropertyUI(List<Diagnostic> diagnosticList) {
 		markPropertyUI(diagnosticList, model);
 	}
@@ -210,7 +218,7 @@ public class ModelPanelCreator {
 				hasCreated = true;
 			}
 			if (typeClazz.getInstanceClass() == Integer.class || typeClazz.getInstanceClass() == int.class) {
-				editPart = createStringFieldEditor(model, detailsComposite, feature, formToolkit,
+				editPart = createIntegerFieldEditor(model, detailsComposite, feature, formToolkit,
 						itemPropertyDescriptor);
 				hasCreated = true;
 			}
@@ -222,6 +230,12 @@ public class ModelPanelCreator {
 		}
 
 		return editPart;
+	}
+
+	protected AttributeFieldEditPart createIntegerFieldEditor(Object model, final Composite propertyComposite,
+			EAttribute feature, FormToolkit formToolKit, final IItemPropertyDescriptor itemPropertyDescriptor) {
+		return SmooksUIUtils.createNumberFieldEditor(null, propertyComposite, formToolKit, itemPropertyDescriptor,
+				model);
 	}
 
 	protected AttributeFieldEditPart createEnumFieldEditor(FormToolkit formToolkit, final EObject model,

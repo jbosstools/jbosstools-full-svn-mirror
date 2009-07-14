@@ -106,11 +106,6 @@ public class AbstractEDIMappingEditPart extends TreeNodeEditPart {
 					}
 				}
 				return null;
-				// RenameActivityCommand cmd = new RenameActivityCommand();
-				// cmd.setSource((Activity)getHost().getModel());
-				// cmd.setOldName(((Activity)getHost().getModel()).getName());
-				// cmd.setName((String)request.getCellEditor().getValue());
-				// return cmd;
 			}
 
 			/*

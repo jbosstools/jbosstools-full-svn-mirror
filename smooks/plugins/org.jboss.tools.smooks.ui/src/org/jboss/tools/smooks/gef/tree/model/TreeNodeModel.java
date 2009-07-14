@@ -31,6 +31,12 @@ public class TreeNodeModel implements IConnectableNode {
 	public static final String PRO_REMOVE_TARGET_CONNECTION = "_pro_remove_target_connected";
 
 	public static final String PRO_TEXT_CHANGED = "_pro_text_changed";
+	
+	public static final String PRO_FORCE_VISUAL_CHANGED = "_pro_force_text_changed";
+	
+	public static final String PRO_FORCE_CHIDLREN_CHANGED = "_pro_force_children_changed";
+	
+	public static final String PRO_FORCE_CONNECTION_CHANGED = "_pro_force_connection_changed";
 
 	protected Object data = null;
 
@@ -123,6 +129,7 @@ public class TreeNodeModel implements IConnectableNode {
 						TreeNodeModel node = (TreeNodeModel) iterator.next();
 						Object data = node.getData();
 						if (!graphicalChildExist(data, models)) {
+							disconnectAllConnections(node);
 							children.remove(node);
 							node.setParent(null);
 						}
@@ -133,6 +140,34 @@ public class TreeNodeModel implements IConnectableNode {
 			}
 		}
 		return children;
+	}
+
+	protected void disconnectAllConnections(TreeNodeModel node) {
+		List<TreeNodeConnection> sourceConnections = node.getSourceConnections();
+		List<TreeNodeConnection> targetConnections = node.getTargetConnections();
+		List<TreeNodeConnection> tempSourceConnections = new ArrayList<TreeNodeConnection>(sourceConnections);
+		List<TreeNodeConnection> tempTargetConnections = new ArrayList<TreeNodeConnection>(targetConnections);
+
+		for (Iterator<?> iterator2 = tempTargetConnections.iterator(); iterator2.hasNext();) {
+			TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
+			treeNodeConnection.disconnect();
+		}
+
+		for (Iterator<?> iterator2 = tempSourceConnections.iterator(); iterator2.hasNext();) {
+			TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
+			treeNodeConnection.disconnect();
+		}
+
+		tempSourceConnections.clear();
+		tempTargetConnections.clear();
+		tempSourceConnections = null;
+		tempTargetConnections = null;
+
+		List<TreeNodeModel> children = node.getChildren();
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			TreeNodeModel treeNodeModel = (TreeNodeModel) iterator.next();
+			disconnectAllConnections(treeNodeModel);
+		}
 	}
 
 	protected boolean graphicalChildExist(Object model, Object[] models) {
@@ -268,6 +303,18 @@ public class TreeNodeModel implements IConnectableNode {
 
 	public List<TreeNodeConnection> getTargetConnections() {
 		return targetConnections;
+	}
+	
+	public void fireChildrenChanged(){
+		support.firePropertyChange(PRO_FORCE_CHIDLREN_CHANGED, new Object(), null);
+	}
+	
+	public void fireConnectionChanged(){
+		support.firePropertyChange(PRO_FORCE_CONNECTION_CHANGED, new Object(), null);
+	}
+	
+	public void fireVisualChanged(){
+		support.firePropertyChange(PRO_FORCE_VISUAL_CHANGED, new Object(), null);
 	}
 
 }

@@ -27,17 +27,12 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor.PropertyValueWrapper;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.ui.forms.IDetailsPage;
 import org.eclipse.ui.forms.IFormPart;
 import org.eclipse.ui.forms.IManagedForm;
@@ -91,7 +86,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 
 	public void createContents(Composite parent) {
 		parent.setLayout(new FillLayout());
-		section = formToolkit.createSection(parent, Section.TITLE_BAR|Section.DESCRIPTION);
+		section = formToolkit.createSection(parent, Section.TITLE_BAR | Section.DESCRIPTION);
 
 		Composite client = formToolkit.createComposite(section);
 		section.setLayout(new FillLayout());
@@ -119,12 +114,14 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 			IPropertyUICreator creator = PropertyUICreatorManager.getInstance().getPropertyUICreator(getModel());
 			List<IItemPropertyDescriptor> propertyDes = itemPropertySource.getPropertyDescriptors(getModel());
 			if (creator != null) {
-				List<AttributeFieldEditPart> list =  creator.createExtendUIOnTop((AdapterFactoryEditingDomain) formEditor
-						.getEditingDomain(), formToolkit, detailsComposite, getModel(), getFormEditor(),getFormEditor());
+				List<AttributeFieldEditPart> list = creator.createExtendUIOnTop(
+						(AdapterFactoryEditingDomain) formEditor.getEditingDomain(), formToolkit, detailsComposite,
+						getModel(), getFormEditor(), getFormEditor());
 				if (list != null) {
 					for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 						AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
-						if(attributeFieldEditPart == null) continue;
+						if (attributeFieldEditPart == null)
+							continue;
 						Object attribute = attributeFieldEditPart.getAttribute();
 						if (attribute != null && attributeFieldEditPart != null) {
 							currentPropertyUIMap.put(attribute, attributeFieldEditPart);
@@ -138,7 +135,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				EAttribute attribute = (EAttribute) pd.getFeature(getModel());
 				if (attribute.isRequired()) {
 					AttributeFieldEditPart editPart = createAttributeUI(detailsComposite, pd, creator);
-					if (editPart != null  && attribute != null) {
+					if (editPart != null && attribute != null) {
 						currentPropertyUIMap.put(attribute, editPart);
 					}
 				}
@@ -154,12 +151,14 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				}
 			}
 			if (creator != null) {
-				List<AttributeFieldEditPart> list = creator.createExtendUIOnBottom((AdapterFactoryEditingDomain) formEditor
-						.getEditingDomain(), formToolkit, detailsComposite, getModel(), getFormEditor(),getFormEditor());
+				List<AttributeFieldEditPart> list = creator.createExtendUIOnBottom(
+						(AdapterFactoryEditingDomain) formEditor.getEditingDomain(), formToolkit, detailsComposite,
+						getModel(), getFormEditor(), getFormEditor());
 				if (list != null) {
 					for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 						AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
-						if(attributeFieldEditPart == null) continue;
+						if (attributeFieldEditPart == null)
+							continue;
 						Object attribute = attributeFieldEditPart.getAttribute();
 						if (attribute != null && attributeFieldEditPart != null) {
 							currentPropertyUIMap.put(attribute, attributeFieldEditPart);
@@ -249,7 +248,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				return null;
 			}
 			editPart = creator.createPropertyUI(formToolkit, detailsComposite, itemPropertyDescriptor, getModel(),
-					feature, getFormEditor(),getFormEditor());
+					feature, getFormEditor(), getFormEditor());
 			if (editPart != null) {
 				createDefault = false;
 			}
@@ -271,7 +270,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				hasCreated = true;
 			}
 			if (typeClazz.getInstanceClass() == Integer.class || typeClazz.getInstanceClass() == int.class) {
-				editPart = createStringFieldEditor(detailsComposite, feature, formToolkit, itemPropertyDescriptor);
+				editPart = createIntegerFieldEditor(detailsComposite, feature, formToolkit, itemPropertyDescriptor);
 				hasCreated = true;
 			}
 			if (!hasCreated) {
@@ -356,36 +355,11 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				getModel(), false, false, null);
 	}
 
-	protected void createIntegerFieldEditor(final Composite propertyComposite, EAttribute feature,
+	protected AttributeFieldEditPart createIntegerFieldEditor(final Composite propertyComposite, EAttribute feature,
 			FormToolkit formToolKit, final IItemPropertyDescriptor itemPropertyDescriptor) {
-		SmooksUIUtils.createFieldEditorLabel(null, propertyComposite, formToolKit, itemPropertyDescriptor, getModel(),
-				false);
-		final Spinner spinner = new Spinner(propertyComposite, SWT.BORDER);
-		Object value = itemPropertyDescriptor.getPropertyValue(getModel());
-		if (value != null && value instanceof PropertyValueWrapper) {
-			Object editValue = ((PropertyValueWrapper) value).getEditableValue(getModel());
-			if (editValue != null && editValue instanceof Integer)
-				spinner.setSelection((Integer) editValue);
-		}
-		spinner.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				Object value = itemPropertyDescriptor.getPropertyValue(getModel());
-				if (value != null && value instanceof PropertyValueWrapper) {
-					Object editValue = ((PropertyValueWrapper) value).getEditableValue(getModel());
-					if (editValue != null) {
-						if (!editValue.equals(spinner.getSelection())) {
-							itemPropertyDescriptor.setPropertyValue(getModel(), spinner.getSelection());
-						}
-					} else {
-						itemPropertyDescriptor.setPropertyValue(getModel(), spinner.getSelection());
-					}
-				} else {
-					itemPropertyDescriptor.setPropertyValue(getModel(), spinner.getSelection());
-				}
-			}
-		});
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		spinner.setLayoutData(gd);
+
+		return SmooksUIUtils.createNumberFieldEditor(null, propertyComposite, formToolKit, itemPropertyDescriptor,
+				getModel());
 	}
 
 	/*
@@ -477,7 +451,8 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				text = ((EObject) model).eClass().getName();
 			}
 			section.setText(text);
-//			section.setDescription("Details of " + text + ". Required fields are denoted by \"*\".");
+			// section.setDescription("Details of " + text +
+			// ". Required fields are denoted by \"*\".");
 			section.layout();
 		}
 	}

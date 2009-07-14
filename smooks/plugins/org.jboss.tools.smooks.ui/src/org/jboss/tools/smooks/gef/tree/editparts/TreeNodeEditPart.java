@@ -60,7 +60,6 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 		return false;
 	}
 
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -174,8 +173,13 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 
 	public void propertyChange(PropertyChangeEvent evt) {
 		String proName = evt.getPropertyName();
-		if (TreeNodeModel.PRO_ADD_CHILD.equals(proName) || TreeNodeModel.PRO_REMOVE_CHILD.equals(proName)) {
+		if (TreeNodeModel.PRO_FORCE_VISUAL_CHANGED.equals(proName)) {
+			refreshVisuals();
+		}
+		if (TreeNodeModel.PRO_ADD_CHILD.equals(proName) || TreeNodeModel.PRO_REMOVE_CHILD.equals(proName)
+				|| TreeNodeModel.PRO_FORCE_CHIDLREN_CHANGED.equals(proName)) {
 			refreshChildren();
+			
 		}
 		if (TreeNodeModel.PRO_ADD_SOURCE_CONNECTION.equals(proName)
 				|| TreeNodeModel.PRO_REMOVE_SOURCE_CONNECTION.equals(proName)) {
@@ -183,6 +187,11 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 		}
 		if (TreeNodeModel.PRO_ADD_TARGET_CONNECTION.equals(proName)
 				|| TreeNodeModel.PRO_REMOVE_TARGET_CONNECTION.equals(proName)) {
+			refreshTargetConnections();
+		}
+
+		if (TreeNodeModel.PRO_FORCE_CONNECTION_CHANGED.equals(proName)) {
+			refreshSourceConnections();
 			refreshTargetConnections();
 		}
 	}
@@ -324,5 +333,9 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 
 	public ConnectionAnchor getTargetConnectionAnchor(Request request) {
 		return new LeftOrRightAnchor(getAnchorFigure());
+	}
+
+	public CreateConnectionCommand createCreateConnectionCommand() {
+		return null;
 	}
 }

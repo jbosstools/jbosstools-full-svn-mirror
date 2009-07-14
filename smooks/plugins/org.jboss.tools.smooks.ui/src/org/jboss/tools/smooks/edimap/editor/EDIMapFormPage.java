@@ -11,18 +11,33 @@
 package org.jboss.tools.smooks.edimap.editor;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.stream.StreamSource;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CommandWrapper;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.DeleteCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
@@ -43,7 +58,9 @@ import org.eclipse.gef.ui.actions.UndoAction;
 import org.eclipse.gef.ui.actions.UpdateAction;
 import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
 import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -60,17 +77,21 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
+import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.ModelPanelCreator;
+import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
@@ -101,6 +122,12 @@ import org.jboss.tools.smooks.model.medi.DocumentRoot;
 import org.jboss.tools.smooks.model.medi.Segment;
 import org.jboss.tools.smooks.model.medi.Segments;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
+import org.milyn.Smooks;
+import org.milyn.SmooksUtil;
+import org.milyn.cdr.SmooksResourceConfiguration;
+import org.milyn.smooks.edi.SmooksEDIReader;
+import org.milyn.xml.XmlUtil;
+import org.w3c.dom.Document;
 
 /**
  * @author Dart
@@ -218,9 +245,9 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		DocumentRoot root = (DocumentRoot) modelProvider.getSmooksModel();
 
 		Segments segments = root.getEdimap().getSegments();
-		EDIMappingNodeContainerGraphModel container = new EDIMappingNodeContainerGraphModel(segments, new AdapterFactoryContentProvider(
-				editingDomain.getAdapterFactory()),
-				new EDIGraphicalTreeLabelProvider(editingDomain.getAdapterFactory()));
+		EDIMappingNodeContainerGraphModel container = new EDIMappingNodeContainerGraphModel(segments,
+				new AdapterFactoryContentProvider(editingDomain.getAdapterFactory()),
+				new EDIGraphicalTreeLabelProvider(editingDomain.getAdapterFactory()), modelProvider);
 		container.setHeaderVisable(true);
 
 		graphicalRootModel.addTreeNode(container);
@@ -329,8 +356,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 
 	protected void configureGraphicalViewer() {
 		createGEFActions();
-		getGraphicalViewer().getControl().setBackground(
-				getManagedForm().getToolkit().getColors().getColor(IFormColors.H_HOVER_LIGHT));
+		getGraphicalViewer().getControl().setBackground(ColorConstants.button);
 		getGraphicalViewer().setRootEditPart(new FreeformGraphicalRootEditPart());
 		getGraphicalViewer().setEditPartFactory(new EDIEditPartFactory());
 
@@ -369,11 +395,26 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		if (delimitersCreator != null) {
 			IItemPropertySource itemPropertySource = (IItemPropertySource) editingDomain.getAdapterFactory().adapt(
 					delimiters, IItemPropertySource.class);
-			delimitersCreator.createModelPanel(delimiters, toolkit, delimitersComposite, itemPropertySource,
-					modelProvider, getEditor());
+			Map<Object, Object> fieldEditorMap = delimitersCreator.createModelPanel(delimiters, toolkit,
+					delimitersComposite, itemPropertySource, modelProvider, getEditor());
+			handleDelimiterFieldEditor(fieldEditorMap);
 		}
 		delimitersComposite.getParent().layout();
 		initGraphicalModel();
+	}
+
+	private void handleDelimiterFieldEditor(Map<Object, Object> fieldEditorMap) {
+		// Iterator<Object> keyIterator = fieldEditorMap.keySet().iterator();
+		// while (keyIterator.hasNext()) {
+		// Object key = keyIterator.next();
+		// AttributeFieldEditPart editPart = (AttributeFieldEditPart)
+		// fieldEditorMap.get(key);
+		// Control control = editPart.getContentControl();
+		// if (control instanceof Text) {
+		// ((Text) control).addModifyListener(new DelimiterModifyListener());
+		//
+		// }
+		// }
 	}
 
 	private void removeEDIGraphModel() {
@@ -490,6 +531,8 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 					description, IItemPropertySource.class);
 
 			descriptionCreator = new ModelPanelCreator(description, propertySource2);
+
+			handleCommandStack(editingDomain.getCommandStack());
 		}
 	}
 
@@ -501,6 +544,9 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		this.description = root.getEdimap().getDescription();
 
 		this.segments = root.getEdimap().getSegments();
+		if(segments.getXmltag() == null){
+			segments.setXmltag("root");
+		}
 
 		editingDomain = (AdapterFactoryEditingDomain) modelProvider.getEditingDomain();
 
@@ -568,15 +614,64 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		FillLayout flayout = new FillLayout();
 		descriptionSection.setLayout(flayout);
 
-		descriptorComposite = toolkit.createComposite(descriptionSection, SWT.NONE);
+		Composite desciptorContainer = toolkit.createComposite(descriptionSection);
+		GridLayout dgl = new GridLayout();
+		dgl.marginHeight = 0;
+		dgl.marginWidth = 0;
+		desciptorContainer.setLayout(dgl);
+		descriptionSection.setClient(desciptorContainer);
+
+		descriptorComposite = toolkit.createComposite(desciptorContainer, SWT.NONE);
 		GridLayout gl = new GridLayout();
 		gl.numColumns = 2;
 		descriptorComposite.setLayout(gl);
-		descriptionSection.setClient(descriptorComposite);
+		gd = new GridData(GridData.FILL_BOTH);
+		descriptorComposite.setLayoutData(gd);
 
 		if (descriptionCreator != null) {
 			descriptionCreator.createModelPanel(toolkit, descriptorComposite, modelProvider, getEditor());
 		}
+
+		Hyperlink showTransformResultLink = toolkit.createHyperlink(desciptorContainer, "Test EDI transform", SWT.NONE);
+		showTransformResultLink.setVisible(false);
+		showTransformResultLink.addHyperlinkListener(new IHyperlinkListener() {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.ui.forms.events.IHyperlinkListener#linkActivated(
+			 * org.eclipse.ui.forms.events.HyperlinkEvent)
+			 */
+			public void linkActivated(HyperlinkEvent e) {
+				testEDITransform();
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.ui.forms.events.IHyperlinkListener#linkEntered(org
+			 * .eclipse.ui.forms.events.HyperlinkEvent)
+			 */
+			public void linkEntered(HyperlinkEvent e) {
+
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.ui.forms.events.IHyperlinkListener#linkExited(org
+			 * .eclipse.ui.forms.events.HyperlinkEvent)
+			 */
+			public void linkExited(HyperlinkEvent e) {
+
+			}
+
+		});
+		gd = new GridData();
+		showTransformResultLink.setLayoutData(gd);
 
 		Section delimiterSection = toolkit.createSection(form.getBody(), Section.TITLE_BAR | Section.DESCRIPTION);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -603,7 +698,9 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		ediFileText.addModifyListener(this);
 
 		if (delimitersCreator != null) {
-			delimitersCreator.createModelPanel(toolkit, delimitersComposite, modelProvider, getEditor());
+			Map<Object, Object> editPartMap = delimitersCreator.createModelPanel(toolkit, delimitersComposite,
+					modelProvider, getEditor());
+			handleDelimiterFieldEditor(editPartMap);
 		}
 
 		// Section testSection = toolkit.createSection(form.getBody(),
@@ -664,6 +761,50 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		mappingModelPropertiesComposite.setLayout(mgl);
 
 		sashForm.setWeights(new int[] { 10, 3 });
+
+	}
+
+	private void handleCommandStack(org.eclipse.emf.common.command.CommandStack commandStack) {
+		commandStack.addCommandStackListener(new org.eclipse.emf.common.command.CommandStackListener() {
+			public void commandStackChanged(EventObject event) {
+				final Command mostRecentCommand = ((org.eclipse.emf.common.command.CommandStack) event.getSource())
+						.getMostRecentCommand();
+				getEditorSite().getShell().getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						if (mostRecentCommand != null) {
+							Command rawCommand = mostRecentCommand;
+							while (rawCommand instanceof CommandWrapper) {
+								rawCommand = ((CommandWrapper) rawCommand).getCommand();
+							}
+							if (rawCommand instanceof SetCommand || rawCommand instanceof AddCommand
+									|| rawCommand instanceof DeleteCommand) {
+								refershRecentAffectedModel(rawCommand, mostRecentCommand.getAffectedObjects());
+							}
+						}
+					}
+				});
+			}
+		});
+	}
+
+	private void refershRecentAffectedModel(Command command, Collection<?> models) {
+		for (Iterator<?> iterator = models.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			if (object == this.delimiters) {
+				rebuildEDIGraph();
+				continue;
+			}
+			TreeNodeModel node = findEDIGraphicalModel(object);
+			if (node == null)
+				continue;
+			if (command instanceof SetCommand) {
+				node.fireVisualChanged();
+			}
+			if (command instanceof AddCommand || command instanceof DeleteCommand) {
+				node.fireChildrenChanged();
+				node.fireConnectionChanged();
+			}
+		}
 	}
 
 	private void createEDIDataGraphModel() {
@@ -727,21 +868,31 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	private void disconnectSegement(List<Segment> segmentList) {
 		for (Iterator<?> iterator = segmentList.iterator(); iterator.hasNext();) {
 			Segment segment = (Segment) iterator.next();
-			TreeNodeModel segmentGraphicalModel = findSegmentGraphicalModel(segment);
+			TreeNodeModel segmentGraphicalModel = findEDIGraphicalModel(segment);
+			if (segmentGraphicalModel == null)
+				continue;
 			List<TreeNodeConnection> sourceConnections = segmentGraphicalModel.getSourceConnections();
 			List<TreeNodeConnection> targetConnections = segmentGraphicalModel.getTargetConnections();
 			List<TreeNodeConnection> sourceConnectionsTemp = new ArrayList<TreeNodeConnection>(sourceConnections);
 			List<TreeNodeConnection> targetConnectionsTemp = new ArrayList<TreeNodeConnection>(targetConnections);
 			for (Iterator<?> iterator2 = targetConnectionsTemp.iterator(); iterator2.hasNext();) {
 				TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
-				treeNodeConnection.disconnect();
+				// don't earse the segcode
+				treeNodeConnection.getSourceNode().getSourceConnections().remove(treeNodeConnection);
+				treeNodeConnection.getSourceNode().fireConnectionChanged();
+				treeNodeConnection.getTargetNode().getTargetConnections().remove(treeNodeConnection);
+				treeNodeConnection.getTargetNode().fireConnectionChanged();
+				// treeNodeConnection.disconnect();
 			}
 			targetConnectionsTemp.clear();
 			targetConnectionsTemp = null;
 
 			for (Iterator<?> iterator2 = sourceConnectionsTemp.iterator(); iterator2.hasNext();) {
 				TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
-				treeNodeConnection.disconnect();
+				treeNodeConnection.getSourceNode().getSourceConnections().remove(treeNodeConnection);
+				treeNodeConnection.getSourceNode().fireConnectionChanged();
+				treeNodeConnection.getTargetNode().getTargetConnections().remove(treeNodeConnection);
+				treeNodeConnection.getTargetNode().fireConnectionChanged();
 			}
 			sourceConnectionsTemp.clear();
 			sourceConnectionsTemp = null;
@@ -769,12 +920,12 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		List<TreeNodeModel> sourceLinkedModel = new ArrayList<TreeNodeModel>();
 		for (Iterator<?> iterator = segmentList.iterator(); iterator.hasNext();) {
 			Segment segment = (Segment) iterator.next();
-			TreeNodeModel segmentGraphicalModel = findSegmentGraphicalModel(segment);
+			TreeNodeModel segmentGraphicalModel = findEDIGraphicalModel(segment);
 			String code = segment.getSegcode();
 			TreeNodeModel model = findEDIDataGraphicalModel(code);
-			if (segmentGraphicalModel == null || model == null)
-				continue;
-			new TreeNodeConnection(segmentGraphicalModel, model).connect();
+			if (segmentGraphicalModel != null && model != null) {
+				new TreeNodeConnection(segmentGraphicalModel, model).connect();
+			}
 			sourceLinkedModel.add(segmentGraphicalModel);
 			List<TreeNodeModel> linkedModel = linkNode(segment.getSegment());
 			if (linkedModel != null) {
@@ -784,28 +935,54 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		return sourceLinkedModel;
 	}
 
+	// private TreeNodeModel findEDIGraphModel(Object model){
+	// if (graphicalRootModel != null) {
+	// List<TreeNodeModel> treeNodeList = graphicalRootModel.getChildren();
+	// return findEDIGraphicalModel(model, treeNodeList);
+	// }
+	// return null;
+	// }
+	//
+	// private TreeNodeModel findEDIGraphicalModel(Object model,
+	// List<TreeNodeModel> treeNodeList) {
+	// for (Iterator<?> iterator = treeNodeList.iterator(); iterator.hasNext();)
+	// {
+	// TreeNodeModel treeNodeModel = (TreeNodeModel) iterator.next();
+	// Object model = treeNodeModel.getData();
+	// if (model == segment) {
+	// return treeNodeModel;
+	// }
+	// TreeNodeModel m = findSegmentGraphicalModel(segment,
+	// treeNodeModel.getChildren());
+	// if (m != null) {
+	// return m;
+	// }
+	// }
+	// return null;
+	// }
+
 	/**
 	 * it's dangerous , the method is dangerous
 	 * 
-	 * @param segment
+	 * @param model
 	 * @return
 	 */
-	private TreeNodeModel findSegmentGraphicalModel(Segment segment) {
+	private TreeNodeModel findEDIGraphicalModel(Object model) {
 		if (graphicalRootModel != null) {
 			List<TreeNodeModel> treeNodeList = graphicalRootModel.getChildren();
-			return findSegmentGraphicalModel(segment, treeNodeList);
+			return findEDIGraphicalModel(model, treeNodeList);
 		}
 		return null;
 	}
 
-	private TreeNodeModel findSegmentGraphicalModel(Segment segment, List<TreeNodeModel> treeNodeList) {
+	private TreeNodeModel findEDIGraphicalModel(Object model, List<TreeNodeModel> treeNodeList) {
 		for (Iterator<?> iterator = treeNodeList.iterator(); iterator.hasNext();) {
 			TreeNodeModel treeNodeModel = (TreeNodeModel) iterator.next();
-			Object model = treeNodeModel.getData();
-			if (model == segment) {
+			Object data = treeNodeModel.getData();
+			if (data == model) {
 				return treeNodeModel;
 			}
-			TreeNodeModel m = findSegmentGraphicalModel(segment, treeNodeModel.getChildren());
+			TreeNodeModel m = findEDIGraphicalModel(model, treeNodeModel.getChildren());
 			if (m != null) {
 				return m;
 			}
@@ -814,6 +991,8 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	}
 
 	private TreeNodeModel findEDIDataGraphicalModel(String code) {
+		if (code == null)
+			return null;
 		if (graphicalRootModel != null) {
 			List<TreeNodeModel> treeNodeList = graphicalRootModel.getChildren();
 			for (Iterator<?> iterator = treeNodeList.iterator(); iterator.hasNext();) {
@@ -866,6 +1045,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 
 	public void selectionChanged(SelectionChangedEvent event) {
 		if (event.getSource() == getGraphicalViewer()) {
+			initEDIModels();
 			disposeMappingModelPropertiesCompoisiteControls();
 			IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 			if (selection.size() > 1)
@@ -881,12 +1061,83 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 				if ((model instanceof EObject)) {
 					IItemPropertySource itemPropertySource = (IItemPropertySource) editingDomain.getAdapterFactory()
 							.adapt(model, IItemPropertySource.class);
+					segmentsCreator.setModel((EObject) model);
+					segmentsCreator.setPropertySource(itemPropertySource);
 					segmentsCreator.createModelPanel((EObject) model, this.getManagedForm().getToolkit(),
 							mappingModelPropertiesComposite, itemPropertySource, modelProvider, getEditor());
 					mappingModelPropertiesComposite.getParent().layout();
 				}
 			}
 			updateSelectionActions();
+		}
+	}
+
+	protected void testEDITransform() {
+		ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
+		try {
+			if (this.getEditor().isDirty()) {
+				MessageDialog.openInformation(getEditorSite().getShell(), "Info",
+						"The configuration file should be saved");
+				return;
+			}
+			IFileEditorInput input = (IFileEditorInput) getEditorInput();
+			IFile file = input.getFile();
+			String path = file.getLocation().toOSString();
+			File ediFile = new File(SmooksUIUtils.parseFilePath(ediFilePath));
+
+			if (ediFile == null || !ediFile.exists()) {
+				MessageDialog.openError(getEditorSite().getShell(), "Transform Error", "Can't the find the EDI file : "
+						+ ediFilePath);
+				return;
+			}
+
+			if (file == null || !file.exists()) {
+				MessageDialog.openError(getEditorSite().getShell(), "Transform Error",
+						"Can't find the EDI mapping configuration file : " + path);
+				return;
+			}
+
+			IPath path1 = file.getFullPath().removeFirstSegments(1);
+
+			ProjectClassLoader classLoader = new ProjectClassLoader(JavaCore.create(file.getProject()));
+
+			Thread.currentThread().setContextClassLoader(classLoader);
+			Smooks smooks = new Smooks();
+
+			SmooksResourceConfiguration readerConfig = new SmooksResourceConfiguration("org.xml.sax.driver",
+					SmooksEDIReader.class.getName());
+
+			readerConfig.setParameter("mapping-model", path1.toString());
+			readerConfig.setParameter("encoding", "UTF-8");
+
+			SmooksUtil.registerResource(readerConfig, smooks);
+
+			// Use a DOM result to capture the message model for the supplied
+			// CSV
+			// message...
+			DOMResult domResult = new DOMResult();
+
+			// Filter the message through Smooks and capture the result as a DOM
+			// in
+			// the domResult instance...
+			smooks.filter(new StreamSource(new FileInputStream(ediFile)), domResult);
+
+			// Get the Document object from the domResult. This is the message
+			// model!!!...
+			Document model = (Document) domResult.getNode();
+
+			// So using the model Document, you can construct a tree structure
+			// for
+			// the editor.
+
+			// We'll just print out the model DOM here so you can see it....
+			StringWriter modelWriter = new StringWriter();
+			XmlUtil.serialize(model, true, modelWriter);
+			System.out.println(modelWriter);
+		} catch (Throwable t) {
+			SmooksUIUtils.showErrorDialog(getEditorSite().getShell(), SmooksUIUtils.createErrorStatus(t));
+		} finally {
+			Thread.currentThread().setContextClassLoader(oldClassLoader);
 		}
 	}
 
@@ -905,12 +1156,32 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		}
 		SmooksUIUtils.recordInputDataInfomation(inputType1, modelProvider.getSmooksGraphicsExt(),
 				SmooksModelUtils.INPUT_TYPE_EDI, ediFilePath, null);
+		rebuildEDIGraph();
+	}
 
+	private void rebuildEDIGraph() {
+		SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
 		disconnectSegements();
 		removeEDIGraphModel();
 		createEDIDataGraphModel();
 		initModelGraphicsInformation(ext);
 		List<TreeNodeModel> sourceLinkedModel = this.createLinkModel();
 		expandSegmentNode(sourceLinkedModel);
+	}
+
+	private class DelimiterModifyListener implements ModifyListener {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.
+		 * events.ModifyEvent)
+		 */
+		public void modifyText(ModifyEvent e) {
+			rebuildEDIGraph();
+
+		}
+
 	}
 }

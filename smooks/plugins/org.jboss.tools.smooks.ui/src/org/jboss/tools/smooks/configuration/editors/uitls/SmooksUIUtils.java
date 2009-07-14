@@ -30,7 +30,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
@@ -121,7 +120,6 @@ import org.jboss.tools.smooks.configuration.editors.javabean.JavaMethodsSelectio
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaPropertiesSelectionDialog;
 import org.jboss.tools.smooks.core.SmooksCoreActivator;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
-import org.jboss.tools.smooks.gef.tree.figures.TreeNodeFigure;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.model.freemarker.BindTo;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
@@ -475,6 +473,103 @@ public class SmooksUIUtils {
 				linkLabel, openFile, height, listener, valueType, openEditorAction, false);
 	}
 
+	public static AttributeFieldEditPart createNumberFieldEditor(String label, final Composite parent,
+			FormToolkit toolkit, final IItemPropertyDescriptor itemPropertyDescriptor, Object model) {
+		AttributeFieldEditPart fieldEditPart = new AttributeFieldEditPart();
+		GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+		Section section = null;
+		Composite textContainer = parent;
+		final Object fm = model;
+		if (label == null && itemPropertyDescriptor != null) {
+			label = itemPropertyDescriptor.getDisplayName(model);
+			EAttribute feature = (EAttribute) itemPropertyDescriptor.getFeature(model);
+			if (feature.isRequired()) {
+				label = label + "*";
+			}
+		}
+		FieldMarkerWrapper warpper = createFieldEditorLabel(label, parent, toolkit, itemPropertyDescriptor, model,
+				false);
+		fieldEditPart.setFieldMarker(warpper.getMarker());
+
+		Object editValue = getEditValue(itemPropertyDescriptor, model);
+
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+
+		int textType = SWT.FLAT;
+		if (isLinuxOS()) {
+			textType = SWT.BORDER;
+		}
+		Composite tcom = toolkit.createComposite(textContainer);
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 2;
+		layout.marginLeft = 0;
+		layout.marginRight = 0;
+		layout.horizontalSpacing = 0;
+		tcom.setLayout(layout);
+
+		FieldMarkerComposite notificationComposite = new FieldMarkerComposite(tcom, SWT.NONE);
+		gd = new GridData();
+		gd.heightHint = 8;
+		gd.widthHint = 8;
+		gd.horizontalAlignment = GridData.BEGINNING;
+		gd.verticalAlignment = GridData.BEGINNING;
+		notificationComposite.setLayoutData(gd);
+		fieldEditPart.setFieldMarker(notificationComposite);
+
+		final Text valueText = toolkit.createText(tcom, "", textType);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		valueText.setLayoutData(gd);
+
+		tcom.setLayoutData(gd);
+
+		toolkit.paintBordersFor(textContainer);
+
+		boolean valueIsSet = true;
+		if (model != null && model instanceof EObject && itemPropertyDescriptor != null) {
+			valueIsSet = ((EObject) model).eIsSet((EAttribute) itemPropertyDescriptor.getFeature(model));
+		}
+		if (editValue != null && valueIsSet && editValue instanceof Integer) {
+			valueText.setText(editValue.toString());
+		}
+		if (itemPropertyDescriptor != null) {
+			valueText.addModifyListener(new ModifyListener() {
+				public void modifyText(ModifyEvent e) {
+					Object editValue = getEditValue(itemPropertyDescriptor, fm);
+					if (editValue != null) {
+						String vt = valueText.getText();
+						Integer newValue = null;
+						try {
+							newValue = Integer.parseInt(vt);
+						} catch (Throwable t) {
+							return;
+						}
+						if (vt == null || vt.length() == 0) {
+							itemPropertyDescriptor.setPropertyValue(fm, null);
+						} else {
+							if (!editValue.equals(newValue)) {
+								itemPropertyDescriptor.setPropertyValue(fm, newValue);
+							}
+						}
+					} else {
+						String vt = valueText.getText();
+						Integer newValue = null;
+						try {
+							newValue = Integer.parseInt(vt);
+						} catch (Throwable t) {
+							return;
+						}
+						itemPropertyDescriptor.setPropertyValue(fm, newValue);
+					}
+
+				}
+			});
+		}
+		if (section != null)
+			section.layout();
+		fieldEditPart.setContentControl(valueText);
+		return fieldEditPart;
+	}
+
 	public static AttributeFieldEditPart createStringFieldEditor(String label, final Composite parent,
 			EditingDomain editingdomain, FormToolkit toolkit, final IItemPropertyDescriptor itemPropertyDescriptor,
 			Object model, boolean multiText, boolean linkLabel, boolean openFile, int height,
@@ -713,6 +808,7 @@ public class SmooksUIUtils {
 					public void modifyText(ModifyEvent e) {
 						Object editValue = getEditValue(itemPropertyDescriptor, fm);
 						if (editValue != null) {
+							String vt = valueText.getText();
 							if (valueText.getText() == null || valueText.getText().length() == 0) {
 								itemPropertyDescriptor.setPropertyValue(fm, null);
 							} else {

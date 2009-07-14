@@ -1,5 +1,6 @@
 package org.jboss.tools.smooks.edimap.models;
 
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
@@ -7,9 +8,12 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 
 public class EDIMappingNodeContainerGraphModel extends TreeContainerModel {
 
-	public EDIMappingNodeContainerGraphModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider) {
+	private IEditingDomainProvider domainProvider;
+
+	public EDIMappingNodeContainerGraphModel(Object data, ITreeContentProvider contentProvider,
+			ILabelProvider labelProvider, IEditingDomainProvider domainProvider) {
 		super(data, contentProvider, labelProvider);
-		// TODO Auto-generated constructor stub
+		this.domainProvider = domainProvider;
 	}
 
 	/*
@@ -24,7 +28,7 @@ public class EDIMappingNodeContainerGraphModel extends TreeContainerModel {
 	protected TreeNodeModel createChildModel(Object model, ITreeContentProvider contentProvider,
 			ILabelProvider labelProvider) {
 		// TODO Auto-generated method stub
-		return new EDIMappingNodeGraphModel(model, contentProvider, labelProvider);
+		return new EDIMappingNodeGraphModel(model, contentProvider, labelProvider,domainProvider);
 	}
 
 	/*

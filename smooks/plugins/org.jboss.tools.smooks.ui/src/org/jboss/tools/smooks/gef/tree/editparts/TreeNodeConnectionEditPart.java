@@ -13,7 +13,10 @@ import org.eclipse.draw2d.PolygonDecoration;
 import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
+import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.editparts.AbstractConnectionEditPart;
+import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeConnectionEditPolicy;
+import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeEndpointEditPolicy;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
@@ -27,7 +30,8 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 
 	@Override
 	protected void createEditPolicies() {
-
+		this.installEditPolicy(EditPolicy.CONNECTION_ROLE, new TreeNodeConnectionEditPolicy());
+		this.installEditPolicy(EditPolicy.CONNECTION_ENDPOINTS_ROLE, new TreeNodeEndpointEditPolicy());
 	}
 
 	public void changeLineAlpha(int alpha) {
@@ -38,7 +42,7 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 		TreeNodeConnection model = (TreeNodeConnection) getModel();
 		TreeNodeModel sourceModel = model.getSourceNode();
 		TreeNodeModel targetModel = model.getTargetNode();
-		PolylineConnection connection1 = new PolylineConnection(){
+		PolylineConnection connection1 = new PolylineConnection() {
 			@Override
 			public void paintFigure(Graphics graphics) {
 				graphics.setAlpha(alpha);

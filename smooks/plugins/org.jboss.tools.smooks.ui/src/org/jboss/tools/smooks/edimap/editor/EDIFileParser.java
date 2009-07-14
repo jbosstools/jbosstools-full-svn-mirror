@@ -24,6 +24,7 @@ import java.util.List;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
+import org.jboss.tools.smooks.edimap.models.EDIDataContainerModel;
 
 /**
  * @author Dart dpeng@redhat.com
@@ -60,7 +61,7 @@ public class EDIFileParser {
 			String[] fields = string.split("\\" + new String(new char[] { field }));
 			TagObject tag = null;
 			if (fields.length != 0) {
-				tag = new TagObject();
+				tag = new EDIDataContainerModel();
 				if (names.indexOf(fields[0]) == -1) {
 					tag.setName(fields[0].trim());
 					names.add(tag.getName());
