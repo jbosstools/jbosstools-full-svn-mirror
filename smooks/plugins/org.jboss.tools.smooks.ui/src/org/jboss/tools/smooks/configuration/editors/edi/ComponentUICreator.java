@@ -46,4 +46,17 @@ public class ComponentUICreator extends PropertyUICreator {
 			formEditor,part);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.configuration.editors.PropertyUICreator#ignoreProperty(org.eclipse.emf.ecore.EAttribute)
+	 */
+	@Override
+	public boolean ignoreProperty(EAttribute feature) {
+		if(feature == MEdiPackage.Literals.MAPPING_NODE__XMLTAG){
+			return true;
+		}
+		return super.ignoreProperty(feature);
+	}
+	
+	
+
 }

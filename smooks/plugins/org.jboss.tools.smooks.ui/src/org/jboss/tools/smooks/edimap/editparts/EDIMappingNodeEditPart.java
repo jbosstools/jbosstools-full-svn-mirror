@@ -11,6 +11,8 @@
 package org.jboss.tools.smooks.edimap.editparts;
 
 import org.jboss.tools.smooks.edimap.editor.EDITreeNodeEditPart;
+import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.model.medi.Segment;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -36,7 +38,11 @@ public class EDIMappingNodeEditPart extends EDITreeNodeEditPart {
 	 */
 	@Override
 	protected boolean isDragLink() {
-		return true;
+		TreeNodeModel treeNode = (TreeNodeModel)getModel();
+		if(treeNode.getData() instanceof Segment){
+			return true;
+		}
+		return false;
 	}
 
 	/*

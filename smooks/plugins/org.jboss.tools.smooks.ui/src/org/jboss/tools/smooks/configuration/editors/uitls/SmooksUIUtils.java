@@ -111,6 +111,7 @@ import org.jboss.tools.smooks.configuration.editors.CurrentProjecViewerFilter;
 import org.jboss.tools.smooks.configuration.editors.FieldMarkerComposite;
 import org.jboss.tools.smooks.configuration.editors.FileSelectionWizard;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
+import org.jboss.tools.smooks.configuration.editors.IFilePathProcessor;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.OpenFileHyperLinkListener;
 import org.jboss.tools.smooks.configuration.editors.SelectorAttributes;
@@ -575,6 +576,16 @@ public class SmooksUIUtils {
 			Object model, boolean multiText, boolean linkLabel, boolean openFile, int height,
 			IHyperlinkListener listener, int valueType, OpenEditorEditInnerContentsAction openEditorAction,
 			boolean expandEditor) {
+		return createStringFieldEditor(label, parent, editingdomain, toolkit, itemPropertyDescriptor, model, multiText,
+				linkLabel, openFile, new ClassPathFileProcessor(), height, listener, valueType, openEditorAction,
+				expandEditor);
+	}
+
+	public static AttributeFieldEditPart createStringFieldEditor(String label, final Composite parent,
+			EditingDomain editingdomain, FormToolkit toolkit, final IItemPropertyDescriptor itemPropertyDescriptor,
+			Object model, boolean multiText, boolean linkLabel, boolean openFile, IFilePathProcessor filePathProcessor,
+			int height, IHyperlinkListener listener, int valueType, OpenEditorEditInnerContentsAction openEditorAction,
+			boolean expandEditor) {
 		AttributeFieldEditPart fieldEditPart = new AttributeFieldEditPart();
 		GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 		Section section = null;
@@ -706,6 +717,7 @@ public class SmooksUIUtils {
 
 		toolkit.paintBordersFor(textContainer);
 		if (openFile) {
+			final IFilePathProcessor processor = filePathProcessor;
 			Button fileBrowseButton = toolkit.createButton(textContainer, "Browse", SWT.NONE);
 			fileBrowseButton.addSelectionListener(new SelectionAdapter() {
 
@@ -716,7 +728,7 @@ public class SmooksUIUtils {
 					if (resource != null) {
 						initSelections = new Object[] { resource };
 					}
-					wizard.setFilePathProcessor(new ClassPathFileProcessor());
+					wizard.setFilePathProcessor(processor);
 					wizard.setInitSelections(initSelections);
 					List<ViewerFilter> filterList = new ArrayList<ViewerFilter>();
 					filterList.add(new CurrentProjecViewerFilter(resource));
@@ -1304,6 +1316,11 @@ public class SmooksUIUtils {
 
 		if (currentSelect != -1) {
 			combo.select(currentSelect);
+		} else {
+			
+		}
+		if (editValue instanceof String) {
+			combo.setText(editValue.toString());
 		}
 		final Object fm = model;
 		final ItemPropertyDescriptor fipd = (ItemPropertyDescriptor) itemPropertyDescriptor;
