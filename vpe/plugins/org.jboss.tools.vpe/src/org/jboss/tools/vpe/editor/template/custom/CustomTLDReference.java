@@ -10,24 +10,20 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.template.custom;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.XModelObject;
+import org.jboss.tools.common.model.filesystems.impl.SimpleFileImpl;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
-import org.jboss.tools.jst.web.model.helpers.WebAppHelper;
+import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.w3c.dom.Node;
 
@@ -39,12 +35,9 @@ import org.w3c.dom.Node;
  */
 public class CustomTLDReference {
 
-	private static final String FACELETS_LIBS_PARAMETER = "facelets.LIBRARIES"; //$NON-NLS-1$
-
-	private static final String PARAM_VALUE = "param-value"; //$NON-NLS-1$
-
 	/**
-	 * Returns absolute path to custom template file, if such exist or null otherwise
+	 * Returns absolute path to custom template file, if such exist or null
+	 * otherwise
 	 * 
 	 * @param sourceNode
 	 * @return full path to custom template if exist or null if not exist
@@ -56,99 +49,66 @@ public class CustomTLDReference {
 		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourceNode
 				.getPrefix(), taglibs);
 		String uri = sourceNodeTaglib.getUri();
-		CustomTLDData customTLDData = getCustomTLDDataMap(pageContext).get(uri);
-		if (customTLDData == null) {
+		XModelObject xmodel = getCustomTaglibObject(pageContext,uri);
+
+		XModelObject o = xmodel.getChildByPath(sourceNode.getLocalName()
+				+ "/declaration"); //$NON-NLS-1$
+		String sourceAttributeValue = null;
+		if (o != null) {
+			sourceAttributeValue = o.getAttributeValue("source"); //$NON-NLS-1$
+		}
+
+		if (sourceAttributeValue == null) {
 			return null;
 		}
-		IPath pathToSourceFile = customTLDData.getTldFilePath();
-		pathToSourceFile = pathToSourceFile.removeLastSegments(1);
-		String sourceParamValue = CustomTLDParser.getSourceValuetInTag(
-				customTLDData.getTldFilePath(), sourceNode.getLocalName());
-		if (sourceParamValue == null) {
-			return null;
+		if (xmodel instanceof SimpleFileImpl) {
+			IPath pathToSourceFile = ((SimpleFileImpl) xmodel).getFile()
+					.getFullPath();
+			// pathToSourceFile now smth like this
+			// /customFaceletsTestProject/WebContent/tags/facelets.taglib.xml
+			// so we remove facelet taglib name now
+			pathToSourceFile = pathToSourceFile.removeLastSegments(1);
+			pathToSourceFile = pathToSourceFile.append(sourceAttributeValue);
+			return pathToSourceFile;
 		}
-		pathToSourceFile = pathToSourceFile.append(sourceParamValue);
-		return pathToSourceFile;
+		return null;
 	}
+
 	/**
 	 * 
 	 * @param pageContext
-	 * @param uri node namespace uri
-	 * @return true if such template defined in facelets lib or falce if not defined
+	 * @param uri
+	 *            node namespace uri
+	 * @return true if such template defined in facelets lib or falce if not
+	 *         defined
 	 */
 	public static boolean isExistInCustomTlds(VpePageContext pageContext,
 			String uri) {
-		return getCustomTLDDataMap(pageContext).containsKey(uri);
+		return getCustomTaglibObject(pageContext,uri)!=null?true:false;
 	}
 
-	/**
-	 * Looks for taglibs library
-	 * @param pageContext
-	 * @param sourceNode node for which we look for taglib library
-	 * @return path to taglibs, if such exists or null otherwise
-	 */
-	public static IPath getCustomTLDPath(VpePageContext pageContext, Node sourceNode) {
-		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,
-				pageContext);
-		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourceNode
-				.getPrefix(), taglibs);
-		String uri = sourceNodeTaglib.getUri();
-		CustomTLDData customTLDData = getCustomTLDDataMap(pageContext).get(uri);
-		if(customTLDData!=null) {
-			return customTLDData.getTldFilePath();
-		} 
-			return null;	
-	}
 	/**
 	 * Looks for custom taglib library map
+	 * 
 	 * @return the customTLDDataMap
 	 */
-	private static Map<String, CustomTLDData> getCustomTLDDataMap(
-			VpePageContext pageContext) {
+	private static XModelObject getCustomTaglibObject(
+			VpePageContext pageContext, String uri) {
+		IEditorInput editorInput = pageContext.getEditPart().getEditorInput();
 
-		Map<String, CustomTLDData> customTLDMap = new HashMap<String, CustomTLDData>();
-
-		IEditorInput iEditorInput = pageContext.getEditPart().getEditorInput();
-
-		if (iEditorInput instanceof IFileEditorInput) {
-
-			IFileEditorInput iFileEditorInput = (IFileEditorInput) iEditorInput;
-
-			IFile iFile = iFileEditorInput.getFile();
-
-			IProject project = iFile.getProject();
-			IModelNature nature = EclipseResourceUtil.getModelNature(project);
-			if (nature != null) {
-				XModel model = nature.getModel();
-				XModelObject webXML = WebAppHelper.getWebApp(model);
-				XModelObject param = WebAppHelper.findWebAppContextParam(
-						webXML, CustomTLDReference.FACELETS_LIBS_PARAMETER); 
-				if (param != null) {
-					String value = param.getAttributeValue(PARAM_VALUE);
-					if (value != null) {
-						String[] libs = value.split(";");//$NON-NLS-1$
-						for (String faceletLib : libs) {
-							IPath rootPath = VpeStyleUtil
-									.getRootPath(iEditorInput);
-							IPath projectPath = ((IFileEditorInput)iEditorInput).getFile().getProject().getLocation();
-							
-							IPath pathToCustonTld = new Path(faceletLib);
-							
-							pathToCustonTld = rootPath.append(pathToCustonTld);
-							pathToCustonTld = pathToCustonTld.makeRelativeTo(projectPath);
-							pathToCustonTld = ((IFileEditorInput)iEditorInput).getFile().getProject().getFile(pathToCustonTld).getFullPath();
-							CustomTLDData customTLDData = new CustomTLDData(
-									pathToCustonTld, CustomTLDParser
-											.getNameSpace(pathToCustonTld));
-							if (customTLDData.getNamespace() != null) {
-								customTLDMap.put(customTLDData.getNamespace(),
-										customTLDData);
-							}
-						}
-					}
-				}
+		if (editorInput instanceof IFileEditorInput) {
+			XModel xm = null;
+			IProject project = ((IFileEditorInput) editorInput).getFile()
+					.getProject();
+			IModelNature mn = EclipseResourceUtil.getModelNature(project);
+			if (mn != null) {
+				xm = mn.getModel();
+			}
+			if (xm != null) {
+				return WebProject.getInstance(xm).getTaglibMapping().getTaglibObject(uri);
 			}
 		}
-		return customTLDMap;
+		return null;
 	}
+
 }

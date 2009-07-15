@@ -385,14 +385,16 @@ public class VpeTemplateManager {
 			}
 			
 			String sourceNodeUri = sourceNodeTaglib.getUri();
-			if(sourceNodeUri!=null && CustomTLDReference.isExistInCustomTlds(pageContext,sourceNodeUri)){
-				return VpeTemplateManager.CUSTOM_TEMPLATE_NAME;
-			}
+
 			
 			String templateTaglibPrefix = getTemplateTaglibPrefix(sourceNodeUri);
 
 			if(templateTaglibPrefix != null) {
 				return templateTaglibPrefix + ":" + sourceNode.getLocalName();  //$NON-NLS-1$
+			}
+			
+			if(sourceNodeUri!=null && CustomTLDReference.isExistInCustomTlds(pageContext,sourceNodeUri)){
+				return VpeTemplateManager.CUSTOM_TEMPLATE_NAME;
 			}
 			return null;
 		default : 

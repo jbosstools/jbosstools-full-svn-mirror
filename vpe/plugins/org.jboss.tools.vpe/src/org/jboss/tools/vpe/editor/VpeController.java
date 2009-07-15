@@ -255,7 +255,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		sourceModel.addModelLifecycleListener(this);
 
-		IEditorInput editorInput = pageContext.getEditPart().getEditorInput();
+//		IEditorInput editorInput = pageContext.getEditPart().getEditorInput();
 		//commented by Maksim Areshkau, as fix for https://jira.jboss.org/jira/browse/JBIDE-4534
 //		if(editorInput instanceof IFileEditorInput) {
 //			XModel xm = null;
