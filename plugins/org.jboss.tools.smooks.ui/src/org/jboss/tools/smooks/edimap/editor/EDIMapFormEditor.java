@@ -92,17 +92,17 @@ public class EDIMapFormEditor extends AbstractSmooksFormEditor {
 			if(map == null){
 				map = MEdiFactory.eINSTANCE.createEdiMap();
 				((DocumentRoot)smooksModel).setEdimap(map);
-				Description description = map.getDescription();
-				if(description == null){
-					description = MEdiFactory.eINSTANCE.createDescription();
-					map.setDescription(description);
-				}
-				
-				Delimiters delimiters = map.getDelimiters();
-				if(delimiters == null){
-					delimiters = MEdiFactory.eINSTANCE.createDelimiters();
-					map.setDelimiters(delimiters);
-				}
+			}
+			Description description = map.getDescription();
+			if(description == null){
+				description = MEdiFactory.eINSTANCE.createDescription();
+				map.setDescription(description);
+			}
+			
+			Delimiters delimiters = map.getDelimiters();
+			if(delimiters == null){
+				delimiters = MEdiFactory.eINSTANCE.createDelimiters();
+				map.setDelimiters(delimiters);
 			}
 		}
 	}

@@ -59,9 +59,9 @@ public class SegmentUICreator extends PropertyUICreator {
 	 */
 	@Override
 	public boolean ignoreProperty(EAttribute feature) {
-		if (feature == MEdiPackage.Literals.MAPPING_NODE__XMLTAG) {
-			return true;
-		}
+//		if (feature == MEdiPackage.Literals.MAPPING_NODE__XMLTAG) {
+//			return true;
+//		}
 		if (feature == MEdiPackage.Literals.SEGMENT__SEGCODE) {
 			return true;
 		}

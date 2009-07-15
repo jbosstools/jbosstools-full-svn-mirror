@@ -68,6 +68,9 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 	 * .eclipse.gef.Request)
 	 */
 	public DragTracker getDragTracker(Request request) {
+//		if(true){
+//			return super.getDragTracker(request);
+//		}
 		if (isDragLink()) {
 			getViewer().select(this);
 			return new ConnectionDragCreationTool();

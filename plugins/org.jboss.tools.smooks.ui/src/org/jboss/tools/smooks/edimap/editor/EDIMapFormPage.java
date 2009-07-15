@@ -22,6 +22,7 @@ import java.util.EventObject;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
@@ -87,7 +88,9 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
+import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
+import org.jboss.tools.smooks.configuration.editors.IFilePathProcessor;
 import org.jboss.tools.smooks.configuration.editors.ModelPanelCreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
@@ -108,6 +111,7 @@ import org.jboss.tools.smooks.gef.tree.figures.IMoveableModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
+import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
@@ -164,6 +168,8 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	private Composite descriptorComposite;
 
 	private Composite delimitersComposite;
+
+	private String ediFileEncoding = "UTF-8";
 
 	public EDIMapFormPage(FormEditor editor, String id, String title) {
 		super(editor, id, title);
@@ -382,15 +388,6 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 
 		disposeCompositeControls(delimitersComposite, null);
 
-		AttributeFieldEditPart pathEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor("EDI Mapping File",
-				delimitersComposite, editingDomain, toolkit, null, null, SmooksUIUtils.VALUE_TYPE_TEXT, null, null);
-		final Text ediFileText = (Text) pathEditPart.getContentControl();
-		String filePath = getEDIFilePath();
-		if (filePath != null) {
-			ediFileText.setText(filePath);
-		}
-		ediFileText.addModifyListener(this);
-
 		if (delimitersCreator != null) {
 			IItemPropertySource itemPropertySource = (IItemPropertySource) editingDomain.getAdapterFactory().adapt(
 					delimiters, IItemPropertySource.class);
@@ -440,6 +437,26 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 					for (Iterator<?> iterator2 = paramList.iterator(); iterator2.hasNext();) {
 						ParamType paramType = (ParamType) iterator2.next();
 						if (SmooksModelUtils.PARAM_NAME_PATH.equals(paramType.getName())) {
+							return paramType.getValue();
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	private String getEDIFileEncoding() {
+		if (modelProvider != null) {
+			SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
+			List<InputType> inputList = ext.getInput();
+			for (Iterator<?> iterator = inputList.iterator(); iterator.hasNext();) {
+				InputType inputType = (InputType) iterator.next();
+				if (SmooksModelUtils.INPUT_TYPE_EDI.equals(inputType.getType())) {
+					List<ParamType> paramList = inputType.getParam();
+					for (Iterator<?> iterator2 = paramList.iterator(); iterator2.hasNext();) {
+						ParamType paramType = (ParamType) iterator2.next();
+						if ("encoding".equals(paramType.getName())) {
 							return paramType.getValue();
 						}
 					}
@@ -609,7 +626,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.verticalAlignment = GridData.BEGINNING;
 		descriptionSection.setLayoutData(gd);
-		descriptionSection.setText("Mapping Description");
+		descriptionSection.setText("Description");
 		FillLayout flayout = new FillLayout();
 		descriptionSection.setLayout(flayout);
 
@@ -631,53 +648,12 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			descriptionCreator.createModelPanel(toolkit, descriptorComposite, modelProvider, getEditor());
 		}
 
-		Hyperlink showTransformResultLink = toolkit.createHyperlink(desciptorContainer, "Test EDI transform", SWT.NONE);
-		// showTransformResultLink.setVisible(false);
-		showTransformResultLink.addHyperlinkListener(new IHyperlinkListener() {
-
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * org.eclipse.ui.forms.events.IHyperlinkListener#linkActivated(
-			 * org.eclipse.ui.forms.events.HyperlinkEvent)
-			 */
-			public void linkActivated(HyperlinkEvent e) {
-				testEDITransform();
-			}
-
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * org.eclipse.ui.forms.events.IHyperlinkListener#linkEntered(org
-			 * .eclipse.ui.forms.events.HyperlinkEvent)
-			 */
-			public void linkEntered(HyperlinkEvent e) {
-
-			}
-
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * org.eclipse.ui.forms.events.IHyperlinkListener#linkExited(org
-			 * .eclipse.ui.forms.events.HyperlinkEvent)
-			 */
-			public void linkExited(HyperlinkEvent e) {
-
-			}
-
-		});
-		gd = new GridData();
-		showTransformResultLink.setLayoutData(gd);
-
 		Section delimiterSection = toolkit.createSection(form.getBody(), Section.TITLE_BAR | Section.DESCRIPTION);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.verticalAlignment = GridData.BEGINNING;
 		gd.verticalSpan = 2;
 		delimiterSection.setLayoutData(gd);
-		delimiterSection.setText("EDI File Configurations");
+		delimiterSection.setText("Delimiters");
 		FillLayout flayout1 = new FillLayout();
 		delimiterSection.setLayout(flayout1);
 
@@ -687,8 +663,56 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		delimitersComposite.setLayout(gl1);
 		delimiterSection.setClient(delimitersComposite);
 
-		AttributeFieldEditPart pathEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor("EDI Mapping File",
-				delimitersComposite, editingDomain, toolkit, null, null, SmooksUIUtils.VALUE_TYPE_TEXT, null, null);
+		if (delimitersCreator != null) {
+			Map<Object, Object> editPartMap = delimitersCreator.createModelPanel(toolkit, delimitersComposite,
+					modelProvider, getEditor());
+			handleDelimiterFieldEditor(editPartMap);
+		}
+
+		Section testSection = toolkit.createSection(form.getBody(), Section.TITLE_BAR | Section.DESCRIPTION);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.verticalAlignment = GridData.BEGINNING;
+		// gd.horizontalSpan = 2;
+		testSection.setLayoutData(gd);
+		testSection.setText("EDI File Setting");
+		FillLayout flayout2 = new FillLayout();
+		testSection.setLayout(flayout2);
+
+		Composite fileComposite = toolkit.createComposite(testSection, SWT.NONE);
+		GridLayout fgl = new GridLayout();
+		fgl.numColumns = 2;
+		fileComposite.setLayout(fgl);
+		testSection.setClient(fileComposite);
+
+		AttributeFieldEditPart pathEditPart = SmooksUIUtils.createStringFieldEditor("EDI File", fileComposite,
+				editingDomain, toolkit, null, null, false, false, true, new IFilePathProcessor() {
+
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @seeorg.jboss.tools.smooks.configuration.editors.
+					 * IFilePathProcessor
+					 * #processFileSystemPath(java.lang.String)
+					 */
+					public String processFileSystemPath(String filePath) {
+						return filePath;
+					}
+
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @seeorg.jboss.tools.smooks.configuration.editors.
+					 * IFilePathProcessor
+					 * #processWorkBenchPath(org.eclipse.core.resources.IFile)
+					 */
+					public String processWorkBenchPath(IFile file) {
+						String s = file.getFullPath().toPortableString();
+						s = SmooksUIUtils.WORKSPACE_PRIX + s;
+						return s;
+					}
+
+				}, 0, null, -1, null, false);
+
 		final Text ediFileText = (Text) pathEditPart.getContentControl();
 		String filePath = getEDIFilePath();
 		if (filePath != null) {
@@ -696,23 +720,88 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		}
 		ediFileText.addModifyListener(this);
 
-		if (delimitersCreator != null) {
-			Map<Object, Object> editPartMap = delimitersCreator.createModelPanel(toolkit, delimitersComposite,
-					modelProvider, getEditor());
-			handleDelimiterFieldEditor(editPartMap);
+		AttributeFieldEditPart encodingEditPart = SmooksUIUtils.createStringFieldEditor("EDI File Encoding",
+				fileComposite, editingDomain, toolkit, null, null, false, false, false, 0, null, -1, null);
+		final Text encodingText = (Text) encodingEditPart.getContentControl();
+		String encoding = getEDIFileEncoding();
+		if (encoding != null) {
+			encodingText.setText(encoding);
 		}
+		encodingText.addModifyListener(new ModifyListener() {
 
-		// Section testSection = toolkit.createSection(form.getBody(),
-		// Section.TITLE_BAR | Section.TWISTIE | Section.DESCRIPTION);
-		// gd = new GridData(GridData.FILL_HORIZONTAL);
-		// gd.verticalAlignment = GridData.BEGINNING;
-		// // gd.horizontalSpan = 2;
-		// testSection.setLayoutData(gd);
-		// testSection.setText("Mapping Descriptor");
-		// FillLayout flayout2 = new FillLayout();
-		// testSection.setLayout(flayout2);
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.
+			 * swt.events.ModifyEvent)
+			 */
+			public void modifyText(ModifyEvent e) {
+				ediFileEncoding = encodingText.getText();
+				ediFilePath = ediFileText.getText();
+				final InputType[] inputType1 = new InputType[1];
+				SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
+				List<InputType> list = ext.getInput();
+				for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+					InputType inputType = (InputType) iterator.next();
+					if (SmooksModelUtils.INPUT_TYPE_EDI.equals(inputType.getType())) {
+						inputType1[0] = inputType;
+						break;
+					}
+				}
 
-		Section ediModelViewerSection = toolkit.createSection(form.getBody(), Section.TITLE_BAR | Section.DESCRIPTION);
+				final Properties pro = new Properties();
+				pro.setProperty("encoding", ediFileEncoding);
+				getEditorSite().getShell().getDisplay().syncExec(new Runnable() {
+
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see java.lang.Runnable#run()
+					 */
+					public void run() {
+						String type = SmooksModelUtils.INPUT_TYPE_EDI;
+						SmooksGraphicsExtType extType = modelProvider.getSmooksGraphicsExt();
+						InputType input = inputType1[0];
+						if (input == null) {
+							input = GraphFactory.eINSTANCE.createInputType();
+						}
+						input.setType(type);
+						ParamType encodingParam = null;
+						List<ParamType> paramList = input.getParam();
+						for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
+							ParamType paramType = (ParamType) iterator.next();
+							if ("encoding".equals(paramType.getName())) {
+								encodingParam = paramType;
+								break;
+							}
+						}
+						if (encodingParam == null) {
+							encodingParam = GraphFactory.eINSTANCE.createParamType();
+							encodingParam.setName("encoding");
+						}
+						encodingParam.setValue(ediFileEncoding);
+
+						input.getParam().add(encodingParam);
+						try {
+							extType.eResource().save(Collections.emptyMap());
+							List<ISmooksGraphChangeListener> listeners = extType.getChangeListeners();
+							for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
+								ISmooksGraphChangeListener smooksGraphChangeListener = (ISmooksGraphChangeListener) iterator
+										.next();
+								smooksGraphChangeListener.saveComplete(extType);
+							}
+						} catch (IOException e) {
+							SmooksConfigurationActivator.getDefault().log(e);
+						}
+					}
+				});
+
+			}
+
+		});
+
+		Section ediModelViewerSection = toolkit.createSection(form.getBody(), Section.TITLE_BAR );
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.horizontalSpan = 2;
 		ediModelViewerSection.setLayoutData(gd);
@@ -726,6 +815,28 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		vgl.numColumns = 2;
 
 		viewerComposite.setLayout(vgl);
+		
+		Hyperlink showTransformResultLink = toolkit.createHyperlink(viewerComposite, "Test EDI to XML transform",
+				SWT.NONE);
+		// showTransformResultLink.setVisible(false);
+		showTransformResultLink.addHyperlinkListener(new IHyperlinkListener() {
+
+			public void linkActivated(HyperlinkEvent e) {
+				testEDITransform();
+			}
+
+			public void linkEntered(HyperlinkEvent e) {
+
+			}
+
+			public void linkExited(HyperlinkEvent e) {
+
+			}
+
+		});
+		gd = new GridData();
+		gd.horizontalSpan = 2;
+		showTransformResultLink.setLayoutData(gd);
 
 		SashForm sashForm = new SashForm(viewerComposite, SWT.NONE);
 
@@ -1108,7 +1219,10 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			File f = new File(file.getLocation().toOSString());
 
 			readerConfig.setParameter("mapping-model", f.toURI().toString());
-			readerConfig.setParameter("encoding", "UTF-8");
+			if (ediFileEncoding == null || ediFileEncoding.trim().length() == 0) {
+				ediFileEncoding = "UTF-8";
+			}
+			readerConfig.setParameter("encoding", ediFileEncoding);
 
 			SmooksUtil.registerResource(readerConfig, smooks);
 
@@ -1121,7 +1235,8 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			// in
 			// the domResult instance...
 			// FileInputStream stream
-			smooks.filter(new StreamSource(new FileInputStream(ediFile)), domResult);
+			FileInputStream ediInputStream = new FileInputStream(ediFile);
+			smooks.filter(new StreamSource(ediInputStream), domResult);
 
 			// Get the Document object from the domResult. This is the message
 			// model!!!...
@@ -1134,11 +1249,13 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			// We'll just print out the model DOM here so you can see it....
 			StringWriter modelWriter = new StringWriter();
 			XmlUtil.serialize(model, true, modelWriter);
-			System.out.println(modelWriter);
+			// System.out.println(modelWriter);
 			EDIMappingResultDialog dialog = new EDIMappingResultDialog(getSite().getShell());
 			dialog.setText(modelWriter.toString());
 			dialog.open();
 			modelWriter.close();
+			ediInputStream.close();
+			model = null;
 		} catch (Throwable t) {
 			SmooksUIUtils.showErrorDialog(getEditorSite().getShell(), SmooksUIUtils.createErrorStatus(t));
 		} finally {
@@ -1148,18 +1265,29 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	public void modifyText(ModifyEvent e) {
 		Text ediFileText = (Text) e.getSource();
 		ediFilePath = ediFileText.getText();
-		InputType inputType1 = null;
+		final InputType[] inputType1 = new InputType[1];
 		SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
 		List<InputType> list = ext.getInput();
 		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 			InputType inputType = (InputType) iterator.next();
 			if (SmooksModelUtils.INPUT_TYPE_EDI.equals(inputType.getType())) {
-				inputType1 = inputType;
+				inputType1[0] = inputType;
 				break;
 			}
 		}
-		SmooksUIUtils.recordInputDataInfomation(inputType1, modelProvider.getSmooksGraphicsExt(),
-				SmooksModelUtils.INPUT_TYPE_EDI, ediFilePath, null);
+		getEditorSite().getShell().getDisplay().syncExec(new Runnable() {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see java.lang.Runnable#run()
+			 */
+			public void run() {
+				SmooksUIUtils.recordInputDataInfomation(inputType1[0], modelProvider.getSmooksGraphicsExt(),
+						SmooksModelUtils.INPUT_TYPE_EDI, ediFilePath, null);
+			}
+
+		});
 		rebuildEDIGraph();
 	}
 
