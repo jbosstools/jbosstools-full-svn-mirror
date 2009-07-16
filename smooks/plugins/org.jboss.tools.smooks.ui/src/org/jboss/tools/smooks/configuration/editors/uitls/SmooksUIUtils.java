@@ -1317,9 +1317,9 @@ public class SmooksUIUtils {
 		if (currentSelect != -1) {
 			combo.select(currentSelect);
 		} else {
-			
+
 		}
-		if (editValue instanceof String) {
+		if (valueIsSet && (editValue instanceof String)) {
 			combo.setText(editValue.toString());
 		}
 		final Object fm = model;

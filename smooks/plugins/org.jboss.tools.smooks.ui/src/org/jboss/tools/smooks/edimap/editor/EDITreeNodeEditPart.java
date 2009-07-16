@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.edimap.editor;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gef.DefaultEditDomain;
@@ -81,6 +82,9 @@ public class EDITreeNodeEditPart extends AbstractEDIMappingEditPart {
 			@Override
 			protected Command createDeleteCommand(GroupRequest deleteRequest) {
 				TreeNodeModel node = (TreeNodeModel) getHost().getModel();
+				if(!(node.getData() instanceof EObject)){
+					return null;
+				}
 				GraphicalViewer viewer = (GraphicalViewer) ((AbstractGraphicalEditPart) getHost()).getViewer();
 				DefaultEditDomain domain = (DefaultEditDomain) viewer.getEditDomain();
 				IEditorPart part = domain.getEditorPart();

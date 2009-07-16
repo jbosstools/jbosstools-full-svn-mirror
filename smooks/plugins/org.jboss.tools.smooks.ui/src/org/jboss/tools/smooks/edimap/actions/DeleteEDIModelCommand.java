@@ -10,16 +10,23 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.edimap.actions;
 
+import java.util.List;
+
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPart;
+import org.eclipse.ui.IEditorPart;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.edimap.editor.EDIMapFormPage;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
+import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 
 /**
  * @author Dart (dpeng@redhat.com)
- *
+ * 
  */
-public class DeleteEDIModelCommand extends EDIGEFAdpaterCommand{
+public class DeleteEDIModelCommand extends EDIGEFAdpaterCommand {
 
 	private EditPart parentPart;
 
@@ -27,23 +34,53 @@ public class DeleteEDIModelCommand extends EDIGEFAdpaterCommand{
 		super(editPart, domain, emfCommand);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.edimap.actions.AddOrDeleteEDIMappingModelCommand#refreshEditPart()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.edimap.actions.AddOrDeleteEDIMappingModelCommand
+	 * #refreshEditPart()
 	 */
 	@Override
 	protected void refreshEditPart() {
-		if(parentPart != null && parentPart instanceof TreeNodeEditPart){
-			((TreeNodeEditPart)parentPart).childrenModelChanged();
-			((TreeNodeEditPart)parentPart).getFigure().repaint();
+
+		if (parentPart != null && parentPart instanceof TreeNodeEditPart) {
+			((TreeNodeEditPart) parentPart).childrenModelChanged();
+			((TreeNodeEditPart) parentPart).getFigure().repaint();
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.edimap.actions.AddOrDeleteEDIMappingModelCommand#execute()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.edimap.actions.AddOrDeleteEDIMappingModelCommand
+	 * #execute()
 	 */
 	@Override
 	public void execute() {
-		parentPart = this.editPart.getParent();
+		if (parentPart == null) {
+			parentPart = this.editPart.getParent();
+		}
 		super.execute();
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jboss.tools.smooks.edimap.actions.EDIGEFAdpaterCommand#undo()
+	 */
+	@Override
+	public void undo() {
+		super.undo();
+		if (parentPart != null && parentPart instanceof TreeNodeEditPart) {
+			DefaultEditDomain editDomain = (DefaultEditDomain) parentPart.getViewer().getEditDomain();
+			IEditorPart editorPart = editDomain.getEditorPart();
+			if (editorPart instanceof EDIMapFormPage) {
+				List<TreeNodeModel> linkedNodes = ((EDIMapFormPage) editorPart).createLinkModel();
+				SmooksUIUtils.expandGraphTree(linkedNodes, (TreeNodeEditPart) parentPart);
+			}
+		}
+	}
+
 }
