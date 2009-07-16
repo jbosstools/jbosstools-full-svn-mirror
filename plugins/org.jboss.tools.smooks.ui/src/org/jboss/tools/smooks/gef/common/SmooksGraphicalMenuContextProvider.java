@@ -56,10 +56,10 @@ public class SmooksGraphicalMenuContextProvider extends ContextMenuProvider {
 		menu.add(new Separator(GROUP_CUSTOME));
 		GEFActionConstants.addStandardActionGroups(menu);
 		IAction action;
-//		action = getActionRegistry().getAction(ActionFactory.UNDO.getId());
-//		menu.appendToGroup(GEFActionConstants.GROUP_UNDO, action);
-//		action = getActionRegistry().getAction(ActionFactory.REDO.getId());
-//		menu.appendToGroup(GEFActionConstants.GROUP_UNDO, action);
+		action = getActionRegistry().getAction(ActionFactory.UNDO.getId());
+		menu.appendToGroup(GEFActionConstants.GROUP_UNDO, action);
+		action = getActionRegistry().getAction(ActionFactory.REDO.getId());
+		menu.appendToGroup(GEFActionConstants.GROUP_UNDO, action);
 
 		action = getActionRegistry().getAction(ActionFactory.DELETE.getId());
 		if (action.isEnabled())

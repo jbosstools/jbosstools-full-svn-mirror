@@ -19,9 +19,9 @@ import org.eclipse.gef.commands.Command;
  */
 public class GEFAdapterCommand extends Command {
 
-	private org.eclipse.emf.common.command.Command emfCommand;
+	protected org.eclipse.emf.common.command.Command emfCommand;
 
-	private EditingDomain domain;
+	protected EditingDomain domain;
 
 	public GEFAdapterCommand(EditingDomain domain, org.eclipse.emf.common.command.Command emfCommand) {
 		this.emfCommand = emfCommand;
@@ -119,7 +119,6 @@ public class GEFAdapterCommand extends Command {
 				domain.getCommandStack().redo();
 			}
 		}
-		super.redo();
 	}
 
 	/*

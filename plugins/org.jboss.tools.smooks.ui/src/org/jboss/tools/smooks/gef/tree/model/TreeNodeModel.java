@@ -150,12 +150,12 @@ public class TreeNodeModel implements IConnectableNode {
 
 		for (Iterator<?> iterator2 = tempTargetConnections.iterator(); iterator2.hasNext();) {
 			TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
-			treeNodeConnection.disconnect();
+			treeNodeConnection.disconnectSource();
 		}
 
 		for (Iterator<?> iterator2 = tempSourceConnections.iterator(); iterator2.hasNext();) {
 			TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
-			treeNodeConnection.disconnect();
+			treeNodeConnection.disconnectTarget();
 		}
 
 		tempSourceConnections.clear();
