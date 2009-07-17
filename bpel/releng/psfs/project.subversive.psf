@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.eclipse.team.svn.core.svnnature">
+
+  <!-- !*** Generated with org.eclipse.dash.common.releng/tools/scripts/buildAllHelper.xml#dir2svnmap task -->
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/features/org.jboss.tools.bpel.feature,org.jboss.tools.bpel.feature"/>
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/features/org.jboss.tools.bpel.sdk.feature,org.jboss.tools.bpel.sdk.feature"/>
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/features/org.jboss.tools.bpel.tests.feature,org.jboss.tools.bpel.tests.feature"/>
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/plugins/org.eclipse.bpel.apache.ode.deploy.model,org.eclipse.bpel.apache.ode.deploy.model"/>
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui,org.eclipse.bpel.apache.ode.deploy.ui"/>
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/plugins/org.eclipse.bpel.apache.ode.runtime,org.eclipse.bpel.apache.ode.runtime"/>
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/plugins/org.eclipse.bpel.common.model,org.eclipse.bpel.common.model"/>
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/plugins/org.eclipse.bpel.common.ui,org.eclipse.bpel.common.ui"/>
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/plugins/org.eclipse.bpel.model,org.eclipse.bpel.model"/>
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/plugins/org.eclipse.bpel.runtimes,org.eclipse.bpel.runtimes"/>
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/plugins/org.eclipse.bpel.ui,org.eclipse.bpel.ui"/>
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/plugins/org.eclipse.bpel.validator,org.eclipse.bpel.validator"/>
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/plugins/org.eclipse.bpel.wsil.model,org.eclipse.bpel.wsil.model"/>
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/plugins/org.eclipse.bpel.xpath10,org.eclipse.bpel.xpath10"/>
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/tests/org.eclipse.tools.bpel.ui.test,org.eclipse.tools.bpel.ui.test"/>
+
+</provider>
+</psf>

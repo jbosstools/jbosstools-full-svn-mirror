@@ -1,8 +1,7 @@
 !*** Generated with org.eclipse.dash.common.releng/tools/scripts/buildAllHelper.xml#dir2svnmap task
-feature@org.jboss.tools.bpel.sdk.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/features/org.jboss.tools.bpel.sdk.feature
 feature@org.jboss.tools.bpel.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/features/org.jboss.tools.bpel.feature
+feature@org.jboss.tools.bpel.sdk.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/features/org.jboss.tools.bpel.sdk.feature
 feature@org.jboss.tools.bpel.tests.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/features/org.jboss.tools.bpel.tests.feature
-
 plugin@org.eclipse.bpel.apache.ode.deploy.model=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.apache.ode.deploy.model
 plugin@org.eclipse.bpel.apache.ode.deploy.ui=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui
 plugin@org.eclipse.bpel.apache.ode.runtime=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.apache.ode.runtime
