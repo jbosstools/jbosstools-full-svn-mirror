@@ -10,27 +10,27 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor;
 
-import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IStorage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class VpeIncludeInfo {
 	private Element element;
-	private IFile file;
+	private IStorage storage;
 	private Document document;
 	
-	public VpeIncludeInfo(Element element, IFile file, Document document) {
+	public VpeIncludeInfo(Element element, IStorage storage, Document document) {
 		this.element = element;
-		this.file = file;
+		this.storage = storage;
 		this.document = document;
 	}
 	
 	public Element getElement() {
-		return element;
+		return this.element;
 	}
 	
-	public IFile getFile() {
-		return file;
+	public IStorage getStorage() {
+		return this.storage;
 	}
 	
 	public Document getDocument() {

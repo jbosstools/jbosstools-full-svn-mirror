@@ -13,7 +13,6 @@ package org.jboss.tools.vpe.editor.util;
 
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.w3c.dom.Node;
 
 /**
  * @author Evgenij Stherbin
@@ -37,16 +36,4 @@ public class ResourceUtil {
         return bundle.getBundleValue(value);
 
     }
-    /**
-     * get bundle.
-     * 
-     * @param pageContext the page context
-     * @param attr the attr
-     * 
-     * @return the bundle value
-     */
-    public static String getBundleValue(VpePageContext pageContext, Node attr) {
-            return getBundleValue(pageContext,attr.getNodeValue());
-    }
-
 }

@@ -377,10 +377,13 @@ public class VpeStyleUtil {
 					endPathIndex);
 			
 			IFile file = null;
-			if (pageContext.getVisualBuilder().getCurrentIncludeInfo() != null)
-				file = pageContext.getVisualBuilder().getCurrentIncludeInfo()
-						.getFile();
-			if (file != null)
+			if ((pageContext.getVisualBuilder().getCurrentIncludeInfo() != null)
+					&&(pageContext.getVisualBuilder().getCurrentIncludeInfo()
+							.getStorage() instanceof IFile)) {
+				file = (IFile) pageContext.getVisualBuilder().getCurrentIncludeInfo()
+						.getStorage();
+			}
+			if(file!=null)
 				filePath = processUrl(filePath, file);
 
 			String firstPartValue = urls[i].substring(0, startPathIndex + 1);
@@ -827,10 +830,12 @@ public class VpeStyleUtil {
 						"^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", Constants.EMPTY); //$NON-NLS-1$
 
 		IFile file = null;
-		if (pageContext.getVisualBuilder().getCurrentIncludeInfo() != null)
-			file = pageContext.getVisualBuilder().getCurrentIncludeInfo()
-					.getFile();
-
+		if ( (pageContext.getVisualBuilder().getCurrentIncludeInfo() != null)
+				&&(pageContext.getVisualBuilder().getCurrentIncludeInfo()
+						.getStorage() instanceof IFile) ) {
+			file = (IFile) pageContext.getVisualBuilder().getCurrentIncludeInfo()
+					.getStorage();
+			}
 		if (file == null)
 			return resolvedValue;
 

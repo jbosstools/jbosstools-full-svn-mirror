@@ -46,7 +46,7 @@ public interface IELService {
      *
      * @return the string
      */
-   String replaceElAndResources(VpePageContext pageContext, Node attributeNode);
+   String replaceElAndResources(VpePageContext pageContext, String value);
 
    /**
      * Checks if is available.

@@ -19,6 +19,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.ui.texteditor.TextNavigationAction;
 import org.jboss.tools.common.el.core.ELReferenceList;
 import org.jboss.tools.common.el.core.GlobalELReferenceList;
 import org.jboss.tools.common.resref.core.ResourceReference;
@@ -27,6 +28,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.Text;
 
 
 /**
@@ -172,18 +174,58 @@ public final class ElService implements IELService {
      */
     public boolean isELNode(VpePageContext pageContext,Node sourceNode) {
         boolean rst = false;
+        if(isInCustomElementsAttributes(pageContext,sourceNode)){
+        	return true;
+        }
         // fix for JBIDE-3030
-        if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null) {
+        if((pageContext.getVisualBuilder().getCurrentIncludeInfo())==null 
+        		|| !(pageContext.getVisualBuilder().getCurrentIncludeInfo().getStorage() instanceof IFile)) {
         	return rst;
         }
-        final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
+        final IFile file = (IFile) pageContext.getVisualBuilder().getCurrentIncludeInfo().getStorage();
 
-        if (((this.isAvailable(file) && this.isAvailableForNode(sourceNode, file))) || isInResourcesBundle(pageContext, sourceNode)){
+        if (((this.isAvailable(file) && this.isAvailableForNode(sourceNode, file))) 
+        		|| isInResourcesBundle(pageContext, sourceNode)){
             rst = true;
         }
         return rst;
     }
+    /**
+     * Checks is node exist in source custom element attribute map and if so,
+     * then retrun true
+     * @param pageContext
+     * @param sourceNode
+     * @return
+     */
 
+    private static boolean isInCustomElementsAttributes(VpePageContext pageContext,Node sourceNode){
+    	
+    	String textValue = null;
+    	if(sourceNode.getNodeType() == Node.TEXT_NODE) {
+            textValue = sourceNode.getNodeValue();
+            if (textValue != null) {
+            	for(String key : pageContext.getCustomElementsAttributes().keySet()){
+            		if(equalsExppression(textValue,key)){
+            			return true;
+            		}
+            	}
+            }
+    	}else if(sourceNode.getNodeType() == Node.ELEMENT_NODE) {
+			NamedNodeMap attributesMap = sourceNode.getAttributes();
+			for(int i=0;i<attributesMap.getLength();i++) {
+				Attr attr = (Attr) attributesMap.item(i);
+				textValue =attr.getValue();
+					if(textValue!=null) {
+		            	for(String key : pageContext.getCustomElementsAttributes().keySet()){
+		            		if(equalsExppression(textValue,key)){
+		            			return true;
+		            		}
+		            	}
+					}
+			}
+    	}
+		return false;
+    }
     /**
      *
      * @param pageContext
@@ -333,31 +375,42 @@ public final class ElService implements IELService {
 
     }
 
-    public String replaceElAndResources(VpePageContext pageContext, Node attributeNode) {
+    public String replaceElAndResources(VpePageContext pageContext, String value) {
 
 
-        String attribuString = null;
-        if (attributeNode instanceof Attr) {
-            attribuString = ((Attr) attributeNode).getValue();
-        } else {
-            attribuString = attributeNode.getNodeValue();
-        }
-        String rst  = attribuString;
+        String rst  = value;
 
-        rst = ResourceUtil.getBundleValue(pageContext, attributeNode);
+        rst = ResourceUtil.getBundleValue(pageContext, value);
+        //replace custom attributes
+        rst = replaceCustomAttributes(pageContext,rst);
         //fix for JBIDE-3030
-        if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null) {
+        if((pageContext.getVisualBuilder().getCurrentIncludeInfo()==null)
+        		|| !(pageContext.getVisualBuilder().getCurrentIncludeInfo().getStorage() instanceof IFile)) {
         	return rst;
         }
-        final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
+        final IFile file = (IFile) pageContext.getVisualBuilder().getCurrentIncludeInfo().getStorage();
         rst = replaceEl(file, rst);
-
+        
         return rst;
     }
 
+    private String replaceCustomAttributes(VpePageContext pageContext, String value){
+    	String result = value;
+		for (String el : pageContext.getCustomElementsAttributes().keySet()) {
+			final String dollarEl = DOLLAR_PREFIX + el + SUFFIX;
+			final String sharpEl = SHARP_PREFIX + el + SUFFIX;
 
+			if (result.contains(dollarEl)) {
+				result = result.replace(dollarEl, pageContext.getCustomElementsAttributes().get(el));
+			}
+			if (result.contains(sharpEl)) {
+				result = result.replace(sharpEl,pageContext.getCustomElementsAttributes().get(el));
+			}
+		}
+    	return result;
+    }
 
-    private boolean equalsExppression(String value, String expression) {
+    private static boolean equalsExppression(String value, String expression) {
 
 		final String dollarEl = String.valueOf(DOLLAR_PREFIX) + expression
 				+ String.valueOf(SUFFIX);

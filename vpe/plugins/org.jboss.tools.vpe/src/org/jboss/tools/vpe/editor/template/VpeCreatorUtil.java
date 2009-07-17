@@ -15,12 +15,17 @@ import java.io.IOException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.wst.sse.core.internal.provisional.IModelManager;
+import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.core.internal.provisional.StructuredModelManager;
+import org.eclipse.wst.sse.core.internal.provisional.text.IStructuredDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.template.custom.VpeCustomStringStorage;
 import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -125,11 +130,12 @@ public class VpeCreatorUtil {
 		IEditorInput input = pageContext.getEditPart().getEditorInput();
 		IFile file = null;
 
-		if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null) {
+		if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null 
+				|| !(pageContext.getVisualBuilder().getCurrentIncludeInfo().getStorage() instanceof IFile)) {
 			file = FileUtil.getFile(input, fileName);
 		} else {
 			IFile includedFile = 
-				pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
+				(IFile) pageContext.getVisualBuilder().getCurrentIncludeInfo().getStorage();
 			file = FileUtil.getFile(fileName, includedFile);
 		}
 		
@@ -165,6 +171,25 @@ public class VpeCreatorUtil {
 		} catch(CoreException e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
+		return null;
+	}
+	/**
+	 * Return dom document for read, document shoud be released from read
+	 * @see VpeCreatorUtil#releaseDocumentFromRead(Document)
+	 * @param file
+	 * @return dom document for read
+	 */
+	public static Document getDocumentForRead(String content) {
+		IDOMModel wtpModel = null;
+
+		IModelManager modelManager = StructuredModelManager.getModelManager();
+
+		wtpModel = (IDOMModel) modelManager
+				.createUnManagedStructuredModelFor("org.eclipse.wst.html.core.htmlsource"); //$NON-NLS-1$
+		IStructuredDocument document = wtpModel.getStructuredDocument();
+		document.set(content);
+		if (wtpModel != null)
+			return wtpModel.getDocument();
 		return null;
 	}
 

@@ -12,12 +12,17 @@ package org.jboss.tools.vpe.editor.template.custom;
 
 
 import java.util.List;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IStorage;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.XModelObject;
+import org.jboss.tools.common.model.XModelObjectConstants;
+import org.jboss.tools.common.model.filesystems.impl.RecognizedFileImpl;
 import org.jboss.tools.common.model.filesystems.impl.SimpleFileImpl;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
@@ -42,7 +47,7 @@ public class CustomTLDReference {
 	 * @param sourceNode
 	 * @return full path to custom template if exist or null if not exist
 	 */
-	public static IPath getCustomElementPath(Node sourceNode,
+	public static IStorage getCustomElementPath(Node sourceNode,
 			VpePageContext pageContext) {
 		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,
 				pageContext);
@@ -52,7 +57,7 @@ public class CustomTLDReference {
 		XModelObject xmodel = getCustomTaglibObject(pageContext,uri);
 
 		XModelObject o = xmodel.getChildByPath(sourceNode.getLocalName()
-				+ "/declaration"); //$NON-NLS-1$
+				+XModelObjectConstants.SEPARATOR +"declaration"); //$NON-NLS-1$
 		String sourceAttributeValue = null;
 		if (o != null) {
 			sourceAttributeValue = o.getAttributeValue("source"); //$NON-NLS-1$
@@ -62,14 +67,28 @@ public class CustomTLDReference {
 			return null;
 		}
 		if (xmodel instanceof SimpleFileImpl) {
-			IPath pathToSourceFile = ((SimpleFileImpl) xmodel).getFile()
-					.getFullPath();
+			IFile iFile = ((SimpleFileImpl) xmodel).getFile();
+			if(iFile==null) {
+				//possibly it's a jar file
+
+				XModelObject sourceFile = xmodel.getParent().getParent().getChildByPath(sourceAttributeValue.substring(1));
+				if(sourceFile instanceof RecognizedFileImpl) {
+					String content = ((RecognizedFileImpl)sourceFile).getAsText();
+					String name =((RecognizedFileImpl)sourceFile).getPresentationString();
+					IStorage customStorage = new VpeCustomStringStorage(content, name);
+					return customStorage;
+				}
+				return null;
+			}
+			IPath pathToSourceFile = iFile.getFullPath();
 			// pathToSourceFile now smth like this
 			// /customFaceletsTestProject/WebContent/tags/facelets.taglib.xml
 			// so we remove facelet taglib name now
 			pathToSourceFile = pathToSourceFile.removeLastSegments(1);
 			pathToSourceFile = pathToSourceFile.append(sourceAttributeValue);
-			return pathToSourceFile;
+			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(
+					pathToSourceFile);
+			return file;
 		}
 		return null;
 	}

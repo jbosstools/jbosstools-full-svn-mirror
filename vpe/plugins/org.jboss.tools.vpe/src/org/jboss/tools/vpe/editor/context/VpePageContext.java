@@ -11,9 +11,11 @@
 package org.jboss.tools.vpe.editor.context;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -21,9 +23,6 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.ide.IDE;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.jboss.tools.common.kb.KbConnectorFactory;
 import org.jboss.tools.common.kb.KbConnectorType;
@@ -33,18 +32,14 @@ import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.jst.jsp.editor.IVisualContext;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.jst.web.tld.TaglibData;
-import org.jboss.tools.jst.web.tld.VpeTaglibListener;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.VpeSourceDomBuilder;
 import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
-import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
-import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.jboss.tools.vpe.resref.core.AbsoluteFolderReferenceList;
-import org.jboss.tools.vpe.resref.core.CSSReferenceList;
 import org.jboss.tools.vpe.resref.core.RelativeFolderReferenceList;
 import org.jboss.tools.vpe.resref.core.TaglibReferenceList;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -64,6 +59,13 @@ public class VpePageContext implements IVisualContext {
 	private VpeEditorPart editPart;
 	WtpKbConnector connector;
 	private nsIDOMNode currentVisualNode;
+	/**
+	 * Created to store custom element attributes and use it in time of
+	 * rendering
+	 * @author mareshkau
+	 */
+	private Map<String,String> customElementsAttributes;
+	
 	
 	public VpePageContext(BundleMap bundle, VpeEditorPart editPart) {
 		this.bundle = bundle;
@@ -79,6 +81,22 @@ public class VpePageContext implements IVisualContext {
 		else return false;
 	}
 	
+	/**
+	 * Adds attribute to element attribute map
+	 * @param key
+	 * @param value
+	 */
+	public void addAttributeInCustomElementsMap(String key, String value){
+		getCustomElementsAttributes().put(key, value);
+	}
+	/**
+	 * Removes attribute from custom attribute map
+	 * @param sourceBuilder
+	 */
+	public void removeAttributeFromCustomElementMap(String key) {
+		getCustomElementsAttributes().remove(key);
+	}
+
 	public void setSourceDomBuilder(VpeSourceDomBuilder sourceBuilder) {
 		this.sourceBuilder = sourceBuilder;
 		refreshConnector();
@@ -244,27 +262,11 @@ public class VpePageContext implements IVisualContext {
 	}
 
 	
-	private void fireTaglibChanged(VpeTaglibListener taglibListener, List newTaglibs, List delTaglibs) {
-		Iterator iter = delTaglibs.iterator();
-		while (iter.hasNext()) {
-			TaglibData taglib = (TaglibData)iter.next();
-			taglibListener.removeTaglib(taglib.getUri(), taglib.getPrefix());
-		}
-		iter = newTaglibs.iterator();
-		while (iter.hasNext()) {
-			TaglibData taglib = (TaglibData)iter.next();
-			taglibListener.addTaglib(taglib.getUri(), taglib.getPrefix());
-		}
-	}
-	
 	public WtpKbConnector getConnector() {
-		return connector;
+		return this.connector;
 	}
 
-	public void addTaglibListener(VpeTaglibListener listener) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	public List<TaglibData> getTagLibs(Node sourceNode) {
 		
@@ -275,7 +277,7 @@ public class VpePageContext implements IVisualContext {
 	 * @return the currentVisualNode
 	 */
 	public nsIDOMNode getCurrentVisualNode() {
-		return currentVisualNode;
+		return this.currentVisualNode;
 	}
 
 	/**
@@ -298,6 +300,16 @@ public class VpePageContext implements IVisualContext {
 		if(display!=null) {
 			while(display.readAndDispatch()){}
 		}			
+	}
+
+	/**
+	 * @return the customElementsAttributes
+	 */
+	public Map<String, String> getCustomElementsAttributes() {
+		if(this.customElementsAttributes==null) {
+			this.customElementsAttributes =  new HashMap<String, String>();
+		}
+ 		return this.customElementsAttributes;
 	}
 
 }

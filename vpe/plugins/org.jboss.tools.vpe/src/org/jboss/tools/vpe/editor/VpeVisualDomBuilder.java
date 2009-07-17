@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.swt.graphics.Point;
@@ -160,7 +161,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	private VpeDnd dropper;
 
-	private Map<IFile, Document> includeDocuments = new HashMap<IFile, Document>();
+	private Map<IStorage, Document> includeDocuments = new HashMap<IStorage, Document>();
 	private boolean showInvisibleTags;
 
 	public VpeVisualDomBuilder(VpeDomMapping domMapping,
@@ -461,7 +462,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		Node sourceNodeProxy = null;
 		// FIX FOR JBIDE-1568, added by Max Areshkau
 		try {
-
 			if (ElService.getInstance().isELNode(getPageContext(),
 					sourceNode)) {
 				
@@ -2114,11 +2114,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return includeInfo;
 	}
 
-	public boolean isFileInIncludeStack(IFile file) {
+	public boolean isFileInIncludeStack(IStorage file) {
 		if (file == null)
 			return false;
 		for (int i = 0; i < includeStack.size(); i++) {
-			if (file.equals(((VpeIncludeInfo) includeStack.get(i)).getFile())) {
+			if (file.equals(((VpeIncludeInfo) includeStack.get(i)).getStorage())) {
 				return true;
 			}
 		}
@@ -2264,7 +2264,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		this.xulRunnerEditor = xulRunnerEditor;
 	}
 
-	public Map<IFile, Document> getIncludeDocuments() {
+	public Map<IStorage, Document> getIncludeDocuments() {
 		return includeDocuments;
 	}
 

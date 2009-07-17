@@ -12,10 +12,8 @@ package org.jboss.tools.vpe.editor.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import org.eclipse.core.resources.IFile;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.util.ElService;
-import org.jboss.tools.vpe.editor.util.ResourceUtil;
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -43,15 +41,15 @@ public class VpeNodeInvocationHandler implements InvocationHandler {
 
 	public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
-		Object result = method.invoke(node, args);
+		Object result = method.invoke(this.node, args);
 		if(result instanceof String) {
 			String processedStr = (String) result;
 			result = replaceEL(processedStr);
 		} else if(result instanceof Attr) {
-			result = VpeProxyUtil.createProxyForELExpressionNode(pageContext,
+			result = VpeProxyUtil.createProxyForELExpressionNode(this.pageContext,
 						(Node)result);
 		} else if(result instanceof NamedNodeMap) {
-			result = VpeProxyUtil.createProxyForNamedNodeMap(pageContext, (NamedNodeMap)result);
+			result = VpeProxyUtil.createProxyForNamedNodeMap(this.pageContext, (NamedNodeMap)result);
 		}
  		return result;
 	}
@@ -62,16 +60,7 @@ public class VpeNodeInvocationHandler implements InvocationHandler {
 	 */
 	private String replaceEL(String toReplace) {
 		
-		String result = toReplace;
-
-		result = ResourceUtil.getBundleValue(pageContext, toReplace);
-
-		//mareshkau,fix for JBIDE-3030, el doesn't works for external files.
-        if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null) {
-        	return result;
-        }
-        final IFile file = pageContext.getVisualBuilder().getCurrentIncludeInfo().getFile();
-        return  ElService.getInstance().replaceEl(file, result);
+        return  ElService.getInstance().replaceElAndResources(this.pageContext, toReplace);
 	}
 
 }

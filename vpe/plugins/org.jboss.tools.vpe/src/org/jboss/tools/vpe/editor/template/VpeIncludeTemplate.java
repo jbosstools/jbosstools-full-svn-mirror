@@ -63,8 +63,8 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 			if (vpeValue != null && vpeValue.stringValue().length() > 0) {
 				fileName = vpeValue.stringValue();
 				VpeIncludeInfo info = pageContext.getVisualBuilder().getCurrentIncludeInfo();
-				if(info != null) {
-					IFile templateFile = info.getFile();
+				if(info != null && info.getStorage() instanceof IFile) {
+					IFile templateFile = (IFile) info.getStorage();
 					IFile file = FileUtil.getFile(fileName, templateFile);
 					
 					if (file != null) {
@@ -102,7 +102,7 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 		if (data.getData() != null) {
 			VpeIncludeInfo includeInfo = pageContext.getVisualBuilder().popIncludeStack();
 			if (includeInfo != null) {
-				//VpeCreatorUtil.releaseDocumentFromRead(includeInfo.getDocument());
+//				VpeCreatorUtil.releaseDocumentFromRead(includeInfo.getDocument());
 			}
 		}
 	}
