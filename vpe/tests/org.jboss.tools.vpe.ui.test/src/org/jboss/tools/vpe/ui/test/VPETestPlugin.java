@@ -67,9 +67,9 @@ public class VPETestPlugin extends BaseUIPlugin {
 		URL url = null;
 		try {
 			url = bundle == null ? null : FileLocator.resolve(bundle
-					.getEntry("/resources")); // $NON-NLS-1$
+					.getEntry("/resources")); //$NON-NLS-1$
 		} catch (Exception e) {
-			url = bundle.getEntry("/resources"); // $NON-NLS-1$
+			url = bundle.getEntry("/resources"); //$NON-NLS-1$
 		}
 		return (url == null) ? null : url.getPath();
 	}
