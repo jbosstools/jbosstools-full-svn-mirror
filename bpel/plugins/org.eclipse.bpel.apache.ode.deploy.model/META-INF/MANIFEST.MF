@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ODE Deploy Descriptor EMF Model
 Bundle-SymbolicName: org.eclipse.bpel.apache.ode.deploy.model; singleton:=true
-Bundle-Version: 0.4.0
+Bundle-Version: 0.4.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse.org
 Bundle-Localization: plugin

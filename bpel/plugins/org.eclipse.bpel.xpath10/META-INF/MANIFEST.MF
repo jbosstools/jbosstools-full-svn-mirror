@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: XPath Parser 1.0 (Incubation)
 Bundle-SymbolicName: org.eclipse.bpel.xpath10
-Bundle-Version: 0.4.0
+Bundle-Version: 0.4.0.qualifier
 Bundle-ClassPath: bin/,
  lib/antlr-runtime-3.0.1.jar
 Export-Package: org.antlr.runtime;uses:="org.antlr.runtime.tree",
