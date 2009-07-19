@@ -10,11 +10,11 @@
  ************************************************************************************/
 package org.jboss.tools.birt.oda;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.eclipse.datatools.connectivity.oda.OdaException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.jboss.tools.birt.oda.impl.HibernateOdaQuery;
+import org.jboss.tools.birt.oda.impl.HibernateResult;
 import org.jboss.tools.birt.oda.impl.HibernateResultSetMetaData;
 
 /**
@@ -31,12 +31,9 @@ public interface IOdaFactory {
 	
 	void close();
 	boolean isOpen();
-	HibernateResultSetMetaData prepare(String queryText) throws OdaException;
+	HibernateResultSetMetaData prepare(String queryText,Session session) throws OdaException;
 	void setMaxRows(int max);
 	int getMaxRows();
-	void executeQuery(HibernateOdaQuery query) throws OdaException;
-	Iterator getIterator();
-	List getResult();
-	Object getResult(int rstcol) throws OdaException;
-	void next();
+	HibernateResult executeQuery(HibernateOdaQuery query,Session session) throws OdaException;
+	SessionFactory getSessionFactory();
 }

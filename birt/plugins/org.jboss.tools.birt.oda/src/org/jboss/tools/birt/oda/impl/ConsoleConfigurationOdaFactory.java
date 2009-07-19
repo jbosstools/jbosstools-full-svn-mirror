@@ -29,7 +29,7 @@ import org.jboss.tools.birt.oda.Messages;
 public class ConsoleConfigurationOdaFactory extends AbstractOdaFactory {
 
 	ConsoleConfiguration consoleConfiguration;
-
+	
 	public ConsoleConfigurationOdaFactory(Properties properties) throws OdaException {
 		getSessionFactory(properties);
 		String maxRowString = properties.getProperty(IOdaFactory.MAX_ROWS);
@@ -49,7 +49,7 @@ public class ConsoleConfigurationOdaFactory extends AbstractOdaFactory {
 				break;
 			}
 		}
-        if (isOpen()) {
+        if (!isOpen()) {
         	try {
 				sessionFactory = consoleConfiguration.getSessionFactory();
 				if (sessionFactory == null) {
@@ -65,14 +65,5 @@ public class ConsoleConfigurationOdaFactory extends AbstractOdaFactory {
         }
 		return sessionFactory;
 	}
-	
-	@Override
-	public void close() {
-		consoleConfiguration = null;
-		super.close();
-	}
 
-	public boolean isOpen() {
-		return consoleConfiguration != null;
-	}
 }

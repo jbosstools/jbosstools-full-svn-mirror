@@ -2,22 +2,17 @@ package org.jboss.tools.birt.oda.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.eclipse.datatools.connectivity.oda.IParameterMetaData;
-import org.eclipse.datatools.connectivity.oda.IResultSetMetaData;
 import org.eclipse.datatools.connectivity.oda.OdaException;
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.EntityMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.engine.query.HQLQueryPlan;
 import org.hibernate.impl.SessionFactoryImpl;
-import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.type.Type;
 import org.jboss.tools.birt.oda.IOdaFactory;
 import org.jboss.tools.birt.oda.Messages;
@@ -26,40 +21,41 @@ public abstract class AbstractOdaFactory implements IOdaFactory {
 
 	protected SessionFactory sessionFactory;
 	private int maxRows;
-	private List result;
-	private Iterator iterator;
-	private Type[] queryReturnTypes;
-	private Object currentRow;
-	private HibernateOdaQuery query;
-	private Session session;
+	//private List result;
+	//private Iterator iterator;
+	//private Type[] queryReturnTypes;
+	//private Object currentRow;
+	//private HibernateOdaQuery query;
+	//private Session session;
 	private String queryText;
 	
 	public void close() {
-		sessionFactory = null;
-		if (session != null) {
-			session.close();
-			session = null;
-		}
+//		if (session != null) {
+//			session.close();
+//			session = null;
+//		}
+	}
+	
+	public boolean isOpen() {
+		return getSessionFactory() != null;
 	}
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
 
-	public HibernateResultSetMetaData prepare(String queryText) throws OdaException {
+	public HibernateResultSetMetaData prepare(String queryText,Session session) throws OdaException {
 		this.queryText = queryText;
-		return parseQuery();
+		return parseQuery(session);
 	}
 
-	private HibernateResultSetMetaData parseQuery()
+	private HibernateResultSetMetaData parseQuery(Session session)
 			throws OdaException {
 		List arColsType = new ArrayList();
 		List arCols = new ArrayList();
 		List arColClass = new ArrayList();
 		String[] props = null;
-		Session session = null;
 		try {
-			session = getSessionFactory().openSession();
 			Query query = session.createQuery(queryText);
 			int maxRows = getMaxRows();
 			if (maxRows > 0) {
@@ -112,10 +108,6 @@ public abstract class AbstractOdaFactory implements IOdaFactory {
 							.toArray(new String[arColClass.size()]));
 		} catch (Exception e) {
 			throw new OdaException(e.getLocalizedMessage());
-		} finally {
-			if (session != null) {
-				session.close();
-			}
 		}
 	}
 
@@ -156,10 +148,8 @@ public abstract class AbstractOdaFactory implements IOdaFactory {
 		this.maxRows = maxRows;
 	}
 
-	public void executeQuery(HibernateOdaQuery query) throws OdaException {
-		this.query = query;
+	public HibernateResult executeQuery(HibernateOdaQuery query,Session session) throws OdaException {
 		try {
-			session = getSessionFactory().openSession(); 
 			Query q = session.createQuery(queryText);
 			HibernateParameterMetaData parameterMetaData = (HibernateParameterMetaData) query.getParameterMetaData();
 			List<Parameter> parameters = parameterMetaData.getParameters();
@@ -174,58 +164,11 @@ public abstract class AbstractOdaFactory implements IOdaFactory {
 						break;
 				}
 			}
-			result = q.list();
-			iterator = result.iterator();
-			this.queryReturnTypes = q.getReturnTypes();
+			HibernateResult hibernateResult = new HibernateResult(q,this, query);
+			return hibernateResult;
 		} catch (HibernateException e) {
 			throw new OdaException(e.getLocalizedMessage());
 		}
 	}
-
-	public Iterator getIterator() {
-		return iterator;
-	}
-
-	public List getResult() {
-		return result;
-	}
-
-	public Object getResult(int rstcol) throws OdaException {
-		Object obj = this.currentRow;
-		Object value = null;
-		try {
-			if (queryReturnTypes.length > 0
-					&& queryReturnTypes[0].isEntityType()) {
-				String checkClass = ((HibernateResultSetMetaData) getMetaData())
-						.getColumnClass(rstcol);
-				SessionFactory sf = getSessionFactory();
-				ClassMetadata metadata = sf.getClassMetadata(checkClass);
-				if (metadata == null) {
-					metadata = sf.getClassMetadata(obj.getClass());
-				} 
-				value = metadata.getPropertyValue(obj, getMetaData()
-						.getColumnName(rstcol), EntityMode.POJO);
-			} else {
-				if (getMetaData().getColumnCount() == 1) {
-					value = obj;
-				} else {
-					Object[] values = (Object[]) obj;
-					value = values[rstcol - 1];
-				}
-			}
-		} catch (Exception e) {
-			throw new OdaException(e.getLocalizedMessage());
-		}
-		return (value);
-	}
-
-	private IResultSetMetaData getMetaData() throws OdaException {
-		return query.getMetaData();
-	}
-
-	public void next() {
-		currentRow = getIterator().next();
-	}
-
 	
 }

@@ -16,6 +16,7 @@ import org.eclipse.datatools.connectivity.oda.IConnection;
 import org.eclipse.datatools.connectivity.oda.IDataSetMetaData;
 import org.eclipse.datatools.connectivity.oda.IQuery;
 import org.eclipse.datatools.connectivity.oda.OdaException;
+import org.hibernate.Session;
 import org.jboss.tools.birt.oda.IOdaFactory;
 import org.jboss.tools.birt.oda.Messages;
 import org.osgi.framework.Bundle;
@@ -27,7 +28,9 @@ import org.osgi.framework.Bundle;
  */
 public class HibernateConnection implements IConnection {
 	private IOdaFactory odaSessionFactory;
-	private Map appContext;
+	private Session session;
+
+	//private Map appContext;
 
 	/*
 	 * @see
@@ -43,6 +46,7 @@ public class HibernateConnection implements IConnection {
 		} else {
 			odaSessionFactory = new ServerOdaFactory(connProperties);
 		}
+		session = odaSessionFactory.getSessionFactory().openSession();
 	}
 
 	/*
@@ -54,21 +58,28 @@ public class HibernateConnection implements IConnection {
 		if (!(context instanceof Map)) {
 			throw new OdaException(Messages.HibernateConnection_Invalid_AppContext);
 		}
-		this.appContext = (Map) context;
+		//this.appContext = (Map) context;
 	}
 
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IConnection#close()
 	 */
 	public void close() throws OdaException {
-		odaSessionFactory.close();
+		if (odaSessionFactory != null) {
+			odaSessionFactory.close();
+			odaSessionFactory = null;
+		}
+		if (session != null) {
+			session.close();
+			session = null;
+		}
 	}
 
 	/*
 	 * @see org.eclipse.datatools.connectivity.oda.IConnection#isOpen()
 	 */
 	public boolean isOpen() throws OdaException {
-		return odaSessionFactory != null && odaSessionFactory.isOpen();
+		return session != null && session.isOpen();
 	}
 
 	/*
@@ -114,13 +125,13 @@ public class HibernateConnection implements IConnection {
 		// do nothing; assumes no transaction support needed
 	}
 
-	/*
-	 * public SessionFactory getSessionFactory() { return
-	 * odaSessionFactory.getSessionFactory(); }
-	 */
-
 	public IOdaFactory getOdaSessionFactory() {
 		return odaSessionFactory;
 	}
+
+	public Session getSession() {
+		return session;
+	}
+
 
 }
