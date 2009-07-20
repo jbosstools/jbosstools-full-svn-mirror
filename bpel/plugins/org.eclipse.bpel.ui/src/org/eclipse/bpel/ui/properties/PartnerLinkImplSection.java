@@ -466,7 +466,6 @@ public class PartnerLinkImplSection extends BPELPropertySection {
 	
 
 	
-	@SuppressWarnings("unchecked")
 	protected void updateMyRolePartnerRoleWidgets ( PartnerLink pl ) {
 		
 		PartnerLinkType plt = pl.getPartnerLinkType();
@@ -536,6 +535,9 @@ public class PartnerLinkImplSection extends BPELPropertySection {
 		if (plt == null) {
 			fPartnerLinkTypeHref.setText(Messages.PartnerLinkImplSection_8);
 			// partnerLinkTypeName.setText("(None)");
+			
+			// added by Grid.Qian
+			fPartnerLinkTypeHref.setEnabled(false);
 			return;
 		}
 		
@@ -545,6 +547,9 @@ public class PartnerLinkImplSection extends BPELPropertySection {
 			name = label.getLabel( plt );
 		} 	
 		fPartnerLinkTypeHref.setText( name );
+		
+		// added by Grid.Qian
+		fPartnerLinkTypeHref.setEnabled(true);
 		// partnerLinkTypeName.setText(name);
 	}
 	
