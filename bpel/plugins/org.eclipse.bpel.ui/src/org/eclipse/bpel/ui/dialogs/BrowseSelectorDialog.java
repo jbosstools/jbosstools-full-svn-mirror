@@ -576,7 +576,10 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 			
 			fFilteredList.setEnabled(true);
 			fFilteredList.setAllowDuplicates(showDuplicates);
-			fFilteredList.setElements( contentProvider.getElements( fProjectObjects ) );						
+			fFilteredList.setElements( contentProvider.getElements( fProjectObjects ) );	
+			// add by Grid.Qian
+			// update the fTreeViewer because for now the fTreeViewer's input is null
+			updateLowerViewWidget(fFilteredList.getSelection());
 		}		
 	}
 
