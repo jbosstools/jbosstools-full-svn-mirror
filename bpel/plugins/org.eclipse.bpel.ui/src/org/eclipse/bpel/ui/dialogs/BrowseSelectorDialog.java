@@ -579,7 +579,10 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 			fFilteredList.setElements( contentProvider.getElements( fProjectObjects ) );	
 			// add by Grid.Qian
 			// update the fTreeViewer because for now the fTreeViewer's input is null
-			updateLowerViewWidget(fFilteredList.getSelection());
+			if (contentProvider.getElements( fProjectObjects ) != null && 
+			    contentProvider.getElements( fProjectObjects ).length > 0) {
+				updateLowerViewWidget(fFilteredList.getSelection());
+			}
 		}		
 	}
 
