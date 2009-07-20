@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.bpel.runtimes; singleton:=true
-Bundle-Version: 0.4.0.qualifier
+Bundle-Version: 0.4.0
 Bundle-Activator: org.eclipse.bpel.runtimes.RuntimesPlugin
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui;bundle-version="[3.4.0,4.0.0)",
@@ -21,8 +21,8 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.bpel.model;bundle-version="0.4.0",
  org.eclipse.emf.ecore;bundle-version="[2.4.0,3.0.0)",
  org.eclipse.wst.wsdl;bundle-version="[1.1.200,2.0.0)",
- javax.wsdl;bundle-version="[1.5.0,1.6.0)"
-Bundle-ActivationPolicy: lazy
+ javax.wsdl;bundle-version="[1.4.0,1.6.0)"
+Eclipse-LazyStart: true
 Export-Package: org.eclipse.bpel.runtimes,
  org.eclipse.bpel.runtimes.facets,
  org.eclipse.bpel.runtimes.module,

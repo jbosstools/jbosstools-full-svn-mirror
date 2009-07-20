@@ -43,9 +43,6 @@
          name="BPEL Validator"
          point="org.eclipse.wst.validation.validator">
       <validator>
-         <facet
-               facetId="bpel.facet.core">
-         </facet>
          <filter
                caseSensitive="false"
                nameFilter="*.bpel"
