@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: BPEL JBoss AS Publisher
+Bundle-SymbolicName: org.jboss.bpel.as.integration;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.jboss.bpel.as.integration.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.jboss.ide.eclipse.as.core,
+ org.eclipse.wst.server.core;bundle-version="1.1.2",
+ org.eclipse.core.resources;bundle-version="3.5.0",
+ org.eclipse.wst.common.project.facet.core;bundle-version="1.4.0",
+ org.eclipse.bpel.runtimes;bundle-version="0.4.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
