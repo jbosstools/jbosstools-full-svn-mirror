@@ -26,6 +26,34 @@ import org.jboss.tools.smooks.model.medi.MEdiPackage;
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
  */
 public class DelimitersUICreator extends PropertyUICreator {
+	
+	public static final String ENTER_CHAR_STRING = "<Enter>";
+
+	private class DelimiterChoiceModelProcsser implements IModelProcsser {
+		public Object unwrapValue(Object model) {
+			if (model == null)
+				return null;
+			if (model instanceof String) {
+				if (((String) model).equals("\n")) {
+					return ENTER_CHAR_STRING;
+				}
+				return model.toString();
+			}
+			return null;
+		}
+
+		public Object wrapValue(Object model) {
+			if (model == null)
+				return null;
+			if (model instanceof String) {
+				if (((String) model).equals(ENTER_CHAR_STRING)) {
+					return "\n";
+				}
+				return model.toString();
+			}
+			return null;
+		}
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -42,128 +70,21 @@ public class DelimitersUICreator extends PropertyUICreator {
 
 		if (feature == MEdiPackage.eINSTANCE.getDelimiters_Component()) {
 			return SmooksUIUtils.createChoiceFieldEditor(parent, toolkit, propertyDescriptor, model,
-					new String[] { ENTER_CHAR_STRING }, new IModelProcsser() {
-
-						public Object unwrapValue(Object model) {
-							if (model == null)
-								return null;
-							if (model instanceof String) {
-								if (((String) model).equals("\n")) {
-									return ENTER_CHAR_STRING;
-								}
-								return model.toString();
-							}
-							return null;
-						}
-
-						public Object wrapValue(Object model) {
-							if (model == null)
-								return null;
-							if (model instanceof String) {
-								if (((String) model).equals(ENTER_CHAR_STRING)) {
-									return "\n";
-								}
-								return model.toString();
-							}
-							return null;
-						}
-
-					}, false);
+					new String[] { ENTER_CHAR_STRING }, new DelimiterChoiceModelProcsser(), false);
 		}
 		if (feature == MEdiPackage.eINSTANCE.getDelimiters_Field()) {
 			return SmooksUIUtils.createChoiceFieldEditor(parent, toolkit, propertyDescriptor, model,
-					new String[] { ENTER_CHAR_STRING }, new IModelProcsser() {
-
-						public Object unwrapValue(Object model) {
-							if (model == null)
-								return null;
-							if (model instanceof String) {
-								if (((String) model).equals("\n")) {
-									return ENTER_CHAR_STRING;
-								}
-								return model.toString();
-							}
-							return null;
-						}
-
-						public Object wrapValue(Object model) {
-							if (model == null)
-								return null;
-							if (model instanceof String) {
-								if (((String) model).equals(ENTER_CHAR_STRING)) {
-									return "\n";
-								}
-								return model.toString();
-							}
-							return null;
-						}
-
-					}, false);
+					new String[] { ENTER_CHAR_STRING }, new DelimiterChoiceModelProcsser(), false);
 		}
 		if (feature == MEdiPackage.eINSTANCE.getDelimiters_Segment()) {
 			return SmooksUIUtils.createChoiceFieldEditor(parent, toolkit, propertyDescriptor, model,
-					new String[] { ENTER_CHAR_STRING }, new IModelProcsser() {
-
-						public Object unwrapValue(Object model) {
-							if (model == null)
-								return null;
-							if (model instanceof String) {
-								if (((String) model).equals("\n")) {
-									return ENTER_CHAR_STRING;
-								}
-								return model.toString();
-							}
-							return null;
-						}
-
-						public Object wrapValue(Object model) {
-							if (model == null)
-								return null;
-							if (model instanceof String) {
-								if (((String) model).equals(ENTER_CHAR_STRING)) {
-									return "\n";
-								}
-								return model.toString();
-							}
-							return null;
-						}
-
-					}, false);
+					new String[] { ENTER_CHAR_STRING }, new DelimiterChoiceModelProcsser(), false);
 		}
 		if (feature == MEdiPackage.eINSTANCE.getDelimiters_SubComponent()) {
 			return SmooksUIUtils.createChoiceFieldEditor(parent, toolkit, propertyDescriptor, model,
-					new String[] { ENTER_CHAR_STRING }, new IModelProcsser() {
-
-						public Object unwrapValue(Object model) {
-							if (model == null)
-								return null;
-							if (model instanceof String) {
-								if (((String) model).equals("\n")) {
-									return ENTER_CHAR_STRING;
-								}
-								return model.toString();
-							}
-							return null;
-						}
-
-						public Object wrapValue(Object model) {
-							if (model == null)
-								return null;
-							if (model instanceof String) {
-								if (((String) model).equals(ENTER_CHAR_STRING)) {
-									return "\n";
-								}
-								return model.toString();
-							}
-							return null;
-						}
-
-					}, false);
+					new String[] { ENTER_CHAR_STRING }, new DelimiterChoiceModelProcsser(), false);
 		}
 
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor, part);
 	}
-	
-	public static final String ENTER_CHAR_STRING = "<Enter>";
-
 }

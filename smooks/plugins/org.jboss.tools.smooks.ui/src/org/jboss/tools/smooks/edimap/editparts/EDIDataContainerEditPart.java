@@ -10,10 +10,29 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.edimap.editparts;
 
+import org.jboss.tools.smooks.edimap.models.EDIDataContainerModel;
+import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+
 /**
  * @author Dart (dpeng@redhat.com)
  *
  */
 public class EDIDataContainerEditPart extends EDITreeContainerEditPart {
 
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart#getLabelText()
+	 */
+	@Override
+	protected String getLabelText() {
+		String labelText = super.getLabelText();
+		TreeNodeModel obj = (TreeNodeModel) getModel();
+		if(obj.getData() instanceof EDIDataContainerModel){
+			if(((EDIDataContainerModel)obj.getData()).isMultipe()){
+				labelText += " *";
+			}
+		}
+		return labelText;
+	}
+
+	
 }

@@ -78,7 +78,11 @@ public class DeleteEDIModelCommand extends EDIGEFAdpaterCommand {
 			IEditorPart editorPart = editDomain.getEditorPart();
 			if (editorPart instanceof EDIMapFormPage) {
 				List<TreeNodeModel> linkedNodes = ((EDIMapFormPage) editorPart).createLinkModel();
+				try{
 				SmooksUIUtils.expandGraphTree(linkedNodes, (TreeNodeEditPart) parentPart);
+				}catch(Throwable t){
+					t.printStackTrace();
+				}
 			}
 		}
 	}
