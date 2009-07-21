@@ -19,3 +19,4 @@ Export-Package: org.jboss.tools.profiler.internal.ui,
  org.jboss.tools.profiler.internal.ui.launch,
  org.jboss.tools.profiler.internal.ui.launchtabs,
  org.jboss.tools.profiler.internal.ui.util
+Bundle-Vendor: JBoss by Red Hat
