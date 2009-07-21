@@ -607,6 +607,11 @@ public class BPELReader implements ErrorHandler {
 	protected void setProperties(Element element, EObject eObject, String propertyName) {
 		String propertyAttribute = element.getAttribute(propertyName);
 		
+		// added by Grid.Qian
+		// we should permit user add a correlation without properties
+		if(propertyAttribute == null){
+			return;
+		}
 		StringTokenizer st = new StringTokenizer(propertyAttribute);
 
 		while (st.hasMoreTokens()) {
