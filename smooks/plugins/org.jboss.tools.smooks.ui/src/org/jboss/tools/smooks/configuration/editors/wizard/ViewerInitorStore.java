@@ -18,6 +18,7 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.csv.CSVInputDataWizard;
+import org.jboss.tools.smooks.configuration.editors.edi.EDIDataWizard;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanContentProvider;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanStrucutredDataWizard;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanlabelProvider;
@@ -225,6 +226,24 @@ public class ViewerInitorStore {
 		// jsonViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
 		map.put(typeID, csvViewerInitor);
 
+		// for Csv
+		BaseViewerInitor ediViewerInitor = new BaseViewerInitor();
+		name = "EDI";
+		description = "Select EDI data file as the input data.";
+		iconPath = null;
+		typeID = SmooksModelUtils.INPUT_TYPE_EDI;
+
+		ediViewerInitor.setName(name);
+		ediViewerInitor.setDescription(description);
+		ediViewerInitor.setWizardIconPath(iconPath);
+		ediViewerInitor.setTypeID(typeID);
+		ediViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
+		ediViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
+		ediViewerInitor.setStructuredDataLoadWizard(new EDIDataWizard());
+		// jsonViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
+		map.put(typeID, ediViewerInitor);
+
+		
 		return map;
 	}
 }
