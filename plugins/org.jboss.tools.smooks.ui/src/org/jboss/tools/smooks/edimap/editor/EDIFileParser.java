@@ -35,7 +35,8 @@ public class EDIFileParser {
 			throws InvocationTargetException, IOException {
 		TagList tl = new TagList();
 		path = SmooksUIUtils.parseFilePath(path);
-		if(!new File(path).exists()) return new TagList();
+		if (!new File(path).exists())
+			return new TagList();
 		InputStream stream = new FileInputStream(path);
 		InputStreamReader reader = new InputStreamReader(stream);
 		BufferedReader br = new BufferedReader(reader);
@@ -51,34 +52,50 @@ public class EDIFileParser {
 				stringBuffer = new StringBuffer();
 			}
 		}
+		if (stringBuffer != null && stringBuffer.toString().length() > 0) {
+			segmentList.add(stringBuffer.toString());
+			stringBuffer = null;
+		}
 		br.close();
 		reader.close();
 		stream.close();
 		List<String> names = new ArrayList<String>();
-		char[] separators = new char[]{field,component,subcomponent};
+		char[] separators = new char[] { field, component, subcomponent };
 		for (Iterator<?> iterator = segmentList.iterator(); iterator.hasNext();) {
 			String string = (String) iterator.next();
 			String[] fields = string.split("\\" + new String(new char[] { field }));
 			TagObject tag = null;
 			if (fields.length != 0) {
-				tag = new EDIDataContainerModel();
 				if (names.indexOf(fields[0]) == -1) {
+					tag = new EDIDataContainerModel();
+					((EDIDataContainerModel) tag).setMultipe(false);
 					tag.setName(fields[0].trim());
 					names.add(tag.getName());
 					tl.addRootTag(tag);
+				} else {
+					List<TagObject> tagList = tl.getRootTagList();
+					for (Iterator<?> iterator2 = tagList.iterator(); iterator2.hasNext();) {
+						TagObject tagObject = (TagObject) iterator2.next();
+						if (tagObject instanceof EDIDataContainerModel) {
+							if (fields[0].equals(((EDIDataContainerModel) tagObject).getSegCode())) {
+								((EDIDataContainerModel) tagObject).setMultipe(true);
+								break;
+							}
+						}
+					}
 				}
 			}
 			if (tag != null) {
-				String ss = string.substring(fields[0].length() , string.length());
+				String ss = string.substring(fields[0].length(), string.length());
 				generateChildrenTag(tag, ss, separators, 0);
 			}
 		}
-		
+
 		return tl;
 	}
-	
-	private String getSeparator(String s){
-		if(s.equals("*") || s.equals("+") || s.equals("^")){
+
+	private String getSeparator(String s) {
+		if (s.equals("*") || s.equals("+") || s.equals("^")) {
 			return "\\" + s;
 		}
 		return s;
@@ -87,7 +104,8 @@ public class EDIFileParser {
 	private void generateChildrenTag(TagObject parent, String content, char[] separators, int currentSeparator) {
 		char separator = separators[currentSeparator];
 		String sss = new String(new char[] { separator });
-		if(content.indexOf(sss) == -1) return;
+		if (content.indexOf(sss) == -1)
+			return;
 		sss = getSeparator(sss);
 		String[] contentArray = content.split(sss);
 		if (contentArray == null || contentArray.length == 0) {
@@ -95,11 +113,12 @@ public class EDIFileParser {
 		}
 		for (int i = 0; i < contentArray.length; i++) {
 			String con = contentArray[i];
-			if(con == null || con.length() == 0) continue;
+			if (con == null || con.length() == 0)
+				continue;
 			TagObject child = new TagObject();
 			child.setName(con.trim());
 			parent.addChildTag(child);
-			int newIndex = (currentSeparator+1);
+			int newIndex = (currentSeparator + 1);
 			if (newIndex <= (separators.length - 1)) {
 				generateChildrenTag(child, con, separators, newIndex);
 			}

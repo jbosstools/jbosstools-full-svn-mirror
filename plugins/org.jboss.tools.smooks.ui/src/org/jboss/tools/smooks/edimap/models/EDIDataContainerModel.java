@@ -17,6 +17,23 @@ import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
  * 
  */
 public class EDIDataContainerModel extends TagObject {
+	
+	private boolean multipe = false;
+	
+	/**
+	 * @return the multipe
+	 */
+	public boolean isMultipe() {
+		return multipe;
+	}
+
+	/**
+	 * @param multipe the multipe to set
+	 */
+	public void setMultipe(boolean multipe) {
+		this.multipe = multipe;
+	}
+
 	public String getSegCode() {
 		return getName();
 	}

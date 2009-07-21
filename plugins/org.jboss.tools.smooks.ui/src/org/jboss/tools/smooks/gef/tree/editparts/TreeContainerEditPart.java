@@ -34,10 +34,16 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 	protected IFigure createFigure() {
 		return new TreeContainerFigure((TreeContainerModel) getModel());
 	}
+	
+	protected String getLabelText(){
+		TreeContainerModel model = (TreeContainerModel) getModel();
+		String text = model.getText();
+		return text;
+	}
 
 	protected void refreshVisuals() {
 		TreeContainerModel model = (TreeContainerModel) getModel();
-		String text = model.getText();
+		String text = getLabelText();
 		if (text != null && model.isHeaderVisable() && getFigure() instanceof TreeContainerFigure) {
 			TreeContainerFigure figure = (TreeContainerFigure) getFigure();
 			figure.setText(text);

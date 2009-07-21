@@ -2276,6 +2276,7 @@ public class SmooksUIUtils {
 				parentList = null;
 				continue;
 			}
+			if(parentList.isEmpty()) continue;
 			parentList.remove(parentList.size() - 1);
 			((TreeNodeEditPart) rootEditPart).expandNode();
 			for (int i = parentList.size() - 1; i >= 0; i--) {
