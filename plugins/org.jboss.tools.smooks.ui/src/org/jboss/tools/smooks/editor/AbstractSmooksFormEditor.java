@@ -78,7 +78,7 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
 
 public class AbstractSmooksFormEditor extends FormEditor implements IEditingDomainProvider,
 		ISmooksModelValidateListener , ISmooksModelProvider{
-	public static final String EDITOR_ID = "org.jboss.tools.smooks.configuration.editors.MultiPageEditor";
+	public static final String EDITOR_ID = "org.jboss.tools.smooks.edimap.editors.MultiPageEditor";
 
 	protected StructuredTextEditor textEditor = null;
 

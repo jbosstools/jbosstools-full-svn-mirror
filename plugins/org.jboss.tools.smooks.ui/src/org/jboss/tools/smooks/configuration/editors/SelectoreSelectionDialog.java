@@ -44,6 +44,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.csv.CSVDataParser;
+import org.jboss.tools.smooks.configuration.editors.edi.EDIDataParser;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModelFactory;
 import org.jboss.tools.smooks.configuration.editors.uitls.JsonInputDataParser;
@@ -254,6 +255,17 @@ public class SelectoreSelectionDialog extends Dialog {
 					String path = SmooksModelUtils.getInputPath(inputType);
 					if (type != null && path != null) {
 						path = path.trim();
+						if (SmooksModelUtils.INPUT_TYPE_EDI.equals(type)) {
+							EDIDataParser parser = new EDIDataParser();
+							try {
+								TagList tl = parser.parseEDIFile(path, inputType, smooksResourceListType);
+								if (tl != null) {
+									list.addAll(((TagList) tl).getChildren());
+								}
+							} catch (Throwable t) {
+								t.printStackTrace();
+							}
+						}
 						if (SmooksModelUtils.INPUT_TYPE_CSV.equals(type)) {
 							CSVDataParser parser = new CSVDataParser();
 							try {
