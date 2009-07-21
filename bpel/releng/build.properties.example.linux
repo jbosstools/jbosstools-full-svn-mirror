@@ -12,9 +12,23 @@ version=1.0.0
 mainFeatureToBuildID=org.jboss.tools.bpel.sdk.feature
 testFeatureToBuildID=org.jboss.tools.bpel.tests.feature
 
-build.steps=buildUpdate,buildTests,generateDigests,test,publish,cleanup
+# tests do not run due to missing dependencies for o.j.t.c - xulrunner and xpcom?
+#build.steps=buildUpdate,buildTests,generateDigests,test,publish,cleanup
+build.steps=buildUpdate,generateDigests,publish,cleanup
+
+# to (re)generate map and psfs, use these settings
+#build.steps=dir2svnmap,map2psf
+#dir2map.reporoot = http://anonsvn.jboss.org/repos
+#dir2map.repopath = jbosstools/trunk/bpel
+#dir2map.dir = /home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/bpel
+#dir2map.map = /home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/bpel/releng/maps/project.map
 
 # Re-use local sources?
+# note: to run tests locally, these plugins must be pre-checked out into the local source folder:
+#org.jboss.tools.common.test -> /path/to/common/tests/org.jboss.tools.common.test/
+#org.jboss.tools.common -> /path/to/common/plugins/org.jboss.tools.common/
+#org.jboss.tools.test -> /path/to/tests/tests/org.jboss.tools.test/
+
 localSourceCheckoutDir=/home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/bpel
 relengBuilderDir=/home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/bpel/releng
 relengBaseBuilderDir=/home/nboldt/eclipse/workspace-jboss/org.eclipse.releng.basebuilder
@@ -24,7 +38,13 @@ JAVA_HOME=/usr/lib/jvm/java
 JAVA50_HOME=/usr/lib/jvm/java
 
 dependencyURLs=\
-dependencyURLs=http://download.eclipse.org/eclipse/downloads/drops/R-3.5-200906111540/eclipse-SDK-3.5-linux-gtk.tar.gz
+http://download.eclipse.org/eclipse/downloads/drops/R-3.5-200906111540/eclipse-SDK-3.5-linux-gtk.tar.gz,\
+http://www.eclipse.org/downloads/download.php?r=1&file=/tools/gef/downloads/drops/3.5.0/R200906221200/GEF-runtime-3.5.0.zip,\
+http://www.eclipse.org/downloads/download.php?r=1&file=/modeling/emf/emf/downloads/drops/2.5.0/R200906151043/emf-runtime-2.5.0.zip,\
+http://www.eclipse.org/downloads/download.php?r=1&file=/modeling/emf/emf/downloads/drops/2.5.0/R200906151043/xsd-runtime-2.5.0.zip,\
+http://www.eclipse.org/downloads/download.php?r=1&file=/datatools/downloads/1.7/dtp_1.7.0.zip,\
+http://www.eclipse.org/downloads/download.php?r=1&file=/webtools/downloads/drops/R3.1/M-3.1M-20090716104714/wtp-jpt-M-3.1M-20090716104714.zip,\
+http://www.eclipse.org/downloads/download.php?r=1&file=/webtools/downloads/drops/R3.1/M-3.1M-20090716104714/wtp-M-3.1M-20090716104714.zip
 #,\
 #http://www.eclipse.org/downloads/download.php?r=1&file=/eclipse/downloads/drops/S-3.5M7-200904302300/eclipse-SDK-3.5M7-win32.zip,\
 #http://www.eclipse.org/downloads/download.php?r=1&file=/eclipse/downloads/drops/S-3.5M7-200904302300/eclipse-SDK-3.5M7-linux-gtk-x86_64.tar.gz,\
@@ -33,11 +53,7 @@ dependencyURLs=http://download.eclipse.org/eclipse/downloads/drops/R-3.5-2009061
 #http://www.eclipse.org/downloads/download.php?r=1&file=/birt/downloads/drops/M-R1-2.5M7-200905061338/birt-report-framework-2.5M7.zip,\
 #http://www.eclipse.org/downloads/download.php?r=1&file=/birt/downloads/drops/M-R1-2.5M7-200905061338/birt-wtp-integration-sdk-2.5M7.zip,\
 #http://www.eclipse.org/downloads/download.php?r=1&file=/datatools/downloads/drops/N_DTP_1.7/dtp-1.7.0M7-200905052200.zip,\
-#http://www.eclipse.org/downloads/download.php?r=1&file=/modeling/emf/emf/downloads/drops/2.5.0/S200905041408/emf-runtime-2.5.0M7.zip,\
 #http://www.eclipse.org/downloads/download.php?r=1&file=/tptp/4.6.0/TPTP-4.6.0M7-200904260100/tptp.runtime-TPTP-4.6.0M7.zip,\
-#http://www.eclipse.org/downloads/download.php?r=1&file=/webtools/downloads/drops/R3.1/S-3.1M7-20090505073946/wtp-S-3.1M7-20090505073946.zip,\
-#http://www.eclipse.org/downloads/download.php?r=1&file=/webtools/downloads/drops/R3.1/S-3.1M7-20090505073946/wtp-jpt-S-3.1M7-20090505073946.zip,\
-#http://www.eclipse.org/downloads/download.php?r=1&file=/modeling/emf/emf/downloads/drops/2.5.0/S200905041408/xsd-runtime-2.5.0M7.zip
 
 flattenDependencies=true
 parallelCompilation=true
