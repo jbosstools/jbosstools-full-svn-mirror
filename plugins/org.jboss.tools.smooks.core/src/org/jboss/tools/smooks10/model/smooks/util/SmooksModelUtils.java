@@ -491,7 +491,8 @@ public class SmooksModelUtils {
 		List<org.jboss.tools.smooks.model.graphics.ext.ParamType> list = input.getParam();
 		if (INPUT_TYPE_JAVA.equals(input.getType()) || INPUT_TYPE_XML.equals(input.getType())
 				|| INPUT_TYPE_XSD.equals(input.getType()) || INPUT_TYPE_JSON.equals(input.getType())
-				|| INPUT_TYPE_CSV.equals(input.getType())) {
+				|| INPUT_TYPE_CSV.equals(input.getType())
+				|| INPUT_TYPE_EDI.equals(input.getType())) {
 			for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 				org.jboss.tools.smooks.model.graphics.ext.ParamType paramType = (org.jboss.tools.smooks.model.graphics.ext.ParamType) iterator
 						.next();

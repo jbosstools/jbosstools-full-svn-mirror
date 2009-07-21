@@ -267,7 +267,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 		xsdLayout.numColumns = 2;
 		xsdLayout.marginWidth = 0;
 		xsdComposite.setLayout(xsdLayout);
-
+		createExtensionGUIFirst(xsdComposite);
 		Label nfileLanel = new Label(xsdComposite, SWT.NONE);
 		nfileLanel.setText("File : "); //$NON-NLS-1$
 		// fileTextComposite = new Composite(xsdComposite, SWT.NONE);
@@ -334,6 +334,10 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 		fileSystemBrowseButton.setLayoutData(gd);
 		changeWizardPageStatus();
 		return xsdComposite;
+	}
+
+	protected void createExtensionGUIFirst(Composite parent) {
+		// do nothing
 	}
 
 	abstract protected Object loadedTheObject(String path) throws Exception;
