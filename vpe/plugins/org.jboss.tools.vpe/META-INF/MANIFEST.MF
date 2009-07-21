@@ -76,6 +76,7 @@ Require-Bundle: org.jboss.tools.common.model.ui,
  org.jboss.tools.vpe.resref,
  org.jboss.tools.common.el.core,
  org.jboss.tools.common.el.ui,
+ org.jboss.tools.jst.web.kb,
  org.eclipse.core.expressions;bundle-version="3.4.100",
  org.eclipse.jdt.ui
 Bundle-Version: 2.1.0

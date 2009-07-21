@@ -24,10 +24,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
-import org.jboss.tools.common.kb.KbConnectorFactory;
-import org.jboss.tools.common.kb.KbConnectorType;
-import org.jboss.tools.common.kb.KbException;
-import org.jboss.tools.common.kb.wtp.WtpKbConnector;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.jst.jsp.editor.IVisualContext;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
@@ -57,7 +53,6 @@ public class VpePageContext implements IVisualContext {
 	private VpeSourceDomBuilder sourceBuilder;
 	private VpeVisualDomBuilder visualBuilder;
 	private VpeEditorPart editPart;
-	WtpKbConnector connector;
 	private nsIDOMNode currentVisualNode;
 	/**
 	 * Created to store custom element attributes and use it in time of
@@ -103,12 +98,7 @@ public class VpePageContext implements IVisualContext {
 	}
 	
 	public void refreshConnector() {
-			IDocument document = sourceBuilder.getStructuredTextViewer().getDocument();
-			try {
-				connector = (WtpKbConnector)KbConnectorFactory.getIntstance().createConnector(KbConnectorType.JSP_WTP_KB_CONNECTOR, document);
-			} catch (KbException e) {
-				VpePlugin.getPluginLog().logError(e);
-			}
+		//TODO we need to provide loading of kb here
 	}
 	
 	public VpeVisualDomBuilder getVisualBuilder(){
@@ -131,14 +121,12 @@ public class VpePageContext implements IVisualContext {
 	public void dispose() {
 		for (Iterator iterator = connectorDocuments.iterator(); iterator.hasNext();) {
 			IDocument document = (IDocument) iterator.next();
-			KbConnectorFactory.getIntstance().removeConnector(KbConnectorType.JSP_WTP_KB_CONNECTOR, document);
 		}
 		connectorDocuments.clear();
 		connectorDocuments = null;
 		bundle.dispose();
 		clearAll();
 		editPart=null;
-		connector=null;
 		sourceBuilder=null;
 		visualBuilder=null;
 	}
@@ -260,13 +248,6 @@ public class VpePageContext implements IVisualContext {
 		}
 		return null;
 	}
-
-	
-	public WtpKbConnector getConnector() {
-		return this.connector;
-	}
-
-
 
 	public List<TaglibData> getTagLibs(Node sourceNode) {
 		

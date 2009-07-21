@@ -21,12 +21,18 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.ILocationProvider;
-import org.jboss.tools.common.kb.AttributeDescriptor;
-import org.jboss.tools.common.kb.AttributeValueDescriptor;
-import org.jboss.tools.common.kb.KbException;
-import org.jboss.tools.common.kb.ParamList;
-import org.jboss.tools.common.kb.wtp.WtpKbConnector;
+import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.jboss.tools.common.resref.core.ResourceReference;
+import org.jboss.tools.jst.jsp.contentassist.JspContentAssistProcessor;
+import org.jboss.tools.jst.jsp.outline.ValueHelper;
+import org.jboss.tools.jst.web.kb.IPageContext;
+import org.jboss.tools.jst.web.kb.KbQuery;
+import org.jboss.tools.jst.web.kb.PageProcessor;
+import org.jboss.tools.jst.web.kb.KbQuery.Type;
+import org.jboss.tools.jst.web.kb.internal.taglib.CustomProposalType;
+import org.jboss.tools.jst.web.kb.internal.taglib.CustomTagLibAttribute;
+import org.jboss.tools.jst.web.kb.internal.taglib.CustomProposalType.Param;
+import org.jboss.tools.jst.web.kb.taglib.IAttribute;
 import org.jboss.tools.jst.web.tld.IFilePathEncoder;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
@@ -173,32 +179,66 @@ public class VpeFunctionSrc extends VpeFunction {
 	    return tagValue;
 	}
 	
-	WtpKbConnector connector = pageContext.getConnector();
-	try {
-	    AttributeDescriptor descriptor = connector.getAttributeInformation(query);
-	    if (descriptor == null) {
-		return tagValue;
-	    }
-	    
-	    AttributeValueDescriptor[] ds = descriptor.getValueDesriptors();
-	    for (int i = 0; i < ds.length; i++) {
-		if (!"file".equals(ds[i].getType())) {//$NON-NLS-1$
-		    continue;
-		}
-		
-		ParamList params = ds[i].getParams();
-		String[] vs = params.getParamsValues(IFilePathEncoder.PATH_ADDITION);
-		if (vs == null || vs.length == 0) {
-		    continue;
-		}
-		
-		if (tagValue.startsWith(vs[0])) {
-		    tagValue = tagValue.substring(vs[0].length());
-		}
-	    }
-	} catch (KbException e) {
-	    VpePlugin.getPluginLog().logError(e);
+	ValueHelper valueHelper = new ValueHelper();
+	JspContentAssistProcessor processor = valueHelper.createContentAssistProcessor();
+	int offset = 0;
+	if(sourceNode instanceof IndexedRegion) {
+		offset = ((IndexedRegion)sourceNode).getStartOffset() + 1;
 	}
+	IPageContext pc = valueHelper.createPageContext(processor, offset);
+	KbQuery kbQuery = createKbQuery(processor, sourceNode, offset, attrName);
+	IAttribute[] as = PageProcessor.getInstance().getAttributes(kbQuery, pc);
+	CustomTagLibAttribute a = null;
+	for (IAttribute i: as) {
+		if(i instanceof CustomTagLibAttribute) {
+			a = (CustomTagLibAttribute)i;
+			break;
+		}
+	}
+	if(a != null) {
+		CustomProposalType[] ds = a.getProposals();
+	    for (int i = 0; i < ds.length; i++) {
+			if (!"file".equals(ds[i].getType())) {//$NON-NLS-1$
+			    continue;
+			}
+			Param[] ps = ds[i].getParams();
+			for (Param p: ps) {
+				if(IFilePathEncoder.PATH_ADDITION.equals(p.getName())) {
+					String v = p.getValue();
+					if(v != null && v.length() > 0 && tagValue.startsWith(v)) {
+						tagValue = tagValue.substring(v.length());
+					}
+				}
+			}
+	    }
+	}
+	
+//	WtpKbConnector connector = pageContext.getConnector();
+//	try {
+//	    AttributeDescriptor descriptor = connector.getAttributeInformation(query);
+//	    if (descriptor == null) {
+//		return tagValue;
+//	    }
+//	    
+//	    AttributeValueDescriptor[] ds = descriptor.getValueDesriptors();
+//	    for (int i = 0; i < ds.length; i++) {
+//		if (!"file".equals(ds[i].getType())) {//$NON-NLS-1$
+//		    continue;
+//		}
+//		
+//		ParamList params = ds[i].getParams();
+//		String[] vs = params.getParamsValues(IFilePathEncoder.PATH_ADDITION);
+//		if (vs == null || vs.length == 0) {
+//		    continue;
+//		}
+//		
+//		if (tagValue.startsWith(vs[0])) {
+//		    tagValue = tagValue.substring(vs[0].length());
+//		}
+//	    }
+//	} catch (KbException e) {
+//	    VpePlugin.getPluginLog().logError(e);
+//	}
 	
 	return tagValue;
     }
@@ -231,4 +271,34 @@ public class VpeFunctionSrc extends VpeFunction {
 		    + resourcePathInPlugin);
 	}
     }
+
+	protected KbQuery createKbQuery(JspContentAssistProcessor processor, Node fNode, int offset, String attrName) {
+		KbQuery kbQuery = new KbQuery();
+
+		String[] parentTags = processor.getParentTags(false);
+		parentTags = add(parentTags, fNode.getNodeName());
+		kbQuery.setPrefix(getPrefix(fNode));
+		kbQuery.setUri(processor.getUri(getPrefix()));
+		kbQuery.setParentTags(parentTags);
+		kbQuery.setParent(fNode.getNodeName());
+		kbQuery.setMask(false); 
+		kbQuery.setType(Type.ATTRIBUTE_NAME);
+		kbQuery.setOffset(offset);
+		kbQuery.setValue(attrName); 
+		kbQuery.setStringQuery(attrName);
+		
+		return kbQuery;
+	}
+
+	private String[] add(String[] result, String v) {
+		String[] result1 = new String[result.length + 1];
+		System.arraycopy(result, 0, result1, 0, result.length);
+		result1[result.length] = v;
+		return result1;
+	}
+	private String getPrefix(Node fNode) {
+		int i = fNode.getNodeName().indexOf(':');
+		return i < 0 ? null : fNode.getNodeName().substring(0, i);
+	}
+
 }
