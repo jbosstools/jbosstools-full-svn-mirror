@@ -10,12 +10,20 @@
  *******************************************************************************/
 package org.eclipse.bpel.ui.adapters;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.CompensationHandler;
+import org.eclipse.bpel.model.CorrelationSets;
 import org.eclipse.bpel.model.EventHandler;
+import org.eclipse.bpel.model.ExtensibleElement;
 import org.eclipse.bpel.model.FaultHandler;
+import org.eclipse.bpel.model.MessageExchanges;
+import org.eclipse.bpel.model.PartnerLinks;
 import org.eclipse.bpel.model.Scope;
 import org.eclipse.bpel.model.TerminationHandler;
+import org.eclipse.bpel.model.Variables;
 import org.eclipse.bpel.ui.adapters.delegates.ActivityContainer;
 import org.eclipse.bpel.ui.adapters.delegates.MultiContainer;
 import org.eclipse.bpel.ui.adapters.delegates.OptionalIndirectContainer;
@@ -104,8 +112,42 @@ public class ScopeAdapter extends ContainerActivityAdapter implements IFaultHand
 	/* IOutlineEditPartFactory */
 	
 	@Override
-	public EditPart createOutlineEditPart(EditPart context, Object model) {
-		EditPart result = new OutlineTreeEditPart();
+	public EditPart createOutlineEditPart(EditPart context, final Object model) {
+		EditPart result = new OutlineTreeEditPart(){
+			// add the getModelChildren() method by Grid.Qian to refresh the scope when
+			// these partner, varaible, and so on change
+			@SuppressWarnings("unchecked")
+			@Override
+			protected List<ExtensibleElement> getModelChildren() {
+				Scope  scope = (Scope)model;
+				List<ExtensibleElement> list = new ArrayList<ExtensibleElement>();
+
+				PartnerLinks links = scope.getPartnerLinks();
+				if (links != null) {
+					list.add(links);
+				}
+
+				Variables variables = scope.getVariables();
+				if (variables != null) {
+					list.add(variables);
+				}
+				
+				CorrelationSets sets = scope.getCorrelationSets();
+				if (sets != null) {
+					list.add(sets);
+				}
+				
+				MessageExchanges exchanges = scope.getMessageExchanges();
+				if (exchanges != null) {
+					list.add(exchanges);
+				}
+
+				IContainer container = new ActivityContainer(BPELPackage.eINSTANCE.getScope_Activity());
+				List<ExtensibleElement> list2 = container.getChildren(scope);
+				list.addAll(list2);
+				return list;
+			}
+		};
 		result.setModel(model);
 		return result;
 	}
