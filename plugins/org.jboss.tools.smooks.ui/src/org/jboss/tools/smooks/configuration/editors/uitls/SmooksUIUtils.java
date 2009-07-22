@@ -1105,6 +1105,8 @@ public class SmooksUIUtils {
 		if (resource == null)
 			return null;
 		URI uri = resource.getURI();
+		
+		if(uri == null) return null;
 		IResource workspaceResource = null;
 		if (uri.isPlatformResource()) {
 			String path = uri.toPlatformString(true);
@@ -1483,6 +1485,7 @@ public class SmooksUIUtils {
 	}
 
 	public static IFile getFile(String uri, IProject project) {
+		if(project == null) return null;
 		if (uri.charAt(0) == '\\' || uri.charAt(0) == '/') {
 			uri = uri.substring(1);
 		}

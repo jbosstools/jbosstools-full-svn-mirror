@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<smooks-graphics-ext xmlns="http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd">
+  <input type="EDI">
+    <param name="path">Workspace://javabean_test/src/example/input-message.edi</param>
+    <param name="use_availableReader">true</param>
+  </input>
+  <input type="EDI">
+    <param name="path">Workspace://javabean_test/src/example/input-message.edi</param>
+    <param name="encoding">UTF-8</param>
+    <param name="mappingModelFile">/org/jboss/tools/smooks/test/ediparser/edi-to-xml-order-mapping.xml</param>
+  </input>
+</smooks-graphics-ext>

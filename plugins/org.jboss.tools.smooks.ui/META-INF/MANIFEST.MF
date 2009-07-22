@@ -35,6 +35,7 @@ Bundle-ClassPath: libs/dom4j-1.6.1.jar,
  .
 Export-Package: org.jboss.tools.smooks.configuration.editors,
  org.jboss.tools.smooks.configuration.editors.csv,
+ org.jboss.tools.smooks.configuration.editors.edi,
  org.jboss.tools.smooks.configuration.editors.javabean,
  org.jboss.tools.smooks.configuration.editors.uitls,
  org.jboss.tools.smooks.configuration.editors.xml
