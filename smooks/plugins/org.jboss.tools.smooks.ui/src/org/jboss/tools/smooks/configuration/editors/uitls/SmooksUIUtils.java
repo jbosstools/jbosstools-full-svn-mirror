@@ -1482,12 +1482,11 @@ public class SmooksUIUtils {
 		openFile(uri, project, null);
 	}
 
-	public static void openFile(String uri, IProject project, String editorID) throws PartInitException {
+	public static IFile getFile(String uri, IProject project) {
 		if (uri.charAt(0) == '\\' || uri.charAt(0) == '/') {
 			uri = uri.substring(1);
 		}
 		IFile file = project.getFile(uri);
-		IWorkbenchWindow window = SmooksConfigurationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow();
 		// it's workspace resource
 		if (file.exists()) {
 
@@ -1514,6 +1513,15 @@ public class SmooksUIUtils {
 			}
 		}
 		if (file.exists()) {
+			return file;
+		}
+		return null;
+	}
+
+	public static void openFile(String uri, IProject project, String editorID) throws PartInitException {
+		IFile file = getFile(uri, project);
+		IWorkbenchWindow window = SmooksConfigurationActivator.getDefault().getWorkbench().getActiveWorkbenchWindow();
+		if (file != null && window != null) {
 			FileEditorInput editorInput = new FileEditorInput(file);
 			if (editorID != null) {
 				window.getActivePage().openEditor(editorInput, editorID);
@@ -2276,7 +2284,8 @@ public class SmooksUIUtils {
 				parentList = null;
 				continue;
 			}
-			if(parentList.isEmpty()) continue;
+			if (parentList.isEmpty())
+				continue;
 			parentList.remove(parentList.size() - 1);
 			((TreeNodeEditPart) rootEditPart).expandNode();
 			for (int i = parentList.size() - 1; i >= 0; i--) {

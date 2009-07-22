@@ -48,7 +48,7 @@ public class ClassPathFileProcessor implements IFilePathProcessor {
 							IPath filePath = file.getFullPath();
 							String sp = sourcePath.toPortableString();
 							String fp = filePath.toPortableString();
-							path = fp.substring(0, sp.length());
+							path = fp.substring(sp.length(), fp.length());
 							break;
 						}
 //					}
@@ -61,7 +61,9 @@ public class ClassPathFileProcessor implements IFilePathProcessor {
 		if(path == null){
 		    path = file.getFullPath().removeFirstSegments(1).toPortableString();
 		}
-		if(path.charAt(0) != '\\' || path.charAt(0) != '/' ){
+		if(path.charAt(0) == '\\' || path.charAt(0) == '/' ){
+			
+		}else{
 			path = "/" + path;
 		}
 		return path;
