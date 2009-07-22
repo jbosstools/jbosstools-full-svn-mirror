@@ -18,7 +18,6 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.dom4j.DocumentException;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.edi.EDIDataParser;
