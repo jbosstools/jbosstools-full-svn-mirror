@@ -25,6 +25,9 @@ import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.dom4j.DocumentException;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.emf.ecore.EObject;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
@@ -93,26 +96,34 @@ public class EDIDataParser {
 			}
 		}
 
-		return parseEDIFile(stream, mappingModel, encoding);
+		return parseEDIFile(stream, mappingModel, encoding, resourceList);
 	}
 
 	public TagList parseEDIFile(InputStream ediInputStream, EDIReader reader) throws IOException, DocumentException {
 		String encoding = reader.getEncoding();
 		String mappingModel = reader.getMappingModel();
-		return parseEDIFile(ediInputStream, mappingModel, encoding);
+		return parseEDIFile(ediInputStream, mappingModel, encoding, reader);
 	}
 
-	public TagList parseEDIFile(InputStream ediInputStream, String mappingModel, String ediFileEncoding)
+	public TagList parseEDIFile(InputStream ediInputStream, String mappingModel, String ediFileEncoding, EObject emodel)
 			throws IOException, DocumentException {
 		Smooks smooks = new Smooks();
 
 		SmooksResourceConfiguration readerConfig = new SmooksResourceConfiguration("org.xml.sax.driver",
 				SmooksEDIReader.class.getName());
-		 File f = new File(mappingModel);
-		 String modelPath = mappingModel;
-		 if(f.exists()){
-			modelPath = f.toURI().toString(); 
-		 }
+		File f = new File(mappingModel);
+		String modelPath = mappingModel;
+		if (f.exists()) {
+			modelPath = f.toURI().toString();
+		} else {
+			IResource resource = SmooksUIUtils.getResource(emodel);
+			if (resource != null) {
+				IFile tf = SmooksUIUtils.getFile(mappingModel, resource.getProject());
+				if (tf != null) {
+					modelPath = tf.getLocation().toFile().toURI().toString();
+				}
+			}
+		}
 
 		readerConfig.setParameter("mapping-model", modelPath);
 		if (ediFileEncoding == null || ediFileEncoding.trim().length() == 0) {
