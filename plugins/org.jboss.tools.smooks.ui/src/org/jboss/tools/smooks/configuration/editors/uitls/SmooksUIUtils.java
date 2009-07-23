@@ -1105,8 +1105,9 @@ public class SmooksUIUtils {
 		if (resource == null)
 			return null;
 		URI uri = resource.getURI();
-		
-		if(uri == null) return null;
+
+		if (uri == null)
+			return null;
 		IResource workspaceResource = null;
 		if (uri.isPlatformResource()) {
 			String path = uri.toPlatformString(true);
@@ -1485,7 +1486,8 @@ public class SmooksUIUtils {
 	}
 
 	public static IFile getFile(String uri, IProject project) {
-		if(project == null) return null;
+		if (project == null)
+			return null;
 		if (uri.charAt(0) == '\\' || uri.charAt(0) == '/') {
 			uri = uri.substring(1);
 		}
@@ -2266,16 +2268,19 @@ public class SmooksUIUtils {
 		}
 	}
 
-	public static void expandGraphTree(List<TreeNodeModel> expandNodes, TreeNodeEditPart rootEditPart) {
+	public static void expandGraphTree(List<?> expandNodes, TreeNodeEditPart rootEditPart) {
 		for (Iterator<?> iterator = expandNodes.iterator(); iterator.hasNext();) {
-			TreeNodeModel treeNodeModel = (TreeNodeModel) iterator.next();
+			Object obj = iterator.next();
+			if (!(obj instanceof TreeNodeModel))
+				continue;
+			TreeNodeModel treeNodeModel = (TreeNodeModel) obj;
 			TreeNodeModel parent = treeNodeModel;
 			if (parent == null)
 				continue;
 			List<TreeNodeModel> parentList = new ArrayList<TreeNodeModel>();
 			boolean canExpand = true;
 			while (parent != rootEditPart.getModel()) {
-				parent = parent.getParent();
+				parent = (TreeNodeModel) parent.getParent();
 				if (parent == null) {
 					canExpand = false;
 					break;

@@ -12,11 +12,14 @@ package org.jboss.tools.smooks.configuration.editors;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.PartInitException;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
+import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart;
 
 /**
  * 
@@ -25,10 +28,14 @@ import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 public class SmooksMultiFormEditor extends AbstractSmooksFormEditor {
 
 	public static final String EDITOR_ID = "org.jboss.tools.smooks.configuration.editors.MultiPageEditor";
-	
+
 	private SmooksConfigurationFormPage configurationPage;
 
-	/* (non-Javadoc)
+	private SmooksGraphicalEditorPart graphicalPage;
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jboss.tools.smooks.editor.AbstractSmooksFormEditor#addPages()
 	 */
 	@Override
@@ -41,15 +48,42 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor {
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
+
+//		graphicalPage = new SmooksGraphicalEditorPart(this);
+//		try {
+//			int index = this.addPage(graphicalPage, getEditorInput());
+//			setPageText(index, "Graph");
+//		} catch (PartInitException e) {
+//			e.printStackTrace();
+//		}
+
 		super.addPages();
 	}
-	
+
+	@Override
+	public void doSave(IProgressMonitor monitor) {
+		super.doSave(monitor);
+		try {
+			getSmooksGraphicsExt().eResource().save(Collections.emptyMap());
+			if (graphicalPage != null) {
+				if (graphicalPage.getEditDomain() != null) {
+					graphicalPage.getEditDomain().getCommandStack().flush();
+				}
+			}
+			firePropertyChange(PROP_DIRTY);
+		} catch (Throwable t) {
+		}
+	}
+
 	protected SmooksConfigurationFormPage createSmooksConfigurationFormPage() {
 		return new SmooksConfigurationFormPage(this, "DesignPage", "Design Page");
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.editor.AbstractSmooksFormEditor#activeRecentAffectedModel(java.util.Collection)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.editor.AbstractSmooksFormEditor#
+	 * activeRecentAffectedModel(java.util.Collection)
 	 */
 	@Override
 	public void activeRecentAffectedModel(Collection<?> collection) {
@@ -67,8 +101,11 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.editor.AbstractSmooksFormEditor#createNewModelViaTextPage()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.editor.AbstractSmooksFormEditor#
+	 * createNewModelViaTextPage()
 	 */
 	@Override
 	protected void createNewModelViaTextPage() {

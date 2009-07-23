@@ -1,7 +1,5 @@
 package org.jboss.tools.smooks.gef.tree.model;
 
-import java.util.List;
-
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -28,10 +26,6 @@ public class TreeContainerModel extends TreeNodeModel implements IMoveableModel 
 
 	public void setSourceLinkNode(boolean sourceLinkNode) {
 		this.sourceLinkNode = sourceLinkNode;
-	}
-
-	public List<TreeNodeModel> getChildren() {
-		return super.getChildren();
 	}
 
 	public Point getLocation() {

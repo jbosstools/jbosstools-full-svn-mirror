@@ -16,6 +16,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.model.medi.MEdiPackage;
@@ -72,7 +73,7 @@ public class EDIMappingNodeGraphModel extends TreeNodeModel {
 	public void addSourceConnection(TreeNodeConnection connection) {
 		super.addSourceConnection(connection);
 		if (getData() instanceof Segment) {
-			TreeNodeModel targetNode = connection.getTargetNode();
+			AbstractSmooksGraphicalModel targetNode = connection.getTargetNode();
 			if (targetNode != null && targetNode.getData() instanceof EDIDataContainerModel) {
 				if (domainProvider != null) {
 					String segCode = ((EDIDataContainerModel) targetNode.getData()).getSegCode();
