@@ -10,14 +10,18 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.ui.IEditorPart;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeGraphicalNodeEditPolicy;
 import org.jboss.tools.smooks.gef.tree.figures.IMoveableModel;
 import org.jboss.tools.smooks.gef.tree.figures.TreeContainerFigure;
 import org.jboss.tools.smooks.gef.tree.figures.TreeFigureExpansionEvent;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 
 /**
  * @author DartPeng
@@ -90,6 +94,15 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 		super.propertyChange(evt);
 		if (IMoveableModel.PRO_BOUNDS_CHANGED.equals(evt.getPropertyName())) {
 			refresh();
+			DefaultEditDomain domain = (DefaultEditDomain) getViewer().getEditDomain();
+			IEditorPart editor = domain.getEditorPart();
+			ISmooksModelProvider modelProvider = (ISmooksModelProvider) editor.getAdapter(ISmooksModelProvider.class);
+			
+			if(modelProvider != null  && getModel() instanceof IMoveableModel){
+				SmooksGraphicsExtType graph = modelProvider.getSmooksGraphicsExt();
+				Rectangle rect = ((IMoveableModel)getModel()).getBounds();
+				recordBounds(graph,rect);
+			}
 		}
 	}
 

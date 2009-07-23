@@ -107,6 +107,7 @@ import org.jboss.tools.smooks.edimap.models.EDIDataContainerGraphModel;
 import org.jboss.tools.smooks.edimap.models.EDIMappingNodeContainerGraphModel;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.common.RootModel;
+import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.editparts.RootEditPart;
 import org.jboss.tools.smooks.gef.tree.figures.IMoveableModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
@@ -508,6 +509,9 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			if (editDomain != null) {
 				return editDomain.getCommandStack();
 			}
+		}
+		if (type == ISmooksModelProvider.class) {
+			return this.modelProvider;
 		}
 		if (type == GraphicalViewer.class)
 			return getGraphicalViewer();
@@ -1065,7 +1069,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		List<TreeNodeConnection> connections = source.getSourceConnections();
 		for (Iterator<?> iterator = connections.iterator(); iterator.hasNext();) {
 			TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator.next();
-			if(treeNodeConnection.getTargetNode() == target){
+			if (treeNodeConnection.getTargetNode() == target) {
 				return true;
 			}
 		}
@@ -1107,19 +1111,19 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	private TreeNodeModel findEDIGraphicalModel(Object model) {
 		if (graphicalRootModel != null) {
 			List<TreeNodeModel> treeNodeList = graphicalRootModel.getChildren();
-			return findEDIGraphicalModel(model, treeNodeList);
+			return (TreeNodeModel)findEDIGraphicalModel(model, treeNodeList);
 		}
 		return null;
 	}
 
-	private TreeNodeModel findEDIGraphicalModel(Object model, List<TreeNodeModel> treeNodeList) {
+	private AbstractSmooksGraphicalModel findEDIGraphicalModel(Object model, List<?> treeNodeList) {
 		for (Iterator<?> iterator = treeNodeList.iterator(); iterator.hasNext();) {
-			TreeNodeModel treeNodeModel = (TreeNodeModel) iterator.next();
+			AbstractSmooksGraphicalModel treeNodeModel = (AbstractSmooksGraphicalModel) iterator.next();
 			Object data = treeNodeModel.getData();
 			if (data == model) {
 				return treeNodeModel;
 			}
-			TreeNodeModel m = findEDIGraphicalModel(model, treeNodeModel.getChildren());
+			AbstractSmooksGraphicalModel m = findEDIGraphicalModel(model, treeNodeModel.getChildren());
 			if (m != null) {
 				return m;
 			}

@@ -26,7 +26,6 @@ import org.eclipse.gef.requests.DirectEditRequest;
 import org.eclipse.gef.tools.DirectEditManager;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.forms.editor.FormPage;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.edimap.actions.RenameXmlTagNameCommand;
 import org.jboss.tools.smooks.edimap.editor.EDIEdiPartDirectEditManager;
@@ -35,11 +34,9 @@ import org.jboss.tools.smooks.edimap.editor.EDIMapFormPage;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
-import org.jboss.tools.smooks.gef.tree.figures.IMoveableModel;
 import org.jboss.tools.smooks.gef.tree.figures.TreeContainerFigure;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.MappingNode;
 import org.jboss.tools.smooks.model.medi.Segments;
@@ -82,19 +79,19 @@ public class EDITreeContainerEditPart extends TreeContainerEditPart {
 	
 	public void propertyChange(PropertyChangeEvent evt) {
 		super.propertyChange(evt);
-		if (IMoveableModel.PRO_BOUNDS_CHANGED.equals(evt.getPropertyName())) {
-			DefaultEditDomain domain = (DefaultEditDomain) getViewer().getEditDomain();
-			IEditorPart editor = domain.getEditorPart();
-			if((editor instanceof FormPage)){
-				editor = ((FormPage)editor).getEditor();
-			}
-			
-			if(editor instanceof ISmooksModelProvider && getModel() instanceof IMoveableModel){
-				SmooksGraphicsExtType graph = ((ISmooksModelProvider)editor).getSmooksGraphicsExt();
-				Rectangle rect = ((IMoveableModel)getModel()).getBounds();
-				recordBounds(graph,rect);
-			}
-		}
+//		if (IMoveableModel.PRO_BOUNDS_CHANGED.equals(evt.getPropertyName())) {
+//			DefaultEditDomain domain = (DefaultEditDomain) getViewer().getEditDomain();
+//			IEditorPart editor = domain.getEditorPart();
+//			if((editor instanceof FormPage)){
+//				editor = ((FormPage)editor).getEditor();
+//			}
+//			
+//			if(editor instanceof ISmooksModelProvider && getModel() instanceof IMoveableModel){
+//				SmooksGraphicsExtType graph = ((ISmooksModelProvider)editor).getSmooksGraphicsExt();
+//				Rectangle rect = ((IMoveableModel)getModel()).getBounds();
+//				recordBounds(graph,rect);
+//			}
+//		}
 	}
 	
 	

@@ -15,11 +15,11 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.editparts.AbstractConnectionEditPart;
+import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeConnectionEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeEndpointEditPolicy;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
-import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 
 /**
  * @author DartPeng
@@ -40,8 +40,8 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 
 	public IFigure createFigure() {
 		TreeNodeConnection model = (TreeNodeConnection) getModel();
-		TreeNodeModel sourceModel = model.getSourceNode();
-		TreeNodeModel targetModel = model.getTargetNode();
+		AbstractSmooksGraphicalModel sourceModel = model.getSourceNode();
+		AbstractSmooksGraphicalModel targetModel = model.getTargetNode();
 		PolylineConnection connection1 = new PolylineConnection() {
 			@Override
 			public void paintFigure(Graphics graphics) {
