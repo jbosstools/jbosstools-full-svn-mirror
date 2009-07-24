@@ -221,6 +221,70 @@
             uri="http://www.jboss.org/xsd/jbossesb/smooks/routing-1.0.xsd">
       </package>
    </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.jboss.tools.smooks.model.javabean12.Javabean12Package"
+            genModel="model/smooks-1.2-models/javabean12.genmodel"
+            uri="http://www.milyn.org/xsd/smooks/javabean-1.2.xsd">
+      </package>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.jboss.tools.smooks.model.json12.Json12Package"
+            genModel="model/smooks-1.2-models/json12.genmodel"
+            uri="http://www.milyn.org/xsd/smooks/json-1.2.xsd">
+      </package>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.jboss.tools.smooks.model.csv12.Csv12Package"
+            genModel="model/smooks-1.2-models/csv12.genmodel"
+            uri="http://www.milyn.org/xsd/smooks/csv-1.2.xsd">
+      </package>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.jboss.tools.smooks.model.edi12.Edi12Package"
+            genModel="model/smooks-1.2-models/edi12.genmodel"
+            uri="http://www.milyn.org/xsd/smooks/edi-1.2.xsd">
+      </package>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package"
+            genModel="model/smooks-1.2-models/jmsrouting12.genmodel"
+            uri="http://www.milyn.org/xsd/smooks/jms-routing-1.2.xsd">
+      </package>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.jboss.tools.smooks.model.persistence12.Persistence12Package"
+            genModel="model/smooks-1.2-models/persistence12.genmodel"
+            uri="http://www.milyn.org/xsd/smooks/persistence-1.2.xsd">
+      </package>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.jboss.tools.smooks.model.rules10.Rules10Package"
+            genModel="model/smooks-1.2-models/rules10.genmodel"
+            uri="http://www.milyn.org/xsd/smooks/rules-1.0.xsd">
+      </package>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.jboss.tools.smooks.model.validation10.Validation10Package"
+            genModel="model/smooks-1.2-models/validation10.genmodel"
+            uri="http://www.milyn.org/xsd/smooks/validation-1.0.xsd">
+      </package>
+   </extension>
    
    
    
