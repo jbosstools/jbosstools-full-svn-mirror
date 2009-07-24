@@ -277,8 +277,9 @@ public class VpeFunctionSrc extends VpeFunction {
 
 		String[] parentTags = processor.getParentTags(false);
 		parentTags = add(parentTags, fNode.getNodeName());
-		kbQuery.setPrefix(getPrefix(fNode));
-		kbQuery.setUri(processor.getUri(getPrefix()));
+		String prefix = getPrefix(fNode);
+		kbQuery.setPrefix(prefix);
+		kbQuery.setUri(processor.getUri(prefix));
 		kbQuery.setParentTags(parentTags);
 		kbQuery.setParent(fNode.getNodeName());
 		kbQuery.setMask(false); 
