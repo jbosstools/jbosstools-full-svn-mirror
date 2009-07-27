@@ -6,12 +6,14 @@
  */
 package org.jboss.tools.smooks.model.persistence12;
 
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.jboss.tools.smooks.model.common.CommonPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 
@@ -77,13 +79,40 @@ public interface Persistence12Package extends EPackage {
 	int DECODER_PARAMETER = 0;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DECODER_PARAMETER__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DECODER_PARAMETER__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DECODER_PARAMETER__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DECODER_PARAMETER__VALUE = 0;
+	int DECODER_PARAMETER__VALUE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -92,7 +121,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DECODER_PARAMETER__NAME = 1;
+	int DECODER_PARAMETER__NAME = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Decoder Parameter</em>' class.
@@ -101,7 +130,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DECODER_PARAMETER_FEATURE_COUNT = 2;
+	int DECODER_PARAMETER_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.persistence12.impl.DeleterImpl <em>Deleter</em>}' class.
@@ -332,13 +361,40 @@ public interface Persistence12Package extends EPackage {
 	int EXPRESSION_PARAMETER = 3;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPRESSION_PARAMETER__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPRESSION_PARAMETER__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPRESSION_PARAMETER__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_PARAMETER__VALUE = 0;
+	int EXPRESSION_PARAMETER__VALUE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Exec On Element</b></em>' attribute.
@@ -347,7 +403,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_PARAMETER__EXEC_ON_ELEMENT = 1;
+	int EXPRESSION_PARAMETER__EXEC_ON_ELEMENT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Exec On Element NS</b></em>' attribute.
@@ -356,7 +412,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_PARAMETER__EXEC_ON_ELEMENT_NS = 2;
+	int EXPRESSION_PARAMETER__EXEC_ON_ELEMENT_NS = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -365,7 +421,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_PARAMETER__NAME = 3;
+	int EXPRESSION_PARAMETER__NAME = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Expression Parameter</em>' class.
@@ -374,7 +430,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_PARAMETER_FEATURE_COUNT = 4;
+	int EXPRESSION_PARAMETER_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.persistence12.impl.FlusherImpl <em>Flusher</em>}' class.
@@ -759,13 +815,40 @@ public interface Persistence12Package extends EPackage {
 	int PARAMETERS = 7;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERS__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERS__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETERS__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Group</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERS__GROUP = 0;
+	int PARAMETERS__GROUP = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' containment reference list.
@@ -774,7 +857,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERS__VALUE = 1;
+	int PARAMETERS__VALUE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Wiring</b></em>' containment reference list.
@@ -783,7 +866,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERS__WIRING = 2;
+	int PARAMETERS__WIRING = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference list.
@@ -792,7 +875,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERS__EXPRESSION = 3;
+	int PARAMETERS__EXPRESSION = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -801,7 +884,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERS__TYPE = 4;
+	int PARAMETERS__TYPE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Parameters</em>' class.
@@ -810,7 +893,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERS_FEATURE_COUNT = 5;
+	int PARAMETERS_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.persistence12.impl.UpdaterImpl <em>Updater</em>}' class.
@@ -950,13 +1033,40 @@ public interface Persistence12Package extends EPackage {
 	int VALUE_PARAMETER = 9;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PARAMETER__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PARAMETER__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_PARAMETER__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Decode Param</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_PARAMETER__DECODE_PARAM = 0;
+	int VALUE_PARAMETER__DECODE_PARAM = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Data</b></em>' attribute.
@@ -965,7 +1075,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_PARAMETER__DATA = 1;
+	int VALUE_PARAMETER__DATA = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Data NS</b></em>' attribute.
@@ -974,7 +1084,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_PARAMETER__DATA_NS = 2;
+	int VALUE_PARAMETER__DATA_NS = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Decoder</b></em>' attribute.
@@ -983,7 +1093,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_PARAMETER__DECODER = 3;
+	int VALUE_PARAMETER__DECODER = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Default</b></em>' attribute.
@@ -992,7 +1102,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_PARAMETER__DEFAULT = 4;
+	int VALUE_PARAMETER__DEFAULT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Index</b></em>' attribute.
@@ -1001,7 +1111,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_PARAMETER__INDEX = 5;
+	int VALUE_PARAMETER__INDEX = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1010,7 +1120,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_PARAMETER__NAME = 6;
+	int VALUE_PARAMETER__NAME = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of structural features of the '<em>Value Parameter</em>' class.
@@ -1019,7 +1129,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_PARAMETER_FEATURE_COUNT = 7;
+	int VALUE_PARAMETER_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 7;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.persistence12.impl.WiringParameterImpl <em>Wiring Parameter</em>}' class.
@@ -1032,13 +1142,40 @@ public interface Persistence12Package extends EPackage {
 	int WIRING_PARAMETER = 10;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIRING_PARAMETER__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIRING_PARAMETER__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIRING_PARAMETER__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Bean Id Ref</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WIRING_PARAMETER__BEAN_ID_REF = 0;
+	int WIRING_PARAMETER__BEAN_ID_REF = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1047,7 +1184,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WIRING_PARAMETER__NAME = 1;
+	int WIRING_PARAMETER__NAME = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Wire On Element</b></em>' attribute.
@@ -1056,7 +1193,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WIRING_PARAMETER__WIRE_ON_ELEMENT = 2;
+	int WIRING_PARAMETER__WIRE_ON_ELEMENT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Wire On Element NS</b></em>' attribute.
@@ -1065,7 +1202,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WIRING_PARAMETER__WIRE_ON_ELEMENT_NS = 3;
+	int WIRING_PARAMETER__WIRE_ON_ELEMENT_NS = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Wiring Parameter</em>' class.
@@ -1074,7 +1211,7 @@ public interface Persistence12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WIRING_PARAMETER_FEATURE_COUNT = 4;
+	int WIRING_PARAMETER_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.persistence12.OnNoResult <em>On No Result</em>}' enum.

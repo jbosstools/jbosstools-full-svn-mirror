@@ -6,7 +6,7 @@
  */
 package org.jboss.tools.smooks.model.jmsrouting12;
 
-import org.eclipse.emf.ecore.EObject;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='connection' kind='empty'"
  * @generated
  */
-public interface Connection extends EObject {
+public interface Connection extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Factory</b></em>' attribute.
 	 * The default value is <code>"ConnectionFactory"</code>.

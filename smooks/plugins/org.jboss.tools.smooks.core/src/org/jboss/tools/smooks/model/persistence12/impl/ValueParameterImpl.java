@@ -6,6 +6,7 @@
  */
 package org.jboss.tools.smooks.model.persistence12.impl;
 
+
 import java.math.BigInteger;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -15,7 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.persistence12.DecoderParameter;
 import org.jboss.tools.smooks.model.persistence12.Persistence12Package;
 import org.jboss.tools.smooks.model.persistence12.ValueParameter;
@@ -40,7 +41,7 @@ import org.jboss.tools.smooks.model.persistence12.ValueParameter;
  *
  * @generated
  */
-public class ValueParameterImpl extends EObjectImpl implements ValueParameter {
+public class ValueParameterImpl extends AbstractAnyTypeImpl implements ValueParameter {
 	/**
 	 * The cached value of the '{@link #getDecodeParam() <em>Decode Param</em>}' containment reference.
 	 * <!-- begin-user-doc -->

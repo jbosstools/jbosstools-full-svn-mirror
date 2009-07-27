@@ -115,18 +115,18 @@ public class Json12PackageImpl extends EPackageImpl implements Json12Package {
 		XMLTypePackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
-		SmooksPackageImpl theSmooksPackage = (SmooksPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) instanceof SmooksPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) : SmooksPackage.eINSTANCE);
 		CommonPackageImpl theCommonPackage = (CommonPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI) instanceof CommonPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI) : CommonPackage.eINSTANCE);
+		SmooksPackageImpl theSmooksPackage = (SmooksPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) instanceof SmooksPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) : SmooksPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theJson12Package.createPackageContents();
-		theSmooksPackage.createPackageContents();
 		theCommonPackage.createPackageContents();
+		theSmooksPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theJson12Package.initializePackageContents();
-		theSmooksPackage.initializePackageContents();
 		theCommonPackage.initializePackageContents();
+		theSmooksPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theJson12Package.freeze();
@@ -404,10 +404,13 @@ public class Json12PackageImpl extends EPackageImpl implements Json12Package {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
+		CommonPackage theCommonPackage = (CommonPackage)EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI);
 		XMLTypePackage theXMLTypePackage = (XMLTypePackage)EPackage.Registry.INSTANCE.getEPackage(XMLTypePackage.eNS_URI);
 		SmooksPackage theSmooksPackage = (SmooksPackage)EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI);
 
 		// Add supertypes to classes
+		keyEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
+		keyMapEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
 		json12ReaderEClass.getESuperTypes().add(theSmooksPackage.getAbstractReader());
 
 		// Initialize classes and features; add operations and parameters

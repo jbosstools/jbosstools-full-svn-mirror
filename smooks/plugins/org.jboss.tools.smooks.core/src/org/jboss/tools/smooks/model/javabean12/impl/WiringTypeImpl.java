@@ -7,12 +7,13 @@
 package org.jboss.tools.smooks.model.javabean12.impl;
 
 
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.javabean12.WiringType;
 
@@ -33,7 +34,7 @@ import org.jboss.tools.smooks.model.javabean12.WiringType;
  *
  * @generated
  */
-public class WiringTypeImpl extends EObjectImpl implements WiringType {
+public class WiringTypeImpl extends AbstractAnyTypeImpl implements WiringType {
 	/**
 	 * The default value of the '{@link #getBeanIdRef() <em>Bean Id Ref</em>}' attribute.
 	 * <!-- begin-user-doc -->

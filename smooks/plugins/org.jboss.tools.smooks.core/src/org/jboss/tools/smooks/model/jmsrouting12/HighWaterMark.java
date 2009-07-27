@@ -6,7 +6,7 @@
  */
 package org.jboss.tools.smooks.model.jmsrouting12;
 
-import org.eclipse.emf.ecore.EObject;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='highWaterMark' kind='empty'"
  * @generated
  */
-public interface HighWaterMark extends EObject {
+public interface HighWaterMark extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Mark</b></em>' attribute.
 	 * The default value is <code>"200"</code>.

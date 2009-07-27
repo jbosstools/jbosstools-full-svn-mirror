@@ -71,13 +71,13 @@ public interface Jmsrouting12Factory extends EFactory {
 	Message createMessage();
 
 	/**
-	 * Returns a new object of class '<em>Router</em>'.
+	 * Returns a new object of class '<em>JMS12 Router</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Router</em>'.
+	 * @return a new object of class '<em>JMS12 Router</em>'.
 	 * @generated
 	 */
-	Router createRouter();
+	JMS12Router createJMS12Router();
 
 	/**
 	 * Returns a new object of class '<em>Session</em>'.

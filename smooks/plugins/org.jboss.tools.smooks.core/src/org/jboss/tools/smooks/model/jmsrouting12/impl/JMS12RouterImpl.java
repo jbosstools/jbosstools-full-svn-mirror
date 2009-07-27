@@ -16,37 +16,37 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.jboss.tools.smooks.model.jmsrouting12.Connection;
 import org.jboss.tools.smooks.model.jmsrouting12.HighWaterMark;
+import org.jboss.tools.smooks.model.jmsrouting12.JMS12Router;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
 import org.jboss.tools.smooks.model.jmsrouting12.Jndi;
 import org.jboss.tools.smooks.model.jmsrouting12.Message;
-import org.jboss.tools.smooks.model.jmsrouting12.Router;
 import org.jboss.tools.smooks.model.jmsrouting12.Session;
 import org.jboss.tools.smooks.model.smooks.impl.ElementVisitorImpl;
 
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Router</b></em>'.
+ * An implementation of the model object '<em><b>JMS12 Router</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.RouterImpl#getMessage <em>Message</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.RouterImpl#getConnection <em>Connection</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.RouterImpl#getSession <em>Session</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.RouterImpl#getJndi <em>Jndi</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.RouterImpl#getHighWaterMark <em>High Water Mark</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.RouterImpl#getBeanId <em>Bean Id</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.RouterImpl#getDestination <em>Destination</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.RouterImpl#isExecuteBefore <em>Execute Before</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.RouterImpl#getRouteOnElement <em>Route On Element</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.RouterImpl#getRouteOnElementNS <em>Route On Element NS</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl#getMessage <em>Message</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl#getConnection <em>Connection</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl#getSession <em>Session</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl#getJndi <em>Jndi</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl#getHighWaterMark <em>High Water Mark</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl#getBeanId <em>Bean Id</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl#getDestination <em>Destination</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl#isExecuteBefore <em>Execute Before</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl#getRouteOnElement <em>Route On Element</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl#getRouteOnElementNS <em>Route On Element NS</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class RouterImpl extends ElementVisitorImpl implements Router {
+public class JMS12RouterImpl extends ElementVisitorImpl implements JMS12Router {
 	/**
 	 * The cached value of the '{@link #getMessage() <em>Message</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -211,7 +211,7 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected RouterImpl() {
+	protected JMS12RouterImpl() {
 		super();
 	}
 
@@ -221,7 +221,7 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 	 * @generated
 	 */
 	protected EClass eStaticClass() {
-		return Jmsrouting12Package.Literals.ROUTER;
+		return Jmsrouting12Package.Literals.JMS12_ROUTER;
 	}
 
 	/**
@@ -242,7 +242,7 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		Message oldMessage = message;
 		message = newMessage;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__MESSAGE, oldMessage, newMessage);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__MESSAGE, oldMessage, newMessage);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -257,14 +257,14 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		if (newMessage != message) {
 			NotificationChain msgs = null;
 			if (message != null)
-				msgs = ((InternalEObject)message).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.ROUTER__MESSAGE, null, msgs);
+				msgs = ((InternalEObject)message).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.JMS12_ROUTER__MESSAGE, null, msgs);
 			if (newMessage != null)
-				msgs = ((InternalEObject)newMessage).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.ROUTER__MESSAGE, null, msgs);
+				msgs = ((InternalEObject)newMessage).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.JMS12_ROUTER__MESSAGE, null, msgs);
 			msgs = basicSetMessage(newMessage, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__MESSAGE, newMessage, newMessage));
+			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__MESSAGE, newMessage, newMessage));
 	}
 
 	/**
@@ -285,7 +285,7 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		Connection oldConnection = connection;
 		connection = newConnection;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__CONNECTION, oldConnection, newConnection);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__CONNECTION, oldConnection, newConnection);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -300,14 +300,14 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		if (newConnection != connection) {
 			NotificationChain msgs = null;
 			if (connection != null)
-				msgs = ((InternalEObject)connection).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.ROUTER__CONNECTION, null, msgs);
+				msgs = ((InternalEObject)connection).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.JMS12_ROUTER__CONNECTION, null, msgs);
 			if (newConnection != null)
-				msgs = ((InternalEObject)newConnection).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.ROUTER__CONNECTION, null, msgs);
+				msgs = ((InternalEObject)newConnection).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.JMS12_ROUTER__CONNECTION, null, msgs);
 			msgs = basicSetConnection(newConnection, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__CONNECTION, newConnection, newConnection));
+			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__CONNECTION, newConnection, newConnection));
 	}
 
 	/**
@@ -328,7 +328,7 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		Session oldSession = session;
 		session = newSession;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__SESSION, oldSession, newSession);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__SESSION, oldSession, newSession);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -343,14 +343,14 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		if (newSession != session) {
 			NotificationChain msgs = null;
 			if (session != null)
-				msgs = ((InternalEObject)session).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.ROUTER__SESSION, null, msgs);
+				msgs = ((InternalEObject)session).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.JMS12_ROUTER__SESSION, null, msgs);
 			if (newSession != null)
-				msgs = ((InternalEObject)newSession).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.ROUTER__SESSION, null, msgs);
+				msgs = ((InternalEObject)newSession).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.JMS12_ROUTER__SESSION, null, msgs);
 			msgs = basicSetSession(newSession, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__SESSION, newSession, newSession));
+			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__SESSION, newSession, newSession));
 	}
 
 	/**
@@ -371,7 +371,7 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		Jndi oldJndi = jndi;
 		jndi = newJndi;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__JNDI, oldJndi, newJndi);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__JNDI, oldJndi, newJndi);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -386,14 +386,14 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		if (newJndi != jndi) {
 			NotificationChain msgs = null;
 			if (jndi != null)
-				msgs = ((InternalEObject)jndi).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.ROUTER__JNDI, null, msgs);
+				msgs = ((InternalEObject)jndi).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.JMS12_ROUTER__JNDI, null, msgs);
 			if (newJndi != null)
-				msgs = ((InternalEObject)newJndi).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.ROUTER__JNDI, null, msgs);
+				msgs = ((InternalEObject)newJndi).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.JMS12_ROUTER__JNDI, null, msgs);
 			msgs = basicSetJndi(newJndi, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__JNDI, newJndi, newJndi));
+			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__JNDI, newJndi, newJndi));
 	}
 
 	/**
@@ -414,7 +414,7 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		HighWaterMark oldHighWaterMark = highWaterMark;
 		highWaterMark = newHighWaterMark;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__HIGH_WATER_MARK, oldHighWaterMark, newHighWaterMark);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__HIGH_WATER_MARK, oldHighWaterMark, newHighWaterMark);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -429,14 +429,14 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		if (newHighWaterMark != highWaterMark) {
 			NotificationChain msgs = null;
 			if (highWaterMark != null)
-				msgs = ((InternalEObject)highWaterMark).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.ROUTER__HIGH_WATER_MARK, null, msgs);
+				msgs = ((InternalEObject)highWaterMark).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.JMS12_ROUTER__HIGH_WATER_MARK, null, msgs);
 			if (newHighWaterMark != null)
-				msgs = ((InternalEObject)newHighWaterMark).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.ROUTER__HIGH_WATER_MARK, null, msgs);
+				msgs = ((InternalEObject)newHighWaterMark).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Jmsrouting12Package.JMS12_ROUTER__HIGH_WATER_MARK, null, msgs);
 			msgs = basicSetHighWaterMark(newHighWaterMark, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__HIGH_WATER_MARK, newHighWaterMark, newHighWaterMark));
+			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__HIGH_WATER_MARK, newHighWaterMark, newHighWaterMark));
 	}
 
 	/**
@@ -457,7 +457,7 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		String oldBeanId = beanId;
 		beanId = newBeanId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__BEAN_ID, oldBeanId, beanId));
+			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__BEAN_ID, oldBeanId, beanId));
 	}
 
 	/**
@@ -478,7 +478,7 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		String oldDestination = destination;
 		destination = newDestination;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__DESTINATION, oldDestination, destination));
+			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__DESTINATION, oldDestination, destination));
 	}
 
 	/**
@@ -501,7 +501,7 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		boolean oldExecuteBeforeESet = executeBeforeESet;
 		executeBeforeESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__EXECUTE_BEFORE, oldExecuteBefore, executeBefore, !oldExecuteBeforeESet));
+			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__EXECUTE_BEFORE, oldExecuteBefore, executeBefore, !oldExecuteBeforeESet));
 	}
 
 	/**
@@ -515,7 +515,7 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		executeBefore = EXECUTE_BEFORE_EDEFAULT;
 		executeBeforeESet = false;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, Jmsrouting12Package.ROUTER__EXECUTE_BEFORE, oldExecuteBefore, EXECUTE_BEFORE_EDEFAULT, oldExecuteBeforeESet));
+			eNotify(new ENotificationImpl(this, Notification.UNSET, Jmsrouting12Package.JMS12_ROUTER__EXECUTE_BEFORE, oldExecuteBefore, EXECUTE_BEFORE_EDEFAULT, oldExecuteBeforeESet));
 	}
 
 	/**
@@ -545,7 +545,7 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		String oldRouteOnElement = routeOnElement;
 		routeOnElement = newRouteOnElement;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__ROUTE_ON_ELEMENT, oldRouteOnElement, routeOnElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__ROUTE_ON_ELEMENT, oldRouteOnElement, routeOnElement));
 	}
 
 	/**
@@ -566,7 +566,7 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		String oldRouteOnElementNS = routeOnElementNS;
 		routeOnElementNS = newRouteOnElementNS;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.ROUTER__ROUTE_ON_ELEMENT_NS, oldRouteOnElementNS, routeOnElementNS));
+			eNotify(new ENotificationImpl(this, Notification.SET, Jmsrouting12Package.JMS12_ROUTER__ROUTE_ON_ELEMENT_NS, oldRouteOnElementNS, routeOnElementNS));
 	}
 
 	/**
@@ -576,15 +576,15 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 	 */
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case Jmsrouting12Package.ROUTER__MESSAGE:
+			case Jmsrouting12Package.JMS12_ROUTER__MESSAGE:
 				return basicSetMessage(null, msgs);
-			case Jmsrouting12Package.ROUTER__CONNECTION:
+			case Jmsrouting12Package.JMS12_ROUTER__CONNECTION:
 				return basicSetConnection(null, msgs);
-			case Jmsrouting12Package.ROUTER__SESSION:
+			case Jmsrouting12Package.JMS12_ROUTER__SESSION:
 				return basicSetSession(null, msgs);
-			case Jmsrouting12Package.ROUTER__JNDI:
+			case Jmsrouting12Package.JMS12_ROUTER__JNDI:
 				return basicSetJndi(null, msgs);
-			case Jmsrouting12Package.ROUTER__HIGH_WATER_MARK:
+			case Jmsrouting12Package.JMS12_ROUTER__HIGH_WATER_MARK:
 				return basicSetHighWaterMark(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -597,25 +597,25 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 	 */
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case Jmsrouting12Package.ROUTER__MESSAGE:
+			case Jmsrouting12Package.JMS12_ROUTER__MESSAGE:
 				return getMessage();
-			case Jmsrouting12Package.ROUTER__CONNECTION:
+			case Jmsrouting12Package.JMS12_ROUTER__CONNECTION:
 				return getConnection();
-			case Jmsrouting12Package.ROUTER__SESSION:
+			case Jmsrouting12Package.JMS12_ROUTER__SESSION:
 				return getSession();
-			case Jmsrouting12Package.ROUTER__JNDI:
+			case Jmsrouting12Package.JMS12_ROUTER__JNDI:
 				return getJndi();
-			case Jmsrouting12Package.ROUTER__HIGH_WATER_MARK:
+			case Jmsrouting12Package.JMS12_ROUTER__HIGH_WATER_MARK:
 				return getHighWaterMark();
-			case Jmsrouting12Package.ROUTER__BEAN_ID:
+			case Jmsrouting12Package.JMS12_ROUTER__BEAN_ID:
 				return getBeanId();
-			case Jmsrouting12Package.ROUTER__DESTINATION:
+			case Jmsrouting12Package.JMS12_ROUTER__DESTINATION:
 				return getDestination();
-			case Jmsrouting12Package.ROUTER__EXECUTE_BEFORE:
+			case Jmsrouting12Package.JMS12_ROUTER__EXECUTE_BEFORE:
 				return isExecuteBefore() ? Boolean.TRUE : Boolean.FALSE;
-			case Jmsrouting12Package.ROUTER__ROUTE_ON_ELEMENT:
+			case Jmsrouting12Package.JMS12_ROUTER__ROUTE_ON_ELEMENT:
 				return getRouteOnElement();
-			case Jmsrouting12Package.ROUTER__ROUTE_ON_ELEMENT_NS:
+			case Jmsrouting12Package.JMS12_ROUTER__ROUTE_ON_ELEMENT_NS:
 				return getRouteOnElementNS();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -628,34 +628,34 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 	 */
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case Jmsrouting12Package.ROUTER__MESSAGE:
+			case Jmsrouting12Package.JMS12_ROUTER__MESSAGE:
 				setMessage((Message)newValue);
 				return;
-			case Jmsrouting12Package.ROUTER__CONNECTION:
+			case Jmsrouting12Package.JMS12_ROUTER__CONNECTION:
 				setConnection((Connection)newValue);
 				return;
-			case Jmsrouting12Package.ROUTER__SESSION:
+			case Jmsrouting12Package.JMS12_ROUTER__SESSION:
 				setSession((Session)newValue);
 				return;
-			case Jmsrouting12Package.ROUTER__JNDI:
+			case Jmsrouting12Package.JMS12_ROUTER__JNDI:
 				setJndi((Jndi)newValue);
 				return;
-			case Jmsrouting12Package.ROUTER__HIGH_WATER_MARK:
+			case Jmsrouting12Package.JMS12_ROUTER__HIGH_WATER_MARK:
 				setHighWaterMark((HighWaterMark)newValue);
 				return;
-			case Jmsrouting12Package.ROUTER__BEAN_ID:
+			case Jmsrouting12Package.JMS12_ROUTER__BEAN_ID:
 				setBeanId((String)newValue);
 				return;
-			case Jmsrouting12Package.ROUTER__DESTINATION:
+			case Jmsrouting12Package.JMS12_ROUTER__DESTINATION:
 				setDestination((String)newValue);
 				return;
-			case Jmsrouting12Package.ROUTER__EXECUTE_BEFORE:
+			case Jmsrouting12Package.JMS12_ROUTER__EXECUTE_BEFORE:
 				setExecuteBefore(((Boolean)newValue).booleanValue());
 				return;
-			case Jmsrouting12Package.ROUTER__ROUTE_ON_ELEMENT:
+			case Jmsrouting12Package.JMS12_ROUTER__ROUTE_ON_ELEMENT:
 				setRouteOnElement((String)newValue);
 				return;
-			case Jmsrouting12Package.ROUTER__ROUTE_ON_ELEMENT_NS:
+			case Jmsrouting12Package.JMS12_ROUTER__ROUTE_ON_ELEMENT_NS:
 				setRouteOnElementNS((String)newValue);
 				return;
 		}
@@ -669,34 +669,34 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 	 */
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case Jmsrouting12Package.ROUTER__MESSAGE:
+			case Jmsrouting12Package.JMS12_ROUTER__MESSAGE:
 				setMessage((Message)null);
 				return;
-			case Jmsrouting12Package.ROUTER__CONNECTION:
+			case Jmsrouting12Package.JMS12_ROUTER__CONNECTION:
 				setConnection((Connection)null);
 				return;
-			case Jmsrouting12Package.ROUTER__SESSION:
+			case Jmsrouting12Package.JMS12_ROUTER__SESSION:
 				setSession((Session)null);
 				return;
-			case Jmsrouting12Package.ROUTER__JNDI:
+			case Jmsrouting12Package.JMS12_ROUTER__JNDI:
 				setJndi((Jndi)null);
 				return;
-			case Jmsrouting12Package.ROUTER__HIGH_WATER_MARK:
+			case Jmsrouting12Package.JMS12_ROUTER__HIGH_WATER_MARK:
 				setHighWaterMark((HighWaterMark)null);
 				return;
-			case Jmsrouting12Package.ROUTER__BEAN_ID:
+			case Jmsrouting12Package.JMS12_ROUTER__BEAN_ID:
 				setBeanId(BEAN_ID_EDEFAULT);
 				return;
-			case Jmsrouting12Package.ROUTER__DESTINATION:
+			case Jmsrouting12Package.JMS12_ROUTER__DESTINATION:
 				setDestination(DESTINATION_EDEFAULT);
 				return;
-			case Jmsrouting12Package.ROUTER__EXECUTE_BEFORE:
+			case Jmsrouting12Package.JMS12_ROUTER__EXECUTE_BEFORE:
 				unsetExecuteBefore();
 				return;
-			case Jmsrouting12Package.ROUTER__ROUTE_ON_ELEMENT:
+			case Jmsrouting12Package.JMS12_ROUTER__ROUTE_ON_ELEMENT:
 				setRouteOnElement(ROUTE_ON_ELEMENT_EDEFAULT);
 				return;
-			case Jmsrouting12Package.ROUTER__ROUTE_ON_ELEMENT_NS:
+			case Jmsrouting12Package.JMS12_ROUTER__ROUTE_ON_ELEMENT_NS:
 				setRouteOnElementNS(ROUTE_ON_ELEMENT_NS_EDEFAULT);
 				return;
 		}
@@ -710,25 +710,25 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 	 */
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case Jmsrouting12Package.ROUTER__MESSAGE:
+			case Jmsrouting12Package.JMS12_ROUTER__MESSAGE:
 				return message != null;
-			case Jmsrouting12Package.ROUTER__CONNECTION:
+			case Jmsrouting12Package.JMS12_ROUTER__CONNECTION:
 				return connection != null;
-			case Jmsrouting12Package.ROUTER__SESSION:
+			case Jmsrouting12Package.JMS12_ROUTER__SESSION:
 				return session != null;
-			case Jmsrouting12Package.ROUTER__JNDI:
+			case Jmsrouting12Package.JMS12_ROUTER__JNDI:
 				return jndi != null;
-			case Jmsrouting12Package.ROUTER__HIGH_WATER_MARK:
+			case Jmsrouting12Package.JMS12_ROUTER__HIGH_WATER_MARK:
 				return highWaterMark != null;
-			case Jmsrouting12Package.ROUTER__BEAN_ID:
+			case Jmsrouting12Package.JMS12_ROUTER__BEAN_ID:
 				return BEAN_ID_EDEFAULT == null ? beanId != null : !BEAN_ID_EDEFAULT.equals(beanId);
-			case Jmsrouting12Package.ROUTER__DESTINATION:
+			case Jmsrouting12Package.JMS12_ROUTER__DESTINATION:
 				return DESTINATION_EDEFAULT == null ? destination != null : !DESTINATION_EDEFAULT.equals(destination);
-			case Jmsrouting12Package.ROUTER__EXECUTE_BEFORE:
+			case Jmsrouting12Package.JMS12_ROUTER__EXECUTE_BEFORE:
 				return isSetExecuteBefore();
-			case Jmsrouting12Package.ROUTER__ROUTE_ON_ELEMENT:
+			case Jmsrouting12Package.JMS12_ROUTER__ROUTE_ON_ELEMENT:
 				return ROUTE_ON_ELEMENT_EDEFAULT == null ? routeOnElement != null : !ROUTE_ON_ELEMENT_EDEFAULT.equals(routeOnElement);
-			case Jmsrouting12Package.ROUTER__ROUTE_ON_ELEMENT_NS:
+			case Jmsrouting12Package.JMS12_ROUTER__ROUTE_ON_ELEMENT_NS:
 				return ROUTE_ON_ELEMENT_NS_EDEFAULT == null ? routeOnElementNS != null : !ROUTE_ON_ELEMENT_NS_EDEFAULT.equals(routeOnElementNS);
 		}
 		return super.eIsSet(featureID);
@@ -757,4 +757,4 @@ public class RouterImpl extends ElementVisitorImpl implements Router {
 		return result.toString();
 	}
 
-} //RouterImpl
+} //JMS12RouterImpl

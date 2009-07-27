@@ -103,12 +103,16 @@ public class Json12Switch {
 			case Json12Package.KEY: {
 				Key key = (Key)theEObject;
 				Object result = caseKey(key);
+				if (result == null) result = caseAbstractAnyType(key);
+				if (result == null) result = caseAnyType(key);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case Json12Package.KEY_MAP: {
 				KeyMap keyMap = (KeyMap)theEObject;
 				Object result = caseKeyMap(keyMap);
+				if (result == null) result = caseAbstractAnyType(keyMap);
+				if (result == null) result = caseAnyType(keyMap);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

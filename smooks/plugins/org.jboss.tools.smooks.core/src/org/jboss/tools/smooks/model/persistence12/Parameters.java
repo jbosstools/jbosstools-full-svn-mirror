@@ -6,11 +6,11 @@
  */
 package org.jboss.tools.smooks.model.persistence12;
 
+
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecore.util.FeatureMap;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  * @model extendedMetaData="name='parameters' kind='elementOnly'"
  * @generated
  */
-public interface Parameters extends EObject {
+public interface Parameters extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Group</b></em>' attribute list.
 	 * The list contents are of type {@link org.eclipse.emf.ecore.util.FeatureMap.Entry}.

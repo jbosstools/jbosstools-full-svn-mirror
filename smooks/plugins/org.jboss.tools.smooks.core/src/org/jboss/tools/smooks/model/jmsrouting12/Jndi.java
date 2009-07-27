@@ -6,7 +6,7 @@
  */
 package org.jboss.tools.smooks.model.jmsrouting12;
 
-import org.eclipse.emf.ecore.EObject;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='jndi' kind='empty'"
  * @generated
  */
-public interface Jndi extends EObject {
+public interface Jndi extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Context Factory</b></em>' attribute.
 	 * <!-- begin-user-doc -->

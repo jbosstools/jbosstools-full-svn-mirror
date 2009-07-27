@@ -7,6 +7,7 @@
 package org.jboss.tools.smooks.model.jmsrouting12.provider;
 
 
+
 import java.util.Collection;
 import java.util.List;
 
@@ -23,8 +24,8 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
 import org.jboss.tools.smooks.model.jmsrouting12.Message;
 
@@ -35,7 +36,7 @@ import org.jboss.tools.smooks.model.jmsrouting12.Message;
  * @generated
  */
 public class MessageItemProvider
-	extends ItemProviderAdapter
+	extends AbstractAnyTypeItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,

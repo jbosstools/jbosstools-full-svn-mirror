@@ -6,7 +6,7 @@
  */
 package org.jboss.tools.smooks.model.javabean12;
 
-import org.eclipse.emf.ecore.EObject;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='wiring_._type' kind='empty'"
  * @generated
  */
-public interface WiringType extends EObject {
+public interface WiringType extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Bean Id Ref</b></em>' attribute.
 	 * <!-- begin-user-doc -->

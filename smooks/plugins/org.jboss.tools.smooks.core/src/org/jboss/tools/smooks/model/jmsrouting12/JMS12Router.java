@@ -10,7 +10,7 @@ import org.jboss.tools.smooks.model.smooks.ElementVisitor;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Router</b></em>'.
+ * A representation of the model object '<em><b>JMS12 Router</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -22,24 +22,24 @@ import org.jboss.tools.smooks.model.smooks.ElementVisitor;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getMessage <em>Message</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getConnection <em>Connection</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getSession <em>Session</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getJndi <em>Jndi</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getHighWaterMark <em>High Water Mark</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getBeanId <em>Bean Id</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getDestination <em>Destination</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.Router#isExecuteBefore <em>Execute Before</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getRouteOnElement <em>Route On Element</em>}</li>
- *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getRouteOnElementNS <em>Route On Element NS</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getMessage <em>Message</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getConnection <em>Connection</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getSession <em>Session</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getJndi <em>Jndi</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getHighWaterMark <em>High Water Mark</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getBeanId <em>Bean Id</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getDestination <em>Destination</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#isExecuteBefore <em>Execute Before</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getRouteOnElement <em>Route On Element</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getRouteOnElementNS <em>Route On Element NS</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getRouter()
+ * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getJMS12Router()
  * @model extendedMetaData="name='router' kind='elementOnly'"
  * @generated
  */
-public interface Router extends ElementVisitor {
+public interface JMS12Router extends ElementVisitor {
 	/**
 	 * Returns the value of the '<em><b>Message</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -51,7 +51,7 @@ public interface Router extends ElementVisitor {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Message</em>' containment reference.
 	 * @see #setMessage(Message)
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getRouter_Message()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getJMS12Router_Message()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='message' namespace='##targetNamespace'"
 	 * @generated
@@ -59,7 +59,7 @@ public interface Router extends ElementVisitor {
 	Message getMessage();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getMessage <em>Message</em>}' containment reference.
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getMessage <em>Message</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Message</em>' containment reference.
@@ -79,7 +79,7 @@ public interface Router extends ElementVisitor {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Connection</em>' containment reference.
 	 * @see #setConnection(Connection)
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getRouter_Connection()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getJMS12Router_Connection()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='connection' namespace='##targetNamespace'"
 	 * @generated
@@ -87,7 +87,7 @@ public interface Router extends ElementVisitor {
 	Connection getConnection();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getConnection <em>Connection</em>}' containment reference.
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getConnection <em>Connection</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Connection</em>' containment reference.
@@ -107,7 +107,7 @@ public interface Router extends ElementVisitor {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Session</em>' containment reference.
 	 * @see #setSession(Session)
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getRouter_Session()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getJMS12Router_Session()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='session' namespace='##targetNamespace'"
 	 * @generated
@@ -115,7 +115,7 @@ public interface Router extends ElementVisitor {
 	Session getSession();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getSession <em>Session</em>}' containment reference.
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getSession <em>Session</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Session</em>' containment reference.
@@ -135,7 +135,7 @@ public interface Router extends ElementVisitor {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Jndi</em>' containment reference.
 	 * @see #setJndi(Jndi)
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getRouter_Jndi()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getJMS12Router_Jndi()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='jndi' namespace='##targetNamespace'"
 	 * @generated
@@ -143,7 +143,7 @@ public interface Router extends ElementVisitor {
 	Jndi getJndi();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getJndi <em>Jndi</em>}' containment reference.
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getJndi <em>Jndi</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Jndi</em>' containment reference.
@@ -164,7 +164,7 @@ public interface Router extends ElementVisitor {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>High Water Mark</em>' containment reference.
 	 * @see #setHighWaterMark(HighWaterMark)
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getRouter_HighWaterMark()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getJMS12Router_HighWaterMark()
 	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='highWaterMark' namespace='##targetNamespace'"
 	 * @generated
@@ -172,7 +172,7 @@ public interface Router extends ElementVisitor {
 	HighWaterMark getHighWaterMark();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getHighWaterMark <em>High Water Mark</em>}' containment reference.
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getHighWaterMark <em>High Water Mark</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>High Water Mark</em>' containment reference.
@@ -192,7 +192,7 @@ public interface Router extends ElementVisitor {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Bean Id</em>' attribute.
 	 * @see #setBeanId(String)
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getRouter_BeanId()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getJMS12Router_BeanId()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
 	 *        extendedMetaData="kind='attribute' name='beanId'"
 	 * @generated
@@ -200,7 +200,7 @@ public interface Router extends ElementVisitor {
 	String getBeanId();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getBeanId <em>Bean Id</em>}' attribute.
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getBeanId <em>Bean Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Bean Id</em>' attribute.
@@ -220,7 +220,7 @@ public interface Router extends ElementVisitor {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Destination</em>' attribute.
 	 * @see #setDestination(String)
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getRouter_Destination()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getJMS12Router_Destination()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
 	 *        extendedMetaData="kind='attribute' name='destination'"
 	 * @generated
@@ -228,7 +228,7 @@ public interface Router extends ElementVisitor {
 	String getDestination();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getDestination <em>Destination</em>}' attribute.
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getDestination <em>Destination</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Destination</em>' attribute.
@@ -251,7 +251,7 @@ public interface Router extends ElementVisitor {
 	 * @see #isSetExecuteBefore()
 	 * @see #unsetExecuteBefore()
 	 * @see #setExecuteBefore(boolean)
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getRouter_ExecuteBefore()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getJMS12Router_ExecuteBefore()
 	 * @model default="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='executeBefore'"
 	 * @generated
@@ -259,7 +259,7 @@ public interface Router extends ElementVisitor {
 	boolean isExecuteBefore();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#isExecuteBefore <em>Execute Before</em>}' attribute.
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#isExecuteBefore <em>Execute Before</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Execute Before</em>' attribute.
@@ -271,7 +271,7 @@ public interface Router extends ElementVisitor {
 	void setExecuteBefore(boolean value);
 
 	/**
-	 * Unsets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#isExecuteBefore <em>Execute Before</em>}' attribute.
+	 * Unsets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#isExecuteBefore <em>Execute Before</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #isSetExecuteBefore()
@@ -282,7 +282,7 @@ public interface Router extends ElementVisitor {
 	void unsetExecuteBefore();
 
 	/**
-	 * Returns whether the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#isExecuteBefore <em>Execute Before</em>}' attribute is set.
+	 * Returns whether the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#isExecuteBefore <em>Execute Before</em>}' attribute is set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return whether the value of the '<em>Execute Before</em>' attribute is set.
@@ -304,7 +304,7 @@ public interface Router extends ElementVisitor {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Route On Element</em>' attribute.
 	 * @see #setRouteOnElement(String)
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getRouter_RouteOnElement()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getJMS12Router_RouteOnElement()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
 	 *        extendedMetaData="kind='attribute' name='routeOnElement'"
 	 * @generated
@@ -312,7 +312,7 @@ public interface Router extends ElementVisitor {
 	String getRouteOnElement();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getRouteOnElement <em>Route On Element</em>}' attribute.
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getRouteOnElement <em>Route On Element</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Route On Element</em>' attribute.
@@ -332,7 +332,7 @@ public interface Router extends ElementVisitor {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Route On Element NS</em>' attribute.
 	 * @see #setRouteOnElementNS(String)
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getRouter_RouteOnElementNS()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getJMS12Router_RouteOnElementNS()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='routeOnElementNS'"
 	 * @generated
@@ -340,7 +340,7 @@ public interface Router extends ElementVisitor {
 	String getRouteOnElementNS();
 
 	/**
-	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getRouteOnElementNS <em>Route On Element NS</em>}' attribute.
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getRouteOnElementNS <em>Route On Element NS</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Route On Element NS</em>' attribute.
@@ -349,4 +349,4 @@ public interface Router extends ElementVisitor {
 	 */
 	void setRouteOnElementNS(String value);
 
-} // Router
+} // JMS12Router

@@ -186,25 +186,25 @@ public class Jmsrouting12ItemProviderAdapterFactory extends Jmsrouting12AdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.jboss.tools.smooks.model.jmsrouting12.Router} instances.
+	 * This keeps track of the one adapter used for all {@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected RouterItemProvider routerItemProvider;
+	protected JMS12RouterItemProvider jms12RouterItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.jmsrouting12.Router}.
+	 * This creates an adapter for a {@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Adapter createRouterAdapter() {
-		if (routerItemProvider == null) {
-			routerItemProvider = new RouterItemProvider(this);
+	public Adapter createJMS12RouterAdapter() {
+		if (jms12RouterItemProvider == null) {
+			jms12RouterItemProvider = new JMS12RouterItemProvider(this);
 		}
 
-		return routerItemProvider;
+		return jms12RouterItemProvider;
 	}
 
 	/**
@@ -330,7 +330,7 @@ public class Jmsrouting12ItemProviderAdapterFactory extends Jmsrouting12AdapterF
 		if (highWaterMarkItemProvider != null) highWaterMarkItemProvider.dispose();
 		if (jndiItemProvider != null) jndiItemProvider.dispose();
 		if (messageItemProvider != null) messageItemProvider.dispose();
-		if (routerItemProvider != null) routerItemProvider.dispose();
+		if (jms12RouterItemProvider != null) jms12RouterItemProvider.dispose();
 		if (sessionItemProvider != null) sessionItemProvider.dispose();
 	}
 

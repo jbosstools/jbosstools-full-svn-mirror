@@ -6,7 +6,7 @@
  */
 package org.jboss.tools.smooks.model.jmsrouting12;
 
-import org.eclipse.emf.ecore.EObject;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='session' kind='empty'"
  * @generated
  */
-public interface Session extends EObject {
+public interface Session extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Acknowledge Mode</b></em>' attribute.
 	 * The default value is <code>"AUTO_ACKNOWLEDGE"</code>.

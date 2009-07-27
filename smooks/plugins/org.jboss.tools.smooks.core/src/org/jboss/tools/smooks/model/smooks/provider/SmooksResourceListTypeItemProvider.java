@@ -458,7 +458,7 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 		newChildDescriptors.add(createChildParameter(
 				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
 						.createEntry(Jmsrouting12Package.Literals.JMS_ROUTING12_DOCUMENT_ROOT__ROUTER,
-								Jmsrouting12Factory.eINSTANCE.createRouter())));
+								Jmsrouting12Factory.eINSTANCE.createJMS12Router())));
 
 	}
 

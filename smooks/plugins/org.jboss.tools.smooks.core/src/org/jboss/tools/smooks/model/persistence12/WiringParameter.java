@@ -6,7 +6,7 @@
  */
 package org.jboss.tools.smooks.model.persistence12;
 
-import org.eclipse.emf.ecore.EObject;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='wiringParameter' kind='empty'"
  * @generated
  */
-public interface WiringParameter extends EObject {
+public interface WiringParameter extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Bean Id Ref</b></em>' attribute.
 	 * <!-- begin-user-doc -->

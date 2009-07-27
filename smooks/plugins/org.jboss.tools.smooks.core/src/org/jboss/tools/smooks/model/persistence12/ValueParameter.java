@@ -6,9 +6,10 @@
  */
 package org.jboss.tools.smooks.model.persistence12;
 
+
 import java.math.BigInteger;
 
-import org.eclipse.emf.ecore.EObject;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +33,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='valueParameter' kind='elementOnly'"
  * @generated
  */
-public interface ValueParameter extends EObject {
+public interface ValueParameter extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Decode Param</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
