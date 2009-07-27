@@ -59,9 +59,11 @@ import org.jboss.tools.smooks.configuration.wizards.SmooksConfigurationFileNewWi
 import org.jboss.tools.smooks.model.calc.provider.CalcItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.common.provider.CommonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.csv.provider.CsvItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.csv12.provider.Csv12ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.datasource.provider.DatasourceItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.dbrouting.provider.DbroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.edi.provider.EdiItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.edi12.provider.Edi12ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.esbrouting.provider.EsbroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.fileRouting.provider.FileRoutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.freemarker.provider.FreemarkerItemProviderAdapterFactory;
@@ -69,10 +71,16 @@ import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.groovy.provider.GroovyItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.iorouting.provider.IoroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.javabean.provider.JavabeanItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.javabean12.provider.Javabean12ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.jmsrouting.provider.JmsroutingItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.jmsrouting12.provider.Jmsrouting12ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.json.provider.JsonItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.json12.provider.Json12ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.persistence12.provider.Persistence12ItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.rules10.provider.Rules10ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.validation10.provider.Validation10ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
 
@@ -191,9 +199,10 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		}
 	}
 
-	private void initEditingDomain() {
+	protected void initEditingDomain() {
 		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-
+		
+		// add smooks 1.1.2 EMF item provider model
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new XslItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new FreemarkerItemProviderAdapterFactory());
@@ -213,6 +222,17 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		adapterFactory.addAdapterFactory(new FileRoutingItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new EsbroutingItemProviderAdapterFactory());
+		
+		// add smooks 1.2 EMF itemprovider
+		adapterFactory.addAdapterFactory(new Json12ItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new Edi12ItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new Javabean12ItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new Csv12ItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new Rules10ItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new Validation10ItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new Jmsrouting12ItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new Persistence12ItemProviderAdapterFactory());
+		
 		BasicCommandStack commandStack = new BasicCommandStack();
 		handleCommandStack(commandStack);
 		editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
