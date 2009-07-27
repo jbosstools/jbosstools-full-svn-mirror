@@ -1124,11 +1124,17 @@ public class SmooksUIUtils {
 		}
 		return null;
 	}
-
+	
 	public static AttributeFieldEditPart createJavaMethodSearchFieldEditor(BindingsType container, Composite parent,
 			FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor, String buttonName,
 			final EObject model) {
 		String classString = ((BindingsType) container).getClass_();
+		return createJavaMethodSearchFieldEditor(classString, container, parent, toolkit, propertyDescriptor, buttonName, model);
+	}
+
+	public static AttributeFieldEditPart createJavaMethodSearchFieldEditor(String classString , EObject container, Composite parent,
+			FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor, String buttonName,
+			final EObject model) {
 		IJavaProject project = getJavaProject(container);
 		Class<?> clazz = null;
 		try {
@@ -1351,10 +1357,9 @@ public class SmooksUIUtils {
 		return fieldEditPart;
 	}
 
-	public static AttributeFieldEditPart createJavaPropertySearchFieldEditor(BindingsType container, Composite parent,
-			FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor, String buttonName,
+	public static AttributeFieldEditPart createJavaPropertySearchFieldEditor(String classString, EObject container,
+			Composite parent, FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor, String buttonName,
 			final EObject model) {
-		String classString = ((BindingsType) container).getClass_();
 		IJavaProject project = getJavaProject(container);
 		JavaPropertiesSelectionDialog dialog = new JavaPropertiesSelectionDialog(project, classString);
 		AttributeFieldEditPart editPart = SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor,
@@ -1383,6 +1388,14 @@ public class SmooksUIUtils {
 			}
 		}
 		return editPart;
+	}
+
+	public static AttributeFieldEditPart createJavaPropertySearchFieldEditor(BindingsType container, Composite parent,
+			FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor, String buttonName,
+			final EObject model) {
+		String classString = ((BindingsType) container).getClass_();
+		return createJavaPropertySearchFieldEditor(classString, container, parent, toolkit, propertyDescriptor,
+				buttonName, model);
 	}
 
 	public static Object getEditValue(IItemPropertyDescriptor propertyDescriptor, Object model) {

@@ -20,7 +20,8 @@ import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
+
+//import org.jboss.tools.smooks.model.javabean.BindingsType;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 9, 2009
@@ -37,7 +38,7 @@ public class PropertiesAndSetterMethodSearchFieldEditorCreator extends PropertyU
 		if (canCreateMethodsSearchFieldEditor(feature)) {
 			return createMethodsSearchFieldEditor(toolkit, parent, propertyDescriptor, model);
 		}
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor, part);
 	}
 
 	protected boolean canCreatePropertiesSearchFieldEditor(EAttribute feature) {
@@ -60,11 +61,16 @@ public class PropertiesAndSetterMethodSearchFieldEditorCreator extends PropertyU
 			IItemPropertyDescriptor propertyDescriptor, Object model) {
 		if (model instanceof EObject) {
 			EObject container = ((EObject) model).eContainer();
-			if (container instanceof BindingsType) {
-				return SmooksUIUtils.createJavaPropertySearchFieldEditor((BindingsType) container, parent, toolkit,
+			String classString = getClassString(model);
+			if (classString != null) {
+				return SmooksUIUtils.createJavaPropertySearchFieldEditor(classString, container, parent, toolkit,
 						propertyDescriptor, getPropertiesSearchButtonName(), (EObject) model);
 			}
 		}
+		return null;
+	}
+
+	protected String getClassString(Object model) {
 		return null;
 	}
 
@@ -72,8 +78,9 @@ public class PropertiesAndSetterMethodSearchFieldEditorCreator extends PropertyU
 			IItemPropertyDescriptor propertyDescriptor, Object model) {
 		if (model instanceof EObject) {
 			EObject container = ((EObject) model).eContainer();
-			if (container instanceof BindingsType) {
-				return SmooksUIUtils.createJavaMethodSearchFieldEditor((BindingsType) container, parent, toolkit,
+			String classString = getClassString(model);
+			if (classString != null) {
+				return SmooksUIUtils.createJavaMethodSearchFieldEditor(classString, container, parent, toolkit,
 						propertyDescriptor, getMethodsSearchButtonName(), (EObject) model);
 			}
 		}

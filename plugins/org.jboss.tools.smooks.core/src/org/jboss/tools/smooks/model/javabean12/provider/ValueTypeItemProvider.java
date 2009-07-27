@@ -11,14 +11,10 @@ package org.jboss.tools.smooks.model.javabean12.provider;
 import java.util.Collection;
 import java.util.List;
 
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -253,10 +249,10 @@ public class ValueTypeItemProvider
 	 * @generated
 	 */
 	public String getText(Object object) {
-		String label = ((ValueType)object).getData();
+		String label = ((ValueType)object).getProperty();
 		return label == null || label.length() == 0 ?
 			getString("_UI_ValueType_type") :
-			getString("_UI_ValueType_type") + " " + label;
+			getString("_UI_ValueType_type") + " (" + label + ")";
 	}
 
 	/**
