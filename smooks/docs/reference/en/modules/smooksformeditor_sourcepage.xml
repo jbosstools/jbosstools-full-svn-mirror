@@ -42,7 +42,42 @@
 			<para> You can't edit the configuration file with other editors until file becomes
 				valid. </para>
 		</note-->
+		
+		
+		
+	</section>
+	
+	<section>
+		<title>Smooks Configuration File Validator</title>
+		<para>Smooks configuration file validator will validate your Smooks configuration file. Just  right-click on the file and then click on the <property>Validate</property> button. The validator can be enabled/disabled in <emphasis><property>Window -> Preferences -> Validation</property></emphasis>:</para>
+	
+		<figure>
+			<title>Validation: Smooks Configuration File Validator</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/source_editor/smooks_conf_validator.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+	<para>You can set up your Smooks validator to include, exclude groups to validate and specify rules for validation. Just click on the <property>Settings</property> button and use the options provided:</para>
+	
+		<figure>
+			<title>Smooks Configuration File Validator Settings</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/source_editor/smooks_conf_validator_settings.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+	
+	
 		<para>We hope, our guide will help you to get started with JBoss Smooks Tools. Besides, for additional information you are welcome on <ulink
 			url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss forum</ulink>.</para>
+		
 	</section>
+	
+	
+	
+	
 </chapter>
