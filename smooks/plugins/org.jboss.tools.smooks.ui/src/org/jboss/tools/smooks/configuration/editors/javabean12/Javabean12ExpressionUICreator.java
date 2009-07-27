@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors.javabean;
+package org.jboss.tools.smooks.configuration.editors.javabean12;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,27 +26,20 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.IPropertyUICreator;
+import org.jboss.tools.smooks.configuration.editors.javabean.PropertiesAndSetterMethodSearchFieldEditorCreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.FieldAssistDisposer;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
+import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
 /**
  * @author Dart (dpeng@redhat.com)
  * 
  */
-public class JavabeanExpressionUICreator extends PropertiesAndSetterMethodSearchFieldEditorCreator implements
+public class Javabean12ExpressionUICreator extends PropertiesAndSetterMethodSearchFieldEditorCreator implements
 		IPropertyUICreator {
-	protected String getClassString(Object model) {
-		if (model instanceof EObject) {
-			EObject container = ((EObject) model).eContainer();
-			if(container instanceof BindingsType){
-				return ((BindingsType)container).getClass_();
-			}
-		}
-		return super.getClassString(model);
-	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -96,16 +89,30 @@ public class JavabeanExpressionUICreator extends PropertiesAndSetterMethodSearch
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
 
 		AttributeFieldEditPart pEditPart = createPropertiesSearchFieldEditor(toolkit, parent, getPropertyDescriptor(
-				editingdomain, JavabeanPackage.Literals.EXPRESSION_TYPE__PROPERTY, model), model);
+				editingdomain, Javabean12Package.Literals.EXPRESSION_TYPE__PROPERTY, model), model);
 		AttributeFieldEditPart mEditPart = createMethodsSearchFieldEditor(toolkit, parent, getPropertyDescriptor(
-				editingdomain, JavabeanPackage.Literals.EXPRESSION_TYPE__SETTER_METHOD, model), model);
+				editingdomain, Javabean12Package.Literals.EXPRESSION_TYPE__SETTER_METHOD, model), model);
 		list.add(pEditPart);
 		list.add(mEditPart);
 		list.addAll(createElementSelectionSection("Execute On Element", editingdomain, toolkit, parent, model,
-				formEditor, part,JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT,
-				JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS));
+				formEditor, part,Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT,
+				Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS));
 
 		return list;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.tools.smooks.configuration.editors.javabean.PropertiesAndSetterMethodSearchFieldEditorCreator#getClassString(java.lang.Object)
+	 */
+	protected String getClassString(Object model) {
+		if (model instanceof EObject) {
+			EObject container = ((EObject) model).eContainer();
+			if(container instanceof BeanType){
+				return ((BeanType)container).getClass_();
+			}
+		}
+		return super.getClassString(model);
 	}
 
 	/*
@@ -117,19 +124,19 @@ public class JavabeanExpressionUICreator extends PropertiesAndSetterMethodSearch
 	 */
 	@Override
 	public boolean ignoreProperty(EAttribute feature) {
-		if (feature == JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT) {
+		if (feature == Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT) {
 			return true;
 		}
-		if (feature == JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS) {
+		if (feature == Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS) {
 			return true;
 		}
-		if (feature == JavabeanPackage.Literals.EXPRESSION_TYPE__VALUE) {
+		if (feature == Javabean12Package.Literals.EXPRESSION_TYPE__VALUE) {
 			return true;
 		}
-		if (feature == JavabeanPackage.Literals.EXPRESSION_TYPE__PROPERTY) {
+		if (feature == Javabean12Package.Literals.EXPRESSION_TYPE__PROPERTY) {
 			return true;
 		}
-		if (feature == JavabeanPackage.Literals.EXPRESSION_TYPE__SETTER_METHOD) {
+		if (feature == Javabean12Package.Literals.EXPRESSION_TYPE__SETTER_METHOD) {
 			return true;
 		}
 		return super.ignoreProperty(feature);

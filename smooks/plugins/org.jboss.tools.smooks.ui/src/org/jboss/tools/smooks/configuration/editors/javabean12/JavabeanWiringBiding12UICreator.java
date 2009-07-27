@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors.javabean;
+package org.jboss.tools.smooks.configuration.editors.javabean12;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +21,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
+import org.jboss.tools.smooks.configuration.editors.javabean.PropertiesAndSetterMethodSearchFieldEditorCreator;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
+import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 9, 2009
  */
-public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFieldEditorCreator {
+public class JavabeanWiringBiding12UICreator extends PropertiesAndSetterMethodSearchFieldEditorCreator {
 
 	@Override
 	protected boolean canCreatePropertiesSearchFieldEditor(EAttribute feature) {
@@ -37,12 +38,19 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 		// }
 		return false;
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.configuration.editors.javabean.
+	 * PropertiesAndSetterMethodSearchFieldEditorCreator
+	 * #getClassString(java.lang.Object)
+	 */
 	protected String getClassString(Object model) {
 		if (model instanceof EObject) {
 			EObject container = ((EObject) model).eContainer();
-			if(container instanceof BindingsType){
-				return ((BindingsType)container).getClass_();
+			if (container instanceof BeanType) {
+				return ((BeanType) container).getClass_();
 			}
 		}
 		return super.getClassString(model);
@@ -66,16 +74,16 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 	 */
 	@Override
 	public boolean ignoreProperty(EAttribute feature) {
-		if (feature == JavabeanPackage.eINSTANCE.getWiringType_WireOnElement()) {
+		if (feature == Javabean12Package.eINSTANCE.getWiringType_WireOnElement()) {
 			return true;
 		}
-		if (feature == JavabeanPackage.eINSTANCE.getWiringType_WireOnElementNS()) {
+		if (feature == Javabean12Package.eINSTANCE.getWiringType_WireOnElementNS()) {
 			return true;
 		}
-		if (feature == JavabeanPackage.eINSTANCE.getWiringType_Property()) {
+		if (feature == Javabean12Package.eINSTANCE.getWiringType_Property()) {
 			return true;
 		}
-		if (feature == JavabeanPackage.eINSTANCE.getWiringType_SetterMethod()) {
+		if (feature == Javabean12Package.eINSTANCE.getWiringType_SetterMethod()) {
 			return true;
 		}
 		return super.ignoreProperty(feature);
@@ -98,20 +106,20 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
 
 		AttributeFieldEditPart pEditPart = createPropertiesSearchFieldEditor(toolkit, parent, getPropertyDescriptor(
-				editingdomain, JavabeanPackage.eINSTANCE.getWiringType_Property(), model), model);
+				editingdomain, Javabean12Package.eINSTANCE.getWiringType_Property(), model), model);
 		AttributeFieldEditPart mEditPart = createMethodsSearchFieldEditor(toolkit, parent, getPropertyDescriptor(
-				editingdomain, JavabeanPackage.eINSTANCE.getWiringType_SetterMethod(), model), model);
+				editingdomain, Javabean12Package.eINSTANCE.getWiringType_SetterMethod(), model), model);
 		list.add(pEditPart);
 		list.add(mEditPart);
-		list.addAll(createElementSelectionSection("Wrie On Element", editingdomain, toolkit, parent, model, formEditor,part,
-				JavabeanPackage.eINSTANCE.getWiringType_WireOnElement(),
-				JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT_NS));
+		list.addAll(createElementSelectionSection("Wrie On Element", editingdomain, toolkit, parent, model, formEditor,
+				part, Javabean12Package.eINSTANCE.getWiringType_WireOnElement(),
+				Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT_NS));
 		return list;
 	}
 
 	@Override
 	public boolean isBeanIDRefFieldFeature(EAttribute attribute) {
-		if (attribute == JavabeanPackage.eINSTANCE.getWiringType_BeanIdRef()) {
+		if (attribute == Javabean12Package.eINSTANCE.getWiringType_BeanIdRef()) {
 			return true;
 		}
 		return super.isBeanIDRefFieldFeature(attribute);
@@ -126,6 +134,6 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 			ISmooksModelProvider formEditor, IEditorPart part) {
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor, part);
 	}
 }

@@ -199,10 +199,10 @@ public class WiringTypeItemProvider
 	 * @generated
 	 */
 	public String getText(Object object) {
-		String label = ((WiringType)object).getBeanIdRef();
+		String label = ((WiringType)object).getProperty();
 		return label == null || label.length() == 0 ?
 			getString("_UI_WiringType_type") :
-			getString("_UI_WiringType_type") + " " + label;
+			getString("_UI_WiringType_type") + " (" + label+")";
 	}
 
 	/**

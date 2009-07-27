@@ -43,11 +43,16 @@ import org.jboss.tools.smooks.configuration.editors.javabean.BindingsPropertyUIC
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanExpressionUICreator;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanValueUICreator;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanWiringUICreator;
+import org.jboss.tools.smooks.configuration.editors.javabean12.JavaBean12PropertyUICreator;
+import org.jboss.tools.smooks.configuration.editors.javabean12.Javabean12ExpressionUICreator;
+import org.jboss.tools.smooks.configuration.editors.javabean12.JavabeanValueBinding12UICreator;
+import org.jboss.tools.smooks.configuration.editors.javabean12.JavabeanWiringBiding12UICreator;
 import org.jboss.tools.smooks.configuration.editors.jms.ConnectionUICreator;
 import org.jboss.tools.smooks.configuration.editors.jms.JmsRouterUICreator;
 import org.jboss.tools.smooks.configuration.editors.jms.JndiUICreator;
 import org.jboss.tools.smooks.configuration.editors.jms.MessageUICreator;
 import org.jboss.tools.smooks.configuration.editors.jms.SessionUICreator;
+import org.jboss.tools.smooks.configuration.editors.jms12.JMSRouter12UICreator;
 import org.jboss.tools.smooks.configuration.editors.json.JsonReaderUICreator;
 import org.jboss.tools.smooks.configuration.editors.json.KeyMapUICreator;
 import org.jboss.tools.smooks.configuration.editors.json.KeyUICreator;
@@ -92,11 +97,13 @@ import org.jboss.tools.smooks.model.javabean.impl.BindingsTypeImpl;
 import org.jboss.tools.smooks.model.javabean.impl.ExpressionTypeImpl;
 import org.jboss.tools.smooks.model.javabean.impl.ValueTypeImpl;
 import org.jboss.tools.smooks.model.javabean.impl.WiringTypeImpl;
+import org.jboss.tools.smooks.model.javabean12.impl.BeanTypeImpl;
 import org.jboss.tools.smooks.model.jmsrouting.impl.ConnectionImpl;
 import org.jboss.tools.smooks.model.jmsrouting.impl.JmsRouterImpl;
 import org.jboss.tools.smooks.model.jmsrouting.impl.JndiImpl;
 import org.jboss.tools.smooks.model.jmsrouting.impl.MessageImpl;
 import org.jboss.tools.smooks.model.jmsrouting.impl.SessionImpl;
+import org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl;
 import org.jboss.tools.smooks.model.json.impl.JsonReaderImpl;
 import org.jboss.tools.smooks.model.json.impl.KeyImpl;
 import org.jboss.tools.smooks.model.json.impl.KeyMapImpl;
@@ -153,7 +160,7 @@ public class PropertyUICreatorManager {
 		map.put(BindingsTypeImpl.class, new BindingsPropertyUICreator());
 		map.put(ValueTypeImpl.class, new JavabeanValueUICreator());
 		map.put(WiringTypeImpl.class, new JavabeanWiringUICreator());
-		map.put(ExpressionTypeImpl.class,new JavabeanExpressionUICreator());
+		map.put(ExpressionTypeImpl.class, new JavabeanExpressionUICreator());
 
 		// for smooks models
 		map.put(ConditionTypeImpl.class, new ConditionTypeUICreator());
@@ -172,7 +179,6 @@ public class PropertyUICreatorManager {
 		map.put(SetOffTypeImpl.class, new SetOffTypeUICreator());
 		map.put(SetOnTypeImpl.class, new SetOnTypeUICreator());
 		map.put(SmooksResourceListTypeImpl.class, new SmooksResourceListTypeUICreator());
-
 
 		// for xsl models
 		map.put(BindToImpl.class, new BindToUICreator());
@@ -217,13 +223,13 @@ public class PropertyUICreatorManager {
 		map.put(KeyImpl.class, new KeyUICreator());
 		map.put(KeyMapImpl.class, new KeyMapUICreator());
 		map.put(JsonReaderImpl.class, new JsonReaderUICreator());
-		
+
 		// for CSV
 		map.put(CsvReaderImpl.class, new CsvReaderUICreator());
-		
+
 		// for IO Routing
 		map.put(IORouterImpl.class, new IORouterUICreator());
-		
+
 		// for JMS
 		map.put(ConnectionImpl.class, new ConnectionUICreator());
 		map.put(HighWaterMarkImpl.class, new HighWaterMarkUICreator());
@@ -231,7 +237,7 @@ public class PropertyUICreatorManager {
 		map.put(MessageImpl.class, new MessageUICreator());
 		map.put(JmsRouterImpl.class, new JmsRouterUICreator());
 		map.put(SessionImpl.class, new SessionUICreator());
-		
+
 		// for DB routing
 		map.put(ExecutorImpl.class, new ExecutorUICreator());
 		map.put(ResultSetImpl.class, new ResultSetUICreator());
@@ -239,7 +245,7 @@ public class PropertyUICreatorManager {
 
 		// for calc
 		map.put(CounterImpl.class, new CounterUICreator());
-		
+
 		// for datasource
 		map.put(DirectImpl.class, new DirectUICreator());
 		map.put(DataSourceJndiImpl.class, new DataSourceJndiUICreator());
@@ -250,6 +256,22 @@ public class PropertyUICreatorManager {
 		 * up is for smooks1.1
 		 */
 
+		/*
+		 * bottom is for smooks 1.2
+		 */
+		
+		// for JavaBean v1.2
+		map.put(BeanTypeImpl.class, new JavaBean12PropertyUICreator());
+		map
+				.put(org.jboss.tools.smooks.model.javabean12.impl.ValueTypeImpl.class,
+						new JavabeanValueBinding12UICreator());
+		map.put(org.jboss.tools.smooks.model.javabean12.impl.ExpressionTypeImpl.class,
+				new Javabean12ExpressionUICreator());
+		map.put(org.jboss.tools.smooks.model.javabean12.impl.WiringTypeImpl.class,
+				new JavabeanWiringBiding12UICreator());
+		
+		// for JMS Router v1.2
+		map.put(JMS12RouterImpl.class, new JMSRouter12UICreator());
 	}
 
 	public void registePropertyUICreator(Class<?> key, IPropertyUICreator creator) {
