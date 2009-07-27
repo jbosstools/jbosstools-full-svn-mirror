@@ -65,7 +65,7 @@ public class Jmsrouting12FactoryImpl extends EFactoryImpl implements Jmsrouting1
 			case Jmsrouting12Package.HIGH_WATER_MARK: return createHighWaterMark();
 			case Jmsrouting12Package.JNDI: return createJndi();
 			case Jmsrouting12Package.MESSAGE: return createMessage();
-			case Jmsrouting12Package.ROUTER: return createRouter();
+			case Jmsrouting12Package.JMS12_ROUTER: return createJMS12Router();
 			case Jmsrouting12Package.SESSION: return createSession();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -175,9 +175,9 @@ public class Jmsrouting12FactoryImpl extends EFactoryImpl implements Jmsrouting1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Router createRouter() {
-		RouterImpl router = new RouterImpl();
-		return router;
+	public JMS12Router createJMS12Router() {
+		JMS12RouterImpl jms12Router = new JMS12RouterImpl();
+		return jms12Router;
 	}
 
 	/**

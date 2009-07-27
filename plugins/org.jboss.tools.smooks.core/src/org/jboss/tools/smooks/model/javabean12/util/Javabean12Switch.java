@@ -107,6 +107,8 @@ public class Javabean12Switch {
 			case Javabean12Package.DECODE_PARAM_TYPE: {
 				DecodeParamType decodeParamType = (DecodeParamType)theEObject;
 				Object result = caseDecodeParamType(decodeParamType);
+				if (result == null) result = caseAbstractAnyType(decodeParamType);
+				if (result == null) result = caseAnyType(decodeParamType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -119,6 +121,8 @@ public class Javabean12Switch {
 			case Javabean12Package.EXPRESSION_TYPE: {
 				ExpressionType expressionType = (ExpressionType)theEObject;
 				Object result = caseExpressionType(expressionType);
+				if (result == null) result = caseAbstractAnyType(expressionType);
+				if (result == null) result = caseAnyType(expressionType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -135,12 +139,16 @@ public class Javabean12Switch {
 			case Javabean12Package.VALUE_TYPE: {
 				ValueType valueType = (ValueType)theEObject;
 				Object result = caseValueType(valueType);
+				if (result == null) result = caseAbstractAnyType(valueType);
+				if (result == null) result = caseAnyType(valueType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case Javabean12Package.WIRING_TYPE: {
 				WiringType wiringType = (WiringType)theEObject;
 				Object result = caseWiringType(wiringType);
+				if (result == null) result = caseAbstractAnyType(wiringType);
+				if (result == null) result = caseAnyType(wiringType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

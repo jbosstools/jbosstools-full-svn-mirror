@@ -7,12 +7,13 @@
 package org.jboss.tools.smooks.model.json12.impl;
 
 
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.json12.Json12Package;
 import org.jboss.tools.smooks.model.json12.Key;
 
@@ -31,7 +32,7 @@ import org.jboss.tools.smooks.model.json12.Key;
  *
  * @generated
  */
-public class KeyImpl extends EObjectImpl implements Key {
+public class KeyImpl extends AbstractAnyTypeImpl implements Key {
 	/**
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->

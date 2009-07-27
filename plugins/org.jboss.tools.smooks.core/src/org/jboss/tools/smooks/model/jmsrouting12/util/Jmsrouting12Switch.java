@@ -97,6 +97,8 @@ public class Jmsrouting12Switch {
 			case Jmsrouting12Package.CONNECTION: {
 				Connection connection = (Connection)theEObject;
 				Object result = caseConnection(connection);
+				if (result == null) result = caseAbstractAnyType(connection);
+				if (result == null) result = caseAnyType(connection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -109,34 +111,42 @@ public class Jmsrouting12Switch {
 			case Jmsrouting12Package.HIGH_WATER_MARK: {
 				HighWaterMark highWaterMark = (HighWaterMark)theEObject;
 				Object result = caseHighWaterMark(highWaterMark);
+				if (result == null) result = caseAbstractAnyType(highWaterMark);
+				if (result == null) result = caseAnyType(highWaterMark);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case Jmsrouting12Package.JNDI: {
 				Jndi jndi = (Jndi)theEObject;
 				Object result = caseJndi(jndi);
+				if (result == null) result = caseAbstractAnyType(jndi);
+				if (result == null) result = caseAnyType(jndi);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case Jmsrouting12Package.MESSAGE: {
 				Message message = (Message)theEObject;
 				Object result = caseMessage(message);
+				if (result == null) result = caseAbstractAnyType(message);
+				if (result == null) result = caseAnyType(message);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case Jmsrouting12Package.ROUTER: {
-				Router router = (Router)theEObject;
-				Object result = caseRouter(router);
-				if (result == null) result = caseElementVisitor(router);
-				if (result == null) result = caseAbstractResourceConfig(router);
-				if (result == null) result = caseAbstractAnyType(router);
-				if (result == null) result = caseAnyType(router);
+			case Jmsrouting12Package.JMS12_ROUTER: {
+				JMS12Router jms12Router = (JMS12Router)theEObject;
+				Object result = caseJMS12Router(jms12Router);
+				if (result == null) result = caseElementVisitor(jms12Router);
+				if (result == null) result = caseAbstractResourceConfig(jms12Router);
+				if (result == null) result = caseAbstractAnyType(jms12Router);
+				if (result == null) result = caseAnyType(jms12Router);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case Jmsrouting12Package.SESSION: {
 				Session session = (Session)theEObject;
 				Object result = caseSession(session);
+				if (result == null) result = caseAbstractAnyType(session);
+				if (result == null) result = caseAnyType(session);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -220,17 +230,17 @@ public class Jmsrouting12Switch {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Router</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>JMS12 Router</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Router</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>JMS12 Router</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public Object caseRouter(Router object) {
+	public Object caseJMS12Router(JMS12Router object) {
 		return null;
 	}
 

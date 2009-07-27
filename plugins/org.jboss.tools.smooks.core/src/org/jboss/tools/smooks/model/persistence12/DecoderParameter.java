@@ -6,7 +6,7 @@
  */
 package org.jboss.tools.smooks.model.persistence12;
 
-import org.eclipse.emf.ecore.EObject;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='decoderParameter' kind='simple'"
  * @generated
  */
-public interface DecoderParameter extends EObject {
+public interface DecoderParameter extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->

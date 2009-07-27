@@ -92,8 +92,8 @@ public class Jmsrouting12AdapterFactory extends AdapterFactoryImpl {
 			public Object caseMessage(Message object) {
 				return createMessageAdapter();
 			}
-			public Object caseRouter(Router object) {
-				return createRouterAdapter();
+			public Object caseJMS12Router(JMS12Router object) {
+				return createJMS12RouterAdapter();
 			}
 			public Object caseSession(Session object) {
 				return createSessionAdapter();
@@ -199,16 +199,16 @@ public class Jmsrouting12AdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.jmsrouting12.Router <em>Router</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router <em>JMS12 Router</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Router
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.JMS12Router
 	 * @generated
 	 */
-	public Adapter createRouterAdapter() {
+	public Adapter createJMS12RouterAdapter() {
 		return null;
 	}
 

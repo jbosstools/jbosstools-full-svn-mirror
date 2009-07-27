@@ -6,9 +6,9 @@
  */
 package org.jboss.tools.smooks.model.json12;
 
-import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.common.util.EList;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='keyMap' kind='elementOnly'"
  * @generated
  */
-public interface KeyMap extends EObject {
+public interface KeyMap extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Key</b></em>' containment reference list.
 	 * The list contents are of type {@link org.jboss.tools.smooks.model.json12.Key}.

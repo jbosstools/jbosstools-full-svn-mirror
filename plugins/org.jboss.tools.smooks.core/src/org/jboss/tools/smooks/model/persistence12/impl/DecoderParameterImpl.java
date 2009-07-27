@@ -6,12 +6,13 @@
  */
 package org.jboss.tools.smooks.model.persistence12.impl;
 
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.persistence12.DecoderParameter;
 import org.jboss.tools.smooks.model.persistence12.Persistence12Package;
 
@@ -30,7 +31,7 @@ import org.jboss.tools.smooks.model.persistence12.Persistence12Package;
  *
  * @generated
  */
-public class DecoderParameterImpl extends EObjectImpl implements DecoderParameter {
+public class DecoderParameterImpl extends AbstractAnyTypeImpl implements DecoderParameter {
 	/**
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->

@@ -6,6 +6,7 @@
  */
 package org.jboss.tools.smooks.model.json12.impl;
 
+
 import java.util.Collection;
 
 
@@ -16,10 +17,9 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.json12.Json12Package;
 import org.jboss.tools.smooks.model.json12.Key;
 import org.jboss.tools.smooks.model.json12.KeyMap;
@@ -37,7 +37,7 @@ import org.jboss.tools.smooks.model.json12.KeyMap;
  *
  * @generated
  */
-public class KeyMapImpl extends EObjectImpl implements KeyMap {
+public class KeyMapImpl extends AbstractAnyTypeImpl implements KeyMap {
 	/**
 	 * The cached value of the '{@link #getKey() <em>Key</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

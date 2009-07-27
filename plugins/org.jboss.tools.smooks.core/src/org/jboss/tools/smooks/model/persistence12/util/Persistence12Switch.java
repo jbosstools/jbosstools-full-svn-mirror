@@ -97,6 +97,8 @@ public class Persistence12Switch {
 			case Persistence12Package.DECODER_PARAMETER: {
 				DecoderParameter decoderParameter = (DecoderParameter)theEObject;
 				Object result = caseDecoderParameter(decoderParameter);
+				if (result == null) result = caseAbstractAnyType(decoderParameter);
+				if (result == null) result = caseAnyType(decoderParameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -119,6 +121,8 @@ public class Persistence12Switch {
 			case Persistence12Package.EXPRESSION_PARAMETER: {
 				ExpressionParameter expressionParameter = (ExpressionParameter)theEObject;
 				Object result = caseExpressionParameter(expressionParameter);
+				if (result == null) result = caseAbstractAnyType(expressionParameter);
+				if (result == null) result = caseAnyType(expressionParameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -155,6 +159,8 @@ public class Persistence12Switch {
 			case Persistence12Package.PARAMETERS: {
 				Parameters parameters = (Parameters)theEObject;
 				Object result = caseParameters(parameters);
+				if (result == null) result = caseAbstractAnyType(parameters);
+				if (result == null) result = caseAnyType(parameters);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -171,12 +177,16 @@ public class Persistence12Switch {
 			case Persistence12Package.VALUE_PARAMETER: {
 				ValueParameter valueParameter = (ValueParameter)theEObject;
 				Object result = caseValueParameter(valueParameter);
+				if (result == null) result = caseAbstractAnyType(valueParameter);
+				if (result == null) result = caseAnyType(valueParameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case Persistence12Package.WIRING_PARAMETER: {
 				WiringParameter wiringParameter = (WiringParameter)theEObject;
 				Object result = caseWiringParameter(wiringParameter);
+				if (result == null) result = caseAbstractAnyType(wiringParameter);
+				if (result == null) result = caseAnyType(wiringParameter);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

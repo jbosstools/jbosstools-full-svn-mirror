@@ -6,6 +6,7 @@
  */
 package org.jboss.tools.smooks.model.javabean12.impl;
 
+
 import java.util.Collection;
 
 
@@ -18,10 +19,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.javabean12.DecodeParamType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.javabean12.ValueType;
@@ -45,7 +46,7 @@ import org.jboss.tools.smooks.model.javabean12.ValueType;
  *
  * @generated
  */
-public class ValueTypeImpl extends EObjectImpl implements ValueType {
+public class ValueTypeImpl extends AbstractAnyTypeImpl implements ValueType {
 	/**
 	 * The cached value of the '{@link #getDecodeParam() <em>Decode Param</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

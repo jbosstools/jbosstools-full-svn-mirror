@@ -683,10 +683,15 @@ public class Javabean12PackageImpl extends EPackageImpl implements Javabean12Pac
 		// Obtain other dependent packages
 		SmooksPackage theSmooksPackage = (SmooksPackage)EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI);
 		XMLTypePackage theXMLTypePackage = (XMLTypePackage)EPackage.Registry.INSTANCE.getEPackage(XMLTypePackage.eNS_URI);
+		CommonPackage theCommonPackage = (CommonPackage)EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI);
 
 		// Add supertypes to classes
 		beanTypeEClass.getESuperTypes().add(theSmooksPackage.getElementVisitor());
+		decodeParamTypeEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
+		expressionTypeEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
 		resultTypeEClass.getESuperTypes().add(theSmooksPackage.getElementVisitor());
+		valueTypeEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
+		wiringTypeEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(beanTypeEClass, BeanType.class, "BeanType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

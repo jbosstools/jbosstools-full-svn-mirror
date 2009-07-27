@@ -7,12 +7,13 @@
 package org.jboss.tools.smooks.model.jmsrouting12.impl;
 
 
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.jmsrouting12.AcknowledgeMode;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
 import org.jboss.tools.smooks.model.jmsrouting12.Session;
@@ -31,7 +32,7 @@ import org.jboss.tools.smooks.model.jmsrouting12.Session;
  *
  * @generated
  */
-public class SessionImpl extends EObjectImpl implements Session {
+public class SessionImpl extends AbstractAnyTypeImpl implements Session {
 	/**
 	 * The default value of the '{@link #getAcknowledgeMode() <em>Acknowledge Mode</em>}' attribute.
 	 * <!-- begin-user-doc -->

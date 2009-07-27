@@ -7,12 +7,13 @@
 package org.jboss.tools.smooks.model.jmsrouting12.impl;
 
 
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.jmsrouting12.Connection;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
 
@@ -31,7 +32,7 @@ import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
  *
  * @generated
  */
-public class ConnectionImpl extends EObjectImpl implements Connection {
+public class ConnectionImpl extends AbstractAnyTypeImpl implements Connection {
 	/**
 	 * The default value of the '{@link #getFactory() <em>Factory</em>}' attribute.
 	 * <!-- begin-user-doc -->

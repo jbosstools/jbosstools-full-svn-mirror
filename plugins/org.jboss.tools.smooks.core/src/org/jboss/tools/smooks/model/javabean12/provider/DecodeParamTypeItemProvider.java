@@ -7,6 +7,7 @@
 package org.jboss.tools.smooks.model.javabean12.provider;
 
 
+
 import java.util.Collection;
 import java.util.List;
 
@@ -23,8 +24,8 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
 import org.jboss.tools.smooks.model.javabean12.DecodeParamType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
@@ -35,7 +36,7 @@ import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
  * @generated
  */
 public class DecodeParamTypeItemProvider
-	extends ItemProviderAdapter
+	extends AbstractAnyTypeItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,

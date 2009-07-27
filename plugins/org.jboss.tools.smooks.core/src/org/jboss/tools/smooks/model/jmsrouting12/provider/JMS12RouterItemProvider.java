@@ -26,19 +26,19 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.jboss.tools.smooks.model.jmsrouting12.JMS12Router;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Factory;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
-import org.jboss.tools.smooks.model.jmsrouting12.Router;
 import org.jboss.tools.smooks.model.smooks.provider.ElementVisitorItemProvider;
 
 
 /**
- * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.jmsrouting12.Router} object.
+ * This is the item provider adapter for a {@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class RouterItemProvider
+public class JMS12RouterItemProvider
 	extends ElementVisitorItemProvider
 	implements
 		IEditingDomainItemProvider,
@@ -52,7 +52,7 @@ public class RouterItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RouterItemProvider(AdapterFactory adapterFactory) {
+	public JMS12RouterItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -86,9 +86,9 @@ public class RouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Router_beanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Router_beanId_feature", "_UI_Router_type"),
-				 Jmsrouting12Package.Literals.ROUTER__BEAN_ID,
+				 getString("_UI_JMS12Router_beanId_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_beanId_feature", "_UI_JMS12Router_type"),
+				 Jmsrouting12Package.Literals.JMS12_ROUTER__BEAN_ID,
 				 true,
 				 false,
 				 false,
@@ -108,9 +108,9 @@ public class RouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Router_destination_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Router_destination_feature", "_UI_Router_type"),
-				 Jmsrouting12Package.Literals.ROUTER__DESTINATION,
+				 getString("_UI_JMS12Router_destination_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_destination_feature", "_UI_JMS12Router_type"),
+				 Jmsrouting12Package.Literals.JMS12_ROUTER__DESTINATION,
 				 true,
 				 false,
 				 false,
@@ -130,9 +130,9 @@ public class RouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Router_executeBefore_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Router_executeBefore_feature", "_UI_Router_type"),
-				 Jmsrouting12Package.Literals.ROUTER__EXECUTE_BEFORE,
+				 getString("_UI_JMS12Router_executeBefore_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_executeBefore_feature", "_UI_JMS12Router_type"),
+				 Jmsrouting12Package.Literals.JMS12_ROUTER__EXECUTE_BEFORE,
 				 true,
 				 false,
 				 false,
@@ -152,9 +152,9 @@ public class RouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Router_routeOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Router_routeOnElement_feature", "_UI_Router_type"),
-				 Jmsrouting12Package.Literals.ROUTER__ROUTE_ON_ELEMENT,
+				 getString("_UI_JMS12Router_routeOnElement_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_routeOnElement_feature", "_UI_JMS12Router_type"),
+				 Jmsrouting12Package.Literals.JMS12_ROUTER__ROUTE_ON_ELEMENT,
 				 true,
 				 false,
 				 false,
@@ -174,9 +174,9 @@ public class RouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Router_routeOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Router_routeOnElementNS_feature", "_UI_Router_type"),
-				 Jmsrouting12Package.Literals.ROUTER__ROUTE_ON_ELEMENT_NS,
+				 getString("_UI_JMS12Router_routeOnElementNS_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_routeOnElementNS_feature", "_UI_JMS12Router_type"),
+				 Jmsrouting12Package.Literals.JMS12_ROUTER__ROUTE_ON_ELEMENT_NS,
 				 true,
 				 false,
 				 false,
@@ -196,11 +196,11 @@ public class RouterItemProvider
 	public Collection getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(Jmsrouting12Package.Literals.ROUTER__MESSAGE);
-			childrenFeatures.add(Jmsrouting12Package.Literals.ROUTER__CONNECTION);
-			childrenFeatures.add(Jmsrouting12Package.Literals.ROUTER__SESSION);
-			childrenFeatures.add(Jmsrouting12Package.Literals.ROUTER__JNDI);
-			childrenFeatures.add(Jmsrouting12Package.Literals.ROUTER__HIGH_WATER_MARK);
+			childrenFeatures.add(Jmsrouting12Package.Literals.JMS12_ROUTER__MESSAGE);
+			childrenFeatures.add(Jmsrouting12Package.Literals.JMS12_ROUTER__CONNECTION);
+			childrenFeatures.add(Jmsrouting12Package.Literals.JMS12_ROUTER__SESSION);
+			childrenFeatures.add(Jmsrouting12Package.Literals.JMS12_ROUTER__JNDI);
+			childrenFeatures.add(Jmsrouting12Package.Literals.JMS12_ROUTER__HIGH_WATER_MARK);
 		}
 		return childrenFeatures;
 	}
@@ -218,13 +218,13 @@ public class RouterItemProvider
 	}
 
 	/**
-	 * This returns Router.gif.
+	 * This returns JMS12Router.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Router"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/JMS12Router"));
 	}
 
 	/**
@@ -234,10 +234,10 @@ public class RouterItemProvider
 	 * @generated
 	 */
 	public String getText(Object object) {
-		String label = ((Router)object).getTargetProfile();
+		String label = ((JMS12Router)object).getTargetProfile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Router_type") :
-			getString("_UI_Router_type") + " " + label;
+			getString("_UI_JMS12Router_type") :
+			getString("_UI_JMS12Router_type") + " " + label;
 	}
 
 	/**
@@ -250,19 +250,19 @@ public class RouterItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Router.class)) {
-			case Jmsrouting12Package.ROUTER__BEAN_ID:
-			case Jmsrouting12Package.ROUTER__DESTINATION:
-			case Jmsrouting12Package.ROUTER__EXECUTE_BEFORE:
-			case Jmsrouting12Package.ROUTER__ROUTE_ON_ELEMENT:
-			case Jmsrouting12Package.ROUTER__ROUTE_ON_ELEMENT_NS:
+		switch (notification.getFeatureID(JMS12Router.class)) {
+			case Jmsrouting12Package.JMS12_ROUTER__BEAN_ID:
+			case Jmsrouting12Package.JMS12_ROUTER__DESTINATION:
+			case Jmsrouting12Package.JMS12_ROUTER__EXECUTE_BEFORE:
+			case Jmsrouting12Package.JMS12_ROUTER__ROUTE_ON_ELEMENT:
+			case Jmsrouting12Package.JMS12_ROUTER__ROUTE_ON_ELEMENT_NS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case Jmsrouting12Package.ROUTER__MESSAGE:
-			case Jmsrouting12Package.ROUTER__CONNECTION:
-			case Jmsrouting12Package.ROUTER__SESSION:
-			case Jmsrouting12Package.ROUTER__JNDI:
-			case Jmsrouting12Package.ROUTER__HIGH_WATER_MARK:
+			case Jmsrouting12Package.JMS12_ROUTER__MESSAGE:
+			case Jmsrouting12Package.JMS12_ROUTER__CONNECTION:
+			case Jmsrouting12Package.JMS12_ROUTER__SESSION:
+			case Jmsrouting12Package.JMS12_ROUTER__JNDI:
+			case Jmsrouting12Package.JMS12_ROUTER__HIGH_WATER_MARK:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -281,27 +281,27 @@ public class RouterItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(Jmsrouting12Package.Literals.ROUTER__MESSAGE,
+				(Jmsrouting12Package.Literals.JMS12_ROUTER__MESSAGE,
 				 Jmsrouting12Factory.eINSTANCE.createMessage()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(Jmsrouting12Package.Literals.ROUTER__CONNECTION,
+				(Jmsrouting12Package.Literals.JMS12_ROUTER__CONNECTION,
 				 Jmsrouting12Factory.eINSTANCE.createConnection()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(Jmsrouting12Package.Literals.ROUTER__SESSION,
+				(Jmsrouting12Package.Literals.JMS12_ROUTER__SESSION,
 				 Jmsrouting12Factory.eINSTANCE.createSession()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(Jmsrouting12Package.Literals.ROUTER__JNDI,
+				(Jmsrouting12Package.Literals.JMS12_ROUTER__JNDI,
 				 Jmsrouting12Factory.eINSTANCE.createJndi()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(Jmsrouting12Package.Literals.ROUTER__HIGH_WATER_MARK,
+				(Jmsrouting12Package.Literals.JMS12_ROUTER__HIGH_WATER_MARK,
 				 Jmsrouting12Factory.eINSTANCE.createHighWaterMark()));
 	}
 

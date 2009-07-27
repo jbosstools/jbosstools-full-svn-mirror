@@ -25,13 +25,13 @@ import org.jboss.tools.smooks.model.jmsrouting12.AcknowledgeMode;
 import org.jboss.tools.smooks.model.jmsrouting12.Connection;
 import org.jboss.tools.smooks.model.jmsrouting12.DeliveryMode;
 import org.jboss.tools.smooks.model.jmsrouting12.HighWaterMark;
+import org.jboss.tools.smooks.model.jmsrouting12.JMS12Router;
 import org.jboss.tools.smooks.model.jmsrouting12.JMSRouting12DocumentRoot;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Factory;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
 import org.jboss.tools.smooks.model.jmsrouting12.Jndi;
 import org.jboss.tools.smooks.model.jmsrouting12.Message;
 import org.jboss.tools.smooks.model.jmsrouting12.MessageType;
-import org.jboss.tools.smooks.model.jmsrouting12.Router;
 import org.jboss.tools.smooks.model.jmsrouting12.Session;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.impl.SmooksPackageImpl;
@@ -85,7 +85,7 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass routerEClass = null;
+	private EClass jms12RouterEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -186,18 +186,18 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 		XMLTypePackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
-		SmooksPackageImpl theSmooksPackage = (SmooksPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) instanceof SmooksPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) : SmooksPackage.eINSTANCE);
 		CommonPackageImpl theCommonPackage = (CommonPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI) instanceof CommonPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI) : CommonPackage.eINSTANCE);
+		SmooksPackageImpl theSmooksPackage = (SmooksPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) instanceof SmooksPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) : SmooksPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theJmsrouting12Package.createPackageContents();
-		theSmooksPackage.createPackageContents();
 		theCommonPackage.createPackageContents();
+		theSmooksPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theJmsrouting12Package.initializePackageContents();
-		theSmooksPackage.initializePackageContents();
 		theCommonPackage.initializePackageContents();
+		theSmooksPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theJmsrouting12Package.freeze();
@@ -429,8 +429,8 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getRouter() {
-		return routerEClass;
+	public EClass getJMS12Router() {
+		return jms12RouterEClass;
 	}
 
 	/**
@@ -438,8 +438,8 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getRouter_Message() {
-		return (EReference)routerEClass.getEStructuralFeatures().get(0);
+	public EReference getJMS12Router_Message() {
+		return (EReference)jms12RouterEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -447,8 +447,8 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getRouter_Connection() {
-		return (EReference)routerEClass.getEStructuralFeatures().get(1);
+	public EReference getJMS12Router_Connection() {
+		return (EReference)jms12RouterEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -456,8 +456,8 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getRouter_Session() {
-		return (EReference)routerEClass.getEStructuralFeatures().get(2);
+	public EReference getJMS12Router_Session() {
+		return (EReference)jms12RouterEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -465,8 +465,8 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getRouter_Jndi() {
-		return (EReference)routerEClass.getEStructuralFeatures().get(3);
+	public EReference getJMS12Router_Jndi() {
+		return (EReference)jms12RouterEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -474,8 +474,8 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getRouter_HighWaterMark() {
-		return (EReference)routerEClass.getEStructuralFeatures().get(4);
+	public EReference getJMS12Router_HighWaterMark() {
+		return (EReference)jms12RouterEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -483,8 +483,8 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getRouter_BeanId() {
-		return (EAttribute)routerEClass.getEStructuralFeatures().get(5);
+	public EAttribute getJMS12Router_BeanId() {
+		return (EAttribute)jms12RouterEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -492,8 +492,8 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getRouter_Destination() {
-		return (EAttribute)routerEClass.getEStructuralFeatures().get(6);
+	public EAttribute getJMS12Router_Destination() {
+		return (EAttribute)jms12RouterEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -501,8 +501,8 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getRouter_ExecuteBefore() {
-		return (EAttribute)routerEClass.getEStructuralFeatures().get(7);
+	public EAttribute getJMS12Router_ExecuteBefore() {
+		return (EAttribute)jms12RouterEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -510,8 +510,8 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getRouter_RouteOnElement() {
-		return (EAttribute)routerEClass.getEStructuralFeatures().get(8);
+	public EAttribute getJMS12Router_RouteOnElement() {
+		return (EAttribute)jms12RouterEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -519,8 +519,8 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getRouter_RouteOnElementNS() {
-		return (EAttribute)routerEClass.getEStructuralFeatures().get(9);
+	public EAttribute getJMS12Router_RouteOnElementNS() {
+		return (EAttribute)jms12RouterEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -661,17 +661,17 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 		createEAttribute(messageEClass, MESSAGE__TIME_TO_LIVE);
 		createEAttribute(messageEClass, MESSAGE__TYPE);
 
-		routerEClass = createEClass(ROUTER);
-		createEReference(routerEClass, ROUTER__MESSAGE);
-		createEReference(routerEClass, ROUTER__CONNECTION);
-		createEReference(routerEClass, ROUTER__SESSION);
-		createEReference(routerEClass, ROUTER__JNDI);
-		createEReference(routerEClass, ROUTER__HIGH_WATER_MARK);
-		createEAttribute(routerEClass, ROUTER__BEAN_ID);
-		createEAttribute(routerEClass, ROUTER__DESTINATION);
-		createEAttribute(routerEClass, ROUTER__EXECUTE_BEFORE);
-		createEAttribute(routerEClass, ROUTER__ROUTE_ON_ELEMENT);
-		createEAttribute(routerEClass, ROUTER__ROUTE_ON_ELEMENT_NS);
+		jms12RouterEClass = createEClass(JMS12_ROUTER);
+		createEReference(jms12RouterEClass, JMS12_ROUTER__MESSAGE);
+		createEReference(jms12RouterEClass, JMS12_ROUTER__CONNECTION);
+		createEReference(jms12RouterEClass, JMS12_ROUTER__SESSION);
+		createEReference(jms12RouterEClass, JMS12_ROUTER__JNDI);
+		createEReference(jms12RouterEClass, JMS12_ROUTER__HIGH_WATER_MARK);
+		createEAttribute(jms12RouterEClass, JMS12_ROUTER__BEAN_ID);
+		createEAttribute(jms12RouterEClass, JMS12_ROUTER__DESTINATION);
+		createEAttribute(jms12RouterEClass, JMS12_ROUTER__EXECUTE_BEFORE);
+		createEAttribute(jms12RouterEClass, JMS12_ROUTER__ROUTE_ON_ELEMENT);
+		createEAttribute(jms12RouterEClass, JMS12_ROUTER__ROUTE_ON_ELEMENT_NS);
 
 		sessionEClass = createEClass(SESSION);
 		createEAttribute(sessionEClass, SESSION__ACKNOWLEDGE_MODE);
@@ -712,11 +712,17 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
+		CommonPackage theCommonPackage = (CommonPackage)EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI);
 		XMLTypePackage theXMLTypePackage = (XMLTypePackage)EPackage.Registry.INSTANCE.getEPackage(XMLTypePackage.eNS_URI);
 		SmooksPackage theSmooksPackage = (SmooksPackage)EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI);
 
 		// Add supertypes to classes
-		routerEClass.getESuperTypes().add(theSmooksPackage.getElementVisitor());
+		connectionEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
+		highWaterMarkEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
+		jndiEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
+		messageEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
+		jms12RouterEClass.getESuperTypes().add(theSmooksPackage.getElementVisitor());
+		sessionEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(connectionEClass, Connection.class, "Connection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -728,7 +734,7 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 		initEAttribute(getJMSRouting12DocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getJMSRouting12DocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getJMSRouting12DocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getJMSRouting12DocumentRoot_Router(), this.getRouter(), null, "router", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getJMSRouting12DocumentRoot_Router(), this.getJMS12Router(), null, "router", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(highWaterMarkEClass, HighWaterMark.class, "HighWaterMark", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getHighWaterMark_Mark(), theXMLTypePackage.getInt(), "mark", "200", 0, 1, HighWaterMark.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -748,17 +754,17 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 		initEAttribute(getMessage_TimeToLive(), theXMLTypePackage.getLong(), "timeToLive", "0", 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMessage_Type(), this.getMessageType(), "type", "TextMessage", 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(routerEClass, Router.class, "Router", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRouter_Message(), this.getMessage(), null, "message", null, 0, 1, Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRouter_Connection(), this.getConnection(), null, "connection", null, 0, 1, Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRouter_Session(), this.getSession(), null, "session", null, 0, 1, Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRouter_Jndi(), this.getJndi(), null, "jndi", null, 0, 1, Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRouter_HighWaterMark(), this.getHighWaterMark(), null, "highWaterMark", null, 0, 1, Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRouter_BeanId(), theXMLTypePackage.getString(), "beanId", null, 1, 1, Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRouter_Destination(), theXMLTypePackage.getString(), "destination", null, 1, 1, Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRouter_ExecuteBefore(), theXMLTypePackage.getBoolean(), "executeBefore", "false", 0, 1, Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRouter_RouteOnElement(), theXMLTypePackage.getString(), "routeOnElement", null, 1, 1, Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRouter_RouteOnElementNS(), theXMLTypePackage.getString(), "routeOnElementNS", null, 0, 1, Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(jms12RouterEClass, JMS12Router.class, "JMS12Router", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getJMS12Router_Message(), this.getMessage(), null, "message", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJMS12Router_Connection(), this.getConnection(), null, "connection", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJMS12Router_Session(), this.getSession(), null, "session", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJMS12Router_Jndi(), this.getJndi(), null, "jndi", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getJMS12Router_HighWaterMark(), this.getHighWaterMark(), null, "highWaterMark", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getJMS12Router_BeanId(), theXMLTypePackage.getString(), "beanId", null, 1, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getJMS12Router_Destination(), theXMLTypePackage.getString(), "destination", null, 1, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getJMS12Router_ExecuteBefore(), theXMLTypePackage.getBoolean(), "executeBefore", "false", 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getJMS12Router_RouteOnElement(), theXMLTypePackage.getString(), "routeOnElement", null, 1, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getJMS12Router_RouteOnElementNS(), theXMLTypePackage.getString(), "routeOnElementNS", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(sessionEClass, Session.class, "Session", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSession_AcknowledgeMode(), this.getAcknowledgeMode(), "acknowledgeMode", "AUTO_ACKNOWLEDGE", 0, 1, Session.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1011,14 +1017,14 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 			 "baseType", "messageType"
 		   });			
 		addAnnotation
-		  (routerEClass, 
+		  (jms12RouterEClass, 
 		   source, 
 		   new String[] {
 			 "name", "router",
 			 "kind", "elementOnly"
 		   });			
 		addAnnotation
-		  (getRouter_Message(), 
+		  (getJMS12Router_Message(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -1026,7 +1032,7 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 			 "namespace", "##targetNamespace"
 		   });			
 		addAnnotation
-		  (getRouter_Connection(), 
+		  (getJMS12Router_Connection(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -1034,7 +1040,7 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 			 "namespace", "##targetNamespace"
 		   });			
 		addAnnotation
-		  (getRouter_Session(), 
+		  (getJMS12Router_Session(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -1042,7 +1048,7 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 			 "namespace", "##targetNamespace"
 		   });			
 		addAnnotation
-		  (getRouter_Jndi(), 
+		  (getJMS12Router_Jndi(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -1050,7 +1056,7 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 			 "namespace", "##targetNamespace"
 		   });			
 		addAnnotation
-		  (getRouter_HighWaterMark(), 
+		  (getJMS12Router_HighWaterMark(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -1058,35 +1064,35 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 			 "namespace", "##targetNamespace"
 		   });			
 		addAnnotation
-		  (getRouter_BeanId(), 
+		  (getJMS12Router_BeanId(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "beanId"
 		   });			
 		addAnnotation
-		  (getRouter_Destination(), 
+		  (getJMS12Router_Destination(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "destination"
 		   });			
 		addAnnotation
-		  (getRouter_ExecuteBefore(), 
+		  (getJMS12Router_ExecuteBefore(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "executeBefore"
 		   });			
 		addAnnotation
-		  (getRouter_RouteOnElement(), 
+		  (getJMS12Router_RouteOnElement(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "routeOnElement"
 		   });			
 		addAnnotation
-		  (getRouter_RouteOnElementNS(), 
+		  (getJMS12Router_RouteOnElementNS(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",

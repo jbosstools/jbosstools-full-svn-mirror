@@ -6,7 +6,7 @@
  */
 package org.jboss.tools.smooks.model.jmsrouting12;
 
-import org.eclipse.emf.ecore.EObject;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='message' kind='elementOnly'"
  * @generated
  */
-public interface Message extends EObject {
+public interface Message extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Correlation Id Pattern</b></em>' attribute.
 	 * <!-- begin-user-doc -->

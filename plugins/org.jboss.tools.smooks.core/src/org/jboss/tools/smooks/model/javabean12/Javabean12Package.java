@@ -6,10 +6,12 @@
  */
 package org.jboss.tools.smooks.model.javabean12;
 
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.jboss.tools.smooks.model.common.CommonPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 
@@ -220,13 +222,40 @@ public interface Javabean12Package extends EPackage {
 	int DECODE_PARAM_TYPE = 1;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DECODE_PARAM_TYPE__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DECODE_PARAM_TYPE__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DECODE_PARAM_TYPE__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DECODE_PARAM_TYPE__VALUE = 0;
+	int DECODE_PARAM_TYPE__VALUE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -235,7 +264,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DECODE_PARAM_TYPE__NAME = 1;
+	int DECODE_PARAM_TYPE__NAME = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Decode Param Type</em>' class.
@@ -244,7 +273,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DECODE_PARAM_TYPE_FEATURE_COUNT = 2;
+	int DECODE_PARAM_TYPE_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.javabean12.impl.Javabean12DocumentRootImpl <em>Document Root</em>}' class.
@@ -357,13 +386,40 @@ public interface Javabean12Package extends EPackage {
 	int EXPRESSION_TYPE = 3;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPRESSION_TYPE__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPRESSION_TYPE__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXPRESSION_TYPE__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_TYPE__VALUE = 0;
+	int EXPRESSION_TYPE__VALUE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Exec On Element</b></em>' attribute.
@@ -372,7 +428,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_TYPE__EXEC_ON_ELEMENT = 1;
+	int EXPRESSION_TYPE__EXEC_ON_ELEMENT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Exec On Element NS</b></em>' attribute.
@@ -381,7 +437,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS = 2;
+	int EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Init Val</b></em>' attribute.
@@ -390,7 +446,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_TYPE__INIT_VAL = 3;
+	int EXPRESSION_TYPE__INIT_VAL = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Property</b></em>' attribute.
@@ -399,7 +455,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_TYPE__PROPERTY = 4;
+	int EXPRESSION_TYPE__PROPERTY = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Setter Method</b></em>' attribute.
@@ -408,7 +464,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_TYPE__SETTER_METHOD = 5;
+	int EXPRESSION_TYPE__SETTER_METHOD = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Expression Type</em>' class.
@@ -417,7 +473,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_TYPE_FEATURE_COUNT = 6;
+	int EXPRESSION_TYPE_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.javabean12.impl.ResultTypeImpl <em>Result Type</em>}' class.
@@ -503,13 +559,40 @@ public interface Javabean12Package extends EPackage {
 	int VALUE_TYPE = 5;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_TYPE__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_TYPE__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VALUE_TYPE__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Decode Param</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_TYPE__DECODE_PARAM = 0;
+	int VALUE_TYPE__DECODE_PARAM = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Data</b></em>' attribute.
@@ -518,7 +601,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_TYPE__DATA = 1;
+	int VALUE_TYPE__DATA = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Data NS</b></em>' attribute.
@@ -527,7 +610,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_TYPE__DATA_NS = 2;
+	int VALUE_TYPE__DATA_NS = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Decoder</b></em>' attribute.
@@ -536,7 +619,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_TYPE__DECODER = 3;
+	int VALUE_TYPE__DECODER = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Default</b></em>' attribute.
@@ -545,7 +628,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_TYPE__DEFAULT = 4;
+	int VALUE_TYPE__DEFAULT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Property</b></em>' attribute.
@@ -554,7 +637,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_TYPE__PROPERTY = 5;
+	int VALUE_TYPE__PROPERTY = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Setter Method</b></em>' attribute.
@@ -563,7 +646,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_TYPE__SETTER_METHOD = 6;
+	int VALUE_TYPE__SETTER_METHOD = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of structural features of the '<em>Value Type</em>' class.
@@ -572,7 +655,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALUE_TYPE_FEATURE_COUNT = 7;
+	int VALUE_TYPE_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 7;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.javabean12.impl.WiringTypeImpl <em>Wiring Type</em>}' class.
@@ -585,13 +668,40 @@ public interface Javabean12Package extends EPackage {
 	int WIRING_TYPE = 6;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIRING_TYPE__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIRING_TYPE__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIRING_TYPE__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Bean Id Ref</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WIRING_TYPE__BEAN_ID_REF = 0;
+	int WIRING_TYPE__BEAN_ID_REF = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Property</b></em>' attribute.
@@ -600,7 +710,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WIRING_TYPE__PROPERTY = 1;
+	int WIRING_TYPE__PROPERTY = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Setter Method</b></em>' attribute.
@@ -609,7 +719,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WIRING_TYPE__SETTER_METHOD = 2;
+	int WIRING_TYPE__SETTER_METHOD = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Wire On Element</b></em>' attribute.
@@ -618,7 +728,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WIRING_TYPE__WIRE_ON_ELEMENT = 3;
+	int WIRING_TYPE__WIRE_ON_ELEMENT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Wire On Element NS</b></em>' attribute.
@@ -627,7 +737,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WIRING_TYPE__WIRE_ON_ELEMENT_NS = 4;
+	int WIRING_TYPE__WIRE_ON_ELEMENT_NS = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Wiring Type</em>' class.
@@ -636,7 +746,7 @@ public interface Javabean12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WIRING_TYPE_FEATURE_COUNT = 5;
+	int WIRING_TYPE_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 5;
 
 
 	/**

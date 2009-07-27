@@ -203,18 +203,18 @@ public class Persistence12PackageImpl extends EPackageImpl implements Persistenc
 		XMLTypePackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
-		SmooksPackageImpl theSmooksPackage = (SmooksPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) instanceof SmooksPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) : SmooksPackage.eINSTANCE);
 		CommonPackageImpl theCommonPackage = (CommonPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI) instanceof CommonPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI) : CommonPackage.eINSTANCE);
+		SmooksPackageImpl theSmooksPackage = (SmooksPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) instanceof SmooksPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) : SmooksPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		thePersistence12Package.createPackageContents();
-		theSmooksPackage.createPackageContents();
 		theCommonPackage.createPackageContents();
+		theSmooksPackage.createPackageContents();
 
 		// Initialize created meta-data
 		thePersistence12Package.initializePackageContents();
-		theSmooksPackage.initializePackageContents();
 		theCommonPackage.initializePackageContents();
+		theSmooksPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		thePersistence12Package.freeze();
@@ -1083,15 +1083,21 @@ public class Persistence12PackageImpl extends EPackageImpl implements Persistenc
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
+		CommonPackage theCommonPackage = (CommonPackage)EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI);
 		XMLTypePackage theXMLTypePackage = (XMLTypePackage)EPackage.Registry.INSTANCE.getEPackage(XMLTypePackage.eNS_URI);
 		SmooksPackage theSmooksPackage = (SmooksPackage)EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI);
 
 		// Add supertypes to classes
+		decoderParameterEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
 		deleterEClass.getESuperTypes().add(theSmooksPackage.getElementVisitor());
+		expressionParameterEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
 		flusherEClass.getESuperTypes().add(theSmooksPackage.getElementVisitor());
 		inserterEClass.getESuperTypes().add(theSmooksPackage.getElementVisitor());
 		locatorEClass.getESuperTypes().add(theSmooksPackage.getElementVisitor());
+		parametersEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
 		updaterEClass.getESuperTypes().add(theSmooksPackage.getElementVisitor());
+		valueParameterEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
+		wiringParameterEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(decoderParameterEClass, DecoderParameter.class, "DecoderParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

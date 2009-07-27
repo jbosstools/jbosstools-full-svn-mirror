@@ -6,12 +6,14 @@
  */
 package org.jboss.tools.smooks.model.jmsrouting12;
 
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.jboss.tools.smooks.model.common.CommonPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 
@@ -77,13 +79,40 @@ public interface Jmsrouting12Package extends EPackage {
 	int CONNECTION = 0;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTION__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTION__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTION__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Factory</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION__FACTORY = 0;
+	int CONNECTION__FACTORY = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Security Credential</b></em>' attribute.
@@ -92,7 +121,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION__SECURITY_CREDENTIAL = 1;
+	int CONNECTION__SECURITY_CREDENTIAL = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Security Principal</b></em>' attribute.
@@ -101,7 +130,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION__SECURITY_PRINCIPAL = 2;
+	int CONNECTION__SECURITY_PRINCIPAL = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Connection</em>' class.
@@ -110,7 +139,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION_FEATURE_COUNT = 3;
+	int CONNECTION_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.jmsrouting12.impl.JMSRouting12DocumentRootImpl <em>JMS Routing12 Document Root</em>}' class.
@@ -178,13 +207,40 @@ public interface Jmsrouting12Package extends EPackage {
 	int HIGH_WATER_MARK = 2;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HIGH_WATER_MARK__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HIGH_WATER_MARK__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HIGH_WATER_MARK__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Mark</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HIGH_WATER_MARK__MARK = 0;
+	int HIGH_WATER_MARK__MARK = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Poll Frequency</b></em>' attribute.
@@ -193,7 +249,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int HIGH_WATER_MARK__POLL_FREQUENCY = 1;
+	int HIGH_WATER_MARK__POLL_FREQUENCY = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Timeout</b></em>' attribute.
@@ -202,7 +258,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int HIGH_WATER_MARK__TIMEOUT = 2;
+	int HIGH_WATER_MARK__TIMEOUT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>High Water Mark</em>' class.
@@ -211,7 +267,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int HIGH_WATER_MARK_FEATURE_COUNT = 3;
+	int HIGH_WATER_MARK_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.jmsrouting12.impl.JndiImpl <em>Jndi</em>}' class.
@@ -224,13 +280,40 @@ public interface Jmsrouting12Package extends EPackage {
 	int JNDI = 3;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JNDI__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JNDI__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JNDI__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Context Factory</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int JNDI__CONTEXT_FACTORY = 0;
+	int JNDI__CONTEXT_FACTORY = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Naming Factory</b></em>' attribute.
@@ -239,7 +322,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int JNDI__NAMING_FACTORY = 1;
+	int JNDI__NAMING_FACTORY = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Properties</b></em>' attribute.
@@ -248,7 +331,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int JNDI__PROPERTIES = 2;
+	int JNDI__PROPERTIES = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Provider Url</b></em>' attribute.
@@ -257,7 +340,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int JNDI__PROVIDER_URL = 3;
+	int JNDI__PROVIDER_URL = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Jndi</em>' class.
@@ -266,7 +349,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int JNDI_FEATURE_COUNT = 4;
+	int JNDI_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.jmsrouting12.impl.MessageImpl <em>Message</em>}' class.
@@ -279,77 +362,13 @@ public interface Jmsrouting12Package extends EPackage {
 	int MESSAGE = 4;
 
 	/**
-	 * The feature id for the '<em><b>Correlation Id Pattern</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MESSAGE__CORRELATION_ID_PATTERN = 0;
-
-	/**
-	 * The feature id for the '<em><b>Delivery Mode</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MESSAGE__DELIVERY_MODE = 1;
-
-	/**
-	 * The feature id for the '<em><b>Priority</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MESSAGE__PRIORITY = 2;
-
-	/**
-	 * The feature id for the '<em><b>Time To Live</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MESSAGE__TIME_TO_LIVE = 3;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MESSAGE__TYPE = 4;
-
-	/**
-	 * The number of structural features of the '<em>Message</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MESSAGE_FEATURE_COUNT = 5;
-
-	/**
-	 * The meta object id for the '{@link org.jboss.tools.smooks.model.jmsrouting12.impl.RouterImpl <em>Router</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.impl.RouterImpl
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.impl.Jmsrouting12PackageImpl#getRouter()
-	 * @generated
-	 */
-	int ROUTER = 5;
-
-	/**
 	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__MIXED = SmooksPackage.ELEMENT_VISITOR__MIXED;
+	int MESSAGE__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
 
 	/**
 	 * The feature id for the '<em><b>Any</b></em>' attribute list.
@@ -358,7 +377,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__ANY = SmooksPackage.ELEMENT_VISITOR__ANY;
+	int MESSAGE__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
 
 	/**
 	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
@@ -367,7 +386,98 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__ANY_ATTRIBUTE = SmooksPackage.ELEMENT_VISITOR__ANY_ATTRIBUTE;
+	int MESSAGE__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
+	 * The feature id for the '<em><b>Correlation Id Pattern</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MESSAGE__CORRELATION_ID_PATTERN = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Delivery Mode</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MESSAGE__DELIVERY_MODE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Priority</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MESSAGE__PRIORITY = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Time To Live</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MESSAGE__TIME_TO_LIVE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MESSAGE__TYPE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of structural features of the '<em>Message</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MESSAGE_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 5;
+
+	/**
+	 * The meta object id for the '{@link org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl <em>JMS12 Router</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.impl.Jmsrouting12PackageImpl#getJMS12Router()
+	 * @generated
+	 */
+	int JMS12_ROUTER = 5;
+
+	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JMS12_ROUTER__MIXED = SmooksPackage.ELEMENT_VISITOR__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JMS12_ROUTER__ANY = SmooksPackage.ELEMENT_VISITOR__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int JMS12_ROUTER__ANY_ATTRIBUTE = SmooksPackage.ELEMENT_VISITOR__ANY_ATTRIBUTE;
 
 	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
@@ -376,7 +486,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__CONDITION = SmooksPackage.ELEMENT_VISITOR__CONDITION;
+	int JMS12_ROUTER__CONDITION = SmooksPackage.ELEMENT_VISITOR__CONDITION;
 
 	/**
 	 * The feature id for the '<em><b>Target Profile</b></em>' attribute.
@@ -385,7 +495,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__TARGET_PROFILE = SmooksPackage.ELEMENT_VISITOR__TARGET_PROFILE;
+	int JMS12_ROUTER__TARGET_PROFILE = SmooksPackage.ELEMENT_VISITOR__TARGET_PROFILE;
 
 	/**
 	 * The feature id for the '<em><b>Message</b></em>' containment reference.
@@ -394,7 +504,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__MESSAGE = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 0;
+	int JMS12_ROUTER__MESSAGE = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Connection</b></em>' containment reference.
@@ -403,7 +513,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__CONNECTION = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 1;
+	int JMS12_ROUTER__CONNECTION = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Session</b></em>' containment reference.
@@ -412,7 +522,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__SESSION = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 2;
+	int JMS12_ROUTER__SESSION = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Jndi</b></em>' containment reference.
@@ -421,7 +531,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__JNDI = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 3;
+	int JMS12_ROUTER__JNDI = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>High Water Mark</b></em>' containment reference.
@@ -430,7 +540,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__HIGH_WATER_MARK = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 4;
+	int JMS12_ROUTER__HIGH_WATER_MARK = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Bean Id</b></em>' attribute.
@@ -439,7 +549,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__BEAN_ID = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 5;
+	int JMS12_ROUTER__BEAN_ID = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Destination</b></em>' attribute.
@@ -448,7 +558,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__DESTINATION = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 6;
+	int JMS12_ROUTER__DESTINATION = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Execute Before</b></em>' attribute.
@@ -457,7 +567,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__EXECUTE_BEFORE = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 7;
+	int JMS12_ROUTER__EXECUTE_BEFORE = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Route On Element</b></em>' attribute.
@@ -466,7 +576,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__ROUTE_ON_ELEMENT = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 8;
+	int JMS12_ROUTER__ROUTE_ON_ELEMENT = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Route On Element NS</b></em>' attribute.
@@ -475,16 +585,16 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER__ROUTE_ON_ELEMENT_NS = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 9;
+	int JMS12_ROUTER__ROUTE_ON_ELEMENT_NS = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 9;
 
 	/**
-	 * The number of structural features of the '<em>Router</em>' class.
+	 * The number of structural features of the '<em>JMS12 Router</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ROUTER_FEATURE_COUNT = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 10;
+	int JMS12_ROUTER_FEATURE_COUNT = SmooksPackage.ELEMENT_VISITOR_FEATURE_COUNT + 10;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.jmsrouting12.impl.SessionImpl <em>Session</em>}' class.
@@ -497,13 +607,40 @@ public interface Jmsrouting12Package extends EPackage {
 	int SESSION = 6;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SESSION__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SESSION__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SESSION__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Acknowledge Mode</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SESSION__ACKNOWLEDGE_MODE = 0;
+	int SESSION__ACKNOWLEDGE_MODE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Transacted</b></em>' attribute.
@@ -512,7 +649,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SESSION__TRANSACTED = 1;
+	int SESSION__TRANSACTED = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Session</em>' class.
@@ -521,7 +658,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SESSION_FEATURE_COUNT = 2;
+	int SESSION_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.jmsrouting12.AcknowledgeMode <em>Acknowledge Mode</em>}' enum.
@@ -844,124 +981,124 @@ public interface Jmsrouting12Package extends EPackage {
 	EAttribute getMessage_Type();
 
 	/**
-	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.jmsrouting12.Router <em>Router</em>}'.
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router <em>JMS12 Router</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Router</em>'.
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Router
+	 * @return the meta object for class '<em>JMS12 Router</em>'.
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.JMS12Router
 	 * @generated
 	 */
-	EClass getRouter();
+	EClass getJMS12Router();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getMessage <em>Message</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getMessage <em>Message</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Message</em>'.
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Router#getMessage()
-	 * @see #getRouter()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getMessage()
+	 * @see #getJMS12Router()
 	 * @generated
 	 */
-	EReference getRouter_Message();
+	EReference getJMS12Router_Message();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getConnection <em>Connection</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getConnection <em>Connection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Connection</em>'.
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Router#getConnection()
-	 * @see #getRouter()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getConnection()
+	 * @see #getJMS12Router()
 	 * @generated
 	 */
-	EReference getRouter_Connection();
+	EReference getJMS12Router_Connection();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getSession <em>Session</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getSession <em>Session</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Session</em>'.
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Router#getSession()
-	 * @see #getRouter()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getSession()
+	 * @see #getJMS12Router()
 	 * @generated
 	 */
-	EReference getRouter_Session();
+	EReference getJMS12Router_Session();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getJndi <em>Jndi</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getJndi <em>Jndi</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Jndi</em>'.
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Router#getJndi()
-	 * @see #getRouter()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getJndi()
+	 * @see #getJMS12Router()
 	 * @generated
 	 */
-	EReference getRouter_Jndi();
+	EReference getJMS12Router_Jndi();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getHighWaterMark <em>High Water Mark</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getHighWaterMark <em>High Water Mark</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>High Water Mark</em>'.
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Router#getHighWaterMark()
-	 * @see #getRouter()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getHighWaterMark()
+	 * @see #getJMS12Router()
 	 * @generated
 	 */
-	EReference getRouter_HighWaterMark();
+	EReference getJMS12Router_HighWaterMark();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getBeanId <em>Bean Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getBeanId <em>Bean Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Bean Id</em>'.
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Router#getBeanId()
-	 * @see #getRouter()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getBeanId()
+	 * @see #getJMS12Router()
 	 * @generated
 	 */
-	EAttribute getRouter_BeanId();
+	EAttribute getJMS12Router_BeanId();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getDestination <em>Destination</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getDestination <em>Destination</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Destination</em>'.
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Router#getDestination()
-	 * @see #getRouter()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getDestination()
+	 * @see #getJMS12Router()
 	 * @generated
 	 */
-	EAttribute getRouter_Destination();
+	EAttribute getJMS12Router_Destination();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#isExecuteBefore <em>Execute Before</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#isExecuteBefore <em>Execute Before</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Execute Before</em>'.
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Router#isExecuteBefore()
-	 * @see #getRouter()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#isExecuteBefore()
+	 * @see #getJMS12Router()
 	 * @generated
 	 */
-	EAttribute getRouter_ExecuteBefore();
+	EAttribute getJMS12Router_ExecuteBefore();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getRouteOnElement <em>Route On Element</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getRouteOnElement <em>Route On Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Route On Element</em>'.
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Router#getRouteOnElement()
-	 * @see #getRouter()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getRouteOnElement()
+	 * @see #getJMS12Router()
 	 * @generated
 	 */
-	EAttribute getRouter_RouteOnElement();
+	EAttribute getJMS12Router_RouteOnElement();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.jmsrouting12.Router#getRouteOnElementNS <em>Route On Element NS</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getRouteOnElementNS <em>Route On Element NS</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Route On Element NS</em>'.
-	 * @see org.jboss.tools.smooks.model.jmsrouting12.Router#getRouteOnElementNS()
-	 * @see #getRouter()
+	 * @see org.jboss.tools.smooks.model.jmsrouting12.JMS12Router#getRouteOnElementNS()
+	 * @see #getJMS12Router()
 	 * @generated
 	 */
-	EAttribute getRouter_RouteOnElementNS();
+	EAttribute getJMS12Router_RouteOnElementNS();
 
 	/**
 	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.jmsrouting12.Session <em>Session</em>}'.
@@ -1286,14 +1423,14 @@ public interface Jmsrouting12Package extends EPackage {
 		EAttribute MESSAGE__TYPE = eINSTANCE.getMessage_Type();
 
 		/**
-		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.jmsrouting12.impl.RouterImpl <em>Router</em>}' class.
+		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl <em>JMS12 Router</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.jboss.tools.smooks.model.jmsrouting12.impl.RouterImpl
-		 * @see org.jboss.tools.smooks.model.jmsrouting12.impl.Jmsrouting12PackageImpl#getRouter()
+		 * @see org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl
+		 * @see org.jboss.tools.smooks.model.jmsrouting12.impl.Jmsrouting12PackageImpl#getJMS12Router()
 		 * @generated
 		 */
-		EClass ROUTER = eINSTANCE.getRouter();
+		EClass JMS12_ROUTER = eINSTANCE.getJMS12Router();
 
 		/**
 		 * The meta object literal for the '<em><b>Message</b></em>' containment reference feature.
@@ -1301,7 +1438,7 @@ public interface Jmsrouting12Package extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ROUTER__MESSAGE = eINSTANCE.getRouter_Message();
+		EReference JMS12_ROUTER__MESSAGE = eINSTANCE.getJMS12Router_Message();
 
 		/**
 		 * The meta object literal for the '<em><b>Connection</b></em>' containment reference feature.
@@ -1309,7 +1446,7 @@ public interface Jmsrouting12Package extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ROUTER__CONNECTION = eINSTANCE.getRouter_Connection();
+		EReference JMS12_ROUTER__CONNECTION = eINSTANCE.getJMS12Router_Connection();
 
 		/**
 		 * The meta object literal for the '<em><b>Session</b></em>' containment reference feature.
@@ -1317,7 +1454,7 @@ public interface Jmsrouting12Package extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ROUTER__SESSION = eINSTANCE.getRouter_Session();
+		EReference JMS12_ROUTER__SESSION = eINSTANCE.getJMS12Router_Session();
 
 		/**
 		 * The meta object literal for the '<em><b>Jndi</b></em>' containment reference feature.
@@ -1325,7 +1462,7 @@ public interface Jmsrouting12Package extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ROUTER__JNDI = eINSTANCE.getRouter_Jndi();
+		EReference JMS12_ROUTER__JNDI = eINSTANCE.getJMS12Router_Jndi();
 
 		/**
 		 * The meta object literal for the '<em><b>High Water Mark</b></em>' containment reference feature.
@@ -1333,7 +1470,7 @@ public interface Jmsrouting12Package extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ROUTER__HIGH_WATER_MARK = eINSTANCE.getRouter_HighWaterMark();
+		EReference JMS12_ROUTER__HIGH_WATER_MARK = eINSTANCE.getJMS12Router_HighWaterMark();
 
 		/**
 		 * The meta object literal for the '<em><b>Bean Id</b></em>' attribute feature.
@@ -1341,7 +1478,7 @@ public interface Jmsrouting12Package extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ROUTER__BEAN_ID = eINSTANCE.getRouter_BeanId();
+		EAttribute JMS12_ROUTER__BEAN_ID = eINSTANCE.getJMS12Router_BeanId();
 
 		/**
 		 * The meta object literal for the '<em><b>Destination</b></em>' attribute feature.
@@ -1349,7 +1486,7 @@ public interface Jmsrouting12Package extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ROUTER__DESTINATION = eINSTANCE.getRouter_Destination();
+		EAttribute JMS12_ROUTER__DESTINATION = eINSTANCE.getJMS12Router_Destination();
 
 		/**
 		 * The meta object literal for the '<em><b>Execute Before</b></em>' attribute feature.
@@ -1357,7 +1494,7 @@ public interface Jmsrouting12Package extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ROUTER__EXECUTE_BEFORE = eINSTANCE.getRouter_ExecuteBefore();
+		EAttribute JMS12_ROUTER__EXECUTE_BEFORE = eINSTANCE.getJMS12Router_ExecuteBefore();
 
 		/**
 		 * The meta object literal for the '<em><b>Route On Element</b></em>' attribute feature.
@@ -1365,7 +1502,7 @@ public interface Jmsrouting12Package extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ROUTER__ROUTE_ON_ELEMENT = eINSTANCE.getRouter_RouteOnElement();
+		EAttribute JMS12_ROUTER__ROUTE_ON_ELEMENT = eINSTANCE.getJMS12Router_RouteOnElement();
 
 		/**
 		 * The meta object literal for the '<em><b>Route On Element NS</b></em>' attribute feature.
@@ -1373,7 +1510,7 @@ public interface Jmsrouting12Package extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ROUTER__ROUTE_ON_ELEMENT_NS = eINSTANCE.getRouter_RouteOnElementNS();
+		EAttribute JMS12_ROUTER__ROUTE_ON_ELEMENT_NS = eINSTANCE.getJMS12Router_RouteOnElementNS();
 
 		/**
 		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.jmsrouting12.impl.SessionImpl <em>Session</em>}' class.

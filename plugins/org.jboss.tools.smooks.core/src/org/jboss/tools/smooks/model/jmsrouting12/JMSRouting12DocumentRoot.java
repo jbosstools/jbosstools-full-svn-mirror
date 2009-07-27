@@ -99,13 +99,13 @@ public interface JMSRouting12DocumentRoot extends EObject {
 	 * 	   		
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Router</em>' containment reference.
-	 * @see #setRouter(Router)
+	 * @see #setRouter(JMS12Router)
 	 * @see org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package#getJMSRouting12DocumentRoot_Router()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='router' namespace='##targetNamespace' affiliation='http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config'"
 	 * @generated
 	 */
-	Router getRouter();
+	JMS12Router getRouter();
 
 	/**
 	 * Sets the value of the '{@link org.jboss.tools.smooks.model.jmsrouting12.JMSRouting12DocumentRoot#getRouter <em>Router</em>}' containment reference.
@@ -115,6 +115,6 @@ public interface JMSRouting12DocumentRoot extends EObject {
 	 * @see #getRouter()
 	 * @generated
 	 */
-	void setRouter(Router value);
+	void setRouter(JMS12Router value);
 
 } // JMSRouting12DocumentRoot

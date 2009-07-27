@@ -146,7 +146,7 @@ public class JMSRouting12DocumentRootItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(Jmsrouting12Package.Literals.JMS_ROUTING12_DOCUMENT_ROOT__ROUTER,
-				 Jmsrouting12Factory.eINSTANCE.createRouter()));
+				 Jmsrouting12Factory.eINSTANCE.createJMS12Router()));
 	}
 
 	/**

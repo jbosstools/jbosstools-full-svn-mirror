@@ -7,6 +7,7 @@
 package org.jboss.tools.smooks.model.persistence12.provider;
 
 
+
 import java.util.Collection;
 import java.util.List;
 
@@ -26,8 +27,8 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
 import org.jboss.tools.smooks.model.persistence12.ParameterType;
 import org.jboss.tools.smooks.model.persistence12.Parameters;
 import org.jboss.tools.smooks.model.persistence12.Persistence12Factory;
@@ -41,7 +42,7 @@ import org.jboss.tools.smooks.model.persistence12.Persistence12Package;
  * @generated
  */
 public class ParametersItemProvider
-	extends ItemProviderAdapter
+	extends AbstractAnyTypeItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,

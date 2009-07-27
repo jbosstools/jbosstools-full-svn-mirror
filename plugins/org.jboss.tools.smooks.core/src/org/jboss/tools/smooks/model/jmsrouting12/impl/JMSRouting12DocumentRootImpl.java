@@ -23,9 +23,9 @@ import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.jboss.tools.smooks.model.jmsrouting12.JMS12Router;
 import org.jboss.tools.smooks.model.jmsrouting12.JMSRouting12DocumentRoot;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
-import org.jboss.tools.smooks.model.jmsrouting12.Router;
 
 /**
  * <!-- begin-user-doc -->
@@ -133,8 +133,8 @@ public class JMSRouting12DocumentRootImpl extends EObjectImpl implements JMSRout
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Router getRouter() {
-		return (Router)getMixed().get(Jmsrouting12Package.Literals.JMS_ROUTING12_DOCUMENT_ROOT__ROUTER, true);
+	public JMS12Router getRouter() {
+		return (JMS12Router)getMixed().get(Jmsrouting12Package.Literals.JMS_ROUTING12_DOCUMENT_ROOT__ROUTER, true);
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class JMSRouting12DocumentRootImpl extends EObjectImpl implements JMSRout
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetRouter(Router newRouter, NotificationChain msgs) {
+	public NotificationChain basicSetRouter(JMS12Router newRouter, NotificationChain msgs) {
 		return ((FeatureMap.Internal)getMixed()).basicAdd(Jmsrouting12Package.Literals.JMS_ROUTING12_DOCUMENT_ROOT__ROUTER, newRouter, msgs);
 	}
 
@@ -151,7 +151,7 @@ public class JMSRouting12DocumentRootImpl extends EObjectImpl implements JMSRout
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setRouter(Router newRouter) {
+	public void setRouter(JMS12Router newRouter) {
 		((FeatureMap.Internal)getMixed()).set(Jmsrouting12Package.Literals.JMS_ROUTING12_DOCUMENT_ROOT__ROUTER, newRouter);
 	}
 
@@ -213,7 +213,7 @@ public class JMSRouting12DocumentRootImpl extends EObjectImpl implements JMSRout
 				((EStructuralFeature.Setting)getXSISchemaLocation()).set(newValue);
 				return;
 			case Jmsrouting12Package.JMS_ROUTING12_DOCUMENT_ROOT__ROUTER:
-				setRouter((Router)newValue);
+				setRouter((JMS12Router)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -236,7 +236,7 @@ public class JMSRouting12DocumentRootImpl extends EObjectImpl implements JMSRout
 				getXSISchemaLocation().clear();
 				return;
 			case Jmsrouting12Package.JMS_ROUTING12_DOCUMENT_ROOT__ROUTER:
-				setRouter((Router)null);
+				setRouter((JMS12Router)null);
 				return;
 		}
 		super.eUnset(featureID);

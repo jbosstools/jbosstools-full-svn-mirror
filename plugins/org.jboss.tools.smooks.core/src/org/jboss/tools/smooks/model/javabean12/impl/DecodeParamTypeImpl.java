@@ -7,12 +7,13 @@
 package org.jboss.tools.smooks.model.javabean12.impl;
 
 
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.javabean12.DecodeParamType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
@@ -30,7 +31,7 @@ import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
  *
  * @generated
  */
-public class DecodeParamTypeImpl extends EObjectImpl implements DecodeParamType {
+public class DecodeParamTypeImpl extends AbstractAnyTypeImpl implements DecodeParamType {
 	/**
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->

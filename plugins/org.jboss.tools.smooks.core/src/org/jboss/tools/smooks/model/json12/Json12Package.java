@@ -6,10 +6,12 @@
  */
 package org.jboss.tools.smooks.model.json12;
 
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.jboss.tools.smooks.model.common.CommonPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 
@@ -130,13 +132,40 @@ public interface Json12Package extends EPackage {
 	int KEY = 1;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int KEY__VALUE = 0;
+	int KEY__VALUE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>From</b></em>' attribute.
@@ -145,7 +174,7 @@ public interface Json12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int KEY__FROM = 1;
+	int KEY__FROM = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>To</b></em>' attribute.
@@ -154,7 +183,7 @@ public interface Json12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int KEY__TO = 2;
+	int KEY__TO = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Key</em>' class.
@@ -163,7 +192,7 @@ public interface Json12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int KEY_FEATURE_COUNT = 3;
+	int KEY_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.json12.impl.KeyMapImpl <em>Key Map</em>}' class.
@@ -176,13 +205,40 @@ public interface Json12Package extends EPackage {
 	int KEY_MAP = 2;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY_MAP__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY_MAP__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEY_MAP__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Key</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int KEY_MAP__KEY = 0;
+	int KEY_MAP__KEY = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Key Map</em>' class.
@@ -191,7 +247,7 @@ public interface Json12Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int KEY_MAP_FEATURE_COUNT = 1;
+	int KEY_MAP_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.json12.impl.Json12ReaderImpl <em>Reader</em>}' class.
