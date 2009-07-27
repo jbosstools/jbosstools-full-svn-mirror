@@ -8,7 +8,10 @@ package org.jboss.tools.smooks.configuration.editors;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
@@ -56,27 +59,28 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.actions.AddSmooksResourceAction;
 import org.jboss.tools.smooks.configuration.actions.ValidateSmooksAction;
-import org.jboss.tools.smooks.model.calc.Counter;
-import org.jboss.tools.smooks.model.datasource.DataSourceJndi;
-import org.jboss.tools.smooks.model.datasource.Direct;
-import org.jboss.tools.smooks.model.dbrouting.Executor;
-import org.jboss.tools.smooks.model.dbrouting.ResultSetRowSelector;
-import org.jboss.tools.smooks.model.esbrouting.RouteBean;
-import org.jboss.tools.smooks.model.fileRouting.OutputStream;
-import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.groovy.Groovy;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.jmsrouting.JmsRouter;
+import org.jboss.tools.smooks.configuration.editors.actions.Calc11ActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.Database11ActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.Datasources11ActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.FragmentRouting11ActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.FragmentRouting12ActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.ISmooksActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.JavaBean11ActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.JavaBean12ActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.PersistenceActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.Reader11ActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.Reader12ActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.Scripting11ActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.SeparatorActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.Templating11ActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.Validation10ActionGrouper;
 import org.jboss.tools.smooks.model.medi.EdiMap;
 import org.jboss.tools.smooks.model.medi.MEdiFactory;
 import org.jboss.tools.smooks.model.medi.MEdiPackage;
-import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks.model.smooks.ReaderType;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks.model.xsl.Xsl;
 
 /**
  * This is the action bar contributor for the Smooks model editor. <!--
@@ -371,7 +375,9 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 				super.runWithEvent(event);
 			}
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see org.eclipse.jface.action.Action#isEnabled()
 			 */
 			@Override
@@ -669,254 +675,77 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		return false;
 	}
 
+	private List<ISmooksActionGrouper> getSmooksActionGrouper() {
+		List<ISmooksActionGrouper> grouperList = new ArrayList<ISmooksActionGrouper>();
+
+		grouperList.add(new JavaBean11ActionGrouper());
+		grouperList.add(new Reader11ActionGrouper());
+		grouperList.add(new Calc11ActionGrouper());
+		grouperList.add(new Database11ActionGrouper());
+		grouperList.add(new Datasources11ActionGrouper());
+		grouperList.add(new FragmentRouting11ActionGrouper());
+		grouperList.add(new Scripting11ActionGrouper());
+		grouperList.add(new Templating11ActionGrouper());
+		grouperList.add(new SeparatorActionGrouper("V1.1-V1.2"));
+		grouperList.add(new JavaBean12ActionGrouper());
+		grouperList.add(new Reader12ActionGrouper());
+		grouperList.add(new FragmentRouting12ActionGrouper());
+		grouperList.add(new PersistenceActionGrouper());
+		grouperList.add(new Validation10ActionGrouper());
+		grouperList.add(new SeparatorActionGrouper("No Group actions"));
+		return grouperList;
+	}
+
 	protected void groupActions(MenuManager manager, Collection<?> createChildActions) {
-		MenuManager readerMenu = new MenuManager("Reader");
-		manager.add(readerMenu);
 
-		MenuManager templatingMenu = new MenuManager("Templating");
-		manager.add(templatingMenu);
+		Map<Object, Object> map = new HashMap<Object, Object>();
 
-		MenuManager jbindingMenu = new MenuManager("Java Binding");
-		manager.add(jbindingMenu);
-
-		MenuManager datasourcesMenu = new MenuManager("Datasources");
-		manager.add(datasourcesMenu);
-
-		MenuManager scriptingMenu = new MenuManager("Scripting");
-		manager.add(scriptingMenu);
-
-		MenuManager fragmentRoutingMenu = new MenuManager("Fragment Routing");
-		manager.add(fragmentRoutingMenu);
-		
-		MenuManager databaseMenu = new MenuManager("Database");
-		manager.add(databaseMenu);
-		
-		MenuManager calcMenu = new MenuManager("Calc");
-		manager.add(calcMenu);
+		List<ISmooksActionGrouper> grouperList = getSmooksActionGrouper();
+		for (Iterator<?> iterator1 = grouperList.iterator(); iterator1.hasNext();) {
+			ISmooksActionGrouper grouper = (ISmooksActionGrouper) iterator1.next();
+			if (grouper.isSeparator()) {
+				String name = grouper.getGroupName();
+				if(name == null) name = "";
+				Separator s = new Separator(name);
+				manager.add(s);
+				continue;
+			} else {
+				String name = grouper.getGroupName();
+				if (name != null) {
+					MenuManager newMenu = new MenuManager(name);
+					manager.add(newMenu);
+					map.put(newMenu, grouper);
+				}
+			}
+		}
 
 		for (Iterator<?> iterator = createChildActions.iterator(); iterator.hasNext();) {
 			boolean added = false;
 			AddSmooksResourceAction action = (AddSmooksResourceAction) iterator.next();
 			Object descriptor = action.getDescriptor();
-			if (isCalcDescriptor(descriptor)) {
-				calcMenu.add(action);
-				added = true;
+			Iterator<?> menuIterator = map.keySet().iterator();
+			while (menuIterator.hasNext()) {
+				MenuManager newMenu = (MenuManager) menuIterator.next();
+				ISmooksActionGrouper grouper = (ISmooksActionGrouper) map.get(newMenu);
+				if (grouper.belongsToGroup(descriptor)) {
+					newMenu.add(action);
+					added = true;
+					break;
+				}
 			}
-			
-			if (isReaderDescriptor(descriptor)) {
-				readerMenu.add(action);
-				added = true;
-			}
-			if (isTemplateDescriptor(descriptor)) {
-				templatingMenu.add(action);
-				added = true;
-			}
-			if (isJavaBindingDescriptor(descriptor)) {
-				jbindingMenu.add(action);
-				added = true;
-			}
-			if (isDatasourcesDescriptor(descriptor)) {
-				datasourcesMenu.add(action);
-				added = true;
-			}
-			
-			if(isDatabaseDescriptor(descriptor)){
-				databaseMenu.add(action);
-				added = true;
-			}
-			if (isScriptingDescriptor(descriptor)) {
-				scriptingMenu.add(action);
-				added = true;
-			}
-			if (isFragmentRoutingDescriptor(descriptor)) {
-				fragmentRoutingMenu.add(action);
-				added = true;
-			}
+
 			if (!added) {
 				manager.add(action);
 			}
 		}
 
-		orderReaderAction(readerMenu);
-		orderTemplateAction(templatingMenu);
-		orderJBindingAction(jbindingMenu);
-		orderDatasourceAction(datasourcesMenu);
-		orderScriptAction(scriptingMenu);
-		orderFragmentAction(fragmentRoutingMenu);
-		orderDatabaseAction(databaseMenu);
-		orderCalcAction(calcMenu);
-	}
-
-	protected void orderCalcAction(MenuManager database) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	protected void orderDatabaseAction(MenuManager database) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	protected void orderScriptAction(MenuManager scripting) {
-		// TODO Auto-generated method stub
-
-	}
-
-	protected void orderFragmentAction(MenuManager fragmentRouting) {
-		// TODO Auto-generated method stub
-
-	}
-
-	protected void orderDatasourceAction(MenuManager datasources) {
-		// TODO Auto-generated method stub
-
-	}
-
-	protected void orderJBindingAction(MenuManager jbinding) {
-		// TODO Auto-generated method stub
-
-	}
-
-	protected void orderTemplateAction(MenuManager templating) {
-		// TODO Auto-generated method stub
-
-	}
-
-	protected void orderReaderAction(MenuManager readers) {
-		IContributionItem[] items = readers.getItems();
-		for (int i = 0; i < items.length; i++) {
-			IContributionItem item = items[i];
-			if (item instanceof ActionContributionItem) {
-				IAction action = ((ActionContributionItem) item).getAction();
-				if (action instanceof AddSmooksResourceAction) {
-					AddSmooksResourceAction action1 = (AddSmooksResourceAction) action;
-					Object descriptor = action1.getDescriptor();
-					if (descriptor instanceof CommandParameter) {
-						CommandParameter parameter = (CommandParameter) descriptor;
-						if (parameter.getValue() != null) {
-							Object value = AdapterFactoryEditingDomain.unwrap(parameter.getValue());
-							if (value instanceof ReaderType) {
-								int index = items.length - 1;
-								readers.remove(item);
-								readers.insert(index, item);
-								return;
-							}
-						}
-					}
-				}
-			}
+		Iterator<?> menuIterator = map.keySet().iterator();
+		while (menuIterator.hasNext()) {
+			MenuManager newMenu = (MenuManager) menuIterator.next();
+			ISmooksActionGrouper grouper = (ISmooksActionGrouper) map.get(newMenu);
+			grouper.orderActions(newMenu);
 		}
-	}
-	
-	protected boolean isCalcDescriptor(Object descriptor) {
-		if (descriptor instanceof CommandParameter) {
-			CommandParameter parameter = (CommandParameter) descriptor;
-			if (parameter.getValue() != null) {
-				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Counter) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
 
-	private boolean isDatabaseDescriptor(Object descriptor) {
-		if (descriptor instanceof CommandParameter) {
-			CommandParameter parameter = (CommandParameter) descriptor;
-			if (parameter.getValue() != null) {
-				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof ResultSetRowSelector) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
-	private boolean isFragmentRoutingDescriptor(Object descriptor) {
-		if (descriptor instanceof CommandParameter) {
-			CommandParameter parameter = (CommandParameter) descriptor;
-			if (parameter.getValue() != null) {
-				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof JmsRouter) {
-					return true;
-				}
-				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof OutputStream) {
-					return true;
-				}
-				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Executor) {
-					return true;
-				}
-				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof RouteBean) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	private boolean isScriptingDescriptor(Object descriptor) {
-		if (descriptor instanceof CommandParameter) {
-			CommandParameter parameter = (CommandParameter) descriptor;
-			if (parameter.getValue() != null) {
-				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Groovy) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	private boolean isDatasourcesDescriptor(Object descriptor) {
-		if (descriptor instanceof CommandParameter) {
-			CommandParameter parameter = (CommandParameter) descriptor;
-			if (parameter.getValue() != null) {
-				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof DataSourceJndi) {
-					return true;
-				}
-				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Direct) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	private boolean isJavaBindingDescriptor(Object descriptor) {
-		if (descriptor instanceof CommandParameter) {
-			CommandParameter parameter = (CommandParameter) descriptor;
-			if (parameter.getValue() != null) {
-				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof BindingsType) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	private boolean isTemplateDescriptor(Object descriptor) {
-		if (descriptor instanceof CommandParameter) {
-			CommandParameter parameter = (CommandParameter) descriptor;
-			if (parameter.getValue() != null) {
-				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Freemarker) {
-					return true;
-				}
-				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof Xsl) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	private boolean isReaderDescriptor(Object descriptor) {
-		if (descriptor instanceof CommandParameter) {
-			CommandParameter parameter = (CommandParameter) descriptor;
-			if (parameter.getValue() != null) {
-				if (AdapterFactoryEditingDomain.unwrap(parameter.getValue()) instanceof AbstractReader) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	protected void updateRootElementAddAction() {
