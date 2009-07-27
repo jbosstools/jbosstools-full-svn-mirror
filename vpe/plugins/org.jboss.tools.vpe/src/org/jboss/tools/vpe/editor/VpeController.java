@@ -2515,7 +2515,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	 */
 	public void selectionChanged(SelectionChangedEvent event) {
 		if (selectionBar != null)
-			selectionBar.selectionChanged();
+			selectionBar.updateNodes();
 		// FIX for JBIDE-2114
 		if (!isVisualEditorVisible()) {
 			// selection event doesn't changes a content

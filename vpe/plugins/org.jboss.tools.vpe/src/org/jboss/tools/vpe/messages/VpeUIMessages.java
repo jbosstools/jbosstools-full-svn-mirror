@@ -82,6 +82,7 @@ public final class VpeUIMessages extends NLS {
 	public static String MenuCreationHelper_Cut;
 	public static String MenuCreationHelper_Paste;
 	public static String MenuCreationHelper_Test;
+	public static String SelectionBar_MoreNodes;
 	public static String TemplatesPreferencePage_Edit;
 	public static String TemplatesPreferencePage_Remove;
 	public static String TemplatesTableProvider_Children;
