@@ -15,6 +15,8 @@ import java.util.Map;
 
 import org.jboss.tools.smooks.configuration.editors.calc.CounterUICreator;
 import org.jboss.tools.smooks.configuration.editors.csv.CsvReaderUICreator;
+import org.jboss.tools.smooks.configuration.editors.csv12.Csv12ReaderBindingPropertyUICreator;
+import org.jboss.tools.smooks.configuration.editors.csv12.Csv12ReaderMapBindingPropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.datasource.DataSourceJndiUICreator;
 import org.jboss.tools.smooks.configuration.editors.datasource.DirectUICreator;
 import org.jboss.tools.smooks.configuration.editors.dbrouting.ExecutorUICreator;
@@ -56,6 +58,15 @@ import org.jboss.tools.smooks.configuration.editors.jms12.JMSRouter12UICreator;
 import org.jboss.tools.smooks.configuration.editors.json.JsonReaderUICreator;
 import org.jboss.tools.smooks.configuration.editors.json.KeyMapUICreator;
 import org.jboss.tools.smooks.configuration.editors.json.KeyUICreator;
+import org.jboss.tools.smooks.configuration.editors.persistence12.DeleterUICreator;
+import org.jboss.tools.smooks.configuration.editors.persistence12.FlusherUICreator;
+import org.jboss.tools.smooks.configuration.editors.persistence12.InserterUICreator;
+import org.jboss.tools.smooks.configuration.editors.persistence12.LocatorExpressionParamUICreator;
+import org.jboss.tools.smooks.configuration.editors.persistence12.LocatorUICreator;
+import org.jboss.tools.smooks.configuration.editors.persistence12.LocatorValueParamUICreator;
+import org.jboss.tools.smooks.configuration.editors.persistence12.LocatorWiringParamUICreator;
+import org.jboss.tools.smooks.configuration.editors.persistence12.UpdaterUICreator;
+import org.jboss.tools.smooks.configuration.editors.rule10.Rules10RulebaseUICreator;
 import org.jboss.tools.smooks.configuration.editors.smooks.ConditionTypeUICreator;
 import org.jboss.tools.smooks.configuration.editors.smooks.ConditionsTypeUICreator;
 import org.jboss.tools.smooks.configuration.editors.smooks.FeaturesTypeUICreator;
@@ -72,12 +83,15 @@ import org.jboss.tools.smooks.configuration.editors.smooks.ResourceTypeUICreator
 import org.jboss.tools.smooks.configuration.editors.smooks.SetOffTypeUICreator;
 import org.jboss.tools.smooks.configuration.editors.smooks.SetOnTypeUICreator;
 import org.jboss.tools.smooks.configuration.editors.smooks.SmooksResourceListTypeUICreator;
+import org.jboss.tools.smooks.configuration.editors.validation10.RuleUICreator;
 import org.jboss.tools.smooks.configuration.editors.xsl.BindToUICreator;
 import org.jboss.tools.smooks.configuration.editors.xsl.OutputToUICreator;
 import org.jboss.tools.smooks.configuration.editors.xsl.TemplateUICreator;
 import org.jboss.tools.smooks.configuration.editors.xsl.XslUICreator;
 import org.jboss.tools.smooks.model.calc.impl.CounterImpl;
 import org.jboss.tools.smooks.model.csv.impl.CsvReaderImpl;
+import org.jboss.tools.smooks.model.csv12.impl.BindingImpl;
+import org.jboss.tools.smooks.model.csv12.impl.MapBindingImpl;
 import org.jboss.tools.smooks.model.datasource.impl.DataSourceJndiImpl;
 import org.jboss.tools.smooks.model.datasource.impl.DirectImpl;
 import org.jboss.tools.smooks.model.dbrouting.impl.ExecutorImpl;
@@ -116,6 +130,15 @@ import org.jboss.tools.smooks.model.medi.impl.MappingNodeImpl;
 import org.jboss.tools.smooks.model.medi.impl.SegmentImpl;
 import org.jboss.tools.smooks.model.medi.impl.SegmentsImpl;
 import org.jboss.tools.smooks.model.medi.impl.SubComponentImpl;
+import org.jboss.tools.smooks.model.persistence12.impl.DeleterImpl;
+import org.jboss.tools.smooks.model.persistence12.impl.ExpressionParameterImpl;
+import org.jboss.tools.smooks.model.persistence12.impl.FlusherImpl;
+import org.jboss.tools.smooks.model.persistence12.impl.InserterImpl;
+import org.jboss.tools.smooks.model.persistence12.impl.LocatorImpl;
+import org.jboss.tools.smooks.model.persistence12.impl.UpdaterImpl;
+import org.jboss.tools.smooks.model.persistence12.impl.ValueParameterImpl;
+import org.jboss.tools.smooks.model.persistence12.impl.WiringParameterImpl;
+import org.jboss.tools.smooks.model.rules10.impl.RuleBaseImpl;
 import org.jboss.tools.smooks.model.smooks.impl.ConditionTypeImpl;
 import org.jboss.tools.smooks.model.smooks.impl.ConditionsTypeImpl;
 import org.jboss.tools.smooks.model.smooks.impl.FeaturesTypeImpl;
@@ -132,6 +155,7 @@ import org.jboss.tools.smooks.model.smooks.impl.ResourceTypeImpl;
 import org.jboss.tools.smooks.model.smooks.impl.SetOffTypeImpl;
 import org.jboss.tools.smooks.model.smooks.impl.SetOnTypeImpl;
 import org.jboss.tools.smooks.model.smooks.impl.SmooksResourceListTypeImpl;
+import org.jboss.tools.smooks.model.validation10.impl.RuleTypeImpl;
 import org.jboss.tools.smooks.model.xsl.impl.BindToImpl;
 import org.jboss.tools.smooks.model.xsl.impl.OutputToImpl;
 import org.jboss.tools.smooks.model.xsl.impl.TemplateImpl;
@@ -272,6 +296,27 @@ public class PropertyUICreatorManager {
 		
 		// for JMS Router v1.2
 		map.put(JMS12RouterImpl.class, new JMSRouter12UICreator());
+		
+		// for Persistence v1.2
+		map.put(DeleterImpl.class, new DeleterUICreator());
+		map.put(UpdaterImpl.class, new UpdaterUICreator());
+		map.put(InserterImpl.class, new InserterUICreator());
+		map.put(LocatorImpl.class, new LocatorUICreator());
+		map.put(FlusherImpl.class, new FlusherUICreator());
+		
+		map.put(ValueParameterImpl.class, new LocatorValueParamUICreator());
+		map.put(WiringParameterImpl.class, new LocatorWiringParamUICreator());
+		map.put(ExpressionParameterImpl.class, new LocatorExpressionParamUICreator());
+		
+		// for Validation v1.0
+		map.put(RuleTypeImpl.class, new RuleUICreator());
+		
+		// for CSV Reader v1.2
+		map.put(BindingImpl.class, new Csv12ReaderBindingPropertyUICreator());
+		map.put(MapBindingImpl.class, new Csv12ReaderMapBindingPropertyUICreator());
+		
+		// for Rules v1.0
+		map.put(RuleBaseImpl.class, new Rules10RulebaseUICreator());
 	}
 
 	public void registePropertyUICreator(Class<?> key, IPropertyUICreator creator) {

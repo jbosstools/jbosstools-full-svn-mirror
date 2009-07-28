@@ -17,14 +17,22 @@ import java.util.List;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.model.csv12.Binding;
+import org.jboss.tools.smooks.model.csv12.Csv12Package;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
+import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
+import org.jboss.tools.smooks.model.rules10.RuleBase;
+import org.jboss.tools.smooks.model.rules10.Rules10Package;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -33,6 +41,8 @@ import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 public class ClassFieldEditorValidator extends AbstractValidator {
 
 	private ProjectClassLoader classLoader;
+
+	private List<Object> validationTargetList = null;
 
 	/**
 	 * @return the classLoader
@@ -50,33 +60,122 @@ public class ClassFieldEditorValidator extends AbstractValidator {
 		return classLoader;
 	}
 
+	protected void initValidationTargetList() {
+		ClassValidationTarget target = new ClassValidationTarget();
+		target.setFeature(JavabeanPackage.Literals.BINDINGS_TYPE__CLASS);
+		target.setSupportArrayClass(true);
+		target.setTarget(BindingsType.class);
+		validationTargetList.add(target);
+
+		ClassValidationTarget target1 = new ClassValidationTarget();
+		target1.setFeature(Javabean12Package.Literals.BEAN_TYPE__CLASS);
+		target1.setSupportArrayClass(true);
+		target1.setTarget(BeanType.class);
+		validationTargetList.add(target1);
+
+		ClassValidationTarget target2 = new ClassValidationTarget();
+		target2.setFeature(Csv12Package.Literals.BINDING__CLASS);
+		target2.setTarget(Binding.class);
+		validationTargetList.add(target2);
+		
+		ClassValidationTarget target3 = new ClassValidationTarget();
+		target3.setFeature(Rules10Package.Literals.RULE_BASE__PROVIDER);
+		target3.setTarget(RuleBase.class);
+		validationTargetList.add(target3);
+	}
+
+	public List<Object> getValidationTargetList() {
+		if (validationTargetList == null) {
+			validationTargetList = new ArrayList<Object>();
+			initValidationTargetList();
+		}
+		return validationTargetList;
+	}
+
 	public List<Diagnostic> validate(Collection<?> selectionObjects) {
 		List<Diagnostic> list = new ArrayList<Diagnostic>();
 		for (Iterator<?> iterator = selectionObjects.iterator(); iterator.hasNext();) {
 			Object object = (Object) iterator.next();
-			if (object instanceof BindingsType) {
-				BindingsType bindings = (BindingsType) object;
-				classLoader = getClassLoader(bindings);
-				String clazz = bindings.getClass_();
-				if (clazz != null) {
-					clazz = clazz.trim();
-					if (clazz.endsWith("[]")) {
-						clazz = clazz.substring(0, clazz.length() - 2);
+			if ((object instanceof EObject)) {
+				List<?> targetList = getValidationTargetList();
+				for (Iterator<?> iterator2 = targetList.iterator(); iterator2.hasNext();) {
+					ClassValidationTarget target = (ClassValidationTarget) iterator2.next();
+					Class<?> targetClass = target.getTarget();
+					EStructuralFeature feature = target.getFeature();
+					if (targetClass.isAssignableFrom(object.getClass()) && feature != null) {
+						Object value = ((EObject) object).eGet(feature);
+						if (value == null)
+							break;
+						String classString = value.toString();
+						classLoader = getClassLoader((EObject) object);
+						if (classString != null) {
+							classString = classString.trim();
+						} else {
+							continue;
+						}
+						if (target.isSupportArrayClass()) {
+							if (classString.endsWith("[]")) {
+								classString = classString.substring(0, classString.length() - 2);
+							}
+						}
+						Class<?> clazz1 = null;
+						if (classString != null && classLoader != null) {
+							try {
+								clazz1 = classLoader.loadClass(classString);
+							} catch (ClassNotFoundException e) {
+								// ignore
+							}
+						}
+						String message = "Can't find class : \"" + classString + "\"";
+						if (clazz1 == null) {
+							list.add(newWaringDiagnostic(message, object,(EAttribute) feature));
+						}
+						break;
 					}
-				}
-				Class<?> clazz1 = null;
-				if (clazz != null && classLoader != null) {
-					try {
-						clazz1 = classLoader.loadClass(clazz);
-					} catch (ClassNotFoundException e) {
-						// ignore
-					}
-				}
-				String message = "Can't find class : \"" + clazz + "\"";
-				if (clazz1 == null) {
-					list.add(newWaringDiagnostic(message, bindings, JavabeanPackage.Literals.BINDINGS_TYPE__CLASS));
 				}
 			}
+
+			// if (object instanceof Binding) {
+			// String classString = ((Binding) object).getClass_();
+			// classLoader = getClassLoader((EObject) object);
+			// Class<?> clazz1 = null;
+			// if (classString != null && classLoader != null) {
+			// try {
+			// clazz1 = classLoader.loadClass(classString);
+			// } catch (ClassNotFoundException e) {
+			// // ignore
+			// }
+			// }
+			// String message = "Can't find class : \"" + classString + "\"";
+			// if (clazz1 == null) {
+			// list.add(newWaringDiagnostic(message, object,
+			// JavabeanPackage.Literals.BINDINGS_TYPE__CLASS));
+			// }
+			// }
+			// if (object instanceof BindingsType) {
+			// BindingsType bindings = (BindingsType) object;
+			// classLoader = getClassLoader(bindings);
+			// String clazz = bindings.getClass_();
+			// if (clazz != null) {
+			// clazz = clazz.trim();
+			// if (clazz.endsWith("[]")) {
+			// clazz = clazz.substring(0, clazz.length() - 2);
+			// }
+			// }
+			// Class<?> clazz1 = null;
+			// if (clazz != null && classLoader != null) {
+			// try {
+			// clazz1 = classLoader.loadClass(clazz);
+			// } catch (ClassNotFoundException e) {
+			// // ignore
+			// }
+			// }
+			// String message = "Can't find class : \"" + clazz + "\"";
+			// if (clazz1 == null) {
+			// list.add(newWaringDiagnostic(message, bindings,
+			// JavabeanPackage.Literals.BINDINGS_TYPE__CLASS));
+			// }
+			// }
 
 			if (object instanceof EObject) {
 				List<Diagnostic> dd = validate(((EObject) object).eContents());
@@ -94,6 +193,37 @@ public class ClassFieldEditorValidator extends AbstractValidator {
 
 	public void initValidator(Collection<?> selectedObjects, EditingDomain editingDomain) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	private class ClassValidationTarget {
+		private boolean supportArrayClass = false;
+		private EStructuralFeature feature;
+		private Class<?> target;
+
+		public EStructuralFeature getFeature() {
+			return feature;
+		}
+
+		public void setFeature(EStructuralFeature feature) {
+			this.feature = feature;
+		}
+
+		public Class<?> getTarget() {
+			return target;
+		}
+
+		public void setTarget(Class<?> target) {
+			this.target = target;
+		}
+
+		public boolean isSupportArrayClass() {
+			return supportArrayClass;
+		}
+
+		public void setSupportArrayClass(boolean supportArrayClass) {
+			this.supportArrayClass = supportArrayClass;
+		}
+
 	}
 }
