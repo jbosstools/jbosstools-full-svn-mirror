@@ -13,6 +13,8 @@ package org.jboss.tools.vpe.editor.template.expression;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
@@ -44,7 +46,10 @@ import org.w3c.dom.Node;
 public class VpeFunctionSrc extends VpeFunction {
     static final String IMG_UNRESOLVED = "unresolved_image.gif"; //$NON-NLS-1$
     static final String IMG_PREFIX = "file:///"; //$NON-NLS-1$
-
+    private static final Pattern resourcePatternWithSinglCoat= Pattern.compile("[#\\$]\\{\\s*resource\\s*\\[\\s*'(.*)'\\s*\\]\\s*\\}"); //$NON-NLS-1$
+    private static final Pattern resourcePatternWithDoableCoat= Pattern.compile("[#\\$]\\{\\s*resource\\s*\\[\\s*\"(.*)\"\\s*\\]\\s*\\}"); //$NON-NLS-1$
+    
+    
     public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 	String tagValue = getParameter(0).exec(pageContext, sourceNode)
 		.stringValue();
@@ -249,6 +254,16 @@ public class VpeFunctionSrc extends VpeFunction {
      */
     protected String resolveEL(VpePageContext pageContext, String value) {
         String resolvedValue = value.replaceFirst("^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        
+        //fix for JBIDE-2550, author Maksim Areshkau
+          Matcher singleCoatMatcher = resourcePatternWithSinglCoat.matcher(resolvedValue);
+          Matcher doubleCoatMatcher = resourcePatternWithDoableCoat.matcher(resolvedValue);
+          if(doubleCoatMatcher.find()) {
+        	  resolvedValue = processJSF2Resource(doubleCoatMatcher);      	  
+          }else if(singleCoatMatcher.find()){
+        	  resolvedValue = processJSF2Resource(singleCoatMatcher);
+          }
+
         //Fix for JBIDE-3030
         if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null
         		|| !(pageContext.getVisualBuilder().getCurrentIncludeInfo() instanceof IFile)){
@@ -258,6 +273,17 @@ public class VpeFunctionSrc extends VpeFunction {
 
         resolvedValue = ElService.getInstance().replaceEl(file, resolvedValue);
         return resolvedValue;
+    }
+    /**
+     * See JBIDE-2550
+     * @param matcher
+     * @return
+     */
+    private static final String processJSF2Resource(Matcher matcher){
+    	String resulString = matcher.group(1);
+    	resulString=resulString.replaceAll(":", "/");  //$NON-NLS-1$//$NON-NLS-2$
+    	resulString = "/resources/"+resulString; //$NON-NLS-1$
+    	return resulString;
     }
     
     public static String getAbsoluteResourcePath(String resourcePathInPlugin) {
