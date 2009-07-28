@@ -169,7 +169,7 @@ public class ValueWiringBindingSelectionDialog extends Dialog {
 
 		});
 
-		Hyperlink allunselectlink = toolkit.createHyperlink(linkComposite, "Diselect All", SWT.NONE);
+		Hyperlink allunselectlink = toolkit.createHyperlink(linkComposite, "Deselect All", SWT.NONE);
 		allunselectlink.setBackground(linkComposite.getBackground());
 		allunselectlink.addHyperlinkListener(new IHyperlinkListener() {
 
@@ -209,7 +209,7 @@ public class ValueWiringBindingSelectionDialog extends Dialog {
 			}
 
 		});
-
+		getShell().setText("Add Binding");
 		return composite;
 	}
 	
