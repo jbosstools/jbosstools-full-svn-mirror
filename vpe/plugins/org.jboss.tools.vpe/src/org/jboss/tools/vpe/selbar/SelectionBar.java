@@ -17,8 +17,13 @@ import org.eclipse.compare.Splitter;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FormAttachment;
@@ -26,8 +31,8 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -36,6 +41,8 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.IWorkbenchGraphicConstants;
+import org.eclipse.ui.internal.WorkbenchImages;
 import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
 import org.eclipse.wst.sse.core.internal.provisional.INodeNotifier;
 import org.jboss.tools.common.meta.XAttribute;
@@ -55,26 +62,28 @@ import org.w3c.dom.Node;
  * This class create and manage the Selection Bar under the VPE.
  * Entry point from the class MozilaEditor This bar can be hiden and
  * shown it uses splitter for this.
- * 
+ *
  * @author erick
+ * @author yradtsevich
  */
-
 public class SelectionBar implements SelectionListener {
-    private Splitter splitter;
+    /**
+	 *
+	 */
+	private static final int SEL_ITEM_RIGHT_MARGIN = 5;
+
+	private Splitter splitter;
 
 	private boolean resizeListenerAdded = false;
-
     private VpeController vpeController = null;
-
     private ToolBar selBar = null;
-    private ToolBar closeSelectionBar = null;
-
+    private FormData selBarData;
+//    private Composite closeBar = null;
+    private Menu dropDownMenu = null;
     private int itemCount = 0;
-
+//    private Composite arrowBar;
     private Composite cmpToolBar = null;
     private Composite cmpTlEmpty = null;
-    private Composite closeBar = null;
-
 	private List<VisibilityListener> visibilityListeners = new ArrayList<VisibilityListener>(1);
 
 	/**
@@ -82,16 +91,12 @@ public class SelectionBar implements SelectionListener {
 	 */
 	private boolean visible;
 
-	private ToolItem dropDownItem;
+	private ImageButton arrowButton;
 
-	private Button arrowButton;
-
-	private Menu dropDownMenu;
+//	private ToolItem arrowButton;
 
 
-    //Listener selbarListener = null;
-
-    final static String PREFERENCE_YES = "yes"; //$NON-NLS-1$
+	final static String PREFERENCE_YES = "yes"; //$NON-NLS-1$
     final static String PREFERENCE_NO = "no"; //$NON-NLS-1$
 
 	public Composite createToolBarComposite(Composite parent, boolean visible) {
@@ -101,6 +106,7 @@ public class SelectionBar implements SelectionListener {
 		 * The empty composite
 		 */
 		cmpTlEmpty = new Composite(splitter, SWT.NONE) {
+			@Override
 			public Point computeSize(int wHint, int hHint, boolean changed) {
 				Point point = super.computeSize(wHint, hHint, changed);
 				point.y = 1;
@@ -114,37 +120,21 @@ public class SelectionBar implements SelectionListener {
 		cmpToolBar = new Composite(splitter, SWT.NONE);
 		cmpToolBar.setLayout(new FormLayout());
 
-		GridLayout layoutTl = new GridLayout(1, false);
-		layoutTl.marginBottom = 0;
-		layoutTl.marginHeight = 0;
-		layoutTl.marginWidth = 0;
-		layoutTl.verticalSpacing = 0;
-		layoutTl.horizontalSpacing = 0;
+		final Image closeImage = PlatformUI.getWorkbench().getSharedImages()
+				.getImage(ISharedImages.IMG_TOOL_DELETE);
 
-		closeBar = new Composite(cmpToolBar, SWT.NONE);
-		FormData closeBarData = new FormData();
-		closeBarData.right = new FormAttachment(100);
-		closeBarData.top = new FormAttachment(0);
-		closeBar.setLayout(layoutTl);
-		closeBar.setLayoutData(closeBarData);
-
-		closeSelectionBar = new ToolBar(closeBar, SWT.HORIZONTAL | SWT.FLAT);
-		ToolItem closeItem = new ToolItem(closeSelectionBar, SWT.FLAT);
-		closeItem.setImage(PlatformUI.getWorkbench().getSharedImages()
-				.getImage(ISharedImages.IMG_TOOL_DELETE));
-		closeItem.setToolTipText(VpeUIMessages.HIDE_SELECTION_BAR);
-		closeItem.addListener(SWT.Selection, new Listener() {
+		final Listener closeListener = new Listener() {
 			public void handleEvent(Event event) {
 				if (!getHideWithoutPromptOption()) {
 					MessageDialogWithToggle dialog = MessageDialogWithToggle
-							.openOkCancelConfirm(
-									PlatformUI.getWorkbench()
-											.getActiveWorkbenchWindow()
-											.getShell(),
-									VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TITLE,
-									VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_MESSAGE,
-									VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TOGGLE_MESSAGE,
-									false, null, null);
+					.openOkCancelConfirm(
+							PlatformUI.getWorkbench()
+							.getActiveWorkbenchWindow()
+							.getShell(),
+							VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TITLE,
+							VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_MESSAGE,
+							VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TOGGLE_MESSAGE,
+							false, null, null);
 					if (dialog.getReturnCode() != IDialogConstants.OK_ID) {
 						return;
 					}
@@ -156,15 +146,26 @@ public class SelectionBar implements SelectionListener {
 				setAlwaysVisibleOption(false);
 				setVisible(false);
 			}
+		};
 
-		});
+		ImageButton closeButton = new ImageButton(cmpToolBar, closeImage,
+				VpeUIMessages.HIDE_SELECTION_BAR);
+		closeButton.addSelectionListener(closeListener);
+		FormData closeBarData = new FormData();
+		closeBarData.right = new FormAttachment(100);
+		closeBarData.top = new FormAttachment(0);
+		Composite closeItemComposite = closeButton.getComposite();
+		closeItemComposite.setLayoutData(closeBarData);
+
 		// Create selection bar
-		selBar = new ToolBar(cmpToolBar, SWT.HORIZONTAL | SWT.FLAT);
-		FormData selBarData = new FormData(SWT.DEFAULT, SWT.DEFAULT);
+		selBar = new ToolBar(cmpToolBar, SWT.HORIZONTAL | SWT.FLAT | SWT.NO_BACKGROUND);
+		selBarData = new FormData();
 		selBarData.left = new FormAttachment(0);
-		selBarData.right = new FormAttachment(closeBar, 0, SWT.LEFT);
+		selBarData.right = new FormAttachment(closeItemComposite, 0, SWT.LEFT);
 		selBarData.top = new FormAttachment(0);
 		selBar.setLayoutData(selBarData);
+		createArrowButton();
+		cmpToolBar.layout();
 		setVisible(visible);
 
 		return splitter;
@@ -176,7 +177,7 @@ public class SelectionBar implements SelectionListener {
 
 		/*
 		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-2298
-		 * To get stored in xml XModelObject 
+		 * To get stored in xml XModelObject
 		 * should be marked as modified.
 		 */
 		optionsObject.setModified(true);
@@ -215,7 +216,7 @@ public class SelectionBar implements SelectionListener {
 		setPersistentOption(VpePreference.ATT_ALWAYS_HIDE_SELECTION_BAR_WITHOUT_PROMT,
 				optionValue);
 	}
-	
+
 	public boolean getHideWithoutPromptOption() {
 		return VpePreference.ALWAYS_HIDE_SELECTION_BAR_WITHOUT_PROMT
 				.getValue().equals(PREFERENCE_YES);
@@ -249,22 +250,22 @@ public class SelectionBar implements SelectionListener {
     /**
      * Adds the listener to the collection of listeners who will
      * be notified when the {@code #visible} state is changed.
-     *  
+     *
      * @param listener the listener which should be notified
-     * 
+     *
      * @see VisibilityListener
      * @see VisibilityEvent
      */
     public void addVisibilityListener(VisibilityListener listener) {
     	visibilityListeners.add(listener);
     }
-    
+
     /**
      * Removes the listener from the collection of listeners who will
      * be notified when the {@link #visible} state is changed.
-     *  
+     *
      * @param listener the listener which should be removed
-     * 
+     *
      * @see VisibilityListener
      */
     public void removeVisibilityListener(VisibilityListener listener) {
@@ -274,7 +275,7 @@ public class SelectionBar implements SelectionListener {
     /**
      * Fires all registered instances of {@code VisibilityListener} by
      * sending them {@link VisibilityEvent}.
-     * 
+     *
      * @see #addVisibilityListener(VisibilityListener)
      * @see #removeVisibilityListener(VisibilityListener)
      */
@@ -289,6 +290,10 @@ public class SelectionBar implements SelectionListener {
 		this.vpeController = vpeController;
 	}
 
+	/**
+	 * Updates buttons in the selection bar and the drop-down menu
+	 * according to the source selection.
+	 */
     public void updateNodes() {
 		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(
 				vpeController.getSourceEditor());
@@ -306,34 +311,49 @@ public class SelectionBar implements SelectionListener {
 		removeNodeListenerFromAllNodes();
 		cleanToolBar(selBar);
 
+		disposeDropDownMenu();
+		// for now dropDownMenu = null
+
 		int elementCounter = 0;
-		while (node != null 
+		while (node != null
 				&& (node.getNodeType() == Node.ELEMENT_NODE || node.getNodeType() == Node.COMMENT_NODE)) {
 			addNodeListenerTo(node);
 
-			ToolItem item = new ToolItem(selBar, SWT.FLAT, 0);
-			item.addSelectionListener(this);
-			item.setData(node);
-			item.setText(node.getNodeName());
+			if (dropDownMenu == null) {
+				ToolItem item = new ToolItem(selBar, SWT.FLAT, 1);
+				item.addSelectionListener(this);
+				item.setData(node);
+				item.setText(node.getNodeName());
+
+				if (!isItemShown(selBar.getItem(elementCounter + 1))) {
+					item.dispose();
+					dropDownMenu = new Menu(selBar);
+				}
+			}
+
+			if (dropDownMenu != null) {
+				MenuItem menuItem = new MenuItem(dropDownMenu, SWT.PUSH, 0);
+				menuItem.addSelectionListener(this);
+				menuItem.setText(node.getNodeName());
+				menuItem.setData(node);
+			}
 
 			elementCounter++;
 			node = node.getParentNode();
 		}
+		itemCount = elementCounter;
+		arrowButton.setEnabled(dropDownMenu != null);
+
 		if (node != null && node.getNodeType() == Node.DOCUMENT_NODE) {
 			addNodeListenerTo(node);
 		}
 
-		itemCount = elementCounter;
-		cmpToolBar.layout();
 		// bug was fixed when toolbar are not shown for resizeble components
 		cmpToolBar.layout();
 		splitter.getParent().layout(true, true);
 
-		deleteArrow();
-		addArrowIfNecessary();
-
 		if (!resizeListenerAdded ) {
-			selBar.addListener(SWT.Resize, new Listener() {
+			cmpToolBar.addListener(SWT.Resize, new Listener() {
 				public void handleEvent(Event event) {
 					updateNodes();
 				}
@@ -343,76 +363,57 @@ public class SelectionBar implements SelectionListener {
 	}
 
     /**
-     * Deletes all items from {@code #toolBar}.
+     * Deletes all items (except the first item-arrow button)
+     * from the given {@code #toolBar}.
      */
 	private void cleanToolBar(ToolBar toolBar) {
 		ToolItem[] oldItems = toolBar.getItems();
-		for (ToolItem oldItem : oldItems) {
-			oldItem.dispose();
+		for (int i = 1; i < oldItems.length; i++) {
+			oldItems[i].dispose();
 		}
 	}
 
-    /**
-     * Deletes the {@link #arrowButton} with drop-down menu if it is existing.
-     */
-    private void deleteArrow() {
-    	if (dropDownMenu != null) {
-			dropDownMenu.dispose();
-			dropDownMenu = null;
-		}
-		if (dropDownItem != null) {
-			dropDownItem.dispose();
-			dropDownItem = null;
-		}
-		if (arrowButton != null) {
-			arrowButton.dispose();
-			arrowButton = null;
-		}
-    }
-
-    /**
-	 * Adds {@link #arrowButton} with drop-down menu if there are
-	 * invisible items in the {@link #selBar}.
-	 * <P>
-	 * It is assumed that the arrow is not existing at the entry point.
+	/**
+	 * Initializes {@link #arrowButton}.
 	 */
-	private void addArrowIfNecessary() {
-		ToolItem[] items = selBar.getItems();
+    private void createArrowButton() {
+		final Image hoverImage = WorkbenchImages.getImage(
+				IWorkbenchGraphicConstants.IMG_LCL_RENDERED_VIEW_MENU);
 
-		if (items.length == 0 || isItemShown(items[items.length - 1])) {
-			// the arrow is not necessary
-			return;
-		}
+		arrowButton = new ImageButton(selBar, hoverImage,
+				VpeUIMessages.SelectionBar_MoreNodes);
+		arrowButton.setEnabled(false);
+		arrowButton.addSelectionListener(
+				new Listener() {
+					public void handleEvent(Event event) {
+						Rectangle bounds = arrowButton.getButtonBounds();
+						Point point = selBar.toDisplay(bounds.x, bounds.y
+								+ bounds.height);
+						dropDownMenu.setLocation(point);
+						dropDownMenu.setVisible(true);
+					}
+				});
 
-		dropDownItem = new ToolItem(selBar, SWT.SEPARATOR, 0);
-		arrowButton = new Button(selBar, SWT.ARROW | SWT.DOWN);
-		arrowButton.setToolTipText(VpeUIMessages.SelectionBar_MoreNodes);
-		arrowButton.pack();
-		dropDownItem.setWidth(arrowButton.getSize().x);
-		dropDownItem.setControl(arrowButton);
-		dropDownMenu = new Menu(selBar);
-		for (int i = 0;	i < items.length
-				&& !isItemShown(items[items.length - 1]); i++) {
-			MenuItem menuItem = new MenuItem(dropDownMenu, SWT.PUSH);
-			menuItem.setText(items[i].getText());
-			menuItem.setData(items[i].getData());
-			menuItem.addSelectionListener(this);
-			items[i].dispose();
-		}
-		arrowButton.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event event) {
-				Rectangle bounds = dropDownItem.getBounds();
-				Point point = selBar.toDisplay(bounds.x, bounds.y
-						+ bounds.height);
-				dropDownMenu.setLocation(point);
-				dropDownMenu.setVisible(true);
-			}
-		});
+		ToolItem arrowItem = new ToolItem(selBar, SWT.SEPARATOR, 0);
+		Composite arrowButtonComposite = arrowButton.getComposite();
+		arrowItem.setControl(arrowButtonComposite);
+		arrowButtonComposite.pack();
+		arrowItem.setWidth(arrowButtonComposite.getSize().x);
+
+		FormData arrowToolBarData = new FormData();
+		arrowToolBarData.left = new FormAttachment(0);
+		arrowToolBarData.top = new FormAttachment(0);
+		arrowButtonComposite.setLayoutData(arrowToolBarData);
 	}
 
+    /**
+     * Checks if the given {@code toolItem} is fully shown on the screen.
+     */
 	private boolean isItemShown(ToolItem toolItem) {
 		ToolBar toolBar = toolItem.getParent();
 		Rectangle toolItemBounds = toolItem.getBounds();
+
+		toolItemBounds.width += SEL_ITEM_RIGHT_MARGIN;
 		Rectangle intersection = toolBar.getBounds().intersection(
 				toolItemBounds);
 		return intersection.equals(toolItemBounds);
@@ -420,17 +421,17 @@ public class SelectionBar implements SelectionListener {
 
 	/**
      * List of nodes that are notifying {@link #nodeListener} when they are
-     * changed. 
+     * changed.
      */
     private List<INodeNotifier> nodeNotifiers = new ArrayList<INodeNotifier>();
     /**
-     * Listener for all {@link #nodeNotifiers} 
+     * Listener for all {@link #nodeNotifiers}
      */
     private NodeListener nodeListener = new NodeListener(this);
-    
+
     /**
      * Adds {@link #nodeListener} to the given {@code node}.
-     * 
+     *
      * @param node the node to that the listener must be added.
      */
 	private void addNodeListenerTo(Node node) {
@@ -443,7 +444,7 @@ public class SelectionBar implements SelectionListener {
 		}
 	}
 	/**
-	 * Removes {@link #nodeListener} from all nodes associated with this {@code SelectionBar}. 
+	 * Removes {@link #nodeListener} from all nodes associated with this {@code SelectionBar}.
 	 */
 	private void removeNodeListenerFromAllNodes() {
 		for (INodeNotifier notifier : nodeNotifiers) {
@@ -455,27 +456,21 @@ public class SelectionBar implements SelectionListener {
     public void dispose() {
     	removeNodeListenerFromAllNodes();
 
-		if (!selBar.isDisposed()) {
-			for (int i = 0; i < selBar.getItemCount(); i++) {
-				if (!selBar.getItem(i).isDisposed()) {
-					selBar.getItem(i).removeSelectionListener(this);
-				}
-			}
-			selBar.dispose();
-			selBar = null;
-		}
-		if (!closeSelectionBar.isDisposed()) {
-			for (int i = 0; i < closeSelectionBar.getItemCount(); i++) {
-				if (!closeSelectionBar.getItem(i).isDisposed()) {
-					closeSelectionBar.getItem(i).removeSelectionListener(this);
-				}
-			}
-			closeSelectionBar.dispose();
-			closeSelectionBar = null;
-		}
 		if (splitter != null) {
 			splitter.dispose();
 			splitter = null;
+		}
+
+    	disposeDropDownMenu();
+	}
+
+    /**
+     * Disposes {@link #dropDownMenu}.
+     */
+	private void disposeDropDownMenu() {
+		if (dropDownMenu != null) {
+			dropDownMenu.dispose();
+			dropDownMenu = null;
 		}
 	}
 
@@ -489,7 +484,7 @@ public class SelectionBar implements SelectionListener {
 
 	/**
 	 * Performs storing model object in the model and xml file.
-	 * 
+	 *
 	 * @param xmo the model object to store
 	 */
 	private void performStore(XModelObject xmo) {
@@ -497,7 +492,7 @@ public class SelectionBar implements SelectionListener {
 				|| null == xmo.getModelEntity()) {
 			return;
 		}
-		
+
 		ArrayList<IModelPropertyEditorAdapter> adapters = new ArrayList<IModelPropertyEditorAdapter>();
 		XAttribute[] attribute = xmo.getModelEntity().getAttributes();
 		for (int i = 0; i < attribute.length; i++) {
@@ -508,7 +503,7 @@ public class SelectionBar implements SelectionListener {
 			adapters.add(adapter);
 		}
 		/*
-		 * Stores model object by its adaptors. 
+		 * Stores model object by its adaptors.
 		 */
 		for (IModelPropertyEditorAdapter adapter : adapters) {
 			adapter.store();
@@ -520,7 +515,8 @@ public class SelectionBar implements SelectionListener {
 		xmo.getModel().saveOptions();
 	}
 
-    public String toString() {
+    @Override
+	public String toString() {
 		StringBuffer st = new StringBuffer("CountItem: "); //$NON-NLS-1$
 		st.append(itemCount);
 		st.append(" Parent Composite: " + cmpToolBar.getBounds().width); //$NON-NLS-1$
@@ -530,17 +526,91 @@ public class SelectionBar implements SelectionListener {
 }
 
 /**
+ * Instances of this class represent a flat button with image.
+ * 
+ * @author yradtsevich
+ */
+class ImageButton {
+	private ToolItem item;
+	private Composite composite;
+	private Image emptyImage;
+
+	public ImageButton(Composite parent, Image image, String toolTip) {
+		composite = new Composite(parent, SWT.NONE);
+		composite.addDisposeListener(new DisposeListener() {
+			public void widgetDisposed(DisposeEvent e) {
+				release();
+			}
+		});
+		GridLayout layoutTl = new GridLayout(1, false);
+		layoutTl.marginBottom = 0;
+		layoutTl.marginHeight = 0;
+		layoutTl.marginWidth = 0;
+		layoutTl.verticalSpacing = 0;
+		layoutTl.horizontalSpacing = 0;
+		composite.setLayout(layoutTl);
+
+		ToolBar toolBar = new ToolBar(composite, SWT.HORIZONTAL | SWT.FLAT);
+		item = new ToolItem(toolBar, SWT.FLAT);
+		item.setImage(image);
+		emptyImage = new Image(Display.getCurrent(), 1, 1);
+		Color emptyImageColor = toolBar.getBackground();
+		emptyImage.setBackground(emptyImageColor);
+		GC gc = new GC(emptyImage);
+		gc.setForeground(emptyImageColor);
+        gc.drawPoint(0, 0);
+        gc.dispose();
+		item.setDisabledImage(emptyImage);
+		item.setToolTipText(toolTip);
+	}
+
+	public void addSelectionListener (Listener listener) {
+		item.addListener(SWT.Selection, listener);
+	}
+
+	/**
+	 * Releases resources.
+	 */
+	protected void release() {
+		if (emptyImage != null) {
+			emptyImage.dispose();
+			emptyImage = null;
+		}
+	}
+
+	public void dispose () {
+		if (composite != null) {
+			composite.dispose();
+			composite = null;
+			item = null;
+		}
+	}
+	public void setEnabled (boolean enabled) {
+		item.setEnabled(enabled);
+	}
+
+	public Rectangle getButtonBounds() {
+		return item.getBounds();
+	}
+
+
+	public Composite getComposite() {
+		return composite;
+	}
+}
+
+/**
  * Listener for nodes that are implementing {@link INodeAdapter}.
  * Calls {@link SelectionBar#updateNodes()} every time when these nodes are changed.
  * <P>
- * This class is a part of fix of JBIDE-3919: 
+ * This class is a part of fix of JBIDE-3919:
  * Incorrect interaction of block comments with selection bar.
  * </P>
  * @author yradtsevich
  */
 class NodeListener implements INodeAdapter {
 	private SelectionBar selectionBar;
-	
+
 	public NodeListener(SelectionBar selectionBar) {
 		this.selectionBar = selectionBar;
 	}
