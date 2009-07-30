@@ -152,7 +152,7 @@ public class BPELModuleFactoryDelegate extends ModuleFactoryDelegate {
 			for (int i = 0; i < size; i++) {
 				IFacetedProject fp = ProjectFacetsManager.create(projects2[i]);
 				IProjectFacet bpelFacet = ProjectFacetsManager.getProjectFacet(IBPELModuleFacetConstants.BPEL20_PROJECT_FACET);
-				if(fp.hasProjectFacet(bpelFacet)){
+				if(fp != null && fp.hasProjectFacet(bpelFacet)){
 					final List bpelFileResources = new ArrayList();
 					projects2[i].accept(new IResourceVisitor(){
 					
