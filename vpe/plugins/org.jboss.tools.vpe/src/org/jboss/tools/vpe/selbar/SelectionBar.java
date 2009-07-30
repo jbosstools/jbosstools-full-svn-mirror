@@ -295,6 +295,10 @@ public class SelectionBar implements SelectionListener {
 	 * according to the source selection.
 	 */
     public void updateNodes() {
+		// bug was fixed when toolbar are not shown for resizeble components
+		cmpToolBar.layout();
+		splitter.getParent().layout(true, true);
+    	
 		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(
 				vpeController.getSourceEditor());
 		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
@@ -347,10 +351,6 @@ public class SelectionBar implements SelectionListener {
 		if (node != null && node.getNodeType() == Node.DOCUMENT_NODE) {
 			addNodeListenerTo(node);
 		}
-
-		// bug was fixed when toolbar are not shown for resizeble components
-		cmpToolBar.layout();
-		splitter.getParent().layout(true, true);
 
 		if (!resizeListenerAdded ) {
 			cmpToolBar.addListener(SWT.Resize, new Listener() {
