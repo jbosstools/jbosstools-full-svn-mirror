@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: BPEL JBoss AS Publisher
-Bundle-SymbolicName: org.jboss.bpel.as.integration;singleton:=true
+Bundle-SymbolicName: org.jboss.tools.bpel.as.integration;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jboss.bpel.as.integration.Activator
 Require-Bundle: org.eclipse.ui,
