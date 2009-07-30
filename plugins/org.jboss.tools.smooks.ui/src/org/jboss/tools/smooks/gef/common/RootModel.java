@@ -5,6 +5,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 
 public class RootModel {
@@ -15,11 +16,11 @@ public class RootModel {
 
 	private PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-	private List<TreeNodeModel> children;
+	private List<AbstractSmooksGraphicalModel> children;
 
-	public List<TreeNodeModel> getChildren() {
+	public List<AbstractSmooksGraphicalModel> getChildren() {
 		if (children == null) {
-			children = new ArrayList<TreeNodeModel>();
+			children = new ArrayList<AbstractSmooksGraphicalModel>();
 		}
 		return children;
 	}
@@ -29,7 +30,7 @@ public class RootModel {
 		support.firePropertyChange(REMOVE_CHILDREN, new Object(), null);
 	}
 
-	public void removeTreeNode(TreeNodeModel node) {
+	public void removeTreeNode(AbstractSmooksGraphicalModel node) {
 		this.getChildren().remove(node);
 		support.firePropertyChange(REMOVE_CHILDREN, node, null);
 	}
@@ -42,7 +43,7 @@ public class RootModel {
 		support.removePropertyChangeListener(listener);
 	}
 
-	public void addTreeNode(TreeNodeModel node) {
+	public void addTreeNode(AbstractSmooksGraphicalModel node) {
 		this.getChildren().add(node);
 		support.firePropertyChange(ADD_CHILDREN, null, node);
 	}

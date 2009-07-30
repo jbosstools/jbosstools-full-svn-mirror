@@ -23,8 +23,12 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataContainerEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataTreeNodeEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.JavaBeanChildNodeEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.JavaBeanContainerEditPart;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.JavaBeanChildGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.JavaBeanGraphModel;
 
 /**
  * @author Dart
@@ -51,6 +55,13 @@ public class SmooksEditFactory extends SmooksGEFEditFactory implements EditPartF
 			editPart = new InputDataTreeNodeEditPart();
 		}if(model.getClass() == InputDataContianerModel.class){
 			editPart = new InputDataContainerEditPart();
+		}
+		
+		// for javabean
+		if(model.getClass() == JavaBeanChildGraphModel.class){
+			editPart = new JavaBeanChildNodeEditPart();
+		}if(model.getClass() == JavaBeanGraphModel.class){
+			editPart = new JavaBeanContainerEditPart();
 		}
 		if(model.getClass() == TreeNodeConnection.class){
 			editPart = new TreeNodeConnectionEditPart();

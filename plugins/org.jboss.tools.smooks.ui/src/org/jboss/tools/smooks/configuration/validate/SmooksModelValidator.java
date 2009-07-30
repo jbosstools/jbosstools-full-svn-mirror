@@ -77,7 +77,7 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 	private boolean waiting = false;
 	private Object lock = new Object();
 	private AdapterFactoryEditingDomain innerEditingDomain;
-	
+
 	private SmooksMarkerHelper markerHelper = new SmooksMarkerHelper();
 
 	private long watingTime = 300;
@@ -222,18 +222,21 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 
 					for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
 						final ISmooksModelValidateListener l = (ISmooksModelValidateListener) iterator.next();
-						Display.getDefault().syncExec(new Runnable() {
+						Display dis = Display.getDefault();
+						if (dis != null && !dis.isDisposed()) {
+							dis.syncExec(new Runnable() {
 
-							/*
-							 * (non-Javadoc)
-							 * 
-							 * @see java.lang.Runnable#run()
-							 */
-							public void run() {
-								l.validateEnd(d);
-							}
+								/*
+								 * (non-Javadoc)
+								 * 
+								 * @see java.lang.Runnable#run()
+								 */
+								public void run() {
+									l.validateEnd(d);
+								}
 
-						});
+							});
+						}
 					}
 				} finally {
 					waiting = false;
@@ -247,7 +250,7 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 
 	private AdapterFactoryEditingDomain newEditingDomain() {
 		BasicCommandStack commandStack = new BasicCommandStack();
-		if(innerEditingDomain == null){
+		if (innerEditingDomain == null) {
 			innerEditingDomain = new AdapterFactoryEditingDomain(getAdapterFactory(), commandStack,
 					new HashMap<Resource, Boolean>());
 		}
@@ -255,9 +258,8 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 	}
 
 	public ComposedAdapterFactory getAdapterFactory() {
-		if(adapterFactory == null){
-			adapterFactory = new ComposedAdapterFactory(
-					ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		if (adapterFactory == null) {
+			adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
 			adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
 			adapterFactory.addAdapterFactory(new XslItemProviderAdapterFactory());
@@ -301,19 +303,19 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 		}
 		List<Object> list = new ArrayList<Object>();
 		list.add(smooksModel);
-		
+
 		final List<Diagnostic> d = this.validate(list, editingDomain, monitor);
-		try{
-		markerHelper.deleteMarkers(smooksResource);
-		for (Iterator<?> iterator = d.iterator(); iterator.hasNext();) {
-			Diagnostic diagnostic = (Diagnostic) iterator.next();
-			if (resource != null && diagnostic.getSeverity() != Diagnostic.OK) {
-				for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
-					markerHelper.createMarkers(smooksResource, childDiagnostic);
+		try {
+			markerHelper.deleteMarkers(smooksResource);
+			for (Iterator<?> iterator = d.iterator(); iterator.hasNext();) {
+				Diagnostic diagnostic = (Diagnostic) iterator.next();
+				if (resource != null && diagnostic.getSeverity() != Diagnostic.OK) {
+					for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
+						markerHelper.createMarkers(smooksResource, childDiagnostic);
+					}
 				}
 			}
-		}
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -328,6 +330,6 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 
 	public void initValidator(Collection<?> selectedObjects, EditingDomain editingDomain) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

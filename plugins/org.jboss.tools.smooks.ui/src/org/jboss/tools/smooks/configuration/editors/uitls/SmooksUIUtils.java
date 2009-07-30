@@ -2309,15 +2309,16 @@ public class SmooksUIUtils {
 				continue;
 			parentList.remove(parentList.size() - 1);
 			((TreeNodeEditPart) rootEditPart).expandNode();
+			TreeNodeEditPart tempEditPart = rootEditPart;
 			for (int i = parentList.size() - 1; i >= 0; i--) {
 				boolean expanded = false;
 				TreeNodeModel parentNode = parentList.get(i);
-				List<?> editParts = rootEditPart.getChildren();
+				List<?> editParts = tempEditPart.getChildren();
 				for (Iterator<?> iterator2 = editParts.iterator(); iterator2.hasNext();) {
 					EditPart editPart = (EditPart) iterator2.next();
 					if (editPart instanceof TreeNodeEditPart && editPart.getModel() == parentNode) {
 						((TreeNodeEditPart) editPart).expandNode();
-						rootEditPart = (TreeNodeEditPart) editPart;
+						tempEditPart = (TreeNodeEditPart) editPart;
 						expanded = true;
 						break;
 					}

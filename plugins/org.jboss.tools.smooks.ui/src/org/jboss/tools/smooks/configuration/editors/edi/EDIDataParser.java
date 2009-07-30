@@ -171,6 +171,7 @@ public class EDIDataParser {
 
 		SmooksResourceConfiguration readerConfig = new SmooksResourceConfiguration("org.xml.sax.driver",
 				SmooksEDIReader.class.getName());
+		if(mappingModel == null) return null;
 		File f = new File(mappingModel);
 		String modelPath = mappingModel;
 		if (f.exists()) {

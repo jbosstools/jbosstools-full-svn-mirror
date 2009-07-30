@@ -300,9 +300,9 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		if (graph == null)
 			return;
 
-		List<TreeNodeModel> list = graphicalRootModel.getChildren();
+		List<AbstractSmooksGraphicalModel> list = graphicalRootModel.getChildren();
 		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-			TreeNodeModel treeNodeModel = (TreeNodeModel) iterator.next();
+			AbstractSmooksGraphicalModel treeNodeModel = (AbstractSmooksGraphicalModel) iterator.next();
 			if (treeNodeModel instanceof IMoveableModel) {
 				Object data = treeNodeModel.getData();
 				String id = EDISegementsEditPart.generateFigureId(data);
@@ -416,10 +416,10 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	}
 
 	private void removeEDIGraphModel() {
-		List<TreeNodeModel> children = this.graphicalRootModel.getChildren();
-		List<TreeNodeModel> temp = new ArrayList<TreeNodeModel>(children);
+		List<AbstractSmooksGraphicalModel> children = this.graphicalRootModel.getChildren();
+		List<AbstractSmooksGraphicalModel> temp = new ArrayList<AbstractSmooksGraphicalModel>(children);
 		for (Iterator<?> iterator = temp.iterator(); iterator.hasNext();) {
-			TreeNodeModel treeNodeModel = (TreeNodeModel) iterator.next();
+			AbstractSmooksGraphicalModel treeNodeModel = (AbstractSmooksGraphicalModel) iterator.next();
 			if (treeNodeModel.getData() instanceof TagObject) {
 				graphicalRootModel.removeTreeNode(treeNodeModel);
 			}
@@ -1050,7 +1050,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			Segment segment = (Segment) obj;
 			TreeNodeModel segmentGraphicalModel = findEDIGraphicalModel(segment);
 			String code = segment.getSegcode();
-			TreeNodeModel model = findEDIDataGraphicalModel(code);
+			AbstractSmooksGraphicalModel model = findEDIDataGraphicalModel(code);
 			if (segmentGraphicalModel != null && model != null) {
 				if (!isLinked(segmentGraphicalModel, model)) {
 					new TreeNodeConnection(segmentGraphicalModel, model).connect();
@@ -1065,7 +1065,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		return sourceLinkedModel;
 	}
 
-	private boolean isLinked(TreeNodeModel source, TreeNodeModel target) {
+	private boolean isLinked(AbstractSmooksGraphicalModel source, AbstractSmooksGraphicalModel target) {
 		List<TreeNodeConnection> connections = source.getSourceConnections();
 		for (Iterator<?> iterator = connections.iterator(); iterator.hasNext();) {
 			TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator.next();
@@ -1110,7 +1110,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	 */
 	private TreeNodeModel findEDIGraphicalModel(Object model) {
 		if (graphicalRootModel != null) {
-			List<TreeNodeModel> treeNodeList = graphicalRootModel.getChildren();
+			List<AbstractSmooksGraphicalModel> treeNodeList = graphicalRootModel.getChildren();
 			return (TreeNodeModel)findEDIGraphicalModel(model, treeNodeList);
 		}
 		return null;
@@ -1131,13 +1131,13 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		return null;
 	}
 
-	private TreeNodeModel findEDIDataGraphicalModel(String code) {
+	private AbstractSmooksGraphicalModel findEDIDataGraphicalModel(String code) {
 		if (code == null)
 			return null;
 		if (graphicalRootModel != null) {
-			List<TreeNodeModel> treeNodeList = graphicalRootModel.getChildren();
+			List<AbstractSmooksGraphicalModel> treeNodeList = graphicalRootModel.getChildren();
 			for (Iterator<?> iterator = treeNodeList.iterator(); iterator.hasNext();) {
-				TreeNodeModel treeNodeModel = (TreeNodeModel) iterator.next();
+				AbstractSmooksGraphicalModel treeNodeModel = (AbstractSmooksGraphicalModel) iterator.next();
 				Object model = treeNodeModel.getData();
 				if (model instanceof TagObject) {
 					String name = ((TagObject) model).getName();
