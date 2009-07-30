@@ -16,7 +16,7 @@
    <license url="%licenseURL">
       %license
    </license>
-   
+
    <url>
       <update label="%updateSiteName" url="http://download.jboss.org/jbosstools/updates/stable"/>
    </url>
@@ -89,5 +89,12 @@
          download-size="0"
          install-size="0"
          version="0.0.0"/>
+
+   <plugin
+         id="org.jboss.bpel.as.integration"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>
