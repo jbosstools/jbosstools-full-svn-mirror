@@ -13,4 +13,5 @@ plugin@org.eclipse.bpel.ui=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk
 plugin@org.eclipse.bpel.validator=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.validator
 plugin@org.eclipse.bpel.wsil.model=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.wsil.model
 plugin@org.eclipse.bpel.xpath10=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.xpath10
+plugin@org.jboss.tools.bpel.as.integration=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.jboss.tools.bpel.as.integration
 plugin@org.eclipse.tools.bpel.ui.test=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/tests/org.eclipse.tools.bpel.ui.test
