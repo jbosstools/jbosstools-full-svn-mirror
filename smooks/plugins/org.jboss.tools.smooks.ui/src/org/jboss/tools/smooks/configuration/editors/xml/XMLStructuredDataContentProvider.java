@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 
 /**
  * @author Dart Peng
@@ -36,8 +37,11 @@ public class XMLStructuredDataContentProvider implements ITreeContentProvider {
 			List pros = ((TagObject)obj).getProperties();
 			c.addAll(pros);
 			c.addAll(((TagObject)obj).getXMLNodeChildren());
-			
 			return c.toArray();
+		}
+		
+		if(obj instanceof IXMLStructuredObject){
+			return ((IXMLStructuredObject)obj).getChildren().toArray();
 		}
 		return new Object[] {};
 	}
@@ -48,8 +52,8 @@ public class XMLStructuredDataContentProvider implements ITreeContentProvider {
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getParent(java.lang.Object )
 	 */
 	public Object getParent(Object arg0) {
-		 if(arg0 instanceof AbstractXMLObject){
-			 return ((AbstractXMLObject)arg0).getParent();
+		 if(arg0 instanceof IXMLStructuredObject){
+			 return ((IXMLStructuredObject)arg0).getParent();
 		 }
 		return null;
 	}
@@ -67,8 +71,8 @@ public class XMLStructuredDataContentProvider implements ITreeContentProvider {
 			return true;
 		}
 		if(obj instanceof TagObject){
-			List pros = ((TagObject)obj).getProperties();
-			List c = (((TagObject)obj).getXMLNodeChildren());
+			List<?> pros = ((TagObject)obj).getProperties();
+			List<?> c = (((TagObject)obj).getXMLNodeChildren());
 			return !pros.isEmpty() || !c.isEmpty();
 		}
 		return false;
@@ -83,6 +87,9 @@ public class XMLStructuredDataContentProvider implements ITreeContentProvider {
 	public Object[] getElements(Object arg0) {
 		if(arg0 instanceof TagList){
 			return ((TagList)arg0).getRootTagList().toArray();
+		}
+		if(arg0 instanceof IXMLStructuredObject){
+			return ((IXMLStructuredObject)arg0).getChildren().toArray();
 		}
 		return new Object[] {};
 	}

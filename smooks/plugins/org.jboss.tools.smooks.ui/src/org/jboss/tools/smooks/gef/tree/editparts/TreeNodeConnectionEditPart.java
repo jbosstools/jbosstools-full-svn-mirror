@@ -64,6 +64,7 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 
 			public PointList getPoints() {
 				PointList list = super.getPoints();
+				if(list.size() == 0) return list;
 				Point start = getStart();
 				Point start2 = new Point(start.x + 20, start.y);
 				Point end = getEnd();

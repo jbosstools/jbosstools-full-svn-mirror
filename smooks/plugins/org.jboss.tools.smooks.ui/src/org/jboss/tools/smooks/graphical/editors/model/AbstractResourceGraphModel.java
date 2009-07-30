@@ -8,27 +8,20 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors.editparts;
+package org.jboss.tools.smooks.graphical.editors.model;
 
-import java.beans.PropertyChangeEvent;
-
-import org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart;
+import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 
 /**
  * @author Dart
  *
  */
-public class InputDataContainerEditPart extends TreeContainerEditPart {
+public class AbstractResourceGraphModel extends TreeNodeModel {
 
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		super.propertyChange(evt);
+	public AbstractResourceGraphModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider) {
+		super(data, contentProvider, labelProvider);
 	}
 
-	@Override
-	protected String generateFigureID() {
-		return SmooksGraphUtil.generateFigureID((TreeNodeModel)getModel());
-	}
-	
 }

@@ -10,25 +10,17 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.editparts;
 
-import java.beans.PropertyChangeEvent;
-
-import org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart;
-import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
 
 /**
  * @author Dart
  *
  */
-public class InputDataContainerEditPart extends TreeContainerEditPart {
+public class JavaBeanChildNodeEditPart extends TreeNodeEditPart {
 
 	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		super.propertyChange(evt);
+	protected boolean isDragLink() {
+		return false;
 	}
 
-	@Override
-	protected String generateFigureID() {
-		return SmooksGraphUtil.generateFigureID((TreeNodeModel)getModel());
-	}
-	
 }

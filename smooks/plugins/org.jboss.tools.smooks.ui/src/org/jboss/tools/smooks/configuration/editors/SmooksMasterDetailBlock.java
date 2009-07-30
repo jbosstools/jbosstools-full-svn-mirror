@@ -133,6 +133,9 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 	}
 
 	protected void refreshSmooksTreeViewer() {
+		if (smooksTreeViewer.getControl().isDisposed()) {
+			return;
+		}
 		smooksTreeViewer.refresh();
 	}
 
