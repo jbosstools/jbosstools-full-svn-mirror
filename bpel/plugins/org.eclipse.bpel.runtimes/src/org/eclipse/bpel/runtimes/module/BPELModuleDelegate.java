@@ -148,9 +148,9 @@ public class BPELModuleDelegate extends ProjectModule {
 				IPath path = resource.getProjectRelativePath();
 				path = path.removeLastSegments(1);
 				if (resource.getType() == IResource.FILE) {
-					if(!isFileOfInterest((IFile)resource)){
-						return true;
-					}
+//					if(!isFileOfInterest((IFile)resource)){
+//						return true;
+//					}
 					IModuleFile mf = new ModuleFile((IFile)resource, resource.getName(), path);
 					files.add(mf);
 				}
