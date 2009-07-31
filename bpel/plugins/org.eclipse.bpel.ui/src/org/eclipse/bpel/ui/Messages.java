@@ -31,7 +31,6 @@ public final class Messages extends NLS {
 	public static String AssignImplDetails_Delete__6;
 	public static String AssignImplDetails_From__1;
 	public static String AssignImplDetails_New__5;
-	public static String AssignImplDetails_NofM__4;
 	public static String AssignImplDetails_To__2;
 	public static String AssignImplDetails_KeepSrcElementName;
 	public static String AssignImplDetails_IgnoreMissingSourceData;
@@ -39,7 +38,6 @@ public final class Messages extends NLS {
 	public static String BrowseSelectorDialog_0;
 	public static String BrowseSelectorDialog_1;
 	public static String BrowseSelectorDialog_2;
-	public static String BrowseSelectorDialog_3;
 	public static String BrowseSelectorDialog_4;
 	public static String DocumentationSection_Source_1;
 	public static String DocumentationSection_Language_1;
@@ -93,7 +91,6 @@ public final class Messages extends NLS {
 	public static String PartnerLinkTypeSelectorDialog_4;
 	public static String PartnerLinkTypeSelectorDialog_5;
 	public static String PartnerLinkTypeSelectorDialog_6;
-	public static String SaveImageAction_0;
 	public static String SaveImageAction_1;
 	public static String SaveImageAction_2;
 	public static String SaveImageAction_3;
@@ -101,7 +98,6 @@ public final class Messages extends NLS {
 	public static String SchemaImportDialog_0;
 	public static String SchemaImportDialog_10;
 	public static String SchemaImportDialog_11;
-	public static String SchemaImportDialog_12;
 	public static String SchemaImportDialog_13;
 	public static String SchemaImportDialog_14;
 	public static String SchemaImportDialog_15;
@@ -119,7 +115,6 @@ public final class Messages extends NLS {
 	public static String TypeSelectorDialog_10;
 	public static String TypeSelectorDialog_11;
 	public static String TypeSelectorDialog_12;
-	public static String TypeSelectorDialog_13;
 	public static String TypeSelectorDialog_14;
 	public static String TypeSelectorDialog_15;
 	public static String TypeSelectorDialog_16;
@@ -129,13 +124,10 @@ public final class Messages extends NLS {
 	public static String TypeSelectorDialog_3;
 	public static String TypeSelectorDialog_4;
 	public static String TypeSelectorDialog_5;
-	public static String TypeSelectorDialog_6;
 	public static String TypeSelectorDialog_7;
-	public static String TypeSelectorDialog_8;
 	public static String TypeSelectorDialog_9;
 	public static String Validate;
 	public static String AttributesDetails_Expression_Language__2;
-	public static String AttributesDetails_Process_Type_Abstract__3;
 	public static String AttributesDetails_Query_Language__2;
 	public static String AutoArrangeFlowsAction_Arrange_Flow_Contents_2;
 	public static String AutoArrangeFlowsAction_Auto_arrange_flow_contents_3;
@@ -146,7 +138,6 @@ public final class Messages extends NLS {
 	public static String BPELCopyAction_Copy_3;
 	public static String BPELDuplicateAction_Duplicate_1;
 	public static String BPELDuplicateAction_Duplicate_2;
-	public static String BPELDuplicateAction_Duplicate_3;	
 	public static String BPELCutAction_Cut_1;
 	public static String BPELCutAction_Cut_2;
 	public static String BPELCutAction_Cut_3;
@@ -175,8 +166,6 @@ public final class Messages extends NLS {
 	public static String BPELEditor_Marquee_Tool;
 	public static String BPELEditor_Pick_8;
 	public static String BPELEditor_Pick_9;
-	public static String BPELEditor_Process_Out_Of_Sync_2;
-	public static String BPELEditor_Process_has_been_modified_3;
 	public static String BPELEditor_ReThrow_1;
 	public static String BPELEditor_ReThrow_2;
 	public static String BPELEditor_Receive_4;
@@ -206,8 +195,6 @@ public final class Messages extends NLS {
 	public static String BPELEditor_Repeat_Until_42;
 	public static String BPELEditor_Repeat_Until_43;
 	public static String BPELEditor_addCorrelationSet;
-	public static String BPELEditor_addInterfacePartner;
-	public static String BPELEditor_addReferencePartner;
 	public static String BPELEditor_addPartnerLink;
 	public static String BPELEditor_addVariable;
 	public static String BPELEditor_addMessageExchange;
@@ -215,9 +202,6 @@ public final class Messages extends NLS {
 	public static String BPELPasteAction_Paste_1;
 	public static String BPELPasteAction_Paste_2;
 	public static String BPELPasteAction_Paste_3;
-	public static String BPELPasteFromSourceAction_Paste_1;
-	public static String BPELPasteFromSourceAction_Paste_2;
-	public static String BPELPasteFromSourceAction_Paste_3;
 	public static String BPELPreferencePage_0;
 	public static String BPELPreferencePage_0TT;
 	public static String BPELPreferencePage_1;
@@ -442,24 +426,14 @@ public final class Messages extends NLS {
 	public static String InsertInContainerCommand_Node_3;
 	public static String InsertNewAction_Insert_a;
 	public static String InvokeAction_Invoke_HTML_Description_1;
-	public static String InvokeImplDetails_Fault_22;
 	public static String InvokeImplDetails_Fault_Name__25;
-	public static String InvokeImplDetails_Normal_21;
 	public static String InvokeImplDetails_Operation__19;
 	public static String InvokeImplDetails_Partner__10;
-	public static String InvokeImplDetails_Reply_Type__20;
-	public static String InvokeImplDetails_Request_3;
 	public static String InvokeImplDetails_Request_3_Plain;
-	public static String InvokeImplDetails_Response_4;
 	public static String InvokeImplDetails_Response_4_Plain;
-	public static String InvokeImplSection_Browse_1;
-	public static String InvokeImplSection_Interface_1;
 	public static String InvokeImplSection_None_1;
-	public static String InvokeImplSection_Select_Request_Variable_1;
-	public static String InvokeImplSection_Select_Response_Variable_1;
 	public static String JoinConditionSection_Create_a_New_Condition_3;
 	public static String JoinConditionSection_No_condition_specified_1;
-	public static String JoinConditionSection_No_incoming_links_text_1;
 	public static String JoinConditionSection_Optional_condition_text_2;
 	public static String JoinFailureDetails_No_3;
 	public static String JoinFailureDetails_Suppress_Join_Failure__1;
@@ -468,7 +442,6 @@ public final class Messages extends NLS {
 	public static String JoinFailureDetails_Use_Same_Value_as_Parent_4;
 	public static String JoinFailureDetails_Yes_2;
 	public static String LinkAdapter_Link_1;
-	public static String LiteralAssignCategory_25;
 	public static String LiteralAssignCategory_Fixed_Value_1;
 	public static String LiteralAssignCategory_Literal_not_XML_2;
 	public static String LiteralAssignCategory_Warning_1;
@@ -500,7 +473,6 @@ public final class Messages extends NLS {
 	public static String OnAlarmAdapter_OnAlarm_1;
 	public static String OnEventAdapter_OnEvent_1;
 	public static String OnMessageAdapter_OnMessage_1;
-	public static String OpaqueAction_opaque_HTML_Description_1;
 	public static String OpaqueAssignCategory_An_Opaque_value_is_used_in_abstract_processes__2;
 	public static String OpaqueAssignCategory_Opaque_1;
 	public static String OperationAdapter_Operation_1;
@@ -511,8 +483,6 @@ public final class Messages extends NLS {
 	public static String PartLabelProvider_result_localPart;
 	public static String PartnerLinkAdapter_Partner_1;
 	public static String PartnerLinkImplSection_Browse_1;
-	public static String PartnerLinkImplSection_Interface_1;
-	public static String PartnerLinkImplSection_Reference_Interface_2;
 	public static String PartnerLinkSelectorDialog_0;
 	public static String PartnerLinkSelectorDialog_1;
 	public static String PartnerLinkSelectorDialog_2;
@@ -523,7 +493,6 @@ public final class Messages extends NLS {
 	public static String PartnerRoleSelectorDialog_Title_PartnerRole;
 	public static String PartnerRoleSelectorDialog_Title_MyRole;
 	public static String PartnerLinkTypeAdapter_Partner_Link_Type_1;
-	public static String PartnerLinksAdapter_Interface_Partners_1;
 	public static String PartnerLinksAdapter_PartnerLinks_1;
 	public static String PartnerLinksEditPart_0;
 	public static String PartnerLinksEditPart_1;
@@ -563,8 +532,6 @@ public final class Messages extends NLS {
 	public static String SelectionAndCreationDialog_Error_2;
 	public static String SelectionAndCreationDialog_New_1;
 	public static String SelectionAndCreationDialog_No_elements_were_selected_3;
-	public static String ServerDetails_TargetNamespaceError;
-	public static String ServerDetails_TargetNamespaceErrorMessage;
 	public static String SetCommand_Change_1;
 	public static String SetCommand_Change_2;
 	public static String SetCompensateLinkAction_Set_Compensate_1;
@@ -662,11 +629,8 @@ public final class Messages extends NLS {
 	public static String XSDTypeDefinitionAdapter_XSD_Type_1;
 	public static String ZoominToolEntry_Zoom_in_1;
 	public static String ZoomoutToolEntry_Zoom_out_1;
-	public static String validationInfo_dialog_title;
-	public static String validationInfo_invalidElementsRemoved;
 	public static String TerminationHandlerAdapter_Termination_Handlers_1;
 	public static String CreateTerminationHandlerAction_Add_Termination_Handler_1;
-	public static String ValidateXML_Details_1;
 	public static String ValidateDetails_1;
 	public static String ValidateDetails_2;
 	public static String ValidateDetails_3;
@@ -684,18 +648,6 @@ public final class Messages extends NLS {
 	public static String DateTimeSelector_Month_10;
 	public static String DateTimeSelector_Month_11;
 	public static String DateTimeSelector_Month_12;
-	
-	public static String BPELPropertyAliasQuerySection_Query_Language;
-	public static String BPELPropertyAliasQuerySection_Query;
-	
-	public static String BPELPartnerLinkRolesSection_Add;
-	public static String BPELPartnerLinkRolesSection_Remove;
-	public static String BPELPartnerLinkRolesSection_Roles;
-	
-	public static String BPELPartnerLinkRolesSection_Role_Name;
-	public static String BPELPartnerLinkRolesSection_Role_PortType;
-
-	public static String BPELWSDLComponentSelectionDialog;
 
 	public static String ShowPropertiesViewAction_actionText;
 	public static String ShowPaletteInPaletteViewAction_actionText;
