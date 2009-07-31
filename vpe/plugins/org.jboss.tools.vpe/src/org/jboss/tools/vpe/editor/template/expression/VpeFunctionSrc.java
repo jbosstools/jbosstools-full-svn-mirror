@@ -11,14 +11,27 @@
 package org.jboss.tools.vpe.editor.template.expression;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.internal.core.JarPackageFragmentRoot;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
@@ -259,9 +272,9 @@ public class VpeFunctionSrc extends VpeFunction {
           Matcher singleCoatMatcher = resourcePatternWithSinglCoat.matcher(resolvedValue);
           Matcher doubleCoatMatcher = resourcePatternWithDoableCoat.matcher(resolvedValue);
           if(doubleCoatMatcher.find()) {
-        	  resolvedValue = processJSF2Resource(doubleCoatMatcher);      	  
+        	  resolvedValue = processJSF2Resource(pageContext, doubleCoatMatcher);      	  
           }else if(singleCoatMatcher.find()){
-        	  resolvedValue = processJSF2Resource(singleCoatMatcher);
+        	  resolvedValue = processJSF2Resource(pageContext, singleCoatMatcher);
           }
 
         //Fix for JBIDE-3030
@@ -279,11 +292,74 @@ public class VpeFunctionSrc extends VpeFunction {
      * @param matcher
      * @return
      */
-    private static final String processJSF2Resource(Matcher matcher){
+    private static final String processJSF2Resource(VpePageContext pageContext, Matcher matcher){
     	String resulString = matcher.group(1);
     	resulString=resulString.replaceAll(":", "/");  //$NON-NLS-1$//$NON-NLS-2$
     	resulString = "/resources/"+resulString; //$NON-NLS-1$
+    	// if file not accessible and try to search in jar files
+    	if(VpeCreatorUtil.getFile(resulString, pageContext)==null) {
+    		String tempEntryPath =seachResourceInClassPath(pageContext, "META-INF"+resulString); //$NON-NLS-1$
+    		if(tempEntryPath!=null) {
+    			resulString = tempEntryPath;
+    		}
+    	}
     	return resulString;
+    }
+    /**
+     * Function search into project class path resource, if resource founded in jar file, make a 
+     * temp copy of this resource and return path to copy.
+     * @author mareshkau
+     * @param pageContext
+     * @param classPathResource
+     * @return
+     */
+    private static String  seachResourceInClassPath(VpePageContext pageContext, String classPathResource) {
+    	String result = null;
+		final IFile currentFile = (IFile) pageContext.getVisualBuilder().getCurrentIncludeInfo().getStorage();
+		final IProject project = currentFile.getProject();
+		IJavaProject javaProject = JavaCore.create(project);
+		try {
+			for (IPackageFragmentRoot fragmentRoot : javaProject.getAllPackageFragmentRoots()) {
+				if(fragmentRoot instanceof JarPackageFragmentRoot) {
+					JarPackageFragmentRoot jarPackageFragmentRoot = (JarPackageFragmentRoot) fragmentRoot;
+					ZipEntry zipEntry = jarPackageFragmentRoot.getJar().getEntry(classPathResource);
+					if(zipEntry!=null){
+						InputStream inputStream = jarPackageFragmentRoot.getJar().getInputStream(zipEntry);
+						IPath stateLocation = VpePlugin.getDefault().getStateLocation();
+						String fileName = classPathResource.substring(classPathResource.lastIndexOf("/")+1,classPathResource.lastIndexOf(".")); //$NON-NLS-1$ //$NON-NLS-2$
+						String fileExtension = classPathResource.substring(classPathResource.lastIndexOf("."),classPathResource.length()); //$NON-NLS-1$
+						if(fileName!=null && fileName.length()>0
+								&& fileExtension!=null && fileExtension.length()>0) {
+							File temporaryFile =File.createTempFile(
+									fileName, 
+									fileExtension,  
+									new File(stateLocation.toOSString())); 
+							temporaryFile.deleteOnExit();
+							OutputStream out = new FileOutputStream(temporaryFile,false);
+					        byte[] buf = new byte[1024];
+					        int len;
+					        while ((len = inputStream.read(buf)) > 0) {
+					            out.write(buf, 0, len);
+					        }
+					        inputStream.close();
+					        out.close();
+					        result = IMG_PREFIX + temporaryFile.getAbsolutePath();
+						}
+					}
+				}
+			}
+		} catch (JavaModelException e) {
+				VpePlugin.reportProblem(e);
+		} catch (IllegalStateException e) {
+				VpePlugin.reportProblem(e);
+		} catch (FileNotFoundException e) {
+				VpePlugin.reportProblem(e);
+		} catch (CoreException e) {
+				VpePlugin.reportProblem(e);
+		} catch (IOException e) {
+				VpePlugin.reportProblem(e);
+		}
+    	return result;
     }
     
     public static String getAbsoluteResourcePath(String resourcePathInPlugin) {
