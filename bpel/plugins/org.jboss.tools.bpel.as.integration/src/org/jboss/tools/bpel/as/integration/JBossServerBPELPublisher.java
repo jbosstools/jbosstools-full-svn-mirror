@@ -1,4 +1,4 @@
-package org.jboss.bpel.as.integration;
+package org.jboss.tools.bpel.as.integration;
 
 import org.eclipse.bpel.runtimes.IBPELModuleFacetConstants;
 import org.eclipse.core.resources.IProject;

@@ -1,4 +1,4 @@
-package org.jboss.bpel.as.integration;
+package org.jboss.tools.bpel.as.integration;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jboss.bpel.as.integration";
+	public static final String PLUGIN_ID = "org.jboss.tools.bpel.as.integration";
 
 	// The shared instance
 	private static Activator plugin;
