@@ -16,9 +16,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jboss.tools.vpe.VpePlugin;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
+import org.w3c.dom.Node;
 
 public class TextUtil {
 
@@ -37,6 +40,8 @@ public class TextUtil {
 	private final static char CHR_ESC_STOP = ';';
 	private final static char CHR_HEX_FLAG = 'x';
 	private final static String SPCHARS = "\f\n\r\t\u0020\u2028\u2029"; //$NON-NLS-1$
+	private static final Pattern elPattern = Pattern.compile("(#|\\$)\\{\\s*([^\\s])"); //$NON-NLS-1$
+	
 	private final static Map<Character, String> textSet = new HashMap<Character, String>();
 	static {
 		try {
@@ -427,6 +432,29 @@ public class TextUtil {
 		}
 
 		return str;
+	}
+	/**
+	 * @author mareshkau
+	 * @param node or attribute for which we want calculate position start el position
+	 * 
+	 * @return position if we can find position
+	 * 			-1 if we can't find pisition, <document_offcet>'#{el}', return start position of el
+	 */
+	public static int getStartELDocumentPosition(Node node) {
+
+		if (node != null && node.getNodeValue() != null
+				&& node.getNodeValue().length() > 0) {
+			int elPosition = 0;
+			Matcher beginELExpresion = elPattern.matcher(node.getNodeValue());
+			if (beginELExpresion.find()) {
+				// +1 becouse we should have position of first symbol
+				elPosition = beginELExpresion.start(2) + 1;
+			}
+			int offset = NodesManagingUtil.getStartOffsetNode(node)
+					+ elPosition;
+			return offset;
+		}
+		return -1;
 	}
 
 	/**

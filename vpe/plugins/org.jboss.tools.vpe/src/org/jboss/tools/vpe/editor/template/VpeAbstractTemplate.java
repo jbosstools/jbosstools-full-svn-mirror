@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
@@ -1214,17 +1215,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 			Element sourceElement, Object data) {
 	}
 
-	/**
-	 * Opens proprties editor for bundle value Is invoked at double mouse click
-	 * on visual element.
-	 * 
-	 * @param sourceElement The current element of the source tree.
-	 * @param data The arbitrary data, built by a method <code>create</code>
-	 * @param pageContext Contains the information on edited page.
-	 */
-	public void openBundleEditors(VpePageContext pageContext,
-			Element sourceElement, Object data) {
-	}
+
 
 //	/**
 //	 * Opens editor of source file for include-element.
@@ -1466,6 +1457,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @author mareshkau
 	 */
 	public IRegion getSourceRegionForOpenOn(VpePageContext pageContext, Node sourceNode ,nsIDOMNode domNode) {
+
 			int offset = NodesManagingUtil.getStartOffsetNode(sourceNode);
 			//calculate openOnPosition,prefixLengght+>+":"
 			offset+=sourceNode.getPrefix().length()+1+1;

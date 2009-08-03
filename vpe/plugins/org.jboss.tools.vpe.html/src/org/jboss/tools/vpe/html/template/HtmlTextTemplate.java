@@ -68,7 +68,11 @@ public class HtmlTextTemplate extends VpeAbstractTemplate {
 	public IRegion getSourceRegionForOpenOn(VpePageContext pageContext, Node sourceNode, nsIDOMNode domNode) {
 			
 		Point selection = pageContext.getSourceBuilder().getSelectionRange();
-		
+		//processing for el expressions
+		int offset = TextUtil.getStartELDocumentPosition(sourceNode);
+		if(offset!=-1) {
+			return new Region(offset,0);
+		}
 		return new Region(selection.x,0);
 	}
 	

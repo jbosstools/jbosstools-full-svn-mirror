@@ -284,39 +284,6 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		}	
 	}
 	
-	boolean openBundleEditors(nsIDOMNode visualNode) {
-
-		VpeNodeMapping nodeMapping = NodesManagingUtil.getNodeMapping(
-				domMapping, visualNode);
-		if (nodeMapping != null
-				&& nodeMapping instanceof VpeElementMapping) {
-
-			VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
-
-			VpeTemplate template = elementMapping.getTemplate();
-
-			// as all templates implement new method 
-			template.openBundle(pageContext, visualNode, elementMapping);
-			// if (!template.openBundle(pageContext, visualNode,
-			// elementMapping))
-			// template.openBundleEditors(pageContext,
-			// (Element) elementMapping.getSourceNode(),
-			// elementMapping.getData());
-		}
-		return false;
-	}
-	
-//	boolean openIncludeEditor(nsIDOMNode visualNode) {
-//		Node sourceNode = domMapping.getNearSourceNode(visualNode);
-//		if (sourceNode != null && sourceNode.getNodeType() == Node.ELEMENT_NODE) {
-//			VpeElementMapping elementMapping = (VpeElementMapping)domMapping.getNodeMapping(sourceNode);
-//			if (elementMapping != null) {
-//				VpeTemplate template = elementMapping.getTemplate();
-//				template.openIncludeEditor(pageContext, (Element)sourceNode, elementMapping.getData());
-//			}
-//		}
-//		return false;
-//	}
 	
 	boolean isEmptyDocument() {
 		if (sourceDocument == null) return true;

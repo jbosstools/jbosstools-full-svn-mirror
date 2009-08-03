@@ -302,33 +302,6 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		return dependencyFromBundle;
 	}
 	
-	/**
-	 * 
-	 * Deprecated
-	 */
-	@Override
-	public void openBundleEditors(VpePageContext pageContext, Element sourceElement, Object data) {
-		openBundleEditors(pageContext, sourceElement, (Map<VpeTemplate,nsIDOMElement>) data);
-	}
-	
-	private void openBundleEditors(VpePageContext pageContext, Element sourceElement, Map<VpeTemplate,nsIDOMElement> visualNodeMap) {
-		if (dependencyFromBundle) {
-			VpeCreator[] creators = dependencyMap.getCreators(VpeExpressionBuilder.SIGNATURE_JSF_VALUE);
-			for (int i = 0; i < creators.length; i++) {
-				if (creators[i] instanceof VpeOutputAttributes) {
-					String[] outputAttrs = ((VpeOutputAttributes)creators[i]).getOutputAttributes();
-					if (outputAttrs != null) {
-						for (int j = 0; j < outputAttrs.length; j++) {
-							String value = sourceElement.getAttribute(outputAttrs[j]);
-							if (value != null) {
-								pageContext.getBundle().openBundle(value, getPageLocale(pageContext, (IDOMElement)sourceElement));
-							}
-						}
-					}
-				}
-			}
-		}
-	}
 
 	private static final String VIEW_TAGNAME = "view"; //$NON-NLS-1$
 	private static final String LOCALE_ATTRNAME = "locale"; //$NON-NLS-1$

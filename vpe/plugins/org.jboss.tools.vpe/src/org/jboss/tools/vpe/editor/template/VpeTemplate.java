@@ -346,21 +346,6 @@ public interface VpeTemplate {
 	void refreshBundleValues(VpePageContext pageContext, Element sourceElement,
 			Object data);
 
-	/**
-	 * @deprecated
-	 * Opens proprties editor for bundle value Is invoked at double mouse click
-	 * on visual element
-	 * 
-	 * @param pageContext
-	 *            Contains the information on edited page.
-	 * @param sourceElement
-	 *            The current element of the source tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
-	 */
-	void openBundleEditors(VpePageContext pageContext, Element sourceElement,
-			Object data);
-
 //	/**
 //	 * Opens editor of source file for include-element
 //	 * 
