@@ -37,6 +37,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -55,8 +56,10 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.wizards.NewSmooksElementWizard;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
+import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 
 /**
  * @author Dart Peng (dpeng@redhat.com)
@@ -184,6 +187,7 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 			}
 
 		}, SmooksConfigurationActivator.getDefault().getWorkbench().getDecoratorManager().getLabelDecorator()));
+
 		smooksTreeViewer.setComparer(new IElementComparer() {
 
 			/*
@@ -216,7 +220,7 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		smooksTreeViewer.setFilters(new ViewerFilter[] { new TextEObjectModelFilter() });
 		Object smooksModel = ((ISmooksModelProvider) this.formEditor).getSmooksModel();
 		if (smooksModel != null) {
-			smooksTreeViewer.setInput(smooksModel);
+			setTreeViewerModel(smooksModel);
 		}
 		createMenuForViewer(smooksTreeViewer);
 		formEditor.getSite().setSelectionProvider(smooksTreeViewer);
@@ -240,30 +244,66 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		GridLayout buttonLayout = new GridLayout();
 		buttonComposite.setLayout(buttonLayout);
 
-		addButton = tool.createButton(buttonComposite, "New", SWT.NONE);
+		addButton = tool.createButton(buttonComposite, "Add...", SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		addButton.setLayoutData(gd);
 
 		removeButton = tool.createButton(buttonComposite, "Remove", SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		removeButton.setLayoutData(gd);
+		
+		Composite  sc= tool.createComposite(buttonComposite);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.heightHint = 40;
+		sc.setLayoutData(gd);
 
 		upButton = tool.createButton(buttonComposite, "Up", SWT.NONE);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
 		upButton.setLayoutData(gd);
 
 		downButton = tool.createButton(buttonComposite, "Down", SWT.NONE);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
 		downButton.setLayoutData(gd);
 		// don't display button area
 		gd = new GridData(GridData.FILL_VERTICAL);
-		gd.widthHint = 0;
+		gd.widthHint = 70;
 		buttonComposite.setLayoutData(gd);
-		buttonComposite.setVisible(false);
+		// buttonComposite.setVisible(false);
 
 		hookButtons();
 	}
 
+	private void setTreeViewerModel(Object smooksModel) {
+		boolean seted = false;
+		if (smooksModel instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
+			smooksTreeViewer.setInput(((org.jboss.tools.smooks10.model.smooks.DocumentRoot) smooksModel)
+					.getSmooksResourceList());
+			seted = true;
+		}
+		if (smooksModel instanceof DocumentRoot) {
+			smooksTreeViewer.setInput(((DocumentRoot) smooksModel).getSmooksResourceList());
+			seted = true;
+		}
+		if (!seted) {
+			smooksTreeViewer.setInput(smooksModel);
+		}
+	}
+
+	private EObject getTreeViewerInput() {
+		EObject smooksModel = ((ISmooksModelProvider) this.formEditor).getSmooksModel();
+		if (smooksModel instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
+			return ((org.jboss.tools.smooks10.model.smooks.DocumentRoot) smooksModel).getSmooksResourceList();
+		}
+		if (smooksModel instanceof DocumentRoot) {
+			return (((DocumentRoot) smooksModel).getSmooksResourceList());
+		}
+		return null;
+	}
+
 	protected List<?> getViewerSelections() {
 		IStructuredSelection selections = (IStructuredSelection) smooksTreeViewer.getSelection();
+		if (selections == null)
+			return null;
 		return selections.toList();
 		// List<Object> nl = new ArrayList<Object>();
 		// for (Iterator<?> iterator = l.iterator(); iterator.hasNext();) {
@@ -275,6 +315,18 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 	}
 
 	private void hookButtons() {
+		addButton.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				super.widgetSelected(e);
+				NewSmooksElementWizard wizard = new NewSmooksElementWizard(editingDomain, getTreeViewerInput());
+				WizardDialog dialog = new WizardDialog(formEditor.getSite().getShell(), wizard);
+				dialog.open();
+			}
+
+		});
+
 		removeButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				List<?> list = getViewerSelections();
@@ -300,7 +352,6 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 					EObject parent = v.eContainer();
 					int index = parent.eContents().indexOf(v);
 					Command command = MoveCommand.create(editingDomain, parent, null, obj, index + 1);
-					System.out.println(command.canExecute());
 					editingDomain.getCommandStack().execute(command);
 				}
 			}
@@ -308,6 +359,15 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 
 		upButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				List<?> list = getViewerSelections();
+				if (list.size() == 1) {
+					Object obj = list.get(0);
+					EObject v = (EObject) AdapterFactoryEditingDomain.unwrap(obj);
+					EObject parent = v.eContainer();
+					int index = parent.eContents().indexOf(v);
+					Command command = MoveCommand.create(editingDomain, parent, null, obj, index - 1);
+					editingDomain.getCommandStack().execute(command);
+				}
 			}
 		});
 	}
@@ -358,7 +418,8 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 
 	public void setSmooksModel(Object model) {
 		if (model != null) {
-			smooksTreeViewer.setInput(model);
+			setTreeViewerModel(model);
+			// smooksTreeViewer.setInput(model);
 		} else {
 			smooksTreeViewer.setInput(new Object());
 		}
@@ -369,42 +430,22 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 	 * @param selections
 	 */
 	protected void updateButtons(List<?> selections) {
-		// removeButton.setEnabled(true);
-		// upButton.setEnabled(true);
-		// downButton.setEnabled(true);
-		// if (selections.size() >= 1) {
-		// for (Iterator<?> iterator = selections.iterator();
-		// iterator.hasNext();) {
-		// Object object = (Object) iterator.next();
-		// object = AdapterFactoryEditingDomain.unwrap(object);
-		// if (object instanceof SmooksResourceListType
-		// || object instanceof
-		// org.jboss.tools.smooks10.model.smooks.SmooksResourceListType) {
-		// removeButton.setEnabled(false);
-		// break;
-		// }
-		// }
-		// }
-		// if (selections.size() == 1) {
-		// Object selection = selections.get(0);
-		// if (selection instanceof SmooksResourceListType
-		// || selection instanceof
-		// org.jboss.tools.smooks10.model.smooks.SmooksResourceListType) {
-		// upButton.setEnabled(false);
-		// downButton.setEnabled(false);
-		// } else {
-		// if (selection instanceof EObject) {
-		// EObject parent = ((EObject) selection).eContainer();
-		// int index = parent.eContents().indexOf(selection);
-		// if (index <= 0) {
-		// upButton.setEnabled(false);
-		// }
-		// if (index >= parent.eContents().size() - 1) {
-		// downButton.setEnabled(false);
-		// }
-		// }
-		// }
-		// }
+		removeButton.setEnabled(true);
+		upButton.setEnabled(true);
+		downButton.setEnabled(true);
+		List<?> list = getViewerSelections();
+		if (list.size() == 1) {
+			Object obj = list.get(0);
+			EObject v = (EObject) AdapterFactoryEditingDomain.unwrap(obj);
+			EObject parent = v.eContainer();
+			int index = parent.eContents().indexOf(v);
+
+			Command upCommand = MoveCommand.create(editingDomain, parent, null, obj, index - 1);
+			upButton.setEnabled(upCommand.canExecute());
+
+			Command downCommand = MoveCommand.create(editingDomain, parent, null, obj, index + 1);
+			downButton.setEnabled(downCommand.canExecute());
+		}
 	}
 
 	/*

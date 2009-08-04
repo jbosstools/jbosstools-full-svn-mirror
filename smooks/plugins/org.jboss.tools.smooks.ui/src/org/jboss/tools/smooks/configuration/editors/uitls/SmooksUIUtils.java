@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -48,6 +49,7 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.search.IJavaSearchConstants;
 import org.eclipse.jdt.ui.JavaUI;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -62,6 +64,7 @@ import org.eclipse.jface.fieldassist.IContentProposalListener;
 import org.eclipse.jface.fieldassist.IContentProposalListener2;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -103,6 +106,7 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.actions.AddSmooksResourceAction;
 import org.jboss.tools.smooks.configuration.actions.OpenEditorEditInnerContentsAction;
 import org.jboss.tools.smooks.configuration.command.UnSetFeatureCommand;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
@@ -1124,16 +1128,17 @@ public class SmooksUIUtils {
 		}
 		return null;
 	}
-	
+
 	public static AttributeFieldEditPart createJavaMethodSearchFieldEditor(BindingsType container, Composite parent,
 			FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor, String buttonName,
 			final EObject model) {
 		String classString = ((BindingsType) container).getClass_();
-		return createJavaMethodSearchFieldEditor(classString, container, parent, toolkit, propertyDescriptor, buttonName, model);
+		return createJavaMethodSearchFieldEditor(classString, container, parent, toolkit, propertyDescriptor,
+				buttonName, model);
 	}
 
-	public static AttributeFieldEditPart createJavaMethodSearchFieldEditor(String classString , EObject container, Composite parent,
-			FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor, String buttonName,
+	public static AttributeFieldEditPart createJavaMethodSearchFieldEditor(String classString, EObject container,
+			Composite parent, FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor, String buttonName,
 			final EObject model) {
 		IJavaProject project = getJavaProject(container);
 		Class<?> clazz = null;
@@ -2343,6 +2348,35 @@ public class SmooksUIUtils {
 			}
 		}
 		return lists;
+	}
+
+	/**
+	 * This generates a {@link org.eclipse.emf.edit.ui.action.CreateChildAction}
+	 * for each object in <code>descriptors</code>, and returns the collection
+	 * of these actions. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public static Collection<IAction> generateCreateChildActions(EditingDomain editingDomain,
+			Collection<?> descriptors, ISelection selection) {
+		Collection<IAction> actions = new ArrayList<IAction>();
+		// if (selection != null && selection.isEmpty() && descriptors != null)
+		// {
+		// CommandParameter cp =
+		// createChildParameter(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE,
+		// SmooksFactory.eINSTANCE.createSmooksResourceListType());
+		// CommandParameter cp2 =
+		// createChildParameter(EdiPackage.Literals.EDI_MAP,
+		// EdiFactory.eINSTANCE.createEdiMap());
+		// descriptors.add(cp);
+		// descriptors.add(cp2);
+		// }
+		if (descriptors != null) {
+			for (Object descriptor : descriptors) {
+				actions.add(new AddSmooksResourceAction(editingDomain, selection, descriptor));
+			}
+		}
+		return actions;
 	}
 
 }

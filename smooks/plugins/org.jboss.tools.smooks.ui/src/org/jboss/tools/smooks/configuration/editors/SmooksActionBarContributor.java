@@ -507,6 +507,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 * @generated
 	 */
 	protected Collection<IAction> generateCreateChildActions(Collection<?> descriptors, ISelection selection) {
+//		return SmooksUIUtils.generateCreateChildActions(activeEditorPart, descriptors, selection);
 		Collection<IAction> actions = new ArrayList<IAction>();
 		// if (selection != null && selection.isEmpty() && descriptors != null)
 		// {
