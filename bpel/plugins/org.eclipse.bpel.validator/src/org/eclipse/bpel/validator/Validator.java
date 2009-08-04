@@ -10,9 +10,15 @@
  *******************************************************************************/
 package org.eclipse.bpel.validator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.bpel.validator.model.IProblem;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdapterManager;
@@ -75,7 +81,12 @@ public class Validator implements IValidator {
 		String s[] = helper.getURIs();
 		
 		if (s.length < 1) {
-			return ;
+			if(helper instanceof ValidatorHelper){
+				s = getURIsByProject(((ValidatorHelper)helper).getProject());
+			}
+			else{
+				return ;
+			}
 		}		
 				
 		for (String f : s) {	
@@ -108,7 +119,30 @@ public class Validator implements IValidator {
 		}
 	}
 
-	
+	private String[] getURIsByProject(IProject project){
+		
+		final List<String> bpelFolders = new ArrayList<String>();
+		IResourceVisitor bpelFolderFinder = new IResourceVisitor() {
+			
+			public boolean visit(IResource resource) throws CoreException {
+				if( resource.getType() == IResource.FILE){
+					if("bpel".equals(resource.getFileExtension())){
+						bpelFolders.add(resource.getFullPath().toOSString());
+						return false;
+					}
+				}
+				return true;
+			}
+		};
+		try {
+			project.accept(bpelFolderFinder);
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+		
+		String[] URIs = new String[bpelFolders.size()];
+		return bpelFolders.toArray(URIs);
+	}
 	
 	
 	void p(String msg) {
