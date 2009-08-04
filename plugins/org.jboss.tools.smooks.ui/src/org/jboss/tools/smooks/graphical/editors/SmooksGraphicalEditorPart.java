@@ -11,18 +11,24 @@
 package org.jboss.tools.smooks.graphical.editors;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EventObject;
 import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CommandWrapper;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.DeleteCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.gef.DefaultEditDomain;
-import org.eclipse.gef.EditDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.CommandStackEvent;
 import org.eclipse.gef.commands.CommandStackEventListener;
@@ -90,6 +96,50 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor {
 		});
 		this.smooksModelProvider = provider;
 		this.setEditDomain(editDomain);
+	}
+	
+	private void handleCommandStack(org.eclipse.emf.common.command.CommandStack commandStack) {
+		commandStack.addCommandStackListener(new org.eclipse.emf.common.command.CommandStackListener() {
+			public void commandStackChanged(EventObject event) {
+				final Command mostRecentCommand = ((org.eclipse.emf.common.command.CommandStack) event.getSource())
+						.getMostRecentCommand();
+				getEditorSite().getShell().getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						if (mostRecentCommand != null) {
+							Command rawCommand = mostRecentCommand;
+							while (rawCommand instanceof CommandWrapper) {
+								rawCommand = ((CommandWrapper) rawCommand).getCommand();
+							}
+							if (rawCommand instanceof SetCommand || rawCommand instanceof AddCommand
+									|| rawCommand instanceof DeleteCommand) {
+								refershRecentAffectedModel(rawCommand, mostRecentCommand.getAffectedObjects());
+							}
+						}
+					}
+					
+				});
+			}
+		});
+	}
+	
+	protected void refershRecentAffectedModel(Command command, Collection<?> affectedObjects) {
+		for (Iterator<?> iterator = affectedObjects.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			TreeNodeModel node = findGraphicalModel(object);
+			if (node == null)
+				continue;
+			if (command instanceof SetCommand) {
+				node.fireVisualChanged();
+			}
+			if (command instanceof AddCommand || command instanceof DeleteCommand) {
+				node.fireChildrenChanged();
+				node.fireConnectionChanged();
+			}
+		}
+	}
+
+	private TreeNodeModel findGraphicalModel(Object object) {
+		return null;
 	}
 
 	public DefaultEditDomain getEditDomain() {
@@ -294,6 +344,9 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor {
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
 		super.init(site, input);
 		initSmooksData();
+		if(smooksModelProvider != null){
+			this.handleCommandStack(smooksModelProvider.getEditingDomain().getCommandStack());
+		}
 	}
 
 	protected void expandConnectedModels(List<TreeNodeConnection> connections) {
