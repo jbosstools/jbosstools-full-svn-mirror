@@ -41,6 +41,7 @@ import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelectionWizard;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
+import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
@@ -49,7 +50,7 @@ import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 1, 2009
  */
-public class SmooksConfigurationFormPage extends FormPage implements ISmooksModelValidateListener , ISmooksGraphChangeListener {
+public class SmooksConfigurationFormPage extends FormPage implements ISmooksModelValidateListener , ISmooksGraphChangeListener , ISourceSynchronizeListener{
 
 	private SmooksMasterDetailBlock masterDetailBlock = null;
 
@@ -256,6 +257,10 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 
 	public void saveComplete(SmooksGraphicsExtType extType) {
 		inputDataViewer.refresh();
+	}
+
+	public void sourceChange(Object model) {
+		this.setSmooksModel(model);
 	}
 
 }

@@ -60,6 +60,7 @@ import org.jboss.tools.smooks.configuration.wizards.NewSmooksElementWizard;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
+import org.jboss.tools.smooks.model.smooks.ParamsType;
 
 /**
  * @author Dart Peng (dpeng@redhat.com)
@@ -401,6 +402,9 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		public boolean select(Viewer viewer, Object parentElement, Object element) {
 			Object obj = element;
 			obj = AdapterFactoryEditingDomain.unwrap(obj);
+			if(obj instanceof ParamsType){
+				return false;
+			}
 			if (obj instanceof BasicFeatureMapEntry) {
 				EStructuralFeature sf = ((BasicFeatureMapEntry) obj).getEStructuralFeature();
 				if (sf.equals(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT)

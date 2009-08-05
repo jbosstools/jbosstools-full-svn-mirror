@@ -44,6 +44,7 @@ public class FieldMarkerComposite extends Canvas implements IFieldMarker, PaintL
 
 	public FieldMarkerComposite(Composite parent, int style) {
 		super(parent, style);
+		this.setBackground(new Color(null,255,255,255));
 		errorImage = SmooksConfigurationActivator.getDefault().getImageRegistry()
 				.get(GraphicsConstants.IMAGE_OVR_ERROR);
 		waringImage = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
