@@ -33,6 +33,8 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor {
 
 	private SmooksGraphicalEditorPart graphicalPage;
 
+	private SmooksConfigurationOverviewPage overViewPage;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -40,8 +42,19 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor {
 	 */
 	@Override
 	protected void addPages() {
+		overViewPage = createSmooksConfigurationOverviewPage();
+		addValidateListener(overViewPage);
+		addSourceSynchronizeListener(overViewPage);
+		try {
+			int index = this.addPage(overViewPage);
+			setPageText(index, "Overview");
+		} catch (PartInitException e) {
+			e.printStackTrace();
+		}
+
 		configurationPage = createSmooksConfigurationFormPage();
 		addValidateListener(configurationPage);
+		addSourceSynchronizeListener(configurationPage);
 		try {
 			int index = this.addPage(configurationPage);
 			setPageText(index, "Design");
@@ -49,15 +62,19 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor {
 			e.printStackTrace();
 		}
 
-//		graphicalPage = new SmooksGraphicalEditorPart(this);
-//		try {
-//			int index = this.addPage(graphicalPage, getEditorInput());
-//			setPageText(index, "Graph");
-//		} catch (PartInitException e) {
-//			e.printStackTrace();
-//		}
+		// graphicalPage = new SmooksGraphicalEditorPart(this);
+		// try {
+		// int index = this.addPage(graphicalPage, getEditorInput());
+		// setPageText(index, "Graph");
+		// } catch (PartInitException e) {
+		// e.printStackTrace();
+		// }
 
 		super.addPages();
+	}
+
+	private SmooksConfigurationOverviewPage createSmooksConfigurationOverviewPage() {
+		return new SmooksConfigurationOverviewPage(this, "Overview", "Overview", this);
 	}
 
 	@Override
@@ -110,6 +127,5 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor {
 	@Override
 	protected void createNewModelViaTextPage() {
 		super.createNewModelViaTextPage();
-		configurationPage.setSmooksModel(this.smooksModel);
 	}
 }

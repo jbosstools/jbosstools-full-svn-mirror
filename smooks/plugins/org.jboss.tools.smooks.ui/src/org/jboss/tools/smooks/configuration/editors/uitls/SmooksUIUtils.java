@@ -825,11 +825,11 @@ public class SmooksUIUtils {
 						Object editValue = getEditValue(itemPropertyDescriptor, fm);
 						if (editValue != null) {
 							String vt = valueText.getText();
-							if (valueText.getText() == null || valueText.getText().length() == 0) {
+							if (vt == null || vt.length() == 0) {
 								itemPropertyDescriptor.setPropertyValue(fm, null);
 							} else {
-								if (!editValue.equals(valueText.getText())) {
-									itemPropertyDescriptor.setPropertyValue(fm, valueText.getText());
+								if (!editValue.equals(vt)) {
+									itemPropertyDescriptor.setPropertyValue(fm, vt);
 								}
 							}
 						} else {

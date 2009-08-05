@@ -3,6 +3,7 @@ package org.jboss.tools.smooks.editor;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
@@ -86,6 +87,9 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
 
 public class AbstractSmooksFormEditor extends FormEditor implements IEditingDomainProvider,
 		ISmooksModelValidateListener , ISmooksModelProvider{
+	
+	protected List<ISourceSynchronizeListener> sourceSynchronizeListener = new ArrayList<ISourceSynchronizeListener>();
+	
 	public static final String EDITOR_ID = "org.jboss.tools.smooks.edimap.editors.MultiPageEditor";
 
 	protected StructuredTextEditor textEditor = null;
@@ -113,6 +117,14 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	public AbstractSmooksFormEditor() {
 		super();
 		initEditingDomain();
+	}
+	
+	public void addSourceSynchronizeListener(ISourceSynchronizeListener listener){
+		this.sourceSynchronizeListener.add(listener);
+	}
+	
+	public void removeSourceSynchronizeListener(ISourceSynchronizeListener listener){
+		this.sourceSynchronizeListener.remove(listener);
 	}
 
 	private void handleCommandStack(BasicCommandStack commandStack) {
@@ -352,6 +364,10 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		} catch (IOException e) {
 			smooksModel = null;
 			SmooksConfigurationActivator.getDefault().log(e);
+		}
+		for (Iterator<?> iterator = this.sourceSynchronizeListener.iterator(); iterator.hasNext();) {
+			ISourceSynchronizeListener l = (ISourceSynchronizeListener) iterator.next();
+			l.sourceChange(smooksModel);
 		}
 	}
 
