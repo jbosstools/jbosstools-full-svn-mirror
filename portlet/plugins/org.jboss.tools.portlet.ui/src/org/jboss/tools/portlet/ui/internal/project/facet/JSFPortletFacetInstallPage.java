@@ -412,6 +412,9 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 		}
 		
 		org.eclipse.wst.common.project.facet.core.runtime.IRuntime facetRuntime = fpwc.getPrimaryRuntime();
+		if (facetRuntime == null) {
+			return false;
+		}
 		IRuntime runtime = PortletCoreActivator.getRuntime(facetRuntime);
 		IJBossServerRuntime jbossRuntime = (IJBossServerRuntime)runtime.loadAdapter(IJBossServerRuntime.class, new NullProgressMonitor());
 		if (jbossRuntime != null) {
