@@ -10,6 +10,10 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
@@ -35,20 +39,18 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
+import org.eclipse.ui.forms.events.HyperlinkAdapter;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
+import org.eclipse.ui.forms.widgets.FormText;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
@@ -779,28 +781,60 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		gd.verticalAlignment = GridData.BEGINNING;
 		navigator.setLayoutData(gd);
 
-		navigatorComposite.setLayout(new FormLayout());
+		FormText formText = toolkit.createFormText(navigatorComposite, true);
+		StringBuffer buf = new StringBuffer();
+		InputStream inputStream = this.getClass().getResourceAsStream(
+				"/org/jboss/tools/smooks/configuration/navigator/DefaultSetting.htm");
+		BufferedReader reader = null;
+		if (inputStream != null) {
+			try {
+				reader = new BufferedReader(new InputStreamReader(inputStream));
+				String line = reader.readLine();
+				while (line != null) {
+					buf.append(line);
+					line = reader.readLine();
+				}
+			} catch (IOException e) {
 
-		Label label1 = toolkit.createLabel(navigatorComposite, "Define the ");
-		FormData data = new FormData ();
-		data.left = new FormAttachment(label1);
-		Hyperlink defaultSettingLink = toolkit.createHyperlink(navigatorComposite, "default setting", SWT.NONE);
-		defaultSettingLink.setLayoutData(data);
-		
-		Label label2 = toolkit.createLabel(navigatorComposite, " and ");
-		data = new FormData ();
-		data.left = new FormAttachment(defaultSettingLink);
-		label2.setLayoutData(data);
-		
-		data = new FormData ();
-		data.left = new FormAttachment(label2);
-		Hyperlink paramLink = toolkit.createHyperlink(navigatorComposite, "global paramters", SWT.NONE);
-		paramLink.setLayoutData(data);
-		
-		data = new FormData ();
-		data.left = new FormAttachment(paramLink);
-		Label label3 = toolkit.createLabel(navigatorComposite,  " at this page.");
-		label3.setLayoutData(data);
+			} finally {
+				try {
+					if (reader != null) {
+						reader.close();
+					}
+					if (inputStream != null) {
+						inputStream.close();
+					}
+				} catch (Throwable t) {
+
+				}
+			}
+		}
+		formText.setWhitespaceNormalized(true);
+		String content = buf.toString();
+		if (content != null) {
+			try {
+				formText.setText(content, true, false);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		formText.addHyperlinkListener(new HyperlinkAdapter() {
+			public void linkActivated(HyperlinkEvent e) {
+				Object href = e.getHref();
+				if(href == null) return;
+				activeNavigatorLink(href.toString());
+			}
+		});
+		navigatorComposite.setLayout(new GridLayout());
+		gd = new GridData(GridData.FILL_BOTH);
+		formText.setLayoutData(gd);
+	}
+	
+	protected void activeNavigatorLink(String href){
+		if(href == null)return;
+		if(href.equals("reader_page")){
+			this.getEditor().setActivePage("Reader");
+		}
 	}
 
 	private EObject getSmooksResourceList() {

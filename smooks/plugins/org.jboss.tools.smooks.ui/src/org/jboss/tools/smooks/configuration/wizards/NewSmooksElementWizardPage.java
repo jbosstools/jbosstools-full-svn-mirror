@@ -17,6 +17,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.edit.command.CommandParameter;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -29,6 +31,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -60,6 +63,38 @@ public class NewSmooksElementWizardPage extends org.eclipse.jface.wizard.WizardP
 	private IAction selectedAction;
 
 	private TreeViewer actionViewer = null;
+
+	private ViewerFilter[] filters;
+
+	public NewSmooksElementWizardPage(String pageName, String title, ImageDescriptor titleImage,
+			Collection<IAction> childDescriptor, ViewerFilter[] filters, String text, String description) {
+		super(pageName, title, titleImage);
+		this.childDescriptor = childDescriptor;
+		this.setTitle("Add Child");
+		this.setDescription("Add Smooks Elements");
+		if (text != null) {
+			this.setTitle(text);
+		}
+		if (description != null) {
+			this.setDescription(description);
+		}
+		this.filters = filters;
+	}
+
+	public NewSmooksElementWizardPage(String pageName, Collection<IAction> childDescriptor, ViewerFilter[] filters,
+			String text, String description) {
+		super(pageName);
+		this.childDescriptor = childDescriptor;
+		this.setTitle("Add Child");
+		this.setDescription("Add Smooks Elements");
+		if (text != null) {
+			this.setTitle(text);
+		}
+		if (description != null) {
+			this.setDescription(description);
+		}
+		this.filters = filters;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -105,7 +140,35 @@ public class NewSmooksElementWizardPage extends org.eclipse.jface.wizard.WizardP
 		}
 	}
 
+	private void filterAction() {
+		if (this.filters != null) {
+			for (Iterator<?> iterator = childDescriptor.iterator(); iterator.hasNext();) {
+				AddSmooksResourceAction action = (AddSmooksResourceAction) iterator.next();
+				if (!action.isEnabled()) {
+					continue;
+				}
+				for (int i = 0; i < filters.length; i++) {
+					ViewerFilter vf = filters[i];
+					Object descriptor = action.getDescriptor();
+					if (descriptor instanceof CommandParameter) {
+						CommandParameter parameter = (CommandParameter) descriptor;
+						if (parameter.getValue() != null) {
+							Object value = AdapterFactoryEditingDomain.unwrap(parameter.getValue());
+							boolean enable = vf.select(null, null, value);
+							action.setEnabled(enable);
+							if (!enable) {
+								break;
+							}
+						}
+					}
+				}
+			}
+
+		}
+	}
+
 	private Collection<IAction> getActions() {
+		filterAction();
 		List<IAction> actions = new ArrayList<IAction>();
 		List<ISmooksActionGrouper> grouperList = getSmooksActionGrouper();
 		for (Iterator<?> iterator = grouperList.iterator(); iterator.hasNext();) {
@@ -148,21 +211,6 @@ public class NewSmooksElementWizardPage extends org.eclipse.jface.wizard.WizardP
 				}
 			}
 		}
-	}
-
-	public NewSmooksElementWizardPage(String pageName, String title, ImageDescriptor titleImage,
-			Collection<IAction> childDescriptor) {
-		super(pageName, title, titleImage);
-		this.childDescriptor = childDescriptor;
-		this.setTitle("Add Child");
-		this.setDescription("Add Smooks Elements");
-	}
-
-	public NewSmooksElementWizardPage(String pageName, Collection<IAction> childDescriptor) {
-		super(pageName);
-		this.childDescriptor = childDescriptor;
-		this.setTitle("Add Child");
-		this.setDescription("Add Smooks Elements");
 	}
 
 	private List<ISmooksActionGrouper> getSmooksActionGrouper() {
