@@ -17,14 +17,16 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.jboss.tools.vpe.VpePlugin;
-import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 /**
@@ -48,7 +50,7 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 	public Composite createToolBarComposite(Composite parent) {
 		splitter = new Splitter(parent, SWT.NONE) {
 
-			// if there is not visual children then return Point(0,0)
+			// if there are no visual children then return Point(0,0)
 			public Point computeSize(int hint, int hint2, boolean changed) {
                 
 				int countVisibleChild = 0;
@@ -63,16 +65,24 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 					return super.computeSize(hint, hint2, changed);
 			}
 		};
-
+		splitter.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		return splitter;
 	}
 
 	public void addToolBar(IVpeToolBar bar) {
 
 		Composite cmpToolBar = new Composite(splitter, SWT.NONE);
+		splitter.getParent().setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE));
+		splitter.getParent().setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE));
+		FormData data = new FormData();
+		data.left = new FormAttachment(0);
+		data.right = new FormAttachment(100);
+		data.top = new FormAttachment(0);
+
+		cmpToolBar.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
 		GridLayout layoutTl = new GridLayout(2, false);
 		layoutTl.marginBottom = 0;
-		layoutTl.marginHeight = 2;
+		layoutTl.marginHeight = 0;
 		layoutTl.marginWidth = 0;
 		layoutTl.verticalSpacing = 0;
 		layoutTl.horizontalSpacing = 0;

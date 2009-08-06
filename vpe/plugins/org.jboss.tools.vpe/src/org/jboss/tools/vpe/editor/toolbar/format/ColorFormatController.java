@@ -40,9 +40,8 @@ abstract public class ColorFormatController extends ToolItemFormatController {
 	 * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
 	 */
 	public void handleEvent(Event event) {
-		Shell shell = new Shell(Display.getCurrent());
-		shell.setLocation(shell.getDisplay().getBounds().width / 2 - 111, shell.getDisplay().getBounds().height / 2 - 162);
-		ColorDialog cd = new ColorDialog(shell, SWT.APPLICATION_MODAL);
+		ColorDialog cd = new ColorDialog(toolItem.getParent().getShell(),
+				SWT.APPLICATION_MODAL);
 		cd.setText(getColorDialogTitle());
 		cd.setRGB(new RGB(255, 255, 255));
 		RGB newColor = cd.open();

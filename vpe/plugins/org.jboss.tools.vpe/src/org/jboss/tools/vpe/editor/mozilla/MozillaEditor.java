@@ -301,15 +301,15 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	@Override
 	public void createPartControl(final Composite parent) {
     	//Setting  Layout for the parent Composite
-		parent.setLayout(new FillLayout());
+//		parent.setLayout(new FillLayout());
 		
 		/*
 		 * https://jira.jboss.org/jira/browse/JBIDE-4062
 		 * Creating scrollable eclipse element.
 		 */
-		ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-		sc.setLayout(new FillLayout());
-		Composite composite = new Composite(sc, SWT.NATIVE);
+//		ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+//		sc.setLayout(new FillLayout());
+//		Composite composite = new Composite(parent, SWT.NATIVE);
 
 	    GridLayout layout = new GridLayout(2,false);
 		layout.marginHeight = 0;
@@ -317,12 +317,13 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		layout.verticalSpacing = 2;
 		layout.horizontalSpacing = 2;
 		layout.marginBottom = 0;
-		composite.setLayout(layout);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		parent.setLayout(layout);
+//		composite.setLayout(layout);
+//		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 		
 		// Editors and Toolbar composite 
-		Composite cmpEdTl = new Composite(composite, SWT.NONE);
+		Composite cmpEdTl = new Composite(parent, SWT.NONE);
 		GridLayout layoutEdTl = new GridLayout(1, false);
 		layoutEdTl.verticalSpacing = 0;
 		layoutEdTl.marginHeight = 0;
@@ -467,11 +468,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		 * https://jira.jboss.org/jira/browse/JBIDE-4062
 		 * Computing elements sizes to set up scroll bars.
 		 */
-		Point totalSize = composite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		sc.setContent(composite);
-		sc.setExpandHorizontal(true);
-		sc.setExpandVertical(true);
-		sc.setMinSize(totalSize);
+//		Point totalSize = composite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+//		sc.setContent(composite);
+//		sc.setExpandHorizontal(true);
+//		sc.setExpandVertical(true);
+//		sc.setMinSize(totalSize);
 	}
 
 	/**

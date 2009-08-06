@@ -73,8 +73,8 @@ public class BlockFormatController extends ComboFormatController {
      * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
      */
     public void handleEvent(Event event) {
-	selectionIndex = comboBlockFormat.getSelectionIndex();
-	selectionText = comboBlockFormat.getText();
+	selectionIndex = ((Combo)event.widget).getSelectionIndex();
+	selectionText = ((Combo)event.widget).getText();
 	tagName = (String) TEXTS.get(selectionText);
 	if (tagName == null) {
 	    tagName = "normal"; //$NON-NLS-1$

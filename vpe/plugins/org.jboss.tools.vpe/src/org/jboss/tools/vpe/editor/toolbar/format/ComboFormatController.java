@@ -36,8 +36,8 @@ abstract public class ComboFormatController extends AttributeFormatController {
 	}
 
 	public void handleEvent(Event event) {
-		selectionIndex = comboBlockFormat.getSelectionIndex();
-		selectionText = comboBlockFormat.getText();
+		selectionIndex = ((Combo)event.widget).getSelectionIndex();
+		selectionText = ((Combo)event.widget).getText();
 		super.handleEvent(event);
     }
 

@@ -10,29 +10,136 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.toolbar;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.ShellAdapter;
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowData;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.CoolBar;
+import org.eclipse.swt.widgets.CoolItem;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.Widget;
 
 /**
  * @author Erick
  * Created on 14.07.2005
+ * @author yradtsevich
+ * 
  * @see IVpeToolBar
  * This class create a toolBar and store all his item in the array of IItems
  * @see IItems
  */
 public abstract class SplitToolBar implements IVpeToolBar {
 
-	public abstract IItems[] createItems(ToolBar bar);
+	protected CoolBar coolBar;
+	public abstract void createItems(ToolBar bar);
 
 	public void createToolBarControl(Composite parent) {
 		final Composite comp = new Composite(parent, SWT.NONE);
 		comp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		comp.setLayout(new GridLayout());
+		coolBar = new CoolBar(comp, SWT.FLAT | SWT.WRAP);
+		coolBar.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		final ToolBar horBar = new ToolBar(comp, SWT.FLAT);
-		createItems(horBar);
+		final ToolBar toolBar = new ToolBar(coolBar, SWT.FLAT | SWT.WRAP);
+		createItems(toolBar);
+		CoolItem coolItem = new CoolItem(coolBar, SWT.DROP_DOWN);
+		coolItem.setControl(toolBar);
+		Point size = toolBar.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		Point coolSize = coolItem.computeSize(size.x, size.y);
 
+		coolItem.setSize(coolSize);
+		coolItem.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
+				if (event.detail == SWT.ARROW) {
+					CoolItem item = (CoolItem) event.widget;
+					Rectangle itemBounds = item.getBounds();
+					Point pt = coolBar.toDisplay(new Point(itemBounds.x,
+							itemBounds.y));
+					itemBounds.x = pt.x;
+					itemBounds.y = pt.y;
+					ToolBar bar = (ToolBar) item.getControl();
+					ToolItem[] tools = bar.getItems();
+
+					int i = 0;
+					while (i < tools.length) {
+						Rectangle toolBounds = tools[i].getBounds();
+						pt = bar.toDisplay(new Point(toolBounds.x, toolBounds.y));
+						toolBounds.x = pt.x;
+						toolBounds.y = pt.y;
+
+						/*
+						 * Figure out the visible portion of the tool by looking
+						 * at the intersection of the tool bounds with the cool
+						 * item bounds.
+						 */
+						Rectangle intersection = itemBounds
+								.intersection(toolBounds);
+
+						/*
+						 * If the tool is not completely within the cool item
+						 * bounds, then it is partially hidden, and all
+						 * remaining tools are completely hidden.
+						 */
+						if (!intersection.equals(toolBounds))
+							break;
+						i++;
+					}
+
+					/*
+					 * Create a menu with items for each of the completely
+					 * hidden buttons.
+					 */
+					final Shell floatingShell = new Shell(coolBar.getShell(),
+							SWT.ON_TOP);
+					floatingShell.setLayout(new GridLayout());
+					final ToolBar floatingBar = new ToolBar(floatingShell, 
+							SWT.FLAT | SWT.WRAP);
+					SelectionListener selectionListener = new SelectionAdapter() {
+						public void widgetSelected(SelectionEvent e) {
+							floatingShell.dispose();
+						}
+					};
+					for (int j = i; j < tools.length; j++) {
+						cloneToolItem(floatingBar, tools[j], selectionListener);
+					}
+
+					/*
+					 * Drop down the menu below the chevron, with the left edges
+					 * aligned.
+					 */
+					pt = coolBar.toDisplay(new Point(event.x, event.y));
+					floatingShell.pack();
+					arrange(floatingShell, pt);
+					floatingShell.setVisible(true);
+					floatingShell.setFocus();
+					floatingShell.addShellListener(new ShellAdapter() {
+						public void shellDeactivated(ShellEvent e) {
+							e.widget.dispose();
+						}
+					});
+				}
+			}
+		});
+		coolBar.pack();
+//		coolBar.layout();
+		
 //		final Button  button = new Button(parent, SWT.FLAT|SWT.PUSH);
 //		button.setImage(ImageDescriptor.createFromFile(MozillaEditor.class, "icons/arrow_more.gif").createImage());
 //		button.setVisible(false);
@@ -86,7 +193,7 @@ public abstract class SplitToolBar implements IVpeToolBar {
 //				}								
 //			}			
 //		});
-		horBar.pack(true);		
+		toolBar.pack(true);		
 	}
 
 //	public Menu setMenu(Composite cmp, Button btn){
@@ -123,4 +230,116 @@ public abstract class SplitToolBar implements IVpeToolBar {
 //		}
 //		return menu;																															
 //	}
+
+	/**
+	 * Creates a copy of {@code item} in the {@code destBar} and
+	 * adds given {@code selectionListener} to the created control.
+	 */
+	protected void cloneToolItem(ToolBar destBar, ToolItem item,
+			SelectionListener selectionListener) {
+		int style = item.getStyle();
+
+		if ((style & SWT.SEPARATOR) != 0) {
+			Control control = item.getControl();
+			if (control instanceof Combo) {
+				Combo combo = (Combo) control;
+				Combo copiedCombo = createComboToolItem(destBar, combo.getStyle(),
+						combo.getToolTipText(),
+						Arrays.asList(combo.getItems()),
+						combo.getSelectionIndex());
+				copiedCombo.setEnabled(combo.getEnabled());
+				copiedCombo.setVisible(combo.getVisible());
+				copySelectionListeners(combo, copiedCombo);
+				copiedCombo.addSelectionListener(selectionListener);
+			}
+		} else {
+			ToolItem copiedItem = createToolItem(destBar, item.getStyle(),
+					item.getImage(), item.getToolTipText());
+			copiedItem.setEnabled(item.getEnabled());
+			copiedItem.setSelection(item.getSelection());
+			copySelectionListeners(item, copiedItem);
+			copiedItem.addSelectionListener(selectionListener);
+		}
+	}
+
+	/**
+	 * Copies all selection listeners from {@code src} to {@code dest}.
+	 */
+	protected void copySelectionListeners(Widget src, Widget dest) {
+		Listener[] listeners = src.getListeners(SWT.Selection);
+		for (Listener listener : listeners) {
+			dest.addListener(SWT.Selection, listener);
+		}
+	}
+	
+	/**
+	 * Creates and returns new {@code ToolItem} in the 
+	 * {@code bar}. 
+	 */
+	protected ToolItem createToolItem(ToolBar bar, int style,
+			Image image, String toolTipText) {
+		ToolItem item = null;
+		item = new ToolItem(bar, style);
+		item.setImage(image);		
+		item.setToolTipText(toolTipText);
+
+		return item;
+	}
+
+	/**
+	 * Creates and returns new {@code Combo} in the 
+	 * {@code bar}.
+	 */
+	protected Combo createComboToolItem(ToolBar bar, int style,
+			String toolTipText,	List<String> comboItems, int selectionIndex) {
+		Combo combo = createCombo(bar, style, comboItems);
+		ToolItem sep = new ToolItem(bar, SWT.SEPARATOR);
+		sep.setWidth(combo.getSize().x);
+		combo.setToolTipText(toolTipText);
+		combo.select(selectionIndex);
+		sep.setControl(combo);
+
+		return combo;
+	}
+	
+	protected Combo createCombo(Composite parent, int style,
+			List<String> comboItems) {
+		Combo combo = new Combo(parent, style);
+		combo.setLayoutData(new RowData());
+		combo.setItems(comboItems.toArray(new String[comboItems.size()]));
+		combo.pack();
+		return combo;
+	}
+	
+	/**
+	 * Arranges {@code control} on the display near the {@code point}.
+	 */
+	private void arrange(Control control, Point point) {
+		Point size = control.getSize();
+		Rectangle bounds = new Rectangle(point.x, point.y, size.x, size.y);
+		control.setBounds(arrange(bounds, control.getDisplay().getBounds()));
+	}
+
+	/**
+	 * Returns the nearest {@code Rectangle} to the given {@code bounds},
+	 * which is fully placed in the {@code clientArea}.
+	 */
+	private Rectangle arrange(Rectangle bounds, Rectangle clientArea) {
+		Rectangle result = new Rectangle(bounds.x, bounds.y,
+				bounds.width, bounds.height);
+		if (result.x + result.width > clientArea.x + clientArea.width) {
+			result.x = clientArea.x + clientArea.width - result.width;
+		}
+		if (result.x < clientArea.x) {
+			result.x = clientArea.x;
+		}
+		if (result.y + result.height > clientArea.y + clientArea.height) {
+			result.y = clientArea.y + clientArea.height - result.height;
+		}
+		if (result.y < clientArea.y) {
+			result.y = clientArea.y;
+		}
+
+		return result;
+	}
 }
