@@ -17,6 +17,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.ui.PartInitException;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart;
@@ -25,7 +29,7 @@ import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart;
  * 
  * @author Dart Peng (dpeng@redhat.com) Date Apr 1, 2009
  */
-public class SmooksMultiFormEditor extends AbstractSmooksFormEditor {
+public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements ISelectionProvider{
 
 	public static final String EDITOR_ID = "org.jboss.tools.smooks.configuration.editors.MultiPageEditor";
 
@@ -34,6 +38,12 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor {
 	private SmooksGraphicalEditorPart graphicalPage;
 
 	private SmooksConfigurationOverviewPage overViewPage;
+
+	private SmooksConfigurationFormPage readerPage;
+	
+	private ISelection selection;
+	
+	private Collection<ISelectionChangedListener> selectionChangeListener = new ArrayList<ISelectionChangedListener>();
 
 	/*
 	 * (non-Javadoc)
@@ -48,6 +58,16 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor {
 		try {
 			int index = this.addPage(overViewPage);
 			setPageText(index, "Overview");
+		} catch (PartInitException e) {
+			e.printStackTrace();
+		}
+
+		readerPage = createSmooksConfigurationReaderPage();
+		addValidateListener(readerPage);
+		addSourceSynchronizeListener(readerPage);
+		try {
+			int index = this.addPage(readerPage);
+			setPageText(index, "Reader");
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
@@ -73,6 +93,10 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor {
 		super.addPages();
 	}
 
+	private SmooksConfigurationReaderPage createSmooksConfigurationReaderPage() {
+		return new SmooksConfigurationReaderPage(this, "Reader", "Reader Page");
+	}
+
 	private SmooksConfigurationOverviewPage createSmooksConfigurationOverviewPage() {
 		return new SmooksConfigurationOverviewPage(this, "Overview", "Overview", this);
 	}
@@ -93,7 +117,7 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor {
 	}
 
 	protected SmooksConfigurationFormPage createSmooksConfigurationFormPage() {
-		return new SmooksConfigurationFormPage(this, "DesignPage", "Design Page");
+		return new SmooksConfigurationResourceConfigPage(this, "DesignPage", "Design Page");
 	}
 
 	/*
@@ -127,5 +151,31 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor {
 	@Override
 	protected void createNewModelViaTextPage() {
 		super.createNewModelViaTextPage();
+	}
+
+	public void addSelectionChangedListener(ISelectionChangedListener listener) {
+		selectionChangeListener.add(listener);
+	}
+
+	public ISelection getSelection() {
+		return this.selection;
+	}
+
+	public void removeSelectionChangedListener(ISelectionChangedListener listener) {
+		selectionChangeListener.remove(listener);
+	}
+
+	public void setSelection(ISelection selection) {
+		if(selection != null){
+			if(selection.equals(this.selection)){
+				return;
+			}
+		}
+		this.selection = selection;
+		
+		for (Iterator<?> iterator = this.selectionChangeListener.iterator(); iterator.hasNext();) {
+			ISelectionChangedListener l = (ISelectionChangedListener) iterator.next();
+			l.selectionChanged(new SelectionChangedEvent(this, getSelection()));
+		}
 	}
 }

@@ -19,6 +19,7 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.Wizard;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 
@@ -34,10 +35,20 @@ public class NewSmooksElementWizard extends Wizard {
 
 	private NewSmooksElementWizardPage page;
 
-	public NewSmooksElementWizard(AdapterFactoryEditingDomain editingDomain, EObject parentElement) {
+	private ViewerFilter[] filters;
+	
+	private String text;
+	
+	private String description;
+
+	public NewSmooksElementWizard(AdapterFactoryEditingDomain editingDomain, EObject parentElement,
+			ViewerFilter[] filters, String text, String description) {
 		super();
 		this.parentElement = parentElement;
 		this.editingDomain = editingDomain;
+		this.filters = filters;
+		this.text = text;
+		this.description = description;
 	}
 
 	@Override
@@ -45,7 +56,7 @@ public class NewSmooksElementWizard extends Wizard {
 		Collection<?> childDescriptors = editingDomain.getNewChildDescriptors(parentElement, null);
 		Collection<IAction> actions = SmooksUIUtils.generateCreateChildActions(editingDomain, childDescriptors,
 				new StructuredSelection(parentElement));
-		page = new NewSmooksElementWizardPage("Smooks Elements", actions);
+		page = new NewSmooksElementWizardPage("Smooks Elements", actions , filters , text , description);
 
 		this.addPage(page);
 	}
