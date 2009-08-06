@@ -129,11 +129,61 @@
 		<para>Left click the added item and to the left of <emphasis>
 			<property>Message Filtering Resources  Import Smooks Configuration </property></emphasis> section should appear. Click the  <emphasis>
 				<property>Browse</property>
-			</emphasis> button and select the file you want to import. </para>
+			</emphasis> button and select the file you want to import(see <link linkend="file_selection">File selection</link> section). </para>
 		<para>Click <emphasis>
 			<property>Save</property></emphasis> and the <code>&lt;import&gt;</code> tag with the corresponding file path as a <emphasis>
 				<property>file</property></emphasis> property will be added to the <emphasis>
 					<property>smooks-config.xml</property></emphasis>.</para>
+	</section >
+	<section id="file_selection">
+		<title>File selection</title>
+		<para>Some attributes in Smooks elements should store path to a file as a value
+			(e.g. attribute <emphasis><property>"mappingModel"</property></emphasis> of the element <emphasis><property>"edi:reader"</property></emphasis>).
+			You can see a Browse button near the fields, that  set such a value to the attribute
+			(e.g. <emphasis><property>"Mapping Model"</property></emphasis> field set a value to the <emphasis><property>"mappingModel"</property></emphasis> attribute).
+		</para>
+		<figure>
+			<title>EDI:Reader element</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/config_page/config_page6.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+	<para>	
+		When you click <emphasis><property>Browse</property></emphasis>, the  dialog prompts you click one of two buttons:
+		<emphasis><property>Browse File System</property></emphasis> and <emphasis><property>Browse WorkSpace</property></emphasis>. 
+	</para>
+		<figure>
+			<title>Browse dialog</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/config_page/config_page7.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Using the buttons  you can locate the file you need. If you click <emphasis>
+			<property>Browse File System</property></emphasis> button you specify the path of, or browse to, a file system directory.
+		</para>
+		<figure>
+			<title>Browse file system</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/config_page/config_page8.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			If you click <emphasis><property>Browse WorkSpace</property></emphasis> button, you specify the path of, or browse to, a workspace relative working directory.
+		</para>
+		<figure>
+			<title>Browse Workspace</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/config_page/config_page9.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 	</section>
 	<!--<section id="configurationpage_datedecoder">
 		<title>Date Decoder Detail Page</title>
