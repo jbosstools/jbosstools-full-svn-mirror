@@ -50,9 +50,9 @@ import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
 public class SmooksModelUtils {
 
 	public static final String INPUT_TYPE_JAVA = "java";
-	
+
 	public static final String INPUT_TYPE_JSON = "json";
-	
+
 	public static final String INPUT_TYPE_CSV = "csv";
 
 	public static final String PARAM_NAME_CLASS = "class";
@@ -377,7 +377,11 @@ public class SmooksModelUtils {
 		if (addCommand != null && addCommand.canExecute()) {
 			ccommand.append(addCommand);
 		}
-		editingDomain.getCommandStack().execute(ccommand);
+		if (smooksModel.eContainer() == null) {
+			ccommand.execute();
+		} else {
+			editingDomain.getCommandStack().execute(ccommand);
+		}
 	}
 
 	public static void setCommentToSmooksType(EditingDomain editingDomain, AnyType smooksModel, String comment) {
@@ -402,7 +406,11 @@ public class SmooksModelUtils {
 		if (addCommand != null && addCommand.canExecute()) {
 			ccommand.append(addCommand);
 		}
-		editingDomain.getCommandStack().execute(ccommand);
+		if (smooksModel.eContainer() == null) {
+			ccommand.execute();
+		} else {
+			editingDomain.getCommandStack().execute(ccommand);
+		}
 	}
 
 	public static void setCDATAToSmooksType(EditingDomain editingDomain, AnyType smooksModel, String cdata) {
@@ -427,7 +435,11 @@ public class SmooksModelUtils {
 		if (addCommand != null && addCommand.canExecute()) {
 			ccommand.append(addCommand);
 		}
-		editingDomain.getCommandStack().execute(ccommand);
+		if (smooksModel.eContainer() == null) {
+			ccommand.execute();
+		} else {
+			editingDomain.getCommandStack().execute(ccommand);
+		}
 	}
 
 	public static void appendCDATAToSmooksType(AnyType smooksModel, String text) {
@@ -491,8 +503,7 @@ public class SmooksModelUtils {
 		List<org.jboss.tools.smooks.model.graphics.ext.ParamType> list = input.getParam();
 		if (INPUT_TYPE_JAVA.equals(input.getType()) || INPUT_TYPE_XML.equals(input.getType())
 				|| INPUT_TYPE_XSD.equals(input.getType()) || INPUT_TYPE_JSON.equals(input.getType())
-				|| INPUT_TYPE_CSV.equals(input.getType())
-				|| INPUT_TYPE_EDI.equals(input.getType())) {
+				|| INPUT_TYPE_CSV.equals(input.getType()) || INPUT_TYPE_EDI.equals(input.getType())) {
 			for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 				org.jboss.tools.smooks.model.graphics.ext.ParamType paramType = (org.jboss.tools.smooks.model.graphics.ext.ParamType) iterator
 						.next();
@@ -506,12 +517,12 @@ public class SmooksModelUtils {
 		}
 		return null;
 	}
-	
-	public static FigureType findFigureType(GraphType graph , String figureId){
+
+	public static FigureType findFigureType(GraphType graph, String figureId) {
 		List<FigureType> list = graph.getFigure();
 		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 			FigureType figureType = (FigureType) iterator.next();
-			if(figureId.equals(figureType.getId())){
+			if (figureId.equals(figureType.getId())) {
 				return figureType;
 			}
 		}
