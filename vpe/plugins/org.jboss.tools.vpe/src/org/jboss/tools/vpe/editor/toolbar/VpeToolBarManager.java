@@ -72,8 +72,6 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 	public void addToolBar(IVpeToolBar bar) {
 
 		Composite cmpToolBar = new Composite(splitter, SWT.NONE);
-		splitter.getParent().setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE));
-		splitter.getParent().setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE));
 		FormData data = new FormData();
 		data.left = new FormAttachment(0);
 		data.right = new FormAttachment(100);
