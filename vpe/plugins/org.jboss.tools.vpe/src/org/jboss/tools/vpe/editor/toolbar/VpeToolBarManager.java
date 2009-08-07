@@ -77,7 +77,6 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 		data.right = new FormAttachment(100);
 		data.top = new FormAttachment(0);
 
-		cmpToolBar.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
 		GridLayout layoutTl = new GridLayout(2, false);
 		layoutTl.marginBottom = 0;
 		layoutTl.marginHeight = 0;
