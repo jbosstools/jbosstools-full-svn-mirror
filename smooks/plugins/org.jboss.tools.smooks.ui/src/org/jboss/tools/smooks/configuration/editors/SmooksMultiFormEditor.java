@@ -77,7 +77,7 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 		addSourceSynchronizeListener(configurationPage);
 		try {
 			int index = this.addPage(configurationPage);
-			setPageText(index, "Design");
+			setPageText(index, "Message Filter");
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
@@ -94,11 +94,11 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 	}
 
 	private SmooksConfigurationReaderPage createSmooksConfigurationReaderPage() {
-		return new SmooksConfigurationReaderPage(this, "Reader", "Reader Page");
+		return new SmooksConfigurationReaderPage(this, "reader_page", "Reader Page");
 	}
 
 	private SmooksConfigurationOverviewPage createSmooksConfigurationOverviewPage() {
-		return new SmooksConfigurationOverviewPage(this, "Overview", "Overview", this);
+		return new SmooksConfigurationOverviewPage(this, "overview_page", "Overview", this);
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 	}
 
 	protected SmooksConfigurationFormPage createSmooksConfigurationFormPage() {
-		return new SmooksConfigurationResourceConfigPage(this, "DesignPage", "Design Page");
+		return new SmooksConfigurationResourceConfigPage(this, "message_filter_page", "Design Page");
 	}
 
 	/*
