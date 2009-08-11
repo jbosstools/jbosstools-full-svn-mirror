@@ -193,10 +193,19 @@
 	<section id="graphicaleditor_datalink">
 		<title>Choosing the transform data</title>
 
-		<para>To choose the transform data you should click <emphasis>
+		<para>To choose the transform data you should open <emphasis>
+			<property>Reader</property></emphasis> tab and click <emphasis>
 			<property>Add</property></emphasis> button in the Input Data section.</para>
+		<figure>
+			<title>Input Data section</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start_6a.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 		<para>After clicking the button the <property>Data Type Selection wizard</property> is
-			opened, and there are two data types in the list: Java and XML.</para>
+			opened, and there are many data types in the list: Java, XML etc.</para>
 		<note>
 			<title>Note</title>
 			<para> There will become more and more data types on the list as the development goes on.
