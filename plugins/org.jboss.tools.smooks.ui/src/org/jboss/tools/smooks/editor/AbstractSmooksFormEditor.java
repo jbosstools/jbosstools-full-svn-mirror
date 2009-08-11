@@ -159,6 +159,10 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		});
 	}
 
+	public StructuredTextEditor getTextEditor() {
+		return textEditor;
+	}
+
 	protected void handleEMFModelChange() {
 		IDocument document = textEditor.getDocumentProvider().getDocument(textEditor.getEditorInput());
 

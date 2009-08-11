@@ -18,6 +18,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.ConditionsType;
 import org.jboss.tools.smooks.model.smooks.ParamsType;
+import org.jboss.tools.smooks.model.smooks.ProfilesType;
 
 /**
  * @author Dart
@@ -48,6 +49,12 @@ public class SmooksConfigurationResourceConfigPage extends SmooksConfigurationFo
 					return false;
 				}
 				if(obj instanceof AbstractReader){
+					return false;
+				}
+				if(obj instanceof ProfilesType){
+					return false;
+				}
+				if(obj instanceof org.jboss.tools.smooks10.model.smooks.ProfilesType){
 					return false;
 				}
 				return true;
@@ -84,7 +91,7 @@ public class SmooksConfigurationResourceConfigPage extends SmooksConfigurationFo
 //				title = "Smooks 1.0 - " + title;
 //			}
 //		}
-		form.setText("Desgin");
+		form.setText("Message Filter");
 	}
 
 	@Override
@@ -104,6 +111,6 @@ public class SmooksConfigurationResourceConfigPage extends SmooksConfigurationFo
 
 	@Override
 	protected String getMainSectionTitle() {
-		return super.getMainSectionTitle();
+		return "Message Filtering Resources";
 	}
 }
