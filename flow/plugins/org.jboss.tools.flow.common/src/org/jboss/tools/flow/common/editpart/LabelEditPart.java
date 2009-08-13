@@ -48,7 +48,7 @@ public class LabelEditPart extends AbstractGraphicalEditPart implements ModelLis
 			((LabelWrapper)getModel()).setLocation(location);
 		}
 		Label label = (Label)getFigure();
-		label.setText(text);
+		label.setText(text == null ? "" : text);
 		LabelConstraint constraint = new LabelConstraint(text, location, polyline);
 		((GraphicalEditPart)getParent()).setLayoutConstraint(this, getFigure(), constraint);
 	}
