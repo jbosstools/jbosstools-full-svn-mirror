@@ -21,6 +21,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IFile;
@@ -2074,7 +2075,7 @@ public class SmooksUIUtils {
 	}
 
 	private static IXMLStructuredObject localXMLNodeWithNodeName(String name, IXMLStructuredObject contextNode,
-			HashMap usedNodeMap) {
+			Map<Object , Object> usedNodeMap) {
 		if (name == null || contextNode == null)
 			return null;
 		String nodeName = contextNode.getNodeName();
@@ -2095,9 +2096,9 @@ public class SmooksUIUtils {
 			return contextNode;
 		}
 		usedNodeMap.put(contextNode.getID(), new Object());
-		List children = contextNode.getChildren();
+		List<?> children = contextNode.getChildren();
 		IXMLStructuredObject result = null;
-		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
 			IXMLStructuredObject child = (IXMLStructuredObject) iterator.next();
 			if (isAttributeName) {
 				if (!child.isAttribute())
@@ -2109,7 +2110,7 @@ public class SmooksUIUtils {
 			}
 		}
 		if (result == null) {
-			for (Iterator iterator = children.iterator(); iterator.hasNext();) {
+			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
 				IXMLStructuredObject child = (IXMLStructuredObject) iterator.next();
 				// to avoid the "died loop"
 				if (usedNodeMap.get(child.getID()) != null) {
@@ -2129,7 +2130,7 @@ public class SmooksUIUtils {
 	}
 
 	public static IXMLStructuredObject localXMLNodeWithNodeName(String name, IXMLStructuredObject contextNode) {
-		HashMap map = new HashMap();
+		HashMap<Object,Object> map = new HashMap<Object,Object>();
 		IXMLStructuredObject node = localXMLNodeWithNodeName(name, contextNode, map);
 		map.clear();
 		map = null;
@@ -2211,7 +2212,7 @@ public class SmooksUIUtils {
 		List<IXMLStructuredObject> children = parent.getChildren();
 		if (children == null)
 			return null;
-		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
 			IXMLStructuredObject structuredObject = (IXMLStructuredObject) iterator.next();
 			if (isAttribute) {
 				if (!structuredObject.isAttribute())
