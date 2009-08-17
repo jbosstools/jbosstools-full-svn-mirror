@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jboss.tools.smooks.configuration.editors.csv;
+package org.jboss.tools.smooks.configuration.editors.csv12;
 
 import java.math.BigInteger;
 import java.util.Iterator;
@@ -19,10 +19,11 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
-import org.jboss.tools.smooks.configuration.editors.csv.CSVDataConfigurationWizardPage.FieldString;
+import org.jboss.tools.smooks.configuration.editors.csv.CSVDataParser;
+import org.jboss.tools.smooks.configuration.editors.csv12.CSV12DataConfigurationWizardPage.FieldString;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
-import org.jboss.tools.smooks.model.csv.CsvFactory;
-import org.jboss.tools.smooks.model.csv.CsvReader;
+import org.jboss.tools.smooks.model.csv12.CSV12Reader;
+import org.jboss.tools.smooks.model.csv12.Csv12Factory;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -32,30 +33,30 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  * @author Dart
  * 
  */
-public class CSVInputDataWizard extends Wizard implements IStructuredDataSelectionWizard, INewWizard {
+public class CSV12InputDataWizard extends Wizard implements IStructuredDataSelectionWizard, INewWizard {
 
 	private SmooksResourceListType resourceList;
 
 	private EditingDomain editingDomain;
 
-	private CSVDataConfigurationWizardPage configPage;
+	private CSV12DataConfigurationWizardPage configPage;
 
-	private CSVDataPathWizardPage pathPage;
+	private CSV12DataPathWizardPage pathPage;
 	
-	public CSVInputDataWizard() {
+	public CSV12InputDataWizard() {
 		super();
-		this.setWindowTitle("CSV Input Data Wizard (version 1.1)");
+		this.setWindowTitle("CSV Input Data Wizard (version 1.2)");
 	}
 
 	@Override
 	public void addPages() {
 		if (configPage == null) {
-			configPage = new CSVDataConfigurationWizardPage("CSV Configurations Page");
+			configPage = new CSV12DataConfigurationWizardPage("CSV Configurations Page");
 			configPage.setSmooksResourceList(resourceList);
 		}
 		
 		if (pathPage == null) {
-			pathPage = new CSVDataPathWizardPage("CSV Path Page", new String[] {},configPage);
+			pathPage = new CSV12DataPathWizardPage("CSV Path Page", new String[] {},configPage);
 		}
 		
 		this.addPage(pathPage);
@@ -73,7 +74,7 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 		if (configPage != null) {
 			boolean createCSVReader = configPage.isCreateCSVReader();
 			if (createCSVReader) {
-				CsvReader reader = CsvFactory.eINSTANCE.createCsvReader();
+				CSV12Reader reader = Csv12Factory.eINSTANCE.createCSV12Reader();
 
 				String encoding = configPage.getEncoding();
 				reader.setEncoding(encoding);
@@ -94,6 +95,16 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 
 				String quoteChar = configPage.getQuoteChar();
 				reader.setQuote(quoteChar);
+				
+				String rootName = configPage.getRootName();
+				if(rootName != null){
+					reader.setRootElementName(rootName);
+				}
+				
+				String recordName = configPage.getRecordName();
+				if(recordName != null){
+					reader.setRecordElementName(recordName);
+				}
 
 				String fields = null;
 				List<FieldString> fieldList = configPage.getFieldsList();
@@ -146,7 +157,7 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 	 * IStructuredDataSelectionWizard#getInputDataTypeID()
 	 */
 	public String getInputDataTypeID() {
-		return SmooksModelUtils.INPUT_TYPE_CSV_1_1;
+		return SmooksModelUtils.INPUT_TYPE_CSV_1_2;
 	}
 
 	/*
@@ -202,6 +213,16 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 			String quoteChar = configPage.getQuoteChar();
 			if (quoteChar != null && quoteChar.length() != 0) {
 				pro.put(CSVDataParser.QUOTECHAR, quoteChar);
+			}
+			
+			String rootName = configPage.getRootName();
+			if (rootName != null && rootName.length() != 0) {
+				pro.put(CSVDataParser.ROOT_ELEMENT_NAME, rootName);
+			}
+			
+			String recordName = configPage.getRecordName();
+			if (recordName != null && recordName.length() != 0) {
+				pro.put(CSVDataParser.RECORD_NAME, recordName);
 			}
 
 			String skiplines = configPage.getSkipLines();

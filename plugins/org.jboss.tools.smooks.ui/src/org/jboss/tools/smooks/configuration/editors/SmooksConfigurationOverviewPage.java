@@ -1212,7 +1212,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 			profilesSection.setExpanded(true);
 		}
 		if (href.equals("selector_dialog")) {
-			SelectoreSelectionDialog dialog = new SelectoreSelectionDialog(getEditorSite().getShell(),
+			SelectorCreationDialog dialog = new SelectorCreationDialog(getEditorSite().getShell(),
 					this.smooksModelProvider.getSmooksGraphicsExt(), this.getEditor());
 			try {
 				dialog.open();

@@ -120,7 +120,7 @@ import org.jboss.tools.smooks.configuration.editors.IFilePathProcessor;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.OpenFileHyperLinkListener;
 import org.jboss.tools.smooks.configuration.editors.SelectorAttributes;
-import org.jboss.tools.smooks.configuration.editors.SelectoreSelectionDialog;
+import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaMethodsSelectionDialog;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaPropertiesSelectionDialog;
@@ -859,7 +859,7 @@ public class SmooksUIUtils {
 		AttributeFieldEditPart fieldEditPart = createDialogFieldEditor(labelText, parent, toolkit, propertyDescriptor,
 				"Browse", new IFieldDialog() {
 					public Object open(Shell shell) {
-						SelectoreSelectionDialog dialog = new SelectoreSelectionDialog(shell, extType,
+						SelectorCreationDialog dialog = new SelectorCreationDialog(shell, extType,
 								currentEditorPart);
 						if (dialog.open() == Dialog.OK) {
 							Object currentSelection = dialog.getCurrentSelection();

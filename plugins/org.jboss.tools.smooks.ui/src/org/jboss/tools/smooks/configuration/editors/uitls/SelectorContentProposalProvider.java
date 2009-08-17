@@ -17,7 +17,7 @@ import java.util.List;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
-import org.jboss.tools.smooks.configuration.editors.SelectoreSelectionDialog;
+import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
@@ -47,7 +47,7 @@ public class SelectorContentProposalProvider implements IContentProposalProvider
 		if(contents.indexOf("h") != -1){
 			System.out.println();
 		}
-		List<Object> list = SelectoreSelectionDialog.generateInputData(extType,resourceList);
+		List<Object> list = SelectorCreationDialog.generateInputData(extType,resourceList);
 		if(list == null || list.isEmpty()){
 			return new IContentProposal[]{};
 		}

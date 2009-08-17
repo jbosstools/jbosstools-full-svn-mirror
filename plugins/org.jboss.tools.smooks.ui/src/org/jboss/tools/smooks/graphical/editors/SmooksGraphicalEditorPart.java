@@ -49,7 +49,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.ActionFactory;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
-import org.jboss.tools.smooks.configuration.editors.SelectoreSelectionDialog;
+import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanContentProvider;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanlabelProvider;
@@ -382,7 +382,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 			smooksResourceList = null;
 			if (obj instanceof DocumentRoot) {
 				smooksResourceList = ((DocumentRoot) obj).getSmooksResourceList();
-				inputDataList = SelectoreSelectionDialog.generateInputData(smooksModelProvider.getSmooksGraphicsExt(),
+				inputDataList = SelectorCreationDialog.generateInputData(smooksModelProvider.getSmooksGraphicsExt(),
 						smooksResourceList);
 			}
 		}

@@ -27,5 +27,6 @@ Export-Package: org.milyn,
  org.milyn.cdr,
  org.milyn.csv,
  org.milyn.json,
+ org.milyn.payload,
  org.milyn.smooks.edi,
  org.milyn.xml
