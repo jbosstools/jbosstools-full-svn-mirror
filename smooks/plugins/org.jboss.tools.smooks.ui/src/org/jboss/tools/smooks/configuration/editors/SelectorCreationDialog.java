@@ -66,7 +66,7 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  *         <p>
  *         Apr 12, 2009
  */
-public class SelectoreSelectionDialog extends Dialog {
+public class SelectorCreationDialog extends Dialog {
 
 	private SmooksGraphicsExtType graphicsExt;
 	private TreeViewer viewer;
@@ -78,11 +78,11 @@ public class SelectoreSelectionDialog extends Dialog {
 
 	private FormToolkit toolkit;
 
-	public SelectoreSelectionDialog(IShellProvider parentShell) {
+	public SelectorCreationDialog(IShellProvider parentShell) {
 		super(parentShell);
 	}
 
-	public SelectoreSelectionDialog(Shell parentShell, SmooksGraphicsExtType graphicsExt, IEditorPart editorPart) {
+	public SelectorCreationDialog(Shell parentShell, SmooksGraphicsExtType graphicsExt, IEditorPart editorPart) {
 		super(parentShell);
 		this.graphicsExt = graphicsExt;
 		selectorAttributes = new SelectorAttributes();
@@ -266,7 +266,8 @@ public class SelectoreSelectionDialog extends Dialog {
 								t.printStackTrace();
 							}
 						}
-						if (SmooksModelUtils.INPUT_TYPE_CSV.equals(type)) {
+						if (SmooksModelUtils.INPUT_TYPE_CSV_1_1.equals(type)
+								|| SmooksModelUtils.INPUT_TYPE_CSV_1_2.equals(type)) {
 							CSVDataParser parser = new CSVDataParser();
 							try {
 								TagList tl = parser.parseCSV(path, inputType, smooksResourceListType);

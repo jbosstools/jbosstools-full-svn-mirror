@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
-import org.jboss.tools.smooks.configuration.editors.SelectoreSelectionDialog;
+import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
 import org.jboss.tools.smooks.configuration.editors.groovy.GroovyUICreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.calc.CalcPackage;
@@ -245,7 +245,7 @@ public class SelectorValidator extends AbstractValidator {
 			}
 		}
 		if (extType != null) {
-			List<Object> l = SelectoreSelectionDialog.generateInputData(extType, listType);
+			List<Object> l = SelectorCreationDialog.generateInputData(extType, listType);
 			if (l != null) {
 				list.addAll(l);
 			}

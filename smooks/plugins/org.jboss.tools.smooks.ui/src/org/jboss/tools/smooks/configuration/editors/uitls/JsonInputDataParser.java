@@ -245,7 +245,8 @@ public class JsonInputDataParser {
 			}
 			model = null;
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// ignore
+//			t.printStackTrace();
 		}
 
 		return tagList;

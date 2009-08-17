@@ -14,13 +14,11 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.dom4j.DocumentException;
@@ -28,16 +26,15 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
 import org.jboss.tools.smooks.model.csv.CsvReader;
+import org.jboss.tools.smooks.model.csv12.CSV12Reader;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.milyn.Smooks;
-import org.milyn.SmooksUtil;
-import org.milyn.cdr.SmooksResourceConfiguration;
-import org.milyn.csv.CSVReader;
-import org.milyn.xml.XmlUtil;
-import org.w3c.dom.Document;
+import org.milyn.csv.CSVReaderConfigurator;
+import org.milyn.payload.StringResult;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -57,36 +54,59 @@ public class CSVDataParser {
 
 	public static final String FIELDS = "fields";
 
+	public static final String ROOT_ELEMENT_NAME = "rootElementName";
+
+	public static final String RECORD_NAME = "recordName";
+
 	public TagList parseCSV(String filePath, InputType inputType, SmooksResourceListType resourceList)
 			throws FileNotFoundException, DocumentException, InvocationTargetException, ParserConfigurationException {
 		return parseCSV(new FileInputStream(SmooksUIUtils.parseFilePath(filePath)), inputType, resourceList);
 	}
 
-	public TagList parseCSV(InputStream inputStream, CsvReader reader)
-			throws ParserConfigurationException, DocumentException {
+	public TagList parseCSV(InputStream inputStream, Object readerObj) throws ParserConfigurationException,
+			DocumentException {
 		String fields = null;
 		String separator = null;
 		String quoteChar = null;
 		String skiplines = null;
 		String encoding = null;
-		if (reader == null)
+		String rootName = null;
+		String recordName = null;
+		if (readerObj == null)
 			return null;
-		fields = reader.getFields();
-		separator = reader.getSeparator();
-		skiplines = reader.getSkipLines().toString();
-		quoteChar = reader.getQuote();
-		encoding = reader.getEncoding();
-		return this.parseCSV(inputStream, fields, separator, quoteChar, skiplines, encoding);
+
+		if (readerObj instanceof CsvReader) {
+			CsvReader reader = (CsvReader) readerObj;
+			fields = reader.getFields();
+			separator = reader.getSeparator();
+			skiplines = reader.getSkipLines().toString();
+			quoteChar = reader.getQuote();
+			encoding = reader.getEncoding();
+		}
+		if (readerObj instanceof CSV12Reader) {
+			CSV12Reader reader = (CSV12Reader) readerObj;
+			fields = reader.getFields();
+			separator = reader.getSeparator();
+			skiplines = reader.getSkipLines().toString();
+			quoteChar = reader.getQuote();
+			encoding = reader.getEncoding();
+			rootName = reader.getRootElementName();
+			recordName = reader.getRecordElementName();
+		}
+		return this.parseCSV(inputStream, fields, rootName, recordName, separator, quoteChar, skiplines, encoding);
 	}
 
 	public TagList parseCSV(InputStream stream, InputType inputType, SmooksResourceListType resourceList)
 			throws DocumentException, ParserConfigurationException {
+		String type = inputType.getType();
 		List<ParamType> paramList = inputType.getParam();
 		String fields = null;
 		String separator = null;
 		String quoteChar = null;
 		String skiplines = null;
 		String encoding = null;
+		String rootName = null;
+		String recordName = null;
 
 		for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
 			ParamType paramType = (ParamType) iterator.next();
@@ -97,10 +117,21 @@ public class CSVDataParser {
 					int index = -1;
 					for (Iterator<?> iterator2 = readers.iterator(); iterator2.hasNext();) {
 						AbstractReader abstractReader = (AbstractReader) iterator2.next();
-						if (abstractReader instanceof CsvReader) {
-							count++;
-							if (index == -1) {
-								index = readers.indexOf(abstractReader);
+						if (SmooksModelUtils.INPUT_TYPE_CSV_1_1.equals(type)) {
+							if (abstractReader instanceof CsvReader) {
+								count++;
+								if (index == -1) {
+									index = readers.indexOf(abstractReader);
+								}
+							}
+						}
+
+						if (SmooksModelUtils.INPUT_TYPE_CSV_1_2.equals(type)) {
+							if (abstractReader instanceof CSV12Reader) {
+								count++;
+								if (index == -1) {
+									index = readers.indexOf(abstractReader);
+								}
 							}
 						}
 					}
@@ -110,7 +141,7 @@ public class CSVDataParser {
 						// RuntimeException("The smooks config file should have only one JSON reader");
 					}
 					if (index != -1) {
-						return parseCSV(stream, (CsvReader)readers.get(index));
+						return parseCSV(stream, readers.get(index));
 						// return parseJsonFile(stream, (JsonReader)
 						// readers.get(index));
 					}
@@ -120,7 +151,7 @@ public class CSVDataParser {
 			if (paramType.getName().equals(FIELDS)) {
 				fields = paramType.getValue();
 				try {
-//					fields = fields.replace(';', ',');
+					// fields = fields.replace(';', ',');
 				} catch (Throwable t) {
 
 				}
@@ -137,64 +168,75 @@ public class CSVDataParser {
 			if (paramType.getName().equals(ENCODING)) {
 				encoding = paramType.getValue();
 			}
+			if (paramType.getName().equals(ROOT_ELEMENT_NAME)) {
+				rootName = paramType.getValue();
+			}
+			if (paramType.getName().equals(RECORD_NAME)) {
+				recordName = paramType.getValue();
+			}
 		}
 
-		return this.parseCSV(stream, fields, separator, quoteChar, skiplines, encoding);
+		return this.parseCSV(stream, fields, rootName, recordName, separator, quoteChar, skiplines, encoding);
 	}
 
-	public TagList parseCSV(String filePath, String fields, String separator, String quoteChar, String skiplines,
-			String encoding) throws DocumentException, FileNotFoundException {
-		return parseCSV(new FileInputStream(filePath), fields, separator, quoteChar, skiplines, encoding);
+	public TagList parseCSV(String filePath, String fields, String rootName, String recordName, String separator,
+			String quoteChar, String skiplines, String encoding) throws DocumentException, FileNotFoundException {
+		return parseCSV(new FileInputStream(filePath), fields, rootName, recordName, separator, quoteChar, skiplines,
+				encoding);
 	}
 
-	public TagList parseCSV(InputStream stream, String fields, String separator, String quoteChar, String skiplines,
-			String encoding) throws DocumentException {
+	public TagList parseCSV(InputStream stream, String fields, String rootName, String recordName, String separator,
+			String quoteChar, String skiplines, String encoding) throws DocumentException {
 
 		Smooks smooks = new Smooks();
-		SmooksResourceConfiguration readerConfig = new SmooksResourceConfiguration("org.xml.sax.driver",
-				CSVReader.class.getName());
-		if((quoteChar == null) || (encoding == null) || (fields == null)){
+
+		// SmooksResourceConfiguration readerConfig = new
+		// SmooksResourceConfiguration("org.xml.sax.driver",
+		// CSVReader.class.getName());
+		if ((quoteChar == null) || (encoding == null) || (fields == null)) {
 			return null;
 		}
-		if(quoteChar == null) quoteChar = "\"";
-		if(skiplines == null) skiplines = "0";
-		if(encoding == null) encoding = "UTF-8";
-		readerConfig.setParameter("fields", fields);
-		readerConfig.setParameter("separator", separator);
-		readerConfig.setParameter("quote-char", quoteChar);
-		readerConfig.setParameter("skip-line-count", skiplines);
-		readerConfig.setParameter("encoding", encoding);
+		if (quoteChar == null)
+			quoteChar = "\"";
+		if (skiplines == null)
+			skiplines = "0";
+		if (encoding == null)
+			encoding = "UTF-8";
 
-		SmooksUtil.registerResource(readerConfig, smooks);
+		CSVReaderConfigurator readerConfigurator = new CSVReaderConfigurator(fields);
+		if (separator != null && separator.length() >= 1) {
+			readerConfigurator.setSeparatorChar(separator.toCharArray()[0]);
+		}
+		if (quoteChar != null && quoteChar.length() >= 1) {
+			readerConfigurator.setQuoteChar(quoteChar.toCharArray()[0]);
+		}
+		if (skiplines != null) {
+			try {
+				readerConfigurator.setSkipLineCount(Integer.parseInt(skiplines));
+			} catch (Throwable t) {
 
-		DOMResult domResult = new DOMResult();
+			}
+		}
+		if (rootName != null) {
+			readerConfigurator.setRootElementName(rootName);
+		}
+		if (recordName != null) {
+			readerConfigurator.setRecordElementName(recordName);
+		}
 
-		// Filter the message through Smooks and capture the result as a DOM in
-		// the domResult instance...
-		smooks.filter(new StreamSource(stream), domResult);
+		smooks.setReaderConfig(readerConfigurator);
 
-		// Get the Document object from the domResult. This is the message
-		// model!!!...
-		Document model = (Document) domResult.getNode();
-
-		// So using the model Document, you can construct a tree structure for
-		// the editor.
-		
-		StringWriter modelWriter = new StringWriter();
-		XmlUtil.serialize(model, true, modelWriter);
+		StringResult result = new StringResult();
+		smooks.filterSource(new StreamSource(stream), result);
 
 		XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();
-		ByteArrayInputStream byteinputStream = new ByteArrayInputStream(modelWriter.toString().getBytes());
+		ByteArrayInputStream byteinputStream = new ByteArrayInputStream(result.getResult().getBytes());
 		TagList tagList = analyzer.analyze(byteinputStream, null);
 
 		try {
 			if (byteinputStream != null) {
 				byteinputStream.close();
 				byteinputStream = null;
-			}
-			if (modelWriter != null) {
-				modelWriter.close();
-				modelWriter = null;
 			}
 			if (smooks != null) {
 				smooks.close();
@@ -204,7 +246,7 @@ public class CSVDataParser {
 				stream.close();
 				stream = null;
 			}
-			model = null;
+			result = null;
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}

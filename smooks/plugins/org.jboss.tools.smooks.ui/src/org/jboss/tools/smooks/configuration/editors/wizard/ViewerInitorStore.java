@@ -18,6 +18,7 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.csv.CSVInputDataWizard;
+import org.jboss.tools.smooks.configuration.editors.csv12.CSV12InputDataWizard;
 import org.jboss.tools.smooks.configuration.editors.edi.EDIDataWizard;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanContentProvider;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanStrucutredDataWizard;
@@ -139,9 +140,9 @@ public class ViewerInitorStore {
 	protected HashMap<String, IViewerInitor> createNewInitorMap() {
 		HashMap<String, IViewerInitor> map = new HashMap<String, IViewerInitor>();
 
-		// for json
+		// for json 1.1
 		BaseViewerInitor jsonViewerInitor = new BaseViewerInitor();
-		String name = "Json";
+		String name = "Json 1.1";
 		String description = "Select Json data file as the input data.";
 		String iconPath = null;
 		String typeID = SmooksModelUtils.INPUT_TYPE_JSON;
@@ -209,12 +210,12 @@ public class ViewerInitorStore {
 		xsdViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_XSD_FILE);
 		map.put(typeID, xsdViewerInitor);
 
-		// for Csv
+		// for Csv 1.1
 		BaseViewerInitor csvViewerInitor = new BaseViewerInitor();
-		name = "CSV";
-		description = "Select CSV data file as the input data.";
+		name = "CSV 1.1";
+		description = "Select CSV data file as the input data (version 1.1).";
 		iconPath = null;
-		typeID = SmooksModelUtils.INPUT_TYPE_CSV;
+		typeID = SmooksModelUtils.INPUT_TYPE_CSV_1_1;
 
 		csvViewerInitor.setName(name);
 		csvViewerInitor.setDescription(description);
@@ -223,12 +224,27 @@ public class ViewerInitorStore {
 		csvViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
 		csvViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
 		csvViewerInitor.setStructuredDataLoadWizard(new CSVInputDataWizard());
-		// jsonViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
 		map.put(typeID, csvViewerInitor);
+		
+		// for Csv 1.2
+		BaseViewerInitor csv12ViewerInitor = new BaseViewerInitor();
+		name = "CSV 1.2";
+		description = "Select CSV data file as the input data (version 1.2).";
+		iconPath = null;
+		typeID = SmooksModelUtils.INPUT_TYPE_CSV_1_2;
 
-		// for Csv
+		csv12ViewerInitor.setName(name);
+		csv12ViewerInitor.setDescription(description);
+		csv12ViewerInitor.setWizardIconPath(iconPath);
+		csv12ViewerInitor.setTypeID(typeID);
+		csv12ViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
+		csv12ViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
+		csv12ViewerInitor.setStructuredDataLoadWizard(new CSV12InputDataWizard());
+		map.put(typeID, csv12ViewerInitor);
+
+		// for EDI 1.1
 		BaseViewerInitor ediViewerInitor = new BaseViewerInitor();
-		name = "EDI";
+		name = "EDI 1.1";
 		description = "Select EDI data file as the input data.";
 		iconPath = null;
 		typeID = SmooksModelUtils.INPUT_TYPE_EDI;
