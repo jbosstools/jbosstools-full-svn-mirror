@@ -33,12 +33,21 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.CommandStackEvent;
 import org.eclipse.gef.commands.CommandStackEventListener;
 import org.eclipse.gef.editparts.FreeformGraphicalRootEditPart;
+import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.gef.ui.parts.GraphicalEditor;
+import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.swt.SWT;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.actions.ActionFactory;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.SelectoreSelectionDialog;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
@@ -47,6 +56,7 @@ import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanlabelProvid
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataContentProvider;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataLabelProvider;
+import org.jboss.tools.smooks.edimap.editor.EDIMappingMenuContextProvider;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
@@ -73,7 +83,7 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  * @author Dart
  * 
  */
-public class SmooksGraphicalEditorPart extends GraphicalEditor {
+public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelectionChangedListener {
 
 	private DefaultEditDomain editDomain = null;
 
@@ -97,7 +107,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor {
 		this.smooksModelProvider = provider;
 		this.setEditDomain(editDomain);
 	}
-	
+
 	private void handleCommandStack(org.eclipse.emf.common.command.CommandStack commandStack) {
 		commandStack.addCommandStackListener(new org.eclipse.emf.common.command.CommandStackListener() {
 			public void commandStackChanged(EventObject event) {
@@ -116,12 +126,19 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor {
 							}
 						}
 					}
-					
+
 				});
 			}
 		});
 	}
 	
+	
+
+	@Override
+	protected void createActions() {
+		super.createActions();
+	}
+
 	protected void refershRecentAffectedModel(Command command, Collection<?> affectedObjects) {
 		for (Iterator<?> iterator = affectedObjects.iterator(); iterator.hasNext();) {
 			Object object = (Object) iterator.next();
@@ -153,6 +170,33 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor {
 		getGraphicalViewer().setEditPartFactory(new SmooksEditFactory());
 
 		getGraphicalViewer().setRootEditPart(new FreeformGraphicalRootEditPart());
+
+		GraphicalViewerKeyHandler keyHandler = new GraphicalViewerKeyHandler(getGraphicalViewer());
+		keyHandler.put(org.eclipse.gef.KeyStroke.getPressed(SWT.DEL, 0), this.getActionRegistry().getAction(
+				ActionFactory.DELETE.getId()));
+
+		EDIMappingMenuContextProvider provider = new EDIMappingMenuContextProvider(getGraphicalViewer(), this
+				.getActionRegistry());
+		getGraphicalViewer().setContextMenu(provider);
+		
+		hookSelectionActions();
+	}
+	
+	private void hookSelectionActions(){
+		Iterator<?> actions = getActionRegistry().getActions();
+		while(actions.hasNext()){
+			Object action = actions.next();
+			if(action instanceof SelectionAction){
+				((SelectionAction)action).setSelectionProvider(getGraphicalViewer());
+			}
+		}
+	}
+
+	@Override
+	protected void hookGraphicalViewer() {
+		// super.hookGraphicalViewer();
+		getGraphicalViewer().addSelectionChangedListener(getSelectionSynchronizer());
+		getGraphicalViewer().addSelectionChangedListener(this);
 	}
 
 	protected void initGraphicalModel() {
@@ -209,7 +253,8 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor {
 			for (Iterator<?> iterator = arcList.iterator(); iterator.hasNext();) {
 				Object object = (Object) iterator.next();
 				if (object instanceof BindingsType) {
-					JavaBeanGraphModel graphModel = new JavaBeanGraphModel(object, contentProvider, labelProvider);
+					JavaBeanGraphModel graphModel = new JavaBeanGraphModel(object, contentProvider, labelProvider,
+							this.smooksModelProvider);
 					graphModel.setHeaderVisable(true);
 					root.addTreeNode(graphModel);
 				}
@@ -278,7 +323,10 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor {
 									selector, (IXMLStructuredObject) obj, root);
 							if (sourceGraphModel != null) {
 								TreeNodeConnection connection = new TreeNodeConnection(sourceGraphModel, model);
-								connection.connect();
+								sourceGraphModel.getSourceConnections().add(connection);
+								sourceGraphModel.fireConnectionChanged();
+								model.getTargetConnections().add(connection);
+								model.fireConnectionChanged();
 								connections.add(connection);
 							}
 						}
@@ -344,7 +392,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor {
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
 		super.init(site, input);
 		initSmooksData();
-		if(smooksModelProvider != null){
+		if (smooksModelProvider != null) {
 			this.handleCommandStack(smooksModelProvider.getEditingDomain().getCommandStack());
 		}
 	}
@@ -423,4 +471,12 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor {
 
 	}
 
+	@Override
+	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+		super.selectionChanged(part, selection);
+	}
+
+	public void selectionChanged(SelectionChangedEvent event) {
+		updateActions(getSelectionActions());
+	}
 }

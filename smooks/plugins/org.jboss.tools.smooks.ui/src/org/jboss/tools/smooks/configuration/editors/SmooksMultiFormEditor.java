@@ -82,13 +82,13 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 			e.printStackTrace();
 		}
 
-		// graphicalPage = new SmooksGraphicalEditorPart(this);
-		// try {
-		// int index = this.addPage(graphicalPage, getEditorInput());
-		// setPageText(index, "Graph");
-		// } catch (PartInitException e) {
-		// e.printStackTrace();
-		// }
+		graphicalPage = new SmooksGraphicalEditorPart(this);
+		try {
+			int index = this.addPage(graphicalPage, getEditorInput());
+			setPageText(index, "Graph");
+		} catch (PartInitException e) {
+			e.printStackTrace();
+		}
 
 		super.addPages();
 	}
