@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.jboss.tools.smooks.runtime
-Bundle-Version: 1.1.2
+Bundle-Version: 1.2.1
 Require-Bundle: org.eclipse.core.runtime,
  org.apache.commons.codec,
  org.apache.commons.lang,
@@ -13,13 +13,13 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: .,
- libs/milyn-commons-1.1.2.jar,
- libs/milyn-smooks-csv-1.1.2.jar,
- libs/milyn-smooks-json-1.1.2.jar,
- libs/milyn-smooks-core-1.1.2.jar,
- libs/jackson-lgpl-0.9.3.jar,
- libs/milyn-smooks-edi-1.1.2.jar,
- libs/milyn-edisax-parser-1.1.2.jar,
+ libs/jackson-core-lgpl-1.0.1.jar,
+ libs/milyn-commons-1.2.1.jar,
+ libs/milyn-edisax-parser-1.2.1.jar,
+ libs/milyn-smooks-core-1.2.1.jar,
+ libs/milyn-smooks-csv-1.2.1.jar,
+ libs/milyn-smooks-edi-1.2.1.jar,
+ libs/milyn-smooks-json-1.2.1.jar,
  libs/opencsv-1.8.jar
 Bundle-Localization: plugin
 Bundle-Vendor: %providerName
