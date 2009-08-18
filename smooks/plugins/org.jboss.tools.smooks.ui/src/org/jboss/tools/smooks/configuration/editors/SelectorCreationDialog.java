@@ -255,7 +255,8 @@ public class SelectorCreationDialog extends Dialog {
 					String path = SmooksModelUtils.getInputPath(inputType);
 					if (type != null && path != null) {
 						path = path.trim();
-						if (SmooksModelUtils.INPUT_TYPE_EDI.equals(type)) {
+						if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(type)
+								|| SmooksModelUtils.INPUT_TYPE_EDI_1_2.equals(type)) {
 							EDIDataParser parser = new EDIDataParser();
 							try {
 								TagList tl = parser.parseEDIFile(path, inputType, smooksResourceListType);
@@ -278,7 +279,8 @@ public class SelectorCreationDialog extends Dialog {
 								t.printStackTrace();
 							}
 						}
-						if (SmooksModelUtils.INPUT_TYPE_JSON.equals(type)) {
+						if (SmooksModelUtils.INPUT_TYPE_JSON_1_1.equals(type)
+								|| SmooksModelUtils.INPUT_TYPE_JSON_1_2.equals(type)) {
 							try {
 								JsonInputDataParser parser = new JsonInputDataParser();
 								IXMLStructuredObject tagList = parser.parseJsonFile(SmooksUIUtils.parseFilePath(path),

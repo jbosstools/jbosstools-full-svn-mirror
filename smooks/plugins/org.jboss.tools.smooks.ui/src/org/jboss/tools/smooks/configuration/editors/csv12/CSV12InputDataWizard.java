@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -21,9 +22,11 @@ import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.csv.CSVDataParser;
 import org.jboss.tools.smooks.configuration.editors.csv12.CSV12DataConfigurationWizardPage.FieldString;
+import org.jboss.tools.smooks.configuration.editors.uitls.JsonInputDataParser;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
 import org.jboss.tools.smooks.model.csv12.CSV12Reader;
 import org.jboss.tools.smooks.model.csv12.Csv12Factory;
+import org.jboss.tools.smooks.model.csv12.Csv12Package;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -105,6 +108,12 @@ public class CSV12InputDataWizard extends Wizard implements IStructuredDataSelec
 				if(recordName != null){
 					reader.setRecordElementName(recordName);
 				}
+				
+				String indent = configPage.getIndent();
+				if (indent != null && indent.length() != 0) {
+					boolean indentValue = Boolean.valueOf(indent).booleanValue();
+					reader.setIndent(indentValue);
+				}
 
 				String fields = null;
 				List<FieldString> fieldList = configPage.getFieldsList();
@@ -120,9 +129,9 @@ public class CSV12InputDataWizard extends Wizard implements IStructuredDataSelec
 					}
 				}
 				reader.setFields(fields);
-
-				Command command = AddCommand.create(editingDomain, resourceList, SmooksPackage.eINSTANCE
-						.getSmooksResourceListType_AbstractReader(), reader);
+				Command command = AddCommand.create(editingDomain, resourceList,
+						SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
+								.createEntry(Csv12Package.Literals.CSV12_DOCUMENT_ROOT__READER, reader));
 				editingDomain.getCommandStack().execute(command);
 
 			}
@@ -228,6 +237,11 @@ public class CSV12InputDataWizard extends Wizard implements IStructuredDataSelec
 			String skiplines = configPage.getSkipLines();
 			if (skiplines != null && skiplines.length() != 0) {
 				pro.put(CSVDataParser.SKIPLINES, skiplines);
+			}
+			
+			String indent = configPage.getIndent();
+			if (indent != null && indent.length() != 0) {
+				pro.setProperty(JsonInputDataParser.INDENT, indent);
 			}
 
 		}

@@ -54,7 +54,7 @@ public interface CsvPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "cvs";
+	String eNS_PREFIX = "csv";
 
 	/**
 	 * The singleton instance of the package.

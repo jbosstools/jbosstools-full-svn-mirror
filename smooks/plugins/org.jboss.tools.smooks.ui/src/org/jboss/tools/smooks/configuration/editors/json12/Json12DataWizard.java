@@ -8,13 +8,14 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors.json;
+package org.jboss.tools.smooks.configuration.editors.json12;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -25,13 +26,14 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
-import org.jboss.tools.smooks.configuration.editors.json.JsonDataConfiguraitonWizardPage.KeyValueModel;
+import org.jboss.tools.smooks.configuration.editors.json12.Json12DataConfiguraitonWizardPage.KeyValueModel;
 import org.jboss.tools.smooks.configuration.editors.uitls.JsonInputDataParser;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
-import org.jboss.tools.smooks.model.json.JsonFactory;
-import org.jboss.tools.smooks.model.json.JsonReader;
-import org.jboss.tools.smooks.model.json.Key;
-import org.jboss.tools.smooks.model.json.KeyMap;
+import org.jboss.tools.smooks.model.json12.Json12Factory;
+import org.jboss.tools.smooks.model.json12.Json12Package;
+import org.jboss.tools.smooks.model.json12.Json12Reader;
+import org.jboss.tools.smooks.model.json12.Key;
+import org.jboss.tools.smooks.model.json12.KeyMap;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -41,19 +43,19 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  * @author Dart (dpeng@redhat.com)
  * 
  */
-public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWizard, INewWizard {
+public class Json12DataWizard extends Wizard implements IStructuredDataSelectionWizard, INewWizard {
 
-	private JsonDataPathWizardPage pathPage = null;
+	private Json12DataPathWizardPage pathPage = null;
 
-	private JsonDataConfiguraitonWizardPage configPage = null;
+	private Json12DataConfiguraitonWizardPage configPage = null;
 
 	private SmooksResourceListType resourceList;
 
 	private EditingDomain editingDomain;
 
-	public JsonDataWizard() {
+	public Json12DataWizard() {
 		super();
-		this.setWindowTitle("JSON Input Data Wizard");
+		this.setWindowTitle("JSON Input Data Wizard (version 1.2)");
 	}
 
 	public boolean canFinish() {
@@ -73,11 +75,11 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 	public void addPages() {
 		super.addPages();
 		if (pathPage == null) {
-			pathPage = new JsonDataPathWizardPage("Json Input Data Selection ", new String[] {});
+			pathPage = new Json12DataPathWizardPage("Json Input Data Selection ", new String[] {});
 
 		}
 		if (configPage == null) {
-			configPage = new JsonDataConfiguraitonWizardPage("Json data configuration page");
+			configPage = new Json12DataConfiguraitonWizardPage("Json data configuration page");
 			configPage.setSmooksResourceList(resourceList);
 		}
 		this.addPage(pathPage);
@@ -91,20 +93,20 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 	 */
 	@Override
 	public boolean performFinish() {
-		if(editingDomain == null || resourceList == null){
+		if (editingDomain == null || resourceList == null) {
 			return true;
 		}
 		if (configPage != null && configPage.isCreateJsonReader()) {
 			List<KeyValueModel> keyMapList = configPage.getKeyValueList();
 
-			JsonReader reader = JsonFactory.eINSTANCE.createJsonReader();
+			Json12Reader reader = Json12Factory.eINSTANCE.createJson12Reader();
 			if (keyMapList != null && !keyMapList.isEmpty()) {
-				KeyMap map = JsonFactory.eINSTANCE.createKeyMap();
+				KeyMap map = Json12Factory.eINSTANCE.createKeyMap();
 				for (Iterator<?> iterator = keyMapList.iterator(); iterator.hasNext();) {
 					KeyValueModel keyValueModel = (KeyValueModel) iterator.next();
 					String key = keyValueModel.getKey();
 					String value = keyValueModel.getValue();
-					Key k = JsonFactory.eINSTANCE.createKey();
+					Key k = Json12Factory.eINSTANCE.createKey();
 					k.setFrom(key);
 					k.setTo(value);
 					map.getKey().add(k);
@@ -146,8 +148,15 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 			if (ier != null && ier.length() != 0) {
 				reader.setIllegalElementNameCharReplacement(ier);
 			}
-			Command command = AddCommand.create(editingDomain, resourceList, SmooksPackage.eINSTANCE
-					.getSmooksResourceListType_AbstractReader(), reader);
+			String indent = configPage.getIndent();
+			if (indent != null && indent.length() != 0) {
+				boolean indentValue = Boolean.valueOf(indent).booleanValue();
+				reader.setIndent(indentValue);
+			}
+
+			Command command = AddCommand.create(editingDomain, resourceList,
+					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
+							.createEntry(Json12Package.Literals.JSON12_DOCUMENT_ROOT__READER, reader));
 			editingDomain.getCommandStack().execute(command);
 		}
 		return true;
@@ -172,7 +181,7 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 	 */
 	public String getInputDataTypeID() {
 		// TODO Auto-generated method stub
-		return SmooksModelUtils.INPUT_TYPE_JSON_1_1;
+		return SmooksModelUtils.INPUT_TYPE_JSON_1_2;
 	}
 
 	/*
@@ -239,6 +248,11 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 			if (ier != null && ier.length() != 0) {
 				p.setProperty(JsonInputDataParser.ILLEGAL_REPLACE, ier);
 			}
+
+			String indent = configPage.getIndent();
+			if (indent != null && indent.length() != 0) {
+				p.setProperty(JsonInputDataParser.INDENT, indent);
+			}
 		}
 	}
 
@@ -283,7 +297,7 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 			}
 			editingDomain = formEditor.getEditingDomain();
 		}
-		if(configPage != null){
+		if (configPage != null) {
 			configPage.setSmooksResourceList(resourceList);
 		}
 	}

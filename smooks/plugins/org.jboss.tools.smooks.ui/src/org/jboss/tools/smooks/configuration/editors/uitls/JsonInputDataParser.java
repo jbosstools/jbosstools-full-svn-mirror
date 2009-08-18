@@ -7,8 +7,8 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +18,6 @@ import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.dom4j.DocumentException;
@@ -30,15 +29,15 @@ import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.json.JsonReader;
 import org.jboss.tools.smooks.model.json.Key;
 import org.jboss.tools.smooks.model.json.KeyMap;
+import org.jboss.tools.smooks.model.json12.Json12Package;
+import org.jboss.tools.smooks.model.json12.Json12Reader;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.milyn.Smooks;
-import org.milyn.SmooksUtil;
 import org.milyn.cdr.Parameter;
-import org.milyn.cdr.SmooksResourceConfiguration;
-import org.milyn.json.JSONReader;
-import org.milyn.xml.XmlUtil;
-import org.w3c.dom.Document;
+import org.milyn.json.JSONReaderConfigurator;
+import org.milyn.payload.StringResult;
 import org.w3c.dom.Element;
 
 /**
@@ -54,10 +53,11 @@ public class JsonInputDataParser {
 	public static final String SPACE_REPLACE = "spaceReplace";
 	public static final String PREFIX_ON_NUMERIC = "prefixOnNumeric";
 	public static final String ILLEGAL_REPLACE = "illegalReplace";
+	public static final String INDENT = "indent";
 	public static final String ARRAY_ELEMENT_NAME = "arrayElementName";
 	public static final String ROOT_NAME = "rootName";
 
-	public IXMLStructuredObject parseJsonFile(InputStream inputStream, JsonReader reader)
+	public IXMLStructuredObject parseJsonFile(InputStream inputStream, Object readerObj)
 			throws ParserConfigurationException, DocumentException {
 		String rootName = null;
 		String arrayElementName = null;
@@ -66,26 +66,55 @@ public class JsonInputDataParser {
 		String illegalElementNameCharReplacement = null;
 		String nullValueReplacement = null;
 		String encoding = null;
+		String indent = null;
 		Map<String, String> keyMap = new HashMap<String, String>();
-		if (reader == null)
+		if (readerObj == null)
 			return null;
-		rootName = reader.getRootName();
-		arrayElementName = reader.getArrayElementName();
-		keyPrefixOnNumeric = reader.getKeyPrefixOnNumeric();
-		keyWhitspaceReplacement = reader.getKeyWhitspaceReplacement();
-		illegalElementNameCharReplacement = reader.getIllegalElementNameCharReplacement();
-		nullValueReplacement = reader.getNullValueReplacement();
-		encoding = reader.getEncoding();
-		KeyMap km = reader.getKeyMap();
-		if (km != null) {
-			List<Key> keyList = km.getKey();
-			for (Iterator<?> iterator = keyList.iterator(); iterator.hasNext();) {
-				Key key = (Key) iterator.next();
-				keyMap.put(key.getFrom(), key.getTo());
+		if (readerObj instanceof JsonReader) {
+			JsonReader reader = (JsonReader) readerObj;
+			rootName = reader.getRootName();
+			arrayElementName = reader.getArrayElementName();
+			keyPrefixOnNumeric = reader.getKeyPrefixOnNumeric();
+			keyWhitspaceReplacement = reader.getKeyWhitspaceReplacement();
+			illegalElementNameCharReplacement = reader.getIllegalElementNameCharReplacement();
+			nullValueReplacement = reader.getNullValueReplacement();
+			encoding = reader.getEncoding();
+			KeyMap km = reader.getKeyMap();
+			if (km != null) {
+				List<Key> keyList = km.getKey();
+				for (Iterator<?> iterator = keyList.iterator(); iterator.hasNext();) {
+					Key key = (Key) iterator.next();
+					keyMap.put(key.getFrom(), key.getTo());
+				}
 			}
 		}
+
+		if (readerObj instanceof Json12Reader) {
+			Json12Reader reader = (Json12Reader) readerObj;
+			rootName = reader.getRootName();
+			arrayElementName = reader.getArrayElementName();
+			keyPrefixOnNumeric = reader.getKeyPrefixOnNumeric();
+			keyWhitspaceReplacement = reader.getKeyWhitspaceReplacement();
+			illegalElementNameCharReplacement = reader.getIllegalElementNameCharReplacement();
+			nullValueReplacement = reader.getNullValueReplacement();
+			encoding = reader.getEncoding();
+			boolean isSet = reader.eIsSet(Json12Package.Literals.JSON12_READER__INDENT);
+			if (isSet) {
+				indent = String.valueOf(reader.isIndent());
+			}
+			org.jboss.tools.smooks.model.json12.KeyMap km = reader.getKeyMap();
+			if (km != null) {
+				List<?> keyList = km.getKey();
+				for (Iterator<?> iterator = keyList.iterator(); iterator.hasNext();) {
+					org.jboss.tools.smooks.model.json12.Key key = (org.jboss.tools.smooks.model.json12.Key) iterator
+							.next();
+					keyMap.put(key.getFrom(), key.getTo());
+				}
+			}
+		}
+
 		return this.parseJsonFile(inputStream, rootName, arrayElementName, keyWhitspaceReplacement, keyPrefixOnNumeric,
-				illegalElementNameCharReplacement, nullValueReplacement, keyMap, encoding);
+				illegalElementNameCharReplacement, nullValueReplacement, keyMap, indent, encoding);
 	}
 
 	public IXMLStructuredObject parseJsonFile(InputStream stream, InputType inputType,
@@ -99,6 +128,10 @@ public class JsonInputDataParser {
 		String illegalElementNameCharReplacement = null;
 		String nullValueReplacement = null;
 		String encoding = null;
+		String indent = null;
+
+		String type = inputType.getType();
+
 		Map<String, String> keyMap = new HashMap<String, String>();
 
 		for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
@@ -110,10 +143,20 @@ public class JsonInputDataParser {
 					int index = -1;
 					for (Iterator<?> iterator2 = readers.iterator(); iterator2.hasNext();) {
 						AbstractReader abstractReader = (AbstractReader) iterator2.next();
-						if (abstractReader instanceof JsonReader) {
-							count++;
-							if (index == -1) {
-								index = readers.indexOf(abstractReader);
+						if (SmooksModelUtils.INPUT_TYPE_JSON_1_1.equals(type)) {
+							if (abstractReader instanceof JsonReader) {
+								count++;
+								if (index == -1) {
+									index = readers.indexOf(abstractReader);
+								}
+							}
+						}
+						if (SmooksModelUtils.INPUT_TYPE_JSON_1_2.equals(type)) {
+							if (abstractReader instanceof Json12Reader) {
+								count++;
+								if (index == -1) {
+									index = readers.indexOf(abstractReader);
+								}
 							}
 						}
 					}
@@ -123,7 +166,7 @@ public class JsonInputDataParser {
 						// RuntimeException("The smooks config file should have only one JSON reader");
 					}
 					if (index != -1) {
-						return parseJsonFile(stream, (JsonReader) readers.get(index));
+						return parseJsonFile(stream, readers.get(index));
 					}
 
 				}
@@ -154,10 +197,14 @@ public class JsonInputDataParser {
 			if (paramType.getName().equals(NULL_REPLACE)) {
 				nullValueReplacement = paramType.getValue();
 			}
+
+			if (paramType.getName().equals(INDENT)) {
+				indent = paramType.getValue();
+			}
 		}
 
 		return this.parseJsonFile(stream, rootName, arrayElementName, keyWhitspaceReplacement, keyPrefixOnNumeric,
-				illegalElementNameCharReplacement, nullValueReplacement, keyMap, encoding);
+				illegalElementNameCharReplacement, nullValueReplacement, keyMap, indent, encoding);
 	}
 
 	public IXMLStructuredObject parseJsonFile(String filePath, InputType inputType, SmooksResourceListType resourceList)
@@ -168,72 +215,70 @@ public class JsonInputDataParser {
 
 	public IXMLStructuredObject parseJsonFile(String filePath, String rootName, String arrayElementName,
 			String keyWhitspaceReplacement, String keyPrefixOnNumeric, String illegalElementNameCharReplacement,
-			String nullValueReplacement, Map<String, String> keyMap, String encoding) throws FileNotFoundException,
-			ParserConfigurationException, DocumentException, InvocationTargetException {
+			String nullValueReplacement, Map<String, String> keyMap, String indent, String encoding)
+			throws FileNotFoundException, ParserConfigurationException, DocumentException, InvocationTargetException {
 		return this.parseJsonFile(new FileInputStream(SmooksUIUtils.parseFilePath(filePath)), rootName,
 				arrayElementName, keyWhitspaceReplacement, keyPrefixOnNumeric, illegalElementNameCharReplacement,
-				nullValueReplacement, keyMap, encoding);
+				nullValueReplacement, keyMap, indent, encoding);
 	}
 
 	public IXMLStructuredObject parseJsonFile(InputStream inputStream, String rootName, String arrayElementName,
 			String keyWhitspaceReplacement, String keyPrefixOnNumeric, String illegalElementNameCharReplacement,
-			String nullValueReplacement, Map<String, String> keyMap, String encoding)
+			String nullValueReplacement, Map<String, String> keyMap, String indent, String encoding)
 			throws ParserConfigurationException, DocumentException {
 
 		Smooks smooks = new Smooks();
 
-		SmooksResourceConfiguration readerConfig = new SmooksResourceConfiguration("org.xml.sax.driver",
-				JSONReader.class.getName());
-
-		readerConfig.setParameter(ROOT_NAME, rootName);
-		readerConfig.setParameter(ARRAY_ELEMENT_NAME, arrayElementName);
+		JSONReaderConfigurator readerConfig = new JSONReaderConfigurator();
+		if (arrayElementName != null) {
+			readerConfig.setArrayElementName(arrayElementName);
+		}
+		if (rootName != null) {
+			readerConfig.setRootName(rootName);
+		}
 		if (keyWhitspaceReplacement != null) {
-			readerConfig.setParameter("keyWhitspaceReplacement", keyWhitspaceReplacement);
+			readerConfig.setKeyWhitspaceReplacement(keyWhitspaceReplacement);
 		}
 		if (keyPrefixOnNumeric != null) {
-			readerConfig.setParameter("keyPrefixOnNumeric", keyPrefixOnNumeric);
+			readerConfig.setKeyPrefixOnNumeric(keyPrefixOnNumeric);
 		}
 		if (illegalElementNameCharReplacement != null) {
-			readerConfig.setParameter("illegalElementNameCharReplacement", illegalElementNameCharReplacement);
+			readerConfig.setIllegalElementNameCharReplacement(illegalElementNameCharReplacement);
 		}
 		if (nullValueReplacement != null) {
-			readerConfig.setParameter("nullValueReplacement", nullValueReplacement);
+			readerConfig.setNullValueReplacement(nullValueReplacement);
 		}
 
 		if (keyMap != null) {
-			readerConfig.setParameter(keyMapToParameter(keyMap));
+			readerConfig.setKeyMap(keyMap);
 		}
 
-		readerConfig.setParameter(ENCODING2, encoding);
+		readerConfig.setEncoding(Charset.forName(encoding));
 
-		SmooksUtil.registerResource(readerConfig, smooks);
+		if (indent != null) {
+			// readerConfig.set
+		}
+
+		// readerConfig.setParameter(ENCODING2, encoding);
+
+		smooks.setReaderConfig(readerConfig);
 
 		// Use a DOM result to capture the message model for the supplied CSV
 		// message...
-		DOMResult domResult = new DOMResult();
+		StringResult result = new StringResult();
 
 		// Filter the message through Smooks and capture the result as a DOM in
 		// the domResult instance...
-		smooks.filter(new StreamSource(inputStream), domResult);
-
-		// Get the Document object from the domResult. This is the message
-		// model!!!...
-		Document model = (Document) domResult.getNode();
-		StringWriter modelWriter = new StringWriter();
-		XmlUtil.serialize(model, true, modelWriter);
+		smooks.filterSource(new StreamSource(inputStream), result);
 
 		XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();
-		ByteArrayInputStream byteinputStream = new ByteArrayInputStream(modelWriter.toString().getBytes());
+		ByteArrayInputStream byteinputStream = new ByteArrayInputStream(result.getResult().getBytes());
 		TagList tagList = analyzer.analyze(byteinputStream, null);
 
 		try {
 			if (byteinputStream != null) {
 				byteinputStream.close();
 				byteinputStream = null;
-			}
-			if (modelWriter != null) {
-				modelWriter.close();
-				modelWriter = null;
 			}
 			if (smooks != null) {
 				smooks.close();
@@ -243,10 +288,10 @@ public class JsonInputDataParser {
 				inputStream.close();
 				inputStream = null;
 			}
-			model = null;
+			result = null;
 		} catch (Throwable t) {
 			// ignore
-//			t.printStackTrace();
+			// t.printStackTrace();
 		}
 
 		return tagList;

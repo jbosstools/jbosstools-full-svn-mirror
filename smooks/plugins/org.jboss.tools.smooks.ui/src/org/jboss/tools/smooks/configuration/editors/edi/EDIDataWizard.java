@@ -97,7 +97,7 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 	 * IStructuredDataSelectionWizard#getInputDataTypeID()
 	 */
 	public String getInputDataTypeID() {
-		return SmooksModelUtils.INPUT_TYPE_EDI;
+		return SmooksModelUtils.INPUT_TYPE_EDI_1_1;
 	}
 
 	/*

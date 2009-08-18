@@ -434,7 +434,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			List<InputType> inputList = ext.getInput();
 			for (Iterator<?> iterator = inputList.iterator(); iterator.hasNext();) {
 				InputType inputType = (InputType) iterator.next();
-				if (SmooksModelUtils.INPUT_TYPE_EDI.equals(inputType.getType())) {
+				if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(inputType.getType())) {
 					List<ParamType> paramList = inputType.getParam();
 					for (Iterator<?> iterator2 = paramList.iterator(); iterator2.hasNext();) {
 						ParamType paramType = (ParamType) iterator2.next();
@@ -454,7 +454,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			List<InputType> inputList = ext.getInput();
 			for (Iterator<?> iterator = inputList.iterator(); iterator.hasNext();) {
 				InputType inputType = (InputType) iterator.next();
-				if (SmooksModelUtils.INPUT_TYPE_EDI.equals(inputType.getType())) {
+				if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(inputType.getType())) {
 					List<ParamType> paramList = inputType.getParam();
 					for (Iterator<?> iterator2 = paramList.iterator(); iterator2.hasNext();) {
 						ParamType paramType = (ParamType) iterator2.next();
@@ -758,7 +758,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 				List<InputType> list = ext.getInput();
 				for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 					InputType inputType = (InputType) iterator.next();
-					if (SmooksModelUtils.INPUT_TYPE_EDI.equals(inputType.getType())) {
+					if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(inputType.getType())) {
 						inputType1[0] = inputType;
 						break;
 					}
@@ -774,7 +774,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 					 * @see java.lang.Runnable#run()
 					 */
 					public void run() {
-						String type = SmooksModelUtils.INPUT_TYPE_EDI;
+						String type = SmooksModelUtils.INPUT_TYPE_EDI_1_1;
 						SmooksGraphicsExtType extType = modelProvider.getSmooksGraphicsExt();
 						InputType input = inputType1[0];
 						if (input == null) {
@@ -1301,7 +1301,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		List<InputType> list = ext.getInput();
 		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 			InputType inputType = (InputType) iterator.next();
-			if (SmooksModelUtils.INPUT_TYPE_EDI.equals(inputType.getType())) {
+			if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(inputType.getType())) {
 				inputType1[0] = inputType;
 				break;
 			}
@@ -1315,7 +1315,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			 */
 			public void run() {
 				SmooksUIUtils.recordInputDataInfomation(inputType1[0], modelProvider.getSmooksGraphicsExt(),
-						SmooksModelUtils.INPUT_TYPE_EDI, ediFilePath, null);
+						SmooksModelUtils.INPUT_TYPE_EDI_1_1, ediFilePath, null);
 			}
 
 		});
