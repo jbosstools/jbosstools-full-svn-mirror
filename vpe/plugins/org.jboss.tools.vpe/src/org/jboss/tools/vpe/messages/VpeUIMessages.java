@@ -112,5 +112,5 @@ public final class VpeUIMessages extends NLS {
 	public static String ACTUAL_RUN_TIME_FOLDERS_ABOUT;
 	public static String INCLUDED_CSS_FILES_ABOUT;
 	public static String INCLUDED_TAG_LIBS_ABOUT;
-	public static String SUBSTITUTED_EL_EXPRESSIONS_ABOUT;	
+	public static String SUBSTITUTED_EL_EXPRESSIONS_ABOUT;
 }

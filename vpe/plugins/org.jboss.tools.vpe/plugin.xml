@@ -4,7 +4,7 @@
    <extension-point id="templates" name="Path to xml file with templates definitionj" schema="schema/templates.exsd"/>
 
 	<extension point="org.eclipse.ui.startup" />
-	
+
    <extension point="org.jboss.tools.common.model.meta">
       <meta path="meta/vpe.meta"/>
    </extension>

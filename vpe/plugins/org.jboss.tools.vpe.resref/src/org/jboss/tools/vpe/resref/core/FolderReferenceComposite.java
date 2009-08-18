@@ -10,119 +10,186 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.resref.core;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Group;
-import org.jboss.tools.common.meta.action.XEntityData;
-import org.jboss.tools.common.meta.action.impl.XEntityDataImpl;
-import org.jboss.tools.common.model.XModelObject;
-import org.jboss.tools.common.model.options.PreferenceModelUtilities;
-import org.jboss.tools.common.model.ui.attribute.XAttributeSupport;
-import org.jboss.tools.common.model.ui.attribute.editor.DirectoryFieldEditorEx;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.common.resref.core.ResourceReferenceList;
 
-public abstract class FolderReferenceComposite {
-	XAttributeSupport support = new XAttributeSupport();
-	XModelObject object;
-	IFile file;
-	IPath path;
-	ResourceReference[] rs;
-	ResourceReference current;
-	XEntityData data;
+public abstract class FolderReferenceComposite implements ModifyListener {
+
+	private final String BROWSE_BUTTON_NAME = "&Browse...";//$NON-NLS-1$
+	private Text text = null;
+	/*
+	 * Object representing file location.
+	 * Can be IFile or IPath.
+	 */
+	Object fileLocation = null;
+	ResourceReference[] rs = null;
+	ResourceReference current = null;
+	private String browseDialogFilterPath = null;
 	
-	public FolderReferenceComposite() {
-		object = PreferenceModelUtilities.getPreferenceModel().createModelObject(getEntity(), new Properties());
-	}
+	public FolderReferenceComposite() {}
 	
-	public void setObject(Properties p) {
-		file = (IFile)p.get("file"); //$NON-NLS-1$
-		path = (IPath)p.get("path"); //$NON-NLS-1$
-		rs = (file != null) ? getReferenceList().getAllResources(file) :
-							(path != null) ? getReferenceList().getAllResources(path)
-							               : new ResourceReference[0];
+	public void setObject(Object fileLocation) {
+		this.fileLocation = fileLocation;
+		if (fileLocation instanceof IFile) {
+			browseDialogFilterPath = ((IFile)fileLocation).getProject().getLocation().toString(); 
+		}
+		if (null != fileLocation) {
+			if (fileLocation instanceof IFile) {
+				rs = getReferenceList().getAllResources((IFile) fileLocation);
+			} else if (fileLocation instanceof IPath) {
+				rs = getReferenceList().getAllResources((IPath) fileLocation);
+			}
+		} else {
+			rs = new ResourceReference[0];
+		}
+		
 		if(rs.length == 0) {
 			rs = new ResourceReference[1];
 			rs[0] = new ResourceReference("", ResourceReference.FILE_SCOPE); //$NON-NLS-1$
 		}
 		current = rs[0];
-		object.setAttributeValue("location", current.getLocation()); //$NON-NLS-1$
-		object.setAttributeValue("scope", current.getScopeName()); //$NON-NLS-1$
-
-		data = XEntityDataImpl.create(new String[][]{
-			{getEntity(), "yes"}, //$NON-NLS-1$
-			{"location", "no"}, //$NON-NLS-1$ //$NON-NLS-2$
-			{"scope", "no"} //$NON-NLS-1$ //$NON-NLS-2$
-		});
-
-		data.getAttributeData()[0].setValue(current.getLocation());
-		data.getAttributeData()[1].setValue(current.getScopeName());
-
-		support.init(object, data);
-//		support.addPropertyChangeListener(new PropertyChangeListener() {
-//			public void propertyChange(PropertyChangeEvent evt) {
-//			}
-//		});
-	}
-
-	protected String getEntity() {
-		return (file != null) ? "VPEFolderReference" : "VPEFolderReferenceExt"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	protected abstract ResourceReferenceList getReferenceList();
 	protected abstract String getTitle();
 	
 	public Control createControl(Composite parent) {
-		Group g = new Group(parent, SWT.SHADOW_ETCHED_IN);
-		GridData data = new GridData(GridData.FILL_HORIZONTAL);
-		GridLayout layout = new GridLayout(1, false);
-		g.setLayout(layout);
-		g.setLayoutData(data);
-		g.setText(getTitle());
-		Control c = support.createControl(g);
-		if(file != null) {
-			DirectoryFieldEditorEx f = (DirectoryFieldEditorEx)support.getFieldEditorByName("location"); //$NON-NLS-1$
-			f.setLastPath(file.getProject().getLocation().toString());
-		}
-		data = new GridData(GridData.FILL_BOTH);
-		c.setLayoutData(data);
-		return g;
+		/*
+		 * Create group control.
+		 */
+		Group groupControl = new Group(parent, SWT.SHADOW_ETCHED_IN);
+		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
+		GridLayout layout = new GridLayout(3, false);
+		groupControl.setLayout(layout);
+		groupControl.setLayoutData(gd);
+		groupControl.setText(getTitle());
+		
+		/*
+		 * Create label control
+		 */
+		Label pathLabel = new Label(groupControl, SWT.RIGHT);
+		pathLabel.setText(Messages.FOLDER_PATH);
+		gd = new GridData();
+		pathLabel.setLayoutData(gd);
+		
+		/*
+		 * Create text control.
+		 */
+		text = new Text(groupControl, SWT.BORDER);
+		/*
+		 * Set location from stored resource reference
+		 * if it presents.
+		 */
+		text.setText(current.getLocation());
+		gd = new GridData(SWT.FILL, SWT.NONE, true, false);
+		text.setLayoutData(gd);
+		text.addModifyListener(this);
+		
+		/*
+		 * Create browse control.
+		 */
+		final Button button = new Button(groupControl, SWT.PUSH);
+		button.setText(BROWSE_BUTTON_NAME);
+		gd = new GridData();
+		button.setLayoutData(gd);
+		button.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent evt) {
+				DirectoryDialog dialog = new DirectoryDialog(button.getShell());
+				dialog.setMessage(Messages.SELECT_FOLDER_DIALOG_TITLE);
+				if ((null != browseDialogFilterPath) && (new File(browseDialogFilterPath).exists()) ){
+					dialog.setFilterPath(browseDialogFilterPath);
+				}
+				String newPath = dialog.open();
+				/*
+				 * When new value is set
+				 * store it to current resref, filter, text field.
+				 */
+				if (newPath != null) {
+					newPath = newPath.trim();
+					browseDialogFilterPath = newPath;
+					current.setLocation(newPath);
+					text.setText(newPath);
+				}
+			}
+		});
+		
+		/*
+		 * Create scope label.
+		 */
+		Label comboboxLabel = new Label(groupControl, SWT.RIGHT);
+		comboboxLabel.setText(Messages.SCOPE_GROUP_NAME);
+		gd = new GridData();
+		comboboxLabel.setLayoutData(gd);
+		
+		/*
+		 * Create scope combobox.
+		 */
+		CCombo combobox = new CCombo(groupControl, SWT.BORDER);
+		String[] items = { Messages.SCOPE_PAGE_SHORT,
+				Messages.SCOPE_FOLDER_SHORT, Messages.SCOPE_PROJECT_SHORT };
+		combobox.setItems(items);
+		combobox.setText(Messages.SCOPE_PAGE_SHORT);
+		gd = new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1);
+		combobox.setLayoutData(gd);
+		
+		return groupControl;
 	}
 	
 	public void commit() {
-		support.store();
-		current.setLocation(data.getAttributeData()[0].getValue());
 		current.setScope(getNewScope());
 		List l = new ArrayList();
 		for (int i = rs.length - 2; i >= 0; i--) {
-			if(rs[i].getLocation().equals(current.getLocation())) continue;
-			if(rs[i].getScope() == current.getScope()) continue;
+			if(rs[i].getLocation().equals(current.getLocation())) {
+				continue;
+			}
+			if(rs[i].getScope() == current.getScope()) {
+				continue;
+			}
 			l.add(rs[i]);
 		}
 		l.add(current);
 		rs = (ResourceReference[])l.toArray(new ResourceReference[0]);
-		if(file != null) {
-			getReferenceList().setAllResources(file, rs);
-		} else {
-			getReferenceList().setAllResources(path, rs);
+		if (null != fileLocation) {
+			if (fileLocation instanceof IFile) {
+				getReferenceList().setAllResources((IFile) fileLocation, rs);
+			} else if (fileLocation instanceof IPath) {
+				getReferenceList().setAllResources((IPath) fileLocation, rs);
+			}
 		}
 	}
 	
 	int getNewScope() {
-		String s = data.getAttributeData()[1].getValue();
-		for (int i = 0; i < ResourceReference.SCOPE_NAMES.length; i++) {
-			if(ResourceReference.SCOPE_NAMES[i].equals(s)) return i;
-		}
 		return ResourceReference.FILE_SCOPE;
 	}
 
+	public void setFileLocation(Object fileLocation) {
+		this.fileLocation = fileLocation;
+	}
+
+	public void modifyText(ModifyEvent e) {
+		browseDialogFilterPath = text.getText().trim();
+		current.setLocation(browseDialogFilterPath);
+	}
+	
 }

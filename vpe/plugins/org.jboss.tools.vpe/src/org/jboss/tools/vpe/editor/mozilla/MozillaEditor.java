@@ -51,6 +51,7 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IEditorInput;
@@ -79,7 +80,8 @@ import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.xpl.CustomSashForm;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
-import org.jboss.tools.vpe.resref.VpeResourcesDialog;
+import org.jboss.tools.vpe.resref.core.ReferenceWizard;
+import org.jboss.tools.vpe.resref.core.VpeResourcesDialog;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -231,14 +233,24 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		item.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				IEditorInput input = getEditorInput();
+				Object fileLocation = null;
 				if (input instanceof IFileEditorInput) {
 					IFile file = ((IFileEditorInput) input).getFile();
-					VpeResourcesDialog.run(file);
+					fileLocation = file;
 				} else if (input instanceof ILocationProvider) {
 					ILocationProvider provider = (ILocationProvider) input;
 					IPath path = provider.getPath(input);
-					if (path != null)
-						VpeResourcesDialog.run(path);
+					if (path != null) {
+						fileLocation = path;
+					}
+				}
+				if (null != fileLocation) {
+					VpeResourcesDialog dialogNew = 
+						new VpeResourcesDialog(PlatformUI.getWorkbench().getDisplay()
+									.getActiveShell(), fileLocation);
+					dialogNew.open();
+				} else {
+					VpePlugin.getDefault().logError("Could not open Vpe Resources Dialog."); //$NON-NLS-1$
 				}
 			}
 		});

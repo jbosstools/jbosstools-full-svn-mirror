@@ -12,15 +12,13 @@ package org.jboss.tools.vpe.resref.core;
 
 import java.util.List;
 
+import org.eclipse.ui.PlatformUI;
+import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.common.resref.core.ResourceReferenceList;
-import org.jboss.tools.common.resref.ui.AbstractResourceReferencesComposite;
 import org.jboss.tools.common.resref.ui.ResourceReferencesTableProvider;
 
 public class CssReferencesComposite extends VpeResourceReferencesComposite {
 
-	protected String getEntity() {
-		return (file != null) ? "VPECSSReference" : "VPECSSReferenceExt"; //$NON-NLS-1$ //$NON-NLS-2$
-	}
 
 	protected ResourceReferencesTableProvider createTableProvider(List dataList) {
 		return ResourceReferencesTableProvider.getCSSTableProvider(dataList);
@@ -30,14 +28,8 @@ public class CssReferencesComposite extends VpeResourceReferencesComposite {
 		return CSSReferenceList.getInstance();
 	}
 	
-	
-	/**
-	 * @see AbstractResourceReferencesComposite#createGroupLabel()
-	 */
-    @Override
-    protected String createGroupLabel() {
-        return Messages.INCLUDED_CSS_FILES;
+	protected ReferenceWizardDialog getDialog(ResourceReference resref) {
+		return new CSSReferenceWizardDialog(PlatformUI.getWorkbench()
+				.getDisplay().getActiveShell(), fileLocation, resref);
     }
-
-
 }

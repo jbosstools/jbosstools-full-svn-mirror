@@ -19,7 +19,7 @@ public class AbsoluteFolderReferenceComposite extends FolderReferenceComposite {
 	}
 
 	protected String getTitle() {
-		return Messages.ACTUAL_RUN_TIME_ABSOLUTE_FOLDER;
+		return Messages.VRD_ACTUAL_RUN_TIME_ABSOLUTE_FOLDER;
 	}
 
 }

@@ -2,11 +2,11 @@ package org.jboss.tools.vpe.resref.core;
 
 import java.util.List;
 
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.common.el.core.ELReferenceList;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.common.resref.core.ResourceReferenceList;
-import org.jboss.tools.common.resref.ui.AbstractResourceReferencesComposite;
-import org.jboss.tools.common.resref.ui.BaseAddReferenceSupport;
 import org.jboss.tools.common.resref.ui.ResourceReferencesTableProvider;
 
 /**
@@ -26,18 +26,7 @@ public class ElVariablesComposite extends AbstractResourceReferencesComposite {
         return ResourceReferencesTableProvider.getELTableProvider(dataList);
     };
 
-
     /**
-     * Gets the entity.
-     * 
-     * @return the entity
-     */
-    @Override
-    protected String getEntity() {
-        return  "VPEElReference";  //$NON-NLS-1$
-    }
-
-    /**c
      * Gets the reference list.
      * 
      * @return the reference list
@@ -47,43 +36,42 @@ public class ElVariablesComposite extends AbstractResourceReferencesComposite {
         return ELReferenceList.getInstance();
     }
 
-    /**
-     * @see AbstractResourceReferencesComposite#createGroupLabel()
-     */
-    @Override
-    protected String createGroupLabel() {
-        return Messages.SUBSTITUTED_EL_EXPRESSIONS;
+    protected ReferenceWizardDialog getDialog(ResourceReference resref) {
+        return new ELReferenceWizardDialog(
+				PlatformUI.getWorkbench().getDisplay().getActiveShell(), fileLocation, resref, getReferenceArray());
     }
 
 
 	@Override
 	protected void add(int index) {
-		ResourceReference css = getDefaultResourceReference();
-
-		initFilterInFileChooser();
-		boolean ok = BaseAddReferenceSupport.add(file, css, getReferenceArray(),
-				getEntity());
-		if (!ok)
-			return;
-		dataList.add(css);
-		update();
-		table.setSelection(dataList.size() - 1);
+		ResourceReference resref = getDefaultResourceReference();
+		int returnCode = -1;
+		ReferenceWizardDialog  d = getDialog(resref);
+		if (null != d) {
+			returnCode = d.open();
+		}
+		if (Dialog.OK == returnCode) {
+			dataList.add(resref);
+			update();
+			table.setSelection(dataList.size() - 1);
+		}
 		
 	}
 
 
 	@Override
 	protected void edit(int index) {
-		if (index < 0) {
+		if(index < 0) {
 			return;
 		}
-		ResourceReference css = getReferenceArray()[index];
-		initFilterInFileChooser();
-		boolean ok = BaseAddReferenceSupport.edit(file, css,
-				getReferenceArray(), getEntity());
-		if (ok) {
+		ResourceReference resref = getReferenceArray()[index];
+		int returnCode = -1;
+		ReferenceWizardDialog  d = getDialog(resref);
+		if (null != d) {
+			returnCode = d.open();
+		}
+		if (Dialog.OK == returnCode) {
 			update();
 		}
 	}
-
 }

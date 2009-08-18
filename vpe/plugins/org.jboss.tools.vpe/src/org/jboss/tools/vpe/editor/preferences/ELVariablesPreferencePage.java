@@ -24,7 +24,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.jboss.tools.common.el.ui.GlobalElVariablesComposite;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
-import org.jboss.tools.vpe.resref.VpeResourcesDialog;
 
 /**
  * Page for the El preferences.
@@ -96,13 +95,10 @@ public class ELVariablesPreferencePage extends PreferencePage implements IWorkbe
      * @param el the el
      */
     private void setUpVariableComposite(GlobalElVariablesComposite el){
-        final VpeResourcesDialog dialog = new VpeResourcesDialog();
         final Properties p = new Properties();
-        
         p.setProperty("help", "VpeResourcesDialog"); //$NON-NLS-1$ //$NON-NLS-2$
         p.put("path", Platform.getLocation()); //$NON-NLS-1$
         p.put("model", PreferenceModelUtilities.getPreferenceModel()); //$NON-NLS-1$
-        dialog.setObject(p);
         el.setObject(p);
     }
 

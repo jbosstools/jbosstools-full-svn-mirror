@@ -12,6 +12,9 @@ package org.jboss.tools.vpe.resref.core;
 
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.ui.PlatformUI;
+import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.common.resref.core.ResourceReferenceList;
 import org.jboss.tools.common.resref.ui.AbstractResourceReferencesComposite;
 import org.jboss.tools.common.resref.ui.ResourceReferencesTableProvider;
@@ -23,11 +26,6 @@ import org.jboss.tools.common.resref.ui.ResourceReferencesTableProvider;
  */
 public class TaglibReferencesComposite extends VpeResourceReferencesComposite {
 
-	@Override
-	protected String getEntity() {
-		return (file != null) ? "VPETLDReference" : "VPETLDReferenceExt"; //$NON-NLS-1$ //$NON-NLS-2$
-	}
-
 	protected ResourceReferencesTableProvider createTableProvider(List dataList) {
 		return ResourceReferencesTableProvider.getTLDTableProvider(dataList);
 	}
@@ -36,14 +34,8 @@ public class TaglibReferencesComposite extends VpeResourceReferencesComposite {
 		return TaglibReferenceList.getInstance();
 	}
 
-	/**
-	 * @see AbstractResourceReferencesComposite#createGroupLabel()
-	 */
-    @Override
-    protected String createGroupLabel() {
-        return Messages.INCLUDED_TAG_LIBS;
+    protected ReferenceWizardDialog getDialog(ResourceReference resref) {
+        return new TaglibReferenceWizardDialog(
+				PlatformUI.getWorkbench().getDisplay().getActiveShell(), fileLocation, resref);
     }
-
-
-
 }

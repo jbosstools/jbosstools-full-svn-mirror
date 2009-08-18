@@ -10,52 +10,42 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.resref.core;
 
-import java.util.List;
-
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.jface.dialogs.Dialog;
 import org.jboss.tools.common.resref.core.ResourceReference;
-import org.jboss.tools.common.resref.core.ResourceReferenceList;
-import org.jboss.tools.common.resref.ui.AbstractResourceReferencesComposite;
-import org.jboss.tools.common.resref.ui.BaseAddReferenceSupport;
-import org.jboss.tools.common.resref.ui.ResourceReferencesTableProvider;
 
 public abstract class VpeResourceReferencesComposite extends AbstractResourceReferencesComposite {
 	
 	public VpeResourceReferencesComposite() {
 		super();
 	}
-
 	
-	protected abstract ResourceReferencesTableProvider createTableProvider(List dataList);
-	protected abstract ResourceReferenceList getReferenceList();
-	
-	/**
-	 * Returned the label that will display in group.
-	 *
-	 * @return label displayed in group
-	 * @see #createControl(Composite)
-	 */
-	protected abstract String createGroupLabel();
-	   
-
 	protected void add(int index) {
-		ResourceReference css = getDefaultResourceReference();
+		ResourceReference resref = getDefaultResourceReference();
 		
-		initFilterInFileChooser();
-		boolean ok = BaseAddReferenceSupport.add(file, css, getReferenceArray(), getEntity());
-		if(!ok) return;
-		dataList.add(css);
-		update();
-		table.setSelection(dataList.size() - 1);
+		int returnCode = -1;
+		ReferenceWizardDialog  d = getDialog(resref);
+		if (null != d) {
+			returnCode = d.open();
+		}
+		if (Dialog.OK == returnCode) {
+			dataList.add(resref);
+			update();
+			table.setSelection(dataList.size() - 1);
+		}
 	}
 	
 	protected void edit(int index) {
-		if(index < 0) return;
-		ResourceReference css = getReferenceArray()[index];
-		initFilterInFileChooser();
-		boolean ok = BaseAddReferenceSupport.edit(file, css, getReferenceArray(), getEntity());
-		if(!ok) return;
-		update();
+		if(index < 0) {
+			return;
+		}
+		ResourceReference resref = getReferenceArray()[index];
+		int returnCode = -1;
+		ReferenceWizardDialog  d = getDialog(resref);
+		if (null != d) {
+			returnCode = d.open();
+		}
+		if (Dialog.OK == returnCode) {
+			update();
+		}
 	}
-	
 }

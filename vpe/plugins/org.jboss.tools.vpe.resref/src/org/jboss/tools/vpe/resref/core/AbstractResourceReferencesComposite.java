@@ -12,7 +12,6 @@ package org.jboss.tools.vpe.resref.core;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
@@ -26,31 +25,32 @@ import org.eclipse.swt.widgets.Control;
 import org.jboss.tools.common.model.ui.action.CommandBar;
 import org.jboss.tools.common.model.ui.action.CommandBarListener;
 import org.jboss.tools.common.model.ui.objecteditor.XTable;
-import org.jboss.tools.common.model.ui.wizards.query.AbstractQueryWizardView;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.common.resref.core.ResourceReferenceList;
-import org.jboss.tools.common.resref.ui.BaseAddReferenceSupport;
 import org.jboss.tools.common.resref.ui.ResourceReferencesTableProvider;
 
-public abstract class ResourceReferencesDialogView extends AbstractQueryWizardView {
-	static String ADD = Messages.ResourceReferencesDialogView_Add;
-	static String EDIT = Messages.ResourceReferencesDialogView_Edit;
-	static String REMOVE = Messages.ResourceReferencesDialogView_Remove;
+public abstract class AbstractResourceReferencesComposite {
+	protected static String ADD = Messages.VRD_LABEL_ADD;
+	protected static String EDIT = Messages.VRD_LABEL_EDIT;
+	protected static String REMOVE = Messages.VRD_LABEL_REMOVE;
 	protected XTable table = new XTable();
 	protected CommandBar bar = new CommandBar();
 	protected ResourceReferencesTableProvider tableProvider;// = new TemplatesTableProvider();
-	IFile file;
-	IPath path;
+//	protected IFile file;
+//	protected IPath path;
+	/*
+	 * Object representing file location.
+	 * Can be IFile or IPath.
+	 */
+	protected Object fileLocation = null;
 	protected List dataList = new ArrayList();
 	
-	public ResourceReferencesDialogView() {
+	public AbstractResourceReferencesComposite() {
 		init();
 	}
 
 	private void init() {
-//		changed = false;
 		tableProvider = createTableProvider(dataList);
-///ResourceReferencesTableProvider.getCSSTableProvider(dataList);
 		bar.getLayout().buttonWidth = 80;
 		bar.getLayout().direction = SWT.VERTICAL;
 		bar.setCommands(new String[]{ADD, EDIT, REMOVE});
@@ -60,26 +60,39 @@ public abstract class ResourceReferencesDialogView extends AbstractQueryWizardVi
 	
 	protected abstract ResourceReferencesTableProvider createTableProvider(List dataList);
 	protected abstract ResourceReferenceList getReferenceList();
-
-	public void setObject(Object object) {
-		super.setObject(object);
-		Properties p = findProperties(object);
-		file = (IFile)p.get("file"); //$NON-NLS-1$
-		path = (IPath)p.get("path"); //$NON-NLS-1$
-		ResourceReference[] rs = (file != null) ? getReferenceList().getAllResources(file) :
-							(path != null) ? getReferenceList().getAllResources(path)
-							               : new ResourceReference[0];
-		for (int i = 0; i < rs.length; i++) dataList.add(rs[i]);
+	protected abstract ReferenceWizardDialog getDialog(ResourceReference resref);
+	
+	public void setObject(Object fileLocation) {
+		this.fileLocation = fileLocation;
+		ResourceReference[] rs = null;							
+		if (null != fileLocation) {
+			if (fileLocation instanceof IFile) {
+				rs = getReferenceList().getAllResources((IFile) fileLocation);
+			} else if (fileLocation instanceof IPath) {
+				rs = getReferenceList().getAllResources((IPath) fileLocation);
+			}
+		} else {
+			rs = new ResourceReference[0];
+		}							
+		for (int i = 0; i < rs.length; i++) {
+			dataList.add(rs[i]);	
+		}
 	}
 
 	public Control createControl(Composite parent) {
-		Composite c = new Composite(parent, SWT.NONE);
-		c.setLayoutData(new GridData(GridData.FILL_BOTH));
+		
+		final Composite composite = new Composite(parent,SWT.NONE);
+		
+		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 		GridLayout g = new GridLayout(2, false);
-		c.setLayout(g);
-		Control slc = table.createControl(c);
+		composite.setLayout(g);
+
+	    
+		Control slc = table.createControl(composite);
 		slc.setLayoutData(new GridData(GridData.FILL_BOTH));
-		Control bc = bar.createControl(c);
+		Control bc = bar.createControl(composite);
+		
+	
 		GridData gd = new GridData(GridData.FILL_VERTICAL);
 		bc.setLayoutData(gd);
 		table.getTable().addSelectionListener(new SelectionListener() {
@@ -91,29 +104,37 @@ public abstract class ResourceReferencesDialogView extends AbstractQueryWizardVi
 			}
 		});
 		update();
-		return c;
+		return composite;
 	}
 	
-	ResourceReference[] getReferenceArray() {
+	protected ResourceReference[] getReferenceArray() {
 		return (ResourceReference[])dataList.toArray(new ResourceReference[0]);
 	}
 	
-	public void action(String command) {
-		stopEditing();
-		if(OK.equalsIgnoreCase(command)) {
-			if(file != null) {
-				getReferenceList().setAllResources(file, getReferenceArray());
-			} else {
-				getReferenceList().setAllResources(path, getReferenceArray());
+	/**
+	 * Clear all entries from table.
+	 */
+	public void clearAll(){
+	    if(this.dataList!=null){
+	        this.dataList.clear();
+	    }
+	}
+	
+	public void commit() {
+		if (null != fileLocation) {
+			if (fileLocation instanceof IFile) {
+				getReferenceList().setAllResources((IFile) fileLocation, getReferenceArray());
+			} else if (fileLocation instanceof IPath) {
+				getReferenceList().setAllResources((IPath) fileLocation, getReferenceArray());
 			}
 		}
-		super.action(command);
 	}
-	class BarListener implements CommandBarListener {
+	
+	public class BarListener implements CommandBarListener {
 		public void action(String command) {
 			int index = table.getSelectionIndex();
 			if(ADD.equals(command)) {
-				add(index);
+ 				add(index);
 			} else if(EDIT.equals(command)) {
 				edit(index);
 			} else if(REMOVE.equals(command)) {
@@ -123,25 +144,17 @@ public abstract class ResourceReferencesDialogView extends AbstractQueryWizardVi
 		}
 	}
 
-	protected void add(int index) {
-		ResourceReference css = new ResourceReference("", ResourceReference.FOLDER_SCOPE); //$NON-NLS-1$
-		boolean ok = BaseAddReferenceSupport.add(file, css, getReferenceArray(), getEntity());
-		if(!ok) return;
-		dataList.add(css);
-		update();
-		table.setSelection(dataList.size() - 1);
-	}
-	
-	protected void edit(int index) {
-		if(index < 0) return;
-		ResourceReference css = getReferenceArray()[index];
-		boolean ok = BaseAddReferenceSupport.edit(file, css, getReferenceArray(), getEntity());
-		if(!ok) return;
-		update();
-	}
-	
-	protected abstract String getEntity();
+	abstract protected void add(int index);
 
+    /**
+     * @return
+     */
+	protected ResourceReference getDefaultResourceReference() {
+        return new ResourceReference("", ResourceReference.FOLDER_SCOPE); //$NON-NLS-1$
+    }
+	
+	abstract protected void edit(int index);
+	
 	void remove(int index) {
 		if(index >= 0) dataList.remove(index);
 	}
@@ -151,13 +164,10 @@ public abstract class ResourceReferencesDialogView extends AbstractQueryWizardVi
 		updateBars();
 	}
 
-	void updateBars() {
-		bar.setEnabled(EDIT, canModify());
-		bar.setEnabled(REMOVE, canModify());
-	}
-
-	private boolean canModify() {
-		return table.getSelectionIndex() >= 0;
+	protected void updateBars() {
+		boolean canModify = table.getSelectionIndex() >= 0;
+		bar.setEnabled(EDIT, canModify);
+		bar.setEnabled(REMOVE, canModify);
 	}
 
 }
