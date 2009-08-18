@@ -24,6 +24,7 @@ import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanContentProv
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanStrucutredDataWizard;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanlabelProvider;
 import org.jboss.tools.smooks.configuration.editors.json.JsonDataWizard;
+import org.jboss.tools.smooks.configuration.editors.json12.Json12DataWizard;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataContentProvider;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataLabelProvider;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataWizard;
@@ -145,7 +146,7 @@ public class ViewerInitorStore {
 		String name = "Json 1.1";
 		String description = "Select Json data file as the input data.";
 		String iconPath = null;
-		String typeID = SmooksModelUtils.INPUT_TYPE_JSON;
+		String typeID = SmooksModelUtils.INPUT_TYPE_JSON_1_1;
 
 		jsonViewerInitor.setName(name);
 		jsonViewerInitor.setDescription(description);
@@ -156,6 +157,24 @@ public class ViewerInitorStore {
 		jsonViewerInitor.setStructuredDataLoadWizard(new JsonDataWizard());
 		// jsonViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
 		map.put(typeID, jsonViewerInitor);
+		
+		// for json 1.2
+		BaseViewerInitor json12ViewerInitor = new BaseViewerInitor();
+		name = "Json 1.2";
+		description = "Select Json data file as the input data.(version 1.2)";
+		iconPath = null;
+		typeID = SmooksModelUtils.INPUT_TYPE_JSON_1_2;
+
+		json12ViewerInitor.setName(name);
+		json12ViewerInitor.setDescription(description);
+		json12ViewerInitor.setWizardIconPath(iconPath);
+		json12ViewerInitor.setTypeID(typeID);
+		json12ViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
+		json12ViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
+		json12ViewerInitor.setStructuredDataLoadWizard(new Json12DataWizard());
+		json12ViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
+		map.put(typeID, json12ViewerInitor);
+
 
 		// for java
 		BaseViewerInitor javabeanViewerInitor = new BaseViewerInitor();
@@ -247,7 +266,7 @@ public class ViewerInitorStore {
 		name = "EDI 1.1";
 		description = "Select EDI data file as the input data.";
 		iconPath = null;
-		typeID = SmooksModelUtils.INPUT_TYPE_EDI;
+		typeID = SmooksModelUtils.INPUT_TYPE_EDI_1_1;
 
 		ediViewerInitor.setName(name);
 		ediViewerInitor.setDescription(description);

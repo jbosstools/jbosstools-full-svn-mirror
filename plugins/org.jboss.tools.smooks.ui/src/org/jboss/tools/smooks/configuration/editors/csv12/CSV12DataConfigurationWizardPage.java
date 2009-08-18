@@ -35,6 +35,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
@@ -89,6 +90,8 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 	private List<FieldString> fieldsList = new ArrayList<FieldString>();
 	private Text rootNameText;
 	private Text recordNameText;
+	private Combo indentText;
+	protected String indent;
 
 	public CSV12DataConfigurationWizardPage(String pageName, String title, ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
@@ -179,6 +182,14 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 		skiplineLabel.setText("Skip Lines");
 		skipLinesText = new Text(configComposite, SWT.BORDER);
 		skipLinesText.setLayoutData(gd);
+		
+		Label indentLabel = new Label(configComposite, SWT.NONE);
+		indentLabel.setText("Indent");
+		indentText = new Combo(configComposite, SWT.BORDER | SWT.READ_ONLY);
+		indentText.add("");
+		indentText.add("TRUE");
+		indentText.add("FALSE");
+		indentText.setLayoutData(gd);
 
 		Label encodingLabel = new Label(configComposite, SWT.NONE);
 		encodingLabel.setText("Encoding");
@@ -397,6 +408,14 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 				changePageStatus();
 			}
 		});
+		
+		indentText.addModifyListener(new ModifyListener() {
+
+			public void modifyText(ModifyEvent e) {
+				indent = indentText.getText();
+				changePageStatus();
+			}
+		});
 
 		this.createCSVReaderButton.addSelectionListener(new SelectionListener() {
 
@@ -558,6 +577,14 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 		}
 	}
 
+	public String getIndent() {
+		return indent;
+	}
+
+	public void setIndent(String indent) {
+		this.indent = indent;
+	}
+
 	/**
 	 * @return the separator
 	 */
@@ -680,6 +707,8 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 	}
 
 	private void initValue() {
+		indent = null;
+		
 		useAvailabelReader = false;
 		
 		filePath = null;

@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.List;
 
@@ -223,6 +224,9 @@ public class CSVDataParser {
 		if (recordName != null) {
 			readerConfigurator.setRecordElementName(recordName);
 		}
+		
+		readerConfigurator.setEncoding(Charset.forName(encoding));
+//		readerConfigurator.setIndent(indent)
 
 		smooks.setReaderConfig(readerConfigurator);
 
