@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors.edi;
+package org.jboss.tools.smooks.configuration.editors.edireader12;
 
 import java.util.Properties;
 
@@ -24,10 +24,11 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
+import org.jboss.tools.smooks.configuration.editors.edi.EDIDataParser;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
-import org.jboss.tools.smooks.model.edi.EDIReader;
-import org.jboss.tools.smooks.model.edi.EdiFactory;
-import org.jboss.tools.smooks.model.edi.EdiPackage;
+import org.jboss.tools.smooks.model.edi12.EDI12Reader;
+import org.jboss.tools.smooks.model.edi12.Edi12Factory;
+import org.jboss.tools.smooks.model.edi12.Edi12Package;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -37,11 +38,11 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  * @author Dart
  * 
  */
-public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWizard, INewWizard {
+public class EDIReader12DataWizard extends Wizard implements IStructuredDataSelectionWizard, INewWizard {
 
-	private EDIMappingDataPathWizardPage mappingFilePage;
+	private EDIReader12MappingDataPathWizardPage mappingFilePage;
 
-	private EDIDataPathWizardPage ediFilePage;
+	private EDIReader12DataPathWizardPage ediFilePage;
 
 	private SmooksResourceListType resourceList;
 
@@ -49,10 +50,10 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 
 	@Override
 	public void addPages() {
-		ediFilePage = new EDIDataPathWizardPage("EDI Data Page", new String[] {});
+		ediFilePage = new EDIReader12DataPathWizardPage("EDI Data Page", new String[] {});
 		this.addPage(ediFilePage);
 
-		mappingFilePage = new EDIMappingDataPathWizardPage("EDI Config Page", null);
+		mappingFilePage = new EDIReader12MappingDataPathWizardPage("EDI Config Page", null);
 		this.addPage(mappingFilePage);
 		super.addPages();
 	}
@@ -70,12 +71,16 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 		if (mappingFilePage.isCreateNewReader()) {
 			String encoding = mappingFilePage.getEncoding();
 			String path = mappingFilePage.getFilePath();
-			EDIReader reader = EdiFactory.eINSTANCE.createEDIReader();
+			String validate = mappingFilePage.getValidate();
+			EDI12Reader reader = Edi12Factory.eINSTANCE.createEDI12Reader();
 			reader.setEncoding(encoding);
 			reader.setMappingModel(path);
+			if (validate != null && validate.length() != 0) {
+				reader.setValidate(Boolean.valueOf(validate));
+			}
 			Command command = AddCommand.create(editingDomain, resourceList,
 					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
-							.createEntry(EdiPackage.Literals.EDI_DOCUMENT_ROOT__READER, reader));
+							.createEntry(Edi12Package.Literals.EDI12_DOCUMENT_ROOT__READER, reader));
 			editingDomain.getCommandStack().execute(command);
 		}
 		return true;
@@ -100,7 +105,7 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 	 * IStructuredDataSelectionWizard#getInputDataTypeID()
 	 */
 	public String getInputDataTypeID() {
-		return SmooksModelUtils.INPUT_TYPE_EDI_1_1;
+		return SmooksModelUtils.INPUT_TYPE_EDI_1_2;
 	}
 
 	/*
@@ -116,9 +121,19 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 			return pros;
 		}
 		String encoding = mappingFilePage.getEncoding();
-		pros.put(EDIDataParser.ENCODING, encoding);
+		if (encoding != null && encoding.length() != 0) {
+			pros.put(EDIDataParser.ENCODING, encoding);
+		}
+		
 		String path = mappingFilePage.getFilePath();
+		if(path != null && path.length() != 0){
 		pros.put(EDIDataParser.MAPPING_MODEL, path);
+		}
+		
+		String validate = mappingFilePage.getValidate();
+		if(validate != null && validate.length() != 0){
+			pros.put(EDIDataParser.VALIDATE, validate);
+		}
 		return pros;
 	}
 

@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors.edireader;
+package org.jboss.tools.smooks.configuration.editors.edireader12;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -20,14 +20,14 @@ import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.edimap.editor.EDIMapFormEditor;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
-import org.jboss.tools.smooks.model.edi.EdiPackage;
+import org.jboss.tools.smooks.model.edi12.Edi12Package;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
  */
-public class EDIReaderUICreator extends PropertyUICreator {
+public class EDIReader12UICreator extends PropertyUICreator {
 
-	public EDIReaderUICreator() {
+	public EDIReader12UICreator() {
 	}
 
 	/*
@@ -42,9 +42,9 @@ public class EDIReaderUICreator extends PropertyUICreator {
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 			ISmooksModelProvider formEditor, IEditorPart part) {
-		if (feature == EdiPackage.eINSTANCE.getEDIReader_Encoding()) {
+		if (feature == Edi12Package.eINSTANCE.getEDI12Reader_Encoding()) {
 		}
-		if (feature == EdiPackage.eINSTANCE.getEDIReader_MappingModel()) {
+		if (feature == Edi12Package.eINSTANCE.getEDI12Reader_MappingModel()) {
 			return SmooksUIUtils.createFileSelectionTextFieldEditor(null, parent, null, toolkit, propertyDescriptor,
 					model, SmooksUIUtils.VALUE_TYPE_VALUE, EDIMapFormEditor.EDITOR_ID, null);
 		}

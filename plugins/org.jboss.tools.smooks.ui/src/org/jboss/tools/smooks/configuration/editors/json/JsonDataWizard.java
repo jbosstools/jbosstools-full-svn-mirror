@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -29,6 +30,7 @@ import org.jboss.tools.smooks.configuration.editors.json.JsonDataConfiguraitonWi
 import org.jboss.tools.smooks.configuration.editors.uitls.JsonInputDataParser;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
 import org.jboss.tools.smooks.model.json.JsonFactory;
+import org.jboss.tools.smooks.model.json.JsonPackage;
 import org.jboss.tools.smooks.model.json.JsonReader;
 import org.jboss.tools.smooks.model.json.Key;
 import org.jboss.tools.smooks.model.json.KeyMap;
@@ -146,8 +148,9 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 			if (ier != null && ier.length() != 0) {
 				reader.setIllegalElementNameCharReplacement(ier);
 			}
-			Command command = AddCommand.create(editingDomain, resourceList, SmooksPackage.eINSTANCE
-					.getSmooksResourceListType_AbstractReader(), reader);
+			Command command = AddCommand.create(editingDomain, resourceList,
+					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
+							.createEntry(JsonPackage.Literals.JSON_DOCUMENT_ROOT__READER, reader));
 			editingDomain.getCommandStack().execute(command);
 		}
 		return true;

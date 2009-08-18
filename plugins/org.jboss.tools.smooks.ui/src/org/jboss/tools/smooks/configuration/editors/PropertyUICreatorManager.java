@@ -32,6 +32,7 @@ import org.jboss.tools.smooks.configuration.editors.edi.SegmentUICreator;
 import org.jboss.tools.smooks.configuration.editors.edi.SegmentsUICreator;
 import org.jboss.tools.smooks.configuration.editors.edi.SubComponentUICreator;
 import org.jboss.tools.smooks.configuration.editors.edireader.EDIReaderUICreator;
+import org.jboss.tools.smooks.configuration.editors.edireader12.EDIReader12UICreator;
 import org.jboss.tools.smooks.configuration.editors.esbrouter.RouteBeanPropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.filerouting.HighWaterMarkUICreator;
 import org.jboss.tools.smooks.configuration.editors.filerouting.OutputStreamUICreator;
@@ -98,6 +99,7 @@ import org.jboss.tools.smooks.model.dbrouting.impl.ExecutorImpl;
 import org.jboss.tools.smooks.model.dbrouting.impl.ResultSetImpl;
 import org.jboss.tools.smooks.model.dbrouting.impl.ResultSetRowSelectorImpl;
 import org.jboss.tools.smooks.model.edi.impl.EDIReaderImpl;
+import org.jboss.tools.smooks.model.edi12.impl.EDI12ReaderImpl;
 import org.jboss.tools.smooks.model.esbrouting.impl.RouteBeanImpl;
 import org.jboss.tools.smooks.model.fileRouting.impl.HighWaterMarkImpl;
 import org.jboss.tools.smooks.model.fileRouting.impl.OutputStreamImpl;
@@ -314,6 +316,9 @@ public class PropertyUICreatorManager {
 		// for CSV Reader v1.2
 		map.put(BindingImpl.class, new Csv12ReaderBindingPropertyUICreator());
 		map.put(MapBindingImpl.class, new Csv12ReaderMapBindingPropertyUICreator());
+		
+		// for EDI Reader v1.2
+		map.put(EDI12ReaderImpl.class, new EDIReader12UICreator());
 		
 		// for Rules v1.0
 		map.put(RuleBaseImpl.class, new Rules10RulebaseUICreator());

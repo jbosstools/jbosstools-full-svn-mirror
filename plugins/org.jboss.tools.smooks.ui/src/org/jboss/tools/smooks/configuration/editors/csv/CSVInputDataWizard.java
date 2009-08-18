@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -22,6 +23,7 @@ import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.csv.CSVDataConfigurationWizardPage.FieldString;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
 import org.jboss.tools.smooks.model.csv.CsvFactory;
+import org.jboss.tools.smooks.model.csv.CsvPackage;
 import org.jboss.tools.smooks.model.csv.CsvReader;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
@@ -110,8 +112,9 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 				}
 				reader.setFields(fields);
 
-				Command command = AddCommand.create(editingDomain, resourceList, SmooksPackage.eINSTANCE
-						.getSmooksResourceListType_AbstractReader(), reader);
+				Command command = AddCommand.create(editingDomain, resourceList,
+						SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
+								.createEntry(CsvPackage.Literals.CSV_DOCUMENT_ROOT__READER, reader));
 				editingDomain.getCommandStack().execute(command);
 
 			}
