@@ -78,6 +78,12 @@
        <fixed
              facet="bpel.facet.core">
        </fixed>
+       <fixed
+             facet="jst.utility">
+       </fixed>
+       <fixed
+             facet="jst.java">
+       </fixed>
 <!--    		<fixed facet="bpel.facet.core"/>-->
     	</template>
     	
@@ -101,10 +107,10 @@
             projects="true"
             class="org.eclipse.bpel.runtimes.module.BPELModuleFactoryDelegate"
             id="org.eclipse.bpel.runtimes.module.moduleFactory">
-     		<moduleType
+     		<!--moduleType
                versions="1.1, 2.0"
                types="bpel.module">
-			</moduleType>
+			</moduleType-->
  		</moduleFactory>
      </extension>
      

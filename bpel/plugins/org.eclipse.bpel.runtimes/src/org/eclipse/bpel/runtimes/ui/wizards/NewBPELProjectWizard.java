@@ -16,7 +16,6 @@ import org.eclipse.bpel.runtimes.RuntimesPlugin;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.ui.INewWizard;
-import org.eclipse.wst.common.componentcore.datamodel.FacetProjectCreationDataModelProvider;
 import org.eclipse.wst.common.frameworks.datamodel.DataModelFactory;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.IFacetedProjectTemplate;
@@ -68,7 +67,7 @@ public class NewBPELProjectWizard extends NewProjectDataModelFacetWizard
 		 * BPEL projects at this stage. May have to reconsider at some point and
 		 * build a BPELFacetProjectCreationDataModelProvider.
 		 */
-		return DataModelFactory.createDataModel(new FacetProjectCreationDataModelProvider());
+		return DataModelFactory.createDataModel(new BPELFacetProjectCreationDataModelProvider());
 	}
 
 	/**
@@ -102,8 +101,17 @@ public class NewBPELProjectWizard extends NewProjectDataModelFacetWizard
 	 */
 	@Override
 	protected IWizardPage createFirstPage() {
+		
 		return new NewBPELProjectWizardPage1(model, "newBPELProject"); // $NON-NLS-1$
 	}
+
+    public IWizardPage getNextPage( final IWizardPage page ){
+    	if(page instanceof NewBPELProjectWizardPage1){
+    		return null;
+    	}
+    	return super.getNextPage(page);
+    }
+
 	
 
 }

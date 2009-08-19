@@ -13,6 +13,11 @@ package org.eclipse.bpel.runtimes.ui.wizards;
 import org.eclipse.bpel.runtimes.IBPELModuleFacetConstants;
 import org.eclipse.bpel.runtimes.IRuntimesUIConstants;
 import org.eclipse.bpel.runtimes.RuntimesPlugin;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.web.ui.internal.wizards.DataModelFacetCreationWizardPage;
 
@@ -38,7 +43,18 @@ public class NewBPELProjectWizardPage1 extends DataModelFacetCreationWizardPage 
 	}
 
 	protected String getModuleTypeID() {
-		return IBPELModuleFacetConstants.BPEL20_PROJECT_FACET;
+		return "";//IBPELModuleFacetConstants.BPEL20_PROJECT_FACET;
 	}
 	
+	protected Composite createTopLevelComposite(Composite parent) {
+		Composite top = new Composite(parent, SWT.NONE);
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(top, getInfopopID());
+		top.setLayout(new GridLayout());
+		top.setLayoutData(new GridData(GridData.FILL_BOTH));
+		createProjectGroup(top);
+//		createServerTargetComposite(top);
+//		createPrimaryFacetComposite(top);
+//        createPresetPanel(top);
+        return top;
+	}
 }
