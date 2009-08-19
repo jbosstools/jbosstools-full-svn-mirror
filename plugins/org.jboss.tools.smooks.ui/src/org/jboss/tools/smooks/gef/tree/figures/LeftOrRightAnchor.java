@@ -7,6 +7,8 @@ import org.eclipse.draw2d.geometry.Point;
 public class LeftOrRightAnchor extends ChopboxAnchor {
 	
 	
+	private boolean isLeft;
+
 	public LeftOrRightAnchor(IFigure owner) {
 		super(owner);
 	}
@@ -28,8 +30,8 @@ public class LeftOrRightAnchor extends ChopboxAnchor {
 		p = getOwner().getBounds().getCenter();
 		getOwner().translateToAbsolute(p);
 		Point referencePoint = reference;
-		boolean isLeft = false;
-		if(referencePoint.x > p.x){
+		isLeft = false;
+		if(referencePoint.x > (p.x + getOwner().getBounds().width / 2)){
 			isLeft = false;
 		}else{
 			isLeft = true;
@@ -45,5 +47,11 @@ public class LeftOrRightAnchor extends ChopboxAnchor {
 		getOwner().translateToAbsolute(p);
 		return p;
 	}
+
+	public boolean isLeft() {
+		return isLeft;
+	}
+	
+	
 }
 
