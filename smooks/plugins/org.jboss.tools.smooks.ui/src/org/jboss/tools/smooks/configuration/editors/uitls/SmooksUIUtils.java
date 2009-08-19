@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -138,6 +139,8 @@ import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoo
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.graphics.ext.util.GraphResourceFactoryImpl;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
+import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
+import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
@@ -2378,6 +2381,36 @@ public class SmooksUIUtils {
 			}
 		}
 		return actions;
+	}
+	
+	public static boolean isRelatedConnectionFeature(EStructuralFeature feature){
+		if(feature == JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT){
+			return true;
+		}
+		if(feature == JavabeanPackage.Literals.VALUE_TYPE__DATA){
+			return true;
+		}
+		if(feature == JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT){
+			return true;
+		}
+		if(feature == JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT){
+			return true;
+		}
+		
+		if(feature == Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT){
+			return true;
+		}
+		if(feature == Javabean12Package.Literals.VALUE_TYPE__DATA){
+			return true;
+		}
+		if(feature == Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT){
+			return true;
+		}
+		if(feature == Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT){
+			return true;
+		}
+		
+		return false;
 	}
 
 }

@@ -94,7 +94,7 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode {
 		return children;
 	}
 
-	protected void disconnectAllConnections(AbstractSmooksGraphicalModel node) {
+	public static void disconnectAllConnections(AbstractSmooksGraphicalModel node) {
 		List<TreeNodeConnection> sourceConnections = node.getSourceConnections();
 		List<TreeNodeConnection> targetConnections = node.getTargetConnections();
 		List<TreeNodeConnection> tempSourceConnections = new ArrayList<TreeNodeConnection>(sourceConnections);
