@@ -314,6 +314,8 @@ public class DocTypeUtil {
 							new NullProgressMonitor());
 				}
 			}
+			bufferManager.disconnect(location, LocationKind.LOCATION,
+					new NullProgressMonitor());
 		} catch (CoreException e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
@@ -345,28 +347,27 @@ public class DocTypeUtil {
 		document = getDocument(initFile);
 		if (document != null) {
 			// for each tag's name
-			for (String tag : urlTags) {
-				NodeList list = document.getElementsByTagName(tag);
-				for (int i = 0; i < list.getLength(); i++) {
-					Element element = (Element) list.item(i);
-					// for each attribute's name
-					for (String attributeName : urlAttributes) {
-						if (element.hasAttribute(attributeName)) {
-							Attr attr = element.getAttributeNode(attributeName);
-							try {
-								URI uri = new URI(attr.getValue().replace('\\', '/'));
-								if (!uri.isAbsolute()) {
-									// corrected path
-									attr.setValue(Constants.FILE_PREFIX + initFile.getParent()
-											+ File.separator + attr.getValue());
-								}
-							} catch (URISyntaxException e) {
-								VpePlugin.getPluginLog().logError(e.getMessage());
-							}
-						}
-					}
-				}
-			}
+			//commented by Maksim Areshkau as fix for https://jira.jboss.org/jira/browse/JBIDE-4772
+			//we not needed to correct attributes for styles which specified in init.html file.
+//			for (String tag : urlTags) {
+//				NodeList list = document.getElementsByTagName(tag);
+//				for (int i = 0; i < list.getLength(); i++) {
+//					Element element = (Element) list.item(i);
+//					// for each attribute's name
+//					for (String attributeName : urlAttributes) {
+//						if (element.hasAttribute(attributeName)) {
+//							Attr attr = element.getAttributeNode(attributeName);
+//								//here we make absolute path in attributes, added by Maksim Areshkau
+//								if (attr.getValue()!=null && !attr.getValue().startsWith(Constants.FILE_PREFIX ) ) {
+//									// corrected path
+//									attr.setValue(Constants.FILE_PREFIX + initFile.getParent()
+//											+ File.separator + attr.getValue());
+//								}
+//
+//						}
+//					}
+//				}
+//			}
 			result = document.getSource();
 		}
 		} finally {
