@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -27,10 +29,11 @@ public class CSSReferenceWizardPage extends ReferenceWizardPage {
 	public CSSReferenceWizardPage(String pageName, String title,
 			ImageDescriptor titleImage, Object fileLocation) {
 		super(pageName, title, titleImage, fileLocation);
-	}
-
-	public CSSReferenceWizardPage(String pageName) {
-		super(pageName);
+		if (fileLocation instanceof IFile) {
+			browseDialogFilterPath = ((IFile)fileLocation).getProject().getLocation().toString(); 
+		} else if (fileLocation instanceof IPath) {
+			browseDialogFilterPath = ((IPath)fileLocation).toString();
+		}
 	}
 
 	public void createControl(Composite parent) {
@@ -71,7 +74,7 @@ public class CSSReferenceWizardPage extends ReferenceWizardPage {
 				/*
 				 * Add filter path
 				 */
-				if ((null != browseDialogFilterPath) && (new File(browseDialogFilterPath).exists()) ){
+				if (null != browseDialogFilterPath) {
 					dialog.setFilterPath(browseDialogFilterPath);
 				}
 				dialog.setFilterExtensions(FILTER_EXTENSIONS);
@@ -79,8 +82,10 @@ public class CSSReferenceWizardPage extends ReferenceWizardPage {
 				String newPath = dialog.open();
 				if (newPath != null) {
 					newPath = newPath.trim();
-					browseDialogFilterPath = newPath; 
-					cssName.setText(browseDialogFilterPath);
+					cssName.setText(newPath);
+					if (new File(newPath).exists()) {
+						browseDialogFilterPath = newPath; 
+					}
 				}
 			}
 		});
