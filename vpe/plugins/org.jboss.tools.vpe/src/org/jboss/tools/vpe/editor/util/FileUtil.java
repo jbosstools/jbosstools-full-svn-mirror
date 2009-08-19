@@ -95,14 +95,18 @@ public class FileUtil {
 				//		.getWebArtifactEditForRead(includeFile.getProject());
 				IVirtualComponent com = ComponentCore
 						.createComponent(includeFile.getProject());
-				if (com == null) {
-					return null;
+				if (com != null) {
+					IVirtualFolder webRootFolder = com.getRootFolder().getFolder(
+							new Path("/")); //$NON-NLS-1$
+					IContainer folder = webRootFolder.getUnderlyingFolder();
+					IPath path = folder.getFullPath().append(fileName);
+					file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);										
+				} else {
+					/* Yahor Radtsevich (yradtsevich):
+					 * Fix of JBIDE-4416: assume that the parent directory
+					 * of the opened file is the web-root directory */
+					file = resolveRelatedPath(includeFile, fileName);
 				}
-				IVirtualFolder webRootFolder = com.getRootFolder().getFolder(
-						new Path("/")); //$NON-NLS-1$
-				IContainer folder = webRootFolder.getUnderlyingFolder();
-				IPath path = folder.getFullPath().append(fileName);
-				file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 			}
 		} else {
 			ResourceReference[] resources = RelativeFolderReferenceList
@@ -114,14 +118,23 @@ public class FileUtil {
 				return ResourcesPlugin.getWorkspace().getRoot()
 						.getFileForLocation(path);
 			} else {
-				IPath currentFolder = includeFile.getParent().getFullPath();
-				IPath path = currentFolder.append(fileName);
-				file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+				file = resolveRelatedPath(includeFile, fileName);
 			}
 		}
 		return file;
 	}
-	
+
+	/**
+	 * Appends {@code relatedFilePath} to the parent directory of
+	 * {@code baseFile}.
+	 */
+	private static IFile resolveRelatedPath(IFile baseFile,
+			String relatedFilePath) {
+		IPath currentFolder = baseFile.getParent().getFullPath();
+		IPath path = currentFolder.append(relatedFilePath);
+		return ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+	}
+
 	/**
 	 * open editor
 	 * @param file

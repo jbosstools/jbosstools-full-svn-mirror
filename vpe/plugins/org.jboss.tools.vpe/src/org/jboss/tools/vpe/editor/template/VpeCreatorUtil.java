@@ -24,6 +24,7 @@ import org.eclipse.wst.sse.core.internal.provisional.text.IStructuredDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.editor.VpeIncludeInfo;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.custom.VpeCustomStringStorage;
 import org.jboss.tools.vpe.editor.util.FileUtil;
@@ -130,12 +131,14 @@ public class VpeCreatorUtil {
 		IEditorInput input = pageContext.getEditPart().getEditorInput();
 		IFile file = null;
 
-		if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null 
-				|| !(pageContext.getVisualBuilder().getCurrentIncludeInfo().getStorage() instanceof IFile)) {
+		VpeIncludeInfo currentIncludeInfo
+				= pageContext.getVisualBuilder().getCurrentIncludeInfo();
+		if(currentIncludeInfo==null 
+				|| !(currentIncludeInfo.getStorage() instanceof IFile)) {
 			file = FileUtil.getFile(input, fileName);
 		} else {
 			IFile includedFile = 
-				(IFile) pageContext.getVisualBuilder().getCurrentIncludeInfo().getStorage();
+				(IFile) currentIncludeInfo.getStorage();
 			file = FileUtil.getFile(fileName, includedFile);
 		}
 		
