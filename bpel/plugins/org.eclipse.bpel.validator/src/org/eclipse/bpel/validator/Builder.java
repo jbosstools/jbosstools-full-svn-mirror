@@ -4,10 +4,13 @@ package org.eclipse.bpel.validator;
  * Java JDK dependencies 
  */
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.bpel.model.Import;
 import org.eclipse.bpel.model.Process;
 import org.eclipse.bpel.model.resource.BPELResourceSetImpl;
 import org.eclipse.bpel.validator.factory.AdapterFactory;
@@ -16,19 +19,23 @@ import org.eclipse.bpel.validator.model.INode;
 import org.eclipse.bpel.validator.model.IProblem;
 import org.eclipse.bpel.validator.model.Messages;
 import org.eclipse.bpel.validator.model.Runner;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdapterManager;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.wst.wsdl.WSDLElement;
 import org.w3c.dom.Element;
 
@@ -142,6 +149,7 @@ public class Builder extends IncrementalProjectBuilder {
 				continue;
 			}
 			
+			fResourceSet.resourceChanged((IFile)resource);
 			validate ( resource, monitor );					
 		}		
 	}
@@ -152,9 +160,18 @@ public class Builder extends IncrementalProjectBuilder {
 	 */
 	@Override
 	protected void clean (IProgressMonitor monitor) throws CoreException {
-		
+		removeProblemsAndTasksFor(getProject());
 	}
 
+	public static void removeProblemsAndTasksFor(IResource resource) {
+		try {
+			if (resource != null && resource.exists()) {
+				resource.deleteMarkers(IBPELMarker.ID, false, IResource.DEPTH_INFINITE);
+			}
+		} catch (CoreException e) {
+			// assume there were no problems
+		}
+	}
 	/**
 	 * Validate the resource using the monitor passed.
 	 * 
@@ -182,14 +199,72 @@ public class Builder extends IncrementalProjectBuilder {
 			 
 			// TODO: This should be a better check
 			if ( file.getName().endsWith(".bpel")) {
-				file.deleteMarkers(IBPELMarker.ID, false,  IResource.DEPTH_ZERO);
+				file.deleteMarkers(IBPELMarker.ID, true,  IResource.DEPTH_INFINITE);
+				deleteMarkersInReferencialResources(file);
 				makeMarkers ( validate (  file, monitor  ) );	
 			} 
 			break;
+			
+		case IResource.PROJECT:
+			for(IFile bpelFile : getBPELFilesByProject((IProject)resource)){
+				p("File Resource : " + bpelFile.getName() );
+
+				bpelFile.deleteMarkers(IBPELMarker.ID, true,  IResource.DEPTH_INFINITE);
+				deleteMarkersInReferencialResources(bpelFile);
+				makeMarkers ( validate (  bpelFile, monitor  ) );
+			}
 		}
+		
+			
+	}
+	
+	private List<IFile> getBPELFilesByProject(IProject project){
+		
+		final List<IFile> bpelFolders = new ArrayList<IFile>();
+		IResourceVisitor bpelFolderFinder = new IResourceVisitor() {
+			
+			public boolean visit(IResource resource) throws CoreException {
+				if( resource.getType() == IResource.FILE){
+					if("bpel".equals(resource.getFileExtension())){
+						bpelFolders.add((IFile)resource);
+						return false;
+					}
+				}
+				return true;
+			}
+		};
+		try {
+			project.accept(bpelFolderFinder);
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+		
+		return bpelFolders;
+	}
+	
+	private void deleteMarkersInReferencialResources(IFile bpelFile) throws CoreException{
+		
+		fResourceSet.resourceChanged(bpelFile);
+		fReader.read( bpelFile, fResourceSet );
+		Process process = fReader.getProcess();
+		
+		p("Delete markers");
+		
+		IContainer container = bpelFile.getParent();
+		for(Import impt : process.getImports()){
+			String fileLocation = impt.getLocation();
+			IFile importedFile = container.getFile(new Path(fileLocation));
+			if(importedFile != null && importedFile.exists()){
+				importedFile.deleteMarkers(IBPELMarker.ID, false,  IResource.DEPTH_ZERO);
+			}
+		}
+		
 	}
 	
 	
+	public void clearCach(){
+		fResourceSet.getResources().clear();
+	}
 	/**
 	 * @param file
 	 * @param monitor
@@ -203,7 +278,7 @@ public class Builder extends IncrementalProjectBuilder {
 		p("Validating BPEL Resource : " + file.getName() );
 				
 		// Step 1. Read the BPEL process using the Model API.
-				
+		
 		fResourceSet.resourceChanged(file);
 		fReader.read( file, fResourceSet );
 		Process process = fReader.getProcess();
@@ -274,7 +349,6 @@ public class Builder extends IncrementalProjectBuilder {
 				Element el = wsdle.getElement();
 				if (el != null) {
 //					System.out.println(el.getOwnerDocument().getDocumentURI() + " " + el.getLocalName() + "----" + obj);
-					
 					el.setUserData("emf.model", obj, null); //$NON-NLS-1$
 				}
 			}

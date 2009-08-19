@@ -277,7 +277,7 @@ public class CValidator extends Validator {
 	 * @param toNode
 	 */
 	public void compatibleCopyCheck ( INode fromNode, INode toNode ) {
-		
+		int i =0;
 		INode fromTypeNode = getValue(fromNode,"type",null);
 		INode toTypeNode = getValue(toNode,"type",null);
 		

@@ -161,7 +161,7 @@ public class XPathVisitor  {
 		if (obj instanceof Number) {
 			mContext.push(  ((Number)obj).doubleValue() * (-1) );
 		} else {
-			mContext.push(0.0);
+			mContext.push(obj);
 		}
 	}
 

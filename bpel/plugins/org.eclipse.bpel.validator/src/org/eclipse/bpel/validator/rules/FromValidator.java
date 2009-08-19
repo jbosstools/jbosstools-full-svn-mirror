@@ -421,7 +421,6 @@ public class FromValidator extends CValidator {
 		sa = 1000
 	)	
 	public void rule_CheckExpressionVariant_50 () {
-		
 		// not this variant.
 		if (fVariableNode != null || 
 		    fPropertyNode != null || 

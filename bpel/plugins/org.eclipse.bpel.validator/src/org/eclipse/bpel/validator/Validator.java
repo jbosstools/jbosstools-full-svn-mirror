@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.bpel.validator.model.IProblem;
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IAdapterManager;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.wst.validation.internal.core.ValidationException;
+import org.eclipse.wst.validation.internal.operations.WorkbenchReporter;
 import org.eclipse.wst.validation.internal.provisional.core.IMessage;
 import org.eclipse.wst.validation.internal.provisional.core.IReporter;
 import org.eclipse.wst.validation.internal.provisional.core.IValidationContext;
@@ -63,7 +64,6 @@ public class Validator implements IValidator {
 	 * @see org.eclipse.wst.validation.internal.provisional.core.IValidator#cleanup(org.eclipse.wst.validation.internal.provisional.core.IReporter)
 	 */
 	public void cleanup (IReporter reporter) {
-		 // p("Doing cleanup ...");
 	}
 
 	/**
@@ -76,17 +76,11 @@ public class Validator implements IValidator {
 	public void validate (IValidationContext helper, IReporter reporter)
 			throws ValidationException {
 
-		reporter.removeAllMessages(this);
 		
 		String s[] = helper.getURIs();
 		
 		if (s.length < 1) {
-			if(helper instanceof ValidatorHelper){
-				s = getURIsByProject(((ValidatorHelper)helper).getProject());
-			}
-			else{
-				return ;
-			}
+			return ;
 		}		
 				
 		for (String f : s) {	
@@ -97,6 +91,10 @@ public class Validator implements IValidator {
 				p("File " + f + " does not exist and cannot be validated.");
 				continue ;
 			}
+			
+			//because the validate will validate its referenced artefacts, if those referenced 
+			//file was changed, clear the catch to make sure those referenced file to be reloaded.
+			fBuilder.clearCach();
 			
 			if (mechanism == 1) {
 				// delegate all the "builder"
@@ -119,31 +117,6 @@ public class Validator implements IValidator {
 		}
 	}
 
-	private String[] getURIsByProject(IProject project){
-		
-		final List<String> bpelFolders = new ArrayList<String>();
-		IResourceVisitor bpelFolderFinder = new IResourceVisitor() {
-			
-			public boolean visit(IResource resource) throws CoreException {
-				if( resource.getType() == IResource.FILE){
-					if("bpel".equals(resource.getFileExtension())){
-						bpelFolders.add(resource.getFullPath().toOSString());
-						return false;
-					}
-				}
-				return true;
-			}
-		};
-		try {
-			project.accept(bpelFolderFinder);
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
-		
-		String[] URIs = new String[bpelFolders.size()];
-		return bpelFolders.toArray(URIs);
-	}
-	
 	
 	void p(String msg) {
 		if (bDebug) {
