@@ -85,11 +85,6 @@ public class TaglibReferenceWizardPage extends ReferenceWizardPage {
 		 * Dialog's control should be initialized.
 		 */
 		setControl(pageControl);
-		/*
-		 * Validate page right after creation.
-		 */
-		validatePage();
-
 	}
 
 	@Override
