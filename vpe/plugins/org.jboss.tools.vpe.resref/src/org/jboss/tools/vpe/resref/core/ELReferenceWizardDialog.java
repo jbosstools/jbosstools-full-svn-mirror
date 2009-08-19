@@ -8,7 +8,8 @@ public class ELReferenceWizardDialog extends
 
 	public ELReferenceWizardDialog(Shell parentShell, Object fileLocation,
 			ResourceReference resref, ResourceReference[] resrefList) {
-		super(parentShell, new ELReferenceWizard(fileLocation, resrefList),
+		super(parentShell, new ELReferenceWizard(fileLocation,
+				Messages.VRD_ADD_EL_PREFERENCE, resrefList),
 				resref);
 	}
 	

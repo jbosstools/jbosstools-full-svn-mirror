@@ -8,7 +8,8 @@ public class CSSReferenceWizardDialog extends
 	
 	public CSSReferenceWizardDialog(Shell parentShell, Object fileLocation,
 			ResourceReference resref) {
-		super(parentShell, new CSSReferenceWizard(fileLocation), resref);
+		super(parentShell, new CSSReferenceWizard(fileLocation,
+				Messages.VRD_ADD_CSS_PREFERENCE), resref);
 	}
 
 }

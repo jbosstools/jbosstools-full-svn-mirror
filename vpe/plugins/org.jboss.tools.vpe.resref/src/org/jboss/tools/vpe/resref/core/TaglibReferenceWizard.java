@@ -4,8 +4,8 @@ public class TaglibReferenceWizard extends ReferenceWizard {
 
 	
 	
-	public TaglibReferenceWizard(Object fileLocation) {
-		super(fileLocation);
+	public TaglibReferenceWizard(Object fileLocation, String windowTitle) {
+		super(fileLocation, windowTitle);
 	}
 
 	@Override

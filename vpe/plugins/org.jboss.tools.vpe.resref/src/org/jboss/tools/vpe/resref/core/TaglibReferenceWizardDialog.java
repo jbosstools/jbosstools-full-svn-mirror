@@ -8,7 +8,8 @@ public class TaglibReferenceWizardDialog extends
 	
 	public TaglibReferenceWizardDialog(Shell parentShell, Object fileLocation,
 			ResourceReference resref) {
-		super(parentShell, new TaglibReferenceWizard(fileLocation), resref);
+		super(parentShell, new TaglibReferenceWizard(fileLocation,
+				Messages.VRD_ADD_TAGLIB_PREFERENCE), resref);
 	}
 	
 }

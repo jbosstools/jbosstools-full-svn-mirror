@@ -15,10 +15,11 @@ public abstract class ReferenceWizard extends Wizard {
 	 */
 	ReferenceWizardPage page = null;
 	
-	public ReferenceWizard(Object fileLocation) {
+	public ReferenceWizard(Object fileLocation, String windowTitle) {
 		super();
 		this.fileLocation = fileLocation;
 		createPage();
+		setWindowTitle(windowTitle);
 	}
 
 	public void createPageControls(Composite pageContainer, Object fileLocation) {

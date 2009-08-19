@@ -2,8 +2,8 @@ package org.jboss.tools.vpe.resref.core;
 
 public class CSSReferenceWizard extends ReferenceWizard {
 
-	public CSSReferenceWizard(Object fileLocation) {
-		super(fileLocation);
+	public CSSReferenceWizard(Object fileLocation, String windowTitle) {
+		super(fileLocation, windowTitle);
 	}
 	
 	@Override

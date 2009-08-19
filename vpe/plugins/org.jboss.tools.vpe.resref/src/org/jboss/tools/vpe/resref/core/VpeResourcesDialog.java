@@ -5,17 +5,12 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.wizard.IWizard;
-import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -26,8 +21,6 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.jboss.tools.common.model.ui.ModelUIPlugin;
 import org.jboss.tools.common.model.ui.action.CommandBar;
-import org.jboss.tools.common.model.ui.action.CommandBarLayout;
-import org.jboss.tools.common.model.ui.wizards.query.AbstractQueryWizardView;
 import org.jboss.tools.vpe.resref.Activator;
 import org.osgi.framework.Bundle;
 
@@ -48,7 +41,6 @@ public class VpeResourcesDialog extends TitleAreaDialog {
 
 	public VpeResourcesDialog(Shell parentShell, Object fileLocation) {
 		super(parentShell);
-//		setShellStyle(SWT.RESIZE);
 		setHelpAvailable(false);
 		this.fileLocation = fileLocation;
 		init(fileLocation);
@@ -67,9 +59,8 @@ public class VpeResourcesDialog extends TitleAreaDialog {
     	relFolder.setObject(fileLocation);
 	}
 
-//	@Override
+	@Override
 	protected Control createDialogArea(Composite parent) {
-//		super.createDialogArea(parent);
 		
 		Bundle bundle = Platform.getBundle(ModelUIPlugin.PLUGIN_ID);
 		URL url = null;

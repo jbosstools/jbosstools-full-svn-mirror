@@ -6,8 +6,9 @@ public class ELReferenceWizard extends ReferenceWizard {
 	
 	protected ResourceReference[] resrefList = null;
 	
-	public ELReferenceWizard(Object fileLocation, ResourceReference[] resrefList) {
-		super(fileLocation);
+	public ELReferenceWizard(Object fileLocation, String windowTitle,
+			ResourceReference[] resrefList) {
+		super(fileLocation, windowTitle);
 		this.resrefList = resrefList;
 	}
 
