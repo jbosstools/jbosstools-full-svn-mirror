@@ -77,6 +77,8 @@ public class ELReferenceWizardPage extends ReferenceWizardPage {
 		gd = new GridData(SWT.FILL, SWT.NONE, true, false);
 		elValue.setLayoutData(gd);
 		elValue.setText(elValueStr);
+		elValue.addListener(SWT.Selection, this);
+		elValue.addListener(SWT.Modify, this);
 		
 		/*
 		 * Dialog's control should be initialized.
