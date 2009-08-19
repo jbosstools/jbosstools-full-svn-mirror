@@ -371,7 +371,11 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		}
 		for (Iterator<?> iterator = this.sourceSynchronizeListener.iterator(); iterator.hasNext();) {
 			ISourceSynchronizeListener l = (ISourceSynchronizeListener) iterator.next();
+			try{
 			l.sourceChange(smooksModel);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 	}
 

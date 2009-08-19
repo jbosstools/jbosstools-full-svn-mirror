@@ -105,7 +105,9 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 	}
 
 	public void setSmooksModel(Object model) {
-		masterDetailBlock.setSmooksModel(model);
+		if (masterDetailBlock != null) {
+			masterDetailBlock.setSmooksModel(model);
+		}
 	}
 
 	protected void showInputDataWizard() {
