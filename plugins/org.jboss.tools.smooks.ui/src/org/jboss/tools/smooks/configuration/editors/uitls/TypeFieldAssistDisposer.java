@@ -12,8 +12,8 @@ package org.jboss.tools.smooks.configuration.editors.uitls;
 
 import org.eclipse.jface.fieldassist.IContentProposalListener;
 import org.eclipse.jface.fieldassist.IContentProposalListener2;
-import org.eclipse.pde.internal.ui.editor.contentassist.TypeContentProposalListener;
 import org.eclipse.ui.fieldassist.ContentAssistCommandAdapter;
+import org.jboss.tools.smooks.contentassist.TypeContentProposalListener;
 
 /**
  * @author Dart (dpeng@redhat.com)

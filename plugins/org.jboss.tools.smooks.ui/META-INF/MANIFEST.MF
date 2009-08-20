@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources,
  org.eclipse.ui.editors,
  org.eclipse.ui.ide,
- org.jboss.tools.smooks.core;bundle-version="1.0.0",
+ org.jboss.tools.smooks.core,
  org.eclipse.ui.forms,
  org.eclipse.wst.sse.core,
  org.eclipse.wst.sse.ui,
@@ -20,13 +20,13 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.core,
  org.eclipse.jdt.ui,
  org.eclipse.wst.validation,
- org.eclipse.pde.ui,
  org.eclipse.xsd,
  org.eclipse.wst.wsdl,
  org.apache.xerces,
  javax.wsdl,
- org.jboss.tools.smooks.runtime;bundle-version="1.1.2",
- org.eclipse.gef
+ org.jboss.tools.smooks.runtime,
+ org.eclipse.gef,
+ org.eclipse.jdt.launching
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

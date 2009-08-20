@@ -37,16 +37,16 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 	}
 
 	public IFigure createFigure() {
-//		TreeNodeConnection model = (TreeNodeConnection) getModel();
-//		AbstractSmooksGraphicalModel sourceModel = model.getSourceNode();
-//		AbstractSmooksGraphicalModel targetModel = model.getTargetNode();
-//		PolylineConnection connection1 = new PolylineConnection() {
-//			@Override
-//			public void paintFigure(Graphics graphics) {
-//				graphics.setAlpha(alpha);
-//				super.paintFigure(graphics);
-//			}
-//		};
+		// TreeNodeConnection model = (TreeNodeConnection) getModel();
+		// AbstractSmooksGraphicalModel sourceModel = model.getSourceNode();
+		// AbstractSmooksGraphicalModel targetModel = model.getTargetNode();
+		// PolylineConnection connection1 = new PolylineConnection() {
+		// @Override
+		// public void paintFigure(Graphics graphics) {
+		// graphics.setAlpha(alpha);
+		// super.paintFigure(graphics);
+		// }
+		// };
 		// if (sourceModel instanceof TreeContainerModel || targetModel
 		// instanceof TreeContainerModel) {
 		// // connection1.setConnectionRouter(new ManhattanConnectionRouter());
@@ -183,7 +183,7 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 					pointList.addPoint(p3);
 					graphics.fillPolygon(pointList);
 					graphics.drawPolygon(pointList);
-				}else{
+				} else {
 					Point p = this.getBounds().getTopRight();
 					Point p2 = this.getBounds().getBottomRight();
 					Point p3 = this.getBounds().getTopLeft();
@@ -200,8 +200,8 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 			}
 
 		};
-		targetFlagFigure.setSize(5, 5);
-		sourceFlagFigure.setSize(5, 5);
+		targetFlagFigure.setSize(7, 7);
+		sourceFlagFigure.setSize(7, 7);
 		ConnectionLocator targetLocator = new ConnectionLocator(connection, ConnectionLocator.TARGET);
 		connection.add(targetFlagFigure, targetLocator);
 		ConnectionLocator sourceLocator = new ConnectionLocator(connection, ConnectionLocator.SOURCE);
