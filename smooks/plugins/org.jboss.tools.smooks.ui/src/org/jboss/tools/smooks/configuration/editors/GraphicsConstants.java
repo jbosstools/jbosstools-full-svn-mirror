@@ -8,7 +8,9 @@ public final class GraphicsConstants {
 	
 	public static final String IMAGE_JAVA_ATTRIBUTE = "icons/full/obj16/att_obj.gif";
 	
-	public static final String IMAGE_JAVA_OBJECT = "java_object";
+	public static final String IMAGE_JAVA_OBJECT = "icons/full/obj16/class_obj.gif";
+	
+	public static final String IMAGE_PACKAGE_OBJECT = "icons/full/obj16/package_obj.gif";
 	
 	public static final String IMAGE_OVR_ERROR = "icons/full/ovr16/error_co.gif";
 	

@@ -64,13 +64,11 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 	@Override
 	protected void initializeImageRegistry(ImageRegistry reg) {
 		super.initializeImageRegistry(reg);
-		reg.put(GraphicsConstants.JAVA_PROPERTY_ICON,
-				getImageDescriptor(GraphicsConstants.JAVA_PROPERTY_ICON_PATH));
-		
+		reg.put(GraphicsConstants.JAVA_PROPERTY_ICON, getImageDescriptor(GraphicsConstants.JAVA_PROPERTY_ICON_PATH));
+
 		reg.put(GraphicsConstants.IMAGE_UNKNOWN_OBJ, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_UNKNOWN_OBJ));
 
-		
 		// regist ovr images
 		reg.put(GraphicsConstants.IMAGE_OVR_ERROR, getImageDescriptor(GraphicsConstants.IMAGE_OVR_ERROR));
 		reg.put(GraphicsConstants.IMAGE_OVR_WARING, getImageDescriptor(GraphicsConstants.IMAGE_OVR_WARING));
@@ -90,7 +88,9 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 		reg.put(GraphicsConstants.IMAGE_CHECKBOX_UNCHECK, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_CHECKBOX_UNCHECK));
 		reg.put(GraphicsConstants.IMAGE_JAVA_OBJECT, imageDescriptorFromPlugin(PLUGIN_ID,
-				"icons/full/obj16/class_obj.gif"));
+				GraphicsConstants.IMAGE_JAVA_OBJECT));
+		reg.put(GraphicsConstants.IMAGE_PACKAGE_OBJECT, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_PACKAGE_OBJECT));
 		reg.put(GraphicsConstants.IMAGE_JAVA_ARRAY, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_JAVA_ARRAY));
 		reg.put(GraphicsConstants.IMAGE_JAVA_COLLECTION, imageDescriptorFromPlugin(PLUGIN_ID,
@@ -98,14 +98,12 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 		reg.put(GraphicsConstants.IMAGE_JAVA_FILE, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_JAVA_FILE));
 
-
 		// for the xml2xml line
-		reg.put(GraphicsConstants.IMAGE_XML_FILE, imageDescriptorFromPlugin(PLUGIN_ID,
-				GraphicsConstants.IMAGE_XML_FILE));
-		
-		reg.put(GraphicsConstants.IMAGE_XSD_FILE, imageDescriptorFromPlugin(PLUGIN_ID,
-				GraphicsConstants.IMAGE_XSD_FILE));
+		reg.put(GraphicsConstants.IMAGE_XML_FILE,
+				imageDescriptorFromPlugin(PLUGIN_ID, GraphicsConstants.IMAGE_XML_FILE));
 
+		reg.put(GraphicsConstants.IMAGE_XSD_FILE,
+				imageDescriptorFromPlugin(PLUGIN_ID, GraphicsConstants.IMAGE_XSD_FILE));
 
 		reg.put(GraphicsConstants.IMAGE_BINDING_LINE, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_BINDING_LINE));

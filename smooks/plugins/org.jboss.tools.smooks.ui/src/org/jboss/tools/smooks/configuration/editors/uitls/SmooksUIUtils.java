@@ -30,6 +30,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
@@ -47,9 +48,13 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.search.IJavaSearchConstants;
+import org.eclipse.jdt.core.search.IJavaSearchScope;
+import org.eclipse.jdt.core.search.SearchEngine;
+import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.ToolBarManager;
@@ -71,9 +76,6 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.pde.internal.ui.editor.contentassist.TypeContentProposalListener;
-import org.eclipse.pde.internal.ui.editor.contentassist.TypeContentProposalProvider;
-import org.eclipse.pde.internal.ui.editor.contentassist.TypeProposalLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -125,6 +127,9 @@ import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaMethodsSelectionDialog;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaPropertiesSelectionDialog;
+import org.jboss.tools.smooks.contentassist.TypeContentProposalListener;
+import org.jboss.tools.smooks.contentassist.TypeContentProposalProvider;
+import org.jboss.tools.smooks.contentassist.TypeProposalLabelProvider;
 import org.jboss.tools.smooks.core.SmooksCoreActivator;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
@@ -2412,5 +2417,39 @@ public class SmooksUIUtils {
 		
 		return false;
 	}
+	
+	public static IJavaSearchScope getSearchScope(IJavaProject project) {
+		return SearchEngine.createJavaSearchScope(getNonJRERoots(project));
+	}
+
+	public static IJavaSearchScope getSearchScope(IProject project) {
+		return getSearchScope(JavaCore.create(project));
+	}
+
+	public static IPackageFragmentRoot[] getNonJRERoots(IJavaProject project) {
+		ArrayList<Object> result = new ArrayList<Object>();
+		try {
+			IPackageFragmentRoot[] roots = project.getAllPackageFragmentRoots();
+			for (int i = 0; i < roots.length; i++) {
+				if (!isJRELibrary(roots[i])) {
+					result.add(roots[i]);
+				}
+			}
+		} catch (JavaModelException e) {
+		}
+		return (IPackageFragmentRoot[]) result.toArray(new IPackageFragmentRoot[result.size()]);
+	}
+
+	public static boolean isJRELibrary(IPackageFragmentRoot root) {
+		try {
+			IPath path = root.getRawClasspathEntry().getPath();
+			if (path.equals(new Path(JavaRuntime.JRE_CONTAINER)) || path.equals(new Path(JavaRuntime.JRELIB_VARIABLE))) {
+				return true;
+			}
+		} catch (JavaModelException e) {
+		}
+		return false;
+	}
+
 
 }
