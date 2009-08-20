@@ -12,10 +12,12 @@
 package org.jboss.tools.vpe.editor.util;
 
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.core.filebuffers.FileBuffers;
@@ -37,6 +39,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.wst.sse.core.internal.FileBufferModelManager;
+import org.eclipse.wst.sse.core.internal.model.ModelManagerImpl;
 import org.eclipse.wst.sse.core.internal.provisional.text.IStructuredDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocumentType;
@@ -236,10 +239,12 @@ public class DocTypeUtil {
 	 */
 	private static String getDoctype(File file) {
 		String docTypeValue = Constants.EMPTY;
-		IDOMDocument document= null;
+		IDOMModel domModel = null;
 		try {
-		document = getDocument(file);
-		if (document != null) {
+		
+			domModel = getModelForRead(file);
+		if (domModel != null && domModel.getDocument()!=null) {
+			IDOMDocument document = domModel.getDocument();
 			// find "component" element
 			Element componentElement = FaceletUtil
 					.findComponentElement(document.getDocumentElement());
@@ -277,8 +282,8 @@ public class DocTypeUtil {
 		}
 		}finally {
 			//added by Max Areshkau, we should always release document
-			if(document!=null) {
-				FileBufferModelManager.getInstance().releaseModel(document.getStructuredDocument());
+			if(domModel != null) {
+				domModel.releaseFromRead();
 			}
 		}
 		return (docTypeValue != null) ? docTypeValue.trim() : Constants.EMPTY;
@@ -293,7 +298,7 @@ public class DocTypeUtil {
 	 * @param file
 	 * @return
 	 */
-	static private IDOMDocument getDocument(File file) {
+	static private IDOMModel getModelForRead(File file) {
 
 		IDOMModel model = null;
 		ITextFileBufferManager bufferManager = FileBuffers
@@ -307,19 +312,17 @@ public class DocTypeUtil {
 			if (buffer != null) {
 				IDocument bufferDocument = buffer.getDocument();
 				if (bufferDocument instanceof IStructuredDocument) {
-					model = (IDOMModel) FileBufferModelManager.getInstance()
-							.getModel((IStructuredDocument) bufferDocument);
-				} else {
-					bufferManager.disconnect(location, LocationKind.IFILE,
-							new NullProgressMonitor());
-				}
+					model = (IDOMModel) ModelManagerImpl.getInstance().
+						getModelForRead((IStructuredDocument) bufferDocument);
+
+				} 
 			}
 			bufferManager.disconnect(location, LocationKind.LOCATION,
 					new NullProgressMonitor());
 		} catch (CoreException e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
-		return model==null?null:model.getDocument();
+		return model;
 	}
 
 	/**
@@ -337,44 +340,34 @@ public class DocTypeUtil {
 	/**
 	 * get content of initFile, corrected paths on a page
 	 * 
+	 * @author mareshkau
+	 * 
 	 * @param initFile
 	 * @return
 	 */
 	public static String getContentInitFile(File initFile) {
-		IDOMDocument document = null;
-		String result = Constants.EMPTY;
+		final String VPE_EDITOR_STYLES ="EditorOverride.css"; //$NON-NLS-1$
+		String result = ""; //$NON-NLS-1$
 		try {
-		document = getDocument(initFile);
-		if (document != null) {
-			// for each tag's name
-			//commented by Maksim Areshkau as fix for https://jira.jboss.org/jira/browse/JBIDE-4772
-			//we not needed to correct attributes for styles which specified in init.html file.
-//			for (String tag : urlTags) {
-//				NodeList list = document.getElementsByTagName(tag);
-//				for (int i = 0; i < list.getLength(); i++) {
-//					Element element = (Element) list.item(i);
-//					// for each attribute's name
-//					for (String attributeName : urlAttributes) {
-//						if (element.hasAttribute(attributeName)) {
-//							Attr attr = element.getAttributeNode(attributeName);
-//								//here we make absolute path in attributes, added by Maksim Areshkau
-//								if (attr.getValue()!=null && !attr.getValue().startsWith(Constants.FILE_PREFIX ) ) {
-//									// corrected path
-//									attr.setValue(Constants.FILE_PREFIX + initFile.getParent()
-//											+ File.separator + attr.getValue());
-//								}
-//
-//						}
-//					}
-//				}
-//			}
-			result = document.getSource();
-		}
-		} finally {
-			if(document!=null) {
-				FileBufferModelManager.getInstance().releaseModel(document.getStructuredDocument());
+			BufferedReader inReader = new BufferedReader(new FileReader(initFile));
+			try {
+				inReader = new BufferedReader(new FileReader(initFile));
+				String line = null;
+		        while (( line = inReader.readLine()) != null){
+		        	//Maksim Areshkau, here we correct path for internal vpe styles.
+		            if(line!=null && line.contains(VPE_EDITOR_STYLES)) {
+		            	line=line.replace(VPE_EDITOR_STYLES, Constants.FILE_PREFIX + initFile.getParent()
+										+ File.separator + VPE_EDITOR_STYLES);
+		            }
+		        	result+=line;
+		          }
+			} finally {
+				inReader.close();
 			}
-		}
+			
+		} catch (IOException  e) {
+			VpePlugin.reportProblem(e);
+		} 
 		return result;
 	}
 }
