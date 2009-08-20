@@ -1123,7 +1123,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			if (data == model) {
 				return treeNodeModel;
 			}
-			AbstractSmooksGraphicalModel m = findEDIGraphicalModel(model, treeNodeModel.getChildren());
+			AbstractSmooksGraphicalModel m = findEDIGraphicalModel(model, treeNodeModel.getChildrenWithoutDynamic());
 			if (m != null) {
 				return m;
 			}

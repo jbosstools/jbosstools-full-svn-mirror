@@ -26,8 +26,6 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.CommandStackEvent;
@@ -71,11 +69,9 @@ import org.jboss.tools.smooks.graphical.editors.model.InputDataRootModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.model.JavaBeanChildGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.JavaBeanGraphModel;
-import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
@@ -84,7 +80,14 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  * @author Dart
  * 
  */
-public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelectionChangedListener ,ISourceSynchronizeListener {
+public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelectionChangedListener,
+		ISourceSynchronizeListener {
+
+	public static final int EXECUTE_COMMAND = 0;
+
+	public static final int REDO_COMMAND = 1;
+
+	public static final int UNDO_COMMAND = 2;
 
 	private DefaultEditDomain editDomain = null;
 
@@ -95,6 +98,10 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	private SmooksResourceListType smooksResourceList;
 
 	private List<Object> inputDataList = null;
+
+	private GraphicalModelFactory graphicalModelFactory;
+
+	private ConnectionModelFactory connectionModelFactory;
 
 	public SmooksGraphicalEditorPart(ISmooksModelProvider provider) {
 		super();
@@ -114,16 +121,27 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 			public void commandStackChanged(EventObject event) {
 				final Command mostRecentCommand = ((org.eclipse.emf.common.command.CommandStack) event.getSource())
 						.getMostRecentCommand();
+				final EventObject fe = event;
 				getEditorSite().getShell().getDisplay().asyncExec(new Runnable() {
 					public void run() {
 						if (mostRecentCommand != null) {
 							Command rawCommand = mostRecentCommand;
+							int commandType = EXECUTE_COMMAND;
+							if (rawCommand == ((org.eclipse.emf.common.command.CommandStack) fe.getSource())
+									.getUndoCommand()) {
+								commandType = EXECUTE_COMMAND;
+							}
+							if (rawCommand == ((org.eclipse.emf.common.command.CommandStack) fe.getSource())
+									.getRedoCommand()) {
+								commandType = UNDO_COMMAND;
+							}
 							while (rawCommand instanceof CommandWrapper) {
 								rawCommand = ((CommandWrapper) rawCommand).getCommand();
 							}
 							if (rawCommand instanceof SetCommand || rawCommand instanceof AddCommand
 									|| rawCommand instanceof DeleteCommand) {
-								refershRecentAffectedModel(rawCommand, mostRecentCommand.getAffectedObjects());
+								refershRecentAffectedModel(rawCommand, mostRecentCommand.getAffectedObjects(),
+										commandType);
 							}
 						}
 					}
@@ -131,6 +149,36 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 				});
 			}
 		});
+	}
+
+	public ConnectionModelFactory getConnectionModelFactory() {
+		if (connectionModelFactory == null) {
+			connectionModelFactory = createConnectionModelFactory();
+		}
+		return connectionModelFactory;
+	}
+
+	private ConnectionModelFactory createConnectionModelFactory() {
+		return new ConnectionModelFactoryImpl();
+	}
+
+	public void setConnectionModelFactory(ConnectionModelFactory connectionModelFactory) {
+		this.connectionModelFactory = connectionModelFactory;
+	}
+
+	public GraphicalModelFactory getGraphicalModelFactory() {
+		if (graphicalModelFactory == null) {
+			graphicalModelFactory = createGraphicalModelFactory();
+		}
+		return graphicalModelFactory;
+	}
+
+	private GraphicalModelFactory createGraphicalModelFactory() {
+		return new GraphicalModelFactoryImpl();
+	}
+
+	public void setGraphicalModelFactory(GraphicalModelFactoryImpl graphicalModelFactory) {
+		this.graphicalModelFactory = graphicalModelFactory;
 	}
 
 	@Override
@@ -172,82 +220,112 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		}
 	}
 
-	protected void refershRecentAffectedModel(Command command, Collection<?> affectedObjects) {
+	protected void refershRecentAffectedModel(Command command, Collection<?> affectedObjects, int commandType) {
 		for (Iterator<?> iterator = affectedObjects.iterator(); iterator.hasNext();) {
 			Object object = (Object) iterator.next();
 			object = AdapterFactoryEditingDomain.unwrap(object);
-			if (object == this.smooksResourceList) {
-				if (command instanceof AddCommand) {
-					Collection<?> colletion = ((AddCommand) command).getCollection();
-					for (Iterator<?> iterator2 = colletion.iterator(); iterator2.hasNext();) {
-						Object childModel = (Object) iterator2.next();
-						childModel = AdapterFactoryEditingDomain.unwrap(childModel);
-						AbstractSmooksGraphicalModel graphModel = createGraphModel(childModel);
-						if (graphModel == null)
+			if (commandType == EXECUTE_COMMAND || commandType == REDO_COMMAND) {
+				if (object instanceof SmooksResourceListType) {
+					if (command instanceof AddCommand) {
+						Collection<?> colletion = ((AddCommand) command).getCollection();
+						for (Iterator<?> iterator2 = colletion.iterator(); iterator2.hasNext();) {
+							Object childModel = (Object) iterator2.next();
+							childModel = AdapterFactoryEditingDomain.unwrap(childModel);
+							AbstractSmooksGraphicalModel graphModel = createGraphModel(childModel);
+							if (graphModel == null)
+								continue;
+							root.addTreeNode(graphModel);
+							List<TreeNodeConnection> connections = createAllConnection(graphModel);
+							expandConnectedModels(connections);
+						}
+					}
+					if (command instanceof DeleteCommand) {
+						Collection<?> colletion = ((DeleteCommand) command).getCollection();
+						for (Iterator<?> iterator2 = colletion.iterator(); iterator2.hasNext();) {
+							Object childModel = (Object) iterator2.next();
+							childModel = AdapterFactoryEditingDomain.unwrap(childModel);
+							AbstractSmooksGraphicalModel graphModel = findGraphicalModel(childModel);
+							if (graphModel == null)
+								continue;
+							AbstractSmooksGraphicalModel.disconnectAllConnections(graphModel);
+							root.removeTreeNode(graphModel);
+						}
+					}
+				} else {
+					object = AdapterFactoryEditingDomain.unwrap(object);
+					AbstractSmooksGraphicalModel node = findGraphicalModel(object);
+					if (command instanceof SetCommand) {
+						if (node == null) {
 							continue;
-						List<TreeNodeConnection> connections = createAllConnection(graphModel);
-						expandConnectedModels(connections);
+						}
+						node.fireVisualChanged();
+						EStructuralFeature feature = ((SetCommand) command).getFeature();
+						if (SmooksUIUtils.isRelatedConnectionFeature(feature)) {
+							deleteRelatedConnection(node, feature, (SetCommand) command);
+							List<TreeNodeConnection> connections = createConnection(node);
+							node.fireConnectionChanged();
+							expandConnectedModels(connections);
+						}
+					}
+					if (command instanceof AddCommand) {
+						Object owner = ((AddCommand) command).getOwner();
+						owner = AdapterFactoryEditingDomain.unwrap(owner);
+						if (owner instanceof SmooksResourceListType) {
+							AbstractSmooksGraphicalModel graphModel = createGraphModel(object);
+							if (graphModel == null)
+								continue;
+							root.addTreeNode(graphModel);
+							List<TreeNodeConnection> connections = createAllConnection(graphModel);
+							expandConnectedModels(connections);
+						} else {
+							AbstractSmooksGraphicalModel ownerGraph = findGraphicalModel(owner);
+							if (ownerGraph != null) {
+								ownerGraph.fireChildrenChanged();
+							}
+						}
+						if (node == null) {
+							continue;
+						}
+						node.fireChildrenChanged();
+						node.fireConnectionChanged();
+					}
+					if (command instanceof DeleteCommand) {
+						Object owner = ((EObject) object).eContainer();
+						owner = AdapterFactoryEditingDomain.unwrap(owner);
+						AbstractSmooksGraphicalModel ownerGraph = findGraphicalModel(owner);
+						if (ownerGraph != null) {
+							ownerGraph.fireChildrenChanged();
+						}
 					}
 				}
-				if (command instanceof DeleteCommand) {
-					Collection<?> colletion = ((DeleteCommand) command).getCollection();
-					for (Iterator<?> iterator2 = colletion.iterator(); iterator2.hasNext();) {
-						Object childModel = (Object) iterator2.next();
-						childModel = AdapterFactoryEditingDomain.unwrap(childModel);
-						AbstractSmooksGraphicalModel graphModel = findGraphicalModel(childModel);
-						if (graphModel == null)
-							continue;
-						AbstractSmooksGraphicalModel.disconnectAllConnections(graphModel);
-						root.removeTreeNode(graphModel);
-					}
-				}
-			} else {
+				continue;
+			}
+
+			if (commandType == UNDO_COMMAND) {
 				object = AdapterFactoryEditingDomain.unwrap(object);
 				AbstractSmooksGraphicalModel node = findGraphicalModel(object);
-				if (node == null) {
-					if (command instanceof DeleteCommand || command instanceof AddCommand) {
-						Collection<?> cccc = null;
-						if (command instanceof DeleteCommand) {
-							cccc = ((DeleteCommand) command).getCollection();
-						}
-						if (command instanceof AddCommand) {
-							cccc = ((AddCommand) command).getCollection();
-						}
+				if (command instanceof AddCommand) {
+					if (object instanceof SmooksResourceListType) {
+						Collection<?> cccc = ((AddCommand) command).getCollection();
 						for (Iterator<?> iterator2 = cccc.iterator(); iterator2.hasNext();) {
 							Object object2 = (Object) iterator2.next();
 							object2 = AdapterFactoryEditingDomain.unwrap(object2);
-							if (object == object2) {
-								EObject owner = ((EObject) object).eContainer();
-								if (owner == this.smooksResourceList) {
-									object = AdapterFactoryEditingDomain.unwrap(object);
-									AbstractSmooksGraphicalModel graphModel = createGraphModel(object);
-									if (graphModel == null)
-										continue;
-									List<TreeNodeConnection> connections = createAllConnection(graphModel);
-									expandConnectedModels(connections);
-									if (graphModel instanceof IMoveableModel) {
-										String id = SmooksGraphUtil.generateFigureID(graphModel);
-										if (id != null) {
-											FigureType ft = SmooksModelUtils.findFigureType(smooksModelProvider
-													.getSmooksGraphicsExt().getGraph(), id);
-											try {
-												int x = Integer.parseInt(ft.getX());
-												int y = Integer.parseInt(ft.getY());
-												((IMoveableModel) graphModel).setLocation(new Point(x, y));
-											} catch (Throwable t) {
-												continue;
-											}
-										}
-									}
-								}
+							AbstractSmooksGraphicalModel gmodel = findGraphicalModel(object2);
+							if (gmodel != null) {
+								root.removeTreeNode(gmodel);
 								break;
 							}
 						}
 					} else {
-						continue;
+						if (node != null) {
+							node.fireChildrenChanged();
+						}
 					}
 				}
 				if (command instanceof SetCommand) {
+					if (node == null) {
+						continue;
+					}
 					node.fireVisualChanged();
 					EStructuralFeature feature = ((SetCommand) command).getFeature();
 					if (SmooksUIUtils.isRelatedConnectionFeature(feature)) {
@@ -257,26 +335,54 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 						expandConnectedModels(connections);
 					}
 				}
-				if (command instanceof AddCommand) {
-					Object owner = ((AddCommand) command).getOwner();
-					owner = AdapterFactoryEditingDomain.unwrap(owner);
-					AbstractSmooksGraphicalModel ownerGraph = findGraphicalModel(owner);
-					if (ownerGraph != null) {
-						ownerGraph.fireChildrenChanged();
-					}
-					node.fireChildrenChanged();
-					node.fireConnectionChanged();
-				}
 				if (command instanceof DeleteCommand) {
-					Object owner = ((EObject)object).eContainer();
-					 owner = AdapterFactoryEditingDomain.unwrap(owner);
-					AbstractSmooksGraphicalModel ownerGraph = findGraphicalModel(owner);
-					if (ownerGraph != null) {
-						ownerGraph.fireChildrenChanged();
+					Collection<?> cccc = null;
+					if (command instanceof DeleteCommand) {
+						cccc = ((DeleteCommand) command).getCollection();
 					}
-					node.fireChildrenChanged();
-					node.fireConnectionChanged();
+					for (Iterator<?> iterator2 = cccc.iterator(); iterator2.hasNext();) {
+						Object object2 = (Object) iterator2.next();
+						object2 = AdapterFactoryEditingDomain.unwrap(object2);
+						// it means that it's deletecommand undo
+						if (object == object2) {
+							EObject owner = ((EObject) object).eContainer();
+							if (owner instanceof SmooksResourceListType) {
+								object = AdapterFactoryEditingDomain.unwrap(object);
+								AbstractSmooksGraphicalModel graphModel = createGraphModel(object);
+								if (graphModel == null)
+									continue;
+								node = graphModel;
+								root.addTreeNode(graphModel);
+								List<TreeNodeConnection> connections = createAllConnection(graphModel);
+								expandConnectedModels(connections);
+								if (graphModel instanceof IMoveableModel) {
+									String id = SmooksGraphUtil.generateFigureID(graphModel);
+									if (id != null) {
+										FigureType ft = SmooksModelUtils.findFigureType(smooksModelProvider
+												.getSmooksGraphicsExt().getGraph(), id);
+										try {
+											int x = Integer.parseInt(ft.getX());
+											int y = Integer.parseInt(ft.getY());
+											((IMoveableModel) graphModel).setLocation(new Point(x, y));
+										} catch (Throwable t) {
+											continue;
+										}
+									}
+								}
+							} else {
+								AbstractSmooksGraphicalModel ownernode = findGraphicalModel(owner);
+								ownernode.fireChildrenChanged();
+								node = findGraphicalModel(object);
+								if (node == null)
+									continue;
+								List<TreeNodeConnection> connections = createAllConnection(node);
+								expandConnectedModels(connections);
+							}
+							break;
+						}
+					}
 				}
+				continue;
 			}
 		}
 	}
@@ -302,7 +408,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		if (AdapterFactoryEditingDomain.unwrap(graph.getData()) == object) {
 			return graph;
 		}
-		List<?> children = graph.getChildren();
+		List<?> children = graph.getChildrenWithoutDynamic();
 		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
 			Object child = (Object) iterator.next();
 			if (child instanceof AbstractSmooksGraphicalModel) {
@@ -360,7 +466,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 			root = new RootModel();
 		} else {
 			root.removeAllTreeNode();
-			
+
 		}
 		Object obj = smooksModelProvider.getSmooksModel();
 		AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) smooksModelProvider
@@ -384,12 +490,14 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 					root.addTreeNode(container);
 				}
 			}
-			// to find Bean v1.2
 			SmooksResourceListType listType = ((DocumentRoot) obj).getSmooksResourceList();
 			List<?> arcList = listType.getAbstractResourceConfig();
 			for (Iterator<?> iterator = arcList.iterator(); iterator.hasNext();) {
 				Object object = (Object) iterator.next();
-				createGraphModel(object);
+				AbstractSmooksGraphicalModel gmodel = createGraphModel(object);
+				if (gmodel != null) {
+					root.addTreeNode(gmodel);
+				}
 			}
 			getGraphicalViewer().setContents(root);
 		}
@@ -406,27 +514,14 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	}
 
 	protected AbstractSmooksGraphicalModel createGraphModel(Object model) {
-		AbstractSmooksGraphicalModel graphModel = null;
-		if (model instanceof BindingsType) {
-			AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) smooksModelProvider
-					.getEditingDomain();
-			ITreeContentProvider contentProvider = new AdapterFactoryContentProvider(editingDomain.getAdapterFactory());
-			ILabelProvider labelProvider = new AdapterFactoryLabelProvider(editingDomain.getAdapterFactory()) {
-				@Override
-				public String getText(Object object) {
-					Object obj = AdapterFactoryEditingDomain.unwrap(object);
-					if (obj instanceof AbstractAnyType) {
-						return super.getText(obj);
-					}
-					return super.getText(object);
-				}
-
-			};
-			graphModel = new JavaBeanGraphModel(model, contentProvider, labelProvider, this.smooksModelProvider);
-			((JavaBeanGraphModel) graphModel).setHeaderVisable(true);
-			root.addTreeNode(graphModel);
+		GraphicalModelFactory factory = getGraphicalModelFactory();
+		if (factory != null) {
+			Object gmodel = factory.createGraphicalModel(model, smooksModelProvider);
+			if (gmodel != null && gmodel instanceof AbstractSmooksGraphicalModel) {
+				return (AbstractSmooksGraphicalModel) gmodel;
+			}
 		}
-		return graphModel;
+		return null;
 	}
 
 	protected List<TreeNodeConnection> createConnectionModel() {
@@ -457,84 +552,27 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	}
 
 	protected List<TreeNodeConnection> createConnection(AbstractSmooksGraphicalModel model) {
+		ConnectionModelFactory connectionModelFactory = getConnectionModelFactory();
 		List<TreeNodeConnection> cs = new ArrayList<TreeNodeConnection>();
-		if (hasSelectorConnection(model)) {
-			List<TreeNodeConnection> cList = createSelectorConnection(model);
-			if (cList != null) {
-				cs.addAll(cList);
+		if (connectionModelFactory != null) {
+			if (connectionModelFactory.hasSelectorConnection(model)) {
+				List<TreeNodeConnection> cList = connectionModelFactory.createSelectorConnection(inputDataList, root,
+						model);
+				if (cList != null) {
+					cs.addAll(cList);
+				}
 			}
-		}
-		if (hasBeanIDReferenceConnection(model)) {
-			TreeNodeConnection c = createBeanIDReferenceConnection(model);
-			if (c != null) {
-				cs.add(c);
+			if (connectionModelFactory.hasBeanIDReferenceConnection(model)) {
+				TreeNodeConnection c = connectionModelFactory.createBeanIDReferenceConnection(smooksModelProvider
+						.getSmooksModel(), root, model);
+				if (c != null) {
+					cs.add(c);
+				}
 			}
 		}
 		if (cs.isEmpty())
 			return null;
 		return cs;
-	}
-
-	private TreeNodeConnection createBeanIDReferenceConnection(AbstractSmooksGraphicalModel model) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private List<TreeNodeConnection> createSelectorConnection(AbstractSmooksGraphicalModel model) {
-		Object data = model.getData();
-		data = AdapterFactoryEditingDomain.unwrap(data);
-		List<TreeNodeConnection> connections = new ArrayList<TreeNodeConnection>();
-		if (data != null && data instanceof EObject) {
-			EStructuralFeature feature = SmooksGraphUtil.getSelectorFeature((EObject) data);
-			Object sd = ((EObject) data).eGet(feature);
-			if (sd != null) {
-				String selector = sd.toString();
-				if (inputDataList != null) {
-					for (Iterator<?> iterator = inputDataList.iterator(); iterator.hasNext();) {
-						Object obj = (Object) iterator.next();
-						if (obj instanceof IXMLStructuredObject) {
-							AbstractSmooksGraphicalModel sourceGraphModel = SmooksGraphUtil.findInputGraphModel(
-									selector, (IXMLStructuredObject) obj, root);
-							if (sourceGraphModel != null) {
-								boolean canCreate = true;
-								List<TreeNodeConnection> tcs = model.getTargetConnections();
-								for (Iterator<?> iterator2 = tcs.iterator(); iterator2.hasNext();) {
-									TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
-									if (treeNodeConnection.getSourceNode() == sourceGraphModel) {
-										canCreate = false;
-									}
-								}
-
-								if (!canCreate) {
-									break;
-								}
-
-								TreeNodeConnection connection = new TreeNodeConnection(sourceGraphModel, model);
-								sourceGraphModel.getSourceConnections().add(connection);
-								sourceGraphModel.fireConnectionChanged();
-								model.getTargetConnections().add(connection);
-								model.fireConnectionChanged();
-								connections.add(connection);
-							}
-						}
-					}
-				}
-			}
-		}
-		return connections;
-	}
-
-	private boolean hasSelectorConnection(AbstractSmooksGraphicalModel model) {
-		Object data = model.getData();
-		data = AdapterFactoryEditingDomain.unwrap(data);
-		if (data instanceof EObject) {
-			return (SmooksGraphUtil.getSelectorFeature((EObject) data) != null);
-		}
-		return false;
-	}
-
-	private boolean hasBeanIDReferenceConnection(AbstractSmooksGraphicalModel model) {
-		return false;
 	}
 
 	private void createConnection(List<AbstractSmooksGraphicalModel> children, List<TreeNodeConnection> connections) {

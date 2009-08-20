@@ -93,6 +93,13 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode {
 		}
 		return children;
 	}
+	
+	public List<AbstractSmooksGraphicalModel> getChildrenWithoutDynamic() {
+		if (children == null) {
+			children = new ArrayList<AbstractSmooksGraphicalModel>();
+		}
+		return children;
+	}
 
 	public static void disconnectAllConnections(AbstractSmooksGraphicalModel node) {
 		List<TreeNodeConnection> sourceConnections = node.getSourceConnections();
@@ -180,16 +187,16 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode {
 	}
 
 	public void addChild(AbstractSmooksGraphicalModel node) {
-		if (getChildren().indexOf(node) == -1) {
-			getChildren().add(node);
+		if (getChildrenWithoutDynamic().indexOf(node) == -1) {
+			getChildrenWithoutDynamic().add(node);
 			node.setParent(this);
 			support.firePropertyChange(PRO_ADD_CHILD, null, node);
 		}
 	}
 
 	public void removeChild(AbstractSmooksGraphicalModel node) {
-		if (getChildren().indexOf(node) != -1) {
-			getChildren().remove(node);
+		if (getChildrenWithoutDynamic().indexOf(node) != -1) {
+			getChildrenWithoutDynamic().remove(node);
 			node.setParent(null);
 			support.firePropertyChange(PRO_REMOVE_CHILD, node, null);
 		}

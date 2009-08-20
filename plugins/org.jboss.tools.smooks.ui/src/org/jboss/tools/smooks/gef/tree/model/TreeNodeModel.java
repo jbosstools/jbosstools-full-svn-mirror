@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.swt.graphics.Image;
@@ -73,6 +74,7 @@ public class TreeNodeModel extends AbstractSmooksGraphicalModel {
 				if (models != null) {
 					for (int i = 0; i < models.length; i++) {
 						Object model = models[i];
+//						model = AdapterFactoryEditingDomain.unwrap(model);
 						if (!childExsit(model)) {
 							TreeNodeModel n = createChildModel(model, contentProvider, labelProvider);
 							children.add(n);

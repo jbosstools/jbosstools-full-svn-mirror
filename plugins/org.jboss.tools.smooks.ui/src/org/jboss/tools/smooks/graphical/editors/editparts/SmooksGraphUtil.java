@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.gef.common.RootModel;
@@ -25,6 +26,8 @@ import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.javabean.ValueType;
 import org.jboss.tools.smooks.model.javabean.WiringType;
+import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
 /**
  * @author Dart
@@ -34,6 +37,7 @@ public class SmooksGraphUtil {
 
 	public static String generateFigureID(AbstractSmooksGraphicalModel model) {
 		Object data = model.getData();
+		data = AdapterFactoryEditingDomain.unwrap(data);
 		if (data instanceof BindingsType) {
 			String beanId = ((BindingsType) data).getBeanId();
 			if (beanId == null) {
@@ -42,6 +46,16 @@ public class SmooksGraphUtil {
 			beanId = beanId.trim();
 			return "BindingsType_" + beanId;
 		}
+		
+		if (data instanceof BeanType) {
+			String beanId = ((BeanType) data).getBeanId();
+			if (beanId == null) {
+				return null;
+			}
+			beanId = beanId.trim();
+			return "BeanType" + beanId;
+		}
+		
 		if (data instanceof IXMLStructuredObject) {
 			List<?> children = ((IXMLStructuredObject) data).getChildren();
 			if (children == null || children.isEmpty()) {
@@ -60,6 +74,7 @@ public class SmooksGraphUtil {
 	public static EStructuralFeature getSelectorFeature(EObject obj) {
 		if (obj == null)
 			return null;
+		// for javabean 1.1
 		if (obj instanceof BindingsType) {
 			return JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT;
 		}
@@ -68,6 +83,18 @@ public class SmooksGraphUtil {
 		}
 		if(obj instanceof WiringType){
 			return JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
+		}
+		
+		// for javabean 1.2
+		
+		if(obj instanceof BeanType){
+			return Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT;
+		}
+		if(obj instanceof org.jboss.tools.smooks.model.javabean12.ValueType){
+			return Javabean12Package.Literals.VALUE_TYPE__DATA;
+		}
+		if(obj instanceof org.jboss.tools.smooks.model.javabean12.WiringType){
+			return Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
 		}
 		return null;
 	}

@@ -21,6 +21,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
@@ -46,6 +47,8 @@ import org.jboss.tools.smooks.model.javabean.ExpressionType;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.javabean.ValueType;
 import org.jboss.tools.smooks.model.javabean.WiringType;
+import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.jmsrouting.JmsRouter;
 import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
@@ -86,39 +89,46 @@ public class SelectorValidator extends AbstractValidator {
 	 */
 	@Override
 	protected Diagnostic validateModel(Object model, EditingDomain editingDomain) {
-		EAttribute feature = getAttribute(model);
-		String path = getPath(model);
-		if (path == null) {
-			return null;
-		}
-		// if(feature != null && path == null){
-		// return newWaringDiagnostic("Selector '" +path+ "' isn't available",
-		// model, feature);
-		// }
-		String sperator = "/";
-		if (path.indexOf('/') == -1) {
-			sperator = " ";
-		}
-		if (feature != null && path != null) {
-			Object node = null;
-			for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-				Object obj = (Object) iterator.next();
-				if (obj instanceof IXMLStructuredObject) {
-					if (node == null) {
-						try {
-							node = SmooksUIUtils
-									.localXMLNodeWithPath(path, (IXMLStructuredObject) obj, sperator, false);
-						} catch (Throwable e) {
-							SmooksConfigurationActivator.getDefault().log(e);
+		if (model instanceof EObject) {
+			EAttribute feature = getAttribute(model);
+			Object data = ((EObject)model).eGet(feature);
+			if(data == null){
+				return null;
+			}
+			String path = data.toString();
+//			if (path == null) {
+//				return null;
+//			}
+			// if(feature != null && path == null){
+			// return newWaringDiagnostic("Selector '" +path+
+			// "' isn't available",
+			// model, feature);
+			// }
+			String sperator = "/";
+			if (path.indexOf('/') == -1) {
+				sperator = " ";
+			}
+			if (feature != null && path != null) {
+				Object node = null;
+				for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+					Object obj = (Object) iterator.next();
+					if (obj instanceof IXMLStructuredObject) {
+						if (node == null) {
+							try {
+								node = SmooksUIUtils.localXMLNodeWithPath(path, (IXMLStructuredObject) obj, sperator,
+										false);
+							} catch (Throwable e) {
+								SmooksConfigurationActivator.getDefault().log(e);
+							}
+						}
+						if (node != null) {
+							return null;
 						}
 					}
-					if (node != null) {
-						return null;
-					}
 				}
-			}
-			if (node == null) {
-				return newWaringDiagnostic("Selector '" + path + "' isn't available", model, feature);
+				if (node == null) {
+					return newWaringDiagnostic("Selector '" + path + "' isn't available", model, feature);
+				}
 			}
 		}
 		return super.validateModel(model, editingDomain);
@@ -170,9 +180,27 @@ public class SelectorValidator extends AbstractValidator {
 		if (model instanceof ValueType) {
 			return JavabeanPackage.Literals.VALUE_TYPE__DATA;
 		}
+		
+		if(model instanceof BeanType){
+			return Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT;
+		}
+		if (model instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
+			return Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
+		}
+		if (model instanceof org.jboss.tools.smooks.model.javabean12.ExpressionType) {
+			return Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT;
+		}
+		if (model instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
+			return Javabean12Package.Literals.VALUE_TYPE__DATA;
+		}
 		return null;
 	}
 
+	/**
+	 * @deprecated
+	 * @param model
+	 * @return
+	 */
 	private String getPath(Object model) {
 		if (model instanceof ExpressionType) {
 			return ((ExpressionType) model).getExecOnElement();
