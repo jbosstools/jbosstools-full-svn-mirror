@@ -43,11 +43,6 @@ implements SelectionListener, Listener {
 		this.fileLocation = fileLocation; 
 		setPageComplete(false);
 	}
-
-	public ReferenceWizardPage(String pageName) {
-		super(pageName);
-		setPageComplete(false);
-	}
 	
 	public static ImageDescriptor getImageDescriptor() {
 		Bundle bundle = Platform.getBundle(ModelUIPlugin.PLUGIN_ID);

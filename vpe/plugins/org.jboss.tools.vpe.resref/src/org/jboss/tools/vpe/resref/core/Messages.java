@@ -49,6 +49,8 @@ public final class Messages extends NLS {
 	public static String SCOPE_FOLDER_SHORT;
 	public static String SCOPE_PROJECT;
 	public static String SCOPE_PROJECT_SHORT;
+	public static String SCOPE_GLOBAL;
+	public static String SCOPE_GLOBAL_SHORT;
 	public static String WIZARD_PAGE_SHOULD_BE_INITIALIZED;
 	
     
@@ -65,6 +67,7 @@ public final class Messages extends NLS {
 	public static String VRD_ADD_TAGLIB_PREFERENCE_MESSAGE;
 	public static String VRD_ADD_EL_PREFERENCE;
 	public static String VRD_ADD_EL_PREFERENCE_MESSAGE;
+	public static String ADD_GLOBAL_EL_PREFERENCE_MESSAGE;
 	
 	public static String VRD_PAGE_DESIGN_OPTIONS_ABOUT;
 	public static String VRD_ACTUAL_RUN_TIME_FOLDERS_ABOUT;
@@ -89,9 +92,11 @@ public final class Messages extends NLS {
 	public static String URI_SHOULD_BE_SET;
 	
 	
+	public static String GLOBAL_EL_WIZARD_PAGE_NAME;
 	public static String EL_WIZARD_PAGE_NAME;
 	public static String EL_NAME;
 	public static String EL_VALUE;
+	public static String EL_NAME_SHOULD_BE_SET;
 	public static String INVALID_EL_EXPRESSION;
 	public static String CANNOT_PARSE_SCOPE_VALUE;
 	public static String EL_EXPRESSION_ALREADY_EXISTS;

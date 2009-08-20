@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2007-2009 Exadel, Inc. and Red Hat, Inc.
+ * Distributed under license by Red Hat, Inc. All rights reserved.
+ * This program is made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
+ ******************************************************************************/
 package org.jboss.tools.vpe.resref.core;
 
 import java.util.HashMap;
@@ -10,7 +20,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class TaglibReferenceWizardPage extends ReferenceWizardPage {
@@ -23,10 +32,6 @@ public class TaglibReferenceWizardPage extends ReferenceWizardPage {
 	public TaglibReferenceWizardPage(String pageName, String title,
 			ImageDescriptor titleImage, Object fileLocation) {
 		super(pageName, title, titleImage, fileLocation);
-	}
-
-	public TaglibReferenceWizardPage(String pageName) {
-		super(pageName);
 	}
 
 	public void createControl(Composite parent) {

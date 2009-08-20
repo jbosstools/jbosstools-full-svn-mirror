@@ -10,16 +10,21 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.resref.core;
 
-import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.common.resref.core.ResourceReference;
 
-public class CSSReferenceWizardDialog extends
-		ReferenceWizardDialog {
-	
-	public CSSReferenceWizardDialog(Shell parentShell, Object fileLocation,
-			ResourceReference resref) {
-		super(parentShell, new CSSReferenceWizard(fileLocation,
-				Messages.VRD_ADD_CSS_PREFERENCE), resref);
+public class GlobalELReferenceWizard extends ELReferenceWizard {
+
+	public GlobalELReferenceWizard(Object fileLocation, String windowTitle,
+			ResourceReference[] resrefList) {
+		super(fileLocation, windowTitle, resrefList);
 	}
 
+	@Override
+	protected void createPage() {
+		page = new GlobalElReferenceWizardPage(Messages.GLOBAL_EL_WIZARD_PAGE_NAME,
+				Messages.VRD_ADD_EL_PREFERENCE, ReferenceWizardPage
+						.getImageDescriptor(), fileLocation);
+		page.setDescription(Messages.ADD_GLOBAL_EL_PREFERENCE_MESSAGE);
+	}
+	
 }

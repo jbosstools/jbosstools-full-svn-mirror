@@ -11,8 +11,6 @@
 
 package org.jboss.tools.vpe.editor.preferences;
 
-import java.util.Properties;
-
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
@@ -23,7 +21,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.jboss.tools.common.el.ui.GlobalElVariablesComposite;
-import org.jboss.tools.common.model.options.PreferenceModelUtilities;
 
 /**
  * Page for the El preferences.
@@ -34,7 +31,7 @@ public class ELVariablesPreferencePage extends PreferencePage implements IWorkbe
     
 	public static final String ID = "org.jboss.tools.common.xstudio.elvariables"; //$NON-NLS-1$
     /** The el. */
-    private GlobalElVariablesComposite   el  = new GlobalElVariablesComposite();
+    private GlobalElVariablesComposite el = new GlobalElVariablesComposite();
     
     @Override
     protected void performApply() {
@@ -67,8 +64,8 @@ public class ELVariablesPreferencePage extends PreferencePage implements IWorkbe
         layout.marginWidth = 0;
         layout.marginHeight = 0;
         c.setLayout(layout);
-       
-        setUpVariableComposite(el);
+
+        el.setObject(Platform.getLocation());
         data = new GridData(GridData.FILL_BOTH);
         final Control elControl =  el.createControl(c);
         elControl.setLayoutData(data);
@@ -84,22 +81,8 @@ public class ELVariablesPreferencePage extends PreferencePage implements IWorkbe
     @Override
     public boolean performOk() {
         boolean rst = super.performOk();
-        
         el.commit();
         return rst;
-    }
-
-    /**
-     * Sets the up variable composite.
-     * 
-     * @param el the el
-     */
-    private void setUpVariableComposite(GlobalElVariablesComposite el){
-        final Properties p = new Properties();
-        p.setProperty("help", "VpeResourcesDialog"); //$NON-NLS-1$ //$NON-NLS-2$
-        p.put("path", Platform.getLocation()); //$NON-NLS-1$
-        p.put("model", PreferenceModelUtilities.getPreferenceModel()); //$NON-NLS-1$
-        el.setObject(p);
     }
 
     /**
@@ -110,8 +93,9 @@ public class ELVariablesPreferencePage extends PreferencePage implements IWorkbe
      * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
      */
     public void init(IWorkbench workbench) {
-        // TODO Auto-generated method stub
-
+    	/*
+    	 * Do nothing
+    	 */
     }
 
 }
