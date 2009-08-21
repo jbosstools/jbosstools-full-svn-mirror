@@ -23,10 +23,6 @@ import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
-import org.jboss.tools.smooks.model.javabean12.BeanType;
-import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
 /**
  * @author Dart
@@ -54,20 +50,42 @@ public class JavaBeanGraphModel extends TreeContainerModel {
 		Object model = getData();
 		if (model instanceof EObject) {
 			EStructuralFeature feature = null;
-			if (model instanceof BindingsType) {
-				feature = JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT;
+			// judge the source model's type:
+			AbstractSmooksGraphicalModel sourceGraphModel = connection.getSourceNode();
+			if (sourceGraphModel instanceof InputDataTreeNodeModel
+					|| sourceGraphModel instanceof InputDataContianerModel) {
+				// it's "Selector" connection
+				feature = SmooksUIUtils.getSelectorFeature((EObject) model);
+				if (feature != null) {
+					EObject owner = (EObject) model;
+					AbstractSmooksGraphicalModel targetGraphModel = connection.getSourceNode();
+					Object tm = targetGraphModel.getData();
+					if (tm instanceof IXMLStructuredObject) {
+						String selector = SmooksUIUtils.generateFullPath((IXMLStructuredObject) tm, "/");
+						Command command = SetCommand
+								.create(domainProvider.getEditingDomain(), owner, feature, selector);
+						domainProvider.getEditingDomain().getCommandStack().execute(command);
+						return;
+					}
+				}
 			}
-			if (model instanceof BeanType) {
-				feature = Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT;
-			}
-			EObject owner = (EObject) model;
-			AbstractSmooksGraphicalModel targetGraphModel = connection.getSourceNode();
-			Object tm = targetGraphModel.getData();
-			if (tm instanceof IXMLStructuredObject) {
-				String selector = SmooksUIUtils.generateFullPath((IXMLStructuredObject) tm, "/");
-				Command command = SetCommand.create(domainProvider.getEditingDomain(), owner, feature, selector);
-				domainProvider.getEditingDomain().getCommandStack().execute(command);
-			}
+
+//			Object sourceModel = sourceGraphModel.getData();
+//			sourceModel = AdapterFactoryEditingDomain.unwrap(sourceModel);
+//			if (sourceModel instanceof EObject) {
+//				feature = SmooksUIUtils.getBeanIDRefFeature((EObject) sourceModel);
+//				if (feature != null) {
+//					// it's bean id connection
+//					EStructuralFeature idFeature = SmooksUIUtils.getBeanIDFeature((EObject) model);
+//					Object iddata = ((EObject) model).eGet(idFeature);
+//					if (iddata != null) {
+//						Command command = SetCommand.create(domainProvider.getEditingDomain(), (EObject) sourceModel,
+//								feature, iddata);
+//						domainProvider.getEditingDomain().getCommandStack().execute(command);
+//						return;
+//					}
+//				}
+//			}
 		}
 	}
 
@@ -77,15 +95,31 @@ public class JavaBeanGraphModel extends TreeContainerModel {
 		Object model = getData();
 		if (model instanceof EObject) {
 			EStructuralFeature feature = null;
-			if (model instanceof BindingsType) {
-				feature = JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT;
+			AbstractSmooksGraphicalModel sourceGraphModel = connection.getSourceNode();
+			if (sourceGraphModel instanceof InputDataTreeNodeModel
+					|| sourceGraphModel instanceof InputDataContianerModel) {
+				// it's "Selector" connection
+				feature = SmooksUIUtils.getSelectorFeature((EObject) model);
+				if (feature != null) {
+					EObject owner = (EObject) model;
+					Command command = SetCommand.create(domainProvider.getEditingDomain(), owner, feature, null);
+					domainProvider.getEditingDomain().getCommandStack().execute(command);
+					return;
+				}
 			}
-			if (model instanceof BeanType) {
-				feature = Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT;
-			}
-			EObject owner = (EObject) model;
-			Command command = SetCommand.create(domainProvider.getEditingDomain(), owner, feature, null);
-			domainProvider.getEditingDomain().getCommandStack().execute(command);
+
+//			Object sourceModel = sourceGraphModel.getData();
+//			sourceModel = AdapterFactoryEditingDomain.unwrap(sourceModel);
+//			if (sourceModel instanceof EObject) {
+//				feature = SmooksUIUtils.getBeanIDRefFeature((EObject) sourceModel);
+//				if (feature != null) {
+//					// it's bean id connection
+//					Command command = SetCommand.create(domainProvider.getEditingDomain(), (EObject) sourceModel,
+//							feature, null);
+//					domainProvider.getEditingDomain().getCommandStack().execute(command);
+//					return;
+//				}
+//			}
 		}
 	}
 }

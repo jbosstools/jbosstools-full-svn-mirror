@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
@@ -23,11 +21,7 @@ import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
-import org.jboss.tools.smooks.model.javabean.ValueType;
-import org.jboss.tools.smooks.model.javabean.WiringType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
-import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
 /**
  * @author Dart
@@ -70,31 +64,37 @@ public class SmooksGraphUtil {
 		}
 		return null;
 	}
-
-	public static EStructuralFeature getSelectorFeature(EObject obj) {
-		if (obj == null)
-			return null;
-		// for javabean 1.1
-		if (obj instanceof BindingsType) {
-			return JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT;
+	
+	public static AbstractSmooksGraphicalModel findSmooksGraphModel(RootModel root,Object object){
+		if (root != null && object != null) {
+			List<?> children = root.getChildren();
+			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+				AbstractSmooksGraphicalModel child = (AbstractSmooksGraphicalModel) iterator.next();
+				if (child instanceof InputDataContianerModel) {
+					continue;
+				}
+				AbstractSmooksGraphicalModel model = findGraphicalModel(child, object);
+				if (model != null) {
+					return model;
+				}
+			}
 		}
-		if(obj instanceof ValueType){
-			return JavabeanPackage.Literals.VALUE_TYPE__DATA;
+		return null;
+	}
+	
+	private static AbstractSmooksGraphicalModel findGraphicalModel(AbstractSmooksGraphicalModel graph, Object object) {
+		if (AdapterFactoryEditingDomain.unwrap(graph.getData()) == object) {
+			return graph;
 		}
-		if(obj instanceof WiringType){
-			return JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
-		}
-		
-		// for javabean 1.2
-		
-		if(obj instanceof BeanType){
-			return Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT;
-		}
-		if(obj instanceof org.jboss.tools.smooks.model.javabean12.ValueType){
-			return Javabean12Package.Literals.VALUE_TYPE__DATA;
-		}
-		if(obj instanceof org.jboss.tools.smooks.model.javabean12.WiringType){
-			return Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
+		List<?> children = graph.getChildrenWithoutDynamic();
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			Object child = (Object) iterator.next();
+			if (child instanceof AbstractSmooksGraphicalModel) {
+				AbstractSmooksGraphicalModel model = findGraphicalModel((AbstractSmooksGraphicalModel) child, object);
+				if (model != null) {
+					return model;
+				}
+			}
 		}
 		return null;
 	}
