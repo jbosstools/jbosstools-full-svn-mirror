@@ -28,8 +28,9 @@ public abstract class ReferenceWizard extends Wizard {
 	public ReferenceWizard(Object fileLocation, String windowTitle) {
 		super();
 		this.fileLocation = fileLocation;
-		createPage();
 		setWindowTitle(windowTitle);
+		setHelpAvailable(false);
+		createPage();
 	}
 
 	public void createPageControls(Composite pageContainer, Object fileLocation) {

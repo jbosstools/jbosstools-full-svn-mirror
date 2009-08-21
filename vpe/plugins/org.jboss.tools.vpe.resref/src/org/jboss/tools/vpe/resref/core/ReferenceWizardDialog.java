@@ -22,21 +22,19 @@ public class ReferenceWizardDialog extends WizardDialog {
 	public ReferenceWizardDialog(Shell parentShell, ReferenceWizard newWizard, ResourceReference resref) {
 		super(parentShell, newWizard);
 		this.resref = resref;
-	}
-
-	@Override
-	protected void constrainShellSize() {
-		super.constrainShellSize();
+		setHelpAvailable(false);
 	}
 	
 	@Override
 	public int open() {
 		/*
-		 * Get Resouce Reference dialog.
+		 * Get Resource Reference wizard.
 		 */
 		ReferenceWizard wizard = (ReferenceWizard) getWizard();
+		
 		/*
-		 * Read values from resref when editing.
+		 * Read values from resref when editing
+		 * and send it to the wizard.
 		 */
 		wizard.setResref(resref);
 		
@@ -44,12 +42,15 @@ public class ReferenceWizardDialog extends WizardDialog {
 		 * Open the dialog
 		 */
 		int returnCode = super.open();
+		
 		/*
-		 * If Finish pressed - store new values in the resref.
+		 * If Finish pressed - store new values in the resref
+		 * and than it'll be saved in the appropriate ResourceReferenceComposite
 		 */
 		if (Dialog.OK == returnCode) {
 			resref = wizard.getResref();
 		}
+		
 		return returnCode;
 	}
 	

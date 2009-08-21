@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
-    <extension point="org.jboss.tools.common.model.classes">
-       <xclass id="org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"
-		class="org.jboss.tools.vpe.resref.core.VpeAddReferenceSupport"/>
-	   <xclass id="org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"
-		class="org.jboss.tools.vpe.resref.core.VpeELReferenceSupport"/>
-	   <xclass id="org.jboss.tools.vpe.resref.core.VpeCSSReferenceSupport"
-		class="org.jboss.tools.vpe.resref.core.VpeCSSReferenceSupport"/>
-	   <xclass id="org.jboss.tools.vpe.resref.core.VpeTaglibReferenceSupport"
-		class="org.jboss.tools.vpe.resref.core.VpeTaglibReferenceSupport"/>
-    </extension>
+
 </plugin>
