@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: BPEL JBoss AS Publisher
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.jboss.tools.bpel.as.integration;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jboss.tools.bpel.as.integration.Activator
@@ -13,3 +13,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.bpel.runtimes;bundle-version="0.4.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: %providerName
