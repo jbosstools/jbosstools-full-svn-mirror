@@ -70,10 +70,13 @@ public class HtmlTextTemplate extends VpeAbstractTemplate {
 		Point selection = pageContext.getSourceBuilder().getSelectionRange();
 		//processing for el expressions
 		int offset = TextUtil.getStartELDocumentPosition(sourceNode);
-		if(offset!=-1) {
-			return new Region(offset,0);
+		IRegion resultRegion;
+		if(offset >= 0) {
+			resultRegion = new Region(offset,0);
+		} else {
+			resultRegion = new Region(selection.x,0);
 		}
-		return new Region(selection.x,0);
+		return resultRegion;
 	}
 	
 	
