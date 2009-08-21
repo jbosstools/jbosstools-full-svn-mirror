@@ -17,6 +17,10 @@ public class JBossServerBPELPublisher extends JstPublisher implements
 	public JBossServerBPELPublisher() {
 	}
 
+	public boolean accepts(String method, IServer server, IModule[] module) {
+		return "local".equals(method) && accepts(server, module);
+	}
+	
 	public boolean accepts(IServer server, IModule[] module) {
 		IProject project = module[0].getProject();
 		if(project == null) return false;
