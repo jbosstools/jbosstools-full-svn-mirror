@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -23,12 +24,12 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
  */
 public interface ConnectionModelFactory {
 
-	public boolean hasBeanIDReferenceConnection(AbstractSmooksGraphicalModel model);
+	public boolean hasBeanIDConnection(AbstractSmooksGraphicalModel model);
 
-	public TreeNodeConnection createBeanIDReferenceConnection(EObject rootModel, RootModel root,
+	public Collection<TreeNodeConnection> createBeanIDReferenceConnection(EObject rootModel, RootModel root,
 			AbstractSmooksGraphicalModel model);
 
-	public List<TreeNodeConnection> createSelectorConnection(List<Object> inputDataList, RootModel root,
+	public Collection<TreeNodeConnection> createSelectorConnection(List<Object> inputDataList, RootModel root,
 			AbstractSmooksGraphicalModel model);
 
 	public boolean hasSelectorConnection(AbstractSmooksGraphicalModel model);

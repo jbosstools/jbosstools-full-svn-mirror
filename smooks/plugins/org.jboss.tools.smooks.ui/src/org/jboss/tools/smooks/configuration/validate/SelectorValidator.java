@@ -22,41 +22,16 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
-import org.jboss.tools.smooks.configuration.editors.groovy.GroovyUICreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.calc.CalcPackage;
-import org.jboss.tools.smooks.model.calc.Counter;
-import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
-import org.jboss.tools.smooks.model.datasource.Direct;
-import org.jboss.tools.smooks.model.esbrouting.EsbroutingPackage;
-import org.jboss.tools.smooks.model.esbrouting.RouteBean;
-import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
-import org.jboss.tools.smooks.model.fileRouting.OutputStream;
-import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks.model.groovy.Groovy;
-import org.jboss.tools.smooks.model.groovy.GroovyPackage;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.ExpressionType;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
-import org.jboss.tools.smooks.model.javabean.ValueType;
-import org.jboss.tools.smooks.model.javabean.WiringType;
-import org.jboss.tools.smooks.model.javabean12.BeanType;
-import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
-import org.jboss.tools.smooks.model.jmsrouting.JmsRouter;
-import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks.model.smooks.ResourceConfigType;
-import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks.model.xsl.Xsl;
-import org.jboss.tools.smooks.model.xsl.XslPackage;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -90,15 +65,16 @@ public class SelectorValidator extends AbstractValidator {
 	@Override
 	protected Diagnostic validateModel(Object model, EditingDomain editingDomain) {
 		if (model instanceof EObject) {
-			EAttribute feature = getAttribute(model);
-			Object data = ((EObject)model).eGet(feature);
-			if(data == null){
+			EStructuralFeature feature = getAttribute(model);
+			if(feature == null) return null;
+			Object data = ((EObject) model).eGet(feature);
+			if (data == null) {
 				return null;
 			}
 			String path = data.toString();
-//			if (path == null) {
-//				return null;
-//			}
+			// if (path == null) {
+			// return null;
+			// }
 			// if(feature != null && path == null){
 			// return newWaringDiagnostic("Selector '" +path+
 			// "' isn't available",
@@ -126,125 +102,16 @@ public class SelectorValidator extends AbstractValidator {
 						}
 					}
 				}
-				if (node == null) {
-					return newWaringDiagnostic("Selector '" + path + "' isn't available", model, feature);
+				if (node == null && feature instanceof EAttribute) {
+					return newWaringDiagnostic("Selector '" + path + "' isn't available", model, (EAttribute) feature);
 				}
 			}
 		}
 		return super.validateModel(model, editingDomain);
 	}
 
-	private EAttribute getAttribute(Object model) {
-		if (model instanceof BindingsType) {
-			return JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT;
-		}
-		if (model instanceof Counter) {
-			return CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT;
-		}
-		if (model instanceof Direct) {
-			return DatasourcePackage.Literals.DIRECT__BIND_ON_ELEMENT;
-		}
-		if (model instanceof RouteBean) {
-			return EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_ON_ELEMENT;
-		}
-		if (model instanceof OutputStream) {
-			return FileRoutingPackage.Literals.OUTPUT_STREAM__OPEN_ON_ELEMENT;
-		}
-		if (model instanceof Freemarker) {
-			return FreemarkerPackage.Literals.FREEMARKER__APPLY_ON_ELEMENT;
-		}
-		if (model instanceof Xsl) {
-			return XslPackage.Literals.XSL__APPLY_ON_ELEMENT;
-		}
-		if (model instanceof GroovyUICreator) {
-			return GroovyPackage.Literals.GROOVY__EXECUTE_ON_ELEMENT;
-		}
-		if (model instanceof JmsRouter) {
-			return JmsroutingPackage.Literals.JMS_ROUTER__ROUTE_ON_ELEMENT;
-		}
-
-		if (model instanceof ResourceConfigType) {
-			return SmooksPackage.Literals.RESOURCE_CONFIG_TYPE__SELECTOR;
-		}
-
-		if (model instanceof SmooksResourceListType) {
-			return SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR;
-		}
-
-		if (model instanceof WiringType) {
-			return JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
-		}
-		if (model instanceof ExpressionType) {
-			return JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT;
-		}
-		if (model instanceof ValueType) {
-			return JavabeanPackage.Literals.VALUE_TYPE__DATA;
-		}
-		
-		if(model instanceof BeanType){
-			return Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT;
-		}
-		if (model instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
-			return Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
-		}
-		if (model instanceof org.jboss.tools.smooks.model.javabean12.ExpressionType) {
-			return Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT;
-		}
-		if (model instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
-			return Javabean12Package.Literals.VALUE_TYPE__DATA;
-		}
-		return null;
-	}
-
-	/**
-	 * @deprecated
-	 * @param model
-	 * @return
-	 */
-	private String getPath(Object model) {
-		if (model instanceof ExpressionType) {
-			return ((ExpressionType) model).getExecOnElement();
-		}
-		if (model instanceof ValueType) {
-			return ((ValueType) model).getData();
-		}
-		if (model instanceof WiringType) {
-			return ((WiringType) model).getWireOnElement();
-		}
-		if (model instanceof SmooksResourceListType) {
-			return ((SmooksResourceListType) model).getDefaultSelector();
-		}
-		if (model instanceof ResourceConfigType) {
-			return ((ResourceConfigType) model).getSelector();
-		}
-		if (model instanceof JmsRouter) {
-			return ((JmsRouter) model).getRouteOnElement();
-		}
-		if (model instanceof GroovyUICreator) {
-			return ((Groovy) model).getExecuteOnElement();
-		}
-		if (model instanceof Xsl) {
-			return ((Xsl) model).getApplyOnElement();
-		}
-		if (model instanceof Counter) {
-			return ((Counter) model).getCountOnElement();
-		}
-		if (model instanceof BindingsType) {
-			return ((BindingsType) model).getCreateOnElement();
-		}
-		if (model instanceof Direct) {
-			return ((Direct) model).getBindOnElement();
-		}
-		if (model instanceof RouteBean) {
-			return ((RouteBean) model).getRouteOnElement();
-		}
-		if (model instanceof OutputStream) {
-			return ((OutputStream) model).getOpenOnElement();
-		}
-		if (model instanceof Freemarker) {
-			return ((Freemarker) model).getApplyOnElement();
-		}
-		return null;
+	private EStructuralFeature getAttribute(Object model) {
+		return SmooksUIUtils.getSelectorFeature((EObject) model);
 	}
 
 	public void initValidator(Collection<?> selectedObjects, EditingDomain editingDomain) {

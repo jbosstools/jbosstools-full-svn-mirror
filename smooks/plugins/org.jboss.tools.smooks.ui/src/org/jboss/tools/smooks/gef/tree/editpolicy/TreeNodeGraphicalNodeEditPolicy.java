@@ -8,9 +8,9 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.GraphicalNodeEditPolicy;
 import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.ReconnectRequest;
+import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.editparts.CreateConnectionCommand;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
-import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 
 /**
  * @author DartPeng
@@ -30,15 +30,15 @@ public class TreeNodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 		Command command = request.getStartCommand();
 		if (command != null && command instanceof CreateConnectionCommand) {
 			Object targetModel = request.getTargetEditPart().getModel();
-			if (targetModel instanceof TreeNodeModel) {
-				if (!((TreeNodeModel) targetModel).canLinkWithSource(((CreateConnectionCommand) command).getSource()))
+			if (targetModel instanceof AbstractSmooksGraphicalModel) {
+				if (!((AbstractSmooksGraphicalModel) targetModel).canLinkWithSource(((CreateConnectionCommand) command).getSource()))
 					return null;
 				Object source = ((CreateConnectionCommand) command).getSource();
-				if (source instanceof TreeNodeModel) {
-					if (!((TreeNodeModel) source).canLinkWithTarget(targetModel))
+				if (source instanceof AbstractSmooksGraphicalModel) {
+					if (!((AbstractSmooksGraphicalModel) source).canLinkWithTarget(targetModel))
 						return null;
 				}
-				((CreateConnectionCommand) command).setTarget((TreeNodeModel) targetModel);
+				((CreateConnectionCommand) command).setTarget((AbstractSmooksGraphicalModel) targetModel);
 				return command;
 			}
 		}
@@ -60,8 +60,8 @@ public class TreeNodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 			sourceEditpart = getHost();
 		}
 		model = sourceEditpart.getModel();
-		if (model != null && model instanceof TreeNodeModel) {
-			if (!((TreeNodeModel) model).isLinkable())
+		if (model != null && model instanceof AbstractSmooksGraphicalModel) {
+			if (!((AbstractSmooksGraphicalModel) model).isLinkable())
 				return null;
 			EditPart hostPart = getHost();
 			CreateConnectionCommand command = null;
@@ -71,7 +71,7 @@ public class TreeNodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 			if (command == null) {
 				command = new CreateConnectionCommand();
 			}
-			command.setSource((TreeNodeModel) model);
+			command.setSource((AbstractSmooksGraphicalModel) model);
 			request.setStartCommand(command);
 			return command;
 		}

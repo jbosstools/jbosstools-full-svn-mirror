@@ -4,8 +4,8 @@
 package org.jboss.tools.smooks.gef.tree.editparts;
 
 import org.eclipse.gef.commands.Command;
+import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
-import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 
 /**
  * @author DartPeng
@@ -14,9 +14,9 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 public class CreateConnectionCommand extends Command {
 
 
-	private TreeNodeModel source;
+	private AbstractSmooksGraphicalModel source;
 
-	private TreeNodeModel target;
+	private AbstractSmooksGraphicalModel target;
 
 	private TreeNodeConnection tempConnectionHandle = null;
 
@@ -45,19 +45,19 @@ public class CreateConnectionCommand extends Command {
 			tempConnectionHandle.disconnect();
 		}
 	}
-	public TreeNodeModel getSource() {
+	public AbstractSmooksGraphicalModel getSource() {
 		return source;
 	}
 
-	public void setSource(TreeNodeModel source) {
+	public void setSource(AbstractSmooksGraphicalModel source) {
 		this.source = source;
 	}
 
-	public TreeNodeModel getTarget() {
+	public AbstractSmooksGraphicalModel getTarget() {
 		return target;
 	}
 
-	public void setTarget(TreeNodeModel target) {
+	public void setTarget(AbstractSmooksGraphicalModel target) {
 		this.target = target;
 	}
 }

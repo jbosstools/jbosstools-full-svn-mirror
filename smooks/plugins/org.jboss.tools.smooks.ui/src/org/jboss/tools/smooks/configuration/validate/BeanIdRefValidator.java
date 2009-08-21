@@ -15,13 +15,12 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
-import org.jboss.tools.smooks.model.javabean.WiringType;
-import org.jboss.tools.smooks.model.jmsrouting.JmsRouter;
-import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
@@ -65,21 +64,40 @@ public class BeanIdRefValidator extends AbstractValidator {
 	 */
 	@Override
 	protected Diagnostic validateModel(Object model, EditingDomain editingDomain) {
-		if (model instanceof WiringType) {
-			String idRef = ((WiringType) model).getBeanIdRef();
-			if (!idList.contains(idRef)) {
-				return newWaringDiagnostic("Reference BeanId '" + idRef + "' dosen't exist.", model,
-						JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF);
+		String idRef = null;
+		EStructuralFeature beanIDRefFeature = null;
+		if (model instanceof EObject) {
+			beanIDRefFeature = SmooksUIUtils.getBeanIDRefFeature((EObject) model);
+			if (beanIDRefFeature != null) {
+				Object data = ((EObject) model).eGet(beanIDRefFeature);
+				if (data != null) {
+					idRef = data.toString();
+				}
 			}
 		}
 
-		if (model instanceof JmsRouter) {
-			String idRef = ((JmsRouter) model).getBeanId();
-			if (!idList.contains(idRef)) {
+		if (idRef != null) {
+			if (!idList.contains(idRef) && beanIDRefFeature != null && beanIDRefFeature instanceof EAttribute) {
 				return newWaringDiagnostic("Reference BeanId '" + idRef + "' dosen't exist.", model,
-						JmsroutingPackage.Literals.JMS_ROUTER__BEAN_ID);
+						(EAttribute) beanIDRefFeature);
 			}
 		}
+
+//		if (model instanceof WiringType) {
+//			String idRef = ((WiringType) model).getBeanIdRef();
+//			if (!idList.contains(idRef)) {
+//				return newWaringDiagnostic("Reference BeanId '" + idRef + "' dosen't exist.", model,
+//						JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF);
+//			}
+//		}
+//
+//		if (model instanceof JmsRouter) {
+//			String idRef = ((JmsRouter) model).getBeanId();
+//			if (!idList.contains(idRef)) {
+//				return newWaringDiagnostic("Reference BeanId '" + idRef + "' dosen't exist.", model,
+//						JmsroutingPackage.Literals.JMS_ROUTER__BEAN_ID);
+//			}
+//		}
 		return super.validateModel(model, editingDomain);
 	}
 

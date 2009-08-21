@@ -23,21 +23,17 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
-import org.jboss.tools.smooks.model.javabean.ExpressionType;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
-import org.jboss.tools.smooks.model.javabean.ValueType;
-import org.jboss.tools.smooks.model.javabean.WiringType;
-import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
 /**
  * @author Dart
- *
+ * 
  */
 public class JavaBeanChildGraphModel extends TreeNodeModel {
 
 	protected IEditingDomainProvider domainProvider = null;
-	
-	public JavaBeanChildGraphModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider , IEditingDomainProvider domainProvider) {
+
+	public JavaBeanChildGraphModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider,
+			IEditingDomainProvider domainProvider) {
 		super(data, contentProvider, labelProvider);
 		this.domainProvider = domainProvider;
 	}
@@ -48,12 +44,99 @@ public class JavaBeanChildGraphModel extends TreeNodeModel {
 	}
 
 	@Override
+	public boolean canLinkWithSource(Object model) {
+		if (model instanceof AbstractSmooksGraphicalModel) {
+			Object sourceModel = ((AbstractSmooksGraphicalModel) model).getData();
+			sourceModel = AdapterFactoryEditingDomain.unwrap(sourceModel);
+			Object targetModel = getData();
+			targetModel = AdapterFactoryEditingDomain.unwrap(targetModel);
+			if (sourceModel instanceof EObject && targetModel instanceof EObject) {
+				EStructuralFeature idFeature = SmooksUIUtils.getBeanIDFeature((EObject) targetModel);
+				EStructuralFeature idRefFeature = SmooksUIUtils.getBeanIDRefFeature((EObject) sourceModel);
+				if (idFeature != null && idRefFeature != null) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean canLinkWithTarget(Object model) {
+		if (model instanceof AbstractSmooksGraphicalModel) {
+			Object targetModel = ((AbstractSmooksGraphicalModel) model).getData();
+			targetModel = AdapterFactoryEditingDomain.unwrap(targetModel);
+			Object sourceModel = getData();
+			sourceModel = AdapterFactoryEditingDomain.unwrap(sourceModel);
+			if (sourceModel instanceof EObject && targetModel instanceof EObject) {
+				EStructuralFeature idFeature = SmooksUIUtils.getBeanIDFeature((EObject) targetModel);
+				EStructuralFeature idRefFeature = SmooksUIUtils.getBeanIDRefFeature((EObject) sourceModel);
+				if (idFeature != null && idRefFeature != null) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void addSourceConnection(TreeNodeConnection connection) {
+		super.addSourceConnection(connection);
+		Object sourceModel = getData();
+		sourceModel = AdapterFactoryEditingDomain.unwrap(sourceModel);
+		if (sourceModel instanceof EObject) {
+			EStructuralFeature feature = SmooksUIUtils.getBeanIDRefFeature((EObject) sourceModel);
+			Object model = connection.getTargetNode().getData();
+			if (feature != null) {
+				EStructuralFeature idFeature = SmooksUIUtils.getBeanIDFeature((EObject) model);
+				if (idFeature == null)
+					return;
+				// it's bean id connection
+				Object iddata = ((EObject) model).eGet(idFeature);
+				if (iddata != null) {
+					Command command = SetCommand.create(domainProvider.getEditingDomain(), (EObject) sourceModel,
+							feature, iddata);
+					domainProvider.getEditingDomain().getCommandStack().execute(command);
+					return;
+				}
+			}
+		}
+	}
+
+	@Override
+	public void removeSourceConnection(TreeNodeConnection connection) {
+		super.removeSourceConnection(connection);
+		Object sourceModel = getData();
+		sourceModel = AdapterFactoryEditingDomain.unwrap(sourceModel);
+		if (sourceModel instanceof EObject) {
+			EStructuralFeature feature = SmooksUIUtils.getBeanIDRefFeature((EObject) sourceModel);
+			Object model = connection.getTargetNode().getData();
+			if (feature != null) {
+				EStructuralFeature idFeature = SmooksUIUtils.getBeanIDFeature((EObject) model);
+				if (idFeature == null)
+					return;
+				// it's bean id connection
+				if (idFeature != null) {
+					Command command = SetCommand.create(domainProvider.getEditingDomain(), (EObject) sourceModel,
+							feature, null);
+					domainProvider.getEditingDomain().getCommandStack().execute(command);
+					return;
+				}
+			}
+		}
+	}
+
+	@Override
 	public void addTargetConnection(TreeNodeConnection connection) {
 		super.addTargetConnection(connection);
 		Object model = getData();
 		model = AdapterFactoryEditingDomain.unwrap(model);
 		if (model instanceof EObject) {
-			EStructuralFeature feature = getFeature(model);
+			// for the javabean children , there is only "Selector" target
+			// connection;
+			EStructuralFeature feature = SmooksUIUtils.getSelectorFeature((EObject) model);
+			if (feature == null)
+				return;
 			EObject owner = (EObject) model;
 			AbstractSmooksGraphicalModel targetGraphModel = connection.getSourceNode();
 			Object tm = targetGraphModel.getData();
@@ -64,33 +147,6 @@ public class JavaBeanChildGraphModel extends TreeNodeModel {
 			}
 		}
 	}
-	
-	protected EStructuralFeature getFeature(Object model){
-		EStructuralFeature feature = null;
-		if(model == null){
-			return null;
-		}
-		if (model instanceof WiringType) {
-			feature = JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
-		}
-		if (model instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
-			feature = Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
-		}
-		if (model instanceof ValueType) {
-			feature = JavabeanPackage.Literals.VALUE_TYPE__DATA;
-		}
-		if (model instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
-			feature = Javabean12Package.Literals.VALUE_TYPE__DATA;
-		}
-		if (model instanceof ExpressionType) {
-			feature = JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT;
-		}
-		if (model instanceof org.jboss.tools.smooks.model.javabean12.ExpressionType) {
-			feature = Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT;
-		}
-		
-		return feature;
-	}
 
 	@Override
 	public void removeTargetConnection(TreeNodeConnection connection) {
@@ -98,11 +154,13 @@ public class JavaBeanChildGraphModel extends TreeNodeModel {
 		Object model = getData();
 		model = AdapterFactoryEditingDomain.unwrap(model);
 		if (model instanceof EObject) {
-			EStructuralFeature feature = getFeature(model);
+			EStructuralFeature feature = SmooksUIUtils.getSelectorFeature((EObject) model);
+			if (feature == null)
+				return;
 			EObject owner = (EObject) model;
 			Command command = SetCommand.create(domainProvider.getEditingDomain(), owner, feature, null);
 			domainProvider.getEditingDomain().getCommandStack().execute(command);
 		}
 	}
-	
+
 }

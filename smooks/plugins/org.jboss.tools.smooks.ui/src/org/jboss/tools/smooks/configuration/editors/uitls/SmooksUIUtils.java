@@ -124,6 +124,7 @@ import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.OpenFileHyperLinkListener;
 import org.jboss.tools.smooks.configuration.editors.SelectorAttributes;
 import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
+import org.jboss.tools.smooks.configuration.editors.groovy.GroovyUICreator;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaMethodsSelectionDialog;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaPropertiesSelectionDialog;
@@ -133,9 +134,17 @@ import org.jboss.tools.smooks.contentassist.TypeProposalLabelProvider;
 import org.jboss.tools.smooks.core.SmooksCoreActivator;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.model.calc.CalcPackage;
+import org.jboss.tools.smooks.model.calc.Counter;
+import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
+import org.jboss.tools.smooks.model.datasource.Direct;
+import org.jboss.tools.smooks.model.esbrouting.EsbroutingPackage;
+import org.jboss.tools.smooks.model.esbrouting.RouteBean;
+import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
+import org.jboss.tools.smooks.model.fileRouting.OutputStream;
 import org.jboss.tools.smooks.model.freemarker.BindTo;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.freemarker.Use;
+import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
@@ -143,14 +152,26 @@ import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.graphics.ext.util.GraphResourceFactoryImpl;
+import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
+import org.jboss.tools.smooks.model.javabean.ExpressionType;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
+import org.jboss.tools.smooks.model.javabean.ValueType;
+import org.jboss.tools.smooks.model.javabean.WiringType;
+import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
+import org.jboss.tools.smooks.model.jmsrouting.JmsRouter;
+import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
+import org.jboss.tools.smooks.model.jmsrouting12.JMS12Router;
+import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
+import org.jboss.tools.smooks.model.smooks.ResourceConfigType;
+import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.xsl.Xsl;
+import org.jboss.tools.smooks.model.xsl.XslPackage;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -183,50 +204,118 @@ public class SmooksUIUtils {
 
 	public static final String[] SELECTOR_SPERATORS = new String[] { " ", "/" };
 
+	private static void fillBeanIdStringList(EObject model, final Collection<String> beanIdList) {
+		EStructuralFeature beanIDFeature = getBeanIDFeature(model);
+		if (beanIDFeature != null) {
+			Object data = model.eGet(beanIDFeature);
+			if (data != null) {
+				String beanId = data.toString();
+				if (!beanIdList.contains(beanId))
+					beanIdList.add(beanId);
+			}
+		}
+		List<EObject> children = model.eContents();
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			EObject eObject = (EObject) iterator.next();
+			fillBeanIdStringList(eObject, beanIdList);
+		}
+	}
+
+	public static Collection<EObject> getBeanIdModelList(EObject model) {
+		List<EObject> beanIdModelList = new ArrayList<EObject>();
+		fillBeanIdModelList(model, beanIdModelList);
+		return beanIdModelList;
+	}
+
+	public static void fillBeanIdModelList(EObject model, final List<EObject> list) {
+		EStructuralFeature beanIDFeature = getBeanIDFeature(model);
+		if (beanIDFeature != null) {
+			list.add(model);
+		}
+		List<EObject> children = model.eContents();
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			EObject eObject = (EObject) iterator.next();
+			fillBeanIdModelList(eObject, list);
+		}
+	}
+
+	public static Collection<EObject> getBeanIdRefModelList(EObject model) {
+		List<EObject> beanIdRefModelList = new ArrayList<EObject>();
+		fillBeanIdRefModelList(model, beanIdRefModelList);
+		return beanIdRefModelList;
+	}
+
+	private static void fillBeanIdRefModelList(EObject model, List<EObject> beanIdRefModelList) {
+		EStructuralFeature beanIDRefFeature = getBeanIDRefFeature(model);
+		if (beanIDRefFeature != null) {
+			beanIdRefModelList.add(model);
+		}
+		List<EObject> children = model.eContents();
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			EObject eObject = (EObject) iterator.next();
+			fillBeanIdRefModelList(eObject, beanIdRefModelList);
+		}
+	}
+
 	public static List<String> getBeanIdStringList(SmooksResourceListType resourceList) {
 		if (resourceList == null) {
 			return null;
 		}
-		List<AbstractResourceConfig> rlist = resourceList.getAbstractResourceConfig();
 		List<String> beanIdList = new ArrayList<String>();
-		for (Iterator<?> iterator = rlist.iterator(); iterator.hasNext();) {
-			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
-			if (abstractResourceConfig instanceof BindingsType) {
-				String beanId = ((BindingsType) abstractResourceConfig).getBeanId();
-				if (beanId == null)
-					continue;
-				if (!beanIdList.contains(beanId))
-					beanIdList.add(beanId);
-			}
-			if (abstractResourceConfig instanceof Freemarker) {
-				Use use = ((Freemarker) abstractResourceConfig).getUse();
-				if (use != null) {
-					BindTo bindTo = use.getBindTo();
-					if (bindTo != null) {
-						String beanId = ((BindTo) bindTo).getId();
-						if (beanId == null)
-							continue;
-						if (!beanIdList.contains(beanId))
-							beanIdList.add(beanId);
-					}
-				}
 
-			}
-			if (abstractResourceConfig instanceof Xsl) {
-				org.jboss.tools.smooks.model.xsl.Use use = ((Xsl) abstractResourceConfig).getUse();
-				if (use != null) {
-					org.jboss.tools.smooks.model.xsl.BindTo bindTo = use.getBindTo();
-					if (bindTo != null) {
-						String beanId = ((org.jboss.tools.smooks.model.xsl.BindTo) bindTo).getId();
-						if (beanId == null)
-							continue;
-						if (!beanIdList.contains(beanId))
-							beanIdList.add(beanId);
-					}
-				}
+		fillBeanIdStringList(resourceList, beanIdList);
 
-			}
-		}
+		// for (Iterator<?> iterator = rlist.iterator(); iterator.hasNext();) {
+		// AbstractResourceConfig abstractResourceConfig =
+		// (AbstractResourceConfig) iterator.next();
+		// EStructuralFeature beanIDFeature =
+		// getBeanIDFeature(abstractResourceConfig);
+		// if (beanIDFeature != null) {
+		// Object data = abstractResourceConfig.eGet(beanIDFeature);
+		// if (data != null) {
+		// String beanId = data.toString();
+		// if (!beanIdList.contains(beanId))
+		// beanIdList.add(beanId);
+		// }
+		// }
+		// if (abstractResourceConfig instanceof BindingsType) {
+		// String beanId = ((BindingsType) abstractResourceConfig).getBeanId();
+		// if (beanId == null)
+		// continue;
+		// if (!beanIdList.contains(beanId))
+		// beanIdList.add(beanId);
+		// }
+		// if (abstractResourceConfig instanceof Freemarker) {
+		// Use use = ((Freemarker) abstractResourceConfig).getUse();
+		// if (use != null) {
+		// BindTo bindTo = use.getBindTo();
+		// if (bindTo != null) {
+		// String beanId = ((BindTo) bindTo).getId();
+		// if (beanId == null)
+		// continue;
+		// if (!beanIdList.contains(beanId))
+		// beanIdList.add(beanId);
+		// }
+		// }
+		//
+		// }
+		// if (abstractResourceConfig instanceof Xsl) {
+		// org.jboss.tools.smooks.model.xsl.Use use = ((Xsl)
+		// abstractResourceConfig).getUse();
+		// if (use != null) {
+		// org.jboss.tools.smooks.model.xsl.BindTo bindTo = use.getBindTo();
+		// if (bindTo != null) {
+		// String beanId = ((org.jboss.tools.smooks.model.xsl.BindTo)
+		// bindTo).getId();
+		// if (beanId == null)
+		// continue;
+		// if (!beanIdList.contains(beanId))
+		// beanIdList.add(beanId);
+		// }
+		// }
+		//
+		// }
+		// }
 		return beanIdList;
 	}
 
@@ -867,8 +956,7 @@ public class SmooksUIUtils {
 		AttributeFieldEditPart fieldEditPart = createDialogFieldEditor(labelText, parent, toolkit, propertyDescriptor,
 				"Browse", new IFieldDialog() {
 					public Object open(Shell shell) {
-						SelectorCreationDialog dialog = new SelectorCreationDialog(shell, extType,
-								currentEditorPart);
+						SelectorCreationDialog dialog = new SelectorCreationDialog(shell, extType, currentEditorPart);
 						if (dialog.open() == Dialog.OK) {
 							Object currentSelection = dialog.getCurrentSelection();
 							SelectorAttributes sa = dialog.getSelectorAttributes();
@@ -2083,7 +2171,7 @@ public class SmooksUIUtils {
 	}
 
 	private static IXMLStructuredObject localXMLNodeWithNodeName(String name, IXMLStructuredObject contextNode,
-			Map<Object , Object> usedNodeMap) {
+			Map<Object, Object> usedNodeMap) {
 		if (name == null || contextNode == null)
 			return null;
 		String nodeName = contextNode.getNodeName();
@@ -2138,7 +2226,7 @@ public class SmooksUIUtils {
 	}
 
 	public static IXMLStructuredObject localXMLNodeWithNodeName(String name, IXMLStructuredObject contextNode) {
-		HashMap<Object,Object> map = new HashMap<Object,Object>();
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		IXMLStructuredObject node = localXMLNodeWithNodeName(name, contextNode, map);
 		map.clear();
 		map = null;
@@ -2387,37 +2475,96 @@ public class SmooksUIUtils {
 		}
 		return actions;
 	}
-	
-	public static boolean isRelatedConnectionFeature(EStructuralFeature feature){
-		if(feature == JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT){
+
+	public static boolean isRelatedConnectionFeature(EStructuralFeature feature) {
+		// for Bean ID
+		if (FreemarkerPackage.Literals.BIND_TO__ID == feature){
 			return true;
 		}
-		if(feature == JavabeanPackage.Literals.VALUE_TYPE__DATA){
+		if (feature == XslPackage.Literals.BIND_TO__ID) {
 			return true;
 		}
-		if(feature == JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT){
+
+		if (feature ==  JavabeanPackage.Literals.BINDINGS_TYPE__BEAN_ID) {
 			return true;
 		}
-		if(feature == JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT){
-			return true;
-		}
-		
-		if(feature == Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT){
-			return true;
-		}
-		if(feature == Javabean12Package.Literals.VALUE_TYPE__DATA){
-			return true;
-		}
-		if(feature == Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT){
-			return true;
-		}
-		if(feature == Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT){
+
+		if (feature == Javabean12Package.Literals.BEAN_TYPE__BEAN_ID) {
 			return true;
 		}
 		
+		// for bean ref id :
+		if (JmsroutingPackage.Literals.JMS_ROUTER__BEAN_ID == feature){
+			return true;
+		}
+		if (Jmsrouting12Package.Literals.JMS12_ROUTER__BEAN_ID == feature){
+			return true;
+		}
+		if (JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF == feature){
+			return true;
+		}
+		if (Javabean12Package.Literals.WIRING_TYPE__BEAN_ID_REF == feature){
+			return true;
+		}
+		
+		// for selector : 
+		if (JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT == feature){
+			return true;
+		}
+		if (CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT == feature){
+			return true;
+		}
+		if (DatasourcePackage.Literals.DIRECT__BIND_ON_ELEMENT == feature){
+			return true;
+		}
+		if (EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_ON_ELEMENT == feature){
+			return true;
+		}
+		if (FileRoutingPackage.Literals.OUTPUT_STREAM__OPEN_ON_ELEMENT == feature){
+			return true;
+		}
+		if (FreemarkerPackage.Literals.FREEMARKER__APPLY_ON_ELEMENT == feature){
+			return true;
+		}
+		if (XslPackage.Literals.XSL__APPLY_ON_ELEMENT == feature){
+			return true;
+		}
+		if (GroovyPackage.Literals.GROOVY__EXECUTE_ON_ELEMENT == feature){
+			return true;
+		}
+		if (JmsroutingPackage.Literals.JMS_ROUTER__ROUTE_ON_ELEMENT == feature){
+			return true;
+		}
+		if (SmooksPackage.Literals.RESOURCE_CONFIG_TYPE__SELECTOR == feature){
+			return true;
+		}
+		if (SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR == feature){
+			return true;
+		}
+		if (JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT == feature){
+			return true;
+		}
+		if (JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT == feature){
+			return true;
+		}
+		if (JavabeanPackage.Literals.VALUE_TYPE__DATA == feature){
+			return true;
+		}
+		if (Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT == feature){
+			return true;
+		}
+		if (Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT == feature){
+			return true;
+		}
+		if (Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT == feature){
+			return true;
+		}
+		if (Javabean12Package.Literals.VALUE_TYPE__DATA == feature){
+			return true;
+		}
 		return false;
 	}
-	
+
 	public static IJavaSearchScope getSearchScope(IJavaProject project) {
 		return SearchEngine.createJavaSearchScope(getNonJRERoots(project));
 	}
@@ -2451,5 +2598,110 @@ public class SmooksUIUtils {
 		return false;
 	}
 
+	public static EStructuralFeature getBeanIDFeature(EObject model) {
+		if (model == null) {
+			return null;
+		}
+		if (model instanceof BindTo) {
+			return FreemarkerPackage.Literals.BIND_TO__ID;
+		}
+		if (model instanceof org.jboss.tools.smooks.model.xsl.BindTo) {
+			return XslPackage.Literals.BIND_TO__ID;
+		}
+
+		if (model instanceof BindingsType) {
+			return JavabeanPackage.Literals.BINDINGS_TYPE__BEAN_ID;
+		}
+
+		if (model instanceof BeanType) {
+			return Javabean12Package.Literals.BEAN_TYPE__BEAN_ID;
+		}
+
+		return null;
+	}
+
+	public static EStructuralFeature getBeanIDRefFeature(EObject model) {
+		if (model == null) {
+			return null;
+		}
+		if (model instanceof JmsRouter) {
+			return JmsroutingPackage.Literals.JMS_ROUTER__BEAN_ID;
+		}
+		if (model instanceof JMS12Router) {
+			return Jmsrouting12Package.Literals.JMS12_ROUTER__BEAN_ID;
+		}
+		if (model instanceof WiringType) {
+			return JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF;
+		}
+
+		if (model instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
+			return Javabean12Package.Literals.WIRING_TYPE__BEAN_ID_REF;
+		}
+		return null;
+	}
+
+	public static EStructuralFeature getSelectorFeature(EObject model) {
+		if (model == null)
+			return null;
+		if (model instanceof BindingsType) {
+			return JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT;
+		}
+		if (model instanceof Counter) {
+			return CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT;
+		}
+		if (model instanceof Direct) {
+			return DatasourcePackage.Literals.DIRECT__BIND_ON_ELEMENT;
+		}
+		if (model instanceof RouteBean) {
+			return EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_ON_ELEMENT;
+		}
+		if (model instanceof OutputStream) {
+			return FileRoutingPackage.Literals.OUTPUT_STREAM__OPEN_ON_ELEMENT;
+		}
+		if (model instanceof Freemarker) {
+			return FreemarkerPackage.Literals.FREEMARKER__APPLY_ON_ELEMENT;
+		}
+		if (model instanceof Xsl) {
+			return XslPackage.Literals.XSL__APPLY_ON_ELEMENT;
+		}
+		if (model instanceof GroovyUICreator) {
+			return GroovyPackage.Literals.GROOVY__EXECUTE_ON_ELEMENT;
+		}
+		if (model instanceof JmsRouter) {
+			return JmsroutingPackage.Literals.JMS_ROUTER__ROUTE_ON_ELEMENT;
+		}
+
+		if (model instanceof ResourceConfigType) {
+			return SmooksPackage.Literals.RESOURCE_CONFIG_TYPE__SELECTOR;
+		}
+
+		if (model instanceof SmooksResourceListType) {
+			return SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR;
+		}
+
+		if (model instanceof WiringType) {
+			return JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
+		}
+		if (model instanceof ExpressionType) {
+			return JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT;
+		}
+		if (model instanceof ValueType) {
+			return JavabeanPackage.Literals.VALUE_TYPE__DATA;
+		}
+
+		if (model instanceof BeanType) {
+			return Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT;
+		}
+		if (model instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
+			return Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
+		}
+		if (model instanceof org.jboss.tools.smooks.model.javabean12.ExpressionType) {
+			return Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT;
+		}
+		if (model instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
+			return Javabean12Package.Literals.VALUE_TYPE__DATA;
+		}
+		return null;
+	}
 
 }
