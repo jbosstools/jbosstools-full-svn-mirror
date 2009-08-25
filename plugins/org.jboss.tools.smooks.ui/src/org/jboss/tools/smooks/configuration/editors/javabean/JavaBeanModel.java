@@ -281,12 +281,12 @@ public class JavaBeanModel implements IXMLStructuredObject, Cloneable {
 		this(beanClass, name, null, null, true);
 	}
 
-	JavaBeanModel(Class beanClass, boolean lazyLoadProperties) {
+	JavaBeanModel(Class<?> beanClass, boolean lazyLoadProperties) {
 		this(beanClass, null, null, null, lazyLoadProperties);
 	}
 
 	public boolean isPrimitive() {
-		Class beanType = getBeanClass();
+		Class<?> beanType = getBeanClass();
 		if (beanType == null)
 			return false;
 		if (beanType.isPrimitive() || JavaBeanModelFactory.isPrimitiveObject(beanType)) {

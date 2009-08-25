@@ -60,6 +60,7 @@ public class JavaBeanModelFactory {
 	}
 
 	public static boolean isPrimitiveObject(Class<?> clazz) {
+		if(clazz.isEnum()) return true;
 		return (PRIMITIVE_CLASSES.indexOf(clazz) != -1);
 	}
 }

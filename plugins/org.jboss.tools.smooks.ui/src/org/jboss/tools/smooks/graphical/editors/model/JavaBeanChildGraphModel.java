@@ -57,6 +57,13 @@ public class JavaBeanChildGraphModel extends TreeNodeModel {
 					return true;
 				}
 			}
+			
+			if(sourceModel instanceof IXMLStructuredObject && targetModel instanceof EObject){
+				EStructuralFeature selectorFeature = SmooksUIUtils.getSelectorFeature((EObject)targetModel);
+				if(selectorFeature != null){
+					return true;
+				}
+			}
 		}
 		return false;
 	}
