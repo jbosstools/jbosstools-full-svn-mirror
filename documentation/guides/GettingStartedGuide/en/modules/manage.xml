@@ -15,9 +15,9 @@
 
     <para>In this chapter we&apos;ll focus more on how to operate the <property>JBoss
             AS</property> from <property>JBoss Developer Studio</property>.</para>
-    <para><property>JBoss Developer Studio</property> is shipped with <property>JBoss EAP
+    <para><property>JBoss Developer Studio 2.1.0.GA</property> is shipped with <property>JBoss EAP 5
          </property>. When you followed the default installation of <property>JBoss
-            Developer Studio</property>, you should already have a JBoss EAP 4.3 Server installed and
+            Developer Studio</property>, you should already have a JBoss EAP 5 Server installed and
         defined. To run JBoss AS you need JDK 1.5, JDK 6 is not formally supported yet, although
         you may be able to start the server with it.</para>
 
@@ -141,7 +141,7 @@
         <?dbhtml filename="JBossInstances.html"?>
         <title>How to Use Your Own JBoss AS Instance with JBDS</title>
         <para>Although <property>JBoss Developer Studio</property> works closely with
-                <property>JBoss EAP 4.3</property> we do not ultimately tie you to any particular
+                <property>JBoss EAP 5</property> we do not ultimately tie you to any particular
             server for deployment. There are some servers that Studio supports directly (via the
             bundled Eclipse WTP plug-ins). In this section we discuss how to manage self-installed
             JBoss AS. Suppose you want to deploy the application to <property>JBoss 4.2.3
