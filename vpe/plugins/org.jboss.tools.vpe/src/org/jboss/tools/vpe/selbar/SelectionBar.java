@@ -92,6 +92,7 @@ public class SelectionBar implements SelectionListener {
 	private boolean visible;
 
 	private ImageButton arrowButton;
+	private Node currentSelectedNode = null;
 
 //	private ToolItem arrowButton;
 
@@ -294,11 +295,7 @@ public class SelectionBar implements SelectionListener {
 	 * Updates buttons in the selection bar and the drop-down menu
 	 * according to the source selection.
 	 */
-    public void updateNodes() {
-		// bug was fixed when toolbar are not shown for resizeble components
-		cmpToolBar.layout();
-		splitter.getParent().layout(true, true);
-    	
+    public void updateNodes(boolean forceUpdate) {
 		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(
 				vpeController.getSourceEditor());
 		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
@@ -311,6 +308,16 @@ public class SelectionBar implements SelectionListener {
 		if (node != null && node.getNodeType() == Node.TEXT_NODE) {
 			node = node.getParentNode();
 		}
+
+		if (currentSelectedNode == node && !forceUpdate) {
+			return;
+		} else {
+			currentSelectedNode = node;
+		}
+
+		// bug was fixed when toolbar are not shown for resizeble components
+		cmpToolBar.layout();
+		splitter.getParent().layout(true, true);
 
 		removeNodeListenerFromAllNodes();
 		cleanToolBar(selBar);
@@ -355,7 +362,7 @@ public class SelectionBar implements SelectionListener {
 		if (!resizeListenerAdded ) {
 			cmpToolBar.addListener(SWT.Resize, new Listener() {
 				public void handleEvent(Event event) {
-					updateNodes();
+					updateNodes(true);
 				}
 			});
 			resizeListenerAdded = true;
@@ -633,6 +640,6 @@ class NodeListener implements INodeAdapter {
      * event' instance.
      */
     public void notifyChanged(INodeNotifier notifier, int eventType, Object changedFeature, Object oldValue, Object newValue, int pos) {
-   		selectionBar.updateNodes();
+   		selectionBar.updateNodes(false);
     }
 }
