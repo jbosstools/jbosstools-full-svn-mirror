@@ -244,7 +244,7 @@ public class ValueTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ValueType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/value_binding"));
 	}
 
 	/**

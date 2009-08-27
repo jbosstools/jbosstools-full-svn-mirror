@@ -189,7 +189,7 @@ public class ExpressionTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ExpressionType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/expression_binding"));
 	}
 
 	/**
