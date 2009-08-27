@@ -1041,6 +1041,21 @@ public class SmooksUIUtils {
 		}
 		return null;
 	}
+	
+	public static AttributeFieldEditPart createTextFieldEditor(String label,
+			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+			OpenEditorEditInnerContentsAction action) {
+		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300,
+				null, VALUE_TYPE_TEXT, action);
+	}
+
+	public static AttributeFieldEditPart createTextFieldEditor(String label,
+			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
+			OpenEditorEditInnerContentsAction action, boolean expanedEditor) {
+		return createStringFieldEditor(label, parent, editingdomain, toolkit, null, model, true, true, false, 300,
+				null, VALUE_TYPE_TEXT, action, expanedEditor);
+	}
+
 
 	public static AttributeFieldEditPart createCDATAFieldEditor(String label,
 			AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,

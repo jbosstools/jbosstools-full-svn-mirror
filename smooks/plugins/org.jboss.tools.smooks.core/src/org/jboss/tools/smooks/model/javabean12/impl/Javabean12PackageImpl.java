@@ -943,7 +943,7 @@ public class Javabean12PackageImpl extends EPackageImpl implements Javabean12Pac
 		   source, 
 		   new String[] {
 			 "name", "expression_._type",
-			 "kind", "simple"
+			 "kind", "mixed"
 		   });		
 		addAnnotation
 		  (getExpressionType_Value(), 
