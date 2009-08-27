@@ -189,7 +189,7 @@ public class WiringTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/WiringType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/wiring_binding"));
 	}
 
 	/**

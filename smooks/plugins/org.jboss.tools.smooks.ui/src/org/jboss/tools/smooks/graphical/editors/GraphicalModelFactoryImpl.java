@@ -61,14 +61,14 @@ public class GraphicalModelFactoryImpl implements GraphicalModelFactory {
 					if (obj instanceof BeanType) {
 						String p = ((BeanType) obj).getBeanId();
 						if (p == null) {
-							p = "";
+							p = "<NULL>";
 						}
 						return p;
 					}
 					if (obj instanceof BindingsType) {
 						String p = ((BindingsType) obj).getBeanId();
 						if (p == null) {
-							p = "";
+							p = "<NULL>";
 						}
 						return p;
 					}
@@ -76,21 +76,21 @@ public class GraphicalModelFactoryImpl implements GraphicalModelFactory {
 					if (obj instanceof ValueType) {
 						String p = ((ValueType) obj).getProperty();
 						if (p == null) {
-							p = "";
+							p = "<NULL>";
 						}
 						return p;
 					}
 					if (obj instanceof WiringType) {
 						String p = ((WiringType) obj).getProperty();
 						if (p == null) {
-							p = "";
+							p = "<NULL>";
 						}
 						return p;
 					}
 					if (obj instanceof ExpressionType) {
 						String p = ((ExpressionType) obj).getProperty();
 						if (p == null) {
-							p = "";
+							p = "<NULL>";
 						}
 						return p;
 					}
@@ -98,21 +98,21 @@ public class GraphicalModelFactoryImpl implements GraphicalModelFactory {
 					if (obj instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
 						String p = ((org.jboss.tools.smooks.model.javabean12.ValueType) obj).getProperty();
 						if (p == null) {
-							p = "";
+							p = "<NULL>";
 						}
 						return p;
 					}
 					if (obj instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
 						String p = ((org.jboss.tools.smooks.model.javabean12.WiringType) obj).getProperty();
 						if (p == null) {
-							p = "";
+							p = "<NULL>";
 						}
 						return p;
 					}
 					if (obj instanceof org.jboss.tools.smooks.model.javabean12.ExpressionType) {
 						String p = ((org.jboss.tools.smooks.model.javabean12.ExpressionType) obj).getProperty();
 						if (p == null) {
-							p = "";
+							p = "<NULL>";
 						}
 						return p;
 					}
