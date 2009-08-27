@@ -10,7 +10,7 @@
             filenames="bpel-deploy.xml,deploy.xml"
             icon="icons/obj16/ode.gif"
             id="org.eclipse.bpel.apache.ode.deploy.ui.editors.ODEDeployMultiPageEditor"
-            name="JBoss BPEL Descriptor Editor">
+            name="ODE Deployment Descriptor Editor">
          <contentTypeBinding
                contentTypeId="org.eclipse.bpel.apache.ode.deploy.ui.content-type">
          </contentTypeBinding>
@@ -20,7 +20,7 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            name="JBoss BPEL Deployment Descriptor"
+            name="Apache ODE Deployment Descriptor"
             icon="icons/obj16/ode.gif"
             category="org.eclipse.bpel.wizards"
             class="org.eclipse.bpel.apache.ode.deploy.ui.wizards.NewODEDeployWizard"
@@ -34,7 +34,7 @@
             default-charset="UTF-8"
             file-names="deploy.xml,bpel-deploy.xml"
             id="org.eclipse.bpel.apache.ode.deploy.ui.content-type"
-            name="JBoss BPEL Deployment Descriptor"
+            name="ODE BPEL Deployment Descriptor"
             priority="normal">
       </content-type>
    </extension>
@@ -44,7 +44,7 @@
             adaptable="true"
             icon="icons/obj16/ode.gif"
             id="org.eclipse.bpel.apache.ode.deploy.ui.icondecorator"
-            label="JBoss BPEL DD Resource Decorator"
+            label="ODE DD Resource Decorator"
             lightweight="true"
             location="TOP_LEFT"
             state="true">

@@ -40,8 +40,8 @@ public class ODEDeployWizardPage extends WizardPage {
 	 */
 	public ODEDeployWizardPage(ISelection selection) {
 		super("ODEDeployDescriptorWizardPage");
-		setTitle("JBoss BPEL Deployment Descriptor");
-		setDescription("This wizard creates a new JBoss BPEL  descriptor file (bpel-deploy.xml). Note that the file name cannot be changed.");
+		setTitle("Apache ODE Deployment Descriptor");
+		setDescription("This wizard creates a new Apache ODE  descriptor file (bpel-deploy.xml). Note that the file name cannot be changed.");
 		this.selection = selection;
 	}
 
