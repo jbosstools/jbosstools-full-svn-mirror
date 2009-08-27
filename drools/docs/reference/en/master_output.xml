@@ -25,13 +25,13 @@
     
      <bookinfo>
          <title>Drools Tools Reference Guide</title>
-             <corpauthor>
-                 <inlinemediaobject>
-                     <imageobject role="fo">
-                         <imagedata fileref="images/jbosstools_logo.png" format="PNG"></imagedata>
+             <corpauthor diffmk:change="added">
+                 <inlinemediaobject diffmk:change="added">
+                     <imageobject diffmk:change="added" role="fo">
+                         <imagedata diffmk:change="added" fileref="images/jbosstools_logo.png" format="PNG"></imagedata>
                      </imageobject>	
-                     <imageobject role="html">
-                         <imagedata></imagedata>
+                     <imageobject diffmk:change="added" role="html">
+                         <imagedata diffmk:change="added"></imagedata>
                      </imageobject>	
                  </inlinemediaobject>           
              </corpauthor>
@@ -41,7 +41,7 @@
 	                       <copyright>
 			             <year>2007</year>
 	                           <year>2009</year>
-	                           <holder>JBoss by Red Hat</holder>
+	                           <holder><diffmk:wrapper diffmk:change="changed">JBoss by Red Hat</diffmk:wrapper></holder>
 	                       </copyright>
           <releaseinfo><diffmk:wrapper diffmk:change="changed">
               Version: 5.1.0.trunk
