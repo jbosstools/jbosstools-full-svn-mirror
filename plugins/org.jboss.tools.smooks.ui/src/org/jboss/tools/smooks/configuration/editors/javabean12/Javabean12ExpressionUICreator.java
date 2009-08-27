@@ -54,7 +54,7 @@ public class Javabean12ExpressionUICreator extends PropertiesAndSetterMethodSear
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
-		AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Expression", editingdomain, toolkit,
+		AttributeFieldEditPart cdatatext = SmooksUIUtils.createTextFieldEditor("Expression", editingdomain, toolkit,
 				parent, model, null, true);
 		if (cdatatext != null) {
 			list.add(cdatatext);

@@ -704,11 +704,13 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 			}
 		}
 		EditPart rootEditPart = getGraphicalViewer().getContents();
-		List<?> childrenEditPart = rootEditPart.getChildren();
-		for (Iterator<?> iterator = childrenEditPart.iterator(); iterator.hasNext();) {
-			Object object = (Object) iterator.next();
-			if (object instanceof InputDataContainerEditPart) {
-				SmooksUIUtils.expandGraphTree(expanedTreeNodeList, (InputDataContainerEditPart) object);
+		if (rootEditPart != null) {
+			List<?> childrenEditPart = rootEditPart.getChildren();
+			for (Iterator<?> iterator = childrenEditPart.iterator(); iterator.hasNext();) {
+				Object object = (Object) iterator.next();
+				if (object instanceof InputDataContainerEditPart) {
+					SmooksUIUtils.expandGraphTree(expanedTreeNodeList, (InputDataContainerEditPart) object);
+				}
 			}
 		}
 

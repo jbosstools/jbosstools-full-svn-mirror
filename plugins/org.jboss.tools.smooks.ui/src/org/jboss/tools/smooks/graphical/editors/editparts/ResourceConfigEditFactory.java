@@ -13,6 +13,8 @@ package org.jboss.tools.smooks.graphical.editors.editparts;
 import org.eclipse.gef.EditPart;
 import org.jboss.tools.smooks.graphical.editors.model.JavaBeanChildGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.JavaBeanGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.ResourceConfigChildNodeGraphModelImpl;
+import org.jboss.tools.smooks.graphical.editors.model.ResourceConfigGraphModelImpl;
 
 /**
  * @author Dart
@@ -25,6 +27,12 @@ public class ResourceConfigEditFactory {
 		}
 		if(model instanceof JavaBeanChildGraphModel){
 			return new JavaBeanChildNodeEditPart();
+		}
+		if(model instanceof ResourceConfigChildNodeGraphModelImpl){
+			return new ResourceConfigChildNodeEditPart();
+		}
+		if(model instanceof ResourceConfigGraphModelImpl){
+			return new ResourceConfigEditPart();
 		}
 		return null;
 	}

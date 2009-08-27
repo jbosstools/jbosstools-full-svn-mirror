@@ -29,7 +29,7 @@ public class TreeNodeModel extends AbstractSmooksGraphicalModel {
 		}
 		return true;
 	}
-	
+
 	public ITreeContentProvider getContentProvider() {
 		return contentProvider;
 	}
@@ -60,8 +60,10 @@ public class TreeNodeModel extends AbstractSmooksGraphicalModel {
 					for (int i = 0; i < models.length; i++) {
 						Object model = models[i];
 						TreeNodeModel n = createChildModel(model, contentProvider, labelProvider);
-						children.add(n);
-						n.setParent(this);
+						if (n != null) {
+							children.add(n);
+							n.setParent(this);
+						}
 					}
 					return children;
 				}
@@ -73,11 +75,13 @@ public class TreeNodeModel extends AbstractSmooksGraphicalModel {
 				if (models != null) {
 					for (int i = 0; i < models.length; i++) {
 						Object model = models[i];
-//						model = AdapterFactoryEditingDomain.unwrap(model);
+						// model = AdapterFactoryEditingDomain.unwrap(model);
 						if (!childExsit(model)) {
 							TreeNodeModel n = createChildModel(model, contentProvider, labelProvider);
-							children.add(n);
-							n.setParent(this);
+							if (n != null) {
+								children.add(n);
+								n.setParent(this);
+							}
 						}
 					}
 					List<AbstractSmooksGraphicalModel> temp = new ArrayList<AbstractSmooksGraphicalModel>(children);
@@ -98,7 +102,6 @@ public class TreeNodeModel extends AbstractSmooksGraphicalModel {
 		return children;
 	}
 
-
 	public String getText() {
 		if (data != null && labelProvider != null) {
 			return labelProvider.getText(data);
@@ -113,13 +116,13 @@ public class TreeNodeModel extends AbstractSmooksGraphicalModel {
 		return null;
 	}
 
-//	public boolean isLinkable() {
-//		return linkable;
-//	}
-//
-//	public void setLinkable(boolean linkable) {
-//		this.linkable = linkable;
-//	}
+	// public boolean isLinkable() {
+	// return linkable;
+	// }
+	//
+	// public void setLinkable(boolean linkable) {
+	// this.linkable = linkable;
+	// }
 
 	public boolean canLinkWithSource(Object model) {
 		return true;
