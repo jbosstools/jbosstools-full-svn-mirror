@@ -8,20 +8,21 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors.model;
+package org.jboss.tools.smooks.graphical.editors.commands;
 
-import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.command.DeleteCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.jboss.tools.smooks.gef.tree.command.GEFAdapterCommand;
 
 /**
  * @author Dart
  *
  */
-public class AbstractResourceGraphModel extends TreeNodeModel {
+public class SmooksModelRemoveCommand extends GEFAdapterCommand {
 
-	public AbstractResourceGraphModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider) {
-		super(data, contentProvider, labelProvider);
+	public SmooksModelRemoveCommand(EditingDomain domain,EObject model){
+		super(domain,DeleteCommand.create(domain, model));
 	}
 
 }

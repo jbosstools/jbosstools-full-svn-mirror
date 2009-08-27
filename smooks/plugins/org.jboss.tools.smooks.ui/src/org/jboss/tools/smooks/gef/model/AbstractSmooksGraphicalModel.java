@@ -109,12 +109,17 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode {
 
 		for (Iterator<?> iterator2 = tempTargetConnections.iterator(); iterator2.hasNext();) {
 			TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
-			treeNodeConnection.disconnectSource();
+			AbstractSmooksGraphicalModel sourceNode = treeNodeConnection.getSourceNode();
+			sourceNode.getSourceConnections().remove(treeNodeConnection);
+			sourceNode.fireConnectionChanged();
 		}
 
 		for (Iterator<?> iterator2 = tempSourceConnections.iterator(); iterator2.hasNext();) {
 			TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
-			treeNodeConnection.disconnectTarget();
+//			treeNodeConnection.disconnectTarget();
+			AbstractSmooksGraphicalModel targetNode = treeNodeConnection.getTargetNode();
+			targetNode.getTargetConnections().remove(treeNodeConnection);
+			targetNode.fireConnectionChanged();
 		}
 
 		tempSourceConnections.clear();

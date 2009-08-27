@@ -13,6 +13,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeGraphicalNodeEditPolicy;
@@ -50,6 +51,10 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 		String text = getLabelText();
 		if (text != null && model.isHeaderVisable() && getFigure() instanceof TreeContainerFigure) {
 			TreeContainerFigure figure = (TreeContainerFigure) getFigure();
+			Image i = model.getImage();
+			if(i != null){
+				figure.setIcon(i);
+			}
 			figure.setText(text);
 		}
 		boolean isSource = this.isSourceLinkNodeEditPart();

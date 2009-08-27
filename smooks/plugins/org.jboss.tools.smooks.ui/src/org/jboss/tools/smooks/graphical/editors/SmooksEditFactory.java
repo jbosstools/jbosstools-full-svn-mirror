@@ -23,50 +23,50 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataContainerEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataTreeNodeEditPart;
-import org.jboss.tools.smooks.graphical.editors.editparts.JavaBeanChildNodeEditPart;
-import org.jboss.tools.smooks.graphical.editors.editparts.JavaBeanContainerEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.ResourceConfigEditFactory;
+import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
-import org.jboss.tools.smooks.graphical.editors.model.JavaBeanChildGraphModel;
-import org.jboss.tools.smooks.graphical.editors.model.JavaBeanGraphModel;
 
 /**
  * @author Dart
- *
+ * 
  */
-public class SmooksEditFactory extends SmooksGEFEditFactory implements EditPartFactory{
+public class SmooksEditFactory extends SmooksGEFEditFactory implements EditPartFactory {
+	private ResourceConfigEditFactory resourceConfigFactory;
 
 	public SmooksEditFactory() {
 		super();
-		// TODO Auto-generated constructor stub
+		resourceConfigFactory = new ResourceConfigEditFactory();
 	}
 
 	public EditPart createEditPart(EditPart context, Object model) {
 		EditPart editPart = null;
-		if(model instanceof RootModel){
+		if (model instanceof RootModel) {
 			editPart = new RootEditPart();
 		}
-		if(model.getClass() == TreeNodeModel.class){
+		if (model.getClass() == TreeNodeModel.class) {
 			editPart = new TreeNodeEditPart();
-		}if(model.getClass() == TreeContainerModel.class){
+		}
+		if (model.getClass() == TreeContainerModel.class) {
 			editPart = new TreeContainerEditPart();
 		}
-		if(model.getClass() == InputDataTreeNodeModel.class){
+		if (model.getClass() == InputDataTreeNodeModel.class) {
 			editPart = new InputDataTreeNodeEditPart();
-		}if(model.getClass() == InputDataContianerModel.class){
+		}
+		if (model.getClass() == InputDataContianerModel.class) {
 			editPart = new InputDataContainerEditPart();
 		}
-		
-		// for javabean
-		if(model.getClass() == JavaBeanChildGraphModel.class){
-			editPart = new JavaBeanChildNodeEditPart();
-		}if(model.getClass() == JavaBeanGraphModel.class){
-			editPart = new JavaBeanContainerEditPart();
+
+		if (model instanceof AbstractResourceConfigGraphModel
+				|| model instanceof AbstractResourceConfigChildNodeGraphModel) {
+			editPart = resourceConfigFactory.createEditPart(model);
 		}
-		if(model.getClass() == TreeNodeConnection.class){
+		if (model.getClass() == TreeNodeConnection.class) {
 			editPart = new TreeNodeConnectionEditPart();
 		}
-		if(editPart != null){
+		if (editPart != null) {
 			editPart.setModel(model);
 		}
 		return editPart;

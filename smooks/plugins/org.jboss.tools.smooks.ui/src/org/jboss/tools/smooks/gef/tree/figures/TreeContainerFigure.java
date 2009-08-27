@@ -12,6 +12,7 @@ import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 
 /**
@@ -23,13 +24,13 @@ public class TreeContainerFigure extends Figure {
 	private IFigure headerFigure;
 
 	private IFigure contentFigure;
-	
+
 	private Label label;
-	
+
 	private TreeContainerModel model;
-	
+
 	private Color headerColor = ColorConstants.button;
-	
+
 	public TreeContainerFigure(TreeContainerModel model) {
 		super();
 		this.model = model;
@@ -43,15 +44,15 @@ public class TreeContainerFigure extends Figure {
 				graphics.setBackgroundColor(ColorConstants.white);
 				graphics.fillGradient(getBounds(), true);
 				graphics.setForegroundColor(headerColor);
-				graphics.drawLine(getBounds().getBottomLeft().translate(0, -1),
-						getBounds().getBottomRight().translate(0, -1));
+				graphics.drawLine(getBounds().getBottomLeft().translate(0, -1), getBounds().getBottomRight().translate(
+						0, -1));
 				graphics.popState();
 			}
 
 			@Override
 			public Dimension getPreferredSize(int hint, int hint2) {
 				Dimension size = super.getPreferredSize(hint, hint2);
-				return new Dimension(size.width,25);
+				return new Dimension(size.width, 25);
 			}
 		};
 		label = new Label();
@@ -67,9 +68,10 @@ public class TreeContainerFigure extends Figure {
 		contentFigure.setLayoutManager(new ToolbarLayout());
 		this.add(headerFigure);
 		this.add(contentFigure);
-		this.setLayoutManager(new ToolbarLayout());
+		ToolbarLayout tl = new ToolbarLayout();
+		tl.setMinorAlignment(ToolbarLayout.ALIGN_CENTER);
+		this.setLayoutManager(tl);
 	}
-
 	/**
 	 * @return the label
 	 */
@@ -78,7 +80,8 @@ public class TreeContainerFigure extends Figure {
 	}
 
 	/**
-	 * @param label the label to set
+	 * @param label
+	 *            the label to set
 	 */
 	public void setLabel(Label label) {
 		this.label = label;
@@ -87,7 +90,7 @@ public class TreeContainerFigure extends Figure {
 	public IFigure getContentFigure() {
 		return contentFigure;
 	}
-	
+
 	public Color getHeaderColor() {
 		return headerColor;
 	}
@@ -108,17 +111,17 @@ public class TreeContainerFigure extends Figure {
 	@Override
 	protected void paintBorder(Graphics graphics) {
 		graphics.setForegroundColor(ColorConstants.buttonDarker);
-		Rectangle drawnRectangle = new Rectangle(getBounds().x, getBounds().y,
-				getBounds().width - 1, getBounds().height - 1);
+		Rectangle drawnRectangle = new Rectangle(getBounds().x, getBounds().y, getBounds().width - 1,
+				getBounds().height - 1);
 		graphics.drawRoundRectangle(drawnRectangle, 5, 5);
 	}
-	
-	public void setText(String text){
-		if(label != null){
+
+	public void setText(String text) {
+		if (label != null) {
 			label.setText(text);
 		}
 	}
-	
+
 	public TreeContainerModel getModel() {
 		return model;
 	}
@@ -135,5 +138,10 @@ public class TreeContainerFigure extends Figure {
 		graphics.setBackgroundColor(ColorConstants.white);
 		graphics.fillRectangle(getBounds());
 		graphics.popState();
+	}
+	public void setIcon(Image i) {
+		if(label != null){
+			label.setIcon(i);
+		}
 	}
 }

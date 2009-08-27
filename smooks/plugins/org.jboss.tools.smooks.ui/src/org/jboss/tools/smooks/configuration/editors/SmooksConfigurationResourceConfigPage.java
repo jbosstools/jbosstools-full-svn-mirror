@@ -10,19 +10,26 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors;
 
+import java.util.Iterator;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
+import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ConditionsType;
 import org.jboss.tools.smooks.model.smooks.ParamsType;
 import org.jboss.tools.smooks.model.smooks.ProfilesType;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
  * @author Dart
- *
+ * 
  */
 public class SmooksConfigurationResourceConfigPage extends SmooksConfigurationFormPage {
 
@@ -35,62 +42,91 @@ public class SmooksConfigurationResourceConfigPage extends SmooksConfigurationFo
 	}
 
 	@Override
+	protected void createMasterDetailBlock(IManagedForm managedForm) {
+		// TODO Auto-generated method stub
+		super.createMasterDetailBlock(managedForm);
+	}
+
+	@Override
+	protected SmooksMasterDetailBlock createSmooksMasterDetailsBlock() {
+		return new SmooksMasterDetailBlock(getEditor(),
+				(AdapterFactoryEditingDomain) ((SmooksMultiFormEditor) getEditor()).getEditingDomain()) {
+			@Override
+			protected Object getEmptyDefaultSelection(EObject smooksTreeViewerInput) {
+				List<EObject> contents = smooksTreeViewerInput.eContents();
+				for (Iterator<?> iterator = contents.iterator(); iterator.hasNext();) {
+					EObject eObject = (EObject) iterator.next();
+					if (smooksTreeViewerInput instanceof SmooksResourceListType
+							&& eObject instanceof AbstractResourceConfig) {
+						return eObject;
+					}
+
+					if (smooksTreeViewerInput instanceof org.jboss.tools.smooks10.model.smooks.SmooksResourceListType
+							&& eObject instanceof org.jboss.tools.smooks10.model.smooks.AbstractResourceConfig) {
+						return eObject;
+					}
+				}
+				return super.getEmptyDefaultSelection(smooksTreeViewerInput);
+			}
+		};
+	}
+
+	@Override
 	protected ViewerFilter[] createViewerFilters() {
 		ViewerFilter filter = new ViewerFilter() {
-			
+
 			@Override
 			public boolean select(Viewer viewer, Object parentElement, Object element) {
 				Object obj = element;
 				obj = AdapterFactoryEditingDomain.unwrap(obj);
-				if(obj instanceof ParamsType){
+				if (obj instanceof ParamsType) {
 					return false;
 				}
-				if(obj instanceof ConditionsType){
+				if (obj instanceof ConditionsType) {
 					return false;
 				}
-				if(obj instanceof AbstractReader){
+				if (obj instanceof AbstractReader) {
 					return false;
 				}
-				if(obj instanceof ProfilesType){
+				if (obj instanceof ProfilesType) {
 					return false;
 				}
-				if(obj instanceof org.jboss.tools.smooks10.model.smooks.ProfilesType){
+				if (obj instanceof org.jboss.tools.smooks10.model.smooks.ProfilesType) {
 					return false;
 				}
 				return true;
 			}
 		};
-		
+
 		ViewerFilter[] filters = super.createViewerFilters();
 		ViewerFilter[] newFilters = new ViewerFilter[filters.length + 1];
 		newFilters[0] = filter;
-		System.arraycopy(filters, 0, newFilters,1, filters.length);
+		System.arraycopy(filters, 0, newFilters, 1, filters.length);
 		return newFilters;
 	}
-	
-	
 
-	
 	@Override
 	protected void setPageTitle(ScrolledForm form) {
-//		EObject smooksModel = ((ISmooksModelProvider) getEditor()).getSmooksModel();
-//		if (smooksModel != null) {
-//			EObject parent = smooksModel;
-//			while (parent != null) {
-//				EObject old = parent;
-//				parent = parent.eContainer();
-//				if (parent == null) {
-//					parent = old;
-//					break;
-//				}
-//			}
-//			if (parent instanceof DocumentRoot) {
-//				title = "Smooks 1.1 - " + title;
-//			}
-//			if (parent instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
-//				title = "Smooks 1.0 - " + title;
-//			}
-//		}
+		// EObject smooksModel = ((ISmooksModelProvider)
+		// getEditor()).getSmooksModel();
+		// if (smooksModel != null) {
+		// EObject parent = smooksModel;
+		// while (parent != null) {
+		// EObject old = parent;
+		// parent = parent.eContainer();
+		// if (parent == null) {
+		// parent = old;
+		// break;
+		// }
+		// }
+		// if (parent instanceof DocumentRoot) {
+		// title = "Smooks 1.1 - " + title;
+		// }
+		// if (parent instanceof
+		// org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
+		// title = "Smooks 1.0 - " + title;
+		// }
+		// }
 		form.setText("Message Filter");
 	}
 
