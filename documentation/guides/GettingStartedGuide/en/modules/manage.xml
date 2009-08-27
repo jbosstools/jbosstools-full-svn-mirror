@@ -25,7 +25,19 @@
         <?dbhtml filename="JBossbundled.html"?>
         <title>How to Manage the JBoss AS Bundled in JBDS</title>
         <para>This section covers the basics of working with the <property>JBoss Server</property>
-            supported directly by <property>JBDS</property> via bundled AS plug-in. To read more
+            supported directly by <property>JBDS</property> via bundled AS plug-in. The server points to 
+            the JBoss Enterprise Application Platform 5.0 Runtime shipped with <property>JBDS</property>.</para>
+    	
+    	<figure>
+    		<title>JBoss EAP 5.0 Runtime</title>
+    		<mediaobject>
+    			<imageobject>
+    				<imagedata fileref="images/manage/eap5runtime.png"/>
+    			</imageobject>
+    		</mediaobject>
+    	</figure>
+        	
+        	<para>To read more
             about AS plug-in, refer to the <ulink url="&aslink;">Server Manager
             guide</ulink>.</para>
 

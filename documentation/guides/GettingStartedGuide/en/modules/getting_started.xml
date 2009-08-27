@@ -396,17 +396,6 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </para></listitem>
   </itemizedlist>
   
-  
-  <figure>
-   <title>List of Servers Added</title>
-   <mediaobject>
-    <imageobject>
-     <imagedata fileref="images/getting_started/getting_started_3_3.png"/>
-    </imageobject>
-   </mediaobject>
-  </figure>
-  <para/>
-  
   <itemizedlist>
    <listitem> <para>You can also add servers one by one using the <emphasis><property>Add</property></emphasis> button:</para>
    </listitem>
