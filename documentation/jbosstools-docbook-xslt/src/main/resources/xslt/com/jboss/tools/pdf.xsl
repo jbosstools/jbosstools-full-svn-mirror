@@ -170,7 +170,9 @@
       </xsl:attribute>
    </xsl:attribute-set>
 
-   
+
+<xsl:template match="//corpauthor/inlinemediaobject" />
+
    <!--              highlighting meaningful words                      -->
    
    <xsl:template match="property">
