@@ -10,35 +10,66 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.editparts;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
-import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
+import org.jboss.tools.smooks.model.javabean.ExpressionType;
+import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
+import org.jboss.tools.smooks.model.javabean.ValueType;
+import org.jboss.tools.smooks.model.javabean.WiringType;
+import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
 /**
  * @author Dart
- * 
+ *
  */
-public class JavaBeanChildNodeEditPart extends TreeNodeEditPart {
+public class JavaBeanChildNodeEditPart extends AbstractResourceConfigChildNodeEditPart {
 
-	@Override
-	protected boolean isDragLink() {
-		AbstractSmooksGraphicalModel model = (AbstractSmooksGraphicalModel) getModel();
-		if (model != null) {
-			Object data = model.getData();
-			data = AdapterFactoryEditingDomain.unwrap(data);
-			if (data != null && data instanceof EObject) {
-				EStructuralFeature idRefFeature = SmooksUIUtils.getBeanIDRefFeature((EObject) data);
-				if (idRefFeature != null) {
-					if (((EObject) data).eGet(idRefFeature) == null || !((EObject) data).eIsSet(idRefFeature)) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
+	private List<Object> supportTypes = new ArrayList<Object>();
+	
+	
+	
+	public JavaBeanChildNodeEditPart() {
+		super();
+		supportTypes.add(ValueType.class);
+		supportTypes.add(ExpressionType.class);
+		supportTypes.add(WiringType.class);
+		
+		supportTypes.add(org.jboss.tools.smooks.model.javabean12.ValueType.class);
+		supportTypes.add(org.jboss.tools.smooks.model.javabean12.ExpressionType.class);
+		supportTypes.add(org.jboss.tools.smooks.model.javabean12.WiringType.class);
 	}
 
+
+
+	@Override
+	protected EStructuralFeature getFeature(EObject model) {
+		if(model instanceof WiringType){
+			return JavabeanPackage.Literals.BINDINGS_TYPE__WIRING;
+		}
+		
+		if(model instanceof ValueType){
+			return JavabeanPackage.Literals.BINDINGS_TYPE__VALUE;
+		}
+		
+		if(model instanceof ExpressionType){
+			return JavabeanPackage.Literals.BINDINGS_TYPE__EXPRESSION;
+		}
+		
+		if(model instanceof org.jboss.tools.smooks.model.javabean12.WiringType){
+			return Javabean12Package.Literals.BEAN_TYPE__WIRING;
+		}
+		
+		if(model instanceof org.jboss.tools.smooks.model.javabean12.ValueType){
+			return Javabean12Package.Literals.BEAN_TYPE__VALUE;
+		}
+		
+		if(model instanceof org.jboss.tools.smooks.model.javabean12.ExpressionType){
+			return Javabean12Package.Literals.BEAN_TYPE__EXPRESSION;
+		}
+		return null;
+	}
+	
 }

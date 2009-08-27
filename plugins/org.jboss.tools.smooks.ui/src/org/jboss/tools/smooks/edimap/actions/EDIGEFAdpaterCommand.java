@@ -12,7 +12,7 @@ package org.jboss.tools.smooks.edimap.actions;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.jboss.tools.smooks.edimap.editor.GEFAdapterCommand;
+import org.jboss.tools.smooks.gef.tree.command.GEFAdapterCommand;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
 
 /**

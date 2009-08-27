@@ -75,9 +75,13 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 		form.setText(title);
 	}
 
-	protected void createMasterDetailBlock(IManagedForm managedForm) {
-		masterDetailBlock = new SmooksMasterDetailBlock(getEditor(),
+	protected SmooksMasterDetailBlock createSmooksMasterDetailsBlock() {
+		return new SmooksMasterDetailBlock(getEditor(),
 				(AdapterFactoryEditingDomain) ((SmooksMultiFormEditor) getEditor()).getEditingDomain());
+	}
+
+	protected void createMasterDetailBlock(IManagedForm managedForm) {
+		masterDetailBlock = createSmooksMasterDetailsBlock();
 		ViewerFilter[] filters = createViewerFilters();
 		masterDetailBlock.setViewerFilters(filters);
 		masterDetailBlock.setMainSectionDescription(getMainSectionDescription());

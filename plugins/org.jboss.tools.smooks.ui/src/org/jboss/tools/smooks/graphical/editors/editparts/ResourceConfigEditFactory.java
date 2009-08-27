@@ -10,18 +10,22 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.editparts;
 
-import org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart;
-import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.eclipse.gef.EditPart;
+import org.jboss.tools.smooks.graphical.editors.model.JavaBeanChildGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.JavaBeanGraphModel;
 
 /**
  * @author Dart
- * 
+ *
  */
-public class JavaBeanContainerEditPart extends TreeContainerEditPart {
-
-	@Override
-	protected String generateFigureID() {
-		return SmooksGraphUtil.generateFigureID((TreeNodeModel) getModel());
+public class ResourceConfigEditFactory {
+	public EditPart createEditPart(Object model){
+		if(model instanceof JavaBeanGraphModel){
+			return new JavaBeanEditPart();
+		}
+		if(model instanceof JavaBeanChildGraphModel){
+			return new JavaBeanChildNodeEditPart();
+		}
+		return null;
 	}
-
 }

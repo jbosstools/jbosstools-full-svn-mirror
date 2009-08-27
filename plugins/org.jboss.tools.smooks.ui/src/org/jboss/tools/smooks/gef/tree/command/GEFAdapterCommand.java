@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.edimap.editor;
+package org.jboss.tools.smooks.gef.tree.command;
 
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gef.commands.Command;
@@ -49,7 +49,7 @@ public class GEFAdapterCommand extends Command {
 	@Override
 	public boolean canUndo() {
 		if (emfCommand != null && domain != null) {
-			if (domain.getCommandStack().getUndoCommand() == emfCommand) {
+			if (domain.getCommandStack().getUndoCommand().equals(emfCommand)) {
 				return emfCommand.canUndo();
 			}
 		}
@@ -115,7 +115,7 @@ public class GEFAdapterCommand extends Command {
 	@Override
 	public void redo() {
 		if (emfCommand != null && domain != null) {
-			if (domain.getCommandStack().getRedoCommand() == emfCommand) {
+			if (domain.getCommandStack().getRedoCommand().equals(emfCommand)) {
 				domain.getCommandStack().redo();
 			}
 		}
@@ -149,8 +149,14 @@ public class GEFAdapterCommand extends Command {
 	@Override
 	public void undo() {
 		if (emfCommand != null && domain != null) {
-			if (domain.getCommandStack().getUndoCommand() == emfCommand) {
-				domain.getCommandStack().undo();
+			org.eclipse.emf.common.command.Command ccc = domain.getCommandStack().getUndoCommand();
+			if (domain.getCommandStack().getUndoCommand().equals(emfCommand)) {
+				try {
+					domain.getCommandStack().undo();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
 			}
 		}
 		super.undo();

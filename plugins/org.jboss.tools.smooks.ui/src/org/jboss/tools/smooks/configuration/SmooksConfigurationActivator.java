@@ -79,6 +79,8 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 		reg.put(GraphicsConstants.IMAGE_WARNING, getImageDescriptor(GraphicsConstants.IMAGE_PATH_WARNING));
 
 		// regist java images
+		reg.put(GraphicsConstants.IMAGE_JAVA_BEAN, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_JAVA_BEAN));
 		reg.put(GraphicsConstants.IMAGE_JAVA_INTERFACE, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_JAVA_INTERFACE));
 		reg.put(GraphicsConstants.IMAGE_JAVA_ATTRIBUTE, imageDescriptorFromPlugin(PLUGIN_ID,

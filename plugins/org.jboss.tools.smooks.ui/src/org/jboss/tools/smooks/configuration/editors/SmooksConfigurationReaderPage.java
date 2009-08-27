@@ -12,7 +12,11 @@ package org.jboss.tools.smooks.configuration.editors;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -33,10 +37,12 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
+import org.jboss.tools.smooks.model.smooks.AbstractReader;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
  * @author Dart
- *
+ * 
  */
 public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 
@@ -52,9 +58,27 @@ public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 
 	@Override
 	protected ViewerFilter[] createViewerFilters() {
-		return new ViewerFilter[]{new OnlyReaderViewerFilter()};
+		return new ViewerFilter[] { new OnlyReaderViewerFilter() };
 	}
-	
+
+	@Override
+	protected SmooksMasterDetailBlock createSmooksMasterDetailsBlock() {
+		return new SmooksMasterDetailBlock(getEditor(),
+				(AdapterFactoryEditingDomain) ((SmooksMultiFormEditor) getEditor()).getEditingDomain()) {
+			@Override
+			protected Object getEmptyDefaultSelection(EObject smooksTreeViewerInput) {
+				List<EObject> contents = smooksTreeViewerInput.eContents();
+				for (Iterator<?> iterator = contents.iterator(); iterator.hasNext();) {
+					EObject eObject = (EObject) iterator.next();
+					if (smooksTreeViewerInput instanceof SmooksResourceListType && eObject instanceof AbstractReader) {
+						return eObject;
+					}
+				}
+				return super.getEmptyDefaultSelection(smooksTreeViewerInput);
+			}
+		};
+	}
+
 	@Override
 	protected String getNewSmooksElementDescription() {
 		return "create new smooks reader";
@@ -79,13 +103,13 @@ public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 	protected void setPageTitle(ScrolledForm form) {
 		form.setText("Reader/Input");
 	}
-	
+
 	protected void createFormContent(IManagedForm managedForm) {
 		super.createFormContent(managedForm);
 		// create extention UI for add/remove extention data
 		createExtentionArea(managedForm);
 	}
-	
+
 	protected void createExtentionArea(IManagedForm managedForm) {
 		FormToolkit toolkit = managedForm.getToolkit();
 		final ScrolledForm form = managedForm.getForm();
@@ -118,12 +142,11 @@ public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 		TableColumn pathColumn = new TableColumn(inputDataViewer.getTable(), SWT.NONE);
 		pathColumn.setText("Path");
 		pathColumn.setWidth(300);
-		
+
 		TableColumn extColumn = new TableColumn(inputDataViewer.getTable(), SWT.NONE);
 		extColumn.setText("Extension Paramers");
 		extColumn.setWidth(400);
-		
-		
+
 		inputDataViewer.setContentProvider(new ExtentionInputContentProvider());
 		inputDataViewer.setLabelProvider(new ExtentionInputLabelProvider());
 		inputDataViewer.getTable().setHeaderVisible(true);
@@ -181,10 +204,9 @@ public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 			}
 		});
 	}
-	
+
 	public void saveComplete(SmooksGraphicsExtType extType) {
 		inputDataViewer.refresh();
 	}
 
-	
 }

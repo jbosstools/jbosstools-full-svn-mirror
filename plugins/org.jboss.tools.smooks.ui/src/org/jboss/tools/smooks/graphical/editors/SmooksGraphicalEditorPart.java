@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
+import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.gef.DefaultEditDomain;
@@ -126,20 +127,22 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 					public void run() {
 						if (mostRecentCommand != null) {
 							Command rawCommand = mostRecentCommand;
-							int commandType = EXECUTE_COMMAND;
-							if (rawCommand == ((org.eclipse.emf.common.command.CommandStack) fe.getSource())
-									.getUndoCommand()) {
-								commandType = EXECUTE_COMMAND;
-							}
-							if (rawCommand == ((org.eclipse.emf.common.command.CommandStack) fe.getSource())
-									.getRedoCommand()) {
-								commandType = UNDO_COMMAND;
-							}
 							while (rawCommand instanceof CommandWrapper) {
 								rawCommand = ((CommandWrapper) rawCommand).getCommand();
 							}
+							int commandType = EXECUTE_COMMAND;
+							Command undoCommand = ((org.eclipse.emf.common.command.CommandStack) fe.getSource())
+									.getUndoCommand();
+							Command redoCommand = ((org.eclipse.emf.common.command.CommandStack) fe.getSource())
+									.getRedoCommand();
+							if (undoCommand != null || rawCommand.equals(undoCommand)) {
+								commandType = EXECUTE_COMMAND;
+							}
+							if (redoCommand != null || rawCommand.equals(redoCommand)) {
+								commandType = UNDO_COMMAND;
+							}
 							if (rawCommand instanceof SetCommand || rawCommand instanceof AddCommand
-									|| rawCommand instanceof DeleteCommand) {
+									|| rawCommand instanceof DeleteCommand || rawCommand instanceof RemoveCommand) {
 								refershRecentAffectedModel(rawCommand, mostRecentCommand.getAffectedObjects(),
 										commandType);
 							}
@@ -295,8 +298,14 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 							expandConnectedModels(connections);
 						}
 					}
-					if (command instanceof DeleteCommand) {
-						Collection<?> colletion = ((DeleteCommand) command).getCollection();
+					if (command instanceof DeleteCommand || command instanceof RemoveCommand) {
+						Collection<?> colletion = null;
+						if (command instanceof DeleteCommand) {
+							colletion = ((DeleteCommand) command).getCollection();
+						}
+						if (command instanceof RemoveCommand) {
+							colletion = ((RemoveCommand) command).getCollection();
+						}
 						for (Iterator<?> iterator2 = colletion.iterator(); iterator2.hasNext();) {
 							Object childModel = (Object) iterator2.next();
 							childModel = AdapterFactoryEditingDomain.unwrap(childModel);
@@ -345,7 +354,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 						node.fireChildrenChanged();
 						node.fireConnectionChanged();
 					}
-					if (command instanceof DeleteCommand) {
+					if (command instanceof DeleteCommand || command instanceof RemoveCommand) {
 						if (node != null) {
 							node.fireChildrenChanged();
 						}
@@ -388,10 +397,13 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 						expandConnectedModels(connections);
 					}
 				}
-				if (command instanceof DeleteCommand) {
+				if (command instanceof DeleteCommand || command instanceof RemoveCommand) {
 					Collection<?> cccc = null;
 					if (command instanceof DeleteCommand) {
 						cccc = ((DeleteCommand) command).getCollection();
+					}
+					if (command instanceof RemoveCommand) {
+						cccc = ((RemoveCommand) command).getCollection();
 					}
 					for (Iterator<?> iterator2 = cccc.iterator(); iterator2.hasNext();) {
 						Object object2 = (Object) iterator2.next();

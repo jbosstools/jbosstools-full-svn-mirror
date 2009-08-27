@@ -74,9 +74,9 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 	private Button downButton;
 
 	private String newSmooksElementTitle;
-	
+
 	private String newSmooksElementDescription;
-	
+
 	private AdapterFactoryEditingDomain editingDomain = null;
 
 	private ViewerFilter[] viewerFilters = null;
@@ -349,8 +349,6 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		// }
 		// return l;
 	}
-	
-	
 
 	public String getNewSmooksElementTitle() {
 		return newSmooksElementTitle;
@@ -375,7 +373,7 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
 				NewSmooksElementWizard wizard = new NewSmooksElementWizard(editingDomain, getTreeViewerInput(),
-						getViewerFilters(),getNewSmooksElementTitle(), getNewSmooksElementDescription());
+						getViewerFilters(), getNewSmooksElementTitle(), getNewSmooksElementDescription());
 				WizardDialog dialog = new WizardDialog(formEditor.getSite().getShell(), wizard);
 				dialog.open();
 			}
@@ -500,6 +498,15 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 				objList.add(obj);
 			}
 			if (objList.isEmpty()) {
+				Object input = smooksTreeViewer.getInput();
+				if (input instanceof EObject) {
+					Object defaultObj = getEmptyDefaultSelection((EObject) input);
+					if (defaultObj != null) {
+						objList.add(defaultObj);
+					}
+				}
+			}
+			if (objList.isEmpty()) {
 				sectionPart.getManagedForm().fireSelectionChanged(sectionPart, event.getSelection());
 			} else {
 				sectionPart.getManagedForm().fireSelectionChanged(sectionPart,
@@ -507,10 +514,18 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 			}
 			updateButtons(objList);
 		}
-		
-		if(formEditor instanceof ISelectionProvider){
-			((ISelectionProvider)formEditor).setSelection(event.getSelection());
+
+		if (formEditor instanceof ISelectionProvider) {
+			((ISelectionProvider) formEditor).setSelection(event.getSelection());
 		}
+	}
+
+	protected Object getEmptyDefaultSelection(EObject smooksTreeViewerInput) {
+		return null;
+//		if (((EObject) smooksTreeViewerInput).eContents().isEmpty()) {
+//			return AdapterFactoryEditingDomain.unwrap(((EObject) smooksTreeViewerInput).eContents().get(0));
+//		}
+//		return null;
 	}
 
 }
