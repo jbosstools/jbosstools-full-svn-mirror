@@ -188,5 +188,14 @@
         </indexentry>
 
 
+        <indexentry>
+            <primaryie>JBoss BPEL User Guide<ulink
+                url="en/bpel_user_guide/html/index.html">(html)</ulink>
+                <ulink url="en/bpel_user_guide/html_single/index.html">(html single)</ulink>
+                <ulink url="en/bpel_user_guide/pdf/JBoss BPEL User Guide.pdf"
+                    >(pdf)</ulink>
+            </primaryie>
+        </indexentry>
+
     </index>
 </book>
