@@ -8,9 +8,9 @@
    
    <para>It improves the Eclipse BPEL project in the following way: </para>
    <itemizedlist>
-       <listitem> Tight integration with JBoss BPEL runtime. Add a new project type for the deployment to JBoss BPEL runtime</listitem>
-       <listitem> Support two ways to deploy: one is deploy a bpel project directly into JBoss BPEL runtime. The other is deploy bpel files in the JBoss ESB project into JBoss BPEL runtime. </listitem>
-       <listitem> Improve the BPEL validator and the Eclipse BPEL editor's quality. </listitem>
+       <listitem><para> Tight integration with JBoss BPEL runtime. Add a new project type for the deployment to JBoss BPEL runtime</para></listitem>
+       <listitem><para> Support two ways to deploy: one is deploy a bpel project directly into JBoss BPEL runtime. The other is deploy bpel files in the JBoss ESB project into JBoss BPEL runtime. </para></listitem>
+       <listitem><para> Improve the BPEL validator and the Eclipse BPEL editor's quality. </para></listitem>
    </itemizedlist>
    
    <para>
