@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.docbook.org/xml/4.3/docbookx.dtd"
+[
+<!ENTITY migration-guide SYSTEM "modules/migration-guide.xml">
+
+]>
+
+<book>
+ <bookinfo>
+  <title>JBoss Developer Studio 2.0 To 2.1 Migration Guide</title>
+  <pubdate>August 2009</pubdate>
+  <copyright>
+   <year>2009</year>
+   <holder>JBoss by Red Hat</holder>
+  </copyright>
+  <releaseinfo>Version: 2.1.0.GA</releaseinfo>
+ <abstract>
+   <title/>
+       <para>
+           <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/JBDS2.0-2.1-migration/pdf/JBDS2.0-2.1-migration-guide.pdf">PDF version</ulink>
+       </para>
+</abstract>
+ 
+</bookinfo>
+ <toc/> 
+
+&migration-guide;
+</book>

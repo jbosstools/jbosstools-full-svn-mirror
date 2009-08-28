@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="getting_started" xreflabel="getting_started">
+ <?dbhtml filename="getting_started.html"?>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Developer Studio</keyword>
+			<keyword>Eclipse</keyword>
+			<keyword>Java</keyword>
+			<keyword>JBoss</keyword>
+		</keywordset>
+	</chapterinfo>
+	<title>JBoss Developer Studio 2.0 To 2.1 Migration Guide</title>
+
+	<section id="intro1">
+		<title>What is JBDS?</title>
+		<para>
+			<property>JBoss Developer Studio</property>
+			is a set of eclipse-based development tools that
+			are pre-configured
+			for JBoss Enterprise Middleware Platforms and Red Hat
+			Enterprise
+			Linux.
+			Developers are not required to use
+			<property>JBoss Developer Studio</property>
+			to develop on
+			JBoss Enterprise Middleware and/or Red Hat Linux. But,
+			many find these
+			pre-configured tools offer
+			significant time-savings and
+			value, making them more productive and speeding
+			time to deployment.
+		</para>
+		<para>This guide will provide you with detailed info on how
+			to
+			migrate from an existing JBDS 2.0 installation to JBDS 2.1.
+		</para>
+	</section>
+
+	<section id="InstallFromUpdateSite">
+		<title>Installation From Update Site</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						If you plan to use JBDS 2.1 with <ulink href="http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/">JBoss EAP 5</ulink>, you will need to first
+						install
+						<ulink url="http://java.sun.com/javase/downloads/index.jsp">Sun JDK 6.</ulink>
+
+						Fedora/RHEL users can also use
+						<emphasis>yum install java-1.6.0-openjdk-devel</emphasis>
+						to install OpenJDK 6.
+					</para>
+					<note>
+						<para>
+							Note that gcj/gij is NOT supported.
+						</para>
+					</note>
+				</listitem>
+				<listitem>
+					<para>Start JBDS, then go to Help > Software Updates... >
+						Available Software > Manage Sites... > Add...
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Paste in the following URL:
+						<ulink url="https://devstudio.jboss.com/updates/2.1/">https://devstudio.jboss.com/updates/2.1/
+						</ulink>
+						<note>
+							<para>On some platforms, you may also be able to drag and drop
+								the link from your browser directly into Eclipse.
+							</para>
+						</note>
+
+					</para>
+				</listitem>
+
+				<figure>
+					<title>Help > Software Updates... > Available Software > Manage
+						Sites... > Add...</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/migration-guide/migration-guide_0.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+
+				<listitem>
+					<para>
+						Enter your username and password. You may be prompted twice.
+					</para>
+				</listitem>
+
+				<figure>
+					<title>Password Required</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/migration-guide/migration-guide_1.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+
+				<listitem>
+					<para>
+						Select features to update or install, then click Install...
+					</para>
+				</listitem>
+
+				<figure>
+					<title>Select features to install</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/migration-guide/migration-guide_2.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+
+				<listitem>
+					<para>
+						Install. Restart when prompted.
+    				</para>
+				</listitem>
+
+				<figure>
+					<title>Installing...</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/migration-guide/migration-guide_3.png" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+
+				<listitem>
+					<para>If the install gets stuck on a particular jar download
+						(bandwidth saturation, slow mirror, etc.), you can shut down JBDS
+						and try again.
+						Ignore any errors you get when starting the second
+						time - a completed install should resolve them so that when you
+						restart the third time you will be ready to go.
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						Enjoy!
+  					</para>
+				</listitem>
+				
+			<note>
+				<para>
+					Installation of EAP 5 is not covered by this migration guide. See
+					<ulink href="http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/">http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/</ulink> for full details.
+				</para>
+			</note>
+				
+			</itemizedlist>
+
+		</para>
+	</section>
+</chapter>

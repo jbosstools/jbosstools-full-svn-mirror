@@ -1,0 +1,3986 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.docbook.org/xml/4.3/docbookx.dtd"
+[
+<!ENTITY getting_started SYSTEM "modules/getting_started.xml">
+<!ENTITY  manage SYSTEM "modules/manage.xml">
+<!ENTITY first_seam  SYSTEM "modules/first_seam.xml">
+<!ENTITY jsp_application  SYSTEM "modules/jsp_application.xml">
+<!ENTITY rad_jsf_application  SYSTEM "modules/rad_jsf_application.xml">
+<!ENTITY gsg_faq  SYSTEM "modules/gsg_faq.xml">
+<!ENTITY further_reading  SYSTEM "modules/further_reading.xml">
+<!ENTITY project_examples  SYSTEM "modules/project_examples.xml">
+
+
+<!ENTITY seamlink "../../seam/html_single/index.html">
+<!ENTITY aslink "../../as/html_single/index.html">
+<!ENTITY esblink "../../esb_ref_guide/html_single/index.html">
+<!ENTITY gsglink "../../GettingStartedGuide/html_single/index.html">
+<!ENTITY hibernatelink "../../hibernatetools/html_single/index.html">
+<!ENTITY jbpmlink "../../jbpm/html_single/index.html">
+<!ENTITY jsflink "../../jsf/html_single/index.html">
+<!ENTITY jsfreflink "../../jsf_tools_ref_guide/html_single/index.html">
+<!ENTITY jsftutoriallink "../../jsf_tools_tutorial/html_single/index.html">
+<!ENTITY strutsreflink "../../struts_tools_ref_guide/html_single/index.html">
+<!ENTITY strutstutoriallink "../../struts_tools_tutorial/html_single/index.html">                            
+<!ENTITY jbossportallink "../../jboss_portal_tools_ref_guide/html_single/index.html"> 
+<!ENTITY migrationlink "../../Exadel-migration/html_single/index.html">                         
+<!ENTITY wslink "../../ws_ref_guide/html_single/index.html">
+]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
+ <bookinfo>
+  <title>Getting Started with JBoss Developer Studio</title>
+  <pubdate>April 2008</pubdate>
+  <copyright>
+   <year>2007</year>
+   <year><diffmk:wrapper diffmk:change="changed">2009</diffmk:wrapper></year>
+   <holder><diffmk:wrapper diffmk:change="changed">JBoss, a division of Red Hat</diffmk:wrapper></holder>
+  </copyright>
+  <releaseinfo><diffmk:wrapper diffmk:change="changed">Version: 2.0.0.GA</diffmk:wrapper></releaseinfo>
+ <abstract>
+   <title></title>
+       <para>
+           <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/GettingStartedGuide/pdf/Getting_Started_Guide.pdf">PDF version</ulink>
+       </para>
+</abstract>
+
+ 
+</bookinfo>
+ <toc></toc> 
+
+
+
+
+<chapter id="getting_started" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/getting_started.xml" xreflabel="getting_started">
+ <?dbhtml filename="getting_started.html"?>
+ <chapterinfo>
+  <keywordset>
+   <keyword>JBoss Developer Studio</keyword>
+   <keyword>Eclipse</keyword>
+   <keyword>Java</keyword>
+   <keyword>JBoss</keyword>
+  </keywordset>
+ </chapterinfo>
+ <title>Getting Started with JBoss Developer Studio</title>
+
+ <section id="intro1">
+  <title>What is JBDS?</title>
+  <para><property moreinfo="none">JBoss Developer Studio</property> is a set of eclipse-based development tools that
+   are pre-configured for JBoss Enterprise Middleware Platforms and Red Hat Enterprise Linux.
+   Developers are not required to use <property moreinfo="none">JBoss Developer Studio</property> to develop on
+   JBoss Enterprise Middleware and/or Red Hat Linux. But, many find these pre-configured tools offer
+   significant time-savings and value, making them more productive and speeding time to deployment.</para>
+  <para>This guide covers the first steps to get started working with <property moreinfo="none">JBoss Developer
+    Studio</property>. You will learn how to install and configure necessary software for your OS
+   (currently Linux, Microsoft Windows or Mac OSX).</para>
+  <para>Thus this guide will provide you with detailed info on how to start JDK, JBDS and JBoss
+   Tools.</para>
+ </section>
+
+ <section id="ConfigJavaEnvironment">
+  <?dbhtml filename="ConfigJavaEnvironment.html"?>
+  <title>Configuring Your Java Environment</title>
+  <para>You must have a working installation of JDK 5 before you install <property moreinfo="none">JBoss Developer
+    Studio</property>. Currently it will only fully work with a 32-bit JVM, not a 64-bit JVM. On a
+   64-bit JVM the visual editor fails to launch because of feature of OS architecture. Thus in this
+   guide we will show you how to install a 32-bit Sun JDK 5.0 on a Linux Platform and Microsoft
+   Windows Platform.</para>
+
+  <section id="InstallJDK50onLinux">
+   <title>Installing and Configuring 32-bit Sun JDK 5.0 on Linux</title>
+   <para>To install 32-bit Sun JDK 5.0 on Linux and configure it, you should follow the next steps:</para>
+   <itemizedlist>
+    <listitem>
+     <para>Download the <ulink url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0
+       (Java 2 Development Kit)</ulink> from Sun's website. Choose "JDK 5.0 Update
+      &lt;x&gt;" (where "x" is the latest update number) for
+      download and then select "Red Hat Package Manager in self-extracting" file
+      for Linux. Read the instructions on Sun's website for installing the JDK.</para>
+    </listitem>
+    <listitem>
+     <para>If you don't want to use SysV service scripts you can install the
+      "self-extracting file" for Linux instead of choosing the "RPM in
+      self-extracting" file. In that case you can skip the next step mentioned here. But it
+      is recommended to use the SysV service scripts for production servers.</para>
+    </listitem>
+    <listitem>
+     <para>Download and install the appropriate -compat RPM from JPackage <ulink url="ftp://jpackage.hmdc.harvard.edu/JPackage/1.7/generic/RPMS.non-free/">here</ulink>.
+      Please ensure you choose a matching version of the -compat package to the JDK you've
+      installed.</para>
+    </listitem>
+    <listitem>
+     <para>Create an environment variable that points to the JDK installation directory and call it
+      JAVA_HOME. Add <emphasis>
+       <property moreinfo="none">$JAVA_HOME/bin</property>
+      </emphasis> to the system path to be able to run java from the command line. You can do this
+      by adding the following lines to the .bashrc file in your home directory.</para>
+     <programlisting format="linespecific"><![CDATA[#In this example /usr/java/jdk1.5.0_11 is the JDK installation directory.
+export JAVA_HOME=/usr/java/jdk1.5.0_11
+export PATH=$PATH:$JAVA_HOME/bin]]></programlisting>
+    </listitem>
+   </itemizedlist>
+
+   <note>
+    <title>Note:</title>
+
+    <para>﻿If you have JDK already installed and added in your system path, you should add
+      <emphasis>$JAVA_HOME/bin</emphasis> before the old <emphasis>$PATH</emphasis> (not after it)
+     so that the new version of JDK can be found first, i. e. <emphasis>
+      <emphasis>export PATH=$JAVA_HOME/bin:$PATH</emphasis>
+     </emphasis> This way, the machine will pick up the new JVM first. You only need to run
+     "alternative" as a safe guard for the right JVM. </para>
+   </note>
+
+   <para>Set this variable for your account doing the installation and also for the user account
+    that will run the server.</para>
+   <itemizedlist>
+    <listitem>
+     <para>If you have more than one version of JVM installed on your machine, make sure you are
+      using the JDK 1.5 installation as the default java and javac. You can do this using the
+      alternatives system. The alternatives system allows different versions of Java from different
+      sources to co-exist on your system.</para>
+    </listitem>
+   </itemizedlist>
+   <section id="SelectAlternativesforJava">
+    <title>Select alternatives for java, javac and java_sdk_1.5.0</title>
+    <itemizedlist>
+     <listitem>
+      <para>As a root user, type the following command at the shell prompt and you should see
+       something like this:</para>
+     </listitem>
+    </itemizedlist>
+    <programlisting format="linespecific"><![CDATA[[root@vsr ~]$ /usr/sbin/alternatives --config java
+There are 2 programs that provide 'java'.
+Selection    Command
+-----------------------------------------------
+   1           /usr/lib/jvm/jre-1.4.2-gcj/bin/java
+*+ 2           /usr/lib/jvm/jre-1.5.0-sun/bin/java
+Enter to keep the current selection[+], or type selection number:]]></programlisting>
+    <para>Make sure the Sun version [jre-1.5.0-sun in this case] is selected (marked with a
+     '+' in the output), or select it by entering its number as prompted.</para>
+    <itemizedlist>
+     <listitem>
+      <para>Repeat the same for javac and java_sdk_1.5.0.</para>
+     </listitem>
+    </itemizedlist>
+    <programlisting format="linespecific"><![CDATA[[root@vsr ~]$ /usr/sbin/alternatives --config javac
+There is 1 program that provides 'javac'.
+	Selection   Command
+-----------------------------------------------
+*+ 1           /usr/lib/jvm/java-1.5.0-sun/bin/javac
+Enter to keep the current selection[+], or type selection number:
+
+[root@vsr ~]$ /usr/sbin/alternatives --config java_sdk_1.5.0
+There is 1 program that provide 'java_sdk_1.5.0'.
+	Selection   Command
+-----------------------------------------------
+*+ 1           /usr/lib/jvm/java-1.5.0-sun
+Enter to keep the current selection[+], or type selection number:]]></programlisting>
+    <para>You should verify that java, javac and java_sdk_1.5.0 all point to the same manufacturer
+     and version.</para>
+    <note>
+     <title>Note:</title>
+     <para>You can always override this step by setting the JAVA_HOME environment variable as
+      explained in the previous step.</para>
+    </note>
+    <itemizedlist>
+     <listitem>
+      <para>Make sure that the java executable is in your path and that you are using an appropriate
+       version. To verify your Java environment, type "java -version" at the shell
+       prompt and you should see something like this:</para>
+     </listitem>
+    </itemizedlist>
+    <programlisting format="linespecific"><![CDATA[[root@vsr ~]$ java -version
+java version "1.5.0_11"
+Java(TM) 2 Runtime Environment, Standard Edition (build 1.5.0_11-b03)
+Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></programlisting>
+   </section>
+
+  </section>
+  <section id="InstallJDK50onWindows">
+   <title>Installing and Configuring 32-bit Sun JDK 5.0 on Microsoft Windows</title>
+
+   <para>To install and configure 32-bit Sun JDK 5.0 on Microsoft Windows, follow these steps:</para>
+   <itemizedlist>
+    <listitem>
+     <para>Download the <ulink url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0
+       (Java 2 Development Kit)</ulink> from Sun's website. Choose "JDK 5.0 Update
+      &lt;x&gt;" (where "x" is the latest update number) for
+      download and then select your Windows Platform options to perform the installation.</para>
+    </listitem>
+    <listitem>
+     <para>Create an environment variable called JAVA_HOME that points to the JDK installation
+      directory, for example:
+      <literallayout class="normal" format="linespecific">
+       <emphasis>C:\Program Files\Java\jdk1.5.0_11\</emphasis>
+      </literallayout></para>
+    </listitem>
+   </itemizedlist>
+
+   <para>In order to run java from the command line, add the <emphasis>jre\bin</emphasis> directory
+    to your path, for example:</para>
+   <para>
+    <emphasis>C:\Program Files\Java\jdk1.5.0_11\jre\bin</emphasis>
+   </para>
+   <para>To do this, open the <emphasis>
+     <property moreinfo="none">Control Panel</property>
+    </emphasis> from the <emphasis>
+     <property moreinfo="none">Start</property>
+    </emphasis> menu, switch to Classic View if necessary, open the System Control Panel applet (<emphasis>
+     <property moreinfo="none">System</property>
+    </emphasis>), select the <emphasis>
+     <property moreinfo="none">Advanced</property>
+    </emphasis> Tab, and click on the <emphasis>
+     <property moreinfo="none">Environment Variables</property>
+    </emphasis> button.</para>
+   <para>Now, when 32-bit Sun JDK 5.0 has been successfully installed, we can pass on to the next
+    step.</para>
+  </section>
+
+ </section>
+
+ <section id="InstallingJBDS">
+  <?dbhtml filename="InstallingRHDS.html"?>
+  <title>JBoss Developer Studio Installation</title>
+
+  <para>This chapter will provide you with detailed information on how to install <property moreinfo="none">JBoss
+    Developer Studio</property>.</para>
+
+  <para>JBDS comes with a simple installer, bundled with tested/pre-configured versions of Eclipse,
+   WTP, JBossEAP, Seam, and SpringIDE. Thus, to start perform the next steps:</para>
+
+  <itemizedlist>
+   <listitem>
+    <para>First of all you need the appropriate installation file for your platform from 
+     <ulink url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">Red Hat
+     website</ulink>.</para>
+   </listitem>
+   <listitem>
+    <para>Then run in console:</para>
+    <programlisting format="linespecific" role="JAVA"><![CDATA[java -jar jbdevstudio-linux-gtk-2.0.0.GA.jar
+]]></programlisting>
+   </listitem>
+   <listitem>
+    <para>Follow the instructions presented by the installation wizard:</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure float="0">
+   <title>JBoss Developer Studio Installation Wizard</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_1.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+  <itemizedlist>
+   <listitem>
+    <para>Provide the installation path</para>
+   </listitem>
+   <listitem>
+    <para>Select Java VM</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure float="0">
+   <title>Select Java VM</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_2.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+  <tip>
+   <title>Tip:</title>
+   <para>By selecting <emphasis>
+     <property moreinfo="none">Default Java VM</property>
+    </emphasis> you set default Java VM of your system (to verify your Java environment, type
+    "java -version" in console).</para>
+  </tip>
+
+  <para>Selecting <emphasis>
+    <property moreinfo="none">Specific Java VM</property>
+   </emphasis> you can provide the path to non-default Java VM.</para>
+
+  <note>
+   <title>Note:</title>
+   <para>JBoss Developer Studio needs Java 5 and "gij" isn't available on
+    every platform.</para>
+  </note>
+
+  <itemizedlist>
+   <listitem>
+    <para>Installation process includes <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application
+      Platform</ulink>. Select <emphasis>
+      <property moreinfo="none">Yes</property>
+      </emphasis> to use it in JBoss Developer Studio.  This step lets you configure locally available JBoss Application Servers: </para> 
+   </listitem>
+  </itemizedlist>
+
+  <figure float="0">
+   <title>JBoss Enterprise Application Platform Installing</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_3.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+<itemizedlist>
+ <listitem><para>You can fill the list automatically using the <emphasis><property moreinfo="none">Find</property></emphasis> button: click <emphasis><property moreinfo="none">Find</property></emphasis>, select a folder where search of available JBoss Application Servers should be started and click on <emphasis><property moreinfo="none">Ok</property></emphasis>: </para> </listitem>
+</itemizedlist>
+  
+  <figure float="0">
+   <title>Finding Servers in the Selected Directory</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_3_3_1.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+  <para></para>
+  
+  <itemizedlist>
+   <listitem><para> All available servers in the selected directory  will be added to the list with the following information specified: Name, Type, Version and Location.  
+   </para></listitem>
+  </itemizedlist>
+  
+  
+  <figure float="0">
+   <title>List of Servers Added</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_3_3.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+  <para></para>
+  
+  <itemizedlist>
+   <listitem> <para>You can also add servers one by one using the <emphasis><property moreinfo="none">Add</property></emphasis> button:</para>
+   </listitem>
+  </itemizedlist>
+ 
+  <figure float="0">
+   <title>Add Server to be Configured</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_3_1.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+  <para></para>
+
+<para>Click on <emphasis><property moreinfo="none">Browse</property></emphasis> and select the server location. Fields Name, Type and Version will be filled in automatically:</para>
+  
+  <figure float="0">
+   <title>Specify Server Location</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_3_2.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+  <para></para>
+  
+  
+  <para>Click on <emphasis><property moreinfo="none">Ok</property></emphasis>. The server is added to the list with the details on its type, version and location.</para>
+  
+  
+  
+  <para>The <emphasis><property moreinfo="none">Remove</property></emphasis> button will the remove the selected server from the list. If necessary, you can edit the server details clicking on the <emphasis><property moreinfo="none">Edit</property></emphasis> button:</para>
+  
+  <figure float="0">
+   <title>Edit Server</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_3_4.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+  <para></para>
+  
+   
+  
+  <!--  <note>
+   <title>Note:</title>
+   <para>The installer installs JBoss Enterprise Application Platform for running your applications
+    if you select this option during the installation process. If you want to use a different server
+    than ours, you can change the setting in JBoss Developer Studio.</para>
+    </note>-->
+
+  <itemizedlist>
+   <listitem>
+    <para>Click <emphasis><property moreinfo="none">Next</property></emphasis>. Check your installation paths and see the components to install. If you'd like to change
+     something, press the <emphasis>
+      <property moreinfo="none">Previous</property>
+     </emphasis> button. Click <emphasis>
+      <property moreinfo="none">Next</property>
+     </emphasis> to start installation. </para>
+   </listitem>
+  </itemizedlist>
+
+  <para></para>
+
+  <figure float="0">
+   <title>Summary Information</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_4.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+ </section>
+
+ <section id="jbds_jbosstools">
+
+  <title>JBoss Developer Studio and JBoss Tools</title>
+
+  <para>This section uncovers the points on the differences between <property moreinfo="none">JBoss Developer
+   Studio</property> and <property moreinfo="none">JBoss Tools</property> and provides the steps on <property moreinfo="none">JBoss
+    Tools</property> installation as well.</para>
+
+  <section id="WhatDifferenceBetweenJBDSAndJBossTools">
+   <title>What is the difference?</title>
+
+   <para><property moreinfo="none">JBoss Tools</property> is what went into our <property moreinfo="none">JBoss Developer
+    Studio</property> which comes as an easy-to-install Eclipse based IDE fully configured and ready
+    to run with the bundled <property moreinfo="none">JBoss Enterprise Application Platform</property>.</para>
+
+   <para>In short <property moreinfo="none">JBoss Tools</property> are just a set of Eclipse plugins and
+     <property moreinfo="none">JBoss Developer Studio</property> adds:</para>
+   <itemizedlist>
+    <listitem>
+     <para>An installer</para>
+    </listitem>
+    <listitem>
+     <para>Eclipse and Web Tools preconfigured</para>
+    </listitem>
+    <listitem>
+     <para>JBoss EAP with JBoss AS and Seam preconfigured</para>
+    </listitem>
+    <listitem>
+     <para>3rd party plugins bundled and configured</para>
+    </listitem>
+    <listitem>
+     <para>Access to RHEL and Red Hat Network</para>
+    </listitem>
+    <listitem>
+     <para>Access to the JBoss/Red Hat supported software</para>
+    </listitem>
+   </itemizedlist>
+   <para> For additional information see <ulink url="http://www.jboss.com/products/devstudio">JBoss.com</ulink></para>
+  </section>
+
+  <section id="JBossToolsInstall">
+   <title>JBoss Tools Installation</title>
+   <para>Here, let's consider the installation of the <property moreinfo="none">JBoss Tools</property>
+    modules.</para>
+   <para><property moreinfo="none">JBoss Tools</property> is an umbrella project for the JBoss developed plugins
+    that will make it into <property moreinfo="none">JBoss Developer Studio</property>. The JBoss Tools modules are:</para>
+   <itemizedlist>
+    <listitem>
+     <para>JBoss AS Tools</para>
+    </listitem>
+    <listitem>
+     <para>Seam Tools</para>
+    </listitem>
+    <listitem>
+     <para>Hibernate Tools</para>
+    </listitem>
+    <listitem>
+     <para>Visual Page Editor</para>
+    </listitem>
+    <listitem>
+     <para>JST Tools</para>
+    </listitem>
+    <listitem>
+     <para>JBPM Tools</para>
+    </listitem>
+   </itemizedlist>
+
+   <para>To install the JBoss Tools plugins for Eclipse, you need the following:</para>
+
+   <itemizedlist>
+    <listitem>
+     <para>Get Eclipse and Web Tools</para>
+    </listitem>
+   </itemizedlist>
+   <para><diffmk:wrapper diffmk:change="changed">The current version of JBoss Tools (3.0.0.GA) targets at Eclipse 3.4.2/Ganymede SR2 and WTP
+    3.0.3+</diffmk:wrapper></para>
+
+   <tip>
+    <title>Tip:</title>
+    <para>We recommend you do not use Eclipse.org update site to go from Eclipse 3.3 to Eclipse 3.4.
+     Instead we suggest that you download the full binary from <ulink url="http://www.eclipse.org/downloads/">here</ulink>.</para>
+   </tip>
+
+   <para>If you can only use Eclipse 3.3 use <ulink url="http://www.jboss.org/tools/download/index.html#stable">JBoss Tools 2.1.2</ulink>, but
+    JBoss Tools 2.x will not have any of the new features.</para>
+
+   <note>
+    <title>Note:</title>
+    <para>Remember to choose the download that matches your OS and use Java 5 when you run
+    it.</para>
+   </note>
+
+   <itemizedlist>
+    <listitem>
+     <para>Get the <ulink url="http://download.jboss.org/jbosstools/builds/nightly/latestBuild.html">latest JBoss Tools build</ulink></para>
+    </listitem>
+   </itemizedlist>
+
+   <para>Some of our newer plugins, like TPTP and BIRT, need additional drivers. On the left side of
+    the download page you can find all of the required drivers for chosen build and their versions.</para>
+   <para>Instead of downloading the nightly build version manually, it's also possible to
+    get the latest release of <property moreinfo="none">JBoss Tools</property> from one of our update sites: <itemizedlist>
+     <listitem>
+      <para>Stable Updates: <ulink url="http://download.jboss.org/jbosstools/updates/stable">http://download.jboss.org/jbosstools/updates/stable</ulink></para>
+     </listitem>
+     <listitem>
+      <para> Development Updates: <ulink url="http://download.jboss.org/jbosstools/updates/development">http://download.jboss.org/jbosstools/updates/development</ulink></para>
+     </listitem>
+    </itemizedlist>
+   </para>
+
+   <itemizedlist>
+    <listitem>
+     <para>Finally, install the build</para>
+    </listitem>
+   </itemizedlist>
+
+   <para>Unzip the file(s) directly into your Eclipse <emphasis>
+     <property moreinfo="none">plugins/features</property>
+    </emphasis> directory and it will be readily available. It might be necessary to start Eclipse
+    with eclipse -clean to make sure it starts clean and rereads the new list of plugins.</para>
+
+   <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read
+    about dependencies between standalone plug-ins.</para>
+  </section>
+
+ </section>
+
+ <section id="Welcome">
+  <title>Welcome to JBoss Developer Studio</title>
+  <para>In this section we'll show you how to work with the welcome page of the <property moreinfo="none">JBoss
+    Developer Studio</property>.</para>
+  <para>The welcome page is the first page you see when you first launch <property moreinfo="none">JBoss Developer
+    Studio</property>. </para>
+
+  <figure float="0">
+   <title>Welcome to JBoss Developer Studio</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_5.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+  <para>With the help of its page you will be able:</para>
+  <itemizedlist>
+   <listitem>
+    <para>to get quick access to Getting Started Documentation (guides, tutorials and
+    viewlets)</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure float="0">
+   <title>Getting Started Documentation</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_6.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+  <itemizedlist>
+   <listitem>
+    <para>to create new Seam projects, jBPM Process, JSF or Struts projects using JBDS
+    wizards</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure float="0">
+   <title>Create New...</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_7.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+  <itemizedlist>
+   <listitem>
+    <para>to get short description of perspectives that JBDS offers for more productive
+    development</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure float="0">
+   <title>Perspectives</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_8.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+  <itemizedlist>
+   <listitem>
+    <para>to visit JBoss Developer Studio web resources.</para>
+   </listitem>
+  </itemizedlist>
+
+  <figure float="0">
+   <title>Web Resources</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_9.png" scale="90"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
+  <para>Start work with <property moreinfo="none">JBoss Developer Studio</property> by clicking on <emphasis>
+    <property moreinfo="none">Workbench</property>
+   </emphasis> button or simply close the Welcome page.</para>
+
+ </section>
+
+ <section id="Upgrading">
+  <?dbhtml filename="Upgrading.html"?>
+  <title>Upgrading</title>
+  <para>To upgrade, just uninstall your current version and install the new one.</para>
+ </section>
+
+ <section id="Uninstalling">
+  <?dbhtml filename="Uninstalling.html"?>
+  <title>Uninstalling</title>
+  <itemizedlist>
+   <listitem>
+    <para>Make sure <property moreinfo="none">JBoss Developer Studio</property> is not running</para>
+   </listitem>
+   <listitem>
+    <para>Uninstall your current version of <property moreinfo="none">JBoss Developer Studio</property> by running
+     Uninstaller</para>
+   </listitem>
+  </itemizedlist>
+ </section>
+
+ <section id="Support">
+  <?dbhtml filename="Support.html"?>
+  <title>Support</title>
+  <para>If you have comments or questions, you can discuss them at our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
+    Developer Studio Forum</ulink>.</para>
+  <para>When writing to the forum for questions, please include the following information:</para>
+  <orderedlist continuation="restarts" inheritnum="ignore">
+   <listitem>
+    <para>JBoss Developer Studio version</para>
+   </listitem>
+   <listitem>
+    <para>Exact error message</para>
+   </listitem>
+   <listitem>
+    <para>Steps to reproduce the issue</para>
+   </listitem>
+  </orderedlist>
+
+  <para><property moreinfo="none">JBDS</property> subscribers can get necessary support on our <ulink url="https://network.jboss.com/jbossnetwork/login.html">Support Portal</ulink>.</para>
+ </section>
+
+
+ <section id="OtherRelevantResourcesOnTheTopic33">
+  <?dbhtml filename="OtherRelevantResourcesOnTheTopic33.html"?>
+  <title>Other relevant resources on the topic</title>
+  <para>JBDS on JBoss: <ulink url="http://labs.jboss.com/rhdevstudio/">JBoss Developer
+   Studio</ulink></para>
+  <para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
+   Forum</ulink></para>
+  <para>Subscription: <ulink url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">JBDS
+   Subscription</ulink></para>
+
+  <para>The latest documentation builds are available <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
+ </section>
+
+</chapter>
+
+ 
+<chapter id="manage" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/manage.xml" xreflabel="manage">
+    <?dbhtml filename="manage.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Developer Studio</keyword>
+            <keyword>Eclipse</keyword>
+            <keyword>Deploy</keyword>
+            <keyword>Deployment</keyword>
+            <keyword>JBoss</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>Manage JBoss AS from JBoss Developer Studio</title>
+
+    <para>In this chapter we'll focus more on how to operate the <property moreinfo="none">JBoss
+            AS</property> from <property moreinfo="none">JBoss Developer Studio</property>.</para>
+    <para><property moreinfo="none">JBoss Developer Studio</property> ships with <property moreinfo="none">JBoss EAP
+            v.4.2</property> bundled. When you followed the default installation of <property moreinfo="none">JBoss
+            Developer Studio</property><diffmk:wrapper diffmk:change="changed">, you should already have a JBoss EAP 4.3 Server installed and
+        defined. To run JBoss AS you need JDK 1.5, JDK 6 is not formally supported yet, although
+        you may be able to start the server with it.</diffmk:wrapper></para>
+
+    <section id="JBossbundled">
+        <?dbhtml filename="JBossbundled.html"?>
+        <title>How to Manage the JBoss AS Bundled in JBDS</title>
+        <para>This section covers the basics of working with the <property moreinfo="none">JBoss Server</property>
+            supported directly by <property moreinfo="none">JBDS</property> via bundled AS plug-in. To read more
+            about AS plug-in, refer to the <ulink url="../../as/html_single/index.html">Server Manager
+            guide</ulink>.</para>
+
+        <section id="StartingServer">
+            <?dbhtml filename="StartingServer.html"?>
+            <title>Starting JBoss Server</title>
+            <para>Starting <property moreinfo="none">JBoss Server</property> is quite simple. <property moreinfo="none">JBoss
+                    Developer Studio</property><diffmk:wrapper diffmk:change="changed"> allows you to control its behaviour with the help of
+                a special toolbar, where you could start it in a regular or debug mode, stop it or
+                restart it.</diffmk:wrapper></para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>To launch the server click the green-with-white-arrow icon on the
+                            <property moreinfo="none">JBoss Server View </property>or right click server name in
+                        this view and select <emphasis>
+                            <property moreinfo="none">Start</property>
+                        </emphasis>. If this view is not open, select <emphasis>
+                            <property moreinfo="none">Window &gt; Show View &gt; Other &gt; Server
+                                &gt; JBoss Server View</property>
+                        </emphasis></para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Starting from Icon</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_1.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <para>While launching, server output is written to the <property moreinfo="none">Console
+                view</property>:</para>
+
+            <figure float="0">
+                <title>Console Output</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_3.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>When the server is started you should see <emphasis>
+                    <property moreinfo="none">Started</property>
+                </emphasis><diffmk:wrapper diffmk:change="changed"> in the square brackets right next its name in </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss Server
+                    View</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed">.</diffmk:wrapper></para>
+
+            <figure float="0">
+                <title>Server is Started</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_4.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <!--para>To see event log after the server is started, expand <property>Event
+                    Log</property> branch beneath <property>JBoss Server View</property>:</para>
+            <figure>
+                <title>Event Log</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_5.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure-->
+        </section>
+
+        <section id="StoppingJBoss">
+            <?dbhtml filename="StoppingJBoss.html"?>
+            <title>Stopping JBoss Server</title>
+            <para>To stop the server, click the <emphasis>
+                    <property moreinfo="none">Stop</property>
+                </emphasis> icon in <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss Server View</diffmk:wrapper></property> or right click the server
+                name and press <emphasis>
+                    <property moreinfo="none">Stop</property><diffmk:wrapper diffmk:change="changed">. </diffmk:wrapper></emphasis></para>
+
+            <figure float="0">
+                <title>Stopping Server</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_6.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>When the server is stopped you will see <emphasis>
+                    <property moreinfo="none">Stopped</property>
+                </emphasis><diffmk:wrapper diffmk:change="changed"> in the square brackets next to its name.</diffmk:wrapper></para>
+        </section>
+        <section id="ServerPreferences">
+            <?dbhtml filename="ServerPreferences.html"?>
+            <title>Server Container Preferences</title>
+            <para>You can control how <property moreinfo="none">JBoss Developer Studio</property> interacts with
+                server containers in the <property moreinfo="none">Server editor</property>. Double-click the server
+                to open it in the editor.</para>
+
+            <figure float="0">
+                <title>Server Overview</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_8.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <para>Here you can specify some common settings: host name, server name, runtime as well
+                as settings related to the publishing, timeouts and server ports.</para>
+
+        </section>
+    </section>
+
+    <section id="JBossInstances">
+        <?dbhtml filename="JBossInstances.html"?>
+        <title>How to Use Your Own JBoss AS Instance with JBDS</title>
+        <para>Although <property moreinfo="none">JBoss Developer Studio</property> works closely with
+                <property moreinfo="none">JBoss EAP 4.2</property> we do not ultimately tie you to any particular
+            server for deployment. There are some servers that Studio supports directly (via the
+            bundled Eclipse WTP plug-ins). In this section we discuss how to manage self-installed
+            JBoss AS. Suppose you want to deploy the application to <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss 4.2.3
+                server</diffmk:wrapper></property>. First of all you need to install it.</para>
+        <section id="JBossInstalling">
+            <?dbhtml filename="JBossInstalling.html"?>
+            <title>JBoss AS Installation</title>
+            <itemizedlist>
+                <listitem>
+                    <para>Download the binary package of <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss 4.2.3</diffmk:wrapper></property> and save
+                        it on your computer: <ulink url="http://labs.jboss.com/jbossas/downloads">http://labs.jboss.com/jbossas/downloads</ulink></para>
+                </listitem>
+            </itemizedlist>
+            <para>It does not matter where on your system you install JBoss server.</para>
+
+            <note>
+                <title>Note:</title>
+                <para>The installation of JBoss server into a directory that has a name containing
+                    spaces provokes problems in some situations with Sun-based VMs. Try to avoid
+                    using installation folders that have spaces in their names.</para>
+            </note>
+
+            <para>There is no requirement for root access to run JBoss Server on UNIX/Linux systems
+                because none of the default ports are within the 0-1023 privileged port
+                range.</para>
+            <itemizedlist>
+                <listitem>
+                    <para><diffmk:wrapper diffmk:change="changed">After you have the binary archive you want to install, use the JDK jar
+                        tool (or any other ZIP extraction tool) to extract the jboss-4.2.3.GA.zip
+                        archive contents into a location of your choice. The jboss-4.2.3.GA.tgz
+                        archive is a gzipped tar file that requires a gnutar compatible tar which
+                        can handle the long pathnames in the archive. The extraction process will
+                        create a jboss-4.2.3.GA directory. </diffmk:wrapper></para>
+                </listitem>
+            </itemizedlist>
+        </section>
+
+        <section id="AddingJBossServer">
+            <?dbhtml filename="AddingJBossServer.html"?>
+            <title><diffmk:wrapper diffmk:change="changed">Adding and Configuring JBoss Server</diffmk:wrapper></title>
+            <para>Now we should add just installed server into server manager in <property moreinfo="none">JBoss
+                    Developer Studio</property>.</para>
+            <itemizedlist>
+                <listitem>
+                    <para><diffmk:wrapper diffmk:change="added">Open the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Server View</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> by selecting </diffmk:wrapper><emphasis>
+                            <property moreinfo="none">Window &gt; Show View &gt; Other &gt; Server
+                                &gt; JBoss Server View</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>Right click anywhere in this view and select <emphasis>
+                            <property moreinfo="none">New Server</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss Community &gt; JBoss 4.2 Server</diffmk:wrapper></property>
+                        </emphasis></para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Selecting Server Type</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_9.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <note diffmk:change="added">
+                <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Note:</diffmk:wrapper></title>
+
+                <para><diffmk:wrapper diffmk:change="changed">Now in the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">New Server wizard</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> there is a separation
+                    between the .org servers (the </diffmk:wrapper><emphasis diffmk:change="added">
+                        <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Community</diffmk:wrapper></property>
+                    </emphasis><diffmk:wrapper diffmk:change="added"> category) and product server that comes bundled with JBoss EAP (the
+                    </diffmk:wrapper><emphasis diffmk:change="added">
+                        <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss Enterprise Middleware</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> category).</diffmk:wrapper></para>
+            </note>
+
+            <itemizedlist>
+                <listitem>
+                    <para><diffmk:wrapper diffmk:change="changed">To create a new runtime, which Jboss AS 4.2 matches to, click </diffmk:wrapper><emphasis>
+                            <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Next</diffmk:wrapper></property>
+                        </emphasis></para>
+                </listitem>
+            </itemizedlist>
+
+            <itemizedlist>
+                <listitem>
+                    <para>In the next step make <property moreinfo="none">JBoss Developer Studio</property> to know
+                        where you have installed the Server and define JRE.</para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Defining JBoss Runtime</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_11.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <note>
+                <title>Note:</title>
+                <para>When adding a new server you will need to specify what JRE to use. It is
+                    important to set this value to a full JDK, not JRE. Again, you need a full JDK
+                    to run Web applications, JRE will not be enough.</para>
+            </note>
+
+            <itemizedlist>
+                <listitem>
+                    <para><diffmk:wrapper diffmk:change="added">In the next dialog verify the specified information and if something is
+                        unfair go back and correct it</diffmk:wrapper></para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Configuring Projects</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_15.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <itemizedlist>
+                <listitem>
+                    <para>In the last wizard's dialog modify the projects that are
+                        configured on the server and click <emphasis>
+                            <property moreinfo="none">Finish</property>
+                        </emphasis>.</para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Configuring Projects</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_16.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>A new <property moreinfo="none">JBoss Server</property> should now appear in the <property moreinfo="none">JBoss
+                    Server view</property>.</para>
+            <figure float="0">
+                <title>New JBoss Server</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/manage/manage_17.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>Now, we are ready to create the first web application.</para>
+        </section>
+
+    </section>
+</chapter>
+ 
+ 
+<chapter id="first_seam" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/first_seam.xml" xreflabel="first_seam">
+  <?dbhtml filename="first_seam.html"?>
+  <chapterinfo>
+    <keywordset>
+      <keyword>JBoss Developer Studio</keyword>
+      <keyword>Seam</keyword>
+      <keyword>JBoss</keyword>
+    </keywordset>
+  </chapterinfo>
+
+  <title>Write Your First Project with JBoss Developer Studio</title>
+
+  <para>This chapter is a set of hands-on labs. You get step-by-step information about how the JBoss
+    Developer Studio can be used during the development process.</para>
+
+  <section id="create_seam_application">
+    <title>Create a Seam Application</title>
+
+    <para>In this section you get to know how to create a Seam project in JBDS, how to start the
+      server and what a structure your project has after creating.</para>
+
+    <section id="start_dev_db">
+      <title>Start Development Database</title>
+
+      <para>Before opening the JBoss Developer studio you need to <ulink url="http://anonsvn.jboss.org/repos/jbosstools/trunk/documentation/guides/GettingStartedGuide/en/database.zip">download</ulink> and start a Workshop Database.</para>
+      <para>To start the database just run <property moreinfo="none">./runDBServer.sh</property> or
+          <property moreinfo="none">runDBServer.bat</property> from the database directory.</para>
+      <para>The end result should be a console window that looks like:</para>
+
+      <figure float="0">
+        <title>Starting DataBase</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam1.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+    </section>
+
+    <section id="create_deploy_seam">
+      <title>Create and deploy Seam Web Project</title>
+
+      <para>Minimize the terminal window and run the <property moreinfo="none">JBoss Developer Studio</property>
+        from Applications Menu or from the desktop icon.</para>
+      <para>First of all you get the Workspace Launcher. Change the default workspace location if
+        it's needed. Click on <property moreinfo="none">Ok</property>. </para>
+
+      <figure float="0">
+        <title>Workspace Launcher Dialog</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam2.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>After startup, you see the welcome page. You could read how to work with welcome pages
+        in <link linkend="Welcome">previous</link> chapter. Now select <property moreinfo="none">Create
+          New...</property> icon and then press on <property moreinfo="none">Create Seam Project</property>
+        link.</para>
+
+      <para>The <property moreinfo="none">New Seam Project wizard</property> is started. You need to enter a name
+        (e.g., "workshop") and a location directory for your new project. The
+        wizard has an option for selecting the actual Server (and not just WTP runtime) that will be
+        used for the project. This allows the wizard to correctly identify where the needed
+        datasource and driver libraries need to go.</para>
+
+      <figure float="0">
+        <title>New Seam Project Wizard</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam3.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>All settings are already specified here, you can just modify the Configuration. Click on
+        the <emphasis>
+          <property moreinfo="none">Modify...</property>
+        </emphasis> button to configure your custom facets pattern:</para>
+
+
+      <figure float="0" id="ProjectFacetsSpecifyingScreen">
+        <title>Project Facets Specifying</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam4.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>On the whole the dialog allows to select the "features" you want to use in your project.
+        Doing this <property moreinfo="none">JBoss Developer Studio</property> setups the appropriate tooling for
+        your project. Since JBoss Seam integrates all popular Java EE frameworks, you can select any
+        combination of technologies from the list. Here, for the default configuration, Dynamic Web
+        Module, Java, JavaServer Faces (JSF), and Seam Facet are already selected for a typical
+        database-driven web application. The default project facets should suffice.</para>
+
+      <para>In the <property moreinfo="none">Project Facets</property> form you can also bring up server runtimes
+        panel by clicking <property moreinfo="none"> Runtimes</property> tab on the right corner. This panel shows
+        available server runtimes.</para>
+
+      <figure float="0">
+        <title>Runtimes Selecting</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam5.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Click on <emphasis>
+          <property moreinfo="none">Ok</property>
+        </emphasis> and then <emphasis>
+          <property moreinfo="none">Next</property>
+        </emphasis> to proceed further.</para>
+
+      <para>A dynamic web application contains both web pages and Java code. The wizard will ask you
+        where you want to put those files. You can just leave the default values or choose another
+        folder.</para>
+
+      <figure float="0">
+        <title>Web Module Settings</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam6.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>On the next form, you will be able to select where those library JARs come from. The
+        easiest is just to select the JARs provided by the JBoss AS runtime associated with this
+        project. That is why it is important to chose the right JBoss AS 4.2 runtime in the project
+        setup window.</para>
+      <itemizedlist>
+        <listitem>
+          <para>Check <emphasis>
+              <property moreinfo="none">Server Supplied JSF Implementation</property>
+            </emphasis>. We will use <ulink url="../../seam/html_single/index.html#addJSFCapab">JSF
+              implementation</ulink> that comes with JBoss server</para>
+        </listitem>
+        <listitem>
+          <para>Click <emphasis>
+              <property moreinfo="none">Next</property>
+            </emphasis></para>
+        </listitem>
+      </itemizedlist>
+
+      <figure float="0">
+        <title>JSF Capabilities Adding</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam7.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Next wizard step needs more settings that previous. Let's start with
+          <property moreinfo="none">General</property> section.</para>
+      <para>Leave the default Seam runtime and check a WAR deployment.</para>
+
+      <figure float="0">
+        <title>Seam Facet Setting</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam8.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Next <property moreinfo="none">Database</property> section is a little tricky. The <property moreinfo="none">Connection
+          Profile</property> needs to be edited so that the new project works properly with the
+        external HSQLDB server. By default the project wizard tries to use the JBoss embedded
+        HSQLDB, but the tutorial uses an external database to replicate a more real world
+        development scenario. Click on <property moreinfo="none">Edit</property> to modify the Connection
+        Profile.</para>
+
+      <figure float="0">
+        <title>DataBase Setting</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam8_1.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Select <property moreinfo="none">JDBC Connection Properties</property>. Make sure the URL is set to <emphasis>
+          <property moreinfo="none">jdbc:hsqldb:hsql://localhost:1701</property>
+        </emphasis></para>
+
+      <figure float="0">
+        <title>JDBC Connection Properties</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam9.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Try click on <property moreinfo="none">Test Connection</property> button. It probably won’t work. This
+        happens if the hsql jdbc driver is not exactly the same. This can be worked around by
+        modifying the HSQLDB database driver settings. To modify the settings, click the
+          <property moreinfo="none">“...”</property> next to the drop-down box.</para>
+
+      <para>The proper Driver JAR File should be listed under <property moreinfo="none">Driver File(s)</property>.
+        Select the hsqldb.jar file found in the database/lib directory and click on
+          <property moreinfo="none">Ok</property>.</para>
+
+      <figure float="0">
+        <title>Driver Details</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam10.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Select <property moreinfo="none">Hypersonic DB</property> and click on <property moreinfo="none">Ok</property>. Again,
+        this only happens if the selected hsqldb.jar is different from the running database.</para>
+
+      <figure float="0">
+        <title>Hypersonic DB Selecting</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam11.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Now, the <property moreinfo="none">Test Connection</property> should succeed. After testing the
+        connection, click on Ok.</para>
+
+      <figure float="0">
+        <title>Connection Testing</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam12.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>You can leave the <property moreinfo="none">Code Generation</property> section as is. It refers to Java
+        packages in which the generated code will be placed.</para>
+
+      <figure float="0">
+        <title>Code Generation Setting</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam13.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Click on <property moreinfo="none">Finish</property> button. Now, there should be a new Seam project
+        called “workshop” listed in Package Explorer view.</para>
+
+      <figure float="0">
+        <title>"worskhop" Project in the Package Explorer</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam14.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </section>
+
+    <section id="start_JBossAS">
+      <title>Start JBoss Application Server</title>
+
+      <para>The complete information on how to manage JBoss AS from JBoss Developer Studio you can
+        read in a <link linkend="manage">corresponding chapter</link>.</para>
+      <para>Now you just need to start the server by clicking on green circle/triangle icon in the
+        JBoss Server View.</para>
+
+      <figure float="0">
+        <title>Starting the Server</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam15.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Then run the project by selecting the project and use <emphasis><property moreinfo="none">Run As... &gt;
+            Run on Server</property>.</emphasis></para>
+
+      <note>
+        <title>Note:</title>
+        <para>If the project does not show up, then you can use a normal browser and use <emphasis>
+            <property moreinfo="none">http://localhost:8080/workshop/home.seam</property>
+          </emphasis> as the url.</para>
+      </note>
+
+      <para>Your project looks like this:</para>
+
+      <figure float="0">
+        <title>"workshop" Project Started</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam16.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+    </section>
+
+    <section id="workshop_code_overview">
+      <title>Workshop Project Code Overview</title>
+
+      <para>Now let's examine the project and its structure. Go back to the Package Explorer view in
+        JBoss Developer Studio.</para>
+
+      <para>It seems like it's not much for project but this shell application contains a login
+        screen with default login logic, a menu template that can be further modified, and other
+        layout templates.</para>
+
+      <para>It's important to note that the business logic will reside in the <emphasis>
+          <property moreinfo="none">src/hot</property>
+        </emphasis> folder, by default. And, the package naming conventions that were used in <property moreinfo="none">New Seam
+        project wizard</property> could have been changed to something different from <emphasis>
+          <property moreinfo="none">org.domain.workshop.session</property>.
+        </emphasis> Also, notice that there is a default <property moreinfo="none">Authenticator. java</property>
+        file. This is where custom security logic can be added. Seam has a nice declarative security
+        model that we will explore in a bit more detail later on. The <emphasis>
+          <property moreinfo="none">src/main</property>
+        </emphasis> folder is a model directory. It stores the project's JPA entity beans.</para>
+      
+      <figure float="0">
+        <title>Project Structure</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam17.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+        
+        <para>The view tier of the
+        application is also important. Seam uses facelets and there is a built-in facelets GUI
+        editor that has some nice WYSIWYG and component drag/drop functionality. Try this out by
+        opening <property moreinfo="none">home.xhtml</property> from <property moreinfo="none">WebContent</property> folder.</para>
+
+      <figure float="0">
+        <title>Facelets GUI Editor</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam18.png" scale="85"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Notice that the templates reside in the <emphasis>
+          <property moreinfo="none">WebContent/layout</property>
+        </emphasis> folder. There is a stylesheet in the <emphasis>
+          <property moreinfo="none">WebContent/stylesheet</property>
+        </emphasis> folder. There is also a login and default error page. The Facelet editor will be
+        explored in more detail later in the lab.</para>
+
+      <para>The project already has a datasource that was created per the Seam project wizard
+        database settings. And, obviously all of the Seam specific configuration files and JAR
+        dependencies are included and placed in the proper locations. On last noteworthy line item
+        is related to the build script. There isn’t a build script because the Eclipse WTP(Web Tools
+        Project) plugin is used to publish web application changes. As you can see, JBoss Developer
+        Studio is removing a great deal of complexity from the enterprise Java project
+        setup/deployment process. The end result is a developer that is writing code, not spending
+        days/weeks trying to figure out how to get a decent development environment and project
+        build process.</para>
+
+    </section>
+
+  </section>
+
+
+  <section id="seam_action_dev">
+    <title>Seam Action Development</title>
+
+    <para>Now, it’s time to write some code. The good news is that JBoss Developer Studio can also
+      help out in this respect. In this section, we will create a new Seam Action POJO and facelet
+      with some custom business logic and some GUI changes.</para>
+
+    <section id="create_seam_action">
+      <title>Create a New Seam Action</title>
+
+      <para>Go to main menu bar and click on <emphasis>
+          <property moreinfo="none">File &gt; New &gt; New Seam Action</property>
+        </emphasis> to start the New Seam Action wizard.</para>
+
+      <para>Specify a <property moreinfo="none">Seam component name</property> (e.g., "myAction").
+        The other properties will be auto-completed for you so there is no need to change them.
+        Click on <property moreinfo="none">Finish</property>.</para>
+
+      <figure float="0">
+        <title>New Seam Action Wizard</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam19.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Now, open the <property moreinfo="none">MyAction.java</property> file and replace the
+        "myAction" method with this logic:</para>
+
+      <programlisting format="linespecific"><![CDATA[public void myAction() {
+Calendar cal = Calendar.getInstance();
+log.info("myAction.myAction() action called");
+facesMessages.add("MyAction Executed on:" + cal.getTime());
+}]]></programlisting>
+
+      <para>You also need to import the <property moreinfo="none">java.util.Calendar</property> class by clicking
+            <emphasis><property moreinfo="none">CTRL + Shift + O</property>.</emphasis></para>
+
+    </section>
+
+    <section id="test_seam_action">
+      <title>Test Seam Action</title>
+
+      <para>The new action can be tested by browsing the workshop-test project. JBoss Developer
+        Studio has already created a TestNG test case for you.</para>
+
+      <figure float="0">
+        <title>"workshop-test" Project</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam20.png" scale="85"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>The test case simulates a Seam component/method execution for the
+          <property moreinfo="none">MyAction.myAction()</property> logic.</para>
+      <para>To run the test case, right click on <property moreinfo="none">MyActionTest.xml</property> and click <emphasis>
+          <property moreinfo="none">Run As &gt; TestNG Suite</property>
+        </emphasis> or use the <property moreinfo="none">Run As...</property> toolbar shortcut as shown
+        below.</para>
+
+      <figure float="0">
+        <title>TestNG Running</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam21.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>With any luck, the test case will pass. Look at the TestNG view.</para>
+
+      <figure float="0">
+        <title>TestNG Results</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam22.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Now, it’s safe to test the new Seam Action in a web browser. The fastest way to do that
+        is to right click on <property moreinfo="none">myAction.xhtml</property> and use <emphasis>
+          <property moreinfo="none">Run As... &gt; Run On Server</property>
+        </emphasis> which will show the appropriate url in the browser. Alternatively you can
+        manually enter <emphasis>
+          <property moreinfo="none">http://localhost:8080/workshop/myAction.seam</property>
+        </emphasis> into a browser.</para>
+
+      <figure float="0">
+        <title>Seam Action in a Web Browser</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam23.png" scale="90"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+    </section>
+
+    <section id="modify_seam_action">
+      <title>Modify Seam Action User Interface</title>
+
+      <para>Browse to <emphasis>
+          <property moreinfo="none">http://localhost:8080/workshop/myAction.seam</property>
+        </emphasis> and click on <property moreinfo="none">myAction</property>. This executes the “myAction” method.
+        This looks pretty good, but we could make this page look a little better.</para>
+
+      <para>Open <emphasis>
+          <property moreinfo="none">WebContent/myAction.xhtml</property>
+        </emphasis> in JBoss Developer Studio to use the nice facelets editor.</para>
+
+      <figure float="0">
+        <title>Open Seam Action with Editor </title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam24.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Right click on the "myAction!" button in the visual part of editor and
+        select <property moreinfo="none">&lt;h:commandButton&gt; Attributes</property>.</para>
+
+      <figure float="0">
+        <title>Seam Action Editing</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam25.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Change the <property moreinfo="none">value</property> of the button to something different. If desired,
+        you can change any other text on the page. Then, type <emphasis>
+          <property moreinfo="none">CTRL + S</property>
+        </emphasis> to save the facelet.</para>
+
+      <figure float="0">
+        <title>Attributes Dialog</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam26.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Refresh <emphasis>
+          <property moreinfo="none">http://localhost:8080/workshop/myAction.seam</property>
+        </emphasis> and now you should see your changes.</para>
+
+      <para>Notice that you did not have to publish the application. JBoss Developer Studio
+        auto-published it for you.</para>
+
+      <figure float="0">
+        <title>Seam Action Is Modified</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam27.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+    </section>
+
+
+  </section>
+
+  <section id="declarative_security">
+    <title>Declarative Security</title>
+
+    <para>In this section you will see how it’s easy to secure the facelets and facelet components
+      in Seam. Let’s go ahead and secure the action button, then we will secure the entire
+      page.</para>
+
+    <section id="edit_login">
+      <title>Edit Login Authentication Logic</title>
+
+      <para>There is a class called <property moreinfo="none">Authenticator.java</property>. The login page will
+        execute the <property moreinfo="none">Authenticator.authenticate()</property> method by default, so we’ll
+        start by adding some custom login logic.</para>
+      <para>Open <property moreinfo="none">Authenticator.java</property> in JBoss Developer Studio and replace the
+          <property moreinfo="none">authenticate()</property> method with this code:</para>
+
+      <programlisting format="linespecific"><![CDATA[public boolean authenticate() {
+if (identity.getUsername().equals("admin")
+&& identity.getPassword().equals("password")) {
+identity.addRole("admin");
+return true;
+}
+else
+return true;
+}]]></programlisting>
+
+    </section>
+    <section id="secure_seam_page">
+      <title>Secure Seam Page Component</title>
+
+      <para>Open <property moreinfo="none">myAction.xhtml</property> and add a new secured command button:</para>
+      <programlisting format="linespecific"><![CDATA[<h:commandButton id="myActionSecured"
+value="Secured Action Button"
+action="#{myAction.myAction}"
+rendered="#{s:hasRole('admin')}"/>]]></programlisting>
+
+      <para>Refresh <emphasis>
+          <property moreinfo="none">http://localhost:8080/workshop/myAction.seam</property>
+        </emphasis> If you are not logged in you will only see one button. If you are logged in,
+        there will be two buttons.</para>
+
+
+      <figure float="0">
+        <title>One Button on a Page</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam28.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>The secured button is not visible because the user isn’t logged in as
+          <property moreinfo="none">"admin"</property>.</para>
+
+      <figure float="0">
+        <title>Secured Button is Visible</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam29.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>The user is logged in as <property moreinfo="none">"admin"</property>. Securing
+        components is easy but securing pages is pretty simple as well. </para>
+      <para>Open <emphasis>
+          <property moreinfo="none">WebContent/WEB-INF/pages.xml</property>
+        </emphasis>. Then add this markup directly underneath the &lt;pages&gt;
+        element:</para>
+
+      <programlisting format="linespecific"><![CDATA[<page view-id="/myAction.xhtml" login-required="true"/>]]></programlisting>
+
+      <para>Refresh <emphasis>
+          <property moreinfo="none">http://localhost:8080/workshop/myAction.seam</property>
+        </emphasis> If you are not logged in you will get bounced back to the login page.</para>
+
+      <figure float="0">
+        <title>Login Page</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam30.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Thus, if you enter login credentials for the
+          <property moreinfo="none">"admin"</property> user, you will be re-directed to the
+        secured page and secured component. If you enter different login credentials, page access
+        will be granted, but the secured component will not be displayed.</para>
+
+      <para>Congratulations! You have secured your new action both at the facelet component and page
+        level. You also added custom authentication logic to the login action.</para>
+
+    </section>
+
+  </section>
+
+  <section id="browsing_workshop_db">
+    <title>Browsing Workshop Database</title>
+
+    <para>In this section you get to know how to use the workshop database that was started at the
+      beginning of the lab.</para>
+
+    <section id="database_connectivity">
+      <title>Database Connectivity Setup</title>
+
+      <para>The workshop data can be browsed inside of JBoss Developer Studio.</para>
+
+      <para>To open the Data Source Explorer, click on <emphasis><property moreinfo="none">Window &gt; Open Perspective
+            &gt; Other &gt; Database Development</property>.</emphasis></para>
+      <para>In the Data Source Explorer, expand a <property moreinfo="none">Databases</property> node and select a
+          <property moreinfo="none">Default</property> database. Right click on it, select
+          <property moreinfo="none">Connect</property> from the context menu.</para>
+
+      <figure float="0">
+        <title>Data Source Explorer</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam31.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+    </section>
+
+    <section id="browsing_workshop_db2">
+      <title>Browse Workshop Database</title>
+
+      <para>Then in the current view, drill down to the <property moreinfo="none">CUSTOMERS</property> table.</para>
+
+      <figure float="0">
+        <title>"CUSTOMERS" Table</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam32.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Right click on <property moreinfo="none">CUSTOMERS</property>, select <emphasis>
+          <property moreinfo="none">Data &gt; Sample Contents</property>
+        </emphasis> to view the data in the table.</para>
+
+      <para>There should be a SQL Results view on the workbench, but it could be hidden. Click on
+        the <property moreinfo="none">"Result1"</property> tab in the right side and you should
+        see the data in the CUSTOMERS table.</para>
+
+
+      <figure float="0">
+        <title>SQL Results View</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam33.png" scale="92"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <note>
+        <title>Note:</title>
+        <para>If you can’t find the SQL Results view tab, click on <emphasis><property moreinfo="none">Window &gt; Show
+              View &gt; Other &gt; SQL Development &gt; SQL Results</property>.</emphasis></para>
+      </note>
+
+      <para>Congratulations! You just connected to the workshop database and queried the content
+        using Database Explorer tools.</para>
+
+    </section>
+
+  </section>
+
+  <section id="db_programming">
+    <title>Database Programming</title>
+
+    <para>Now, it’s time to reverse engineer the workshop database into a fully functioning Seam
+      CRUD(Create Read Update Delete) application.</para>
+
+    <section id="reverse_engineer_crud">
+      <title>Reverse Engineer CRUD from a Running Database</title>
+
+      <para>In <property moreinfo="none">JBoss Developer Studio</property>, switch to <property moreinfo="none">Seam
+          perspective</property>, and then right-click the project and select
+            <emphasis><property moreinfo="none">New &gt; Seam Generate Entities</property>.</emphasis></para>
+
+      <para>"workshop" project in the <property moreinfo="none">Seam Generate Entities
+          wizard</property> will be selected automatically. There is no need to change something
+        more, click <emphasis>
+          <property moreinfo="none">Next</property>
+        </emphasis> to proceed further.</para>
+
+      <figure float="0">
+        <title>Generate Seam Entities</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam34.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>On the next page use the <emphasis>
+          <property moreinfo="none">Include</property>
+        </emphasis> button to include all the tables from the database and click <emphasis>
+          <property moreinfo="none">Finish</property>.</emphasis></para>
+
+      <figure float="0">
+        <title>Selecting Tables</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam34a.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>After running the Generate Entities action, you will see new <emphasis>
+          <property moreinfo="none">org.domain.workshop.entity</property>
+        </emphasis> classes. These classes represent insert/update/delete/query logic.</para>
+
+      <figure float="0">
+        <title>org.domain.workshop.entity Classes</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam35.png" scale="90"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>There are also <emphasis>
+          <property moreinfo="none">org.domain.workshop.entity</property>
+        </emphasis> package that contains the JPA classes. These are the entity beans that are
+        mapped to database tables.</para>
+
+      <para>Last, but not least, there are facelets for all of the CRUD screens. The best way to get
+        a feel for the generated code is to open a browser and play around with the application. Go
+        to <emphasis>
+          <property moreinfo="none">http://localhost:8080/workshop</property>
+        </emphasis> and insert/update/delete/query a few records. There is quite a bit of AJAX in
+        this application, but which we will explore further later on in the lab. For now, take note
+        of the page tabs, required field logic and data table sorting in the list pages. </para>
+
+      <figure float="0">
+        <title>CustomersList.xhtml in the Editor</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam36.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Congratulations! You now have a fully functioning CRUD application that is already AJAX
+        enabled.</para>
+
+    </section>
+
+    <section id="use_hibernate_tools">
+      <title>Use Hibernate Tools to Query Data via JPA</title>
+
+      <para>Now, it's time to write some JPA queries using the Hibernate perspective in
+          <property moreinfo="none">JBoss Developer Studio</property>.</para>
+      <para>In the upper right corner of the workbench there is a small icon (see the figure below),
+        click on it and choose <property moreinfo="none">Hibernate</property>.</para>
+
+      <figure float="0">
+        <title>Hibernate Perspective</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam37.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Look at the Hibernate Configurations view. In the "workshop" project,
+        drill down on the <property moreinfo="none">Session Factory</property> and notice that the JPA
+        entities/attributes are listed in a nice tree view.</para>
+
+      <figure float="0">
+        <title>Hibernate Configurations View</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam38.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Right click on the <property moreinfo="none">Session Factory</property> and select <property moreinfo="none">HQL
+          Editor</property>. This will open a JPA query scratch pad window.</para>
+
+      <para>Write your query and click on the "Hibernate Dynamic SQL Preview" tab.
+        You should see the SQL that will be executed if this JPA query is run.</para>
+
+      <figure float="0">
+        <title>JPA Query Editor</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam39.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Run the query by clicking on the green run icon.</para>
+
+      <para>The results are listed in the "Hibernate Query Result" tab. There is a
+        "Properties" tab in the workbench that can be used to see a specific JPA
+        result. These results represent the JPA objects because our query did not specify column
+        names.</para>
+
+      <figure float="0">
+        <title>Hibernate Query Result View</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam40.png" scale="80"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>The query can be refined, and take note that there is nice code completion in the JPA
+        query editor.</para>
+
+      <figure float="0">
+        <title>Code Completion</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam41.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>A refined query will return results that are more ResultSet oriented. Notice the join
+        logic that JPA supports.</para>
+
+      <figure float="0">
+        <title>The Results</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam42.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+
+      <para>There was no need to specify an <property moreinfo="none">Employees</property> table in the
+          <property moreinfo="none">from</property> part of the JPA query because JPA supports reference traversal
+        via Java class attribute references. Not only are JPA and HQL queries fully supported, but
+        Criteria based queries can also be written in the Criteria Editor. You should spend some
+        time tinkering with different queries and possibly Criteria based queries, even though the
+        instructions are not provided in this lab.</para>
+
+      <figure float="0">
+        <title>Criteria Editor</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam43.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+    </section>
+
+    <section id="use_hibernate_to_vizualize">
+      <title>Use Hibernate Tools to visualize the Data Model</title>
+
+      <para>Now, it’s time to view the data model for the workshop database.</para>
+
+      <para>In the Hibernate Configurations view, select "workshop" project and
+        expand the <property moreinfo="none">Configuration</property> node. Select the
+          <property moreinfo="none">Customers</property> entity, right click on it, choose <property moreinfo="none">Open Mapping
+          Diagram</property>.</para>
+
+      <figure float="0">
+        <title>Mapping Diagram Opening</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam44.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+
+      <para>You see a Diagram tab for the CUSTOMERS table and any tables that have FK references.
+        This is a handy way to view the data model and JPA mappings. Now, you’ve got access to
+        something that the Erwin Data Modeler can’t do.</para>
+
+
+      <figure float="0">
+        <title>Diagram Tab</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam45.png" scale="80"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+    </section>
+  </section>
+
+
+  <section id="rich_components">
+    <title>Rich Components</title>
+
+    <para>This lab will conclude with one last AJAX twist. In this section we add a RichFaces
+        <property moreinfo="none">inputNumberSlider</property> to the Order Details edit screen.</para>
+
+    <section id="add_richfaces">
+      <title>Add a Richfaces component to the CRUD Application</title>
+
+      <para>Switch to Seam perspective, open <emphasis>
+          <property moreinfo="none">WebContent/OrderdetailsEdit.xhtml</property>
+        </emphasis> in JBoss Developer Studio.</para>
+      <para>Change the form field values using the visual editor. Seam has generated the form field
+        names that match the database column names. This is not ideal for business users.</para>
+
+      <figure float="0">
+        <title>Form Fields Editing</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam46.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Also, replace the QTY Ordered input field with a <property moreinfo="none">inputNumberSlider</property>.
+        You can use the JBoss Developer Studio palette or right click on the form and insert the
+        RichFaces component.</para>
+
+      <figure float="0">
+        <title>RichFaces Component Inserting</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam47.png" scale="85"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>One the last option is to use the source view and manually copy the inputNumberSlider
+        markup listed below:</para>
+
+      <programlisting format="linespecific"><![CDATA[<rich:inputNumberSlider id="quantityOrdered" required="true"
+                                                               value="#{orderdetailsHome.instance.quantityordered}"/>]]></programlisting>
+
+      <figure float="0">
+        <title>Adding the Source</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam48.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>The end result is an edit page that has better form labels and a new RichFaces
+        control.</para>
+
+      <figure float="0">
+        <title>The Result Page</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam49.png" scale="85"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Congratulations! You have completed the JBoss Developer Studio lab.</para>
+
+    </section>
+
+  </section>
+</chapter>
+ 
+ 
+<chapter id="jsp_application" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/jsp_application.xml" xreflabel="jsp_application">
+	<?dbhtml filename="jsp_application.html"?>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Developer Studio</keyword>
+			<keyword>JSP</keyword>
+			<keyword>JBoss</keyword>
+		</keywordset>
+	</chapterinfo>
+	<title>Developing a simple JSP web application</title>
+
+	<note>
+		<title>Note:</title>
+		<para>We highly recommend developing in <property moreinfo="none">Seam</property>. This chapter is for users
+			who for some reason cannot use Seam.</para>
+	</note>
+
+	<para>In this chapter you'll find out how to create a simple <ulink url="http://java.sun.com/products/jsp/">JSP</ulink> application using the
+			<property moreinfo="none">JBoss Developer Studio</property>. The application will show a classic
+		"Hello World!" on the page.</para>
+	<para>We'll assume that you have already launched <property moreinfo="none">JBoss Developer
+		Studio</property> and also that the <property moreinfo="none">Web Development</property> perspective is the
+		current perspective. If not, make it active by selecting <emphasis>
+			<property moreinfo="none">Window &gt; Open Perspective &gt; Web Development</property>
+		</emphasis> from the menu bar or by selecting <emphasis>
+			<property moreinfo="none">Window &gt; Open Perspective &gt; Other...</property>
+		</emphasis> from the menu bar and then selecting Web Development from the Select Perspective
+		dialog box.</para>
+
+	<section id="SettingUpTheProject">
+		<?dbhtml filename="SettingUpTheProject.html"?>
+		<title>Setting Up the Project</title>
+		<para>We are going to start with the creating a Dynamic Web Project with a minimal
+			structure, i.e. with just required facets. Thus this section will perform you all
+			necessary steps on how to do this.</para>
+		<itemizedlist>
+			<listitem>
+				<para>Go to the menu bar and select <emphasis>
+						<property moreinfo="none">File &gt; New &gt; Other...</property>
+					</emphasis></para>
+			</listitem>
+			<listitem>
+				<para>Select <emphasis>
+						<property moreinfo="none">Web &gt; Dynamic Web Project</property>
+					</emphasis> in the New Project dialog box</para>
+			</listitem>
+			<listitem>
+				<para>Click <emphasis>
+						<property moreinfo="none">Next</property>
+					</emphasis>
+				</para>
+			</listitem>
+			<listitem>
+				<para>Enter "jspHello" as a project name</para>
+			</listitem>
+			<listitem>
+				<para>Then select <emphasis>
+						<property moreinfo="none">Minimal Configuration</property>
+					</emphasis> from the list of possible configurations and click <emphasis>
+						<property moreinfo="none">Finish</property>
+					</emphasis></para>
+			</listitem>
+		</itemizedlist>
+		<figure float="0">
+			<title>Create New Web Project</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/jsp_application/jsp_application_1.png"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<para>The <emphasis>
+				<property moreinfo="none">jspHello</property>
+			</emphasis> node should appear in the upper-left <property moreinfo="none">Package Explorer</property>
+			view.</para>
+		<figure float="0">
+			<title>New Web Project</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/jsp_application/jsp_application_2.png"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</section>
+
+	<section id="CreatingJSPPage">
+		<?dbhtml filename="CreatingJSPPage.html"?>
+		<title>Creating JSP Page</title>
+		<para>This section covers all the points how to create, edit and then preview JSP page.</para>
+		<para>In our simple application we need to create only one JSP page which displays a
+				<emphasis>"Hello World!"</emphasis> message.</para>
+		<itemizedlist>
+			<listitem>
+				<para>Right click <emphasis><property moreinfo="none">WebContent &gt; New &gt;
+						JSP</property>. </emphasis></para>
+			</listitem>
+			<listitem>
+				<para>Type "hello.jsp" for a file name and click the <emphasis>
+						<property moreinfo="none">Next</property>
+					</emphasis> button.</para>
+			</listitem>
+		</itemizedlist>
+		<para>In the next window you can choose a template for your jsp page and see its preview.</para>
+		<itemizedlist>
+			<listitem>
+				<para>Select <emphasis>
+						<property moreinfo="none">New JSP File (xhtml)</property>
+					</emphasis> template and click <emphasis>
+						<property moreinfo="none">Finish</property>
+					</emphasis> button.</para>
+			</listitem>
+		</itemizedlist>
+		<figure float="0">
+			<title>Create JSP Page</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/jsp_application/jsp_application_3.png"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Our <emphasis><property moreinfo="none">hello.jsp</property></emphasis> page will now appear in 
+			<property moreinfo="none">Project Explorer</property>.
+		</para>
+		<section id="EditingJSPPage">
+			<?dbhtml filename="EditingJSPPage.html"?>
+			<title>Editing a JSP Page</title>
+			<para>Let's now make a little change so that a jsp page displays
+					<emphasis>"Hello World!"</emphasis> message.</para>
+			<itemizedlist>
+				<listitem>
+					<para>Insert this line inside the <emphasis role="bold">
+							<property moreinfo="none">&lt;body&gt;</property>
+						</emphasis><emphasis role="bold">
+							<property moreinfo="none">&lt;/body&gt;</property>
+						</emphasis> tag: </para>
+				</listitem>
+			</itemizedlist>
+			<programlisting format="linespecific" role="XML"><![CDATA[<% System.out.println("Hello World!"); %>]]>
+</programlisting>
+
+			<para>Notice that content assist functionality is always available when you are typing:</para>
+			<figure float="0">
+				<title>Content Assist in JSP Page</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/jsp_application/jsp_application_4.png"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>After changes made your <emphasis>
+					<property moreinfo="none">hello.jsp</property>
+				</emphasis> page should look like this:</para>
+			<figure float="0">
+				<title>Hello.jsp Page</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/jsp_application/jsp_application_5.png"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+
+			<para>This line will actually output <emphasis>"Hello
+				World!"</emphasis> message in the <property moreinfo="none">Console</property>. To make the
+				message displayed in the Browser, just replace this line with the simple
+					<emphasis>Hello World!</emphasis>.</para>
+		</section>
+
+		<section id="WebXML">
+			<?dbhtml filename="WebXML.html"?>
+			<title>web.xml file</title>
+			<para>When you are creating web project the wizard creates the <emphasis>
+					<property moreinfo="none">web.xml</property>
+				</emphasis> for you automatically. The <property moreinfo="none">web.xml file editor</property>
+				provided by <property moreinfo="none">JBoss Developer Studio</property> is available in two modes:
+					<property moreinfo="none">Tree</property> and <property moreinfo="none">Source</property>.</para>
+			<figure float="0">
+				<title>Web.xml in Design and Source Mode</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/jsp_application/jsp_application_6.png" scale="90"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Both modes are fully synchronized. Let's add mapping to our <emphasis>
+					<property moreinfo="none">hello.jsp</property>
+				</emphasis> page in <emphasis>
+					<property moreinfo="none">web.xml</property>
+				</emphasis> file.</para>
+			<itemizedlist>
+				<listitem>
+					<para>Switch to <property moreinfo="none">Source</property> tab.</para>
+				</listitem>
+				<listitem>
+					<para>Add the next code into <emphasis role="bold">
+							<property moreinfo="none">&lt;welcome-file-list&gt;</property>
+						</emphasis>:</para>
+				</listitem>
+			</itemizedlist>
+			<programlisting format="linespecific" role="XML"><![CDATA[<welcome-file>hello.jsp</welcome-file>
+]]></programlisting>
+			<para>If you come back to <property moreinfo="none">Tree</property> mode you will see that the changes
+				made are automatically reflected in that mode.</para>
+			<para>Actually you don't really need to do any configurations right now.</para>
+		</section>
+
+		<section id="DeployTheProject">
+			<?dbhtml filename="DeployTheProject.html"?>
+			<title>Deploying the project</title>
+			<para>While creating any web project you could experience a pain writing ant scripts and
+				managing the packaging even when writing the most trivial web applications. With
+					<property moreinfo="none">JBoss Developer Studio</property> you are saved from such a pain. All
+				you need is to start <property moreinfo="none">JBoss Server</property> and launch your application
+				in your favorite browser.</para>
+			<para>You can also create a war archive with <ulink url="../../as/html_single/index.html#Project_archivesView">JBDS's Archive Tools</ulink>
+				and export it to any web server.</para>
+			<section id="WarConfig">
+				<?dbhtml filename="WarConfig.html"?>
+				<title>WAR Config</title>
+				<para>Project archives managing is available through <ulink url="../../as/html_single/index.html#Project_archivesView">Project Archives view</ulink>.</para>
+				<itemizedlist>
+					<listitem>
+						<para>Select <emphasis>
+								<property moreinfo="none">Window &gt; Show view &gt; Other &gt; JBoss
+									Tools &gt; Project archives</property>
+							</emphasis> from menu bar</para>
+					</listitem>
+					<listitem>
+						<para>Select a project in Package Explorer you want to be archived</para>
+					</listitem>
+				</itemizedlist>
+				<para>In <property moreinfo="none">Project Archives</property> you will see available archive types
+					for the project:</para>
+				<figure float="0">
+					<title>Project Archives</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/jsp_application/jsp_application_8.png"></imagedata>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<itemizedlist>
+					<listitem>
+						<para>Click, for example, <emphasis>
+								<property moreinfo="none">WAR</property>
+							</emphasis> option to create war archive</para>
+					</listitem>
+				</itemizedlist>
+				<para>In the <property moreinfo="none">New WAR</property> dialog you can see automatically selected
+					default values.</para>
+				<figure float="0">
+					<title>New WAR Archive</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/jsp_application/jsp_application_9.png"></imagedata>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<itemizedlist>
+					<listitem>
+						<para>Click <emphasis>
+								<property moreinfo="none">Next</property>
+							</emphasis> to see a stub archive configuration for your project: <figure float="0">
+								<title>Stub Archive Configuration</title>
+								<mediaobject>
+									<imageobject>
+										<imagedata fileref="images/jsp_application/jsp_application_10.png"></imagedata>
+									</imageobject>
+								</mediaobject>
+							</figure>
+						</para>
+					</listitem>
+					<listitem>
+						<para>Click <emphasis>
+								<property moreinfo="none">Finish</property>. </emphasis> The
+							<emphasis>.war</emphasis> file will appear in <property moreinfo="none">Package
+							Explorer</property> and also in <property moreinfo="none">Project Archives</property>
+							view as structure tree: <figure float="0">
+								<title>Archive is Created</title>
+								<mediaobject>
+									<imageobject>
+										<imagedata fileref="images/jsp_application/jsp_application_11.png"></imagedata>
+									</imageobject>
+								</mediaobject>
+							</figure>
+							<figure float="0">
+								<title>Archive in Project Archives View</title>
+								<mediaobject>
+									<imageobject>
+										<imagedata fileref="images/jsp_application/jsp_application_12.png"></imagedata>
+									</imageobject>
+								</mediaobject>
+							</figure>
+						</para>
+					</listitem>
+				</itemizedlist>
+				<para>Via <property moreinfo="none">Project Archives</property> view you could now edit your
+					archive, add new folders, publish to server, and so on:</para>
+				<figure float="0">
+					<title>Configure Archive</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/jsp_application/jsp_application_13.png"></imagedata>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</section>
+
+			<section id="AutoRedeploy">
+				<?dbhtml filename="AutoRedeploy.html"?>
+				<title>Auto redeploy</title>
+				<para>When you are creating a web application and register it on <property moreinfo="none">JBoss
+						Server</property> it is automatically deployed into
+					<emphasis>/deploy</emphasis> directory of the server. JBDS comes with the
+					feature of auto-redeploy. It means that you don't need to restart
+						<property moreinfo="none">JBoss Server</property>. Any changes made in the application in
+					exploded format will trigger a redeployment on the server.</para>
+			</section>
+		</section>
+
+		<section id="Previewtab">
+			<?dbhtml filename="Previewtab.html"?>
+			<title>JSP Page Preview</title>
+			<para><property moreinfo="none">JBDS</property> comes with JSP design-time preview features. When
+				designing JSP pages you can easily preview how they will look during runtime. You
+				can even <ulink url="../../jsf/html_single/index.html#el_exp_para">attach your stylesheet to the
+					Preview</ulink>.</para>
+			<itemizedlist>
+				<listitem>
+					<para>Make a little change to <emphasis>
+							<property moreinfo="none">hello.jsp</property>
+						</emphasis> page, e.g. put this code snippet:</para>
+				</listitem>
+			</itemizedlist>
+			<programlisting format="linespecific" role="XML"><![CDATA[<%= new java.util.Date() %>
+]]></programlisting>
+			<itemizedlist>
+				<listitem>
+					<para>Click <emphasis>
+							<property moreinfo="none">Save</property>
+						</emphasis> button.</para>
+				</listitem>
+				<listitem>
+					<para>Switch to Preview page by clicking <property moreinfo="none">Preview</property> tab at the
+						bottom of the page. You will see how the page will look at runtime.</para>
+				</listitem>
+			</itemizedlist>
+			<!--		<figure>
+			<title>Preview Page</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/jsp_application/jsp_application_14.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+-->
+		</section>
+		<section id="LaunchingTheProject">
+			<?dbhtml filename="LaunchingTheProject.html"?>
+			<title>Launch JSP Project</title>
+			<para>Let's now launch our project on server. We'll use
+					<property moreinfo="none">JBoss Server</property> that is shipped with <property moreinfo="none">JBoss Developer
+					Studio</property>. You can do it by performing one of the following actions:</para>
+			<itemizedlist>
+				<listitem>
+					<para>Start JBoss Server from <ulink url="../../as/html_single/index.html#JBossServerView">JBoss
+							Server view</ulink> by clicking the Start icon.</para>
+				</listitem>
+			</itemizedlist>
+			<figure float="0">
+				<title>Starting Server</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/jsp_application/jsp_application_15.png"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<itemizedlist>
+				<listitem>
+					<para>Click the Run icon or right click your project folder and select <emphasis>
+							<property moreinfo="none">Run As &gt; Run on Server</property>. </emphasis> If you
+						haven't made any changes in <emphasis>
+							<property moreinfo="none">web.xml</property>
+						</emphasis> file or cleared it out you can launch the application by right
+						clicking the <emphasis>
+							<property moreinfo="none">hello.jsp</property>
+						</emphasis> page and selecting <emphasis>
+							<property moreinfo="none">Run on the Server</property>. </emphasis></para>
+				</listitem>
+			</itemizedlist>
+			<figure float="0">
+				<title>Run Project</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/jsp_application/jsp_application_16.png"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>You should see the next page in a Browser :</para>
+			<figure float="0">
+				<title>Running Project</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/jsp_application/jsp_application_17.png"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Thus with the help of this chapter you've learnt how to organize a Dynamic
+				Web Project with a minimal configuration, add any staff to it (in our case it's
+				just one jsp page) and deploy and run it on the <property moreinfo="none">JBoss Server</property>
+				shipped with <property moreinfo="none">JBDS</property>.
+			</para>
+		</section>
+
+		</section>
+</chapter>
+
+ 
+<chapter id="rad_jsf_application" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/rad_jsf_application.xml" xreflabel="rad_jsf_application">
+    <?dbhtml filename="rad_jsf_application.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Developer Studio</keyword>
+            <keyword>JSF</keyword>
+            <keyword>JBoss</keyword>
+            <keyword>RAD</keyword>
+        </keywordset>
+    </chapterinfo>
+    <title>RAD development of a simple JSF application</title>
+
+    <note>
+        <title>Note:</title>
+        <para>We highly recommend developing in <property moreinfo="none">Seam</property>. This chapter is for users
+            who for some reason cannot use <property moreinfo="none">Seam</property>.</para>
+    </note>
+
+    <para>In this chapter you will see how to create a simple JSF application being based on
+            <property moreinfo="none">"RAD"</property> philosophy. We will create the familiar
+        Guess Number application. The scenario is the following. You are asked to guess a number
+        between 0 and 100. If the guess is correct, a success page is displayed with a link to play
+        again. If the guess is incorrect, a message is printed notifying that a smaller or a larger
+        number should be entered and the game continues.</para>
+    <para>We'll show you how to create such an application from scratch, along the way
+        demonstrating powerful features of JBoss Developer Studio such as project templating, Visual
+        Page Editor, code completion and others. You will design the JSF application and then run
+        the application from inside JBoss Developer Studio using the bundled JBoss server.</para>
+
+    <section id="SettingUpTheProject12">
+        <?dbhtml filename="SettingUpTheProject12.html"?>
+        <title>Setting up the project</title>
+        <para>First, you should create a JSF 1.2 project using an integrated JBDS's new
+            project wizard and predefined templates. Follow the next steps:</para>
+        <itemizedlist>
+            <listitem>
+                <para>In Web Projects View (if it is not open select <emphasis>
+                        <property moreinfo="none">Window &gt; Show View &gt; Others &gt; JBoss Tools Web
+                            &gt; Web Projects View</property>) </emphasis> click <emphasis>
+                        <property moreinfo="none">Create New JSF Project</property>
+                    </emphasis> button. <figure float="0">
+                        <title>Create New JSF Project</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/rad_jsf_application/rad_jsf_application_1.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure></para>
+            </listitem>
+
+            <listitem>
+                <para>Put <property moreinfo="none">GuessNumber</property> as a project name, in JSF Environment
+                    drop down list choose <property moreinfo="none">JSF 1.2</property></para>
+            </listitem>
+            <listitem>
+                <para>Leave everything else as it is and click <emphasis>
+                        <property moreinfo="none">Finish</property>
+                    </emphasis></para>
+            </listitem>
+        </itemizedlist>
+        <para>Our project will appear in Project Explorer and Web Projects Views. As you can see
+            JBoss Developer Studio has created for us the whole skeleton for the project with all
+            needed libraries, faces-config.xml and web.xml files.</para>
+        <figure float="0">
+            <title>New JSF Project</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_2.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>As the project has been set up, new JSP pages should be created now.</para>
+    </section>
+    <section id="CreatingJSPPages">
+        <?dbhtml filename="CreatingJSPPages.html"?>
+        <title>Creating JSP Pages</title>
+
+        <para>Here, we are going to add two pages to our application. The first page is
+            inputnumber.jsp. It prompts you to enter a number. If the guess is incorrect, the same
+            page will be redisplayed with a message indicating whether a smaller or a larger number
+            should be tried. The second page is success.jsp. This page will be shown after you guess
+            the number correctly. From this page you also have the option to play the game again.</para>
+
+        <para>Now, we will guide you through the steps on how to do this.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Open <emphasis>
+                        <property moreinfo="none">faces-config.xml</property>
+                    </emphasis> file</para>
+            </listitem>
+            <listitem>
+                <para>Right click anywhere on the diagram mode</para>
+            </listitem>
+            <listitem>
+                <para>From the context menu select <emphasis>
+                        <property moreinfo="none">New View</property>
+                    </emphasis></para>
+            </listitem>
+        </itemizedlist>
+        <figure float="0">
+            <title>Create New View</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_3.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <itemizedlist>
+
+            <listitem>
+                <para>Type <emphasis>
+                        <property moreinfo="none">pages/inputnumber</property>
+                    </emphasis> as the value for <emphasis>
+                        <property moreinfo="none">From-view-id</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Leave everything else as is and click <emphasis>
+                        <property moreinfo="none">Finish</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>In the same way create another jsf view. Type <emphasis>
+                        <property moreinfo="none">pages/success</property>
+                    </emphasis> as the value for <emphasis>
+                        <property moreinfo="none">From-view-id</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Select <emphasis>
+                        <property moreinfo="none">File &gt; Save</property>
+                    </emphasis></para>
+            </listitem>
+        </itemizedlist>
+        <para>On the diagram you will see two created views.</para>
+        <figure float="0">
+            <title>New Views</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_4.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
+
+    <section id="CreatingTransition">
+        <?dbhtml filename="CreatingTransition.html"?>
+        <title>Creating Transition between two views</title>
+        <para>Then, we should create connection between jsp pages.</para>
+        <itemizedlist>
+            <listitem>
+                <para>In the diagram, select the <emphasis>
+                        <property moreinfo="none">Create New Connection</property>
+                    </emphasis> icon third from the top along the upper left side of the diagram to
+                    get an arrow cursor with a two-pronged plug at the arrow's bottom <figure float="0">
+                        <title>Create Connection</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/rad_jsf_application/rad_jsf_application_5.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                </para>
+            </listitem>
+            <listitem>
+                <para>Click on the <emphasis>
+                        <property moreinfo="none">pages/inputnumber</property>
+                    </emphasis> page icon and then click on the <emphasis>
+                        <property moreinfo="none">pages/success</property>
+                    </emphasis> page icon</para>
+            </listitem>
+        </itemizedlist>
+        <para>A transition should appear between the two icons of views.</para>
+        <figure float="0">
+            <title>Created Connection</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_6.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <itemizedlist>
+            <listitem>
+                <para>Select <emphasis>
+                        <property moreinfo="none">File &gt; Save</property>
+                    </emphasis> from the menu bar</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+
+    <section id="CreatingResourceFile">
+        <?dbhtml filename="CreatingResourceFile.html"?>
+        <title>Creating Resource File</title>
+        <para>A resource file is just a file with a <emphasis>.properties</emphasis> extension for
+            collecting text messages in one central place. JBoss Developer Studio allows you to
+            create quickly a resource file. The messages stored in resource file can be displayed to
+            you on a Web page during application execution. </para>
+        <para>With resource file first, you don't hard code anything into the JSP pages.
+            And second, it makes it easier to translate your application to other languages. All you
+            have to do is to translate all your messages to the other language and save them in a
+            new properties file with a name that ends with the appropriate ISO-639 language code.</para>
+        <para>It is a good idea to keep your resources inside the <emphasis>
+                <property moreinfo="none">JavaSource</property>
+            </emphasis> folder, where you keep your .java files. Every time you build the project,
+            all <emphasis>.properties</emphasis> files will then be copied to the
+            <emphasis>classes</emphasis> folder by default.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Right click <emphasis>
+                        <property moreinfo="none">JavaSource</property>
+                    </emphasis> folder and select <emphasis>
+                        <property moreinfo="none">New &gt; Folder</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Type <emphasis>
+                        <property moreinfo="none">game</property>
+                    </emphasis> for Folder name and click <emphasis>
+                        <property moreinfo="none">Finish</property>
+                    </emphasis></para>
+            </listitem>
+        </itemizedlist>
+        <para>Your resource file and java bean will be stored in this folder.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Right click on <emphasis>
+                        <property moreinfo="none">game folder</property>
+                    </emphasis> and select <emphasis>
+                        <property moreinfo="none">New &gt; Properties File</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Type <emphasis>
+                        <property moreinfo="none">messages</property>
+                    </emphasis> as the value for "name" attribute and click <emphasis>
+                        <property moreinfo="none">Finish</property>
+                    </emphasis></para>
+            </listitem>
+        </itemizedlist>
+        <para>JBoss Developer Studio will automatically open
+            <property moreinfo="none">messages.properties</property> file for editing.</para>
+        <figure float="0">
+            <title>Messages.properties File</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_7.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <itemizedlist>
+            <listitem>
+                <para>Click <emphasis>
+                        <property moreinfo="none">Add</property>
+                    </emphasis> button for adding new attribute to your resource file</para>
+            </listitem>
+            <listitem>
+                <para>Type <emphasis role="italic">
+                        <property moreinfo="none">how_to_play</property>
+                    </emphasis> for "name" and <emphasis role="italic">
+                        <property moreinfo="none">Please pick a number between 0 and 100.</property>
+                    </emphasis> for value</para>
+            </listitem>
+            <listitem>
+                <para>Click <emphasis>
+                        <property moreinfo="none">Finish</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>In such a way add the next properties:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting format="linespecific" role="JAVA"><![CDATA[makeguess_button=Make Guess
+trayagain_button=Play Again?
+success_text=How cool.. You have guessed the number, {0} is correct! 
+tryagain_smaller=Oops..incorrect guess. Please try a smaller number.
+tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
+]]></programlisting>
+        <itemizedlist>
+            <listitem>
+                <para>Click <emphasis>
+                        <property moreinfo="none">File &gt; Save</property>
+                    </emphasis> from the menu bar</para>
+            </listitem>
+        </itemizedlist>
+        <para>Your .properties file should now look like follows:</para>
+        <figure float="0">
+            <title>Properties are Added</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_8.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para><emphasis>
+            <property moreinfo="none">Up</property></emphasis>
+            and <emphasis>
+                <property moreinfo="none">Down</property>
+            </emphasis> buttons allow you to move you attribute on the list. For delete the attribute, choose it and press <emphasis>
+                <property moreinfo="none">Delete</property></emphasis> button.</para>
+        <para>If you want to change a value or a name of your attribute, click on it and than on <emphasis>
+            <property moreinfo="none">Edit</property></emphasis> button.</para>
+    </section>
+
+    <section id="CreatingJavaBean">
+        <?dbhtml filename="CreatingJavaBean.html"?>
+        <title>Creating Java Bean</title>
+        <para>In this section you'll see how to create a Java bean that will hold business
+            logic of our application.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Right click <emphasis>
+                        <property moreinfo="none">game folder</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Select <emphasis>
+                        <property moreinfo="none">New &gt; Class</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Type <emphasis>
+                        <property moreinfo="none">NumberBean</property>
+                    </emphasis> for bean name</para>
+            </listitem>
+        </itemizedlist>
+        <para>A java bean is created.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Declare the variable of your entered number:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting format="linespecific" role="JAVA"><![CDATA[Integer userNumber;
+]]></programlisting>
+        <para>JBDS allows to quickly generate getters and setters for java bean.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Right click <emphasis>
+                        <property moreinfo="none">NumberBean.java</property>
+                    </emphasis> in Package Explorer</para>
+            </listitem>
+            <listitem>
+                <para>Select <emphasis>
+                        <property moreinfo="none">Source &gt; Generate Getters and Setters...</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Check <emphasis>
+                        <property moreinfo="none">userNumber</property>
+                    </emphasis> box and click <emphasis>
+                        <property moreinfo="none">OK</property>
+                    </emphasis>
+                    <figure float="0">
+                        <title>Generate Getters and Setters</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/rad_jsf_application/rad_jsf_application_9.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                </para>
+            </listitem>
+            <listitem>
+                <para>Add the declaration of the second variable</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting format="linespecific" role="JAVA"><![CDATA[int randomNumber;
+]]></programlisting>
+        <itemizedlist>
+            <listitem>
+                <para>.. other bean methods:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting format="linespecific" role="JAVA"><![CDATA[public NumberBean () 
+{
+    randomNumber = (int)(Math.random()*100);
+    System.out.println ( "Random number: "+randomNumber);
+  }
+  public String playagain () 
+  {
+    FacesContext context = FacesContext.getCurrentInstance();
+    HttpSession session = 
+        (HttpSession) context.getExternalContext().getSession(false);
+    session.invalidate();
+    return "playagain"; 
+  }
+  public String checkGuess () 
+  {
+     
+    // if guessed, return 'success' for navigation
+    if ( userNumber.intValue() == randomNumber ) 
+    {
+      return "success";
+    }
+else 
+   {
+      FacesContext context = FacesContext.getCurrentInstance();
+      ResourceBundle bundle = ResourceBundle.getBundle("game.messages", 
+      context.getViewRoot().getLocale());
+      String msg = "";
+      // if number bigger, get appropriate message
+      if ( userNumber.intValue() > randomNumber ) 
+         msg = bundle.getString("tryagain_smaller");
+      else // if number smaller, get appropriate message
+         msg = bundle.getString("tryagain_bigger");      
+      // add message to be displayed on the page via <h:messages> tag
+      context.addMessage (null, new FacesMessage(msg)); 
+      // return 'tryagain' for navigation
+      return "tryagain";
+    }
+  }
+]]></programlisting>
+        <itemizedlist>
+            <listitem>
+                <para>And the import declarations:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting format="linespecific" role="JAVA"><![CDATA[import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import javax.faces.application.FacesMessage;
+import java.util.Locale;
+import java.util.ResourceBundle;
+]]></programlisting>
+        <para>The whole java bean should look as follows:</para>
+        <programlisting format="linespecific" role="JAVA"><![CDATA[import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import javax.faces.application.FacesMessage;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+public class NumberBean 
+{
+  Integer userNumber; 
+  int randomNumber; // random number generated by application
+public Integer getUserNumber () 
+  {
+    return userNumber;
+  }
+  public void setUserNumber (Integer value)
+  {
+     this.userNumber = value;
+  }
+  
+  // constructor, generates random number
+  public NumberBean () 
+  {
+    randomNumber = (int)(Math.random()*100);
+    System.out.println ( 
+   "Random number: " + randomNumber);
+  }
+  
+  public String playagain () 
+  {
+    FacesContext context = FacesContext.getCurrentInstance();
+    HttpSession session = 
+        (HttpSession) context.getExternalContext().getSession(false);
+    session.invalidate();
+    return "playagain"; 
+  }
+  
+  // check if user guessed the number
+  public String checkGuess () 
+  {
+    // if guessed, return 'success' for navigation
+    if ( userNumber.intValue() == randomNumber )
+    {
+      return "success";
+    }
+    // incorrect guess
+    else 
+   {
+      // get a reference to properties file to retrieve messages
+      FacesContext context = FacesContext.getCurrentInstance();
+      ResourceBundle bundle = 
+          ResourceBundle.getBundle("game.messages", 
+          context.getViewRoot().getLocale());
+      String msg = "";
+      // if number is bigger, get appropriate message
+      if ( userNumber.intValue() > randomNumber ) 
+         msg = bundle.getString("tryagain_smaller");
+      else // if number smaller, get appropriate message
+         msg = bundle.getString("tryagain_bigger");
+      
+      // add message to be displayed on the page via <h:messages> tag
+      context.addMessage (null, new FacesMessage(msg)); 
+      // return 'tryagain' for navigation
+      return "tryagain";
+    }
+  }
+}
+]]></programlisting>
+    </section>
+
+    <section id="EditingFacesConfig">
+        <?dbhtml filename="EditingFacesConfig.html"?>
+        <title>Editing faces-config.xml File</title>
+        <para>In this section you know about faces-config.xml file.</para>
+        <para>This file holds two navigation rules and defines the backing bean used.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Open faces-config.xml file in a source mode</para>
+            </listitem>
+            <listitem>
+                <para>Add here one more navigation rule and a managed bean declarations that the
+                    content of the file looks like this:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting format="linespecific" role="XML"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="1.2" xmlns="http://java.sun.com/xml/ns/javaee
+xmlns:xi="http://www.w3.org/2001/XInclude"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+        http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2_.xsd">
+  
+  <navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+      <from-outcome>playagain</from-outcome> 
+      <to-view-id>/pages/inputnumber.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+
+  <navigation-rule>
+    <from-view-id>/pages/inputnumber.jsp</from-view-id>
+    <navigation-case>
+      <from-outcome>success</from-outcome> 
+      <to-view-id>/pages/success.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <managed-bean>
+    <managed-bean-name>NumberBean</managed-bean-name>
+    <managed-bean-class>game.NumberBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+                 
+</faces-config>
+]]></programlisting>
+        <para>The first navigation rule states that from any page (<property moreinfo="none">*</property> stands for
+            any page) an outcome of playagain will take you to <emphasis>
+                <property moreinfo="none">/pages/inputnumber.jsp</property>
+            </emphasis>. Outcome values are returned from backing bean methods in this example. The
+            second navigation rule states that if you are at the page <emphasis>
+                <property moreinfo="none">/pages/inputnumber.jsp</property>
+            </emphasis>, and the outcome is success, then navigate to the <emphasis>
+                <property moreinfo="none">/pages/success.jsp</property>
+            </emphasis> page. </para>
+    </section>
+    <section id="EditingTheJSPViewFiles2">
+        <?dbhtml filename="EditingTheJSPViewFiles2.html"?>
+        <title>Editing the JSP View Files</title>
+        <para>Now, we will continue editing the JSP files for our two "views" using
+            Visual Page Editor.</para>
+        <section id="EditingInputjsp">
+            <?dbhtml filename="EditingInputjsp.html"?>
+            <title>Editing inputnumber.jsp page</title>
+            <para>First, let's dwell on how to edit inputnumber.jsp.</para>
+            <para>On this page we will have an output text component displaying a message, a text
+                field for user's number entering and a button for input submission.</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Open inputnumber.jsp by double-clicking on the <emphasis>
+                            <property moreinfo="none">/pages/inputnumber. jsp</property>
+                        </emphasis> icon</para>
+                </listitem>
+            </itemizedlist>
+            <para>The Visual Page Editor will open in a screen split between source code along the
+                top and a WYSIWIG view along the bottom. You can see that some JSF code will be
+                already generated as we choose a template when creating the page.</para>
+            <para>At the beginning it's necessary to create a <emphasis role="bold">
+                    <property moreinfo="none">&lt;h:form&gt;</property>
+                </emphasis> component where all others components are put.</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Place the mouse cursor inside <emphasis role="bold">
+                            <property moreinfo="none">&lt;f:view&gt;</property>
+                        </emphasis><emphasis role="bold">
+                            <property moreinfo="none">&lt;/f:view&gt;</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>Go to JBoss Tools Palette and expand JSF HTML folder by selecting
+                    it</para>
+                </listitem>
+                <listitem>
+                    <para>Click on <emphasis role="bold">
+                            <property moreinfo="none">&lt;h:form&gt;</property>
+                        </emphasis> tag <figure float="0">
+                            <title>Insert h:form</title>
+                            <mediaobject>
+                                <imageobject>
+                                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_10.png"></imagedata>
+                                </imageobject>
+                            </mediaobject>
+                        </figure>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>In the dialog Insert Tag select <emphasis>
+                            <property moreinfo="none">id</property>
+                        </emphasis> and click on this line below the value header. A blinking cursor
+                        will appear in a input text field inviting to enter a value of id <figure float="0">
+                            <title>Define Id of Form</title>
+                            <mediaobject>
+                                <imageobject>
+                                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_11.png"></imagedata>
+                                </imageobject>
+                            </mediaobject>
+                        </figure>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Type <emphasis>
+                            <property moreinfo="none">inputNumbers</property>
+                        </emphasis> and click <emphasis>
+                            <property moreinfo="none">Finish</property>
+                        </emphasis></para>
+                </listitem>
+            </itemizedlist>
+            <para>In source view you can see the declaration of a form.</para>
+            <figure float="0">
+                <title>Created Form</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_12.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>First let's declare the properties file in inputnumber.jsp page using the
+                loadBundle JSF tag.</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Put this declaration on the top of a page, right after the first two
+                        lines:</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting format="linespecific" role="XML"><![CDATA[<f:loadBundle basename="game.messages" var="msg"/>
+]]></programlisting>
+            <para>As always JBDS provides code assist:</para>
+            <figure float="0">
+                <title>Code Assist</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_13.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <itemizedlist>
+                <listitem>
+                    <para>Switch to Visual tab, so it could be possible to work with the editor
+                        completely in its WYSIWYG mode</para>
+                </listitem>
+                <listitem>
+                    <para>Click on <emphasis>
+                            <property moreinfo="none">outputText</property>, </emphasis> drag the cursor over to the
+                        editor, and drop it inside the blue box in the editor</para>
+                </listitem>
+
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none">value</property>
+                        </emphasis> and click on this line below "value"
+                    header</para>
+                </listitem>
+                <listitem>
+                    <para>Click <property moreinfo="none">...</property> button next to the value field</para>
+                </listitem>
+            </itemizedlist>
+            <para>JBDS will nicely propose you to choose within available values:</para>
+            <figure float="0">
+                <title>Choose Value</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_14.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <itemizedlist>
+                <listitem>
+                    <para>Expand <emphasis>
+                            <property moreinfo="none">Resource Bundles &gt; msg</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none">how_to_play</property>
+                        </emphasis> value and click <emphasis>
+                            <property moreinfo="none">Ok</property>. </emphasis> Then click <emphasis>
+                            <property moreinfo="none">Finish</property>
+                        </emphasis>
+                        <figure float="0">
+                            <title>Selecting Value</title>
+                            <mediaobject>
+                                <imageobject>
+                                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_15.png"></imagedata>
+                                </imageobject>
+                            </mediaobject>
+                        </figure>
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <para>The text will appear on the page:</para>
+            <figure float="0">
+                <title>Created OutputText Component</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_16.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <itemizedlist>
+                <listitem>
+                    <para>Switch to Source mode and insert <emphasis role="bold">
+                            <property moreinfo="none">&lt;br/&gt;</property>
+                        </emphasis> tag after <emphasis role="bold">
+                            <property moreinfo="none">&lt;h:outputText&gt;</property>
+                        </emphasis> component to make a new line.</para>
+                </listitem>
+                <listitem>
+                    <para>Click <emphasis>
+                            <property moreinfo="none">Save</property>
+                        </emphasis> button.</para>
+                </listitem>
+                <listitem>
+                    <para>On the Palette click on <emphasis>
+                            <property moreinfo="none">inputText</property>, </emphasis> drag the cursor over to the
+                        editor, and drop it inside the editor after the text.</para>
+                </listitem>
+                <listitem>
+                    <para>Switch to a Source mode and insert <emphasis role="bold">
+                            <property moreinfo="none">&lt;br/&gt;</property>
+                        </emphasis> tag after <emphasis role="bold">
+                            <property moreinfo="none">&lt;h:outputText&gt;</property>
+                        </emphasis> component to make a new line</para>
+                </listitem>
+                <listitem>
+                    <para>Click <emphasis>
+                            <property moreinfo="none">Save</property>
+                        </emphasis> button</para>
+                </listitem>
+                <listitem>
+                    <para>On the Palette click on <emphasis>
+                            <property moreinfo="none">inputText</property>, </emphasis> drag the cursor over to the
+                        editor, and drop it inside the editor after the text</para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none">value</property>
+                        </emphasis> and click on this line below "value"
+                    header</para>
+                </listitem>
+                <listitem>
+                    <para>Click <property moreinfo="none">...</property> button next to the value field</para>
+                </listitem>
+                <listitem>
+                    <para>Expand <emphasis>
+                            <property moreinfo="none">Managed Beans &gt; NumberBean</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none">userNumber</property>
+                        </emphasis> value and click <emphasis>
+                            <property moreinfo="none">Ok</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>Switch <emphasis>
+                            <property moreinfo="none">Advanced</property>
+                        </emphasis> tab</para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none">id</property>
+                        </emphasis> and click on this line below "value"
+                    header</para>
+                </listitem>
+                <listitem>
+                    <para>Type <emphasis>
+                            <property moreinfo="none">userNumber</property>
+                        </emphasis> in text field</para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none">required</property>
+                        </emphasis> and click on this line below "value"
+                    header</para>
+                </listitem>
+                <listitem>
+                    <para>Click <property moreinfo="none">...</property> button next to the value field</para>
+                </listitem>
+                <listitem>
+                    <para>Expand <emphasis>
+                            <property moreinfo="none">Enumeration</property>
+                        </emphasis> and select <emphasis>
+                            <property moreinfo="none">true</property>
+                        </emphasis> as a value</para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Add "required" Attribute</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_17.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <itemizedlist>
+                <listitem>
+                    <para>Click <emphasis>
+                            <property moreinfo="none">Ok</property>, </emphasis> then click <emphasis>
+                            <property moreinfo="none">Finish</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>Go to Source mode</para>
+                </listitem>
+                <listitem>
+                    <para>Add the validation attribute to <emphasis role="bold">
+                            <property moreinfo="none">&lt;f:validateLongRange&gt;</property>
+                        </emphasis> for user input validation</para>
+                </listitem>
+            </itemizedlist>
+            <programlisting format="linespecific" role="XML"><![CDATA[<h:inputText id="userNumber" value="#{NumberBean.userNumber}" required="true">
+           <f:validateLongRange minimum="0" maximum="100"/>
+</h:inputText>
+]]></programlisting>
+            <itemizedlist>
+                <listitem>
+                    <para>Click <emphasis>
+                            <property moreinfo="none">Save</property>
+                        </emphasis> button</para>
+                </listitem>
+                <listitem>
+                    <para>Again select <emphasis>
+                            <property moreinfo="none">Visual</property>
+                        </emphasis> mode</para>
+                </listitem>
+                <listitem>
+                    <para>On the Palette, click on <emphasis>
+                            <property moreinfo="none">commandButton</property>, </emphasis> drag the cursor over to
+                        the editor, and drop it inside the editor after the inputText
+                    component.</para>
+                </listitem>
+                <listitem>
+                    <para>In the editing dialog select <emphasis>
+                            <property moreinfo="none">value</property>
+                        </emphasis> and click on this line below "value"
+                    header</para>
+                </listitem>
+                <listitem>
+                    <para>Click <property moreinfo="none">...</property> button next to the value field</para>
+                </listitem>
+                <listitem>
+                    <para>Expand <emphasis>
+                            <property moreinfo="none">Resource Bundles &gt; msg</property>
+                        </emphasis> and select <emphasis>
+                            <property moreinfo="none">makeguess_button</property>
+                        </emphasis> as a value</para>
+                </listitem>
+                <listitem>
+                    <para>Click <emphasis>
+                            <property moreinfo="none">Ok</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>Select <emphasis>
+                            <property moreinfo="none">action</property>
+                        </emphasis> and click on this line below "value"
+                    header</para>
+                </listitem>
+                <listitem>
+                    <para>Type <emphasis>
+                            <property moreinfo="none">NumberBean.checkGuess</property>
+                        </emphasis> in text field</para>
+                </listitem>
+                <listitem>
+                    <para>Click <emphasis>
+                            <property moreinfo="none">Finish</property>
+                        </emphasis></para>
+                </listitem>
+                <listitem>
+                    <para>In Source mode add <emphasis role="bold">
+                            <property moreinfo="none">&lt;br/&gt;</property>
+                        </emphasis> tags between <emphasis role="bold">
+                            <property moreinfo="none">&lt;outputText&gt;</property>
+                        </emphasis>, <emphasis role="bold">
+                            <property moreinfo="none">&lt;inputText&gt;</property>
+                        </emphasis> and <emphasis role="bold">
+                            <property moreinfo="none">&lt;commandButton&gt;</property>
+                        </emphasis> components to place them on different lines</para>
+                </listitem>
+            </itemizedlist>
+            <para>inputnumber.jsp page should look like this:</para>
+            <programlisting format="linespecific" role="XML"><![CDATA[<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+<f:loadBundle basename="game.messages" var="msg"/>
+
+<html>
+ <f:view>
+     <h:form id="inputNumbers">
+      <h:outputText value="#{msg.how_to_play}"/>
+      <br/>
+      <h:messages style="color: blue"/>
+      <br/>
+      <h:inputText id="userNumber" value="#{NumberBean.userNumber}" required="true">
+           <f:validateLongRange minimum="0" maximum="100"/>
+      </h:inputText>
+     <br/><br/>
+     <h:commandButton value=
+             "#{msg.makeguess_button}" action="#{NumberBean.checkGuess}"/>  
+   </h:form>
+ </f:view>
+</html>
+]]></programlisting>
+        </section>
+        <section id="EditingSuccessJsp">
+            <?dbhtml filename="EditingSuccessJsp.html"?>
+            <title>Editing success.jsp page</title>
+            <para>In the same way like inputnumber.jsp, edit success.jsp page. Its whole source
+                should be the next:</para>
+            <programlisting format="linespecific" role="XML"><![CDATA[<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+<f:loadBundle basename="game.messages" var="msg"/>
+
+<html>
+ <f:view>
+   <h:form id="result">
+     <h:outputFormat value="#{msg.success_text}">
+       <f:param value="#{NumberBean.userNumber}"/>
+     </h:outputFormat>
+     <br/><br/>
+     <h:commandButton value=
+             "#{msg.trayagain_button}" action="#{NumberBean.playagain}"/>
+   </h:form>
+ </f:view>
+</html>
+]]></programlisting>
+            <para>Again you can use code assist provided by JBDS when editing jsp page:</para>
+            <figure float="0">
+                <title>Code Assist for &lt;f:param&gt;</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_18.png" scale="80"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>This page, success.jsp, is shown if you correctly guessed the number. The
+                    <emphasis role="bold">
+                    <property moreinfo="none">&lt;h:outputFormat&gt;</property>
+                </emphasis> tag will get the value of success_text from the properties file. The {0}
+                in success_text will be substituted for by the value of the value attribute within
+                the <emphasis role="bold">
+                    <property moreinfo="none">&lt;f:param&gt;</property>
+                </emphasis> tag during runtime.</para>
+            <para>At the end, you have a button which allows you to replay the game. The action
+                value references a backing bean method. In this case, the method only terminates the
+                current session so that when you are shown the first page, the input text box is
+                clear and a new random number is generated.</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Switch to Preview mode to see how this page will look in a browser:</para>
+                </listitem>
+            </itemizedlist>
+            <figure float="0">
+                <title>Success.jsp in Preview Mode</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/rad_jsf_application/rad_jsf_application_19.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+        </section>
+    </section>
+    <section id="CreatingIndexjsp">
+        <?dbhtml filename="CreatingIndexjsp.html"?>
+        <title>Creating index.jsp page</title>
+        <para>Now you know how to create index.jsp page.</para>
+        <para>The index.jsp page is the entry point of our application. It's just
+            forwarding to inputnumber.jsp page.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Right click <emphasis>
+                        <property moreinfo="none">WebContent &gt; New &gt; JSP File</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Type <emphasis>
+                        <property moreinfo="none">index</property>
+                    </emphasis> for name field and choose <emphasis>
+                        <property moreinfo="none">JSPRedirect</property>
+                    </emphasis> as a template</para>
+            </listitem>
+            <listitem>
+                <para>Click <emphasis>
+                        <property moreinfo="none">Finish</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>The source for this page should be like the following:</para>
+            </listitem>
+        </itemizedlist>
+        <programlisting format="linespecific" role="XML"><![CDATA[<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+ <body>
+  <jsp:forward page="/pages/inputnumber.jsf" />
+ </body>
+</html>
+
+]]></programlisting>
+        <para>Note the <emphasis>.jsf</emphasis> extension of a page. It means that we trigger the
+            JSF controller servlet to handle the page according the servlet mapping in the
+            faces-config.xml file.</para>
+    </section>
+    <section id="RunningTheApplication33">
+        <?dbhtml filename="RunningTheApplication33.html"?>
+        <title>Running the Application</title>
+        <para>Finally, we have all the pieces needed to run the application.</para>
+        <itemizedlist>
+            <listitem>
+                <para>Start up JBoss server by clicking on the <emphasis>
+                        <property moreinfo="none">Start</property>
+                    </emphasis> icon in JBoss Server view. (If JBoss is already running, stop it by
+                    clicking on the red icon and then start it again. After the messages in the
+                    Console tabbed view stop scrolling, JBoss is available)</para>
+            </listitem>
+            <listitem>
+                <para>Right-click on project <emphasis>
+                        <property moreinfo="none">Run AS &gt; Run on Server</property>
+                    </emphasis></para>
+            </listitem>
+            <listitem>
+                <para>Play with the application by entering correct as well as incorrect
+                values</para>
+            </listitem>
+        </itemizedlist>
+        <figure float="0">
+            <title>You are Asked to Enter a Number Between 0 and 100</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_20.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <figure float="0">
+            <title>Your Input is Validated and an Error Message is Displayed if Invalid Input was
+                Entered</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_21.png" scale="90"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <figure float="0">
+            <title>After You Enter a Guess, the Application Tells You Whether a Smaller or a Larger
+                Number Should be Tried</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_22.png" scale="90"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <figure float="0">
+            <title>Your Guess is Correct</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_23.png" scale="90"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
+</chapter>
+ 
+ 
+
+<chapter id="project_examples" role="new" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/project_examples.xml" xreflabel="project_examples">
+    <?dbhtml filename="project_examples.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Developer Studio</keyword>
+            <keyword>Eclipse</keyword>
+            <keyword>Java</keyword>
+            <keyword>JBoss</keyword>
+        </keywordset>
+    </chapterinfo>
+    <title>Project Examples</title>
+    
+    <para><emphasis><property moreinfo="none">JBoss Developer Studio</property></emphasis> provides an option to download and import a ready-made 
+        project that you can explore and derive some useful technology implementation lessons. </para>
+    
+    
+    <section id="DownloadingProjectExample">
+        <title>Downloading a Project Example</title>
+        
+        <para>To download a project example and  start working with it you need to take a few steps:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Go to the menu bar and select <emphasis><property moreinfo="none">File &gt; New &gt; Other...</property></emphasis>
+                </para></listitem>
+            
+            <listitem><para>Select <emphasis><property moreinfo="none">Jboss Tools &gt; Project Examples</property></emphasis>(You can also call the <emphasis><property moreinfo="none">Project Examples</property></emphasis> from menu bar: <emphasis><property moreinfo="none">Help &gt; Project Examples...</property></emphasis>)</para></listitem>
+            
+            
+        </itemizedlist>
+        
+        <figure float="0">
+            <title>Project Examples</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project_examples/pr_example_1.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <itemizedlist>
+            <listitem><para>Now in the New Project Example dialog you can select a project you would like to explore</para>
+                <para>Project Examples Wizard  provides a filter field to more easily locate the project examples you want, so you can type in the project you would like to explore in the field.</para></listitem>
+            
+        </itemizedlist>
+        
+        
+        <figure float="0">
+            <title>Selecting a Project Example</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project_examples/pr_example_2.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <note>
+            <title>Note:</title>
+            <para>
+                The <emphasis><property moreinfo="none">Show the Quick Fix Dialog</property></emphasis> option is described in the <link linkend="QuickFixes">Quick Fixes</link> section.
+            </para>
+        </note>
+        
+        <itemizedlist>
+            <listitem><para>Press <emphasis><property moreinfo="none">Finish</property></emphasis> to start downloading the project from the repository
+            </para></listitem>
+            
+        </itemizedlist>
+        
+        <para>When downloading is finished the project will be imported automatically and you will be able to see it in the Package Explorer.</para>
+        
+        <para>Now you can run the application on the server.</para>
+        
+        <figure float="0">
+            <title>Seam Demo Application run on the Server</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project_examples/pr_example_3.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
+    
+    <section id="QuickFixes">
+        <title>Quick Fixes</title>
+        <para>
+            Project Examples Wizard has an option for making quick fixes 
+            for the imported project to easily fix possible issues like  missing servers, Seam runtimes etc.
+        </para>
+        <para>To enable quick fixing option you need to check the
+            <emphasis><property moreinfo="none">Show the Quick Fix dialog</property></emphasis> while choosing the <link linkend="DownloadingProjectExample">Project Example</link>.</para>
+        
+        <para>When the project you selected is downloaded it will be checked for missing dependences and if there are some you will see a dialog listing the problems.</para>
+        <figure float="0">
+            <title>Quick Fix Dialog box</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project_examples/pr_example_4.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>To fix the problem you need to:</para>
+        
+        <itemizedlist>
+            <listitem><para>Select the problem from the list</para></listitem>
+            <listitem><para>Click <emphasis><property moreinfo="none">Quick Fix</property></emphasis> button</para></listitem>
+        </itemizedlist>
+        
+        <para>You will be offered a solution or a number of solutions to the problem.</para>
+        
+        <figure float="0">
+            <title>Quick Fix Dialog box: Selecting a Fix</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project_examples/pr_example_5.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>In this case(see the image above), when the <emphasis><property moreinfo="none">Finish</property></emphasis> button is pressed, Seam Settings dialog box will be displayed where you need to provide a path to the Seam environment to fix the issue.</para>
+        
+        <para>When the problem is fixed you will be returned to the Quick Fix dialog box with the remaining problems to be fixed.</para>
+        
+    </section>
+    
+    
+</chapter>
+
+ 
+
+<chapter id="gsg_faq" role="updated" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/gsg_faq.xml" xreflabel="gsg_faq">
+    <?dbhtml filename="gsg_faq.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Developer Studio</keyword>
+            <keyword>Eclipse</keyword>
+            <keyword>Java</keyword>
+            <keyword>JBoss</keyword>
+        </keywordset>
+    </chapterinfo>
+    <title>FAQ</title>
+
+    <para>For more information on <property moreinfo="none">JBoss Developer Studio</property> features, refer to the
+        following FAQ to get the answers on the most "popular" questions.</para>
+
+    <section id="question_1">
+        <title>What should I do if Visual Page Editor does not start under Linux</title>
+
+        <para>Linux users may need to do the following to get the <property moreinfo="none">Visual Page
+                Editor</property> to work correctly on their machines.</para>
+
+        <orderedlist continuation="restarts" inheritnum="ignore">
+            <listitem>
+                <para>On Red Hat based Linux distributions install the xpLib.i386 package</para>
+            </listitem>
+            <listitem>
+                <para>Type</para>
+                <programlisting format="linespecific" role="JAVA"><![CDATA[ln -s libstdc++.so.5.0.7 libstdc++.so.5
+]]></programlisting>
+            </listitem>
+            <listitem>
+                <para>and/or use</para>
+                <programlisting format="linespecific" role="JAVA"><![CDATA[yum install libXp
+]]></programlisting>
+            </listitem>
+            <listitem>
+                <para>Open the JBDS perspective. If you see the Help view open, close it and restart
+                    JBDS</para>
+            </listitem>
+            <listitem>
+                <para>If none of these work, do the following:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Clear the Eclipse log file,
+                                <emphasis>&lt;workspace&gt;\.metadata\.log</emphasis></para>
+                    </listitem>
+                    <listitem>
+                        <para>Start Eclipse with the -debug option:</para>
+                        <programlisting format="linespecific" role="JAVA"><![CDATA[eclipse -debug
+]]></programlisting>
+                    </listitem>
+                    <listitem>
+                        <para>Post the Eclipse log file
+                                (<emphasis>&lt;workspace&gt;\.metadata\.log</emphasis>) on
+                            the forums.</para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+        </orderedlist>
+    </section>
+
+    <section id="question_2">
+        <title>Do I need to have JBoss Server installed to run JBoss Developer Studio?</title>
+
+        <para>No. <property moreinfo="none">JBoss Developer Studio</property> already comes bundled with JBoss
+            Server. We bundle it together so that you don't need to download any additional
+            software and can test your application in a Web browser right away.</para>
+        <para>If you want to use a different JBoss server installation, after <property moreinfo="none">JBoss
+                Developer Studio</property> is installed open Servers View (select
+                    <emphasis><property moreinfo="none">Window &gt; Show View &gt; Others &gt; Server
+                    &gt; Servers</property>),</emphasis> then right click on this <emphasis>
+                <property moreinfo="none">view &gt; New &gt; Server</property>
+            </emphasis> and follow the wizards steps to point to another Jboss Server
+            installation.</para>
+        <para><property moreinfo="none">JBoss Developer Studio</property> works with any servlet container, not just
+            JBoss. For more information on deployment, please see the Deploying Your Application
+            section.</para>
+    </section>
+
+    <section id="question_3">
+        <title>I have an existing Seam 1.2.1 project. Can I migrate/import the project to a JBDS
+            Seam project?</title>
+
+        <para>We highly recommend you to create Seam 1.2.1 project using the
+                <property moreinfo="none">JBDS</property>. In other case try to do manually:</para>
+
+        <itemizedlist>
+            <listitem>
+                <para>Create a Seam Web project to get the JBoss tools structure</para>
+            </listitem>
+        </itemizedlist>
+        <para>Then from your Seam 1.2.1 seam-gen project start doing the following:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Copy <property moreinfo="none">src</property> to <property moreinfo="none">src</property></para>
+            </listitem>
+            <listitem>
+                <para>Copy <property moreinfo="none">view</property> to <property moreinfo="none">Web content</property></para>
+            </listitem>
+            <listitem>
+                <para>Copy resources individual files to where they are in the seam web project
+                    etc.</para>
+            </listitem>
+        </itemizedlist>
+
+    </section>
+    <section id="questio_4">
+        <title>I have an existing Struts or JSF project. Can I open the project in JBDS?</title>
+
+        <para>Yes. From main menu select <emphasis>
+                <property moreinfo="none">File &gt; Import &gt; Other &gt; JSF Project (or Struts
+                    Project)</property>
+            </emphasis> and follow wizards steps.</para>
+
+    </section>
+
+    <section id="question_5">
+        <title>Can I import a .war file?</title>
+
+        <para>Yes. Select <emphasis><property moreinfo="none">File &gt; Import &gt; Web &gt; WAR
+                    file</property>, </emphasis> then follow importing steps.</para>
+    </section>
+
+    <section id="question_6">
+        <title>Is it possible to increase the performance of Eclipse after installing your
+            product?</title>
+
+        <para><property moreinfo="none">JBoss Developer Studio</property> preconfigures eclipse via the eclipse.ini
+            file to allocate extra memory, but if you for some reason need more memory then by
+            default, you can manually make adjustments in this file. For example:</para>
+        <programlisting format="linespecific" role="XML">
+                <![CDATA[-vmargs -Xms128m -Xmx512m -XX:MaxPermSize=128m
+]]></programlisting>
+    </section>
+
+    <section id="question_7">
+        <title>How can I add my own tag library to the JBoss Tools Palette?</title>
+
+        <para>See <ulink url="../../jsf/html_single/index.html#AddingCustomJSFTagsToTheRedHatPalette7433">Adding Tag
+                Libraries</ulink> in Visual Web Tools Guide.</para>
+    </section>
+
+    <section id="question_8">
+        <title>How to get Code Assist for Seam specific resources in an externally generated
+            project?</title>
+
+        <para>To get Code Assist for Seam specific resources in an externally generated project, you
+            should enable Seam features in Project Preferences. Right click an imported project and
+            navigate <emphasis>
+                <property moreinfo="none">Properties &gt; Seam Settings</property>.</emphasis> Check <emphasis>
+                <property moreinfo="none">Seam support</property>
+            </emphasis> box to enable all available <ulink url="../../seam/html_single/index.html#project_pref">Seam
+                Settings</ulink>.</para>
+    </section>
+
+    <section id="question_9">
+        <title>How to import an example Seam project from jboss-eap directory?</title>
+
+        <para>To import an example Seam project from <emphasis>
+                <property moreinfo="none">jboss-eap</property>
+            </emphasis> into your working directory, you should perform the following steps:</para>
+
+        <itemizedlist>
+            <listitem>
+                <para>Go to <emphasis>
+                        <property moreinfo="none">New &gt; Other &gt; Java Project from Existing Buildfile</property>
+                    </emphasis></para>
+            </listitem>
+
+            <listitem>
+                <para>Point to the <emphasis>
+                        <property moreinfo="none">build.xml</property>
+                    </emphasis> of any chosen project by pressing <emphasis>
+                        <property moreinfo="none">Browse</property>
+                    </emphasis> button</para>
+            </listitem>
+
+            <listitem>
+                <para>Hit <emphasis>
+                        <property moreinfo="none">Finish</property>
+                    </emphasis> to open the project</para>
+            </listitem>
+        </itemizedlist>
+
+        <para>As these seam examples are non WTP projects, next you should enable Seam support for
+            them. To do that, right click the project and go to <emphasis>
+                <property moreinfo="none">Properties &gt; Seam Settings</property>.</emphasis></para>
+    </section>
+
+    <section id="question_10">
+        <title>Is a cross-platform project import possible for JBDS?</title>
+
+        <para>Yes. You can easily import created in Linux JSF, Struts or Seam project to Windows and
+            vice versa.</para>
+
+        <para>To do the transferring JSF, Struts or Seam project, go to <emphasis>
+                <property moreinfo="none">Menu &gt; Import &gt; General &gt; Existing Projects into Workspace</property>,</emphasis>
+            select the folder where your project stored and press <emphasis>
+                <property moreinfo="none">Finish</property>.</emphasis></para>
+    </section>
+</chapter>
+
+ 
+<chapter id="further_reading" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/documentation/guides/GettingStartedGuide/en/modules/further_reading.xml" xreflabel="further_reading">
+  <?dbhtml filename="further_reading.html"?>
+  <chapterinfo>
+    <keywordset>
+      <keyword>JBoss Developer Studio</keyword>
+      <keyword>Eclipse</keyword>
+      <keyword>Deploy</keyword>
+      <keyword>Deployment</keyword>
+      <keyword>JBoss</keyword>
+    </keywordset>
+  </chapterinfo>
+
+  <title>Further Reading</title>
+
+  <para>
+    <emphasis role="bold">JSF Tools Reference Guide</emphasis>
+    <ulink url="../../jsf_tools_ref_guide/html_single/index.html">(html)</ulink>
+
+  </para>
+  <para> From this guide you'll discover all peculiarities of work at a JSF project. You'll
+    learn all shades that cover the process of project creation and take a closer look at the JSF
+    configuration file. Also you'll get to know managed beans and how to work with them and
+    find out, how to create and register a custom converter, custom validator and referenced beans
+    in a JSF project. </para>
+
+<itemizedlist>
+  <listitem>
+  <para>
+    <emphasis role="bold">JSF Tools Tutorial</emphasis>
+    <ulink url="../../jsf_tools_tutorial/html_single/index.html">(html)</ulink>
+  </para>
+  <para> This tutorial will describe how to deal with classic/old style of JSF development and how
+    to create a simple JSF application using the JBoss Developer Studio. </para>
+  </listitem>
+  
+  <listitem> <para>
+    <emphasis role="bold">Struts Tools Reference Guide</emphasis>
+    <ulink url="../../struts_tools_ref_guide/html_single/index.html">(html)</ulink>
+  </para>
+  <para> In Struts Tools Reference Guide you will learn how to create and work with a new struts
+    project. This guide also provides information about graphical editor for struts configuration
+    files, tiles files, and struts validation files. </para>
+  </listitem>
+
+<listitem>
+  <para>
+    <emphasis role="bold">Struts Tools Tutorial</emphasis>
+    <ulink url="../../struts_tools_tutorial/html_single/index.html">(html)</ulink>
+  </para>
+  <para> This tutorial will describe the classical style of Struts development, and will
+  step-by-step show you how to create a simple Struts application in JBoss Developer Studio.</para>
+</listitem>
+
+<listitem>
+  <para>
+    <emphasis role="bold">Seam Dev Tools Reference Guide</emphasis>
+    <ulink url="../../seam/html_single/index.html">(html)</ulink>
+  </para>
+  <para> This guide helps you to understand what Seam is and how to install Seam plug-in into
+    Eclipse. It tells you the necessary steps to start working with Seam Framework and assists in a
+    simple Seam Project creation. Also you will learn how to create and run the CRUD Database
+    Application with Seam as well as find out what Seam Editors Features and Seam Components are. </para>
+   </listitem>
+      
+    <listitem>
+  <para>
+    <emphasis role="bold">Visual Web Tools Reference Guide</emphasis>
+    <ulink url="../../jsf/html_single/index.html">(html)</ulink>
+  </para>
+    </listitem>
+      
+    <listitem>
+  <para>
+    <emphasis role="bold">JBoss Server Manager Reference Guide</emphasis>
+    <ulink url="../../as/html_single/index.html">(html)</ulink>
+  </para>
+  <para> This guide covers the basics of working with the JBoss server manager. You will read how to
+    install runtimes and servers and quickly learn how to configure, start, stop the server and know
+    how deployment and archiving process. You will find out how to manage installed JBoss Servers
+    via JBoss AS Perspective. You will also read how to deploy modules onto the server. </para>
+    </listitem>
+      
+    <listitem>
+  <para>
+    <emphasis role="bold">jBPM Tools Reference Guide</emphasis>
+    <ulink url="../../jbpm/html_single/index.html">(html)</ulink>
+  </para>
+  <para>With jBPM Tools Reference Guide we'll help you to facilitate a cross-product
+    learning and know how you can speed your development using special editors and visual designers.
+    We'll also guide you through the steps on how to create a simple process and test it
+    within jBPM jPDL perspective.</para>
+    </listitem>
+  
+  <listitem>
+  <para>
+    <emphasis role="bold">Hibernate Tools Reference Guide</emphasis>
+    <ulink url="../../hibernatetools/html_single/index.html">(html)</ulink>
+  </para>
+  <para>Throughout this guide you will learn how to install and use Hibernate Tools bath via Ant and
+    through Eclipse. We'll supply you with the information on how to create mapping files,
+    configuration file as well as a file for controlling reverse engineering by using specific
+    wizards that Hibernate tooling provides. Also you will know about Code Generation and
+    peculiarities of work within Hibernate Console Perspective.</para>
+  </listitem>
+
+    <listitem>
+      <para>
+    <emphasis role="bold">ESB Editor Reference Guide</emphasis>
+    <ulink url="../../esb_ref_guide/html_single/index.html">(html)</ulink>
+  </para>
+  <para>This guide provides you with the information on ESB Editor which allows you to develop ESB
+  file.</para>
+    </listitem>
+      
+    <listitem>
+  <para>
+    <emphasis role="bold">JBoss Portal Tools Reference Guide</emphasis>
+    <ulink url="../../jboss_portal_tools_ref_guide/html_single/index.html">(html)</ulink>
+  </para>
+  <para>The guide gives a detail look at how you can easily build a Portlet Web Application with
+  JBoss Tools and deploy it onto JBoss Portal.</para>
+    </listitem>
+      
+    <listitem>
+      <para>
+    <emphasis role="bold">JBoss WS User Guide</emphasis>
+    <ulink url="../../ws_ref_guide/html_single/index.html">(html)</ulink>
+  </para>
+  <para>This guide gives you practical help on JBossWS usage.</para>
+    </listitem>
+      
+    <listitem> 
+  <para>
+    <emphasis role="bold">Exadel Studio Migration Guide</emphasis>
+    <ulink url="../../Exadel-migration/html_single/index.html">(html)</ulink>
+  </para>
+  <para>This document is intended to help you to migrate an existing Exadel JSF or Struts projects
+    from Exadel Studio into JBoss Developer Studio. </para>
+    </listitem>
+      
+</itemizedlist>
+</chapter>
+ 
+
+</book>
