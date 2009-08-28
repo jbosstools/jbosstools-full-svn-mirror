@@ -25,6 +25,7 @@ import org.eclipse.bpel.apache.ode.deploy.model.dd.TDeployment;
 import org.eclipse.bpel.apache.ode.deploy.model.dd.ddFactory;
 import org.eclipse.bpel.model.Process;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
@@ -38,6 +39,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.internal.core.JavaProject;
+import org.eclipse.wst.common.componentcore.ComponentCore;
+import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
+import org.eclipse.wst.common.componentcore.resources.IVirtualResource;
 import org.eclipse.wst.wsdl.Definition;
 import org.eclipse.wst.wsdl.Port;
 import org.eclipse.wst.wsdl.Service;
@@ -210,6 +219,7 @@ public class DeployUtils {
 	
 	
 	public static List<IFile> getAllFilesInProject(IProject project) {
+		
 		final List<IFile> files = new ArrayList<IFile>();
 		IResourceVisitor visitor = new IResourceVisitor() {
 			public boolean visit(org.eclipse.core.resources.IResource resource) throws org.eclipse.core.runtime.CoreException {
@@ -220,15 +230,53 @@ public class DeployUtils {
 			}
 		};
 		try {
-			project.accept(visitor);
+			IResource[] reses = getSourceContainers(project);
+			for(IResource res : reses){
+				if(res instanceof IFolder){
+					res.accept(visitor);
+				}
+			}
 		} 
 		catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return files;
 	}
 
+	public static IResource[] getSourceContainers(IProject project) {
+		IJavaProject jProject = JavaCore.create(project);
+		if (jProject == null)
+			return new IResource[0];
+		List list = new ArrayList();
+		IVirtualComponent vc = ComponentCore.createComponent(project);
+		
+		IPackageFragmentRoot[] roots;
+		try {
+			roots = jProject.getPackageFragmentRoots();
+			for (int i = 0; i < roots.length; i++) {
+				if (roots[i].getKind() != IPackageFragmentRoot.K_SOURCE)
+					continue;
+				IResource resource = roots[i].getResource();
+				list.add(resource);
+//				if (null != resource) {
+//					IVirtualResource[] vResources = ComponentCore.createResources(resource);
+//					boolean found = false;
+//					for (int j = 0; !found && j < vResources.length; j++) {
+//						if (vResources[j].getComponent().equals(vc)) {
+//							if (!list.contains(roots[i]))
+//								list.add(roots[i]);
+//							found = true;
+//						}
+//					}
+//				}
+			}
+		} catch (JavaModelException e) {
+//			Logger.getLogger().logError(e);
+		}
+		return (IResource[]) list.toArray(new IResource[list.size()]);
+	}
+	
+	
 	public static IFile getIFileForURI(URI uri) {
 
 		if(uri == null) return null; 
