@@ -13,7 +13,7 @@
     <section id="installRuntime">
         <title>Installing the JBoss BPEL Runtime</title>
         <para>If you want to deploy a BPEL project to JBoss runtime, you need to download the JBoss BPEL Runtime by yourself. The JBoss BPEL Runtime
-            is named RiftSaw. You can get it from <ulink url="">JBoss RiftSaw</ulink> page.
+            is named RiftSaw. You can get it from <ulink url="http://jboss.org/riftsaw">JBoss RiftSaw</ulink> page.
         </para>
     </section>
 </chapter>

@@ -7,7 +7,7 @@
     <section id="createproject">
         <title>Creating a BPEL project</title>
         <para>Create a Web project by selecting 
-              <emphasis><property>New > Project... > BPEL 2.0 > BPEL Project</property></emphasis>.
+              <emphasis><property>New > Project... > BPEL 2.0 > BPEL Project</property></emphasis>. Click on the <property>Next</property> button. 
         </para>
         <figure>
             <title>New BPEL Project</title>
@@ -20,7 +20,7 @@
         <para>Enter the following information:</para>
         <itemizedlist>
             <listitem>
-                <para>Project Name: enter a project name</para>
+                <para>Project Name: enter a project name. For example, enter <property>HelloWorld</property>. </para>
             </listitem>
         </itemizedlist>
         <figure>
@@ -57,13 +57,13 @@
         <para>Click on the <property>Next</property> button. Enter the following information:</para>
         <itemizedlist>
             <listitem>
-                <para>BPEL Process Name: enter a project name</para>
+                <para>BPEL Process Name: enter a process name. For example, <property>HelloWorld</property>. </para>
             </listitem>
             <listitem>
                 <para>Namespace: enter or select a namespace for the BPEL process</para>
             </listitem>
             <listitem>
-                <para>Template: select a template for the BPEL process. When you select a template, below the raw, you will get the information for the template.</para>
+                <para>Template: select a template for the BPEL process. When you select a template, below the row, you will get the information for the template.</para>
             </listitem>            
         </itemizedlist>
         <figure>
@@ -74,7 +74,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>Click on the <property>Next</property> button. On the second page, make sure that the Fold <property>HelloWorld/bpel</property> is selected.
+        <para>Click on the <property>Next</property> button. On the second page, make sure that the fold <property>HelloWorld/bpel</property> is selected.
               Clink on the <property>Finish</property> button.
         </para>
         <para>All of your files that are used in your BPEL project must be under the <property>bpel</property> folder. Only like this, 

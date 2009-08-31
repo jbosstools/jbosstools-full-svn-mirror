@@ -9,7 +9,7 @@
         <itemizedlist>
             <listitem>
                 <para>Create the bpel-deploy.xml by selecting 
-                    <emphasis><property>New > Other... > BPEL 2.0 > Apache ODE Deployment Descriptor</property></emphasis>.
+                    <emphasis><property>New > Other... > BPEL 2.0 > Apache ODE Deployment Descriptor</property></emphasis>. Click on the <property>Next</property> button. 
                 </para>
                 <figure>
                     <title>New BPEL Deploy file</title>
@@ -54,7 +54,7 @@
     </section>
     <section id="createruntime">
         <title>Creating JBoss BPEL Server</title>
-        <para>Suppose you have installed the JBoss BPEL Runtime, <property>RiftSaw</property>, now we can create a server for the JBoss BPEL runtime</para>
+        <para>Suppose you have installed the JBoss BPEL Runtime-<property>RiftSaw</property>, now we can create a server for the JBoss BPEL runtime</para>
         <itemizedlist>
             <listitem>
                 <para>Open the <property>Servers view</property> by selecting 
@@ -104,7 +104,7 @@
                 </figure>                 
             </listitem>
             <listitem>
-                <para>You can input the link <ulink url="http://localhost:8080/bpel/processes.html">http://localhost:8080/bpel/processes.html</ulink> in the browse to find the deployed processes.</para>                 
+                <para>You can input the link <ulink url="http://localhost:8080/bpel/processes.html">http://localhost:8080/bpel/processes.html</ulink> in the browser to get the deployed processes.</para>                 
                 <figure>
                     <title>The BPEL console</title>
                         <mediaobject>
