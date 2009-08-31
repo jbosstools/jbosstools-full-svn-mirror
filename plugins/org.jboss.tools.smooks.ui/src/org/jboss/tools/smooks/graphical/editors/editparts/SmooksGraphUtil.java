@@ -104,7 +104,7 @@ public class SmooksGraphUtil {
 		IXMLStructuredObject model = null;
 		model = SmooksUIUtils.localXMLNodeWithPath(selector, root, "/", false);
 		if (model == null) {
-			SmooksUIUtils.localXMLNodeWithPath(selector, root, " ", false);
+			model = SmooksUIUtils.localXMLNodeWithPath(selector, root, " ", false);
 		}
 		if(model == null) return null;
 		IXMLStructuredObject p = model;
