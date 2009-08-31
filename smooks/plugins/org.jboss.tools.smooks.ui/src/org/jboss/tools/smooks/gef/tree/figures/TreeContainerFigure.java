@@ -34,25 +34,23 @@ public class TreeContainerFigure extends Figure {
 	public TreeContainerFigure(TreeContainerModel model) {
 		super();
 		this.model = model;
+		this.addChildrenFigures();
+	}
+	
+	protected void addChildrenFigures(){
 		headerFigure = new Figure() {
 
 			@Override
 			protected void paintFigure(Graphics graphics) {
 				super.paintFigure(graphics);
-				graphics.pushState();
-				graphics.setForegroundColor(headerColor);
-				graphics.setBackgroundColor(ColorConstants.white);
-				graphics.fillGradient(getBounds(), true);
-				graphics.setForegroundColor(headerColor);
-				graphics.drawLine(getBounds().getBottomLeft().translate(0, -1), getBounds().getBottomRight().translate(
-						0, -1));
-				graphics.popState();
+				drawHeaderFigure(graphics);
 			}
 
 			@Override
 			public Dimension getPreferredSize(int hint, int hint2) {
 				Dimension size = super.getPreferredSize(hint, hint2);
-				return new Dimension(size.width, 25);
+				int width = Math.max(size.width, 100);
+				return new Dimension(width, 25);
 			}
 		};
 		label = new Label();
@@ -61,10 +59,8 @@ public class TreeContainerFigure extends Figure {
 		layout.setMinorAlignment(ToolbarLayout.ALIGN_CENTER);
 		headerFigure.setLayoutManager(layout);
 		headerFigure.setOpaque(true);
-		headerFigure.setBackgroundColor(ColorConstants.blue);
 
 		contentFigure = new Figure();
-		contentFigure.setBackgroundColor(ColorConstants.red);
 		contentFigure.setLayoutManager(new ToolbarLayout());
 		this.add(headerFigure);
 		this.add(contentFigure);
@@ -72,6 +68,17 @@ public class TreeContainerFigure extends Figure {
 		tl.setMinorAlignment(ToolbarLayout.ALIGN_CENTER);
 		this.setLayoutManager(tl);
 	}
+
+	protected void drawHeaderFigure(Graphics graphics) {
+		graphics.pushState();
+		graphics.setForegroundColor(headerColor);
+		graphics.setBackgroundColor(ColorConstants.white);
+		graphics.fillGradient(getBounds(), true);
+		graphics.setForegroundColor(headerColor);
+		graphics.drawLine(getBounds().getBottomLeft().translate(0, -1), getBounds().getBottomRight().translate(0, -1));
+		graphics.popState();
+	}
+
 	/**
 	 * @return the label
 	 */
@@ -139,8 +146,9 @@ public class TreeContainerFigure extends Figure {
 		graphics.fillRectangle(getBounds());
 		graphics.popState();
 	}
+
 	public void setIcon(Image i) {
-		if(label != null){
+		if (label != null) {
 			label.setIcon(i);
 		}
 	}
