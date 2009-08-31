@@ -249,7 +249,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		nsIDOMNodeList children = getContentArea().getChildNodes();
 		long len = children.getLength();
 		for (long i = len - 1; i >= 0; i--) {
-			getContentArea().removeChild(children.item(i));
+			//added by Maksim Areshkau as fix for https://jira.jboss.org/jira/browse/JBIDE-4816
+			//for XR-1.8 addes <BR _MOZ_EDITOR_BOGUS_NODE="TRUE" _MOZ_DIRTY=""/> node in document and it's should be deleted
+			if(PSEUDO_ELEMENT.equalsIgnoreCase(children.item(i).getNodeName())) {
+				getContentArea().removeChild(children.item(i));
+			}
 		}
 
 		if (sourceDocument != null) {
