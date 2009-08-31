@@ -2137,10 +2137,13 @@ public class SmooksUIUtils {
 		// Content assist command
 		String command = "org.eclipse.ui.edit.text.contentAssist.proposals"; //$NON-NLS-1$
 		// Set auto activation character to be a '.'
-		char[] autoActivationChars = new char[] { '.' };
+		char[] chars = new char[allEnglishCharas.length + 1];
+		System.arraycopy(allEnglishCharas, 0, chars, 0, allEnglishCharas.length);
+		chars[chars.length - 1] = '.';
+//		char[] autoActivationChars = new char[] { '.' };
 		// Create the adapter
 		ContentAssistCommandAdapter adapter = new ContentAssistCommandAdapter(text, textContentAdapter,
-				proposalProvider, command, autoActivationChars);
+				proposalProvider, command, chars);
 		// Configure the adapter
 		// Add label provider
 		ILabelProvider labelProvider = new TypeProposalLabelProvider();
