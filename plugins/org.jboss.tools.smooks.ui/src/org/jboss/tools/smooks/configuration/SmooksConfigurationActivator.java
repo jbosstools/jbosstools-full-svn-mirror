@@ -69,6 +69,9 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 		reg.put(GraphicsConstants.IMAGE_UNKNOWN_OBJ, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_UNKNOWN_OBJ));
 
+		reg.put(GraphicsConstants.IMAGE_INPUT_DATA_HEADER, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_INPUT_DATA_HEADER));
+
 		// regist ovr images
 		reg.put(GraphicsConstants.IMAGE_OVR_ERROR, getImageDescriptor(GraphicsConstants.IMAGE_OVR_ERROR));
 		reg.put(GraphicsConstants.IMAGE_OVR_WARING, getImageDescriptor(GraphicsConstants.IMAGE_OVR_WARING));

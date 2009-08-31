@@ -22,6 +22,8 @@ public final class GraphicsConstants {
 	
 	public static final String IMAGE_JAVA_BEAN = "icons/full/obj16/java_bean.png";
 	
+	public static final String IMAGE_INPUT_DATA_HEADER = "icons/full/obj16/input_data_header.gif";
+	
 	public static final String IMAGE_JAVA_ARRAY = "icons/full/obj16/javaarraymodel.gif";
 	
 	public static final String IMAGE_CHECKBOX_CHECK = "icons/full/obj16/checkbox_checked.gif";

@@ -32,8 +32,9 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.CommandStackEvent;
 import org.eclipse.gef.commands.CommandStackEventListener;
 import org.eclipse.gef.editparts.FreeformGraphicalRootEditPart;
+import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.actions.SelectionAction;
-import org.eclipse.gef.ui.parts.GraphicalEditor;
+import org.eclipse.gef.ui.parts.GraphicalEditorWithPalette;
 import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
@@ -81,7 +82,7 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  * @author Dart
  * 
  */
-public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelectionChangedListener,
+public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implements ISelectionChangedListener,
 		ISourceSynchronizeListener {
 
 	public static final int EXECUTE_COMMAND = 0;
@@ -780,5 +781,11 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 
 	public void sourceChange(Object model) {
 		initGraphicalModel();
+	}
+
+	@Override
+	protected PaletteRoot getPaletteRoot() {
+		SmooksGraphicalEditorPaletteRootCreator creator = new SmooksGraphicalEditorPaletteRootCreator();
+		return creator.createPaletteRoot();
 	}
 }
