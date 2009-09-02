@@ -768,7 +768,10 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <para>There are also <emphasis>
           <property>org.domain.workshop.entity</property>
         </emphasis> package that contains the JPA classes. These are the entity beans that are
-        mapped to database tables.</para>
+        mapped to database tables.Note,that you can use Seam refactoring tools with Seam components.
+        Read more about it in <ulink
+          url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#seam_refactoring"
+          >Seam refactoring tools chapter</ulink> of Seam Dev Tools Reference Guide.</para>
 
       <para>Last, but not least, there are facelets for all of the CRUD screens. The best way to get
         a feel for the generated code is to open a browser and play around with the application. Go
