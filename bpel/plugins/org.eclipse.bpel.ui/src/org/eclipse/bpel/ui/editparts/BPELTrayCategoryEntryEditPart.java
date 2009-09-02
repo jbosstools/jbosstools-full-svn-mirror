@@ -23,9 +23,7 @@ import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.AccessibleEditPart;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.EditPolicy;
-import org.eclipse.gef.RootEditPart;
 
 /**
  * Tray category edit part.
@@ -40,12 +38,6 @@ public abstract class BPELTrayCategoryEntryEditPart extends TrayCategoryEntryEdi
 	
 	protected MouseMotionListener mouseMotionListener;
 	
-	// added by Grid.Qian
-	// use the variable to hold the root of the editpart
-	// because when we delete a correlationSet from scope
-	// the editpart parent will be null
-	private RootEditPart holdRoot;
-
 	@Override
 	protected AccessibleEditPart createAccessible() {
 		return new BPELTrayAccessibleEditPart(this);
@@ -142,11 +134,7 @@ public abstract class BPELTrayCategoryEntryEditPart extends TrayCategoryEntryEdi
 	@Override
 	public void removeNotify() {
 		// we only do the following hack if we are dealing with scoped variables
-		
-		// when we delete a variable from scope, the variables parent will
-		// be null, so we need to filter this
-		EObject eObj = ((EObject) getParent().getModel()).eContainer();
-		if (eObj != null && !(eObj instanceof Scope)) {
+		if (!(((EObject)getParent().getModel()).eContainer() instanceof Scope)) {
 			super.removeNotify();
 			return;
 		}
@@ -163,31 +151,5 @@ public abstract class BPELTrayCategoryEntryEditPart extends TrayCategoryEntryEdi
 		for (int i = 0; i < children.size(); i++)
 			children.get(i).removeNotify();
 		unregister();
-	}
-
-	/**
-	 * Overwrite the method by Grid.Qian to get the viewer 
-	 * when the editpart's parent == null
-	 */
-	public EditPartViewer getViewer() {
-		try {
-			return super.getViewer();
-		} catch (Exception e) {
-			return holdRoot.getViewer();
-		}
-
-	}
-
-	/**
-	 * Overwrite the method by Grid.Qian
-	 * Hold the editpart's root editpart
-	 */
-	public void setParent(EditPart parent) {
-		if (this.getParent() == parent)
-			return;
-		if (parent != null) {
-			holdRoot = parent.getRoot();
-		}
-		super.setParent(parent);
 	}
 }
