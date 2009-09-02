@@ -304,9 +304,10 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
         <para>If you want to change a value or a name of your attribute, click on it and than on <emphasis>
             <property>Edit</property></emphasis> button.</para>
         
-        <para>If the .properties file is rather big and there are a lot of entries in it, you can use filtering to find the necessary ones. The Filter is implemented by an expandable panel, closed by default: </para>
+        <para>If the .properties file is rather big and there are a lot of entries in it, you can use filtering and regular expressions to find the necessary ones. The Filter and Regular Expressions Search is implemented by an expandable panel, closed by default: </para>
+        <para>When "Expression" is not selected (as by default), filter is case insensitive. When "Expression" is selected, filter uses regular expressions which are case sensitive</para>
         <figure>
-            <title>Filter panel</title>
+            <title>Filter and Regular Expressions Search Panel</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/rad_jsf_application/rad_jsf_application_8a.png"/>
@@ -314,7 +315,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
             </mediaobject>
         </figure>
         <para> Enter the characters that should be searched for in the entries to the  'name' or 'value' input fields accordingly. The filtered results will be displayed in the table below:</para>
-        
+                 
         <figure>
             <title>Filter results</title>
             <mediaobject>
@@ -324,7 +325,9 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
             </mediaobject>
         </figure>
         
-        
+        <para>When using regular expressions please note, that regular expression syntax does not use "*" for any characters and "?" for any one character. It's necessary to use "." for any one character and ".*" for any characters. Symbols "*" and "?" are used to show that the preceding token is not required, for example, "a.a" matches "aba" but not "aa", while "a.?a" or a.*a" matches both; besides "a.*a" matches "abcda".</para>
+        <para>To find the exact match, use sequences \A and \z in expression. For example, expression "\Adate\z" matches only string "date"; expression "\Adate" matches "date" and "dateline", expression "date\z" matches "date" and "Begin date", and expression "date" matches all of them.</para>
+               
     </section>
 
     <section id="CreatingJavaBean">
