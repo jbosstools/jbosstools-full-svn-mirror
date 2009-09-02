@@ -55,7 +55,7 @@ public class JBide3989Test extends TestCase {
 		ISeamProject seamProject = SeamCorePlugin.getSeamProject(project, true);
 		seamProject.setRuntimeName("UNKNOWN");
 		ValidatorManager.addProjectBuildValidationSupport(project);
-		project.build(IncrementalProjectBuilder.CLEAN_BUILD,
+		project.build(IncrementalProjectBuilder.FULL_BUILD,
 				new NullProgressMonitor());
 		JobUtils.waitForIdle();
 	}
