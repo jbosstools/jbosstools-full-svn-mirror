@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.bpel.validator;
 
+import java.util.ArrayList;
+
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -26,7 +28,12 @@ public class ValidatorHelper extends WorkbenchContext {
 
 	@Override
 	public void registerResource(IResource resource) {
-		getValidationFileURIs().add(resource.getFullPath().toOSString());		
+		if(resource!=null) {
+			if(getValidationFileURIs()==null) {
+				setValidationFileURIs(new ArrayList<String>());
+			}
+			getValidationFileURIs().add(resource.getFullPath().toOSString());
+		}
 	}
 
 }
