@@ -5,13 +5,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jboss.tools.tests.AbstractPluginsLoadTest;
-import org.jboss.tools.tests.ToolsAllTests;
 
 public class BirtCoreTestSuite extends TestCase {
 
 	public static Test suite ()
 	{
-		TestSuite suite = new TestSuite(ToolsAllTests.class.getName());
+		TestSuite suite = new TestSuite(BirtCoreTestSuite.class.getName());
 		suite.addTestSuite(BirtPluginsLoadTest.class);
 		return suite;
 	}
