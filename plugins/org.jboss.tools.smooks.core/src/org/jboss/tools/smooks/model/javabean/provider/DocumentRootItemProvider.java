@@ -27,7 +27,7 @@ import org.jboss.tools.smooks.model.javabean.JavabeanFactory;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 
 /**
- * This is the item provider adapter for a {@link javabean.DocumentRoot} object.
+ * This is the item provider adapter for a {@link SmooksGraphExtDocumentRoot.DocumentRoot} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

@@ -28,7 +28,7 @@ import org.jboss.tools.smooks.configuration.SmooksConstants;
  */
 public class SmooksVersionSelectionPage extends WizardPage {
 
-	protected String version = SmooksConstants.VERSION_1_1;
+	protected String version = SmooksConstants.VERSION_1_2;
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
@@ -45,7 +45,7 @@ public class SmooksVersionSelectionPage extends WizardPage {
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		Label label = new Label(buttonComposite, SWT.NONE);
-		label.setText("Smooks configuration file version");
+		label.setText("Smooks platform version");
 		
 
 		

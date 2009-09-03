@@ -27,7 +27,7 @@ import org.jboss.tools.smooks.model.xsl.XslFactory;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
 
 /**
- * This is the item provider adapter for a {@link xsl.DocumentRoot} object.
+ * This is the item provider adapter for a {@link SmooksGraphExtDocumentRoot.DocumentRoot} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

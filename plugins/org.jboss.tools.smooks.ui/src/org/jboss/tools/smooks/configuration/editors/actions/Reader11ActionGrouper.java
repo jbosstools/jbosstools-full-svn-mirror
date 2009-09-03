@@ -8,14 +8,26 @@ import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.MenuManager;
 import org.jboss.tools.smooks.configuration.actions.AddSmooksResourceAction;
 import org.jboss.tools.smooks.model.csv.CsvReader;
+import org.jboss.tools.smooks.model.csv12.CSV12Reader;
 import org.jboss.tools.smooks.model.edi.EDIReader;
+import org.jboss.tools.smooks.model.edi12.EDI12Reader;
 import org.jboss.tools.smooks.model.json.JsonReader;
+import org.jboss.tools.smooks.model.json12.Json12Reader;
 import org.jboss.tools.smooks.model.smooks.ReaderType;
 
 public class Reader11ActionGrouper extends AbstractSmooksActionGrouper {
 
 	@Override
 	protected boolean canAdd(Object value) {
+		if (value instanceof CSV12Reader) {
+			return true;
+		}
+		if (value instanceof EDI12Reader) {
+			return true;
+		}
+		if (value instanceof Json12Reader) {
+			return true;
+		}
 		if (value instanceof CsvReader) {
 			return true;
 		}
@@ -32,7 +44,7 @@ public class Reader11ActionGrouper extends AbstractSmooksActionGrouper {
 	}
 
 	public String getGroupName() {
-		return "Reader v1.1";
+		return "Reader";
 	}
 
 	@Override
@@ -61,7 +73,5 @@ public class Reader11ActionGrouper extends AbstractSmooksActionGrouper {
 			}
 		}
 	}
-	
-	
 
 }

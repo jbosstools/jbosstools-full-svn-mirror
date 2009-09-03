@@ -11,15 +11,19 @@
 package org.jboss.tools.smooks.graphical.editors;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.jboss.tools.smooks.configuration.SmooksConstants;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.JavaBeanGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.ResourceConfigGraphModelImpl;
+import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.ExpressionType;
 import org.jboss.tools.smooks.model.javabean.ValueType;
@@ -124,14 +128,18 @@ public class GraphicalModelFactoryImpl implements GraphicalModelFactory {
 		AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) provider.getEditingDomain();
 		ITreeContentProvider contentProvider = new AdapterFactoryContentProvider(editingDomain.getAdapterFactory());
 		ILabelProvider labelProvider = createLabelProvider(editingDomain.getAdapterFactory());
+		SmooksGraphicsExtType extType = provider.getSmooksGraphicsExt();
+		String version = extType.getPlatformVersion();
+		if (SmooksUIUtils.isUnSupportElement(version, (EObject) model)) {
+			return null;
+		}
 		if (model instanceof BindingsType || model instanceof BeanType) {
 			graphModel = new JavaBeanGraphModel(model, contentProvider, labelProvider, provider);
 			((JavaBeanGraphModel) graphModel).setHeaderVisable(true);
-		} else {
-			if (model instanceof AbstractResourceConfig) {
-				graphModel = new ResourceConfigGraphModelImpl(model, contentProvider, labelProvider, provider);
-				((ResourceConfigGraphModelImpl) graphModel).setHeaderVisable(true);
-			}
+		}
+		if (graphModel == null && model instanceof AbstractResourceConfig) {
+			graphModel = new ResourceConfigGraphModelImpl(model, contentProvider, labelProvider, provider);
+			((ResourceConfigGraphModelImpl) graphModel).setHeaderVisable(true);
 		}
 		return graphModel;
 	}

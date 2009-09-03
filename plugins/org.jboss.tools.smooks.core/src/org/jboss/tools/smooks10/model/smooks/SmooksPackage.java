@@ -118,10 +118,10 @@ public interface SmooksPackage extends EPackage {
 	int CONDITION_TYPE_FEATURE_COUNT = 2;
 
 	/**
-	 * The meta object id for the '{@link smooks.impl.DocumentRootImpl <em>Document Root</em>}' class.
+	 * The meta object id for the '{@link SmooksGraphExtDocumentRootImpl.impl.DocumentRootImpl <em>Document Root</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see smooks.impl.DocumentRootImpl
+	 * @see SmooksGraphExtDocumentRootImpl.impl.DocumentRootImpl
 	 * @see smooks.impl.SmooksPackageImpl#getDocumentRoot()
 	 * @generated
 	 */
@@ -655,142 +655,142 @@ public interface SmooksPackage extends EPackage {
 	EAttribute getConditionType_Evaluator();
 
 	/**
-	 * Returns the meta object for class '{@link smooks.DocumentRoot <em>Document Root</em>}'.
+	 * Returns the meta object for class '{@link smooks.SmooksGraphExtDocumentRoot <em>Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Document Root</em>'.
-	 * @see smooks.DocumentRoot
+	 * @see smooks.SmooksGraphExtDocumentRoot
 	 * @generated
 	 */
 	EClass getDocumentRoot();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link smooks.DocumentRoot#getMixed <em>Mixed</em>}'.
+	 * Returns the meta object for the attribute list '{@link smooks.SmooksGraphExtDocumentRoot#getMixed <em>Mixed</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Mixed</em>'.
-	 * @see smooks.DocumentRoot#getMixed()
+	 * @see smooks.SmooksGraphExtDocumentRoot#getMixed()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EAttribute getDocumentRoot_Mixed();
 
 	/**
-	 * Returns the meta object for the map '{@link smooks.DocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}'.
+	 * Returns the meta object for the map '{@link smooks.SmooksGraphExtDocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>XMLNS Prefix Map</em>'.
-	 * @see smooks.DocumentRoot#getXMLNSPrefixMap()
+	 * @see smooks.SmooksGraphExtDocumentRoot#getXMLNSPrefixMap()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_XMLNSPrefixMap();
 
 	/**
-	 * Returns the meta object for the map '{@link smooks.DocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}'.
+	 * Returns the meta object for the map '{@link smooks.SmooksGraphExtDocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>XSI Schema Location</em>'.
-	 * @see smooks.DocumentRoot#getXSISchemaLocation()
+	 * @see smooks.SmooksGraphExtDocumentRoot#getXSISchemaLocation()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_XSISchemaLocation();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.DocumentRoot#getAbstractResourceConfig <em>Abstract Resource Config</em>}'.
+	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getAbstractResourceConfig <em>Abstract Resource Config</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Abstract Resource Config</em>'.
-	 * @see smooks.DocumentRoot#getAbstractResourceConfig()
+	 * @see smooks.SmooksGraphExtDocumentRoot#getAbstractResourceConfig()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_AbstractResourceConfig();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.DocumentRoot#getCondition <em>Condition</em>}'.
+	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getCondition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Condition</em>'.
-	 * @see smooks.DocumentRoot#getCondition()
+	 * @see smooks.SmooksGraphExtDocumentRoot#getCondition()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_Condition();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.DocumentRoot#getImport <em>Import</em>}'.
+	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getImport <em>Import</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Import</em>'.
-	 * @see smooks.DocumentRoot#getImport()
+	 * @see smooks.SmooksGraphExtDocumentRoot#getImport()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_Import();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.DocumentRoot#getParam <em>Param</em>}'.
+	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getParam <em>Param</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Param</em>'.
-	 * @see smooks.DocumentRoot#getParam()
+	 * @see smooks.SmooksGraphExtDocumentRoot#getParam()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_Param();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.DocumentRoot#getProfile <em>Profile</em>}'.
+	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getProfile <em>Profile</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Profile</em>'.
-	 * @see smooks.DocumentRoot#getProfile()
+	 * @see smooks.SmooksGraphExtDocumentRoot#getProfile()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_Profile();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.DocumentRoot#getProfiles <em>Profiles</em>}'.
+	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getProfiles <em>Profiles</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Profiles</em>'.
-	 * @see smooks.DocumentRoot#getProfiles()
+	 * @see smooks.SmooksGraphExtDocumentRoot#getProfiles()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_Profiles();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.DocumentRoot#getResource <em>Resource</em>}'.
+	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getResource <em>Resource</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Resource</em>'.
-	 * @see smooks.DocumentRoot#getResource()
+	 * @see smooks.SmooksGraphExtDocumentRoot#getResource()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_Resource();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.DocumentRoot#getResourceConfig <em>Resource Config</em>}'.
+	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getResourceConfig <em>Resource Config</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Resource Config</em>'.
-	 * @see smooks.DocumentRoot#getResourceConfig()
+	 * @see smooks.SmooksGraphExtDocumentRoot#getResourceConfig()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_ResourceConfig();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.DocumentRoot#getSmooksResourceList <em>Smooks Resource List</em>}'.
+	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getSmooksResourceList <em>Smooks Resource List</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Smooks Resource List</em>'.
-	 * @see smooks.DocumentRoot#getSmooksResourceList()
+	 * @see smooks.SmooksGraphExtDocumentRoot#getSmooksResourceList()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
@@ -1145,10 +1145,10 @@ public interface SmooksPackage extends EPackage {
 		EAttribute CONDITION_TYPE__EVALUATOR = eINSTANCE.getConditionType_Evaluator();
 
 		/**
-		 * The meta object literal for the '{@link smooks.impl.DocumentRootImpl <em>Document Root</em>}' class.
+		 * The meta object literal for the '{@link SmooksGraphExtDocumentRootImpl.impl.DocumentRootImpl <em>Document Root</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see smooks.impl.DocumentRootImpl
+		 * @see SmooksGraphExtDocumentRootImpl.impl.DocumentRootImpl
 		 * @see smooks.impl.SmooksPackageImpl#getDocumentRoot()
 		 * @generated
 		 */

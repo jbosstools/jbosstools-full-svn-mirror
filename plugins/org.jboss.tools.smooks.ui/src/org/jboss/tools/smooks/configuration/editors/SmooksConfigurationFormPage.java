@@ -12,9 +12,12 @@ package org.jboss.tools.smooks.configuration.editors;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -24,6 +27,7 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelectionWizard;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
@@ -121,7 +125,13 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 		wizard.setForcePreviousAndNextButtons(true);
 		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(
 				getEditorSite().getShell(), wizard, getSmooksGraphicsExtType(), (SmooksMultiFormEditor) getEditor());
-		dialog.show();
+		if(dialog.show() == Dialog.OK){
+			SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
+			String type = dialog.getType();
+			String path = dialog.getPath();
+			Properties pros = dialog.getProperties();
+			SmooksUIUtils.recordInputDataInfomation(null, extType, type, path, pros);
+		}
 	}
 
 	public void setSelectionToViewer(final Collection<?> collection) {
@@ -157,11 +167,21 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 
 	}
 
-	public void saveComplete(SmooksGraphicsExtType extType) {
+	public void inputTypeChanged(SmooksGraphicsExtType extType) {
 	}
 
 	public void sourceChange(Object model) {
 		this.setSmooksModel(model);
+	}
+
+	public void graphChanged(SmooksGraphicsExtType extType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void graphPropertyChange(EStructuralFeature featre, Object value) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

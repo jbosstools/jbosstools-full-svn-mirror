@@ -6,13 +6,13 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext.util;
 
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
+
 import org.jboss.tools.smooks.model.graphics.ext.*;
 
 /**
@@ -76,8 +76,8 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 				return createConnectionTypeAdapter();
 			}
 			@Override
-			public Adapter caseSmooksGraphExtensionDocumentRoot(SmooksGraphExtensionDocumentRoot object) {
-				return createSmooksGraphExtensionDocumentRootAdapter();
+			public Adapter caseDocumentRoot(SmooksGraphExtensionDocumentRoot object) {
+				return createDocumentRootAdapter();
 			}
 			@Override
 			public Adapter caseFigureType(FigureType object) {
@@ -134,7 +134,7 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot <em>Smooks Graph Extension Document Root</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot <em>Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -143,7 +143,7 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot
 	 * @generated
 	 */
-	public Adapter createSmooksGraphExtensionDocumentRootAdapter() {
+	public Adapter createDocumentRootAdapter() {
 		return null;
 	}
 
@@ -162,7 +162,7 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.graphics.ext.GraphType <em>Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.graphics.ext.GraphType <em>Graph Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -229,4 +229,4 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 		return null;
 	}
 
-} //GraphAdapterFactory
+} //ExtAdapterFactory

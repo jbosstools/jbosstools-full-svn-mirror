@@ -20,6 +20,8 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ConditionsType;
@@ -92,6 +94,11 @@ public class SmooksConfigurationResourceConfigPage extends SmooksConfigurationFo
 					return false;
 				}
 				if (obj instanceof org.jboss.tools.smooks10.model.smooks.ProfilesType) {
+					return false;
+				}
+				SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
+				String version = extType.getPlatformVersion();
+				if(SmooksUIUtils.isUnSupportElement(version, (EObject)obj)){
 					return false;
 				}
 				return true;

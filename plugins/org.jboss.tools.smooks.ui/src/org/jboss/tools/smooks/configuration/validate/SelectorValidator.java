@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.validate;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -18,17 +17,22 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -66,7 +70,8 @@ public class SelectorValidator extends AbstractValidator {
 	protected Diagnostic validateModel(Object model, EditingDomain editingDomain) {
 		if (model instanceof EObject) {
 			EStructuralFeature feature = getAttribute(model);
-			if(feature == null) return null;
+			if (feature == null)
+				return null;
 			Object data = ((EObject) model).eGet(feature);
 			if (data == null) {
 				return null;
@@ -129,21 +134,38 @@ public class SelectorValidator extends AbstractValidator {
 			if (r instanceof IFile) {
 				file = (IFile) r;
 			}
-			final IFile ff = file;
-			String extName = ff.getName() + ".ext";
+			final FileEditorInput input = new FileEditorInput(file);
+			final SmooksResourceListType finalList = listType;
+			Display dis = Display.getDefault();
+			if (dis != null && !dis.isDisposed()) {
+				dis.syncExec(new Runnable() {
 
-			IFile extFile = ff.getParent().getFile(new Path(extName));
-			try {
-				extType = SmooksUIUtils.loadSmooksGraphicsExt(extFile);
-			} catch (IOException e) {
-				// ignore
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see java.lang.Runnable#run()
+					 */
+					public void run() {
+						IWorkbenchWindow window = SmooksConfigurationActivator.getDefault().getWorkbench()
+								.getActiveWorkbenchWindow();
+						IWorkbenchPage activePage = window.getActivePage();
+						if (activePage != null) {
+							IEditorPart part = activePage.findEditor(input);
+							if (part != null && part instanceof AbstractSmooksFormEditor) {
+								extType = ((AbstractSmooksFormEditor) part).getSmooksGraphicsExt();
+								if (extType != null) {
+									List<Object> l = SelectorCreationDialog.generateInputData(extType, finalList);
+									if (l != null) {
+										list.addAll(l);
+									}
+								}
+							}
+						}
+					}
+
+				});
 			}
-		}
-		if (extType != null) {
-			List<Object> l = SelectorCreationDialog.generateInputData(extType, listType);
-			if (l != null) {
-				list.addAll(l);
-			}
+
 		}
 	}
 

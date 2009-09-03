@@ -6,7 +6,6 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext.impl;
 
-
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EMap;
@@ -23,18 +22,19 @@ import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.jboss.tools.smooks.model.graphics.ext.ConnectionType;
-import org.jboss.tools.smooks.model.graphics.ext.FigureType;
+import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
+import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.ParamType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Smooks Graph Extension Document Root</b></em>'.
+ * An implementation of the model object '<em><b>Document Root</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -122,7 +122,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT;
+		return GraphPackage.Literals.DOCUMENT_ROOT;
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 */
 	public FeatureMap getMixed() {
 		if (mixed == null) {
-			mixed = new BasicFeatureMap(this, GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__MIXED);
+			mixed = new BasicFeatureMap(this, GraphPackage.DOCUMENT_ROOT__MIXED);
 		}
 		return mixed;
 	}
@@ -144,7 +144,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 */
 	public EMap<String, String> getXMLNSPrefixMap() {
 		if (xMLNSPrefixMap == null) {
-			xMLNSPrefixMap = new EcoreEMap<String,String>(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
+			xMLNSPrefixMap = new EcoreEMap<String,String>(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, GraphPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
 		}
 		return xMLNSPrefixMap;
 	}
@@ -156,7 +156,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 */
 	public EMap<String, String> getXSISchemaLocation() {
 		if (xSISchemaLocation == null) {
-			xSISchemaLocation = new EcoreEMap<String,String>(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
+			xSISchemaLocation = new EcoreEMap<String,String>(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, GraphPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
 		}
 		return xSISchemaLocation;
 	}
@@ -167,7 +167,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public ConnectionType getConnection() {
-		return (ConnectionType)getMixed().get(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__CONNECTION, true);
+		return (ConnectionType)getMixed().get(GraphPackage.Literals.DOCUMENT_ROOT__CONNECTION, true);
 	}
 
 	/**
@@ -176,7 +176,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public NotificationChain basicSetConnection(ConnectionType newConnection, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__CONNECTION, newConnection, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(GraphPackage.Literals.DOCUMENT_ROOT__CONNECTION, newConnection, msgs);
 	}
 
 	/**
@@ -185,7 +185,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public void setConnection(ConnectionType newConnection) {
-		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__CONNECTION, newConnection);
+		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.DOCUMENT_ROOT__CONNECTION, newConnection);
 	}
 
 	/**
@@ -194,7 +194,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public FigureType getFigure() {
-		return (FigureType)getMixed().get(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__FIGURE, true);
+		return (FigureType)getMixed().get(GraphPackage.Literals.DOCUMENT_ROOT__FIGURE, true);
 	}
 
 	/**
@@ -203,7 +203,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public NotificationChain basicSetFigure(FigureType newFigure, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__FIGURE, newFigure, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(GraphPackage.Literals.DOCUMENT_ROOT__FIGURE, newFigure, msgs);
 	}
 
 	/**
@@ -212,7 +212,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public void setFigure(FigureType newFigure) {
-		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__FIGURE, newFigure);
+		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.DOCUMENT_ROOT__FIGURE, newFigure);
 	}
 
 	/**
@@ -221,7 +221,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public GraphType getGraph() {
-		return (GraphType)getMixed().get(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__GRAPH, true);
+		return (GraphType)getMixed().get(GraphPackage.Literals.DOCUMENT_ROOT__GRAPH, true);
 	}
 
 	/**
@@ -230,7 +230,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public NotificationChain basicSetGraph(GraphType newGraph, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__GRAPH, newGraph, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(GraphPackage.Literals.DOCUMENT_ROOT__GRAPH, newGraph, msgs);
 	}
 
 	/**
@@ -239,7 +239,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public void setGraph(GraphType newGraph) {
-		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__GRAPH, newGraph);
+		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.DOCUMENT_ROOT__GRAPH, newGraph);
 	}
 
 	/**
@@ -248,7 +248,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public InputType getInput() {
-		return (InputType)getMixed().get(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__INPUT, true);
+		return (InputType)getMixed().get(GraphPackage.Literals.DOCUMENT_ROOT__INPUT, true);
 	}
 
 	/**
@@ -257,7 +257,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public NotificationChain basicSetInput(InputType newInput, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__INPUT, newInput, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(GraphPackage.Literals.DOCUMENT_ROOT__INPUT, newInput, msgs);
 	}
 
 	/**
@@ -266,7 +266,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public void setInput(InputType newInput) {
-		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__INPUT, newInput);
+		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.DOCUMENT_ROOT__INPUT, newInput);
 	}
 
 	/**
@@ -275,7 +275,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public ParamType getParam() {
-		return (ParamType)getMixed().get(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PARAM, true);
+		return (ParamType)getMixed().get(GraphPackage.Literals.DOCUMENT_ROOT__PARAM, true);
 	}
 
 	/**
@@ -284,7 +284,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public NotificationChain basicSetParam(ParamType newParam, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PARAM, newParam, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(GraphPackage.Literals.DOCUMENT_ROOT__PARAM, newParam, msgs);
 	}
 
 	/**
@@ -293,7 +293,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public void setParam(ParamType newParam) {
-		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PARAM, newParam);
+		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.DOCUMENT_ROOT__PARAM, newParam);
 	}
 
 	/**
@@ -302,7 +302,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public SmooksGraphicsExtType getSmooksGraphicsExt() {
-		return (SmooksGraphicsExtType)getMixed().get(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT, true);
+		return (SmooksGraphicsExtType)getMixed().get(GraphPackage.Literals.DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT, true);
 	}
 
 	/**
@@ -311,7 +311,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public NotificationChain basicSetSmooksGraphicsExt(SmooksGraphicsExtType newSmooksGraphicsExt, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT, newSmooksGraphicsExt, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(GraphPackage.Literals.DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT, newSmooksGraphicsExt, msgs);
 	}
 
 	/**
@@ -320,7 +320,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public void setSmooksGraphicsExt(SmooksGraphicsExtType newSmooksGraphicsExt) {
-		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT, newSmooksGraphicsExt);
+		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT, newSmooksGraphicsExt);
 	}
 
 	/**
@@ -329,7 +329,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public String getSource() {
-		return (String)getMixed().get(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SOURCE, true);
+		return (String)getMixed().get(GraphPackage.Literals.DOCUMENT_ROOT__SOURCE, true);
 	}
 
 	/**
@@ -338,7 +338,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public void setSource(String newSource) {
-		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SOURCE, newSource);
+		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.DOCUMENT_ROOT__SOURCE, newSource);
 	}
 
 	/**
@@ -347,7 +347,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public String getTarget() {
-		return (String)getMixed().get(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__TARGET, true);
+		return (String)getMixed().get(GraphPackage.Literals.DOCUMENT_ROOT__TARGET, true);
 	}
 
 	/**
@@ -356,7 +356,7 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	 * @generated
 	 */
 	public void setTarget(String newTarget) {
-		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__TARGET, newTarget);
+		((FeatureMap.Internal)getMixed()).set(GraphPackage.Literals.DOCUMENT_ROOT__TARGET, newTarget);
 	}
 
 	/**
@@ -367,23 +367,23 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__MIXED:
+			case GraphPackage.DOCUMENT_ROOT__MIXED:
 				return ((InternalEList<?>)getMixed()).basicRemove(otherEnd, msgs);
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case GraphPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				return ((InternalEList<?>)getXMLNSPrefixMap()).basicRemove(otherEnd, msgs);
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case GraphPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				return ((InternalEList<?>)getXSISchemaLocation()).basicRemove(otherEnd, msgs);
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__CONNECTION:
+			case GraphPackage.DOCUMENT_ROOT__CONNECTION:
 				return basicSetConnection(null, msgs);
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__FIGURE:
+			case GraphPackage.DOCUMENT_ROOT__FIGURE:
 				return basicSetFigure(null, msgs);
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__GRAPH:
+			case GraphPackage.DOCUMENT_ROOT__GRAPH:
 				return basicSetGraph(null, msgs);
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__INPUT:
+			case GraphPackage.DOCUMENT_ROOT__INPUT:
 				return basicSetInput(null, msgs);
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PARAM:
+			case GraphPackage.DOCUMENT_ROOT__PARAM:
 				return basicSetParam(null, msgs);
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT:
+			case GraphPackage.DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT:
 				return basicSetSmooksGraphicsExt(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -397,30 +397,30 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__MIXED:
+			case GraphPackage.DOCUMENT_ROOT__MIXED:
 				if (coreType) return getMixed();
 				return ((FeatureMap.Internal)getMixed()).getWrapper();
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case GraphPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				if (coreType) return getXMLNSPrefixMap();
 				else return getXMLNSPrefixMap().map();
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case GraphPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				if (coreType) return getXSISchemaLocation();
 				else return getXSISchemaLocation().map();
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__CONNECTION:
+			case GraphPackage.DOCUMENT_ROOT__CONNECTION:
 				return getConnection();
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__FIGURE:
+			case GraphPackage.DOCUMENT_ROOT__FIGURE:
 				return getFigure();
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__GRAPH:
+			case GraphPackage.DOCUMENT_ROOT__GRAPH:
 				return getGraph();
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__INPUT:
+			case GraphPackage.DOCUMENT_ROOT__INPUT:
 				return getInput();
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PARAM:
+			case GraphPackage.DOCUMENT_ROOT__PARAM:
 				return getParam();
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT:
+			case GraphPackage.DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT:
 				return getSmooksGraphicsExt();
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SOURCE:
+			case GraphPackage.DOCUMENT_ROOT__SOURCE:
 				return getSource();
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__TARGET:
+			case GraphPackage.DOCUMENT_ROOT__TARGET:
 				return getTarget();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -434,37 +434,37 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__MIXED:
+			case GraphPackage.DOCUMENT_ROOT__MIXED:
 				((FeatureMap.Internal)getMixed()).set(newValue);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case GraphPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				((EStructuralFeature.Setting)getXMLNSPrefixMap()).set(newValue);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case GraphPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				((EStructuralFeature.Setting)getXSISchemaLocation()).set(newValue);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__CONNECTION:
+			case GraphPackage.DOCUMENT_ROOT__CONNECTION:
 				setConnection((ConnectionType)newValue);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__FIGURE:
+			case GraphPackage.DOCUMENT_ROOT__FIGURE:
 				setFigure((FigureType)newValue);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__GRAPH:
+			case GraphPackage.DOCUMENT_ROOT__GRAPH:
 				setGraph((GraphType)newValue);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__INPUT:
+			case GraphPackage.DOCUMENT_ROOT__INPUT:
 				setInput((InputType)newValue);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PARAM:
+			case GraphPackage.DOCUMENT_ROOT__PARAM:
 				setParam((ParamType)newValue);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT:
+			case GraphPackage.DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT:
 				setSmooksGraphicsExt((SmooksGraphicsExtType)newValue);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SOURCE:
+			case GraphPackage.DOCUMENT_ROOT__SOURCE:
 				setSource((String)newValue);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__TARGET:
+			case GraphPackage.DOCUMENT_ROOT__TARGET:
 				setTarget((String)newValue);
 				return;
 		}
@@ -479,37 +479,37 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__MIXED:
+			case GraphPackage.DOCUMENT_ROOT__MIXED:
 				getMixed().clear();
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case GraphPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				getXMLNSPrefixMap().clear();
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case GraphPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				getXSISchemaLocation().clear();
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__CONNECTION:
+			case GraphPackage.DOCUMENT_ROOT__CONNECTION:
 				setConnection((ConnectionType)null);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__FIGURE:
+			case GraphPackage.DOCUMENT_ROOT__FIGURE:
 				setFigure((FigureType)null);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__GRAPH:
+			case GraphPackage.DOCUMENT_ROOT__GRAPH:
 				setGraph((GraphType)null);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__INPUT:
+			case GraphPackage.DOCUMENT_ROOT__INPUT:
 				setInput((InputType)null);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PARAM:
+			case GraphPackage.DOCUMENT_ROOT__PARAM:
 				setParam((ParamType)null);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT:
+			case GraphPackage.DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT:
 				setSmooksGraphicsExt((SmooksGraphicsExtType)null);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SOURCE:
+			case GraphPackage.DOCUMENT_ROOT__SOURCE:
 				setSource(SOURCE_EDEFAULT);
 				return;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__TARGET:
+			case GraphPackage.DOCUMENT_ROOT__TARGET:
 				setTarget(TARGET_EDEFAULT);
 				return;
 		}
@@ -524,27 +524,27 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__MIXED:
+			case GraphPackage.DOCUMENT_ROOT__MIXED:
 				return mixed != null && !mixed.isEmpty();
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case GraphPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				return xMLNSPrefixMap != null && !xMLNSPrefixMap.isEmpty();
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case GraphPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				return xSISchemaLocation != null && !xSISchemaLocation.isEmpty();
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__CONNECTION:
+			case GraphPackage.DOCUMENT_ROOT__CONNECTION:
 				return getConnection() != null;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__FIGURE:
+			case GraphPackage.DOCUMENT_ROOT__FIGURE:
 				return getFigure() != null;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__GRAPH:
+			case GraphPackage.DOCUMENT_ROOT__GRAPH:
 				return getGraph() != null;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__INPUT:
+			case GraphPackage.DOCUMENT_ROOT__INPUT:
 				return getInput() != null;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PARAM:
+			case GraphPackage.DOCUMENT_ROOT__PARAM:
 				return getParam() != null;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT:
+			case GraphPackage.DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT:
 				return getSmooksGraphicsExt() != null;
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SOURCE:
+			case GraphPackage.DOCUMENT_ROOT__SOURCE:
 				return SOURCE_EDEFAULT == null ? getSource() != null : !SOURCE_EDEFAULT.equals(getSource());
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__TARGET:
+			case GraphPackage.DOCUMENT_ROOT__TARGET:
 				return TARGET_EDEFAULT == null ? getTarget() != null : !TARGET_EDEFAULT.equals(getTarget());
 		}
 		return super.eIsSet(featureID);
@@ -566,4 +566,4 @@ public class SmooksGraphExtensionDocumentRootImpl extends EObjectImpl implements
 		return result.toString();
 	}
 
-} //SmooksGraphExtensionDocumentRootImpl
+} //DocumentRootImpl

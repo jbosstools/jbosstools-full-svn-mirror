@@ -97,7 +97,7 @@ public class XslItemProviderAdapterFactory extends XslAdapterFactory implements 
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link xsl.DocumentRoot} instances.
+	 * This keeps track of the one adapter used for all {@link xsl.SmooksGraphExtDocumentRoot} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -105,7 +105,7 @@ public class XslItemProviderAdapterFactory extends XslAdapterFactory implements 
 	protected DocumentRootItemProvider documentRootItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link xsl.DocumentRoot}.
+	 * This creates an adapter for a {@link xsl.SmooksGraphExtDocumentRoot}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

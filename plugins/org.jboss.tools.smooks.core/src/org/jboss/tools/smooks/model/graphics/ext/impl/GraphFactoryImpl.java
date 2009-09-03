@@ -6,7 +6,6 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext.impl;
 
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -14,6 +13,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
 import org.jboss.tools.smooks.model.graphics.ext.*;
 
 /**
@@ -31,9 +31,9 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	 */
 	public static GraphFactory init() {
 		try {
-			GraphFactory theGraphFactory = (GraphFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd"); 
-			if (theGraphFactory != null) {
-				return theGraphFactory;
+			GraphFactory theExtFactory = (GraphFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd"); 
+			if (theExtFactory != null) {
+				return theExtFactory;
 			}
 		}
 		catch (Exception exception) {
@@ -61,7 +61,7 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case GraphPackage.CONNECTION_TYPE: return createConnectionType();
-			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT: return createSmooksGraphExtensionDocumentRoot();
+			case GraphPackage.DOCUMENT_ROOT: return createDocumentRoot();
 			case GraphPackage.FIGURE_TYPE: return createFigureType();
 			case GraphPackage.GRAPH_TYPE: return createGraphType();
 			case GraphPackage.INPUT_TYPE: return createInputType();
@@ -87,9 +87,9 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SmooksGraphExtensionDocumentRoot createSmooksGraphExtensionDocumentRoot() {
-		SmooksGraphExtensionDocumentRootImpl smooksGraphExtensionDocumentRoot = new SmooksGraphExtensionDocumentRootImpl();
-		return smooksGraphExtensionDocumentRoot;
+	public SmooksGraphExtensionDocumentRoot createDocumentRoot() {
+		SmooksGraphExtensionDocumentRootImpl documentRoot = new SmooksGraphExtensionDocumentRootImpl();
+		return documentRoot;
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GraphPackage getGraphPackage() {
+	public GraphPackage getExtPackage() {
 		return (GraphPackage)getEPackage();
 	}
 
@@ -162,4 +162,4 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 		return GraphPackage.eINSTANCE;
 	}
 
-} //GraphFactoryImpl
+} //ExtFactoryImpl

@@ -97,7 +97,7 @@ public class FreemarkerItemProviderAdapterFactory extends FreemarkerAdapterFacto
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link freemarker.DocumentRoot} instances.
+	 * This keeps track of the one adapter used for all {@link freemarker.SmooksGraphExtDocumentRoot} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -105,7 +105,7 @@ public class FreemarkerItemProviderAdapterFactory extends FreemarkerAdapterFacto
 	protected DocumentRootItemProvider documentRootItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link freemarker.DocumentRoot}.
+	 * This creates an adapter for a {@link freemarker.SmooksGraphExtDocumentRoot}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

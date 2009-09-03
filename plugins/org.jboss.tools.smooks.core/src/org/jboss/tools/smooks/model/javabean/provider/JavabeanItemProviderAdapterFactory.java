@@ -120,7 +120,7 @@ public class JavabeanItemProviderAdapterFactory extends JavabeanAdapterFactory i
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link javabean.DocumentRoot} instances.
+	 * This keeps track of the one adapter used for all {@link javabean.SmooksGraphExtDocumentRoot} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -128,7 +128,7 @@ public class JavabeanItemProviderAdapterFactory extends JavabeanAdapterFactory i
 	protected DocumentRootItemProvider documentRootItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link javabean.DocumentRoot}.
+	 * This creates an adapter for a {@link javabean.SmooksGraphExtDocumentRoot}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

@@ -61,6 +61,8 @@ public class SmooksModelUtils {
 
 	public static final String PARAM_NAME_PATH = "path";
 
+	public static final String PARAM_NAME_ACTIVED = "actived";
+
 	public static final String INPUT_TYPE_XML = "xml";
 
 	public static final String INPUT_TYPE_XSD = "xsd";
@@ -74,7 +76,7 @@ public class SmooksModelUtils {
 	public static final String BEAN_ID = "beanId";
 
 	public static final String BINDINGS = "bindings";
-
+	
 	public static final String INPUT_TYPE_EDI_1_1 = "EDI";
 
 	public static final String INPUT_TYPE_EDI_1_2 = "EDI_1_2";

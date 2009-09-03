@@ -20,11 +20,11 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link groovy.DocumentRoot#getMixed <em>Mixed</em>}</li>
- *   <li>{@link groovy.DocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}</li>
- *   <li>{@link groovy.DocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}</li>
- *   <li>{@link groovy.DocumentRoot#getGroovy <em>Groovy</em>}</li>
- *   <li>{@link groovy.DocumentRoot#getScript <em>Script</em>}</li>
+ *   <li>{@link SmooksGraphExtDocumentRoot.DocumentRoot#getMixed <em>Mixed</em>}</li>
+ *   <li>{@link SmooksGraphExtDocumentRoot.DocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}</li>
+ *   <li>{@link SmooksGraphExtDocumentRoot.DocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}</li>
+ *   <li>{@link SmooksGraphExtDocumentRoot.DocumentRoot#getGroovy <em>Groovy</em>}</li>
+ *   <li>{@link SmooksGraphExtDocumentRoot.DocumentRoot#getScript <em>Script</em>}</li>
  * </ul>
  * </p>
  *
@@ -105,7 +105,7 @@ public interface DocumentRoot extends EObject {
 	Groovy getGroovy();
 
 	/**
-	 * Sets the value of the '{@link groovy.DocumentRoot#getGroovy <em>Groovy</em>}' containment reference.
+	 * Sets the value of the '{@link SmooksGraphExtDocumentRoot.DocumentRoot#getGroovy <em>Groovy</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Groovy</em>' containment reference.
@@ -132,7 +132,7 @@ public interface DocumentRoot extends EObject {
 	ScriptType getScript();
 
 	/**
-	 * Sets the value of the '{@link groovy.DocumentRoot#getScript <em>Script</em>}' containment reference.
+	 * Sets the value of the '{@link SmooksGraphExtDocumentRoot.DocumentRoot#getScript <em>Script</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Script</em>' containment reference.

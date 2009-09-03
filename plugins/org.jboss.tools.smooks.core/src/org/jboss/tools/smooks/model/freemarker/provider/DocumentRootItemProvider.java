@@ -27,7 +27,7 @@ import org.jboss.tools.smooks.model.freemarker.FreemarkerFactory;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 
 /**
- * This is the item provider adapter for a {@link freemarker.DocumentRoot} object.
+ * This is the item provider adapter for a {@link SmooksGraphExtDocumentRoot.DocumentRoot} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
