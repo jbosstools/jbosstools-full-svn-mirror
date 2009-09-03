@@ -180,7 +180,19 @@ public abstract class ComponentContentTest extends VpeTest {
 		controller.getVisualBuilder().setShowInvisibleTags(true);
 		controller.visualRefresh();
 
-		TestUtil.waitForIdle();
+//		TestUtil.waitForIdle();
+		//added by Maksim Areshkau, when some non VPE background job 
+		//TestUtil.waitForIdle() can be throw exception in time when vpe works normally
+		long start = System.currentTimeMillis();
+		visualElement = findElementById(controller, elementId);
+		while (visualElement==null) {
+			TestUtil.delay(500);
+			if ( (System.currentTimeMillis()-start) > TestUtil.MAX_IDLE) {
+			throw new RuntimeException("A long running task detected"); //$NON-NLS-1$
+			}
+			visualElement = findElementById(controller, elementId);
+		}
+		
 
 		// find visual element and check if it is not null
 		visualElement = findElementById(controller, elementId);
