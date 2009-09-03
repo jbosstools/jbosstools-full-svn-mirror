@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.jboss.smooks.test.feature"
+      id="org.jboss.tools.smooks.test.feature"
       label="Smooks Tests"
       version="1.0.0"
       provider-name="JBoss by RedHat">
