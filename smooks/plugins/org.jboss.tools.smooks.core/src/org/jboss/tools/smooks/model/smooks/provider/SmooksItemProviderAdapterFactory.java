@@ -120,7 +120,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link smooks.DocumentRoot} instances.
+	 * This keeps track of the one adapter used for all {@link smooks.SmooksGraphExtDocumentRoot} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -128,7 +128,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	protected DocumentRootItemProvider documentRootItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link smooks.DocumentRoot}.
+	 * This creates an adapter for a {@link smooks.SmooksGraphExtDocumentRoot}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

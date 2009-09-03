@@ -27,6 +27,7 @@ import org.eclipse.emf.common.command.CommandWrapper;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -68,6 +69,8 @@ import org.jboss.tools.smooks.model.edi12.provider.Edi12ItemProviderAdapterFacto
 import org.jboss.tools.smooks.model.esbrouting.provider.EsbroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.fileRouting.provider.FileRoutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.freemarker.provider.FreemarkerItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
+import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.groovy.provider.GroovyItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.iorouting.provider.IoroutingItemProviderAdapterFactory;
@@ -86,7 +89,7 @@ import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
 
 public class AbstractSmooksFormEditor extends FormEditor implements IEditingDomainProvider,
-		ISmooksModelValidateListener , ISmooksModelProvider{
+		ISmooksModelValidateListener , ISmooksModelProvider , ISmooksGraphChangeListener{
 	
 	protected List<ISourceSynchronizeListener> sourceSynchronizeListener = new ArrayList<ISourceSynchronizeListener>();
 	
@@ -111,6 +114,8 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	protected SmooksMarkerHelper markerHelper = new SmooksMarkerHelper();
 
 	protected List<Diagnostic> diagnosticList;
+
+	private boolean graphChanged = false;
 
 	// private Object smooksDOMModel;
 
@@ -201,7 +206,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 	@Override
 	public boolean isDirty() {
-		return ((BasicCommandStack) editingDomain.getCommandStack()).isSaveNeeded() || super.isDirty();
+		return graphChanged || ((BasicCommandStack) editingDomain.getCommandStack()).isSaveNeeded() || super.isDirty();
 	}
 
 	public EObject getSmooksModel() {
@@ -405,7 +410,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			if (activeEditor != null && activeEditor == textEditor) {
 				textEditor.doSave(monitor);
 				((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
-				firePropertyChange(PROP_DIRTY);
+				
 			} else {
 				Map<?, ?> options = Collections.emptyMap();
 				initSaveOptions(options);
@@ -422,10 +427,12 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 					}
 					((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
 					textEditor.doRevertToSaved();
-					firePropertyChange(PROP_DIRTY);
 				}
 			}
+			getSmooksGraphicsExt().eResource().save(Collections.emptyMap());
+			graphChanged = false;
 			
+			firePropertyChange(PROP_DIRTY);
 			if (this.smooksModel != null) {
 				validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
 			}
@@ -463,7 +470,8 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			IFile extFile = container.getFile(new Path(extFileName));
 			if (extFile != null && !extFile.exists()) {
 				try {
-					SmooksConfigurationFileNewWizard.createExtentionFile(extFile, null);
+					String version = SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel);
+					SmooksConfigurationFileNewWizard.createExtentionFile(extFile, version ,  null);
 				} catch (Throwable t) {
 					// ignore
 				}
@@ -471,6 +479,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			if (extFile != null && extFile.exists()) {
 				try {
 					smooksGraphicsExt = SmooksUIUtils.loadSmooksGraphicsExt(extFile);
+					smooksGraphicsExt.addSmooksGraphChangeListener(this);
 				} catch (IOException e) {
 					SmooksConfigurationActivator.getDefault().log(e);
 				}
@@ -555,5 +564,23 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 	public void validateStart() {
 
+	}
+
+	public void graphChanged(SmooksGraphicsExtType extType) {
+		
+	}
+
+	public void inputTypeChanged(SmooksGraphicsExtType extType) {
+		graphChanged  = true;
+		firePropertyChange(PROP_DIRTY);
+	}
+
+	public void graphPropertyChange(EStructuralFeature featre, Object value) {
+		if(featre.equals(GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__AUTHOR) || 
+				featre.equals(GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__PLATFORM_VERSION) ||
+				featre.equals(GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__NAME)){
+			graphChanged  = true;
+			firePropertyChange(PROP_DIRTY);
+		}
 	}
 }

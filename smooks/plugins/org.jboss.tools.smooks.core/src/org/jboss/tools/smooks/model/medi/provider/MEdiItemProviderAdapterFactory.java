@@ -143,7 +143,7 @@ public class MEdiItemProviderAdapterFactory extends MEdiAdapterFactory implement
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link edi.DocumentRoot} instances.
+	 * This keeps track of the one adapter used for all {@link edi.SmooksGraphExtDocumentRoot} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -151,7 +151,7 @@ public class MEdiItemProviderAdapterFactory extends MEdiAdapterFactory implement
 	protected DocumentRootItemProvider documentRootItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link edi.DocumentRoot}.
+	 * This creates an adapter for a {@link edi.SmooksGraphExtDocumentRoot}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

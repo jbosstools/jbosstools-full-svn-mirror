@@ -35,13 +35,13 @@ public interface GraphFactory extends EFactory {
 	ConnectionType createConnectionType();
 
 	/**
-	 * Returns a new object of class '<em>Smooks Graph Extension Document Root</em>'.
+	 * Returns a new object of class '<em>Document Root</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Smooks Graph Extension Document Root</em>'.
+	 * @return a new object of class '<em>Document Root</em>'.
 	 * @generated
 	 */
-	SmooksGraphExtensionDocumentRoot createSmooksGraphExtensionDocumentRoot();
+	SmooksGraphExtensionDocumentRoot createDocumentRoot();
 
 	/**
 	 * Returns a new object of class '<em>Figure Type</em>'.
@@ -53,10 +53,10 @@ public interface GraphFactory extends EFactory {
 	FigureType createFigureType();
 
 	/**
-	 * Returns a new object of class '<em>Type</em>'.
+	 * Returns a new object of class '<em>Graph Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Type</em>'.
+	 * @return a new object of class '<em>Graph Type</em>'.
 	 * @generated
 	 */
 	GraphType createGraphType();
@@ -95,6 +95,6 @@ public interface GraphFactory extends EFactory {
 	 * @return the package supported by this factory.
 	 * @generated
 	 */
-	GraphPackage getGraphPackage();
+	GraphPackage getExtPackage();
 
-} //GraphFactory
+} //ExtFactory

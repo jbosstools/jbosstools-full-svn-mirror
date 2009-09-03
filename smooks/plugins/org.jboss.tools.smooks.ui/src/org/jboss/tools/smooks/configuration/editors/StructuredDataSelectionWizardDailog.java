@@ -10,10 +10,11 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors;
 
+import java.util.Properties;
+
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 
@@ -24,25 +25,30 @@ import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 public class StructuredDataSelectionWizardDailog extends WizardDialog {
 
 	protected SmooksGraphicsExtType smooksGraphicsExtType;
-	
+
 	private SmooksMultiFormEditor formEditor;
-	
-	public StructuredDataSelectionWizardDailog(Shell parentShell,
-			IWizard newWizard,SmooksGraphicsExtType extType , SmooksMultiFormEditor formEditor) {
+
+	private String type = null;
+
+	private String path = null;
+
+	private Properties properties = null;
+
+	public StructuredDataSelectionWizardDailog(Shell parentShell, IWizard newWizard, SmooksGraphicsExtType extType,
+			SmooksMultiFormEditor formEditor) {
 		super(parentShell, newWizard);
 		this.setSmooksGraphicsExtType(extType);
 		this.formEditor = formEditor;
 	}
-	
-	public IStructuredDataSelectionWizard getCurrentCreationWizard(){
+
+	public IStructuredDataSelectionWizard getCurrentCreationWizard() {
 		IWizard w = getWizard();
-		if(w != null && w instanceof IStructuredDataSelectionWizard){
-			return (IStructuredDataSelectionWizard)w;
+		if (w != null && w instanceof IStructuredDataSelectionWizard) {
+			return (IStructuredDataSelectionWizard) w;
 		}
 		return null;
 	}
-	
-	
+
 	public SmooksMultiFormEditor getFormEditor() {
 		return formEditor;
 	}
@@ -59,26 +65,45 @@ public class StructuredDataSelectionWizardDailog extends WizardDialog {
 	}
 
 	/**
-	 * @param smooksGraphicsExtType the smooksGraphicsExtType to set
+	 * @param smooksGraphicsExtType
+	 *            the smooksGraphicsExtType to set
 	 */
 	public void setSmooksGraphicsExtType(SmooksGraphicsExtType smooksGraphicsExtType) {
 		this.smooksGraphicsExtType = smooksGraphicsExtType;
 	}
 
-	
 	public int show() {
 		int openResult = this.open();
 		if (openResult == WizardDialog.OK) {
 			IStructuredDataSelectionWizard wizard1 = this.getCurrentCreationWizard();
-			String type = wizard1.getInputDataTypeID();
-			String path = wizard1.getStructuredDataSourcePath();
-			
-//			wizard1.complate(this.getFormEditor());
-			
-			SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
-			SmooksUIUtils.recordInputDataInfomation(null,extType, type, path, wizard1.getProperties());
+			type = wizard1.getInputDataTypeID();
+			path = wizard1.getStructuredDataSourcePath();
+			properties = wizard1.getProperties();
 		}
 		return openResult;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public Properties getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Properties properties) {
+		this.properties = properties;
+	}
 }

@@ -29,7 +29,7 @@ import org.jboss.tools.smooks.model.xsl.provider.Xsl1EditPlugin;
 
 
 /**
- * This is the item provider adapter for a {@link smooks.DocumentRoot} object.
+ * This is the item provider adapter for a {@link SmooksGraphExtDocumentRoot.DocumentRoot} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

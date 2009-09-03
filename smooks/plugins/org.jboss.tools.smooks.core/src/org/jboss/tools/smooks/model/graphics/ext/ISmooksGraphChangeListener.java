@@ -10,10 +10,16 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.model.graphics.ext;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 /**
  * @author Dart (dpeng@redhat.com)
  *
  */
 public interface ISmooksGraphChangeListener {
-	public void saveComplete(SmooksGraphicsExtType extType);
+	public void inputTypeChanged(SmooksGraphicsExtType extType);
+	
+	public void graphChanged(SmooksGraphicsExtType extType);
+	
+	public void graphPropertyChange(EStructuralFeature featre , Object value);
 }

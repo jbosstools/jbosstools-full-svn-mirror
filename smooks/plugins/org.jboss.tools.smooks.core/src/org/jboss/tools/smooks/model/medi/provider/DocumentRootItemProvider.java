@@ -27,7 +27,7 @@ import org.jboss.tools.smooks.model.medi.MEdiFactory;
 import org.jboss.tools.smooks.model.medi.MEdiPackage;
 
 /**
- * This is the item provider adapter for a {@link edi.DocumentRoot} object.
+ * This is the item provider adapter for a {@link SmooksGraphExtDocumentRoot.DocumentRoot} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

@@ -27,7 +27,7 @@ import org.jboss.tools.smooks.model.groovy.GroovyFactory;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 
 /**
- * This is the item provider adapter for a {@link groovy.DocumentRoot} object.
+ * This is the item provider adapter for a {@link groovy.SmooksGraphExtDocumentRoot} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

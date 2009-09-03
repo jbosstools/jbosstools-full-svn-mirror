@@ -17,10 +17,15 @@
 				<xs:element ref="ext:input" minOccurs="0"
 					maxOccurs="unbounded">
 				</xs:element>
-				<xs:element ref="ext:graph" minOccurs="0" maxOccurs="1"></xs:element>
+				<xs:element ref="ext:graph" minOccurs="0"
+					maxOccurs="1">
+				</xs:element>
 			</xs:sequence>
 			<xs:attribute name="inputType" type="xs:string"></xs:attribute>
 			<xs:attribute name="outputType" type="xs:string"></xs:attribute>
+			<xs:attribute name="platformVersion" type="xs:string"></xs:attribute>
+			<xs:attribute name="name" type="xs:string"></xs:attribute>
+			<xs:attribute name="author" type="xs:string"></xs:attribute>
 		</xs:complexType>
 	</xs:element>
 

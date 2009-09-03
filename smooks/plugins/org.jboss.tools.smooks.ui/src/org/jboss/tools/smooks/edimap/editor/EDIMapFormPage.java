@@ -36,6 +36,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandWrapper;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -803,7 +804,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 							for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
 								ISmooksGraphChangeListener smooksGraphChangeListener = (ISmooksGraphChangeListener) iterator
 										.next();
-								smooksGraphChangeListener.saveComplete(extType);
+								smooksGraphChangeListener.inputTypeChanged(extType);
 							}
 						} catch (IOException e) {
 							SmooksConfigurationActivator.getDefault().log(e);
@@ -1111,7 +1112,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	private TreeNodeModel findEDIGraphicalModel(Object model) {
 		if (graphicalRootModel != null) {
 			List<AbstractSmooksGraphicalModel> treeNodeList = graphicalRootModel.getChildren();
-			return (TreeNodeModel)findEDIGraphicalModel(model, treeNodeList);
+			return (TreeNodeModel) findEDIGraphicalModel(model, treeNodeList);
 		}
 		return null;
 	}
@@ -1158,7 +1159,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	 * saveComplete
 	 * (org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType)
 	 */
-	public void saveComplete(SmooksGraphicsExtType extType) {
+	public void inputTypeChanged(SmooksGraphicsExtType extType) {
 
 	}
 
@@ -1330,5 +1331,15 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		initModelGraphicsInformation(ext);
 		List<TreeNodeModel> sourceLinkedModel = this.createLinkModel();
 		expandSegmentNode(sourceLinkedModel);
+	}
+
+	public void graphChanged(SmooksGraphicsExtType extType) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void graphPropertyChange(EStructuralFeature featre, Object value) {
+		// TODO Auto-generated method stub
+		
 	}
 }

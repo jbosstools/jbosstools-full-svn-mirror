@@ -251,6 +251,8 @@ public class SelectorCreationDialog extends Dialog {
 				List<InputType> inputLists = extType.getInput();
 				for (Iterator<?> iterator = inputLists.iterator(); iterator.hasNext();) {
 					InputType inputType = (InputType) iterator.next();
+					if (!SmooksUIUtils.isActivedInput(inputType))
+						continue;
 					String type = inputType.getType();
 					String path = SmooksModelUtils.getInputPath(inputType);
 					if (type != null && path != null) {

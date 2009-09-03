@@ -30,11 +30,11 @@ import org.jboss.tools.smooks.model.groovy.ScriptType;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link groovy.impl.DocumentRootImpl#getMixed <em>Mixed</em>}</li>
- *   <li>{@link groovy.impl.DocumentRootImpl#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}</li>
- *   <li>{@link groovy.impl.DocumentRootImpl#getXSISchemaLocation <em>XSI Schema Location</em>}</li>
- *   <li>{@link groovy.impl.DocumentRootImpl#getGroovy <em>Groovy</em>}</li>
- *   <li>{@link groovy.impl.DocumentRootImpl#getScript <em>Script</em>}</li>
+ *   <li>{@link groovy.impl.SmooksGraphExtDocumentRootImpl#getMixed <em>Mixed</em>}</li>
+ *   <li>{@link groovy.impl.SmooksGraphExtDocumentRootImpl#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}</li>
+ *   <li>{@link groovy.impl.SmooksGraphExtDocumentRootImpl#getXSISchemaLocation <em>XSI Schema Location</em>}</li>
+ *   <li>{@link groovy.impl.SmooksGraphExtDocumentRootImpl#getGroovy <em>Groovy</em>}</li>
+ *   <li>{@link groovy.impl.SmooksGraphExtDocumentRootImpl#getScript <em>Script</em>}</li>
  * </ul>
  * </p>
  *

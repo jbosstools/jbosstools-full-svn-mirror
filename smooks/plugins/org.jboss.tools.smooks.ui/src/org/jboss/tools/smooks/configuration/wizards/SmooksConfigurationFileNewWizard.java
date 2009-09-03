@@ -126,7 +126,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 			}
 			stream.close();
 			// create ext file:
-			createExtentionFile(extFile, monitor);
+			createExtentionFile(extFile,version, monitor);
 		} catch (IOException e) {
 			SmooksConfigurationActivator.getDefault().log(e);
 		}
@@ -146,11 +146,11 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		monitor.worked(1);
 	}
 	
-	public static void createExtentionFile(IFile file , IProgressMonitor monitor) throws CoreException, IOException{
+	public static void createExtentionFile(IFile file , String version , IProgressMonitor monitor) throws CoreException, IOException{
 		if(monitor == null){
 			monitor = new NullProgressMonitor();
 		}
-		InputStream stream1 = createExtContentStream();
+		InputStream stream1 = createExtContentStream(version);
 		if (file.exists()) {
 			file.setContents(stream1, true, true, monitor);
 		} else {
@@ -159,9 +159,9 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		stream1.close();
 	}
 
-	public static InputStream createExtContentStream() {
+	public static InputStream createExtContentStream(String version) {
 		String contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-				+ "    <smooks-graphics-ext xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
+				+ "    <smooks-graphics-ext platformVersion = \""+version+"\" xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
 		return new ByteArrayInputStream(contents.getBytes());
 	}
 
@@ -180,7 +180,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 					+ "		</resource-config>\n"//$NON-NLS-1$
 					+ "</smooks-resource-list>"; //$NON-NLS-1$
 		}
-		if (SmooksConstants.VERSION_1_1.equals(version)) {
+		if (SmooksConstants.VERSION_1_1.equals(version) || SmooksConstants.VERSION_1_2.equals(version)) {
 			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
 					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.1.xsd\">\n"//$NON-NLS-1$
 					+ "		<params>\n"//$NON-NLS-1$

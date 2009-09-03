@@ -74,7 +74,7 @@ public class GroovyItemProviderAdapterFactory extends GroovyAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link groovy.DocumentRoot} instances.
+	 * This keeps track of the one adapter used for all {@link groovy.SmooksGraphExtDocumentRoot} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -82,7 +82,7 @@ public class GroovyItemProviderAdapterFactory extends GroovyAdapterFactory imple
 	protected DocumentRootItemProvider documentRootItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link groovy.DocumentRoot}.
+	 * This creates an adapter for a {@link groovy.SmooksGraphExtDocumentRoot}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

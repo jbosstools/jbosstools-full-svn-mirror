@@ -28,5 +28,7 @@ public class SmooksConstants {
 	
 	public static final String VERSION_1_1 = "1.1";
 	
-	public static final String[] SMOOKS_VERSIONS = new String[]{VERSION_1_0,VERSION_1_1};
+	public static final String VERSION_1_2 = "1.2";
+	
+	public static final String[] SMOOKS_VERSIONS = new String[]{VERSION_1_0,VERSION_1_1,VERSION_1_2};
 }

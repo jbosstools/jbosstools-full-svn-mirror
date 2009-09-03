@@ -12,6 +12,7 @@ import java.util.List;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.DragTracker;
 import org.eclipse.gef.EditPart;
@@ -32,6 +33,7 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
+import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
@@ -68,9 +70,9 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 	 * .eclipse.gef.Request)
 	 */
 	public DragTracker getDragTracker(Request request) {
-//		if(true){
-//			return super.getDragTracker(request);
-//		}
+		// if(true){
+		// return super.getDragTracker(request);
+		// }
 		if (isDragLink()) {
 			getViewer().select(this);
 			return new ConnectionDragCreationTool();
@@ -182,7 +184,7 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 		if (TreeNodeModel.PRO_ADD_CHILD.equals(proName) || TreeNodeModel.PRO_REMOVE_CHILD.equals(proName)
 				|| TreeNodeModel.PRO_FORCE_CHIDLREN_CHANGED.equals(proName)) {
 			refreshChildren();
-			
+
 		}
 		if (TreeNodeModel.PRO_ADD_SOURCE_CONNECTION.equals(proName)
 				|| TreeNodeModel.PRO_REMOVE_SOURCE_CONNECTION.equals(proName)) {
@@ -224,6 +226,19 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 
 		figureType.setHeight(String.valueOf(bounds.getSize().height));
 		figureType.setWidth(String.valueOf(bounds.getSize().width));
+
+		EObject ext = figureType;
+		while (ext != null && !(ext instanceof SmooksGraphicsExtType)) {
+			ext = ext.eContainer();
+		}
+
+		if (ext != null && ext instanceof SmooksGraphicsExtType) {
+			List<ISmooksGraphChangeListener> listeners = ((SmooksGraphicsExtType) ext).getChangeListeners();
+			for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
+				ISmooksGraphChangeListener smooksGraphChangeListener = (ISmooksGraphChangeListener) iterator.next();
+				smooksGraphChangeListener.graphChanged((SmooksGraphicsExtType) ext);
+			}
+		}
 	}
 
 	protected String generateFigureID() {

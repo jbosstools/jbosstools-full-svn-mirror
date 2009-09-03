@@ -225,9 +225,9 @@ public class NewSmooksElementWizardPage extends org.eclipse.jface.wizard.WizardP
 		grouperList.add(new Scripting11ActionGrouper());
 		grouperList.add(new Templating11ActionGrouper());
 		// grouperList.add(new SeparatorActionGrouper("V1.1-V1.2"));
-		grouperList.add(new JavaBean12ActionGrouper());
-		grouperList.add(new Reader12ActionGrouper());
-		grouperList.add(new FragmentRouting12ActionGrouper());
+//		grouperList.add(new JavaBean12ActionGrouper());
+//		grouperList.add(new Reader12ActionGrouper());
+//		grouperList.add(new FragmentRouting12ActionGrouper());
 		grouperList.add(new PersistenceActionGrouper());
 		grouperList.add(new Validation10ActionGrouper());
 		// grouperList.add(new SeparatorActionGrouper("No Group actions"));

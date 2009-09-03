@@ -66,10 +66,10 @@ public interface GroovyPackage extends EPackage {
 	GroovyPackage eINSTANCE = GroovyPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link groovy.impl.DocumentRootImpl <em>Document Root</em>}' class.
+	 * The meta object id for the '{@link SmooksGraphExtDocumentRootImpl.impl.DocumentRootImpl <em>Document Root</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see groovy.impl.DocumentRootImpl
+	 * @see SmooksGraphExtDocumentRootImpl.impl.DocumentRootImpl
 	 * @see groovy.impl.GroovyPackageImpl#getDocumentRoot()
 	 * @generated
 	 */
@@ -295,65 +295,65 @@ public interface GroovyPackage extends EPackage {
 
 
 	/**
-	 * Returns the meta object for class '{@link groovy.DocumentRoot <em>Document Root</em>}'.
+	 * Returns the meta object for class '{@link groovy.SmooksGraphExtDocumentRoot <em>Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Document Root</em>'.
-	 * @see groovy.DocumentRoot
+	 * @see groovy.SmooksGraphExtDocumentRoot
 	 * @generated
 	 */
 	EClass getDocumentRoot();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link groovy.DocumentRoot#getMixed <em>Mixed</em>}'.
+	 * Returns the meta object for the attribute list '{@link groovy.SmooksGraphExtDocumentRoot#getMixed <em>Mixed</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Mixed</em>'.
-	 * @see groovy.DocumentRoot#getMixed()
+	 * @see groovy.SmooksGraphExtDocumentRoot#getMixed()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EAttribute getDocumentRoot_Mixed();
 
 	/**
-	 * Returns the meta object for the map '{@link groovy.DocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}'.
+	 * Returns the meta object for the map '{@link groovy.SmooksGraphExtDocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>XMLNS Prefix Map</em>'.
-	 * @see groovy.DocumentRoot#getXMLNSPrefixMap()
+	 * @see groovy.SmooksGraphExtDocumentRoot#getXMLNSPrefixMap()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_XMLNSPrefixMap();
 
 	/**
-	 * Returns the meta object for the map '{@link groovy.DocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}'.
+	 * Returns the meta object for the map '{@link groovy.SmooksGraphExtDocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>XSI Schema Location</em>'.
-	 * @see groovy.DocumentRoot#getXSISchemaLocation()
+	 * @see groovy.SmooksGraphExtDocumentRoot#getXSISchemaLocation()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_XSISchemaLocation();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link groovy.DocumentRoot#getGroovy <em>Groovy</em>}'.
+	 * Returns the meta object for the containment reference '{@link groovy.SmooksGraphExtDocumentRoot#getGroovy <em>Groovy</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Groovy</em>'.
-	 * @see groovy.DocumentRoot#getGroovy()
+	 * @see groovy.SmooksGraphExtDocumentRoot#getGroovy()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
 	EReference getDocumentRoot_Groovy();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link groovy.DocumentRoot#getScript <em>Script</em>}'.
+	 * Returns the meta object for the containment reference '{@link groovy.SmooksGraphExtDocumentRoot#getScript <em>Script</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Script</em>'.
-	 * @see groovy.DocumentRoot#getScript()
+	 * @see groovy.SmooksGraphExtDocumentRoot#getScript()
 	 * @see #getDocumentRoot()
 	 * @generated
 	 */
@@ -468,10 +468,10 @@ public interface GroovyPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link groovy.impl.DocumentRootImpl <em>Document Root</em>}' class.
+		 * The meta object literal for the '{@link SmooksGraphExtDocumentRootImpl.impl.DocumentRootImpl <em>Document Root</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see groovy.impl.DocumentRootImpl
+		 * @see SmooksGraphExtDocumentRootImpl.impl.DocumentRootImpl
 		 * @see groovy.impl.GroovyPackageImpl#getDocumentRoot()
 		 * @generated
 		 */
