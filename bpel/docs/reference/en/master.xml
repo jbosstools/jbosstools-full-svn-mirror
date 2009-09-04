@@ -6,6 +6,8 @@
 <!ENTITY install SYSTEM "modules/install.xml">
 <!ENTITY detail SYSTEM "modules/detail.xml">
 <!ENTITY deploy SYSTEM "modules/deploy.xml">
+
+
 ]>
 
 <book>

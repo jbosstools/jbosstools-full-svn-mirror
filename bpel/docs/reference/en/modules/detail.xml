@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <chapter id="detail">
-    <title>Create and edit a BPEL project</title>
-    <para>In the chapter we provide you with the necessary steps to create a BPEL project and edit the BPEL files.
-          First you need to create a BPEL project.
+    <title>Creating and editing a BPEL project</title>
+    <para>In the chapter we describe the necessary steps to create a new BPEL project and edit the BPEL files.
+          First of all, you should create a BPEL project.
     </para>
     <section id="createproject">
         <title>Creating a BPEL project</title>
-        <para>Create a Web project by selecting 
-              <emphasis><property>New > Project... > BPEL 2.0 > BPEL Project</property></emphasis>. Click on the <property>Next</property> button. 
+        <para>Create the project by selecting 
+            <emphasis><property>New > Project... > BPEL 2.0 > BPEL Project</property></emphasis> from the menu bar.
+            Then click the <property>Next</property> button. 
         </para>
         <figure>
             <title>New BPEL Project</title>
@@ -17,12 +18,9 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>Enter the following information:</para>
-        <itemizedlist>
-            <listitem>
-                <para>Project Name: enter a project name. For example, enter <property>HelloWorld</property>. </para>
-            </listitem>
-        </itemizedlist>
+        <para>On this page of the <property>New BPEL Project Wizard</property> enter a project name in the <property>Project Name</property>
+            field,e.g enter <property>HelloWorld</property>.</para>
+       
         <figure>
             <title>New BPEL Project Wizard</title>
             <mediaobject>
@@ -31,9 +29,9 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>Click on the <property>Finish</property> button. Now you have created a BPEL project named <property>HelloWorld</property>. It's structure is like this: </para>
+        <para>Click the <property>Finish</property> button. So you have created the BPEL project named <property>HelloWorld</property>. Its structure is like this: </para>
         <figure>
-            <title>A BPEL Project structure</title>
+            <title>The BPEL Project structure</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/detail_createproject_3.png"/>
@@ -43,7 +41,7 @@
     </section>
     <section id="createprocess">
         <title>Creating a BPEL process</title>
-        <para>Create a BPEL process by selecting 
+        <para>Now you should create a BPEL process. You can create it by selecting 
               <emphasis><property>New > Others... > BPEL 2.0 > New BPEL Process File</property></emphasis>.
         </para>
         <figure>
@@ -54,18 +52,38 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>Click on the <property>Next</property> button. Enter the following information:</para>
-        <itemizedlist>
-            <listitem>
-                <para>BPEL Process Name: enter a process name. For example, <property>HelloWorld</property>. </para>
-            </listitem>
-            <listitem>
-                <para>Namespace: enter or select a namespace for the BPEL process</para>
-            </listitem>
-            <listitem>
-                <para>Template: select a template for the BPEL process. When you select a template, below the row, you will get the information for the template.</para>
-            </listitem>            
-        </itemizedlist>
+        <para>Click the <property>Next</property> button. Enter the following information:</para>
+        <table>
+            
+            <title>Fields and values</title>
+            <tgroup cols="2">          
+                <colspec colnum="1" align="left" colwidth="2*"/>
+                <colspec colnum="2" colwidth="4*"/>
+                <thead>
+                    <row>
+                        <entry>Field</entry>
+                        <entry>Value</entry>
+                        
+                    </row>
+                </thead> 
+                <tbody>            
+                    <row>
+                        <entry><para>BPEL Process Name</para></entry>
+                        <entry><para>enter a process name. For example, <property>HelloWorld</property>.</para></entry>   
+                    </row>          
+                    <row>
+                        <entry><para>Namespace</para></entry>
+                        <entry><para>enter or select a namespace for the BPEL process.</para></entry> 
+                    </row>               
+                    <row>
+                        <entry><para>Template</para></entry>
+                        <entry><para>select a template for the BPEL process. When you select the template, you will see the information about the template below on the page.</para></entry>  
+                    </row>               
+                                             
+                </tbody>           
+            </tgroup>
+        </table>
+
         <figure>
             <title>New BPEL Process File Wizard</title>
             <mediaobject>
@@ -74,13 +92,16 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>Click on the <property>Next</property> button. On the second page, make sure that the fold <property>HelloWorld/bpel</property> is selected.
-              Clink on the <property>Finish</property> button.
+        <para>Click the <property>Next</property> button. On the second page make sure that the folder <property>HelloWorld/bpel</property> is selected.
+              Click <property>Finish</property>.
         </para>
-        <para>All of your files that are used in your BPEL project must be under the <property>bpel</property> folder. Only like this, 
-              these files can be deployed into JBoss server.
-        </para>
-        <para>Up to now, you have get a simple BPEL process as below. Next step, you can edit the BPEL process and then deploy it into JBoss server. </para>
+        <note>
+            <para>All of your files that are used in your BPEL project must be under the <property>bpel</property> folder. Only in this case 
+            these files can be deployed to JBoss server.
+            </para>
+        </note>
+
+       <para>Up to now, you have got a simple BPEL process as on the screen below.</para>
         <figure>
             <title>A simple BPEL Process File</title>
             <mediaobject>
@@ -89,11 +110,12 @@
                 </imageobject>
             </mediaobject>
         </figure>
+        <para>The next step, you can do is to edit the BPEL process file and then deploy it to JBoss server. </para>
     </section>
     <section id="editprocess">
-        <title>Editing a BPEL process</title>
-        <para>If you don't get the Properties view and Palette view opened, you can right-click on the BPEL editor and select the 
-              <property>Show in Properties</property>, <property>Show Palette in Palette view</property>. Then you can get the view like: 
+        <title>Editing a BPEL process file</title>
+        <para>If the <emphasis><property>Properties view</property></emphasis> and <emphasis><property>Palette view</property></emphasis> are not opened, you can open the views by right-clicking the BPEL editor and selecting  
+              <property>Show in Properties</property>, <property>Show Palette in Palette view</property>. Then you should have the view like this: 
         </para>
         <figure>
             <title>The BPEL editor view</title>
@@ -103,46 +125,66 @@
                 </imageobject>
             </mediaobject>
         </figure>  
-        <para>In the Palette view, you can drag a BPEL element into the BPEL editor and put it in the palace that you want.</para>   
-        <para>In the Properties view, you can get the information for every element of the BPEL process. Select a element in the BPEL editor,
-            the element's properties will be shown in the Properties view: 
+        <para>In the <emphasis><property>Palette view</property></emphasis>, you can drag a BPEL element to the BPEL editor and drop it in the place you want.</para>   
+        <para>In the <emphasis><property>Properties view</property></emphasis>, you can get the information about every element of the BPEL process.
+            In the BPEL editor select any element  you want,and then
+            the element's properties will be shown in the Properties view.The table below describes the tabs of the Properties view: 
         </para>
-        <itemizedlist>
-            <listitem>
-                <para>Description section: Show the described information of the element. For example, <property>Name</property> of the element.</para>
-            </listitem>
-            <listitem>
-                <para>Details section: Show the detailed and important information of element. This is the most important section of a element.
-                     Many properties of a element will be set in this section.
-                </para>
-            </listitem>
-            <listitem>
-                <para>Join Behavior section: Show the <property>Join Failure</property> property of the element.</para>
-            </listitem> 
-            <listitem>
-                <para>Documentation section: Show the <property>documentation</property> sub-element of the element.</para>
-            </listitem>
-            <listitem>
-                <para>Others sections: Every BPEL element has itself sections, Correlation section, Message Exchange section, and so on. We will
-                    introduce them when using them.
-                </para>
-            </listitem>                                    
-        </itemizedlist> 
-        <para>In order to show how a simple BPEL process work, we will do some steps as below: </para>   
+        <table>
+            
+            <title>Tabs of the Property view</title>
+            <tgroup cols="2">          
+                <colspec colnum="1" align="left" colwidth="2*"/>
+                <colspec colnum="2" colwidth="4*"/>
+                <thead>
+                    <row>
+                        <entry>Tab</entry>
+                        <entry>Description</entry>
+                        
+                    </row>
+                </thead> 
+                <tbody>            
+                    <row>
+                        <entry><para>Description</para></entry>
+                        <entry><para>Shows the descriptive information about the element,e.g. <property>Name</property> of the element.</para></entry>   
+                    </row>          
+                    <row>
+                        <entry><para>Details</para></entry>
+                        <entry><para>Shows the detailed and important information about the element.
+                           It is the most important section of an element.
+                            Most of the properties of an element are set in this section.</para></entry> 
+                    </row>               
+                    <row>
+                        <entry><para>Join Behavior</para></entry>
+                        <entry><para>Shows the <property>Join Failure</property> property of the element.</para></entry>  
+                    </row>               
+                    <row>
+                        <entry><para>Documentation</para></entry>
+                        <entry><para>Shows the <property>documentation</property> sub-element of an element.</para></entry>  
+                    </row> 
+                    <row>
+                        <entry><para>Other</para></entry>
+                        <entry><para>Every BPEL element has its own sections: Correlation section, Message Exchange section, and so on. We will
+                            introduce them while using them.</para></entry>  
+                    </row> 
+                </tbody>           
+            </tgroup>
+        </table>
+        <para>In order to see how a simple BPEL process works in action, you should do some steps as below: </para>   
         <itemizedlist>
             <listitem>
                 <para>Add an <property>Assign</property> element between the <property>receiveInput</property> element and <property>replyOutput</property> element.</para>
             </listitem>
             <listitem>
-                <para>Select the <property>Assign</property> element in the BPEL editor, you can get the properties information of it in the Properties view. 
+                <para>Click the <property>Assign</property> element in the BPEL editor in order to get the properties information of it in the Properties view. 
                 </para>
             </listitem>
             <listitem>
-                <para>In the Details section, you can select <property>New</property> button to add a <property>copy</property> sub-element to the element. 
-                    Assign "input->payload->input" to "output->payload->result". At this time, an "initializer" popup dialog appears. Click on the <property>Yes</property> button.
+                <para>In the <property>Details</property> section of Properties view, you should click the <property>New</property> button to add a <property>copy</property> sub-element to the element. 
+                    Assign "input->payload->input" to "output->payload->result". At this time, an "<property>initializer</property>" popup dialog appears. Click on the <property>Yes</property> button in the dialog.
                 </para>
                 <figure>
-                    <title>Add an <property>Assign</property> to the process</title>
+                    <title>Add <property>Assign</property> to the process</title>
                         <mediaobject>
                             <imageobject>
                                 <imagedata fileref="images/detail_editprocess_2.png"/>
@@ -151,13 +193,13 @@
                 </figure>                
             </listitem> 
             <listitem>
-                <para>Open the file "HelloWorldArtifacts.wsdl" in the "HelloWorld" project by double-clicking on it. Right-click in the WSDL editor and select 
-                    <property>Add Service</property>. A new service appears on the editor. Name it <property>HelloWorldProcessService</property>. It has a Port 
+                <para>Open the file "<property>HelloWorldArtifacts.wsdl</property>" in the "<property>HelloWorld</property>" project by double-clicking the file. Right-click the WSDL editor and select 
+                    <property>Add Service</property>. A new service should appear in the editor. Name it <property>HelloWorldProcessService</property>. It has the Port 
                     named <property>NewPort</property>. Select it, right-click on it and rename it to <property>HelloWorldProcessPort</property> in the Properties 
                     view.
                 </para>
                 <figure>
-                    <title>Add a <property>Service</property> to the WSDL file</title>
+                    <title>Add <property>Service</property> to the WSDL file</title>
                         <mediaobject>
                             <imageobject>
                                 <imagedata fileref="images/detail_editprocess_3.png"/>
@@ -167,10 +209,10 @@
             </listitem>
             <listitem>
                 <para>Right-click somewhere in the whitespace of the WSDL editor and select 
-                    <property>Add Binding</property>. A new Binding appears on the editor. Name it <property>HelloWorldSOAPBinding</property>. Select it, in the 
-                    Properties view, General section, select <property>HelloWorld</property> port type in the <property>PortType</property>. Then click on the 
-                    <property>Generate Binding Content...</property> button to open a  <property>Binding Wizard</property>. In the wizard, select the <property>SOAP</property> 
-                    as the <property>Protocol</property>. Finally, click on the <property>Finish</property> button to close the wizard.
+                    <property>Add Binding</property>. A new Binding component will appear in the editor. Name it <property>HelloWorldSOAPBinding</property>. Select it, in the 
+                    General tab of the Properties view and select <property>HelloWorld</property> as a port type in the <property>PortType</property>. Then click on the 
+                    <property>Generate Binding Content...</property> button to open the  <property>Binding Wizard</property>. In the wizard, select <property>SOAP </property> 
+                    as the <property>Protocol</property>. Finally, click  the <property>Finish</property> button to close the wizard.
                 </para>
                 <figure>
                     <title>Add a <property>Binding</property> to the WSDL file</title>
@@ -182,8 +224,8 @@
                 </figure>  
             </listitem>
             <listitem>
-                <para>Click on the <property>HelloWorldProcessPort</property>, in the Properties view, General section, select the <property>HelloWorldSOAPBinding</property> in
-                    the <property>Binding</property> Combo. In the <property>Address</property> field, input <ulink url="http://localhost:8080/bpel/processes/HelloWorld?wsdl">http://localhost:8080/bpel/processes/HelloWorld?wsdl</ulink>.
+                <para>Click the <property>HelloWorldProcessPort</property> property in the General section of the Properties view, select <property>HelloWorldSOAPBinding</property> in
+                    the <property>Binding</property> combobox. In the <property>Address</property> field input <ulink url="http://localhost:8080/bpel/processes/HelloWorld?wsdl">http://localhost:8080/bpel/processes/HelloWorld?wsdl</ulink>.
                 </para>
                 <figure>
                     <title>Add the <property>HelloWorldSOAPBinding</property> to the <property>HelloWorldProcessPort</property></title>
@@ -195,7 +237,7 @@
                 </figure>  
             </listitem>                                    
         </itemizedlist>
-        <para>For now, you have finished the simple BPEL process. Next step, you can deploy the BPEL project into JBoss BPEL Runtime.</para>              
+        <para>Now you have finished creating a simple BPEL process.As a next step, you can deploy the BPEL project to JBoss BPEL Runtime.</para>              
     
     </section>   
 </chapter>
