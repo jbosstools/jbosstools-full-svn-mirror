@@ -180,10 +180,8 @@ public abstract class ComponentContentTest extends VpeTest {
 		controller.getVisualBuilder().setShowInvisibleTags(true);
 		controller.visualRefresh();
 
-		TestUtil.waitForIdle();
-
 		// find visual element and check if it is not null
-		visualElement = findElementById(controller, elementId);
+		visualElement = findElementById(controller, elementId,TestUtil.MAX_IDLE);
 		assertNotNull(visualElement);
 
 		// generate text for invisible tag
@@ -307,6 +305,27 @@ public abstract class ComponentContentTest extends VpeTest {
 		return (nsIDOMElement) nodeMapping.getVisualNode();
 	}
 
+	/**
+	 * find visual element by "id" entered in source part of vpe
+	 * 
+	 * @param controller
+	 * @param elementId
+	 * @param idle try element for some time period, for example when we need
+	 * to wait for refresh job
+	 * @return
+	 */
+	protected nsIDOMElement findElementById(VpeController controller,
+			String elementId, long idle) {
+		long start = System.currentTimeMillis();
+		nsIDOMElement result = null;
+		while (result==null) {
+			result = findElementById(controller, elementId);
+			TestUtil.delay(50);
+			if (result==null && ((System.currentTimeMillis()-start) > idle) ) 
+				throw new RuntimeException("A long running task detected"); //$NON-NLS-1$
+		}
+		return result;
+	}	
 	/**
 	 * find visual element by "id" entered in source part of vpe
 	 * 
