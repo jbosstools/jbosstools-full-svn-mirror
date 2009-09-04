@@ -79,7 +79,7 @@
             <listitem>
                 <para>Select <property>JBoss AS 5.1 </property>as a server type. </para>
                 <note>
-                    <para>Please note, that only JBoss As 5.1 or higher version support BPEL.</para>
+                    <para>Please note, that only JBoss As 5.1 or higher version supports BPEL.</para>
                 </note>
             </listitem>
             <listitem>
