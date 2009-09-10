@@ -96,4 +96,14 @@ public interface IPortletConstants {
 	static final String PORTLET_SAR_LIB = "deploy/jboss-portal.sar/portal-identity.sar/portal-identity.war/WEB-INF/lib"; //$NON-NLS-1$
 	
 	static final String PORTLET_SAR_HA_LIB = "deploy/jboss-portal-ha.sar/portal-identity.sar/portal-identity.war/WEB-INF/lib"; //$NON-NLS-1$
+	
+	static final String PORTLET_LIBRARY_PROVIDER_DELEGATE = "PORTLET_LIBRARY_PROVIDER_DELEGATE"; //$NON-NLS-1$
+	
+	static final String JSFPORTLET_LIBRARY_PROVIDER_DELEGATE = "JSFPORTLET_LIBRARY_PROVIDER_DELEGATE"; //$NON-NLS-1$
+
+	static final String PORTLETBRIDGE_HOME = "portletbridgeHome"; //$NON-NLS-1$
+	
+	static final String PREFS_PORTLETBRIDGE_HOME = "jsfportlet.library.provider/portletbridge_home"; //$NON-NLS-1$
+
+	static final String PORTLET_BRIDGE_HOME = "portletBridgeHome"; //$NON-NLS-1$
 }

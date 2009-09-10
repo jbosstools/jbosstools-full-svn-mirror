@@ -30,6 +30,7 @@ import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jst.common.project.facet.core.libprov.LibraryInstallDelegate;
 import org.eclipse.jst.j2ee.classpathdep.ClasspathDependencyUtil;
 import org.eclipse.jst.j2ee.classpathdep.IClasspathDependencyConstants;
 import org.eclipse.jst.j2ee.model.IModelProvider;
@@ -113,7 +114,11 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 
 			configureFacesConfig(project, monitor, config);
 
-			configureClassPath(project, monitor, config);
+			//configureClassPath(project, monitor, config);
+			
+			//Configure libraries
+			( (LibraryInstallDelegate) config.getProperty( IPortletConstants.JSFPORTLET_LIBRARY_PROVIDER_DELEGATE ) ).execute( new NullProgressMonitor() );
+			
 
 			configureWebApp(project, monitor, config);
 			

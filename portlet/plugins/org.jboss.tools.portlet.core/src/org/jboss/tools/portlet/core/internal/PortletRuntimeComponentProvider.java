@@ -23,6 +23,8 @@ import org.jboss.tools.portlet.core.PortletCoreActivator;
 public class PortletRuntimeComponentProvider extends
 		RuntimeFacetComponentProviderDelegate {
 
+	private static final String IS_PORTLET_RUNTIME = "isPortletRuntime"; //$NON-NLS-1$
+
 	private static final IRuntimeComponentType PORTAL_TYPE = RuntimeManager
 			.getRuntimeComponentType("org.jboss.tools.portlet.core.runtime.component"); //$NON-NLS-1$
 
@@ -34,7 +36,7 @@ public class PortletRuntimeComponentProvider extends
 		if (runtime != null && runtime.getLocation() != null) {
 			File location = runtime.getLocation().toFile();
 
-			if (isPortalPresent(location, runtime)) {
+			if (isPortalPresentInternal(location, runtime)) {
 				final IRuntimeComponent portalComponent = RuntimeManager
 						.createRuntimeComponent(PORTAL_VERSION_1, null);
 				components.add(portalComponent);
@@ -44,12 +46,18 @@ public class PortletRuntimeComponentProvider extends
 	}
 
 	
-	private static boolean isPortalPresent(final File location, IRuntime runtime) {
+	private static boolean isPortalPresentInternal(final File location, IRuntime runtime) {
 		boolean check = PortletCoreActivator.getDefault().getPluginPreferences().getBoolean(PortletCoreActivator.CHECK_RUNTIMES);
 		if (!check) {
 			return true;
 		}
 		
+		return isPortalPresent(location, runtime, IS_PORTLET_RUNTIME); 
+	}
+
+
+	public static boolean isPortalPresent(final File location,
+			IRuntime runtime, String property) {
 		IJBossServerRuntime jbossRuntime = (IJBossServerRuntime)runtime.loadAdapter(IJBossServerRuntime.class, new NullProgressMonitor());
 		if (jbossRuntime != null) {
 			// JBoss Portal server
@@ -71,8 +79,12 @@ public class PortletRuntimeComponentProvider extends
 					IPortletConstants.SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL)) {
 				return true;
 			}
+			return false;
 		}
 		// Tomcat portletcontainer
+		if (!IS_PORTLET_RUNTIME.equals(property)) {
+			return false;
+		}
 		File tomcatLib = new File(location,IPortletConstants.TOMCAT_LIB);
 		if (tomcatLib.exists() && tomcatLib.isDirectory()) {
 			String[] files = tomcatLib.list(new FilenameFilter() {
@@ -88,7 +100,7 @@ public class PortletRuntimeComponentProvider extends
 			return files.length > 0;
 		}
 		
-		return false; 
+		return false;
 	}
 
 

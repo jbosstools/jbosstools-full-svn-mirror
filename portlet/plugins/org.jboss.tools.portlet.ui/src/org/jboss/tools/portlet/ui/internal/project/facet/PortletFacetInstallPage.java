@@ -2,6 +2,8 @@ package org.jboss.tools.portlet.ui.internal.project.facet;
 
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jst.common.project.facet.core.libprov.LibraryInstallDelegate;
+import org.eclipse.jst.common.project.facet.ui.libprov.LibraryProviderFrameworkUi;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -10,6 +12,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
@@ -103,7 +106,13 @@ public class PortletFacetInstallPage extends DataModelWizardPage implements
 		composite.setLayout(new GridLayout(1, false));
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		composite.setLayoutData(gd);
-		enableImplementationLibrary = new Button(composite, SWT.CHECK);
+		LibraryInstallDelegate librariesInstallDelegate= (LibraryInstallDelegate) getDataModel().getProperty( IPortletConstants.PORTLET_LIBRARY_PROVIDER_DELEGATE );
+		Control librariesComposite= LibraryProviderFrameworkUi.createInstallLibraryPanel( composite, librariesInstallDelegate,
+	                                                            Messages.PortletFacetInstallPage_PortletImplementationLibrariesFrame );
+		gd = new GridData( GridData.FILL_HORIZONTAL );
+		librariesComposite.setLayoutData( gd );
+	
+		/*enableImplementationLibrary = new Button(composite, SWT.CHECK);
 		enableImplementationLibrary.setText(Messages.PortletFacetInstallPage_Enable_implementation_library);
 		enableImplementationLibrary
 				.setSelection(enableImplementationLibraryValue);
@@ -215,7 +224,7 @@ public class PortletFacetInstallPage extends DataModelWizardPage implements
 		model.setProperty(IPortletConstants.USER_LIBRARY_NAME,
 				userLibraries
 						.getText());
-		/*deployButton = new Button(composite, SWT.CHECK);
+*/		/*deployButton = new Button(composite, SWT.CHECK);
 		deployButton.setText(Messages.JSFPortletFacetInstallPage_Deploy_jars);
 		deployButton.setSelection(deployPortletJars);
 		deployButton.addSelectionListener(new SelectionAdapter() {
@@ -227,7 +236,7 @@ public class PortletFacetInstallPage extends DataModelWizardPage implements
 			}
 
 		}); */
-		validatePage();
+		//validatePage();
 		return composite;
 	}
 
@@ -251,7 +260,7 @@ public class PortletFacetInstallPage extends DataModelWizardPage implements
 
 	@Override
 	protected String[] getValidationPropertyNames() {
-		return new String[0];
+		return new String[] { IPortletConstants.PORTLET_LIBRARY_PROVIDER_DELEGATE };
 	}
 
 	public void setConfig(Object config) {
@@ -303,21 +312,6 @@ public class PortletFacetInstallPage extends DataModelWizardPage implements
 			
 		});
 		super.storeDefaultSettings();
-	}
-	
-	@Override
-	protected void validatePage() {
-		//super.validatePage();
-		if (enableImplementationLibrary == null) {
-			return;
-		}
-		if (enableImplementationLibrary.getSelection() && implementationLibraryCombo.getText().equals(IPortletConstants.USER_LIBRARY) && userLibraries.getText().trim().length() <= 0) {
-			setErrorMessage(Messages.PortletFacetInstallPage_You_have_to_choose_an_user_library);
-			setPageComplete(false);
-		} else {
-			setErrorMessage(null);
-			setPageComplete(true);
-		}
 	}
 
 }

@@ -4,7 +4,10 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jboss.tools.portlet.core.messages"; //$NON-NLS-1$
+	public static String JSFPortletLibraryValidator_MISSING_JSFPORTLET_IMPLEMENTATION_CLASSES;
+	public static String PortletLibraryValidator_MISSING_PORTLET_IMPLEMENTATION_CLASSES;
 	public static String PortletPostInstallListener_Invalid_Richfaces_Runtime;
+	public static String PortletPostInstallListener_Cannot_find_Richfaces_ibraries;
 	public static String PortletPostInstallListener_Cannot_find_Richfaces_Runtime;
 	public static String Libraries_provided_by_richfaces;
 	public static String Libraries_provided_by_portletbridge ;
@@ -38,6 +41,8 @@ public class Messages extends NLS {
 	public static String SeamPortletFacetInstallDelegate_Cannot_configure_web_module_for_JBoss_Seam_Portlet_Facet;
 	public static String SeamPortletFacetInstallDelegate_Missing_configuration;
 	public static String SeamPortletFacetInstallDelegate_The_web_xml_file_is_not_updateable;
+	public static String JSFPortletFacetInstallPage_Portletbridge_Runtime_directory_is_required;
+	public static String JSFPortletFacetInstallPage_Invalid_Portletbridge_Runtime_directory;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

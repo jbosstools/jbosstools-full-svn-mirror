@@ -8,6 +8,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jst.common.project.facet.core.libprov.LibraryInstallDelegate;
+import org.eclipse.jst.common.project.facet.ui.libprov.LibraryProviderFrameworkUi;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -18,6 +20,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
@@ -25,14 +28,19 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.dialogs.WorkbenchPreferenceDialog;
 import org.eclipse.wst.common.componentcore.datamodel.properties.IFacetDataModelProperties;
+import org.eclipse.wst.common.frameworks.datamodel.AbstractDataModelProvider;
+import org.eclipse.wst.common.frameworks.datamodel.DataModelEvent;
+import org.eclipse.wst.common.frameworks.datamodel.DataModelFactory;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
+import org.eclipse.wst.common.frameworks.datamodel.IDataModelListener;
 import org.eclipse.wst.common.frameworks.internal.datamodel.ui.DataModelSynchHelper;
+import org.eclipse.wst.common.frameworks.internal.datamodel.ui.DataModelWizardPage;
 import org.eclipse.wst.common.project.facet.core.IFacetedProjectWorkingCopy;
 import org.eclipse.wst.common.project.facet.core.IProjectFacet;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
-import org.eclipse.wst.common.project.facet.ui.AbstractFacetWizardPage;
+import org.eclipse.wst.common.project.facet.ui.IFacetWizardPage;
+import org.eclipse.wst.common.project.facet.ui.IWizardContext;
 import org.eclipse.wst.server.core.IRuntime;
-import org.eclipse.wst.server.core.ServerCore;
 import org.jboss.ide.eclipse.as.core.server.IJBossServerConstants;
 import org.jboss.ide.eclipse.as.core.server.IJBossServerRuntime;
 import org.jboss.tools.portlet.core.IPortletConstants;
@@ -43,15 +51,14 @@ import org.jboss.tools.portlet.ui.PortletUIActivator;
 /**
  * @author snjeza
  */
-public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
+public class JSFPortletFacetInstallPage extends DataModelWizardPage implements IFacetWizardPage  {
 
+	private static final Object PORTLETBRIDGE_LIBRARY_PROVIDER = "jsfportletbridge-library-provider"; //$NON-NLS-1$
 	private IDialogSettings dialogSettings;
-	private IDataModel model;
 	private IDialogSettings jsfSection;
 	private boolean deployJars;
 	private String portletbridgeRuntime;
 	private Text folderText;
-	private DataModelSynchHelper synchHelper;
 	private Button folderButton;
 	private Button deployButton;
 	private Combo portletBridgeLibraryCombo;
@@ -59,7 +66,7 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 	private String userLibraryName;
 	private Button add;
 	private String implementationLibrary;
-	private Button addRichFacesCapabilities;
+	//private Button addRichFacesCapabilities;
 	private boolean hasSeamFacet;
 	private Button addRichFacesLibraries;
 	private Combo richFacesLibraryCombo;
@@ -69,7 +76,8 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 	private boolean richFacesLibrariesSelected;
 
 	public JSFPortletFacetInstallPage() {
-		super("JSFPortletProjectConfigurationWizardPage"); //$NON-NLS-1$
+		super(DataModelFactory.createDataModel(new AbstractDataModelProvider() {
+		}), "jboss.jsfportal.facet.install.page"); //$NON-NLS-1$
 		setTitle(Messages.JSFPortletFacetInstallPage_JBoss_JSF_Portlet_Capabilities);
 		setDescription(Messages.JSFPortletFacetInstallPage_Add_JBoss_JSF_Portlet_capabilities_to_this_Web_Project);
 		// ImageDescriptor imageDesc = getDefaultPageImageDescriptor( );
@@ -122,14 +130,21 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 
 	}
 
-	public void createControl(Composite parent) {
+	protected Composite createTopLevelComposite(Composite parent) {
 		initializeDialogUnits(parent);
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout(1, false));
-		synchHelper = new DataModelSynchHelper(model);
-		addFolderGroup(composite);
 		// createButton(composite);
-		setControl(composite);
+		LibraryInstallDelegate librariesInstallDelegate= (LibraryInstallDelegate) getDataModel().getProperty( IPortletConstants.JSFPORTLET_LIBRARY_PROVIDER_DELEGATE );
+		Control librariesComposite= LibraryProviderFrameworkUi.createInstallLibraryPanel( composite, librariesInstallDelegate,
+	                                                            Messages.JSFPortletFacetInstallPage_JSFPortletImplementationLibrariesFrame );
+		GridData gd = new GridData( GridData.FILL_HORIZONTAL );
+		librariesComposite.setLayoutData( gd );
+		
+		synchHelper = new DataModelSynchHelper(model);
+		//addFolderGroup(composite);
+		
+		return composite;
 	}
 
 	private void createButton(Composite composite) {
@@ -147,64 +162,61 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 		});
 	}
 
-	public void setConfig(Object config) {
-		this.model = (IDataModel) config;
-	}
-
 	private void addFolderGroup(Composite composite) {
-		portletBridgeLibraryCombo = new Combo(composite, SWT.READ_ONLY);
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		portletBridgeLibraryCombo.setLayoutData(gd);
-		portletBridgeLibraryCombo.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				boolean enabled = IPortletConstants.USER_LIBRARY
-						.equals(portletBridgeLibraryCombo.getText());
-				userLibraries.setEnabled(enabled);
-				add.setEnabled(enabled);
-
-				enabled = IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE.equals(portletBridgeLibraryCombo.getText());
-				folderText.setEnabled(enabled);
-				folderButton.setEnabled(enabled);
-				model.setProperty(IPortletConstants.IMPLEMENTATION_LIBRARY,
-						portletBridgeLibraryCombo.getText());
-				model.setProperty(IPortletConstants.PORTLET_BRIDGE_RUNTIME,folderText.getText().trim());
-				model.setProperty(IPortletConstants.USER_LIBRARY_NAME,userLibraries.getText());
-				if (IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE.equals(portletBridgeLibraryCombo.getText())) {
-					richFacesLibraryCombo.removeAll();
-					richFacesLibraryCombo.add(IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE);
-					richFacesLibraryCombo.add(IPortletConstants.LIBRARIES_PROVIDED_BY_RICHFACES);
-					richFacesLibraryCombo.select(0);
-				} else {
-					richFacesLibraryCombo.removeAll();
-					richFacesLibraryCombo.add(IPortletConstants.LIBRARIES_PROVIDED_BY_RICHFACES);
-					richFacesLibraryCombo.select(0);
-				}
-				validatePage();
-			}
-
-		});
-		
-		if (portletBridgeLibrariesExistOnServer()) {
-			portletBridgeLibraryCombo.add(IPortletConstants.LIBRARIES_PROVIDED_BY_SERVER_RUNTIME);
-		}
-		portletBridgeLibraryCombo.add(IPortletConstants.USER_LIBRARY);
-		
-		addUserLibraryGroup(composite);
-		
-		portletBridgeLibraryCombo.add(IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE);
-		
-		addPortletBridgeGroup(composite);
-		
-		portletBridgeLibraryCombo.setText(implementationLibrary);
-		
-		synchHelper.synchCombo(portletBridgeLibraryCombo, IPortletConstants.IMPLEMENTATION_LIBRARY, null);
+//		portletBridgeLibraryCombo = new Combo(composite, SWT.READ_ONLY);
+//		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+//		portletBridgeLibraryCombo.setLayoutData(gd);
+//		portletBridgeLibraryCombo.addSelectionListener(new SelectionAdapter() {
+//
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				boolean enabled = IPortletConstants.USER_LIBRARY
+//						.equals(portletBridgeLibraryCombo.getText());
+//				userLibraries.setEnabled(enabled);
+//				add.setEnabled(enabled);
+//
+//				enabled = IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE.equals(portletBridgeLibraryCombo.getText());
+//				folderText.setEnabled(enabled);
+//				folderButton.setEnabled(enabled);
+//				model.setProperty(IPortletConstants.IMPLEMENTATION_LIBRARY,
+//						portletBridgeLibraryCombo.getText());
+//				model.setProperty(IPortletConstants.PORTLET_BRIDGE_RUNTIME,folderText.getText().trim());
+//				model.setProperty(IPortletConstants.USER_LIBRARY_NAME,userLibraries.getText());
+//				if (IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE.equals(portletBridgeLibraryCombo.getText())) {
+//					richFacesLibraryCombo.removeAll();
+//					richFacesLibraryCombo.add(IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE);
+//					richFacesLibraryCombo.add(IPortletConstants.LIBRARIES_PROVIDED_BY_RICHFACES);
+//					richFacesLibraryCombo.select(0);
+//				} else {
+//					richFacesLibraryCombo.removeAll();
+//					richFacesLibraryCombo.add(IPortletConstants.LIBRARIES_PROVIDED_BY_RICHFACES);
+//					richFacesLibraryCombo.select(0);
+//				}
+//				validatePage();
+//			}
+//
+//		});
+//		
+//		if (portletBridgeLibrariesExistOnServer()) {
+//			portletBridgeLibraryCombo.add(IPortletConstants.LIBRARIES_PROVIDED_BY_SERVER_RUNTIME);
+//		}
+//		portletBridgeLibraryCombo.add(IPortletConstants.USER_LIBRARY);
+//		
+//		addUserLibraryGroup(composite);
+//		
+//		portletBridgeLibraryCombo.add(IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE);
+//		
+//		addPortletBridgeGroup(composite);
+//		
+//		portletBridgeLibraryCombo.setText(implementationLibrary);
+//		
+//		synchHelper.synchCombo(portletBridgeLibraryCombo, IPortletConstants.IMPLEMENTATION_LIBRARY, null);
+//		
 		
 		Group richfacesGroup = new Group(composite, SWT.NONE);
 		richfacesGroup.setLayout(new GridLayout(2, false));
 		richfacesGroup.setText(Messages.JSFPortletFacetInstallPage_Richfaces_Capabilities);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		richfacesGroup.setLayoutData(gd);
 		/*
 		addRichFacesCapabilities= new Button(richfacesGroup,SWT.CHECK);
@@ -251,14 +263,41 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 			
 		});
 		addRichFaces(richfacesGroup);
+		changeRichFaces();
+		getDataModel().addListener(new IDataModelListener() {
+			
+			public void propertyChanged(DataModelEvent event) {
+				String propertyName = event.getPropertyName();
+				if (IPortletConstants.JSFPORTLET_LIBRARY_PROVIDER_DELEGATE.equals(propertyName)) {
+					changeRichFaces();
+				}
+			}
+		});
 		
 		addRichFacesLibraries.setSelection(richFacesLibrariesSelected);
 		enableRichfacesLibraries();
 		richFacesLibraryCombo.select(0);
 		
-		validatePage();
+		//validatePage();
 	}
 
+	private void changeRichFaces() {
+		LibraryInstallDelegate librariesInstallDelegate= (LibraryInstallDelegate) getDataModel().getProperty( IPortletConstants.JSFPORTLET_LIBRARY_PROVIDER_DELEGATE );
+		String providerId = librariesInstallDelegate.getLibraryProvider().getId();
+		if (providerId != null && providerId.equals(PORTLETBRIDGE_LIBRARY_PROVIDER)) {
+			richFacesLibraryCombo.removeAll();
+			richFacesLibraryCombo.add(IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE);
+			richFacesLibraryCombo.add(IPortletConstants.LIBRARIES_PROVIDED_BY_RICHFACES);
+			richFacesLibraryCombo.select(0);
+		} else {
+			richFacesLibraryCombo.removeAll();
+			richFacesLibraryCombo.add(IPortletConstants.LIBRARIES_PROVIDED_BY_RICHFACES);
+			richFacesLibraryCombo.select(0);
+		}
+		boolean enabled =IPortletConstants.LIBRARIES_PROVIDED_BY_RICHFACES.equals(richFacesLibraryCombo.getText());
+		richfacesText.setEnabled(enabled);
+		richfacesButton.setEnabled(enabled);
+	}
 	private void addRichFaces(Composite parent) {
 		richfacesText = new Text(parent, SWT.SINGLE | SWT.BORDER);
 		richfacesText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -382,20 +421,31 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 		validatePage();
 	}
 	
-	private void validatePage() {
-		if (!validatePortletBridge()) {
-			return;
-		}
-		if (!validateRichFaces()) {
-			return;
-		}
-		if (portletBridgeLibraryCombo.getText().equals(IPortletConstants.USER_LIBRARY) && userLibraries.getText().trim().length() <= 0) {
-			setErrorMessage(Messages.PortletFacetInstallPage_You_have_to_choose_an_user_library);
-			setPageComplete(false);
-		} else {
-			setErrorMessage(null);
-			setPageComplete(true);
-		}
+	@Override
+	protected String[] getValidationPropertyNames() {
+		return new String[] { IPortletConstants.JSFPORTLET_LIBRARY_PROVIDER_DELEGATE };
+	}
+
+	public void setConfig(Object config) {
+		model.removeListener(this);
+		synchHelper.dispose();
+
+		model = (IDataModel) config;
+		model.addListener(this);
+		synchHelper = initializeSynchHelper(model);
+	}
+
+	@Override
+	public void dispose() {
+		model.removeListener(this);
+		super.dispose();
+	}
+
+	public void setWizardContext(IWizardContext context) {
+
+	}
+
+	public void transferStateToConfig() {
 
 	}
 	
@@ -568,24 +618,6 @@ public class JSFPortletFacetInstallPage extends AbstractFacetWizardPage {
 		}
 		String newPath = dialog.getFilterPath();
 		richfacesText.setText(newPath);
-	}
-
-	@Override
-	public void transferStateToConfig() {
-		super.transferStateToConfig();
-		if (deployButton != null) {
-			jsfSection.put(IPortletConstants.DEPLOY_JARS, deployButton
-					.getSelection());
-		}
-		jsfSection.put(IPortletConstants.PORTLET_BRIDGE_RUNTIME,
-				portletbridgeRuntime);
-		jsfSection.put(IPortletConstants.RICHFACES_RUNTIME,
-				richfacesRuntime);
-		jsfSection.put(IPortletConstants.IMPLEMENTATION_LIBRARY, 
-				implementationLibrary);
-		jsfSection.put(IPortletConstants.RICHFACES_LIBRARIES_SELECTED, 
-				richFacesLibrariesSelected);
-		
 	}
 
 	private void enableRichfacesLibraries() {

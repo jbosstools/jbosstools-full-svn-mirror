@@ -61,6 +61,24 @@
            class="org.jboss.tools.portlet.ui.internal.preferences.JBossPortletPreferencePage"
            id="org.jboss.tools.portlet.core.ui.JBossPortletPreferencePage"
            name="%JBoss_Portlet"/>
-      </extension>
-    
+   </extension>
+   
+   <extension point="org.eclipse.jst.common.project.facet.ui.libraryProviderActionPanels">
+     <panel 
+       provider="portlet-library-provider"
+       class="org.jboss.tools.portlet.ui.internal.libprov.PortletServerRuntimeProviderInstallPanel"/>
+   </extension> 
+   
+   <extension point="org.eclipse.jst.common.project.facet.ui.libraryProviderActionPanels">
+     <panel 
+       provider="jsfportlet-library-provider"
+       class="org.jboss.tools.portlet.ui.internal.libprov.JSFPortletServerRuntimeProviderInstallPanel"/>
+   </extension> 
+   
+   <extension point="org.eclipse.jst.common.project.facet.ui.libraryProviderActionPanels">
+     <panel 
+       provider="jsfportletbridge-library-provider"
+       class="org.jboss.tools.portlet.ui.internal.libprov.JSFPortletbridgeRuntimeProviderInstallPanel"/>
+   </extension>
+  
 </plugin>

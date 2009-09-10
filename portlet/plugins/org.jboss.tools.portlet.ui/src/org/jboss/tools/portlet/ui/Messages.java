@@ -4,6 +4,9 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jboss.tools.portlet.ui.messages"; //$NON-NLS-1$
+	public static String JSFPortletServerRuntimeProviderInstallPanel_The_targeted_runtime_contains_a_portlet_library;
+	public static String JSFPortletFacetInstallPage_JSFPortletImplementationLibrariesFrame;
+	public static String PortletFacetInstallPage_PortletImplementationLibrariesFrame;
 	public static String JBossPortletPreferencePage_Check_Runtimes_for_Portlet_Components;
 	public static String AddPortletWizardPage_Edit;
 	public static String AddPortletWizardPage_Help;
@@ -55,10 +58,11 @@ public class Messages extends NLS {
 	public static String JSFPortletFacetInstallPage_Select_RichFaces_Runtime;
 	public static String PortletFacetInstallPage_Add;
 	public static String PortletFacetInstallPage_Add_JBoss_Portlet_capabilities_to_this_Web_Project;
-	public static String PortletFacetInstallPage_Enable_implementation_library;
+	//public static String PortletFacetInstallPage_Enable_implementation_library;
 	public static String PortletFacetInstallPage_JBoss_Portlet_Capabilities;
 	public static String PortletFacetInstallPage_User_Library;
-	public static String PortletFacetInstallPage_You_have_to_choose_an_user_library;
+	//public static String PortletFacetInstallPage_You_have_to_choose_an_user_library;
+	public static String PortletServerRuntimeProviderInstallPanel_The_targeted_runtime_contains_a_portlet_library;
 	public static String PortletUIActivator_The_portlet_xml_file_doesnt_exist;
 	static {
 		// initialize resource bundle

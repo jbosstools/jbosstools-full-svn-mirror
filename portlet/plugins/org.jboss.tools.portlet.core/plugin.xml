@@ -309,5 +309,133 @@
          point="org.eclipse.core.runtime.preferences">
       <initializer class="org.jboss.tools.portlet.core.preferences.JBossPortletPreferencesInitializer"/>
    </extension>
-	
+ 
+   <extension point="org.eclipse.jst.common.project.facet.core.libraryProviders">
+    <provider id="portlet-user-library-provider" extends="wtp-user-library-provider">
+      <param name="validator" value="org.jboss.tools.portlet.core.internal.project.facet.PortletLibraryValidator"/>
+      <param name="validator.param.0" value="javax.portlet.GenericPortlet"/>
+      <enablement>
+        <with variable="requestingProjectFacet">
+          <test property="org.eclipse.wst.common.project.facet.core.projectFacet" value="jboss.portlet" forcePluginActivation="true"/>
+        </with>
+      </enablement>
+    </provider>
+  </extension>
+  
+  <extension point="org.eclipse.jst.common.project.facet.core.libraryProviders">
+    <provider id="portlet-no-op-library-provider" extends="no-op-library-provider">
+      <param name="message" value="%noOpLibraryProviderMessage"/>
+      <param name="warning" value="%noOpLibraryProviderWarning"/>
+      <enablement>
+        <with variable="requestingProjectFacet">
+          <test property="org.eclipse.wst.common.project.facet.core.projectFacet" value="jboss.portlet" forcePluginActivation="true"/>
+        </with>
+      </enablement>
+    </provider>
+  </extension>
+  
+  <extension point="org.eclipse.jst.common.project.facet.core.libraryProviders">
+    	<provider id="portlet-library-provider">
+      		<label>%portletLibraryProviderLabel</label>
+      		<priority>500</priority>
+      		<action type="INSTALL">
+        		<config class="org.jboss.tools.portlet.core.libprov.PortletServerRuntimeLibraryProviderInstallOperationConfig"/>
+        		<operation class="org.jboss.tools.portlet.core.libprov.PortletServerRuntimeLibraryProviderInstallOperation"/>
+      		</action>
+      		
+      		<action type="UNINSTALL">
+        		<operation class="org.jboss.tools.portlet.core.libprov.PortletServerRuntimeLibraryProviderUninstallOperation"/>
+      		</action>
+      		<enablement>
+        	  <and>	
+        		<with variable="requestingProjectFacet">
+          			<test property="org.eclipse.wst.common.project.facet.core.projectFacet" value="jboss.portlet" forcePluginActivation="true"/>
+        		</with>
+        		<with variable="context">
+          			<test property="org.jboss.tools.portlet.core.libprov.isPortletRuntime" forcePluginActivation="true"/>
+        		</with>
+        	  </and>
+      		</enablement>
+    	</provider>
+  	</extension>
+  	
+  	<extension point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+      	id="org.jboss.tools.portlet.core.libprov.isPortletRuntime"
+      	type="org.eclipse.jst.common.project.facet.core.libprov.EnablementExpressionContext"
+      	namespace="org.jboss.tools.portlet.core.libprov"
+      	properties="isPortletRuntime,isJSFPortletRuntime"
+      	class="org.jboss.tools.portlet.core.libprov.RuntimeLibraryProviderPropertyTester">
+      </propertyTester>
+    </extension>
+  
+  <extension point="org.eclipse.jst.common.project.facet.core.libraryProviders">
+    <provider id="jsfportlet-no-op-library-provider" extends="no-op-library-provider">
+      <param name="message" value="%noOpLibraryJSFPortletProviderMessage"/>
+      <param name="warning" value="%noOpLibraryJSFPortletProviderWarning"/>
+      <enablement>
+        <with variable="requestingProjectFacet">
+          <test property="org.eclipse.wst.common.project.facet.core.projectFacet" value="jboss.jsfportlet" forcePluginActivation="true"/>
+        </with>
+      </enablement>
+    </provider>
+  </extension>
+  
+  <extension point="org.eclipse.jst.common.project.facet.core.libraryProviders">
+    <provider id="jsfportlet-user-library-provider" extends="wtp-user-library-provider">
+      <param name="validator" value="org.jboss.tools.portlet.core.internal.project.facet.JSFPortletLibraryValidator"/>
+      <param name="validator.param.0" value="javax.portlet.faces.GenericFacesPortlet"/>
+      <enablement>
+        <with variable="requestingProjectFacet">
+          <test property="org.eclipse.wst.common.project.facet.core.projectFacet" value="jboss.jsfportlet" forcePluginActivation="true"/>
+        </with>
+      </enablement>
+    </provider>
+  </extension>
+  
+  <extension point="org.eclipse.jst.common.project.facet.core.libraryProviders">
+    	<provider id="jsfportlet-library-provider">
+      		<label>%jsfportletLibraryProviderLabel</label>
+      		<priority>500</priority>
+      		<action type="INSTALL">
+        		<config class="org.jboss.tools.portlet.core.libprov.JSFPortletServerRuntimeLibraryProviderInstallOperationConfig"/>
+        		<operation class="org.jboss.tools.portlet.core.libprov.JSFPortletServerRuntimeLibraryProviderInstallOperation"/>
+      		</action>
+      		
+      		<action type="UNINSTALL">
+        		<operation class="org.jboss.tools.portlet.core.libprov.JSFPortletServerRuntimeLibraryProviderUninstallOperation"/>
+      		</action>
+      		<enablement>
+        	  <and>	
+        		<with variable="requestingProjectFacet">
+          			<test property="org.eclipse.wst.common.project.facet.core.projectFacet" value="jboss.jsfportlet" forcePluginActivation="true"/>
+        		</with>
+        		<with variable="context">
+          			<test property="org.jboss.tools.portlet.core.libprov.isJSFPortletRuntime" forcePluginActivation="true"/>
+        		</with>
+        	  </and>
+      		</enablement>
+    	</provider>
+  	</extension>
+  	
+  	<extension point="org.eclipse.jst.common.project.facet.core.libraryProviders">
+    	<provider id="jsfportletbridge-library-provider">
+      		<label>%jsfportletbridgeLibraryProviderLabel</label>
+      		<priority>500</priority>
+      		<action type="INSTALL">
+        		<config class="org.jboss.tools.portlet.core.libprov.JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig"/>
+        		<operation class="org.jboss.tools.portlet.core.libprov.JSFPortletbridgeRuntimeLibraryProviderInstallOperation"/>
+      		</action>
+      		
+      		<action type="UNINSTALL">
+        		<operation class="org.jboss.tools.portlet.core.libprov.JSFPortletbridgeRuntimeLibraryProviderUninstallOperation"/>
+      		</action>
+      		<enablement>
+        		<with variable="requestingProjectFacet">
+          			<test property="org.eclipse.wst.common.project.facet.core.projectFacet" value="jboss.jsfportlet" forcePluginActivation="true"/>
+        		</with>
+      		</enablement>
+    	</provider>
+  	</extension>
+  	
 </plugin>

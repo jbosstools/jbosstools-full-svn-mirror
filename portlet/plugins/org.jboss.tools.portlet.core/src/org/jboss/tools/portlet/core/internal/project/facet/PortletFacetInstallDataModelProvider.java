@@ -12,9 +12,14 @@ package org.jboss.tools.portlet.core.internal.project.facet;
 
 import java.util.Set;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jst.common.project.facet.core.libprov.IPropertyChangeListener;
+import org.eclipse.jst.common.project.facet.core.libprov.LibraryInstallDelegate;
 import org.eclipse.wst.common.componentcore.datamodel.FacetInstallDataModelProvider;
+import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
+import org.eclipse.wst.common.project.facet.core.IFacetedProjectWorkingCopy;
+import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
 import org.jboss.tools.portlet.core.IPortletConstants;
-import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 
 /**
@@ -24,6 +29,27 @@ import org.jboss.tools.portlet.core.PortletCoreActivator;
 public class PortletFacetInstallDataModelProvider extends
 		FacetInstallDataModelProvider implements IPortletConstants {
 
+	private LibraryInstallDelegate libraryInstallDelegate = null;
+    
+	private void initLibraryInstallDelegate() {
+		final IFacetedProjectWorkingCopy fpjwc = (IFacetedProjectWorkingCopy) getProperty(FACETED_PROJECT_WORKING_COPY);
+		final IProjectFacetVersion fv = (IProjectFacetVersion) getProperty(FACET_VERSION);
+		if (libraryInstallDelegate == null && fpjwc != null && fv != null) {
+			libraryInstallDelegate = new LibraryInstallDelegate(fpjwc, fv);
+			libraryInstallDelegate.addListener(new IPropertyChangeListener() {
+
+				public void propertyChanged(final String property,
+								final Object oldValue, final Object newValue) {
+					final IDataModel dm = getDataModel();
+					if (dm != null) {
+						dm.notifyPropertyChange(PORTLET_LIBRARY_PROVIDER_DELEGATE,IDataModel.VALUE_CHG);
+					}
+				}
+				
+			});
+		}
+	}
+	
 	@Override
 	public Object getDefaultProperty(String propertyName) {
 		if(propertyName.equals(FACET_ID)){
@@ -49,6 +75,9 @@ public class PortletFacetInstallDataModelProvider extends
 			}
 			//return IPortletConstants.LIBRARY_PROVIDED_BY_JBOSS_TOOLS;
 		}
+		if (propertyName.equals(PORTLET_LIBRARY_PROVIDER_DELEGATE)) {
+            return libraryInstallDelegate;
+		}
 		return super.getDefaultProperty(propertyName);
 	}
 	
@@ -59,8 +88,30 @@ public class PortletFacetInstallDataModelProvider extends
 		propertyNames.add(IPortletConstants.ENABLE_IMPLEMENTATION_LIBRARY);
 		propertyNames.add(IPortletConstants.USER_LIBRARY_NAME);
 		propertyNames.add(IPortletConstants.IMPLEMENTATION_LIBRARY);
+		propertyNames.add(PORTLET_LIBRARY_PROVIDER_DELEGATE);
 		
 		return propertyNames;
 	}
+	
+	@Override
+	public boolean propertySet(final String propertyName,
+			final Object propertyValue) {
+		if (propertyName.equals(FACETED_PROJECT_WORKING_COPY)
+				|| propertyName.equals(FACET_VERSION)) {
+			initLibraryInstallDelegate();
+			if (this.libraryInstallDelegate != null && propertyName.equals(FACET_VERSION)) {
+				final IProjectFacetVersion fv = (IProjectFacetVersion) getProperty(FACET_VERSION);
+				this.libraryInstallDelegate.setProjectFacetVersion(fv);
+			}
+		}
 
+		return super.propertySet(propertyName, propertyValue);
+	}
+
+	public IStatus validate(String name) {
+		if (name.equals(PORTLET_LIBRARY_PROVIDER_DELEGATE)) {
+			return ((LibraryInstallDelegate) getProperty(PORTLET_LIBRARY_PROVIDER_DELEGATE)).validate();
+		}
+		return super.validate(name);
+	}
 }

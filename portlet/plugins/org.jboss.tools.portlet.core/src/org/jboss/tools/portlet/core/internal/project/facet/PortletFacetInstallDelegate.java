@@ -16,11 +16,12 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jst.common.project.facet.core.libprov.LibraryInstallDelegate;
 import org.eclipse.jst.j2ee.model.IModelProvider;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.IDelegate;
@@ -76,11 +77,14 @@ public class PortletFacetInstallDelegate implements IDelegate {
 				}
 			}
 
-			IJavaProject javaProject = JavaCore.create(project);	
+			/*IJavaProject javaProject = JavaCore.create(project);	
 			boolean enableImplementationLibrary = config.getBooleanProperty(IPortletConstants.ENABLE_IMPLEMENTATION_LIBRARY);
 			if (enableImplementationLibrary) {
 				setClasspath(monitor, javaProject, config);
-			}
+			}*/
+			
+			//Configure libraries
+			( (LibraryInstallDelegate) config.getProperty( IPortletConstants.PORTLET_LIBRARY_PROVIDER_DELEGATE ) ).execute( new NullProgressMonitor() );
 			
 			createPortletXml(project, fv, config, monitor);
 
