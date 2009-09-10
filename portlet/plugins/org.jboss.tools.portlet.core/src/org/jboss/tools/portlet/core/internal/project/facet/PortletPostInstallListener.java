@@ -48,10 +48,12 @@ import org.jboss.ide.eclipse.as.core.server.IJBossServerRuntime;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
+import org.jboss.tools.portlet.core.libprov.AbstractLibraryProviderInstallOperationConfig;
 import org.jboss.tools.portlet.core.libprov.JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig;
 
 public class PortletPostInstallListener implements IFacetedProjectListener {
 
+	private static final String JSFPORTLET_LIBRARY_PROVIDER = "jsfportlet-library-provider";
 	private static final String JSFPORTLETBRIDGE_LIBRARY_PROVIDER = "jsfportletbridge-library-provider"; //$NON-NLS-1$
 	private static final IProjectFacet seamFacet = ProjectFacetsManager.getProjectFacet("jst.seam"); //$NON-NLS-1$
 	private static final IOverwriteQuery OVERWRITE_NONE_QUERY = new IOverwriteQuery()
@@ -62,9 +64,9 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
       }
     };
 	private String portletbridgeRuntime;
-	//private boolean richfacesCapabilities;
+	private boolean richfacesCapabilities = false;
 	//private boolean richfacesSelected;
-	//private String richfacesType;
+	private String richfacesType;
 	private String richfacesRuntime;
 	
 	
@@ -98,44 +100,50 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 			IDataModel dataModel = (IDataModel) actionEvent.getActionConfig();
 			try {
 				LibraryInstallDelegate libraryDelegate = ( (LibraryInstallDelegate) dataModel.getProperty( IPortletConstants.JSFPORTLET_LIBRARY_PROVIDER_DELEGATE ) );
-				ILibraryProvider libraryProvider = libraryDelegate.getLibraryProvider();
-				String providerId = libraryProvider.getId();
-				if (JSFPORTLETBRIDGE_LIBRARY_PROVIDER.equals(providerId)) {
-					JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig libraryConfig = (JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig) libraryDelegate.getLibraryProviderOperationConfig(libraryProvider);
-					portletbridgeRuntime = libraryConfig.getPortletbridgeHome();
-				} else {
-					portletbridgeRuntime = null;
-				}
-				richfacesFromServerRuntime = "jsfportlet-library-provider".equals(providerId); //$NON-NLS-1$
+				if (libraryDelegate != null) {
+					ILibraryProvider libraryProvider = libraryDelegate
+							.getLibraryProvider();
+					String providerId = libraryProvider.getId();
+					if (JSFPORTLETBRIDGE_LIBRARY_PROVIDER.equals(providerId)) {
+						JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig libraryConfig = (JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig) libraryDelegate
+								.getLibraryProviderOperationConfig(libraryProvider);
+						portletbridgeRuntime = libraryConfig.getPortletbridgeHome();
+					} else {
+						portletbridgeRuntime = null;
+					}
+					richfacesFromServerRuntime = JSFPORTLET_LIBRARY_PROVIDER.equals(providerId); //$NON-NLS-1$
+
+					if (JSFPORTLETBRIDGE_LIBRARY_PROVIDER.equals(providerId)
+							|| JSFPORTLET_LIBRARY_PROVIDER.equals(providerId)) {
+						AbstractLibraryProviderInstallOperationConfig libraryConfig = (AbstractLibraryProviderInstallOperationConfig) libraryDelegate.getLibraryProviderOperationConfig(libraryProvider);
+						richfacesCapabilities = libraryConfig.isAddRichfacesCapabilities();
+						richfacesRuntime = libraryConfig.getRichfacesRuntime();
+						richfacesType = libraryConfig.getRichfacesType();
+					}
 					
-				//richfacesCapabilities = dataModel.getBooleanProperty(IPortletConstants.RICHFACES_CAPABILITIES);
-				//richfacesSelected = dataModel.getBooleanProperty(IPortletConstants.RICHFACES_LIBRARIES_SELECTED);
-				//richfacesType = dataModel.getStringProperty(IPortletConstants.RICHFACES_LIBRARIES_TYPE);
-				//richfacesRuntime = dataModel.getStringProperty(IPortletConstants.RICHFACES_RUNTIME);
+				}
 			} catch (Exception e) {
 				//PortletCoreActivator.log(e);
 			}
 		}
 		
-		//if (!richfacesCapabilities || !richfacesSelected) {
-		//	return;
-		//}
 		if (isJSFPortlet) {
 			if (portletbridgeRuntime != null) {
-				addRichfacesFromPortletBridgeRuntime(facetedProject,portletbridgeRuntime);
+				addLibrariesFromPortletBridgeRuntime(facetedProject,portletbridgeRuntime);
 			} 
 			else if (richfacesFromServerRuntime) {
-				addRichFacesFromServerRuntime(facetedProject);
+				addLibrariesFromServerRuntime(facetedProject);
 			}
-			//else {
-			//	addRichfacesFromRichfacesRuntime(facetedProject,isSeamProject);
-			//}
 		}
 	}
 
-	private void addRichFacesFromServerRuntime(IFacetedProject facetedProject) {
+	private void addLibrariesFromServerRuntime(IFacetedProject facetedProject) {
 		final boolean isSeamProject = facetedProject.hasProjectFacet(seamFacet);
-		if (isSeamProject) {
+		final boolean addRichfacesFromRichfacesRuntime = richfacesCapabilities && IPortletConstants.LIBRARIES_PROVIDED_BY_RICHFACES.equals(richfacesType);
+		if (addRichfacesFromRichfacesRuntime) {
+			addRichfacesFromRichfacesRuntime(facetedProject);
+		}
+		if (isSeamProject) {	
 			return;
 		}
 		org.eclipse.wst.common.project.facet.core.runtime.IRuntime facetRuntime = facetedProject.getPrimaryRuntime();
@@ -168,18 +176,21 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 			try {
 				IProject project = facetedProject.getProject();
 				final IProject earProject = getEarProject(project, isSeamProject);
+				
 				String[] fileList = richfacesLib.list(new FilenameFilter() {
 
 					public boolean accept(File dir, String name) {
-						if (name.startsWith("richfaces-ui") && name.endsWith(".jar")) { //$NON-NLS-1$ //$NON-NLS-2$
-							return true;
-						}
-						if (name.startsWith("richfaces-impl") && name.endsWith(".jar")) { //$NON-NLS-1$ //$NON-NLS-2$
-							return true;
-						}
-						if (earProject == null) {
-							if (name.startsWith("richfaces-api") && name.endsWith(".jar")) { //$NON-NLS-1$ //$NON-NLS-2$
+						if (!addRichfacesFromRichfacesRuntime) {
+							if (name.startsWith("richfaces-ui") && name.endsWith(".jar")) { //$NON-NLS-1$ //$NON-NLS-2$
 								return true;
+							}
+							if (name.startsWith("richfaces-impl") && name.endsWith(".jar")) { //$NON-NLS-1$ //$NON-NLS-2$
+								return true;
+							}
+							if (earProject == null) {
+								if (name.startsWith("richfaces-api") && name.endsWith(".jar")) { //$NON-NLS-1$ //$NON-NLS-2$
+									return true;
+								}
 							}
 						}
 						if (!isSeamProject) {
@@ -246,7 +257,8 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 	}
 
 	private void addRichfacesFromRichfacesRuntime(
-			IFacetedProject facetedProject, boolean isSeamProject) {
+			IFacetedProject facetedProject) {
+		final boolean isSeamProject = facetedProject.hasProjectFacet(seamFacet);
 		File richfacesRuntimeHome = new File(richfacesRuntime);
 		File richfacesLib = new File(richfacesRuntimeHome, "lib"); //$NON-NLS-1$
 		if (!richfacesLib.exists()) {
@@ -360,7 +372,7 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 		}
 	}
 
-	private void addRichfacesFromPortletBridgeRuntime(IFacetedProject facetedProject, String portletbridgeRuntime) {
+	private void addLibrariesFromPortletBridgeRuntime(IFacetedProject facetedProject, String portletbridgeRuntime) {
 		File portletbridgeHome = new File(portletbridgeRuntime);
 		if (!portletbridgeHome.exists()) {
 			PortletCoreActivator.log(null, Messages.PortletPostInstallListener_Cannot_find_Portletbridge_Runtime);
@@ -385,7 +397,11 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 			ZipFileStructureProvider structureProvider = new ZipFileStructureProvider(
 					zipFile );
 			boolean isSeamProject = facetedProject.hasProjectFacet(seamFacet);
-			List<ZipEntry> list = prepareList(zipFile, facetedProject, isSeamProject);
+			final boolean addRichfacesFromRichfacesRuntime = richfacesCapabilities && IPortletConstants.LIBRARIES_PROVIDED_BY_RICHFACES.equals(richfacesType);
+			if (addRichfacesFromRichfacesRuntime) {
+				addRichfacesFromRichfacesRuntime(facetedProject);
+			}
+			List<ZipEntry> list = prepareList(zipFile, facetedProject, isSeamProject, addRichfacesFromRichfacesRuntime);
 			
 			IProject project = facetedProject.getProject();
 			IProject earProject = getEarProject(project, isSeamProject);
@@ -502,7 +518,7 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 		return projectScope.getNode("org.jboss.tools.seam.core"); //$NON-NLS-1$
 	}
 	
-	private List<ZipEntry> prepareList(ZipFile rootEntry, IFacetedProject facetedProject, boolean isSeamProject) {
+	private List<ZipEntry> prepareList(ZipFile rootEntry, IFacetedProject facetedProject, boolean isSeamProject, boolean addRichfacesFromRichfacesRuntime) {
 		if (rootEntry == null) {
 			return null;
 		}
@@ -513,18 +529,21 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 		while (entries.hasMoreElements()) {
 			ZipEntry entry = entries.nextElement();
 			if (entry.getName().endsWith(".jar")) { //$NON-NLS-1$
-				if (entry.getName().startsWith("WEB-INF/lib/richfaces-ui")) { //$NON-NLS-1$
-					list.add(entry);
-				}
-				if (entry.getName().startsWith("WEB-INF/lib/richfaces-impl")) { //$NON-NLS-1$
-					list.add(entry);
-				}
-				if (earProject == null) {
-					if (entry.getName().startsWith("WEB-INF/lib/richfaces-api")) { //$NON-NLS-1$
+				if (!addRichfacesFromRichfacesRuntime) {
+					if (entry.getName().startsWith("WEB-INF/lib/richfaces-ui")) { //$NON-NLS-1$
 						list.add(entry);
-					}	
+					}
+					if (entry.getName()
+							.startsWith("WEB-INF/lib/richfaces-impl")) { //$NON-NLS-1$
+						list.add(entry);
+					}
+					if (earProject == null) {
+						if (entry.getName().startsWith(
+								"WEB-INF/lib/richfaces-api")) { //$NON-NLS-1$
+							list.add(entry);
+						}
+					}
 				}
-				
 				if (!isSeamProject) {
 					if (entry.getName().startsWith(
 							"WEB-INF/lib/commons-beanutils") //$NON-NLS-1$

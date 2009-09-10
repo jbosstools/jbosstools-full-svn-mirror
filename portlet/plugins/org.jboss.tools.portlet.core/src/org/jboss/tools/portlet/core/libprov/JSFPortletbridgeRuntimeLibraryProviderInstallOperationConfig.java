@@ -6,7 +6,6 @@ import java.io.FilenameFilter;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jst.common.project.facet.core.libprov.ILibraryProvider;
-import org.eclipse.jst.common.project.facet.core.libprov.LibraryProviderInstallOperationConfig;
 import org.eclipse.wst.common.project.facet.core.FacetedProjectFramework;
 import org.eclipse.wst.common.project.facet.core.IFacetedProjectBase;
 import org.eclipse.wst.common.project.facet.core.IProjectFacet;
@@ -18,7 +17,7 @@ import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
 public class JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig extends
-		LibraryProviderInstallOperationConfig {
+		AbstractLibraryProviderInstallOperationConfig {
 
 	private String portletbridgeHome;
 
@@ -81,6 +80,7 @@ public class JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig extend
 
 	@Override
 	public void reset() {
+		super.reset();
 		IProjectFacet f = getProjectFacet();
         try {
 			Preferences prefs = FacetedProjectFramework.getPreferences( f );

@@ -18,6 +18,7 @@ import org.eclipse.ui.wizards.datatransfer.ImportOperation;
 import org.eclipse.wst.common.componentcore.ComponentCore;
 import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 import org.eclipse.wst.common.componentcore.resources.IVirtualFile;
+import org.eclipse.wst.common.project.facet.core.FacetedProjectFramework;
 import org.eclipse.wst.common.project.facet.core.IFacetedProjectBase;
 import org.eclipse.wst.common.project.facet.core.IProjectFacet;
 import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
@@ -27,6 +28,8 @@ import org.jboss.ide.eclipse.as.core.server.IJBossServerRuntime;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
+import org.osgi.service.prefs.BackingStoreException;
+import org.osgi.service.prefs.Preferences;
 
 public class JSFPortletServerRuntimeLibraryProviderInstallOperation extends
 		LibraryProviderOperation {
@@ -81,6 +84,20 @@ public class JSFPortletServerRuntimeLibraryProviderInstallOperation extends
 					.log(e, Messages.JSFPortletFacetInstallDelegate_Error_loading_classpath_container);
 				}
 			}
+		}
+		JSFPortletServerRuntimeLibraryProviderInstallOperationConfig serverConfig = (JSFPortletServerRuntimeLibraryProviderInstallOperationConfig) config;
+		boolean addRichfacesCapabilities = serverConfig.isAddRichfacesCapabilities();
+		String richfacesType = serverConfig.getRichfacesType();
+		String richfacesRuntime = serverConfig.getRichfacesRuntime();
+		try {
+			Preferences prefs = FacetedProjectFramework.getPreferences( config.getProjectFacet() );
+			prefs = prefs.node(IPortletConstants.PORTLET_BRIDGE_HOME);
+			prefs.putBoolean(IPortletConstants.RICHFACES_CAPABILITIES, addRichfacesCapabilities);
+			prefs.put(IPortletConstants.RICHFACES_LIBRARIES_TYPE, richfacesType);
+			prefs.put(IPortletConstants.RICHFACES_RUNTIME, richfacesRuntime);
+			prefs.flush();
+		} catch (BackingStoreException e) {
+			PortletCoreActivator.log(e);
 		}
 	}
 	

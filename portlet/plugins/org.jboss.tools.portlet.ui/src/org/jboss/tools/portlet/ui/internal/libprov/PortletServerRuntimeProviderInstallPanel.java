@@ -18,12 +18,16 @@ public class PortletServerRuntimeProviderInstallPanel extends LibraryProviderOpe
         final Composite composite = new Composite( parent, SWT.NONE );
         composite.setLayout( gl( 1, 0, 0 ) );
         
-        final Link link = new Link( composite, SWT.WRAP );
+        addMessage(composite);
+        
+        return composite;
+    }
+
+	private void addMessage(final Composite composite) {
+		final Link link = new Link( composite, SWT.WRAP );
         final GridData data = new GridData( SWT.FILL, SWT.BEGINNING, true, false );
         data.widthHint = 300;
         link.setLayoutData( data );
         link.setText( Messages.PortletServerRuntimeProviderInstallPanel_The_targeted_runtime_contains_a_portlet_library );
-        
-        return composite;
-    }
+	}
 }

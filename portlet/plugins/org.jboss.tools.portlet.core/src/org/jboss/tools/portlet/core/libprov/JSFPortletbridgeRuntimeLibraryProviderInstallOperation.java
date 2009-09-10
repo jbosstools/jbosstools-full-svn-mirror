@@ -35,11 +35,16 @@ public class JSFPortletbridgeRuntimeLibraryProviderInstallOperation extends
 		JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig portletbridgeConfig = (JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig) config;
 		String pbRuntime = portletbridgeConfig.getPortletbridgeHome();
 		getPortletbridgeLibraries(monitor, project, pbRuntime);
-		
+		boolean addRichfacesCapabilities = portletbridgeConfig.isAddRichfacesCapabilities();
+		String richfacesType = portletbridgeConfig.getRichfacesType();
+		String richfacesRuntime = portletbridgeConfig.getRichfacesRuntime();
 		try {
 			Preferences prefs = FacetedProjectFramework.getPreferences( config.getProjectFacet() );
 			prefs = prefs.node(IPortletConstants.PORTLET_BRIDGE_HOME);
 			prefs.put(IPortletConstants.PREFS_PORTLETBRIDGE_HOME, pbRuntime);
+			prefs.putBoolean(IPortletConstants.RICHFACES_CAPABILITIES, addRichfacesCapabilities);
+			prefs.put(IPortletConstants.RICHFACES_LIBRARIES_TYPE, richfacesType);
+			prefs.put(IPortletConstants.RICHFACES_RUNTIME, richfacesRuntime);
 			prefs.flush();
 		} catch (BackingStoreException e) {
 			PortletCoreActivator.log(e);

@@ -1,10 +1,9 @@
 package org.jboss.tools.portlet.ui.internal.libprov;
 
-import java.io.File;
-import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.jface.dialogs.IDialogSettings;
-import org.eclipse.jst.common.project.facet.ui.libprov.LibraryProviderOperationPanel;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -14,40 +13,32 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Link;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.libprov.JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig;
 import org.jboss.tools.portlet.ui.Messages;
 import org.jboss.tools.portlet.ui.PortletUIActivator;
 
-public class JSFPortletbridgeRuntimeProviderInstallPanel extends LibraryProviderOperationPanel {
+public class JSFPortletbridgeRuntimeProviderInstallPanel extends
+		AbstractPortletProviderInstallPanel {
 
 	@Override
-    public Control createControl( final Composite parent )
-    {
-        final Composite composite = new Composite( parent, SWT.NONE );
-        final GridLayout layout = new GridLayout( 1, false );
+	protected void addMessage(Composite composite) {
+		
+	}
 
-        layout.marginWidth = 0;
-        layout.marginHeight = 0;
-        composite.setLayout( layout );
-        addPortletBridgeGroup(composite);
-//        final Link link = new Link( composite, SWT.WRAP );
-//        final GridData data = new GridData( SWT.FILL, SWT.BEGINNING, true, false );
-//        data.widthHint = 300;
-//        link.setLayoutData( data );
-//        link.setText( Messages.JSFPortletServerRuntimeProviderInstallPanel_The_targeted_runtime_contains_a_portlet_library );
-//        
-        return composite;
-    }
+	@Override
+	protected List<String> getRichfacesTypes() {
+		List<String> types = new ArrayList<String>();
+		types.add(IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE);
+		types.add(IPortletConstants.LIBRARIES_PROVIDED_BY_RICHFACES);
+		return types;
+	}
 	
-	private void addPortletBridgeGroup(Composite composite) {
+	@Override
+	protected void addPortletBridgeGroup(Composite composite) {
 		GridData gd;
 		Group portletBridgeGroup = new Group(composite, SWT.NONE);
 		portletBridgeGroup.setText(Messages.JSFPortletFacetInstallPage_Portletbridge_Runtime);
@@ -110,9 +101,5 @@ public class JSFPortletbridgeRuntimeProviderInstallPanel extends LibraryProvider
 		}
 		String newPath = dialog.getFilterPath();
 		folderText.setText(newPath);
-	}
-
-	private Shell getShell() {
-		return Display.getCurrent().getActiveShell();
 	}
 }
