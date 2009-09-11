@@ -763,8 +763,12 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    Studio</ulink></para>
   <para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
    Forum</ulink></para>
+	<para>
+	Wiki: <ulink url="http://www.jboss.org/community/wiki/JBossTools">  JBossToolsWiki </ulink>  
+   </para>  
   <para>Subscription: <ulink url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">JBDS
    Subscription</ulink></para>
+   
 
   <para>The latest documentation builds are available <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
  </section>
