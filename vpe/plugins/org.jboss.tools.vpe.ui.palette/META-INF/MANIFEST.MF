@@ -1,11 +1,12 @@
 Manifest-Version: 1.0
-Eclipse-LazyStart: true
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
 Bundle-Name: %pluginName
 Bundle-Activator: org.jboss.tools.vpe.ui.palette.PalettePlugin
 Bundle-Vendor: %providerName
 Bundle-SymbolicName: org.jboss.tools.vpe.ui.palette
 Bundle-Localization: plugin
-Provide-Package: org.jboss.tools.vpe.ui.palette,org.jboss.tools.vpe.ui.palette.model
+Export-Package: org.jboss.tools.vpe.ui.palette,org.jboss.tools.vpe.ui.palette.model
 Require-Bundle: org.eclipse.ui.ide,
  org.eclipse.jface.text,
  org.eclipse.ui,

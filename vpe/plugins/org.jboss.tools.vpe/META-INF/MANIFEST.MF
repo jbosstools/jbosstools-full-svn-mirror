@@ -1,19 +1,18 @@
 Manifest-Version: 1.0
-Eclipse-LazyStart: true
+Bundle-ActivationPolicy: lazy
 Bundle-Name: %pluginName
 Bundle-ClassPath: vpe.jar
 Bundle-Activator: org.jboss.tools.vpe.VpePlugin
+Bundle-ManifestVersion: 2
 Bundle-Vendor: %providerName
 Bundle-SymbolicName: org.jboss.tools.vpe;singleton:=true
 Bundle-Localization: plugin
-Provide-Package: meta,
+Export-Package: 
  org.jboss.tools.vpe,
  org.jboss.tools.vpe.dnd,
  org.jboss.tools.vpe.editor,
  org.jboss.tools.vpe.editor.bundle,
  org.jboss.tools.vpe.editor.context,
- org.jboss.tools.vpe.editor.dnd,
- org.jboss.tools.vpe.editor.dnd.composite,
  org.jboss.tools.vpe.editor.dnd.context,
  org.jboss.tools.vpe.editor.dnd.context.xpl,
  org.jboss.tools.vpe.editor.mapping,
@@ -22,8 +21,10 @@ Provide-Package: meta,
  org.jboss.tools.vpe.editor.menu.xpl,
  org.jboss.tools.vpe.editor.mozilla,
  org.jboss.tools.vpe.editor.preferences,
+ org.jboss.tools.vpe.editor.proxy,
  org.jboss.tools.vpe.editor.selection,
  org.jboss.tools.vpe.editor.template,
+ org.jboss.tools.vpe.editor.template.custom,
  org.jboss.tools.vpe.editor.template.dnd,
  org.jboss.tools.vpe.editor.template.expression,
  org.jboss.tools.vpe.editor.template.resize,
@@ -34,10 +35,7 @@ Provide-Package: meta,
  org.jboss.tools.vpe.editor.toolbar.format.handler,
  org.jboss.tools.vpe.editor.util,
  org.jboss.tools.vpe.editor.xpl,
- org.jboss.tools.vpe.el,
- org.jboss.tools.vpe.el.messages,
  org.jboss.tools.vpe.messages,
- org.jboss.tools.vpe.resref,
  org.jboss.tools.vpe.selbar
 Require-Bundle: org.eclipse.jface.text,
  org.jboss.tools.jst.jsp,
