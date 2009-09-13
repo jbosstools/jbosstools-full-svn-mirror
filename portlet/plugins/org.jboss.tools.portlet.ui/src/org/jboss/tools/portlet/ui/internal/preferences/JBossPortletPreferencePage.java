@@ -39,13 +39,17 @@ public class JBossPortletPreferencePage extends PreferencePage implements
 	@Override
 	protected void performDefaults() {
 		button.setSelection(PortletCoreActivator.DEFAULT_CHECK_RUNTIMES);
+		Preferences preferences = PortletCoreActivator.getDefault().getPluginPreferences();
+		preferences.setValue(PortletCoreActivator.CHECK_RUNTIMES, PortletCoreActivator.DEFAULT_CHECK_RUNTIMES);
+		PortletCoreActivator.getDefault().savePluginPreferences();
 		super.performDefaults();
 	}
 
 	@Override
 	public boolean performOk() {
 		Preferences preferences = PortletCoreActivator.getDefault().getPluginPreferences();
-		preferences.setDefault(PortletCoreActivator.CHECK_RUNTIMES, button.getSelection());
+		preferences.setValue(PortletCoreActivator.CHECK_RUNTIMES, button.getSelection());
+		PortletCoreActivator.getDefault().savePluginPreferences();
 		return super.performOk();
 	}
 
