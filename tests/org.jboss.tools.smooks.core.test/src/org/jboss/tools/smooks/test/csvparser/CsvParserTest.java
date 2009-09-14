@@ -101,11 +101,11 @@ public class CsvParserTest extends BaseTestCase {
 		IXMLStructuredObject child = tag.getChildren().get(0);
 		assertEquals("csv-record", child.getNodeName());
 		
-		checkNode("a",tag);
-		checkNode("b",tag);
-		checkNode("c",tag);
-		checkNode("d",tag);
-		checkNode("e",tag);
+		checkNode("firstname",tag);
+		checkNode("lastname",tag);
+		checkNode("gender",tag);
+		checkNode("age",tag);
+		checkNode("country",tag);
 	}
 	
 	private void checkTagList1(TagList tagList){
