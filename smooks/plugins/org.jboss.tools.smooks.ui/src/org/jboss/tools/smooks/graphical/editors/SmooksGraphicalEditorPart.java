@@ -73,6 +73,7 @@ import org.jboss.tools.smooks.graphical.editors.model.JavaBeanChildGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.JavaBeanGraphModel;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
+import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -83,7 +84,7 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  * 
  */
 public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implements ISelectionChangedListener,
-		ISourceSynchronizeListener {
+		ISourceSynchronizeListener, ISmooksGraphChangeListener {
 
 	public static final int EXECUTE_COMMAND = 0;
 
@@ -509,24 +510,9 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 		}
 	}
 
-	@Override
-	protected void hookGraphicalViewer() {
-		// super.hookGraphicalViewer();
-		getGraphicalViewer().addSelectionChangedListener(getSelectionSynchronizer());
-		getGraphicalViewer().addSelectionChangedListener(this);
-	}
-
-	protected void initGraphicalModel() {
-		if (root == null) {
-			root = new RootModel();
-		} else {
-			root.removeAllTreeNode();
-
-		}
-		Object obj = smooksModelProvider.getSmooksModel();
-		AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) smooksModelProvider
-				.getEditingDomain();
-		if (inputDataList != null && obj != null && obj instanceof DocumentRoot && editingDomain != null) {
+	protected List<AbstractSmooksGraphicalModel> createInputDataGraphModel() {
+		List<AbstractSmooksGraphicalModel> inputGraphModel = new ArrayList<AbstractSmooksGraphicalModel>();
+		if (inputDataList != null && root != null) {
 			for (Iterator<?> iterator = inputDataList.iterator(); iterator.hasNext();) {
 				Object object = (Object) iterator.next();
 				ITreeContentProvider contentProvider = new XMLStructuredDataContentProvider();
@@ -543,8 +529,33 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 					TreeContainerModel container = new InputDataContianerModel(containerModel, contentProvider,
 							labelProvider);
 					root.addTreeNode(container);
+					inputGraphModel.add(container);
 				}
 			}
+		}
+		return inputGraphModel;
+	}
+
+	@Override
+	protected void hookGraphicalViewer() {
+		// super.hookGraphicalViewer();
+		getGraphicalViewer().addSelectionChangedListener(getSelectionSynchronizer());
+		getGraphicalViewer().addSelectionChangedListener(this);
+	}
+
+	protected void initGraphicalModel() {
+		if (root == null) {
+			root = new RootModel();
+		} else {
+			root.removeAllTreeNode();
+
+		}
+		Object obj = smooksModelProvider.getSmooksModel();
+		if(obj == null) return;
+		AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) smooksModelProvider
+				.getEditingDomain();
+		if (inputDataList != null && obj != null && obj instanceof DocumentRoot && editingDomain != null) {
+			createInputDataGraphModel();
 			SmooksResourceListType listType = ((DocumentRoot) obj).getSmooksResourceList();
 			List<?> arcList = listType.getAbstractResourceConfig();
 			for (Iterator<?> iterator = arcList.iterator(); iterator.hasNext();) {
@@ -693,7 +704,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 	}
 
 	protected void expandConnectedModels(Collection<TreeNodeConnection> connections) {
-		if (connections == null)
+		if (connections == null || connections.isEmpty())
 			return;
 		List<TreeNodeModel> expanedTreeNodeList = new ArrayList<TreeNodeModel>();
 		for (Iterator<?> iterator = connections.iterator(); iterator.hasNext();) {
@@ -785,7 +796,63 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 
 	@Override
 	protected PaletteRoot getPaletteRoot() {
-		SmooksGraphicalEditorPaletteRootCreator creator = new SmooksGraphicalEditorPaletteRootCreator();
+		SmooksGraphicalEditorPaletteRootCreator creator = new SmooksGraphicalEditorPaletteRootCreator(
+				(AdapterFactoryEditingDomain) this.smooksModelProvider.getEditingDomain(), getSmooksResourceListType());
 		return creator.createPaletteRoot();
+	}
+	
+	private SmooksResourceListType getSmooksResourceListType(){
+		if(smooksModelProvider != null){
+			Object obj = smooksModelProvider.getSmooksModel();
+			smooksResourceList = null;
+			if (obj instanceof DocumentRoot) {
+				smooksResourceList = ((DocumentRoot) obj).getSmooksResourceList();
+			}
+			return smooksResourceList;
+		}
+		return null;
+	}
+
+	public void graphChanged(SmooksGraphicsExtType extType) {
+
+	}
+
+	public void graphPropertyChange(EStructuralFeature featre, Object value) {
+
+	}
+
+	public void inputTypeChanged(SmooksGraphicsExtType extType) {
+		if (root != null) {
+			List<Object> newInputDataList = SelectorCreationDialog.generateInputData(smooksModelProvider
+					.getSmooksGraphicsExt(), getSmooksResourceListType());
+
+			List<InputDataContianerModel> inputs = new ArrayList<InputDataContianerModel>();
+			List<AbstractSmooksGraphicalModel> children = root.getChildren();
+			// remove all input data graph model
+			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+				AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator
+						.next();
+				if (abstractSmooksGraphicalModel instanceof InputDataContianerModel) {
+					inputs.add((InputDataContianerModel) abstractSmooksGraphicalModel);
+				}
+			}
+
+			for (Iterator<?> iterator = inputs.iterator(); iterator.hasNext();) {
+				InputDataContianerModel inputModel = (InputDataContianerModel) iterator.next();
+				AbstractSmooksGraphicalModel.disconnectAllConnections(inputModel);
+				root.removeTreeNode(inputModel);
+			}
+
+			inputDataList.clear();
+			inputDataList.addAll(newInputDataList);
+
+			// renew input data graph model
+			List<AbstractSmooksGraphicalModel> inputGraphModel = createInputDataGraphModel();
+			if (inputGraphModel != null && !inputGraphModel.isEmpty()) {
+				List<TreeNodeConnection> connections = createConnectionModel();
+				createConnection(inputGraphModel, connections);
+				expandConnectedModels(connections);
+			}
+		}
 	}
 }

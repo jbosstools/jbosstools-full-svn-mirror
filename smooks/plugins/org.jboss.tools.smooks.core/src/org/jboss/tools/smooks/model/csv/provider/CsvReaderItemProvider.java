@@ -200,10 +200,11 @@ public class CsvReaderItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((CsvReader)object).getTargetProfile();
-		return label == null || label.length() == 0 ?
-			getString("_UI_CsvReader_type") :
-			getString("_UI_CsvReader_type") + " " + label;
+		return "CSV";
+//		String label = ((CsvReader)object).getTargetProfile();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_CsvReader_type") :
+//			getString("_UI_CsvReader_type") + " " + label;
 	}
 
 	/**

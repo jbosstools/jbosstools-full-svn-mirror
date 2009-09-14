@@ -292,6 +292,11 @@ public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGrap
 		inputType = newInputType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE, oldInputType, inputType));
+		List<ISmooksGraphChangeListener> listeners = this.getChangeListeners();
+		for (Iterator<ISmooksGraphChangeListener> iterator = listeners.iterator(); iterator.hasNext();) {
+			ISmooksGraphChangeListener iSmooksGraphChangeListener = (ISmooksGraphChangeListener) iterator.next();
+			iSmooksGraphChangeListener.graphPropertyChange(GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE, inputType);
+		}
 	}
 
 	/**
@@ -541,6 +546,14 @@ public class SmooksGraphicsExtTypeImpl extends EObjectImpl implements SmooksGrap
 			changeListeners = new ArrayList<ISmooksGraphChangeListener>();
 		}
 		return changeListeners;
+	}
+
+	public void setInputType(String value, boolean fireEvent) {
+		if(fireEvent){
+			setInputType(value);
+		}else{
+			inputType = value;
+		}
 	}
 
 

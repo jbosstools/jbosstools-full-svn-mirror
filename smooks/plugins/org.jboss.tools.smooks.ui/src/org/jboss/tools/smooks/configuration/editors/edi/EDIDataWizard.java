@@ -49,11 +49,12 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 
 	@Override
 	public void addPages() {
-		ediFilePage = new EDIDataPathWizardPage("EDI Data Page", new String[] {});
+		ediFilePage = new EDIDataPathWizardPage("EDI Data Page", new String[] {"edi"});
 		this.addPage(ediFilePage);
 
-		mappingFilePage = new EDIMappingDataPathWizardPage("EDI Config Page", null);
-		this.addPage(mappingFilePage);
+		// mappingFilePage = new EDIMappingDataPathWizardPage("EDI Config Page",
+		// null);
+		// this.addPage(mappingFilePage);
 		super.addPages();
 	}
 
@@ -64,19 +65,21 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 	 */
 	@Override
 	public boolean performFinish() {
-		if (mappingFilePage.isUseAvaliableReader()) {
-			return true;
-		}
-		if (mappingFilePage.isCreateNewReader()) {
-			String encoding = mappingFilePage.getEncoding();
-			String path = mappingFilePage.getFilePath();
-			EDIReader reader = EdiFactory.eINSTANCE.createEDIReader();
-			reader.setEncoding(encoding);
-			reader.setMappingModel(path);
-			Command command = AddCommand.create(editingDomain, resourceList,
-					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
-							.createEntry(EdiPackage.Literals.EDI_DOCUMENT_ROOT__READER, reader));
-			editingDomain.getCommandStack().execute(command);
+		if (mappingFilePage != null) {
+			if (mappingFilePage.isUseAvaliableReader()) {
+				return true;
+			}
+			if (mappingFilePage.isCreateNewReader()) {
+				String encoding = mappingFilePage.getEncoding();
+				String path = mappingFilePage.getFilePath();
+				EDIReader reader = EdiFactory.eINSTANCE.createEDIReader();
+				reader.setEncoding(encoding);
+				reader.setMappingModel(path);
+				Command command = AddCommand.create(editingDomain, resourceList,
+						SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
+								.createEntry(EdiPackage.Literals.EDI_DOCUMENT_ROOT__READER, reader));
+				editingDomain.getCommandStack().execute(command);
+			}
 		}
 		return true;
 	}
@@ -111,14 +114,17 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 	 */
 	public Properties getProperties() {
 		Properties pros = new Properties();
-		if (mappingFilePage.isUseAvaliableReader() || mappingFilePage.isCreateNewReader()) {
-			pros.put(EDIDataParser.USE_AVAILABEL_READER, "true");
-			return pros;
+		if (mappingFilePage != null) {
+			if (mappingFilePage.isUseAvaliableReader() || mappingFilePage.isCreateNewReader()) {
+				pros.put(EDIDataParser.USE_AVAILABEL_READER, "true");
+				return pros;
+			}
+
+			String encoding = mappingFilePage.getEncoding();
+			pros.put(EDIDataParser.ENCODING, encoding);
+			String path = mappingFilePage.getFilePath();
+			pros.put(EDIDataParser.MAPPING_MODEL, path);
 		}
-		String encoding = mappingFilePage.getEncoding();
-		pros.put(EDIDataParser.ENCODING, encoding);
-		String path = mappingFilePage.getFilePath();
-		pros.put(EDIDataParser.MAPPING_MODEL, path);
 		return pros;
 	}
 

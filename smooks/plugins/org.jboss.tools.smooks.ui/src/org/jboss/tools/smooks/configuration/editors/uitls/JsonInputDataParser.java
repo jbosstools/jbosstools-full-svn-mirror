@@ -25,7 +25,6 @@ import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
-import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.json.JsonReader;
 import org.jboss.tools.smooks.model.json.Key;
 import org.jboss.tools.smooks.model.json.KeyMap;
@@ -33,7 +32,6 @@ import org.jboss.tools.smooks.model.json12.Json12Package;
 import org.jboss.tools.smooks.model.json12.Json12Reader;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.milyn.Smooks;
 import org.milyn.cdr.Parameter;
 import org.milyn.json.JSONReaderConfigurator;
@@ -120,91 +118,28 @@ public class JsonInputDataParser {
 	public IXMLStructuredObject parseJsonFile(InputStream stream, InputType inputType,
 			SmooksResourceListType resourceList) throws FileNotFoundException, ParserConfigurationException,
 			DocumentException, InvocationTargetException {
-		List<ParamType> paramList = inputType.getParam();
-		String rootName = null;
-		String arrayElementName = null;
-		String keyWhitspaceReplacement = null;
-		String keyPrefixOnNumeric = null;
-		String illegalElementNameCharReplacement = null;
-		String nullValueReplacement = null;
-		String encoding = null;
-		String indent = null;
 
-		String type = inputType.getType();
-
-		Map<String, String> keyMap = new HashMap<String, String>();
-
-		for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
-			ParamType paramType = (ParamType) iterator.next();
-			if (paramType.getName().equals(LINK_JSON_READER)) {
-				if (paramType.getValue().equalsIgnoreCase("true") && resourceList != null) {
-					List<AbstractReader> readers = resourceList.getAbstractReader();
-					int count = 0;
-					int index = -1;
-					for (Iterator<?> iterator2 = readers.iterator(); iterator2.hasNext();) {
-						AbstractReader abstractReader = (AbstractReader) iterator2.next();
-						if (SmooksModelUtils.INPUT_TYPE_JSON_1_1.equals(type)) {
-							if (abstractReader instanceof JsonReader) {
-								count++;
-								if (index == -1) {
-									index = readers.indexOf(abstractReader);
-								}
-							}
-						}
-						if (SmooksModelUtils.INPUT_TYPE_JSON_1_2.equals(type)) {
-							if (abstractReader instanceof Json12Reader) {
-								count++;
-								if (index == -1) {
-									index = readers.indexOf(abstractReader);
-								}
-							}
-						}
-					}
-
-					if (count > 1) {
-						// throw new
-						// RuntimeException("The smooks config file should have only one JSON reader");
-					}
-					if (index != -1) {
-						return parseJsonFile(stream, readers.get(index));
-					}
-
+		List<AbstractReader> readers = resourceList.getAbstractReader();
+		int count = 0;
+		int index = -1;
+		for (Iterator<?> iterator2 = readers.iterator(); iterator2.hasNext();) {
+			AbstractReader abstractReader = (AbstractReader) iterator2.next();
+			if (abstractReader instanceof JsonReader || abstractReader instanceof Json12Reader) {
+				count++;
+				if (index == -1) {
+					index = readers.indexOf(abstractReader);
 				}
-			}
-			if (paramType.getName().equals(ROOT_NAME)) {
-				rootName = paramType.getValue();
-			}
-			if (paramType.getName().startsWith(KEY)) {
-				String name = paramType.getName().substring(KEY.length(), paramType.getName().length());
-				String value = paramType.getValue();
-				keyMap.put(name, value);
-			}
-			if (paramType.getName().equals(ARRAY_ELEMENT_NAME)) {
-				arrayElementName = paramType.getValue();
-			}
-			if (paramType.getName().equals(ILLEGAL_REPLACE)) {
-				illegalElementNameCharReplacement = paramType.getValue();
-			}
-			if (paramType.getName().equals(PREFIX_ON_NUMERIC)) {
-				keyPrefixOnNumeric = paramType.getValue();
-			}
-			if (paramType.getName().equals(SPACE_REPLACE)) {
-				keyWhitspaceReplacement = paramType.getValue();
-			}
-			if (paramType.getName().equals(ENCODING2)) {
-				encoding = paramType.getValue();
-			}
-			if (paramType.getName().equals(NULL_REPLACE)) {
-				nullValueReplacement = paramType.getValue();
-			}
-
-			if (paramType.getName().equals(INDENT)) {
-				indent = paramType.getValue();
 			}
 		}
 
-		return this.parseJsonFile(stream, rootName, arrayElementName, keyWhitspaceReplacement, keyPrefixOnNumeric,
-				illegalElementNameCharReplacement, nullValueReplacement, keyMap, indent, encoding);
+		if (count > 1) {
+			// throw new
+			// RuntimeException("The smooks config file should have only one JSON reader");
+		}
+		if (index != -1) {
+			return parseJsonFile(stream, readers.get(index));
+		}
+		return null;
 	}
 
 	public IXMLStructuredObject parseJsonFile(String filePath, InputType inputType, SmooksResourceListType resourceList)

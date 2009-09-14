@@ -17,11 +17,11 @@ import org.jboss.tools.smooks.configuration.editors.xml.AbstractFileSelectionWiz
  * @author Dart Peng (dpeng@redhat.com) Date Apr 13, 2009
  */
 public class FileSelectionWizardPage extends AbstractFileSelectionWizardPage {
-	
+
 	private ProtableFileStringProcessor processor = null;
-	
-	public FileSelectionWizardPage(String pageName) {
-		super(pageName , new String[]{});
+
+	public FileSelectionWizardPage(String pageName, Object[] initSelection) {
+		super(pageName, new String[] {});
 		processor = new ProtableFileStringProcessor();
 		setFilePathProcessor(processor);
 		setTitle("File Selection");
@@ -40,12 +40,11 @@ public class FileSelectionWizardPage extends AbstractFileSelectionWizardPage {
 		return null;
 	}
 
-
 	@Override
 	protected String processFileSystemFilePath(String path) {
-		if(getFilePathProcessor() != null){
+		if (getFilePathProcessor() != null) {
 			String s = getFilePathProcessor().processFileSystemPath(path);
-			if(s != null){
+			if (s != null) {
 				return s;
 			}
 		}
@@ -54,17 +53,16 @@ public class FileSelectionWizardPage extends AbstractFileSelectionWizardPage {
 
 	@Override
 	protected String processWorkSpaceFilePath(IFile file) {
-		if(getFilePathProcessor() != null){
+		if (getFilePathProcessor() != null) {
 			String s = getFilePathProcessor().processWorkBenchPath(file);
-			if(s != null){
+			if (s != null) {
 				return s;
 			}
 		}
 		return this.processor.processWorkBenchPath(file);
 	}
 
-
-	private class ProtableFileStringProcessor implements IFilePathProcessor{
+	private class ProtableFileStringProcessor implements IFilePathProcessor {
 
 		public String processWorkBenchPath(IFile file) {
 			String s = file.getFullPath().toPortableString();
@@ -74,7 +72,7 @@ public class FileSelectionWizardPage extends AbstractFileSelectionWizardPage {
 		public String processFileSystemPath(String filePath) {
 			return filePath;
 		}
-		
+
 	}
 
 }

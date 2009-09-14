@@ -1036,7 +1036,8 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	public List<TreeNodeModel> createLinkModel() {
 		if (graphicalRootModel != null && segments != null) {
 			List<Segment> segmentList = segments.getSegment();
-			return linkNode(segmentList);
+			List<TreeNodeModel> links =  linkNode(segmentList);
+			return links;
 		}
 		return Collections.emptyList();
 	}
@@ -1124,7 +1125,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			if (data == model) {
 				return treeNodeModel;
 			}
-			AbstractSmooksGraphicalModel m = findEDIGraphicalModel(model, treeNodeModel.getChildrenWithoutDynamic());
+			AbstractSmooksGraphicalModel m = findEDIGraphicalModel(model, treeNodeModel.getChildren());
 			if (m != null) {
 				return m;
 			}

@@ -299,10 +299,11 @@ public class Json12ReaderItemProvider
 	 * @generated
 	 */
 	public String getText(Object object) {
-		String label = ((Json12Reader)object).getArrayElementName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Json12Reader_type") :
-			getString("_UI_Json12Reader_type") + " " + label;
+		return "JSON";
+//		String label = ((Json12Reader)object).getArrayElementName();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_Json12Reader_type") :
+//			getString("_UI_Json12Reader_type") + " " + label;
 	}
 
 	/**

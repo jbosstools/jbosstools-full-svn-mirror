@@ -278,10 +278,11 @@ public class JsonReaderItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((JsonReader)object).getArrayElementName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_JsonReader_type") :
-			getString("_UI_JsonReader_type") + " " + label;
+		return "JSON";
+//		String label = ((JsonReader)object).getArrayElementName();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_JsonReader_type") :
+//			getString("_UI_JsonReader_type") + " " + label;
 	}
 
 	/**

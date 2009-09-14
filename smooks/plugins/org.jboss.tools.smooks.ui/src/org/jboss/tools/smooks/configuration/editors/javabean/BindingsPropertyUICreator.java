@@ -98,7 +98,7 @@ public class BindingsPropertyUICreator extends PropertyUICreator {
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 			ISmooksModelProvider formEditor, IEditorPart part) {
 		if (feature == JavabeanPackage.eINSTANCE.getBindingsType_Class()) {
-			return createBeanClassTextWithButton(parent, toolkit, propertyDescriptor, model);
+			return createBeanClassTextWithButton(parent, toolkit, propertyDescriptor, model , formEditor);
 		}
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor, part);
 	}
@@ -295,7 +295,7 @@ public class BindingsPropertyUICreator extends PropertyUICreator {
 	}
 
 	protected AttributeFieldEditPart createBeanClassTextWithButton(Composite composite, FormToolkit toolkit,
-			final IItemPropertyDescriptor propertyDescriptor, final Object model) {
-		return SmooksUIUtils.createJavaTypeSearchFieldEditor(composite, toolkit, propertyDescriptor, (EObject) model);
+			final IItemPropertyDescriptor propertyDescriptor, final Object model , ISmooksModelProvider provider) {
+		return SmooksUIUtils.createJavaTypeSearchFieldEditor(composite, toolkit, propertyDescriptor, (EObject) model , provider);
 	}
 }

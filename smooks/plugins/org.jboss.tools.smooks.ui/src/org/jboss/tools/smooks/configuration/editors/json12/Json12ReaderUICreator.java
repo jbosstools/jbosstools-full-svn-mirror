@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors.json;
+package org.jboss.tools.smooks.configuration.editors.json12;
 
 import java.util.List;
 
@@ -29,14 +29,14 @@ import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.ModelChildrenTablePanelCreator;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
-import org.jboss.tools.smooks.model.json.JsonFactory;
-import org.jboss.tools.smooks.model.json.JsonPackage;
-import org.jboss.tools.smooks.model.json.JsonReader;
+import org.jboss.tools.smooks.model.json12.Json12Factory;
+import org.jboss.tools.smooks.model.json12.Json12Package;
+import org.jboss.tools.smooks.model.json12.Json12Reader;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
  */
-public class JsonReaderUICreator extends PropertyUICreator {
+public class Json12ReaderUICreator extends PropertyUICreator {
 
 	/*
 	 * (non-Javadoc)
@@ -50,28 +50,14 @@ public class JsonReaderUICreator extends PropertyUICreator {
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 			ISmooksModelProvider formEditor, IEditorPart part) {
-		if (feature == JsonPackage.eINSTANCE.getJsonReader_ArrayElementName()) {
-		}
-		if (feature == JsonPackage.eINSTANCE.getJsonReader_Encoding()) {
-		}
-		if (feature == JsonPackage.eINSTANCE.getJsonReader_IllegalElementNameCharReplacement()) {
-		}
-		if (feature == JsonPackage.eINSTANCE.getJsonReader_KeyPrefixOnNumeric()) {
-		}
-		if (feature == JsonPackage.eINSTANCE.getJsonReader_KeyWhitspaceReplacement()) {
-		}
-		if (feature == JsonPackage.eINSTANCE.getJsonReader_NullValueReplacement()) {
-		}
-		if (feature == JsonPackage.eINSTANCE.getJsonReader_RootName()) {
-		}
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor, part);
 	}
 
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart editorPart) {
-		if (model instanceof JsonReader) {
-			EObject keyMap = ((JsonReader) model).getKeyMap();
+		if (model instanceof Json12Reader) {
+			EObject keyMap = ((Json12Reader) model).getKeyMap();
 			if (keyMap != null) {
 				Group group = new Group(parent, SWT.NONE);
 				group.setText("Key Maps");
@@ -84,12 +70,12 @@ public class JsonReaderUICreator extends PropertyUICreator {
 
 					@Override
 					protected EStructuralFeature getChildrenFeature() {
-						return JsonPackage.Literals.KEY_MAP__KEY;
+						return Json12Package.Literals.KEY_MAP__KEY;
 					}
 
 					@Override
 					protected EObject newChildModel() {
-						return JsonFactory.eINSTANCE.createKey();
+						return Json12Factory.eINSTANCE.createKey();
 					}
 				};
 				creator.createChildrenTablePanel(group);

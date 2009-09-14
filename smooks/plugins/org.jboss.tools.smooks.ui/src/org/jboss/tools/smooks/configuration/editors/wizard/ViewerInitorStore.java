@@ -144,7 +144,7 @@ public class ViewerInitorStore {
 
 		// for json 1.1
 		BaseViewerInitor jsonViewerInitor = new BaseViewerInitor();
-		String name = "Json 1.1";
+		String name = "JSON";
 		String description = "Select Json data file as the input data.";
 		String iconPath = null;
 		String typeID = SmooksModelUtils.INPUT_TYPE_JSON_1_1;
@@ -174,7 +174,8 @@ public class ViewerInitorStore {
 		json12ViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
 		json12ViewerInitor.setStructuredDataLoadWizard(new Json12DataWizard());
 		json12ViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
-		map.put(typeID, json12ViewerInitor);
+		// don't add this
+//		map.put(typeID, json12ViewerInitor);
 
 
 		// for java
@@ -232,10 +233,10 @@ public class ViewerInitorStore {
 
 		// for Csv 1.1
 		BaseViewerInitor csvViewerInitor = new BaseViewerInitor();
-		name = "CSV 1.1";
-		description = "Select CSV data file as the input data (version 1.1).";
+		name = "CSV";
+		description = "Select CSV data file as the input data.";
 		iconPath = null;
-		typeID = SmooksModelUtils.INPUT_TYPE_CSV_1_1;
+		typeID = SmooksModelUtils.INPUT_TYPE_CSV;
 
 		csvViewerInitor.setName(name);
 		csvViewerInitor.setDescription(description);
@@ -260,11 +261,11 @@ public class ViewerInitorStore {
 		csv12ViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
 		csv12ViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
 		csv12ViewerInitor.setStructuredDataLoadWizard(new CSV12InputDataWizard());
-		map.put(typeID, csv12ViewerInitor);
+//		map.put(typeID, csv12ViewerInitor);
 
 		// for EDI 1.1
 		BaseViewerInitor ediViewerInitor = new BaseViewerInitor();
-		name = "EDI 1.1";
+		name = "EDI";
 		description = "Select EDI data file as the input data.";
 		iconPath = null;
 		typeID = SmooksModelUtils.INPUT_TYPE_EDI_1_1;
@@ -294,7 +295,7 @@ public class ViewerInitorStore {
 		edi12ViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
 		edi12ViewerInitor.setStructuredDataLoadWizard(new EDIReader12DataWizard());
 		// jsonViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
-		map.put(typeID, edi12ViewerInitor);
+//		map.put(typeID, edi12ViewerInitor);
 
 		
 		return map;

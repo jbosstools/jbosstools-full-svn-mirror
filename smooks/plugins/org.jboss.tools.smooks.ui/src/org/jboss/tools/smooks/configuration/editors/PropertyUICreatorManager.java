@@ -17,6 +17,7 @@ import org.jboss.tools.smooks.configuration.editors.calc.CounterUICreator;
 import org.jboss.tools.smooks.configuration.editors.csv.CsvReaderUICreator;
 import org.jboss.tools.smooks.configuration.editors.csv12.Csv12ReaderBindingPropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.csv12.Csv12ReaderMapBindingPropertyUICreator;
+import org.jboss.tools.smooks.configuration.editors.csv12.Csv12ReaderUICreator;
 import org.jboss.tools.smooks.configuration.editors.datasource.DataSourceJndiUICreator;
 import org.jboss.tools.smooks.configuration.editors.datasource.DirectUICreator;
 import org.jboss.tools.smooks.configuration.editors.dbrouting.ExecutorUICreator;
@@ -59,6 +60,7 @@ import org.jboss.tools.smooks.configuration.editors.jms12.JMSRouter12UICreator;
 import org.jboss.tools.smooks.configuration.editors.json.JsonReaderUICreator;
 import org.jboss.tools.smooks.configuration.editors.json.KeyMapUICreator;
 import org.jboss.tools.smooks.configuration.editors.json.KeyUICreator;
+import org.jboss.tools.smooks.configuration.editors.json12.Json12ReaderUICreator;
 import org.jboss.tools.smooks.configuration.editors.persistence12.DeleterUICreator;
 import org.jboss.tools.smooks.configuration.editors.persistence12.FlusherUICreator;
 import org.jboss.tools.smooks.configuration.editors.persistence12.InserterUICreator;
@@ -92,6 +94,7 @@ import org.jboss.tools.smooks.configuration.editors.xsl.XslUICreator;
 import org.jboss.tools.smooks.model.calc.impl.CounterImpl;
 import org.jboss.tools.smooks.model.csv.impl.CsvReaderImpl;
 import org.jboss.tools.smooks.model.csv12.impl.BindingImpl;
+import org.jboss.tools.smooks.model.csv12.impl.CSV12ReaderImpl;
 import org.jboss.tools.smooks.model.csv12.impl.MapBindingImpl;
 import org.jboss.tools.smooks.model.datasource.impl.DataSourceJndiImpl;
 import org.jboss.tools.smooks.model.datasource.impl.DirectImpl;
@@ -123,6 +126,7 @@ import org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl;
 import org.jboss.tools.smooks.model.json.impl.JsonReaderImpl;
 import org.jboss.tools.smooks.model.json.impl.KeyImpl;
 import org.jboss.tools.smooks.model.json.impl.KeyMapImpl;
+import org.jboss.tools.smooks.model.json12.impl.Json12ReaderImpl;
 import org.jboss.tools.smooks.model.medi.impl.ComponentImpl;
 import org.jboss.tools.smooks.model.medi.impl.DelimitersImpl;
 import org.jboss.tools.smooks.model.medi.impl.DescriptionImpl;
@@ -249,6 +253,9 @@ public class PropertyUICreatorManager {
 		map.put(KeyImpl.class, new KeyUICreator());
 		map.put(KeyMapImpl.class, new KeyMapUICreator());
 		map.put(JsonReaderImpl.class, new JsonReaderUICreator());
+		
+		// for JSON 1.2
+		map.put(Json12ReaderImpl.class, new Json12ReaderUICreator());
 
 		// for CSV
 		map.put(CsvReaderImpl.class, new CsvReaderUICreator());
@@ -316,6 +323,7 @@ public class PropertyUICreatorManager {
 		// for CSV Reader v1.2
 		map.put(BindingImpl.class, new Csv12ReaderBindingPropertyUICreator());
 		map.put(MapBindingImpl.class, new Csv12ReaderMapBindingPropertyUICreator());
+		map.put(CSV12ReaderImpl.class, new Csv12ReaderUICreator());
 		
 		// for EDI Reader v1.2
 		map.put(EDI12ReaderImpl.class, new EDIReader12UICreator());

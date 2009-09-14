@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.jboss.tools.smooks.model.json12.Json12Factory;
 import org.jboss.tools.smooks.model.json12.Json12Package;
 import org.jboss.tools.smooks.model.json12.Json12Reader;
 import org.jboss.tools.smooks.model.json12.KeyMap;
@@ -255,6 +256,7 @@ public class Json12ReaderImpl extends AbstractReaderImpl implements Json12Reader
 	 */
 	protected Json12ReaderImpl() {
 		super();
+		this.setKeyMap(Json12Factory.eINSTANCE.createKeyMap());
 	}
 
 	/**

@@ -59,7 +59,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		containerSelectionPage = new SmooksFileContainerSelectionPage("Smooks Configuration File",
 				(IStructuredSelection) selection);
 		addPage(containerSelectionPage);
-		
+
 		versionSelectionPage = new SmooksVersionSelectionPage("Smooks Version Selection");
 		addPage(versionSelectionPage);
 	}
@@ -126,7 +126,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 			}
 			stream.close();
 			// create ext file:
-			createExtentionFile(extFile,version, monitor);
+			createExtentionFile(extFile, version, null, monitor);
 		} catch (IOException e) {
 			SmooksConfigurationActivator.getDefault().log(e);
 		}
@@ -145,12 +145,13 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		});
 		monitor.worked(1);
 	}
-	
-	public static void createExtentionFile(IFile file , String version , IProgressMonitor monitor) throws CoreException, IOException{
-		if(monitor == null){
+
+	public static void createExtentionFile(IFile file, String version, String inputType, IProgressMonitor monitor)
+			throws CoreException, IOException {
+		if (monitor == null) {
 			monitor = new NullProgressMonitor();
 		}
-		InputStream stream1 = createExtContentStream(version);
+		InputStream stream1 = createExtContentStream(version, inputType);
 		if (file.exists()) {
 			file.setContents(stream1, true, true, monitor);
 		} else {
@@ -159,9 +160,21 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		stream1.close();
 	}
 
-	public static InputStream createExtContentStream(String version) {
-		String contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-				+ "    <smooks-graphics-ext platformVersion = \""+version+"\" xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
+	public static InputStream createExtContentStream(String version, String inputType) {
+		String typeContents = null;
+		if (inputType != null) {
+			typeContents = "inputType = \"" + inputType + "\"";
+		}
+		String contents= "";
+		if (typeContents == null) {
+			 contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+					+ "    <smooks-graphics-ext platformVersion = \"" + version
+					+ "\" xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
+		}else{
+			 contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+				+ "    <smooks-graphics-ext platformVersion = \"" + version
+				+ "\" "+typeContents+" xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
+		}
 		return new ByteArrayInputStream(contents.getBytes());
 	}
 
@@ -192,8 +205,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 	}
 
 	private void throwCoreException(String message) throws CoreException {
-		IStatus status = new Status(IStatus.ERROR, SmooksConfigurationActivator.PLUGIN_ID, IStatus.OK,
-				message, null);
+		IStatus status = new Status(IStatus.ERROR, SmooksConfigurationActivator.PLUGIN_ID, IStatus.OK, message, null);
 		throw new CoreException(status);
 	}
 

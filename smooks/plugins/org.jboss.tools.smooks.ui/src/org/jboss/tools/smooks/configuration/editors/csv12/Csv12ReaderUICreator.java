@@ -8,13 +8,16 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors.csv;
+package org.jboss.tools.smooks.configuration.editors.csv12;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.jface.viewers.CellEditor;
@@ -28,24 +31,28 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
+import org.jboss.tools.smooks.configuration.editors.ModelMultiChildrenTabelPanelCreator;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
-import org.jboss.tools.smooks.model.csv.CsvPackage;
+import org.jboss.tools.smooks.model.csv12.CSV12Reader;
+import org.jboss.tools.smooks.model.csv12.Csv12Package;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
  */
-public class CsvReaderUICreator extends PropertyUICreator {
+public class Csv12ReaderUICreator extends PropertyUICreator {
 
 	private TableViewer fieldsViewer;
 
@@ -68,40 +75,68 @@ public class CsvReaderUICreator extends PropertyUICreator {
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 			ISmooksModelProvider formEditor, IEditorPart part) {
 
-		if (feature == CsvPackage.eINSTANCE.getCsvReader_Encoding()) {
-		}
-		if (feature == CsvPackage.eINSTANCE.getCsvReader_Fields()) {
-		}
-		if (feature == CsvPackage.eINSTANCE.getCsvReader_Quote()) {
-		}
-		if (feature == CsvPackage.eINSTANCE.getCsvReader_Separator()) {
-		}
-		if (feature == CsvPackage.eINSTANCE.getCsvReader_SkipLines()) {
-		}
-
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor, part);
-	}
-
-	@Override
-	public boolean ignoreProperty(EAttribute feature) {
-		if (feature.equals(CsvPackage.Literals.CSV_READER__FIELDS)) {
-			return true;
-		}
-		return super.ignoreProperty(feature);
 	}
 
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart editorPart) {
 		createFiledsComposite(editingdomain, toolkit, parent, model, formEditor);
+		createParametersGroup(parent, (CSV12Reader) model, toolkit, formEditor, editorPart);
 		return super.createExtendUIOnBottom(editingdomain, toolkit, parent, model, formEditor, editorPart);
+	}
+
+	@Override
+	public boolean ignoreProperty(EAttribute feature) {
+		if (feature.equals(Csv12Package.Literals.CSV12_READER__FIELDS)) {
+			return true;
+		}
+		return super.ignoreProperty(feature);
+	}
+
+	private void createParametersGroup(Composite parent, CSV12Reader reader, FormToolkit toolkit,
+			ISmooksModelProvider modelProvider, IEditorPart editorPart) {
+		Group group = new Group(parent, SWT.NONE);
+		group.setText("Features");
+		group.setBackground(ColorConstants.white);
+		FillLayout fl = new FillLayout();
+		group.setLayout(fl);
+		final AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) modelProvider
+				.getEditingDomain();
+		final Shell shell = parent.getShell();
+		IEditingDomainItemProvider p = (IEditingDomainItemProvider) editingDomain.getAdapterFactory().adapt(reader,
+				IEditingDomainItemProvider.class);
+		final Collection<?> children = p.getNewChildDescriptors(reader, editingDomain, null);
+
+		ModelMultiChildrenTabelPanelCreator creator = new ModelMultiChildrenTabelPanelCreator(shell, children,
+				editingDomain, modelProvider, reader, toolkit, editorPart) {
+			//
+			// @Override
+			// protected EStructuralFeature getChildFeature(CommandParameter
+			// model) {
+			// return model.getEStructuralFeature();
+			// }
+			//
+			// @Override
+			// protected EObject getNewChildInstance(CommandParameter feature2)
+			// {
+			// return feature2.getEValue();
+			// }
+
+		};
+
+		creator.createChildrenTablePanel(group);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.heightHint = 180;
+		gd.horizontalSpan = 2;
+		group.setLayoutData(gd);
 	}
 
 	private void createFiledsComposite(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, ISmooksModelProvider formEditor) {
 		fieldsList.clear();
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.heightHint = 200;
+		gd.heightHint = 150;
 		gd.horizontalSpan = 2;
 		Group fieldsComposite = new Group(parent, SWT.NONE);
 		fieldsComposite.setBackground(toolkit.getColors().getBackground());
@@ -114,7 +149,7 @@ public class CsvReaderUICreator extends PropertyUICreator {
 		IItemPropertySource propertySource = (IItemPropertySource) editingdomain.getAdapterFactory().adapt(model,
 				IItemPropertySource.class);
 		final IItemPropertyDescriptor descriptor = propertySource.getPropertyDescriptor(model,
-				CsvPackage.Literals.CSV_READER__FIELDS);
+				Csv12Package.Literals.CSV12_READER__FIELDS);
 
 		final Object readOnlyMoel = model;
 
@@ -205,16 +240,16 @@ public class CsvReaderUICreator extends PropertyUICreator {
 		this.addButton.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
-				addButton.setEnabled(false);
+				// addButton.setEnabled(false);
 				try {
 					FieldText field = new FieldText("field");
 					fieldsList.add(field);
 					fieldsViewer.refresh();
 					setFieldsValue(readOnlyMoel, descriptor);
 				} catch (Throwable t) {
-
+					t.printStackTrace();
 				} finally {
-					addButton.setEnabled(true);
+					// addButton.setEnabled(true);
 				}
 			}
 

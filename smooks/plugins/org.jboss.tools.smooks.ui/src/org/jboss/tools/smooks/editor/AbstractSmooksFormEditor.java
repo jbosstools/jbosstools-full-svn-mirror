@@ -89,10 +89,10 @@ import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
 
 public class AbstractSmooksFormEditor extends FormEditor implements IEditingDomainProvider,
-		ISmooksModelValidateListener , ISmooksModelProvider , ISmooksGraphChangeListener{
-	
+		ISmooksModelValidateListener, ISmooksModelProvider, ISmooksGraphChangeListener {
+
 	protected List<ISourceSynchronizeListener> sourceSynchronizeListener = new ArrayList<ISourceSynchronizeListener>();
-	
+
 	public static final String EDITOR_ID = "org.jboss.tools.smooks.edimap.editors.MultiPageEditor";
 
 	protected StructuredTextEditor textEditor = null;
@@ -123,12 +123,12 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		super();
 		initEditingDomain();
 	}
-	
-	public void addSourceSynchronizeListener(ISourceSynchronizeListener listener){
+
+	public void addSourceSynchronizeListener(ISourceSynchronizeListener listener) {
 		this.sourceSynchronizeListener.add(listener);
 	}
-	
-	public void removeSourceSynchronizeListener(ISourceSynchronizeListener listener){
+
+	public void removeSourceSynchronizeListener(ISourceSynchronizeListener listener) {
 		this.sourceSynchronizeListener.remove(listener);
 	}
 
@@ -222,7 +222,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 	protected void initEditingDomain() {
 		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		
+
 		// add smooks 1.1.2 EMF item provider model
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new XslItemProviderAdapterFactory());
@@ -243,7 +243,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		adapterFactory.addAdapterFactory(new FileRoutingItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new EsbroutingItemProviderAdapterFactory());
-		
+
 		// add smooks 1.2 EMF itemprovider
 		adapterFactory.addAdapterFactory(new Json12ItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new Edi12ItemProviderAdapterFactory());
@@ -253,7 +253,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		adapterFactory.addAdapterFactory(new Validation10ItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new Jmsrouting12ItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new Persistence12ItemProviderAdapterFactory());
-		
+
 		BasicCommandStack commandStack = new BasicCommandStack();
 		handleCommandStack(commandStack);
 		editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
@@ -278,14 +278,14 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	 */
 	@Override
 	protected void addPages() {
-//		configurationPage = createSmooksConfigurationFormPage();
-//		addValidateListener(configurationPage);
-//		try {
-//			int index = this.addPage(configurationPage);
-//			setPageText(index, "Design");
-//		} catch (PartInitException e) {
-//			e.printStackTrace();
-//		}
+		// configurationPage = createSmooksConfigurationFormPage();
+		// addValidateListener(configurationPage);
+		// try {
+		// int index = this.addPage(configurationPage);
+		// setPageText(index, "Design");
+		// } catch (PartInitException e) {
+		// e.printStackTrace();
+		// }
 
 		textEditor = createTextEditor();
 		try {
@@ -304,7 +304,8 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	}
 
 	/**
-	 * @param smooksGraphicsExt the smooksGraphicsExt to set
+	 * @param smooksGraphicsExt
+	 *            the smooksGraphicsExt to set
 	 */
 	public void setSmooksGraphicsExt(SmooksGraphicsExtType smooksGraphicsExt) {
 		this.smooksGraphicsExt = smooksGraphicsExt;
@@ -361,8 +362,8 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		};
 		return xmlEditor;
 	}
-	
-	protected void createNewModelViaTextPage(){
+
+	protected void createNewModelViaTextPage() {
 		IDocument document = textEditor.getDocumentProvider().getDocument(textEditor.getEditorInput());
 		String conents = document.get();
 		Resource resource = editingDomain.getResourceSet().getResources().get(0);
@@ -372,13 +373,13 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			this.smooksModel = resource.getContents().get(0);
 		} catch (IOException e) {
 			smooksModel = null;
-			SmooksConfigurationActivator.getDefault().log(e);
+			// SmooksConfigurationActivator.getDefault().log(e);
 		}
 		for (Iterator<?> iterator = this.sourceSynchronizeListener.iterator(); iterator.hasNext();) {
 			ISourceSynchronizeListener l = (ISourceSynchronizeListener) iterator.next();
-			try{
-			l.sourceChange(smooksModel);
-			}catch(Exception e){
+			try {
+				l.sourceChange(smooksModel);
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -386,12 +387,18 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 	protected void handleDocumentChange() {
 		createNewModelViaTextPage();
-		validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
+		try {
+			validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
+		} catch (Throwable e) {
+
+		}
 	}
 
-//	protected SmooksConfigurationFormPage createSmooksConfigurationFormPage() {
-//		return new SmooksConfigurationFormPage(this, "DesignPage", "Design Page");
-//	}
+	// protected SmooksConfigurationFormPage createSmooksConfigurationFormPage()
+	// {
+	// return new SmooksConfigurationFormPage(this, "DesignPage",
+	// "Design Page");
+	// }
 
 	protected void initSaveOptions(Map<?, ?> options) {
 
@@ -410,7 +417,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			if (activeEditor != null && activeEditor == textEditor) {
 				textEditor.doSave(monitor);
 				((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
-				
+
 			} else {
 				Map<?, ?> options = Collections.emptyMap();
 				initSaveOptions(options);
@@ -431,7 +438,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			}
 			getSmooksGraphicsExt().eResource().save(Collections.emptyMap());
 			graphChanged = false;
-			
+
 			firePropertyChange(PROP_DIRTY);
 			if (this.smooksModel != null) {
 				validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
@@ -471,7 +478,8 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			if (extFile != null && !extFile.exists()) {
 				try {
 					String version = SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel);
-					SmooksConfigurationFileNewWizard.createExtentionFile(extFile, version ,  null);
+					String inputType = SmooksUIUtils.judgeInputType(smooksModel);
+					SmooksConfigurationFileNewWizard.createExtentionFile(extFile, version, inputType, null);
 				} catch (Throwable t) {
 					// ignore
 				}
@@ -567,19 +575,20 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	}
 
 	public void graphChanged(SmooksGraphicsExtType extType) {
-		
+
 	}
 
 	public void inputTypeChanged(SmooksGraphicsExtType extType) {
-		graphChanged  = true;
+		graphChanged = true;
 		firePropertyChange(PROP_DIRTY);
 	}
 
 	public void graphPropertyChange(EStructuralFeature featre, Object value) {
-		if(featre.equals(GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__AUTHOR) || 
-				featre.equals(GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__PLATFORM_VERSION) ||
-				featre.equals(GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__NAME)){
-			graphChanged  = true;
+		if (featre.equals(GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__AUTHOR)
+				|| featre.equals(GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__PLATFORM_VERSION)
+				|| featre.equals(GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__NAME)
+				|| featre.equals(GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE)) {
+			graphChanged = true;
 			firePropertyChange(PROP_DIRTY);
 		}
 	}

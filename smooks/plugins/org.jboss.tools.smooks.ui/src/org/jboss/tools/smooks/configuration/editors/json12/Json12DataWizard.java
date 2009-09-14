@@ -55,10 +55,13 @@ public class Json12DataWizard extends Wizard implements IStructuredDataSelection
 
 	public Json12DataWizard() {
 		super();
-		this.setWindowTitle("JSON Input Data Wizard (version 1.2)");
+		this.setWindowTitle("JSON Input Data Wizard");
 	}
 
 	public boolean canFinish() {
+		if(pathPage != null){
+			return pathPage.isPageComplete();
+		}
 		if (configPage != null && pathPage != null) {
 			if (configPage.isPageComplete() && pathPage.isPageComplete())
 				return true;
@@ -78,12 +81,12 @@ public class Json12DataWizard extends Wizard implements IStructuredDataSelection
 			pathPage = new Json12DataPathWizardPage("Json Input Data Selection ", new String[] {});
 
 		}
-		if (configPage == null) {
-			configPage = new Json12DataConfiguraitonWizardPage("Json data configuration page");
-			configPage.setSmooksResourceList(resourceList);
-		}
+//		if (configPage == null) {
+//			configPage = new Json12DataConfiguraitonWizardPage("Json data configuration page");
+//			configPage.setSmooksResourceList(resourceList);
+//		}
 		this.addPage(pathPage);
-		this.addPage(configPage);
+//		this.addPage(configPage);
 	}
 
 	/*

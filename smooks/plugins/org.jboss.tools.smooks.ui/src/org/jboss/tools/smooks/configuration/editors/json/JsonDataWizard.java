@@ -59,6 +59,9 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 	}
 
 	public boolean canFinish() {
+		if(pathPage != null){
+			return pathPage.isPageComplete();
+		}
 		if (configPage != null && pathPage != null) {
 			if (configPage.isPageComplete() && pathPage.isPageComplete())
 				return true;
@@ -75,15 +78,15 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 	public void addPages() {
 		super.addPages();
 		if (pathPage == null) {
-			pathPage = new JsonDataPathWizardPage("Json Input Data Selection ", new String[] {});
+			pathPage = new JsonDataPathWizardPage("JSON Input Data Selection ", new String[] {"jsn"});
 
 		}
-		if (configPage == null) {
-			configPage = new JsonDataConfiguraitonWizardPage("Json data configuration page");
-			configPage.setSmooksResourceList(resourceList);
-		}
+//		if (configPage == null) {
+//			configPage = new JsonDataConfiguraitonWizardPage("Json data configuration page");
+//			configPage.setSmooksResourceList(resourceList);
+//		}
 		this.addPage(pathPage);
-		this.addPage(configPage);
+//		this.addPage(configPage);
 	}
 
 	/*

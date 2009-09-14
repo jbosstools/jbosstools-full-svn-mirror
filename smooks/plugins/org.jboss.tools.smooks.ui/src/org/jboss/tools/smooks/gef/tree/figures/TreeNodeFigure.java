@@ -54,9 +54,9 @@ public class TreeNodeFigure extends Figure {
 	private boolean expand = false;
 
 	private TreeNodeModel model;
-	
+
 	private boolean focus;
-	
+
 	private boolean selected;
 
 	public TreeNodeFigure(TreeNodeModel model) {
@@ -79,7 +79,7 @@ public class TreeNodeFigure extends Figure {
 	public TreeNodeModel getModel() {
 		return model;
 	}
-	
+
 	public boolean isExpand() {
 		return expand;
 	}
@@ -87,11 +87,10 @@ public class TreeNodeFigure extends Figure {
 	public void setModel(TreeNodeModel model) {
 		this.model = model;
 	}
-	
+
 	public Label getLabel() {
 		return label;
 	}
-	
 
 	/**
 	 * @return the focus
@@ -101,7 +100,8 @@ public class TreeNodeFigure extends Figure {
 	}
 
 	/**
-	 * @param focus the focus to set
+	 * @param focus
+	 *            the focus to set
 	 */
 	public void setFocus(boolean focus) {
 		this.focus = focus;
@@ -116,7 +116,8 @@ public class TreeNodeFigure extends Figure {
 	}
 
 	/**
-	 * @param selected the selected to set
+	 * @param selected
+	 *            the selected to set
 	 */
 	public void setSelected(boolean selected) {
 		this.selected = selected;
@@ -128,21 +129,22 @@ public class TreeNodeFigure extends Figure {
 		ToolbarLayout layout = new ToolbarLayout();
 		layout.setVertical(false);
 		panelFigure.setLayoutManager(layout);
-		Figure spaceFigure = new Figure(){
+		Figure spaceFigure = new Figure() {
 			@Override
 			public Dimension getPreferredSize(int hint, int hint2) {
 				return new Dimension(SPACE_INT, 0);
 			}
 		};
 		panelFigure.add(spaceFigure);
-		contentFigure = new Figure(){
+		contentFigure = new Figure() {
 
 			@Override
 			protected void paintFigure(Graphics graphics) {
 				super.paintFigure(graphics);
-//				graphics.drawRectangle(getBounds().x + 1 , getBounds().y + 1 , getBounds().width - 2 ,getBounds().height - 2 );
+				// graphics.drawRectangle(getBounds().x + 1 , getBounds().y + 1
+				// , getBounds().width - 2 ,getBounds().height - 2 );
 			}
-			
+
 		};
 		panelFigure.add(contentFigure);
 		contentFigure.setLayoutManager(new ToolbarLayout());
@@ -156,21 +158,25 @@ public class TreeNodeFigure extends Figure {
 	@Override
 	public Dimension getPreferredSize(int hint, int hint2) {
 		if (expand) {
-//			contentFigure.setSize(-1, -1);
-//			LayoutManager manager = contentFigure.getLayoutManager();
-//			if(manager != null){
-//				manager.invalidate();
-//			}
+			// contentFigure.setSize(-1, -1);
+			// LayoutManager manager = contentFigure.getLayoutManager();
+			// if(manager != null){
+			// manager.invalidate();
+			// }
 			return super.getPreferredSize(hint, hint2);
 		} else {
 			LayoutManager layout = labelContainer.getLayoutManager();
 			if (layout != null)
 				layout.invalidate();
 			labelContainer.invalidateTree();
-			Dimension size = labelContainer.getPreferredSize(hint, hint2);
-			Insets insets = getBorder().getInsets(null);
-			return new Dimension(size.width + insets.left + insets.right,
-					size.height + insets.bottom + insets.top);
+			try {
+				Dimension size = labelContainer.getPreferredSize(hint, hint2);
+				Insets insets = getBorder().getInsets(null);
+				return new Dimension(size.width + insets.left + insets.right, size.height + insets.bottom + insets.top);
+			} catch (Throwable t) {
+				return new Dimension(100,100);
+			}
+//			return super.getPreferredSize(hint, hint2);
 		}
 	}
 
@@ -196,35 +202,34 @@ public class TreeNodeFigure extends Figure {
 			}
 
 		});
-		((Clickable) clickNode)
-				.addMouseMotionListener(new MouseMotionListener() {
+		((Clickable) clickNode).addMouseMotionListener(new MouseMotionListener() {
 
-					public void mouseDragged(MouseEvent me) {
-					}
+			public void mouseDragged(MouseEvent me) {
+			}
 
-					public void mouseEntered(MouseEvent me) {
-						boolean hasChildren = model.hasChildren();
-						if (!hasChildren)
-							return;
-						mouseEnter = true;
-						clickNode.repaint();
-					}
+			public void mouseEntered(MouseEvent me) {
+				boolean hasChildren = model.hasChildren();
+				if (!hasChildren)
+					return;
+				mouseEnter = true;
+				clickNode.repaint();
+			}
 
-					public void mouseExited(MouseEvent me) {
-						boolean hasChildren = model.hasChildren();
-						if (!hasChildren)
-							return;
-						mouseEnter = false;
-						clickNode.repaint();
-					}
+			public void mouseExited(MouseEvent me) {
+				boolean hasChildren = model.hasChildren();
+				if (!hasChildren)
+					return;
+				mouseEnter = false;
+				clickNode.repaint();
+			}
 
-					public void mouseHover(MouseEvent me) {
-					}
+			public void mouseHover(MouseEvent me) {
+			}
 
-					public void mouseMoved(MouseEvent me) {
-					}
+			public void mouseMoved(MouseEvent me) {
+			}
 
-				});
+		});
 		clickNode.setSize(new Dimension(CLICKNODE_WIDTH, CLICKNODE_HEIGHT));
 
 		Figure imageFigure = new Figure() {
@@ -235,15 +240,14 @@ public class TreeNodeFigure extends Figure {
 					Image i = model.getImage();
 					if (i != null)
 						;
-					graphics.drawImage(i, getBounds().getTopLeft().x,
-							getBounds().getTopLeft().y + 2);
+					graphics.drawImage(i, getBounds().getTopLeft().x, getBounds().getTopLeft().y + 2);
 				}
 			}
 		};
 		imageFigure.setSize(new Dimension(18, 18));
 
 		label = new Label();
-		if(isFocus()){
+		if (isFocus()) {
 		}
 		if (model != null) {
 			label.setText(model.getText());
@@ -270,17 +274,17 @@ public class TreeNodeFigure extends Figure {
 	public void setLabelText(String text) {
 		label.setText(text);
 	}
-	
-	public void paint(Graphics graphics){
-		if(isFocus()){
+
+	public void paint(Graphics graphics) {
+		if (isFocus()) {
 			label.setForegroundColor(ColorConstants.blue);
-		}else{
+		} else {
 			label.setForegroundColor(ColorConstants.black);
 		}
-		
-		if(isSelected()){
+
+		if (isSelected()) {
 			label.setForegroundColor(ColorConstants.lightBlue);
-		}else{
+		} else {
 			label.setForegroundColor(ColorConstants.black);
 		}
 		super.paint(graphics);
@@ -294,20 +298,16 @@ public class TreeNodeFigure extends Figure {
 		boolean hasChildren = model.hasChildren();
 		if (hasChildren) {
 			if (expand) {
-				Point point1 = new Point(center.x - width / 2, center.y - width
-						/ 4);
+				Point point1 = new Point(center.x - width / 2, center.y - width / 4);
 				Point point2 = new Point(point1.x + width, point1.y);
-				Point point3 = new Point(point1.x + width / 2, point1.y + width
-						/ 2);
+				Point point3 = new Point(point1.x + width / 2, point1.y + width / 2);
 				pointList.addPoint(point1);
 				pointList.addPoint(point2);
 				pointList.addPoint(point3);
 			} else {
-				Point point1 = new Point(center.x - width / 4, center.y - width
-						/ 2);
+				Point point1 = new Point(center.x - width / 4, center.y - width / 2);
 				Point point2 = new Point(point1.x, point1.y + width);
-				Point point3 = new Point(point1.x + width / 2, point1.y + width
-						/ 2);
+				Point point3 = new Point(point1.x + width / 2, point1.y + width / 2);
 				pointList.addPoint(point1);
 				pointList.addPoint(point2);
 				pointList.addPoint(point3);
@@ -321,13 +321,13 @@ public class TreeNodeFigure extends Figure {
 			graphics.popState();
 		}
 	}
-	
-	public void expandNode(){
+
+	public void expandNode() {
 		expand = false;
 		changeTreeExpansionState();
 	}
-	
-	public void collapsedNode(){
+
+	public void collapsedNode() {
 		expand = true;
 		changeTreeExpansionState();
 	}
@@ -344,12 +344,9 @@ public class TreeNodeFigure extends Figure {
 			if (parent != null) {
 				Rectangle oldRectangle = parent.getClientArea();
 				expand = !expand;
-				for (Iterator<ITreeFigureListener> iterator = this.treeListener
-						.iterator(); iterator.hasNext();) {
-					ITreeFigureListener listener = (ITreeFigureListener) iterator
-							.next();
-					TreeFigureExpansionEvent event = new TreeFigureExpansionEvent(
-							this);
+				for (Iterator<ITreeFigureListener> iterator = this.treeListener.iterator(); iterator.hasNext();) {
+					ITreeFigureListener listener = (ITreeFigureListener) iterator.next();
+					TreeFigureExpansionEvent event = new TreeFigureExpansionEvent(this);
 					if (!expand) {
 						listener.treeCollapsed(event);
 					} else {
@@ -366,15 +363,15 @@ public class TreeNodeFigure extends Figure {
 				Rectangle newRectangle = parent.getClientArea();
 				int w = Math.max(oldRectangle.width, newRectangle.width);
 				int h = Math.max(oldRectangle.height, newRectangle.height);
-//				IFigure currentParent = contentFigure.getParent();
-//				currentParent.invalidateTree();
-//				LayoutManager layout = currentParent.getLayoutManager();
-//				if(layout != null){
-//					layout.layout(currentParent);
-//				}
+				// IFigure currentParent = contentFigure.getParent();
+				// currentParent.invalidateTree();
+				// LayoutManager layout = currentParent.getLayoutManager();
+				// if(layout != null){
+				// layout.layout(currentParent);
+				// }
 				IFigure panel = parent.getParent();
 				if (panel != null) {
-//					panel.repaint();
+					// panel.repaint();
 					panel.repaint(oldRectangle.x, oldRectangle.y, w, h);
 				}
 			}

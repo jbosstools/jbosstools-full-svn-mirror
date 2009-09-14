@@ -12,8 +12,10 @@ package org.jboss.tools.smooks.configuration.editors;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
@@ -79,7 +81,7 @@ public class NewOrModifySmooksElementDialog extends Dialog {
 	protected void createButtonsForButtonBar(Composite parent) {
 		// create OK and Cancel buttons by default
 		String okLabel = IDialogConstants.OK_LABEL;
-		if(modify){
+		if (modify) {
 			okLabel = "Close";
 		}
 		createButton(parent, IDialogConstants.OK_ID, okLabel, true);
@@ -120,8 +122,17 @@ public class NewOrModifySmooksElementDialog extends Dialog {
 		try {
 			if (!modify && parentModel != null && modelProvider != null && feature != null) {
 				EditingDomain editingDomain = modelProvider.getEditingDomain();
-				Command command = AddCommand.create(editingDomain, parentModel, feature, model);
-				editingDomain.getCommandStack().execute(command);
+				Command command = null;
+
+				if (feature instanceof EReference) {
+					if (((EReference) feature).isMany()) {
+						command = AddCommand.create(editingDomain, parentModel, feature, model);
+					} else {
+						command = SetCommand.create(editingDomain, parentModel, feature, model);
+					}
+				}
+				if (command != null)
+					editingDomain.getCommandStack().execute(command);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

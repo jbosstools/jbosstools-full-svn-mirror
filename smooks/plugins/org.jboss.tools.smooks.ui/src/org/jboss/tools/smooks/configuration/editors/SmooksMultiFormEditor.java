@@ -24,6 +24,8 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.ui.PartInitException;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart;
+import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
+import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 
 /**
  * 
@@ -39,7 +41,9 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 
 	private SmooksConfigurationOverviewPage overViewPage;
 
-	private SmooksConfigurationFormPage readerPage;
+	private SmooksConfigurationFormPage readerPage1;
+	
+	private SmooksReaderFormPage readerPage;
 	
 	private ISelection selection;
 	
@@ -55,6 +59,7 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 		overViewPage = createSmooksConfigurationOverviewPage();
 		addValidateListener(overViewPage);
 		addSourceSynchronizeListener(overViewPage);
+		addSmooksGraphExtetionListener(overViewPage);
 		try {
 			int index = this.addPage(overViewPage);
 			setPageText(index, "Overview");
@@ -62,12 +67,23 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 			e.printStackTrace();
 		}
 
-		readerPage = createSmooksConfigurationReaderPage();
+//		readerPage1 = createSmooksConfigurationReaderPage();
+//		addValidateListener(readerPage1);
+//		addSourceSynchronizeListener(readerPage1);
+//		try {
+//			int index = this.addPage(readerPage1);
+//			setPageText(index, "Reader");
+//		} catch (PartInitException e) {
+//			e.printStackTrace();
+//		}
+		
+		readerPage = new SmooksReaderFormPage(this, "reader_page" , "Input");
 		addValidateListener(readerPage);
 		addSourceSynchronizeListener(readerPage);
+		addSmooksGraphExtetionListener(readerPage);
 		try {
 			int index = this.addPage(readerPage);
-			setPageText(index, "Reader");
+			setPageText(index, "Input");
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
@@ -75,6 +91,7 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 		configurationPage = createSmooksConfigurationFormPage();
 		addValidateListener(configurationPage);
 		addSourceSynchronizeListener(configurationPage);
+		addSmooksGraphExtetionListener(configurationPage);
 		try {
 			int index = this.addPage(configurationPage);
 			setPageText(index, "Message Filter");
@@ -82,20 +99,21 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 			e.printStackTrace();
 		}
 
-		graphicalPage = new SmooksGraphicalEditorPart(this);
-		addSourceSynchronizeListener(graphicalPage);
-		try {
-			int index = this.addPage(graphicalPage, getEditorInput());
-			setPageText(index, "Graph");
-		} catch (PartInitException e) {
-			e.printStackTrace();
-		}
+//		graphicalPage = new SmooksGraphicalEditorPart(this);
+//		addSourceSynchronizeListener(graphicalPage);
+//		addSmooksGraphExtetionListener(graphicalPage);
+//		try {
+//			int index = this.addPage(graphicalPage, getEditorInput());
+//			setPageText(index, "Graph");
+//		} catch (PartInitException e) {
+//			e.printStackTrace();
+//		}
 
 		super.addPages();
 	}
 
 	private SmooksConfigurationReaderPage createSmooksConfigurationReaderPage() {
-		return new SmooksConfigurationReaderPage(this, "reader_page", "Reader Page");
+		return new SmooksConfigurationReaderPage(this, "reader_page1", "Reader Page");
 	}
 
 	private SmooksConfigurationOverviewPage createSmooksConfigurationOverviewPage() {
@@ -177,6 +195,20 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 		for (Iterator<?> iterator = this.selectionChangeListener.iterator(); iterator.hasNext();) {
 			ISelectionChangedListener l = (ISelectionChangedListener) iterator.next();
 			l.selectionChanged(new SelectionChangedEvent(this, getSelection()));
+		}
+	}
+	
+	public void addSmooksGraphExtetionListener(ISmooksGraphChangeListener listener){
+		SmooksGraphicsExtType ex = getSmooksGraphicsExt();
+		if(ex != null){
+			ex.addSmooksGraphChangeListener(listener);
+		}
+	}
+	
+	public void removeSmooksGraphExtetionListener(ISmooksGraphChangeListener listener){
+		SmooksGraphicsExtType ex = getSmooksGraphicsExt();
+		if(ex != null){
+			ex.removeSmooksGraphChangeListener(listener);
 		}
 	}
 }

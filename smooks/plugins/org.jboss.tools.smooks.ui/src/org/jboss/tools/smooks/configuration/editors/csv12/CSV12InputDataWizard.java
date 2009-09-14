@@ -45,25 +45,26 @@ public class CSV12InputDataWizard extends Wizard implements IStructuredDataSelec
 	private CSV12DataConfigurationWizardPage configPage;
 
 	private CSV12DataPathWizardPage pathPage;
-	
+
 	public CSV12InputDataWizard() {
 		super();
-		this.setWindowTitle("CSV Input Data Wizard (version 1.2)");
+		this.setWindowTitle("CSV Input Data Wizard");
 	}
 
 	@Override
 	public void addPages() {
-		if (configPage == null) {
-			configPage = new CSV12DataConfigurationWizardPage("CSV Configurations Page");
-			configPage.setSmooksResourceList(resourceList);
-		}
-		
+		// if (configPage == null) {
+		// configPage = new
+		// CSV12DataConfigurationWizardPage("CSV Configurations Page");
+		// configPage.setSmooksResourceList(resourceList);
+		// }
+
 		if (pathPage == null) {
-			pathPage = new CSV12DataPathWizardPage("CSV Path Page", new String[] {},configPage);
+			pathPage = new CSV12DataPathWizardPage("CSV Path Page", new String[] { "csv" }, configPage);
 		}
-		
+
 		this.addPage(pathPage);
-		this.addPage(configPage);
+		// this.addPage(configPage);
 		super.addPages();
 	}
 
@@ -93,22 +94,22 @@ public class CSV12InputDataWizard extends Wizard implements IStructuredDataSelec
 
 				}
 				if (skip >= 0) {
-					 reader.setSkipLines(BigInteger.valueOf(skip));
+					reader.setSkipLines(BigInteger.valueOf(skip));
 				}
 
 				String quoteChar = configPage.getQuoteChar();
 				reader.setQuote(quoteChar);
-				
+
 				String rootName = configPage.getRootName();
-				if(rootName != null){
+				if (rootName != null) {
 					reader.setRootElementName(rootName);
 				}
-				
+
 				String recordName = configPage.getRecordName();
-				if(recordName != null){
+				if (recordName != null) {
 					reader.setRecordElementName(recordName);
 				}
-				
+
 				String indent = configPage.getIndent();
 				if (indent != null && indent.length() != 0) {
 					boolean indentValue = Boolean.valueOf(indent).booleanValue();
@@ -138,8 +139,11 @@ public class CSV12InputDataWizard extends Wizard implements IStructuredDataSelec
 		}
 		return true;
 	}
-	
+
 	public boolean canFinish() {
+		if (pathPage != null) {
+			return pathPage.isPageComplete();
+		}
 		if (configPage != null && pathPage != null) {
 			if (configPage.isPageComplete() && pathPage.isPageComplete())
 				return true;
@@ -166,7 +170,7 @@ public class CSV12InputDataWizard extends Wizard implements IStructuredDataSelec
 	 * IStructuredDataSelectionWizard#getInputDataTypeID()
 	 */
 	public String getInputDataTypeID() {
-		return SmooksModelUtils.INPUT_TYPE_CSV_1_2;
+		return SmooksModelUtils.INPUT_TYPE_CSV;
 	}
 
 	/*
@@ -223,12 +227,12 @@ public class CSV12InputDataWizard extends Wizard implements IStructuredDataSelec
 			if (quoteChar != null && quoteChar.length() != 0) {
 				pro.put(CSVDataParser.QUOTECHAR, quoteChar);
 			}
-			
+
 			String rootName = configPage.getRootName();
 			if (rootName != null && rootName.length() != 0) {
 				pro.put(CSVDataParser.ROOT_ELEMENT_NAME, rootName);
 			}
-			
+
 			String recordName = configPage.getRecordName();
 			if (recordName != null && recordName.length() != 0) {
 				pro.put(CSVDataParser.RECORD_NAME, recordName);
@@ -238,7 +242,7 @@ public class CSV12InputDataWizard extends Wizard implements IStructuredDataSelec
 			if (skiplines != null && skiplines.length() != 0) {
 				pro.put(CSVDataParser.SKIPLINES, skiplines);
 			}
-			
+
 			String indent = configPage.getIndent();
 			if (indent != null && indent.length() != 0) {
 				pro.setProperty(JsonInputDataParser.INDENT, indent);

@@ -299,10 +299,11 @@ public class CSV12ReaderItemProvider
 	 * @generated
 	 */
 	public String getText(Object object) {
-		String label = ((CSV12Reader)object).getRecordElementName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_CSV12Reader_type") :
-			getString("_UI_CSV12Reader_type") + " " + label;
+		return "CSV";
+//		String label = ((CSV12Reader)object).getRecordElementName();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_CSV12Reader_type") :
+//			getString("_UI_CSV12Reader_type") + " " + label;
 	}
 
 	/**

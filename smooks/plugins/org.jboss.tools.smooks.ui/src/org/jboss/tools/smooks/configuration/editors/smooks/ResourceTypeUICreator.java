@@ -38,13 +38,13 @@ public class ResourceTypeUICreator extends PropertyUICreator {
 	 */
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-			ISmooksModelProvider formEditor, IEditorPart part) {
+			ISmooksModelProvider modelProvider, IEditorPart part) {
 		if (feature == SmooksPackage.eINSTANCE.getResourceType_Value()) {
-			return SmooksUIUtils.createJavaTypeSearchFieldEditor(parent, toolkit, propertyDescriptor, (EObject) model);
+			return SmooksUIUtils.createJavaTypeSearchFieldEditor(parent, toolkit, propertyDescriptor, (EObject) model , modelProvider);
 		}
 		if (feature == SmooksPackage.eINSTANCE.getResourceType_Type()) {
 		}
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, modelProvider,part);
 	}
 
 }
