@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
@@ -180,7 +181,8 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 		
 		String styleString = getExprValue(pageContext, styleExpr, sourceNode);
 		
-		if ("yes".equalsIgnoreCase(VpePreference.SHOW_BORDER_FOR_UNKNOWN_TAGS.getValue())) { //$NON-NLS-1$
+		if (JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+				IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS)) {
 			styleString =  "border: 1px solid green;" +styleString; //$NON-NLS-1$
 		}
 		

@@ -67,6 +67,10 @@ public class EditorSettings {
 		editor=null;
 	}
 	
+	public void clearOldSettings() {
+		settings.clear();
+	}
+	
 	public void setInput(FileEditorInput input) {
 		file = input.getFile();
 		for (int i = 0; i < settings.size(); i++) {

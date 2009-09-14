@@ -64,8 +64,8 @@ import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.internal.part.StatusPart;
 import org.eclipse.ui.part.EditorPart;
-import org.jboss.tools.common.model.XModelException;
-import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage;
@@ -78,7 +78,6 @@ import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
-import org.jboss.tools.vpe.editor.xpl.CustomSashForm;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.ReferenceWizard;
 import org.jboss.tools.vpe.resref.core.VpeResourcesDialog;
@@ -133,19 +132,26 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private String doctype;
 	
 	private static Map<String, String> layoutIcons;
-	private static List<String> layoutNames;
+	private static Map<String, String> layoutNames;
+	private static List<String> layoutValues;
 	static {
 	    layoutIcons = new HashMap<String, String>();
-	    layoutIcons.put(CustomSashForm.LAYOUT_HORIZONTAL_SOURCE_LEFT, ICON_ORIENTATION_SOURCE_LEFT);
-	    layoutIcons.put(CustomSashForm.LAYOUT_VERTICAL_SOURCE_TOP, ICON_ORIENTATION_SOURCE_TOP);
-	    layoutIcons.put(CustomSashForm.LAYOUT_HORIZONTAL_VISUAL_LEFT, ICON_ORIENTATION_SOURCE_RIGHT);
-	    layoutIcons.put(CustomSashForm.LAYOUT_VERTICAL_VISUAL_TOP, ICON_ORIENTATION_SOURCE_BOTTOM);
+	    layoutIcons.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE, ICON_ORIENTATION_SOURCE_LEFT);
+	    layoutIcons.put(IVpePreferencesPage.SPLITTING_VERT_TOP_SOURCE_VALUE, ICON_ORIENTATION_SOURCE_TOP);
+	    layoutIcons.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_VISUAL_VALUE, ICON_ORIENTATION_SOURCE_RIGHT);
+	    layoutIcons.put(IVpePreferencesPage.SPLITTING_VERT_TOP_VISUAL_VALUE, ICON_ORIENTATION_SOURCE_BOTTOM);
 	    
-	    layoutNames = new ArrayList<String>();
-	    layoutNames.add(CustomSashForm.LAYOUT_HORIZONTAL_SOURCE_LEFT);
-	    layoutNames.add(CustomSashForm.LAYOUT_VERTICAL_SOURCE_TOP);
-	    layoutNames.add(CustomSashForm.LAYOUT_HORIZONTAL_VISUAL_LEFT);
-	    layoutNames.add(CustomSashForm.LAYOUT_VERTICAL_VISUAL_TOP);
+	    layoutNames = new HashMap<String, String>();
+	    layoutNames.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE, VpeUIMessages.SPLITTING_HORIZ_LEFT_SOURCE);
+	    layoutNames.put(IVpePreferencesPage.SPLITTING_VERT_TOP_SOURCE_VALUE, VpeUIMessages.SPLITTING_VERT_TOP_SOURCE);
+	    layoutNames.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_VISUAL_VALUE, VpeUIMessages.SPLITTING_HORIZ_LEFT_VISUAL);
+	    layoutNames.put(IVpePreferencesPage.SPLITTING_VERT_TOP_VISUAL_VALUE, VpeUIMessages.SPLITTING_VERT_TOP_VISUAL);
+
+	    layoutValues= new ArrayList<String>();
+	    layoutValues.add(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE);
+	    layoutValues.add(IVpePreferencesPage.SPLITTING_VERT_TOP_SOURCE_VALUE);
+	    layoutValues.add(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_VISUAL_VALUE);
+	    layoutValues.add(IVpePreferencesPage.SPLITTING_VERT_TOP_VISUAL_VALUE);
 
 	}
 	
@@ -259,46 +265,64 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		 * https://jira.jboss.org/jira/browse/JBIDE-4152
 		 * Compute initial icon state and add it to the tool bar.
 		 */
-		int currentOrientationIndex = layoutNames.indexOf(VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue());
+		int currentOrientationIndex = layoutValues.indexOf(JspEditorPlugin
+				.getDefault().getPreferenceStore().getString(
+						IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING));
 		int newIndx = currentOrientationIndex+1;
-		if (newIndx == layoutNames.size()) {
-		    newIndx = newIndx % layoutNames.size();
+		if (newIndx == layoutValues.size()) {
+		    newIndx = newIndx % layoutValues.size();
 		}
-		String newOrientation = layoutNames.get(newIndx);
+		String newOrientation = layoutValues.get(newIndx);
 
 		final ToolItem rotateEditorsItem = createToolItem(verBar, SWT.BUTTON1,
-			layoutIcons.get(newOrientation),
-			ICON_ORIENTATION_SOURCE_LEFT_DISABLED, newOrientation, true);
+				layoutIcons.get(newOrientation),
+				ICON_ORIENTATION_SOURCE_LEFT_DISABLED, 
+				layoutNames.get(newOrientation), true);
+		
 		rotateEditorsItem.addListener(SWT.Selection, new Listener() {
 		    public void handleEvent(Event event) {
-			try {
-			    /*
-			     * Rotate editors orientation clockwise.
-			     * Store this new orientation to the preferences.
-			     */
-			    int currentOrientationIndex = layoutNames.indexOf(VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue());
-			    int newIndx = currentOrientationIndex+1;
-			    if (newIndx == layoutNames.size()) {
-				newIndx = newIndx % layoutNames.size();
-			    }
-			    String newOrientation = layoutNames.get(newIndx);
-			    VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.setValue(newOrientation);
+				/*
+				 * Rotate editors orientation clockwise. Store this new
+				 * orientation to the preferences.
+				 */
+				int currentOrientationIndex = layoutValues
+						.indexOf(JspEditorPlugin
+								.getDefault()
+								.getPreferenceStore()
+								.getString(
+										IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING));
+				int newIndx = currentOrientationIndex + 1;
+				if (newIndx == layoutValues.size()) {
+					newIndx = newIndx % layoutValues.size();
+				}
+				String newOrientation = layoutValues.get(newIndx);
+				JspEditorPlugin.getDefault().getPreferenceStore().setValue(
+						IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING,
+						newOrientation);
 
-			    /*
-			     * Compute next step orientation and display appropriate icon.
-			     */
-			    currentOrientationIndex = layoutNames.indexOf(VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue());
-			    newIndx = currentOrientationIndex+1;
-			    if (newIndx == layoutNames.size()) {
-				newIndx = newIndx % layoutNames.size();
-			    }
-			    newOrientation = layoutNames.get(newIndx);
-			    rotateEditorsItem.setImage(ImageDescriptor
-				    .createFromFile(MozillaEditor.class, layoutIcons.get(newOrientation)).createImage());
-			    rotateEditorsItem.setToolTipText(newOrientation);
-			} catch (XModelException e) {
-			    VpePlugin.getPluginLog().logError(e);
-			}
+				/*
+				 * Compute next step orientation and display appropriate icon.
+				 */
+				currentOrientationIndex = layoutValues
+						.indexOf(JspEditorPlugin
+								.getDefault()
+								.getPreferenceStore()
+								.getString(
+										IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING));
+				newIndx = currentOrientationIndex + 1;
+				if (newIndx == layoutValues.size()) {
+					newIndx = newIndx % layoutValues.size();
+				}
+				newOrientation = layoutValues.get(newIndx);
+				rotateEditorsItem.setImage(ImageDescriptor.createFromFile(
+						MozillaEditor.class, layoutIcons.get(newOrientation))
+						.createImage());
+				rotateEditorsItem.setToolTipText(layoutNames.get(newOrientation));
+				/*
+				 * Call <code>filContainer()</code> from VpeEditorPart
+				 * to redraw CustomSashForm with new layout.
+				 */
+				getController().getPageContext().getEditPart().fillContainer();
 		    }
 		});
 
@@ -356,8 +380,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			// create menu item
 			MenuItem menuItem = new MenuItem(dropDownMenu.getDropDownMenu(), SWT.PUSH);
 			// get default value of flag
-			boolean showInvisibleTags = Constants.YES_STRING
-			.equals(VpePreference.SHOW_INVISIBLE_TAGS.getValue());
+			boolean showInvisibleTags = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+					IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
 			
 			// set text
 			menuItem.setText(showInvisibleTags ? VpeUIMessages.HIDE_NON_VISUAL_TAGS

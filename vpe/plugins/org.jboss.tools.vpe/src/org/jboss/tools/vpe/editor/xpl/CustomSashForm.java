@@ -29,7 +29,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Sash;
-import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 /**
@@ -45,10 +46,6 @@ import org.jboss.tools.vpe.messages.VpeUIMessages;
 public class CustomSashForm extends SashForm {
 
 	public static final String copyright = "(c) Copyright IBM Corporation 2002."; //$NON-NLS-1$
-	public static final String LAYOUT_VERTICAL_SOURCE_TOP = "Vertical Source on top"; //$NON-NLS-1$
-	public static final String LAYOUT_VERTICAL_VISUAL_TOP = "Vertical Visual on top"; //$NON-NLS-1$
-	public static final String LAYOUT_HORIZONTAL_SOURCE_LEFT = "Horizontal Source to the left"; //$NON-NLS-1$
-	public static final String LAYOUT_HORIZONTAL_VISUAL_LEFT = "Horizontal Visual to the left"; //$NON-NLS-1$
 	/**
 	 * Custom style bits. They set whether max to one side of the other
 	 * is not permitted. For example, if NO_MAX_UP, then there will be only
@@ -81,17 +78,11 @@ public class CustomSashForm extends SashForm {
 		    /*
 		     * Init the sash weight with the default value. 
 		     */
-		    String defaultWeightString = VpePreference.SOURCE_VISUAL_EDITORS_WEIGHTS.getValue();
-		    try {
-			int defaultWeight = Integer.parseInt(defaultWeightString);
+			int defaultWeight = JspEditorPlugin.getDefault().getPreferenceStore()
+					.getInt(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_WEIGHTS);
 			if (defaultWeight > 0) {
 			    weight = defaultWeight;
 			}
-		    } catch (NumberFormatException e) {
-			/*
-			 * Do nothing
-			 */
-		    }
 		}
 	};
 	
@@ -382,7 +373,8 @@ public class CustomSashForm extends SashForm {
 							if (currentSashInfo.cursorOver != i) {
 								currentSashInfo.cursorOver = i;
 								currentSashInfo.sash.redraw();
-								String splitting = VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue();
+								String splitting = JspEditorPlugin.getDefault().getPreferenceStore()
+									.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
 								switch (locs[ARROW_TYPE_INDEX]) {
 								case UP_ARROW:
 								case DOWN_ARROW:
@@ -393,20 +385,20 @@ public class CustomSashForm extends SashForm {
 								     * https://jira.jboss.org/jira/browse/JBIDE-4270
 								     * Tooltip text should correspond panes position.
 								     */
-								    if (LAYOUT_HORIZONTAL_SOURCE_LEFT.equalsIgnoreCase(splitting)
-									    || LAYOUT_VERTICAL_SOURCE_TOP.equalsIgnoreCase(splitting)) {
-									currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_VISUAL_PANE);
-								    } else {
-									currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_SOURCE_PANE);
-								    }
+									if (IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE.equalsIgnoreCase(splitting)
+											|| IVpePreferencesPage.SPLITTING_VERT_TOP_SOURCE_VALUE.equalsIgnoreCase(splitting)) {
+										currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_VISUAL_PANE);
+									} else {
+										currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_SOURCE_PANE);
+									}
 								    break;
 								case DOWN_MAX_ARROW:
-								    if (LAYOUT_HORIZONTAL_SOURCE_LEFT.equalsIgnoreCase(splitting)
-									    || LAYOUT_VERTICAL_SOURCE_TOP.equalsIgnoreCase(splitting)) {
-									currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_SOURCE_PANE);
-								    } else {
-									currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_VISUAL_PANE);
-								    }
+									if (IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE.equalsIgnoreCase(splitting)
+											|| IVpePreferencesPage.SPLITTING_VERT_TOP_SOURCE_VALUE.equalsIgnoreCase(splitting)) {
+										currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_SOURCE_PANE);
+									} else {
+										currentSashInfo.sash.setToolTipText(VpeUIMessages.MAX_VISUAL_PANE);
+									}
 								    break;
 								}
 							}
@@ -1098,15 +1090,6 @@ public class CustomSashForm extends SashForm {
 		gc.drawLine(x+3, y+1, x+3, y+6);
 		gc.drawLine(x+2, y+1, x+2, y+7);
 	}
-
-	
-	public int getSavedWeight() {
-		if (currentSashInfo!=null)
-			return currentSashInfo.weight;
-		else
-			return -1;
-	}
-
 	
 	protected Sash getSash() {
 		Control[] kids = getChildren();
@@ -1115,13 +1098,6 @@ public class CustomSashForm extends SashForm {
 				return (Sash)kids[i];			
 		}
 		return null;
-	}
-	
-	public void setCurrentSavedWeight(int weight) {
-		if (weight>=0 && currentSashInfo!=null) {
-			recomputeSashInfo(false);
-			currentSashInfo.weight=weight;
-		}
 	}
 	
 	/**
@@ -1178,20 +1154,36 @@ public class CustomSashForm extends SashForm {
 	}
 	
 	public void changeOrientation() {
-	    int prefsOrientation = getSplittingFromPreferences();
-	    if (getOrientation() != prefsOrientation) {
-		setOrientation(prefsOrientation);
-	    } 
+		int prefsOrientation = getSplittingFromPreferences();
+		if (getOrientation() != prefsOrientation) {
+			setOrientation(prefsOrientation);
+		}
 	}
 	
 	public static int getSplittingFromPreferences() {
-	    String splitting = VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING.getValue();
-	    if (LAYOUT_HORIZONTAL_SOURCE_LEFT.equalsIgnoreCase(splitting)
-		    || LAYOUT_HORIZONTAL_VISUAL_LEFT.equalsIgnoreCase(splitting)) {
-		return SWT.HORIZONTAL;
-	    } else {
-		return SWT.VERTICAL;
-	    }
+		String splitting = JspEditorPlugin.getDefault().getPreferenceStore()
+				.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
+		if (IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE
+				.equalsIgnoreCase(splitting)
+				|| IVpePreferencesPage.SPLITTING_HORIZ_LEFT_VISUAL_VALUE
+						.equalsIgnoreCase(splitting)) {
+			return SWT.HORIZONTAL;
+		} else {
+			return SWT.VERTICAL;
+		}
+	}
+	
+	public static boolean isSourceEditorFirst() {
+		boolean sourceEditorFirst = false;
+		String splitting = JspEditorPlugin.getDefault().getPreferenceStore()
+		.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
+		if (IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE
+				.equalsIgnoreCase(splitting)
+				|| IVpePreferencesPage.SPLITTING_VERT_TOP_SOURCE_VALUE
+					.equalsIgnoreCase(splitting)) {
+			sourceEditorFirst = true;
+		}
+		return sourceEditorFirst;
 	}
 	
 }

@@ -113,4 +113,25 @@ public final class VpeUIMessages extends NLS {
 	public static String INCLUDED_CSS_FILES_ABOUT;
 	public static String INCLUDED_TAG_LIBS_ABOUT;
 	public static String SUBSTITUTED_EL_EXPRESSIONS_ABOUT;
+	
+	public static String GENERAL_TAB_TITLE;
+	public static String VPE_PREFERENCES_PAGE_DESCRIPTION;
+	public static String SHOW_BORDER_FOR_UNKNOWN_TAGS;
+	public static String SHOW_SELECTION_TAG_BAR;
+	public static String SHOW_RESOURCE_BUNDLES_USAGE_AS_EL;
+	public static String ASK_TAG_ATTRIBUTES_ON_TAG_INSERT;
+	public static String ASK_CONFIRMATION_ON_CLOSING_SELECTION_BAR;
+	public static String DEFAULT_VPE_TAB;
+	public static String VISUAL_SOURCE_EDITORS_SPLITTING;
+	public static String VISUAL_SOURCE_EDITORS_WEIGHTS;
+	public static String DEFAULT_VPE_TAB_VISUAL_SOURCE;
+	public static String DEFAULT_VPE_TAB_SOURCE;
+	public static String DEFAULT_VPE_TAB_PREVIEW;
+	public static String SPLITTING_VERT_TOP_SOURCE;
+	public static String SPLITTING_VERT_TOP_VISUAL;
+	public static String SPLITTING_HORIZ_LEFT_SOURCE;
+	public static String SPLITTING_HORIZ_LEFT_VISUAL;
+	public static String VISUAL_APPEARANCE_GROUP_TITLE;
+	public static String CONFIRMATION_GROUP_TITLE;
+	public static String TABS_GROUP_TITLE;
 }

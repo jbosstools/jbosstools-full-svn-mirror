@@ -38,6 +38,8 @@ import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.document.NodeImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.jboss.tools.common.resref.core.ResourceReference;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpeDebug;
@@ -185,8 +187,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 //			faceletFile = false;
 //		}
 
-		this.showInvisibleTags = Constants.YES_STRING
-				.equals(VpePreference.SHOW_INVISIBLE_TAGS.getValue());
+		this.showInvisibleTags = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+				IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
 
 	}
 

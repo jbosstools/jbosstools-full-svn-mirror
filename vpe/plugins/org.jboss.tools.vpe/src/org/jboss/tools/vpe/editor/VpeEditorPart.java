@@ -10,9 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.eclipse.compare.Splitter;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -20,7 +17,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.action.IAction;
@@ -78,8 +74,10 @@ import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.ui.editor.IModelObjectEditorInput;
 import org.jboss.tools.common.model.ui.util.ModelUtilities;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.editor.IVisualEditor;
 import org.jboss.tools.jst.jsp.jspeditor.StorageRevisionEditorInputAdapter;
+import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.IVpeHelpContextIds;
 import org.jboss.tools.vpe.VpePlugin;
@@ -100,6 +98,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	private IHandlerActivation sourceActivation,visualActivation, jumpingActivation;
 	private IHandler sourceMaxmin,visualMaxmin, jumping;
 	private Composite cmpEd;
+	private Composite cmpEdTl;
 	private CustomSashForm container;
 	protected EditorSettings editorSettings;
 	private StructuredTextEditor sourceEditor = null;
@@ -355,23 +354,6 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		return sizes;
 	}
 
-	protected void saveSplitterPosition(int[] weights) {
-		IEditorInput input = getEditorInput();
-		if (!(input instanceof IFileEditorInput))
-			return;
-		IFile file = ((IFileEditorInput) input).getFile();
-		try {
-			String s = String.valueOf(weights[0]);
-			file.setPersistentProperty(SPLITTER_POSITION_KEY1, s);
-			s = String.valueOf(weights[1]);
-			file.setPersistentProperty(SPLITTER_POSITION_KEY2, s);
-			s = String.valueOf(weights[2]);
-			file.setPersistentProperty(SPLITTER_POSITION_KEY3, s);
-		} catch (CoreException e) {
-			VpePlugin.getPluginLog().logError(e);
-		}
-	}
-
 	public void setVisualMode(int type) {
 		switch (type) {
 		case VISUALSOURCE_MODE:
@@ -503,7 +485,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		/*
 		 * Container composite for editor part
 		 */
-		Composite cmpEdTl = new Composite(parent, SWT.NONE);
+		cmpEdTl = new Composite(parent, SWT.NONE);
 		GridLayout layoutEdTl = new GridLayout(2, false);
 		layoutEdTl.verticalSpacing = 0;
 		layoutEdTl.marginHeight = 0;
@@ -570,12 +552,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		}
 
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		String splitting = VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING
-			.getValue();
-		if (CustomSashForm.LAYOUT_HORIZONTAL_SOURCE_LEFT
-			.equalsIgnoreCase(splitting)
-			|| CustomSashForm.LAYOUT_VERTICAL_SOURCE_TOP
-				.equalsIgnoreCase(splitting)) {
+		if (CustomSashForm.isSourceEditorFirst()) {
 		    sourceContent = new Composite(container, SWT.NONE);
 		    visualContent = new Composite(container, SWT.NONE);
 		} else {
@@ -598,24 +575,11 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				}
 			};
 		int[] weights = loadSplitterPosition();
-		if (weights != null)
+		if (weights != null) {
 			container.setWeights(weights);
+		}
 		container.setSashBorders(new boolean[] { true, true, true });
-		
-		final PropertyChangeListener weightsChangeListener = new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent event) {
-				saveSplitterPosition(container.getWeights());
-			}
-		};
-		container.addWeightsChangeListener(weightsChangeListener);
-		container.addDisposeListener(new DisposeListener() {
 
-			public void widgetDisposed(DisposeEvent e) {
-				container.removeWeightsChangeListener(weightsChangeListener);
-				container.removeDisposeListener(this);
-			}
-			
-		});
 		controlListener = new ControlListener() {
 			public void controlMoved(ControlEvent event) {}
 			public void controlResized(ControlEvent event) {
@@ -813,7 +777,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		};
 	}
 	
-	private void fillContainer() {
+	public void fillContainer() {
 		/*
 		 * https://jira.jboss.org/jira/browse/JBIDE-4152
 		 * 
@@ -825,11 +789,13 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		 */
 		CustomSashForm newContainer = new CustomSashForm(cmpEd, CustomSashForm
 			.getSplittingFromPreferences());
+		newContainer.setOrientation(CustomSashForm.getSplittingFromPreferences());
+
 		/*
 		 * Reset editor's settings. 
 		 */
 		if (editorSettings != null) {
-		    editorSettings.dispose();
+		    editorSettings.clearOldSettings();
 		    editorSettings.addSetting(new SashSetting(newContainer));
 		}
 		newContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -839,12 +805,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		 * Correct layout by selecting the order of components adding.
 		 * All three editors should be added to the new container.
 		 */
-		String splitting = VpePreference.VISUAL_SOURCE_EDITORS_SPLITTING
-			.getValue();
-		if (CustomSashForm.LAYOUT_HORIZONTAL_SOURCE_LEFT
-			.equalsIgnoreCase(splitting)
-			|| CustomSashForm.LAYOUT_VERTICAL_SOURCE_TOP
-				.equalsIgnoreCase(splitting)) {
+		if (CustomSashForm.isSourceEditorFirst()) {
 		    sourceContent.setParent(newContainer);
 		    visualContent.setParent(newContainer);
 		} else {
@@ -860,7 +821,6 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		if (null != container.getMaximizedControl()) {
 			newContainer.setMaximizedControl(container.getMaximizedControl());
 		}
-		
 		/*
 		 * Dispose the old container:
 		 * it'll be excluded from parent composite's layout.
@@ -873,28 +833,43 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		 * Reset the container.
 		 */
 		container = newContainer;
-		int[] weights = loadSplitterPosition();
-		if (weights != null) {
-		    container.setWeights(weights);
+		
+		/*
+		 * Set up new sash weights
+		 */
+		int defaultWeight = JspEditorPlugin.getDefault().getPreferenceStore()
+			.getInt(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_WEIGHTS);
+		int[] weights = container.getWeights();
+		if (defaultWeight == 0) {
+			if (CustomSashForm.isSourceEditorFirst()) {
+				container.maxDown();
+			} else {
+				container.maxUp();
+			}
+		} else if (defaultWeight == 1000) {
+			if (CustomSashForm.isSourceEditorFirst()) {
+				container.maxUp();
+			} else {
+				container.maxDown();
+			}
+		} else {
+			if (CustomSashForm.isSourceEditorFirst()) {
+				weights[0] = 1000 - defaultWeight;
+				weights[1] = defaultWeight;
+			} else {
+				weights[0] = defaultWeight;
+				weights[1] = 1000 - defaultWeight;
+			}
+			if ((weights != null) && !container.isDisposed()){
+				container.setWeights(weights);
+			}
 		}
+		
 		container.setSashBorders(new boolean[] { true, true, true });
 
 		/*
 		 * Reinit listeners on the new container.
 		 */
-		final PropertyChangeListener weightsChangeListener = new PropertyChangeListener() {
-		    public void propertyChange(PropertyChangeEvent event) {
-			saveSplitterPosition(container.getWeights());
-		    }
-		};
-		container.addWeightsChangeListener(weightsChangeListener);
-		container.addDisposeListener(new DisposeListener() {
-		    public void widgetDisposed(DisposeEvent e) {
-			container.removeWeightsChangeListener(weightsChangeListener);
-			container.removeDisposeListener(this);
-		    }
-
-		});
 		controlListener = new ControlListener() {
 		    public void controlMoved(ControlEvent event) {}
 		    public void controlResized(ControlEvent event) {
@@ -903,9 +878,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		};
 
 		/*
-		 * Layout parent composite.
+		 * Layout the parent container for CustomSashForm, Selection Bar.
 		 */
-		cmpEd.layout(true, true);
+		cmpEdTl.layout(true, true);
 	    }
 
 	public void createVisualEditor() {
@@ -1142,8 +1117,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	}
 
 	public VpeController getController() {
-		if (visualEditor == null)
+		if (visualEditor == null) {
 			return null;
+		}
 		return visualEditor.getController();
 	}
 
@@ -1164,4 +1140,25 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		if (container != null)
 			container.maxUp();
 	}
+	
+	/*
+	 * Updates current VpeEditorPart after 
+	 * OK/Apply button on "Visual Page Editor" preference page
+	 * has been pressed.
+	 */
+	public void updatePartAccordingToPreferences() {
+		 /*
+		  * When switching from Source view to Visual/Source
+		  * controller could be null.
+		  */
+		 if (getController() != null) {
+			 selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
+			 fillContainer();
+			 getController().getVisualBuilder().setShowInvisibleTags(JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+					 IVpePreferencesPage.SHOW_NON_VISUAL_TAGS));
+			 getController().getPageContext().getBundle().updateShowBundleUsageAsEL();
+			 getController().visualRefresh();
+		}
+	}
+	
 }

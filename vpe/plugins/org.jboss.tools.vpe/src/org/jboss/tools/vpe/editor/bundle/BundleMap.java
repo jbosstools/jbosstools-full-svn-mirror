@@ -47,7 +47,8 @@ import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
-import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.jst.web.project.list.WebPromptingProvider;
 import org.jboss.tools.vpe.VpePlugin;
@@ -64,7 +65,8 @@ public class BundleMap {
     private BundleEntry[] bundles = new BundleEntry[0];
     private Map<String,UsedKey> usedKeys = new HashMap<String,UsedKey>();
     
-    boolean isShowBundleUsageAsEL = "yes".equals(VpePreference.SHOW_RESOURCE_BUNDLES.getValue()); //$NON-NLS-1$
+    boolean isShowBundleUsageAsEL = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+			IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL); 
     XModelTreeListener modelListener = new ML();
 	
 	public void init(StructuredTextEditor editor){
@@ -461,7 +463,15 @@ public class BundleMap {
 		}
 	}
 	
-
+	public void updateShowBundleUsageAsEL() {
+		boolean b = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+				IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
+		if(isShowBundleUsageAsEL != b) {
+			isShowBundleUsageAsEL = b;
+			refresh();
+		}	
+	}
+	
 	static class Expression {
 		public String prefix;
 		public String propertyName;
@@ -503,11 +513,7 @@ public class BundleMap {
 	class ML implements XModelTreeListener {
 
 		public void nodeChanged(XModelTreeEvent event) {
-		    boolean b = "yes".equals(VpePreference.SHOW_RESOURCE_BUNDLES.getValue());	 //$NON-NLS-1$
-			if(isShowBundleUsageAsEL != b) {
-				isShowBundleUsageAsEL = b;
-				refresh();
-			}			
+			updateShowBundleUsageAsEL();
 		}
 
 		public void structureChanged(XModelTreeEvent event) {

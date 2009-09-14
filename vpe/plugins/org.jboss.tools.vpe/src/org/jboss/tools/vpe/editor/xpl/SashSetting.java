@@ -9,8 +9,8 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
-import org.jboss.tools.jst.jsp.preferences.VpePreference;
-import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 
 
  
@@ -30,126 +30,45 @@ public class SashSetting implements EditorSettings.ISetting {
 	private QualifiedName name;
 	private CustomSashForm sash;
 	
-	private ControlListener listener=null;
 	private Control listenedControl=null;
 	
 	private int weights[];
-	
-	/**
-	 * Save both the current weights, and the (potential) save
-	 * weights.  The first value is the size of the 
-	 * current weights
-	 * 
-	 * @since 1.1.0
-	 */
-	protected void updateWeights() {
-		weights = sash.getWeights();
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < weights.length; i++) {
-			if (i>0)
-				sb.append(EditorSettings.SEPERATOR);
-			sb.append(weights[i]);
-		}
-		sb.append(EditorSettings.SEPERATOR);
-		sb.append(-1);  // seperate between current weights, and saved weights
-		sb.append(EditorSettings.SEPERATOR);
-		sb.append(sash.getSavedWeight());
-		try {
-			//fix for JBIDE-3805
-			if(resource.exists()) {
-			resource.setPersistentProperty(name,sb.toString());
-			}
-		} catch (CoreException e) {
-			VpePlugin.getPluginLog().logError(e);
-		}
-	}
 	
 	public SashSetting(CustomSashForm s) {
 		sash = s;		
 	}
 	
-	protected void addListener() {
-		if (listener==null && !sash.isDisposed()) {
-			listener = new ControlListener() {	
-				public void controlResized(ControlEvent e) {
-					updateWeights();
-				}	
-				public void controlMoved(ControlEvent e) {
-					updateWeights();	
-				}	
-			};
-			listenedControl = sash.getChildren()[0];
-			listenedControl.addControlListener(listener);			
-	    }				
-	}
-	
-	protected void removeListener() {
-		if (listenedControl!=null && !listenedControl.isDisposed()) {
-			listenedControl.removeControlListener(listener);
-			listener=null;
-			listenedControl=null;
-		}
-	}
-	
 	public void apply() {
-		try {
-			String val = resource.getPersistentProperty(name);
-			if (val!=null) {
-				StringTokenizer st = new StringTokenizer(val,EditorSettings.SEPERATOR);
-				weights = new int[st.countTokens()];
-				int index = 0;				
-				while(st.hasMoreTokens()) {
-					String s = st.nextToken();
-					weights[index++]=Integer.parseInt(s);
+		/*
+		 * Set weights from the preference page
+		 */
+		int defaultWeight = JspEditorPlugin.getDefault().getPreferenceStore()
+				.getInt(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_WEIGHTS);
+		int[] weights = sash.getWeights();
+		if (weights.length > 2) {
+			if (defaultWeight == 0) {
+				if (CustomSashForm.isSourceEditorFirst()) {
+					sash.maxDown();
+				} else {
+					sash.maxUp();
 				}
-				for (index = 0; index < weights.length; index++) {
-					if (weights[index]<0)
-						break;					
+			} else if (defaultWeight == 1000) {
+				if (CustomSashForm.isSourceEditorFirst()) {
+					sash.maxUp();
+				} else {
+					sash.maxDown();
 				}
-				int saved = -1;
-				if (index<weights.length) {
-					int w[] = new int[index];
-					for (int i = 0; i < w.length; i++) {
-						w[i] = weights[i];						
-					}
-					saved = weights[index+1];					
-					weights=w;
-				}				
-				sash.setWeights(weights);
-				if (saved>=0)
-				   sash.setCurrentSavedWeight(saved);
 			} else {
-				/*
-				 * Set weights from the preference page
-				 */
-				String stringValue = VpePreference.SOURCE_VISUAL_EDITORS_WEIGHTS.getValue();
-				try {
-					int intValue = Integer.parseInt(stringValue);
-					int[] weights = sash.getWeights();
-					if (weights.length > 2) {
-						if (intValue == 0) {
-							sash.maxDown();
-						} else if (intValue == 1000) {
-							sash.maxUp();
-						} else {
-							weights[0] = intValue;
-							weights[1] = 1000 - intValue;
-							sash.setWeights(weights);
-						}
-					}
-				} catch (NumberFormatException e) {
-					// Do nothing
+				if (CustomSashForm.isSourceEditorFirst()) {
+					weights[0] = 1000 - defaultWeight;
+					weights[1] = defaultWeight;
+				} else {
+					weights[0] = defaultWeight;
+					weights[1] = 1000 - defaultWeight;
 				}
+				sash.setWeights(weights);
 			}
-		} catch (CoreException e1) {
-			VpePlugin.getPluginLog().logError(e1);
 		}
-		addListener();
-	}
-
-
-	public void dispose() {		
-		removeListener();
 	}
 
 	public void setQualifier(String q) {
@@ -162,5 +81,9 @@ public class SashSetting implements EditorSettings.ISetting {
 
 	public void setResource(IResource r) {
 		resource = r;		
+	}
+
+	public void dispose() {
+		
 	}
 }

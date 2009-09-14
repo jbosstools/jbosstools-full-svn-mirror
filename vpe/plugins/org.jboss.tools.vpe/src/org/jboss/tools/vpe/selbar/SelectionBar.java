@@ -50,6 +50,8 @@ import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.ui.attribute.adapter.AdapterFactory;
 import org.jboss.tools.common.model.ui.attribute.adapter.IModelPropertyEditorAdapter;
 import org.jboss.tools.common.model.ui.util.ModelUtilities;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
@@ -126,7 +128,7 @@ public class SelectionBar implements SelectionListener {
 
 		final Listener closeListener = new Listener() {
 			public void handleEvent(Event event) {
-				if (!getHideWithoutPromptOption()) {
+				if (askConfirmationOnClosingSelectionBar()) {
 					MessageDialogWithToggle dialog = MessageDialogWithToggle
 					.openOkCancelConfirm(
 							PlatformUI.getWorkbench()
@@ -134,14 +136,13 @@ public class SelectionBar implements SelectionListener {
 							.getShell(),
 							VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TITLE,
 							VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_MESSAGE,
-							VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TOGGLE_MESSAGE,
-							false, null, null);
+//							VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TOGGLE_MESSAGE,
+							VpeUIMessages.ASK_CONFIRMATION_ON_CLOSING_SELECTION_BAR,
+							askConfirmationOnClosingSelectionBar(), null, null);
 					if (dialog.getReturnCode() != IDialogConstants.OK_ID) {
 						return;
 					}
-					if (dialog.getToggleState()) {
-						setHideWithoutPromptOption(true);
-					}
+					setAskConfirmationOnClosingSelectionBar(dialog.getToggleState());
 				}
 
 				setAlwaysVisibleOption(false);
@@ -203,24 +204,19 @@ public class SelectionBar implements SelectionListener {
 	}
 
 	public boolean getAlwaysVisibleOption() {
-		return VpePreference.SHOW_SELECTION_TAG_BAR.getValue().equals(PREFERENCE_YES);
+		return JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+				IVpePreferencesPage.SHOW_SELECTION_TAG_BAR);
 	}
 
-	public void setHideWithoutPromptOption(boolean hideWithoutPrompt) {
-		final String optionValue;
-		if (hideWithoutPrompt) {
-			optionValue = PREFERENCE_YES;
-		} else {
-			optionValue = PREFERENCE_NO;
-		}
-
-		setPersistentOption(VpePreference.ATT_ALWAYS_HIDE_SELECTION_BAR_WITHOUT_PROMT,
-				optionValue);
+	public void setAskConfirmationOnClosingSelectionBar(boolean askConfirmation) {
+		JspEditorPlugin.getDefault().getPreferenceStore().setValue(
+				IVpePreferencesPage.ASK_CONFIRMATION_ON_CLOSING_SELECTION_BAR,
+				askConfirmation);
 	}
 
-	public boolean getHideWithoutPromptOption() {
-		return VpePreference.ALWAYS_HIDE_SELECTION_BAR_WITHOUT_PROMT
-				.getValue().equals(PREFERENCE_YES);
+	public boolean askConfirmationOnClosingSelectionBar() {
+		return JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+				IVpePreferencesPage.ASK_CONFIRMATION_ON_CLOSING_SELECTION_BAR);
 	}
 
 	/**
