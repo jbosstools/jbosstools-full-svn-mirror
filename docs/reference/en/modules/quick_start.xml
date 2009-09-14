@@ -16,7 +16,7 @@
 	<section>
 		<title>Download Smooks Java-to-Java Example</title>
 		<para> Visit <ulink
-			url="http://svn.codehaus.org/milyn/tags/Smooks_V1.1.2/smooks-examples/java-to-java/"
+			url="http://www.blogjava.net/Files/reloadcn/smooks_java_java.zip"
 			>smooks examples page</ulink> to download the "java-to-java" example project. </para>
 		<tip>
 			<title>Tip:</title>
@@ -26,6 +26,57 @@
 				them into the eclipse Java project. </para>
 		</tip>
 	</section>
+	<section>
+		<title>Mapping rules</title>
+		<para>At the begining of working with Smooks tools,
+			we need to understand the Java-to-Java mapping rules of this example.
+			The transform input Java class is <emphasis><property>example.sourcemodel.Order</property></emphasis> , its structure looks like this :
+		</para>
+		<figure>
+			<title>Order class</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/sourcemodel_structured.jpg" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Let's describe the structure of <emphasis><property>example.sourcemodel.Order</property></emphasis> in short:</para>
+		<itemizedlist>
+			<listitem><para>Order class contains a <property>Header</property> class and a <property>List</property> class.</para></listitem>
+			<listitem><para>The  <property>Header</property> class has <property>customerName</property>,<property>customerNumber</property>,<property>priority</property> as properties.</para></listitem>
+			<listitem><para>In Order class the objects of the OrderItem class are stored in the List.</para></listitem>
+			<listitem><para>OrderItem has <property>price</property>,<property>productId</property>,<property>quantity</property> as its properties.</para></listitem>
+		</itemizedlist>
+		<para>Let's look at the transform target Java class : <emphasis><property>LineOrder</property></emphasis>.</para>
+		<para>On the screen below you can see its structure:</para>
+		<figure>
+			<title>LineOrder class</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/targetmodel_structured.jpg" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<itemizedlist>
+			<listitem><para><property>LineOrder</property> class contains 3 properties:<property>customerId</property>,<property>customerName</property>,<property>priority</property> and an array of lineItems.</para></listitem>
+			<listitem><para>The <property>Header</property> class has <property>customerName</property>,<property>customerNumber</property>,<property>priority</property> as its properties.</para></listitem>
+			<listitem><para>OrderItem objects are stored in a List.</para></listitem>
+		</itemizedlist>
+		<para>Now it's the time to define the mapping rules to transform the input source java class to the target java class:</para>
+		<itemizedlist>
+			<listitem><para>Each instance of the Order class should be mapped with an instance of the LineOrder class.</para></listitem>
+			<listitem><para>The value of <property>customerName</property> of the Header class should be assigned to the <property>customerName</property> property of a LineOrder instance.</para></listitem>
+			<listitem><para>The value of <property>customerNumber</property> of the Header class should be assigned to the <property>customerId</property> property of a LineOrder instance.</para></listitem>
+			<listitem><para>The value of <property>priority</property> of the Header class should be assigned to the <property>priority</property> property of LineOrder instance.</para></listitem>
+			<listitem><para>For the <property>orderitems</property> List of the Order instance, it's necessary to map a new lineItems array instance of LineOrder ,
+			and each OrderItem instance in the orderItems List should be transformed to a LineItem instance,
+			those instances will be put into the lineItems array.</para></listitem>
+			<listitem><para>The value of <property>productId</property> of the OrderItem instance should be assigned to the 'productCode' of LineItem.</para></listitem>
+			<listitem><para>The value of <property>price</property> of  OrderItem should be assigned to the <property>unitPrice</property> of LineItem.</para></listitem>
+			
+		</itemizedlist>
+	</section>
+	
 	<section id="config_file_wizzard">
 		<title>Smooks Configuration File Wizard</title>
 		<para>Select the Smooks Java-to-Java example project that you created and right-click,
@@ -118,7 +169,14 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-
+		<para>On the bottom of this editor there are 5  tabs, they are :
+			
+			Overview, Reader, Message Filter, Graph, Source.</para>
+		<section id="graphicaleditor_datalink">
+			<title>Adding the input data</title>
+			<para>At first, we need to add the Order class as the input data.
+				To do this, click the Reader tab, swich to the Reader/Input editor page</para>
+			
 		<!--<para> This editor contains several parts: <table>
 				<title>The Smooks Editor Parts</title>
 				<tgroup cols="2">
@@ -188,10 +246,7 @@
 				</tgroup>
 			</table>
 		</para>-->
-	</section>
-
-	<section id="graphicaleditor_datalink">
-		<title>Choosing the transform data</title>
+	
 
 		<para>To choose the transform data you should open <emphasis>
 			<property>Reader</property></emphasis> tab and click <emphasis>
@@ -235,10 +290,10 @@
 			</mediaobject>
 		</figure>
 
-		<para> Let's select the Order class from the example project as the source JavaBean class and the ListOrder class as the target JavaBean class.When you selected  the necessary java classes, click <emphasis>
+		<para> Let's select the Order class from the example project as the source JavaBean class.After that click <emphasis>
 				<property>Finish</property>
-			</emphasis> and you should see all added java classes  displayed in the Input Data Section
-			.</para>
+			</emphasis> and you should see the just added java class,  being displayed in the Input Data Section.
+			</para>
 		<figure>
 			<title>Displaying the Structure of the Transformed Data</title>
 			<mediaobject>
@@ -247,8 +302,74 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
+		</section>
+		<section>
+			<title>Adding the target Bean</title>
+			<para>After adding the input data, let's switch to the Message Filter page:</para>
+			<figure>
+				<title>Displaying the Structure of the Transformed Data</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/quick_start/quick_start9a.png" scale="90"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Click the <property>Add</property> button, the <property>Add Child</property> wizard page will be shown, let's select the <property>Java Binding v1.2 -> Bean v1.2</property> and click <emphasis><property>OK</property></emphasis> to add the Bean :
+			</para>
+			<figure>
+				<title>Add Child wizard</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/quick_start/quick_start9b.png" scale="90"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>Then we can find on the Message Filter page the <property>Bean v1.2</property> item  added, click on it ,a Bean v1.2 section should appear to the right of the page.
+				The section represents a GUI for editing <property>Bean v1.2</property> properties:</para>
+			<figure>
+				<title>Bean v1.2 section</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/quick_start/quick_start9c.png" scale="90"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>You should input <property>
+				lineOrder</property> as the Bean's id in the "Bean Id" field.Then you should click  <property>Browse</property> button
+				near the <property>Class</property> textfield and select LineOrder as the Bean's class.</para>
+			<note>
+				<para>
+					When you enter a value for the <property>Class</property> text field,
+					you can type 'Alt + /' and the content assist pop dialog will be shown,
+					so it's will increase the efficiency. If 'Alt + /' doesn't work,
+					try to use the 'Ctrl + space'('Key Assist' of Eclipse).
+				</para>
+			</note>
+			<para>Let's click the <property>Add Binding</property> link at the bottom of this page,
+				it will show a dialog to ask the binding of what Bean properties you will prefer to add.
+				Select all and click OK, you will see a list of Binding elements added under the Bean item.</para>
+			<para>Then you should add an array of beans called <property>lineItems</property> and a Bean LineItem.These two classes and Id values are:</para>
+			<para>Array Bean:</para>
+				<itemizedlist>
+					<listitem><para>BeanId : lineItems;</para></listitem>
+					<listitem><para>Class : example.trgmodel.LineItem[]</para></listitem>
+				</itemizedlist>
+			<para>LineItem Bean :</para>
+			<itemizedlist>
+				<listitem><para>BeanId : lineItem;</para></listitem>
+				<listitem><para>Class : example.trgmodel.LineItem</para></listitem>
+			</itemizedlist>
+		<note>
+			<para>
+				In Smooks , to be an array of Beans , the class value should end with '[]'. This means that this bean is an array type.
+	
+			</para>
+		</note>
+			<para>To finish this work, use the <property>Add Binding</property> link to add  all the bindings for the Bean.</para>
+		</section>
+	
+		
 	</section>
-
 	<section id="quickstart_mapping">
 		<title>Mapping</title>
 
@@ -296,7 +417,7 @@
 		</orderedlist>
 
 		<para> Make sense?
-			You should right click Resource List , select <emphasis>
+			You should open Design tab and click Add button. In opened Add Child Wizard,please, select <emphasis>
 				<property>Add Smooks Resource>Java Binding>Bindings</property></emphasis>.  
 			</para>
 		<para>First of all, you should bind <emphasis>
