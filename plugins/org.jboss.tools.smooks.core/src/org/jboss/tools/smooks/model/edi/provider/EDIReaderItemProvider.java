@@ -131,10 +131,11 @@ public class EDIReaderItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((EDIReader)object).getTargetProfile();
-		return label == null || label.length() == 0 ?
-			getString("_UI_EDIReader_type") :
-			getString("_UI_EDIReader_type") + " " + label;
+		return "EDI";
+//		String label = ((EDIReader)object).getTargetProfile();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_EDIReader_type") :
+//			getString("_UI_EDIReader_type") + " " + label;
 	}
 
 	/**

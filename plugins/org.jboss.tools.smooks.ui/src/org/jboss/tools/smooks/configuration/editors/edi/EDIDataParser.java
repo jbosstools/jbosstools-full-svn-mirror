@@ -108,58 +108,32 @@ public class EDIDataParser {
 
 	public TagList parseEDIFile(InputStream stream, InputType inputType, SmooksResourceListType resourceList)
 			throws IOException, DocumentException {
-
-		List<ParamType> paramList = inputType.getParam();
-		String encoding = null;
-		String mappingModel = null;
-		String validate = null;
-		String type = inputType.getType();
-
-		for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
-			ParamType paramType = (ParamType) iterator.next();
-			if (paramType.getName().equals(USE_AVAILABEL_READER)) {
-				if (paramType.getValue().equalsIgnoreCase("true") && resourceList != null) {
-					List<AbstractReader> readers = resourceList.getAbstractReader();
-					int count = 0;
-					int index = -1;
-					for (Iterator<?> iterator2 = readers.iterator(); iterator2.hasNext();) {
-						AbstractReader abstractReader = (AbstractReader) iterator2.next();
-						if (abstractReader instanceof EDIReader && SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(type)) {
-							count++;
-							if (index == -1) {
-								index = readers.indexOf(abstractReader);
-							}
-						}
-						if (abstractReader instanceof EDI12Reader && SmooksModelUtils.INPUT_TYPE_EDI_1_2.equals(type)) {
-							count++;
-							if (index == -1) {
-								index = readers.indexOf(abstractReader);
-							}
-						}
-					}
-
-					if (count > 1) {
-						// throw new
-						// RuntimeException("The smooks config file should have only one JSON reader");
-					}
-					if (index != -1) {
-						return parseEDIFile(stream, (EObject) readers.get(index));
-					}
-
+//		String encoding = null;
+//		String mappingModel = null;
+//		String validate = null;
+//		String type = inputType.getType();
+		List<AbstractReader> readers = resourceList.getAbstractReader();
+		int count = 0;
+		int index = -1;
+		for (Iterator<?> iterator2 = readers.iterator(); iterator2.hasNext();) {
+			AbstractReader abstractReader = (AbstractReader) iterator2.next();
+			if (abstractReader instanceof EDIReader || abstractReader instanceof EDI12Reader) {
+				count++;
+				if (index == -1) {
+					index = readers.indexOf(abstractReader);
 				}
-			}
-			if (paramType.getName().equals(ENCODING)) {
-				encoding = paramType.getValue();
-			}
-			if (paramType.getName().equals(MAPPING_MODEL)) {
-				mappingModel = paramType.getValue();
-			}
-			if (paramType.getName().equals(VALIDATE)) {
-				validate = paramType.getValue();
 			}
 		}
 
-		return parseEDIFile(stream, mappingModel, encoding,validate, resourceList);
+		if (count > 1) {
+			// throw new
+			// RuntimeException("The smooks config file should have only one JSON reader");
+		}
+		if (index != -1) {
+			return parseEDIFile(stream, (EObject) readers.get(index));
+		}
+		return null;
+//		return parseEDIFile(stream, mappingModel, encoding,validate, resourceList);
 	}
 
 	public TagList parseEDIFile(InputStream ediInputStream, EObject readerObj, IProject project) throws IOException,

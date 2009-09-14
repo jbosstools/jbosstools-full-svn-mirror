@@ -29,10 +29,8 @@ import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
 import org.jboss.tools.smooks.model.csv.CsvReader;
 import org.jboss.tools.smooks.model.csv12.CSV12Reader;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
-import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.milyn.Smooks;
 import org.milyn.csv.CSVReaderConfigurator;
 import org.milyn.payload.StringResult;
@@ -99,85 +97,30 @@ public class CSVDataParser {
 
 	public TagList parseCSV(InputStream stream, InputType inputType, SmooksResourceListType resourceList)
 			throws DocumentException, ParserConfigurationException {
-		String type = inputType.getType();
-		List<ParamType> paramList = inputType.getParam();
-		String fields = null;
-		String separator = null;
-		String quoteChar = null;
-		String skiplines = null;
-		String encoding = null;
-		String rootName = null;
-		String recordName = null;
-
-		for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
-			ParamType paramType = (ParamType) iterator.next();
-			if (paramType.getName().equals(LINK_CSV_READER)) {
-				if (paramType.getValue().equalsIgnoreCase("true") && resourceList != null) {
-					List<AbstractReader> readers = resourceList.getAbstractReader();
-					int count = 0;
-					int index = -1;
-					for (Iterator<?> iterator2 = readers.iterator(); iterator2.hasNext();) {
-						AbstractReader abstractReader = (AbstractReader) iterator2.next();
-						if (SmooksModelUtils.INPUT_TYPE_CSV_1_1.equals(type)) {
-							if (abstractReader instanceof CsvReader) {
-								count++;
-								if (index == -1) {
-									index = readers.indexOf(abstractReader);
-								}
-							}
-						}
-
-						if (SmooksModelUtils.INPUT_TYPE_CSV_1_2.equals(type)) {
-							if (abstractReader instanceof CSV12Reader) {
-								count++;
-								if (index == -1) {
-									index = readers.indexOf(abstractReader);
-								}
-							}
-						}
-					}
-
-					if (count > 1) {
-						// throw new
-						// RuntimeException("The smooks config file should have only one JSON reader");
-					}
-					if (index != -1) {
-						return parseCSV(stream, readers.get(index));
-						// return parseJsonFile(stream, (JsonReader)
-						// readers.get(index));
-					}
-
+		List<AbstractReader> readers = resourceList.getAbstractReader();
+		int count = 0;
+		int index = -1;
+		for (Iterator<?> iterator2 = readers.iterator(); iterator2.hasNext();) {
+			AbstractReader abstractReader = (AbstractReader) iterator2.next();
+			if (abstractReader instanceof CsvReader || abstractReader instanceof CSV12Reader) {
+				count++;
+				if (index == -1) {
+					index = readers.indexOf(abstractReader);
 				}
 			}
-			if (paramType.getName().equals(FIELDS)) {
-				fields = paramType.getValue();
-				try {
-					// fields = fields.replace(';', ',');
-				} catch (Throwable t) {
 
-				}
-			}
-			if (paramType.getName().equals(SEPARATOR)) {
-				separator = paramType.getValue();
-			}
-			if (paramType.getName().equals(SKIPLINES)) {
-				skiplines = paramType.getValue();
-			}
-			if (paramType.getName().equals(QUOTECHAR)) {
-				quoteChar = paramType.getValue();
-			}
-			if (paramType.getName().equals(ENCODING)) {
-				encoding = paramType.getValue();
-			}
-			if (paramType.getName().equals(ROOT_ELEMENT_NAME)) {
-				rootName = paramType.getValue();
-			}
-			if (paramType.getName().equals(RECORD_NAME)) {
-				recordName = paramType.getValue();
-			}
 		}
 
-		return this.parseCSV(stream, fields, rootName, recordName, separator, quoteChar, skiplines, encoding);
+		if (count > 1) {
+			// throw new
+			// RuntimeException("The smooks config file should have only one JSON reader");
+		}
+		if (index != -1) {
+			return parseCSV(stream, readers.get(index));
+			// return parseJsonFile(stream, (JsonReader)
+			// readers.get(index));
+		}
+		return null;
 	}
 
 	public TagList parseCSV(String filePath, String fields, String rootName, String recordName, String separator,
@@ -224,9 +167,9 @@ public class CSVDataParser {
 		if (recordName != null) {
 			readerConfigurator.setRecordElementName(recordName);
 		}
-		
+
 		readerConfigurator.setEncoding(Charset.forName(encoding));
-//		readerConfigurator.setIndent(indent)
+		// readerConfigurator.setIndent(indent)
 
 		smooks.setReaderConfig(readerConfigurator);
 

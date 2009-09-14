@@ -38,7 +38,7 @@ public class FileSelectionWizard extends Wizard implements INewWizard {
 
 	@Override
 	public void addPages() {
-		fileSelectionWizardPage = new FileSelectionWizardPage("File Selection");
+		fileSelectionWizardPage = new FileSelectionWizardPage("File Selection" ,null);
 		fileSelectionWizardPage.setFilters(viewerFilters);
 		fileSelectionWizardPage.setInitSelections(getInitSelections());
 		fileSelectionWizardPage.setMultiSelect(isMultiSelect());

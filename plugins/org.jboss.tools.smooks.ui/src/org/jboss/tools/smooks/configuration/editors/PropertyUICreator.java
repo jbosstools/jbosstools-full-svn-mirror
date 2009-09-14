@@ -15,7 +15,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -149,9 +153,22 @@ public class PropertyUICreator implements IPropertyUICreator {
 	public AttributeFieldEditPart createFileSelectionFieldEditor(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 			ISmooksModelProvider formEditor) {
+		final ISmooksModelProvider provider = formEditor;
 		IFieldDialog dialog = new IFieldDialog() {
 			public Object open(Shell shell) {
 				FileSelectionWizard wizard = new FileSelectionWizard();
+				EObject model = provider.getSmooksModel();
+				if(model != null){
+					URI uri = model.eResource().getURI();
+					if(uri.isPlatformResource()){
+						String path = uri.toPlatformString(true);
+						IResource workspaceResource = ResourcesPlugin.getWorkspace().getRoot().findMember(new Path(path));
+						if(workspaceResource instanceof IFile){
+							workspaceResource = ((IFile)workspaceResource).getParent();
+						}
+						wizard.setInitSelections(new Object[]{workspaceResource});
+					}
+				}
 				wizard.setViewerFilters(getFileDialogViewerFilters());
 				WizardDialog dialog = new WizardDialog(shell, wizard);
 				if (dialog.open() == Dialog.OK) {
@@ -200,7 +217,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 			ISmooksModelProvider formEditor) {
 		if (model instanceof EObject)
-			return SmooksUIUtils.createJavaTypeSearchFieldEditor(parent, toolkit, propertyDescriptor, (EObject) model);
+			return SmooksUIUtils.createJavaTypeSearchFieldEditor(parent, toolkit, propertyDescriptor, (EObject) model , formEditor);
 		return null;
 	}
 

@@ -156,10 +156,16 @@ public class KeyItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Key)object).getValue();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Key_type") :
-			getString("_UI_Key_type") + " " + label;
+		String label = ((Key)object).getTo();
+		String from = ((Key)object).getFrom();
+		String returnText = "-> ";
+		if(from != null){
+			returnText = from + " -> ";
+		}
+		if(label != null){
+			returnText = returnText + label;
+		}
+		return returnText;
 	}
 
 	/**

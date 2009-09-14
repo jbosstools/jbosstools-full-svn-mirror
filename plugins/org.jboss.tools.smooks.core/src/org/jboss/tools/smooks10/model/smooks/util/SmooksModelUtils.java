@@ -51,11 +51,13 @@ public class SmooksModelUtils {
 
 	public static final String INPUT_TYPE_JAVA = "java";
 
+	public static final String INPUT_TYPE_CUSTOME = "custom";
+
 	public static final String INPUT_TYPE_JSON_1_1 = "json";
 
-	public static final String INPUT_TYPE_CSV_1_1 = "csv";
+	public static final String INPUT_TYPE_CSV = "csv";
 
-	public static final String INPUT_TYPE_CSV_1_2 = "csv_1_2";
+	public static final String INPUT_TYPE_CSV_1_2 = "csv";
 
 	public static final String PARAM_NAME_CLASS = "class";
 
@@ -76,12 +78,12 @@ public class SmooksModelUtils {
 	public static final String BEAN_ID = "beanId";
 
 	public static final String BINDINGS = "bindings";
-	
+
 	public static final String INPUT_TYPE_EDI_1_1 = "EDI";
 
-	public static final String INPUT_TYPE_EDI_1_2 = "EDI_1_2";
+	public static final String INPUT_TYPE_EDI_1_2 = "EDI";
 
-	public static final String INPUT_TYPE_JSON_1_2 = "json_1_2";
+	public static final String INPUT_TYPE_JSON_1_2 = "json";
 
 	public static EStructuralFeature ATTRIBUTE_PROPERTY = ExtendedMetaData.INSTANCE.demandFeature(null, "property",
 			false);
@@ -511,7 +513,7 @@ public class SmooksModelUtils {
 		List<org.jboss.tools.smooks.model.graphics.ext.ParamType> list = input.getParam();
 		if (INPUT_TYPE_JAVA.equals(input.getType()) || INPUT_TYPE_XML.equals(input.getType())
 				|| INPUT_TYPE_XSD.equals(input.getType()) || INPUT_TYPE_JSON_1_1.equals(input.getType())
-				|| INPUT_TYPE_JSON_1_2.equals(input.getType()) || INPUT_TYPE_CSV_1_1.equals(input.getType())
+				|| INPUT_TYPE_JSON_1_2.equals(input.getType()) || INPUT_TYPE_CSV.equals(input.getType())
 				|| INPUT_TYPE_EDI_1_1.equals(input.getType()) || INPUT_TYPE_EDI_1_2.equals(input.getType())
 				|| INPUT_TYPE_CSV_1_2.equals(input.getType())) {
 			for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {

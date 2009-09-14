@@ -49,6 +49,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
@@ -57,6 +58,7 @@ import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.FormText;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
@@ -114,8 +116,6 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 	public SmooksConfigurationOverviewPage(FormEditor editor, String id, String title, ISmooksModelProvider provider) {
 		super(editor, id, title);
 		this.smooksModelProvider = provider;
-		((SmooksMultiFormEditor) editor).getSmooksGraphicsExt().addSmooksGraphChangeListener(this);
-
 	}
 
 	public SmooksConfigurationOverviewPage(String id, String title, ISmooksModelProvider provider) {
@@ -133,19 +133,27 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		gl.marginHeight = 0;
 		gl.marginWidth = 0;
 		form.getBody().setLayout(gl);
-		Composite mainComposite = toolkit.createComposite(form.getBody());
+
+		ScrolledPageBook pageBook = new ScrolledPageBook(form.getBody());
+		pageBook.setBackground(toolkit.getColors().getBackground());
+		Composite mainComposite = pageBook.createPage(pageBook);
+		pageBook.showPage(pageBook);
+
+		// Composite mainComposite = toolkit.createComposite(form.getBody());
 
 		GridData gd = new GridData(GridData.FILL_BOTH);
-		mainComposite.setLayoutData(gd);
+		pageBook.setLayoutData(gd);
 
 		GridLayout mgl = new GridLayout();
 		mgl.numColumns = 2;
 		mgl.marginHeight = 13;
+		mgl.horizontalSpacing = 20;
 		mainComposite.setLayout(mgl);
 
 		settingSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR);
 		settingSection.setLayout(new FillLayout());
-		settingSection.setText("Smooks config");
+		settingSection.setText("Smooks configuration");
+		settingSection.setDescription("Set the description for this Smooks configuration file.");
 		Composite settingComposite = toolkit.createComposite(settingSection);
 		settingSection.setClient(settingComposite);
 		gd = new GridData();
@@ -155,7 +163,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		GridLayout sgl = new GridLayout();
 		settingComposite.setLayout(sgl);
 		sgl.numColumns = 2;
-		sgl.verticalSpacing = 12;
+		// sgl.verticalSpacing = 8;
 
 		createSettingSection(settingComposite, toolkit);
 
@@ -163,6 +171,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 
 		globalParamSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
 				| Section.TWISTIE | Section.EXPANDED);
+		globalParamSection.setDescription("Define the global parameters for the Smooks configuration file");
 		globalParamSection.setText("Global Paramters");
 		globalParamSection.setLayout(new FillLayout());
 		Composite globalParamComposite = toolkit.createComposite(globalParamSection);
@@ -181,7 +190,8 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		generalSettingSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
 				| Section.TWISTIE | Section.EXPANDED);
 		generalSettingSection.setLayout(new FillLayout());
-		generalSettingSection.setText("Default Setting");
+		generalSettingSection.setText("Smooks Default Setting");
+		generalSettingSection.setDescription("Define the Smooks configuration file default setting");
 		defaultSettingComposite = toolkit.createComposite(generalSettingSection);
 		generalSettingSection.setClient(defaultSettingComposite);
 		gd = new GridData();
@@ -198,6 +208,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		conditionSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
 				| Section.TWISTIE);
 		conditionSection.setText("Conditions");
+		conditionSection.setDescription("Define the conditions");
 		conditionSection.setLayout(new FillLayout());
 		Composite conditionComposite = toolkit.createComposite(conditionSection);
 		conditionSection.setClient(conditionComposite);
@@ -214,6 +225,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 
 		profilesSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
 				| Section.TWISTIE);
+		profilesSection.setDescription("Define the profiles");
 		profilesSection.setText("Profiles");
 		profilesSection.setLayout(new FillLayout());
 		Composite profilesComposite = toolkit.createComposite(profilesSection);
@@ -232,12 +244,14 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 	}
 
 	private void createSettingSection(Composite settingComposite, FormToolkit toolkit) {
-		toolkit.createLabel(settingComposite, "Smooks Platform Version : ");
+		toolkit.createLabel(settingComposite, "Smooks Platform Version : ").setForeground(
+				toolkit.getColors().getColor(IFormColors.TITLE));
 		int type = SWT.BORDER;
 		if (SmooksUIUtils.isLinuxOS()) {
 			type = SWT.BORDER;
 		}
 		final Combo combo = new Combo(settingComposite, type | SWT.READ_ONLY);
+		combo.setEnabled(false);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		combo.setLayoutData(gd);
 		for (int i = 0; i < SmooksConstants.SMOOKS_VERSIONS.length; i++) {
@@ -258,7 +272,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 			}
 		});
 
-		toolkit.createLabel(settingComposite, "Name : ");
+		toolkit.createLabel(settingComposite, "Name : ").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
 		final Text nameText = toolkit.createText(settingComposite, "", SWT.NONE);
 		nameText.setLayoutData(gd);
 		String name = smooksModelProvider.getSmooksGraphicsExt().getName();
@@ -275,7 +289,8 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 
 		toolkit.paintBordersFor(settingComposite);
 
-		toolkit.createLabel(settingComposite, "Author : ");
+		toolkit.createLabel(settingComposite, "Author : ").setForeground(
+				toolkit.getColors().getColor(IFormColors.TITLE));
 		final Text authorText = toolkit.createText(settingComposite, "", SWT.NONE);
 		authorText.setLayoutData(gd);
 
@@ -290,6 +305,8 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 				}
 			}
 		});
+
+		toolkit.createLabel(settingComposite, "");
 
 		toolkit.paintBordersFor(settingComposite);
 	}
@@ -1195,32 +1212,21 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		}
 	}
 
-	private void createSmooksEditorNavigator(Composite mainComposite, FormToolkit toolkit) {
-		Composite mainNavigatorComposite = toolkit.createComposite(mainComposite);
-		GridData gd = new GridData(GridData.FILL_BOTH);
-		gd.verticalSpan = 5;
-		mainNavigatorComposite.setLayoutData(gd);
-
-		GridLayout gl = new GridLayout();
-		gl.numColumns = 2;
-		gl.marginWidth = 0;
-		gl.marginHeight = 0;
-		mainNavigatorComposite.setLayout(gl);
-
-		Section navigator = toolkit.createSection(mainNavigatorComposite, Section.DESCRIPTION | Section.TITLE_BAR);
-		navigator.setText("Smooks Editor Navigator");
+	private void createNavigatorSection(Composite mainNavigatorComposite, FormToolkit toolkit, String title,
+			String navigatorFilePath) {
+		Section navigator = toolkit.createSection(mainNavigatorComposite, Section.TITLE_BAR);
+		navigator.setText(title);
 		navigator.setLayout(new FillLayout());
 		Composite navigatorComposite = toolkit.createComposite(navigator);
 		navigator.setClient(navigatorComposite);
 
-		gd = new GridData(GridData.FILL_HORIZONTAL);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.verticalAlignment = GridData.BEGINNING;
 		navigator.setLayoutData(gd);
 
 		FormText formText = toolkit.createFormText(navigatorComposite, true);
 		StringBuffer buf = new StringBuffer();
-		InputStream inputStream = this.getClass().getResourceAsStream(
-				"/org/jboss/tools/smooks/configuration/navigator/DefaultSetting.htm");
+		InputStream inputStream = this.getClass().getResourceAsStream(navigatorFilePath);
 		BufferedReader reader = null;
 		if (inputStream != null) {
 			try {
@@ -1265,6 +1271,26 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		navigatorComposite.setLayout(new GridLayout());
 		gd = new GridData(GridData.FILL_BOTH);
 		formText.setLayoutData(gd);
+
+		toolkit.createLabel(navigatorComposite, "");
+	}
+
+	private void createSmooksEditorNavigator(Composite mainComposite, FormToolkit toolkit) {
+		Composite mainNavigatorComposite = toolkit.createComposite(mainComposite);
+		GridData gd = new GridData(GridData.FILL_BOTH);
+		gd.verticalSpan = 5;
+		mainNavigatorComposite.setLayoutData(gd);
+
+		GridLayout gl = new GridLayout();
+		// gl.numColumns = 2;
+		gl.marginWidth = 0;
+		gl.marginHeight = 0;
+		mainNavigatorComposite.setLayout(gl);
+
+		createNavigatorSection(mainNavigatorComposite, toolkit, "Configuring Smooks Input",
+				"/org/jboss/tools/smooks/configuration/navigator/DefaultSetting.htm");
+		createNavigatorSection(mainNavigatorComposite, toolkit, "Configuring Message Filter(s)",
+				"/org/jboss/tools/smooks/configuration/navigator/MessageFilterNavigator.htm");
 	}
 
 	protected void activeNavigatorLink(String href) {
@@ -1323,13 +1349,15 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 	private void createDefaultSection(Composite parent, FormToolkit toolkit) {
 		ModelPanelCreator defaultSettingPanelCreator = getDefaultSettingPanelCreator();
 		EObject model = getSmooksResourceList();
-		AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) smooksModelProvider
-				.getEditingDomain();
-		IItemPropertySource itemPropertySource = (IItemPropertySource) editingDomain.getAdapterFactory().adapt(model,
-				IItemPropertySource.class);
 		if (model != null) {
-			defaultSettingPanelCreator.createModelPanel(model, toolkit, parent, itemPropertySource,
-					smooksModelProvider, getEditor());
+			AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) smooksModelProvider
+					.getEditingDomain();
+			IItemPropertySource itemPropertySource = (IItemPropertySource) editingDomain.getAdapterFactory().adapt(
+					model, IItemPropertySource.class);
+			if (model != null) {
+				defaultSettingPanelCreator.createModelPanel(model, toolkit, parent, itemPropertySource,
+						smooksModelProvider, getEditor());
+			}
 		}
 
 	}

@@ -153,10 +153,11 @@ public class EDI12ReaderItemProvider
 	 * @generated
 	 */
 	public String getText(Object object) {
-		String label = ((EDI12Reader)object).getTargetProfile();
-		return label == null || label.length() == 0 ?
-			getString("_UI_EDI12Reader_type") :
-			getString("_UI_EDI12Reader_type") + " " + label;
+		return "EDI";
+//		String label = ((EDI12Reader)object).getTargetProfile();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_EDI12Reader_type") :
+//			getString("_UI_EDI12Reader_type") + " " + label;
 	}
 
 	/**

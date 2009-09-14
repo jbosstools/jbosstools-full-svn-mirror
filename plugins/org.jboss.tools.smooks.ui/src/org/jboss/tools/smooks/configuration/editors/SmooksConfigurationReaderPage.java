@@ -51,7 +51,7 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 
 	private CheckboxTableViewer inputDataViewer;
-	
+
 	boolean lockCheck = false;
 
 	public SmooksConfigurationReaderPage(FormEditor editor, String id, String title) {
@@ -169,7 +169,8 @@ public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 		inputDataViewer.addCheckStateListener(new ICheckStateListener() {
 
 			public void checkStateChanged(CheckStateChangedEvent event) {
-				if(lockCheck) return;
+				if (lockCheck)
+					return;
 				boolean checked = event.getChecked();
 				InputType inputType = (InputType) event.getElement();
 				List<ParamType> params = inputType.getParam();
@@ -218,7 +219,7 @@ public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 						}
 					}
 				}
-				
+
 				EObject ext = inputType;
 				while (ext != null && !(ext instanceof SmooksGraphicsExtType)) {
 					ext = ext.eContainer();
@@ -227,11 +228,12 @@ public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 				if (ext != null && ext instanceof SmooksGraphicsExtType) {
 					List<ISmooksGraphChangeListener> listeners = ((SmooksGraphicsExtType) ext).getChangeListeners();
 					for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
-						ISmooksGraphChangeListener smooksGraphChangeListener = (ISmooksGraphChangeListener) iterator.next();
+						ISmooksGraphChangeListener smooksGraphChangeListener = (ISmooksGraphChangeListener) iterator
+								.next();
 						smooksGraphChangeListener.inputTypeChanged((SmooksGraphicsExtType) ext);
 					}
 				}
-				
+
 			}
 		});
 		TableColumn header = new TableColumn(inputDataViewer.getTable(), SWT.NONE);
@@ -306,7 +308,8 @@ public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 	}
 
 	public void inputTypeChanged(SmooksGraphicsExtType extType) {
-		inputDataViewer.refresh();
+		if (inputDataViewer != null)
+			inputDataViewer.refresh();
 	}
 
 }

@@ -150,15 +150,19 @@ public class SelectorValidator extends AbstractValidator {
 								.getActiveWorkbenchWindow();
 						IWorkbenchPage activePage = window.getActivePage();
 						if (activePage != null) {
-							IEditorPart part = activePage.findEditor(input);
-							if (part != null && part instanceof AbstractSmooksFormEditor) {
-								extType = ((AbstractSmooksFormEditor) part).getSmooksGraphicsExt();
-								if (extType != null) {
-									List<Object> l = SelectorCreationDialog.generateInputData(extType, finalList);
-									if (l != null) {
-										list.addAll(l);
+							try {
+								IEditorPart part = activePage.findEditor(input);
+								if (part != null && part instanceof AbstractSmooksFormEditor) {
+									extType = ((AbstractSmooksFormEditor) part).getSmooksGraphicsExt();
+									if (extType != null) {
+										List<Object> l = SelectorCreationDialog.generateInputData(extType, finalList);
+										if (l != null) {
+											list.addAll(l);
+										}
 									}
 								}
+							} catch (Throwable t) {
+								t.printStackTrace();
 							}
 						}
 					}

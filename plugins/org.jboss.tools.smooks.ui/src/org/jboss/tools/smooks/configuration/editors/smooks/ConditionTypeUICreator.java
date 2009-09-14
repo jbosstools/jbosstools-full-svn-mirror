@@ -47,18 +47,18 @@ public class ConditionTypeUICreator extends PropertyUICreator {
 	 */
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-			ISmooksModelProvider formEditor,IEditorPart part) {
+			ISmooksModelProvider modelProvider,IEditorPart part) {
 		if (feature == SmooksPackage.eINSTANCE.getConditionType_Value()) {
 		}
 		if (feature == SmooksPackage.eINSTANCE.getConditionType_Evaluator()) {
-			return SmooksUIUtils.createJavaTypeSearchFieldEditor(parent, toolkit, propertyDescriptor, (EObject) model);
+			return SmooksUIUtils.createJavaTypeSearchFieldEditor(parent, toolkit, propertyDescriptor, (EObject) model , modelProvider);
 		}
 		if (feature == SmooksPackage.eINSTANCE.getConditionType_Id()) {
 		}
 		if (feature == SmooksPackage.eINSTANCE.getConditionType_IdRef()) {
 		}
 
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, modelProvider,part);
 	}
 
 	/*

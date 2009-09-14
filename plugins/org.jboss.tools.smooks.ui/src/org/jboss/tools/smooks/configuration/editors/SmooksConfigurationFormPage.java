@@ -44,7 +44,6 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 
 	public SmooksConfigurationFormPage(FormEditor editor, String id, String title) {
 		super(editor, id, title);
-		((SmooksMultiFormEditor) editor).getSmooksGraphicsExt().addSmooksGraphChangeListener(this);
 	}
 
 	public SmooksConfigurationFormPage(String id, String title) {

@@ -42,7 +42,6 @@ import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
-import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.csv.CSVDataParser;
 import org.jboss.tools.smooks.configuration.editors.edi.EDIDataParser;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
@@ -269,7 +268,7 @@ public class SelectorCreationDialog extends Dialog {
 								t.printStackTrace();
 							}
 						}
-						if (SmooksModelUtils.INPUT_TYPE_CSV_1_1.equals(type)
+						if (SmooksModelUtils.INPUT_TYPE_CSV.equals(type)
 								|| SmooksModelUtils.INPUT_TYPE_CSV_1_2.equals(type)) {
 							CSVDataParser parser = new CSVDataParser();
 							try {
@@ -351,7 +350,7 @@ public class SelectorCreationDialog extends Dialog {
 					}
 				}
 			} catch (Exception e) {
-				SmooksConfigurationActivator.getDefault().log(e);
+//				SmooksConfigurationActivator.getDefault().log(e);
 			}
 		}
 		return list;

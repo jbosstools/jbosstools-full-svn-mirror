@@ -134,15 +134,20 @@ import org.jboss.tools.smooks.contentassist.TypeContentProposalListener;
 import org.jboss.tools.smooks.contentassist.TypeContentProposalProvider;
 import org.jboss.tools.smooks.contentassist.TypeProposalLabelProvider;
 import org.jboss.tools.smooks.core.SmooksCoreActivator;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.model.calc.CalcPackage;
 import org.jboss.tools.smooks.model.calc.Counter;
 import org.jboss.tools.smooks.model.csv.CsvPackage;
+import org.jboss.tools.smooks.model.csv.CsvReader;
+import org.jboss.tools.smooks.model.csv12.CSV12Reader;
 import org.jboss.tools.smooks.model.csv12.Csv12Package;
 import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
 import org.jboss.tools.smooks.model.datasource.Direct;
+import org.jboss.tools.smooks.model.edi.EDIReader;
 import org.jboss.tools.smooks.model.edi.EdiPackage;
+import org.jboss.tools.smooks.model.edi12.EDI12Reader;
 import org.jboss.tools.smooks.model.edi12.Edi12Package;
 import org.jboss.tools.smooks.model.esbrouting.EsbroutingPackage;
 import org.jboss.tools.smooks.model.esbrouting.RouteBean;
@@ -171,12 +176,15 @@ import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
 import org.jboss.tools.smooks.model.jmsrouting12.JMS12Router;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
 import org.jboss.tools.smooks.model.json.JsonPackage;
+import org.jboss.tools.smooks.model.json.JsonReader;
 import org.jboss.tools.smooks.model.json12.Json12Package;
+import org.jboss.tools.smooks.model.json12.Json12Reader;
 import org.jboss.tools.smooks.model.persistence12.Persistence12Package;
 import org.jboss.tools.smooks.model.rules10.Rules10Package;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
+import org.jboss.tools.smooks.model.smooks.ReaderType;
 import org.jboss.tools.smooks.model.smooks.ResourceConfigType;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -1103,10 +1111,15 @@ public class SmooksUIUtils {
 	}
 
 	public static AttributeFieldEditPart createJavaTypeSearchFieldEditor(Composite parent, FormToolkit toolkit,
-			final IItemPropertyDescriptor propertyDescriptor, final EObject model) {
+			final IItemPropertyDescriptor propertyDescriptor, final EObject model , ISmooksModelProvider modelProvider) {
 		if (model instanceof EObject) {
 			AttributeFieldEditPart editpart = new AttributeFieldEditPart();
-			final Resource resource = ((EObject) model).eResource();
+			Resource r = ((EObject) model).eResource();
+			if(r == null){
+				r = modelProvider.getSmooksModel().eResource();
+			}
+			final Resource resource = r;
+			if(resource == null) return null;
 			URI uri = resource.getURI();
 			IResource workspaceResource = null;
 			if (uri.isPlatformResource()) {
@@ -2334,6 +2347,7 @@ public class SmooksUIUtils {
 	}
 
 	public static IXMLStructuredObject getChildNodeWithName(String name, IXMLStructuredObject parent) {
+		if(parent == null) return null;
 		String tempName = name;
 		boolean isAttribute = false;
 		if (isAttributeName(tempName)) {
@@ -2824,5 +2838,31 @@ public class SmooksUIUtils {
 			return SmooksConstants.VERSION_1_1;
 		}
 		return SmooksConstants.VERSION_1_2;
+	}
+
+	public static String judgeInputType(EObject smooksModel) {
+		String inputType = null;
+		if (smooksModel instanceof DocumentRoot) {
+			return null;
+		}
+
+		if (smooksModel instanceof org.jboss.tools.smooks.model.smooks.DocumentRoot) {
+			SmooksResourceListType rlist = ((org.jboss.tools.smooks.model.smooks.DocumentRoot)smooksModel).getSmooksResourceList();
+			if(rlist.getAbstractReader().isEmpty()) return null;
+			AbstractReader reader = rlist.getAbstractReader().get(0);
+			if (CsvReader.class.isInstance(reader) || CSV12Reader.class.isInstance(reader)) {
+				inputType = SmooksModelUtils.INPUT_TYPE_CSV;
+			}
+			if (EDIReader.class.isInstance(reader) || EDI12Reader.class.isInstance(reader)) {
+				inputType = SmooksModelUtils.INPUT_TYPE_EDI_1_1;
+			}
+			if (JsonReader.class.isInstance(reader) || Json12Reader.class.isInstance(reader)) {
+				inputType = SmooksModelUtils.INPUT_TYPE_JSON_1_1;
+			}
+			if (ReaderType.class.isInstance(reader)) {
+				inputType = SmooksModelUtils.INPUT_TYPE_CUSTOME;
+			}
+		}
+		return inputType;
 	}
 }

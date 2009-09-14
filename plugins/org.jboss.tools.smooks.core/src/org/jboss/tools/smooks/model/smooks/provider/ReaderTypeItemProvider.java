@@ -139,10 +139,11 @@ public class ReaderTypeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((ReaderType)object).getTargetProfile();
-		return label == null || label.length() == 0 ?
-			getString("_UI_ReaderType_type") :
-			getString("_UI_ReaderType_type") + " " + label;
+		return "Custom";
+//		String label = ((ReaderType)object).getTargetProfile();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_ReaderType_type") :
+//			getString("_UI_ReaderType_type") + " " + label;
 	}
 
 	/**

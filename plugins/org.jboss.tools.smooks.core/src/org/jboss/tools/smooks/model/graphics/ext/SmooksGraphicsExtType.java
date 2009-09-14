@@ -139,6 +139,8 @@ public interface SmooksGraphicsExtType extends EObject {
 	 * @generated
 	 */
 	void setInputType(String value);
+	
+	void setInputType(String value , boolean fireEvent);
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

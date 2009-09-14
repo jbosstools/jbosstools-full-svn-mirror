@@ -46,22 +46,22 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 	
 	public CSVInputDataWizard() {
 		super();
-		this.setWindowTitle("CSV Input Data Wizard (version 1.1)");
+		this.setWindowTitle("CSV Input Data Wizard");
 	}
 
 	@Override
 	public void addPages() {
-		if (configPage == null) {
-			configPage = new CSVDataConfigurationWizardPage("CSV Configurations Page");
-			configPage.setSmooksResourceList(resourceList);
-		}
+//		if (configPage == null) {
+//			configPage = new CSVDataConfigurationWizardPage("CSV Configurations Page");
+//			configPage.setSmooksResourceList(resourceList);
+//		}
 		
 		if (pathPage == null) {
-			pathPage = new CSVDataPathWizardPage("CSV Path Page", new String[] {},configPage);
+			pathPage = new CSVDataPathWizardPage("CSV Path Page", new String[] {"csv"},configPage);
 		}
 		
 		this.addPage(pathPage);
-		this.addPage(configPage);
+//		this.addPage(configPage);
 		super.addPages();
 	}
 
@@ -123,6 +123,9 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 	}
 	
 	public boolean canFinish() {
+		if(pathPage != null){
+			return pathPage.isPageComplete();
+		}
 		if (configPage != null && pathPage != null) {
 			if (configPage.isPageComplete() && pathPage.isPageComplete())
 				return true;
@@ -149,7 +152,7 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 	 * IStructuredDataSelectionWizard#getInputDataTypeID()
 	 */
 	public String getInputDataTypeID() {
-		return SmooksModelUtils.INPUT_TYPE_CSV_1_1;
+		return SmooksModelUtils.INPUT_TYPE_CSV;
 	}
 
 	/*
