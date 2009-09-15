@@ -132,11 +132,15 @@ public class AdapterFactory implements IAdapterFactory {
 	IResource adapt_Element2IResource ( Element elm ) {
 		
 		Element top = elm.getOwnerDocument().getDocumentElement();
-		
-		// Find the EObject reference to the emf model in the hierarchy of the 
-		EObject eObj = (EObject) top.getUserData("emf.model");
-		
-		return adapt_EObject2IResource(eObj);
+		IResource result = null;
+		if (top != null) {
+			// Find the EObject reference to the emf model in the hierarchy of
+			// the
+			EObject eObj = (EObject) top.getUserData("emf.model");
+
+			result = adapt_EObject2IResource(eObj);
+		}
+		return result;
 	}
 
 	/**
