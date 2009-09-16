@@ -8,32 +8,18 @@
  * Contributors: 
  * Red Hat, Inc. - initial API and implementation 
  ******************************************************************************/ 
-package org.jboss.tools.common.el.core.resolver;
+package org.jboss.tools.seam.internal.core.el;
 
-import java.util.List;
-
-import org.jboss.tools.common.el.core.model.ELExpression;
-import org.jboss.tools.common.text.TextProposal;
+import org.jboss.tools.common.el.core.resolver.ELSegment;
+import org.jboss.tools.seam.core.ISeamContextVariable;
 
 /**
- * Represents EL Resolver.
- * TODO replace old ELResolver interface with this one.
  * @author Alexey Kazakov
  */
-public interface ELResolver {
+public interface ContextVariableELSegment extends ELSegment {
 
 	/**
-	 * @param context
-	 * @param el
-	 * @return proposal list
+	 * @return Seam context variable
 	 */
-	List<TextProposal> getProposals(ELContext context, String el);
-
-	/**
-	 * Resolves EL operand.
-	 * @param context
-	 * @param operand
-	 * @return
-	 */
-	ELResolution resolve(ELContext context, ELExpression operand);
+	ISeamContextVariable getVariable();
 }
