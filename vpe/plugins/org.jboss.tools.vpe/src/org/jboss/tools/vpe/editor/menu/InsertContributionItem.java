@@ -81,29 +81,6 @@ public class InsertContributionItem extends ContributionItem {
 	@Override
 	public void fill(Menu menu, int index) {
 		/*
-		 * https://jira.jboss.org/jira/browse/JBIDE-3504 
-		 * Adding 'Insert tag from Palette' menu item.
-		 */
-		final MenuItem fromPaletteItem;
-		if (index < 0) {
-			fromPaletteItem = new MenuItem(menu, SWT.CASCADE);
-		} else {
-			fromPaletteItem = new MenuItem(menu, SWT.CASCADE, index);
-		}
-		/*
-		 * Increasing parent menu item index.
-		 */
-		index++;
-		fromPaletteItem.setText(VpeUIMessages.FROM_PALETTE);
-		/*
-		 * Creating menu for 'Insert tag from Palette' item.
-		 */
-		final Menu fromPaletteMenu = new Menu(menu);
-		/*
-		 * Tie menu with the item.
-		 */
-		fromPaletteItem.setMenu(fromPaletteMenu);
-		/*
 		 * Setting each InsertType to correct position in the menu
 		 */
 		for (final InsertType insertItem : InsertType.values()) {
@@ -113,26 +90,12 @@ public class InsertContributionItem extends ContributionItem {
 			final MenuManager paletteManuManager = new MenuManager(
 					insertItem.getMessage());
 			final XModelObject model = ModelUtilities.getPreferenceModel()
-			.getByPath("%Palette%"); //$NON-NLS-1$
+				.getByPath("%Palette%"); //$NON-NLS-1$
 			paletteManuManager.addMenuListener(new InsertMenuListener(
 					model, insertItem));
 			paletteManuManager.setRemoveAllWhenShown(true);
-			/*
-			 * Place menu items to the correct menu.
-			 */
-			if (insertItem.equals(InsertType.REPLACE_WITH)) {
-				/*
-				 * Replace item will be placed in the parent menu. 
-				 * Because of this its position index is required.
-				 */
-				paletteManuManager.fill(menu, index);
-				index++;
-			} else {
-				/*
-				 * Fill 'Insert tag from palette' menu with insert items.
-				 */
-				paletteManuManager.fill(fromPaletteMenu, -1);
-			}
+			paletteManuManager.fill(menu, index);
+			index++;
 		}
 	}
 
