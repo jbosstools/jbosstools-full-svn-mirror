@@ -598,34 +598,19 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		
 		final ControlListener visualContentControlListener = new ControlListener() {
 			public void controlMoved(ControlEvent event) {
-
+			
 			}
 
 			public void controlResized(ControlEvent event) {
-				Point point = visualContent.getSize();
-				if (point.x == 0 || point.y == 0) {
-					VpeController controller = getController();
-					if (controller != null)
-						controller.setVisualEditorVisible(false);
-				} else {
-					VpeController controller = getController();
-					if (controller != null
-							&& !controller.isVisualEditorVisible()) {
-						controller.setVisualEditorVisible(true);
-						if (!controller.isSynced())
-							controller.visualRefresh();
-					}
-				}
+				updateVisualEditorVisibility();
 			}
 		};
 		visualContent.addControlListener(visualContentControlListener);
 		visualContent.addDisposeListener(new DisposeListener() {
-
 			public void widgetDisposed(DisposeEvent e) {
 				visualContent.removeControlListener(visualContentControlListener);
 				visualContent.removeDisposeListener(this);
 			}
-
 		});
 
 		// createVisualEditor();
@@ -833,7 +818,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		 * Reset the container.
 		 */
 		container = newContainer;
-		
+
 		/*
 		 * Set up new sash weights
 		 */
@@ -1132,13 +1117,53 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	}
 
 	public void maximizeSource() {
-		if (container != null)
-			container.maxDown();
+		if (container != null) {
+			if (CustomSashForm.isSourceEditorFirst()) {
+				container.maxDown();
+			} else {
+				container.maxUp();
+			}
+			/*
+			 * In JUnit for JBIDE-3127 on manual maximizing
+			 * SashForm control listener isn't fired up
+			 * do it here.
+			 */
+			updateVisualEditorVisibility();
+		}
 	}
 	
 	public void maximizeVisual() {
-		if (container != null)
-			container.maxUp();
+		if (container != null) {
+			if (CustomSashForm.isSourceEditorFirst()) {
+				container.maxUp();
+			} else {
+				container.maxDown();
+			}
+			/*
+			 * In JUnit for JBIDE-3127 on manual maximizing
+			 * SashForm control listener isn't fired up
+			 * do it here.
+			 */
+			updateVisualEditorVisibility();
+		}
+	}
+	
+	protected void updateVisualEditorVisibility() {
+		Point point = visualContent.getSize();
+		if (point.x == 0 || point.y == 0) {
+			VpeController controller = getController();
+			if (controller != null)
+				controller.setVisualEditorVisible(false);
+		} else {
+			VpeController controller = getController();
+			if (controller != null
+					&& !controller.isVisualEditorVisible()) {
+				controller.setVisualEditorVisible(true);
+				if (!controller.isSynced()) {
+					controller.visualRefresh();
+				}
+			}
+		}
 	}
 	
 	/*
