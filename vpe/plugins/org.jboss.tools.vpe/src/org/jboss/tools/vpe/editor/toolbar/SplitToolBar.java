@@ -22,9 +22,9 @@ import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -97,8 +97,9 @@ public abstract class SplitToolBar implements IVpeToolBar {
 						 * bounds, then it is partially hidden, and all
 						 * remaining tools are completely hidden.
 						 */
-						if (!intersection.equals(toolBounds))
+						if (!intersection.equals(toolBounds)) {
 							break;
+						}
 						i++;
 					}
 
@@ -108,24 +109,48 @@ public abstract class SplitToolBar implements IVpeToolBar {
 					 */
 					final Shell floatingShell = new Shell(coolBar.getShell(),
 							SWT.ON_TOP);
-					floatingShell.setLayout(new GridLayout());
-					final ToolBar floatingBar = new ToolBar(floatingShell, 
-							SWT.FLAT | SWT.WRAP);
+					FillLayout shellLayout = new FillLayout(SWT.VERTICAL);
+					shellLayout.marginHeight = 5;
+					shellLayout.marginWidth = 5;
+					shellLayout.spacing = 5;
+					
+					floatingShell.setLayout(shellLayout);
 					SelectionListener selectionListener = new SelectionAdapter() {
 						public void widgetSelected(SelectionEvent e) {
 							floatingShell.dispose();
 						}
 					};
+					
+					ToolBar floatingBar = null;
 					for (int j = i; j < tools.length; j++) {
-						cloneToolItem(floatingBar, tools[j], selectionListener);
+						ToolItem tool = tools[j];
+						int style = tool.getStyle();
+
+						if ((style & SWT.SEPARATOR) != 0) {
+							Control control = tool.getControl();
+							if (control instanceof Combo) {
+								cloneCombo(floatingShell, selectionListener,
+										(Combo) control);
+							}
+						} else {
+							if (floatingBar == null) {
+								floatingBar = new ToolBar(floatingShell, 
+										SWT.FLAT | SWT.WRAP);
+							}
+							cloneItem(floatingBar, tool, selectionListener);
+						}
 					}
+//					Point size = floatingBar.computeSize (300, SWT.DEFAULT);
+//					System.out.println(size);
+//					floatingBar.setSize (size);
+//					floatingBar.pack();
+					floatingShell.pack();
 
 					/*
 					 * Drop down the menu below the chevron, with the left edges
 					 * aligned.
 					 */
 					pt = coolBar.toDisplay(new Point(event.x, event.y));
-					floatingShell.pack();
 					arrange(floatingShell, pt);
 					floatingShell.setVisible(true);
 					floatingShell.setFocus();
@@ -235,31 +260,30 @@ public abstract class SplitToolBar implements IVpeToolBar {
 	 * Creates a copy of {@code item} in the {@code destBar} and
 	 * adds given {@code selectionListener} to the created control.
 	 */
-	protected void cloneToolItem(ToolBar destBar, ToolItem item,
+	protected void cloneItem(ToolBar destBar, ToolItem item,
 			SelectionListener selectionListener) {
-		int style = item.getStyle();
+		ToolItem copiedItem = createToolItem(destBar, item.getStyle(),
+				item.getImage(), item.getToolTipText());
+		copiedItem.setEnabled(item.getEnabled());
+		copiedItem.setSelection(item.getSelection());
+		copySelectionListeners(item, copiedItem);
+		copiedItem.addSelectionListener(selectionListener);
+	}
 
-		if ((style & SWT.SEPARATOR) != 0) {
-			Control control = item.getControl();
-			if (control instanceof Combo) {
-				Combo combo = (Combo) control;
-				Combo copiedCombo = createComboToolItem(destBar, combo.getStyle(),
-						combo.getToolTipText(),
-						Arrays.asList(combo.getItems()),
-						combo.getSelectionIndex());
-				copiedCombo.setEnabled(combo.getEnabled());
-				copiedCombo.setVisible(combo.getVisible());
-				copySelectionListeners(combo, copiedCombo);
-				copiedCombo.addSelectionListener(selectionListener);
-			}
-		} else {
-			ToolItem copiedItem = createToolItem(destBar, item.getStyle(),
-					item.getImage(), item.getToolTipText());
-			copiedItem.setEnabled(item.getEnabled());
-			copiedItem.setSelection(item.getSelection());
-			copySelectionListeners(item, copiedItem);
-			copiedItem.addSelectionListener(selectionListener);
-		}
+	/**
+	 * Creates a copy of {@code combo} in the {@code parent} and
+	 * adds given {@code selectionListener} to the created control.
+	 */
+	protected void cloneCombo(Composite parent,
+			SelectionListener selectionListener, Combo combo) {
+		Combo copiedCombo = createCombo(parent, combo.getStyle(),
+				combo.getToolTipText(),
+				Arrays.asList(combo.getItems()),
+				combo.getSelectionIndex());
+		copiedCombo.setEnabled(combo.getEnabled());
+		copiedCombo.setVisible(combo.getVisible());
+		copySelectionListeners(combo, copiedCombo);
+		copiedCombo.addSelectionListener(selectionListener);
 	}
 
 	/**
@@ -292,21 +316,22 @@ public abstract class SplitToolBar implements IVpeToolBar {
 	 */
 	protected Combo createComboToolItem(ToolBar bar, int style,
 			String toolTipText,	List<String> comboItems, int selectionIndex) {
-		Combo combo = createCombo(bar, style, comboItems);
+		Combo combo = createCombo(bar, style,
+				toolTipText, comboItems, selectionIndex);
 		ToolItem sep = new ToolItem(bar, SWT.SEPARATOR);
 		sep.setWidth(combo.getSize().x);
-		combo.setToolTipText(toolTipText);
-		combo.select(selectionIndex);
 		sep.setControl(combo);
 
 		return combo;
 	}
 	
 	protected Combo createCombo(Composite parent, int style,
-			List<String> comboItems) {
+			String toolTipText,	List<String> comboItems, int selectionIndex) {
 		Combo combo = new Combo(parent, style);
-		combo.setLayoutData(new RowData());
+//		combo.setLayoutData(new RowData());
 		combo.setItems(comboItems.toArray(new String[comboItems.size()]));
+		combo.setToolTipText(toolTipText);
+		combo.select(selectionIndex);
 		combo.pack();
 		return combo;
 	}
@@ -343,3 +368,4 @@ public abstract class SplitToolBar implements IVpeToolBar {
 		return result;
 	}
 }
+

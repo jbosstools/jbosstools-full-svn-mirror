@@ -41,7 +41,10 @@ import org.jboss.tools.vpe.messages.VpeUIMessages;
  */
 public class TextFormattingToolBar extends SplitToolBar {
 
-	private static final String NORMAL_FONT = "Normal"; //$NON-NLS-1$
+	private static final String NORMAL_BLOCK_FORMAT 
+			= "- Block Format -"; //$NON-NLS-1$
+	private static final String NORMAL_FONT = "- Font Name -"; //$NON-NLS-1$
+	private static final String NORMAL_SIZE = "- Font Size -"; //$NON-NLS-1$
 	
 	private static final String ID = "TEXT_FORMATTING_TOOLBAR"; //$NON-NLS-1$
 
@@ -92,7 +95,7 @@ public class TextFormattingToolBar extends SplitToolBar {
 		emptySeparator.setWidth(1);
 		
 		List<String> blockFormatItems = new ArrayList<String>();
-		blockFormatItems.add("Normal"); //$NON-NLS-1$
+		blockFormatItems.add(NORMAL_BLOCK_FORMAT);
 		blockFormatItems.add("Address"); //$NON-NLS-1$
 //		blockFormatItems.add("Numbered List");
 //		blockFormatItems.add("Bulleted List");
@@ -122,7 +125,7 @@ public class TextFormattingToolBar extends SplitToolBar {
 //		itemDescriptors.add(new ToolItemDescriptor(sep, false, null, false));
 
 		List<String> fontSizes = new ArrayList<String>();
-		fontSizes.add(NORMAL_FONT);
+		fontSizes.add(NORMAL_SIZE);
 		for (int i = 1; i < 8; i++) {
 			fontSizes.add(Integer.toString(i)); //$NON-NLS-1$
 		}
