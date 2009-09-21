@@ -57,6 +57,7 @@ import org.jboss.tools.smooks.configuration.wizards.NewSmooksElementWizard;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
  * @author Dart Peng (dpeng@redhat.com)
@@ -317,8 +318,13 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 			seted = true;
 		}
 		if (smooksModel instanceof DocumentRoot) {
-			smooksTreeViewer.setInput(((DocumentRoot) smooksModel).getSmooksResourceList());
-			seted = true;
+			SmooksResourceListType list = ((DocumentRoot) smooksModel).getSmooksResourceList();
+			try {
+				smooksTreeViewer.setInput(list);
+				seted = true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		if (!seted) {
 			smooksTreeViewer.setInput(smooksModel);
@@ -522,10 +528,11 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 
 	protected Object getEmptyDefaultSelection(EObject smooksTreeViewerInput) {
 		return null;
-//		if (((EObject) smooksTreeViewerInput).eContents().isEmpty()) {
-//			return AdapterFactoryEditingDomain.unwrap(((EObject) smooksTreeViewerInput).eContents().get(0));
-//		}
-//		return null;
+		// if (((EObject) smooksTreeViewerInput).eContents().isEmpty()) {
+		// return AdapterFactoryEditingDomain.unwrap(((EObject)
+		// smooksTreeViewerInput).eContents().get(0));
+		// }
+		// return null;
 	}
 
 }

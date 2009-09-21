@@ -3,6 +3,9 @@
  */
 package org.jboss.tools.smooks.test.model11;
 
+import java.util.Iterator;
+import java.util.List;
+
 import junit.framework.TestCase;
 
 import org.eclipse.emf.ecore.EPackage.Registry;
@@ -18,6 +21,7 @@ import org.jboss.tools.smooks.model.esbrouting.EsbroutingPackage;
 import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
+import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.iorouting.IoroutingPackage;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
@@ -30,6 +34,7 @@ import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.persistence12.Persistence12Package;
 import org.jboss.tools.smooks.model.rules10.Rules10Package;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.validation10.Validation10Package;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
 
@@ -74,5 +79,16 @@ public class BaseTestCase extends TestCase {
 				org.jboss.tools.smooks10.model.smooks.SmooksPackage.eINSTANCE);
 	}
 	public void testNull(){//ignore
+	}
+	
+	protected SmooksGraphicsExtType getSmooksGraphExtType(SmooksResourceListType list1){
+		List<?> list = list1.getAbstractResourceConfig();
+		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			if(object instanceof SmooksGraphicsExtType){
+				return ((SmooksGraphicsExtType)object);
+			}
+		}
+		return null;
 	}
 }

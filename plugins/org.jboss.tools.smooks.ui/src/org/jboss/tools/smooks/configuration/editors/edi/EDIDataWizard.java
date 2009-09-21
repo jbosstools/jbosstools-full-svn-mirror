@@ -12,6 +12,7 @@ package org.jboss.tools.smooks.configuration.editors.edi;
 
 import java.util.Properties;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -21,6 +22,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
@@ -47,10 +49,15 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 
 	private EditingDomain editingDomain;
 
+	private IContainer folder = null;
+
 	@Override
 	public void addPages() {
-		ediFilePage = new EDIDataPathWizardPage("EDI Data Page", new String[] {"edi"});
+		ediFilePage = new EDIDataPathWizardPage("EDI Data Page", new String[] { "edi" });
 		this.addPage(ediFilePage);
+		if (folder != null) {
+			ediFilePage.setInitSelections(new Object[] { folder });
+		}
 
 		// mappingFilePage = new EDIMappingDataPathWizardPage("EDI Config Page",
 		// null);
@@ -167,6 +174,10 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 				resourceList = ((DocumentRoot) smooksModel).getSmooksResourceList();
 			}
 			editingDomain = formEditor.getEditingDomain();
+		}
+		folder = ((IFileEditorInput) input).getFile().getParent();
+		if (ediFilePage != null && folder != null) {
+			ediFilePage.setInitSelections(new Object[] { folder });
 		}
 		if (this.mappingFilePage != null) {
 			mappingFilePage.setSmooksResourceList(resourceList);

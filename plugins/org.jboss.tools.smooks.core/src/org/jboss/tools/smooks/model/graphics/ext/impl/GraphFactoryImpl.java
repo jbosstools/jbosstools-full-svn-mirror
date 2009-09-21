@@ -6,6 +6,7 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext.impl;
 
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -13,7 +14,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
 import org.jboss.tools.smooks.model.graphics.ext.*;
 
 /**
@@ -31,9 +31,9 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	 */
 	public static GraphFactory init() {
 		try {
-			GraphFactory theExtFactory = (GraphFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd"); 
-			if (theExtFactory != null) {
-				return theExtFactory;
+			GraphFactory theGraphFactory = (GraphFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd"); 
+			if (theGraphFactory != null) {
+				return theGraphFactory;
 			}
 		}
 		catch (Exception exception) {
@@ -147,7 +147,7 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GraphPackage getExtPackage() {
+	public GraphPackage getGraphPackage() {
 		return (GraphPackage)getEPackage();
 	}
 
@@ -162,4 +162,4 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 		return GraphPackage.eINSTANCE;
 	}
 
-} //ExtFactoryImpl
+} //GraphFactoryImpl

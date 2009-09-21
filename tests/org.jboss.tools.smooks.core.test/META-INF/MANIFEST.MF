@@ -11,7 +11,8 @@ Require-Bundle: org.junit,
  org.eclipse.emf.edit.ui,
  org.jboss.tools.smooks.ui,
  org.jboss.tools.smooks.core,
- org.jboss.tools.tests
+ org.jboss.tools.tests,
+ org.jboss.tools.smooks.runtime
 Eclipse-LazyStart: true
 Bundle-ClassPath: lib/dom4j-1.6.1.jar,
  .
