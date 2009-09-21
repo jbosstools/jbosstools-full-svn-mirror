@@ -17,6 +17,11 @@ import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
+
+import org.eclipse.emf.ecore.xml.type.XMLTypeFactory;
+import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
+
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -25,18 +30,18 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.jboss.tools.smooks10.model.smooks.DocumentRoot;
+import org.jboss.tools.smooks10.model.smooks.AbstractType;
 import org.jboss.tools.smooks10.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
 
 
 /**
- * This is the item provider adapter for a {@link org.jboss.tools.smooks10.model.smooks.DocumentRoot} object.
+ * This is the item provider adapter for a {@link org.jboss.tools.smooks10.model.smooks.AbstractType} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class DocumentRootItemProvider
+public class AbstractTypeItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -50,7 +55,7 @@ public class DocumentRootItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DocumentRootItemProvider(AdapterFactory adapterFactory) {
+	public AbstractTypeItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -81,15 +86,8 @@ public class DocumentRootItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG);
-			childrenFeatures.add(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__CONDITION);
-			childrenFeatures.add(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__IMPORT);
-			childrenFeatures.add(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PARAM);
-			childrenFeatures.add(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PROFILE);
-			childrenFeatures.add(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PROFILES);
-			childrenFeatures.add(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__RESOURCE);
-			childrenFeatures.add(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG);
-			childrenFeatures.add(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST);
+			childrenFeatures.add(XMLTypePackage.Literals.ANY_TYPE__MIXED);
+			childrenFeatures.add(XMLTypePackage.Literals.ANY_TYPE__ANY_ATTRIBUTE);
 		}
 		return childrenFeatures;
 	}
@@ -108,17 +106,6 @@ public class DocumentRootItemProvider
 	}
 
 	/**
-	 * This returns Smooks10DocumentRoot.gif.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/DocumentRoot"));
-	}
-
-	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -126,7 +113,7 @@ public class DocumentRootItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_DocumentRoot_type");
+		return getString("_UI_AbstractType_type");
 	}
 
 	/**
@@ -140,16 +127,9 @@ public class DocumentRootItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(DocumentRoot.class)) {
-			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG:
-			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__CONDITION:
-			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__IMPORT:
-			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PARAM:
-			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PROFILE:
-			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PROFILES:
-			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__RESOURCE:
-			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG:
-			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST:
+		switch (notification.getFeatureID(AbstractType.class)) {
+			case SmooksPackage.ABSTRACT_TYPE__MIXED:
+			case SmooksPackage.ABSTRACT_TYPE__ANY_ATTRIBUTE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -167,45 +147,89 @@ public class DocumentRootItemProvider
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-				(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__CONDITION,
-				 SmooksFactory.eINSTANCE.createConditionType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__IMPORT,
-				 SmooksFactory.eINSTANCE.createImportType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PARAM,
-				 SmooksFactory.eINSTANCE.createParamType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PROFILE,
-				 SmooksFactory.eINSTANCE.createProfileType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PROFILES,
-				 SmooksFactory.eINSTANCE.createProfilesType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__RESOURCE,
-				 SmooksFactory.eINSTANCE.createResourceType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG,
-				 SmooksFactory.eINSTANCE.createResourceConfigType()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST,
-				 SmooksFactory.eINSTANCE.createSmooksResourceListType()));
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT,
+//					 "")));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__TEXT,
+//					 "")));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__PROCESSING_INSTRUCTION,
+//					 XMLTypeFactory.eINSTANCE.createProcessingInstruction())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA,
+//					 "")));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__CONDITION,
+//					 SmooksFactory.eINSTANCE.createConditionType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__IMPORT,
+//					 SmooksFactory.eINSTANCE.createImportType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PARAM,
+//					 SmooksFactory.eINSTANCE.createParamType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PROFILE,
+//					 SmooksFactory.eINSTANCE.createProfileType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PROFILES,
+//					 SmooksFactory.eINSTANCE.createProfilesType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__RESOURCE,
+//					 SmooksFactory.eINSTANCE.createResourceType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG,
+//					 SmooksFactory.eINSTANCE.createResourceConfigType())));
+//
+//		newChildDescriptors.add
+//			(createChildParameter
+//				(XMLTypePackage.Literals.ANY_TYPE__MIXED,
+//				 FeatureMapUtil.createEntry
+//					(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST,
+//					 SmooksFactory.eINSTANCE.createSmooksResourceListType())));
 	}
 
 	/**

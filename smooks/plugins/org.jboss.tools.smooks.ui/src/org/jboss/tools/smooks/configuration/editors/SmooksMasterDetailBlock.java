@@ -55,7 +55,6 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.wizards.NewSmooksElementWizard;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
-import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
@@ -145,8 +144,8 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		detailsPart.setPageProvider(provider);
 		// provider.registePage(ResourceType.class, new
 		// SmooksStuffPropertyDetailPage());
-		detailsPart.registerPage(EObject.class, new SmooksStuffPropertyDetailPage(
-				(SmooksMultiFormEditor) this.formEditor));
+		detailsPart.registerPage(EObject.class, new SmooksStuffPropertyDetailPage(formEditor,
+				(ISmooksModelProvider) this.formEditor ));
 	}
 
 	protected void refreshSmooksTreeViewer() {
@@ -215,7 +214,7 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 			@Override
 			public String getText(Object object) {
 				Object obj = AdapterFactoryEditingDomain.unwrap(object);
-				if (obj instanceof AbstractAnyType) {
+				if (obj instanceof EObject) {
 					return super.getText(obj);
 				}
 				return super.getText(object);

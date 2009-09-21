@@ -24,8 +24,8 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.jboss.tools.smooks10.model.smooks.util.SmooksAdapterFactory;
+
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -104,7 +104,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected DocumentRootItemProvider documentRootItemProvider;
+	protected DocumentRootItemProvider smooks10DocumentRootItemProvider;
 
 	/**
 	 * This creates an adapter for a {@link org.jboss.tools.smooks10.model.smooks.DocumentRoot}.
@@ -113,12 +113,12 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	 * @generated
 	 */
 	@Override
-	public Adapter createDocumentRootAdapter() {
-		if (documentRootItemProvider == null) {
-			documentRootItemProvider = new DocumentRootItemProvider(this);
+	public Adapter createSmooks10DocumentRootAdapter() {
+		if (smooks10DocumentRootItemProvider == null) {
+			smooks10DocumentRootItemProvider = new DocumentRootItemProvider(this);
 		}
 
-		return documentRootItemProvider;
+		return smooks10DocumentRootItemProvider;
 	}
 
 	/**
@@ -332,7 +332,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type)) {
 			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class) || (((Class<?>)type).isInstance(adapter))) {
+			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
 				return adapter;
 			}
 		}
@@ -382,7 +382,7 @@ public class SmooksItemProviderAdapterFactory extends SmooksAdapterFactory imple
 	 */
 	public void dispose() {
 		if (conditionTypeItemProvider != null) conditionTypeItemProvider.dispose();
-		if (documentRootItemProvider != null) documentRootItemProvider.dispose();
+		if (smooks10DocumentRootItemProvider != null) smooks10DocumentRootItemProvider.dispose();
 		if (importTypeItemProvider != null) importTypeItemProvider.dispose();
 		if (paramTypeItemProvider != null) paramTypeItemProvider.dispose();
 		if (profilesTypeItemProvider != null) profilesTypeItemProvider.dispose();

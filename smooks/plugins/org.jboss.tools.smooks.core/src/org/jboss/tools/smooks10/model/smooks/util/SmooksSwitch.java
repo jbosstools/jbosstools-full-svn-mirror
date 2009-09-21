@@ -10,18 +10,10 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.emf.ecore.xml.type.AnyType;
-import org.jboss.tools.smooks10.model.smooks.AbstractResourceConfig;
-import org.jboss.tools.smooks10.model.smooks.ConditionType;
-import org.jboss.tools.smooks10.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks10.model.smooks.ImportType;
-import org.jboss.tools.smooks10.model.smooks.ParamType;
-import org.jboss.tools.smooks10.model.smooks.ProfileType;
-import org.jboss.tools.smooks10.model.smooks.ProfilesType;
-import org.jboss.tools.smooks10.model.smooks.ResourceConfigType;
-import org.jboss.tools.smooks10.model.smooks.ResourceType;
-import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
-import org.jboss.tools.smooks10.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks10.model.smooks.*;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -33,7 +25,7 @@ import org.jboss.tools.smooks10.model.smooks.SmooksResourceListType;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see smooks.SmooksPackage
+ * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage
  * @generated
  */
 public class SmooksSwitch<T> {
@@ -100,18 +92,22 @@ public class SmooksSwitch<T> {
 			case SmooksPackage.ABSTRACT_RESOURCE_CONFIG: {
 				AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig)theEObject;
 				T result = caseAbstractResourceConfig(abstractResourceConfig);
+				if (result == null) result = caseAbstractType(abstractResourceConfig);
+				if (result == null) result = caseAnyType(abstractResourceConfig);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case SmooksPackage.CONDITION_TYPE: {
 				ConditionType conditionType = (ConditionType)theEObject;
 				T result = caseConditionType(conditionType);
+				if (result == null) result = caseAbstractType(conditionType);
+				if (result == null) result = caseAnyType(conditionType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case SmooksPackage.DOCUMENT_ROOT: {
-				DocumentRoot documentRoot = (DocumentRoot)theEObject;
-				T result = caseDocumentRoot(documentRoot);
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT: {
+				DocumentRoot smooks10DocumentRoot = (DocumentRoot)theEObject;
+				T result = caseSmooks10DocumentRoot(smooks10DocumentRoot);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -119,12 +115,15 @@ public class SmooksSwitch<T> {
 				ImportType importType = (ImportType)theEObject;
 				T result = caseImportType(importType);
 				if (result == null) result = caseAbstractResourceConfig(importType);
+				if (result == null) result = caseAbstractType(importType);
+				if (result == null) result = caseAnyType(importType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case SmooksPackage.PARAM_TYPE: {
 				ParamType paramType = (ParamType)theEObject;
 				T result = caseParamType(paramType);
+				if (result == null) result = caseAbstractType(paramType);
 				if (result == null) result = caseAnyType(paramType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -132,12 +131,16 @@ public class SmooksSwitch<T> {
 			case SmooksPackage.PROFILES_TYPE: {
 				ProfilesType profilesType = (ProfilesType)theEObject;
 				T result = caseProfilesType(profilesType);
+				if (result == null) result = caseAbstractType(profilesType);
+				if (result == null) result = caseAnyType(profilesType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case SmooksPackage.PROFILE_TYPE: {
 				ProfileType profileType = (ProfileType)theEObject;
 				T result = caseProfileType(profileType);
+				if (result == null) result = caseAbstractType(profileType);
+				if (result == null) result = caseAnyType(profileType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -145,12 +148,15 @@ public class SmooksSwitch<T> {
 				ResourceConfigType resourceConfigType = (ResourceConfigType)theEObject;
 				T result = caseResourceConfigType(resourceConfigType);
 				if (result == null) result = caseAbstractResourceConfig(resourceConfigType);
+				if (result == null) result = caseAbstractType(resourceConfigType);
+				if (result == null) result = caseAnyType(resourceConfigType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case SmooksPackage.RESOURCE_TYPE: {
 				ResourceType resourceType = (ResourceType)theEObject;
 				T result = caseResourceType(resourceType);
+				if (result == null) result = caseAbstractType(resourceType);
 				if (result == null) result = caseAnyType(resourceType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -158,6 +164,15 @@ public class SmooksSwitch<T> {
 			case SmooksPackage.SMOOKS_RESOURCE_LIST_TYPE: {
 				SmooksResourceListType smooksResourceListType = (SmooksResourceListType)theEObject;
 				T result = caseSmooksResourceListType(smooksResourceListType);
+				if (result == null) result = caseAbstractType(smooksResourceListType);
+				if (result == null) result = caseAnyType(smooksResourceListType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case SmooksPackage.ABSTRACT_TYPE: {
+				AbstractType abstractType = (AbstractType)theEObject;
+				T result = caseAbstractType(abstractType);
+				if (result == null) result = caseAnyType(abstractType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -196,17 +211,17 @@ public class SmooksSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Document Root</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Smooks10 Document Root</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Document Root</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Smooks10 Document Root</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseDocumentRoot(DocumentRoot object) {
+	public T caseSmooks10DocumentRoot(DocumentRoot object) {
 		return null;
 	}
 
@@ -312,6 +327,21 @@ public class SmooksSwitch<T> {
 	 * @generated
 	 */
 	public T caseSmooksResourceListType(SmooksResourceListType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Abstract Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Abstract Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAbstractType(AbstractType object) {
 		return null;
 	}
 

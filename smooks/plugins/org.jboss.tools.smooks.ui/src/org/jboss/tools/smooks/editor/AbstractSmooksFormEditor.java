@@ -50,6 +50,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.SmooksXMLEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
@@ -223,6 +224,9 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 	protected void initEditingDomain() {
 		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		
+		// add smooks 1.0 item provider model
+		adapterFactory.addAdapterFactory(new org.jboss.tools.smooks10.model.smooks.provider.SmooksItemProviderAdapterFactory());
 
 		// add smooks 1.1.2 EMF item provider model
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
@@ -505,6 +509,11 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		String version = SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel);
 		try {
 			if (smooksGraphicsExt != null) {
+				if(smooksGraphicsExt.getPlatformVersion().equals(SmooksConstants.VERSION_1_2)){
+					if(version.equals(SmooksConstants.VERSION_1_1)){
+						version = SmooksConstants.VERSION_1_2;
+					}
+				}
 				if (!version.equals(smooksGraphicsExt.getPlatformVersion())) {
 					smooksGraphicsExt.setPlatformVersion(version);
 					smooksResource.save(Collections.emptyMap());

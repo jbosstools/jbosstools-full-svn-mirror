@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors;
+package org.jboss.tools.smooks.configuration.editors_10;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,8 +22,6 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.RemoveCommand;
@@ -31,7 +29,6 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -67,42 +64,35 @@ import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
+import org.jboss.tools.smooks.configuration.editors.CompoundStructuredDataContentProvider;
+import org.jboss.tools.smooks.configuration.editors.CompoundStructuredDataLabelProvider;
+import org.jboss.tools.smooks.configuration.editors.ExtentionInputContentProvider;
+import org.jboss.tools.smooks.configuration.editors.ExtentionInputLabelProvider;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
+import org.jboss.tools.smooks.configuration.editors.ModelPanelCreator;
+import org.jboss.tools.smooks.configuration.editors.OnlyReaderViewerFilter;
+import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
+import org.jboss.tools.smooks.configuration.editors.StructuredDataSelectionWizardDailog;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelectionWizard;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
-import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
-import org.jboss.tools.smooks.model.csv.CsvPackage;
-import org.jboss.tools.smooks.model.csv.CsvReader;
-import org.jboss.tools.smooks.model.csv12.CSV12Reader;
-import org.jboss.tools.smooks.model.csv12.Csv12Package;
-import org.jboss.tools.smooks.model.edi.EDIReader;
-import org.jboss.tools.smooks.model.edi.EdiPackage;
-import org.jboss.tools.smooks.model.edi12.EDI12Reader;
-import org.jboss.tools.smooks.model.edi12.Edi12Package;
 import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
 import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks.model.json.JsonPackage;
-import org.jboss.tools.smooks.model.json.JsonReader;
-import org.jboss.tools.smooks.model.json12.Json12Package;
-import org.jboss.tools.smooks.model.json12.Json12Reader;
-import org.jboss.tools.smooks.model.smooks.AbstractReader;
-import org.jboss.tools.smooks.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks.model.smooks.ReaderType;
-import org.jboss.tools.smooks.model.smooks.SmooksPackage;
-import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks10.model.smooks.DocumentRoot;
+import org.jboss.tools.smooks10.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart
  * 
  */
-public class SmooksReaderFormPage extends FormPage implements ISmooksModelValidateListener, ISmooksGraphChangeListener,
-		ISourceSynchronizeListener {
+public class Smooks10InputFormPage extends FormPage implements ISmooksModelValidateListener,
+		ISmooksGraphChangeListener, ISourceSynchronizeListener {
 
 	private CheckboxTableViewer inputDataViewer;
 	private TreeViewer inputModelViewer;
@@ -112,12 +102,12 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	private ModelPanelCreator modelPanelCreator;
 	protected boolean lockCheck = false;
 
-	public SmooksReaderFormPage(FormEditor editor, String id, String title) {
+	public Smooks10InputFormPage(FormEditor editor, String id, String title) {
 		super(editor, id, title);
-		((SmooksMultiFormEditor) editor).getSmooksGraphicsExt().addSmooksGraphChangeListener(this);
+		((Smooks10MultiFormEditor) editor).getSmooksGraphicsExt().addSmooksGraphChangeListener(this);
 	}
 
-	public SmooksReaderFormPage(String id, String title) {
+	public Smooks10InputFormPage(String id, String title) {
 		super(id, title);
 	}
 
@@ -225,12 +215,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	}
 
 	protected List<Object> generateInputData() {
-		Object obj = ((SmooksMultiFormEditor) getEditor()).getSmooksModel();
-		SmooksResourceListType resourceList = null;
-		if (obj instanceof DocumentRoot) {
-			resourceList = ((DocumentRoot) obj).getSmooksResourceList();
-		}
-		return SelectorCreationDialog.generateInputData(getSmooksGraphicsExtType(), resourceList);
+		return SelectorCreationDialog.generateInputDataForSmooks10(getSmooksGraphicsExtType());
 	}
 
 	private void createReaderConfigSection(FormToolkit toolkit, Composite parent) {
@@ -294,22 +279,9 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		Object reader = getCurrentReaderModel();
 		String type = getSmooksGraphicsExtType().getInputType();
 		if (reader instanceof EObject && type != null) {
-			SmooksResourceListType list = getSmooksConfigResourceList();
-			createReaderPanel((EObject) list.getAbstractReader().get(0));
+			// createReaderPanel((EObject) list.getAbstractReader().get(0));
 		} else {
 			disposeCompositeControls(readerConfigComposite, null);
-		}
-	}
-
-	private void selectCorrectReaderItem(Object reader) {
-		for (int i = 0; i < readerTypeList.size(); i++) {
-			Object r = readerTypeList.get(i);
-			if (r instanceof EObject) {
-				if (r.getClass() == reader.getClass()) {
-					readerCombo.select(i);
-					break;
-				}
-			}
 		}
 	}
 
@@ -330,12 +302,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		String inputType = ext.getInputType();
 
 		if (inputType == null) {
-			// for the first time to open the file.
-			if (rlist.getAbstractReader().isEmpty()) {
-				readerCombo.select(0);
-				return;
-			} else {
-			}
+			readerCombo.select(0);
+			return;
 		}
 		if (SmooksModelUtils.INPUT_TYPE_XML.equals(inputType)) {
 			readerCombo.select(1);
@@ -345,39 +313,6 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		}
 		if (SmooksModelUtils.INPUT_TYPE_XSD.equals(inputType)) {
 			readerCombo.select(3);
-		}
-
-		if (SmooksModelUtils.INPUT_TYPE_CSV.equals(inputType)) {
-			if (!rlist.getAbstractReader().isEmpty()) {
-				AbstractReader reader = rlist.getAbstractReader().get(0);
-				if (CsvReader.class.isInstance(reader) || CSV12Reader.class.isInstance(reader)) {
-					selectCorrectReaderItem(reader);
-				}
-			}
-		}
-		if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(inputType)) {
-			if (!rlist.getAbstractReader().isEmpty()) {
-				AbstractReader reader = rlist.getAbstractReader().get(0);
-				if (EDIReader.class.isInstance(reader) || EDI12Reader.class.isInstance(reader)) {
-					selectCorrectReaderItem(reader);
-				}
-			}
-		}
-		if (SmooksModelUtils.INPUT_TYPE_JSON_1_1.equals(inputType)) {
-			if (!rlist.getAbstractReader().isEmpty()) {
-				AbstractReader reader = rlist.getAbstractReader().get(0);
-				if (JsonReader.class.isInstance(reader) || Json12Reader.class.isInstance(reader)) {
-					selectCorrectReaderItem(reader);
-				}
-			}
-		}
-		if (SmooksModelUtils.INPUT_TYPE_CUSTOME.equals(inputType)) {
-			if (!rlist.getAbstractReader().isEmpty()) {
-				AbstractReader reader = rlist.getAbstractReader().get(0);
-				if (ReaderType.class.isInstance(reader)) {
-					selectCorrectReaderItem(reader);
-				}
-			}
 		}
 		return;
 	}
@@ -405,54 +340,27 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		});
 	}
 
-	private Object createReaderEntry(Object reader, boolean clone) {
-		if (clone) {
-			reader = EcoreUtil.copy((EObject) reader);
-		}
-		if (reader instanceof CsvReader) {
-			return FeatureMapUtil.createEntry(CsvPackage.Literals.CSV_DOCUMENT_ROOT__READER, reader);
-		}
-		if (reader instanceof CSV12Reader) {
-			return FeatureMapUtil.createEntry(Csv12Package.Literals.CSV12_DOCUMENT_ROOT__READER, reader);
-		}
-		if (reader instanceof EDIReader) {
-			return FeatureMapUtil.createEntry(EdiPackage.Literals.EDI_DOCUMENT_ROOT__READER, reader);
-		}
-		if (reader instanceof EDI12Reader) {
-			return FeatureMapUtil.createEntry(Edi12Package.Literals.EDI12_DOCUMENT_ROOT__READER, reader);
-		}
-		if (reader instanceof JsonReader) {
-			return FeatureMapUtil.createEntry(JsonPackage.Literals.JSON_DOCUMENT_ROOT__READER, reader);
-		}
-		if (reader instanceof Json12Reader) {
-			return FeatureMapUtil.createEntry(Json12Package.Literals.JSON12_DOCUMENT_ROOT__READER, reader);
-		}
-		if (reader instanceof ReaderType) {
-			return FeatureMapUtil.createEntry(SmooksPackage.Literals.DOCUMENT_ROOT__READER, reader);
-		}
-		return null;
-	}
-
-	private Command createRemoveReaderCommand() {
-		SmooksResourceListType rlist = getSmooksConfigResourceList();
-		List<AbstractReader> readerList = rlist.getAbstractReader();
-		CompoundCommand compoundCommand = new CompoundCommand();
-		for (Iterator<?> iterator = readerList.iterator(); iterator.hasNext();) {
-			AbstractReader abstractReader = (AbstractReader) iterator.next();
-			Object readerEntry = createReaderEntry(abstractReader, false);
-			if (readerEntry == null)
-				continue;
-			Command removeCommand = RemoveCommand.create(getEditingDomain(), rlist,
-					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, readerEntry);
-			if (removeCommand.canExecute()) {
-				compoundCommand.append(removeCommand);
-			}
-		}
-		if (compoundCommand.isEmpty()) {
-			return null;
-		}
-		return compoundCommand;
-	}
+	// private Command createRemoveReaderCommand() {
+	// SmooksResourceListType rlist = getSmooksConfigResourceList();
+	// List<AbstractReader> readerList = rlist.getAbstractReader();
+	// CompoundCommand compoundCommand = new CompoundCommand();
+	// for (Iterator<?> iterator = readerList.iterator(); iterator.hasNext();) {
+	// AbstractReader abstractReader = (AbstractReader) iterator.next();
+	// Object readerEntry = createReaderEntry(abstractReader, false);
+	// if (readerEntry == null)
+	// continue;
+	// Command removeCommand = RemoveCommand.create(getEditingDomain(), rlist,
+	// SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP,
+	// readerEntry);
+	// if (removeCommand.canExecute()) {
+	// compoundCommand.append(removeCommand);
+	// }
+	// }
+	// if (compoundCommand.isEmpty()) {
+	// return null;
+	// }
+	// return compoundCommand;
+	// }
 
 	private String getReaderType(Object reader) {
 		if (reader instanceof XMLReader) {
@@ -463,22 +371,6 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		}
 		if (reader instanceof XSDReader) {
 			return SmooksModelUtils.INPUT_TYPE_XSD;
-		}
-		if (reader instanceof EObject) {
-			Object obj = ((EObject) reader);
-
-			if (obj instanceof CsvReader || obj instanceof CSV12Reader) {
-				return SmooksModelUtils.INPUT_TYPE_CSV;
-			}
-			if (obj instanceof EDIReader || obj instanceof EDI12Reader) {
-				return SmooksModelUtils.INPUT_TYPE_EDI_1_1;
-			}
-			if (obj instanceof JsonReader || obj instanceof Json12Reader) {
-				return SmooksModelUtils.INPUT_TYPE_JSON_1_1;
-			}
-			if (obj instanceof ReaderType) {
-				return SmooksModelUtils.INPUT_TYPE_CUSTOME;
-			}
 		}
 		return null;
 	}
@@ -501,28 +393,13 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE, type);
 		CompoundCommand compoundCommand = new CompoundCommand();
 		compoundCommand.append(setTypeCommand);
-		Command removeCommand = createRemoveReaderCommand();
-		if (removeCommand != null && removeCommand.canExecute()) {
-			compoundCommand.append(removeCommand);
-		}
 		if (readerConfigComposite != null) {
 			disposeCompositeControls(readerConfigComposite, null);
-		}
-		if (reader instanceof EObject) {
-			Object obj = ((EObject) reader);
-			obj = AdapterFactoryEditingDomain.unwrap(obj);
-			Command command = AddCommand.create(getEditingDomain(), getSmooksConfigResourceList(),
-					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, createReaderEntry(obj,
-							false));
-			if (command.canExecute()) {
-				compoundCommand.append(command);
-			}
-
 		}
 		deactiveAllInputFile(compoundCommand);
 		if (!compoundCommand.isEmpty()) {
 			getEditingDomain().getCommandStack().execute(compoundCommand);
-			createReaderPanel(((EObject) reader));
+//			createReaderPanel(((EObject) reader));
 		}
 
 		if (inputDataViewer != null) {
@@ -541,17 +418,19 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	}
 
 	private void createReaderPanel(EObject reader) {
-		disposeCompositeControls(readerConfigComposite, null);
-		try {
-			ModelPanelCreator modelPanelCreator = getModelPanelCreator();
-			IItemPropertySource ps = (IItemPropertySource) getEditingDomain().getAdapterFactory().adapt(reader,
-					IItemPropertySource.class);
-			modelPanelCreator.createModelPanel(reader, getManagedForm().getToolkit(), readerConfigComposite, ps,
-					(ISmooksModelProvider) getEditor(), getEditor());
-			readerConfigComposite.getParent().layout();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		disposeCompositeControls(readerConfigComposite, null);
+		// try {
+		// ModelPanelCreator modelPanelCreator = getModelPanelCreator();
+		// IItemPropertySource ps = (IItemPropertySource)
+		// getEditingDomain().getAdapterFactory().adapt(reader,
+		// IItemPropertySource.class);
+		// modelPanelCreator.createModelPanel(reader,
+		// getManagedForm().getToolkit(), readerConfigComposite, ps,
+		// (ISmooksModelProvider) getEditor(), getEditor());
+		// readerConfigComposite.getParent().layout();
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	private ModelPanelCreator getModelPanelCreator() {
@@ -707,6 +586,14 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				return false;
 			}
 		});
+		
+//		inputDataViewer.addDoubleClickListener(new IDoubleClickListener() {
+//			public void doubleClick(DoubleClickEvent event) {
+//				InputType inputType =(InputType) ((IStructuredSelection)inputDataViewer.getSelection()).getFirstElement();
+//				String path = SmooksModelUtils.getInputPath(inputType);
+//			}
+//		});
+		
 		inputDataViewer.addCheckStateListener(new ICheckStateListener() {
 
 			public void checkStateChanged(CheckStateChangedEvent event) {
@@ -858,18 +745,18 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	}
 
 	protected SmooksGraphicsExtType getSmooksGraphicsExtType() {
-		SmooksGraphicsExtType extType = ((SmooksMultiFormEditor) getEditor()).getSmooksGraphicsExt();
+		SmooksGraphicsExtType extType = ((Smooks10MultiFormEditor) getEditor()).getSmooksGraphicsExt();
 		return extType;
 	}
 
 	protected AdapterFactoryEditingDomain getEditingDomain() {
-		AdapterFactoryEditingDomain editDomain = (AdapterFactoryEditingDomain) ((SmooksMultiFormEditor) this
+		AdapterFactoryEditingDomain editDomain = (AdapterFactoryEditingDomain) ((Smooks10MultiFormEditor) this
 				.getEditor()).getEditingDomain();
 		return editDomain;
 	}
 
 	protected SmooksResourceListType getSmooksConfigResourceList() {
-		EObject doc = ((SmooksMultiFormEditor) this.getEditor()).getSmooksModel();
+		EObject doc = ((Smooks10MultiFormEditor) this.getEditor()).getSmooksModel();
 		if (doc instanceof DocumentRoot) {
 			return ((DocumentRoot) doc).getSmooksResourceList();
 		}
@@ -980,9 +867,6 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 			if (reader instanceof NullReader) {
 				return true;
 			}
-			if (reader instanceof XMLReader || reader instanceof XSDReader || reader instanceof JavaReader) {
-
-			}
 
 			if (reader instanceof XMLReader) {
 				if (!SmooksModelUtils.INPUT_TYPE_XML.equals(type)) {
@@ -1000,30 +884,6 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				}
 			}
 
-			if (reader instanceof EObject) {
-				Object obj = ((EObject) reader);
-				obj = AdapterFactoryEditingDomain.unwrap(obj);
-				if (obj instanceof EDIReader || obj instanceof EDI12Reader) {
-					if (!SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(type)) {
-						return true;
-					}
-				}
-				if (obj instanceof CsvReader || obj instanceof CSV12Reader) {
-					if (!SmooksModelUtils.INPUT_TYPE_CSV.equals(type)) {
-						return true;
-					}
-				}
-				if (obj instanceof JsonReader || obj instanceof Json12Reader) {
-					if (!SmooksModelUtils.INPUT_TYPE_JSON_1_1.equals(type)) {
-						return true;
-					}
-				}
-				if (obj instanceof ReaderType) {
-					if (!SmooksModelUtils.INPUT_TYPE_CUSTOME.equals(type)) {
-						return true;
-					}
-				}
-			}
 		}
 		return false;
 	}

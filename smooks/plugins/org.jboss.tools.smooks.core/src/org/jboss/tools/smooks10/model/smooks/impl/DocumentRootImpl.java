@@ -22,22 +22,22 @@ import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.jboss.tools.smooks10.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks10.model.smooks.ConditionType;
-import org.jboss.tools.smooks10.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks10.model.smooks.ImportType;
 import org.jboss.tools.smooks10.model.smooks.ParamType;
 import org.jboss.tools.smooks10.model.smooks.ProfileType;
 import org.jboss.tools.smooks10.model.smooks.ProfilesType;
 import org.jboss.tools.smooks10.model.smooks.ResourceConfigType;
 import org.jboss.tools.smooks10.model.smooks.ResourceType;
+import org.jboss.tools.smooks10.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks10.model.smooks.SmooksResourceListType;
 
+
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Document Root</b></em>'.
+ * An implementation of the model object '<em><b>Smooks10 Document Root</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -106,7 +106,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return SmooksPackage.Literals.DOCUMENT_ROOT;
+		return SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT;
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 */
 	public FeatureMap getMixed() {
 		if (mixed == null) {
-			mixed = new BasicFeatureMap(this, SmooksPackage.DOCUMENT_ROOT__MIXED);
+			mixed = new BasicFeatureMap(this, SmooksPackage.SMOOKS10_DOCUMENT_ROOT__MIXED);
 		}
 		return mixed;
 	}
@@ -128,7 +128,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 */
 	public EMap<String, String> getXMLNSPrefixMap() {
 		if (xMLNSPrefixMap == null) {
-			xMLNSPrefixMap = new EcoreEMap<String,String>(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, SmooksPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
+			xMLNSPrefixMap = new EcoreEMap<String,String>(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, SmooksPackage.SMOOKS10_DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
 		}
 		return xMLNSPrefixMap;
 	}
@@ -140,7 +140,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 */
 	public EMap<String, String> getXSISchemaLocation() {
 		if (xSISchemaLocation == null) {
-			xSISchemaLocation = new EcoreEMap<String,String>(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, SmooksPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
+			xSISchemaLocation = new EcoreEMap<String,String>(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, SmooksPackage.SMOOKS10_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
 		}
 		return xSISchemaLocation;
 	}
@@ -151,7 +151,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public AbstractResourceConfig getAbstractResourceConfig() {
-		return (AbstractResourceConfig)getMixed().get(SmooksPackage.Literals.DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG, true);
+		return (AbstractResourceConfig)getMixed().get(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG, true);
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public NotificationChain basicSetAbstractResourceConfig(AbstractResourceConfig newAbstractResourceConfig, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG, newAbstractResourceConfig, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG, newAbstractResourceConfig, msgs);
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public ConditionType getCondition() {
-		return (ConditionType)getMixed().get(SmooksPackage.Literals.DOCUMENT_ROOT__CONDITION, true);
+		return (ConditionType)getMixed().get(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__CONDITION, true);
 	}
 
 	/**
@@ -178,7 +178,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public NotificationChain basicSetCondition(ConditionType newCondition, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.DOCUMENT_ROOT__CONDITION, newCondition, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__CONDITION, newCondition, msgs);
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public void setCondition(ConditionType newCondition) {
-		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.DOCUMENT_ROOT__CONDITION, newCondition);
+		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__CONDITION, newCondition);
 	}
 
 	/**
@@ -196,7 +196,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public ImportType getImport() {
-		return (ImportType)getMixed().get(SmooksPackage.Literals.DOCUMENT_ROOT__IMPORT, true);
+		return (ImportType)getMixed().get(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__IMPORT, true);
 	}
 
 	/**
@@ -205,7 +205,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public NotificationChain basicSetImport(ImportType newImport, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.DOCUMENT_ROOT__IMPORT, newImport, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__IMPORT, newImport, msgs);
 	}
 
 	/**
@@ -214,7 +214,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public void setImport(ImportType newImport) {
-		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.DOCUMENT_ROOT__IMPORT, newImport);
+		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__IMPORT, newImport);
 	}
 
 	/**
@@ -223,7 +223,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public ParamType getParam() {
-		return (ParamType)getMixed().get(SmooksPackage.Literals.DOCUMENT_ROOT__PARAM, true);
+		return (ParamType)getMixed().get(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PARAM, true);
 	}
 
 	/**
@@ -232,7 +232,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public NotificationChain basicSetParam(ParamType newParam, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.DOCUMENT_ROOT__PARAM, newParam, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PARAM, newParam, msgs);
 	}
 
 	/**
@@ -241,7 +241,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public void setParam(ParamType newParam) {
-		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.DOCUMENT_ROOT__PARAM, newParam);
+		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PARAM, newParam);
 	}
 
 	/**
@@ -250,7 +250,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public ProfileType getProfile() {
-		return (ProfileType)getMixed().get(SmooksPackage.Literals.DOCUMENT_ROOT__PROFILE, true);
+		return (ProfileType)getMixed().get(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PROFILE, true);
 	}
 
 	/**
@@ -259,7 +259,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public NotificationChain basicSetProfile(ProfileType newProfile, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.DOCUMENT_ROOT__PROFILE, newProfile, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PROFILE, newProfile, msgs);
 	}
 
 	/**
@@ -268,7 +268,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public void setProfile(ProfileType newProfile) {
-		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.DOCUMENT_ROOT__PROFILE, newProfile);
+		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PROFILE, newProfile);
 	}
 
 	/**
@@ -277,7 +277,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public ProfilesType getProfiles() {
-		return (ProfilesType)getMixed().get(SmooksPackage.Literals.DOCUMENT_ROOT__PROFILES, true);
+		return (ProfilesType)getMixed().get(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PROFILES, true);
 	}
 
 	/**
@@ -286,7 +286,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public NotificationChain basicSetProfiles(ProfilesType newProfiles, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.DOCUMENT_ROOT__PROFILES, newProfiles, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PROFILES, newProfiles, msgs);
 	}
 
 	/**
@@ -295,7 +295,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public void setProfiles(ProfilesType newProfiles) {
-		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.DOCUMENT_ROOT__PROFILES, newProfiles);
+		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__PROFILES, newProfiles);
 	}
 
 	/**
@@ -304,7 +304,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public ResourceType getResource() {
-		return (ResourceType)getMixed().get(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE, true);
+		return (ResourceType)getMixed().get(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__RESOURCE, true);
 	}
 
 	/**
@@ -313,7 +313,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public NotificationChain basicSetResource(ResourceType newResource, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE, newResource, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__RESOURCE, newResource, msgs);
 	}
 
 	/**
@@ -322,7 +322,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public void setResource(ResourceType newResource) {
-		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE, newResource);
+		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__RESOURCE, newResource);
 	}
 
 	/**
@@ -331,7 +331,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public ResourceConfigType getResourceConfig() {
-		return (ResourceConfigType)getMixed().get(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE_CONFIG, true);
+		return (ResourceConfigType)getMixed().get(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG, true);
 	}
 
 	/**
@@ -340,7 +340,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public NotificationChain basicSetResourceConfig(ResourceConfigType newResourceConfig, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE_CONFIG, newResourceConfig, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG, newResourceConfig, msgs);
 	}
 
 	/**
@@ -349,7 +349,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public void setResourceConfig(ResourceConfigType newResourceConfig) {
-		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE_CONFIG, newResourceConfig);
+		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG, newResourceConfig);
 	}
 
 	/**
@@ -358,7 +358,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public SmooksResourceListType getSmooksResourceList() {
-		return (SmooksResourceListType)getMixed().get(SmooksPackage.Literals.DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST, true);
+		return (SmooksResourceListType)getMixed().get(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST, true);
 	}
 
 	/**
@@ -367,7 +367,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public NotificationChain basicSetSmooksResourceList(SmooksResourceListType newSmooksResourceList, NotificationChain msgs) {
-		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST, newSmooksResourceList, msgs);
+		return ((FeatureMap.Internal)getMixed()).basicAdd(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST, newSmooksResourceList, msgs);
 	}
 
 	/**
@@ -376,7 +376,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	 * @generated
 	 */
 	public void setSmooksResourceList(SmooksResourceListType newSmooksResourceList) {
-		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST, newSmooksResourceList);
+		((FeatureMap.Internal)getMixed()).set(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST, newSmooksResourceList);
 	}
 
 	/**
@@ -387,29 +387,29 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case SmooksPackage.DOCUMENT_ROOT__MIXED:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__MIXED:
 				return ((InternalEList<?>)getMixed()).basicRemove(otherEnd, msgs);
-			case SmooksPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				return ((InternalEList<?>)getXMLNSPrefixMap()).basicRemove(otherEnd, msgs);
-			case SmooksPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				return ((InternalEList<?>)getXSISchemaLocation()).basicRemove(otherEnd, msgs);
-			case SmooksPackage.DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG:
 				return basicSetAbstractResourceConfig(null, msgs);
-			case SmooksPackage.DOCUMENT_ROOT__CONDITION:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__CONDITION:
 				return basicSetCondition(null, msgs);
-			case SmooksPackage.DOCUMENT_ROOT__IMPORT:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__IMPORT:
 				return basicSetImport(null, msgs);
-			case SmooksPackage.DOCUMENT_ROOT__PARAM:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PARAM:
 				return basicSetParam(null, msgs);
-			case SmooksPackage.DOCUMENT_ROOT__PROFILE:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PROFILE:
 				return basicSetProfile(null, msgs);
-			case SmooksPackage.DOCUMENT_ROOT__PROFILES:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PROFILES:
 				return basicSetProfiles(null, msgs);
-			case SmooksPackage.DOCUMENT_ROOT__RESOURCE:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__RESOURCE:
 				return basicSetResource(null, msgs);
-			case SmooksPackage.DOCUMENT_ROOT__RESOURCE_CONFIG:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG:
 				return basicSetResourceConfig(null, msgs);
-			case SmooksPackage.DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST:
 				return basicSetSmooksResourceList(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -423,32 +423,32 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case SmooksPackage.DOCUMENT_ROOT__MIXED:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__MIXED:
 				if (coreType) return getMixed();
 				return ((FeatureMap.Internal)getMixed()).getWrapper();
-			case SmooksPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				if (coreType) return getXMLNSPrefixMap();
 				else return getXMLNSPrefixMap().map();
-			case SmooksPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				if (coreType) return getXSISchemaLocation();
 				else return getXSISchemaLocation().map();
-			case SmooksPackage.DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG:
 				return getAbstractResourceConfig();
-			case SmooksPackage.DOCUMENT_ROOT__CONDITION:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__CONDITION:
 				return getCondition();
-			case SmooksPackage.DOCUMENT_ROOT__IMPORT:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__IMPORT:
 				return getImport();
-			case SmooksPackage.DOCUMENT_ROOT__PARAM:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PARAM:
 				return getParam();
-			case SmooksPackage.DOCUMENT_ROOT__PROFILE:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PROFILE:
 				return getProfile();
-			case SmooksPackage.DOCUMENT_ROOT__PROFILES:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PROFILES:
 				return getProfiles();
-			case SmooksPackage.DOCUMENT_ROOT__RESOURCE:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__RESOURCE:
 				return getResource();
-			case SmooksPackage.DOCUMENT_ROOT__RESOURCE_CONFIG:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG:
 				return getResourceConfig();
-			case SmooksPackage.DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST:
 				return getSmooksResourceList();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -462,37 +462,37 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case SmooksPackage.DOCUMENT_ROOT__MIXED:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__MIXED:
 				((FeatureMap.Internal)getMixed()).set(newValue);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				((EStructuralFeature.Setting)getXMLNSPrefixMap()).set(newValue);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				((EStructuralFeature.Setting)getXSISchemaLocation()).set(newValue);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__CONDITION:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__CONDITION:
 				setCondition((ConditionType)newValue);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__IMPORT:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__IMPORT:
 				setImport((ImportType)newValue);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__PARAM:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PARAM:
 				setParam((ParamType)newValue);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__PROFILE:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PROFILE:
 				setProfile((ProfileType)newValue);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__PROFILES:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PROFILES:
 				setProfiles((ProfilesType)newValue);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__RESOURCE:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__RESOURCE:
 				setResource((ResourceType)newValue);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__RESOURCE_CONFIG:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG:
 				setResourceConfig((ResourceConfigType)newValue);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST:
 				setSmooksResourceList((SmooksResourceListType)newValue);
 				return;
 		}
@@ -507,37 +507,37 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case SmooksPackage.DOCUMENT_ROOT__MIXED:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__MIXED:
 				getMixed().clear();
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				getXMLNSPrefixMap().clear();
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				getXSISchemaLocation().clear();
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__CONDITION:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__CONDITION:
 				setCondition((ConditionType)null);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__IMPORT:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__IMPORT:
 				setImport((ImportType)null);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__PARAM:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PARAM:
 				setParam((ParamType)null);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__PROFILE:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PROFILE:
 				setProfile((ProfileType)null);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__PROFILES:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PROFILES:
 				setProfiles((ProfilesType)null);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__RESOURCE:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__RESOURCE:
 				setResource((ResourceType)null);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__RESOURCE_CONFIG:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG:
 				setResourceConfig((ResourceConfigType)null);
 				return;
-			case SmooksPackage.DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST:
 				setSmooksResourceList((SmooksResourceListType)null);
 				return;
 		}
@@ -552,29 +552,29 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case SmooksPackage.DOCUMENT_ROOT__MIXED:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__MIXED:
 				return mixed != null && !mixed.isEmpty();
-			case SmooksPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
 				return xMLNSPrefixMap != null && !xMLNSPrefixMap.isEmpty();
-			case SmooksPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
 				return xSISchemaLocation != null && !xSISchemaLocation.isEmpty();
-			case SmooksPackage.DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG:
 				return getAbstractResourceConfig() != null;
-			case SmooksPackage.DOCUMENT_ROOT__CONDITION:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__CONDITION:
 				return getCondition() != null;
-			case SmooksPackage.DOCUMENT_ROOT__IMPORT:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__IMPORT:
 				return getImport() != null;
-			case SmooksPackage.DOCUMENT_ROOT__PARAM:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PARAM:
 				return getParam() != null;
-			case SmooksPackage.DOCUMENT_ROOT__PROFILE:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PROFILE:
 				return getProfile() != null;
-			case SmooksPackage.DOCUMENT_ROOT__PROFILES:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__PROFILES:
 				return getProfiles() != null;
-			case SmooksPackage.DOCUMENT_ROOT__RESOURCE:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__RESOURCE:
 				return getResource() != null;
-			case SmooksPackage.DOCUMENT_ROOT__RESOURCE_CONFIG:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG:
 				return getResourceConfig() != null;
-			case SmooksPackage.DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST:
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST:
 				return getSmooksResourceList() != null;
 		}
 		return super.eIsSet(featureID);
@@ -596,4 +596,4 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
 		return result.toString();
 	}
 
-} //DocumentRootImpl
+} //Smooks10DocumentRootImpl

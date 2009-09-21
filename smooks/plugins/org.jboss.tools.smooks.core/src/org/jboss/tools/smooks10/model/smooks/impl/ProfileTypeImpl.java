@@ -11,10 +11,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.jboss.tools.smooks10.model.smooks.ProfileType;
 import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +30,7 @@ import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
  *
  * @generated
  */
-public class ProfileTypeImpl extends EObjectImpl implements ProfileType {
+public class ProfileTypeImpl extends AbstractTypeImpl implements ProfileType {
 	/**
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->

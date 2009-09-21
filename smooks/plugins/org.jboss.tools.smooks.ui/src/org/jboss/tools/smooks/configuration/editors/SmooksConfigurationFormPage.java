@@ -30,6 +30,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelectionWizard;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
@@ -107,7 +108,7 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 	}
 
 	protected SmooksGraphicsExtType getSmooksGraphicsExtType() {
-		SmooksGraphicsExtType extType = ((SmooksMultiFormEditor) getEditor()).getSmooksGraphicsExt();
+		SmooksGraphicsExtType extType = ((ISmooksModelProvider) getEditor()).getSmooksGraphicsExt();
 		return extType;
 	}
 
@@ -123,7 +124,7 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 		wizard.setSite(getEditorSite());
 		wizard.setForcePreviousAndNextButtons(true);
 		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(
-				getEditorSite().getShell(), wizard, getSmooksGraphicsExtType(), (SmooksMultiFormEditor) getEditor());
+				getEditorSite().getShell(), wizard, getSmooksGraphicsExtType());
 		if (dialog.show() == Dialog.OK) {
 			SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
 			String type = dialog.getType();

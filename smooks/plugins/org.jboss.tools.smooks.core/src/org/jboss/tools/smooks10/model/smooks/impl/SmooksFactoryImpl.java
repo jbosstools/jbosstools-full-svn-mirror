@@ -9,19 +9,12 @@ package org.jboss.tools.smooks10.model.smooks.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
+
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.jboss.tools.smooks10.model.smooks.ConditionType;
-import org.jboss.tools.smooks10.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks10.model.smooks.ImportType;
-import org.jboss.tools.smooks10.model.smooks.ParamType;
-import org.jboss.tools.smooks10.model.smooks.ProfileType;
-import org.jboss.tools.smooks10.model.smooks.ProfilesType;
-import org.jboss.tools.smooks10.model.smooks.ResourceConfigType;
-import org.jboss.tools.smooks10.model.smooks.ResourceType;
-import org.jboss.tools.smooks10.model.smooks.SmooksFactory;
-import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
-import org.jboss.tools.smooks10.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks10.model.smooks.*;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -68,7 +61,7 @@ public class SmooksFactoryImpl extends EFactoryImpl implements SmooksFactory {
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case SmooksPackage.CONDITION_TYPE: return createConditionType();
-			case SmooksPackage.DOCUMENT_ROOT: return createDocumentRoot();
+			case SmooksPackage.SMOOKS10_DOCUMENT_ROOT: return createSmooks10DocumentRoot();
 			case SmooksPackage.IMPORT_TYPE: return createImportType();
 			case SmooksPackage.PARAM_TYPE: return createParamType();
 			case SmooksPackage.PROFILES_TYPE: return createProfilesType();
@@ -96,9 +89,9 @@ public class SmooksFactoryImpl extends EFactoryImpl implements SmooksFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DocumentRoot createDocumentRoot() {
-		DocumentRootImpl documentRoot = new DocumentRootImpl();
-		return documentRoot;
+	public DocumentRoot createSmooks10DocumentRoot() {
+		DocumentRootImpl smooks10DocumentRoot = new DocumentRootImpl();
+		return smooks10DocumentRoot;
 	}
 
 	/**

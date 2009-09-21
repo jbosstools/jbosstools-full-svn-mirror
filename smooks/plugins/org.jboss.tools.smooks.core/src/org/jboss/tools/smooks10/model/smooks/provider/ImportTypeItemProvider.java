@@ -22,9 +22,9 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
 import org.jboss.tools.smooks10.model.smooks.ImportType;
 import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
+
 
 /**
  * This is the item provider adapter for a {@link org.jboss.tools.smooks10.model.smooks.ImportType} object.

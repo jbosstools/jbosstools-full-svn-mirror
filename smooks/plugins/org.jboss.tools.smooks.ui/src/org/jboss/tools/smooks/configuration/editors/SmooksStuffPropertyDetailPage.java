@@ -33,6 +33,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.IDetailsPage;
 import org.eclipse.ui.forms.IFormPart;
 import org.eclipse.ui.forms.IManagedForm;
@@ -41,6 +42,8 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.editors.uitls.IModelProcsser;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
+import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
@@ -61,7 +64,9 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 
 	private Section section;
 
-	private SmooksMultiFormEditor formEditor;
+	private ISmooksModelProvider smooksModelProvider;
+	
+	private IEditorPart editorPart ; 
 
 	private AdapterFactoryEditingDomain editingDomain = null;
 
@@ -77,11 +82,14 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 
 	private Composite propertyComposite;
 
-	public SmooksStuffPropertyDetailPage(SmooksMultiFormEditor formEditor) {
+	public SmooksStuffPropertyDetailPage(IEditorPart editorPart , ISmooksModelProvider smooksModelProvider) {
 		super();
-		this.formEditor = formEditor;
-		this.formEditor.addValidateListener(this);
-		editingDomain = (AdapterFactoryEditingDomain) formEditor.getEditingDomain();
+		this.smooksModelProvider = smooksModelProvider;
+		this.editorPart = editorPart;
+		if(this.editorPart instanceof AbstractSmooksFormEditor){
+			((AbstractSmooksFormEditor)this.editorPart).addValidateListener(this);
+		}
+		editingDomain = (AdapterFactoryEditingDomain) smooksModelProvider.getEditingDomain();
 	}
 
 	public void createContents(Composite parent) {
@@ -115,8 +123,8 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 			List<IItemPropertyDescriptor> propertyDes = itemPropertySource.getPropertyDescriptors(getModel());
 			if (creator != null) {
 				List<AttributeFieldEditPart> list = creator.createExtendUIOnTop(
-						(AdapterFactoryEditingDomain) formEditor.getEditingDomain(), formToolkit, detailsComposite,
-						getModel(), getFormEditor(), getFormEditor());
+						(AdapterFactoryEditingDomain) smooksModelProvider.getEditingDomain(), formToolkit, detailsComposite,
+						getModel(), smooksModelProvider, editorPart);
 				if (list != null) {
 					for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 						AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
@@ -152,8 +160,8 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 			}
 			if (creator != null) {
 				List<AttributeFieldEditPart> list = creator.createExtendUIOnBottom(
-						(AdapterFactoryEditingDomain) formEditor.getEditingDomain(), formToolkit, detailsComposite,
-						getModel(), getFormEditor(), getFormEditor());
+						(AdapterFactoryEditingDomain) smooksModelProvider.getEditingDomain(), formToolkit, detailsComposite,
+						getModel(),smooksModelProvider,editorPart);
 				if (list != null) {
 					for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 						AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
@@ -170,7 +178,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 			detailsComposite.pack();
 			propertyMainComposite.layout();
 
-			markPropertyUI(formEditor.getDiagnosticList());
+			markPropertyUI(smooksModelProvider.getDiagnosticList());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -248,7 +256,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				return null;
 			}
 			editPart = creator.createPropertyUI(formToolkit, detailsComposite, itemPropertyDescriptor, getModel(),
-					feature, getFormEditor(), getFormEditor());
+					feature, this.smooksModelProvider, editorPart);
 			if (editPart != null) {
 				createDefault = false;
 			}
@@ -461,8 +469,12 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 		currentPropertyUIMap.clear();
 	}
 
-	public SmooksMultiFormEditor getFormEditor() {
-		return formEditor;
+	public ISmooksModelProvider getSmooksModelProvider() {
+		return smooksModelProvider;
+	}
+
+	public IEditorPart getEditorPart() {
+		return editorPart;
 	}
 
 	protected Object getOldModel() {

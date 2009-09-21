@@ -15,16 +15,15 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.jboss.tools.smooks10.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks10.model.smooks.ProfilesType;
 import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks10.model.smooks.SmooksResourceListType;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -44,7 +43,7 @@ import org.jboss.tools.smooks10.model.smooks.SmooksResourceListType;
  *
  * @generated
  */
-public class SmooksResourceListTypeImpl extends EObjectImpl implements SmooksResourceListType {
+public class SmooksResourceListTypeImpl extends AbstractTypeImpl implements SmooksResourceListType {
 	/**
 	 * The cached value of the '{@link #getProfiles() <em>Profiles</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -205,7 +204,6 @@ public class SmooksResourceListTypeImpl extends EObjectImpl implements SmooksRes
 	 * @generated
 	 */
 	public EList<AbstractResourceConfig> getAbstractResourceConfig() {
-		
 		return getAbstractResourceConfigGroup().list(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG);
 	}
 

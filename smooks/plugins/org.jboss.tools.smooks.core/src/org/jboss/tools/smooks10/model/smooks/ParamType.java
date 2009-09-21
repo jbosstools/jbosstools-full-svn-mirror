@@ -6,9 +6,6 @@
  */
 package org.jboss.tools.smooks10.model.smooks;
 
-import org.eclipse.emf.ecore.EObject;
-
-import org.eclipse.emf.ecore.xml.type.AnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +28,7 @@ import org.eclipse.emf.ecore.xml.type.AnyType;
  * @model extendedMetaData="name='param_._type' kind='mixed'"
  * @generated
  */
-public interface ParamType extends EObject, AnyType {
+public interface ParamType extends AbstractType {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->

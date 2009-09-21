@@ -20,12 +20,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.jboss.tools.smooks10.model.smooks.ConditionType;
 import org.jboss.tools.smooks10.model.smooks.ParamType;
 import org.jboss.tools.smooks10.model.smooks.ResourceConfigType;
 import org.jboss.tools.smooks10.model.smooks.ResourceType;
 import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
+
 
 /**
  * <!-- begin-user-doc -->

@@ -7,26 +7,28 @@
 package org.jboss.tools.smooks10.model.smooks.impl;
 
 import org.eclipse.emf.ecore.EClass;
-import org.jboss.tools.smooks10.model.smooks.AbstractResourceConfig;
+
+import org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl;
+import org.jboss.tools.smooks10.model.smooks.AbstractType;
 import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
 
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Abstract Resource Config</b></em>'.
+ * An implementation of the model object '<em><b>Abstract Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * </p>
  *
  * @generated
  */
-public abstract class AbstractResourceConfigImpl extends AbstractTypeImpl implements AbstractResourceConfig {
+public abstract class AbstractTypeImpl extends AnyTypeImpl implements AbstractType {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected AbstractResourceConfigImpl() {
+	protected AbstractTypeImpl() {
 		super();
 	}
 
@@ -37,7 +39,7 @@ public abstract class AbstractResourceConfigImpl extends AbstractTypeImpl implem
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return SmooksPackage.Literals.ABSTRACT_RESOURCE_CONFIG;
+		return SmooksPackage.Literals.ABSTRACT_TYPE;
 	}
 
-} //AbstractResourceConfigImpl
+} //AbstractTypeImpl

@@ -8,27 +8,21 @@ package org.jboss.tools.smooks10.model.smooks.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
 import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.emf.ecore.xml.type.AnyType;
-import org.jboss.tools.smooks10.model.smooks.AbstractResourceConfig;
-import org.jboss.tools.smooks10.model.smooks.ConditionType;
-import org.jboss.tools.smooks10.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks10.model.smooks.ImportType;
-import org.jboss.tools.smooks10.model.smooks.ParamType;
-import org.jboss.tools.smooks10.model.smooks.ProfileType;
-import org.jboss.tools.smooks10.model.smooks.ProfilesType;
-import org.jboss.tools.smooks10.model.smooks.ResourceConfigType;
-import org.jboss.tools.smooks10.model.smooks.ResourceType;
-import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
-import org.jboss.tools.smooks10.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks10.model.smooks.*;
+
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see smooks.SmooksPackage
+ * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage
  * @generated
  */
 public class SmooksAdapterFactory extends AdapterFactoryImpl {
@@ -88,8 +82,8 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 				return createConditionTypeAdapter();
 			}
 			@Override
-			public Adapter caseDocumentRoot(DocumentRoot object) {
-				return createDocumentRootAdapter();
+			public Adapter caseSmooks10DocumentRoot(DocumentRoot object) {
+				return createSmooks10DocumentRootAdapter();
 			}
 			@Override
 			public Adapter caseImportType(ImportType object) {
@@ -120,6 +114,10 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 				return createSmooksResourceListTypeAdapter();
 			}
 			@Override
+			public Adapter caseAbstractType(AbstractType object) {
+				return createAbstractTypeAdapter();
+			}
+			@Override
 			public Adapter caseAnyType(AnyType object) {
 				return createAnyTypeAdapter();
 			}
@@ -144,13 +142,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link smooks.AbstractResourceConfig <em>Abstract Resource Config</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks10.model.smooks.AbstractResourceConfig <em>Abstract Resource Config</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see smooks.AbstractResourceConfig
+	 * @see org.jboss.tools.smooks10.model.smooks.AbstractResourceConfig
 	 * @generated
 	 */
 	public Adapter createAbstractResourceConfigAdapter() {
@@ -158,13 +156,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link smooks.ConditionType <em>Condition Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks10.model.smooks.ConditionType <em>Condition Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see smooks.ConditionType
+	 * @see org.jboss.tools.smooks10.model.smooks.ConditionType
 	 * @generated
 	 */
 	public Adapter createConditionTypeAdapter() {
@@ -172,27 +170,27 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link smooks.SmooksGraphExtDocumentRoot <em>Document Root</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks10.model.smooks.DocumentRoot <em>Smooks10 Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see smooks.SmooksGraphExtDocumentRoot
+	 * @see org.jboss.tools.smooks10.model.smooks.DocumentRoot
 	 * @generated
 	 */
-	public Adapter createDocumentRootAdapter() {
+	public Adapter createSmooks10DocumentRootAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link smooks.ImportType <em>Import Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks10.model.smooks.ImportType <em>Import Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see smooks.ImportType
+	 * @see org.jboss.tools.smooks10.model.smooks.ImportType
 	 * @generated
 	 */
 	public Adapter createImportTypeAdapter() {
@@ -200,13 +198,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link smooks.ParamType <em>Param Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks10.model.smooks.ParamType <em>Param Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see smooks.ParamType
+	 * @see org.jboss.tools.smooks10.model.smooks.ParamType
 	 * @generated
 	 */
 	public Adapter createParamTypeAdapter() {
@@ -214,13 +212,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link smooks.ProfilesType <em>Profiles Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks10.model.smooks.ProfilesType <em>Profiles Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see smooks.ProfilesType
+	 * @see org.jboss.tools.smooks10.model.smooks.ProfilesType
 	 * @generated
 	 */
 	public Adapter createProfilesTypeAdapter() {
@@ -228,13 +226,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link smooks.ProfileType <em>Profile Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks10.model.smooks.ProfileType <em>Profile Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see smooks.ProfileType
+	 * @see org.jboss.tools.smooks10.model.smooks.ProfileType
 	 * @generated
 	 */
 	public Adapter createProfileTypeAdapter() {
@@ -242,13 +240,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link smooks.ResourceConfigType <em>Resource Config Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks10.model.smooks.ResourceConfigType <em>Resource Config Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see smooks.ResourceConfigType
+	 * @see org.jboss.tools.smooks10.model.smooks.ResourceConfigType
 	 * @generated
 	 */
 	public Adapter createResourceConfigTypeAdapter() {
@@ -256,13 +254,13 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link smooks.ResourceType <em>Resource Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks10.model.smooks.ResourceType <em>Resource Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see smooks.ResourceType
+	 * @see org.jboss.tools.smooks10.model.smooks.ResourceType
 	 * @generated
 	 */
 	public Adapter createResourceTypeAdapter() {
@@ -270,16 +268,30 @@ public class SmooksAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link smooks.SmooksResourceListType <em>Resource List Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks10.model.smooks.SmooksResourceListType <em>Resource List Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see smooks.SmooksResourceListType
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksResourceListType
 	 * @generated
 	 */
 	public Adapter createSmooksResourceListTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks10.model.smooks.AbstractType <em>Abstract Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.jboss.tools.smooks10.model.smooks.AbstractType
+	 * @generated
+	 */
+	public Adapter createAbstractTypeAdapter() {
 		return null;
 	}
 

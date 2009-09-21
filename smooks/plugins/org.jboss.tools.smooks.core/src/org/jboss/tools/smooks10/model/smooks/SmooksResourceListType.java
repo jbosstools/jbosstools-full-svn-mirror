@@ -8,8 +8,6 @@ package org.jboss.tools.smooks10.model.smooks;
 
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecore.util.FeatureMap;
 
 /**
@@ -37,7 +35,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  * @model extendedMetaData="name='smooks-resource-list_._type' kind='elementOnly'"
  * @generated
  */
-public interface SmooksResourceListType extends EObject {
+public interface SmooksResourceListType extends AbstractType {
 	/**
 	 * Returns the value of the '<em><b>Profiles</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors;
+package org.jboss.tools.smooks.configuration.editors_10;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -62,44 +62,42 @@ import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
+import org.jboss.tools.smooks.configuration.editors.ModelPanelCreator;
+import org.jboss.tools.smooks.configuration.editors.NewOrModifySmooksElementDialog;
+import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
-import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks.model.smooks.ConditionType;
-import org.jboss.tools.smooks.model.smooks.ConditionsType;
-import org.jboss.tools.smooks.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks.model.smooks.ParamType;
-import org.jboss.tools.smooks.model.smooks.ParamsType;
-import org.jboss.tools.smooks.model.smooks.SmooksFactory;
-import org.jboss.tools.smooks.model.smooks.SmooksPackage;
-import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks10.model.smooks.DocumentRoot;
+import org.jboss.tools.smooks10.model.smooks.SmooksFactory;
+import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
 
 /**
  * @author Dart
  * 
  */
-public class SmooksConfigurationOverviewPage extends FormPage implements ISmooksModelValidateListener,
+public class Smooks10ConfigurationOverviewPage extends FormPage implements ISmooksModelValidateListener,
 		ISmooksGraphChangeListener, ISourceSynchronizeListener {
 
 	private ISmooksModelProvider smooksModelProvider;
-	private Button newParamButton;
-	private Button removeParamButton;
-	private Button upParamButton;
-	private Button downParamButton;
-	private Button paramPropertiesButton;
-	private TableViewer paramViewer;
-	private TableViewer conditionViewer;
-	private Button newConditionButton;
-	private Button removeConditionButton;
-	private Button upConditionButton;
-	private Button downConditionButton;
-	private Button conditionPropertiesButton;
+	private boolean lockEventFire = false;
+	// private Button newParamButton;
+	// private Button removeParamButton;
+	// private Button upParamButton;
+	// private Button downParamButton;
+	// private Button paramPropertiesButton;
+	// private TableViewer paramViewer;
+	// private TableViewer conditionViewer;
+	// private Button newConditionButton;
+	// private Button removeConditionButton;
+	// private Button upConditionButton;
+	// private Button downConditionButton;
+	// private Button conditionPropertiesButton;
 	private Composite defaultSettingComposite;
 	private Button newProfileButton;
 	private Button removeProfileButton;
@@ -115,14 +113,13 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 	private Section settingSection;
 	private Text smooksNameText;
 	private Text smooksAuthorText;
-	protected boolean lockEventFire = false;
 
-	public SmooksConfigurationOverviewPage(FormEditor editor, String id, String title, ISmooksModelProvider provider) {
+	public Smooks10ConfigurationOverviewPage(FormEditor editor, String id, String title, ISmooksModelProvider provider) {
 		super(editor, id, title);
 		this.smooksModelProvider = provider;
 	}
 
-	public SmooksConfigurationOverviewPage(String id, String title, ISmooksModelProvider provider) {
+	public Smooks10ConfigurationOverviewPage(String id, String title, ISmooksModelProvider provider) {
 		super(id, title);
 		this.smooksModelProvider = provider;
 	}
@@ -142,8 +139,6 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		pageBook.setBackground(toolkit.getColors().getBackground());
 		Composite mainComposite = pageBook.createPage(pageBook);
 		pageBook.showPage(pageBook);
-
-		// Composite mainComposite = toolkit.createComposite(form.getBody());
 
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		pageBook.setLayoutData(gd);
@@ -173,24 +168,6 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 
 		createSmooksEditorNavigator(mainComposite, toolkit);
 
-		globalParamSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
-				| Section.TWISTIE | Section.EXPANDED);
-		globalParamSection.setDescription("Define the global parameters for the Smooks configuration file");
-		globalParamSection.setText("Global Paramters");
-		globalParamSection.setLayout(new FillLayout());
-		Composite globalParamComposite = toolkit.createComposite(globalParamSection);
-		globalParamSection.setClient(globalParamComposite);
-		gd = new GridData();
-		gd.verticalAlignment = GridData.BEGINNING;
-		gd.widthHint = 500;
-		globalParamSection.setLayoutData(gd);
-
-		GridLayout gpgl = new GridLayout();
-		globalParamComposite.setLayout(gpgl);
-		gpgl.numColumns = 2;
-
-		createGlobalParamterSection(globalParamComposite, toolkit);
-
 		generalSettingSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
 				| Section.TWISTIE | Section.EXPANDED);
 		generalSettingSection.setLayout(new FillLayout());
@@ -208,24 +185,6 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		ggl.verticalSpacing = 0;
 
 		createDefaultSection(defaultSettingComposite, toolkit);
-
-		conditionSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
-				| Section.TWISTIE);
-		conditionSection.setText("Conditions");
-		conditionSection.setDescription("Define the conditions");
-		conditionSection.setLayout(new FillLayout());
-		Composite conditionComposite = toolkit.createComposite(conditionSection);
-		conditionSection.setClient(conditionComposite);
-		gd = new GridData();
-		gd.verticalAlignment = GridData.BEGINNING;
-		gd.widthHint = 500;
-		conditionSection.setLayoutData(gd);
-
-		GridLayout cgl = new GridLayout();
-		conditionComposite.setLayout(cgl);
-		cgl.numColumns = 2;
-
-		createConditionsSection(conditionComposite, toolkit);
 
 		profilesSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
 				| Section.TWISTIE);
@@ -269,6 +228,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		combo.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
+				if(lockEventFire) return;
 				String v = combo.getText();
 				if (smooksModelProvider != null) {
 					smooksModelProvider.getSmooksGraphicsExt().setPlatformVersion(v);
@@ -285,12 +245,10 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		smooksNameText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
-				if (lockEventFire)
-					return;
+				if(lockEventFire) return;
 				if (smooksModelProvider != null) {
 					Command setCommand = SetCommand.create(smooksModelProvider.getEditingDomain(), smooksModelProvider
-							.getSmooksGraphicsExt(), GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__NAME,
-							smooksNameText.getText());
+							.getSmooksGraphicsExt(), GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__NAME, smooksNameText.getText());
 					smooksModelProvider.getEditingDomain().getCommandStack().execute(setCommand);
 				}
 			}
@@ -309,12 +267,10 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		smooksAuthorText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
-				if (lockEventFire)
-					return;
+				if(lockEventFire) return;
 				if (smooksModelProvider != null) {
 					Command setCommand = SetCommand.create(smooksModelProvider.getEditingDomain(), smooksModelProvider
-							.getSmooksGraphicsExt(), GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__AUTHOR,
-							smooksAuthorText.getText());
+							.getSmooksGraphicsExt(), GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__AUTHOR, smooksAuthorText.getText());
 					smooksModelProvider.getEditingDomain().getCommandStack().execute(setCommand);
 				}
 			}
@@ -385,7 +341,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 				@Override
 				public String getText(Object object) {
 					Object obj = AdapterFactoryEditingDomain.unwrap(object);
-					if (obj instanceof AbstractAnyType) {
+					if (obj instanceof EObject) {
 						return super.getText(obj);
 					}
 					return super.getText(object);
@@ -434,7 +390,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 
 			NewOrModifySmooksElementDialog dialog = new NewOrModifySmooksElementDialog(getEditorSite().getShell(),
 					profileFeature, profile, parent, getManagedForm().getToolkit(), smooksModelProvider,
-					SmooksConfigurationOverviewPage.this, true);
+					Smooks10ConfigurationOverviewPage.this, true);
 			dialog.open();
 		}
 	}
@@ -525,7 +481,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 				}
 				NewOrModifySmooksElementDialog dialog = new NewOrModifySmooksElementDialog(getEditorSite().getShell(),
 						profileFeature, model, parent, getManagedForm().getToolkit(), smooksModelProvider,
-						SmooksConfigurationOverviewPage.this, false);
+						Smooks10ConfigurationOverviewPage.this, false);
 
 				EStructuralFeature profilesFeature = null;
 				if (SmooksConstants.VERSION_1_0.equals(getSmooksVersion())) {
@@ -647,443 +603,6 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		return null;
 	}
 
-	private ConditionsType getConditionsType() {
-		if (smooksModelProvider != null) {
-			EObject smooksModel = smooksModelProvider.getSmooksModel();
-			if (smooksModel instanceof DocumentRoot) {
-				EObject m = ((DocumentRoot) smooksModel).getSmooksResourceList().getConditions();
-				return (ConditionsType) m;
-			}
-		}
-		return null;
-	}
-
-	private void createConditionsSection(Composite conditionComposite, FormToolkit toolkit) {
-		if (smooksModelProvider != null) {
-			AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) smooksModelProvider
-					.getEditingDomain();
-			ConditionsType conditions = getConditionsType();
-			// if (m == null)
-			// return;
-
-			conditionViewer = new TableViewer(conditionComposite);
-			GridData gd = new GridData(GridData.FILL_BOTH);
-			conditionViewer.getControl().setLayoutData(gd);
-			toolkit.paintBordersFor(conditionComposite);
-			Composite buttonArea = toolkit.createComposite(conditionComposite);
-			gd = new GridData(GridData.FILL_VERTICAL);
-			gd.widthHint = 30;
-			GridLayout bgl = new GridLayout();
-			buttonArea.setLayout(bgl);
-
-			newConditionButton = toolkit.createButton(buttonArea, "New", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			newConditionButton.setLayoutData(gd);
-
-			removeConditionButton = toolkit.createButton(buttonArea, "Remove", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			removeConditionButton.setLayoutData(gd);
-
-			upConditionButton = toolkit.createButton(buttonArea, "Up", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			upConditionButton.setLayoutData(gd);
-
-			downConditionButton = toolkit.createButton(buttonArea, "Down", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			downConditionButton.setLayoutData(gd);
-
-			conditionPropertiesButton = toolkit.createButton(buttonArea, "Properties..", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			conditionPropertiesButton.setLayoutData(gd);
-
-			conditionViewer.setContentProvider(new AdapterFactoryContentProvider(editingDomain.getAdapterFactory()) {
-
-				@Override
-				public boolean hasChildren(Object object) {
-					return false;
-				}
-
-			});
-
-			conditionViewer.setLabelProvider(new DecoratingLabelProvider(new AdapterFactoryLabelProvider(editingDomain
-					.getAdapterFactory()) {
-
-				/*
-				 * (non-Javadoc)
-				 * 
-				 * @see
-				 * org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider
-				 * # getText(java.lang.Object)
-				 */
-				@Override
-				public String getText(Object object) {
-					Object obj = AdapterFactoryEditingDomain.unwrap(object);
-					if (obj instanceof AbstractAnyType) {
-						return super.getText(obj);
-					}
-					return super.getText(object);
-				}
-
-			}, SmooksConfigurationActivator.getDefault().getWorkbench().getDecoratorManager().getLabelDecorator()));
-
-			if (conditions != null) {
-				conditionViewer.setInput(conditions);
-			}
-
-			conditionViewer.addDoubleClickListener(new IDoubleClickListener() {
-
-				public void doubleClick(DoubleClickEvent event) {
-					openConditionPropertiesModifyDialog();
-				}
-			});
-
-			conditionViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-
-				public void selectionChanged(SelectionChangedEvent event) {
-					updateConditionsButtons();
-				}
-			});
-
-			hookConditionsButtons();
-			updateConditionsButtons();
-		}
-	}
-
-	protected void hookConditionsButtons() {
-		newConditionButton.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (getSmooksVersion() == null || getSmooksVersion().equals(SmooksConstants.VERSION_1_0)) {
-					return;
-				}
-				ConditionType condition = SmooksFactory.eINSTANCE.createConditionType();
-				ConditionsType parent = getConditionsType();
-				boolean newParent = false;
-				if (parent == null) {
-					newParent = true;
-					parent = SmooksFactory.eINSTANCE.createConditionsType();
-
-				}
-				NewOrModifySmooksElementDialog dialog = new NewOrModifySmooksElementDialog(getEditorSite().getShell(),
-						SmooksPackage.Literals.CONDITIONS_TYPE__CONDITION, condition, parent, getManagedForm()
-								.getToolkit(), smooksModelProvider, SmooksConfigurationOverviewPage.this, false);
-				if (dialog.open() == Dialog.OK && newParent) {
-					EObject resource = getSmooksResourceList();
-					if (resource == null)
-						return;
-					Command command = SetCommand.create(smooksModelProvider.getEditingDomain(), resource,
-							SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__CONDITIONS, parent);
-					if (command.canExecute()) {
-						smooksModelProvider.getEditingDomain().getCommandStack().execute(command);
-						conditionViewer.setInput(parent);
-					}
-				}
-				super.widgetSelected(e);
-			}
-
-		});
-		removeConditionButton.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection selection = (IStructuredSelection) conditionViewer.getSelection();
-				if (selection == null)
-					return;
-				Object obj = selection.getFirstElement();
-				if (obj instanceof ConditionType) {
-					ConditionType condition = (ConditionType) obj;
-					ConditionsType parent = getConditionsType();
-					if (parent == null)
-						return;
-					CompoundCommand compoundCommand = new CompoundCommand();
-					Command command = RemoveCommand.create(smooksModelProvider.getEditingDomain(), condition);
-					compoundCommand.append(command);
-					if (parent.getCondition().size() == 1) {
-						// remove parent;
-						Command command1 = RemoveCommand.create(smooksModelProvider.getEditingDomain(), parent);
-						compoundCommand.append(command1);
-					}
-					smooksModelProvider.getEditingDomain().getCommandStack().execute(compoundCommand);
-				}
-			}
-
-		});
-		upConditionButton.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection selection = (IStructuredSelection) conditionViewer.getSelection();
-				if (selection == null)
-					return;
-				Object obj = selection.getFirstElement();
-				if (obj instanceof ConditionType) {
-					ConditionsType conditionsType = getConditionsType();
-					if (conditionsType == null)
-						return;
-					EObject v = (EObject) AdapterFactoryEditingDomain.unwrap(obj);
-					EObject parent = v.eContainer();
-					int index = parent.eContents().indexOf(v);
-					Command command = MoveCommand.create(smooksModelProvider.getEditingDomain(), parent, null, obj,
-							index - 1);
-					smooksModelProvider.getEditingDomain().getCommandStack().execute(command);
-				}
-			}
-
-		});
-		downConditionButton.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection selection = (IStructuredSelection) conditionViewer.getSelection();
-				if (selection == null)
-					return;
-				Object obj = selection.getFirstElement();
-				if (obj instanceof ConditionType) {
-					ConditionsType conditionsType = getConditionsType();
-					if (conditionsType == null)
-						return;
-					EObject v = (EObject) AdapterFactoryEditingDomain.unwrap(obj);
-					EObject parent = v.eContainer();
-					int index = parent.eContents().indexOf(v);
-					Command command = MoveCommand.create(smooksModelProvider.getEditingDomain(), parent, null, obj,
-							index + 1);
-					smooksModelProvider.getEditingDomain().getCommandStack().execute(command);
-				}
-			}
-
-		});
-		conditionPropertiesButton.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				openConditionPropertiesModifyDialog();
-				super.widgetSelected(e);
-			}
-
-		});
-
-	}
-
-	protected void updateConditionsButtons() {
-		if (getSmooksVersion() == null || getSmooksVersion().equals(SmooksConstants.VERSION_1_0)) {
-			conditionPropertiesButton.setEnabled(false);
-			newConditionButton.setEnabled(false);
-			removeConditionButton.setEnabled(false);
-			upConditionButton.setEnabled(false);
-			downConditionButton.setEnabled(false);
-			return;
-		}
-		conditionPropertiesButton.setEnabled(true);
-		removeConditionButton.setEnabled(true);
-		IStructuredSelection selection = (IStructuredSelection) conditionViewer.getSelection();
-		if (selection == null) {
-			conditionPropertiesButton.setEnabled(false);
-			removeConditionButton.setEnabled(false);
-			upConditionButton.setEnabled(false);
-			downConditionButton.setEnabled(false);
-		} else {
-			if (selection.getFirstElement() == null) {
-				conditionPropertiesButton.setEnabled(false);
-				removeConditionButton.setEnabled(false);
-				upConditionButton.setEnabled(false);
-				downConditionButton.setEnabled(false);
-				return;
-			}
-
-			Object obj = selection.getFirstElement();
-			if (obj instanceof ConditionType) {
-				ConditionsType conditionsType = getConditionsType();
-				if (conditionsType == null)
-					return;
-				EObject v = (EObject) AdapterFactoryEditingDomain.unwrap(obj);
-				EObject parent = v.eContainer();
-				int index = parent.eContents().indexOf(v);
-				Command command = MoveCommand.create(smooksModelProvider.getEditingDomain(), parent, null, obj,
-						index - 1);
-				upConditionButton.setEnabled(command.canExecute());
-
-				Command command1 = MoveCommand.create(smooksModelProvider.getEditingDomain(), parent, null, obj,
-						index + 1);
-				downConditionButton.setEnabled(command1.canExecute());
-			}
-
-			if (selection.size() > 1) {
-				conditionPropertiesButton.setEnabled(false);
-				removeConditionButton.setEnabled(false);
-			}
-		}
-	}
-
-	protected void openConditionPropertiesModifyDialog() {
-		IStructuredSelection selection = (IStructuredSelection) conditionViewer.getSelection();
-		if (selection == null)
-			return;
-		Object obj = selection.getFirstElement();
-		if (obj instanceof ConditionType) {
-			ConditionType condition = (ConditionType) obj;
-			ConditionsType parent = getConditionsType();
-			NewOrModifySmooksElementDialog dialog = new NewOrModifySmooksElementDialog(getEditorSite().getShell(),
-					SmooksPackage.Literals.CONDITIONS_TYPE__CONDITION, condition, parent,
-					getManagedForm().getToolkit(), smooksModelProvider, SmooksConfigurationOverviewPage.this, true);
-			dialog.open();
-		}
-	}
-
-	private ParamsType getParamsType() {
-		if (smooksModelProvider != null) {
-			EObject smooksModel = smooksModelProvider.getSmooksModel();
-			if (smooksModel instanceof DocumentRoot) {
-				EObject m = ((DocumentRoot) smooksModel).getSmooksResourceList().getParams();
-				return (ParamsType) m;
-			}
-		}
-		return null;
-	}
-
-	private void createGlobalParamterSection(Composite globalParamComposite, FormToolkit toolkit) {
-		// ModelPanelCreator creator = new ModelPanelCreator();
-		if (smooksModelProvider != null) {
-			AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) smooksModelProvider
-					.getEditingDomain();
-			ParamsType m = getParamsType();
-			// if (m == null)
-			// return;
-
-			paramViewer = new TableViewer(globalParamComposite);
-			GridData gd = new GridData(GridData.FILL_BOTH);
-			paramViewer.getControl().setLayoutData(gd);
-			toolkit.paintBordersFor(globalParamComposite);
-			Composite buttonArea = toolkit.createComposite(globalParamComposite);
-			gd = new GridData(GridData.FILL_VERTICAL);
-			gd.widthHint = 30;
-			GridLayout bgl = new GridLayout();
-			buttonArea.setLayout(bgl);
-
-			newParamButton = toolkit.createButton(buttonArea, "New", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			newParamButton.setLayoutData(gd);
-
-			removeParamButton = toolkit.createButton(buttonArea, "Remove", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			removeParamButton.setLayoutData(gd);
-
-			upParamButton = toolkit.createButton(buttonArea, "Up", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			upParamButton.setLayoutData(gd);
-
-			downParamButton = toolkit.createButton(buttonArea, "Down", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			downParamButton.setLayoutData(gd);
-
-			paramPropertiesButton = toolkit.createButton(buttonArea, "Properties..", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			paramPropertiesButton.setLayoutData(gd);
-
-			paramViewer.setContentProvider(new AdapterFactoryContentProvider(editingDomain.getAdapterFactory()) {
-
-				@Override
-				public boolean hasChildren(Object object) {
-					return false;
-				}
-
-			});
-
-			paramViewer.setLabelProvider(new DecoratingLabelProvider(new AdapterFactoryLabelProvider(editingDomain
-					.getAdapterFactory()) {
-
-				/*
-				 * (non-Javadoc)
-				 * 
-				 * @see
-				 * org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider
-				 * # getText(java.lang.Object)
-				 */
-				@Override
-				public String getText(Object object) {
-					Object obj = AdapterFactoryEditingDomain.unwrap(object);
-					if (obj instanceof AbstractAnyType) {
-						return super.getText(obj);
-					}
-					return super.getText(object);
-				}
-
-			}, SmooksConfigurationActivator.getDefault().getWorkbench().getDecoratorManager().getLabelDecorator()));
-			if (m != null) {
-				paramViewer.setInput(m);
-			}
-
-			paramViewer.addDoubleClickListener(new IDoubleClickListener() {
-
-				public void doubleClick(DoubleClickEvent event) {
-					openParamPropertiesModifyDialog();
-				}
-			});
-
-			paramViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-
-				public void selectionChanged(SelectionChangedEvent event) {
-					updateParamButtons();
-				}
-			});
-
-			hookGlobalParamterButtons();
-			updateParamButtons();
-		}
-
-	}
-
-	protected void updateParamButtons() {
-		if (getSmooksVersion() == null || getSmooksVersion().equals(SmooksConstants.VERSION_1_0)) {
-			paramPropertiesButton.setEnabled(false);
-			newParamButton.setEnabled(false);
-			removeParamButton.setEnabled(false);
-			upParamButton.setEnabled(false);
-			downParamButton.setEnabled(false);
-			return;
-		}
-		paramPropertiesButton.setEnabled(true);
-		removeParamButton.setEnabled(true);
-		IStructuredSelection selection = (IStructuredSelection) paramViewer.getSelection();
-		if (selection == null) {
-			paramPropertiesButton.setEnabled(false);
-			removeParamButton.setEnabled(false);
-			upParamButton.setEnabled(false);
-			downParamButton.setEnabled(false);
-		} else {
-			if (selection.getFirstElement() == null) {
-				paramPropertiesButton.setEnabled(false);
-				removeParamButton.setEnabled(false);
-				upParamButton.setEnabled(false);
-				downParamButton.setEnabled(false);
-				return;
-			}
-
-			Object obj = selection.getFirstElement();
-			if (obj instanceof ParamType) {
-				ParamsType paramsType = getParamsType();
-				if (paramsType == null)
-					return;
-				EObject v = (EObject) AdapterFactoryEditingDomain.unwrap(obj);
-				EObject parent = v.eContainer();
-				int index = parent.eContents().indexOf(v);
-				Command command = MoveCommand.create(smooksModelProvider.getEditingDomain(), parent, null, obj,
-						index - 1);
-				upParamButton.setEnabled(command.canExecute());
-
-				Command command1 = MoveCommand.create(smooksModelProvider.getEditingDomain(), parent, null, obj,
-						index + 1);
-				downParamButton.setEnabled(command1.canExecute());
-			}
-
-			if (selection.size() > 1) {
-				paramPropertiesButton.setEnabled(false);
-				removeParamButton.setEnabled(false);
-			}
-		}
-
-	}
-
 	private String getSmooksVersion() {
 		if (smooksModelProvider != null) {
 			SmooksGraphicsExtType ext = smooksModelProvider.getSmooksGraphicsExt();
@@ -1092,138 +611,6 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 			}
 		}
 		return null;
-	}
-
-	private void hookGlobalParamterButtons() {
-		newParamButton.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (getSmooksVersion() == null || getSmooksVersion().equals(SmooksConstants.VERSION_1_0)) {
-					return;
-				}
-				ParamType param = SmooksFactory.eINSTANCE.createParamType();
-				ParamsType parent = getParamsType();
-				boolean newParent = false;
-				if (parent == null) {
-					newParent = true;
-					parent = SmooksFactory.eINSTANCE.createParamsType();
-					EObject resource = getSmooksResourceList();
-					if (resource == null)
-						return;
-					Command command = SetCommand.create(smooksModelProvider.getEditingDomain(), resource,
-							SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__PARAMS, parent);
-					if (command.canExecute()) {
-						((SmooksResourceListType) resource).setParams((ParamsType) parent);
-						paramViewer.setInput(parent);
-					}
-				}
-				NewOrModifySmooksElementDialog dialog = new NewOrModifySmooksElementDialog(getEditorSite().getShell(),
-						SmooksPackage.Literals.PARAMS_TYPE__PARAM, param, parent, getManagedForm().getToolkit(),
-						smooksModelProvider, SmooksConfigurationOverviewPage.this, false);
-				if (dialog.open() == Dialog.CANCEL && newParent) {
-					EObject resource = getSmooksResourceList();
-					((SmooksResourceListType) resource).setParams(null);
-					paramViewer.setInput(null);
-				}
-				super.widgetSelected(e);
-			}
-
-		});
-		removeParamButton.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection selection = (IStructuredSelection) paramViewer.getSelection();
-				if (selection == null)
-					return;
-				Object obj = selection.getFirstElement();
-				if (obj instanceof ParamType) {
-					ParamType param = (ParamType) obj;
-					ParamsType parent = getParamsType();
-					if (parent == null)
-						return;
-					CompoundCommand compoundCommand = new CompoundCommand();
-					Command command = RemoveCommand.create(smooksModelProvider.getEditingDomain(), param);
-					compoundCommand.append(command);
-					if (parent.getParam().size() == 1) {
-						// remove parent;
-						Command command1 = RemoveCommand.create(smooksModelProvider.getEditingDomain(), parent);
-						compoundCommand.append(command1);
-					}
-					smooksModelProvider.getEditingDomain().getCommandStack().execute(compoundCommand);
-				}
-			}
-
-		});
-		upParamButton.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection selection = (IStructuredSelection) paramViewer.getSelection();
-				if (selection == null)
-					return;
-				Object obj = selection.getFirstElement();
-				if (obj instanceof ParamType) {
-					ParamsType paramsType = getParamsType();
-					if (paramsType == null)
-						return;
-					EObject v = (EObject) AdapterFactoryEditingDomain.unwrap(obj);
-					EObject parent = v.eContainer();
-					int index = parent.eContents().indexOf(v);
-					Command command = MoveCommand.create(smooksModelProvider.getEditingDomain(), parent, null, obj,
-							index - 1);
-					smooksModelProvider.getEditingDomain().getCommandStack().execute(command);
-				}
-			}
-
-		});
-		downParamButton.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection selection = (IStructuredSelection) paramViewer.getSelection();
-				if (selection == null)
-					return;
-				Object obj = selection.getFirstElement();
-				if (obj instanceof ParamType) {
-					ParamsType paramsType = getParamsType();
-					if (paramsType == null)
-						return;
-					EObject v = (EObject) AdapterFactoryEditingDomain.unwrap(obj);
-					EObject parent = v.eContainer();
-					int index = parent.eContents().indexOf(v);
-					Command command = MoveCommand.create(smooksModelProvider.getEditingDomain(), parent, null, obj,
-							index + 1);
-					smooksModelProvider.getEditingDomain().getCommandStack().execute(command);
-				}
-			}
-
-		});
-		paramPropertiesButton.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				openParamPropertiesModifyDialog();
-				super.widgetSelected(e);
-			}
-
-		});
-	}
-
-	protected void openParamPropertiesModifyDialog() {
-		IStructuredSelection selection = (IStructuredSelection) paramViewer.getSelection();
-		if (selection == null)
-			return;
-		Object obj = selection.getFirstElement();
-		if (obj instanceof ParamType) {
-			ParamType param = (ParamType) obj;
-			ParamsType parent = getParamsType();
-			NewOrModifySmooksElementDialog dialog = new NewOrModifySmooksElementDialog(getEditorSite().getShell(),
-					SmooksPackage.Literals.PARAMS_TYPE__PARAM, param, parent, getManagedForm().getToolkit(),
-					smooksModelProvider, SmooksConfigurationOverviewPage.this, true);
-			dialog.open();
-		}
 	}
 
 	private void createNavigatorSection(Composite mainNavigatorComposite, FormToolkit toolkit, String title,
@@ -1396,9 +783,8 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 	}
 
 	public void sourceChange(Object model) {
-
 		lockEventFire = true;
-
+		
 		String name = smooksModelProvider.getSmooksGraphicsExt().getName();
 		if (name != null)
 			smooksNameText.setText(name);
@@ -1406,15 +792,13 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		String author = smooksModelProvider.getSmooksGraphicsExt().getAuthor();
 		if (author != null)
 			smooksAuthorText.setText(author);
-
+		
 		lockEventFire = false;
-
+		
+		
 		disposeDefaultSettingCompositeControls();
 		createDefaultSection(defaultSettingComposite, this.getManagedForm().getToolkit());
 		defaultSettingComposite.getParent().layout();
-
-		paramViewer.setInput(getParamsType());
-		conditionViewer.setInput(getConditionsType());
 		profileViewer.setInput(getProfilesType());
 	}
 

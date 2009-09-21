@@ -15,14 +15,12 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.jboss.tools.smooks10.model.smooks.ProfileType;
 import org.jboss.tools.smooks10.model.smooks.ProfilesType;
 import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -37,7 +35,7 @@ import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
  *
  * @generated
  */
-public class ProfilesTypeImpl extends EObjectImpl implements ProfilesType {
+public class ProfilesTypeImpl extends AbstractTypeImpl implements ProfilesType {
 	/**
 	 * The cached value of the '{@link #getProfile() <em>Profile</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

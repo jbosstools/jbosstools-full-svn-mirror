@@ -6,9 +6,6 @@
  */
 package org.jboss.tools.smooks10.model.smooks;
 
-import org.eclipse.emf.ecore.EObject;
-
-import org.eclipse.emf.ecore.xml.type.AnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,15 +19,15 @@ import org.eclipse.emf.ecore.xml.type.AnyType;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link smooks.ResourceType#getType <em>Type</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks10.model.smooks.ResourceType#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
- * @see smooks.SmooksPackage#getResourceType()
+ * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getResourceType()
  * @model extendedMetaData="name='resource_._type' kind='mixed'"
  * @generated
  */
-public interface ResourceType extends EObject, AnyType {
+public interface ResourceType extends AbstractType {
 	/**
 	 * Returns the value of the '<em><b>Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -41,7 +38,7 @@ public interface ResourceType extends EObject, AnyType {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' attribute.
 	 * @see #setType(String)
-	 * @see smooks.SmooksPackage#getResourceType_Type()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getResourceType_Type()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='type'"
 	 * @generated
@@ -49,7 +46,7 @@ public interface ResourceType extends EObject, AnyType {
 	String getType();
 
 	/**
-	 * Sets the value of the '{@link smooks.ResourceType#getType <em>Type</em>}' attribute.
+	 * Sets the value of the '{@link org.jboss.tools.smooks10.model.smooks.ResourceType#getType <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type</em>' attribute.
@@ -58,6 +55,7 @@ public interface ResourceType extends EObject, AnyType {
 	 */
 	void setType(String value);
 	
+	
 	String getStringValue();
 	
 	void setStringValue(String value);
@@ -65,5 +63,6 @@ public interface ResourceType extends EObject, AnyType {
 	String getCDATAValue();
 	
 	void setCDATAValue(String value);
+	
 
 } // ResourceType

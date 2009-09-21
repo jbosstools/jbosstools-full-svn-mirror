@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see smooks.SmooksPackage
+ * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage
  * @generated
  */
 public interface SmooksFactory extends EFactory {
@@ -35,13 +35,13 @@ public interface SmooksFactory extends EFactory {
 	ConditionType createConditionType();
 
 	/**
-	 * Returns a new object of class '<em>Document Root</em>'.
+	 * Returns a new object of class '<em>Smooks10 Document Root</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Document Root</em>'.
+	 * @return a new object of class '<em>Smooks10 Document Root</em>'.
 	 * @generated
 	 */
-	DocumentRoot createDocumentRoot();
+	DocumentRoot createSmooks10DocumentRoot();
 
 	/**
 	 * Returns a new object of class '<em>Import Type</em>'.

@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Document Root</b></em>'.
+ * A representation of the model object '<em><b>Smooks10 Document Root</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
@@ -35,7 +35,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getDocumentRoot()
+ * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getSmooks10DocumentRoot()
  * @model extendedMetaData="name='' kind='mixed'"
  * @generated
  */
@@ -50,7 +50,7 @@ public interface DocumentRoot extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mixed</em>' attribute list.
-	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getDocumentRoot_Mixed()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getSmooks10DocumentRoot_Mixed()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
 	 *        extendedMetaData="kind='elementWildcard' name=':mixed'"
 	 * @generated
@@ -68,7 +68,7 @@ public interface DocumentRoot extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>XMLNS Prefix Map</em>' map.
-	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getDocumentRoot_XMLNSPrefixMap()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getSmooks10DocumentRoot_XMLNSPrefixMap()
 	 * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>" transient="true"
 	 *        extendedMetaData="kind='attribute' name='xmlns:prefix'"
 	 * @generated
@@ -86,7 +86,7 @@ public interface DocumentRoot extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>XSI Schema Location</em>' map.
-	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getDocumentRoot_XSISchemaLocation()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getSmooks10DocumentRoot_XSISchemaLocation()
 	 * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>" transient="true"
 	 *        extendedMetaData="kind='attribute' name='xsi:schemaLocation'"
 	 * @generated
@@ -102,7 +102,7 @@ public interface DocumentRoot extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Abstract Resource Config</em>' containment reference.
-	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getDocumentRoot_AbstractResourceConfig()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getSmooks10DocumentRoot_AbstractResourceConfig()
 	 * @model containment="true" upper="-2" transient="true" changeable="false" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='abstract-resource-config' namespace='##targetNamespace'"
 	 * @generated
@@ -119,7 +119,7 @@ public interface DocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Condition</em>' containment reference.
 	 * @see #setCondition(ConditionType)
-	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getDocumentRoot_Condition()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getSmooks10DocumentRoot_Condition()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='condition' namespace='##targetNamespace'"
 	 * @generated
@@ -146,7 +146,7 @@ public interface DocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Import</em>' containment reference.
 	 * @see #setImport(ImportType)
-	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getDocumentRoot_Import()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getSmooks10DocumentRoot_Import()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='import' namespace='##targetNamespace' affiliation='abstract-resource-config'"
 	 * @generated
@@ -173,7 +173,7 @@ public interface DocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Param</em>' containment reference.
 	 * @see #setParam(ParamType)
-	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getDocumentRoot_Param()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getSmooks10DocumentRoot_Param()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='param' namespace='##targetNamespace'"
 	 * @generated
@@ -200,7 +200,7 @@ public interface DocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Profile</em>' containment reference.
 	 * @see #setProfile(ProfileType)
-	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getDocumentRoot_Profile()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getSmooks10DocumentRoot_Profile()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='profile' namespace='##targetNamespace'"
 	 * @generated
@@ -227,7 +227,7 @@ public interface DocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Profiles</em>' containment reference.
 	 * @see #setProfiles(ProfilesType)
-	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getDocumentRoot_Profiles()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getSmooks10DocumentRoot_Profiles()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='profiles' namespace='##targetNamespace'"
 	 * @generated
@@ -254,7 +254,7 @@ public interface DocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Resource</em>' containment reference.
 	 * @see #setResource(ResourceType)
-	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getDocumentRoot_Resource()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getSmooks10DocumentRoot_Resource()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='resource' namespace='##targetNamespace'"
 	 * @generated
@@ -281,7 +281,7 @@ public interface DocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Resource Config</em>' containment reference.
 	 * @see #setResourceConfig(ResourceConfigType)
-	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getDocumentRoot_ResourceConfig()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getSmooks10DocumentRoot_ResourceConfig()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='resource-config' namespace='##targetNamespace' affiliation='abstract-resource-config'"
 	 * @generated
@@ -308,7 +308,7 @@ public interface DocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Smooks Resource List</em>' containment reference.
 	 * @see #setSmooksResourceList(SmooksResourceListType)
-	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getDocumentRoot_SmooksResourceList()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getSmooks10DocumentRoot_SmooksResourceList()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='smooks-resource-list' namespace='##targetNamespace'"
 	 * @generated
@@ -325,4 +325,4 @@ public interface DocumentRoot extends EObject {
 	 */
 	void setSmooksResourceList(SmooksResourceListType value);
 
-} // DocumentRoot
+} // Smooks10DocumentRoot
