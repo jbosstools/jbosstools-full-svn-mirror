@@ -163,7 +163,7 @@ public class InputDataContainerEditPart extends TreeContainerEditPart {
 		// figure.setIcon(i);
 		// }
 		figure.getLabel().setTextAlignment(Label.LEFT);
-		figure.setText("Input Data");
+		figure.setText("Input Model");
 		figure.setIcon(SmooksConfigurationActivator.getDefault().getImageRegistry().get(
 				GraphicsConstants.IMAGE_INPUT_DATA_HEADER));
 		super.refreshVisuals();

@@ -6,6 +6,7 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext.util;
 
+
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -13,7 +14,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
-
 import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 
 /**
@@ -36,7 +36,7 @@ public class GraphXMLProcessor extends XMLProcessor {
 	}
 	
 	/**
-	 * Register for "*" and "xml" file extensions the ExtResourceFactoryImpl factory.
+	 * Register for "*" and "xml" file extensions the GraphResourceFactoryImpl factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -51,4 +51,4 @@ public class GraphXMLProcessor extends XMLProcessor {
 		return registrations;
 	}
 
-} //ExtXMLProcessor
+} //GraphXMLProcessor

@@ -9,7 +9,8 @@ package org.jboss.tools.smooks.model.graphics.ext;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
+import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -33,14 +34,15 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='smooks-graphics-ext_._type' kind='elementOnly'"
  * @generated
  */
-public interface SmooksGraphicsExtType extends EObject {
+public interface SmooksGraphicsExtType extends AbstractResourceConfig {
 	
-	List<ISmooksGraphChangeListener> getChangeListeners();
-
-	void addSmooksGraphChangeListener(ISmooksGraphChangeListener listener);
-
-	void removeSmooksGraphChangeListener(ISmooksGraphChangeListener listener);
-
+   List<ISmooksGraphChangeListener> getChangeListeners();
+   
+   void addSmooksGraphChangeListener(ISmooksGraphChangeListener listener);
+   
+   void removeSmooksGraphChangeListener(ISmooksGraphChangeListener listener);
+   
+//   List<ISmooksGraphChangeListener> getChangeListeners();
 	
 	/**
 	 * Returns the value of the '<em><b>Input</b></em>' containment reference list.
@@ -139,8 +141,6 @@ public interface SmooksGraphicsExtType extends EObject {
 	 * @generated
 	 */
 	void setInputType(String value);
-	
-	void setInputType(String value , boolean fireEvent);
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

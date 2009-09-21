@@ -17,6 +17,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
@@ -33,6 +34,7 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
+ * @deprecated
  * @author Dart
  * 
  */
@@ -290,6 +292,11 @@ public class CSV12InputDataWizard extends Wizard implements IStructuredDataSelec
 				resourceList = ((DocumentRoot) smooksModel).getSmooksResourceList();
 			}
 			editingDomain = formEditor.getEditingDomain();
+		}
+		if(pathPage != null && input != null){
+			if(input instanceof IFileEditorInput){
+				pathPage.setInitSelections(new Object[]{((IFileEditorInput)input).getFile().getParent()});
+			}
 		}
 		if (configPage != null) {
 			configPage.setSmooksResourceList(resourceList);

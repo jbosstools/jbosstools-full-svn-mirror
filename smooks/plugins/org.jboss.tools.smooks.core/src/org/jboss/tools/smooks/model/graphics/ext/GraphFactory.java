@@ -53,10 +53,10 @@ public interface GraphFactory extends EFactory {
 	FigureType createFigureType();
 
 	/**
-	 * Returns a new object of class '<em>Graph Type</em>'.
+	 * Returns a new object of class '<em>Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Graph Type</em>'.
+	 * @return a new object of class '<em>Type</em>'.
 	 * @generated
 	 */
 	GraphType createGraphType();
@@ -95,6 +95,6 @@ public interface GraphFactory extends EFactory {
 	 * @return the package supported by this factory.
 	 * @generated
 	 */
-	GraphPackage getExtPackage();
+	GraphPackage getGraphPackage();
 
-} //ExtFactory
+} //GraphFactory

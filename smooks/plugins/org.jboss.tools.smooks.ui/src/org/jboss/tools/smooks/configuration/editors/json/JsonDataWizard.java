@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -23,6 +24,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
@@ -53,13 +55,15 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 
 	private EditingDomain editingDomain;
 
+	private IContainer folder = null;
+
 	public JsonDataWizard() {
 		super();
 		this.setWindowTitle("JSON Input Data Wizard");
 	}
 
 	public boolean canFinish() {
-		if(pathPage != null){
+		if (pathPage != null) {
 			return pathPage.isPageComplete();
 		}
 		if (configPage != null && pathPage != null) {
@@ -78,15 +82,18 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 	public void addPages() {
 		super.addPages();
 		if (pathPage == null) {
-			pathPage = new JsonDataPathWizardPage("JSON Input Data Selection ", new String[] {"jsn"});
-
+			pathPage = new JsonDataPathWizardPage("JSON Input Data Selection ", new String[] { "jsn" });
+			if (folder != null) {
+				pathPage.setInitSelections(new Object[] { folder });
+			}
 		}
-//		if (configPage == null) {
-//			configPage = new JsonDataConfiguraitonWizardPage("Json data configuration page");
-//			configPage.setSmooksResourceList(resourceList);
-//		}
+		// if (configPage == null) {
+		// configPage = new
+		// JsonDataConfiguraitonWizardPage("Json data configuration page");
+		// configPage.setSmooksResourceList(resourceList);
+		// }
 		this.addPage(pathPage);
-//		this.addPage(configPage);
+		// this.addPage(configPage);
 	}
 
 	/*
@@ -96,7 +103,7 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 	 */
 	@Override
 	public boolean performFinish() {
-		if(editingDomain == null || resourceList == null){
+		if (editingDomain == null || resourceList == null) {
 			return true;
 		}
 		if (configPage != null && configPage.isCreateJsonReader()) {
@@ -289,7 +296,11 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 			}
 			editingDomain = formEditor.getEditingDomain();
 		}
-		if(configPage != null){
+		folder = ((IFileEditorInput) input).getFile().getParent();
+		if (pathPage != null && folder != null) {
+			pathPage.setInitSelections(new Object[] { folder });
+		}
+		if (configPage != null) {
 			configPage.setSmooksResourceList(resourceList);
 		}
 	}

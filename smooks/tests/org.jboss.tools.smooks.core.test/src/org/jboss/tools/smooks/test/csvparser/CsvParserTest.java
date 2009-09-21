@@ -23,9 +23,7 @@ import org.jboss.tools.smooks.configuration.editors.csv.CSVDataParser;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks.model.graphics.ext.util.SmooksGraphicsExtResourceFactoryImpl;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
 import org.jboss.tools.smooks.test.model11.BaseTestCase;
@@ -37,10 +35,15 @@ import org.jboss.tools.smooks.test.model11.BaseTestCase;
 public class CsvParserTest extends BaseTestCase {
 
 	public void testCsvParser() throws IOException, DocumentException, ParserConfigurationException {
-		Resource extResource = new SmooksGraphicsExtResourceFactoryImpl().createResource(null);
-		extResource.load(CsvParserTest.class.getResourceAsStream("smooks-config.xml.ext"), null);
-		SmooksGraphicsExtType extType = ((SmooksGraphExtensionDocumentRoot) extResource.getContents().get(0)).getSmooksGraphicsExt();
+		
 		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(null);
+		smooksResource.load(CsvParserTest.class.getResourceAsStream("smooks-config.xml"), null);
+
+		SmooksResourceListType resourceList = ((org.jboss.tools.smooks.model.smooks.DocumentRoot) smooksResource
+				.getContents().get(0)).getSmooksResourceList();
+		assertNotNull(resourceList);
+		
+		SmooksGraphicsExtType extType = this.getSmooksGraphExtType(resourceList);
 
 		assertNotNull(extType);
 		InputType inputType = null;
@@ -55,12 +58,6 @@ public class CsvParserTest extends BaseTestCase {
 			}
 		}
 		assertNotNull(inputType);
-
-		smooksResource.load(CsvParserTest.class.getResourceAsStream("smooks-config.xml"), null);
-
-		SmooksResourceListType resourceList = ((org.jboss.tools.smooks.model.smooks.DocumentRoot) smooksResource
-				.getContents().get(0)).getSmooksResourceList();
-		assertNotNull(resourceList);
 
 		CSVDataParser parser = new CSVDataParser();
 		TagList tagList = parser.parseCSV(CsvParserTest.class.getResourceAsStream("input-message.csv"), inputType,

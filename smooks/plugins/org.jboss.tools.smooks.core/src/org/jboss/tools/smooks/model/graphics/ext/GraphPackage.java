@@ -10,6 +10,8 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.jboss.tools.smooks.model.smooks.SmooksPackage;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -23,9 +25,9 @@ import org.eclipse.emf.ecore.EReference;
  * </ul>
  * <!-- end-user-doc -->
  * <!-- begin-model-doc -->
- * Smooks Graphics
- * 			Editor Extention File Schema
  * 
+ * 			Smooks Graphics Editor Extention File Schema
+ * 		
  * <!-- end-model-doc -->
  * @see org.jboss.tools.smooks.model.graphics.ext.GraphFactory
  * @model kind="package"
@@ -38,7 +40,7 @@ public interface GraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "ext";
+	String eNAME = "graph";
 
 	/**
 	 * The package namespace URI.
@@ -54,7 +56,7 @@ public interface GraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "ext";
+	String eNS_PREFIX = "graph";
 
 	/**
 	 * The singleton instance of the package.
@@ -302,7 +304,7 @@ public interface GraphPackage extends EPackage {
 	int FIGURE_TYPE_FEATURE_COUNT = 6;
 
 	/**
-	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.GraphTypeImpl <em>Graph Type</em>}' class.
+	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.GraphTypeImpl <em>Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.jboss.tools.smooks.model.graphics.ext.impl.GraphTypeImpl
@@ -330,7 +332,7 @@ public interface GraphPackage extends EPackage {
 	int GRAPH_TYPE__CONNECTION = 1;
 
 	/**
-	 * The number of structural features of the '<em>Graph Type</em>' class.
+	 * The number of structural features of the '<em>Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -432,13 +434,40 @@ public interface GraphPackage extends EPackage {
 	int SMOOKS_GRAPHICS_EXT_TYPE = 6;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SMOOKS_GRAPHICS_EXT_TYPE__MIXED = SmooksPackage.ABSTRACT_RESOURCE_CONFIG__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SMOOKS_GRAPHICS_EXT_TYPE__ANY = SmooksPackage.ABSTRACT_RESOURCE_CONFIG__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SMOOKS_GRAPHICS_EXT_TYPE__ANY_ATTRIBUTE = SmooksPackage.ABSTRACT_RESOURCE_CONFIG__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Input</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE__INPUT = 0;
+	int SMOOKS_GRAPHICS_EXT_TYPE__INPUT = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' containment reference.
@@ -447,7 +476,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE__GRAPH = 1;
+	int SMOOKS_GRAPHICS_EXT_TYPE__GRAPH = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Author</b></em>' attribute.
@@ -456,7 +485,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE__AUTHOR = 2;
+	int SMOOKS_GRAPHICS_EXT_TYPE__AUTHOR = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Input Type</b></em>' attribute.
@@ -465,7 +494,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE = 3;
+	int SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -474,7 +503,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE__NAME = 4;
+	int SMOOKS_GRAPHICS_EXT_TYPE__NAME = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Output Type</b></em>' attribute.
@@ -483,7 +512,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE = 5;
+	int SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Platform Version</b></em>' attribute.
@@ -492,7 +521,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE__PLATFORM_VERSION = 6;
+	int SMOOKS_GRAPHICS_EXT_TYPE__PLATFORM_VERSION = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of structural features of the '<em>Smooks Graphics Ext Type</em>' class.
@@ -501,7 +530,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE_FEATURE_COUNT = 7;
+	int SMOOKS_GRAPHICS_EXT_TYPE_FEATURE_COUNT = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 7;
 
 
 	/**
@@ -755,10 +784,10 @@ public interface GraphPackage extends EPackage {
 	EAttribute getFigureType_Y();
 
 	/**
-	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.graphics.ext.GraphType <em>Graph Type</em>}'.
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.graphics.ext.GraphType <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Graph Type</em>'.
+	 * @return the meta object for class '<em>Type</em>'.
 	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphType
 	 * @generated
 	 */
@@ -955,7 +984,7 @@ public interface GraphPackage extends EPackage {
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
-	GraphFactory getExtFactory();
+	GraphFactory getGraphFactory();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1161,7 +1190,7 @@ public interface GraphPackage extends EPackage {
 		EAttribute FIGURE_TYPE__Y = eINSTANCE.getFigureType_Y();
 
 		/**
-		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.GraphTypeImpl <em>Graph Type</em>}' class.
+		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.GraphTypeImpl <em>Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.jboss.tools.smooks.model.graphics.ext.impl.GraphTypeImpl
@@ -1314,4 +1343,4 @@ public interface GraphPackage extends EPackage {
 
 	}
 
-} //ExtPackage
+} //GraphPackage

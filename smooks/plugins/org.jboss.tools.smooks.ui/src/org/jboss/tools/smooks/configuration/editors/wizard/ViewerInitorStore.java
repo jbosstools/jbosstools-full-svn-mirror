@@ -91,6 +91,9 @@ public class ViewerInitorStore {
 	}
 
 	public synchronized static ViewerInitorStore getInstance() {
+		if (true) {
+			return new ViewerInitorStore();
+		}
 		if (instance == null) {
 			instance = new ViewerInitorStore();
 		}
@@ -158,7 +161,7 @@ public class ViewerInitorStore {
 		jsonViewerInitor.setStructuredDataLoadWizard(new JsonDataWizard());
 		// jsonViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
 		map.put(typeID, jsonViewerInitor);
-		
+
 		// for json 1.2
 		BaseViewerInitor json12ViewerInitor = new BaseViewerInitor();
 		name = "Json 1.2";
@@ -175,8 +178,7 @@ public class ViewerInitorStore {
 		json12ViewerInitor.setStructuredDataLoadWizard(new Json12DataWizard());
 		json12ViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
 		// don't add this
-//		map.put(typeID, json12ViewerInitor);
-
+		// map.put(typeID, json12ViewerInitor);
 
 		// for java
 		BaseViewerInitor javabeanViewerInitor = new BaseViewerInitor();
@@ -246,7 +248,7 @@ public class ViewerInitorStore {
 		csvViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
 		csvViewerInitor.setStructuredDataLoadWizard(new CSVInputDataWizard());
 		map.put(typeID, csvViewerInitor);
-		
+
 		// for Csv 1.2
 		BaseViewerInitor csv12ViewerInitor = new BaseViewerInitor();
 		name = "CSV 1.2";
@@ -261,7 +263,7 @@ public class ViewerInitorStore {
 		csv12ViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
 		csv12ViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
 		csv12ViewerInitor.setStructuredDataLoadWizard(new CSV12InputDataWizard());
-//		map.put(typeID, csv12ViewerInitor);
+		// map.put(typeID, csv12ViewerInitor);
 
 		// for EDI 1.1
 		BaseViewerInitor ediViewerInitor = new BaseViewerInitor();
@@ -279,7 +281,7 @@ public class ViewerInitorStore {
 		ediViewerInitor.setStructuredDataLoadWizard(new EDIDataWizard());
 		// jsonViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
 		map.put(typeID, ediViewerInitor);
-		
+
 		// for EDI 1.2
 		BaseViewerInitor edi12ViewerInitor = new BaseViewerInitor();
 		name = "EDI 1.2";
@@ -295,9 +297,8 @@ public class ViewerInitorStore {
 		edi12ViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
 		edi12ViewerInitor.setStructuredDataLoadWizard(new EDIReader12DataWizard());
 		// jsonViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
-//		map.put(typeID, edi12ViewerInitor);
+		// map.put(typeID, edi12ViewerInitor);
 
-		
 		return map;
 	}
 }

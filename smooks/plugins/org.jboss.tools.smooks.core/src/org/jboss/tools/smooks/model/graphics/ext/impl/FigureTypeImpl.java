@@ -6,15 +6,15 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext.impl;
 
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
-import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
+import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 
 /**
  * <!-- begin-user-doc -->

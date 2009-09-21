@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -17,6 +18,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
@@ -44,6 +46,8 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 
 	private CSVDataPathWizardPage pathPage;
 	
+	private IContainer folder = null;
+	
 	public CSVInputDataWizard() {
 		super();
 		this.setWindowTitle("CSV Input Data Wizard");
@@ -58,6 +62,9 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 		
 		if (pathPage == null) {
 			pathPage = new CSVDataPathWizardPage("CSV Path Page", new String[] {"csv"},configPage);
+			if(folder != null){
+				pathPage.setInitSelections(new Object[]{folder});
+			}
 		}
 		
 		this.addPage(pathPage);
@@ -257,6 +264,12 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 				resourceList = ((DocumentRoot) smooksModel).getSmooksResourceList();
 			}
 			editingDomain = formEditor.getEditingDomain();
+		}
+		this.folder = ((IFileEditorInput)input).getFile().getParent();
+		if(pathPage != null && folder != null){
+			if(input instanceof IFileEditorInput){
+				pathPage.setInitSelections(new Object[]{folder});
+			}
 		}
 		if (configPage != null) {
 			configPage.setSmooksResourceList(resourceList);

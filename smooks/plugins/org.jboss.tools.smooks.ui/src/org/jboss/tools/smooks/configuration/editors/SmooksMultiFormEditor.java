@@ -99,15 +99,15 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 			e.printStackTrace();
 		}
 
-//		graphicalPage = new SmooksGraphicalEditorPart(this);
-//		addSourceSynchronizeListener(graphicalPage);
-//		addSmooksGraphExtetionListener(graphicalPage);
-//		try {
-//			int index = this.addPage(graphicalPage, getEditorInput());
-//			setPageText(index, "Graph");
-//		} catch (PartInitException e) {
-//			e.printStackTrace();
-//		}
+		graphicalPage = new SmooksGraphicalEditorPart(this);
+		addSourceSynchronizeListener(graphicalPage);
+		addSmooksGraphExtetionListener(graphicalPage);
+		try {
+			int index = this.addPage(graphicalPage, getEditorInput());
+			setPageText(index, "Graph");
+		} catch (PartInitException e) {
+			e.printStackTrace();
+		}
 
 		super.addPages();
 	}
@@ -124,13 +124,11 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 	public void doSave(IProgressMonitor monitor) {
 		super.doSave(monitor);
 		try {
-			getSmooksGraphicsExt().eResource().save(Collections.emptyMap());
 			if (graphicalPage != null) {
 				if (graphicalPage.getEditDomain() != null) {
 					graphicalPage.getEditDomain().getCommandStack().flush();
 				}
 			}
-			firePropertyChange(PROP_DIRTY);
 		} catch (Throwable t) {
 		}
 	}

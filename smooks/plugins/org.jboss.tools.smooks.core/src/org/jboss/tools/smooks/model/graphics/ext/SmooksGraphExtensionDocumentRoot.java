@@ -239,7 +239,7 @@ public interface SmooksGraphExtensionDocumentRoot extends EObject {
 	 * @see #setSmooksGraphicsExt(SmooksGraphicsExtType)
 	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getDocumentRoot_SmooksGraphicsExt()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='smooks-graphics-ext' namespace='##targetNamespace'"
+	 *        extendedMetaData="kind='element' name='smooks-graphics-ext' namespace='##targetNamespace' affiliation='http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config'"
 	 * @generated
 	 */
 	SmooksGraphicsExtType getSmooksGraphicsExt();

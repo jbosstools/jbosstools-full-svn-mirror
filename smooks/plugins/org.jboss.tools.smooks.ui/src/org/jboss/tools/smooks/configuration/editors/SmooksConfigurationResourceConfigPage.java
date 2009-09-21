@@ -81,25 +81,27 @@ public class SmooksConfigurationResourceConfigPage extends SmooksConfigurationFo
 			public boolean select(Viewer viewer, Object parentElement, Object element) {
 				Object obj = element;
 				obj = AdapterFactoryEditingDomain.unwrap(obj);
-				if (obj instanceof ParamsType) {
-					return false;
-				}
-				if (obj instanceof ConditionsType) {
-					return false;
-				}
-				if (obj instanceof AbstractReader) {
-					return false;
-				}
-				if (obj instanceof ProfilesType) {
-					return false;
-				}
-				if (obj instanceof org.jboss.tools.smooks10.model.smooks.ProfilesType) {
-					return false;
-				}
-				SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
-				String version = extType.getPlatformVersion();
-				if(SmooksUIUtils.isUnSupportElement(version, (EObject)obj)){
-					return false;
+				if (obj instanceof EObject) {
+					if (obj instanceof ParamsType) {
+						return false;
+					}
+					if (obj instanceof ConditionsType) {
+						return false;
+					}
+					if (obj instanceof AbstractReader) {
+						return false;
+					}
+					if (obj instanceof ProfilesType) {
+						return false;
+					}
+					if (obj instanceof org.jboss.tools.smooks10.model.smooks.ProfilesType) {
+						return false;
+					}
+					SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
+					String version = extType.getPlatformVersion();
+					if (SmooksUIUtils.isUnSupportElement(version, (EObject) obj)) {
+						return false;
+					}
 				}
 				return true;
 			}

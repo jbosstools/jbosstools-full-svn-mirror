@@ -6,6 +6,8 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext.util;
 
+
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -13,7 +15,11 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.emf.ecore.xml.type.AnyType;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.graphics.ext.*;
+import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -100,6 +106,18 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 				return createSmooksGraphicsExtTypeAdapter();
 			}
 			@Override
+			public Adapter caseAnyType(AnyType object) {
+				return createAnyTypeAdapter();
+			}
+			@Override
+			public Adapter caseAbstractAnyType(AbstractAnyType object) {
+				return createAbstractAnyTypeAdapter();
+			}
+			@Override
+			public Adapter caseAbstractResourceConfig(AbstractResourceConfig object) {
+				return createAbstractResourceConfigAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -162,7 +180,7 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.graphics.ext.GraphType <em>Graph Type</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.graphics.ext.GraphType <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -218,6 +236,48 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecore.xml.type.AnyType <em>Any Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecore.xml.type.AnyType
+	 * @generated
+	 */
+	public Adapter createAnyTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.common.AbstractAnyType <em>Abstract Any Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.jboss.tools.smooks.model.common.AbstractAnyType
+	 * @generated
+	 */
+	public Adapter createAbstractAnyTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.smooks.AbstractResourceConfig <em>Abstract Resource Config</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.jboss.tools.smooks.model.smooks.AbstractResourceConfig
+	 * @generated
+	 */
+	public Adapter createAbstractResourceConfigAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for the default case.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null.
@@ -229,4 +289,4 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 		return null;
 	}
 
-} //ExtAdapterFactory
+} //GraphAdapterFactory

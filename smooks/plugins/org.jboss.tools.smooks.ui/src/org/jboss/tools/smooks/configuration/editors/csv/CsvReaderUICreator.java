@@ -252,7 +252,7 @@ public class CsvReaderUICreator extends PropertyUICreator {
 	}
 
 	private void fillFieldsList(String fieldsString) {
-		if (fieldsString == null)
+		if (fieldsString == null || fieldsString.length() == 0)
 			return;
 		String input = fieldsString.toString();
 		input = input.trim();

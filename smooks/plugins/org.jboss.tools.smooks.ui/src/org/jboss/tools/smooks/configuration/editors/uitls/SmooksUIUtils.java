@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -40,6 +41,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xml.type.AnyType;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -157,6 +159,7 @@ import org.jboss.tools.smooks.model.freemarker.BindTo;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
+import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.ParamType;
@@ -2412,9 +2415,9 @@ public class SmooksUIUtils {
 		return false;
 	}
 
-	public static void recordInputDataInfomation(InputType input, SmooksGraphicsExtType extType, String type,
+	public static void recordInputDataInfomation(EditingDomain domain , InputType input, SmooksGraphicsExtType extType, String type,
 			String path, Properties properties) {
-		if (type != null && path != null && extType != null) {
+		if (type != null && path != null && extType != null && domain != null) {
 			String[] values = path.split(";");
 			if (values == null || values.length == 0) {
 				values = new String[] { path };
@@ -2446,7 +2449,12 @@ public class SmooksUIUtils {
 				input.getParam().add(pathParam);
 				List<ParamType> params = generateExtParams(type, path, properties);
 				input.getParam().addAll(params);
-				extType.getInput().add(input);
+				Command command = AddCommand.create(domain, extType, GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__INPUT, input);
+				if(command.canExecute()){
+					System.out.println("aaa");
+				}
+				domain.getCommandStack().execute(command);
+//				extType.getInput().add(input);
 			}
 			// try {
 			// extType.eResource().save(Collections.emptyMap());
@@ -2806,6 +2814,9 @@ public class SmooksUIUtils {
 		if (version == null || element == null)
 			return false;
 		String ns = element.eClass().getEPackage().getNsURI();
+		if(GraphPackage.eNS_URI.equals(ns)){
+			return true;
+		}
 		if (SmooksConstants.VERSION_1_1.equals(version)) {
 			if (isSmooks1_2PlatformSpecialXMLNS(ns)) {
 				return true;

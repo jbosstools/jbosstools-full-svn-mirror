@@ -53,4 +53,4 @@ public class GraphResourceFactoryImpl extends ResourceFactoryImpl {
 		return result;
 	}
 
-} //ExtResourceFactoryImpl
+} //GraphResourceFactoryImpl

@@ -12,9 +12,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.uitls.JsonInputDataParser;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks.model.graphics.ext.util.SmooksGraphicsExtResourceFactoryImpl;
 import org.jboss.tools.smooks.model.json.JsonReader;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
@@ -22,12 +20,15 @@ import org.jboss.tools.smooks.test.model11.BaseTestCase;
 
 public class JsonParserTest extends BaseTestCase {
 	public void testParser1() throws IOException, ParserConfigurationException, DocumentException, InvocationTargetException {
-		Resource extResource = new SmooksGraphicsExtResourceFactoryImpl().createResource(null);
-		extResource.load(JsonParserTest.class.getResourceAsStream("smooks-config.xml.ext"), null);
-		SmooksGraphicsExtType extType = ((SmooksGraphExtensionDocumentRoot) extResource.getContents().get(0)).getSmooksGraphicsExt();
 		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(null);
 		
-		assertNotNull(extType);
+		smooksResource.load(JsonParserTest.class.getResourceAsStream("smooks-config.xml"), null);
+
+		SmooksResourceListType resourceList = ((org.jboss.tools.smooks.model.smooks.DocumentRoot) smooksResource
+				.getContents().get(0)).getSmooksResourceList();
+		assertNotNull(resourceList);
+		
+		SmooksGraphicsExtType extType = getSmooksGraphExtType(resourceList);
 		InputType inputType = null;
 		List<?> ilist = extType.getInput();
 		for (Iterator<?> iterator = ilist.iterator(); iterator.hasNext();) {
@@ -40,11 +41,6 @@ public class JsonParserTest extends BaseTestCase {
 			}
 		}
 		
-		smooksResource.load(JsonParserTest.class.getResourceAsStream("smooks-config.xml"), null);
-
-		SmooksResourceListType resourceList = ((org.jboss.tools.smooks.model.smooks.DocumentRoot) smooksResource
-				.getContents().get(0)).getSmooksResourceList();
-		assertNotNull(resourceList);
 		JsonInputDataParser parser = new JsonInputDataParser();
 		
 		JsonReader reader = null;

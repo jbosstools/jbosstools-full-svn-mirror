@@ -6,12 +6,18 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext.util;
 
+
+
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.emf.ecore.xml.type.AnyType;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.graphics.ext.*;
+import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -126,6 +132,9 @@ public class GraphSwitch<T> {
 			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE: {
 				SmooksGraphicsExtType smooksGraphicsExtType = (SmooksGraphicsExtType)theEObject;
 				T result = caseSmooksGraphicsExtType(smooksGraphicsExtType);
+				if (result == null) result = caseAbstractResourceConfig(smooksGraphicsExtType);
+				if (result == null) result = caseAbstractAnyType(smooksGraphicsExtType);
+				if (result == null) result = caseAnyType(smooksGraphicsExtType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -179,13 +188,13 @@ public class GraphSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Graph Type</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Graph Type</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Type</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -239,6 +248,51 @@ public class GraphSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Any Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Any Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAnyType(AnyType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Abstract Any Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Abstract Any Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAbstractAnyType(AbstractAnyType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Abstract Resource Config</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Abstract Resource Config</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAbstractResourceConfig(AbstractResourceConfig object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -253,4 +307,4 @@ public class GraphSwitch<T> {
 		return null;
 	}
 
-} //ExtSwitch
+} //GraphSwitch

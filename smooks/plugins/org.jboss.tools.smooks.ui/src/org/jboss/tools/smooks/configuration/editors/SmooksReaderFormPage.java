@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.RemoveCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -106,7 +107,6 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	private CheckboxTableViewer inputDataViewer;
 	private TreeViewer inputModelViewer;
 	private Combo readerCombo;
-
 	private List<Object> readerTypeList = new ArrayList<Object>();
 	private Composite readerConfigComposite;
 	private ModelPanelCreator modelPanelCreator;
@@ -315,32 +315,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 
 	private String getCurrentReaderType() {
 		Object reader = getCurrentReaderModel();
-		if (reader instanceof XMLReader) {
-			return SmooksModelUtils.INPUT_TYPE_XML;
-		}
-		if (reader instanceof JavaReader) {
-			return SmooksModelUtils.INPUT_TYPE_JAVA;
-		}
-		if (reader instanceof XSDReader) {
-			return SmooksModelUtils.INPUT_TYPE_XSD;
-		}
-		if (reader instanceof EObject) {
-			Object obj = ((EObject) reader);
-
-			if (obj instanceof CsvReader || obj instanceof CSV12Reader) {
-				return SmooksModelUtils.INPUT_TYPE_CSV;
-			}
-			if (obj instanceof EDIReader || obj instanceof EDI12Reader) {
-				return SmooksModelUtils.INPUT_TYPE_EDI_1_1;
-			}
-			if (obj instanceof JsonReader || obj instanceof Json12Reader) {
-				return SmooksModelUtils.INPUT_TYPE_JSON_1_1;
-			}
-			if (obj instanceof ReaderType) {
-				return SmooksModelUtils.INPUT_TYPE_CUSTOME;
-			}
-		}
-		return null;
+		return getReaderType(reader);
 	}
 
 	private void initReaderCombo() {
@@ -414,12 +389,12 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				Object newreader = getCurrentReaderModel();
 				if (newreader == null)
 					return;
-				String type = getCurrentReaderType();
-				if (type == null) {
-					getSmooksGraphicsExtType().eUnset(GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE);
-				} else {
-					getSmooksGraphicsExtType().setInputType(type);
-				}
+				// String type = getCurrentReaderType();
+				// if (type == null) {
+				// getSmooksGraphicsExtType().eUnset(GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE);
+				// } else {
+				// getSmooksGraphicsExtType().setInputType(type);
+				// }
 				readerChanged(newreader);
 			}
 
@@ -479,9 +454,53 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		return compoundCommand;
 	}
 
+	private String getReaderType(Object reader) {
+		if (reader instanceof XMLReader) {
+			return SmooksModelUtils.INPUT_TYPE_XML;
+		}
+		if (reader instanceof JavaReader) {
+			return SmooksModelUtils.INPUT_TYPE_JAVA;
+		}
+		if (reader instanceof XSDReader) {
+			return SmooksModelUtils.INPUT_TYPE_XSD;
+		}
+		if (reader instanceof EObject) {
+			Object obj = ((EObject) reader);
+
+			if (obj instanceof CsvReader || obj instanceof CSV12Reader) {
+				return SmooksModelUtils.INPUT_TYPE_CSV;
+			}
+			if (obj instanceof EDIReader || obj instanceof EDI12Reader) {
+				return SmooksModelUtils.INPUT_TYPE_EDI_1_1;
+			}
+			if (obj instanceof JsonReader || obj instanceof Json12Reader) {
+				return SmooksModelUtils.INPUT_TYPE_JSON_1_1;
+			}
+			if (obj instanceof ReaderType) {
+				return SmooksModelUtils.INPUT_TYPE_CUSTOME;
+			}
+		}
+		return null;
+	}
+
 	private void readerChanged(Object reader) {
-		
+		String type = getCurrentReaderType();
+		String oldType = this.getSmooksGraphicsExtType().getInputType();
+
+		if (type == null && oldType == null) {
+			return;
+		}
+		if (type != null && type.equals(oldType)) {
+			return;
+		}
+		if (oldType != null && oldType.equals(type)) {
+			return;
+		}
+
+		Command setTypeCommand = SetCommand.create(getEditingDomain(), getSmooksGraphicsExtType(),
+				GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE, type);
 		CompoundCommand compoundCommand = new CompoundCommand();
+		compoundCommand.append(setTypeCommand);
 		Command removeCommand = createRemoveReaderCommand();
 		if (removeCommand != null && removeCommand.canExecute()) {
 			compoundCommand.append(removeCommand);
@@ -489,7 +508,6 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		if (readerConfigComposite != null) {
 			disposeCompositeControls(readerConfigComposite, null);
 		}
-		boolean hasRun = false;
 		if (reader instanceof EObject) {
 			Object obj = ((EObject) reader);
 			obj = AdapterFactoryEditingDomain.unwrap(obj);
@@ -499,20 +517,13 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 			if (command.canExecute()) {
 				compoundCommand.append(command);
 			}
-			if (!compoundCommand.isEmpty()) {
-				getEditingDomain().getCommandStack().execute(compoundCommand);
-				hasRun = true;
-				createReaderPanel((EObject) obj);
-			}
-		}
 
-		if (!hasRun) {
-			if (!compoundCommand.isEmpty()) {
-				getEditingDomain().getCommandStack().execute(compoundCommand);
-			}
 		}
-
-		deactiveAllInputFile();
+		deactiveAllInputFile(compoundCommand);
+		if (!compoundCommand.isEmpty()) {
+			getEditingDomain().getCommandStack().execute(compoundCommand);
+			createReaderPanel(((EObject) reader));
+		}
 
 		if (inputDataViewer != null) {
 			inputDataViewer.refresh();
@@ -520,12 +531,12 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		refreshInputModelView();
 	}
 
-	private void deactiveAllInputFile() {
+	private void deactiveAllInputFile(CompoundCommand command) {
 		SmooksGraphicsExtType ext = getSmooksGraphicsExtType();
 		List<InputType> inputList = ext.getInput();
 		for (Iterator<?> iterator = inputList.iterator(); iterator.hasNext();) {
 			InputType inputType = (InputType) iterator.next();
-			setInputDataActiveStatus(false, inputType);
+			setInputDataActiveStatus(false, inputType, command);
 		}
 	}
 
@@ -565,10 +576,10 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		readerTypeList.add(new JavaReader());
 		readerCombo.add("XSD/WSDL");
 		readerTypeList.add(new XSDReader());
-		
+
 		SmooksResourceListType resourceList = getSmooksConfigResourceList();
-		
-		if(resourceList == null){
+
+		if (resourceList == null) {
 			return;
 		}
 
@@ -602,13 +613,23 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		}
 	}
 
-	private void setInputDataActiveStatus(boolean active, InputType inputType) {
+	private void setInputDataActiveStatus(boolean active, InputType inputType, final CompoundCommand command) {
 		List<ParamType> params = inputType.getParam();
 		boolean newOne = true;
 		for (Iterator<?> iterator = params.iterator(); iterator.hasNext();) {
 			ParamType paramType = (ParamType) iterator.next();
 			if (SmooksModelUtils.PARAM_NAME_ACTIVED.equals(paramType.getName())) {
-				paramType.setValue(String.valueOf(active));
+				Command setCommand = SetCommand.create(getEditingDomain(), paramType,
+						GraphPackage.Literals.PARAM_TYPE__VALUE, String.valueOf(active));
+				if (command != null) {
+					try {
+						command.append(setCommand);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+					getEditingDomain().getCommandStack().execute(setCommand);
+				}
 				newOne = false;
 				break;
 			}
@@ -618,6 +639,13 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 			p.setName(SmooksModelUtils.PARAM_NAME_ACTIVED);
 			p.setValue(String.valueOf(active));
 			inputType.getParam().add(p);
+			Command addCommand = AddCommand.create(getEditingDomain(), inputType,
+					GraphPackage.Literals.INPUT_TYPE__PARAM, p);
+			if (command != null) {
+				command.append(addCommand);
+			} else {
+				getEditingDomain().getCommandStack().execute(addCommand);
+			}
 		}
 		SmooksGraphicsExtType ext = getSmooksGraphicsExtType();
 		if (ext != null) {
@@ -699,7 +727,9 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 					for (Iterator<?> iterator = params.iterator(); iterator.hasNext();) {
 						ParamType paramType = (ParamType) iterator.next();
 						if (SmooksModelUtils.PARAM_NAME_ACTIVED.equals(paramType.getName())) {
-							paramType.setValue(String.valueOf(checked));
+							Command setCommand = SetCommand.create(getEditingDomain(), paramType,
+									GraphPackage.Literals.PARAM_TYPE__VALUE, String.valueOf(checked));
+							getEditingDomain().getCommandStack().execute(setCommand);
 							newOne = false;
 							break;
 						}
@@ -708,6 +738,9 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 						ParamType p = GraphFactory.eINSTANCE.createParamType();
 						p.setName(SmooksModelUtils.PARAM_NAME_ACTIVED);
 						p.setValue(String.valueOf(checked));
+						Command addCommand = AddCommand.create(getEditingDomain(), inputType,
+								GraphPackage.Literals.INPUT_TYPE__PARAM, p);
+						getEditingDomain().getCommandStack().execute(addCommand);
 						inputType.getParam().add(p);
 					}
 
@@ -720,7 +753,9 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 						for (Iterator<?> iterator = params1.iterator(); iterator.hasNext();) {
 							ParamType paramType = (ParamType) iterator.next();
 							if (SmooksModelUtils.PARAM_NAME_ACTIVED.equals(paramType.getName())) {
-								paramType.setValue(String.valueOf(!checked));
+								Command setCommand = SetCommand.create(getEditingDomain(), paramType,
+										GraphPackage.Literals.PARAM_TYPE__VALUE, String.valueOf(!checked));
+								getEditingDomain().getCommandStack().execute(setCommand);
 								break;
 							}
 						}
@@ -733,7 +768,10 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 					for (Iterator<?> iterator = params.iterator(); iterator.hasNext();) {
 						ParamType paramType = (ParamType) iterator.next();
 						if (SmooksModelUtils.PARAM_NAME_ACTIVED.equals(paramType.getName())) {
-							paramType.setValue(String.valueOf(checked));
+							Command setCommand = SetCommand.create(getEditingDomain(), paramType,
+									GraphPackage.Literals.PARAM_TYPE__VALUE, String.valueOf(checked));
+							getEditingDomain().getCommandStack().execute(setCommand);
+
 							break;
 						}
 					}
@@ -797,17 +835,14 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				if (selection != null) {
 					SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
 					if (extType != null) {
-						boolean canSave = false;
-						Object[] objs = selection.toArray();
-						for (int i = 0; i < objs.length; i++) {
-							Object obj = objs[i];
-							if (obj instanceof InputType) {
-								extType.getInput().remove(obj);
-								canSave = true;
-							}
+						boolean canFireEvent = false;
+						Command rc = RemoveCommand.create(getEditingDomain(), selection.toList());
+						if (rc.canExecute()) {
+							getEditingDomain().getCommandStack().execute(rc);
+							canFireEvent = true;
 						}
 
-						if (!canSave)
+						if (!canFireEvent)
 							return;
 
 						List<ISmooksGraphChangeListener> listeners = extType.getChangeListeners();
@@ -853,7 +888,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 			String type = dialog.getType();
 			String path = dialog.getPath();
 			Properties pros = dialog.getProperties();
-			SmooksUIUtils.recordInputDataInfomation(null, extType, type, path, pros);
+			SmooksUIUtils.recordInputDataInfomation(getEditingDomain(), null, extType, type, path, pros);
 		}
 	}
 
@@ -899,35 +934,11 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	}
 
 	public void sourceChange(Object model) {
-		SmooksResourceListType list = getSmooksConfigResourceList();
-		SmooksGraphicsExtType ext = getSmooksGraphicsExtType();
-		if (list == null) {
-			ext.setInputType(null, false);
-		} else {
-			if (list.getAbstractReader().isEmpty()) {
-				ext.setInputType(null, false);
-			} else {
-				AbstractReader reader = list.getAbstractReader().get(0);
-				if (CsvReader.class.isInstance(reader) || CSV12Reader.class.isInstance(reader)) {
-					ext.setInputType(SmooksModelUtils.INPUT_TYPE_CSV);
-				}
-				if (EDIReader.class.isInstance(reader) || EDI12Reader.class.isInstance(reader)) {
-					ext.setInputType(SmooksModelUtils.INPUT_TYPE_EDI_1_1);
-				}
-				if (JsonReader.class.isInstance(reader) || Json12Reader.class.isInstance(reader)) {
-					ext.setInputType(SmooksModelUtils.INPUT_TYPE_JSON_1_1);
-				}
-				if (ReaderType.class.isInstance(reader)) {
-					ext.setInputType(SmooksModelUtils.INPUT_TYPE_CUSTOME);
-				}
-			}
-
-		}
 		bindingReaderCombo();
 		initReaderCombo();
 		initReaderConfigSection();
-		deactiveAllInputFile();
 		if (inputDataViewer != null) {
+			inputDataViewer.setInput(getSmooksGraphicsExtType());
 			inputDataViewer.refresh();
 		}
 		refreshInputModelView();

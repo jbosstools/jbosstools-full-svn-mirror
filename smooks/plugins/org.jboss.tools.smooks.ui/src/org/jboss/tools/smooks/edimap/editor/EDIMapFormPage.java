@@ -1036,7 +1036,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	public List<TreeNodeModel> createLinkModel() {
 		if (graphicalRootModel != null && segments != null) {
 			List<Segment> segmentList = segments.getSegment();
-			List<TreeNodeModel> links =  linkNode(segmentList);
+			List<TreeNodeModel> links = linkNode(segmentList);
 			return links;
 		}
 		return Collections.emptyList();
@@ -1161,7 +1161,6 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	 * (org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType)
 	 */
 	public void inputTypeChanged(SmooksGraphicsExtType extType) {
-
 	}
 
 	protected void disposeCompositeControls(Composite composite, Control[] ignoreControl) {
@@ -1316,8 +1315,10 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			 * @see java.lang.Runnable#run()
 			 */
 			public void run() {
-				SmooksUIUtils.recordInputDataInfomation(inputType1[0], modelProvider.getSmooksGraphicsExt(),
-						SmooksModelUtils.INPUT_TYPE_EDI_1_1, ediFilePath, null);
+				if (modelProvider != null) {
+					SmooksUIUtils.recordInputDataInfomation(modelProvider.getEditingDomain(),inputType1[0], modelProvider.getSmooksGraphicsExt(),
+							SmooksModelUtils.INPUT_TYPE_EDI_1_1, ediFilePath, null);
+				}
 			}
 
 		});
@@ -1341,6 +1342,6 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 
 	public void graphPropertyChange(EStructuralFeature featre, Object value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

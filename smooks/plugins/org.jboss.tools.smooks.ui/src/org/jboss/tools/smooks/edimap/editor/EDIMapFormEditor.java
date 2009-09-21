@@ -10,13 +10,23 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.edimap.editor;
 
+import java.io.IOException;
+
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.SmooksConstants;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.wizards.SmooksConfigurationFileNewWizard;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
+import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.medi.Delimiters;
 import org.jboss.tools.smooks.model.medi.Description;
 import org.jboss.tools.smooks.model.medi.DocumentRoot;
@@ -50,7 +60,11 @@ public class EDIMapFormEditor extends AbstractSmooksFormEditor {
 	}
 	
 	
-	
+	public void inputTypeChanged(SmooksGraphicsExtType extType) {
+		 graphChanged = true;
+		 firePropertyChange(PROP_DIRTY);
+	}
+
 	
 
 	/* (non-Javadoc)
@@ -76,8 +90,6 @@ public class EDIMapFormEditor extends AbstractSmooksFormEditor {
 		super.doSave(monitor);
 		ediPage.doSave(monitor);
 	}
-
-
 
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.smooks.editor.AbstractSmooksFormEditor#init(org.eclipse.ui.IEditorSite, org.eclipse.ui.IEditorInput)
@@ -106,4 +118,39 @@ public class EDIMapFormEditor extends AbstractSmooksFormEditor {
 			}
 		}
 	}
+
+	@Override
+	protected SmooksGraphicsExtType createSmooksGraphcsExtType(Object smooksModel) {
+		IFileEditorInput editorInput = (IFileEditorInput)getEditorInput();
+		IFile file = editorInput.getFile();
+		String extFileName = file.getName() + SmooksConstants.SMOOKS_GRAPHICSEXT_EXTENTION_NAME_WITHDOT;
+		setPartName(file.getName());
+		IContainer container = file.getParent();
+		if (container != null && container.exists()) {
+			IFile extFile = container.getFile(new Path(extFileName));
+			if (extFile != null && !extFile.exists()) {
+				try {
+					String version = SmooksUIUtils.judgeSmooksPlatformVersion((EObject)smooksModel);
+					String inputType = SmooksUIUtils.judgeInputType((EObject)smooksModel);
+					SmooksConfigurationFileNewWizard.createExtentionFile(extFile, version, inputType, null);
+				} catch (Throwable t) {
+					// ignore
+				}
+			}
+			if (extFile != null && extFile.exists()) {
+				try {
+					smooksGraphicsExt = SmooksUIUtils.loadSmooksGraphicsExt(extFile);
+				} catch (IOException e) {
+					SmooksConfigurationActivator.getDefault().log(e);
+				}
+			}
+		}
+		return smooksGraphicsExt;
+	}
+
+	@Override
+	protected void generateSmooksGraphExt() {
+		super.generateSmooksGraphExt();
+	}
+	
 }

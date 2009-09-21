@@ -6,6 +6,7 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext.impl;
 
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -19,15 +20,14 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.jboss.tools.smooks.model.graphics.ext.ConnectionType;
-import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
+import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Graph Type</b></em>'.
+ * An implementation of the model object '<em><b>Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:

@@ -29,4 +29,4 @@ public class GraphResourceImpl extends XMLResourceImpl {
 		super(uri);
 	}
 
-} //ExtResourceImpl
+} //GraphResourceImpl

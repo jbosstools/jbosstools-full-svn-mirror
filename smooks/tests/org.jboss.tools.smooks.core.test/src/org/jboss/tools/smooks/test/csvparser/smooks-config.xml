@@ -1,11 +1,28 @@
 <?xml version="1.0"?>
-<smooks-resource-list
-	xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
-	xmlns:csv="http://www.milyn.org/xsd/smooks/csv-1.1.xsd">
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+	xmlns:csv="http://www.milyn.org/xsd/smooks/csv-1.1.xsd"
+	xmlns:g="http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd">
 
-    <!--
-    Configure the CSV Reader to read the message and change it into a stream of SAX events.
-    -->
-    <csv:reader fields="firstname,lastname,gender,age,country" />
+	<!--
+		Configure the CSV Reader to read the message and change it into a
+		stream of SAX events.
+	-->
+	<csv:reader fields="firstname,lastname,gender,age,country" />
+
+	<g:smooks-graphics-ext>
+		<g:input type="csv">
+			<g:param name="path">Workspace://java_project/csv-to-xml/input-message.csv
+			</g:param>
+			<g:param name="linkCSVReader">true</g:param>
+		</g:input>
+		<g:input type="csv">
+			<g:param name="path">Workspace://java_project/csv-to-xml/input-message.csv
+			</g:param>
+			<g:param name="fields">a,b,c,d,e</g:param>
+			<g:param name="quoteChar">&quot;</g:param>
+			<g:param name="encoding">UTF-8</g:param>
+			<g:param name="separator">,</g:param>
+		</g:input>
+	</g:smooks-graphics-ext>
 
 </smooks-resource-list>

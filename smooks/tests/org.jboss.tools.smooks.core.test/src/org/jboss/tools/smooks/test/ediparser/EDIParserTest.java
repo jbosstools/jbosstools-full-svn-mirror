@@ -24,9 +24,7 @@ import org.jboss.tools.smooks.configuration.editors.edi.EDIDataParser;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks.model.graphics.ext.util.SmooksGraphicsExtResourceFactoryImpl;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
 import org.jboss.tools.smooks.test.model11.BaseTestCase;
@@ -38,12 +36,20 @@ import org.jboss.tools.smooks.test.model11.BaseTestCase;
 public class EDIParserTest extends BaseTestCase {
 
 	public void testEDIParser() throws IOException, DocumentException, ParserConfigurationException {
-		Resource extResource = new SmooksGraphicsExtResourceFactoryImpl().createResource(null);
-		extResource.load(EDIParserTest.class.getResourceAsStream("smooks-config.xml.ext"), null);
-		SmooksGraphicsExtType extType = ((SmooksGraphExtensionDocumentRoot) extResource.getContents().get(0))
-				.getSmooksGraphicsExt();
+		
 		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(null);
 
+	
+		
+
+		smooksResource.load(EDIParserTest.class.getResourceAsStream("smooks-config.xml"), null);
+
+		SmooksResourceListType resourceList = ((org.jboss.tools.smooks.model.smooks.DocumentRoot) smooksResource
+				.getContents().get(0)).getSmooksResourceList();
+		assertNotNull(resourceList);
+		
+		SmooksGraphicsExtType extType = getSmooksGraphExtType(resourceList);
+		
 		assertNotNull(extType);
 		InputType inputType = null;
 		List<?> ilist = extType.getInput();
@@ -57,13 +63,6 @@ public class EDIParserTest extends BaseTestCase {
 			}
 		}
 		assertNotNull(inputType);
-		
-
-		smooksResource.load(EDIParserTest.class.getResourceAsStream("smooks-config.xml"), null);
-
-		SmooksResourceListType resourceList = ((org.jboss.tools.smooks.model.smooks.DocumentRoot) smooksResource
-				.getContents().get(0)).getSmooksResourceList();
-		assertNotNull(resourceList);
 
 		EDIDataParser parser = new EDIDataParser();
 		TagList tagList = parser.parseEDIFile(EDIParserTest.class.getResourceAsStream("input-message.edi"), inputType,resourceList);

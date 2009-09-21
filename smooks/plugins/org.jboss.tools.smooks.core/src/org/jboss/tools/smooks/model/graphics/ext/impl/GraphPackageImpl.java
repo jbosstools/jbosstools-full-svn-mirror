@@ -6,6 +6,9 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext.impl;
 
+
+
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -14,16 +17,21 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
-
+import org.jboss.tools.smooks.model.common.CommonPackage;
+import org.jboss.tools.smooks.model.common.impl.CommonPackageImpl;
 import org.jboss.tools.smooks.model.graphics.ext.ConnectionType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot;
+import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
 import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
-import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
+import org.jboss.tools.smooks.model.smooks.SmooksPackage;
+import org.jboss.tools.smooks.model.smooks.impl.SmooksPackageImpl;
+
+
 
 /**
  * <!-- begin-user-doc -->
@@ -123,26 +131,34 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		if (isInited) return (GraphPackage)EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI);
 
 		// Obtain or create and register package
-		GraphPackageImpl theExtPackage = (GraphPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof GraphPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new GraphPackageImpl());
+		GraphPackageImpl theGraphPackage = (GraphPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof GraphPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new GraphPackageImpl());
 
 		isInited = true;
 
 		// Initialize simple dependencies
 		XMLTypePackage.eINSTANCE.eClass();
 
+		// Obtain or create and register interdependencies
+		SmooksPackageImpl theSmooksPackage = (SmooksPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) instanceof SmooksPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) : SmooksPackage.eINSTANCE);
+		CommonPackageImpl theCommonPackage = (CommonPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI) instanceof CommonPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI) : CommonPackage.eINSTANCE);
+
 		// Create package meta-data objects
-		theExtPackage.createPackageContents();
+		theGraphPackage.createPackageContents();
+		theSmooksPackage.createPackageContents();
+		theCommonPackage.createPackageContents();
 
 		// Initialize created meta-data
-		theExtPackage.initializePackageContents();
+		theGraphPackage.initializePackageContents();
+		theSmooksPackage.initializePackageContents();
+		theCommonPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
-		theExtPackage.freeze();
+		theGraphPackage.freeze();
 
   
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(GraphPackage.eNS_URI, theExtPackage);
-		return theExtPackage;
+		EPackage.Registry.INSTANCE.put(GraphPackage.eNS_URI, theGraphPackage);
+		return theGraphPackage;
 	}
 
 	/**
@@ -519,7 +535,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GraphFactory getExtFactory() {
+	public GraphFactory getGraphFactory() {
 		return (GraphFactory)getEFactoryInstance();
 	}
 
@@ -616,12 +632,14 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 
 		// Obtain other dependent packages
 		XMLTypePackage theXMLTypePackage = (XMLTypePackage)EPackage.Registry.INSTANCE.getEPackage(XMLTypePackage.eNS_URI);
+		SmooksPackage theSmooksPackage = (SmooksPackage)EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		smooksGraphicsExtTypeEClass.getESuperTypes().add(theSmooksPackage.getAbstractResourceConfig());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(connectionTypeEClass, ConnectionType.class, "ConnectionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -792,7 +810,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		   new String[] {
 			 "kind", "element",
 			 "name", "smooks-graphics-ext",
-			 "namespace", "##targetNamespace"
+			 "namespace", "##targetNamespace",
+			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config"
 		   });		
 		addAnnotation
 		  (getDocumentRoot_Source(), 
@@ -992,4 +1011,4 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		   });
 	}
 
-} //ExtPackageImpl
+} //GraphPackageImpl

@@ -124,12 +124,13 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 		wizard.setForcePreviousAndNextButtons(true);
 		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(
 				getEditorSite().getShell(), wizard, getSmooksGraphicsExtType(), (SmooksMultiFormEditor) getEditor());
-		if(dialog.show() == Dialog.OK){
+		if (dialog.show() == Dialog.OK) {
 			SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
 			String type = dialog.getType();
 			String path = dialog.getPath();
 			Properties pros = dialog.getProperties();
-			SmooksUIUtils.recordInputDataInfomation(null, extType, type, path, pros);
+			SmooksUIUtils.recordInputDataInfomation(((SmooksMultiFormEditor) getEditor()).getEditingDomain(), null,
+					extType, type, path, pros);
 		}
 	}
 
@@ -175,12 +176,12 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 
 	public void graphChanged(SmooksGraphicsExtType extType) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void graphPropertyChange(EStructuralFeature featre, Object value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
