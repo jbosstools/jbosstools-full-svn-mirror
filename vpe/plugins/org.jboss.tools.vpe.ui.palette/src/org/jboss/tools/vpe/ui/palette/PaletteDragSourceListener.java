@@ -23,6 +23,7 @@ import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.XModelTransferBuffer;
 import org.jboss.tools.common.model.plugin.ModelPlugin;
 import org.jboss.tools.common.model.ui.views.palette.PaletteInsertHelper;
+import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPPaletteInsertHelper;
 import org.jboss.tools.vpe.ui.palette.model.PaletteItem;
 
 public class PaletteDragSourceListener extends DragSourceAdapter {
@@ -67,7 +68,7 @@ public class PaletteDragSourceListener extends DragSourceAdapter {
 					defaultPrefix = object.getParent().getAttributeValue("default prefix"); //$NON-NLS-1$
 				}
 				if(defaultPrefix != null && tag != null) {
-					PaletteInsertHelper.applyPrefix(d, "", tag, "xxx", defaultPrefix); //$NON-NLS-1$ //$NON-NLS-2$
+					JSPPaletteInsertHelper.applyPrefix(d, "", tag, "xxx", defaultPrefix); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				int i = d[0].indexOf('|');
 				if(i >= 0) d[0] = d[0].substring(0, i) + d[0].substring(i + 1);
