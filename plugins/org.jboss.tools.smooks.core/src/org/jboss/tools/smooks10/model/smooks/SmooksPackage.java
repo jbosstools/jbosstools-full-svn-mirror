@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see smooks.SmooksFactory
+ * @see org.jboss.tools.smooks10.model.smooks.SmooksFactory
  * @model kind="package"
  * @generated
  */
@@ -35,7 +35,7 @@ public interface SmooksPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "smooks";
+	String eNAME = "smooks10";
 
 	/**
 	 * The package namespace URI.
@@ -51,7 +51,7 @@ public interface SmooksPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "smooks";
+	String eNS_PREFIX = "smooks10";
 
 	/**
 	 * The singleton instance of the package.
@@ -62,70 +62,14 @@ public interface SmooksPackage extends EPackage {
 	SmooksPackage eINSTANCE = org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link smooks.impl.AbstractResourceConfigImpl <em>Abstract Resource Config</em>}' class.
+	 * The meta object id for the '{@link org.jboss.tools.smooks10.model.smooks.impl.AbstractTypeImpl <em>Abstract Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see smooks.impl.AbstractResourceConfigImpl
-	 * @see smooks.impl.SmooksPackageImpl#getAbstractResourceConfig()
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.AbstractTypeImpl
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getAbstractType()
 	 * @generated
 	 */
-	int ABSTRACT_RESOURCE_CONFIG = 0;
-
-	/**
-	 * The number of structural features of the '<em>Abstract Resource Config</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link smooks.impl.ConditionTypeImpl <em>Condition Type</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see smooks.impl.ConditionTypeImpl
-	 * @see smooks.impl.SmooksPackageImpl#getConditionType()
-	 * @generated
-	 */
-	int CONDITION_TYPE = 1;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONDITION_TYPE__VALUE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Evaluator</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONDITION_TYPE__EVALUATOR = 1;
-
-	/**
-	 * The number of structural features of the '<em>Condition Type</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONDITION_TYPE_FEATURE_COUNT = 2;
-
-	/**
-	 * The meta object id for the '{@link SmooksGraphExtDocumentRootImpl.impl.DocumentRootImpl <em>Document Root</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see SmooksGraphExtDocumentRootImpl.impl.DocumentRootImpl
-	 * @see smooks.impl.SmooksPackageImpl#getDocumentRoot()
-	 * @generated
-	 */
-	int DOCUMENT_ROOT = 2;
+	int ABSTRACT_TYPE = 10;
 
 	/**
 	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
@@ -134,7 +78,163 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__MIXED = 0;
+	int ABSTRACT_TYPE__MIXED = XMLTypePackage.ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_TYPE__ANY = XMLTypePackage.ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_TYPE__ANY_ATTRIBUTE = XMLTypePackage.ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
+	 * The number of structural features of the '<em>Abstract Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_TYPE_FEATURE_COUNT = XMLTypePackage.ANY_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.jboss.tools.smooks10.model.smooks.impl.AbstractResourceConfigImpl <em>Abstract Resource Config</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.AbstractResourceConfigImpl
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getAbstractResourceConfig()
+	 * @generated
+	 */
+	int ABSTRACT_RESOURCE_CONFIG = 0;
+
+	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_RESOURCE_CONFIG__MIXED = ABSTRACT_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_RESOURCE_CONFIG__ANY = ABSTRACT_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_RESOURCE_CONFIG__ANY_ATTRIBUTE = ABSTRACT_TYPE__ANY_ATTRIBUTE;
+
+	/**
+	 * The number of structural features of the '<em>Abstract Resource Config</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT = ABSTRACT_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.jboss.tools.smooks10.model.smooks.impl.ConditionTypeImpl <em>Condition Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.ConditionTypeImpl
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getConditionType()
+	 * @generated
+	 */
+	int CONDITION_TYPE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION_TYPE__MIXED = ABSTRACT_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION_TYPE__ANY = ABSTRACT_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION_TYPE__ANY_ATTRIBUTE = ABSTRACT_TYPE__ANY_ATTRIBUTE;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION_TYPE__VALUE = ABSTRACT_TYPE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Evaluator</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION_TYPE__EVALUATOR = ABSTRACT_TYPE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Condition Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONDITION_TYPE_FEATURE_COUNT = ABSTRACT_TYPE_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.jboss.tools.smooks10.model.smooks.impl.DocumentRootImpl <em>Smooks10 Document Root</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.DocumentRootImpl
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getSmooks10DocumentRoot()
+	 * @generated
+	 */
+	int SMOOKS10_DOCUMENT_ROOT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SMOOKS10_DOCUMENT_ROOT__MIXED = 0;
 
 	/**
 	 * The feature id for the '<em><b>XMLNS Prefix Map</b></em>' map.
@@ -143,7 +243,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__XMLNS_PREFIX_MAP = 1;
+	int SMOOKS10_DOCUMENT_ROOT__XMLNS_PREFIX_MAP = 1;
 
 	/**
 	 * The feature id for the '<em><b>XSI Schema Location</b></em>' map.
@@ -152,7 +252,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__XSI_SCHEMA_LOCATION = 2;
+	int SMOOKS10_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION = 2;
 
 	/**
 	 * The feature id for the '<em><b>Abstract Resource Config</b></em>' containment reference.
@@ -161,7 +261,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG = 3;
+	int SMOOKS10_DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG = 3;
 
 	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
@@ -170,7 +270,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__CONDITION = 4;
+	int SMOOKS10_DOCUMENT_ROOT__CONDITION = 4;
 
 	/**
 	 * The feature id for the '<em><b>Import</b></em>' containment reference.
@@ -179,7 +279,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__IMPORT = 5;
+	int SMOOKS10_DOCUMENT_ROOT__IMPORT = 5;
 
 	/**
 	 * The feature id for the '<em><b>Param</b></em>' containment reference.
@@ -188,7 +288,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__PARAM = 6;
+	int SMOOKS10_DOCUMENT_ROOT__PARAM = 6;
 
 	/**
 	 * The feature id for the '<em><b>Profile</b></em>' containment reference.
@@ -197,7 +297,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__PROFILE = 7;
+	int SMOOKS10_DOCUMENT_ROOT__PROFILE = 7;
 
 	/**
 	 * The feature id for the '<em><b>Profiles</b></em>' containment reference.
@@ -206,7 +306,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__PROFILES = 8;
+	int SMOOKS10_DOCUMENT_ROOT__PROFILES = 8;
 
 	/**
 	 * The feature id for the '<em><b>Resource</b></em>' containment reference.
@@ -215,7 +315,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__RESOURCE = 9;
+	int SMOOKS10_DOCUMENT_ROOT__RESOURCE = 9;
 
 	/**
 	 * The feature id for the '<em><b>Resource Config</b></em>' containment reference.
@@ -224,7 +324,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__RESOURCE_CONFIG = 10;
+	int SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG = 10;
 
 	/**
 	 * The feature id for the '<em><b>Smooks Resource List</b></em>' containment reference.
@@ -233,26 +333,53 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST = 11;
+	int SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST = 11;
 
 	/**
-	 * The number of structural features of the '<em>Document Root</em>' class.
+	 * The number of structural features of the '<em>Smooks10 Document Root</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT_FEATURE_COUNT = 12;
+	int SMOOKS10_DOCUMENT_ROOT_FEATURE_COUNT = 12;
 
 	/**
-	 * The meta object id for the '{@link smooks.impl.ImportTypeImpl <em>Import Type</em>}' class.
+	 * The meta object id for the '{@link org.jboss.tools.smooks10.model.smooks.impl.ImportTypeImpl <em>Import Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see smooks.impl.ImportTypeImpl
-	 * @see smooks.impl.SmooksPackageImpl#getImportType()
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.ImportTypeImpl
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getImportType()
 	 * @generated
 	 */
 	int IMPORT_TYPE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORT_TYPE__MIXED = ABSTRACT_RESOURCE_CONFIG__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORT_TYPE__ANY = ABSTRACT_RESOURCE_CONFIG__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORT_TYPE__ANY_ATTRIBUTE = ABSTRACT_RESOURCE_CONFIG__ANY_ATTRIBUTE;
 
 	/**
 	 * The feature id for the '<em><b>File</b></em>' attribute.
@@ -273,11 +400,11 @@ public interface SmooksPackage extends EPackage {
 	int IMPORT_TYPE_FEATURE_COUNT = ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link smooks.impl.ParamTypeImpl <em>Param Type</em>}' class.
+	 * The meta object id for the '{@link org.jboss.tools.smooks10.model.smooks.impl.ParamTypeImpl <em>Param Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see smooks.impl.ParamTypeImpl
-	 * @see smooks.impl.SmooksPackageImpl#getParamType()
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.ParamTypeImpl
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getParamType()
 	 * @generated
 	 */
 	int PARAM_TYPE = 4;
@@ -289,7 +416,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_TYPE__MIXED = XMLTypePackage.ANY_TYPE__MIXED;
+	int PARAM_TYPE__MIXED = ABSTRACT_TYPE__MIXED;
 
 	/**
 	 * The feature id for the '<em><b>Any</b></em>' attribute list.
@@ -298,7 +425,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_TYPE__ANY = XMLTypePackage.ANY_TYPE__ANY;
+	int PARAM_TYPE__ANY = ABSTRACT_TYPE__ANY;
 
 	/**
 	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
@@ -307,7 +434,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_TYPE__ANY_ATTRIBUTE = XMLTypePackage.ANY_TYPE__ANY_ATTRIBUTE;
+	int PARAM_TYPE__ANY_ATTRIBUTE = ABSTRACT_TYPE__ANY_ATTRIBUTE;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -316,7 +443,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_TYPE__NAME = XMLTypePackage.ANY_TYPE_FEATURE_COUNT + 0;
+	int PARAM_TYPE__NAME = ABSTRACT_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -325,7 +452,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_TYPE__TYPE = XMLTypePackage.ANY_TYPE_FEATURE_COUNT + 1;
+	int PARAM_TYPE__TYPE = ABSTRACT_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Param Type</em>' class.
@@ -334,17 +461,44 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_TYPE_FEATURE_COUNT = XMLTypePackage.ANY_TYPE_FEATURE_COUNT + 2;
+	int PARAM_TYPE_FEATURE_COUNT = ABSTRACT_TYPE_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link smooks.impl.ProfilesTypeImpl <em>Profiles Type</em>}' class.
+	 * The meta object id for the '{@link org.jboss.tools.smooks10.model.smooks.impl.ProfilesTypeImpl <em>Profiles Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see smooks.impl.ProfilesTypeImpl
-	 * @see smooks.impl.SmooksPackageImpl#getProfilesType()
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.ProfilesTypeImpl
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getProfilesType()
 	 * @generated
 	 */
 	int PROFILES_TYPE = 5;
+
+	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROFILES_TYPE__MIXED = ABSTRACT_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROFILES_TYPE__ANY = ABSTRACT_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROFILES_TYPE__ANY_ATTRIBUTE = ABSTRACT_TYPE__ANY_ATTRIBUTE;
 
 	/**
 	 * The feature id for the '<em><b>Profile</b></em>' containment reference list.
@@ -353,7 +507,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROFILES_TYPE__PROFILE = 0;
+	int PROFILES_TYPE__PROFILE = ABSTRACT_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Profiles Type</em>' class.
@@ -362,17 +516,44 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROFILES_TYPE_FEATURE_COUNT = 1;
+	int PROFILES_TYPE_FEATURE_COUNT = ABSTRACT_TYPE_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link smooks.impl.ProfileTypeImpl <em>Profile Type</em>}' class.
+	 * The meta object id for the '{@link org.jboss.tools.smooks10.model.smooks.impl.ProfileTypeImpl <em>Profile Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see smooks.impl.ProfileTypeImpl
-	 * @see smooks.impl.SmooksPackageImpl#getProfileType()
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.ProfileTypeImpl
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getProfileType()
 	 * @generated
 	 */
 	int PROFILE_TYPE = 6;
+
+	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROFILE_TYPE__MIXED = ABSTRACT_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROFILE_TYPE__ANY = ABSTRACT_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROFILE_TYPE__ANY_ATTRIBUTE = ABSTRACT_TYPE__ANY_ATTRIBUTE;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -381,7 +562,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROFILE_TYPE__VALUE = 0;
+	int PROFILE_TYPE__VALUE = ABSTRACT_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Base Profile</b></em>' attribute.
@@ -390,7 +571,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROFILE_TYPE__BASE_PROFILE = 1;
+	int PROFILE_TYPE__BASE_PROFILE = ABSTRACT_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Sub Profiles</b></em>' attribute.
@@ -399,7 +580,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROFILE_TYPE__SUB_PROFILES = 2;
+	int PROFILE_TYPE__SUB_PROFILES = ABSTRACT_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Profile Type</em>' class.
@@ -408,17 +589,44 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROFILE_TYPE_FEATURE_COUNT = 3;
+	int PROFILE_TYPE_FEATURE_COUNT = ABSTRACT_TYPE_FEATURE_COUNT + 3;
 
 	/**
-	 * The meta object id for the '{@link smooks.impl.ResourceConfigTypeImpl <em>Resource Config Type</em>}' class.
+	 * The meta object id for the '{@link org.jboss.tools.smooks10.model.smooks.impl.ResourceConfigTypeImpl <em>Resource Config Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see smooks.impl.ResourceConfigTypeImpl
-	 * @see smooks.impl.SmooksPackageImpl#getResourceConfigType()
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.ResourceConfigTypeImpl
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getResourceConfigType()
 	 * @generated
 	 */
 	int RESOURCE_CONFIG_TYPE = 7;
+
+	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOURCE_CONFIG_TYPE__MIXED = ABSTRACT_RESOURCE_CONFIG__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOURCE_CONFIG_TYPE__ANY = ABSTRACT_RESOURCE_CONFIG__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOURCE_CONFIG_TYPE__ANY_ATTRIBUTE = ABSTRACT_RESOURCE_CONFIG__ANY_ATTRIBUTE;
 
 	/**
 	 * The feature id for the '<em><b>Resource</b></em>' containment reference.
@@ -484,11 +692,11 @@ public interface SmooksPackage extends EPackage {
 	int RESOURCE_CONFIG_TYPE_FEATURE_COUNT = ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 6;
 
 	/**
-	 * The meta object id for the '{@link smooks.impl.ResourceTypeImpl <em>Resource Type</em>}' class.
+	 * The meta object id for the '{@link org.jboss.tools.smooks10.model.smooks.impl.ResourceTypeImpl <em>Resource Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see smooks.impl.ResourceTypeImpl
-	 * @see smooks.impl.SmooksPackageImpl#getResourceType()
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.ResourceTypeImpl
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getResourceType()
 	 * @generated
 	 */
 	int RESOURCE_TYPE = 8;
@@ -500,7 +708,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESOURCE_TYPE__MIXED = XMLTypePackage.ANY_TYPE__MIXED;
+	int RESOURCE_TYPE__MIXED = ABSTRACT_TYPE__MIXED;
 
 	/**
 	 * The feature id for the '<em><b>Any</b></em>' attribute list.
@@ -509,7 +717,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESOURCE_TYPE__ANY = XMLTypePackage.ANY_TYPE__ANY;
+	int RESOURCE_TYPE__ANY = ABSTRACT_TYPE__ANY;
 
 	/**
 	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
@@ -518,7 +726,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESOURCE_TYPE__ANY_ATTRIBUTE = XMLTypePackage.ANY_TYPE__ANY_ATTRIBUTE;
+	int RESOURCE_TYPE__ANY_ATTRIBUTE = ABSTRACT_TYPE__ANY_ATTRIBUTE;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -527,7 +735,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESOURCE_TYPE__TYPE = XMLTypePackage.ANY_TYPE_FEATURE_COUNT + 0;
+	int RESOURCE_TYPE__TYPE = ABSTRACT_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Resource Type</em>' class.
@@ -536,17 +744,44 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESOURCE_TYPE_FEATURE_COUNT = XMLTypePackage.ANY_TYPE_FEATURE_COUNT + 1;
+	int RESOURCE_TYPE_FEATURE_COUNT = ABSTRACT_TYPE_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link smooks.impl.SmooksResourceListTypeImpl <em>Resource List Type</em>}' class.
+	 * The meta object id for the '{@link org.jboss.tools.smooks10.model.smooks.impl.SmooksResourceListTypeImpl <em>Resource List Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see smooks.impl.SmooksResourceListTypeImpl
-	 * @see smooks.impl.SmooksPackageImpl#getSmooksResourceListType()
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksResourceListTypeImpl
+	 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getSmooksResourceListType()
 	 * @generated
 	 */
 	int SMOOKS_RESOURCE_LIST_TYPE = 9;
+
+	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SMOOKS_RESOURCE_LIST_TYPE__MIXED = ABSTRACT_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SMOOKS_RESOURCE_LIST_TYPE__ANY = ABSTRACT_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SMOOKS_RESOURCE_LIST_TYPE__ANY_ATTRIBUTE = ABSTRACT_TYPE__ANY_ATTRIBUTE;
 
 	/**
 	 * The feature id for the '<em><b>Profiles</b></em>' containment reference.
@@ -555,7 +790,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_RESOURCE_LIST_TYPE__PROFILES = 0;
+	int SMOOKS_RESOURCE_LIST_TYPE__PROFILES = ABSTRACT_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Abstract Resource Config Group</b></em>' attribute list.
@@ -564,7 +799,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP = 1;
+	int SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP = ABSTRACT_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Abstract Resource Config</b></em>' containment reference list.
@@ -573,7 +808,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG = 2;
+	int SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG = ABSTRACT_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Default Selector</b></em>' attribute.
@@ -582,7 +817,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR = 3;
+	int SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR = ABSTRACT_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Default Selector Namespace</b></em>' attribute.
@@ -591,7 +826,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR_NAMESPACE = 4;
+	int SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR_NAMESPACE = ABSTRACT_TYPE_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Default Target Profile</b></em>' attribute.
@@ -600,7 +835,7 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_TARGET_PROFILE = 5;
+	int SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_TARGET_PROFILE = ABSTRACT_TYPE_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Resource List Type</em>' class.
@@ -609,482 +844,492 @@ public interface SmooksPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_RESOURCE_LIST_TYPE_FEATURE_COUNT = 6;
+	int SMOOKS_RESOURCE_LIST_TYPE_FEATURE_COUNT = ABSTRACT_TYPE_FEATURE_COUNT + 6;
 
 
 	/**
-	 * Returns the meta object for class '{@link smooks.AbstractResourceConfig <em>Abstract Resource Config</em>}'.
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks10.model.smooks.AbstractResourceConfig <em>Abstract Resource Config</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Abstract Resource Config</em>'.
-	 * @see smooks.AbstractResourceConfig
+	 * @see org.jboss.tools.smooks10.model.smooks.AbstractResourceConfig
 	 * @generated
 	 */
 	EClass getAbstractResourceConfig();
 
 	/**
-	 * Returns the meta object for class '{@link smooks.ConditionType <em>Condition Type</em>}'.
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks10.model.smooks.ConditionType <em>Condition Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Condition Type</em>'.
-	 * @see smooks.ConditionType
+	 * @see org.jboss.tools.smooks10.model.smooks.ConditionType
 	 * @generated
 	 */
 	EClass getConditionType();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.ConditionType#getValue <em>Value</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.ConditionType#getValue <em>Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Value</em>'.
-	 * @see smooks.ConditionType#getStringValue()
+	 * @see org.jboss.tools.smooks10.model.smooks.ConditionType#getValue()
 	 * @see #getConditionType()
 	 * @generated
 	 */
 	EAttribute getConditionType_Value();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.ConditionType#getEvaluator <em>Evaluator</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.ConditionType#getEvaluator <em>Evaluator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Evaluator</em>'.
-	 * @see smooks.ConditionType#getEvaluator()
+	 * @see org.jboss.tools.smooks10.model.smooks.ConditionType#getEvaluator()
 	 * @see #getConditionType()
 	 * @generated
 	 */
 	EAttribute getConditionType_Evaluator();
 
 	/**
-	 * Returns the meta object for class '{@link smooks.SmooksGraphExtDocumentRoot <em>Document Root</em>}'.
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks10.model.smooks.DocumentRoot <em>Smooks10 Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Document Root</em>'.
-	 * @see smooks.SmooksGraphExtDocumentRoot
+	 * @return the meta object for class '<em>Smooks10 Document Root</em>'.
+	 * @see org.jboss.tools.smooks10.model.smooks.DocumentRoot
 	 * @generated
 	 */
-	EClass getDocumentRoot();
+	EClass getSmooks10DocumentRoot();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link smooks.SmooksGraphExtDocumentRoot#getMixed <em>Mixed</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.jboss.tools.smooks10.model.smooks.DocumentRoot#getMixed <em>Mixed</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Mixed</em>'.
-	 * @see smooks.SmooksGraphExtDocumentRoot#getMixed()
-	 * @see #getDocumentRoot()
+	 * @see org.jboss.tools.smooks10.model.smooks.DocumentRoot#getMixed()
+	 * @see #getSmooks10DocumentRoot()
 	 * @generated
 	 */
-	EAttribute getDocumentRoot_Mixed();
+	EAttribute getSmooks10DocumentRoot_Mixed();
 
 	/**
-	 * Returns the meta object for the map '{@link smooks.SmooksGraphExtDocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}'.
+	 * Returns the meta object for the map '{@link org.jboss.tools.smooks10.model.smooks.DocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>XMLNS Prefix Map</em>'.
-	 * @see smooks.SmooksGraphExtDocumentRoot#getXMLNSPrefixMap()
-	 * @see #getDocumentRoot()
+	 * @see org.jboss.tools.smooks10.model.smooks.DocumentRoot#getXMLNSPrefixMap()
+	 * @see #getSmooks10DocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_XMLNSPrefixMap();
+	EReference getSmooks10DocumentRoot_XMLNSPrefixMap();
 
 	/**
-	 * Returns the meta object for the map '{@link smooks.SmooksGraphExtDocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}'.
+	 * Returns the meta object for the map '{@link org.jboss.tools.smooks10.model.smooks.DocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>XSI Schema Location</em>'.
-	 * @see smooks.SmooksGraphExtDocumentRoot#getXSISchemaLocation()
-	 * @see #getDocumentRoot()
+	 * @see org.jboss.tools.smooks10.model.smooks.DocumentRoot#getXSISchemaLocation()
+	 * @see #getSmooks10DocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_XSISchemaLocation();
+	EReference getSmooks10DocumentRoot_XSISchemaLocation();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getAbstractResourceConfig <em>Abstract Resource Config</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks10.model.smooks.DocumentRoot#getAbstractResourceConfig <em>Abstract Resource Config</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Abstract Resource Config</em>'.
-	 * @see smooks.SmooksGraphExtDocumentRoot#getAbstractResourceConfig()
-	 * @see #getDocumentRoot()
+	 * @see org.jboss.tools.smooks10.model.smooks.DocumentRoot#getAbstractResourceConfig()
+	 * @see #getSmooks10DocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_AbstractResourceConfig();
+	EReference getSmooks10DocumentRoot_AbstractResourceConfig();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getCondition <em>Condition</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks10.model.smooks.DocumentRoot#getCondition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Condition</em>'.
-	 * @see smooks.SmooksGraphExtDocumentRoot#getCondition()
-	 * @see #getDocumentRoot()
+	 * @see org.jboss.tools.smooks10.model.smooks.DocumentRoot#getCondition()
+	 * @see #getSmooks10DocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_Condition();
+	EReference getSmooks10DocumentRoot_Condition();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getImport <em>Import</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks10.model.smooks.DocumentRoot#getImport <em>Import</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Import</em>'.
-	 * @see smooks.SmooksGraphExtDocumentRoot#getImport()
-	 * @see #getDocumentRoot()
+	 * @see org.jboss.tools.smooks10.model.smooks.DocumentRoot#getImport()
+	 * @see #getSmooks10DocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_Import();
+	EReference getSmooks10DocumentRoot_Import();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getParam <em>Param</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks10.model.smooks.DocumentRoot#getParam <em>Param</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Param</em>'.
-	 * @see smooks.SmooksGraphExtDocumentRoot#getParam()
-	 * @see #getDocumentRoot()
+	 * @see org.jboss.tools.smooks10.model.smooks.DocumentRoot#getParam()
+	 * @see #getSmooks10DocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_Param();
+	EReference getSmooks10DocumentRoot_Param();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getProfile <em>Profile</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks10.model.smooks.DocumentRoot#getProfile <em>Profile</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Profile</em>'.
-	 * @see smooks.SmooksGraphExtDocumentRoot#getProfile()
-	 * @see #getDocumentRoot()
+	 * @see org.jboss.tools.smooks10.model.smooks.DocumentRoot#getProfile()
+	 * @see #getSmooks10DocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_Profile();
+	EReference getSmooks10DocumentRoot_Profile();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getProfiles <em>Profiles</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks10.model.smooks.DocumentRoot#getProfiles <em>Profiles</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Profiles</em>'.
-	 * @see smooks.SmooksGraphExtDocumentRoot#getProfiles()
-	 * @see #getDocumentRoot()
+	 * @see org.jboss.tools.smooks10.model.smooks.DocumentRoot#getProfiles()
+	 * @see #getSmooks10DocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_Profiles();
+	EReference getSmooks10DocumentRoot_Profiles();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getResource <em>Resource</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks10.model.smooks.DocumentRoot#getResource <em>Resource</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Resource</em>'.
-	 * @see smooks.SmooksGraphExtDocumentRoot#getResource()
-	 * @see #getDocumentRoot()
+	 * @see org.jboss.tools.smooks10.model.smooks.DocumentRoot#getResource()
+	 * @see #getSmooks10DocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_Resource();
+	EReference getSmooks10DocumentRoot_Resource();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getResourceConfig <em>Resource Config</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks10.model.smooks.DocumentRoot#getResourceConfig <em>Resource Config</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Resource Config</em>'.
-	 * @see smooks.SmooksGraphExtDocumentRoot#getResourceConfig()
-	 * @see #getDocumentRoot()
+	 * @see org.jboss.tools.smooks10.model.smooks.DocumentRoot#getResourceConfig()
+	 * @see #getSmooks10DocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_ResourceConfig();
+	EReference getSmooks10DocumentRoot_ResourceConfig();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.SmooksGraphExtDocumentRoot#getSmooksResourceList <em>Smooks Resource List</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks10.model.smooks.DocumentRoot#getSmooksResourceList <em>Smooks Resource List</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Smooks Resource List</em>'.
-	 * @see smooks.SmooksGraphExtDocumentRoot#getSmooksResourceList()
-	 * @see #getDocumentRoot()
+	 * @see org.jboss.tools.smooks10.model.smooks.DocumentRoot#getSmooksResourceList()
+	 * @see #getSmooks10DocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_SmooksResourceList();
+	EReference getSmooks10DocumentRoot_SmooksResourceList();
 
 	/**
-	 * Returns the meta object for class '{@link smooks.ImportType <em>Import Type</em>}'.
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks10.model.smooks.ImportType <em>Import Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Import Type</em>'.
-	 * @see smooks.ImportType
+	 * @see org.jboss.tools.smooks10.model.smooks.ImportType
 	 * @generated
 	 */
 	EClass getImportType();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.ImportType#getFile <em>File</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.ImportType#getFile <em>File</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>File</em>'.
-	 * @see smooks.ImportType#getFile()
+	 * @see org.jboss.tools.smooks10.model.smooks.ImportType#getFile()
 	 * @see #getImportType()
 	 * @generated
 	 */
 	EAttribute getImportType_File();
 
 	/**
-	 * Returns the meta object for class '{@link smooks.ParamType <em>Param Type</em>}'.
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks10.model.smooks.ParamType <em>Param Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Param Type</em>'.
-	 * @see smooks.ParamType
+	 * @see org.jboss.tools.smooks10.model.smooks.ParamType
 	 * @generated
 	 */
 	EClass getParamType();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.ParamType#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.ParamType#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see smooks.ParamType#getName()
+	 * @see org.jboss.tools.smooks10.model.smooks.ParamType#getName()
 	 * @see #getParamType()
 	 * @generated
 	 */
 	EAttribute getParamType_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.ParamType#getType <em>Type</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.ParamType#getType <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see smooks.ParamType#getType()
+	 * @see org.jboss.tools.smooks10.model.smooks.ParamType#getType()
 	 * @see #getParamType()
 	 * @generated
 	 */
 	EAttribute getParamType_Type();
 
 	/**
-	 * Returns the meta object for class '{@link smooks.ProfilesType <em>Profiles Type</em>}'.
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks10.model.smooks.ProfilesType <em>Profiles Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Profiles Type</em>'.
-	 * @see smooks.ProfilesType
+	 * @see org.jboss.tools.smooks10.model.smooks.ProfilesType
 	 * @generated
 	 */
 	EClass getProfilesType();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link smooks.ProfilesType#getProfile <em>Profile</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.jboss.tools.smooks10.model.smooks.ProfilesType#getProfile <em>Profile</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Profile</em>'.
-	 * @see smooks.ProfilesType#getProfile()
+	 * @see org.jboss.tools.smooks10.model.smooks.ProfilesType#getProfile()
 	 * @see #getProfilesType()
 	 * @generated
 	 */
 	EReference getProfilesType_Profile();
 
 	/**
-	 * Returns the meta object for class '{@link smooks.ProfileType <em>Profile Type</em>}'.
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks10.model.smooks.ProfileType <em>Profile Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Profile Type</em>'.
-	 * @see smooks.ProfileType
+	 * @see org.jboss.tools.smooks10.model.smooks.ProfileType
 	 * @generated
 	 */
 	EClass getProfileType();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.ProfileType#getValue <em>Value</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.ProfileType#getValue <em>Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Value</em>'.
-	 * @see smooks.ProfileType#getStringValue()
+	 * @see org.jboss.tools.smooks10.model.smooks.ProfileType#getValue()
 	 * @see #getProfileType()
 	 * @generated
 	 */
 	EAttribute getProfileType_Value();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.ProfileType#getBaseProfile <em>Base Profile</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.ProfileType#getBaseProfile <em>Base Profile</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Base Profile</em>'.
-	 * @see smooks.ProfileType#getBaseProfile()
+	 * @see org.jboss.tools.smooks10.model.smooks.ProfileType#getBaseProfile()
 	 * @see #getProfileType()
 	 * @generated
 	 */
 	EAttribute getProfileType_BaseProfile();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.ProfileType#getSubProfiles <em>Sub Profiles</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.ProfileType#getSubProfiles <em>Sub Profiles</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Sub Profiles</em>'.
-	 * @see smooks.ProfileType#getSubProfiles()
+	 * @see org.jboss.tools.smooks10.model.smooks.ProfileType#getSubProfiles()
 	 * @see #getProfileType()
 	 * @generated
 	 */
 	EAttribute getProfileType_SubProfiles();
 
 	/**
-	 * Returns the meta object for class '{@link smooks.ResourceConfigType <em>Resource Config Type</em>}'.
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks10.model.smooks.ResourceConfigType <em>Resource Config Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Resource Config Type</em>'.
-	 * @see smooks.ResourceConfigType
+	 * @see org.jboss.tools.smooks10.model.smooks.ResourceConfigType
 	 * @generated
 	 */
 	EClass getResourceConfigType();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.ResourceConfigType#getResource <em>Resource</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks10.model.smooks.ResourceConfigType#getResource <em>Resource</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Resource</em>'.
-	 * @see smooks.ResourceConfigType#getResource()
+	 * @see org.jboss.tools.smooks10.model.smooks.ResourceConfigType#getResource()
 	 * @see #getResourceConfigType()
 	 * @generated
 	 */
 	EReference getResourceConfigType_Resource();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.ResourceConfigType#getCondition <em>Condition</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks10.model.smooks.ResourceConfigType#getCondition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Condition</em>'.
-	 * @see smooks.ResourceConfigType#getCondition()
+	 * @see org.jboss.tools.smooks10.model.smooks.ResourceConfigType#getCondition()
 	 * @see #getResourceConfigType()
 	 * @generated
 	 */
 	EReference getResourceConfigType_Condition();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link smooks.ResourceConfigType#getParam <em>Param</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.jboss.tools.smooks10.model.smooks.ResourceConfigType#getParam <em>Param</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Param</em>'.
-	 * @see smooks.ResourceConfigType#getParam()
+	 * @see org.jboss.tools.smooks10.model.smooks.ResourceConfigType#getParam()
 	 * @see #getResourceConfigType()
 	 * @generated
 	 */
 	EReference getResourceConfigType_Param();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.ResourceConfigType#getSelector <em>Selector</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.ResourceConfigType#getSelector <em>Selector</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Selector</em>'.
-	 * @see smooks.ResourceConfigType#getSelector()
+	 * @see org.jboss.tools.smooks10.model.smooks.ResourceConfigType#getSelector()
 	 * @see #getResourceConfigType()
 	 * @generated
 	 */
 	EAttribute getResourceConfigType_Selector();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.ResourceConfigType#getSelectorNamespace <em>Selector Namespace</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.ResourceConfigType#getSelectorNamespace <em>Selector Namespace</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Selector Namespace</em>'.
-	 * @see smooks.ResourceConfigType#getSelectorNamespace()
+	 * @see org.jboss.tools.smooks10.model.smooks.ResourceConfigType#getSelectorNamespace()
 	 * @see #getResourceConfigType()
 	 * @generated
 	 */
 	EAttribute getResourceConfigType_SelectorNamespace();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.ResourceConfigType#getTargetProfile <em>Target Profile</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.ResourceConfigType#getTargetProfile <em>Target Profile</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Target Profile</em>'.
-	 * @see smooks.ResourceConfigType#getTargetProfile()
+	 * @see org.jboss.tools.smooks10.model.smooks.ResourceConfigType#getTargetProfile()
 	 * @see #getResourceConfigType()
 	 * @generated
 	 */
 	EAttribute getResourceConfigType_TargetProfile();
 
 	/**
-	 * Returns the meta object for class '{@link smooks.ResourceType <em>Resource Type</em>}'.
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks10.model.smooks.ResourceType <em>Resource Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Resource Type</em>'.
-	 * @see smooks.ResourceType
+	 * @see org.jboss.tools.smooks10.model.smooks.ResourceType
 	 * @generated
 	 */
 	EClass getResourceType();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.ResourceType#getType <em>Type</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.ResourceType#getType <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see smooks.ResourceType#getType()
+	 * @see org.jboss.tools.smooks10.model.smooks.ResourceType#getType()
 	 * @see #getResourceType()
 	 * @generated
 	 */
 	EAttribute getResourceType_Type();
 
 	/**
-	 * Returns the meta object for class '{@link smooks.SmooksResourceListType <em>Resource List Type</em>}'.
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks10.model.smooks.SmooksResourceListType <em>Resource List Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Resource List Type</em>'.
-	 * @see smooks.SmooksResourceListType
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksResourceListType
 	 * @generated
 	 */
 	EClass getSmooksResourceListType();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link smooks.SmooksResourceListType#getProfiles <em>Profiles</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks10.model.smooks.SmooksResourceListType#getProfiles <em>Profiles</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Profiles</em>'.
-	 * @see smooks.SmooksResourceListType#getProfiles()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksResourceListType#getProfiles()
 	 * @see #getSmooksResourceListType()
 	 * @generated
 	 */
 	EReference getSmooksResourceListType_Profiles();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link smooks.SmooksResourceListType#getAbstractResourceConfigGroup <em>Abstract Resource Config Group</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.jboss.tools.smooks10.model.smooks.SmooksResourceListType#getAbstractResourceConfigGroup <em>Abstract Resource Config Group</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Abstract Resource Config Group</em>'.
-	 * @see smooks.SmooksResourceListType#getAbstractResourceConfigGroup()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksResourceListType#getAbstractResourceConfigGroup()
 	 * @see #getSmooksResourceListType()
 	 * @generated
 	 */
 	EAttribute getSmooksResourceListType_AbstractResourceConfigGroup();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link smooks.SmooksResourceListType#getAbstractResourceConfig <em>Abstract Resource Config</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.jboss.tools.smooks10.model.smooks.SmooksResourceListType#getAbstractResourceConfig <em>Abstract Resource Config</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Abstract Resource Config</em>'.
-	 * @see smooks.SmooksResourceListType#getAbstractResourceConfig()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksResourceListType#getAbstractResourceConfig()
 	 * @see #getSmooksResourceListType()
 	 * @generated
 	 */
 	EReference getSmooksResourceListType_AbstractResourceConfig();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.SmooksResourceListType#getDefaultSelector <em>Default Selector</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.SmooksResourceListType#getDefaultSelector <em>Default Selector</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Default Selector</em>'.
-	 * @see smooks.SmooksResourceListType#getDefaultSelector()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksResourceListType#getDefaultSelector()
 	 * @see #getSmooksResourceListType()
 	 * @generated
 	 */
 	EAttribute getSmooksResourceListType_DefaultSelector();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.SmooksResourceListType#getDefaultSelectorNamespace <em>Default Selector Namespace</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.SmooksResourceListType#getDefaultSelectorNamespace <em>Default Selector Namespace</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Default Selector Namespace</em>'.
-	 * @see smooks.SmooksResourceListType#getDefaultSelectorNamespace()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksResourceListType#getDefaultSelectorNamespace()
 	 * @see #getSmooksResourceListType()
 	 * @generated
 	 */
 	EAttribute getSmooksResourceListType_DefaultSelectorNamespace();
 
 	/**
-	 * Returns the meta object for the attribute '{@link smooks.SmooksResourceListType#getDefaultTargetProfile <em>Default Target Profile</em>}'.
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks10.model.smooks.SmooksResourceListType#getDefaultTargetProfile <em>Default Target Profile</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Default Target Profile</em>'.
-	 * @see smooks.SmooksResourceListType#getDefaultTargetProfile()
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksResourceListType#getDefaultTargetProfile()
 	 * @see #getSmooksResourceListType()
 	 * @generated
 	 */
 	EAttribute getSmooksResourceListType_DefaultTargetProfile();
+
+	/**
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks10.model.smooks.AbstractType <em>Abstract Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Abstract Type</em>'.
+	 * @see org.jboss.tools.smooks10.model.smooks.AbstractType
+	 * @generated
+	 */
+	EClass getAbstractType();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1109,21 +1354,21 @@ public interface SmooksPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link smooks.impl.AbstractResourceConfigImpl <em>Abstract Resource Config</em>}' class.
+		 * The meta object literal for the '{@link org.jboss.tools.smooks10.model.smooks.impl.AbstractResourceConfigImpl <em>Abstract Resource Config</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see smooks.impl.AbstractResourceConfigImpl
-		 * @see smooks.impl.SmooksPackageImpl#getAbstractResourceConfig()
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.AbstractResourceConfigImpl
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getAbstractResourceConfig()
 		 * @generated
 		 */
 		EClass ABSTRACT_RESOURCE_CONFIG = eINSTANCE.getAbstractResourceConfig();
 
 		/**
-		 * The meta object literal for the '{@link smooks.impl.ConditionTypeImpl <em>Condition Type</em>}' class.
+		 * The meta object literal for the '{@link org.jboss.tools.smooks10.model.smooks.impl.ConditionTypeImpl <em>Condition Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see smooks.impl.ConditionTypeImpl
-		 * @see smooks.impl.SmooksPackageImpl#getConditionType()
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.ConditionTypeImpl
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getConditionType()
 		 * @generated
 		 */
 		EClass CONDITION_TYPE = eINSTANCE.getConditionType();
@@ -1145,14 +1390,14 @@ public interface SmooksPackage extends EPackage {
 		EAttribute CONDITION_TYPE__EVALUATOR = eINSTANCE.getConditionType_Evaluator();
 
 		/**
-		 * The meta object literal for the '{@link SmooksGraphExtDocumentRootImpl.impl.DocumentRootImpl <em>Document Root</em>}' class.
+		 * The meta object literal for the '{@link org.jboss.tools.smooks10.model.smooks.impl.DocumentRootImpl <em>Smooks10 Document Root</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see SmooksGraphExtDocumentRootImpl.impl.DocumentRootImpl
-		 * @see smooks.impl.SmooksPackageImpl#getDocumentRoot()
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.DocumentRootImpl
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getSmooks10DocumentRoot()
 		 * @generated
 		 */
-		EClass DOCUMENT_ROOT = eINSTANCE.getDocumentRoot();
+		EClass SMOOKS10_DOCUMENT_ROOT = eINSTANCE.getSmooks10DocumentRoot();
 
 		/**
 		 * The meta object literal for the '<em><b>Mixed</b></em>' attribute list feature.
@@ -1160,7 +1405,7 @@ public interface SmooksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DOCUMENT_ROOT__MIXED = eINSTANCE.getDocumentRoot_Mixed();
+		EAttribute SMOOKS10_DOCUMENT_ROOT__MIXED = eINSTANCE.getSmooks10DocumentRoot_Mixed();
 
 		/**
 		 * The meta object literal for the '<em><b>XMLNS Prefix Map</b></em>' map feature.
@@ -1168,7 +1413,7 @@ public interface SmooksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__XMLNS_PREFIX_MAP = eINSTANCE.getDocumentRoot_XMLNSPrefixMap();
+		EReference SMOOKS10_DOCUMENT_ROOT__XMLNS_PREFIX_MAP = eINSTANCE.getSmooks10DocumentRoot_XMLNSPrefixMap();
 
 		/**
 		 * The meta object literal for the '<em><b>XSI Schema Location</b></em>' map feature.
@@ -1176,7 +1421,7 @@ public interface SmooksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__XSI_SCHEMA_LOCATION = eINSTANCE.getDocumentRoot_XSISchemaLocation();
+		EReference SMOOKS10_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION = eINSTANCE.getSmooks10DocumentRoot_XSISchemaLocation();
 
 		/**
 		 * The meta object literal for the '<em><b>Abstract Resource Config</b></em>' containment reference feature.
@@ -1184,7 +1429,7 @@ public interface SmooksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG = eINSTANCE.getDocumentRoot_AbstractResourceConfig();
+		EReference SMOOKS10_DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG = eINSTANCE.getSmooks10DocumentRoot_AbstractResourceConfig();
 
 		/**
 		 * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
@@ -1192,7 +1437,7 @@ public interface SmooksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__CONDITION = eINSTANCE.getDocumentRoot_Condition();
+		EReference SMOOKS10_DOCUMENT_ROOT__CONDITION = eINSTANCE.getSmooks10DocumentRoot_Condition();
 
 		/**
 		 * The meta object literal for the '<em><b>Import</b></em>' containment reference feature.
@@ -1200,7 +1445,7 @@ public interface SmooksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__IMPORT = eINSTANCE.getDocumentRoot_Import();
+		EReference SMOOKS10_DOCUMENT_ROOT__IMPORT = eINSTANCE.getSmooks10DocumentRoot_Import();
 
 		/**
 		 * The meta object literal for the '<em><b>Param</b></em>' containment reference feature.
@@ -1208,7 +1453,7 @@ public interface SmooksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__PARAM = eINSTANCE.getDocumentRoot_Param();
+		EReference SMOOKS10_DOCUMENT_ROOT__PARAM = eINSTANCE.getSmooks10DocumentRoot_Param();
 
 		/**
 		 * The meta object literal for the '<em><b>Profile</b></em>' containment reference feature.
@@ -1216,7 +1461,7 @@ public interface SmooksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__PROFILE = eINSTANCE.getDocumentRoot_Profile();
+		EReference SMOOKS10_DOCUMENT_ROOT__PROFILE = eINSTANCE.getSmooks10DocumentRoot_Profile();
 
 		/**
 		 * The meta object literal for the '<em><b>Profiles</b></em>' containment reference feature.
@@ -1224,7 +1469,7 @@ public interface SmooksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__PROFILES = eINSTANCE.getDocumentRoot_Profiles();
+		EReference SMOOKS10_DOCUMENT_ROOT__PROFILES = eINSTANCE.getSmooks10DocumentRoot_Profiles();
 
 		/**
 		 * The meta object literal for the '<em><b>Resource</b></em>' containment reference feature.
@@ -1232,7 +1477,7 @@ public interface SmooksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__RESOURCE = eINSTANCE.getDocumentRoot_Resource();
+		EReference SMOOKS10_DOCUMENT_ROOT__RESOURCE = eINSTANCE.getSmooks10DocumentRoot_Resource();
 
 		/**
 		 * The meta object literal for the '<em><b>Resource Config</b></em>' containment reference feature.
@@ -1240,7 +1485,7 @@ public interface SmooksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__RESOURCE_CONFIG = eINSTANCE.getDocumentRoot_ResourceConfig();
+		EReference SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG = eINSTANCE.getSmooks10DocumentRoot_ResourceConfig();
 
 		/**
 		 * The meta object literal for the '<em><b>Smooks Resource List</b></em>' containment reference feature.
@@ -1248,14 +1493,14 @@ public interface SmooksPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST = eINSTANCE.getDocumentRoot_SmooksResourceList();
+		EReference SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST = eINSTANCE.getSmooks10DocumentRoot_SmooksResourceList();
 
 		/**
-		 * The meta object literal for the '{@link smooks.impl.ImportTypeImpl <em>Import Type</em>}' class.
+		 * The meta object literal for the '{@link org.jboss.tools.smooks10.model.smooks.impl.ImportTypeImpl <em>Import Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see smooks.impl.ImportTypeImpl
-		 * @see smooks.impl.SmooksPackageImpl#getImportType()
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.ImportTypeImpl
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getImportType()
 		 * @generated
 		 */
 		EClass IMPORT_TYPE = eINSTANCE.getImportType();
@@ -1269,11 +1514,11 @@ public interface SmooksPackage extends EPackage {
 		EAttribute IMPORT_TYPE__FILE = eINSTANCE.getImportType_File();
 
 		/**
-		 * The meta object literal for the '{@link smooks.impl.ParamTypeImpl <em>Param Type</em>}' class.
+		 * The meta object literal for the '{@link org.jboss.tools.smooks10.model.smooks.impl.ParamTypeImpl <em>Param Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see smooks.impl.ParamTypeImpl
-		 * @see smooks.impl.SmooksPackageImpl#getParamType()
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.ParamTypeImpl
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getParamType()
 		 * @generated
 		 */
 		EClass PARAM_TYPE = eINSTANCE.getParamType();
@@ -1295,11 +1540,11 @@ public interface SmooksPackage extends EPackage {
 		EAttribute PARAM_TYPE__TYPE = eINSTANCE.getParamType_Type();
 
 		/**
-		 * The meta object literal for the '{@link smooks.impl.ProfilesTypeImpl <em>Profiles Type</em>}' class.
+		 * The meta object literal for the '{@link org.jboss.tools.smooks10.model.smooks.impl.ProfilesTypeImpl <em>Profiles Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see smooks.impl.ProfilesTypeImpl
-		 * @see smooks.impl.SmooksPackageImpl#getProfilesType()
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.ProfilesTypeImpl
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getProfilesType()
 		 * @generated
 		 */
 		EClass PROFILES_TYPE = eINSTANCE.getProfilesType();
@@ -1313,11 +1558,11 @@ public interface SmooksPackage extends EPackage {
 		EReference PROFILES_TYPE__PROFILE = eINSTANCE.getProfilesType_Profile();
 
 		/**
-		 * The meta object literal for the '{@link smooks.impl.ProfileTypeImpl <em>Profile Type</em>}' class.
+		 * The meta object literal for the '{@link org.jboss.tools.smooks10.model.smooks.impl.ProfileTypeImpl <em>Profile Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see smooks.impl.ProfileTypeImpl
-		 * @see smooks.impl.SmooksPackageImpl#getProfileType()
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.ProfileTypeImpl
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getProfileType()
 		 * @generated
 		 */
 		EClass PROFILE_TYPE = eINSTANCE.getProfileType();
@@ -1347,11 +1592,11 @@ public interface SmooksPackage extends EPackage {
 		EAttribute PROFILE_TYPE__SUB_PROFILES = eINSTANCE.getProfileType_SubProfiles();
 
 		/**
-		 * The meta object literal for the '{@link smooks.impl.ResourceConfigTypeImpl <em>Resource Config Type</em>}' class.
+		 * The meta object literal for the '{@link org.jboss.tools.smooks10.model.smooks.impl.ResourceConfigTypeImpl <em>Resource Config Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see smooks.impl.ResourceConfigTypeImpl
-		 * @see smooks.impl.SmooksPackageImpl#getResourceConfigType()
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.ResourceConfigTypeImpl
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getResourceConfigType()
 		 * @generated
 		 */
 		EClass RESOURCE_CONFIG_TYPE = eINSTANCE.getResourceConfigType();
@@ -1405,11 +1650,11 @@ public interface SmooksPackage extends EPackage {
 		EAttribute RESOURCE_CONFIG_TYPE__TARGET_PROFILE = eINSTANCE.getResourceConfigType_TargetProfile();
 
 		/**
-		 * The meta object literal for the '{@link smooks.impl.ResourceTypeImpl <em>Resource Type</em>}' class.
+		 * The meta object literal for the '{@link org.jboss.tools.smooks10.model.smooks.impl.ResourceTypeImpl <em>Resource Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see smooks.impl.ResourceTypeImpl
-		 * @see smooks.impl.SmooksPackageImpl#getResourceType()
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.ResourceTypeImpl
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getResourceType()
 		 * @generated
 		 */
 		EClass RESOURCE_TYPE = eINSTANCE.getResourceType();
@@ -1423,11 +1668,11 @@ public interface SmooksPackage extends EPackage {
 		EAttribute RESOURCE_TYPE__TYPE = eINSTANCE.getResourceType_Type();
 
 		/**
-		 * The meta object literal for the '{@link smooks.impl.SmooksResourceListTypeImpl <em>Resource List Type</em>}' class.
+		 * The meta object literal for the '{@link org.jboss.tools.smooks10.model.smooks.impl.SmooksResourceListTypeImpl <em>Resource List Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see smooks.impl.SmooksResourceListTypeImpl
-		 * @see smooks.impl.SmooksPackageImpl#getSmooksResourceListType()
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksResourceListTypeImpl
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getSmooksResourceListType()
 		 * @generated
 		 */
 		EClass SMOOKS_RESOURCE_LIST_TYPE = eINSTANCE.getSmooksResourceListType();
@@ -1479,6 +1724,16 @@ public interface SmooksPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_TARGET_PROFILE = eINSTANCE.getSmooksResourceListType_DefaultTargetProfile();
+
+		/**
+		 * The meta object literal for the '{@link org.jboss.tools.smooks10.model.smooks.impl.AbstractTypeImpl <em>Abstract Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.AbstractTypeImpl
+		 * @see org.jboss.tools.smooks10.model.smooks.impl.SmooksPackageImpl#getAbstractType()
+		 * @generated
+		 */
+		EClass ABSTRACT_TYPE = eINSTANCE.getAbstractType();
 
 	}
 

@@ -350,7 +350,90 @@ public class SelectorCreationDialog extends Dialog {
 					}
 				}
 			} catch (Exception e) {
-//				SmooksConfigurationActivator.getDefault().log(e);
+				// SmooksConfigurationActivator.getDefault().log(e);
+			}
+		}
+		return list;
+	}
+
+	public static List<Object> generateInputDataForSmooks10(SmooksGraphicsExtType extType) {
+		List<Object> list = new ArrayList<Object>();
+		if (extType != null) {
+			IJavaProject project = SmooksUIUtils.getJavaProject(extType);
+			try {
+				List<InputType> inputLists = extType.getInput();
+				for (Iterator<?> iterator = inputLists.iterator(); iterator.hasNext();) {
+					InputType inputType = (InputType) iterator.next();
+					if (!SmooksUIUtils.isActivedInput(inputType))
+						continue;
+					String type = inputType.getType();
+					String path = SmooksModelUtils.getInputPath(inputType);
+					if (type != null && path != null) {
+						path = path.trim();
+						if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(type)
+								|| SmooksModelUtils.INPUT_TYPE_EDI_1_2.equals(type)) {
+						}
+						if (SmooksModelUtils.INPUT_TYPE_CSV.equals(type)
+								|| SmooksModelUtils.INPUT_TYPE_CSV_1_2.equals(type)) {
+						}
+						if (SmooksModelUtils.INPUT_TYPE_JSON_1_1.equals(type)
+								|| SmooksModelUtils.INPUT_TYPE_JSON_1_2.equals(type)) {
+						}
+						if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(type)) {
+							try {
+								Class<?> clazz = SmooksUIUtils.loadClass(path, project);
+								JavaBeanModel model = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
+								if (model != null) {
+									list.add(model);
+								}
+							} catch (Throwable t) {
+								// ignore
+							}
+						}
+						if (SmooksModelUtils.INPUT_TYPE_XSD.equals(type)) {
+							try {
+								path = SmooksUIUtils.parseFilePath(path);
+								String rootElementName = null;
+								List<ParamType> paramers = inputType.getParam();
+								for (Iterator<?> iterator2 = paramers.iterator(); iterator2.hasNext();) {
+									ParamType paramType = (ParamType) iterator2.next();
+									if ("rootElement".equals(paramType.getName())) {
+										rootElementName = paramType.getValue();
+										break;
+									}
+								}
+								if (rootElementName != null) {
+									rootElementName = rootElementName.trim();
+									list.add(new XSDObjectAnalyzer().loadElement(path, rootElementName));
+								}
+							} catch (Throwable tt) {
+								// ingore
+							}
+						}
+						if (SmooksModelUtils.INPUT_TYPE_XML.equals(type)) {
+							try {
+								path = SmooksUIUtils.parseFilePath(path);
+
+								// XMLObjectAnalyzer analyzer = new
+								// XMLObjectAnalyzer();
+								// TagList doc = analyzer.analyze(path, null);
+
+								AbstractXMLObject model = new XMLObjectAnalyzer().analyze(path, null);
+								if (model != null) {
+									if (model instanceof TagList) {
+										list.addAll(((TagList) model).getChildren());
+									} else {
+										list.add(model);
+									}
+								}
+							} catch (Throwable e) {
+
+							}
+						}
+					}
+				}
+			} catch (Exception e) {
+				// SmooksConfigurationActivator.getDefault().log(e);
 			}
 		}
 		return list;
@@ -373,12 +456,8 @@ public class SelectorCreationDialog extends Dialog {
 		}
 
 		wizard.setForcePreviousAndNextButtons(true);
-		SmooksMultiFormEditor formEditor = null;
-		if (this.editorPart != null && this.editorPart instanceof SmooksMultiFormEditor) {
-			formEditor = (SmooksMultiFormEditor) editorPart;
-		}
 		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(this.getShell(), wizard,
-				this.graphicsExt, formEditor);
+				this.graphicsExt);
 		if (dialog.show() == WizardDialog.OK) {
 			List<Object> input = this.generateInputData();
 			this.viewer.setInput(input);

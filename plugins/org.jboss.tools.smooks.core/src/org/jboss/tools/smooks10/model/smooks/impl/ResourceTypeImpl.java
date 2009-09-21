@@ -7,16 +7,12 @@
 package org.jboss.tools.smooks10.model.smooks.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl;
-
 import org.jboss.tools.smooks10.model.smooks.ResourceType;
 import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -25,13 +21,13 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link smooks.impl.ResourceTypeImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks10.model.smooks.impl.ResourceTypeImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ResourceTypeImpl extends AnyTypeImpl implements ResourceType {
+public class ResourceTypeImpl extends AbstractTypeImpl implements ResourceType {
 	/**
 	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -51,8 +47,6 @@ public class ResourceTypeImpl extends AnyTypeImpl implements ResourceType {
 	 * @ordered
 	 */
 	protected String type = TYPE_EDEFAULT;
-	
-	protected String value = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -167,7 +161,7 @@ public class ResourceTypeImpl extends AnyTypeImpl implements ResourceType {
 		result.append(')');
 		return result.toString();
 	}
-
+	
 	public String getStringValue() {
 		return SmooksModelUtils.getAnyTypeText(this);
 	}

@@ -32,6 +32,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
+import org.jboss.tools.smooks.configuration.editors_10.Smooks10MultiFormEditor;
 
 /**
  * 
@@ -114,8 +115,8 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		if (container == null)
 			throwCoreException("Container \"" + containerPath.toPortableString() + "\" does not exist.");
 		final IFile configFile = container.getFile(new Path(fileName));
-		String extFileName = fileName + ".ext";
-		final IFile extFile = container.getFile(new Path(extFileName));
+		// String extFileName = fileName + ".ext";
+		// final IFile extFile = container.getFile(new Path(extFileName));
 		try {
 			// create config file
 			InputStream stream = openContentStream(version);
@@ -126,18 +127,24 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 			}
 			stream.close();
 			// create ext file:
-			createExtentionFile(extFile, version, null, monitor);
+			// createExtentionFile(extFile, version, null, monitor);
 		} catch (IOException e) {
 			SmooksConfigurationActivator.getDefault().log(e);
 		}
 		monitor.worked(1);
 		monitor.setTaskName("Opening file with Smooks Editor.");
+		final String fversion = version;
 		getShell().getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 				FileEditorInput editorInput = new FileEditorInput(configFile);
 				try {
-					page.openEditor(editorInput, SmooksMultiFormEditor.EDITOR_ID, true);
+					if (fversion.equals(SmooksConstants.VERSION_1_0)) {
+						page.openEditor(editorInput, Smooks10MultiFormEditor.EDITOR_ID, true);
+					}
+					if (fversion.equals(SmooksConstants.VERSION_1_1) || fversion.equals(SmooksConstants.VERSION_1_2)) {
+						page.openEditor(editorInput, SmooksMultiFormEditor.EDITOR_ID, true);
+					}
 				} catch (PartInitException e) {
 					SmooksConfigurationActivator.getDefault().log(e);
 				}
@@ -165,15 +172,14 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		if (inputType != null) {
 			typeContents = "inputType = \"" + inputType + "\"";
 		}
-		String contents= "";
+		String contents = "";
 		if (typeContents == null) {
-			 contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-					+ "    <smooks-graphics-ext platformVersion = \"" + version
-					+ "\" xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
-		}else{
-			 contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-				+ "    <smooks-graphics-ext platformVersion = \"" + version
-				+ "\" "+typeContents+" xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
+			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "    <smooks-graphics-ext platformVersion = \""
+					+ version + "\" xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
+		} else {
+			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "    <smooks-graphics-ext platformVersion = \""
+					+ version + "\" " + typeContents
+					+ " xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
 		}
 		return new ByteArrayInputStream(contents.getBytes());
 	}
@@ -187,18 +193,29 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		String contents = "";
 		if (SmooksConstants.VERSION_1_0.equals(version)) {
 			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
-					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.0.xsd\">\n"//$NON-NLS-1$
+					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.0.xsd\" xmlns:graph = \"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\">\n"//$NON-NLS-1$
 					+ "		<resource-config selector=\"global-parameters\">\n"//$NON-NLS-1$
 					+ "			<param name=\"stream.filter.type\">SAX</param>\n"//$NON-NLS-1$
 					+ "		</resource-config>\n"//$NON-NLS-1$
+					+ "		<graph:smooks-graphics-ext platformVersion = \"1.0\"/>\n"//$NON-NLS-1$
 					+ "</smooks-resource-list>"; //$NON-NLS-1$
 		}
-		if (SmooksConstants.VERSION_1_1.equals(version) || SmooksConstants.VERSION_1_2.equals(version)) {
+		if (SmooksConstants.VERSION_1_1.equals(version)) {
 			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
-					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.1.xsd\">\n"//$NON-NLS-1$
+					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.1.xsd\" xmlns:graph = \"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\">\n"//$NON-NLS-1$
 					+ "		<params>\n"//$NON-NLS-1$
 					+ "			<param name=\"stream.filter.type\">SAX</param>\n"//$NON-NLS-1$
 					+ "		</params>\n"//$NON-NLS-1$
+					+ "		<graph:smooks-graphics-ext platformVersion = \"1.1\"/>\n"//$NON-NLS-1$
+					+ "</smooks-resource-list>"; //$NON-NLS-1$
+		}
+		if (SmooksConstants.VERSION_1_2.equals(version)) {
+			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
+					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.1.xsd\" xmlns:graph = \"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\">\n"//$NON-NLS-1$
+					+ "		<params>\n"//$NON-NLS-1$
+					+ "			<param name=\"stream.filter.type\">SAX</param>\n"//$NON-NLS-1$
+					+ "		</params>\n"//$NON-NLS-1$
+					+ "		<graph:smooks-graphics-ext platformVersion = \"1.2\"/>\n"//$NON-NLS-1$
 					+ "</smooks-resource-list>"; //$NON-NLS-1$
 		}
 		return new ByteArrayInputStream(contents.getBytes());

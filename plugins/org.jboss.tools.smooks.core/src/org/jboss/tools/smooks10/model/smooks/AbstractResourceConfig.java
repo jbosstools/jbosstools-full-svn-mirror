@@ -6,7 +6,6 @@
  */
 package org.jboss.tools.smooks10.model.smooks;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -19,5 +18,5 @@ import org.eclipse.emf.ecore.EObject;
  *        extendedMetaData="name='abstract-resource-config' kind='empty'"
  * @generated
  */
-public interface AbstractResourceConfig extends EObject {
+public interface AbstractResourceConfig extends AbstractType {
 } // AbstractResourceConfig

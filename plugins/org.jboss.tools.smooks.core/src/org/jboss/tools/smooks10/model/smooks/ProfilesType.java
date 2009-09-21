@@ -8,8 +8,6 @@ package org.jboss.tools.smooks10.model.smooks;
 
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Profiles Type</b></em>'.
@@ -30,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='profiles_._type' kind='elementOnly'"
  * @generated
  */
-public interface ProfilesType extends EObject {
+public interface ProfilesType extends AbstractType {
 	/**
 	 * Returns the value of the '<em><b>Profile</b></em>' containment reference list.
 	 * The list contents are of type {@link org.jboss.tools.smooks10.model.smooks.ProfileType}.

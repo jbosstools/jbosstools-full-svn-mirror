@@ -26,19 +26,15 @@ public class StructuredDataSelectionWizardDailog extends WizardDialog {
 
 	protected SmooksGraphicsExtType smooksGraphicsExtType;
 
-	private SmooksMultiFormEditor formEditor;
-
 	private String type = null;
 
 	private String path = null;
 
 	private Properties properties = null;
 
-	public StructuredDataSelectionWizardDailog(Shell parentShell, IWizard newWizard, SmooksGraphicsExtType extType,
-			SmooksMultiFormEditor formEditor) {
+	public StructuredDataSelectionWizardDailog(Shell parentShell, IWizard newWizard, SmooksGraphicsExtType extType) {
 		super(parentShell, newWizard);
 		this.setSmooksGraphicsExtType(extType);
-		this.formEditor = formEditor;
 	}
 
 	public IStructuredDataSelectionWizard getCurrentCreationWizard() {
@@ -49,13 +45,13 @@ public class StructuredDataSelectionWizardDailog extends WizardDialog {
 		return null;
 	}
 
-	public SmooksMultiFormEditor getFormEditor() {
-		return formEditor;
-	}
-
-	public void setFormEditor(SmooksMultiFormEditor formEditor) {
-		this.formEditor = formEditor;
-	}
+//	public SmooksMultiFormEditor getFormEditor() {
+//		return formEditor;
+//	}
+//
+//	public void setFormEditor(SmooksMultiFormEditor formEditor) {
+//		this.formEditor = formEditor;
+//	}
 
 	/**
 	 * @return the smooksGraphicsExtType

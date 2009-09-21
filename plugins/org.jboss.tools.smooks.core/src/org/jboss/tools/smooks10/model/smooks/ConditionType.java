@@ -6,7 +6,6 @@
  */
 package org.jboss.tools.smooks10.model.smooks;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='condition_._type' kind='simple'"
  * @generated
  */
-public interface ConditionType extends EObject {
+public interface ConditionType extends AbstractType {
 	/**
 	 * Returns the value of the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -59,6 +58,7 @@ public interface ConditionType extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Evaluator</b></em>' attribute.
+	 * The default value is <code>"org.milyn.javabean.expression.BeanMapExpressionEvaluator"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Evaluator</em>' attribute isn't clear,
@@ -66,9 +66,11 @@ public interface ConditionType extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Evaluator</em>' attribute.
+	 * @see #isSetEvaluator()
+	 * @see #unsetEvaluator()
 	 * @see #setEvaluator(String)
 	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#getConditionType_Evaluator()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
+	 * @model default="org.milyn.javabean.expression.BeanMapExpressionEvaluator" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='evaluator'"
 	 * @generated
 	 */
@@ -79,9 +81,34 @@ public interface ConditionType extends EObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Evaluator</em>' attribute.
+	 * @see #isSetEvaluator()
+	 * @see #unsetEvaluator()
 	 * @see #getEvaluator()
 	 * @generated
 	 */
 	void setEvaluator(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.jboss.tools.smooks10.model.smooks.ConditionType#getEvaluator <em>Evaluator</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetEvaluator()
+	 * @see #getEvaluator()
+	 * @see #setEvaluator(String)
+	 * @generated
+	 */
+	void unsetEvaluator();
+
+	/**
+	 * Returns whether the value of the '{@link org.jboss.tools.smooks10.model.smooks.ConditionType#getEvaluator <em>Evaluator</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Evaluator</em>' attribute is set.
+	 * @see #unsetEvaluator()
+	 * @see #getEvaluator()
+	 * @see #setEvaluator(String)
+	 * @generated
+	 */
+	boolean isSetEvaluator();
 
 } // ConditionType

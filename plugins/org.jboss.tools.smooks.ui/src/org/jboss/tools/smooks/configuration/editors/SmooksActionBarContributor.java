@@ -74,6 +74,7 @@ import org.jboss.tools.smooks.configuration.editors.actions.Scripting11ActionGro
 import org.jboss.tools.smooks.configuration.editors.actions.SeparatorActionGrouper;
 import org.jboss.tools.smooks.configuration.editors.actions.Templating11ActionGrouper;
 import org.jboss.tools.smooks.configuration.editors.actions.Validation10ActionGrouper;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.medi.EdiMap;
 import org.jboss.tools.smooks.model.medi.MEdiFactory;
 import org.jboss.tools.smooks.model.medi.MEdiPackage;
@@ -229,7 +230,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	}
 
 	protected void addMapNode() {
-		SmooksMultiFormEditor formEditor = (SmooksMultiFormEditor) this.getActiveEditor();
+		ISmooksModelProvider formEditor = (ISmooksModelProvider) this.getActiveEditor();
 		EObject model = formEditor.getSmooksModel();
 		if (model instanceof org.jboss.tools.smooks.model.medi.DocumentRoot) {
 			EdiMap mappingNode = MEdiFactory.eINSTANCE.createEdiMap();
@@ -240,7 +241,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	}
 
 	protected void addSmooks10ResourceList() {
-		SmooksMultiFormEditor formEditor = (SmooksMultiFormEditor) this.getActiveEditor();
+		ISmooksModelProvider formEditor = (ISmooksModelProvider) this.getActiveEditor();
 		EObject model = formEditor.getSmooksModel();
 		if (model instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
 			org.jboss.tools.smooks10.model.smooks.SmooksResourceListType resourceList = org.jboss.tools.smooks10.model.smooks.SmooksFactory.eINSTANCE
@@ -253,7 +254,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	}
 
 	protected void addSmooks11ResourceList() {
-		SmooksMultiFormEditor formEditor = (SmooksMultiFormEditor) this.getActiveEditor();
+		ISmooksModelProvider formEditor = (ISmooksModelProvider) this.getActiveEditor();
 		EObject model = formEditor.getSmooksModel();
 		if (model instanceof DocumentRoot) {
 			SmooksResourceListType resourceList = SmooksFactory.eINSTANCE.createSmooksResourceListType();
@@ -754,7 +755,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		addMap10ResourceListAction.setEnabled(false);
 		addSmooks10ResourceListAction.setEnabled(false);
 
-		SmooksMultiFormEditor formEditor = (SmooksMultiFormEditor) this.getActiveEditor();
+		ISmooksModelProvider formEditor = (ISmooksModelProvider) this.getActiveEditor();
 		EObject model = formEditor.getSmooksModel();
 		if (model instanceof DocumentRoot) {
 			SmooksResourceListType resourceList = SmooksFactory.eINSTANCE.createSmooksResourceListType();

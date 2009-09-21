@@ -11,10 +11,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.jboss.tools.smooks10.model.smooks.ConditionType;
 import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +29,7 @@ import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
  *
  * @generated
  */
-public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
+public class ConditionTypeImpl extends AbstractTypeImpl implements ConditionType {
 	/**
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -59,7 +58,7 @@ public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String EVALUATOR_EDEFAULT = null;
+	protected static final String EVALUATOR_EDEFAULT = "org.milyn.javabean.expression.BeanMapExpressionEvaluator";
 
 	/**
 	 * The cached value of the '{@link #getEvaluator() <em>Evaluator</em>}' attribute.
@@ -70,6 +69,15 @@ public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 	 * @ordered
 	 */
 	protected String evaluator = EVALUATOR_EDEFAULT;
+
+	/**
+	 * This is true if the Evaluator attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean evaluatorESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -128,8 +136,33 @@ public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 	public void setEvaluator(String newEvaluator) {
 		String oldEvaluator = evaluator;
 		evaluator = newEvaluator;
+		boolean oldEvaluatorESet = evaluatorESet;
+		evaluatorESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SmooksPackage.CONDITION_TYPE__EVALUATOR, oldEvaluator, evaluator));
+			eNotify(new ENotificationImpl(this, Notification.SET, SmooksPackage.CONDITION_TYPE__EVALUATOR, oldEvaluator, evaluator, !oldEvaluatorESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetEvaluator() {
+		String oldEvaluator = evaluator;
+		boolean oldEvaluatorESet = evaluatorESet;
+		evaluator = EVALUATOR_EDEFAULT;
+		evaluatorESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, SmooksPackage.CONDITION_TYPE__EVALUATOR, oldEvaluator, EVALUATOR_EDEFAULT, oldEvaluatorESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetEvaluator() {
+		return evaluatorESet;
 	}
 
 	/**
@@ -178,7 +211,7 @@ public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 				setValue(VALUE_EDEFAULT);
 				return;
 			case SmooksPackage.CONDITION_TYPE__EVALUATOR:
-				setEvaluator(EVALUATOR_EDEFAULT);
+				unsetEvaluator();
 				return;
 		}
 		super.eUnset(featureID);
@@ -195,7 +228,7 @@ public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 			case SmooksPackage.CONDITION_TYPE__VALUE:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 			case SmooksPackage.CONDITION_TYPE__EVALUATOR:
-				return EVALUATOR_EDEFAULT == null ? evaluator != null : !EVALUATOR_EDEFAULT.equals(evaluator);
+				return isSetEvaluator();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -213,7 +246,7 @@ public class ConditionTypeImpl extends EObjectImpl implements ConditionType {
 		result.append(" (value: ");
 		result.append(value);
 		result.append(", evaluator: ");
-		result.append(evaluator);
+		if (evaluatorESet) result.append(evaluator); else result.append("<unset>");
 		result.append(')');
 		return result.toString();
 	}

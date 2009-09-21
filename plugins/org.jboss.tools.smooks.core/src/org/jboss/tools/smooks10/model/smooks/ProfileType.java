@@ -6,7 +6,6 @@
  */
 package org.jboss.tools.smooks10.model.smooks;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='profile_._type' kind='simple'"
  * @generated
  */
-public interface ProfileType extends EObject {
+public interface ProfileType extends AbstractType {
 	/**
 	 * Returns the value of the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->

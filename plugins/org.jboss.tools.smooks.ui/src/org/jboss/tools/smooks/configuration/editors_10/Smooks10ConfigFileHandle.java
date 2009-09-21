@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors;
+package org.jboss.tools.smooks.configuration.editors_10;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -17,19 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.jboss.tools.smooks.model.calc.CalcPackage;
-import org.jboss.tools.smooks.model.csv.CsvPackage;
-import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
-import org.jboss.tools.smooks.model.edi.EdiPackage;
-import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
-import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
-import org.jboss.tools.smooks.model.groovy.GroovyPackage;
-import org.jboss.tools.smooks.model.iorouting.IoroutingPackage;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
-import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
-import org.jboss.tools.smooks.model.json.JsonPackage;
-import org.jboss.tools.smooks.model.medi.MEdiPackage;
-import org.jboss.tools.smooks.model.xsl.XslPackage;
+import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -42,7 +30,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author Dart dpeng@redhat.com
  *
  */
-public class SmooksConfigFileHandle extends DefaultHandler {
+public class Smooks10ConfigFileHandle extends DefaultHandler {
 	private boolean correctContentFile = false;
 
 	//		private static final String SMOOKS_RESOURCE_LIST = "smooks-resource-list"; //$NON-NLS-1$
@@ -51,27 +39,14 @@ public class SmooksConfigFileHandle extends DefaultHandler {
 
 	private SAXParserFactory fFactory;
 	
-	public SmooksConfigFileHandle(){
+	public Smooks10ConfigFileHandle(){
 		super();
 		smooksSpportURI = createSupportURI();
 	}
 	
 	protected String[] createSupportURI(){
 		return new String[]{
-				org.jboss.tools.smooks.model.smooks.SmooksPackage.eNS_URI,
-				EdiPackage.eNS_URI,
-				XslPackage.eNS_URI,
-				FreemarkerPackage.eNS_URI,
-				GroovyPackage.eNS_URI,
-				MEdiPackage.eNS_URI,
-				CalcPackage.eNS_URI,
-				CsvPackage.eNS_URI,
-				DatasourcePackage.eNS_URI,
-				FileRoutingPackage.eNS_URI,
-				IoroutingPackage.eNS_URI,
-				JavabeanPackage.eNS_URI,
-				JmsroutingPackage.eNS_URI,
-				JsonPackage.eNS_URI,
+				SmooksPackage.eNS_URI,
 			};
 	}
 

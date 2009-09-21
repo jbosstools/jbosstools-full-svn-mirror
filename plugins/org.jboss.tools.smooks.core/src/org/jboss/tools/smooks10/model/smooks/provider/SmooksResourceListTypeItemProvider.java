@@ -13,8 +13,6 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
@@ -27,12 +25,11 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
 import org.jboss.tools.smooks10.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks10.model.smooks.SmooksResourceListType;
+
 
 /**
  * This is the item provider adapter for a {@link org.jboss.tools.smooks10.model.smooks.SmooksResourceListType} object.
@@ -41,7 +38,7 @@ import org.jboss.tools.smooks10.model.smooks.SmooksResourceListType;
  * @generated
  */
 public class SmooksResourceListTypeItemProvider
-	extends ItemProviderAdapter
+	extends AbstractTypeItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -243,26 +240,15 @@ public class SmooksResourceListTypeItemProvider
 			(createChildParameter
 				(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
 				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__IMPORT,
+					(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__IMPORT,
 					 SmooksFactory.eINSTANCE.createImportType())));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
 				 FeatureMapUtil.createEntry
-					(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE_CONFIG,
+					(SmooksPackage.Literals.SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG,
 					 SmooksFactory.eINSTANCE.createResourceConfigType())));
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public ResourceLocator getResourceLocator() {
-		return Smooks_1_0EditPlugin.INSTANCE;
 	}
 
 }

@@ -809,6 +809,7 @@ public class SmooksUIUtils {
 			Object value = getEditValue(itemPropertyDescriptor, model);
 			if (value != null) {
 				editValue = value.toString();
+			}else{
 			}
 		}
 
@@ -877,7 +878,7 @@ public class SmooksUIUtils {
 		if (model != null && model instanceof EObject && itemPropertyDescriptor != null) {
 			valueIsSet = ((EObject) model).eIsSet((EAttribute) itemPropertyDescriptor.getFeature(model));
 		}
-		if (editValue != null && valueIsSet) {
+		if (editValue != null) {
 			valueText.setText(editValue);
 			if (editValue.length() > 0 && section != null) {
 				section.setExpanded(true);

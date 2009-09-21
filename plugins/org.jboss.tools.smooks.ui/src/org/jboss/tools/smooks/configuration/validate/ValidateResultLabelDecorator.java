@@ -112,12 +112,11 @@ public class ValidateResultLabelDecorator extends LabelDecorator implements ILab
 		}
 		List<?> data = diagnostic.getData();
 		for (Object object : data) {
+			object = AdapterFactoryEditingDomain.unwrap(object);
 			if (object instanceof EObject) {
 				EObject eObject = (EObject) object;
-				if (eObject instanceof AbstractAnyType) {
-					if (eObject == model) {
-						return diagnostic.getSeverity();
-					}
+				if (eObject.equals(model)) {
+					return diagnostic.getSeverity();
 				}
 			}
 		}

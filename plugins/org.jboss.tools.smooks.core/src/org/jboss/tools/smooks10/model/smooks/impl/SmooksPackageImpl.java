@@ -10,20 +10,24 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.jboss.tools.smooks10.model.smooks.AbstractResourceConfig;
+import org.jboss.tools.smooks10.model.smooks.AbstractType;
 import org.jboss.tools.smooks10.model.smooks.ConditionType;
-import org.jboss.tools.smooks10.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks10.model.smooks.ImportType;
 import org.jboss.tools.smooks10.model.smooks.ParamType;
 import org.jboss.tools.smooks10.model.smooks.ProfileType;
 import org.jboss.tools.smooks10.model.smooks.ProfilesType;
 import org.jboss.tools.smooks10.model.smooks.ResourceConfigType;
 import org.jboss.tools.smooks10.model.smooks.ResourceType;
+import org.jboss.tools.smooks10.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks10.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks10.model.smooks.SmooksResourceListType;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -51,7 +55,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass documentRootEClass = null;
+	private EClass smooks10DocumentRootEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -103,6 +107,13 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	private EClass smooksResourceListTypeEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass abstractTypeEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -113,7 +124,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see smooks.SmooksPackage#eNS_URI
+	 * @see org.jboss.tools.smooks10.model.smooks.SmooksPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
@@ -129,20 +140,10 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this
-	 * model, and for any others upon which it depends.  Simple
-	 * dependencies are satisfied by calling this method on all
-	 * dependent packages before doing anything else.  This method drives
-	 * initialization for interdependent packages directly, in parallel
-	 * with this package, itself.
-	 * <p>Of this package and its interdependencies, all packages which
-	 * have not yet been registered by their URI values are first created
-	 * and registered.  The packages are then initialized in two steps:
-	 * meta-model objects for all of the packages are created before any
-	 * are initialized, since one package's meta-model objects may refer to
-	 * those of another.
-	 * <p>Invocation of this method will not affect any packages that have
-	 * already been initialized.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 * 
+	 * <p>This method is used to initialize {@link SmooksPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #eNS_URI
@@ -154,7 +155,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		if (isInited) return (SmooksPackage)EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI);
 
 		// Obtain or create and register package
-		SmooksPackageImpl theSmooksPackage = (SmooksPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof SmooksPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI) : new SmooksPackageImpl());
+		SmooksPackageImpl theSmooksPackage = (SmooksPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SmooksPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new SmooksPackageImpl());
 
 		isInited = true;
 
@@ -170,6 +171,9 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		// Mark meta-data to indicate it can't be changed
 		theSmooksPackage.freeze();
 
+  
+		// Update the registry and return the package
+		EPackage.Registry.INSTANCE.put(SmooksPackage.eNS_URI, theSmooksPackage);
 		return theSmooksPackage;
 	}
 
@@ -214,8 +218,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getDocumentRoot() {
-		return documentRootEClass;
+	public EClass getSmooks10DocumentRoot() {
+		return smooks10DocumentRootEClass;
 	}
 
 	/**
@@ -223,8 +227,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Mixed() {
-		return (EAttribute)documentRootEClass.getEStructuralFeatures().get(0);
+	public EAttribute getSmooks10DocumentRoot_Mixed() {
+		return (EAttribute)smooks10DocumentRootEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -232,8 +236,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_XMLNSPrefixMap() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(1);
+	public EReference getSmooks10DocumentRoot_XMLNSPrefixMap() {
+		return (EReference)smooks10DocumentRootEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -241,8 +245,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_XSISchemaLocation() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(2);
+	public EReference getSmooks10DocumentRoot_XSISchemaLocation() {
+		return (EReference)smooks10DocumentRootEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -250,8 +254,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_AbstractResourceConfig() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(3);
+	public EReference getSmooks10DocumentRoot_AbstractResourceConfig() {
+		return (EReference)smooks10DocumentRootEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -259,8 +263,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Condition() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(4);
+	public EReference getSmooks10DocumentRoot_Condition() {
+		return (EReference)smooks10DocumentRootEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -268,8 +272,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Import() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(5);
+	public EReference getSmooks10DocumentRoot_Import() {
+		return (EReference)smooks10DocumentRootEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -277,8 +281,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Param() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(6);
+	public EReference getSmooks10DocumentRoot_Param() {
+		return (EReference)smooks10DocumentRootEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -286,8 +290,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Profile() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(7);
+	public EReference getSmooks10DocumentRoot_Profile() {
+		return (EReference)smooks10DocumentRootEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -295,8 +299,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Profiles() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(8);
+	public EReference getSmooks10DocumentRoot_Profiles() {
+		return (EReference)smooks10DocumentRootEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -304,8 +308,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Resource() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(9);
+	public EReference getSmooks10DocumentRoot_Resource() {
+		return (EReference)smooks10DocumentRootEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -313,8 +317,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_ResourceConfig() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(10);
+	public EReference getSmooks10DocumentRoot_ResourceConfig() {
+		return (EReference)smooks10DocumentRootEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -322,8 +326,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_SmooksResourceList() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(11);
+	public EReference getSmooks10DocumentRoot_SmooksResourceList() {
+		return (EReference)smooks10DocumentRootEClass.getEStructuralFeatures().get(11);
 	}
 
 	/**
@@ -574,6 +578,15 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getAbstractType() {
+		return abstractTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public SmooksFactory getSmooksFactory() {
 		return (SmooksFactory)getEFactoryInstance();
 	}
@@ -603,19 +616,19 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		createEAttribute(conditionTypeEClass, CONDITION_TYPE__VALUE);
 		createEAttribute(conditionTypeEClass, CONDITION_TYPE__EVALUATOR);
 
-		documentRootEClass = createEClass(DOCUMENT_ROOT);
-		createEAttribute(documentRootEClass, DOCUMENT_ROOT__MIXED);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__CONDITION);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__IMPORT);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__PARAM);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__PROFILE);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__PROFILES);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__RESOURCE);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__RESOURCE_CONFIG);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST);
+		smooks10DocumentRootEClass = createEClass(SMOOKS10_DOCUMENT_ROOT);
+		createEAttribute(smooks10DocumentRootEClass, SMOOKS10_DOCUMENT_ROOT__MIXED);
+		createEReference(smooks10DocumentRootEClass, SMOOKS10_DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
+		createEReference(smooks10DocumentRootEClass, SMOOKS10_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
+		createEReference(smooks10DocumentRootEClass, SMOOKS10_DOCUMENT_ROOT__ABSTRACT_RESOURCE_CONFIG);
+		createEReference(smooks10DocumentRootEClass, SMOOKS10_DOCUMENT_ROOT__CONDITION);
+		createEReference(smooks10DocumentRootEClass, SMOOKS10_DOCUMENT_ROOT__IMPORT);
+		createEReference(smooks10DocumentRootEClass, SMOOKS10_DOCUMENT_ROOT__PARAM);
+		createEReference(smooks10DocumentRootEClass, SMOOKS10_DOCUMENT_ROOT__PROFILE);
+		createEReference(smooks10DocumentRootEClass, SMOOKS10_DOCUMENT_ROOT__PROFILES);
+		createEReference(smooks10DocumentRootEClass, SMOOKS10_DOCUMENT_ROOT__RESOURCE);
+		createEReference(smooks10DocumentRootEClass, SMOOKS10_DOCUMENT_ROOT__RESOURCE_CONFIG);
+		createEReference(smooks10DocumentRootEClass, SMOOKS10_DOCUMENT_ROOT__SMOOKS_RESOURCE_LIST);
 
 		importTypeEClass = createEClass(IMPORT_TYPE);
 		createEAttribute(importTypeEClass, IMPORT_TYPE__FILE);
@@ -650,6 +663,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		createEAttribute(smooksResourceListTypeEClass, SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR);
 		createEAttribute(smooksResourceListTypeEClass, SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR_NAMESPACE);
 		createEAttribute(smooksResourceListTypeEClass, SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_TARGET_PROFILE);
+
+		abstractTypeEClass = createEClass(ABSTRACT_TYPE);
 	}
 
 	/**
@@ -683,10 +698,16 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		abstractResourceConfigEClass.getESuperTypes().add(this.getAbstractType());
+		conditionTypeEClass.getESuperTypes().add(this.getAbstractType());
 		importTypeEClass.getESuperTypes().add(this.getAbstractResourceConfig());
-		paramTypeEClass.getESuperTypes().add(theXMLTypePackage.getAnyType());
+		paramTypeEClass.getESuperTypes().add(this.getAbstractType());
+		profilesTypeEClass.getESuperTypes().add(this.getAbstractType());
+		profileTypeEClass.getESuperTypes().add(this.getAbstractType());
 		resourceConfigTypeEClass.getESuperTypes().add(this.getAbstractResourceConfig());
-		resourceTypeEClass.getESuperTypes().add(theXMLTypePackage.getAnyType());
+		resourceTypeEClass.getESuperTypes().add(this.getAbstractType());
+		smooksResourceListTypeEClass.getESuperTypes().add(this.getAbstractType());
+		abstractTypeEClass.getESuperTypes().add(theXMLTypePackage.getAnyType());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(abstractResourceConfigEClass, AbstractResourceConfig.class, "AbstractResourceConfig", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -695,19 +716,19 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		initEAttribute(getConditionType_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, ConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getConditionType_Evaluator(), theXMLTypePackage.getString(), "evaluator", "org.milyn.javabean.expression.BeanMapExpressionEvaluator", 0, 1, ConditionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_AbstractResourceConfig(), this.getAbstractResourceConfig(), null, "abstractResourceConfig", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_Condition(), this.getConditionType(), null, "condition", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_Import(), this.getImportType(), null, "import", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_Param(), this.getParamType(), null, "param", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_Profile(), this.getProfileType(), null, "profile", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_Profiles(), this.getProfilesType(), null, "profiles", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_Resource(), this.getResourceType(), null, "resource", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_ResourceConfig(), this.getResourceConfigType(), null, "resourceConfig", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_SmooksResourceList(), this.getSmooksResourceListType(), null, "smooksResourceList", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEClass(smooks10DocumentRootEClass, DocumentRoot.class, "Smooks10DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSmooks10DocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooks10DocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooks10DocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooks10DocumentRoot_AbstractResourceConfig(), this.getAbstractResourceConfig(), null, "abstractResourceConfig", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooks10DocumentRoot_Condition(), this.getConditionType(), null, "condition", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooks10DocumentRoot_Import(), this.getImportType(), null, "import", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooks10DocumentRoot_Param(), this.getParamType(), null, "param", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooks10DocumentRoot_Profile(), this.getProfileType(), null, "profile", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooks10DocumentRoot_Profiles(), this.getProfilesType(), null, "profiles", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooks10DocumentRoot_Resource(), this.getResourceType(), null, "resource", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooks10DocumentRoot_ResourceConfig(), this.getResourceConfigType(), null, "resourceConfig", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooks10DocumentRoot_SmooksResourceList(), this.getSmooksResourceListType(), null, "smooksResourceList", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(importTypeEClass, ImportType.class, "ImportType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getImportType_File(), theXMLTypePackage.getAnyURI(), "file", null, 1, 1, ImportType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -742,6 +763,8 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		initEAttribute(getSmooksResourceListType_DefaultSelector(), theXMLTypePackage.getString(), "defaultSelector", null, 0, 1, SmooksResourceListType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSmooksResourceListType_DefaultSelectorNamespace(), theXMLTypePackage.getAnyURI(), "defaultSelectorNamespace", null, 0, 1, SmooksResourceListType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSmooksResourceListType_DefaultTargetProfile(), theXMLTypePackage.getString(), "defaultTargetProfile", null, 0, 1, SmooksResourceListType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(abstractTypeEClass, AbstractType.class, "AbstractType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -788,35 +811,35 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 			 "name", "evaluator"
 		   });		
 		addAnnotation
-		  (documentRootEClass, 
+		  (smooks10DocumentRootEClass, 
 		   source, 
 		   new String[] {
 			 "name", "",
 			 "kind", "mixed"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Mixed(), 
+		  (getSmooks10DocumentRoot_Mixed(), 
 		   source, 
 		   new String[] {
 			 "kind", "elementWildcard",
 			 "name", ":mixed"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_XMLNSPrefixMap(), 
+		  (getSmooks10DocumentRoot_XMLNSPrefixMap(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "xmlns:prefix"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_XSISchemaLocation(), 
+		  (getSmooks10DocumentRoot_XSISchemaLocation(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "xsi:schemaLocation"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_AbstractResourceConfig(), 
+		  (getSmooks10DocumentRoot_AbstractResourceConfig(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -824,7 +847,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Condition(), 
+		  (getSmooks10DocumentRoot_Condition(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -832,7 +855,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Import(), 
+		  (getSmooks10DocumentRoot_Import(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -841,7 +864,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 			 "affiliation", "abstract-resource-config"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Param(), 
+		  (getSmooks10DocumentRoot_Param(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -849,7 +872,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Profile(), 
+		  (getSmooks10DocumentRoot_Profile(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -857,7 +880,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Profiles(), 
+		  (getSmooks10DocumentRoot_Profiles(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -865,7 +888,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Resource(), 
+		  (getSmooks10DocumentRoot_Resource(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -873,7 +896,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_ResourceConfig(), 
+		  (getSmooks10DocumentRoot_ResourceConfig(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -882,7 +905,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 			 "affiliation", "abstract-resource-config"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_SmooksResourceList(), 
+		  (getSmooks10DocumentRoot_SmooksResourceList(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -1038,7 +1061,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		   source, 
 		   new String[] {
 			 "name", "smooks-resource-list_._type",
-			 "kind", "elementOnly"
+			 "kind", "mixed"
 		   });		
 		addAnnotation
 		  (getSmooksResourceListType_Profiles(), 
