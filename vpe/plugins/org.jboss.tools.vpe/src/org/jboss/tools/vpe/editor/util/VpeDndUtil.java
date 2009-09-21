@@ -18,6 +18,7 @@ import org.jboss.tools.common.model.XModelException;
 import org.jboss.tools.common.model.ui.dnd.DnDUtil;
 import org.jboss.tools.common.model.ui.editor.IModelObjectEditorInput;
 import org.jboss.tools.common.model.ui.views.palette.PaletteInsertHelper;
+import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPPaletteInsertHelper;
 import org.jboss.tools.vpe.VpePlugin;
 import org.mozilla.interfaces.nsIFile;
 import org.mozilla.interfaces.nsISupports;
@@ -42,7 +43,7 @@ public class VpeDndUtil {
 
 		try {
 		    DnDUtil.paste(input.getXModelObject(), properties);
-		    PaletteInsertHelper.insertIntoEditor(viewer, properties);
+		    JSPPaletteInsertHelper.getInstance().insertIntoEditor(viewer, properties);
 		} catch (XModelException ex) {
 		    VpePlugin.getPluginLog().logError(ex);
 		}

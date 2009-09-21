@@ -19,6 +19,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.ui.views.palette.PaletteInsertHelper;
+import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPPaletteInsertHelper;
 import org.jboss.tools.jst.web.tld.TLDToPaletteHelper;
 import org.jboss.tools.jst.web.tld.URIConstants;
 import org.jboss.tools.vpe.editor.menu.InsertType;
@@ -215,7 +216,7 @@ public class InsertAction2 extends Action {
 		// if(((Node)region).getNodeType() == Node.ELEMENT_NODE)
 		p.put(PaletteInsertHelper.PROPOPERTY_SELECTION_PROVIDER,
 				selectionProvider);
-		PaletteInsertHelper.insertIntoEditor(sourceEditor.getTextViewer(), p);
+		JSPPaletteInsertHelper.getInstance().insertIntoEditor(sourceEditor.getTextViewer(), p);
 	}
 
 	/**

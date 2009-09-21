@@ -26,6 +26,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import org.jboss.tools.common.model.ui.views.palette.PaletteInsertHelper;
+import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPPaletteInsertHelper;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.template.textformating.FormatData;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
@@ -121,7 +122,7 @@ abstract public class FormatHandler implements IFormatHandler {
 
 		p.put("selectionProvider", selProvider); //$NON-NLS-1$
 
-		PaletteInsertHelper.insertIntoEditor(viewer, p);
+		JSPPaletteInsertHelper.getInstance().insertIntoEditor(viewer, p);
 
 		String documentText = document.get();
 		int newStartOffset = documentText.substring(startOffcet).indexOf(nodeSource);
