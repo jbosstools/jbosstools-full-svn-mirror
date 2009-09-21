@@ -90,6 +90,7 @@ import org.jboss.tools.common.model.util.XModelTreeListenerSWTSync;
 import org.jboss.tools.common.resref.core.ResourceReferenceListListener;
 import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
 import org.jboss.tools.jst.jsp.editor.IVisualController;
+import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPPaletteInsertHelper;
 import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPTagProposalFactory;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.jst.web.tld.TLDUtil;
@@ -2233,7 +2234,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		String defaultPrefix = (parent == null) ? "" : parent.getAttributeValue(URIConstants.DEFAULT_PREFIX); //$NON-NLS-1$
 
 		String[] texts = new String[] { "<" + tagname + ">" }; //$NON-NLS-1$ //$NON-NLS-2$
-		PaletteInsertHelper.applyPrefix(texts, sourceEditor, tagname, uri,
+		JSPPaletteInsertHelper.applyPrefix(texts, sourceEditor, tagname, uri,
 				defaultPrefix);
 		tagname = texts[0].substring(1, texts[0].length() - 1);
 

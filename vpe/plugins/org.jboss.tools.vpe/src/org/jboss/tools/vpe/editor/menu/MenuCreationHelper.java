@@ -32,6 +32,7 @@ import org.jboss.tools.common.model.ui.objecteditor.ExtendedPropertiesWizard;
 import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.common.model.ui.views.palette.PaletteInsertHelper;
 import org.jboss.tools.common.model.util.ModelFeatureFactory;
+import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPPaletteInsertHelper;
 import org.jboss.tools.jst.web.tld.URIConstants;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
@@ -509,7 +510,7 @@ public class MenuCreationHelper {
 		String tagName = item.getAttributeValue("name"); //$NON-NLS-1$
 		String[] texts = new String[] { "<" + tagName + ">" }; //$NON-NLS-1$ //$NON-NLS-2$
 		if (tagName.indexOf("taglib") < 0) { //$NON-NLS-1$
-			PaletteInsertHelper.applyPrefix(texts, sourceEditor, tagName, uri, defaultPrefix);
+			JSPPaletteInsertHelper.applyPrefix(texts, sourceEditor, tagName, uri, defaultPrefix);
 		}
 		tagName = texts[0];
 		
