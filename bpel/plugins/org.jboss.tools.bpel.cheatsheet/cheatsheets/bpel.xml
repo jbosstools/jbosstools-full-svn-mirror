@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<cheatsheet title="JBoss BPEL Tutorial">
+
+  <intro>
+      <description>
+      Learn how to use JBoss BPEL editor.
+      </description>
+  </intro>
+
+  <item title="Create a BPEL Project" skip="true">
+      <description>
+      If you want to deploy a bpel staff into JBoss BPEL server, the first step, you need create a BPEL project.
+Of course, if you only need to draw a BPEL process, you don&apos;t need to do the step.
+      </description>
+      <subitem
+            label="Create a BPEL project by selecting &quot;File &gt; New &gt; Project... &gt; BPEL 2.0 &gt; BPEL Project&quot; from the menu bar."
+            skip="false">
+      </subitem>
+      <subitem label="On the first page of the &quot;New BPEL Project&quot; Wizard enter a project name in the &quot;Project Name&quot;  field. Click &quot;Finish&quot; button.">
+      </subitem>
+  </item>
+   
+  <item title="Create a BPEL Process" skip="true">
+    <description>
+    After create a BPEL project,  you can create a BPEL process file in the project. 
+    </description>
+    <subitem
+          label="Create a BPEL process file  by selecting &quot;File &gt; New &gt; Others... &gt; BPEL 2.0 &gt; New BPEL Process File&quot; from the menu bar.">
+	</subitem>
+	<subitem label="On the first page of the &quot;Create a BPEL Process File&quot; Wizard enter a process name in the &quot;BPEL Process Name&quot;  field, a process&apos;s namesapce in the &quot;Namespace&quot; field, and a process&apos;s template in the &quot;Template&quot; field. Click &quot;Next&quot; button.">
+	</subitem>
+	<subitem label="On the second page of the &quot;Create a BPEL Process File&quot; Wizard select the &quot;bpel&quot; folder of the BPEL project. Click &quot;Finish&quot; button.">
+	</subitem>
+  </item>
+
+  <item title="Edit the BPEL Process file" skip="true">
+    <description>
+       For getting a useful BPEL process, you need to edit the BPEL process file by adding some BPEL elements.<br/><br/>
+From the &quot;Palette&quot; view, you can add a BPEL element to the BPEL process by dragging and dropping it.<br/><br/>
+From the &quot;Properties&quot; view, you can edit the attributes of a BPEL element.<br/><br/>
+From the &quot;Tray of the BPEL editor&quot;, you can add a Partner link, Variable, Correlation Set or Message Exchange to the BPEL process.<br/><br/>
+If the &quot;Properties&quot; view and &quot;Palette&quot; view are not opened, you can open the views by right-clicking the BPEL editor and selecting &quot;Show in Properties&quot;, &quot;Show Palette in Palette view&quot;.
+    	 
+    </description>  
+  </item>
+  
+  <item title="Edit the WSDL file" skip="true">
+  <description>
+     For getting a runnable BPEL staff, beside the BPEL process file, you need a WSDL to describe how to use the BPEL process. As default, the system has genereted a WSDL for the BPEL staff. You need to edit it to support your BPEL project. <br/><br/>
+Open the WSDL using the WSDL editor, add &quot;Service&quot; and &quot;Binding&quot; by right-clicking on the WSDL editor, and set the attributes of them in the &quot;Properties&quot; view.
+  </description>
+  </item>
+  
+  <item title="Create a bpel-deploy.xml file" skip="true">
+      <description>
+         If you want to deploy a BPEL project to JBoss BPEL Runtime, you need to create a bpel-deploy.xml file.
+      </description>
+      <subitem label="Create a bpel-deploy.xml by selecting &quot;File &gt; New &gt; Other... &gt; BPEL 2.0 &gt; Apache ODE Deployment Descriptor&quot; from the menu bar.">
+	  </subitem>
+      <subitem label="On the first page of the &quot;Apache ODE Deployment Descriptor&quot; Wizard choose the &quot;bpel&quot; folder of a bpel project in the &quot;BPEL Project&quot;  field and enter &quot;bpel-deploy.xml&quot; in the &quot;File name&quot; field. Click &quot;Finish&quot; button.">
+	  </subitem>
+      <subitem label="Double-click the bpel-deploy.xml file to open it in ODE Descriptor Deployment Editor. In the &quot;Inbound Interfaces&quot; section, click the &quot;Associated Port&quot; column and  in the dropdown box select a BPEL port that is defined in the WSDL file.The Related Service and Binding Used columns should be automatically filled in. Save the bpel-deploy.xml file.">
+	  </subitem>
+  </item>  
+  
+  <item title="Create a JBoss BPEL Server" skip="true">
+      <description>
+         Suppose you have installed the JBoss BPEL Runtime-RiftSaw into a JBoss server, you can create a server in JBoss Tools for JBoss BPEL runtime.
+      </description>  
+      <subitem label="Open the &quot;JBoss Server&quot; view by selecting &quot;Windows &gt; Show View &gt; Other... &gt; Server &gt; JBoss Server view&quot; in the menu bar.">
+	  </subitem>
+      <subitem label="Right-click the JBoss Server view and select &quot;New &gt; Server&quot; to open the New Server Wizard">
+	  </subitem>
+      <subitem label="On the first page of the &quot;New Server&quot; Wizard select &quot;JBoss AS 5.1&quot; in the &quot;Select the server type&quot; field,  input a server name in the &quot;Server name&quot;  field and select a runtime in the &quot;Server runtime environment&quot; field. Click &quot;Next&quot; button.">
+	  </subitem>
+      <subitem label="On the second page of the &quot;New Server&quot; Wizard input your JBoss AS location in the &quot;JBoss AS Location&quot; field. Click &quot;Next&quot; button.">
+	  </subitem>
+      <subitem label="On the third page of the &quot;New Server&quot; Wizard select a BPEL resource in the left column, click &quot;Add &gt;&quot; button to add the BPEL resource to the right column. Click &quot;Finish&quot; button.">
+	  </subitem>
+  </item> 
+  
+  <item title="Deploy the BPEL Process into the JBoss BPEL Server" skip="true">
+      <description>
+         If you don&apos;t add a BPEL resource into the server in the third step of &quot;Create a JBoss BPEL Server&quot;, you can right-click on the server item in the &quot;JBoss Server&quot; view and select the &quot;Add and Removes...&quot;, then you can do the step as the third step of &quot;Create a JBoss BPEL Server&quot;.
+<br/><br/>
+After these steps, you can start the server to test your BPEL staff.
+      </description>
+  </item> 
+</cheatsheet>
