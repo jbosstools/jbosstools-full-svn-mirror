@@ -11,10 +11,7 @@
 
 package org.jboss.tools.vpe.editor.template;
 
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.wst.sse.core.StructuredModelManager;
-import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.document.NodeImpl;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
@@ -252,91 +249,72 @@ public class SelectionManager implements ISelectionManager {
 	 */
 	final public void refreshVisualSelection() {
 
-		IStructuredModel model = null;
-		try {
-			// checks for null, for case when we close editor and background
-			// update job is running
-			if (getSourceEditor().getTextViewer() == null) {
+		// checks for null, for case when we close editor and background
+		// update job is running
+		if (getSourceEditor().getTextViewer() == null) {
 
-				return;
+			return;
+		}
+
+		Point range = SelectionUtil
+				.getSourceSelectionRange(getSourceEditor());
+
+		if (range == null)
+			return;
+
+		int focusOffcetInSourceDocument = range.x;
+
+		int anchorOffcetInSourceDocument = focusOffcetInSourceDocument
+				+ range.y;
+		VpeNodeMapping nodeMapping = SelectionUtil
+				.getNodeMappingBySourceSelection(getSourceEditor(),
+						getDomMapping());
+
+		if (nodeMapping == null) {
+			return;
+		}
+
+		// visual node which will be selected
+		nsIDOMNode targetVisualNode;
+
+		// int visualNodeOffcet =
+		// TextUtil.visualPosition(((Node)targetSourceNode
+		// ).getNodeValue(),offcetReferenceToSourceNode);
+
+		// if mapping is elementMapping
+		
+		SelectionUtil.clearSelection(selectionController); 
+		
+		if (nodeMapping instanceof VpeElementMapping) {
+
+			VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
+
+			VpeTemplate template = elementMapping.getTemplate();
+
+			targetVisualNode = template.getVisualNodeBySourcePosition(
+					elementMapping, focusOffcetInSourceDocument,
+					anchorOffcetInSourceDocument, getDomMapping());
+
+			NodeData nodeData = template.getNodeData(targetVisualNode,
+					elementMapping.getElementData(), getDomMapping());
+			// we can restore cursor position only if we have nodeData and
+			// range.y==0
+			if (nodeData != null) {
+				// restore cursor position in source document
+				restoreVisualCursorPosition(template, nodeData,
+						focusOffcetInSourceDocument,
+						anchorOffcetInSourceDocument);
 			}
-			// gets source model for read, model should be released see
-			// JBIDE-2219
-			model = StructuredModelManager.getModelManager()
-					.getExistingModelForRead(
-							getSourceEditor().getTextViewer().getDocument());
-			
-			//fix for JBIDE-3805, mareshkau			
-			if(model==null) {
-				return;
-			}
-			
-			Point range = SelectionUtil
-					.getSourceSelectionRange(getSourceEditor());
+		} else {
 
-			if (range == null)
-				return;
-
-			int focusOffcetInSourceDocument = range.x;
-
-			int anchorOffcetInSourceDocument = focusOffcetInSourceDocument
-					+ range.y;
-
-			// get element mapping
-			VpeNodeMapping nodeMapping = SelectionUtil
-					.getNodeMappingBySourceSelection(model, getDomMapping(),
-							focusOffcetInSourceDocument,
-							anchorOffcetInSourceDocument);
-
-			if (nodeMapping == null)
-				return;
-
-			// visual node which will be selected
-			nsIDOMNode targetVisualNode;
-
-			// int visualNodeOffcet =
-			// TextUtil.visualPosition(((Node)targetSourceNode
-			// ).getNodeValue(),offcetReferenceToSourceNode);
-
-			// if mapping is elementMapping
-			
-			SelectionUtil.clearSelection(selectionController); 
-			
-			if (nodeMapping instanceof VpeElementMapping) {
-
-				VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
-
-				VpeTemplate template = elementMapping.getTemplate();
-
-				targetVisualNode = template.getVisualNodeBySourcePosition(
-						elementMapping, focusOffcetInSourceDocument,
-						anchorOffcetInSourceDocument, getDomMapping());
-
-				NodeData nodeData = template.getNodeData(targetVisualNode,
-						elementMapping.getElementData(), getDomMapping());
-				// we can restore cursor position only if we have nodeData and
-				// range.y==0
-				if (nodeData != null) {
-					// restore cursor position in source document
-					restoreVisualCursorPosition(template, nodeData,
-							focusOffcetInSourceDocument,
-							anchorOffcetInSourceDocument);
-				}
-			} else {
-
-				targetVisualNode = nodeMapping.getVisualNode();
-				// restore cursor position for source node
+			targetVisualNode = nodeMapping.getVisualNode();
+			// restore cursor position for source node
 //				restoreVisualCursorPositionForTextNode(targetVisualNode,
 //						focusOffcetInSourceDocument, model);
-			}
-			// here we restore only highlight
-			getPageContext().getVisualBuilder().setSelectionRectangle(
-					targetVisualNode);
-		} finally {
-			if (model != null) {
-				model.releaseFromRead();
-			}
 		}
+		// here we restore only highlight
+		getPageContext().getVisualBuilder().setSelectionRectangle(
+				targetVisualNode);
 	}
 
 	/**

@@ -119,6 +119,11 @@ public class SelectionUtil {
 				offset, length);
 	}
 
+	/**
+	 * @deprecated This method causes JBIDE-4713. Use
+	 * {@link #getNodeMappingBySourceSelection(StructuredTextEditor, VpeDomMapping)}
+	 * instead.
+	 */
 	public static VpeNodeMapping getNodeMappingBySourceSelection(
 			IStructuredModel model, VpeDomMapping domMapping, int focus,
 			int anchor) {
@@ -228,8 +233,15 @@ public class SelectionUtil {
 
 		IStructuredModel model = null;
 		try {
+			// gets source model for read, model should be released see
+			// JBIDE-2219
 			model = StructuredModelManager.getModelManager()
 					.getExistingModelForRead(document);
+			
+			//fix for JBIDE-3805, mareshkau			
+			if(model == null) {
+				return null;
+			}
 
 			int anchor = range.x;
 			int focus = range.x + range.y;
