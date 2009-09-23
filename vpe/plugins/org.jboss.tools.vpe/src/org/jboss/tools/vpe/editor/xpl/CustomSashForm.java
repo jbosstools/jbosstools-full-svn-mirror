@@ -1176,7 +1176,7 @@ public class CustomSashForm extends SashForm {
 	public static boolean isSourceEditorFirst() {
 		boolean sourceEditorFirst = false;
 		String splitting = JspEditorPlugin.getDefault().getPreferenceStore()
-		.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
+			.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
 		if (IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE
 				.equalsIgnoreCase(splitting)
 				|| IVpePreferencesPage.SPLITTING_VERT_TOP_SOURCE_VALUE
