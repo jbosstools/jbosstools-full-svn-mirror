@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.IWorkbenchGraphicConstants;
@@ -76,7 +77,6 @@ public class SelectionBar implements SelectionListener {
 
 	private Splitter splitter;
 
-	private boolean resizeListenerAdded = false;
     private VpeController vpeController = null;
     private ToolBar selBar = null;
     private FormData selBarData;
@@ -95,6 +95,7 @@ public class SelectionBar implements SelectionListener {
 
 	private ImageButton arrowButton;
 	private Node currentSelectedNode = null;
+	private Node currentLastNode = null;
 
 //	private ToolItem arrowButton;
 
@@ -122,6 +123,11 @@ public class SelectionBar implements SelectionListener {
 		// Main composite of the visible splitter
 		cmpToolBar = new Composite(splitter, SWT.NONE);
 		cmpToolBar.setLayout(new FormLayout());
+		cmpToolBar.addListener(SWT.Resize, new Listener() {
+			public void handleEvent(Event event) {
+				updateNodes(true);
+			}
+		});
 
 		final Image closeImage = PlatformUI.getWorkbench().getSharedImages()
 				.getImage(ISharedImages.IMG_TOOL_DELETE);
@@ -307,10 +313,54 @@ public class SelectionBar implements SelectionListener {
 
 		if (currentSelectedNode == node && !forceUpdate) {
 			return;
-		} else {
-			currentSelectedNode = node;
 		}
 
+	    final boolean ancestorSelected = isAncestor(node, currentLastNode);
+	    if (ancestorSelected) {
+	    	if (forceUpdate) {
+	    		// reinitialize selBar with currentLastNode
+	    		setSelBarItems(currentLastNode);
+	    	} else {
+	    		// deselect currentSelectedNode
+	    		setNodeSelected(currentSelectedNode, false);
+	    	}
+	    } else {
+	    	setSelBarItems(node);
+	    	currentLastNode = node;
+	    }
+
+		setNodeSelected(node, true);
+		currentSelectedNode = node;
+	}
+
+    /**
+	 * Sets the selection state of the given node in the selection bar.
+	 */
+	private void setNodeSelected(Node node, boolean selected) {
+		for (ToolItem item : selBar.getItems()) {
+			if (item.getData() == node) {
+				item.setSelection(selected);
+				return;
+			}
+		}
+
+		if (dropDownMenu == null) {
+			return;
+		}
+
+		for (MenuItem item : dropDownMenu.getItems()) {
+			if (item.getData() == node) {
+				item.setSelection(selected);
+				return;
+			}
+		}
+	}
+
+	/**
+     * Cleans {@link #selBar} and adds to it buttons which
+     * appropriate the {@code node} and all its ancestors.
+	 */
+	private void setSelBarItems(Node node) {
 		// bug was fixed when toolbar are not shown for resizeble components
 		cmpToolBar.layout();
 		splitter.getParent().layout(true, true);
@@ -323,11 +373,12 @@ public class SelectionBar implements SelectionListener {
 
 		int elementCounter = 0;
 		while (node != null
-				&& (node.getNodeType() == Node.ELEMENT_NODE || node.getNodeType() == Node.COMMENT_NODE)) {
+				&& (node.getNodeType() == Node.ELEMENT_NODE
+						|| node.getNodeType() == Node.COMMENT_NODE)) {
 			addNodeListenerTo(node);
 
 			if (dropDownMenu == null) {
-				ToolItem item = new ToolItem(selBar, SWT.FLAT, 1);
+				ToolItem item = new ToolItem(selBar, SWT.FLAT | SWT.CHECK, 1);
 				item.addSelectionListener(this);
 				item.setData(node);
 				item.setText(node.getNodeName());
@@ -339,7 +390,7 @@ public class SelectionBar implements SelectionListener {
 			}
 
 			if (dropDownMenu != null) {
-				MenuItem menuItem = new MenuItem(dropDownMenu, SWT.PUSH, 0);
+				MenuItem menuItem = new MenuItem(dropDownMenu, SWT.CHECK, 0);
 				menuItem.addSelectionListener(this);
 				menuItem.setText(node.getNodeName());
 				menuItem.setData(node);
@@ -354,18 +405,28 @@ public class SelectionBar implements SelectionListener {
 		if (node != null && node.getNodeType() == Node.DOCUMENT_NODE) {
 			addNodeListenerTo(node);
 		}
-
-		if (!resizeListenerAdded ) {
-			cmpToolBar.addListener(SWT.Resize, new Listener() {
-				public void handleEvent(Event event) {
-					updateNodes(true);
-				}
-			});
-			resizeListenerAdded = true;
-		}
 	}
 
-    /**
+	/**
+	 * Checks if the {@code potentialAncestor} is an ancestor of
+	 * {@code potentialAncestor node}.
+	 */
+	private boolean isAncestor(Node potentialAncestor, Node node) {
+		if (potentialAncestor == null || node == null) {
+			return false;
+		}
+
+		Node curAncestor = node;
+		while ((curAncestor = curAncestor.getParentNode()) != null) {
+			if (potentialAncestor == curAncestor) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
      * Deletes all items (except the first item-arrow button)
      * from the given {@code #toolBar}.
      */
@@ -478,8 +539,18 @@ public class SelectionBar implements SelectionListener {
 	}
 
     public void widgetSelected(SelectionEvent e) {
+    	Widget widget = e.widget;
+    	
+    	/* ensure that the ToolItem or MenuItem is selected
+    	 * (for repeated clicks on the same widget)*/
+    	if (widget instanceof ToolItem) {
+    		((ToolItem)widget).setSelection(true);
+    	} else if (widget instanceof MenuItem) {
+    		((MenuItem)widget).setSelection(true);
+    	}
+
     	SelectionUtil.setSourceSelection(vpeController.getPageContext(),
-				(Node) e.widget.getData());
+				(Node) widget.getData());
 	}
 
 	public void widgetDefaultSelected(SelectionEvent e) {
