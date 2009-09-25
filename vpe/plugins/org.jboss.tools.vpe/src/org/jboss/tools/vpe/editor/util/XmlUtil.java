@@ -147,7 +147,28 @@ public class XmlUtil {
 					.getPrefix(), true);
 		}
 		return taglibData;
-	} 
+	}
+
+	//helper method
+	public static boolean hasTaglib(Node sourceNode,
+			VpePageContext pageContext, String sourcePrefix) {
+		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,
+			    pageContext);
+		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(
+			    sourcePrefix, taglibs);
+		return sourceNodeTaglib != null;
+	}
+
+	//helper method
+	public static String getTaglibUri(Node sourceNode,
+			VpePageContext pageContext, String sourcePrefix) {
+		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode,
+			    pageContext);
+		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(
+			    sourcePrefix, taglibs);
+		return sourceNodeTaglib == null ? null : sourceNodeTaglib.getUri();
+	}
+
 	/**
 	 * Processes taglib attribute
 	 * @param taglibs
