@@ -113,8 +113,8 @@ abstract public class FormatHandler implements IFormatHandler {
 		if(format) {
 			p.setProperty(PaletteInsertHelper.PROPOPERTY_REFORMAT_BODY, "yes"); //$NON-NLS-1$
 		}
-		p.setProperty(PaletteInsertHelper.PROPOPERTY_TAGLIBRARY_URI, "http://www.w3.org/TR/REC-html40"); //$NON-NLS-1$
-		p.setProperty(PaletteInsertHelper.PROPOPERTY_DEFAULT_PREFIX, ""); //$NON-NLS-1$
+		p.setProperty(JSPPaletteInsertHelper.PROPOPERTY_TAGLIBRARY_URI, "http://www.w3.org/TR/REC-html40"); //$NON-NLS-1$
+		p.setProperty(JSPPaletteInsertHelper.PROPOPERTY_DEFAULT_PREFIX, ""); //$NON-NLS-1$
 
 		ITextSelection sel = new TextSelection(startOffcet, length);
 		ISelectionProvider selProvider = viewer.getSelectionProvider();
