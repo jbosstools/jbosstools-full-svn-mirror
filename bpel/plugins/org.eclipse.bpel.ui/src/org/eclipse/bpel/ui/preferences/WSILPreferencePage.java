@@ -102,6 +102,8 @@ public class WSILPreferencePage extends PreferencePage implements IWorkbenchPref
 	Button moveDownButton;
 	Button openInBrowserButton;
 	
+	private static String WSIL = "wsil";
+	
 	// Track the  modification of any element in the WSIL model.
 	// we don't use commands and stacks here.
 	EContentAdapter fContentAdapter = new EContentAdapter() {
@@ -177,6 +179,7 @@ public class WSILPreferencePage extends PreferencePage implements IWorkbenchPref
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog fd = new FileDialog(getShell(), SWT.OPEN);
+				fd.setFilterExtensions(new String[]{"*."+WSIL});
 				String fileName = fd.open();
 				if ((fileName != null) && (fileName.length() > 0)) {
 					// parse to file url
@@ -500,6 +503,10 @@ public class WSILPreferencePage extends PreferencePage implements IWorkbenchPref
 		if (url.length() < 1) {
 			return ;
 		}
+		if(!url.endsWith(WSIL)){
+			setMessage(Messages.BPELPreferencePage_WSIL_NameLimit, ERROR);
+			return;
+		}
 		
 		if (fWsilDocument != null) {
 			fWsilDocument.eResource().eAdapters().remove( fContentAdapter );
@@ -511,7 +518,7 @@ public class WSILPreferencePage extends PreferencePage implements IWorkbenchPref
 		Resource resource = null;
 		try {
 			
-			resource = resourceSet.getResource(uri, true, "wsil");
+			resource = resourceSet.getResource(uri, true, WSIL);
 			
 			List contents = resource.getContents();
 			

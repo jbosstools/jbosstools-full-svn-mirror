@@ -225,6 +225,7 @@ public final class Messages extends NLS {
 	public static String BPELPreferencePage_WSIL_MoveUp;
 	public static String BPELPreferencePage_WSIL_OpenInBrowser;
 	public static String BPELPreferencePage_WSIL_DocumentNotLoaded;
+	public static String BPELPreferencePage_WSIL_NameLimit;
 	public static String BPELPreferencePage_WSIL_EnterLocation;
 	public static String BPELPreferencePage_WSIL_EnterDescription;
 	public static String BPELUIRegistry_Expression_language_editors_must_provide_expressionLanguage_and_class__8;
