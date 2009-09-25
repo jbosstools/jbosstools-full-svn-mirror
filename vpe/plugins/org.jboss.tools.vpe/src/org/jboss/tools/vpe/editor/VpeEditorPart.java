@@ -546,13 +546,15 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		 * Editors orientation is based on preference's settings.
 		 */
 		container = new CustomSashForm(cmpEd, CustomSashForm
-			.getSplittingFromPreferences());
+			.getSplittingDirection(JspEditorPlugin.getDefault().getPreferenceStore()
+					.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING)));
 		if (editorSettings != null) {
 		    editorSettings.addSetting(new SashSetting(container));
 		}
 
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		if (CustomSashForm.isSourceEditorFirst()) {
+		if (CustomSashForm.isSourceEditorFirst(JspEditorPlugin.getDefault().getPreferenceStore()
+				.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING))) {
 		    sourceContent = new Composite(container, SWT.NONE);
 		    visualContent = new Composite(container, SWT.NONE);
 		} else {
@@ -687,7 +689,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		listener = new XModelTreeListener() {
 
 			public void nodeChanged(XModelTreeEvent event) {
-			    fillContainer();
+			    fillContainer(false, null);
 			    selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
 			}
 
@@ -762,7 +764,16 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		};
 	}
 	
-	public void fillContainer() {
+	/**
+	 * Re-fills the VPE container according to new settings.
+	 * 
+	 * @param useCurrentEditorSettings
+	 *            if <code>true</code> VPE will hold its current state 
+	 *            otherwise values from preference page will be used,
+	 * @param currentOrientation
+	 *            current source-visual editors splitting value
+	 */
+	public void fillContainer(boolean useCurrentEditorSettings, String currentOrientation) {
 		/*
 		 * https://jira.jboss.org/jira/browse/JBIDE-4152
 		 * 
@@ -772,9 +783,15 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		 * 
 		 * Content should be added to a new container.
 		 */
+		String splitting;
+		if (useCurrentEditorSettings) {
+			splitting = currentOrientation;
+		} else {
+			splitting = JspEditorPlugin.getDefault().getPreferenceStore()
+				.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
+		}
 		CustomSashForm newContainer = new CustomSashForm(cmpEd, CustomSashForm
-			.getSplittingFromPreferences());
-		newContainer.setOrientation(CustomSashForm.getSplittingFromPreferences());
+				.getSplittingDirection(splitting));
 
 		/*
 		 * Reset editor's settings. 
@@ -784,18 +801,13 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		    editorSettings.addSetting(new SashSetting(newContainer));
 		}
 		newContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		/*
-		 * Read stored preference settings. 
-		 * Correct layout by selecting the order of components adding.
-		 * All three editors should be added to the new container.
-		 */
-		if (CustomSashForm.isSourceEditorFirst()) {
-		    sourceContent.setParent(newContainer);
-		    visualContent.setParent(newContainer);
+
+		if (CustomSashForm.isSourceEditorFirst(splitting)) {
+			sourceContent.setParent(newContainer);
+			visualContent.setParent(newContainer);
 		} else {
-		    visualContent.setParent(newContainer);
-		    sourceContent.setParent(newContainer);
+			visualContent.setParent(newContainer);
+			sourceContent.setParent(newContainer);
 		}
 		previewContent.setParent(newContainer);
 		
@@ -825,28 +837,32 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		int defaultWeight = JspEditorPlugin.getDefault().getPreferenceStore()
 			.getInt(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_WEIGHTS);
 		int[] weights = container.getWeights();
-		if (defaultWeight == 0) {
-			if (CustomSashForm.isSourceEditorFirst()) {
-				container.maxDown();
-			} else {
-				container.maxUp();
-			}
-		} else if (defaultWeight == 1000) {
-			if (CustomSashForm.isSourceEditorFirst()) {
-				container.maxUp();
-			} else {
-				container.maxDown();
-			}
+		if (useCurrentEditorSettings) {
+			newContainer.setWeights(weights);
 		} else {
-			if (CustomSashForm.isSourceEditorFirst()) {
-				weights[0] = 1000 - defaultWeight;
-				weights[1] = defaultWeight;
+			if (defaultWeight == 0) {
+				if (CustomSashForm.isSourceEditorFirst(splitting)) {
+					container.maxDown();
+				} else {
+					container.maxUp();
+				}
+			} else if (defaultWeight == 1000) {
+				if (CustomSashForm.isSourceEditorFirst(splitting)) {
+					container.maxUp();
+				} else {
+					container.maxDown();
+				}
 			} else {
-				weights[0] = defaultWeight;
-				weights[1] = 1000 - defaultWeight;
-			}
-			if ((weights != null) && !container.isDisposed()){
-				container.setWeights(weights);
+				if (CustomSashForm.isSourceEditorFirst(splitting)) {
+					weights[0] = 1000 - defaultWeight;
+					weights[1] = defaultWeight;
+				} else {
+					weights[0] = defaultWeight;
+					weights[1] = 1000 - defaultWeight;
+				}
+				if ((weights != null) && !container.isDisposed()){
+					container.setWeights(weights);
+				}
 			}
 		}
 		
@@ -1118,7 +1134,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 	public void maximizeSource() {
 		if (container != null) {
-			if (CustomSashForm.isSourceEditorFirst()) {
+			if (CustomSashForm.isSourceEditorFirst(JspEditorPlugin.getDefault().getPreferenceStore()
+					.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING))) {
 				container.maxDown();
 			} else {
 				container.maxUp();
@@ -1134,7 +1151,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	
 	public void maximizeVisual() {
 		if (container != null) {
-			if (CustomSashForm.isSourceEditorFirst()) {
+			if (CustomSashForm.isSourceEditorFirst(JspEditorPlugin.getDefault().getPreferenceStore()
+					.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING))) {
 				container.maxUp();
 			} else {
 				container.maxDown();
@@ -1178,7 +1196,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		  */
 		 if (getController() != null) {
 			 selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
-			 fillContainer();
+			 fillContainer(false, null);
 			 getController().getVisualBuilder().setShowInvisibleTags(JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
 					 IVpePreferencesPage.SHOW_NON_VISUAL_TAGS));
 			 getController().getPageContext().getBundle().updateShowBundleUsageAsEL();

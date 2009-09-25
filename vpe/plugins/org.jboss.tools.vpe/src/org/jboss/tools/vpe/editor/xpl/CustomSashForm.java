@@ -1154,15 +1154,21 @@ public class CustomSashForm extends SashForm {
 	}
 	
 	public void changeOrientation() {
-		int prefsOrientation = getSplittingFromPreferences();
+		int prefsOrientation = getSplittingDirection(JspEditorPlugin.getDefault().getPreferenceStore()
+				.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING));
 		if (getOrientation() != prefsOrientation) {
 			setOrientation(prefsOrientation);
 		}
 	}
 	
-	public static int getSplittingFromPreferences() {
-		String splitting = JspEditorPlugin.getDefault().getPreferenceStore()
-				.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
+	/**
+	 * Computes the splitting style:
+	 * SWT.HORIZONTAL or SWT.VERTICAL
+	 * 
+	 * @param splitting source-visual editors splitting value
+	 * @return integer style value
+	 */
+	public static int getSplittingDirection(String splitting) {
 		if (IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE
 				.equalsIgnoreCase(splitting)
 				|| IVpePreferencesPage.SPLITTING_HORIZ_LEFT_VISUAL_VALUE
@@ -1173,15 +1179,20 @@ public class CustomSashForm extends SashForm {
 		}
 	}
 	
-	public static boolean isSourceEditorFirst() {
-		boolean sourceEditorFirst = false;
-		String splitting = JspEditorPlugin.getDefault().getPreferenceStore()
-			.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
-		if (IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE
+	/**
+	 * Checks if the source editor is displayed on the first place, 
+	 * i.e. on the top, or to the left.
+	 *
+	 * @param splitting source-visual editors splitting value
+	 * @return <code>true</code> when the source goes first
+	 */
+	public static boolean isSourceEditorFirst(String splitting) {
+		boolean sourceEditorFirst = true;
+		if (IVpePreferencesPage.SPLITTING_HORIZ_LEFT_VISUAL_VALUE
 				.equalsIgnoreCase(splitting)
-				|| IVpePreferencesPage.SPLITTING_VERT_TOP_SOURCE_VALUE
+				|| IVpePreferencesPage.SPLITTING_VERT_TOP_VISUAL_VALUE
 					.equalsIgnoreCase(splitting)) {
-			sourceEditorFirst = true;
+			sourceEditorFirst = false;
 		}
 		return sourceEditorFirst;
 	}

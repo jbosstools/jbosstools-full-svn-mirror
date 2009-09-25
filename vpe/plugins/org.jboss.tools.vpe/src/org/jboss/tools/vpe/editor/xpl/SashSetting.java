@@ -46,20 +46,22 @@ public class SashSetting implements EditorSettings.ISetting {
 				.getInt(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_WEIGHTS);
 		int[] weights = sash.getWeights();
 		if (weights.length > 2) {
+			String splitting = JspEditorPlugin.getDefault().getPreferenceStore()
+			.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING); 
 			if (defaultWeight == 0) {
-				if (CustomSashForm.isSourceEditorFirst()) {
+				if (CustomSashForm.isSourceEditorFirst(splitting)) {
 					sash.maxDown();
 				} else {
 					sash.maxUp();
 				}
 			} else if (defaultWeight == 1000) {
-				if (CustomSashForm.isSourceEditorFirst()) {
+				if (CustomSashForm.isSourceEditorFirst(splitting)) {
 					sash.maxUp();
 				} else {
 					sash.maxDown();
 				}
 			} else {
-				if (CustomSashForm.isSourceEditorFirst()) {
+				if (CustomSashForm.isSourceEditorFirst(splitting)) {
 					weights[0] = 1000 - defaultWeight;
 					weights[1] = defaultWeight;
 				} else {

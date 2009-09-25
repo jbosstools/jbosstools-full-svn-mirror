@@ -134,6 +134,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private static Map<String, String> layoutIcons;
 	private static Map<String, String> layoutNames;
 	private static List<String> layoutValues;
+	private int currentOrientationIndex = 1;
 	static {
 	    layoutIcons = new HashMap<String, String>();
 	    layoutIcons.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE, ICON_ORIENTATION_SOURCE_LEFT);
@@ -265,7 +266,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		 * https://jira.jboss.org/jira/browse/JBIDE-4152
 		 * Compute initial icon state and add it to the tool bar.
 		 */
-		int currentOrientationIndex = layoutValues.indexOf(JspEditorPlugin
+		currentOrientationIndex = layoutValues.indexOf(JspEditorPlugin
 				.getDefault().getPreferenceStore().getString(
 						IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING));
 		int newIndx = currentOrientationIndex+1;
@@ -285,35 +286,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				 * Rotate editors orientation clockwise. Store this new
 				 * orientation to the preferences.
 				 */
-				int currentOrientationIndex = layoutValues
-						.indexOf(JspEditorPlugin
-								.getDefault()
-								.getPreferenceStore()
-								.getString(
-										IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING));
-				int newIndx = currentOrientationIndex + 1;
-				if (newIndx == layoutValues.size()) {
-					newIndx = newIndx % layoutValues.size();
+		    	currentOrientationIndex++;
+				if (currentOrientationIndex == layoutValues.size()) {
+					currentOrientationIndex = currentOrientationIndex % layoutValues.size();
 				}
-				String newOrientation = layoutValues.get(newIndx);
-				JspEditorPlugin.getDefault().getPreferenceStore().setValue(
-						IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING,
-						newOrientation);
-
-				/*
-				 * Compute next step orientation and display appropriate icon.
-				 */
-				currentOrientationIndex = layoutValues
-						.indexOf(JspEditorPlugin
-								.getDefault()
-								.getPreferenceStore()
-								.getString(
-										IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING));
-				newIndx = currentOrientationIndex + 1;
-				if (newIndx == layoutValues.size()) {
-					newIndx = newIndx % layoutValues.size();
-				}
-				newOrientation = layoutValues.get(newIndx);
+				String newOrientation = layoutValues.get(currentOrientationIndex);
 				rotateEditorsItem.setImage(ImageDescriptor.createFromFile(
 						MozillaEditor.class, layoutIcons.get(newOrientation))
 						.createImage());
@@ -322,10 +299,10 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				 * Call <code>filContainer()</code> from VpeEditorPart
 				 * to redraw CustomSashForm with new layout.
 				 */
-				getController().getPageContext().getEditPart().fillContainer();
+				getController().getPageContext().getEditPart().fillContainer(true, newOrientation);
 		    }
 		});
-
+		
 		verBar.pack();
 		return verBar;
 	}
