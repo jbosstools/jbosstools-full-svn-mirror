@@ -31,4 +31,3 @@ Export-Package: org.eclipse.bpel.common.ui,
  org.eclipse.bpel.common.ui.tray
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: eclipse.org
-Bundle-ClassPath: bin

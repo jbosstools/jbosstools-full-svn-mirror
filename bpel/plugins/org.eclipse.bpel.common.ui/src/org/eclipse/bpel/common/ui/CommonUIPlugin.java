@@ -125,6 +125,7 @@ public class CommonUIPlugin extends AbstractUIPlugin {
 		try {
 			url = new URL(baseURL, ICommonUIConstants.ICON_PATH + id);
 		} catch (MalformedURLException e) {
+			log(e);
 		}
 		ImageDescriptor desc = ImageDescriptor.createFromURL(url);
 		getImageRegistry().put(id, desc);

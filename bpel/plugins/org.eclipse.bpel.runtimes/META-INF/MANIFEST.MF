@@ -29,6 +29,5 @@ Export-Package: org.eclipse.bpel.runtimes,
  org.eclipse.bpel.runtimes.module,
  org.eclipse.bpel.runtimes.publishers,
  org.eclipse.bpel.runtimes.ui.wizards
-Bundle-ClassPath: bin
 Bundle-Vendor: %providerName
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
