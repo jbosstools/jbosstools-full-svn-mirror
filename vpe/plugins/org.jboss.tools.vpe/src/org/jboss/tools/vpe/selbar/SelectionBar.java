@@ -77,6 +77,7 @@ public class SelectionBar implements SelectionListener {
 
 	private Splitter splitter;
 
+	private boolean resizeListenerAdded = false;
     private VpeController vpeController = null;
     private ToolBar selBar = null;
     private FormData selBarData;
@@ -123,11 +124,6 @@ public class SelectionBar implements SelectionListener {
 		// Main composite of the visible splitter
 		cmpToolBar = new Composite(splitter, SWT.NONE);
 		cmpToolBar.setLayout(new FormLayout());
-		cmpToolBar.addListener(SWT.Resize, new Listener() {
-			public void handleEvent(Event event) {
-				updateNodes(true);
-			}
-		});
 
 		final Image closeImage = PlatformUI.getWorkbench().getSharedImages()
 				.getImage(ISharedImages.IMG_TOOL_DELETE);
@@ -404,6 +400,15 @@ public class SelectionBar implements SelectionListener {
 
 		if (node != null && node.getNodeType() == Node.DOCUMENT_NODE) {
 			addNodeListenerTo(node);
+		}
+
+		if (!resizeListenerAdded ) {
+			cmpToolBar.addListener(SWT.Resize, new Listener() {
+				public void handleEvent(Event event) {
+					updateNodes(true);
+				}
+			});
+			resizeListenerAdded = true;
 		}
 	}
 
