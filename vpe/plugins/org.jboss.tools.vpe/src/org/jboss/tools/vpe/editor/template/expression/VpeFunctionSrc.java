@@ -326,8 +326,13 @@ public class VpeFunctionSrc extends VpeFunction {
 					if(zipEntry!=null){
 						InputStream inputStream = jarPackageFragmentRoot.getJar().getInputStream(zipEntry);
 						IPath stateLocation = VpePlugin.getDefault().getStateLocation();
-						String fileName = classPathResource.substring(classPathResource.lastIndexOf("/")+1,classPathResource.lastIndexOf(".")); //$NON-NLS-1$ //$NON-NLS-2$
-						String fileExtension = classPathResource.substring(classPathResource.lastIndexOf("."),classPathResource.length()); //$NON-NLS-1$
+						
+						String fileName = null;
+						String fileExtension = null;
+						if(classPathResource.lastIndexOf(".")!=-1) { //$NON-NLS-1$ //added by mareshkau, fix for JBIDE-4954
+							fileName = classPathResource.substring(classPathResource.lastIndexOf("/")+1,classPathResource.lastIndexOf(".")); //$NON-NLS-1$ //$NON-NLS-2$
+							fileExtension = classPathResource.substring(classPathResource.lastIndexOf("."),classPathResource.length()); //$NON-NLS-1$
+						}
 						if(fileName!=null && fileName.length()>0
 								&& fileExtension!=null && fileExtension.length()>0) {
 							File temporaryFile =File.createTempFile(
