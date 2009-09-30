@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.CoolBar;
 import org.eclipse.swt.widgets.CoolItem;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
@@ -51,7 +52,7 @@ public abstract class SplitToolBar implements IVpeToolBar {
 	public abstract void createItems(ToolBar bar);
 
 	public void createToolBarControl(Composite parent) {
-		final Composite comp = new Composite(parent, SWT.NONE);
+		Composite comp = new Composite(parent, SWT.NONE);
 		comp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		comp.setLayout(new GridLayout());
 		coolBar = new CoolBar(comp, SWT.FLAT | SWT.WRAP);
@@ -59,7 +60,7 @@ public abstract class SplitToolBar implements IVpeToolBar {
 
 		final ToolBar toolBar = new ToolBar(coolBar, SWT.FLAT | SWT.WRAP);
 		createItems(toolBar);
-		CoolItem coolItem = new CoolItem(coolBar, SWT.DROP_DOWN);
+		final CoolItem coolItem = new CoolItem(coolBar, SWT.DROP_DOWN);
 		coolItem.setControl(toolBar);
 		Point size = toolBar.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Point coolSize = coolItem.computeSize(size.x, size.y);
@@ -68,89 +69,11 @@ public abstract class SplitToolBar implements IVpeToolBar {
 		coolItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				if (event.detail == SWT.ARROW) {
-					CoolItem coolItem = (CoolItem) event.widget;
-					ToolBar bar = (ToolBar) coolItem.getControl();
-					ToolItem[] tools = bar.getItems();
-					Rectangle itemBounds = bar.getBounds();
-					Point pt = coolBar.toDisplay(new Point(itemBounds.x,
-							itemBounds.y));
-					itemBounds.x = pt.x;
-					itemBounds.y = pt.y;
+					int shownItemsCount = getShownItemsCount(toolBar);
+					final Shell floatingShell
+							= createFloatingShell(toolBar, shownItemsCount);
 
-					int i = 0;
-					while (i < tools.length) {
-						Rectangle toolBounds = tools[i].getBounds();
-						pt = bar.toDisplay(new Point(toolBounds.x, toolBounds.y));
-						toolBounds.x = pt.x;
-						toolBounds.y = pt.y;
-
-						/*
-						 * Figure out the visible portion of the tool by looking
-						 * at the intersection of the tool bounds with the cool
-						 * item bounds.
-						 */
-						Rectangle intersection = itemBounds
-								.intersection(toolBounds);
-
-						/*
-						 * If the tool is not completely within the cool item
-						 * bounds, then it is partially hidden, and all
-						 * remaining tools are completely hidden.
-						 */
-						if (!intersection.equals(toolBounds)) {
-							break;
-						}
-						i++;
-					}
-
-					/*
-					 * Create a menu with items for each of the completely
-					 * hidden buttons.
-					 */
-					final Shell floatingShell = new Shell(coolBar.getShell(),
-							SWT.ON_TOP);
-					FillLayout shellLayout = new FillLayout(SWT.VERTICAL);
-					shellLayout.marginHeight = 5;
-					shellLayout.marginWidth = 5;
-					shellLayout.spacing = 5;
-					
-					floatingShell.setLayout(shellLayout);
-					SelectionListener selectionListener = new SelectionAdapter() {
-						public void widgetSelected(SelectionEvent e) {
-							floatingShell.dispose();
-						}
-					};
-					
-					ToolBar floatingBar = null;
-					for (int j = i; j < tools.length; j++) {
-						ToolItem tool = tools[j];
-						int style = tool.getStyle();
-
-						if ((style & SWT.SEPARATOR) != 0) {
-							Control control = tool.getControl();
-							if (control instanceof Combo) {
-								cloneCombo(floatingShell, selectionListener,
-										(Combo) control);
-							}
-						} else {
-							if (floatingBar == null) {
-								floatingBar = new ToolBar(floatingShell, 
-										SWT.FLAT | SWT.WRAP);
-							}
-							cloneItem(floatingBar, tool, selectionListener);
-						}
-					}
-//					Point size = floatingBar.computeSize (300, SWT.DEFAULT);
-//					System.out.println(size);
-//					floatingBar.setSize (size);
-//					floatingBar.pack();
-					floatingShell.pack();
-
-					/*
-					 * Drop down the menu below the chevron, with the left edges
-					 * aligned.
-					 */
-					pt = coolBar.toDisplay(new Point(event.x, event.y));
+					Point pt = coolBar.toDisplay(new Point(event.x, event.y));
 					arrange(floatingShell, pt);
 					floatingShell.setVisible(true);
 					floatingShell.setFocus();
@@ -162,6 +85,13 @@ public abstract class SplitToolBar implements IVpeToolBar {
 				}
 			}
 		});
+		toolBar.addListener(SWT.Resize, new Listener() {
+			public void handleEvent(Event event) {
+				int shownItemsCount = getShownItemsCount(toolBar);
+				ensureVisibility(shownItemsCount, toolBar);
+			}
+		});
+
 		coolBar.pack();
 //		coolBar.layout();
 		
@@ -281,7 +211,6 @@ public abstract class SplitToolBar implements IVpeToolBar {
 				Arrays.asList(combo.getItems()),
 				combo.getSelectionIndex());
 		copiedCombo.setEnabled(combo.getEnabled());
-		copiedCombo.setVisible(combo.getVisible());
 		copySelectionListeners(combo, copiedCombo);
 		copiedCombo.addSelectionListener(selectionListener);
 	}
@@ -366,5 +295,107 @@ public abstract class SplitToolBar implements IVpeToolBar {
 		}
 
 		return result;
+	}
+	
+	/**
+	 * Ensures that the first {@code shownItemsCount} items of
+	 * the given {@code toolBar} are shown and the rest are hidden.
+	 * 
+	 * Also see JBIDE-4734 (screenshot-2.jpeg).
+	 */
+	private void ensureVisibility(int shownItemsCount,
+			ToolBar toolBar) {
+		int toolItemCount = toolBar.getItemCount();
+		for (int i = 0; i < toolItemCount; i++) {
+			ToolItem toolItem = toolBar.getItem(i);
+			Control control = toolItem.getControl();
+			if (control != null) {
+				control.setVisible(i < shownItemsCount);
+			}
+		}
+	}
+
+	/**
+	 * Creates a floating toolbar with copy of items from
+	 * {@code fixedToolBar} beginning from {@code firstItemIndex}.
+	 */
+	private Shell createFloatingShell(ToolBar fixedToolBar,
+			int firstItemIndex) {
+		final Shell floatingShell = new Shell(coolBar.getShell(),
+				SWT.ON_TOP);
+		FillLayout shellLayout = new FillLayout(SWT.VERTICAL);
+		shellLayout.marginHeight = 5;
+		shellLayout.marginWidth = 5;
+		shellLayout.spacing = 5;
+		floatingShell.setLayout(shellLayout);
+		SelectionListener selectionListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				floatingShell.dispose();
+			}
+		};
+
+		ToolBar buttonsBar = null;
+		ToolItem[] tools = fixedToolBar.getItems();
+		for (int j = firstItemIndex; j < tools.length; j++) {
+			ToolItem tool = tools[j];
+			int style = tool.getStyle();
+
+			if ((style & SWT.SEPARATOR) != 0) {
+				Control control = tool.getControl();
+				if (control instanceof Combo) {
+					cloneCombo(floatingShell, selectionListener,
+							(Combo) control);
+				}
+			} else {
+				if (buttonsBar == null) {
+					buttonsBar = new ToolBar(floatingShell, 
+							SWT.FLAT | SWT.WRAP);
+				}
+				cloneItem(buttonsBar, tool, selectionListener);
+			}
+		}
+
+		floatingShell.pack();
+		
+		return floatingShell;
+	}
+
+	/**
+	 * Returns the number of shown items in the {@code toolBar}.
+	 */
+	private int getShownItemsCount(ToolBar bar) {
+		Rectangle barBounds = bar.getBounds();
+		Point pt = coolBar.toDisplay(new Point(barBounds.x,
+				barBounds.y));
+		barBounds.x = pt.x;
+		barBounds.y = pt.y;
+
+		ToolItem[] tools = bar.getItems();
+		int i = 0;
+		while (i < tools.length) {
+			Rectangle toolBounds = tools[i].getBounds();
+			pt = bar.toDisplay(new Point(toolBounds.x, toolBounds.y));
+			toolBounds.x = pt.x;
+			toolBounds.y = pt.y;
+
+			/*
+			 * Figure out the visible portion of the tool by looking
+			 * at the intersection of the tool bounds with the toolbar
+			 * bounds.
+			 */
+			Rectangle intersection = barBounds
+					.intersection(toolBounds);
+
+			/*
+			 * If the tool is not completely within the toolbar
+			 * bounds, then it is partially hidden, and all
+			 * remaining tools are completely hidden.
+			 */
+			if (!intersection.equals(toolBounds)) {
+				break;
+			}
+			i++;
+		}
+		return i;
 	}
 }
