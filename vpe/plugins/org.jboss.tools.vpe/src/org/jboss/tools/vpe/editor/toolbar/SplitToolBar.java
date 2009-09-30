@@ -68,14 +68,14 @@ public abstract class SplitToolBar implements IVpeToolBar {
 		coolItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				if (event.detail == SWT.ARROW) {
-					CoolItem item = (CoolItem) event.widget;
-					Rectangle itemBounds = item.getBounds();
+					CoolItem coolItem = (CoolItem) event.widget;
+					ToolBar bar = (ToolBar) coolItem.getControl();
+					ToolItem[] tools = bar.getItems();
+					Rectangle itemBounds = bar.getBounds();
 					Point pt = coolBar.toDisplay(new Point(itemBounds.x,
 							itemBounds.y));
 					itemBounds.x = pt.x;
 					itemBounds.y = pt.y;
-					ToolBar bar = (ToolBar) item.getControl();
-					ToolItem[] tools = bar.getItems();
 
 					int i = 0;
 					while (i < tools.length) {
@@ -368,4 +368,3 @@ public abstract class SplitToolBar implements IVpeToolBar {
 		return result;
 	}
 }
-
