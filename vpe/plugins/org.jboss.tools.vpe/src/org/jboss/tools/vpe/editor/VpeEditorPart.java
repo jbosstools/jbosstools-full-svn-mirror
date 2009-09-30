@@ -898,43 +898,12 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 						VpeEditorPart.this));
 				selectionBar.setVpeController(visualEditor.getController());
 				visualEditor.getController().setSelectionBarController(selectionBar);
-				createShowSelectionBarMenuItem();
 				visualEditor.getController().init(sourceEditor, visualEditor);
 			}
 		});
 		
 			toolBar = visualEditor.createVisualToolbar(verticalToolbarSplitter);
 			visualEditor.createPartControl(visualContent);
-	}
-
-	/**
-	 * Creates new MenuItem in VPE drop-down menu. This menu item provides 
-	 * option to show/hide selection bar.
-	 */
-	private void createShowSelectionBarMenuItem() {
-		final MenuItem selectionBarVisibilityMenuItem = 
-				new MenuItem(visualEditor.getDropDownMenu().getDropDownMenu(), SWT.PUSH);
-
-		selectionBarVisibilityMenuItem.setText(selectionBar.isVisible() 
-				? VpeUIMessages.HIDE_SELECTION_BAR
-				: VpeUIMessages.SHOW_SELECTION_BAR);
-
-		// add menu item listener
-		selectionBarVisibilityMenuItem.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				boolean selectionBarVisible = !selectionBar.isVisible();
-				selectionBar.setAlwaysVisibleOption(selectionBarVisible);
-				selectionBar.setVisible(selectionBarVisible);
-			}
-		});
-		// add selection bar listener
-		selectionBar.addVisibilityListener(new VisibilityListener() {
-			public void visibilityChanged(VisibilityEvent event) {
-				selectionBarVisibilityMenuItem.setText(event.getSource().isVisible() 
-						? VpeUIMessages.HIDE_SELECTION_BAR
-						: VpeUIMessages.SHOW_SELECTION_BAR);	
-			}
-		});
 	}
 
 	public void createPreviewBrowser() {
@@ -1190,6 +1159,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	 * has been pressed.
 	 */
 	public void updatePartAccordingToPreferences() {
+		/*
+		 * Update MozillaEditor's toolbar items
+		 */
+		visualEditor.setDefaultToolBarItems();
 		 /*
 		  * When switching from Source view to Visual/Source
 		  * controller could be null.
@@ -1201,6 +1174,15 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 					 IVpePreferencesPage.SHOW_NON_VISUAL_TAGS));
 			 getController().getPageContext().getBundle().updateShowBundleUsageAsEL();
 			 getController().visualRefresh();
+		}
+	}
+	
+	public void updateSelectionBar(boolean isSelectionBarVisible) {
+		if (selectionBar != null) {
+			selectionBar.setAlwaysVisibleOption(isSelectionBarVisible);
+			selectionBar.setVisible(isSelectionBarVisible);
+		} else {
+			VpePlugin.getDefault().logError("VPE Selection Bar is not initialized.");
 		}
 	}
 	

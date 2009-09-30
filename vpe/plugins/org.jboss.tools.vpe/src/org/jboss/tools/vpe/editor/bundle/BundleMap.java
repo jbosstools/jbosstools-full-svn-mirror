@@ -358,7 +358,9 @@ public class BundleMap {
 	}
 	
 	public String getBundleValue(String name){
-		if(isShowBundleUsageAsEL) return name;
+		if(isShowBundleUsageAsEL) {
+			return name;
+		}
 		List<ELInstance> is = parseJSFExpression(name);
 		if(is == null) return null;
 		StringBuffer sb = new StringBuffer();
@@ -463,13 +465,15 @@ public class BundleMap {
 		}
 	}
 	
-	public void updateShowBundleUsageAsEL() {
-		boolean b = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
-				IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
-		if(isShowBundleUsageAsEL != b) {
-			isShowBundleUsageAsEL = b;
+	public void updateShowBundleUsageAsEL(boolean showBundlesAsEL) {
+		if(isShowBundleUsageAsEL != showBundlesAsEL) {
+			isShowBundleUsageAsEL = showBundlesAsEL;
 			refresh();
 		}	
+	}
+	public void updateShowBundleUsageAsEL() {
+		updateShowBundleUsageAsEL(JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+				IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL));
 	}
 	
 	static class Expression {

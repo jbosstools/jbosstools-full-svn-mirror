@@ -35,5 +35,10 @@ public interface IVpeToolBarManager {
 	 */
 	public void addToolBar(IVpeToolBar bar);
 
+	/*
+	 * Sets the toolbar visibility
+	 */
+	 void setToolbarVisibility(boolean isVisible);
+	
 	public void dispose();
 }

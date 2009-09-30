@@ -136,6 +136,8 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 				VpeUIMessages.SHOW_NON_VISUAL_TAGS, visualAppearanceGroup));
 		addField(new BooleanFieldEditor(SHOW_SELECTION_TAG_BAR,
 				VpeUIMessages.SHOW_SELECTION_TAG_BAR, visualAppearanceGroup));
+		addField(new BooleanFieldEditor(SHOW_TEXT_FORMATTING,
+				VpeUIMessages.SHOW_TEXT_FORMATTING, visualAppearanceGroup));
 		addField(new BooleanFieldEditor(SHOW_RESOURCE_BUNDLES_USAGE_AS_EL,
 				VpeUIMessages.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL, visualAppearanceGroup));
 		addField(new BooleanFieldEditor(ASK_TAG_ATTRIBUTES_ON_TAG_INSERT,

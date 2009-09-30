@@ -32,16 +32,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.custom.BusyIndicator;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -50,8 +45,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IEditorInput;
@@ -74,12 +67,10 @@ import org.jboss.tools.vpe.editor.toolbar.VpeDropDownMenu;
 import org.jboss.tools.vpe.editor.toolbar.VpeToolBarManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.toolbar.format.TextFormattingToolBar;
-import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
-import org.jboss.tools.vpe.resref.core.ReferenceWizard;
 import org.jboss.tools.vpe.resref.core.VpeResourcesDialog;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
@@ -111,9 +102,17 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	public static final String ICON_PAGE_DESIGN_OPTIONS_DISABLED = "icons/point_to_css_disabled.gif"; //$NON-NLS-1$
 	public static final String ICON_ORIENTATION_SOURCE_LEFT = "icons/source_left.gif"; //$NON-NLS-1$
 	public static final String ICON_ORIENTATION_SOURCE_TOP = "icons/source_top.gif"; //$NON-NLS-1$
-	public static final String ICON_ORIENTATION_SOURCE_RIGHT = "icons/source_right.gif"; //$NON-NLS-1$
-	public static final String ICON_ORIENTATION_SOURCE_BOTTOM = "icons/source_bottom.gif"; //$NON-NLS-1$
+	public static final String ICON_ORIENTATION_VISUAL_LEFT = "icons/visual_left.gif"; //$NON-NLS-1$
+	public static final String ICON_ORIENTATION_VISUAI_TOP = "icons/visual_top.gif"; //$NON-NLS-1$
 	public static final String ICON_ORIENTATION_SOURCE_LEFT_DISABLED = "icons/source_left_disabled.gif"; //$NON-NLS-1$
+	public static final String ICON_NON_VISUAL_TAGS_SHOW = "icons/non-visusal-tags-show.gif"; //$NON-NLS-1$
+	public static final String ICON_NON_VISUAL_TAGS_HIDE = "icons/non-visusal-tags-hide.gif"; //$NON-NLS-1$
+	public static final String ICON_SELECTION_BAR_SHOW = "icons/selbar-show.gif"; //$NON-NLS-1$
+	public static final String ICON_SELECTION_BAR_HIDE = "icons/selbar-hide.gif"; //$NON-NLS-1$
+	public static final String ICON_TEXT_FORMATTING_SHOW = "icons/text-formatting-show.gif"; //$NON-NLS-1$
+	public static final String ICON_TEXT_FORMATTING_HIDE = "icons/text-formatting-hide.gif"; //$NON-NLS-1$
+	public static final String ICON_BUNDLE_AS_EL_SHOW = "icons/bundle-as-el-show.gif"; //$NON-NLS-1$
+	public static final String ICON_BUNDLE_AS_EL_HIDE = "icons/bundle-as-el-hide.gif"; //$NON-NLS-1$
 
 	static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
 	private XulRunnerEditor xulRunnerEditor;
@@ -135,12 +134,27 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private static Map<String, String> layoutNames;
 	private static List<String> layoutValues;
 	private int currentOrientationIndex = 1;
+	private ToolItem rotateEditorsItem;
+	private ToolItem showNonVisualTagsItem;
+	private ToolItem showSelectionBarItem;
+	private ToolItem showBundlesAsELItem;
+	private ToolItem showTextFormattingItem;
+	private boolean showNonVisualTags = false;
+	private boolean showSelectionBar = true;
+	private boolean showTextFormatting = true;
+	private boolean showBundlesAsEL = false;
+	
 	static {
+		/*
+		 * Values from <code>layoutValues</code> should correspond to the order
+		 * when increasing the index of the array will cause 
+		 * the source editor rotation 
+		 */
 	    layoutIcons = new HashMap<String, String>();
 	    layoutIcons.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE, ICON_ORIENTATION_SOURCE_LEFT);
 	    layoutIcons.put(IVpePreferencesPage.SPLITTING_VERT_TOP_SOURCE_VALUE, ICON_ORIENTATION_SOURCE_TOP);
-	    layoutIcons.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_VISUAL_VALUE, ICON_ORIENTATION_SOURCE_RIGHT);
-	    layoutIcons.put(IVpePreferencesPage.SPLITTING_VERT_TOP_VISUAL_VALUE, ICON_ORIENTATION_SOURCE_BOTTOM);
+	    layoutIcons.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_VISUAL_VALUE, ICON_ORIENTATION_VISUAL_LEFT);
+	    layoutIcons.put(IVpePreferencesPage.SPLITTING_VERT_TOP_VISUAL_VALUE, ICON_ORIENTATION_VISUAI_TOP);
 	    
 	    layoutNames = new HashMap<String, String>();
 	    layoutNames.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE, VpeUIMessages.SPLITTING_HORIZ_LEFT_SOURCE);
@@ -263,45 +277,24 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		});
 
 		/*
-		 * https://jira.jboss.org/jira/browse/JBIDE-4152
-		 * Compute initial icon state and add it to the tool bar.
+		 * Create ROTATE EDITORS tool bar icon
 		 */
-		currentOrientationIndex = layoutValues.indexOf(JspEditorPlugin
-				.getDefault().getPreferenceStore().getString(
-						IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING));
-		int newIndx = currentOrientationIndex+1;
-		if (newIndx == layoutValues.size()) {
-		    newIndx = newIndx % layoutValues.size();
-		}
-		String newOrientation = layoutValues.get(newIndx);
-
-		final ToolItem rotateEditorsItem = createToolItem(verBar, SWT.BUTTON1,
-				layoutIcons.get(newOrientation),
-				ICON_ORIENTATION_SOURCE_LEFT_DISABLED, 
-				layoutNames.get(newOrientation), true);
+		createRotateEditorsItem(verBar);
 		
-		rotateEditorsItem.addListener(SWT.Selection, new Listener() {
-		    public void handleEvent(Event event) {
-				/*
-				 * Rotate editors orientation clockwise. Store this new
-				 * orientation to the preferences.
-				 */
-		    	currentOrientationIndex++;
-				if (currentOrientationIndex == layoutValues.size()) {
-					currentOrientationIndex = currentOrientationIndex % layoutValues.size();
-				}
-				String newOrientation = layoutValues.get(currentOrientationIndex);
-				rotateEditorsItem.setImage(ImageDescriptor.createFromFile(
-						MozillaEditor.class, layoutIcons.get(newOrientation))
-						.createImage());
-				rotateEditorsItem.setToolTipText(layoutNames.get(newOrientation));
-				/*
-				 * Call <code>filContainer()</code> from VpeEditorPart
-				 * to redraw CustomSashForm with new layout.
-				 */
-				getController().getPageContext().getEditPart().fillContainer(true, newOrientation);
-		    }
-		});
+		/*
+		 * Create SHOW INVISIBLE TAGS tool bar icon
+		 */
+		createShowNonVisualTagsItem(verBar);
+		
+		/*
+		 * Create SHOW SELECTION BAR tool bar icon
+		 */
+		createShowSelectionBarItem(verBar);
+		
+		/*
+		 * Create SHOW BUNDLE'S MESSAGES AS EL tool bar icon
+		 */
+		createShowBundlesAsELItem(verBar);
 		
 		verBar.pack();
 		return verBar;
@@ -352,53 +345,19 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		 *  and only after that MozillaEditor should be created itself. 
 		 */
 		if (null != verBar) {
-			dropDownMenu = new VpeDropDownMenu(verBar, VpeUIMessages.MENU); 
-			// add Invisible tags support to menu
-			// create menu item
-			MenuItem menuItem = new MenuItem(dropDownMenu.getDropDownMenu(), SWT.PUSH);
-			// get default value of flag
-			boolean showInvisibleTags = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
-					IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
-			
-			// set text
-			menuItem.setText(showInvisibleTags ? VpeUIMessages.HIDE_NON_VISUAL_TAGS
-					: VpeUIMessages.SHOW_NON_VISUAL_TAGS);
-			
-			// add listener
-			menuItem.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					MenuItem selectedItem = (MenuItem) e.widget;
-					
-					// get current value of flag
-					boolean showInvisibleTags = !controller.getVisualBuilder()
-					.isShowInvisibleTags();
-					
-					// change text
-					selectedItem
-					.setText((showInvisibleTags ? VpeUIMessages.HIDE
-							: VpeUIMessages.SHOW)
-							+ Constants.WHITE_SPACE
-							+ VpeUIMessages.NON_VISUAL_TAGS);
-					
-					// change flag
-					controller.getVisualBuilder().setShowInvisibleTags(
-							showInvisibleTags);
-					// update vpe
-					controller.visualRefresh();
-				}
-			});
 			// Use vpeToolBarManager to create a horizontal toolbar.
-			vpeToolBarManager = new VpeToolBarManager(dropDownMenu
-					.getDropDownMenu());
+			vpeToolBarManager = new VpeToolBarManager();
 			if (vpeToolBarManager != null) {
 				vpeToolBarManager.createToolBarComposite(cmpEdTl);
 				vpeToolBarManager.addToolBar(new TextFormattingToolBar(formatControllerManager));
+				
+				/*
+				 * Create SHOW TEXT FORMATTING tool bar icon
+				 */
+				createShowTextFormattingItem(verBar);
 			}
 		}
 
-		
-		
 		//Create a composite to the Editor
 		Composite cmpEd = new Composite (cmpEdTl, SWT.NATIVE);
 		GridLayout layoutEd = new GridLayout(1, false);
@@ -986,5 +945,229 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 	public VpeDropDownMenu getDropDownMenu() {
 		return dropDownMenu;
+	}
+	
+	private void createShowNonVisualTagsItem(ToolBar parent) {
+		showNonVisualTags = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+				IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
+		 showNonVisualTagsItem = createToolItem(parent, SWT.BUTTON1,
+				showNonVisualTags ? ICON_NON_VISUAL_TAGS_SHOW
+						: ICON_NON_VISUAL_TAGS_HIDE, "", //$NON-NLS-1$
+				showNonVisualTags ? VpeUIMessages.SHOW_NON_VISUAL_TAGS
+						: VpeUIMessages.HIDE_NON_VISUAL_TAGS, true);
+		showNonVisualTagsItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				/*
+				 * Switch the value
+				 */
+				showNonVisualTags = !showNonVisualTags;
+				
+				/*
+				 * Update icon and tooltip
+				 */
+				updateShowNonVisualTagsItem(showNonVisualTags);
+				/*
+				 * Change flag
+				 */
+				controller.getVisualBuilder().setShowInvisibleTags(
+						showNonVisualTags);
+				/*
+				 * Update VPE
+				 */
+				controller.visualRefresh();
+			}
+		});
+	}
+	
+	private void updateShowNonVisualTagsItem(boolean showInvisibleTags) {
+		showNonVisualTagsItem.setImage(ImageDescriptor.createFromFile(
+				MozillaEditor.class,
+				showInvisibleTags ? ICON_NON_VISUAL_TAGS_SHOW
+						: ICON_NON_VISUAL_TAGS_HIDE).createImage());
+		showNonVisualTagsItem.setToolTipText(showInvisibleTags ? VpeUIMessages.SHOW_NON_VISUAL_TAGS
+				: VpeUIMessages.HIDE_NON_VISUAL_TAGS);
+	}
+	
+	private void createShowSelectionBarItem(ToolBar parent) {
+		showSelectionBar = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+				IVpePreferencesPage.SHOW_SELECTION_TAG_BAR);
+		showSelectionBarItem = createToolItem(parent, SWT.BUTTON1, 
+				showSelectionBar ? ICON_SELECTION_BAR_SHOW
+						: ICON_SELECTION_BAR_HIDE, "", //$NON-NLS-1$
+				showSelectionBar ? VpeUIMessages.SHOW_SELECTION_BAR
+						: VpeUIMessages.HIDE_SELECTION_BAR, true);
+		showSelectionBarItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				/*
+				 * Switch the value
+				 */
+				showSelectionBar = !showSelectionBar;
+				/*
+				 * Update icon and tooltip
+				 */
+				updateShowSelectionBarItem(showSelectionBar);
+				
+				/*
+				 * Update Selection Bar 
+				 */
+				controller.getPageContext().getEditPart().updateSelectionBar(showSelectionBar);
+			}
+		});
+	}
+	
+	private void updateShowSelectionBarItem(boolean showSelectionBar) {
+		showSelectionBarItem.setImage(ImageDescriptor.createFromFile(
+				MozillaEditor.class,
+				showSelectionBar ? ICON_SELECTION_BAR_SHOW
+						: ICON_SELECTION_BAR_HIDE).createImage());
+		showSelectionBarItem
+				.setToolTipText(showSelectionBar ? VpeUIMessages.SHOW_SELECTION_BAR
+						: VpeUIMessages.HIDE_SELECTION_BAR);
+	}
+	
+	private void createShowBundlesAsELItem(ToolBar parent) {
+		showBundlesAsEL = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+				IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
+		showBundlesAsELItem = createToolItem(parent, SWT.BUTTON1,
+				showBundlesAsEL ? ICON_BUNDLE_AS_EL_SHOW
+						: ICON_BUNDLE_AS_EL_HIDE, "", //$NON-NLS-1$
+				showBundlesAsEL ? VpeUIMessages.SHOW_BUNDLES_AS_EL
+						: VpeUIMessages.SHOW_BUNDLES_AS_MESSAGES, true);
+		showBundlesAsELItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				/*
+				 * Switch the value
+				 */
+				showBundlesAsEL = !showBundlesAsEL;
+				/*
+				 * Update icon and tooltip
+				 */
+				updateShowBundlesAsELItem(showBundlesAsEL);
+				
+				/*
+				 * Update bundle messages. 
+				 */
+				controller.getPageContext().getBundle().updateShowBundleUsageAsEL(showBundlesAsEL);
+				controller.visualRefresh();
+			}
+		});
+	}
+	
+	private void updateShowBundlesAsELItem(boolean showBundlesAsEL) {
+		showBundlesAsELItem.setImage(ImageDescriptor.createFromFile(
+				MozillaEditor.class,
+				showBundlesAsEL ? ICON_BUNDLE_AS_EL_SHOW
+						: ICON_BUNDLE_AS_EL_HIDE).createImage());
+		showBundlesAsELItem
+				.setToolTipText(showBundlesAsEL ? VpeUIMessages.SHOW_BUNDLES_AS_EL
+						: VpeUIMessages.SHOW_BUNDLES_AS_MESSAGES);
+	}
+	
+	private void createShowTextFormattingItem(ToolBar parent) {
+		showTextFormatting = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+				IVpePreferencesPage.SHOW_TEXT_FORMATTING);
+		showTextFormattingItem = createToolItem(parent,
+				SWT.BUTTON1,
+				showTextFormatting ? ICON_TEXT_FORMATTING_SHOW
+						: ICON_TEXT_FORMATTING_HIDE, "", //$NON-NLS-1$
+						showTextFormatting ? VpeUIMessages.SHOW_TEXT_FORMATTING
+								: VpeUIMessages.HIDE_TEXT_FORMATTING, true);
+		showTextFormattingItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				/*
+				 * Switch the value
+				 */
+				showTextFormatting = !showTextFormatting;
+				
+				/*
+				 * Update icon and tooltip
+				 */
+				updateShowTextFormattingItem(showTextFormatting);
+				
+				/*
+				 * Update Text Formatting Bar 
+				 */
+				vpeToolBarManager.setToolbarVisibility(showTextFormatting);
+			}
+		});
+	}
+	
+	private void updateShowTextFormattingItem(boolean showTextFormatting) {
+		showTextFormattingItem.setImage(ImageDescriptor.createFromFile(
+				MozillaEditor.class,
+				showTextFormatting ? ICON_TEXT_FORMATTING_SHOW
+						: ICON_TEXT_FORMATTING_HIDE).createImage());
+		showTextFormattingItem
+				.setToolTipText(showTextFormatting ? VpeUIMessages.SHOW_TEXT_FORMATTING
+						: VpeUIMessages.HIDE_TEXT_FORMATTING);
+	}
+	
+	private void createRotateEditorsItem(ToolBar parent) {
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4152
+		 * Compute initial icon state and add it to the tool bar.
+		 */
+		String newOrientation = JspEditorPlugin
+		.getDefault().getPreferenceStore().getString(
+				IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
+		currentOrientationIndex = layoutValues.indexOf(newOrientation);
+		rotateEditorsItem = createToolItem(parent, SWT.BUTTON1,
+				layoutIcons.get(newOrientation),
+				ICON_ORIENTATION_SOURCE_LEFT_DISABLED, 
+				layoutNames.get(newOrientation), true);
+		
+		rotateEditorsItem.addListener(SWT.Selection, new Listener() {
+		    public void handleEvent(Event event) {
+				/*
+				 * Rotate editors orientation clockwise.
+				 */
+		    	currentOrientationIndex++;
+				if (currentOrientationIndex >= layoutValues.size()) {
+					currentOrientationIndex = currentOrientationIndex % layoutValues.size();
+				}
+				String newOrientation = layoutValues.get(currentOrientationIndex);
+				/*
+				 * Update icon and tooltip
+				 */
+				updateRotateEditorsItem(newOrientation);
+				/*
+				 * Call <code>filContainer()</code> from VpeEditorPart
+				 * to redraw CustomSashForm with new layout.
+				 */
+				getController().getPageContext().getEditPart().fillContainer(true, newOrientation);
+		    }
+		});
+	}
+	
+	private void updateRotateEditorsItem(String newOrientation) {
+		rotateEditorsItem.setImage(ImageDescriptor.createFromFile(
+				MozillaEditor.class, layoutIcons.get(newOrientation))
+				.createImage());
+		rotateEditorsItem.setToolTipText(layoutNames.get(newOrientation));
+	}
+
+	public void setDefaultToolBarItems() {
+		String newOrientation = JspEditorPlugin
+		.getDefault().getPreferenceStore().getString(
+				IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
+		currentOrientationIndex = layoutValues.indexOf(newOrientation);
+		updateRotateEditorsItem(newOrientation);
+		
+		showNonVisualTags = JspEditorPlugin.getDefault().getPreferenceStore()
+				.getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
+		updateShowNonVisualTagsItem(showNonVisualTags);
+		
+		showSelectionBar = JspEditorPlugin.getDefault().getPreferenceStore()
+				.getBoolean(IVpePreferencesPage.SHOW_SELECTION_TAG_BAR);
+		updateShowSelectionBarItem(showSelectionBar);
+		
+		showBundlesAsEL = JspEditorPlugin.getDefault().getPreferenceStore()
+				.getBoolean(
+						IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
+		updateShowBundlesAsELItem(showBundlesAsEL);
+		
+		showTextFormatting = JspEditorPlugin.getDefault().getPreferenceStore()
+				.getBoolean(IVpePreferencesPage.SHOW_TEXT_FORMATTING);
+		updateShowTextFormattingItem(showTextFormatting);
 	}
 }

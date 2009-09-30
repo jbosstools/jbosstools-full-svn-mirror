@@ -10,12 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.toolbar;
 
-import java.text.MessageFormat;
 
 import org.eclipse.compare.Splitter;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -23,11 +20,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.VpePlugin;
-import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 /**
  * @author Erick Created on 14.07.2005
@@ -36,16 +31,9 @@ import org.jboss.tools.vpe.messages.VpeUIMessages;
 public class VpeToolBarManager implements IVpeToolBarManager {
 
 	private Splitter splitter;
+	private Composite cmpToolBar;
 
-	private Menu dropDownMenu;
-
-	public static final String SHOW = "show"; //$NON-NLS-1$
-	public static final String HIDE = "hide"; //$NON-NLS-1$
-
-	public VpeToolBarManager(Menu dropDownMenu) {
-
-		this.dropDownMenu = dropDownMenu;
-	}
+	public VpeToolBarManager() { }
 
 	public Composite createToolBarComposite(Composite parent) {
 		splitter = new Splitter(parent, SWT.NONE) {
@@ -71,7 +59,7 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 
 	public void addToolBar(IVpeToolBar bar) {
 
-		Composite cmpToolBar = new Composite(splitter, SWT.NONE);
+		cmpToolBar = new Composite(splitter, SWT.NONE);
 		FormData data = new FormData();
 		data.left = new FormAttachment(0);
 		data.right = new FormAttachment(100);
@@ -93,40 +81,17 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 		ToolbarContainer toolbarContainer = new ToolbarContainer(cmpToolBar, bar);
 
 		// show or hide toolbar
-		setStateToolbar(cmpToolBar, isShowedToolbar(bar));
+		setStateToolbar(cmpToolBar, JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+				IVpePreferencesPage.SHOW_TEXT_FORMATTING));
 
-		// create item to manage show/hide toolbar
-		attachToMenu(dropDownMenu, toolbarContainer);
 	}
 
-	/**
-	 * create item to manage show/hide toolbar
-	 * 
-	 * @param menu
-	 * @param toolbarContainer
-	 */
-	public void attachToMenu(Menu menu, ToolbarContainer toolbarContainer) {
-		MenuItem menuItem = new MenuItem(dropDownMenu, SWT.PUSH);
-
-		boolean showToolbar = isShowedToolbar(toolbarContainer.getToolbar());
-
-		// set text to menu item
-		menuItem.setText(
-				MessageFormat.format((showToolbar ? VpeUIMessages.HIDE_TOOLBAR : VpeUIMessages.SHOW_TOOLBAR),
-						toolbarContainer.getToolbar().getName()));
-
-		// add listener
-		menuItem.addSelectionListener(
-				new ToolbarManagerSelectionListener(toolbarContainer, showToolbar));
-	}
-
-	/**
-	 * 
-	 * @param bar
-	 * @return
-	 */
-	protected boolean isShowedToolbar(IVpeToolBar bar) {
-		return !HIDE.equalsIgnoreCase(getPreference(bar.getId()));
+	public void setToolbarVisibility(boolean isVisible) {
+		if (cmpToolBar != null) {
+			setStateToolbar(cmpToolBar, isVisible);
+		} else {
+			VpePlugin.getDefault().logError("Toolbar control is not initialized.");
+		}
 	}
 
 	/**
@@ -144,71 +109,6 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 		if (splitter != null) {
 			splitter.dispose();
 			splitter = null;
-		}
-
-		for (MenuItem menuItem : dropDownMenu.getItems()) {
-			menuItem.dispose();
-		}
-
-	}
-
-	/**
-	 * get preference by key
-	 * 
-	 * @param key
-	 * @return
-	 */
-	private String getPreference(String key) {
-
-		return VpePlugin.getDefault().getPreferenceStore().getString(key);
-	}
-
-	/**
-	 * set preference
-	 * 
-	 * @param key
-	 * @param value
-	 */
-	private void setPreference(String key, String value) {
-
-		VpePlugin.getDefault().getPreferenceStore().setValue(key, value);
-	}
-
-	/**
-	 * selection listener to manage toolbars
-	 * 
-	 * @author Sergey Dzmitrovich
-	 * 
-	 */
-	private class ToolbarManagerSelectionListener extends SelectionAdapter {
-
-		private ToolbarContainer toolbarContainer;
-		private boolean showBar;
-
-		public ToolbarManagerSelectionListener(
-				ToolbarContainer toolbarContainer, boolean showBar) {
-			this.toolbarContainer = toolbarContainer;
-			this.showBar = showBar;
-		}
-
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			MenuItem selectedItem = (MenuItem) e.widget;
-
-			// change flag
-			showBar = !showBar;
-
-			// set new value of preference 
-			setPreference(toolbarContainer.getToolbar().getId(), 
-					showBar ? SHOW : HIDE);
-			// change text
-			selectedItem.setText(
-					MessageFormat.format(showBar ? VpeUIMessages.HIDE_TOOLBAR 
-												 : VpeUIMessages.SHOW_TOOLBAR,
-										 toolbarContainer.getToolbar().getName())
-								 );
-			// show or hide toolbar
-			setStateToolbar(toolbarContainer.getParent(), showBar);
 		}
 	}
 

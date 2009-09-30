@@ -118,7 +118,11 @@ public final class VpeUIMessages extends NLS {
 	public static String VPE_PREFERENCES_PAGE_DESCRIPTION;
 	public static String SHOW_BORDER_FOR_UNKNOWN_TAGS;
 	public static String SHOW_SELECTION_TAG_BAR;
+	public static String SHOW_TEXT_FORMATTING;
+	public static String HIDE_TEXT_FORMATTING;
 	public static String SHOW_RESOURCE_BUNDLES_USAGE_AS_EL;
+	public static String SHOW_BUNDLES_AS_EL;
+	public static String SHOW_BUNDLES_AS_MESSAGES;
 	public static String ASK_TAG_ATTRIBUTES_ON_TAG_INSERT;
 	public static String ASK_CONFIRMATION_ON_CLOSING_SELECTION_BAR;
 	public static String DEFAULT_VPE_TAB;
