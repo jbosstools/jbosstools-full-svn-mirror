@@ -1168,7 +1168,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		  * controller could be null.
 		  */
 		 if (getController() != null) {
-			 selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
+			 selectionBar.setVisible(JspEditorPlugin.getDefault()
+					 .getPreferenceStore().getBoolean(
+							 IVpePreferencesPage.SHOW_SELECTION_TAG_BAR));
 			 fillContainer(false, null);
 			 getController().getVisualBuilder().setShowInvisibleTags(JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
 					 IVpePreferencesPage.SHOW_NON_VISUAL_TAGS));
@@ -1179,7 +1181,6 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	
 	public void updateSelectionBar(boolean isSelectionBarVisible) {
 		if (selectionBar != null) {
-			selectionBar.setAlwaysVisibleOption(isSelectionBarVisible);
 			selectionBar.setVisible(isSelectionBarVisible);
 		} else {
 			VpePlugin.getDefault().logError("VPE Selection Bar is not initialized.");

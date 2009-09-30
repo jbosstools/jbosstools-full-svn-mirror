@@ -98,12 +98,6 @@ public class SelectionBar implements SelectionListener {
 	private Node currentSelectedNode = null;
 	private Node currentLastNode = null;
 
-//	private ToolItem arrowButton;
-
-
-	final static String PREFERENCE_YES = "yes"; //$NON-NLS-1$
-    final static String PREFERENCE_NO = "no"; //$NON-NLS-1$
-
 	public Composite createToolBarComposite(Composite parent, boolean visible) {
 		splitter = new Splitter(parent, SWT.NONE);
 		splitter.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -147,7 +141,6 @@ public class SelectionBar implements SelectionListener {
 					setAskConfirmationOnClosingSelectionBar(dialog.getToggleState());
 				}
 
-				setAlwaysVisibleOption(false);
 				setVisible(false);
 			}
 		};
@@ -173,36 +166,6 @@ public class SelectionBar implements SelectionListener {
 		setVisible(visible);
 
 		return splitter;
-	}
-
-	private void setPersistentOption(String name, String value) {
-		XModelObject optionsObject = getOptionsObject();
-		optionsObject.setAttributeValue(name, value);
-
-		/*
-		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-2298
-		 * To get stored in xml XModelObject
-		 * should be marked as modified.
-		 */
-		optionsObject.setModified(true);
-		performStore(optionsObject);
-	}
-
-	private XModelObject getOptionsObject() {
-		XModelObject optionsObject = ModelUtilities.getPreferenceModel()
-				.getByPath(VpePreference.VPE_EDITOR_PATH);
-		return optionsObject;
-	}
-
-	public void setAlwaysVisibleOption(boolean visible) {
-		final String optionValue;
-		if (visible) {
-			optionValue = PREFERENCE_YES;
-		} else {
-			optionValue = PREFERENCE_NO;
-		}
-
-		setPersistentOption(VpePreference.ATT_SHOW_SELECTION_TAG_BAR, optionValue);
 	}
 
 	public boolean getAlwaysVisibleOption() {
@@ -559,39 +522,6 @@ public class SelectionBar implements SelectionListener {
 	}
 
 	public void widgetDefaultSelected(SelectionEvent e) {
-	}
-
-	/**
-	 * Performs storing model object in the model and xml file.
-	 *
-	 * @param xmo the model object to store
-	 */
-	private void performStore(XModelObject xmo) {
-		if (null == xmo || null == xmo.getModel()
-				|| null == xmo.getModelEntity()) {
-			return;
-		}
-
-		ArrayList<IModelPropertyEditorAdapter> adapters = new ArrayList<IModelPropertyEditorAdapter>();
-		XAttribute[] attribute = xmo.getModelEntity().getAttributes();
-		for (int i = 0; i < attribute.length; i++) {
-			if(!attribute[i].isVisible()) {
-				continue;
-			}
-			IModelPropertyEditorAdapter adapter = AdapterFactory.getAdapter(attribute[i], xmo, xmo.getModel());
-			adapters.add(adapter);
-		}
-		/*
-		 * Stores model object by its adaptors.
-		 */
-		for (IModelPropertyEditorAdapter adapter : adapters) {
-			adapter.store();
-		}
-
-		/*
-		 * Saves model options
-		 */
-		xmo.getModel().saveOptions();
 	}
 
     @Override
