@@ -278,7 +278,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 */
 	private boolean addNode(Node sourceNode, nsIDOMNode visualNextNode,
 			nsIDOMNode visualContainer) {
-
+		try {
 		nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer);
 // Commented as fix for JBIDE-3012.	
 //		// Fix for JBIDE-1097
@@ -298,6 +298,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				visualContainer.insertBefore(visualNewNode, visualNextNode);
 			}
 			return true;
+		}
+		} catch(XPCOMException xpcomException) {
+			VpePlugin.reportProblem(xpcomException);
 		}
 
 		return false;
