@@ -300,7 +300,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </listitem>
    <listitem>
     <para>Then run in console:</para>
-    <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-linux-gtk-2.1.0.GA.jar
+    <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-eap-linux-gtk-2.1.0.GA.jar
 ]]></programlisting>
    </listitem>
    <listitem>
@@ -717,7 +717,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <section id="Upgrading">
   <?dbhtml filename="Upgrading.html"?>
   <title>Upgrading</title>
-  <para>To upgrade, just uninstall your current version and install the new one.</para>
+  <para>To upgrade, of course you can uninstall your current version and install the new one.</para>
+ 	<para>Now it&apos;s possible to upgrade from JBDS 2.0 to 2.1 using the update site which is available at 
+ 		<ulink url="is available at http://devstudio.jboss.com/updates/2.1">http://devstudio.jboss.com/updates/2.1</ulink>. 
+ 		This is described more fully in the <ulink url="http://www.jboss.com/products/devstudio/update/">JBDS Update Guide</ulink>.</para>
  </section>
 
  <section id="Uninstalling">
