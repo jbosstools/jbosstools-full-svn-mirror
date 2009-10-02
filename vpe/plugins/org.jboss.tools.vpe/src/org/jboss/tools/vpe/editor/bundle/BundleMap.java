@@ -67,7 +67,8 @@ public class BundleMap {
     
     boolean isShowBundleUsageAsEL = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
 			IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL); 
-    XModelTreeListener modelListener = new ML();
+
+	XModelTreeListener modelListener = new ML();
 	
 	public void init(StructuredTextEditor editor){
 		this.editor = editor;
@@ -105,6 +106,10 @@ public class BundleMap {
 	public void dispose() {
 		PreferenceModelUtilities.getPreferenceModel().removeModelTreeListener(modelListener);
 	}	
+
+	public boolean isShowBundleUsageAsEL() {
+		return isShowBundleUsageAsEL;
+	}
 
 	private static final String[] JSF_PROJECT_NATURES = {
 			WebProject.JSF_NATURE_ID

@@ -169,8 +169,11 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 					vep.updatePartAccordingToPreferences();
 					/*
 					 * Change selected tab
+					 * Commented to fix https://jira.jboss.org/jira/browse/JBIDE-4941
+					 * Do not update VPE splitting, weights, tabs for current page,
+					 * only for newly opened. 
 					 */
-					mpe.updatePartAccordingToPreferences();
+//					mpe.updatePartAccordingToPreferences();
 				}
 			}
 		}

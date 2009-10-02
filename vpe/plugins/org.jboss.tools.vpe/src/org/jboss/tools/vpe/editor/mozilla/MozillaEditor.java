@@ -1148,28 +1148,40 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		rotateEditorsItem.setToolTipText(layoutNames.get(newOrientation));
 	}
 
-	public void setDefaultToolBarItems() {
-		String newOrientation = JspEditorPlugin
+	public void updateToolbarItemsAccordingToPreferences() {
+		String prefsOrientation = JspEditorPlugin
 		.getDefault().getPreferenceStore().getString(
 				IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
-		currentOrientationIndex = layoutValues.indexOf(newOrientation);
-		updateRotateEditorsItem(newOrientation);
-		
-		showNonVisualTags = JspEditorPlugin.getDefault().getPreferenceStore()
+		int prefsOrientationIndex = layoutValues.indexOf(prefsOrientation);
+		boolean prefsShowNonVisualTags = JspEditorPlugin.getDefault().getPreferenceStore()
 				.getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
-		updateShowNonVisualTagsItem(showNonVisualTags);
-		
-		showSelectionBar = JspEditorPlugin.getDefault().getPreferenceStore()
+		boolean prefsShowSelectionBar = JspEditorPlugin.getDefault().getPreferenceStore()
 				.getBoolean(IVpePreferencesPage.SHOW_SELECTION_TAG_BAR);
-		updateShowSelectionBarItem(showSelectionBar);
-		
-		showBundlesAsEL = JspEditorPlugin.getDefault().getPreferenceStore()
+		boolean prefsShowBundlesAsEL = JspEditorPlugin.getDefault().getPreferenceStore()
 				.getBoolean(
 						IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
-		updateShowBundlesAsELItem(showBundlesAsEL);
-		
-		showTextFormatting = JspEditorPlugin.getDefault().getPreferenceStore()
+		boolean prefsShowTextFormatting = JspEditorPlugin.getDefault().getPreferenceStore()
 				.getBoolean(IVpePreferencesPage.SHOW_TEXT_FORMATTING);
-		updateShowTextFormattingItem(showTextFormatting);
+		
+		if (currentOrientationIndex != prefsOrientationIndex) {
+			currentOrientationIndex = prefsOrientationIndex;
+			updateRotateEditorsItem(prefsOrientation);
+		}
+		if (showNonVisualTags != prefsShowNonVisualTags) {
+			showNonVisualTags = prefsShowNonVisualTags;
+			updateShowNonVisualTagsItem(showNonVisualTags);
+		}
+		if (showSelectionBar != prefsShowSelectionBar) {
+			showSelectionBar = prefsShowSelectionBar;
+			updateShowSelectionBarItem(showSelectionBar);
+		}
+		if (showBundlesAsEL != prefsShowBundlesAsEL) {
+			showBundlesAsEL = prefsShowBundlesAsEL;
+			updateShowBundlesAsELItem(showBundlesAsEL);
+		}
+		if (showTextFormatting != prefsShowTextFormatting) {
+			showTextFormatting = prefsShowTextFormatting;
+			updateShowTextFormattingItem(showTextFormatting);
+		}
 	}
 }

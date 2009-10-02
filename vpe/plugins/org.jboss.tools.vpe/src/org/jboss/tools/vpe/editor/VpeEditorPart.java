@@ -689,7 +689,12 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		listener = new XModelTreeListener() {
 
 			public void nodeChanged(XModelTreeEvent event) {
-			    fillContainer(false, null);
+				/*
+				* Commented to fix https://jira.jboss.org/jira/browse/JBIDE-4941 Do
+			 	* not update VPE splitting, weights, tabs for current page, do it
+			 	* for newly opened ones only.
+			 	*/
+//			    fillContainer(false, null);
 			    selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
 			}
 
@@ -1162,20 +1167,51 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		/*
 		 * Update MozillaEditor's toolbar items
 		 */
-		visualEditor.setDefaultToolBarItems();
-		 /*
-		  * When switching from Source view to Visual/Source
-		  * controller could be null.
-		  */
-		 if (getController() != null) {
-			 selectionBar.setVisible(JspEditorPlugin.getDefault()
-					 .getPreferenceStore().getBoolean(
-							 IVpePreferencesPage.SHOW_SELECTION_TAG_BAR));
-			 fillContainer(false, null);
-			 getController().getVisualBuilder().setShowInvisibleTags(JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
-					 IVpePreferencesPage.SHOW_NON_VISUAL_TAGS));
-			 getController().getPageContext().getBundle().updateShowBundleUsageAsEL();
-			 getController().visualRefresh();
+		visualEditor.updateToolbarItemsAccordingToPreferences();
+		/*
+		 * When switching from Source view to Visual/Source controller could be null.
+		 */
+		if (getController() != null) {
+			boolean doVisualRefresh = false;
+			boolean presfShowSelectionBar = JspEditorPlugin.getDefault()
+					.getPreferenceStore().getBoolean(
+							IVpePreferencesPage.SHOW_SELECTION_TAG_BAR);
+			if (presfShowSelectionBar != selectionBar.isVisible()) {
+				selectionBar.setVisible(presfShowSelectionBar);
+				doVisualRefresh = true;
+			}
+			/*
+			 * Commented to fix https://jira.jboss.org/jira/browse/JBIDE-4941 Do
+			 * not update VPE splitting, weights, tabs for current page, do it
+			 * for newly opened ones only.
+			 */
+//			fillContainer(false, null);
+			boolean prefsShowNonVisualTags = JspEditorPlugin.getDefault()
+					.getPreferenceStore().getBoolean(
+							IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
+			if (prefsShowNonVisualTags != getController().getVisualBuilder()
+					.isShowInvisibleTags()) {
+				getController().getVisualBuilder().setShowInvisibleTags(
+						prefsShowNonVisualTags);
+				doVisualRefresh = true;
+			}
+			boolean prefsShowBundlesAsEL = JspEditorPlugin
+					.getDefault()
+					.getPreferenceStore()
+					.getBoolean(
+							IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
+			if (prefsShowBundlesAsEL != getController().getPageContext()
+					.getBundle().isShowBundleUsageAsEL()) {
+				getController().getPageContext().getBundle()
+						.updateShowBundleUsageAsEL(prefsShowBundlesAsEL);
+				doVisualRefresh = true;
+			}
+			/*
+			 * Visual refresh is only needed when some options have changed.
+			 */
+			if (doVisualRefresh) {
+				getController().visualRefresh();
+			}
 		}
 	}
 	
@@ -1183,7 +1219,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		if (selectionBar != null) {
 			selectionBar.setVisible(isSelectionBarVisible);
 		} else {
-			VpePlugin.getDefault().logError("VPE Selection Bar is not initialized.");
+			VpePlugin.getDefault().logError("VPE Selection Bar is not initialized."); //$NON-NLS-1$
 		}
 	}
 	
