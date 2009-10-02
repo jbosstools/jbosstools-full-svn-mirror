@@ -624,6 +624,13 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     </mediaobject>
    </figure>
      
+     <note>
+     	<title>Note:</title>
+  	<para>While installing JBoss Tools on GNU/Linux (64-bit) through the eclipse installation manager you may run into some problems which can interrupt your installation process.
+  		Please, read the 
+  		<ulink url="http://www.jboss.org/community/wiki/ManualinstallationofJBossTools31xonEclipse35onGNULinux64-bit">Manual installation of JBoss Tools 3.1.x on Eclipse 3.5 on GNU/Linux (64-bit)</ulink> 
+  		wiki article which provides you with the necessary steps to do it correct.</para>
+     </note>
   </section>
 
  </section>
