@@ -12,26 +12,6 @@ package org.eclipse.bpel.apache.ode.runtime;
  *******************************************************************************/
 
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.bpel.runtimes.publishers.GenericBPELPublisher;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceVisitor;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.wst.server.core.IModule;
-import org.eclipse.wst.server.core.IModuleArtifact;
-import org.eclipse.wst.server.core.IRuntime;
 
 /**
  * BPEL publisher for Apache ODE.
@@ -39,7 +19,9 @@ import org.eclipse.wst.server.core.IRuntime;
  * @author Tammo van Lessen (IAAS)
  * @author Simon Moser (IBM)
  */
-public class OdeBPELPublisher extends GenericBPELPublisher {
+public class OdeBPELPublisher {
+/*
+extends GenericBPELPublisher {
 		
 	public OdeBPELPublisher()
 	{
@@ -166,9 +148,9 @@ public class OdeBPELPublisher extends GenericBPELPublisher {
 			return false;
 	}
 
-	/**
-	 * This method will create a folder inside the WEB-INF\processes subfolder of the ODE installation
-	 */
+	//
+	// This method will create a folder inside the WEB-INF\processes subfolder of the ODE installation
+	//
 	protected String createDeploymentDestination(IModule module)
 	{
 		String moduleName = module.getName().substring(0, module.getName().indexOf('/'));
@@ -236,4 +218,5 @@ public class OdeBPELPublisher extends GenericBPELPublisher {
 			}
 		}
 	}	
+	*/
 }

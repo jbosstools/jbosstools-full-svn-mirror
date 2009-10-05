@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+<!--  This class is not necessary at all. 
    <extension
          point="org.jboss.ide.eclipse.as.core.publishers">
       <publisher
@@ -8,5 +9,5 @@
             priority="4">
       </publisher>
    </extension>
-
+-->
 </plugin>
