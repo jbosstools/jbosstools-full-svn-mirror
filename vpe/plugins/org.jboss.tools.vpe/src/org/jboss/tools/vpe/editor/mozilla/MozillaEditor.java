@@ -105,8 +105,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	public static final String ICON_ORIENTATION_VISUAL_LEFT = "icons/visual_left.gif"; //$NON-NLS-1$
 	public static final String ICON_ORIENTATION_VISUAI_TOP = "icons/visual_top.gif"; //$NON-NLS-1$
 	public static final String ICON_ORIENTATION_SOURCE_LEFT_DISABLED = "icons/source_left_disabled.gif"; //$NON-NLS-1$
-	public static final String ICON_NON_VISUAL_TAGS_SHOW = "icons/non-visusal-tags-show.png"; //$NON-NLS-1$
-	public static final String ICON_NON_VISUAL_TAGS_HIDE = "icons/non-visusal-tags-hide.png"; //$NON-NLS-1$
+	public static final String ICON_NON_VISUAL_TAGS_SHOW = "icons/non-visusal-tags-show.gif"; //$NON-NLS-1$
+	public static final String ICON_NON_VISUAL_TAGS_HIDE = "icons/non-visusal-tags-hide.gif"; //$NON-NLS-1$
 	public static final String ICON_SELECTION_BAR_SHOW = "icons/selbar-show.gif"; //$NON-NLS-1$
 	public static final String ICON_SELECTION_BAR_HIDE = "icons/selbar-hide.gif"; //$NON-NLS-1$
 	public static final String ICON_TEXT_FORMATTING_SHOW = "icons/text-formatting-show.gif"; //$NON-NLS-1$
