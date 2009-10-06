@@ -8,7 +8,7 @@ import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.IServer;
 import org.jboss.ide.eclipse.as.core.publishers.JstPublisher;
 import org.jboss.ide.eclipse.as.core.server.IJBossServerPublisher;
-import org.jboss.tools.bpel.runtimes.IBPELModuleFacetConstants;
+import org.eclipse.bpel.runtimes.IBPELModuleFacetConstants;
 
 public class JBossServerBPELPublisher extends JstPublisher implements
 		IJBossServerPublisher {
@@ -26,7 +26,7 @@ public class JBossServerBPELPublisher extends JstPublisher implements
 		
 		try {
 			IFacetedProject fp = ProjectFacetsManager.create(project);
-			IProjectFacet pf = ProjectFacetsManager.getProjectFacet(IBPELModuleFacetConstants.BPEL_PROJECT_FACET);
+			IProjectFacet pf = ProjectFacetsManager.getProjectFacet(IBPELModuleFacetConstants.BPEL20_PROJECT_FACET);
 			return fp.hasProjectFacet(pf);
 		} catch (Exception e) {
 			return false;
