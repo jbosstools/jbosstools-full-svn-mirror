@@ -63,12 +63,6 @@
          version="0.0.0"
          unpack="false"/>
 
-   <plugin
-         id="org.eclipse.bpel.runtimes"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
    <plugin
          id="org.eclipse.bpel.ui"
@@ -90,13 +84,6 @@
 
    <plugin
          id="org.eclipse.bpel.xpath10"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.jboss.tools.bpel.as.integration"
          download-size="0"
          install-size="0"
          version="0.0.0"
