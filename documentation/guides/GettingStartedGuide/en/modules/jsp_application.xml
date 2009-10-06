@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <chapter id="jsp_application" xreflabel="jsp_application">
 	<?dbhtml filename="jsp_application.html"?>
 	<chapterinfo>
@@ -161,7 +161,7 @@
 				<property>hello.jsp</property>
 			</emphasis> page should look like this:</para>
 			<figure>
-				<title>Hello.jsp Page</title>
+				<title>Hello.jsp Page Source</title>
 				<mediaobject>
 					<imageobject>
 						<imagedata fileref="images/jsp_application/jsp_application_5.png"/>

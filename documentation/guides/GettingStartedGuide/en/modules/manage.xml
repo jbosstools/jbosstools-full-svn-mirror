@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <chapter id="manage" xreflabel="manage">
     <?dbhtml filename="manage.html"?>
     <chapterinfo>
@@ -36,11 +36,8 @@
     			</imageobject>
     		</mediaobject>
     	</figure>
-        	
-        	<para>To read more
-            about AS plug-in, refer to the <ulink url="&aslink;">Server Manager
-            guide</ulink>.</para>
-
+    	
+    	     	<para>To read more about AS plug-in, refer to the <ulink url="&aslink;">Server Manager guide</ulink>.</para>
         <section id="StartingServer">
             <?dbhtml filename="StartingServer.html"?>
             <title>Starting JBoss Server</title>
@@ -216,7 +213,7 @@
                 </listitem>
             </itemizedlist>
             <figure>
-                <title>Selecting Server Type</title>
+                <title>Selecting Server Name and Server Type</title>
                 <mediaobject>
                     <imageobject>
                         <imagedata fileref="images/manage/manage_9.png"/>
@@ -271,7 +268,7 @@
                 </listitem>
             </itemizedlist>
             <figure>
-                <title>Configuring Projects</title>
+                <title>JBoss Runtime Summary</title>
                 <mediaobject>
                     <imageobject>
                         <imagedata fileref="images/manage/manage_15.png"/>

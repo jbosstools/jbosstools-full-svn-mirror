@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <chapter id="first_seam" xreflabel="first_seam">
   <?dbhtml filename="first_seam.html"?>
   <chapterinfo>
@@ -872,7 +872,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         logic that JPA supports.</para>
 
       <figure>
-        <title>The Results</title>
+        <title>The Hibernate Query Result</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam42.png"/>
@@ -966,7 +966,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         RichFaces component.</para>
 
       <figure>
-        <title>RichFaces Component Inserting</title>
+        <title>Insert RichFaces Component from Context Menu</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam47.png" scale="85"/>
@@ -981,7 +981,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
                                                                value="#{orderdetailsHome.instance.quantityordered}"/>]]></programlisting>
 
       <figure>
-        <title>Adding the Source</title>
+        <title>Manually coping Source Code</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam48.png"/>
