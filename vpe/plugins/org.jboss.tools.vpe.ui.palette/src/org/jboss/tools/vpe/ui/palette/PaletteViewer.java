@@ -23,18 +23,19 @@ import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 
+import org.jboss.tools.common.model.ui.views.palette.IPalettePageAdapter;
 import org.jboss.tools.common.model.ui.views.palette.PaletteViewPart;
 
 import org.jboss.tools.vpe.ui.palette.model.PaletteItem;
 
 public class PaletteViewer extends org.eclipse.gef.ui.palette.PaletteViewer {
-	private PaletteViewPart viewPart;
+	private IPalettePageAdapter viewPart;
 	PaletteDragSourceListener listener;
 
     static Transfer[] transferTypes = new Transfer[] {
             TextTransfer.getInstance(),ModelTransfer.getInstance() };
 
-	public PaletteViewer(PaletteViewPart viewPart) {
+	public PaletteViewer(IPalettePageAdapter viewPart) {
 		this.viewPart = viewPart;
 		setEditPartFactory(new CustomPaletteEditPartFactory());
 	}

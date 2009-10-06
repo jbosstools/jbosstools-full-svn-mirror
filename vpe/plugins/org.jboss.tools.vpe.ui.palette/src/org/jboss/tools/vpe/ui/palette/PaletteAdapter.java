@@ -25,6 +25,7 @@ import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.model.ui.ModelUIPlugin;
 import org.jboss.tools.common.model.ui.views.palette.IPaletteAdapter;
+import org.jboss.tools.common.model.ui.views.palette.IPalettePageAdapter;
 import org.jboss.tools.common.model.ui.views.palette.PaletteContents;
 import org.jboss.tools.common.model.ui.views.palette.PaletteViewPart;
 import org.jboss.tools.vpe.ui.palette.model.PaletteModel;
@@ -35,7 +36,7 @@ public class PaletteAdapter implements IPaletteAdapter {
 	private static final URL BASE_URL = EclipseResourceUtil.getInstallURL(Platform.getBundle(ModelUIPlugin.PLUGIN_ID));
 	private static final String IMAGE_PATH = "images/xstudio/palette/"; //$NON-NLS-1$
 
-	private PaletteViewPart viewPart = null;
+	private IPalettePageAdapter viewPart = null;
 	private PaletteModel model = null; 
 	private PaletteViewer viewer = null;
 	private Control palette = null;
@@ -44,10 +45,19 @@ public class PaletteAdapter implements IPaletteAdapter {
 	private PaletteModelListener modelListener = null;
 	private PaletteContents paletteContents;
 	
-	public void setPaletteViewPart(PaletteViewPart viewPart) {
+	public void setPaletteViewPart(IPalettePageAdapter viewPart) {
 		this.viewPart = viewPart;
 	}
-	
+
+	public void initActionBars() {
+		IActionBars bars = viewPart.getActionBars();
+		if(bars != null) {
+			bars.getToolBarManager().add(new PaletteEditAction());
+			bars.getToolBarManager().add(new ShowHideTabsAction());
+			bars.getToolBarManager().add(new ImportTLDAction());
+		}
+	}
+
 	public Control createControl(Composite root) {
 		model = PaletteModel.getInstance(paletteContents);
 		viewer = new PaletteViewer(viewPart);
@@ -57,11 +67,8 @@ public class PaletteAdapter implements IPaletteAdapter {
 		PaletteRoot paletteRoot = model.getPaletteRoot();
 		viewer.setPaletteRoot(paletteRoot);
 
-		IActionBars bars = viewPart.getViewSite().getActionBars();
-		bars.getToolBarManager().add(new PaletteEditAction());
-		bars.getToolBarManager().add(new ShowHideTabsAction());
-		bars.getToolBarManager().add(new ImportTLDAction());
-
+//		initActionBars();
+		
 		descriptionManager = new DescriptionManager(viewer);
 		descriptionManager.install(palette);
 
@@ -86,7 +93,7 @@ public class PaletteAdapter implements IPaletteAdapter {
 		model.removeModelTreeListener(modelListener);
 		dropManager.dispose();
 		descriptionManager.dispose();
-		viewPart.getViewSite().getActionBars().getToolBarManager().removeAll();
+		viewPart.getActionBars().getToolBarManager().removeAll();
 		viewer = null;
 		viewPart = null;
 	}
@@ -206,4 +213,6 @@ public class PaletteAdapter implements IPaletteAdapter {
 			return (modelObject.getPath() + "/").startsWith(root.getPath() + "/"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
+
+
 }
