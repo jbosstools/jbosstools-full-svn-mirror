@@ -30,6 +30,6 @@ Export-Package: org.jboss.tools.bpel.runtimes,
  org.jboss.tools.bpel.runtimes.facets,
  org.jboss.tools.bpel.runtimes.module,
  org.jboss.tools.bpel.runtimes.ui.wizards
-Bundle-ClassPath: bin
+Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
