@@ -83,8 +83,20 @@
             </mediaobject>
         </figure>
 
-        <para>Next three pages are filled out with defaults, just leave them through by pressing <emphasis>
-                <property>Next</property>.</emphasis> On the <emphasis>
+        <para>Next two pages are filled out with defaults, just leave them through by pressing <emphasis>
+                <property>Next</property>.</emphasis> 
+On the <emphasis><property>Birt Configuration</property></emphasis> page you can modify BIRT Deployment Settings, which also defined in web.xml. Let's keep default values.</para>
+                            <figure>
+            <title>Configuring BIRT Deployment Settings</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/birt_integration_with_seam/birtDeploymentSettings.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+		<para>Next page is also filled out with default values.
+                On the <emphasis>
                 <property>Seam Facet</property>
             </emphasis> page you should specify the Seam runtime and Connection profile.</para>
 
