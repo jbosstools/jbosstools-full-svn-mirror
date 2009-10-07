@@ -8,7 +8,7 @@
   * Contributors:
   *     Red Hat, Inc. - initial API and implementation
   ******************************************************************************/
-package org.jboss.tools.seam.internal.core.refactoring;
+package org.jboss.tools.common.el.ui.refactoring;
 
 import java.util.ArrayList;
 
@@ -34,10 +34,9 @@ import org.jboss.tools.common.el.core.model.ELInvocationExpression;
 import org.jboss.tools.common.el.core.model.ELMethodInvocation;
 import org.jboss.tools.common.el.core.model.ELPropertyInvocation;
 import org.jboss.tools.common.el.core.refactoring.RefactorSearcher;
-import org.jboss.tools.seam.core.SeamCoreMessages;
-import org.jboss.tools.seam.core.SeamProjectsSet;
+import org.jboss.tools.common.el.ui.ElUiCoreMessages;
 
-public class SeamRenameMethodParticipant extends RenameParticipant{
+public class RenameMethodParticipant extends RenameParticipant{
 	private IMethod method;
 	private String oldName;
 	private String newName;
@@ -59,9 +58,9 @@ public class SeamRenameMethodParticipant extends RenameParticipant{
 		
 		if(method != null && !added){
 			if(searcher.isGetter(method))
-				status.addWarning(SeamCoreMessages.SEAM_RENAME_METHOD_PARTICIPANT_GETTER_WARNING);
+				status.addWarning(ElUiCoreMessages.RENAME_METHOD_PARTICIPANT_GETTER_WARNING);
 			else if(searcher.isSetter(method))
-				status.addWarning(SeamCoreMessages.SEAM_RENAME_METHOD_PARTICIPANT_SETTER_WARNING);
+				status.addWarning(ElUiCoreMessages.RENAME_METHOD_PARTICIPANT_SETTER_WARNING);
 			added = true;
 		}
 		
@@ -134,38 +133,32 @@ public class SeamRenameMethodParticipant extends RenameParticipant{
 	}
 	
 	class SeamRenameMethodSearcher extends RefactorSearcher{
-		SeamProjectsSet projectsSet;
-		
 		public SeamRenameMethodSearcher(IFile file, String name){
 			super(file, name, method);
-			projectsSet = new SeamProjectsSet(file.getProject());
 		}
 
 		@Override
 		protected boolean isFileCorrect(IFile file) {
 			if(!file.isSynchronized(IResource.DEPTH_ZERO)){
-				status.addFatalError(Messages.format(SeamCoreMessages.SEAM_RENAME_PROCESSOR_OUT_OF_SYNC_FILE, file.getFullPath().toString()));
+				status.addFatalError(Messages.format(ElUiCoreMessages.RENAME_METHOD_PARTICIPANT_OUT_OF_SYNC_FILE, file.getFullPath().toString()));
 				return false;
 			}else if(file.isPhantom()){
-				status.addFatalError(Messages.format(SeamCoreMessages.SEAM_RENAME_PROCESSOR_ERROR_PHANTOM_FILE, file.getFullPath().toString()));
+				status.addFatalError(Messages.format(ElUiCoreMessages.RENAME_METHOD_PARTICIPANT_ERROR_PHANTOM_FILE, file.getFullPath().toString()));
 				return false;
 			}else if(file.isReadOnly()){
-				status.addFatalError(Messages.format(SeamCoreMessages.SEAM_RENAME_PROCESSOR_ERROR_READ_ONLY_FILE, file.getFullPath().toString()));
+				status.addFatalError(Messages.format(ElUiCoreMessages.RENAME_METHOD_PARTICIPANT_ERROR_READ_ONLY_FILE, file.getFullPath().toString()));
 				return false;
 			}
 			return true;
 		}
 		
 		protected IProject[] getProjects(){
-			return projectsSet.getAllProjects();
+			IProject[] projects = new IProject[1];
+			projects[0] = baseFile.getProject();
+			return projects;
 		}
 		
 		protected IContainer getViewFolder(IProject project){
-			if(project.equals(projectsSet.getWarProject()))
-				return projectsSet.getDefaultViewsFolder();
-			else if(project.equals(projectsSet.getEarProject()))
-				return projectsSet.getDefaultEarViewsFolder();
-			
 			return null;
 		}
 		
@@ -188,7 +181,7 @@ public class SeamRenameMethodParticipant extends RenameParticipant{
 		protected void match(IFile file, int offset, int length, boolean resolved) {
 			change(file, offset, length, newName);
 			if(!resolved)
-				SeamRenameMethodParticipant.this.resolved = false;
+				RenameMethodParticipant.this.resolved = false;
 		}
 	}
 

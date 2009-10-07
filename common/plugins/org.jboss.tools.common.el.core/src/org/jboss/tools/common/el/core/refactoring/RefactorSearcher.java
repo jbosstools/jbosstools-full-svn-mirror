@@ -8,7 +8,7 @@
   * Contributors:
   *     Red Hat, Inc. - initial API and implementation
   ******************************************************************************/
-package org.jboss.tools.seam.internal.core.refactoring;
+package org.jboss.tools.common.el.core.refactoring;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,6 +42,7 @@ import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.eclipse.wst.xml.core.internal.regions.DOMRegionContext;
+import org.jboss.tools.common.el.core.Activator;
 import org.jboss.tools.common.el.core.model.ELExpression;
 import org.jboss.tools.common.el.core.model.ELInstance;
 import org.jboss.tools.common.el.core.model.ELInvocationExpression;
@@ -62,12 +63,10 @@ import org.jboss.tools.common.el.core.resolver.Var;
 import org.jboss.tools.common.model.util.EclipseJavaUtil;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.util.FileUtil;
-import org.jboss.tools.seam.core.SeamCorePlugin;
-import org.jboss.tools.seam.core.SeamProjectsSet;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public abstract class SeamRefactorSearcher {
+public abstract class RefactorSearcher {
 	protected static final String JAVA_EXT = "java"; //$NON-NLS-1$
 	protected static final String XML_EXT = "xml"; //$NON-NLS-1$
 	protected static final String XHTML_EXT = "xhtml"; //$NON-NLS-1$
@@ -86,12 +85,12 @@ public abstract class SeamRefactorSearcher {
 	protected IJavaElement javaElement;
 	protected IJavaSearchScope searchScope;
 	
-	public SeamRefactorSearcher(IFile baseFile, String propertyName){
+	public RefactorSearcher(IFile baseFile, String propertyName){
 		this.baseFile = baseFile;
 		this.propertyName = propertyName;
 	}
 	
-	public SeamRefactorSearcher(IFile baseFile, String propertyName, IJavaElement javaElement){
+	public RefactorSearcher(IFile baseFile, String propertyName, IJavaElement javaElement){
 		this(baseFile, propertyName);
 		this.javaElement = javaElement;
 	}
@@ -104,9 +103,7 @@ public abstract class SeamRefactorSearcher {
 		if(baseFile == null)
 			return;
 		
-		SeamProjectsSet projectsSet = new SeamProjectsSet(baseFile.getProject());
-		
-		IProject[] projects = projectsSet.getAllProjects();
+		IProject[] projects = getProjects();
 		for (IProject project : projects) {
 			if(project == null) continue;
 			
@@ -126,15 +123,18 @@ public abstract class SeamRefactorSearcher {
 			}
 			
 			// searching jsp, xhtml and xml files in WebContent folders
-			if(project.equals(projectsSet.getWarProject()))
-				scan(projectsSet.getDefaultViewsFolder());
-			else if(project.equals(projectsSet.getEarProject()))
-				scan(projectsSet.getDefaultEarViewsFolder());
-			else{
+			
+			if(getViewFolder(project) != null)
+				scan(getViewFolder(project));
+			else
 				scan(project);
-			}
 		}
 	}
+	
+	protected abstract IProject[] getProjects();
+	
+	protected abstract IContainer getViewFolder(IProject project);
+	
 	private void scanForJava(IContainer container){
 		try{
 			for(IResource resource : container.members()){
@@ -144,7 +144,7 @@ public abstract class SeamRefactorSearcher {
 					scanForJava((IFile) resource);
 			}
 		}catch(CoreException ex){
-			SeamCorePlugin.getDefault().logError(ex);
+			Activator.getDefault().logError(ex);
 		}
 	}
 
@@ -157,7 +157,7 @@ public abstract class SeamRefactorSearcher {
 					scan((IFile) resource);
 			}
 		}catch(CoreException ex){
-			SeamCorePlugin.getDefault().logError(ex);
+			Activator.getDefault().logError(ex);
 		}
 	}
 	
@@ -171,7 +171,7 @@ public abstract class SeamRefactorSearcher {
 		try {
 			content = FileUtil.readStream(file.getContents());
 		} catch (CoreException e) {
-			SeamCorePlugin.getPluginLog().logError(e);
+			Activator.getDefault().logError(e);
 			return;
 		}
 		if(JAVA_EXT.equalsIgnoreCase(ext)){
@@ -192,7 +192,7 @@ public abstract class SeamRefactorSearcher {
 		try {
 			content = FileUtil.readStream(file.getContents());
 		} catch (CoreException e) {
-			SeamCorePlugin.getPluginLog().logError(e);
+			Activator.getDefault().logError(e);
 			return;
 		}
 		if(XML_EXT.equalsIgnoreCase(ext) || XHTML_EXT.equalsIgnoreCase(ext) || JSP_EXT.equalsIgnoreCase(ext))
@@ -217,7 +217,7 @@ public abstract class SeamRefactorSearcher {
 				token = scaner.nextToken();
 			}
 		} catch (BadLocationException e) {
-			SeamCorePlugin.getDefault().logError(e);
+			Activator.getDefault().logError(e);
 		}
 	}
 	
@@ -235,9 +235,9 @@ public abstract class SeamRefactorSearcher {
 				scanChildNodes(file, document);
 			}
 		} catch (CoreException e) {
-			SeamCorePlugin.getDefault().logError(e);
+			Activator.getDefault().logError(e);
         } catch (IOException e) {
-        	SeamCorePlugin.getDefault().logError(e);
+        	Activator.getDefault().logError(e);
 		} finally {
 			if (model != null) {
 				model.releaseFromRead();
