@@ -214,7 +214,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		/*
 		 * Create OPEN VPE PREFERENCES tool bar item
 		 */
-		openVPEPreferencesAction = new Action("", IAction.AS_PUSH_BUTTON) {
+		openVPEPreferencesAction = new Action(VpeUIMessages.PREFERENCES,
+				IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
 				VpeEditorPreferencesPage.openPreferenceDialog();
@@ -228,7 +229,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		/*
 		 * Create VPE VISUAL REFRESH tool bar item
 		 */
-		visualRefreshAction = new Action("", IAction.AS_PUSH_BUTTON) {
+		visualRefreshAction = new Action(VpeUIMessages.REFRESH,
+				IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
 				if (controller != null) {
@@ -259,7 +261,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			}
 		}
 		boolean fileExistsInWorkspace = ((file != null) && (file.exists()));
-		showResouceDialogAction = new Action("", IAction.AS_PUSH_BUTTON) {
+		showResouceDialogAction = new Action(VpeUIMessages.PAGE_DESIGN_OPTIONS,
+				IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
 				IEditorInput input = getEditorInput();
@@ -303,7 +306,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		.getDefault().getPreferenceStore().getString(
 				IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
 		currentOrientationIndex = layoutValues.indexOf(newOrientation);
-		rotateEditorsAction = new Action("", IAction.AS_PUSH_BUTTON) {
+		rotateEditorsAction = new Action(
+				VpeUIMessages.VISUAL_SOURCE_EDITORS_SPLITTING,
+				IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
 				/*
@@ -337,7 +342,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		/*
 		 * Create SHOW BORDER FOR UNKNOWN TAGS tool bar item
 		 */
-		showBorderAction = new Action("", IAction.AS_CHECK_BOX) {
+		showBorderAction = new Action(
+				VpeUIMessages.SHOW_BORDER_FOR_UNKNOWN_TAGS,
+				IAction.AS_CHECK_BOX) {
 		    @Override
 		    public void run() {
 		    	/*
@@ -358,7 +365,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		/*
 		 * Create SHOW INVISIBLE TAGS tool bar item
 		 */
-		showNonVisualTagsAction = new Action("", IAction.AS_CHECK_BOX) {
+		showNonVisualTagsAction = new Action(
+				VpeUIMessages.SHOW_NON_VISUAL_TAGS, IAction.AS_CHECK_BOX) {
 			@Override
 			public void run() {
 				
@@ -381,7 +389,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		/*
 		 * Create SHOW SELECTION BAR tool bar item
 		 */
-		showSelectionBarAction = new Action("", IAction.AS_CHECK_BOX) {
+		showSelectionBarAction = new Action(VpeUIMessages.SHOW_SELECTION_BAR,
+				IAction.AS_CHECK_BOX) {
 			@Override
 			public void run() {
 				/*
@@ -398,7 +407,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		/*
 		 * Create SHOW TEXT FORMATTING tool bar item
 		 */
-		showTextFormattingAction = new Action("", IAction.AS_CHECK_BOX) {
+		showTextFormattingAction = new Action(
+				VpeUIMessages.SHOW_TEXT_FORMATTING, IAction.AS_CHECK_BOX) {
 			@Override
 			public void run() {
 				/*
@@ -415,7 +425,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		/*
 		 * Create SHOW BUNDLE'S MESSAGES AS EL tool bar item
 		 */
-		showBundleAsELAction = new Action("", IAction.AS_CHECK_BOX) {
+		showBundleAsELAction = new Action(VpeUIMessages.SHOW_BUNDLES_AS_EL,
+				IAction.AS_CHECK_BOX) {
 			@Override
 			public void run() {
 				/*
