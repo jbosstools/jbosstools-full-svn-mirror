@@ -180,11 +180,17 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 		anyElement.setAttribute(HTML.ATTR_CLASS, CLASS_TAG_CAPTION);
 		
 		String styleString = getExprValue(pageContext, styleExpr, sourceNode);
-		
-		if (JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
-				IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS)) {
-			styleString =  "border: 1px solid green;" +styleString; //$NON-NLS-1$
-		}
+
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4962
+		 * Border will be read from VpeVisualDomBuilder.showBorderForUnknownTags
+		 * during template creation along with showInvisibleTags option.
+		 * 
+		 */
+//		if (JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+//				IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS)) {
+//			styleString =  "border: 1px solid green;" +styleString; //$NON-NLS-1$
+//		}
 		
 		anyElement.setAttribute(HTML.ATTR_STYLE, styleString);
 		

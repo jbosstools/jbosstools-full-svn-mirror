@@ -1173,6 +1173,17 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		 */
 		if (getController() != null) {
 			boolean doVisualRefresh = false;
+			boolean presfShowBorderForUnknownTags = JspEditorPlugin.getDefault()
+			.getPreferenceStore().getBoolean(
+					IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
+			if (presfShowBorderForUnknownTags != getController().getVisualBuilder().isShowBorderForUnknownTags()) {
+				/*
+				 * Templates should be rebuild.
+				 */
+				getController().getVisualBuilder().setShowBorderForUnknownTags(presfShowBorderForUnknownTags);
+				doVisualRefresh = true;
+			}
+			
 			boolean presfShowSelectionBar = JspEditorPlugin.getDefault()
 					.getPreferenceStore().getBoolean(
 							IVpePreferencesPage.SHOW_SELECTION_TAG_BAR);

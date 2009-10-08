@@ -56,6 +56,7 @@ import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
 import org.jboss.tools.vpe.editor.template.VpeDefaultPseudoContentCreator;
+import org.jboss.tools.vpe.editor.template.VpeHtmlTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTagDescription;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
@@ -109,6 +110,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private static final int DRAG_AREA_HEIGHT = 10;
 	private static final String ATTR_DRAG_AVAILABLE_CLASS = "__drag__available_style"; //$NON-NLS-1$
 	private static String DOTTED_BORDER = "border: 1px dotted #FF6600; padding: 5px;"; //$NON-NLS-1$
+	private static final String CSS_STYLE_FOR_BORDER_FOR_UNKNOWN_TAGS = ";border: 1px solid green;"; //$NON-NLS-1$
 
 	private MozillaEditor visualEditor;
 	private XulRunnerEditor xulRunnerEditor;
@@ -165,6 +167,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	private Map<IStorage, Document> includeDocuments = new HashMap<IStorage, Document>();
 	private boolean showInvisibleTags;
+	private boolean showBorderForUnknownTags;
 
 	public VpeVisualDomBuilder(VpeDomMapping domMapping,
 			INodeAdapter sorceAdapter,
@@ -189,7 +192,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 		this.showInvisibleTags = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
 				IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
-
+		this.showBorderForUnknownTags = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+				IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
+		
 	}
 
 	public void buildDom(Document sourceDocument) {
@@ -306,6 +311,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return false;
 	}
 
+	/**
+	 * Creates border around each tag.
+	 * 
+	 * @param sourceNode the source node
+	 * @param visualNode the visual node
+	 * @param block show if it is block or inline tag
+	 * @return the border element around visual tag
+	 */
 	private nsIDOMElement createBorder(Node sourceNode,
 			nsIDOMElement visualNode, boolean block) {
 		nsIDOMElement border = null;
@@ -521,15 +534,20 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			if (visualNewElement != null) {
 				correctVisualAttribute(visualNewElement);
 			}
-			if (YES_STRING.equals(VpePreference.SHOW_BORDER_FOR_ALL_TAGS
-					.getValue())
-					&& visualNewElement != null) {
-				boolean block = true;
-				if (template.getTagDescription(null, null, null,
-						visualNewElement, null).getDisplayType() == VpeTagDescription.DISPLAY_TYPE_INLINE) {
-					block = false;
-				}
-				border = createBorder(sourceNode, visualNewElement, block);
+
+			/*
+			 * Create border for unknown tags if specified.
+			 * Update the style attribute. Usually it's DIV or SPAN with text, 
+			 * so it's harmless to update the style.
+			 * For more complex action #createBorder(..) method should be used.
+			 *	Also "Create border for all tags" option is never used so it was removed. 
+			 */
+			if ((template.getType() == VpeHtmlTemplate.TYPE_ANY) && showBorderForUnknownTags) {
+					String style = visualNewElement
+						.getAttribute(VpeStyleUtil.ATTRIBUTE_STYLE);
+					style += CSS_STYLE_FOR_BORDER_FOR_UNKNOWN_TAGS;
+					visualNewElement.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
+					
 			}
 			if (!isCurrentMainDocument() && visualNewElement != null) {
 				setReadOnlyElement(visualNewElement);
@@ -2285,6 +2303,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		this.showInvisibleTags = showInvisibleTags;
 	}
 	
+	public boolean isShowBorderForUnknownTags() {
+		return showBorderForUnknownTags;
+	}
+
+	public void setShowBorderForUnknownTags(boolean showBorderForUnknownTags) {
+		this.showBorderForUnknownTags = showBorderForUnknownTags;
+	}
+
 	/**
 	 * 
 	 * @param sourceNode
