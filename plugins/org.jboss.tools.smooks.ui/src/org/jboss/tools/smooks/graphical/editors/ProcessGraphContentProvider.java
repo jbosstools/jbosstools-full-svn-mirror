@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.zest.core.viewers.IGraphEntityContentProvider;
 import org.jboss.tools.smooks.model.graphics.ext.ProcessType;
 import org.jboss.tools.smooks.model.graphics.ext.TaskType;
 
@@ -23,7 +22,7 @@ import org.jboss.tools.smooks.model.graphics.ext.TaskType;
  * @author Dart
  *
  */
-public class ProcessGraphContentProvider implements IGraphEntityContentProvider
+public class ProcessGraphContentProvider /* implements IGraphEntityContentProvider */
 		 {
 
 	private void collectTasks(List<Object> list, TaskType task) {
