@@ -74,7 +74,7 @@ public class ParamTypeUICreator extends PropertyUICreator {
 				parent, model, null);
 		list.add(tp);
 		list.add(cp);
-		swicher.hookSwicher(tp, cp, editingdomain, model);
+		swicher.hookSwicher(tp, cp, editingdomain, model , SmooksUIUtils.VALUE_TYPE_CDATA);
 
 		// textButton.setSelection(true);
 		// cdataButton.setSelection(false);

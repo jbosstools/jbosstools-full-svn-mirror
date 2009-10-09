@@ -28,9 +28,7 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
-import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
@@ -525,17 +523,6 @@ public class SmooksModelUtils {
 						value = value.trim();
 					return value;
 				}
-			}
-		}
-		return null;
-	}
-
-	public static FigureType findFigureType(GraphType graph, String figureId) {
-		List<FigureType> list = graph.getFigure();
-		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-			FigureType figureType = (FigureType) iterator.next();
-			if (figureId.equals(figureType.getId())) {
-				return figureType;
 			}
 		}
 		return null;

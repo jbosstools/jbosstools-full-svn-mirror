@@ -34,6 +34,8 @@ import org.jboss.tools.smooks.configuration.editors.uitls.JavaPropertyUtils;
 public class JavaBeanModel implements IXMLStructuredObject, Cloneable {
 
 	private boolean flat = false;
+	
+	private boolean expaned = false;
 
 	private Properties extendProperties = new Properties();
 
@@ -365,7 +367,16 @@ public class JavaBeanModel implements IXMLStructuredObject, Cloneable {
 
 	private List properties;
 
+	
+	/**
+	 * @return the expaned
+	 */
+	public boolean isExpaned() {
+		return expaned;
+	}
+
 	public List getProperties() {
+		expaned = true;
 		JavaBeanModel parent = this.getParent();
 		if (parent != null) {
 			if (parent.isFlat())

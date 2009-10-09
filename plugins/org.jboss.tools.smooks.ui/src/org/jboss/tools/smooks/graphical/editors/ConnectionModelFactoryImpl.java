@@ -55,32 +55,37 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 					if (iddata == null)
 						continue;
 					if (refID.equals(iddata)) {
-						AbstractSmooksGraphicalModel targetGraphModel = SmooksGraphUtil.findSmooksGraphModel(root, eObject);
-						List<TreeNodeConnection> tcs = targetGraphModel.getTargetConnections();
-						boolean createNewConnection = true;
-						for (Iterator<?> iterator2 = tcs.iterator(); iterator2.hasNext();) {
-							TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
-							if(treeNodeConnection.getSourceNode() == model){
-								// it means that the connection has been exist
-								createNewConnection = false;
-								break;
+						AbstractSmooksGraphicalModel targetGraphModel = SmooksGraphUtil.findSmooksGraphModel(root,
+								eObject);
+						if (targetGraphModel != null) {
+							List<TreeNodeConnection> tcs = targetGraphModel.getTargetConnections();
+							boolean createNewConnection = true;
+							for (Iterator<?> iterator2 = tcs.iterator(); iterator2.hasNext();) {
+								TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
+								if (treeNodeConnection.getSourceNode() == model) {
+									// it means that the connection has been
+									// exist
+									createNewConnection = false;
+									break;
+								}
 							}
+							if (!createNewConnection)
+								continue;
+							// create new connection;
+							AbstractSmooksGraphicalModel target = SmooksGraphUtil.findSmooksGraphModel(root, eObject);
+							TreeNodeConnection connection = new TreeNodeConnection(model, target);
+							model.getSourceConnections().add(connection);
+							model.fireConnectionChanged();
+							target.getTargetConnections().add(connection);
+							target.fireConnectionChanged();
+							connections.add(connection);
 						}
-						if(!createNewConnection) continue;
-						// create new connection;
-						AbstractSmooksGraphicalModel target = SmooksGraphUtil.findSmooksGraphModel(root, eObject);
-						TreeNodeConnection connection = new TreeNodeConnection(model, target);
-						model.getSourceConnections().add(connection);
-						model.fireConnectionChanged();
-						target.getTargetConnections().add(connection);
-						target.fireConnectionChanged();
-						connections.add(connection);
 					}
 				}
 			}
 		}
-		
-		if(beanIDFeature != null){
+
+		if (beanIDFeature != null) {
 			Object data = cmodel.eGet(beanIDFeature);
 			if (data != null) {
 				String beanid = data.toString();
@@ -94,21 +99,23 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 					if (idRefData == null)
 						continue;
 					if (beanid.equals(idRefData)) {
-						AbstractSmooksGraphicalModel sourceGraphModel = SmooksGraphUtil.findSmooksGraphModel(root, eObject);
+						AbstractSmooksGraphicalModel sourceGraphModel = SmooksGraphUtil.findSmooksGraphModel(root,
+								eObject);
 						List<TreeNodeConnection> scs = sourceGraphModel.getSourceConnections();
 						boolean createNewConnection = true;
 						for (Iterator<?> iterator2 = scs.iterator(); iterator2.hasNext();) {
 							TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
-							if(treeNodeConnection.getTargetNode() == model){
+							if (treeNodeConnection.getTargetNode() == model) {
 								// it means that the connection has been exist
 								createNewConnection = false;
 								break;
 							}
 						}
-						if(!createNewConnection) continue;
+						if (!createNewConnection)
+							continue;
 						// create new connection;
 						AbstractSmooksGraphicalModel source = SmooksGraphUtil.findSmooksGraphModel(root, eObject);
-						TreeNodeConnection connection = new TreeNodeConnection(source ,model);
+						TreeNodeConnection connection = new TreeNodeConnection(source, model);
 						source.getSourceConnections().add(connection);
 						model.getTargetConnections().add(connection);
 						source.fireConnectionChanged();
@@ -118,7 +125,7 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 				}
 			}
 		}
-		
+
 		if (connections.isEmpty())
 			return null;
 		return connections;

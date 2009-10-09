@@ -547,7 +547,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 					this.editingDomain,
 					resourceList,
 					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP,
-					FeatureMapUtil.createEntry(GraphPackage.Literals.DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT,
+					FeatureMapUtil.createEntry(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT,
 							smooksGraphicsExt)).execute();
 			try {
 				smooksModel.eResource().save(Collections.emptyMap());

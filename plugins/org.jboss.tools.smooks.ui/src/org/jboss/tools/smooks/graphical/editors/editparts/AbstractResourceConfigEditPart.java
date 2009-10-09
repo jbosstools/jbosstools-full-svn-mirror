@@ -15,15 +15,22 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
+import org.eclipse.gef.editpolicies.ContainerEditPolicy;
+import org.eclipse.gef.editpolicies.LayoutEditPolicy;
+import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gef.requests.GroupRequest;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.command.GEFAdapterCommand;
@@ -85,6 +92,67 @@ public class AbstractResourceConfigEditPart extends TreeContainerEditPart {
 				return command;
 			}
 		});
+
+		this.installEditPolicy(EditPolicy.CONTAINER_ROLE, new ContainerEditPolicy() {
+
+			@Override
+			protected Command getCreateCommand(CreateRequest request) {
+				Object model = request.getNewObject();
+				Object type = request.getNewObjectType();
+				Object graphModel = getHost().getModel();
+				if (graphModel instanceof AbstractResourceConfigGraphModel) {
+					IEditingDomainProvider provider = ((AbstractResourceConfigGraphModel) graphModel)
+							.getDomainProvider();
+					EditingDomain domain = provider.getEditingDomain();
+					if (model instanceof FeatureMap.Entry) {
+						EStructuralFeature type1 = ((FeatureMap.Entry) model).getEStructuralFeature();
+						model = ((FeatureMap.Entry) model).getValue();
+						model = EcoreUtil.copy((EObject) model);
+						model = FeatureMapUtil.createEntry(type1, model);
+					} else {
+					}
+					org.eclipse.emf.common.command.Command emfCommand = createModelCreationEMFCommand(domain,
+							((AbstractResourceConfigGraphModel) graphModel).getData(), type, model);
+					return createModelCreationCommand(domain, emfCommand);
+				}
+				return null;
+			}
+		});
+		
+		this.installEditPolicy(EditPolicy.LAYOUT_ROLE, new LayoutEditPolicy() {
+			
+			@Override
+			protected Command getMoveChildrenCommand(Request request) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			protected Command getCreateCommand(CreateRequest request) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			protected EditPolicy createChildEditPolicy(EditPart child) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
+
+	}
+
+	protected org.eclipse.emf.common.command.Command createModelCreationEMFCommand(EditingDomain domain, Object owner,
+			Object type, Object collections) {
+		return AddCommand.create(domain, owner, type, collections);
+	}
+
+	protected Command createModelCreationCommand(EditingDomain domain, org.eclipse.emf.common.command.Command emfCommand) {
+		if (emfCommand.canExecute()) {
+			GEFAdapterCommand command = new GEFAdapterCommand(domain, emfCommand);
+			return command;
+		}
+		return null;
 	}
 
 	protected EStructuralFeature getFeature(EObject model) {

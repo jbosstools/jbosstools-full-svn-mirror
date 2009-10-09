@@ -103,13 +103,12 @@ public class Smooks10MultiFormEditor extends AbstractSmooksFormEditor implements
 		}
 
 		FeatureMap map = resourceList.getMixed();
-		Object obj = map.get(GraphPackage.Literals.DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT, true);
+		Object obj = map.get(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT, true);
 		if(obj instanceof List<?>){
 			Object oooo = ((List<?>)obj).get(0);
 			if(oooo instanceof SmooksGraphicsExtType){
 				return ((SmooksGraphicsExtType)oooo);
 			}
-			System.out.println(oooo);
 		}
 		return null;
 	}

@@ -349,7 +349,7 @@ public class SmooksUIUtils {
 		return beanIdList;
 	}
 
-	public static List<BindingsType> getBeanIdList(SmooksResourceListType resourceList) {
+	public static List<BindingsType> getBindingsTypeList(SmooksResourceListType resourceList) {
 		if (resourceList == null) {
 			return null;
 		}
@@ -359,6 +359,21 @@ public class SmooksUIUtils {
 			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
 			if (abstractResourceConfig instanceof BindingsType) {
 				beanIdList.add((BindingsType) abstractResourceConfig);
+			}
+		}
+		return beanIdList;
+	}
+
+	public static List<BeanType> getBeanTypeList(SmooksResourceListType resourceList) {
+		if (resourceList == null) {
+			return null;
+		}
+		List<AbstractResourceConfig> rlist = resourceList.getAbstractResourceConfig();
+		List<BeanType> beanIdList = new ArrayList<BeanType>();
+		for (Iterator<?> iterator = rlist.iterator(); iterator.hasNext();) {
+			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
+			if (abstractResourceConfig instanceof BeanType) {
+				beanIdList.add((BeanType) abstractResourceConfig);
 			}
 		}
 		return beanIdList;
@@ -809,7 +824,7 @@ public class SmooksUIUtils {
 			Object value = getEditValue(itemPropertyDescriptor, model);
 			if (value != null) {
 				editValue = value.toString();
-			}else{
+			} else {
 			}
 		}
 
@@ -1115,15 +1130,16 @@ public class SmooksUIUtils {
 	}
 
 	public static AttributeFieldEditPart createJavaTypeSearchFieldEditor(Composite parent, FormToolkit toolkit,
-			final IItemPropertyDescriptor propertyDescriptor, final EObject model , ISmooksModelProvider modelProvider) {
+			final IItemPropertyDescriptor propertyDescriptor, final EObject model, ISmooksModelProvider modelProvider) {
 		if (model instanceof EObject) {
 			AttributeFieldEditPart editpart = new AttributeFieldEditPart();
 			Resource r = ((EObject) model).eResource();
-			if(r == null){
+			if (r == null) {
 				r = modelProvider.getSmooksModel().eResource();
 			}
 			final Resource resource = r;
-			if(resource == null) return null;
+			if (resource == null)
+				return null;
 			URI uri = resource.getURI();
 			IResource workspaceResource = null;
 			if (uri.isPlatformResource()) {
@@ -2351,7 +2367,8 @@ public class SmooksUIUtils {
 	}
 
 	public static IXMLStructuredObject getChildNodeWithName(String name, IXMLStructuredObject parent) {
-		if(parent == null) return null;
+		if (parent == null)
+			return null;
 		String tempName = name;
 		boolean isAttribute = false;
 		if (isAttributeName(tempName)) {
@@ -2416,8 +2433,8 @@ public class SmooksUIUtils {
 		return false;
 	}
 
-	public static void recordInputDataInfomation(EditingDomain domain , InputType input, SmooksGraphicsExtType extType, String type,
-			String path, Properties properties) {
+	public static void recordInputDataInfomation(EditingDomain domain, InputType input, SmooksGraphicsExtType extType,
+			String type, String path, Properties properties) {
 		if (type != null && path != null && extType != null && domain != null) {
 			String[] values = path.split(";");
 			if (values == null || values.length == 0) {
@@ -2450,12 +2467,13 @@ public class SmooksUIUtils {
 				input.getParam().add(pathParam);
 				List<ParamType> params = generateExtParams(type, path, properties);
 				input.getParam().addAll(params);
-				Command command = AddCommand.create(domain, extType, GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__INPUT, input);
-				if(command.canExecute()){
+				Command command = AddCommand.create(domain, extType,
+						GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__INPUT, input);
+				if (command.canExecute()) {
 					System.out.println("aaa");
 				}
 				domain.getCommandStack().execute(command);
-//				extType.getInput().add(input);
+				// extType.getInput().add(input);
 			}
 			// try {
 			// extType.eResource().save(Collections.emptyMap());
@@ -2815,7 +2833,7 @@ public class SmooksUIUtils {
 		if (version == null || element == null)
 			return false;
 		String ns = element.eClass().getEPackage().getNsURI();
-		if(GraphPackage.eNS_URI.equals(ns)){
+		if (GraphPackage.eNS_URI.equals(ns)) {
 			return true;
 		}
 		if (SmooksConstants.VERSION_1_1.equals(version)) {
@@ -2827,7 +2845,7 @@ public class SmooksUIUtils {
 		if (SmooksConstants.VERSION_1_2.equals(version)) {
 			if (isSmooks1_1PlatformConflictXMLNS(ns)) {
 				return true;
-			}	
+			}
 		}
 
 		return false;
@@ -2859,8 +2877,10 @@ public class SmooksUIUtils {
 		}
 
 		if (smooksModel instanceof org.jboss.tools.smooks.model.smooks.DocumentRoot) {
-			SmooksResourceListType rlist = ((org.jboss.tools.smooks.model.smooks.DocumentRoot)smooksModel).getSmooksResourceList();
-			if(rlist.getAbstractReader().isEmpty()) return null;
+			SmooksResourceListType rlist = ((org.jboss.tools.smooks.model.smooks.DocumentRoot) smooksModel)
+					.getSmooksResourceList();
+			if (rlist.getAbstractReader().isEmpty())
+				return null;
 			AbstractReader reader = rlist.getAbstractReader().get(0);
 			if (CsvReader.class.isInstance(reader) || CSV12Reader.class.isInstance(reader)) {
 				inputType = SmooksModelUtils.INPUT_TYPE_CSV;

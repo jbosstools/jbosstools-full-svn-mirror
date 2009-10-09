@@ -21,6 +21,7 @@ import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
 import org.eclipse.gef.tools.ConnectionDragCreationTool;
+import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeGraphicalNodeEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeSelectEditPolicy;
 import org.jboss.tools.smooks.gef.tree.figures.ITreeFigureListener;
@@ -30,12 +31,12 @@ import org.jboss.tools.smooks.gef.tree.figures.TreeFigureExpansionEvent;
 import org.jboss.tools.smooks.gef.tree.figures.TreeNodeFigure;
 import org.jboss.tools.smooks.gef.tree.model.IConnectableNode;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author DartPeng
@@ -126,12 +127,17 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 	}
 
 	protected void refreshVisuals() {
-		super.refreshVisuals();
 		TreeNodeModel node = (TreeNodeModel) getModel();
 		String text = node.getText();
 		if (text != null) {
 			((TreeNodeFigure) getFigure()).setLabelText(text);
 		}
+		Image image = node.getImage();
+		if(image != null){
+			((TreeNodeFigure) getFigure()).setLabelImage(image);
+		}
+		super.refreshVisuals();
+		
 		// Dimension size = getFigure().getPreferredSize(-1, -1);
 		// Rectangle rect = getFigure().getBounds();
 		// rect.setSize(size);
@@ -210,7 +216,7 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 		String figureId = generateFigureID();
 		if (figureId == null)
 			return;
-		FigureType figure = SmooksModelUtils.findFigureType(graph, figureId);
+		FigureType figure = SmooksGraphUtil.findFigureType(graph, figureId);
 
 		if (figure == null) {
 			figure = GraphFactory.eINSTANCE.createFigureType();

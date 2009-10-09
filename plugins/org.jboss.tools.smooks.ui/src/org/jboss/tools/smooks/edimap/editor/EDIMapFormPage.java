@@ -113,6 +113,7 @@ import org.jboss.tools.smooks.gef.tree.editparts.RootEditPart;
 import org.jboss.tools.smooks.gef.tree.figures.IMoveableModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
@@ -308,7 +309,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 				Object data = treeNodeModel.getData();
 				String id = EDISegementsEditPart.generateFigureId(data);
 				if (id != null) {
-					FigureType ft = SmooksModelUtils.findFigureType(graph, id);
+					FigureType ft = SmooksGraphUtil.findFigureType(graph, id);
 					try {
 						int x = Integer.parseInt(ft.getX());
 						int y = Integer.parseInt(ft.getY());

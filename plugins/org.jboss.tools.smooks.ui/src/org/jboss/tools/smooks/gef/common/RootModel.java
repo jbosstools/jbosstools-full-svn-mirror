@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
-import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 
 public class RootModel {
 

@@ -22,6 +22,7 @@ import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
  * <ul>
  *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType#getInput <em>Input</em>}</li>
  *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType#getGraph <em>Graph</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType#getProcesses <em>Processes</em>}</li>
  *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType#getAuthor <em>Author</em>}</li>
  *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType#getInputType <em>Input Type</em>}</li>
  *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType#getName <em>Name</em>}</li>
@@ -35,15 +36,14 @@ import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
  * @generated
  */
 public interface SmooksGraphicsExtType extends AbstractResourceConfig {
-	
-   List<ISmooksGraphChangeListener> getChangeListeners();
+
+	List<ISmooksGraphChangeListener> getChangeListeners();
    
-   void addSmooksGraphChangeListener(ISmooksGraphChangeListener listener);
+    void addSmooksGraphChangeListener(ISmooksGraphChangeListener listener);
    
-   void removeSmooksGraphChangeListener(ISmooksGraphChangeListener listener);
-   
-//   List<ISmooksGraphChangeListener> getChangeListeners();
-	
+    void removeSmooksGraphChangeListener(ISmooksGraphChangeListener listener);
+
+
 	/**
 	 * Returns the value of the '<em><b>Input</b></em>' containment reference list.
 	 * The list contents are of type {@link org.jboss.tools.smooks.model.graphics.ext.InputType}.
@@ -87,6 +87,33 @@ public interface SmooksGraphicsExtType extends AbstractResourceConfig {
 	 * @generated
 	 */
 	void setGraph(GraphType value);
+
+	/**
+	 * Returns the value of the '<em><b>Processes</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Processes</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Processes</em>' containment reference.
+	 * @see #setProcesses(ProcessesType)
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphicsExtType_Processes()
+	 * @model containment="true"
+	 *        extendedMetaData="kind='element' name='processes' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	ProcessesType getProcesses();
+
+	/**
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType#getProcesses <em>Processes</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Processes</em>' containment reference.
+	 * @see #getProcesses()
+	 * @generated
+	 */
+	void setProcesses(ProcessesType value);
 
 	/**
 	 * Returns the value of the '<em><b>Author</b></em>' attribute.

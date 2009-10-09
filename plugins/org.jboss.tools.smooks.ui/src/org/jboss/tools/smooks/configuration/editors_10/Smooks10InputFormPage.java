@@ -594,6 +594,8 @@ public class Smooks10InputFormPage extends FormPage implements ISmooksModelValid
 //			}
 //		});
 		
+//		IFile file = File
+		
 		inputDataViewer.addCheckStateListener(new ICheckStateListener() {
 
 			public void checkStateChanged(CheckStateChangedEvent event) {
