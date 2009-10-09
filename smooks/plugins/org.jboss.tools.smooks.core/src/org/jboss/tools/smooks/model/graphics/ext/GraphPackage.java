@@ -113,14 +113,14 @@ public interface GraphPackage extends EPackage {
 	int CONNECTION_TYPE_FEATURE_COUNT = 3;
 
 	/**
-	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.SmooksGraphExtensionDocumentRootImpl <em>Document Root</em>}' class.
+	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.SmooksGraphExtensionDocumentRootImpl <em>Smooks Graph Extension Document Root</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.jboss.tools.smooks.model.graphics.ext.impl.SmooksGraphExtensionDocumentRootImpl
-	 * @see org.jboss.tools.smooks.model.graphics.ext.impl.GraphPackageImpl#getDocumentRoot()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.impl.GraphPackageImpl#getSmooksGraphExtensionDocumentRoot()
 	 * @generated
 	 */
-	int DOCUMENT_ROOT = 1;
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT = 1;
 
 	/**
 	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
@@ -129,7 +129,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__MIXED = 0;
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__MIXED = 0;
 
 	/**
 	 * The feature id for the '<em><b>XMLNS Prefix Map</b></em>' map.
@@ -138,7 +138,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__XMLNS_PREFIX_MAP = 1;
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XMLNS_PREFIX_MAP = 1;
 
 	/**
 	 * The feature id for the '<em><b>XSI Schema Location</b></em>' map.
@@ -147,7 +147,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__XSI_SCHEMA_LOCATION = 2;
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION = 2;
 
 	/**
 	 * The feature id for the '<em><b>Connection</b></em>' containment reference.
@@ -156,7 +156,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__CONNECTION = 3;
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__CONNECTION = 3;
 
 	/**
 	 * The feature id for the '<em><b>Figure</b></em>' containment reference.
@@ -165,7 +165,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__FIGURE = 4;
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__FIGURE = 4;
 
 	/**
 	 * The feature id for the '<em><b>Graph</b></em>' containment reference.
@@ -174,7 +174,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__GRAPH = 5;
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__GRAPH = 5;
 
 	/**
 	 * The feature id for the '<em><b>Input</b></em>' containment reference.
@@ -183,7 +183,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__INPUT = 6;
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__INPUT = 6;
 
 	/**
 	 * The feature id for the '<em><b>Param</b></em>' containment reference.
@@ -192,7 +192,25 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__PARAM = 7;
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PARAM = 7;
+
+	/**
+	 * The feature id for the '<em><b>Process</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PROCESS = 8;
+
+	/**
+	 * The feature id for the '<em><b>Processes</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PROCESSES = 9;
 
 	/**
 	 * The feature id for the '<em><b>Smooks Graphics Ext</b></em>' containment reference.
@@ -201,7 +219,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT = 8;
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT = 10;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' attribute.
@@ -210,7 +228,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__SOURCE = 9;
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SOURCE = 11;
 
 	/**
 	 * The feature id for the '<em><b>Target</b></em>' attribute.
@@ -219,16 +237,25 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT__TARGET = 10;
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__TARGET = 12;
 
 	/**
-	 * The number of structural features of the '<em>Document Root</em>' class.
+	 * The feature id for the '<em><b>Task</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENT_ROOT_FEATURE_COUNT = 11;
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__TASK = 13;
+
+	/**
+	 * The number of structural features of the '<em>Smooks Graph Extension Document Root</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT_FEATURE_COUNT = 14;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.FigureTypeImpl <em>Figure Type</em>}' class.
@@ -424,6 +451,80 @@ public interface GraphPackage extends EPackage {
 	int PARAM_TYPE_FEATURE_COUNT = 3;
 
 	/**
+	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.ProcessesTypeImpl <em>Processes Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.jboss.tools.smooks.model.graphics.ext.impl.ProcessesTypeImpl
+	 * @see org.jboss.tools.smooks.model.graphics.ext.impl.GraphPackageImpl#getProcessesType()
+	 * @generated
+	 */
+	int PROCESSES_TYPE = 6;
+
+	/**
+	 * The feature id for the '<em><b>Process</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESSES_TYPE__PROCESS = 0;
+
+	/**
+	 * The number of structural features of the '<em>Processes Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESSES_TYPE_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.ProcessTypeImpl <em>Process Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.jboss.tools.smooks.model.graphics.ext.impl.ProcessTypeImpl
+	 * @see org.jboss.tools.smooks.model.graphics.ext.impl.GraphPackageImpl#getProcessType()
+	 * @generated
+	 */
+	int PROCESS_TYPE = 7;
+
+	/**
+	 * The feature id for the '<em><b>Task</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_TYPE__TASK = 0;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_TYPE__ID = 1;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_TYPE__NAME = 2;
+
+	/**
+	 * The number of structural features of the '<em>Process Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_TYPE_FEATURE_COUNT = 3;
+
+	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.SmooksGraphicsExtTypeImpl <em>Smooks Graphics Ext Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -431,7 +532,7 @@ public interface GraphPackage extends EPackage {
 	 * @see org.jboss.tools.smooks.model.graphics.ext.impl.GraphPackageImpl#getSmooksGraphicsExtType()
 	 * @generated
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE = 6;
+	int SMOOKS_GRAPHICS_EXT_TYPE = 8;
 
 	/**
 	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
@@ -479,13 +580,22 @@ public interface GraphPackage extends EPackage {
 	int SMOOKS_GRAPHICS_EXT_TYPE__GRAPH = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Processes</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SMOOKS_GRAPHICS_EXT_TYPE__PROCESSES = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Author</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE__AUTHOR = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 2;
+	int SMOOKS_GRAPHICS_EXT_TYPE__AUTHOR = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Input Type</b></em>' attribute.
@@ -494,7 +604,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 3;
+	int SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -503,7 +613,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE__NAME = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 4;
+	int SMOOKS_GRAPHICS_EXT_TYPE__NAME = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Output Type</b></em>' attribute.
@@ -512,7 +622,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 5;
+	int SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Platform Version</b></em>' attribute.
@@ -521,7 +631,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE__PLATFORM_VERSION = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 6;
+	int SMOOKS_GRAPHICS_EXT_TYPE__PLATFORM_VERSION = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>Smooks Graphics Ext Type</em>' class.
@@ -530,7 +640,62 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SMOOKS_GRAPHICS_EXT_TYPE_FEATURE_COUNT = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 7;
+	int SMOOKS_GRAPHICS_EXT_TYPE_FEATURE_COUNT = SmooksPackage.ABSTRACT_RESOURCE_CONFIG_FEATURE_COUNT + 8;
+
+	/**
+	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.TaskTypeImpl <em>Task Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.jboss.tools.smooks.model.graphics.ext.impl.TaskTypeImpl
+	 * @see org.jboss.tools.smooks.model.graphics.ext.impl.GraphPackageImpl#getTaskType()
+	 * @generated
+	 */
+	int TASK_TYPE = 9;
+
+	/**
+	 * The feature id for the '<em><b>Task</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TYPE__TASK = 0;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TYPE__ID = 1;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TYPE__NAME = 2;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TYPE__TYPE = 3;
+
+	/**
+	 * The number of structural features of the '<em>Task Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TYPE_FEATURE_COUNT = 4;
 
 
 	/**
@@ -577,14 +742,14 @@ public interface GraphPackage extends EPackage {
 	EAttribute getConnectionType_Id();
 
 	/**
-	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot <em>Document Root</em>}'.
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot <em>Smooks Graph Extension Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Document Root</em>'.
+	 * @return the meta object for class '<em>Smooks Graph Extension Document Root</em>'.
 	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot
 	 * @generated
 	 */
-	EClass getDocumentRoot();
+	EClass getSmooksGraphExtensionDocumentRoot();
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getMixed <em>Mixed</em>}'.
@@ -592,10 +757,10 @@ public interface GraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Mixed</em>'.
 	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getMixed()
-	 * @see #getDocumentRoot()
+	 * @see #getSmooksGraphExtensionDocumentRoot()
 	 * @generated
 	 */
-	EAttribute getDocumentRoot_Mixed();
+	EAttribute getSmooksGraphExtensionDocumentRoot_Mixed();
 
 	/**
 	 * Returns the meta object for the map '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}'.
@@ -603,10 +768,10 @@ public interface GraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>XMLNS Prefix Map</em>'.
 	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getXMLNSPrefixMap()
-	 * @see #getDocumentRoot()
+	 * @see #getSmooksGraphExtensionDocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_XMLNSPrefixMap();
+	EReference getSmooksGraphExtensionDocumentRoot_XMLNSPrefixMap();
 
 	/**
 	 * Returns the meta object for the map '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}'.
@@ -614,10 +779,10 @@ public interface GraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the map '<em>XSI Schema Location</em>'.
 	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getXSISchemaLocation()
-	 * @see #getDocumentRoot()
+	 * @see #getSmooksGraphExtensionDocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_XSISchemaLocation();
+	EReference getSmooksGraphExtensionDocumentRoot_XSISchemaLocation();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getConnection <em>Connection</em>}'.
@@ -625,10 +790,10 @@ public interface GraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Connection</em>'.
 	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getConnection()
-	 * @see #getDocumentRoot()
+	 * @see #getSmooksGraphExtensionDocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_Connection();
+	EReference getSmooksGraphExtensionDocumentRoot_Connection();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getFigure <em>Figure</em>}'.
@@ -636,10 +801,10 @@ public interface GraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Figure</em>'.
 	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getFigure()
-	 * @see #getDocumentRoot()
+	 * @see #getSmooksGraphExtensionDocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_Figure();
+	EReference getSmooksGraphExtensionDocumentRoot_Figure();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getGraph <em>Graph</em>}'.
@@ -647,10 +812,10 @@ public interface GraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Graph</em>'.
 	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getGraph()
-	 * @see #getDocumentRoot()
+	 * @see #getSmooksGraphExtensionDocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_Graph();
+	EReference getSmooksGraphExtensionDocumentRoot_Graph();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getInput <em>Input</em>}'.
@@ -658,10 +823,10 @@ public interface GraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Input</em>'.
 	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getInput()
-	 * @see #getDocumentRoot()
+	 * @see #getSmooksGraphExtensionDocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_Input();
+	EReference getSmooksGraphExtensionDocumentRoot_Input();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getParam <em>Param</em>}'.
@@ -669,10 +834,32 @@ public interface GraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Param</em>'.
 	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getParam()
-	 * @see #getDocumentRoot()
+	 * @see #getSmooksGraphExtensionDocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_Param();
+	EReference getSmooksGraphExtensionDocumentRoot_Param();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getProcess <em>Process</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Process</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getProcess()
+	 * @see #getSmooksGraphExtensionDocumentRoot()
+	 * @generated
+	 */
+	EReference getSmooksGraphExtensionDocumentRoot_Process();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getProcesses <em>Processes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Processes</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getProcesses()
+	 * @see #getSmooksGraphExtensionDocumentRoot()
+	 * @generated
+	 */
+	EReference getSmooksGraphExtensionDocumentRoot_Processes();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getSmooksGraphicsExt <em>Smooks Graphics Ext</em>}'.
@@ -680,10 +867,10 @@ public interface GraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Smooks Graphics Ext</em>'.
 	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getSmooksGraphicsExt()
-	 * @see #getDocumentRoot()
+	 * @see #getSmooksGraphExtensionDocumentRoot()
 	 * @generated
 	 */
-	EReference getDocumentRoot_SmooksGraphicsExt();
+	EReference getSmooksGraphExtensionDocumentRoot_SmooksGraphicsExt();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getSource <em>Source</em>}'.
@@ -691,10 +878,10 @@ public interface GraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Source</em>'.
 	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getSource()
-	 * @see #getDocumentRoot()
+	 * @see #getSmooksGraphExtensionDocumentRoot()
 	 * @generated
 	 */
-	EAttribute getDocumentRoot_Source();
+	EAttribute getSmooksGraphExtensionDocumentRoot_Source();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getTarget <em>Target</em>}'.
@@ -702,10 +889,21 @@ public interface GraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Target</em>'.
 	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getTarget()
-	 * @see #getDocumentRoot()
+	 * @see #getSmooksGraphExtensionDocumentRoot()
 	 * @generated
 	 */
-	EAttribute getDocumentRoot_Target();
+	EAttribute getSmooksGraphExtensionDocumentRoot_Target();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getTask <em>Task</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Task</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getTask()
+	 * @see #getSmooksGraphExtensionDocumentRoot()
+	 * @generated
+	 */
+	EReference getSmooksGraphExtensionDocumentRoot_Task();
 
 	/**
 	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.graphics.ext.FigureType <em>Figure Type</em>}'.
@@ -891,6 +1089,70 @@ public interface GraphPackage extends EPackage {
 	EAttribute getParamType_Type();
 
 	/**
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.graphics.ext.ProcessesType <em>Processes Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Processes Type</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.ProcessesType
+	 * @generated
+	 */
+	EClass getProcessesType();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.graphics.ext.ProcessesType#getProcess <em>Process</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Process</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.ProcessesType#getProcess()
+	 * @see #getProcessesType()
+	 * @generated
+	 */
+	EReference getProcessesType_Process();
+
+	/**
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.graphics.ext.ProcessType <em>Process Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Process Type</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.ProcessType
+	 * @generated
+	 */
+	EClass getProcessType();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.jboss.tools.smooks.model.graphics.ext.ProcessType#getTask <em>Task</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Task</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.ProcessType#getTask()
+	 * @see #getProcessType()
+	 * @generated
+	 */
+	EReference getProcessType_Task();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.graphics.ext.ProcessType#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.ProcessType#getId()
+	 * @see #getProcessType()
+	 * @generated
+	 */
+	EAttribute getProcessType_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.graphics.ext.ProcessType#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.ProcessType#getName()
+	 * @see #getProcessType()
+	 * @generated
+	 */
+	EAttribute getProcessType_Name();
+
+	/**
 	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType <em>Smooks Graphics Ext Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -921,6 +1183,17 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getSmooksGraphicsExtType_Graph();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType#getProcesses <em>Processes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Processes</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType#getProcesses()
+	 * @see #getSmooksGraphicsExtType()
+	 * @generated
+	 */
+	EReference getSmooksGraphicsExtType_Processes();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType#getAuthor <em>Author</em>}'.
@@ -976,6 +1249,60 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getSmooksGraphicsExtType_PlatformVersion();
+
+	/**
+	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.graphics.ext.TaskType <em>Task Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Task Type</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.TaskType
+	 * @generated
+	 */
+	EClass getTaskType();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.jboss.tools.smooks.model.graphics.ext.TaskType#getTask <em>Task</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Task</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.TaskType#getTask()
+	 * @see #getTaskType()
+	 * @generated
+	 */
+	EReference getTaskType_Task();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.graphics.ext.TaskType#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.TaskType#getId()
+	 * @see #getTaskType()
+	 * @generated
+	 */
+	EAttribute getTaskType_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.graphics.ext.TaskType#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.TaskType#getName()
+	 * @see #getTaskType()
+	 * @generated
+	 */
+	EAttribute getTaskType_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.graphics.ext.TaskType#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.TaskType#getType()
+	 * @see #getTaskType()
+	 * @generated
+	 */
+	EAttribute getTaskType_Type();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1034,14 +1361,14 @@ public interface GraphPackage extends EPackage {
 		EAttribute CONNECTION_TYPE__ID = eINSTANCE.getConnectionType_Id();
 
 		/**
-		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.SmooksGraphExtensionDocumentRootImpl <em>Document Root</em>}' class.
+		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.SmooksGraphExtensionDocumentRootImpl <em>Smooks Graph Extension Document Root</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.jboss.tools.smooks.model.graphics.ext.impl.SmooksGraphExtensionDocumentRootImpl
-		 * @see org.jboss.tools.smooks.model.graphics.ext.impl.GraphPackageImpl#getDocumentRoot()
+		 * @see org.jboss.tools.smooks.model.graphics.ext.impl.GraphPackageImpl#getSmooksGraphExtensionDocumentRoot()
 		 * @generated
 		 */
-		EClass DOCUMENT_ROOT = eINSTANCE.getDocumentRoot();
+		EClass SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT = eINSTANCE.getSmooksGraphExtensionDocumentRoot();
 
 		/**
 		 * The meta object literal for the '<em><b>Mixed</b></em>' attribute list feature.
@@ -1049,7 +1376,7 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DOCUMENT_ROOT__MIXED = eINSTANCE.getDocumentRoot_Mixed();
+		EAttribute SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__MIXED = eINSTANCE.getSmooksGraphExtensionDocumentRoot_Mixed();
 
 		/**
 		 * The meta object literal for the '<em><b>XMLNS Prefix Map</b></em>' map feature.
@@ -1057,7 +1384,7 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__XMLNS_PREFIX_MAP = eINSTANCE.getDocumentRoot_XMLNSPrefixMap();
+		EReference SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XMLNS_PREFIX_MAP = eINSTANCE.getSmooksGraphExtensionDocumentRoot_XMLNSPrefixMap();
 
 		/**
 		 * The meta object literal for the '<em><b>XSI Schema Location</b></em>' map feature.
@@ -1065,7 +1392,7 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__XSI_SCHEMA_LOCATION = eINSTANCE.getDocumentRoot_XSISchemaLocation();
+		EReference SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION = eINSTANCE.getSmooksGraphExtensionDocumentRoot_XSISchemaLocation();
 
 		/**
 		 * The meta object literal for the '<em><b>Connection</b></em>' containment reference feature.
@@ -1073,7 +1400,7 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__CONNECTION = eINSTANCE.getDocumentRoot_Connection();
+		EReference SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__CONNECTION = eINSTANCE.getSmooksGraphExtensionDocumentRoot_Connection();
 
 		/**
 		 * The meta object literal for the '<em><b>Figure</b></em>' containment reference feature.
@@ -1081,7 +1408,7 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__FIGURE = eINSTANCE.getDocumentRoot_Figure();
+		EReference SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__FIGURE = eINSTANCE.getSmooksGraphExtensionDocumentRoot_Figure();
 
 		/**
 		 * The meta object literal for the '<em><b>Graph</b></em>' containment reference feature.
@@ -1089,7 +1416,7 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__GRAPH = eINSTANCE.getDocumentRoot_Graph();
+		EReference SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__GRAPH = eINSTANCE.getSmooksGraphExtensionDocumentRoot_Graph();
 
 		/**
 		 * The meta object literal for the '<em><b>Input</b></em>' containment reference feature.
@@ -1097,7 +1424,7 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__INPUT = eINSTANCE.getDocumentRoot_Input();
+		EReference SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__INPUT = eINSTANCE.getSmooksGraphExtensionDocumentRoot_Input();
 
 		/**
 		 * The meta object literal for the '<em><b>Param</b></em>' containment reference feature.
@@ -1105,7 +1432,23 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__PARAM = eINSTANCE.getDocumentRoot_Param();
+		EReference SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PARAM = eINSTANCE.getSmooksGraphExtensionDocumentRoot_Param();
+
+		/**
+		 * The meta object literal for the '<em><b>Process</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PROCESS = eINSTANCE.getSmooksGraphExtensionDocumentRoot_Process();
+
+		/**
+		 * The meta object literal for the '<em><b>Processes</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PROCESSES = eINSTANCE.getSmooksGraphExtensionDocumentRoot_Processes();
 
 		/**
 		 * The meta object literal for the '<em><b>Smooks Graphics Ext</b></em>' containment reference feature.
@@ -1113,7 +1456,7 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT = eINSTANCE.getDocumentRoot_SmooksGraphicsExt();
+		EReference SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT = eINSTANCE.getSmooksGraphExtensionDocumentRoot_SmooksGraphicsExt();
 
 		/**
 		 * The meta object literal for the '<em><b>Source</b></em>' attribute feature.
@@ -1121,7 +1464,7 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DOCUMENT_ROOT__SOURCE = eINSTANCE.getDocumentRoot_Source();
+		EAttribute SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SOURCE = eINSTANCE.getSmooksGraphExtensionDocumentRoot_Source();
 
 		/**
 		 * The meta object literal for the '<em><b>Target</b></em>' attribute feature.
@@ -1129,7 +1472,15 @@ public interface GraphPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DOCUMENT_ROOT__TARGET = eINSTANCE.getDocumentRoot_Target();
+		EAttribute SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__TARGET = eINSTANCE.getSmooksGraphExtensionDocumentRoot_Target();
+
+		/**
+		 * The meta object literal for the '<em><b>Task</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__TASK = eINSTANCE.getSmooksGraphExtensionDocumentRoot_Task();
 
 		/**
 		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.FigureTypeImpl <em>Figure Type</em>}' class.
@@ -1276,6 +1627,58 @@ public interface GraphPackage extends EPackage {
 		EAttribute PARAM_TYPE__TYPE = eINSTANCE.getParamType_Type();
 
 		/**
+		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.ProcessesTypeImpl <em>Processes Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.jboss.tools.smooks.model.graphics.ext.impl.ProcessesTypeImpl
+		 * @see org.jboss.tools.smooks.model.graphics.ext.impl.GraphPackageImpl#getProcessesType()
+		 * @generated
+		 */
+		EClass PROCESSES_TYPE = eINSTANCE.getProcessesType();
+
+		/**
+		 * The meta object literal for the '<em><b>Process</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROCESSES_TYPE__PROCESS = eINSTANCE.getProcessesType_Process();
+
+		/**
+		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.ProcessTypeImpl <em>Process Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.jboss.tools.smooks.model.graphics.ext.impl.ProcessTypeImpl
+		 * @see org.jboss.tools.smooks.model.graphics.ext.impl.GraphPackageImpl#getProcessType()
+		 * @generated
+		 */
+		EClass PROCESS_TYPE = eINSTANCE.getProcessType();
+
+		/**
+		 * The meta object literal for the '<em><b>Task</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROCESS_TYPE__TASK = eINSTANCE.getProcessType_Task();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PROCESS_TYPE__ID = eINSTANCE.getProcessType_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PROCESS_TYPE__NAME = eINSTANCE.getProcessType_Name();
+
+		/**
 		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.SmooksGraphicsExtTypeImpl <em>Smooks Graphics Ext Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1300,6 +1703,14 @@ public interface GraphPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SMOOKS_GRAPHICS_EXT_TYPE__GRAPH = eINSTANCE.getSmooksGraphicsExtType_Graph();
+
+		/**
+		 * The meta object literal for the '<em><b>Processes</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SMOOKS_GRAPHICS_EXT_TYPE__PROCESSES = eINSTANCE.getSmooksGraphicsExtType_Processes();
 
 		/**
 		 * The meta object literal for the '<em><b>Author</b></em>' attribute feature.
@@ -1340,6 +1751,48 @@ public interface GraphPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SMOOKS_GRAPHICS_EXT_TYPE__PLATFORM_VERSION = eINSTANCE.getSmooksGraphicsExtType_PlatformVersion();
+
+		/**
+		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.TaskTypeImpl <em>Task Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.jboss.tools.smooks.model.graphics.ext.impl.TaskTypeImpl
+		 * @see org.jboss.tools.smooks.model.graphics.ext.impl.GraphPackageImpl#getTaskType()
+		 * @generated
+		 */
+		EClass TASK_TYPE = eINSTANCE.getTaskType();
+
+		/**
+		 * The meta object literal for the '<em><b>Task</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK_TYPE__TASK = eINSTANCE.getTaskType_Task();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK_TYPE__ID = eINSTANCE.getTaskType_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK_TYPE__NAME = eINSTANCE.getTaskType_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TASK_TYPE__TYPE = eINSTANCE.getTaskType_Type();
 
 	}
 

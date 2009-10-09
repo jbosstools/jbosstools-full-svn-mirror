@@ -35,13 +35,13 @@ public interface GraphFactory extends EFactory {
 	ConnectionType createConnectionType();
 
 	/**
-	 * Returns a new object of class '<em>Document Root</em>'.
+	 * Returns a new object of class '<em>Smooks Graph Extension Document Root</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Document Root</em>'.
+	 * @return a new object of class '<em>Smooks Graph Extension Document Root</em>'.
 	 * @generated
 	 */
-	SmooksGraphExtensionDocumentRoot createDocumentRoot();
+	SmooksGraphExtensionDocumentRoot createSmooksGraphExtensionDocumentRoot();
 
 	/**
 	 * Returns a new object of class '<em>Figure Type</em>'.
@@ -80,6 +80,24 @@ public interface GraphFactory extends EFactory {
 	ParamType createParamType();
 
 	/**
+	 * Returns a new object of class '<em>Processes Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Processes Type</em>'.
+	 * @generated
+	 */
+	ProcessesType createProcessesType();
+
+	/**
+	 * Returns a new object of class '<em>Process Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Process Type</em>'.
+	 * @generated
+	 */
+	ProcessType createProcessType();
+
+	/**
 	 * Returns a new object of class '<em>Smooks Graphics Ext Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -87,6 +105,15 @@ public interface GraphFactory extends EFactory {
 	 * @generated
 	 */
 	SmooksGraphicsExtType createSmooksGraphicsExtType();
+
+	/**
+	 * Returns a new object of class '<em>Task Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Task Type</em>'.
+	 * @generated
+	 */
+	TaskType createTaskType();
 
 	/**
 	 * Returns the package supported by this factory.

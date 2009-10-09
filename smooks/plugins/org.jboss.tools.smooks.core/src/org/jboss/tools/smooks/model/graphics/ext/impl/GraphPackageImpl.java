@@ -20,14 +20,17 @@ import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.jboss.tools.smooks.model.common.CommonPackage;
 import org.jboss.tools.smooks.model.common.impl.CommonPackageImpl;
 import org.jboss.tools.smooks.model.graphics.ext.ConnectionType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
 import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.ParamType;
+import org.jboss.tools.smooks.model.graphics.ext.ProcessType;
+import org.jboss.tools.smooks.model.graphics.ext.ProcessesType;
+import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
+import org.jboss.tools.smooks.model.graphics.ext.TaskType;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.impl.SmooksPackageImpl;
 
@@ -52,7 +55,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass documentRootEClass = null;
+	private EClass smooksGraphExtensionDocumentRootEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -87,7 +90,28 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass processesTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass processTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass smooksGraphicsExtTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass taskTypeEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -202,8 +226,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getDocumentRoot() {
-		return documentRootEClass;
+	public EClass getSmooksGraphExtensionDocumentRoot() {
+		return smooksGraphExtensionDocumentRootEClass;
 	}
 
 	/**
@@ -211,8 +235,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Mixed() {
-		return (EAttribute)documentRootEClass.getEStructuralFeatures().get(0);
+	public EAttribute getSmooksGraphExtensionDocumentRoot_Mixed() {
+		return (EAttribute)smooksGraphExtensionDocumentRootEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -220,8 +244,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_XMLNSPrefixMap() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(1);
+	public EReference getSmooksGraphExtensionDocumentRoot_XMLNSPrefixMap() {
+		return (EReference)smooksGraphExtensionDocumentRootEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -229,8 +253,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_XSISchemaLocation() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(2);
+	public EReference getSmooksGraphExtensionDocumentRoot_XSISchemaLocation() {
+		return (EReference)smooksGraphExtensionDocumentRootEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -238,8 +262,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Connection() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(3);
+	public EReference getSmooksGraphExtensionDocumentRoot_Connection() {
+		return (EReference)smooksGraphExtensionDocumentRootEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -247,8 +271,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Figure() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(4);
+	public EReference getSmooksGraphExtensionDocumentRoot_Figure() {
+		return (EReference)smooksGraphExtensionDocumentRootEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -256,8 +280,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Graph() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(5);
+	public EReference getSmooksGraphExtensionDocumentRoot_Graph() {
+		return (EReference)smooksGraphExtensionDocumentRootEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -265,8 +289,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Input() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(6);
+	public EReference getSmooksGraphExtensionDocumentRoot_Input() {
+		return (EReference)smooksGraphExtensionDocumentRootEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -274,8 +298,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_Param() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(7);
+	public EReference getSmooksGraphExtensionDocumentRoot_Param() {
+		return (EReference)smooksGraphExtensionDocumentRootEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -283,8 +307,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDocumentRoot_SmooksGraphicsExt() {
-		return (EReference)documentRootEClass.getEStructuralFeatures().get(8);
+	public EReference getSmooksGraphExtensionDocumentRoot_Process() {
+		return (EReference)smooksGraphExtensionDocumentRootEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -292,8 +316,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Source() {
-		return (EAttribute)documentRootEClass.getEStructuralFeatures().get(9);
+	public EReference getSmooksGraphExtensionDocumentRoot_Processes() {
+		return (EReference)smooksGraphExtensionDocumentRootEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -301,8 +325,35 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDocumentRoot_Target() {
-		return (EAttribute)documentRootEClass.getEStructuralFeatures().get(10);
+	public EReference getSmooksGraphExtensionDocumentRoot_SmooksGraphicsExt() {
+		return (EReference)smooksGraphExtensionDocumentRootEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSmooksGraphExtensionDocumentRoot_Source() {
+		return (EAttribute)smooksGraphExtensionDocumentRootEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSmooksGraphExtensionDocumentRoot_Target() {
+		return (EAttribute)smooksGraphExtensionDocumentRootEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSmooksGraphExtensionDocumentRoot_Task() {
+		return (EReference)smooksGraphExtensionDocumentRootEClass.getEStructuralFeatures().get(13);
 	}
 
 	/**
@@ -463,6 +514,60 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getProcessesType() {
+		return processesTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProcessesType_Process() {
+		return (EReference)processesTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getProcessType() {
+		return processTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProcessType_Task() {
+		return (EReference)processTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProcessType_Id() {
+		return (EAttribute)processTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProcessType_Name() {
+		return (EAttribute)processTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getSmooksGraphicsExtType() {
 		return smooksGraphicsExtTypeEClass;
 	}
@@ -490,8 +595,8 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSmooksGraphicsExtType_Author() {
-		return (EAttribute)smooksGraphicsExtTypeEClass.getEStructuralFeatures().get(2);
+	public EReference getSmooksGraphicsExtType_Processes() {
+		return (EReference)smooksGraphicsExtTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -499,7 +604,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSmooksGraphicsExtType_InputType() {
+	public EAttribute getSmooksGraphicsExtType_Author() {
 		return (EAttribute)smooksGraphicsExtTypeEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -508,7 +613,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSmooksGraphicsExtType_Name() {
+	public EAttribute getSmooksGraphicsExtType_InputType() {
 		return (EAttribute)smooksGraphicsExtTypeEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -517,7 +622,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSmooksGraphicsExtType_OutputType() {
+	public EAttribute getSmooksGraphicsExtType_Name() {
 		return (EAttribute)smooksGraphicsExtTypeEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -526,8 +631,62 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSmooksGraphicsExtType_PlatformVersion() {
+	public EAttribute getSmooksGraphicsExtType_OutputType() {
 		return (EAttribute)smooksGraphicsExtTypeEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSmooksGraphicsExtType_PlatformVersion() {
+		return (EAttribute)smooksGraphicsExtTypeEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTaskType() {
+		return taskTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTaskType_Task() {
+		return (EReference)taskTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTaskType_Id() {
+		return (EAttribute)taskTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTaskType_Name() {
+		return (EAttribute)taskTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTaskType_Type() {
+		return (EAttribute)taskTypeEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -563,18 +722,21 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		createEAttribute(connectionTypeEClass, CONNECTION_TYPE__TARGET);
 		createEAttribute(connectionTypeEClass, CONNECTION_TYPE__ID);
 
-		documentRootEClass = createEClass(DOCUMENT_ROOT);
-		createEAttribute(documentRootEClass, DOCUMENT_ROOT__MIXED);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__CONNECTION);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__FIGURE);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__GRAPH);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__INPUT);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__PARAM);
-		createEReference(documentRootEClass, DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT);
-		createEAttribute(documentRootEClass, DOCUMENT_ROOT__SOURCE);
-		createEAttribute(documentRootEClass, DOCUMENT_ROOT__TARGET);
+		smooksGraphExtensionDocumentRootEClass = createEClass(SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT);
+		createEAttribute(smooksGraphExtensionDocumentRootEClass, SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__MIXED);
+		createEReference(smooksGraphExtensionDocumentRootEClass, SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
+		createEReference(smooksGraphExtensionDocumentRootEClass, SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
+		createEReference(smooksGraphExtensionDocumentRootEClass, SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__CONNECTION);
+		createEReference(smooksGraphExtensionDocumentRootEClass, SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__FIGURE);
+		createEReference(smooksGraphExtensionDocumentRootEClass, SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__GRAPH);
+		createEReference(smooksGraphExtensionDocumentRootEClass, SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__INPUT);
+		createEReference(smooksGraphExtensionDocumentRootEClass, SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PARAM);
+		createEReference(smooksGraphExtensionDocumentRootEClass, SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PROCESS);
+		createEReference(smooksGraphExtensionDocumentRootEClass, SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__PROCESSES);
+		createEReference(smooksGraphExtensionDocumentRootEClass, SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT);
+		createEAttribute(smooksGraphExtensionDocumentRootEClass, SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SOURCE);
+		createEAttribute(smooksGraphExtensionDocumentRootEClass, SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__TARGET);
+		createEReference(smooksGraphExtensionDocumentRootEClass, SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__TASK);
 
 		figureTypeEClass = createEClass(FIGURE_TYPE);
 		createEAttribute(figureTypeEClass, FIGURE_TYPE__HEIGHT);
@@ -597,14 +759,29 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		createEAttribute(paramTypeEClass, PARAM_TYPE__NAME);
 		createEAttribute(paramTypeEClass, PARAM_TYPE__TYPE);
 
+		processesTypeEClass = createEClass(PROCESSES_TYPE);
+		createEReference(processesTypeEClass, PROCESSES_TYPE__PROCESS);
+
+		processTypeEClass = createEClass(PROCESS_TYPE);
+		createEReference(processTypeEClass, PROCESS_TYPE__TASK);
+		createEAttribute(processTypeEClass, PROCESS_TYPE__ID);
+		createEAttribute(processTypeEClass, PROCESS_TYPE__NAME);
+
 		smooksGraphicsExtTypeEClass = createEClass(SMOOKS_GRAPHICS_EXT_TYPE);
 		createEReference(smooksGraphicsExtTypeEClass, SMOOKS_GRAPHICS_EXT_TYPE__INPUT);
 		createEReference(smooksGraphicsExtTypeEClass, SMOOKS_GRAPHICS_EXT_TYPE__GRAPH);
+		createEReference(smooksGraphicsExtTypeEClass, SMOOKS_GRAPHICS_EXT_TYPE__PROCESSES);
 		createEAttribute(smooksGraphicsExtTypeEClass, SMOOKS_GRAPHICS_EXT_TYPE__AUTHOR);
 		createEAttribute(smooksGraphicsExtTypeEClass, SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE);
 		createEAttribute(smooksGraphicsExtTypeEClass, SMOOKS_GRAPHICS_EXT_TYPE__NAME);
 		createEAttribute(smooksGraphicsExtTypeEClass, SMOOKS_GRAPHICS_EXT_TYPE__OUTPUT_TYPE);
 		createEAttribute(smooksGraphicsExtTypeEClass, SMOOKS_GRAPHICS_EXT_TYPE__PLATFORM_VERSION);
+
+		taskTypeEClass = createEClass(TASK_TYPE);
+		createEReference(taskTypeEClass, TASK_TYPE__TASK);
+		createEAttribute(taskTypeEClass, TASK_TYPE__ID);
+		createEAttribute(taskTypeEClass, TASK_TYPE__NAME);
+		createEAttribute(taskTypeEClass, TASK_TYPE__TYPE);
 	}
 
 	/**
@@ -647,18 +824,21 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		initEAttribute(getConnectionType_Target(), theXMLTypePackage.getString(), "target", null, 1, 1, ConnectionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getConnectionType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, ConnectionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(documentRootEClass, SmooksGraphExtensionDocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_Connection(), this.getConnectionType(), null, "connection", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_Figure(), this.getFigureType(), null, "figure", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_Graph(), this.getGraphType(), null, "graph", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_Input(), this.getInputType(), null, "input", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_Param(), this.getParamType(), null, "param", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_SmooksGraphicsExt(), this.getSmooksGraphicsExtType(), null, "smooksGraphicsExt", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDocumentRoot_Source(), theXMLTypePackage.getString(), "source", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDocumentRoot_Target(), theXMLTypePackage.getString(), "target", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEClass(smooksGraphExtensionDocumentRootEClass, SmooksGraphExtensionDocumentRoot.class, "SmooksGraphExtensionDocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSmooksGraphExtensionDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooksGraphExtensionDocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooksGraphExtensionDocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooksGraphExtensionDocumentRoot_Connection(), this.getConnectionType(), null, "connection", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooksGraphExtensionDocumentRoot_Figure(), this.getFigureType(), null, "figure", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooksGraphExtensionDocumentRoot_Graph(), this.getGraphType(), null, "graph", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooksGraphExtensionDocumentRoot_Input(), this.getInputType(), null, "input", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooksGraphExtensionDocumentRoot_Param(), this.getParamType(), null, "param", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooksGraphExtensionDocumentRoot_Process(), this.getProcessType(), null, "process", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooksGraphExtensionDocumentRoot_Processes(), this.getProcessesType(), null, "processes", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooksGraphExtensionDocumentRoot_SmooksGraphicsExt(), this.getSmooksGraphicsExtType(), null, "smooksGraphicsExt", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSmooksGraphExtensionDocumentRoot_Source(), theXMLTypePackage.getString(), "source", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSmooksGraphExtensionDocumentRoot_Target(), theXMLTypePackage.getString(), "target", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooksGraphExtensionDocumentRoot_Task(), this.getTaskType(), null, "task", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(figureTypeEClass, FigureType.class, "FigureType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getFigureType_Height(), theXMLTypePackage.getString(), "height", null, 0, 1, FigureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -681,14 +861,29 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		initEAttribute(getParamType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, ParamType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParamType_Type(), theXMLTypePackage.getString(), "type", null, 0, 1, ParamType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(processesTypeEClass, ProcessesType.class, "ProcessesType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getProcessesType_Process(), this.getProcessType(), null, "process", null, 1, 1, ProcessesType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(processTypeEClass, ProcessType.class, "ProcessType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getProcessType_Task(), this.getTaskType(), null, "task", null, 0, -1, ProcessType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProcessType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, ProcessType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getProcessType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, ProcessType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(smooksGraphicsExtTypeEClass, SmooksGraphicsExtType.class, "SmooksGraphicsExtType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSmooksGraphicsExtType_Input(), this.getInputType(), null, "input", null, 0, -1, SmooksGraphicsExtType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSmooksGraphicsExtType_Graph(), this.getGraphType(), null, "graph", null, 0, 1, SmooksGraphicsExtType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSmooksGraphicsExtType_Processes(), this.getProcessesType(), null, "processes", null, 0, 1, SmooksGraphicsExtType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSmooksGraphicsExtType_Author(), theXMLTypePackage.getString(), "author", null, 0, 1, SmooksGraphicsExtType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSmooksGraphicsExtType_InputType(), theXMLTypePackage.getString(), "inputType", null, 0, 1, SmooksGraphicsExtType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSmooksGraphicsExtType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, SmooksGraphicsExtType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSmooksGraphicsExtType_OutputType(), theXMLTypePackage.getString(), "outputType", null, 0, 1, SmooksGraphicsExtType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSmooksGraphicsExtType_PlatformVersion(), theXMLTypePackage.getString(), "platformVersion", null, 0, 1, SmooksGraphicsExtType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(taskTypeEClass, TaskType.class, "TaskType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTaskType_Task(), this.getTaskType(), null, "task", null, 0, -1, TaskType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTaskType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, TaskType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTaskType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, TaskType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTaskType_Type(), theXMLTypePackage.getString(), "type", null, 0, 1, TaskType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -737,35 +932,35 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 			 "name", "id"
 		   });		
 		addAnnotation
-		  (documentRootEClass, 
+		  (smooksGraphExtensionDocumentRootEClass, 
 		   source, 
 		   new String[] {
 			 "name", "",
 			 "kind", "mixed"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Mixed(), 
+		  (getSmooksGraphExtensionDocumentRoot_Mixed(), 
 		   source, 
 		   new String[] {
 			 "kind", "elementWildcard",
 			 "name", ":mixed"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_XMLNSPrefixMap(), 
+		  (getSmooksGraphExtensionDocumentRoot_XMLNSPrefixMap(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "xmlns:prefix"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_XSISchemaLocation(), 
+		  (getSmooksGraphExtensionDocumentRoot_XSISchemaLocation(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "xsi:schemaLocation"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Connection(), 
+		  (getSmooksGraphExtensionDocumentRoot_Connection(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -773,7 +968,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Figure(), 
+		  (getSmooksGraphExtensionDocumentRoot_Figure(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -781,7 +976,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Graph(), 
+		  (getSmooksGraphExtensionDocumentRoot_Graph(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -789,7 +984,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Input(), 
+		  (getSmooksGraphExtensionDocumentRoot_Input(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -797,7 +992,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Param(), 
+		  (getSmooksGraphExtensionDocumentRoot_Param(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -805,7 +1000,23 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_SmooksGraphicsExt(), 
+		  (getSmooksGraphExtensionDocumentRoot_Process(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "process",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (getSmooksGraphExtensionDocumentRoot_Processes(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "processes",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (getSmooksGraphExtensionDocumentRoot_SmooksGraphicsExt(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -814,7 +1025,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Source(), 
+		  (getSmooksGraphExtensionDocumentRoot_Source(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
@@ -822,11 +1033,19 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
-		  (getDocumentRoot_Target(), 
+		  (getSmooksGraphExtensionDocumentRoot_Target(), 
 		   source, 
 		   new String[] {
 			 "kind", "element",
 			 "name", "target",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (getSmooksGraphExtensionDocumentRoot_Task(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "task",
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
@@ -952,6 +1171,50 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 			 "name", "type"
 		   });		
 		addAnnotation
+		  (processesTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "processes_._type",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getProcessesType_Process(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "process",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (processTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "process_._type",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getProcessType_Task(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "task",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (getProcessType_Id(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "id"
+		   });		
+		addAnnotation
+		  (getProcessType_Name(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "name"
+		   });		
+		addAnnotation
 		  (smooksGraphicsExtTypeEClass, 
 		   source, 
 		   new String[] {
@@ -972,6 +1235,14 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		   new String[] {
 			 "kind", "element",
 			 "name", "graph",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (getSmooksGraphicsExtType_Processes(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "processes",
 			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
@@ -1008,6 +1279,42 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "platformVersion"
+		   });		
+		addAnnotation
+		  (taskTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "task_._type",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getTaskType_Task(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "task",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (getTaskType_Id(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "id"
+		   });		
+		addAnnotation
+		  (getTaskType_Name(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "name"
+		   });		
+		addAnnotation
+		  (getTaskType_Type(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "type"
 		   });
 	}
 

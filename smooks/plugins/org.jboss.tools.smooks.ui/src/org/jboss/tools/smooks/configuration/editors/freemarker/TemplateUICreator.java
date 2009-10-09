@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.actions.OpenEditorEditInnerContentsAction;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
@@ -52,13 +53,16 @@ public class TemplateUICreator extends PropertyUICreator {
 			ISmooksModelProvider formEditor, IEditorPart part) {
 		if (feature == FreemarkerPackage.eINSTANCE.getTemplate_Value()) {
 		}
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor, part);
 	}
 
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
+
+		String version = formEditor.getSmooksGraphicsExt().getPlatformVersion();
+
 		OpenEditorEditInnerContentsAction openCDATAEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,
 				(AnyType) model, SmooksUIUtils.VALUE_TYPE_CDATA, "flt");
 		// OpenEditorEditInnerContentsAction openCommentEditorAction = new
@@ -68,43 +72,76 @@ public class TemplateUICreator extends PropertyUICreator {
 		TextTypeSwicher swicher = new TextTypeSwicher();
 		swicher.createSwicherGUI("External Template File", "Inline Template", parent, toolkit);
 
-		AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Inline Template", editingdomain,
-				toolkit, parent, model, openCDATAEditorAction, true);
-		Control c = cdatatext.getContentControl();
+		if (SmooksConstants.VERSION_1_1.equals(version)) {
 
-		if (c instanceof Text) {
-			final FieldAssistDisposer disposer = SmooksUIUtils.addBindingsContextAssistToText((Text) c, SmooksUIUtils
-					.getSmooks11ResourceListType((EObject) model));
-			c.addDisposeListener(new DisposeListener() {
+			AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Inline Template", editingdomain,
+					toolkit, parent, model, openCDATAEditorAction, true);
+			Control c = cdatatext.getContentControl();
 
-				/*
-				 * (non-Javadoc)
-				 * 
-				 * @see
-				 * org.eclipse.swt.events.DisposeListener#widgetDisposed(org
-				 * .eclipse.swt.events.DisposeEvent)
-				 */
-				public void widgetDisposed(DisposeEvent e) {
-					disposer.dispose();
-				}
+			if (c instanceof Text) {
+				final FieldAssistDisposer disposer = SmooksUIUtils.addBindingsContextAssistToText((Text) c,
+						SmooksUIUtils.getSmooks11ResourceListType((EObject) model));
+				c.addDisposeListener(new DisposeListener() {
 
-			});
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see
+					 * org.eclipse.swt.events.DisposeListener#widgetDisposed(org
+					 * .eclipse.swt.events.DisposeEvent)
+					 */
+					public void widgetDisposed(DisposeEvent e) {
+						disposer.dispose();
+					}
+
+				});
+			}
+			list.add(cdatatext);
+			openCDATAEditorAction.setRelateText((Text) cdatatext.getContentControl());
+			
+			AttributeFieldEditPart textFieldEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor(
+					"External Template File", parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
+					null, null);
+			
+			swicher.hookSwicher(textFieldEditPart, cdatatext, editingdomain, model , SmooksUIUtils.VALUE_TYPE_CDATA);
+			
+			list.add(textFieldEditPart);
 		}
-		list.add(cdatatext);
-		// AttributeFieldEditPart commenttext =
-		// SmooksUIUtils.createCommentFieldEditor("Template Contents(Comment)",
-		// editingdomain, toolkit, parent, model, openCommentEditorAction);
+		if (SmooksConstants.VERSION_1_2.equals(version)) {
 
-		openCDATAEditorAction.setRelateText((Text) cdatatext.getContentControl());
-		// openCommentEditorAction.setRelateText((Text)commenttext.getContentControl());
+			AttributeFieldEditPart cdatatext = SmooksUIUtils.createCommentFieldEditor("Inline Template", editingdomain,
+					toolkit, parent, model, openCDATAEditorAction, true);
+			Control c = cdatatext.getContentControl();
 
-		AttributeFieldEditPart textFieldEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor(
-				"External Template File", parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
-				null, null);
+			if (c instanceof Text) {
+				final FieldAssistDisposer disposer = SmooksUIUtils.addBindingsContextAssistToText((Text) c,
+						SmooksUIUtils.getSmooks11ResourceListType((EObject) model));
+				c.addDisposeListener(new DisposeListener() {
 
-		list.add(textFieldEditPart);
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see
+					 * org.eclipse.swt.events.DisposeListener#widgetDisposed(org
+					 * .eclipse.swt.events.DisposeEvent)
+					 */
+					public void widgetDisposed(DisposeEvent e) {
+						disposer.dispose();
+					}
 
-		swicher.hookSwicher(textFieldEditPart, cdatatext, editingdomain, model);
+				});
+			}
+			list.add(cdatatext);
+			openCDATAEditorAction.setRelateText((Text) cdatatext.getContentControl());
+			
+			AttributeFieldEditPart textFieldEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor(
+					"External Template File", parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
+					null, null);
+			
+			swicher.hookSwicher(textFieldEditPart, cdatatext, editingdomain, model , SmooksUIUtils.VALUE_TYPE_COMMENT);
+			
+			list.add(textFieldEditPart);
+		}		
 
 		list.add(SmooksUIUtils.createStringFieldEditor(parent, toolkit, getPropertyDescriptor(editingdomain,
 				FreemarkerPackage.eINSTANCE.getTemplate_Encoding(), model), model, false, false, null));

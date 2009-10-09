@@ -14,12 +14,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
+import org.jboss.tools.smooks.model.graphics.ext.FigureType;
+import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 
@@ -29,9 +32,7 @@ import org.jboss.tools.smooks.model.javabean12.BeanType;
  */
 public class SmooksGraphUtil {
 
-	public static String generateFigureID(AbstractSmooksGraphicalModel model) {
-		Object data = model.getData();
-		data = AdapterFactoryEditingDomain.unwrap(data);
+	public static String generateFigureIDViaModel(EObject data) {
 		if (data instanceof BindingsType) {
 			String beanId = ((BindingsType) data).getBeanId();
 			if (beanId == null) {
@@ -40,7 +41,7 @@ public class SmooksGraphUtil {
 			beanId = beanId.trim();
 			return "BindingsType_" + beanId;
 		}
-		
+
 		if (data instanceof BeanType) {
 			String beanId = ((BeanType) data).getBeanId();
 			if (beanId == null) {
@@ -49,7 +50,28 @@ public class SmooksGraphUtil {
 			beanId = beanId.trim();
 			return "BeanType" + beanId;
 		}
-		
+		return null;
+	}
+	
+
+	public static FigureType findFigureType(GraphType graph, String figureId) {
+		List<FigureType> list = graph.getFigure();
+		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+			FigureType figureType = (FigureType) iterator.next();
+			if (figureId.equals(figureType.getId())) {
+				return figureType;
+			}
+		}
+		return null;
+	}
+
+
+	public static String generateFigureID(AbstractSmooksGraphicalModel model) {
+		Object data = model.getData();
+		data = AdapterFactoryEditingDomain.unwrap(data);
+		if( data instanceof EObject){
+			return generateFigureIDViaModel((EObject)data);
+		}
 		if (data instanceof IXMLStructuredObject) {
 			List<?> children = ((IXMLStructuredObject) data).getChildren();
 			if (children == null || children.isEmpty()) {
@@ -64,8 +86,8 @@ public class SmooksGraphUtil {
 		}
 		return null;
 	}
-	
-	public static AbstractSmooksGraphicalModel findSmooksGraphModel(RootModel root,Object object){
+
+	public static AbstractSmooksGraphicalModel findSmooksGraphModel(RootModel root, Object object) {
 		if (root != null && object != null) {
 			List<?> children = root.getChildren();
 			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
@@ -81,7 +103,7 @@ public class SmooksGraphUtil {
 		}
 		return null;
 	}
-	
+
 	private static AbstractSmooksGraphicalModel findGraphicalModel(AbstractSmooksGraphicalModel graph, Object object) {
 		if (AdapterFactoryEditingDomain.unwrap(graph.getData()) == object) {
 			return graph;
@@ -106,13 +128,14 @@ public class SmooksGraphUtil {
 		if (model == null) {
 			model = SmooksUIUtils.localXMLNodeWithPath(selector, root, " ", false);
 		}
-		if(model == null) return null;
+		if (model == null)
+			return null;
 		IXMLStructuredObject p = model;
 		List<IXMLStructuredObject> parentList = new ArrayList<IXMLStructuredObject>();
 		IXMLStructuredObject rootParent = SmooksUIUtils.getRootParent(model);
 		while (p != null) {
 			parentList.add(p);
-			if(p == rootParent){
+			if (p == rootParent) {
 				break;
 			}
 			p = p.getParent();

@@ -35,13 +35,13 @@ public class JavaBeanEditPart extends AbstractResourceConfigEditPart {
 
 	@Override
 	protected EStructuralFeature getFeature(EObject model) {
-		if(model instanceof BindingsType){
+		if (model instanceof BindingsType) {
 			return JavabeanPackage.Literals.DOCUMENT_ROOT__BINDINGS;
 		}
-		if(model instanceof BeanType){
+		if (model instanceof BeanType) {
 			return Javabean12Package.Literals.JAVABEAN12_DOCUMENT_ROOT__BEAN;
 		}
 		return null;
 	}
-
+	
 }

@@ -14,7 +14,6 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.common.SmooksGEFEditFactory;
-import org.jboss.tools.smooks.gef.tree.editparts.RootEditPart;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeConnectionEditPart;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
@@ -24,6 +23,7 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataContainerEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataTreeNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.ResourceConfigEditFactory;
+import org.jboss.tools.smooks.graphical.editors.editparts.SmooksRootEditPart;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
@@ -44,7 +44,7 @@ public class SmooksEditFactory extends SmooksGEFEditFactory implements EditPartF
 	public EditPart createEditPart(EditPart context, Object model) {
 		EditPart editPart = null;
 		if (model instanceof RootModel) {
-			editPart = new RootEditPart();
+			editPart = new SmooksRootEditPart();
 		}
 		if (model.getClass() == TreeNodeModel.class) {
 			editPart = new TreeNodeEditPart();

@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Document Root</b></em>'.
+ * A representation of the model object '<em><b>Smooks Graph Extension Document Root</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
@@ -28,13 +28,16 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getGraph <em>Graph</em>}</li>
  *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getInput <em>Input</em>}</li>
  *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getParam <em>Param</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getProcess <em>Process</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getProcesses <em>Processes</em>}</li>
  *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getSmooksGraphicsExt <em>Smooks Graphics Ext</em>}</li>
  *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getSource <em>Source</em>}</li>
  *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getTarget <em>Target</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getTask <em>Task</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getDocumentRoot()
+ * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot()
  * @model extendedMetaData="name='' kind='mixed'"
  * @generated
  */
@@ -49,7 +52,7 @@ public interface SmooksGraphExtensionDocumentRoot extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mixed</em>' attribute list.
-	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getDocumentRoot_Mixed()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot_Mixed()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
 	 *        extendedMetaData="kind='elementWildcard' name=':mixed'"
 	 * @generated
@@ -67,7 +70,7 @@ public interface SmooksGraphExtensionDocumentRoot extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>XMLNS Prefix Map</em>' map.
-	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getDocumentRoot_XMLNSPrefixMap()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot_XMLNSPrefixMap()
 	 * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>" transient="true"
 	 *        extendedMetaData="kind='attribute' name='xmlns:prefix'"
 	 * @generated
@@ -85,7 +88,7 @@ public interface SmooksGraphExtensionDocumentRoot extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>XSI Schema Location</em>' map.
-	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getDocumentRoot_XSISchemaLocation()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot_XSISchemaLocation()
 	 * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>" transient="true"
 	 *        extendedMetaData="kind='attribute' name='xsi:schemaLocation'"
 	 * @generated
@@ -102,7 +105,7 @@ public interface SmooksGraphExtensionDocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Connection</em>' containment reference.
 	 * @see #setConnection(ConnectionType)
-	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getDocumentRoot_Connection()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot_Connection()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='connection' namespace='##targetNamespace'"
 	 * @generated
@@ -129,7 +132,7 @@ public interface SmooksGraphExtensionDocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Figure</em>' containment reference.
 	 * @see #setFigure(FigureType)
-	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getDocumentRoot_Figure()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot_Figure()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='figure' namespace='##targetNamespace'"
 	 * @generated
@@ -156,7 +159,7 @@ public interface SmooksGraphExtensionDocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Graph</em>' containment reference.
 	 * @see #setGraph(GraphType)
-	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getDocumentRoot_Graph()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot_Graph()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='graph' namespace='##targetNamespace'"
 	 * @generated
@@ -183,7 +186,7 @@ public interface SmooksGraphExtensionDocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Input</em>' containment reference.
 	 * @see #setInput(InputType)
-	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getDocumentRoot_Input()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot_Input()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='input' namespace='##targetNamespace'"
 	 * @generated
@@ -210,7 +213,7 @@ public interface SmooksGraphExtensionDocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Param</em>' containment reference.
 	 * @see #setParam(ParamType)
-	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getDocumentRoot_Param()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot_Param()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='param' namespace='##targetNamespace'"
 	 * @generated
@@ -228,6 +231,60 @@ public interface SmooksGraphExtensionDocumentRoot extends EObject {
 	void setParam(ParamType value);
 
 	/**
+	 * Returns the value of the '<em><b>Process</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Process</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Process</em>' containment reference.
+	 * @see #setProcess(ProcessType)
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot_Process()
+	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='process' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	ProcessType getProcess();
+
+	/**
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getProcess <em>Process</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Process</em>' containment reference.
+	 * @see #getProcess()
+	 * @generated
+	 */
+	void setProcess(ProcessType value);
+
+	/**
+	 * Returns the value of the '<em><b>Processes</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Processes</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Processes</em>' containment reference.
+	 * @see #setProcesses(ProcessesType)
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot_Processes()
+	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='processes' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	ProcessesType getProcesses();
+
+	/**
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getProcesses <em>Processes</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Processes</em>' containment reference.
+	 * @see #getProcesses()
+	 * @generated
+	 */
+	void setProcesses(ProcessesType value);
+
+	/**
 	 * Returns the value of the '<em><b>Smooks Graphics Ext</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -237,7 +294,7 @@ public interface SmooksGraphExtensionDocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Smooks Graphics Ext</em>' containment reference.
 	 * @see #setSmooksGraphicsExt(SmooksGraphicsExtType)
-	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getDocumentRoot_SmooksGraphicsExt()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot_SmooksGraphicsExt()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='smooks-graphics-ext' namespace='##targetNamespace' affiliation='http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config'"
 	 * @generated
@@ -264,7 +321,7 @@ public interface SmooksGraphExtensionDocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Source</em>' attribute.
 	 * @see #setSource(String)
-	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getDocumentRoot_Source()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot_Source()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='source' namespace='##targetNamespace'"
 	 * @generated
@@ -291,7 +348,7 @@ public interface SmooksGraphExtensionDocumentRoot extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Target</em>' attribute.
 	 * @see #setTarget(String)
-	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getDocumentRoot_Target()
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot_Target()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" upper="-2" transient="true" volatile="true" derived="true"
 	 *        extendedMetaData="kind='element' name='target' namespace='##targetNamespace'"
 	 * @generated
@@ -308,4 +365,31 @@ public interface SmooksGraphExtensionDocumentRoot extends EObject {
 	 */
 	void setTarget(String value);
 
-} // DocumentRoot
+	/**
+	 * Returns the value of the '<em><b>Task</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Task</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Task</em>' containment reference.
+	 * @see #setTask(TaskType)
+	 * @see org.jboss.tools.smooks.model.graphics.ext.GraphPackage#getSmooksGraphExtensionDocumentRoot_Task()
+	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='task' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	TaskType getTask();
+
+	/**
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot#getTask <em>Task</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Task</em>' containment reference.
+	 * @see #getTask()
+	 * @generated
+	 */
+	void setTask(TaskType value);
+
+} // SmooksGraphExtensionDocumentRoot

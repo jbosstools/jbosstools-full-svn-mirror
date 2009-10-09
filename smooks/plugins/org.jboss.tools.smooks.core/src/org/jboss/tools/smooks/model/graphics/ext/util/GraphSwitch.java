@@ -99,9 +99,9 @@ public class GraphSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case GraphPackage.DOCUMENT_ROOT: {
-				SmooksGraphExtensionDocumentRoot documentRoot = (SmooksGraphExtensionDocumentRoot)theEObject;
-				T result = caseDocumentRoot(documentRoot);
+			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT: {
+				SmooksGraphExtensionDocumentRoot smooksGraphExtensionDocumentRoot = (SmooksGraphExtensionDocumentRoot)theEObject;
+				T result = caseSmooksGraphExtensionDocumentRoot(smooksGraphExtensionDocumentRoot);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -129,12 +129,30 @@ public class GraphSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case GraphPackage.PROCESSES_TYPE: {
+				ProcessesType processesType = (ProcessesType)theEObject;
+				T result = caseProcessesType(processesType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphPackage.PROCESS_TYPE: {
+				ProcessType processType = (ProcessType)theEObject;
+				T result = caseProcessType(processType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE: {
 				SmooksGraphicsExtType smooksGraphicsExtType = (SmooksGraphicsExtType)theEObject;
 				T result = caseSmooksGraphicsExtType(smooksGraphicsExtType);
 				if (result == null) result = caseAbstractResourceConfig(smooksGraphicsExtType);
 				if (result == null) result = caseAbstractAnyType(smooksGraphicsExtType);
 				if (result == null) result = caseAnyType(smooksGraphicsExtType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GraphPackage.TASK_TYPE: {
+				TaskType taskType = (TaskType)theEObject;
+				T result = caseTaskType(taskType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -158,17 +176,17 @@ public class GraphSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Document Root</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Smooks Graph Extension Document Root</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Document Root</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Smooks Graph Extension Document Root</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseDocumentRoot(SmooksGraphExtensionDocumentRoot object) {
+	public T caseSmooksGraphExtensionDocumentRoot(SmooksGraphExtensionDocumentRoot object) {
 		return null;
 	}
 
@@ -233,6 +251,36 @@ public class GraphSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Processes Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Processes Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseProcessesType(ProcessesType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Process Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Process Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseProcessType(ProcessType object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Smooks Graphics Ext Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -244,6 +292,21 @@ public class GraphSwitch<T> {
 	 * @generated
 	 */
 	public T caseSmooksGraphicsExtType(SmooksGraphicsExtType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Task Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Task Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTaskType(TaskType object) {
 		return null;
 	}
 

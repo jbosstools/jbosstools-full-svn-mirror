@@ -61,12 +61,15 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case GraphPackage.CONNECTION_TYPE: return createConnectionType();
-			case GraphPackage.DOCUMENT_ROOT: return createDocumentRoot();
+			case GraphPackage.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT: return createSmooksGraphExtensionDocumentRoot();
 			case GraphPackage.FIGURE_TYPE: return createFigureType();
 			case GraphPackage.GRAPH_TYPE: return createGraphType();
 			case GraphPackage.INPUT_TYPE: return createInputType();
 			case GraphPackage.PARAM_TYPE: return createParamType();
+			case GraphPackage.PROCESSES_TYPE: return createProcessesType();
+			case GraphPackage.PROCESS_TYPE: return createProcessType();
 			case GraphPackage.SMOOKS_GRAPHICS_EXT_TYPE: return createSmooksGraphicsExtType();
+			case GraphPackage.TASK_TYPE: return createTaskType();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -87,9 +90,9 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SmooksGraphExtensionDocumentRoot createDocumentRoot() {
-		SmooksGraphExtensionDocumentRootImpl documentRoot = new SmooksGraphExtensionDocumentRootImpl();
-		return documentRoot;
+	public SmooksGraphExtensionDocumentRoot createSmooksGraphExtensionDocumentRoot() {
+		SmooksGraphExtensionDocumentRootImpl smooksGraphExtensionDocumentRoot = new SmooksGraphExtensionDocumentRootImpl();
+		return smooksGraphExtensionDocumentRoot;
 	}
 
 	/**
@@ -137,9 +140,39 @@ public class GraphFactoryImpl extends EFactoryImpl implements GraphFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ProcessesType createProcessesType() {
+		ProcessesTypeImpl processesType = new ProcessesTypeImpl();
+		return processesType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ProcessType createProcessType() {
+		ProcessTypeImpl processType = new ProcessTypeImpl();
+		return processType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public SmooksGraphicsExtType createSmooksGraphicsExtType() {
 		SmooksGraphicsExtTypeImpl smooksGraphicsExtType = new SmooksGraphicsExtTypeImpl();
 		return smooksGraphicsExtType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TaskType createTaskType() {
+		TaskTypeImpl taskType = new TaskTypeImpl();
+		return taskType;
 	}
 
 	/**

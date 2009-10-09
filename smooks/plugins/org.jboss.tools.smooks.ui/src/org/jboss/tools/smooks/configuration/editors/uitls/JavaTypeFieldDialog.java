@@ -56,7 +56,7 @@ public class JavaTypeFieldDialog implements IFieldDialog {
 		return null;
 	}
 	
-	protected String openJavaTypeDialog(Shell shell, IJavaProject javaProject) {
+	public static String openJavaTypeDialog(Shell shell, IJavaProject javaProject) {
 		IJavaSearchScope scope = null;
 		String className = null;
 		if (javaProject == null) {

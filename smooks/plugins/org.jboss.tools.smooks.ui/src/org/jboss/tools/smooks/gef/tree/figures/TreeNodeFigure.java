@@ -59,6 +59,8 @@ public class TreeNodeFigure extends Figure {
 
 	private boolean selected;
 
+	private Image labelImage = null;
+
 	public TreeNodeFigure(TreeNodeModel model) {
 		super();
 		this.model = model;
@@ -174,9 +176,9 @@ public class TreeNodeFigure extends Figure {
 				Insets insets = getBorder().getInsets(null);
 				return new Dimension(size.width + insets.left + insets.right, size.height + insets.bottom + insets.top);
 			} catch (Throwable t) {
-				return new Dimension(100,100);
+				return new Dimension(100, 100);
 			}
-//			return super.getPreferredSize(hint, hint2);
+			// return super.getPreferredSize(hint, hint2);
 		}
 	}
 
@@ -236,11 +238,8 @@ public class TreeNodeFigure extends Figure {
 			@Override
 			protected void paintFigure(Graphics graphics) {
 				super.paintFigure(graphics);
-				if (model != null) {
-					Image i = model.getImage();
-					if (i != null)
-						;
-					graphics.drawImage(i, getBounds().getTopLeft().x, getBounds().getTopLeft().y + 2);
+				if (labelImage != null) {
+					graphics.drawImage(labelImage, getBounds().getTopLeft().x, getBounds().getTopLeft().y + 2);
 				}
 			}
 		};
@@ -269,6 +268,13 @@ public class TreeNodeFigure extends Figure {
 		} else {
 			label.setText("");
 		}
+	}
+
+	/**
+	 * @param labelImage the labelImage to set
+	 */
+	public void setLabelImage(Image labelImage) {
+		this.labelImage = labelImage;
 	}
 
 	public void setLabelText(String text) {

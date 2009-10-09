@@ -82,8 +82,8 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 				return createConnectionTypeAdapter();
 			}
 			@Override
-			public Adapter caseDocumentRoot(SmooksGraphExtensionDocumentRoot object) {
-				return createDocumentRootAdapter();
+			public Adapter caseSmooksGraphExtensionDocumentRoot(SmooksGraphExtensionDocumentRoot object) {
+				return createSmooksGraphExtensionDocumentRootAdapter();
 			}
 			@Override
 			public Adapter caseFigureType(FigureType object) {
@@ -102,8 +102,20 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 				return createParamTypeAdapter();
 			}
 			@Override
+			public Adapter caseProcessesType(ProcessesType object) {
+				return createProcessesTypeAdapter();
+			}
+			@Override
+			public Adapter caseProcessType(ProcessType object) {
+				return createProcessTypeAdapter();
+			}
+			@Override
 			public Adapter caseSmooksGraphicsExtType(SmooksGraphicsExtType object) {
 				return createSmooksGraphicsExtTypeAdapter();
+			}
+			@Override
+			public Adapter caseTaskType(TaskType object) {
+				return createTaskTypeAdapter();
 			}
 			@Override
 			public Adapter caseAnyType(AnyType object) {
@@ -152,7 +164,7 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot <em>Document Root</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot <em>Smooks Graph Extension Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -161,7 +173,7 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot
 	 * @generated
 	 */
-	public Adapter createDocumentRootAdapter() {
+	public Adapter createSmooksGraphExtensionDocumentRootAdapter() {
 		return null;
 	}
 
@@ -222,6 +234,34 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.graphics.ext.ProcessesType <em>Processes Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.ProcessesType
+	 * @generated
+	 */
+	public Adapter createProcessesTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.graphics.ext.ProcessType <em>Process Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.ProcessType
+	 * @generated
+	 */
+	public Adapter createProcessTypeAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType <em>Smooks Graphics Ext Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -232,6 +272,20 @@ public class GraphAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createSmooksGraphicsExtTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.jboss.tools.smooks.model.graphics.ext.TaskType <em>Task Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.jboss.tools.smooks.model.graphics.ext.TaskType
+	 * @generated
+	 */
+	public Adapter createTaskTypeAdapter() {
 		return null;
 	}
 

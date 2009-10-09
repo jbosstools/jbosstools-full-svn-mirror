@@ -37,7 +37,7 @@ public class BindingsContextProposalProvider implements IContentProposalProvider
 
 	public BindingsContextProposalProvider(SmooksResourceListType listType, Text textControl) {
 		this.textControl = textControl;
-		bindingsList = SmooksUIUtils.getBeanIdList(listType);
+		bindingsList = SmooksUIUtils.getBindingsTypeList(listType);
 		if(bindingsList != null){
 			for (Iterator<?> iterator = bindingsList.iterator(); iterator.hasNext();) {
 				BindingsType bindings = (BindingsType) iterator.next();

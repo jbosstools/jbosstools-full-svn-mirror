@@ -30,28 +30,38 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 public class TextTypeSwicher {
 
 	private Button textButton;
-	private Button cdataButton;
+	private Button innerDataButton;
 
 	public void hookSwicher(AttributeFieldEditPart textFieldEditPart, AttributeFieldEditPart cdataFieldEditPart,
-			AdapterFactoryEditingDomain editingdomain, Object model) {
-		String cdata = SmooksModelUtils.getAnyTypeCDATA((AnyType) model);
+			AdapterFactoryEditingDomain editingdomain, Object model, int type) {
+
+		final int ftype = type;
+
+		String innerData = null;
+
+		if (ftype == SmooksUIUtils.VALUE_TYPE_CDATA) {
+			innerData = SmooksModelUtils.getAnyTypeCDATA((AnyType) model);
+		}
+		if (ftype == SmooksUIUtils.VALUE_TYPE_COMMENT) {
+			innerData = SmooksModelUtils.getAnyTypeComment((AnyType) model);
+		}
 		String text = SmooksModelUtils.getAnyTypeText((AnyType) model);
 
 		textButton.setSelection(true);
-		cdataButton.setSelection(false);
-		if ((cdata == null || cdata.length() == 0) && (text == null || text.length() == 0)) {
+		innerDataButton.setSelection(false);
+		if ((innerData == null || innerData.length() == 0) && (text == null || text.length() == 0)) {
 			textButton.setSelection(true);
-			cdataButton.setSelection(false);
+			innerDataButton.setSelection(false);
 		} else {
 			if ((text == null || text.length() == 0)) {
 				textButton.setSelection(false);
-				cdataButton.setSelection(true);
+				innerDataButton.setSelection(true);
 			}
 		}
 		final AttributeFieldEditPart tp = textFieldEditPart;
 		final AttributeFieldEditPart cp = cdataFieldEditPart;
 		tp.getContentControl().setEnabled(textButton.getSelection());
-		cp.getContentControl().setEnabled(cdataButton.getSelection());
+		cp.getContentControl().setEnabled(innerDataButton.getSelection());
 		final AnyType fm = (AnyType) model;
 		final AdapterFactoryEditingDomain fd = editingdomain;
 		textButton.addSelectionListener(new SelectionListener() {
@@ -76,8 +86,13 @@ public class TextTypeSwicher {
 			 */
 			public void widgetSelected(SelectionEvent e) {
 				tp.getContentControl().setEnabled(textButton.getSelection());
-				cp.getContentControl().setEnabled(cdataButton.getSelection());
-				SmooksModelUtils.setCDATAToSmooksType(fd, fm, null);
+				cp.getContentControl().setEnabled(innerDataButton.getSelection());
+				if (ftype == SmooksUIUtils.VALUE_TYPE_CDATA) {
+					SmooksModelUtils.setCDATAToSmooksType(fd, fm, null);
+				}
+				if (ftype == SmooksUIUtils.VALUE_TYPE_COMMENT) {
+					SmooksModelUtils.setCommentToSmooksType(fd, fm, null);
+				}
 				Text t = (Text) tp.getContentControl();
 				String text = t.getText();
 				if (text != null) {
@@ -90,7 +105,7 @@ public class TextTypeSwicher {
 
 		});
 
-		cdataButton.addSelectionListener(new SelectionListener() {
+		innerDataButton.addSelectionListener(new SelectionListener() {
 
 			/*
 			 * (non-Javadoc)
@@ -112,7 +127,7 @@ public class TextTypeSwicher {
 			 */
 			public void widgetSelected(SelectionEvent e) {
 				tp.getContentControl().setEnabled(textButton.getSelection());
-				cp.getContentControl().setEnabled(cdataButton.getSelection());
+				cp.getContentControl().setEnabled(innerDataButton.getSelection());
 				SmooksModelUtils.setTextToSmooksType(fd, fm, null);
 				Text t = (Text) cp.getContentControl();
 				String text = t.getText();
@@ -121,7 +136,12 @@ public class TextTypeSwicher {
 				}
 				if (text.length() == 0)
 					text = null;
-				SmooksModelUtils.setCDATAToSmooksType(fd, fm, text);
+				if (ftype == SmooksUIUtils.VALUE_TYPE_CDATA) {
+					SmooksModelUtils.setCDATAToSmooksType(fd, fm, text);
+				}
+				if (ftype == SmooksUIUtils.VALUE_TYPE_COMMENT) {
+					SmooksModelUtils.setCommentToSmooksType(fd, fm, text);
+				}
 			}
 
 		});
@@ -135,6 +155,6 @@ public class TextTypeSwicher {
 		toolkit.createSeparator(parent, SWT.HORIZONTAL).setLayoutData(gd);
 
 		textButton = toolkit.createButton(parent, textString, SWT.RADIO);
-		cdataButton = toolkit.createButton(parent, cdataString, SWT.RADIO);
+		innerDataButton = toolkit.createButton(parent, cdataString, SWT.RADIO);
 	}
 }
