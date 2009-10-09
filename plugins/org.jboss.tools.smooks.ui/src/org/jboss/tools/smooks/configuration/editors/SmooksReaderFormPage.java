@@ -16,6 +16,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.filesystem.IFileInfo;
+import org.eclipse.core.filesystem.IFileStore;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
@@ -32,7 +37,12 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -57,6 +67,10 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
@@ -67,6 +81,7 @@ import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
+import org.eclipse.ui.ide.IDE;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelectionWizard;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
@@ -787,6 +802,62 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 					}
 				}
 
+			}
+		});
+		inputDataViewer.addDoubleClickListener(new IDoubleClickListener() {
+
+			public void doubleClick(DoubleClickEvent event) {
+				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+				Object element = selection.getFirstElement();
+				if (element instanceof InputType) {
+					String type = ((InputType) element).getType();
+					String filePath = SmooksModelUtils.getInputPath((InputType) element);
+					if (type != null && filePath != null) {
+						if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(type)) {
+							IFile file = ((IFileEditorInput) getEditorInput()).getFile();
+							IJavaProject javaProject = JavaCore.create(file.getProject());
+							if (javaProject != null) {
+								try {
+									if(filePath.endsWith("[]")){
+										filePath = filePath.substring(0,filePath.length() - 2);
+									}
+									IJavaElement result = javaProject.findType(filePath);
+									if (result != null)
+										JavaUI.openInEditor(result);
+									else {
+										MessageDialog.openError(getSite().getWorkbenchWindow().getShell(),
+												"Can't find type", "Can't find type \"" + filePath + "\" in \""
+														+ javaProject.getProject().getName() + "\" project.");
+									}
+								} catch (Exception e) {
+
+								}
+							}
+						} else {
+							try {
+								filePath = SmooksUIUtils.parseFilePath(filePath);
+								if (filePath != null) {
+									IFileStore fileStore = EFS.getLocalFileSystem().getStore(new Path(filePath));
+									IFileInfo fetchInfo = fileStore.fetchInfo();
+									if (!fetchInfo.isDirectory() && fetchInfo.exists()) {
+										IWorkbenchWindow window = getSite().getWorkbenchWindow();
+										IWorkbenchPage page = window.getActivePage();
+										try {
+											IDE.openEditorOnFileStore(page, fileStore);
+										} catch (PartInitException e) {
+											MessageDialog.open(MessageDialog.ERROR, window.getShell(), "Open File",
+													"Can't open the file : '" + filePath + "'", SWT.SHEET);
+										}
+									} else {
+									}
+								}
+							} catch (Exception e) {
+								MessageDialog.open(MessageDialog.ERROR, getSite().getWorkbenchWindow().getShell(),
+										"Open File", "Can't open the file : '" + filePath + "'", SWT.SHEET);
+							}
+						}
+					}
+				}
 			}
 		});
 		TableColumn header = new TableColumn(inputDataViewer.getTable(), SWT.NONE);

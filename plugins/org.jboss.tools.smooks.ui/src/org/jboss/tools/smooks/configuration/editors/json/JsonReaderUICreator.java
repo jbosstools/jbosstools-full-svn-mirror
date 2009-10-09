@@ -74,7 +74,7 @@ public class JsonReaderUICreator extends PropertyUICreator {
 			EObject keyMap = ((JsonReader) model).getKeyMap();
 			if (keyMap != null) {
 				Group group = new Group(parent, SWT.NONE);
-				group.setText("Key Maps");
+				group.setText("Keys Map");
 				group.setBackground(ColorConstants.white);
 				FillLayout fl = new FillLayout();
 				group.setLayout(fl);

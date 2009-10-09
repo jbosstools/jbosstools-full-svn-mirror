@@ -54,13 +54,9 @@ import org.jboss.tools.smooks.model.csv12.Csv12Package;
  */
 public class Csv12ReaderUICreator extends PropertyUICreator {
 
-	private TableViewer fieldsViewer;
 
 	private List<FieldText> fieldsList = new ArrayList<FieldText>();
 
-	private Button addButton;
-
-	private Button removeButton;
 
 	/*
 	 * (non-Javadoc)
@@ -156,7 +152,7 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 		String fields = (String) SmooksUIUtils.getEditValue(descriptor, model);
 
 		gd = new GridData(GridData.FILL_BOTH);
-		fieldsViewer = new TableViewer(fieldsComposite, SWT.BORDER | SWT.MULTI | SWT.FULL_SELECTION);
+		final TableViewer fieldsViewer = new TableViewer(fieldsComposite, SWT.BORDER | SWT.MULTI | SWT.FULL_SELECTION);
 		fieldsViewer.getControl().setLayoutData(gd);
 		fieldsViewer.getTable().setLinesVisible(true);
 		fieldsViewer.setContentProvider(new FieldsContentProvider());
@@ -229,15 +225,15 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 
-		addButton = new Button(buttonComposite, SWT.NONE);
+		final Button addButton = new Button(buttonComposite, SWT.NONE);
 		addButton.setLayoutData(gd);
 		addButton.setText("Add Field");
 
-		removeButton = new Button(buttonComposite, SWT.NONE);
+		final Button removeButton = new Button(buttonComposite, SWT.NONE);
 		removeButton.setLayoutData(gd);
 		removeButton.setText("Remove");
 
-		this.addButton.addSelectionListener(new SelectionListener() {
+		addButton.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
 				// addButton.setEnabled(false);
@@ -259,7 +255,7 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 			}
 		});
 
-		this.removeButton.addSelectionListener(new SelectionListener() {
+		removeButton.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
 				IStructuredSelection s = (IStructuredSelection) fieldsViewer.getSelection();

@@ -1215,11 +1215,14 @@ public class SmooksUIUtils {
 							if (fresource.getProject().hasNature(JavaCore.NATURE_ID)) {
 								IJavaProject javaProject = JavaCore.create(fresource.getProject());
 								String typeName = searchComposite.getText().getText();
+								if(typeName.endsWith("[]")){
+									typeName = typeName.substring(0,typeName.length() - 2);
+								}
 								IJavaElement result = javaProject.findType(typeName);
 								if (result != null)
 									JavaUI.openInEditor(result);
 								else {
-									MessageDialog.openInformation(classTextComposite.getShell(), "Can't find type",
+									MessageDialog.openError(classTextComposite.getShell(), "Can't find type",
 											"Can't find type \"" + typeName + "\" in \""
 													+ javaProject.getProject().getName() + "\" project.");
 								}
