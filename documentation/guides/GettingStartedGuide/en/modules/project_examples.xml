@@ -13,7 +13,70 @@
     <title>Project Examples</title>
     
     <para><emphasis><property>JBoss Developer Studio</property></emphasis> provides an option to download and import a ready-made 
-        project that you can explore and derive some useful technology implementation lessons. </para>
+    project that you can explore and derive some useful technology implementation lessons from. </para>
+    
+    <para>
+        To adjust the settings of the Project Examples feature you need to navigate to <property>Windows&gt; Preferences &gt; JBoss Tools &gt; Project Examples 
+    </property>. </para>
+    
+    <figure>
+        <title>Project Examples Preferences</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/project_examples/preferences.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+    
+    <para>The <property>Show experimental sites</property> checkbox serves to enable/disable representing the user sites in the <property>Project Example</property> dialog ( <property>Help &gt; Project Examples</property>).  </para>
+
+    
+    <section id="UserSites">
+        <title>User Sites</title>
+        <para>
+            As you can see from the  <emphasis role="bold">Project Examples Preferences</emphasis> image you can add a custom project example that can be provided by anyone. 
+            This feature can, for example, facilitate project testing.
+            
+        </para>
+        <para>
+            In oder to add a new project example you need to select the <property>User sites</property>
+            option and press the <property>Add</property> button to the right.
+        </para>
+        <para>When the <property>Add</property> button is pressed the
+            <property>Add Project Example Site</property> dialog is displayed. The dialog contains 2 
+            input fields: <property>Name</property> where you need to specify the name of the new entry and <property>URL</property> 
+           that has to point to the xml file that contains example project(s) properties. 
+           In more detail the structure of the xml file is discussed further in the chapter of the guide.
+           Alternatively, if the xml is stored on your local machine, you can hit the <property>Browse</property> button to select the file in the file system.</para>
+        <para>Here is an example of the xml file that holds  project example settings:</para>
+    
+    <programlisting role="XML"><![CDATA[
+<projects>
+    <project>
+		<category>User Examples</category>
+		<name>User Project Example</name>
+		<shortDescription>
+		Short project description.
+		</shortDescription>
+		<description>
+    	Full project description.
+		</description>
+		<size>10900</size>
+		<url>
+		http://projectexample.org/projectexample.zip
+		</url>
+	</project>
+</projects>
+]]></programlisting> 
+        
+        <para>Once you define the location of the xml file with projects settings you will see a new user site entry added. 
+            Please note  now if you select the entry you can edit and remove it with the corresponding buttons to the right. 
+            You can not do such operations with the <property>Plugin provides sites</property>.</para>
+        
+        <para>When the user sites location is set up you can download and install the project(s). 
+            Please see the next chapter of the guide. </para>
+    </section>
+    
     
     
     <section id="DownloadingProjectExample">
@@ -25,7 +88,7 @@
                 <para>Go to the menu bar and select <emphasis><property>File &gt; New &gt; Other...</property></emphasis>
                 </para></listitem>
             
-            <listitem><para>Select <emphasis><property>Jboss Tools &gt; Project Examples</property></emphasis>(You can also call the <emphasis><property>Project Examples</property></emphasis> from menu bar: <emphasis><property>Help &gt; Project Examples...</property></emphasis>)</para></listitem>
+            <listitem><para>Select <emphasis><property>Jboss Tools &gt; Project Examples</property></emphasis>(You can also call the <emphasis><property>Project Examples</property></emphasis> from menu bar: <property>Help &gt; Project Examples...</property>)</para></listitem>
             
             
         </itemizedlist>
@@ -39,8 +102,11 @@
             </mediaobject>
         </figure>
         
+        <para>
+            Alternatively, you should navigate to <property>New &gt; Other..</property>, scroll down to find the <property>JBoss Tools</property> option (or just type in the first letters of the word &quot;JBoss&quot; for quick search), expand the option and select <property>Project Examples</property>, click <property>Next</property>.
+        </para>
         <itemizedlist>
-            <listitem><para>Now in the New Project Example dialog you can select a project you would like to explore and a site to download it from</para>
+            <listitem><para>Now in the <property>New Project Example</property> dialog you can select a project you would like to explore and a site to download it from</para>
                 <para>Project Examples Wizard  provides a filter field to more easily locate the project examples you want, so you can type in the project you would like to explore in the field.</para></listitem>
             
         </itemizedlist>
@@ -54,6 +120,21 @@
                 </imageobject>
             </mediaobject>
         </figure>
+        
+        <para>If you have previously specified user sites (see the <link linkend="UserSites">User Sites</link> chapter) they also will be  displayed in the list of project examples  in the category that was defined in the xml file with user sites settings.  </para>
+       <figure>
+           <title>User Site</title>
+           <mediaobject>
+               <imageobject>
+                   <imagedata fileref="images/project_examples/pr_example_user_site.png"/>
+               </imageobject>
+           </mediaobject>
+       </figure>
+        
+        <para>
+            Pleas note that to view the user sites you need to have <property>Show experimental sites</property> checked.
+        </para>
+        
         <note>
             <title>Note:</title>
             <para>
@@ -69,8 +150,11 @@
         
         <para>When downloading is finished the project will be imported automatically and you will be able to see it in the Package Explorer.</para>
         
-        <para>Now you can run the application on the server.</para>
+        <para>Now you can run the application on the server.
         
+        </para>
+  
+       
         <figure>
             <title>Seam Demo Application run on the Server</title>
             <mediaobject>
@@ -79,6 +163,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
+
     </section>
     
     <section id="QuickFixes">
