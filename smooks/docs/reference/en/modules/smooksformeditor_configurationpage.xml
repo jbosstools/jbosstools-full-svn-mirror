@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <chapter id="smooksformeditor_configurationtab" xreflabel="Smooks Configuration Editor Page">
 	<?dbhtml filename="smooks_form_editor_configurationtab.html"?>
 	<chapterinfo>
@@ -60,7 +60,7 @@
 				<property>Data Type Selection</property></emphasis> Wizard you should choose the type of the file and the file itself you want to load to the <emphasis>
 					<property>Selector generate dialog</property></emphasis>.After that your dialog should look nearly like that:</para>
 		<figure>
-			<title>Selector generate dialog</title>
+			<title>Selector generate dialog after adding Input Data</title>
 			<mediaobject>
 			<imageobject>
 				<imagedata fileref="images/config_page/config_page2b.png" scale="90"/>
@@ -79,7 +79,7 @@
 					<property>Param</property></emphasis> to just created <emphasis>
 						<property>Global Parametres</property></emphasis>. </para>
 		<figure>
-			<title>Smooks Parse Types</title>
+			<title>Adding Param to created  Global Parametres</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/config_page/config_page2.png" scale="90"/>
@@ -97,7 +97,7 @@
 			<property>Text</property></emphasis> field.</para>
 
 		<figure>
-			<title>Smooks Parse Types</title>
+			<title>Filling Param section field Name and Text Value for set a Parse Type</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/config_page/config_page3.png" scale="90"/>
@@ -111,7 +111,7 @@
 	</section>
 	<section id="configurationpage_importfile">
 
-		<title>Import Data</title>
+		<title>Import Smooks Configuration page</title>
 		<para> Right click <emphasis>
 			<property>Resource List>Add Smooks Resource>Import Smooks Configuration</property>
 			</emphasis>, then you should see a new  <emphasis>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <chapter id="smooksformeditor_sourcetab" xreflabel="Smooks Source Editor Page">
 	<?dbhtml filename="smooks_form_editor_sourcetab.html"?>
 	<chapterinfo>
@@ -23,7 +23,7 @@
 		</figure>
 	</section>
 	<section>
-		<title>Error Messages GUI</title>
+		<title>Error underlining in Graphical Editor</title>
 		<para>If the <property>Smooks tools</property> can&apos;t understand the configuration
 			file or the configuration file is illegal (XML structure isn&apos;t right for Smooks
 			Configuration file, etc.), the error is underlined.</para>
