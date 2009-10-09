@@ -240,7 +240,7 @@ public class TypePackageCompletionProcessor implements IContentAssistProcessor {
 
 	private Comparator<? super Object> getComparator() {
 		if (fComparator == null) {
-			fComparator = new Comparator<? super Object>() {
+			fComparator = new Comparator<Object>() {
 				/*
 				 * (non-Javadoc)
 				 * 
