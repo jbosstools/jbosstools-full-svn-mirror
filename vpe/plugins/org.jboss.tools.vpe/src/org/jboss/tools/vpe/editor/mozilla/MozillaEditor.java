@@ -1040,7 +1040,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			nsIEditingSession iEditingSession = (nsIEditingSession) getXulRunnerEditor().
 							getComponentManager().createInstanceByContractID(XPCOM.NS_EDITINGSESSION_CONTRACTID, null, nsIEditingSession.NS_IEDITINGSESSION_IID);
 			//make window editable
-			iEditingSession.makeWindowEditable(getXulRunnerEditor().getWebBrowser().getContentDOMWindow(), "html", true); //$NON-NLS-1$
+			iEditingSession.makeWindowEditable(getXulRunnerEditor().getWebBrowser().getContentDOMWindow(), "html", true,true,true); //$NON-NLS-1$
 			//here we setup editor for window
 			iEditingSession.setupEditorOnWindow(getXulRunnerEditor().getWebBrowser().getContentDOMWindow());
 			//getting some editor to disable some actions

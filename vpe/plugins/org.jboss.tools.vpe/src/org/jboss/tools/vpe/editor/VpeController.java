@@ -18,6 +18,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.MenuManager;
@@ -129,6 +130,7 @@ import org.jboss.tools.vpe.resref.core.RelativeFolderReferenceList;
 import org.jboss.tools.vpe.resref.core.TaglibReferenceList;
 import org.jboss.tools.vpe.selbar.SelectionBar;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
+import org.jboss.tools.vpe.xulrunner.editor.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMEvent;
@@ -179,7 +181,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	private VpePageContext pageContext;
 	private BundleMap bundle;
 	private VpeEditorPart editPart;
-	private static final int LEFT_BUTTON = 0;
+	public static final int LEFT_BUTTON = 0;
 
 	private CSSReferenceList cssReferenceListListener;
 	private TaglibReferenceList taglibReferenceListListener;
@@ -1096,8 +1098,16 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			// }
 
 			// selection will be set only if press left button
-			if (mouseEvent.getButton() == LEFT_BUTTON)
+			if (mouseEvent.getButton() == LEFT_BUTTON) {
 				selectionManager.setSelection(mouseEvent);
+				//drag gesture isn't generated in XR 1.9 for Linux Platforms, so we start it's manually
+				//mareshkau
+				nsIDOMElement selectedElement = getXulRunnerEditor().getLastSelectedElement();
+				if (VpeVisualDomBuilder.inDragArea(XulRunnerVpeUtils.getElementBounds(selectedElement), VisualDomUtil
+						.getMousePoint(mouseEvent))) {
+					dragGesture(mouseEvent);
+				}
+			}
 		} finally {
 			switcher.stopActiveEditor();
 		}
@@ -1313,6 +1323,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		boolean canDragFlag = canInnerDrag(mouseEvent);
 		// start drag sessionvpe-element
 		if (canDragFlag) {
+			
 			startDragSession(domEvent);
 		}
 	}

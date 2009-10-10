@@ -50,8 +50,8 @@ import org.osgi.framework.Bundle;
 
 public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		nsIWebProgressListener, nsITooltipListener {
-	private static final String XULRUNNER_LOWER_VERSION = "1.8.1.2"; //$NON-NLS-1$
-	private static final String XULRUNNER_HIGHER_VERSION = "1.8.1.9"; //$NON-NLS-1$
+	private static final String XULRUNNER_LOWER_VERSION = "1.9.1.0"; //$NON-NLS-1$
+	private static final String XULRUNNER_HIGHER_VERSION = "1.9.1.9"; //$NON-NLS-1$
 	// TODO Sergey Vasilyev Think. May be XULRUNNER_BUNDLE shouldn't be final?
 	private static final String XULRUNNER_BUNDLE;
 	private static final String XULRUNNER_ENTRY = "/xulrunner"; //$NON-NLS-1$
@@ -82,7 +82,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	}
 	
 	public XulRunnerBrowser(Composite parent) throws XulRunnerException {
-	    initXulRunner();
+//	    initXulRunner();
 	    
 	    browser = new Browser(parent, SWT.MOZILLA);
 	    

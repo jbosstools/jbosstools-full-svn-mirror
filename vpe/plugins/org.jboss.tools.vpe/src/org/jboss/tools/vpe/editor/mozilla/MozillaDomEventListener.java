@@ -166,6 +166,7 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 			} else if(DRAGOVEREVENT.equals(eventType)) {			
 				getEditorDomEventListener().dragOver(domEvent);
 			}
+
 			getEditorDomEventListener().onRefresh();
 		}
 	}

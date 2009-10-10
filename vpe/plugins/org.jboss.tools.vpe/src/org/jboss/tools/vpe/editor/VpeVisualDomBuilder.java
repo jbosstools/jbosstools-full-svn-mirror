@@ -2031,6 +2031,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					styleClasses = ATTR_DRAG_AVAILABLE_CLASS + " " //$NON-NLS-1$
 							+ styleClasses;
 				}
+				//if mouse in drag area, and left button is pressed than we should
+				//start drag session manually.
 			} else {
 				// change cursor style to normal
 				if (styleClasses != null) {
@@ -2043,7 +2045,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 
-	private boolean inDragArea(Rectangle dragArea, Point mousePoint) {
+	public static boolean inDragArea(Rectangle dragArea, Point mousePoint) {
 		// TODO add drag and drop support
 		return dragArea.contains(mousePoint)
 				&& mousePoint.x < (dragArea.x + DRAG_AREA_WIDTH)

@@ -10,18 +10,14 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.util;
 
-import java.lang.ref.Reference;
-import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
-import org.mozilla.interfaces.nsIAccessibilityService;
 import org.mozilla.interfaces.nsIAccessible;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -33,7 +29,6 @@ import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsIDOMRange;
 import org.mozilla.interfaces.nsISelection;
-import org.mozilla.xpcom.Mozilla;
 import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -50,7 +45,7 @@ public class VisualDomUtil {
     public static String FACELETS_URI = "http://java.sun.com/jsf/facelets"; //$NON-NLS-1$
 
 	private static final String ACCESSIBILITY_SERVICE_CONTRACT_ID = "@mozilla.org/accessibilityService;1"; //$NON-NLS-1$
-	private static Reference<nsIAccessibilityService> accessibilityServiceCache = null;
+//	private static Reference<nsIAccessibilityService> accessibilityServiceCache = null;
 	
 	private static Set<String> escapedTags;
 	
@@ -236,23 +231,23 @@ public class VisualDomUtil {
 	 * 
 	 * @author yradtsevich
 	 */
-	public static nsIAccessibilityService getAccessibilityService() {
-		nsIAccessibilityService accessibilityService = null;
-		if (accessibilityServiceCache != null) {
-			// get accessibilityService from cache
-			accessibilityService = accessibilityServiceCache.get();
-		}
-		if (accessibilityService == null) {
-			accessibilityService = (nsIAccessibilityService) Mozilla.getInstance()
-				.getServiceManager()
-				.getServiceByContractID(ACCESSIBILITY_SERVICE_CONTRACT_ID,
-	        		nsIAccessibilityService.NS_IACCESSIBILITYSERVICE_IID);
-			
-			// cache accessibilityService
-			accessibilityServiceCache = new SoftReference<nsIAccessibilityService>(accessibilityService);
-		}
-		return accessibilityService;
-	}
+//	public static nsIAccessibilityService getAccessibilityService() {
+//		nsIAccessibilityService accessibilityService = null;
+//		if (accessibilityServiceCache != null) {
+//			// get accessibilityService from cache
+//			accessibilityService = accessibilityServiceCache.get();
+//		}
+//		if (accessibilityService == null) {
+//			accessibilityService = (nsIAccessibilityService) Mozilla.getInstance()
+//				.getServiceManager()
+//				.getServiceByContractID(ACCESSIBILITY_SERVICE_CONTRACT_ID,
+//	        		nsIAccessibilityService.NS_IACCESSIBILITYSERVICE_IID);
+//			
+//			// cache accessibilityService
+//			accessibilityServiceCache = new SoftReference<nsIAccessibilityService>(accessibilityService);
+//		}
+//		return accessibilityService;
+//	}
 	
 	/**
 	 * Returns on screen bounds of the {@code node}
@@ -264,8 +259,8 @@ public class VisualDomUtil {
 	 */
 	public static Rectangle getBounds(nsIDOMNode node) {
 		Rectangle bounds = null;
-		
-		nsIAccessible accessible = getAccessibilityService().getAccessibleFor(node);
+
+		nsIAccessible accessible = (nsIAccessible) node.queryInterface(nsIAccessible.NS_IACCESSIBLE_IID);
 		if (accessible != null) {
 			int[] xArray      = new int[1]; // Left hand corner of the node
 			int[] yArray      = new int[1]; // Top corner of the node

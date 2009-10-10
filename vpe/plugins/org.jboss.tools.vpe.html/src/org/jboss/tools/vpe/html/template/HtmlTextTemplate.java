@@ -19,14 +19,12 @@ import org.jboss.tools.vpe.editor.mapping.NodeData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
-import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Node;
-import org.w3c.dom.ranges.RangeException;
 
 /**
  * @author mareshkau
@@ -42,7 +40,7 @@ public class HtmlTextTemplate extends VpeAbstractTemplate {
 		String sourceText = sourceNode.getNodeValue();
 	    
 		if (sourceText.trim().length() <= 0) {
-	    	return new VpeCreationData(visualDocument.createTextNode(sourceText));
+	    	return new VpeCreationData(visualDocument.createTextNode("")); //$NON-NLS-1$
 	    }
 	    String visualText = TextUtil.visualText(sourceText);
 
