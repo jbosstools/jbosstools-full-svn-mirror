@@ -94,8 +94,8 @@ public class VpePopupMenuTest extends VpeTest {
 				0, menuManager.getSize());
 		menuCreator.createMenu();
 		assertEquals(
-				"After menu creation the Menu Manger should have 10 items in it.", //$NON-NLS-1$
-				10, menuManager.getSize());
+				"After menu creation the Menu Manger should have 13 items in it.", //$NON-NLS-1$
+				13, menuManager.getSize());
 		/*
 		 * Searching InsertContributionItem among menu manger items.
 		 */
