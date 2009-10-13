@@ -199,6 +199,13 @@ public class SelectionBar implements SelectionListener {
 		splitter.getParent().layout(true, true);
 
 		this.visible = visible;
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4968
+		 * Updating VPE toolbar on selection bar changes.
+		 */
+		if (vpeController != null) {
+			vpeController.updateVpeToolbar();
+		}
 		fireVisibilityListeners();
 	}
 

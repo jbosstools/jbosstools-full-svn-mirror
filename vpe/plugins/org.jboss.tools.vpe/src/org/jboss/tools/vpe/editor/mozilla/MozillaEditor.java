@@ -1105,4 +1105,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			rotateEditorsAction.setToolTipText(layoutNames.get(prefsOrientation));
 		}
 	}
+	
+	public void updateShowSelectionBarItem(boolean checked) {
+		showSelectionBarAction.setChecked(checked);
+	}
 }
