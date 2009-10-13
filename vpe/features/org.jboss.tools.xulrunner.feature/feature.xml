@@ -2,9 +2,10 @@
 <feature
       id="org.jboss.tools.xulrunner.feature"
       label="%featureName"
-      version="1.9.1.2_v20091009-2100"
+      version="1.9.1.2"
       provider-name="%providerName"
       plugin="org.jboss.tools.xulrunner">
+
    <description>
       %description
    </description>
