@@ -89,10 +89,13 @@ import org.jboss.tools.common.model.ui.views.palette.PaletteInsertHelper;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.model.util.XModelTreeListenerSWTSync;
 import org.jboss.tools.common.resref.core.ResourceReferenceListListener;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
 import org.jboss.tools.jst.jsp.editor.IVisualController;
+import org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor;
 import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPPaletteInsertHelper;
 import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPTagProposalFactory;
+import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.jst.web.tld.URIConstants;
 import org.jboss.tools.jst.web.tld.model.TLDUtil;
@@ -2226,15 +2229,23 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		IDropCommand dropCommand = DropCommandFactory.getInstance()
 				.getDropCommand(flavor, JSPTagProposalFactory.getInstance());
 
-		boolean promptAttributes = "yes" //$NON-NLS-1$
-				.equals(VpePreference.ALWAYS_REQUEST_FOR_ATTRIBUTE.getValue());
+		boolean promptAttributes = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+				IVpePreferencesPage.ASK_TAG_ATTRIBUTES_ON_TAG_INSERT);
 		dropCommand.getDefaultModel().setPromptForTagAttributesRequired(
 				promptAttributes);
-
-		dropCommand.execute(new DropData(flavor, data, sourceEditor
+		DropData dropData = new DropData(flavor, data, sourceEditor
 				.getEditorInput(), (ISourceViewer) sourceEditor
 				.getAdapter(ISourceViewer.class), new VpeSelectionProvider(
-				range.x, range.y), container));
+				range.x, range.y), container);
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4982
+		 * Setting the value provider to create tag insert dialog.
+		 */
+		if (sourceEditor instanceof JSPTextEditor) {
+			dropData.setValueProvider(((JSPTextEditor) sourceEditor).createAttributeDescriptorValueProvider());
+		}
+		
+		dropCommand.execute(dropData);
 	}
 
 	private String getTagName(XModelObject object) {
