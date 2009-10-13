@@ -1,10 +1,10 @@
 <tests>
 	<test id="table">
 		<TABLE WIDTH="400" CELLSPACING="0" CELLPADDING="5" BORDER="0"
-			ID="table" STYLE="-moz-user-modify: read-write;" >
+			ID="table" STYLE="-moz-user-modify: read-write;">
 			<COLGROUP WIDTH="150" STYLE="-moz-user-modify: read-write;">
 			</COLGROUP>
-			<COLGROUP WIDTH="50" ALIGN="center" SPAN="9"
+			<COLGROUP WIDTH="50" SPAN="9" ALIGN="center"
 				STYLE="-moz-user-modify: read-write;">
 				<COL SPAN="5" STYLE="-moz-user-modify: read-only;" />
 
@@ -13,28 +13,28 @@
 			</COLGROUP>
 			<TR STYLE="-moz-user-modify: read-write;">
 				<TD
-					STYLE="background: rgb(176, 178, 142) none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; -moz-user-modify: read-write;">
+					STYLE="background: rgb(176, 178, 142) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; -moz-user-modify: read-write;">
 					<SPAN>
 						Some Text
-				</SPAN>
+</SPAN>
 				</TD>
 				<TD
-					STYLE="background: rgb(204, 204, 204) none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; -moz-user-modify: read-write;">
+					STYLE="background: rgb(204, 204, 204) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; -moz-user-modify: read-write;">
 					<SPAN>
 						Some Text
-					</SPAN>
+</SPAN>
 				</TD>
 				<TD
-					STYLE="background: rgb(176, 178, 142) none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; -moz-user-modify: read-write;">
+					STYLE="background: rgb(176, 178, 142) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; -moz-user-modify: read-write;">
 					<SPAN>
 						Some Text
-					</SPAN>
+</SPAN>
 				</TD>
 				<TD
-					STYLE="background: rgb(204, 204, 204) none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; -moz-user-modify: read-write;">
+					STYLE="background: rgb(204, 204, 204) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; -moz-user-modify: read-write;">
 					<SPAN>
 						Some Text
-					</SPAN>
+</SPAN>
 				</TD>
 			</TR>
 		</TABLE>

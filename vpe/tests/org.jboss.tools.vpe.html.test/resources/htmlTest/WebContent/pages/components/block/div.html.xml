@@ -1,7 +1,7 @@
 <tests>
 	<test id="div">
-		<DIV ALIGN="left" ID="div" CLASS="divClass" STYLE="background: grey none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: white; -moz-user-modify: read-write;" DIR="ltr">
-<SPAN>
+		<DIV ALIGN="left" ID="div" CLASS="divClass" STYLE="background: grey none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; color: white; -moz-user-modify: read-write;">
+<SPAN CLASS="vpe-text">
 some text
 </SPAN>
 </DIV>

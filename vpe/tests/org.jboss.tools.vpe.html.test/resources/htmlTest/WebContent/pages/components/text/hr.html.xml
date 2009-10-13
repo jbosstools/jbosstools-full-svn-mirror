@@ -1,5 +1,5 @@
 <tests>
 	<test id="hr">
-		<HR SIZE="20" ALIGN="left" ID="hr" CLASS="hrClass" STYLE="background: red none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; -moz-user-modify: read-only;" DIR="ltr"/>
+		<HR SIZE="20" ALIGN="left" ID="hr" CLASS="hrClass" STYLE="background: red none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; -moz-user-modify: read-only;"/>
 	</test>
 </tests>
