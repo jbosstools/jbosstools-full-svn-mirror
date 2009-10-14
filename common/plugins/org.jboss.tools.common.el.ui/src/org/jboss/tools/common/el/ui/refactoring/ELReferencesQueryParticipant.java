@@ -8,13 +8,14 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.seam.ui.search;
+package org.jboss.tools.common.el.ui.refactoring;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
@@ -27,15 +28,13 @@ import org.eclipse.jdt.ui.search.QuerySpecification;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.search.ui.text.Match;
 import org.eclipse.ui.PartInitException;
-import org.jboss.tools.common.el.core.model.ELInvocationExpression;
-import org.jboss.tools.common.el.core.model.ELMethodInvocation;
-import org.jboss.tools.common.el.core.model.ELPropertyInvocation;
+import org.jboss.tools.common.el.core.refactoring.ELSearcher;
+import org.jboss.tools.common.el.core.refactoring.ELSearcherExtension;
 import org.jboss.tools.common.el.core.refactoring.RefactorSearcher;
-import org.jboss.tools.seam.core.SeamProjectsSet;
-import org.jboss.tools.seam.internal.core.refactoring.SeamRefactorSearcher;
+import org.jboss.tools.common.model.project.ProjectHome;
 
-public class SeamELReferencesQueryParticipant implements IQueryParticipant, IMatchPresentation{
-	private ELSearcher searcher;
+public class ELReferencesQueryParticipant implements IQueryParticipant, IMatchPresentation{
+	private ELSearch search;
 	JavaSearchResultPage searchPage = null;
 	
 	public int estimateTicks(QuerySpecification specification) {
@@ -56,10 +55,10 @@ public class SeamELReferencesQueryParticipant implements IQueryParticipant, IMat
 				IFile file = (IFile)qs.getElement().getResource();
 				String name = qs.getElement().getElementName();
 				
-				searcher = new ELSearcher(requestor, qs.getElement(), file, name);
-				searcher.setSearchScope(qs.getScope());
+				search = new ELSearch(requestor, qs.getElement(), file, name);
+				search.setSearchScope(qs.getScope());
 				
-				searcher.findELReferences();
+				search.findELReferences();
 			}
 		}
 	}
@@ -72,14 +71,32 @@ public class SeamELReferencesQueryParticipant implements IQueryParticipant, IMat
 			int currentLength, boolean activate) throws PartInitException {
 	}
 	
-	class ELSearcher extends SeamRefactorSearcher{
+	class ELSearch extends RefactorSearcher{
 		ISearchRequestor requestor;
+		ELSearcher searcher=null;
 		
-		public ELSearcher(ISearchRequestor requestor, IJavaElement element, IFile file, String name){
+		public ELSearch(ISearchRequestor requestor, IJavaElement element, IFile file, String name){
 			super(file, name, element);
 			this.requestor = requestor;
+			ELSearcherExtension[] extensions = 	ELSearcherExtension.getInstances();
+			if(extensions.length > 0){
+				searcher = extensions[0].getELSearcher();
+				if(searcher != null)
+					searcher.init(file.getProject());
+			}
+			
 		}
-
+		
+		protected boolean isFileCorrect(IFile file){
+			if(!file.isSynchronized(IResource.DEPTH_ZERO)){
+				return false;
+			}else if(file.isPhantom()){
+				return false;
+			}else if(file.isReadOnly()){
+				return false;
+			}
+			return true;
+		}
 
 		@Override
 		protected void match(IFile file, int offset, int length) {
@@ -87,5 +104,21 @@ public class SeamELReferencesQueryParticipant implements IQueryParticipant, IMat
 			requestor.reportMatch(match);
 		}
 		
+		protected IProject[] getProjects(){
+			if(searcher != null){
+				return searcher.getLinkedProjects();
+			}
+			return new IProject[]{baseFile.getProject()};
+		}
+		
+		protected IContainer getViewFolder(IProject project){
+			if(searcher != null){
+				return searcher.getViewFolder(project);
+			}
+			
+			IPath path = ProjectHome.getFirstWebContentPath(baseFile.getProject()).removeFirstSegments(1);
+			
+			return baseFile.getProject().getFolder(path);
+		}
 	}
 }
