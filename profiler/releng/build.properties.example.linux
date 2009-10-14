@@ -7,10 +7,11 @@ projectid=jbosstools.profiler
 zipPrefix=JBoss-Profiler
 incubation=
 buildType=N
-version=1.1.0
+version=1.0.0
 
-mainFeatureToBuildID=org.jboss.tools.profiler.sdk.feature
-testFeatureToBuildID=org.jboss.tools.profiler.tests.feature
+#mainFeatureToBuildID=org.jboss.tools.profiler.sdk.feature
+mainFeatureToBuildID=org.jboss.tools.profiler.feature
+#testFeatureToBuildID=org.jboss.tools.profiler.tests.feature
 
 #build.steps=buildUpdate,buildTests,generateDigests,test,publish,cleanup
 build.steps=buildUpdate,generateDigests,publish,cleanup
