@@ -14,11 +14,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
-import org.mozilla.interfaces.nsIAccessible;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMEvent;
@@ -249,30 +248,32 @@ public class VisualDomUtil {
 //		return accessibilityService;
 //	}
 	
-	/**
-	 * Returns on screen bounds of the {@code node}
-	 * 
-	 * @param node cannot be {@code null}
-	 * @return bounds of the {@code node} or {@code null} if it is not accessible
-	 * 
-	 * @author yradtsevich
-	 */
-	public static Rectangle getBounds(nsIDOMNode node) {
-		Rectangle bounds = null;
-
-		nsIAccessible accessible = (nsIAccessible) node.queryInterface(nsIAccessible.NS_IACCESSIBLE_IID);
-		if (accessible != null) {
-			int[] xArray      = new int[1]; // Left hand corner of the node
-			int[] yArray      = new int[1]; // Top corner of the node
-			int[] widthArray  = new int[1]; // Width of the node
-			int[] heightArray = new int[1]; // Height of the node
-			
-			accessible.getBounds(xArray, yArray, widthArray, heightArray);
-			bounds = new Rectangle(xArray[0], yArray[0], widthArray[0], heightArray[0]);
-		}
-		
-		return bounds;
-	}
+//	XULRunner 1.9 throws an error when we try to get nsIAccessible.
+//	Use XulRunnerVpeUtils#getElementBounds(nsIDOMNode) instead.
+//	/**
+//	 * Returns on screen bounds of the {@code node}
+//	 * 
+//	 * @param node cannot be {@code null}
+//	 * @return bounds of the {@code node} or {@code null} if it is not accessible
+//	 * 
+//	 * @author yradtsevich
+//	 */
+//	public static Rectangle getBounds(nsIDOMNode node) {
+//		Rectangle bounds = null;
+//
+//		nsIAccessible accessible = (nsIAccessible) node.queryInterface(nsIAccessible.NS_IACCESSIBLE_IID);
+//		if (accessible != null) {
+//			int[] xArray      = new int[1]; // Left hand corner of the node
+//			int[] yArray      = new int[1]; // Top corner of the node
+//			int[] widthArray  = new int[1]; // Width of the node
+//			int[] heightArray = new int[1]; // Height of the node
+//			
+//			accessible.getBounds(xArray, yArray, widthArray, heightArray);
+//			bounds = new Rectangle(xArray[0], yArray[0], widthArray[0], heightArray[0]);
+//		}
+//		
+//		return bounds;
+//	}
 	
 	/**
 	 * Creates HTML container (element) borders of that are
