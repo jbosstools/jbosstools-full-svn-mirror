@@ -45,9 +45,8 @@ public class VpeCustomTemplate extends VpeIncludeTemplate {
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument) {
 
-		IStorage sourceFileStorage = CustomTLDReference
-				.getCustomElementPath(sourceNode, pageContext);
-
+		IStorage sourceFileStorage = getCustomTemplateStorage(pageContext, sourceNode);
+	
 		if (sourceFileStorage instanceof IFile) {
 			//add attributes to EL list
 			IFile file =(IFile) sourceFileStorage;
@@ -156,5 +155,15 @@ public class VpeCustomTemplate extends VpeIncludeTemplate {
 			//calculate openOnPosition,prefixLengght+>+":"
 			offset+=sourceNode.getPrefix().length()+1+1;
 			return new Region(offset, 0); 
+	}
+	/**
+	 * Culculate and returns storage to custom file
+	 * @author mareshkau
+	 * @param pageContext
+	 * @param sourceNode
+	 * @return
+	 */
+	protected IStorage getCustomTemplateStorage(VpePageContext pageContext, Node sourceNode){
+		return CustomTLDReference.getCustomElementStorage(sourceNode, pageContext);
 	}
 }

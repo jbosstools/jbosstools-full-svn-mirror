@@ -270,6 +270,8 @@ public class VpeTemplateManager {
 	//mareshkau, contains a name of custom template
 	private static final String CUSTOM_TEMPLATE_NAME="vpeCustomTemplate"; //$NON-NLS-1$
 	
+	private static final String JSF2_CUSTOM_TEMPLATE="vpejsf2customTemplate"; //$NON-NLS-1$
+	
 	/**
 	 * added by Max Areshkau, JBIDE-1494
 	 * Contains default text formating data
@@ -393,8 +395,13 @@ public class VpeTemplateManager {
 				return templateTaglibPrefix + ":" + sourceNode.getLocalName();  //$NON-NLS-1$
 			}
 			
-			if(sourceNodeUri!=null && CustomTLDReference.isExistInCustomTlds(pageContext,sourceNodeUri)){
+			if(sourceNodeUri!=null
+					&& CustomTLDReference.isExistInCustomTlds(pageContext,sourceNodeUri)) {
 				return VpeTemplateManager.CUSTOM_TEMPLATE_NAME;
+			}
+			if(sourceNodeUri!=null 
+					&&CustomTLDReference.isExistInJsf2CustomComponenets(pageContext,sourceNodeUri,sourceNode.getLocalName()) ) {
+				return VpeTemplateManager.JSF2_CUSTOM_TEMPLATE;
 			}
 			return null;
 		default : 
