@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Cheatsheet
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.jboss.tools.bpel.cheatsheet;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jboss.tools.bpel.cheatsheet.Activator
@@ -9,3 +9,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.cheatsheets
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: %providerName
