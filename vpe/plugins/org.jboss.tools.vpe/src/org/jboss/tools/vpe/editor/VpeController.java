@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -73,10 +74,12 @@ import org.eclipse.wst.sse.ui.internal.view.events.TextSelectionChangedEvent;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.jboss.tools.common.el.core.ELReferenceList;
+import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
+import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
 import org.jboss.tools.common.model.ui.editor.IModelObjectEditorInput;
 import org.jboss.tools.common.model.ui.editors.dnd.DropCommandFactory;
@@ -97,6 +100,8 @@ import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPPaletteInsertHelper;
 import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPTagProposalFactory;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.jst.web.model.helpers.WebAppHelper;
+import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.jst.web.tld.URIConstants;
 import org.jboss.tools.jst.web.tld.model.TLDUtil;
 import org.jboss.tools.vpe.VpeDebug;
@@ -254,21 +259,21 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		sourceModel.addModelLifecycleListener(this);
 
-//		IEditorInput editorInput = pageContext.getEditPart().getEditorInput();
+		IEditorInput editorInput = pageContext.getEditPart().getEditorInput();
 		//commented by Maksim Areshkau, as fix for https://jira.jboss.org/jira/browse/JBIDE-4534
-//		if(editorInput instanceof IFileEditorInput) {
-//			XModel xm = null;
-//			IProject project = ((IFileEditorInput) editorInput).getFile()
-//					.getProject();
-//			IModelNature mn = EclipseResourceUtil.getModelNature(project);
-//			if (mn != null) {
-//				xm = mn.getModel();
-//			}
-//			if (xm != null) {
-//				WebProject.getInstance(xm).getTaglibMapping().revalidate(
-//						WebAppHelper.getWebApp(xm));
-//			}
-//		}
+		if(editorInput instanceof IFileEditorInput) {
+			XModel xm = null;
+			IProject project = ((IFileEditorInput) editorInput).getFile()
+					.getProject();
+			IModelNature mn = EclipseResourceUtil.getModelNature(project);
+			if (mn != null) {
+				xm = mn.getModel();
+			}
+			if (xm != null) {
+				WebProject.getInstance(xm).getTaglibMapping().revalidate(
+						WebAppHelper.getWebApp(xm));
+			}
+		}
 
 		IDOMDocument sourceDocument = sourceModel.getDocument();
 		// FIXED FOR JBIDE-3799 by sdzmitrovich, moved calling of this method to buid dom 
