@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>What's New</title>
+</head>
+<body>
+<h1>What's New Core/General</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a
+	href="../jst/jst-news-3.1.0.M4.html">JST Tools &gt;</a></p>
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>Project Archives</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Nested archives now supports incremental updates</b></td>
+		<td valign="top">
+		<p>Previously nested project archives were possible to define, but updates in a nested archive were not always happening.</p>
+
+		<p>This is now fixed allowing you to have structures like the following:</p>
+
+		<p>
+                <verbatim>
+		  x.jar
+		  ear/x.ear
+		  ear/x.ear/x.jar 
+                </verbatim>
+		<p>And when updating x.jar in the top-level the ear project's version of x.jar will now also be updated.</p>
+
+		<p><small><a
+			href="https://jira.jboss.org/jira/browse/JBIDE-4249">Related Jira</a></small></p>
+
+		</td>
+	</tr>
+	
+	  <tr>
+    <td colspan="2"><hr />
+    </td>
+  </tr>
+
+	<tr>
+		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Build Project Archive Action</b></td>
+		<td valign="top">
+		<p>There is now a "Build Project Archive" action which users can configure a hotkey for if they wish.</p>
+		<p>When invoked the project for the currently selected resource will be built.</p>
+		<p><img src="../images/build_project_archives_action.png"/></p>
+
+		<p><small><a
+			href="https://jira.jboss.org/jira/browse/JBIDE-2452">Related Jira</a></small></p>
+
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>Properties editor</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Filter/Search Regular Expression</b></td>
+		<td valign="top">
+		<p>The JBoss Tools properties editor's filter field now supports regular expressions.</p>
+
+		<p><img src="../images/properties_regular_expression.png"/></p>
+
+		<p>By default the Name and Value fields are just substring seach, but if you enable "Expressions" you can use regular expressions.</p>
+
+		<p><small><a
+			href="https://jira.jboss.org/jira/browse/JBIDE-4576">Related Jira</a></small></p>
+		</td>
+	</tr>
+
+</table>
+
+</body>
+
+</html>
+
+
