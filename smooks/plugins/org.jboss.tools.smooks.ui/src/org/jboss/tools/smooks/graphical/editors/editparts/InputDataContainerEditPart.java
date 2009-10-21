@@ -19,18 +19,25 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart;
 import org.jboss.tools.smooks.gef.tree.figures.TreeContainerFigure;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
+import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart
  * 
  */
 public class InputDataContainerEditPart extends TreeContainerEditPart {
+
+	private String inputType = null;
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -158,14 +165,65 @@ public class InputDataContainerEditPart extends TreeContainerEditPart {
 	 */
 	@Override
 	protected void refreshVisuals() {
-		TreeContainerFigure figure = (TreeContainerFigure) getFigure();
-		// if(i != null){
-		// figure.setIcon(i);
-		// }
-		figure.getLabel().setTextAlignment(Label.LEFT);
-		figure.setText("Input Model");
-		figure.setIcon(SmooksConfigurationActivator.getDefault().getImageRegistry().get(
-				GraphicsConstants.IMAGE_INPUT_DATA_HEADER));
+		InputDataContianerModel model = (InputDataContianerModel) getModel();
+		ISmooksModelProvider provider = model.getSmooksModelProvider();
+		SmooksGraphicsExtType ext = provider.getSmooksGraphicsExt();
+		if (ext != null) {
+
+			Image image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
+					GraphicsConstants.IMAGE_INPUT_DATA_HEADER);
+
+			String text = "Input Model";
+
+			if (inputType != null) {
+				if (inputType.equals(ext.getInputType())) {
+					super.refreshVisuals();
+					return;
+				}
+			}
+			inputType = ext.getInputType();
+			if (inputType.equals(SmooksModelUtils.INPUT_TYPE_JAVA)) {
+				image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
+						GraphicsConstants.IMAGE_JAVA_FILE);
+
+				text = "Java Input Model";
+			}
+
+			if (inputType.equals(SmooksModelUtils.INPUT_TYPE_XML)) {
+				image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
+						GraphicsConstants.IMAGE_XML_FILE);
+
+				text = "XML Input Model";
+			}
+
+			if (inputType.equals(SmooksModelUtils.INPUT_TYPE_XSD)) {
+				image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
+						GraphicsConstants.IMAGE_XSD_FILE);
+
+				text = "XSD Input Model";
+			}
+
+			if (inputType.equals(SmooksModelUtils.INPUT_TYPE_CSV)) {
+
+				text = "CSV Input Model";
+			}
+
+			if (inputType.equals(SmooksModelUtils.INPUT_TYPE_EDI_1_1)) {
+
+				text = "EDI Input Model";
+			}
+
+			if (inputType.equals(SmooksModelUtils.INPUT_TYPE_JSON_1_1)) {
+
+				text = "JSON Input Model";
+			}
+
+			TreeContainerFigure figure = (TreeContainerFigure) getFigure();
+			figure.getLabel().setTextAlignment(Label.LEFT);
+			figure.setText(text);
+			figure.setIcon(image);
+		}
+
 		super.refreshVisuals();
 	}
 

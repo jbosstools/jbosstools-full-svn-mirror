@@ -23,7 +23,7 @@ import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.gef.tree.model.BeanReferenceConnection;
+import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 
@@ -50,7 +50,7 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 		if (connectionType == null) {
 			return true;
 		}
-		if (connectionType == BeanReferenceConnection.class) {
+		if (TreeNodeConnection.class.isAssignableFrom(connectionType)) {
 			Object data = this.getData();
 			data = AdapterFactoryEditingDomain.unwrap(data);
 			if (SmooksUIUtils.getBeanIDRefFeature((EObject)data) != null) {

@@ -149,6 +149,7 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 			@Override
 			public void paintFigure(Graphics graphics) {
 				graphics.setAlpha(alpha);
+				graphics.setLineWidth(3);
 				super.paintFigure(graphics);
 			}
 
@@ -191,7 +192,6 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 				return list;
 			}
 		};
-		
 		connection.setConnectionRouter(new ManhattanConnectionRouter());
 		return connection;
 	}

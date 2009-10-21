@@ -160,12 +160,6 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 						}
 					}
 				});
-
-				//				
-				// if (propertySheetPage != null &&
-				// !propertySheetPage.getControl().isDisposed()) {
-				// propertySheetPage.refresh();
-				// }
 			}
 		});
 	}
@@ -526,7 +520,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 					ProcessType process = GraphFactory.eINSTANCE.createProcessType();
 					processes.setProcess(process);
 					smooksGraphicsExt.setProcesses(processes);
-				}else{
+				} else {
 					if (smooksGraphicsExt.getProcesses().getProcess() == null) {
 						ProcessesType processes = smooksGraphicsExt.getProcesses();
 						ProcessType process = GraphFactory.eINSTANCE.createProcessType();
