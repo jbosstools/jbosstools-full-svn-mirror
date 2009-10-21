@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 <plugin>
    <extension-point id="templates" name="Path to xml file with templates definitionj" schema="schema/templates.exsd"/>
+   <extension-point id="localeProvider" name="Locale provider for an opened file" schema="schema/localeProvider.exsd"/>
 
 	<extension point="org.eclipse.ui.startup" />
 

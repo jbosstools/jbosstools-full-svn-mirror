@@ -52,6 +52,7 @@ import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.jst.web.project.list.WebPromptingProvider;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.editor.i18n.MainLocaleProvider;
 
 public class BundleMap {
 
@@ -220,9 +221,12 @@ public class BundleMap {
 						return null;
 					}
 				}
+
 				ClassLoader classLoader = new URLClassLoader(urls, ClassLoader.getSystemClassLoader());
-				ResourceBundle bundle = ResourceBundle.getBundle(uri, Locale.getDefault(), classLoader);
-				
+
+				Locale locale = MainLocaleProvider.getInstance().getLocale(editor);
+				ResourceBundle bundle = ResourceBundle.getBundle(uri, locale, classLoader);
+
 				return bundle;
 			}
 		} catch (MissingResourceException ex) {
@@ -231,7 +235,7 @@ public class BundleMap {
 	
 		return null;
 	}
-	
+
 	private static String[] getJavaProjectSrcLocations(IProject project) {
 		return EclipseResourceUtil.getJavaProjectSrcLocations(project);
 	}

@@ -15,6 +15,7 @@ Export-Package:
  org.jboss.tools.vpe.editor.context,
  org.jboss.tools.vpe.editor.dnd.context,
  org.jboss.tools.vpe.editor.dnd.context.xpl,
+ org.jboss.tools.vpe.editor.i18n,
  org.jboss.tools.vpe.editor.mapping,
  org.jboss.tools.vpe.editor.menu,
  org.jboss.tools.vpe.editor.menu.action,
