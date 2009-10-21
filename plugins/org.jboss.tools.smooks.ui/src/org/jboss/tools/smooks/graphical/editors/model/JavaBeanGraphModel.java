@@ -31,4 +31,12 @@ public class JavaBeanGraphModel extends AbstractResourceConfigGraphModel {
 			ILabelProvider labelProvider) {
 		return new JavaBeanChildGraphModel(model, contentProvider, labelProvider, this.domainProvider);
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#isLinkable(java.lang.Class)
+	 */
+	@Override
+	public boolean isLinkable(Class<?> connectionType) {
+		return false;
+	}
 }

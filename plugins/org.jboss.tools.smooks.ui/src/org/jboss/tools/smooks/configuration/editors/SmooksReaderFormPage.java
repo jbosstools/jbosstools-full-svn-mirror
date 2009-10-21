@@ -537,7 +537,9 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		deactiveAllInputFile(compoundCommand);
 		if (!compoundCommand.isEmpty()) {
 			getEditingDomain().getCommandStack().execute(compoundCommand);
-			createReaderPanel(((EObject) reader));
+			if(reader != null && reader instanceof EObject){
+				createReaderPanel(((EObject) reader));
+			}
 		}
 
 		if (inputDataViewer != null) {

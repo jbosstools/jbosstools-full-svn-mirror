@@ -98,7 +98,7 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 	public void propertyChange(PropertyChangeEvent evt) {
 		super.propertyChange(evt);
 		if (IMoveableModel.PRO_BOUNDS_CHANGED.equals(evt.getPropertyName())) {
-			refresh();
+			refreshVisuals();
 			DefaultEditDomain domain = (DefaultEditDomain) getViewer().getEditDomain();
 			IEditorPart editor = domain.getEditorPart();
 			ISmooksModelProvider modelProvider = (ISmooksModelProvider) editor.getAdapter(ISmooksModelProvider.class);

@@ -28,7 +28,7 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
-import org.eclipse.gef.editpolicies.ContainerEditPolicy;
+import org.eclipse.gef.editpolicies.FlowLayoutEditPolicy;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gef.requests.GroupRequest;
@@ -93,46 +93,63 @@ public class AbstractResourceConfigEditPart extends TreeContainerEditPart {
 			}
 		});
 
-		this.installEditPolicy(EditPolicy.CONTAINER_ROLE, new ContainerEditPolicy() {
+		this.installEditPolicy(EditPolicy.CONTAINER_ROLE, new FlowLayoutEditPolicy() {
+			
+			/* (non-Javadoc)
+			 * @see org.eclipse.gef.editpolicies.FlowLayoutEditPolicy#isHorizontal()
+			 */
+			@Override
+			protected boolean isHorizontal() {
+				return false;
+			}
 
 			@Override
 			protected Command getCreateCommand(CreateRequest request) {
-				Object model = request.getNewObject();
-				Object type = request.getNewObjectType();
-				Object graphModel = getHost().getModel();
-				if (graphModel instanceof AbstractResourceConfigGraphModel) {
-					IEditingDomainProvider provider = ((AbstractResourceConfigGraphModel) graphModel)
-							.getDomainProvider();
-					EditingDomain domain = provider.getEditingDomain();
-					if (model instanceof FeatureMap.Entry) {
-						EStructuralFeature type1 = ((FeatureMap.Entry) model).getEStructuralFeature();
-						model = ((FeatureMap.Entry) model).getValue();
-						model = EcoreUtil.copy((EObject) model);
-						model = FeatureMapUtil.createEntry(type1, model);
-					} else {
-					}
-					org.eclipse.emf.common.command.Command emfCommand = createModelCreationEMFCommand(domain,
-							((AbstractResourceConfigGraphModel) graphModel).getData(), type, model);
-					return createModelCreationCommand(domain, emfCommand);
-				}
+				return AbstractResourceConfigEditPart.this.getCreateCommand(getHost(), request);
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.gef.editpolicies.OrderedLayoutEditPolicy#createAddCommand
+			 * (org.eclipse.gef.EditPart, org.eclipse.gef.EditPart)
+			 */
+			@Override
+			protected Command createAddCommand(EditPart child, EditPart after) {
+				// TODO Auto-generated method stub
 				return null;
 			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @seeorg.eclipse.gef.editpolicies.OrderedLayoutEditPolicy#
+			 * createMoveChildCommand(org.eclipse.gef.EditPart,
+			 * org.eclipse.gef.EditPart)
+			 */
+			@Override
+			protected Command createMoveChildCommand(EditPart child, EditPart after) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
 		});
-		
+
 		this.installEditPolicy(EditPolicy.LAYOUT_ROLE, new LayoutEditPolicy() {
-			
+
 			@Override
 			protected Command getMoveChildrenCommand(Request request) {
 				// TODO Auto-generated method stub
 				return null;
 			}
-			
+
 			@Override
 			protected Command getCreateCommand(CreateRequest request) {
 				// TODO Auto-generated method stub
 				return null;
 			}
-			
+
 			@Override
 			protected EditPolicy createChildEditPolicy(EditPart child) {
 				// TODO Auto-generated method stub
@@ -140,6 +157,27 @@ public class AbstractResourceConfigEditPart extends TreeContainerEditPart {
 			}
 		});
 
+	}
+
+	protected Command getCreateCommand(EditPart host, CreateRequest request) {
+		Object model = request.getNewObject();
+		Object type = request.getNewObjectType();
+		Object graphModel = host.getModel();
+		if (graphModel instanceof AbstractResourceConfigGraphModel) {
+			IEditingDomainProvider provider = ((AbstractResourceConfigGraphModel) graphModel).getDomainProvider();
+			EditingDomain domain = provider.getEditingDomain();
+			if (model instanceof FeatureMap.Entry) {
+				EStructuralFeature type1 = ((FeatureMap.Entry) model).getEStructuralFeature();
+				model = ((FeatureMap.Entry) model).getValue();
+				model = EcoreUtil.copy((EObject) model);
+				model = FeatureMapUtil.createEntry(type1, model);
+			} else {
+			}
+			org.eclipse.emf.common.command.Command emfCommand = createModelCreationEMFCommand(domain,
+					((AbstractResourceConfigGraphModel) graphModel).getData(), type, model);
+			return createModelCreationCommand(domain, emfCommand);
+		}
+		return null;
 	}
 
 	protected org.eclipse.emf.common.command.Command createModelCreationEMFCommand(EditingDomain domain, Object owner,

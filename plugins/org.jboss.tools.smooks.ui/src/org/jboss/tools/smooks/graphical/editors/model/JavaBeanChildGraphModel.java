@@ -23,6 +23,7 @@ import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.gef.tree.model.BeanReferenceConnection;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 
@@ -35,6 +36,35 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 	public JavaBeanChildGraphModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider,
 			IEditingDomainProvider domainProvider) {
 		super(data, contentProvider, labelProvider, domainProvider);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#isLinkable
+	 * (java.lang.Class)
+	 */
+	@Override
+	public boolean isLinkable(Class<?> connectionType) {
+		if (connectionType == null) {
+			return true;
+		}
+		if (connectionType == BeanReferenceConnection.class) {
+			Object data = this.getData();
+			data = AdapterFactoryEditingDomain.unwrap(data);
+			if (SmooksUIUtils.getBeanIDRefFeature((EObject)data) != null) {
+				return true;
+			}
+		}
+//		if (connectionType == ValueBindingConnection.class) {
+//			Object data = this.getData();
+//			data = AdapterFactoryEditingDomain.unwrap(data);
+//			if (SmooksUIUtils.getSelectorFeature((EObject)data) != null) {
+//				return true;
+//			}
+//		}
+		return false;
 	}
 
 	/*

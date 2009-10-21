@@ -4,6 +4,7 @@
 package org.jboss.tools.smooks.gef.tree.editparts;
 
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.Connection;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.ConnectionLocator;
 import org.eclipse.draw2d.Figure;
@@ -24,7 +25,7 @@ import org.jboss.tools.smooks.gef.tree.figures.LeftOrRightAnchor;
  * 
  */
 public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
-	private int alpha = 255;
+	protected int alpha = 255;
 
 	@Override
 	protected void createEditPolicies() {
@@ -35,33 +36,18 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 	public void changeLineAlpha(int alpha) {
 		this.alpha = alpha;
 	}
+	
+	protected IFigure createSourceFlagFigure(){
+		Figure sourceFlagFigure = new Figure() {
 
-	public IFigure createFigure() {
-		// TreeNodeConnection model = (TreeNodeConnection) getModel();
-		// AbstractSmooksGraphicalModel sourceModel = model.getSourceNode();
-		// AbstractSmooksGraphicalModel targetModel = model.getTargetNode();
-		// PolylineConnection connection1 = new PolylineConnection() {
-		// @Override
-		// public void paintFigure(Graphics graphics) {
-		// graphics.setAlpha(alpha);
-		// super.paintFigure(graphics);
-		// }
-		// };
-		// if (sourceModel instanceof TreeContainerModel || targetModel
-		// instanceof TreeContainerModel) {
-		// // connection1.setConnectionRouter(new ManhattanConnectionRouter());
-		// connection1.setTargetDecoration(new PolygonDecoration());
-		// return connection1;
-		// }
-		PolylineConnection connection = new PolylineConnection() {
-
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see org.eclipse.draw2d.Figure#paint(org.eclipse.draw2d.Graphics)
+			 */
 			@Override
-			public void paintFigure(Graphics graphics) {
-				graphics.setAlpha(alpha);
-				super.paintFigure(graphics);
-			}
-
-			public PointList getPoints() {
+			public void paint(Graphics graphics) {
+				graphics.pushState();
 				ConnectionAnchor sourceAnchor = getSourceConnectionAnchor();
 				ConnectionAnchor targetAnchor = getTargetConnectionAnchor();
 				boolean startLeft = false;
@@ -69,38 +55,40 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 					((LeftOrRightAnchor) sourceAnchor).getLocation(targetAnchor.getReferencePoint());
 					startLeft = ((LeftOrRightAnchor) sourceAnchor).isLeft();
 				}
-
-				boolean targetLeft = false;
-				if (targetAnchor instanceof LeftOrRightAnchor) {
-					((LeftOrRightAnchor) targetAnchor).getLocation(sourceAnchor.getReferencePoint());
-					targetLeft = ((LeftOrRightAnchor) targetAnchor).isLeft();
+				graphics.setForegroundColor(ColorConstants.black);
+				graphics.setBackgroundColor(ColorConstants.listBackground);
+				if (!startLeft) {
+					Point p = this.getBounds().getTopLeft();
+					Point p2 = this.getBounds().getBottomLeft();
+					Point p3 = this.getBounds().getTopRight();
+					p3 = new Point(p3.x, p3.y + this.getSize().height / 2);
+					PointList pointList = new PointList();
+					pointList.addPoint(p);
+					pointList.addPoint(p2.x, p2.y - 1);
+					pointList.addPoint(p3);
+					graphics.fillPolygon(pointList);
+					graphics.drawPolygon(pointList);
+				} else {
+					Point p = this.getBounds().getTopRight();
+					Point p2 = this.getBounds().getBottomRight();
+					Point p3 = this.getBounds().getTopLeft();
+					p3 = new Point(p3.x, p3.y + this.getSize().height / 2);
+					PointList pointList = new PointList();
+					pointList.addPoint(p.x - 1, p.y);
+					pointList.addPoint(p2.x - 1, p2.y - 1);
+					pointList.addPoint(p3);
+					graphics.fillPolygon(pointList);
+					graphics.drawPolygon(pointList);
 				}
-
-				PointList list = super.getPoints();
-				if (list.size() == 0)
-					return list;
-				Point start = getStart();
-				int slength = 20;
-				int tlength = 20;
-				if (startLeft) {
-					slength = (-slength);
-				}
-				if (targetLeft) {
-					tlength = (-tlength);
-				}
-
-				Point start2 = new Point(start.x + slength, start.y);
-				Point end = getEnd();
-				Point end2 = new Point(end.x + tlength, end.y);
-				list.removeAllPoints();
-				list.addPoint(start);
-				list.addPoint(start2);
-				list.addPoint(end2);
-				list.addPoint(end);
-				return list;
+				graphics.popState();
+				super.paint(graphics);
 			}
+
 		};
-		connection.setConnectionRouter(new ManhattanConnectionRouter());
+		return sourceFlagFigure;
+	}
+	
+	protected IFigure createTargetFlagFigure(){
 		Figure targetFlagFigure = new Figure() {
 			/*
 			 * (non-Javadoc)
@@ -152,17 +140,19 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 			}
 
 		};
+		return targetFlagFigure;
+	}
+	
+	protected Connection createConnectionFigure(){
+		PolylineConnection connection = new PolylineConnection() {
 
-		Figure sourceFlagFigure = new Figure() {
-
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see org.eclipse.draw2d.Figure#paint(org.eclipse.draw2d.Graphics)
-			 */
 			@Override
-			public void paint(Graphics graphics) {
-				graphics.pushState();
+			public void paintFigure(Graphics graphics) {
+				graphics.setAlpha(alpha);
+				super.paintFigure(graphics);
+			}
+
+			public PointList getPoints() {
 				ConnectionAnchor sourceAnchor = getSourceConnectionAnchor();
 				ConnectionAnchor targetAnchor = getTargetConnectionAnchor();
 				boolean startLeft = false;
@@ -170,36 +160,47 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 					((LeftOrRightAnchor) sourceAnchor).getLocation(targetAnchor.getReferencePoint());
 					startLeft = ((LeftOrRightAnchor) sourceAnchor).isLeft();
 				}
-				graphics.setForegroundColor(ColorConstants.black);
-				graphics.setBackgroundColor(ColorConstants.listBackground);
-				if (!startLeft) {
-					Point p = this.getBounds().getTopLeft();
-					Point p2 = this.getBounds().getBottomLeft();
-					Point p3 = this.getBounds().getTopRight();
-					p3 = new Point(p3.x, p3.y + this.getSize().height / 2);
-					PointList pointList = new PointList();
-					pointList.addPoint(p);
-					pointList.addPoint(p2.x, p2.y - 1);
-					pointList.addPoint(p3);
-					graphics.fillPolygon(pointList);
-					graphics.drawPolygon(pointList);
-				} else {
-					Point p = this.getBounds().getTopRight();
-					Point p2 = this.getBounds().getBottomRight();
-					Point p3 = this.getBounds().getTopLeft();
-					p3 = new Point(p3.x, p3.y + this.getSize().height / 2);
-					PointList pointList = new PointList();
-					pointList.addPoint(p.x - 1, p.y);
-					pointList.addPoint(p2.x - 1, p2.y - 1);
-					pointList.addPoint(p3);
-					graphics.fillPolygon(pointList);
-					graphics.drawPolygon(pointList);
-				}
-				graphics.popState();
-				super.paint(graphics);
-			}
 
+				boolean targetLeft = false;
+				if (targetAnchor instanceof LeftOrRightAnchor) {
+					((LeftOrRightAnchor) targetAnchor).getLocation(sourceAnchor.getReferencePoint());
+					targetLeft = ((LeftOrRightAnchor) targetAnchor).isLeft();
+				}
+
+				PointList list = super.getPoints();
+				if (list.size() == 0)
+					return list;
+				Point start = getStart();
+				int slength = 20;
+				int tlength = 20;
+				if (startLeft) {
+					slength = (-slength);
+				}
+				if (targetLeft) {
+					tlength = (-tlength);
+				}
+
+				Point start2 = new Point(start.x + slength, start.y);
+				Point end = getEnd();
+				Point end2 = new Point(end.x + tlength, end.y);
+				list.removeAllPoints();
+				list.addPoint(start);
+				list.addPoint(start2);
+				list.addPoint(end2);
+				list.addPoint(end);
+				return list;
+			}
 		};
+		
+		connection.setConnectionRouter(new ManhattanConnectionRouter());
+		return connection;
+	}
+
+	public IFigure createFigure() {
+		Connection connection = createConnectionFigure();
+		connection.setConnectionRouter(new ManhattanConnectionRouter());
+		IFigure targetFlagFigure = createTargetFlagFigure();
+		IFigure sourceFlagFigure = createSourceFlagFigure();
 		targetFlagFigure.setSize(7, 7);
 		sourceFlagFigure.setSize(7, 7);
 		ConnectionLocator targetLocator = new ConnectionLocator(connection, ConnectionLocator.TARGET);

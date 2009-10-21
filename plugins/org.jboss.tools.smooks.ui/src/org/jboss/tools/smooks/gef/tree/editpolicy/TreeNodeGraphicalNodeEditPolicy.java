@@ -31,7 +31,8 @@ public class TreeNodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 		if (command != null && command instanceof CreateConnectionCommand) {
 			Object targetModel = request.getTargetEditPart().getModel();
 			if (targetModel instanceof AbstractSmooksGraphicalModel) {
-				if (!((AbstractSmooksGraphicalModel) targetModel).canLinkWithSource(((CreateConnectionCommand) command).getSource()))
+				if (!((AbstractSmooksGraphicalModel) targetModel).canLinkWithSource(((CreateConnectionCommand) command)
+						.getSource()))
 					return null;
 				Object source = ((CreateConnectionCommand) command).getSource();
 				if (source instanceof AbstractSmooksGraphicalModel) {
@@ -60,8 +61,14 @@ public class TreeNodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 			sourceEditpart = getHost();
 		}
 		model = sourceEditpart.getModel();
+		Class<?> connectionType = null;
+		try {
+			connectionType = (Class<?>) request.getNewObjectType();
+		} catch (Exception e) {
+
+		}
 		if (model != null && model instanceof AbstractSmooksGraphicalModel) {
-			if (!((AbstractSmooksGraphicalModel) model).isLinkable())
+			if (!((AbstractSmooksGraphicalModel) model).isLinkable(connectionType))
 				return null;
 			EditPart hostPart = getHost();
 			CreateConnectionCommand command = null;

@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.ConnectionEditPart;
@@ -20,7 +21,12 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
+import org.eclipse.gef.commands.Command;
+import org.eclipse.gef.editpolicies.DirectEditPolicy;
+import org.eclipse.gef.requests.DirectEditRequest;
 import org.eclipse.gef.tools.ConnectionDragCreationTool;
+import org.eclipse.gef.tools.DirectEditManager;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeGraphicalNodeEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeSelectEditPolicy;
@@ -29,6 +35,8 @@ import org.jboss.tools.smooks.gef.tree.figures.LeftOrRightAnchor;
 import org.jboss.tools.smooks.gef.tree.figures.TreeContainerFigure;
 import org.jboss.tools.smooks.gef.tree.figures.TreeFigureExpansionEvent;
 import org.jboss.tools.smooks.gef.tree.figures.TreeNodeFigure;
+import org.jboss.tools.smooks.gef.tree.figures.TreeNodeTextDirectManager;
+import org.jboss.tools.smooks.gef.tree.figures.TreeNodeTextDirectManagerLocator;
 import org.jboss.tools.smooks.gef.tree.model.IConnectableNode;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
@@ -48,12 +56,32 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 
 	private IFigure anchorFigure = null;
 
+	protected DirectEditManager editManager = null;
+
 	@Override
 	protected IFigure createFigure() {
 		TreeNodeModel model = (TreeNodeModel) getModel();
 		TreeNodeFigure figure = new TreeNodeFigure(model);
 		figure.addTreeListener(this);
 		return figure;
+	}
+
+	protected void performDirectEdit() {
+		if (canDirectEdit()) {
+			if (editManager == null) {
+				editManager = createDirectEditManager();
+			}
+			editManager.show();
+		}
+	}
+
+	protected DirectEditManager createDirectEditManager() {
+		Label l = ((TreeNodeFigure) getFigure()).getLabel();
+		return new TreeNodeTextDirectManager(this, TextCellEditor.class, new TreeNodeTextDirectManagerLocator(l), l);
+	}
+
+	protected boolean canDirectEdit() {
+		return false;
 	}
 
 	/**
@@ -114,8 +142,39 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 		return true;
 	}
 
+	protected Command createDirectEditCommand(DirectEditRequest request) {
+		return null;
+	}
+
 	@Override
 	protected void createEditPolicies() {
+		installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE, new DirectEditPolicy() {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.gef.editpolicies.DirectEditPolicy#getDirectEditCommand
+			 * (org.eclipse.gef.requests.DirectEditRequest)
+			 */
+			@Override
+			protected Command getDirectEditCommand(DirectEditRequest request) {
+				return createDirectEditCommand(request);
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.gef.editpolicies.DirectEditPolicy#showCurrentEditValue
+			 * (org.eclipse.gef.requests.DirectEditRequest)
+			 */
+			@Override
+			protected void showCurrentEditValue(DirectEditRequest request) {
+
+			}
+
+		});
 		this.installEditPolicy(EditPolicy.NODE_ROLE, new TreeNodeGraphicalNodeEditPolicy());
 		this.installEditPolicy("SELECTED", new TreeNodeSelectEditPolicy());
 	}
@@ -133,11 +192,11 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 			((TreeNodeFigure) getFigure()).setLabelText(text);
 		}
 		Image image = node.getImage();
-		if(image != null){
+		if (image != null) {
 			((TreeNodeFigure) getFigure()).setLabelImage(image);
 		}
 		super.refreshVisuals();
-		
+
 		// Dimension size = getFigure().getPreferredSize(-1, -1);
 		// Rectangle rect = getFigure().getBounds();
 		// rect.setSize(size);
@@ -171,9 +230,6 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 		caculateAnchorFigure();
 	}
 
-	protected void performDirectEdit() {
-	}
-
 	/**
 	 * @see org.eclipse.gef.EditPart#performRequest(org.eclipse.gef.Request)
 	 */
@@ -184,13 +240,15 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 
 	public void propertyChange(PropertyChangeEvent evt) {
 		String proName = evt.getPropertyName();
-		if (TreeNodeModel.PRO_FORCE_VISUAL_CHANGED.equals(proName)) {
+		if (TreeNodeModel.PRO_FORCE_VISUAL_CHANGED.equals(proName) || TreeNodeModel.PRO_TEXT_CHANGED.equals(proName)) {
 			refreshVisuals();
 		}
-		if (TreeNodeModel.PRO_ADD_CHILD.equals(proName) || TreeNodeModel.PRO_REMOVE_CHILD.equals(proName)
+		if (TreeNodeModel.PRO_ADD_CHILD.equals(proName) || TreeNodeModel.PRO_MOVE_CHILD.equals(proName)
+				|| TreeNodeModel.PRO_REMOVE_CHILD.equals(proName)
 				|| TreeNodeModel.PRO_FORCE_CHIDLREN_CHANGED.equals(proName)) {
 			refreshChildren();
-
+			this.expandNode();
+			refreshVisuals();
 		}
 		if (TreeNodeModel.PRO_ADD_SOURCE_CONNECTION.equals(proName)
 				|| TreeNodeModel.PRO_REMOVE_SOURCE_CONNECTION.equals(proName)) {

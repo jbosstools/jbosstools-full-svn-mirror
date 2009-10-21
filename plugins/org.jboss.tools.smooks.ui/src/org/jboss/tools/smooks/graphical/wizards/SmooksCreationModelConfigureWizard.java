@@ -17,7 +17,7 @@ import org.jboss.tools.smooks.editor.ISmooksModelProvider;
  * @author Dart
  *
  */
-public class SmooksCreationModelConfigureWizard extends Wizard {
+public abstract class SmooksCreationModelConfigureWizard extends Wizard {
 	
 	protected Object model;
 	
@@ -27,14 +27,6 @@ public class SmooksCreationModelConfigureWizard extends Wizard {
 		super();
 		this.model = model;
 		this.modelProvider = modelProvider;
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
-	 */
-	@Override
-	public boolean performFinish() {
-		return false;
 	}
 
 }

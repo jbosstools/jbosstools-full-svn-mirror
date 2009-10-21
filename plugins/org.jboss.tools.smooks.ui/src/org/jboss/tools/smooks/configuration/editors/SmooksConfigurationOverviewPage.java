@@ -1303,36 +1303,31 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 
 		createNavigatorSection(mainNavigatorComposite, toolkit, "Configuring Smooks Input",
 				"/org/jboss/tools/smooks/configuration/navigator/DefaultSetting.htm");
-		createNavigatorSection(mainNavigatorComposite, toolkit, "Configuring Message Filter(s)",
+		createNavigatorSection(mainNavigatorComposite, toolkit, "Configuring Smooks Transform Processes",
 				"/org/jboss/tools/smooks/configuration/navigator/MessageFilterNavigator.htm");
 	}
 
 	protected void activeNavigatorLink(String href) {
 		if (href == null)
 			return;
-		if (href.equals("reader_page")) {
-			this.getEditor().setActivePage("reader_page");
-		}
-		if (href.equals("message_filter_page")) {
-			this.getEditor().setActivePage("message_filter_page");
-		}
-		if (href.equals("source_page")) {
-			this.getEditor().setActiveEditor(((AbstractSmooksFormEditor) getEditor()).getTextEditor());
-		}
 		if (href.equals("overview_default_setting")) {
 			generalSettingSection.setFocus();
+			return;
 		}
 		if (href.equals("overview_global_param")) {
 			globalParamSection.setFocus();
 			globalParamSection.setExpanded(true);
+			return;
 		}
 		if (href.equals("overview_condition")) {
 			conditionSection.setFocus();
 			conditionSection.setExpanded(true);
+			return;
 		}
 		if (href.equals("overview_profile")) {
 			profilesSection.setFocus();
 			profilesSection.setExpanded(true);
+			return;
 		}
 		if (href.equals("selector_dialog")) {
 			SelectorCreationDialog dialog = new SelectorCreationDialog(getEditorSite().getShell(),
@@ -1342,7 +1337,10 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			return;
 		}
+
+		this.getEditor().setActivePage(href);
 	}
 
 	private EObject getSmooksResourceList() {

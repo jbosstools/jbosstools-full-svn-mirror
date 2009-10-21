@@ -251,9 +251,13 @@ public class ModelPanelCreator {
 		IModelProcsser processer = new IModelProcsser() {
 
 			public Object unwrapValue(Object model) {
-				Object editValue = SmooksUIUtils.getEditValue(fip, model);
-				if (editValue instanceof Enumerator) {
-					return ((Enumerator) editValue).getName();
+				if (model instanceof Enumerator) {
+					return ((Enumerator) model).getName();
+				} else {
+					Object editValue = SmooksUIUtils.getEditValue(fip, model);
+					if (editValue instanceof Enumerator) {
+						return ((Enumerator) editValue).getName();
+					}
 				}
 				return null;
 			}

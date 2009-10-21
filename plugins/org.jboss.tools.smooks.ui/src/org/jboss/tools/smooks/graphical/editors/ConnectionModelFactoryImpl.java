@@ -20,10 +20,17 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
+import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
+import org.jboss.tools.smooks.configuration.editors.xml.XSLTagObject;
 import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
+import org.jboss.tools.smooks.gef.tree.model.BeanReferenceConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
+import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
+import org.jboss.tools.smooks.gef.tree.model.ValueBindingConnection;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
+import org.jboss.tools.smooks.graphical.editors.model.JavaBeanChildGraphModel;
 
 /**
  * @author Dart
@@ -73,7 +80,7 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 								continue;
 							// create new connection;
 							AbstractSmooksGraphicalModel target = SmooksGraphUtil.findSmooksGraphModel(root, eObject);
-							TreeNodeConnection connection = new TreeNodeConnection(model, target);
+							BeanReferenceConnection connection = new BeanReferenceConnection(model, target);
 							model.getSourceConnections().add(connection);
 							model.fireConnectionChanged();
 							target.getTargetConnections().add(connection);
@@ -115,7 +122,7 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 							continue;
 						// create new connection;
 						AbstractSmooksGraphicalModel source = SmooksGraphUtil.findSmooksGraphModel(root, eObject);
-						TreeNodeConnection connection = new TreeNodeConnection(source, model);
+						BeanReferenceConnection connection = new BeanReferenceConnection(source, model);
 						source.getSourceConnections().add(connection);
 						model.getTargetConnections().add(connection);
 						source.fireConnectionChanged();
@@ -180,7 +187,12 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 								if (!canCreate) {
 									break;
 								}
-								TreeNodeConnection connection = new TreeNodeConnection(sourceGraphModel, model);
+								TreeNodeConnection connection = null;
+								if (model instanceof JavaBeanChildGraphModel) {
+									connection = new ValueBindingConnection(sourceGraphModel, model);
+								} else {
+									connection = new TriggerConnection(sourceGraphModel, model);
+								}
 								sourceGraphModel.getSourceConnections().add(connection);
 								sourceGraphModel.fireConnectionChanged();
 								model.getTargetConnections().add(connection);
@@ -193,5 +205,117 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 			}
 		}
 		return connections;
+	}
+
+	private void fillSelectorConnection(List<Object> inputDataList, RootModel root, AbstractSmooksGraphicalModel model,
+			String selector, List<TreeNodeConnection> connections) {
+		if (inputDataList != null && selector != null) {
+			for (Iterator<?> iterator1 = inputDataList.iterator(); iterator1.hasNext();) {
+				Object obj = (Object) iterator1.next();
+				if (obj instanceof IXMLStructuredObject) {
+					AbstractSmooksGraphicalModel sourceGraphModel = SmooksGraphUtil.findInputGraphModel(selector,
+							(IXMLStructuredObject) obj, root);
+					if (sourceGraphModel != null) {
+						boolean canCreate = true;
+						List<TreeNodeConnection> tcs = model.getTargetConnections();
+						for (Iterator<?> iterator2 = tcs.iterator(); iterator2.hasNext();) {
+							TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
+							if (treeNodeConnection.getSourceNode() == sourceGraphModel) {
+								canCreate = false;
+							}
+						}
+						if (!canCreate) {
+							break;
+						}
+						TreeNodeConnection connection = null;
+						connection = new TreeNodeConnection(sourceGraphModel, model);
+						sourceGraphModel.getSourceConnections().add(connection);
+						sourceGraphModel.fireConnectionChanged();
+						model.getTargetConnections().add(connection);
+						model.fireConnectionChanged();
+						connections.add(connection);
+					}
+				}
+			}
+		}
+	}
+
+	private String processSelectString(String select, String skm) {
+		if (select != null) {
+			if (select.startsWith(".")) {
+				select = select.substring(1, select.length());
+			}
+			if (skm != null) {
+				if (select.indexOf(skm + ":") != -1) {
+					select = select.replaceAll(skm + ":", "");
+				}
+			}
+		}
+		return select;
+	}
+
+	public Collection<TreeNodeConnection> createXSLConnection(List<Object> inputDataList, RootModel root,
+			AbstractSmooksGraphicalModel model) {
+		List<TreeNodeConnection> connections = new ArrayList<TreeNodeConnection>();
+		Object data = model.getData();
+		if (data instanceof XSLTagObject) {
+			List<TagObject> list = ((XSLTagObject) data).getRelatedIgnoreXSLTagObjects();
+			for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+				XSLTagObject tagObject = (XSLTagObject) iterator.next();
+				String select = null;
+				if (tagObject.isValueOfElement()) {
+					select = tagObject.getSelectValue();
+				}
+				if (select != null) {
+					select = select.trim();
+					select = processSelectString(select, tagObject.getSmooksPrix());
+					fillSelectorConnection(inputDataList, root, model, select, connections);
+				}
+			}
+
+			if (((XSLTagObject) data).isTemplateElement()) {
+				String select = ((XSLTagObject) data).getMatchValue();
+				if (select != null) {
+					select = select.trim();
+					select = processSelectString(select, ((XSLTagObject) data).getSmooksPrix());
+					fillSelectorConnection(inputDataList, root, model, select, connections);
+				}
+			}
+
+			if (((XSLTagObject) data).isSortElement() || ((XSLTagObject) data).isForeachElement()) {
+				String select = ((XSLTagObject) data).getSelectValue();
+				if (select != null) {
+					select = select.trim();
+					select = processSelectString(select, ((XSLTagObject) data).getSmooksPrix());
+					fillSelectorConnection(inputDataList, root, model, select, connections);
+				}
+			}
+
+		}
+
+		if (data instanceof TagPropertyObject) {
+			TagPropertyObject tagPropertyObject = (TagPropertyObject) data;
+			String value = tagPropertyObject.getValue();
+			if (value != null) {
+				value = value.trim();
+				if (value.startsWith("{") && value.endsWith("}")) {
+					value = value.substring(1, value.length() - 1);
+					fillSelectorConnection(inputDataList, root, model, value, connections);
+				}
+			}
+		}
+		return connections;
+	}
+
+	public boolean hasXSLConnection(AbstractSmooksGraphicalModel model) {
+		Object data = model.getData();
+		if (data instanceof XSLTagObject) {
+			return true;
+		}
+		if (data instanceof TagPropertyObject) {
+			if (((TagPropertyObject) data).getParent() instanceof XSLTagObject)
+				return true;
+		}
+		return false;
 	}
 }

@@ -15,15 +15,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.zest.core.viewers.IGraphEntityContentProvider;
 import org.jboss.tools.smooks.model.graphics.ext.ProcessType;
 import org.jboss.tools.smooks.model.graphics.ext.TaskType;
 
 /**
  * @author Dart
- *
+ * 
  */
-public class ProcessGraphContentProvider /* implements IGraphEntityContentProvider */
-		 {
+public class ProcessGraphContentProvider implements IGraphEntityContentProvider {
 
 	private void collectTasks(List<Object> list, TaskType task) {
 		list.add(task);
@@ -50,7 +50,9 @@ public class ProcessGraphContentProvider /* implements IGraphEntityContentProvid
 		return list.toArray();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
 	 */
 	public void dispose() {
@@ -58,20 +60,28 @@ public class ProcessGraphContentProvider /* implements IGraphEntityContentProvid
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface
+	 * .viewers.Viewer, java.lang.Object, java.lang.Object)
 	 */
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.zest.core.viewers.IGraphEntityContentProvider#getConnectedTo(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.zest.core.viewers.IGraphEntityContentProvider#getConnectedTo
+	 * (java.lang.Object)
 	 */
 	public Object[] getConnectedTo(Object arg0) {
-		if(arg0 instanceof TaskType){
-			return ((TaskType)arg0).getTask().toArray();
+		if (arg0 instanceof TaskType) {
+			return ((TaskType) arg0).getTask().toArray();
 		}
-		return new Object[]{};
+		return new Object[] {};
 	}
 }

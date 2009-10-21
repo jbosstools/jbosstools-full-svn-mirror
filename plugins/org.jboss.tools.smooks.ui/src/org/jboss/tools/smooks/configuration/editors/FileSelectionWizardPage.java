@@ -19,13 +19,16 @@ import org.jboss.tools.smooks.configuration.editors.xml.AbstractFileSelectionWiz
 public class FileSelectionWizardPage extends AbstractFileSelectionWizardPage {
 
 	private ProtableFileStringProcessor processor = null;
+	
+	private boolean processFilePath = true;
 
-	public FileSelectionWizardPage(String pageName, Object[] initSelection) {
+	public FileSelectionWizardPage(String pageName, Object[] initSelection , boolean processFilePath) {
 		super(pageName, new String[] {});
 		processor = new ProtableFileStringProcessor();
 		setFilePathProcessor(processor);
 		setTitle("File Selection");
 		setDescription("Select the file from workspace or from file system.");
+		this.processFilePath = processFilePath;
 	}
 
 	/*
@@ -42,6 +45,7 @@ public class FileSelectionWizardPage extends AbstractFileSelectionWizardPage {
 
 	@Override
 	protected String processFileSystemFilePath(String path) {
+		if(!processFilePath) return super.processFileSystemFilePath(path);
 		if (getFilePathProcessor() != null) {
 			String s = getFilePathProcessor().processFileSystemPath(path);
 			if (s != null) {
@@ -53,6 +57,7 @@ public class FileSelectionWizardPage extends AbstractFileSelectionWizardPage {
 
 	@Override
 	protected String processWorkSpaceFilePath(IFile file) {
+		if(!processFilePath) return super.processWorkSpaceFilePath(file);
 		if (getFilePathProcessor() != null) {
 			String s = getFilePathProcessor().processWorkBenchPath(file);
 			if (s != null) {
