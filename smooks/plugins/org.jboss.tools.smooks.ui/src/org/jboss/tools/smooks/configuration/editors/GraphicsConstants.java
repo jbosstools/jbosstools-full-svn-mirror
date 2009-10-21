@@ -8,9 +8,27 @@ public final class GraphicsConstants {
 	
 	public static final String IMAGE_JAVA_ATTRIBUTE = "icons/full/obj16/att_obj.gif";
 	
+	public static final String IMAGE_VALIDATED_TAG = "icons/full/obj16/validated_tag.gif";
+	
+	public static final String IMAGE_PROPERTY_SHEET_PAGE = "icons/full/prop_ps.gif";
+	
 	public static final String IMAGE_JAVA_OBJECT = "icons/full/obj16/class_obj.gif";
 	
 	public static final String IMAGE_PACKAGE_OBJECT = "icons/full/obj16/package_obj.gif";
+	
+	public static final String IMAGE_XSL_CHOICE = "icons/full/obj16/xsl_choice.gif";
+	
+	public static final String IMAGE_XSL_TEMPLATE_APPLY = "icons/full/obj16/xsl_template_apply.gif";
+	
+	public static final String IMAGE_XSL_FOREACH = "icons/full/obj16/xsl_foreach.gif";
+	
+	public static final String IMAGE_XSL_SORT = "icons/full/obj16/xsl_sort.gif";
+	
+	public static final String IMAGE_XSL_IF = "icons/full/obj16/xsl_if.gif";
+	
+	public static final String IMAGE_XSL_STYLESHEET= "icons/full/obj16/xsl_stylesheet.gif";
+	
+	public static final String IMAGE_XSL_TEMPLATE = "icons/full/obj16/xsl_template.gif";
 	
 	public static final String IMAGE_OVR_ERROR = "icons/full/ovr16/error_co.gif";
 	
@@ -46,9 +64,9 @@ public final class GraphicsConstants {
 
 	public static final String IMAGE_EMPTY = IMAGE_PATH_BLANK;
 	
-	public static final String IMAGE_XML_ELEMENT = "xml_element";
+	public static final String IMAGE_XML_ELEMENT = "icons/full/obj16/element_obj.gif";
 	
-	public static final String IMAGE_XML_ATTRIBUTE = "xml_attribute";
+	public static final String IMAGE_XML_ATTRIBUTE = "icons/full/obj16/attribute_obj.gif";
 	
 	public static final String IMAGE_MAPPING_LINE = "icons/full/obj16/mapping_line.gif";
 	

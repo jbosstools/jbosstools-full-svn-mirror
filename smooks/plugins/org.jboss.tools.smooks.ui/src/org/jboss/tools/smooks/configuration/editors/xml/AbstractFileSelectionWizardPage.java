@@ -52,20 +52,33 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 	private IFilePathProcessor filePathProcessor = null;
 
 	private String[] fileExtensionNames;
-
+	
 	public AbstractFileSelectionWizardPage(String pageName, boolean multiSelect, Object[] initSelections,
-			List<ViewerFilter> filters) {
-		super(pageName);
-		this.initSelections = initSelections;
-		if (filters != null) {
-			this.filters.addAll(filters);
-		}
-		this.multiSelect = multiSelect;
+			List<ViewerFilter> filters,String[] fileExtensionNames) {
+		this(pageName, false, initSelections, Collections.EMPTY_LIST);
+		this.fileExtensionNames = fileExtensionNames;
+		createFileExtensionNameFilter();
+	}
+	
+	/**
+	 * @return the fileExtensionNames
+	 */
+	public String[] getFileExtensionNames() {
+		return fileExtensionNames;
 	}
 
-	public AbstractFileSelectionWizardPage(String pageName, String[] fileExtensionNames) {
-		this(pageName, false, null, Collections.EMPTY_LIST);
+
+
+	/**
+	 * @param fileExtensionNames the fileExtensionNames to set
+	 */
+	public void setFileExtensionNames(String[] fileExtensionNames) {
 		this.fileExtensionNames = fileExtensionNames;
+	}
+
+
+
+	public void createFileExtensionNameFilter(){
 		if (this.fileExtensionNames != null && this.fileExtensionNames.length != 0) {
 			ViewerFilter extensionNameFilter = new ViewerFilter() {
 				/*
@@ -92,6 +105,22 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 			};
 			this.filters.add(extensionNameFilter);
 		}
+	}
+
+	public AbstractFileSelectionWizardPage(String pageName, boolean multiSelect, Object[] initSelections,
+			List<ViewerFilter> filters) {
+		super(pageName);
+		this.initSelections = initSelections;
+		if (filters != null) {
+			this.filters.addAll(filters);
+		}
+		this.multiSelect = multiSelect;
+	}
+
+	public AbstractFileSelectionWizardPage(String pageName, String[] fileExtensionNames) {
+		this(pageName, false, null, Collections.EMPTY_LIST);
+		this.fileExtensionNames = fileExtensionNames;
+		createFileExtensionNameFilter();
 	}
 
 	public Object getReturnValue() {

@@ -11,20 +11,26 @@
 package org.jboss.tools.smooks.gef.common;
 
 import org.eclipse.gef.ContextMenuProvider;
+import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.ui.actions.ActionRegistry;
 import org.eclipse.gef.ui.actions.GEFActionConstants;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.ActionFactory;
+import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 
 /**
  * @author Dart (dpeng@redhat.com)
  * 
  */
 public class SmooksGraphicalMenuContextProvider extends ContextMenuProvider {
-	
+
 	public static final String GROUP_CUSTOME = "custome_group";
 
 	protected ActionRegistry actionRegistry;
@@ -64,6 +70,22 @@ public class SmooksGraphicalMenuContextProvider extends ContextMenuProvider {
 		action = getActionRegistry().getAction(ActionFactory.DELETE.getId());
 		if (action.isEnabled())
 			menu.appendToGroup(GEFActionConstants.GROUP_EDIT, action);
+
+		action = new Action() {
+			public void run() {
+				DefaultEditDomain domain = (DefaultEditDomain) getViewer().getEditDomain();
+				IWorkbenchWindow window = domain.getEditorPart().getSite().getWorkbenchWindow();
+				try {
+					window.getActivePage().showView("org.eclipse.ui.views.PropertySheet");
+				} catch (PartInitException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		action.setText("Properties");
+		action.setImageDescriptor(SmooksConfigurationActivator
+				.getImageDescriptor(GraphicsConstants.IMAGE_PROPERTY_SHEET_PAGE));
+		menu.add(action);
 	}
 
 	public SmooksGraphicalMenuContextProvider(EditPartViewer viewer, ActionRegistry actionRegistry) {

@@ -889,9 +889,9 @@ public class SmooksUIUtils {
 
 			});
 		}
-		boolean valueIsSet = true;
+//		boolean valueIsSet = true;
 		if (model != null && model instanceof EObject && itemPropertyDescriptor != null) {
-			valueIsSet = ((EObject) model).eIsSet((EAttribute) itemPropertyDescriptor.getFeature(model));
+//			valueIsSet = ((EObject) model).eIsSet((EAttribute) itemPropertyDescriptor.getFeature(model));
 		}
 		if (editValue != null) {
 			valueText.setText(editValue);
@@ -1412,6 +1412,9 @@ public class SmooksUIUtils {
 	}
 
 	public static SmooksResourceListType getSmooks11ResourceListType(EObject model) {
+		if(model instanceof org.jboss.tools.smooks.model.smooks.DocumentRoot){
+			return ((org.jboss.tools.smooks.model.smooks.DocumentRoot)model).getSmooksResourceList();
+		}
 		if (model instanceof SmooksResourceListType)
 			return (SmooksResourceListType) model;
 		EObject parent = model;
@@ -1669,7 +1672,7 @@ public class SmooksUIUtils {
 	}
 
 	public static IFile getFile(String uri, IProject project) {
-		if (project == null)
+		if (project == null || uri == null)
 			return null;
 		if (uri.charAt(0) == '\\' || uri.charAt(0) == '/') {
 			uri = uri.substring(1);

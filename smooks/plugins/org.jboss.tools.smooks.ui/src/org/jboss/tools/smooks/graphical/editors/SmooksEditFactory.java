@@ -17,17 +17,25 @@ import org.jboss.tools.smooks.gef.common.SmooksGEFEditFactory;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeConnectionEditPart;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
+import org.jboss.tools.smooks.gef.tree.model.BeanReferenceConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
+import org.jboss.tools.smooks.gef.tree.model.ValueBindingConnection;
+import org.jboss.tools.smooks.graphical.editors.editparts.BeanReferenceConnectionEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataContainerEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataTreeNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.ResourceConfigEditFactory;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksRootEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.TriggerConnectionEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.ValueBindingConnectionEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.XSLNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.XSLNodeGraphicalModel;
 
 /**
  * @author Dart
@@ -59,12 +67,25 @@ public class SmooksEditFactory extends SmooksGEFEditFactory implements EditPartF
 			editPart = new InputDataContainerEditPart();
 		}
 
+		if (model.getClass() == XSLNodeGraphicalModel.class) {
+			editPart = new XSLNodeEditPart();
+		}
+		
 		if (model instanceof AbstractResourceConfigGraphModel
 				|| model instanceof AbstractResourceConfigChildNodeGraphModel) {
 			editPart = resourceConfigFactory.createEditPart(model);
 		}
 		if (model.getClass() == TreeNodeConnection.class) {
 			editPart = new TreeNodeConnectionEditPart();
+		}
+		if(model.getClass() == TriggerConnection.class){
+			editPart = new TriggerConnectionEditPart();
+		}
+		if(model.getClass() == ValueBindingConnection.class){
+			editPart = new ValueBindingConnectionEditPart();
+		}
+		if(model.getClass() == BeanReferenceConnection.class){
+			editPart = new BeanReferenceConnectionEditPart();
 		}
 		if (editPart != null) {
 			editPart.setModel(model);

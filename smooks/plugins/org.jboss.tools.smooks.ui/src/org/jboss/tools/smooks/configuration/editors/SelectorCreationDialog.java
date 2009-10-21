@@ -344,7 +344,7 @@ public class SelectorCreationDialog extends Dialog {
 									}
 								}
 							} catch (Throwable e) {
-
+								e.printStackTrace();
 							}
 						}
 					}

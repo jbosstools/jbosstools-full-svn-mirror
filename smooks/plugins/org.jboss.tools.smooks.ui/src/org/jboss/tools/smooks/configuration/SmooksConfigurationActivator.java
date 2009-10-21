@@ -64,13 +64,32 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 	@Override
 	protected void initializeImageRegistry(ImageRegistry reg) {
 		super.initializeImageRegistry(reg);
-		reg.put(GraphicsConstants.JAVA_PROPERTY_ICON, getImageDescriptor(GraphicsConstants.JAVA_PROPERTY_ICON_PATH));
+
+		reg.put(GraphicsConstants.IMAGE_PROPERTY_SHEET_PAGE,
+				getImageDescriptor(GraphicsConstants.IMAGE_PROPERTY_SHEET_PAGE));
+
+		reg.put(GraphicsConstants.IMAGE_VALIDATED_TAG, getImageDescriptor(GraphicsConstants.IMAGE_VALIDATED_TAG));
 
 		reg.put(GraphicsConstants.IMAGE_UNKNOWN_OBJ, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_UNKNOWN_OBJ));
 
 		reg.put(GraphicsConstants.IMAGE_INPUT_DATA_HEADER, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_INPUT_DATA_HEADER));
+
+		// regist XSL images
+		reg.put(GraphicsConstants.IMAGE_XSL_TEMPLATE_APPLY, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_XSL_TEMPLATE_APPLY));
+		reg.put(GraphicsConstants.IMAGE_XSL_CHOICE, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_XSL_CHOICE));
+		reg.put(GraphicsConstants.IMAGE_XSL_FOREACH, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_XSL_FOREACH));
+		reg.put(GraphicsConstants.IMAGE_XSL_IF, imageDescriptorFromPlugin(PLUGIN_ID, GraphicsConstants.IMAGE_XSL_IF));
+		reg.put(GraphicsConstants.IMAGE_XSL_SORT,
+				imageDescriptorFromPlugin(PLUGIN_ID, GraphicsConstants.IMAGE_XSL_SORT));
+		reg.put(GraphicsConstants.IMAGE_XSL_TEMPLATE, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_XSL_TEMPLATE));
+		reg.put(GraphicsConstants.IMAGE_XSL_STYLESHEET, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_XSL_STYLESHEET));
 
 		// regist ovr images
 		reg.put(GraphicsConstants.IMAGE_OVR_ERROR, getImageDescriptor(GraphicsConstants.IMAGE_OVR_ERROR));
@@ -82,6 +101,7 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 		reg.put(GraphicsConstants.IMAGE_WARNING, getImageDescriptor(GraphicsConstants.IMAGE_PATH_WARNING));
 
 		// regist java images
+		reg.put(GraphicsConstants.JAVA_PROPERTY_ICON, getImageDescriptor(GraphicsConstants.JAVA_PROPERTY_ICON_PATH));
 		reg.put(GraphicsConstants.IMAGE_JAVA_BEAN, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_JAVA_BEAN));
 		reg.put(GraphicsConstants.IMAGE_JAVA_INTERFACE, imageDescriptorFromPlugin(PLUGIN_ID,
@@ -116,9 +136,9 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 		reg.put(GraphicsConstants.IMAGE_MAPPING_LINE, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_MAPPING_LINE));
 		reg.put(GraphicsConstants.IMAGE_XML_ATTRIBUTE, imageDescriptorFromPlugin(PLUGIN_ID,
-				"icons/full/obj16/attribute_obj.gif"));
+				GraphicsConstants.IMAGE_XML_ATTRIBUTE));
 		reg.put(GraphicsConstants.IMAGE_XML_ELEMENT, imageDescriptorFromPlugin(PLUGIN_ID,
-				"icons/full/obj16/element_obj.gif"));
+				GraphicsConstants.IMAGE_XML_ELEMENT));
 	}
 
 	/**

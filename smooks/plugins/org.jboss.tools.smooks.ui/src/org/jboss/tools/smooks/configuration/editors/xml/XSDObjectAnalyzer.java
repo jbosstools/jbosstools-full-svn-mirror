@@ -45,9 +45,15 @@ public class XSDObjectAnalyzer {
 
 	private HashMap<Object, Object> tagObjectBuffer = new HashMap<Object, Object>();
 
-	public static List<XSDElementDeclaration> loadAllElement(String filePath) throws InvocationTargetException, IOException {
+	public static List<XSDElementDeclaration> loadAllElement(String filePath) throws InvocationTargetException,
+			IOException {
 		List<XSDElementDeclaration> nl = new ArrayList<XSDElementDeclaration>();
-		String file = SmooksUIUtils.parseFilePath(filePath);
+		String file = null;
+		try {
+			 file = SmooksUIUtils.parseFilePath(filePath);
+		} catch (Exception e) {
+			return nl;
+		}
 		Resource resource = new XSDResourceFactoryImpl().createResource(URI.createFileURI(file));
 		resource.load(Collections.EMPTY_MAP);
 		XSDSchema schema = (XSDSchema) resource.getContents().get(0);
@@ -124,17 +130,17 @@ public class XSDObjectAnalyzer {
 	private TagObject loadElement(XSDSchema schema, XSDElementDeclaration elementDec) {
 		if (elementDec.isAbstract())
 			return null;
-		
+
 		TagObject tag = (TagObject) tagObjectBuffer.get(elementDec);
 		if (tag == null) {
 			tag = new TagObject();
 			tag.setName(elementDec.getAliasName());
-			tag.setNamespaceURL(elementDec.getAliasURI());
+			tag.setNamespaceURI(elementDec.getAliasURI());
 			tagObjectBuffer.put(elementDec, tag);
-		}else{
+		} else {
 			return tag;
 		}
-		
+
 		XSDTypeDefinition td = elementDec.getType();
 		XSDSimpleTypeDefinition st = td.getSimpleType();
 		// XSDComplexTypeDefinition ct = td.getComplexType();
@@ -186,7 +192,7 @@ public class XSDObjectAnalyzer {
 				XSDAttributeDeclaration attribute = attributeUse.getAttributeDeclaration();
 				TagPropertyObject tp = new TagPropertyObject();
 				tp.setName(attribute.getAliasName());
-				tp.setNamespaceURL(attribute.getTypeDefinition().getURI());
+				tp.setNamespaceURI(attribute.getTypeDefinition().getURI());
 				tag.addProperty(tp);
 			}
 		} else {

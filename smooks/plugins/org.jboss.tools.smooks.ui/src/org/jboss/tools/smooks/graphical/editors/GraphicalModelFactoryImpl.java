@@ -17,19 +17,25 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
+import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.graphical.editors.model.JavaBeanGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.ResourceConfigGraphModelImpl;
+import org.jboss.tools.smooks.graphical.editors.model.XSLTemplateContentProvider;
+import org.jboss.tools.smooks.graphical.editors.model.XSLTemplateGraphicalModel;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.ExpressionType;
 import org.jboss.tools.smooks.model.javabean.ValueType;
 import org.jboss.tools.smooks.model.javabean.WiringType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks.model.rules10.RuleBase;
+import org.jboss.tools.smooks.model.rules10.RuleBasesType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
+import org.jboss.tools.smooks.model.validation10.RuleType;
+import org.jboss.tools.smooks.model.xsl.Xsl;
 
 /**
  * @author Dart
@@ -130,6 +136,11 @@ public class GraphicalModelFactoryImpl implements GraphicalModelFactory {
 		ILabelProvider labelProvider = createLabelProvider(editingDomain.getAdapterFactory());
 		SmooksGraphicsExtType extType = provider.getSmooksGraphicsExt();
 		String version = extType.getPlatformVersion();
+
+		if (model instanceof RuleType || model instanceof RuleBase || model instanceof RuleBasesType) {
+			return null;
+		}
+
 		if (SmooksUIUtils.isUnSupportElement(version, (EObject) model)) {
 			return null;
 		}
@@ -137,10 +148,16 @@ public class GraphicalModelFactoryImpl implements GraphicalModelFactory {
 			graphModel = new JavaBeanGraphModel(model, contentProvider, labelProvider, provider);
 			((JavaBeanGraphModel) graphModel).setHeaderVisable(true);
 		}
+		if (model instanceof Xsl) {
+			graphModel = new XSLTemplateGraphicalModel(model, new XSLTemplateContentProvider(contentProvider),
+					new XSLLabelProvider(labelProvider), provider);
+			((TreeContainerModel) graphModel).setHeaderVisable(true);
+		}
 		if (graphModel == null && model instanceof AbstractResourceConfig) {
 			graphModel = new ResourceConfigGraphModelImpl(model, contentProvider, labelProvider, provider);
 			((ResourceConfigGraphModelImpl) graphModel).setHeaderVisable(true);
 		}
+
 		return graphModel;
 	}
 }

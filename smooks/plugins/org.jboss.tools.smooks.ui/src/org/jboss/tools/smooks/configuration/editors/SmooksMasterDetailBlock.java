@@ -259,7 +259,7 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 			setTreeViewerModel(smooksModel);
 		}
 		createMenuForViewer(smooksTreeViewer);
-		formEditor.getSite().setSelectionProvider(smooksTreeViewer);
+//		formEditor.getSite().setSelectionProvider(smooksTreeViewer);
 
 		if (formEditor.getEditorSite().getActionBarContributor() instanceof ISelectionChangedListener) {
 			smooksTreeViewer.addSelectionChangedListener((ISelectionChangedListener) formEditor.getEditorSite()

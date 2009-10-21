@@ -5,14 +5,19 @@ package org.jboss.tools.smooks.gef.tree.editparts;
 
 import org.eclipse.gef.commands.Command;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
+import org.jboss.tools.smooks.gef.tree.model.BeanReferenceConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
+import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
+import org.jboss.tools.smooks.gef.tree.model.ValueBindingConnection;
+import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.JavaBeanChildGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.JavaBeanGraphModel;
 
 /**
  * @author DartPeng
  * 
  */
 public class CreateConnectionCommand extends Command {
-
 
 	private AbstractSmooksGraphicalModel source;
 
@@ -23,8 +28,22 @@ public class CreateConnectionCommand extends Command {
 	@Override
 	public void execute() {
 		if (source != null && target != null) {
-			TreeNodeConnection connection = new TreeNodeConnection(source,
-					target);
+			TreeNodeConnection connection = null;
+			if (target instanceof JavaBeanChildGraphModel && source instanceof InputDataTreeNodeModel) {
+				connection = new ValueBindingConnection(source, target);
+			}
+
+			if (source instanceof JavaBeanChildGraphModel && target instanceof JavaBeanGraphModel) {
+				connection = new BeanReferenceConnection(source, target);
+			}
+
+			if (target instanceof InputDataTreeNodeModel && connection == null) {
+				connection = new TriggerConnection(source, target);
+			}
+			if (connection == null) {
+				connection = new TreeNodeConnection(source, target);
+			}
+
 			connection.connect();
 			tempConnectionHandle = connection;
 		}
@@ -32,19 +51,20 @@ public class CreateConnectionCommand extends Command {
 
 	@Override
 	public void redo() {
-		if(tempConnectionHandle != null){
+		if (tempConnectionHandle != null) {
 			tempConnectionHandle.connect();
-		}else{
+		} else {
 			execute();
 		}
 	}
 
 	@Override
 	public void undo() {
-		if(tempConnectionHandle != null){
+		if (tempConnectionHandle != null) {
 			tempConnectionHandle.disconnect();
 		}
 	}
+
 	public AbstractSmooksGraphicalModel getSource() {
 		return source;
 	}

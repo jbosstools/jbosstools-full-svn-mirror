@@ -24,6 +24,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.ui.PartInitException;
 import org.jboss.tools.smooks.configuration.editors.SmooksConfigurationFormPage;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
+import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
 import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
@@ -105,6 +106,9 @@ public class Smooks10MultiFormEditor extends AbstractSmooksFormEditor implements
 		FeatureMap map = resourceList.getMixed();
 		Object obj = map.get(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT, true);
 		if(obj instanceof List<?>){
+			if(((List<?>)obj).isEmpty()){
+				((List<Object>)obj).add(GraphFactory.eINSTANCE.createSmooksGraphicsExtType());
+			}
 			Object oooo = ((List<?>)obj).get(0);
 			if(oooo instanceof SmooksGraphicsExtType){
 				return ((SmooksGraphicsExtType)oooo);

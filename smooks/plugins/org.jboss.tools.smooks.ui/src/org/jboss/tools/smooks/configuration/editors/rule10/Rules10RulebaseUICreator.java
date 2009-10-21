@@ -12,6 +12,7 @@ package org.jboss.tools.smooks.configuration.editors.rule10;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorPart;
@@ -28,7 +29,6 @@ import org.jboss.tools.smooks.model.rules10.Rules10Package;
  *         Apr 8, 2009
  */
 public class Rules10RulebaseUICreator extends PropertyUICreator {
-
 
 	/*
 	 * (non-Javadoc)
@@ -54,14 +54,20 @@ public class Rules10RulebaseUICreator extends PropertyUICreator {
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 			ISmooksModelProvider formEditor, IEditorPart part) {
-		if (feature ==  Rules10Package.Literals.RULE_BASE__PROVIDER) {
-			return createBeanClassTextWithButton(parent, toolkit, propertyDescriptor, model , formEditor);
+		if (feature == Rules10Package.Literals.RULE_BASE__PROVIDER) {
+			return createBeanClassTextWithButton(parent, toolkit, propertyDescriptor, model, formEditor);
+		}
+		if (feature == Rules10Package.Literals.RULE_BASE__SRC) {
+			return SmooksUIUtils.createFileSelectionTextFieldEditor("Source Path", parent, formEditor
+					.getEditingDomain(), toolkit, this.getPropertyDescriptor((AdapterFactoryEditingDomain) formEditor
+					.getEditingDomain(), feature, model), model, SmooksUIUtils.VALUE_TYPE_VALUE, null, null);
 		}
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor, part);
 	}
 
 	protected AttributeFieldEditPart createBeanClassTextWithButton(Composite composite, FormToolkit toolkit,
-			final IItemPropertyDescriptor propertyDescriptor, final Object model , ISmooksModelProvider provider) {
-		return SmooksUIUtils.createJavaTypeSearchFieldEditor(composite, toolkit, propertyDescriptor, (EObject) model , provider);
+			final IItemPropertyDescriptor propertyDescriptor, final Object model, ISmooksModelProvider provider) {
+		return SmooksUIUtils.createJavaTypeSearchFieldEditor(composite, toolkit, propertyDescriptor, (EObject) model,
+				provider);
 	}
 }

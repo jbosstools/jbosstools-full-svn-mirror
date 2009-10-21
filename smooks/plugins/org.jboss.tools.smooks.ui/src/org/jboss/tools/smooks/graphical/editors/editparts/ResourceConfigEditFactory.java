@@ -15,6 +15,7 @@ import org.jboss.tools.smooks.graphical.editors.model.JavaBeanChildGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.JavaBeanGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.ResourceConfigChildNodeGraphModelImpl;
 import org.jboss.tools.smooks.graphical.editors.model.ResourceConfigGraphModelImpl;
+import org.jboss.tools.smooks.graphical.editors.model.XSLTemplateGraphicalModel;
 
 /**
  * @author Dart
@@ -33,6 +34,9 @@ public class ResourceConfigEditFactory {
 		}
 		if(model instanceof ResourceConfigGraphModelImpl){
 			return new ResourceConfigEditPart();
+		}
+		if(model instanceof XSLTemplateGraphicalModel){
+			return new XSLTemplateEditPart();
 		}
 		return null;
 	}

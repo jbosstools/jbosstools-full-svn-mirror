@@ -21,8 +21,12 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
+import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
+import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart;
+import org.jboss.tools.smooks.graphical.editors.SmooksProcessGraphicalEditor;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 
@@ -30,7 +34,8 @@ import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
  * 
  * @author Dart Peng (dpeng@redhat.com) Date Apr 1, 2009
  */
-public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements ISelectionProvider {
+public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements ISelectionProvider,
+		ITabbedPropertySheetPageContributor {
 
 	public static final String EDITOR_ID = "org.jboss.tools.smooks.configuration.editors.MultiPageEditor";
 
@@ -42,9 +47,13 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 
 	private SmooksReaderFormPage readerPage;
 
+	private SmooksProcessGraphicalEditor processPage;
+
 	private ISelection selection;
 
 	private Collection<ISelectionChangedListener> selectionChangeListener = new ArrayList<ISelectionChangedListener>();
+
+	private TabbedPropertySheetPage tabbedPropertySheetPage;
 
 	/*
 	 * (non-Javadoc)
@@ -75,33 +84,61 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 			e.printStackTrace();
 		}
 
-		configurationPage = createSmooksConfigurationFormPage();
-		addValidateListener(configurationPage);
-		addSourceSynchronizeListener(configurationPage);
-		addSmooksGraphExtetionListener(configurationPage);
-		try {
-			int index = this.addPage(configurationPage);
-			setPageText(index, "Message Filter");
-		} catch (PartInitException e) {
-			e.printStackTrace();
-		}
+		addProcessGraphicalEditor();
 
-//		graphicalPage = new SmooksGraphicalEditorPart(this);
-//		addSourceSynchronizeListener(graphicalPage);
-//		addSmooksGraphExtetionListener(graphicalPage);
-//		try {
-//			int index = this.addPage(graphicalPage, getEditorInput());
-//			setPageText(index, "Graph");
-//		} catch (PartInitException e) {
-//			e.printStackTrace();
-//		}
+		// addSmooksGraphicalEditor();
+
+		// configurationPage = createSmooksConfigurationFormPage();
+		// addValidateListener(configurationPage);
+		// addSourceSynchronizeListener(configurationPage);
+		// addSmooksGraphExtetionListener(configurationPage);
+		// try {
+		// int index = this.addPage(configurationPage);
+		// setPageText(index, "Message Filter");
+		// } catch (PartInitException e) {
+		// e.printStackTrace();
+		// }
 
 		super.addPages();
 	}
 
-//	private SmooksConfigurationReaderPage createSmooksConfigurationReaderPage() {
-//		return new SmooksConfigurationReaderPage(this, "reader_page1", "Reader Page");
-//	}
+	private void addProcessGraphicalEditor() {
+		processPage = new SmooksProcessGraphicalEditor(this, "process", "Processing", this);
+		addSourceSynchronizeListener(processPage);
+		addSmooksGraphExtetionListener(processPage);
+		try {
+			int index = this.addPage(processPage);
+			setPageText(index, "Process");
+		} catch (PartInitException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void addSmooksGraphicalEditor() {
+		graphicalPage = new SmooksGraphicalEditorPart(this);
+		addSourceSynchronizeListener(graphicalPage);
+		addSmooksGraphExtetionListener(graphicalPage);
+		try {
+			int index = this.addPage(graphicalPage, getEditorInput());
+			setPageText(index, "Process");
+		} catch (PartInitException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public Object getAdapter(Class adapter) {
+		if (adapter == IPropertySheetPage.class) {
+			tabbedPropertySheetPage = new TabbedPropertySheetPage(this);
+			return tabbedPropertySheetPage;
+		}
+		return super.getAdapter(adapter);
+	}
+
+	// private SmooksConfigurationReaderPage
+	// createSmooksConfigurationReaderPage() {
+	// return new SmooksConfigurationReaderPage(this, "reader_page1",
+	// "Reader Page");
+	// }
 
 	private SmooksConfigurationOverviewPage createSmooksConfigurationOverviewPage() {
 		return new SmooksConfigurationOverviewPage(this, "overview_page", "Overview", this);
@@ -109,10 +146,8 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		if (graphicalPage != null) {
-			if (graphicalPage.getEditDomain() != null) {
-				graphicalPage.getEditDomain().getCommandStack().flush();
-			}
+		if (processPage != null) {
+			processPage.doSave(monitor);
 		}
 		super.doSave(monitor);
 	}
@@ -192,5 +227,9 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 		if (ex != null) {
 			ex.removeSmooksGraphChangeListener(listener);
 		}
+	}
+
+	public String getContributorId() {
+		return getSite().getId();
 	}
 }

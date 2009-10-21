@@ -36,9 +36,12 @@ import org.eclipse.gef.requests.CreationFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jboss.tools.smooks.configuration.editors.actions.ISmooksActionGrouper;
 import org.jboss.tools.smooks.configuration.editors.actions.JavaBean11ActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.actions.Templating11ActionGrouper;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
-import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
+import org.jboss.tools.smooks.gef.tree.model.BeanReferenceConnection;
+import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
+import org.jboss.tools.smooks.gef.tree.model.ValueBindingConnection;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
@@ -71,14 +74,14 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 		CreationFactory factory = new CreationFactory() {
 
 			public Object getObjectType() {
-				return TreeNodeConnection.class;
+				return TriggerConnection.class;
 			}
 
 			public Object getNewObject() {
 				return null;
 			}
 		};
-		drawer.add(new ConnectionCreationToolEntry("Link", "Link", factory, null, null));
+		drawer.add(new ConnectionCreationToolEntry("Trigger Link", "Link", factory, null, null));
 		root.add(drawer);
 
 		createPaletteDrawer(root);
@@ -99,8 +102,36 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 			for (Iterator<?> iterator = grouperList.iterator(); iterator.hasNext();) {
 				ISmooksActionGrouper iSmooksActionGrouper = (ISmooksActionGrouper) iterator.next();
 				PaletteDrawer drawer = new PaletteDrawer(iSmooksActionGrouper.getGroupName());
+				
+				if(iSmooksActionGrouper instanceof JavaBean11ActionGrouper){
+					CreationFactory factory = new CreationFactory() {
+
+						public Object getObjectType() {
+							return BeanReferenceConnection.class;
+						}
+
+						public Object getNewObject() {
+							return null;
+						}
+					};
+					drawer.add(new ConnectionCreationToolEntry("Bean Ref Link", "Bean Ref Link", factory, null, null));
+					
+					CreationFactory factory1 = new CreationFactory() {
+
+						public Object getObjectType() {
+							return ValueBindingConnection.class;
+						}
+
+						public Object getNewObject() {
+							return null;
+						}
+					};
+					drawer.add(new ConnectionCreationToolEntry("Value Binding Link", "Value Binding Link", factory1, null, null));
+				}
+				
 				fillDrawer(drawer, newChildrenDescripter, iSmooksActionGrouper);
 				root.add(drawer);
+				
 			}
 		}
 	}
@@ -232,7 +263,7 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 		// grouperList.add(new Datasources11ActionGrouper());
 		// grouperList.add(new FragmentRouting11ActionGrouper());
 		// grouperList.add(new Scripting11ActionGrouper());
-		// grouperList.add(new Templating11ActionGrouper());
+//		 grouperList.add(new Templating11ActionGrouper());
 		// grouperList.add(new PersistenceActionGrouper());
 		// grouperList.add(new Validation10ActionGrouper());
 		return grouperList;

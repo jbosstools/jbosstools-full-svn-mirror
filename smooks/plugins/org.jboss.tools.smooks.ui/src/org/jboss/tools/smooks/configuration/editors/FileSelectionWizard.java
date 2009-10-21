@@ -35,15 +35,56 @@ public class FileSelectionWizard extends Wizard implements INewWizard {
 	private boolean multiSelect = false;
 	
 	private IFilePathProcessor filePathProcessor = null;
+	
+	private String[] extensionNames = null;
+	
+	private boolean processFilePath = true;
+	
 
 	@Override
 	public void addPages() {
-		fileSelectionWizardPage = new FileSelectionWizardPage("File Selection" ,null);
+		fileSelectionWizardPage = new FileSelectionWizardPage("File Selection" ,null,isProcessFilePath());
 		fileSelectionWizardPage.setFilters(viewerFilters);
 		fileSelectionWizardPage.setInitSelections(getInitSelections());
 		fileSelectionWizardPage.setMultiSelect(isMultiSelect());
 		fileSelectionWizardPage.setFilePathProcessor(getFilePathProcessor());
+		fileSelectionWizardPage.setFileExtensionNames(extensionNames);
+		fileSelectionWizardPage.createFileExtensionNameFilter();
 		this.addPage(fileSelectionWizardPage);
+	}
+	
+	
+	
+	/**
+	 * @return the processFilePath
+	 */
+	public boolean isProcessFilePath() {
+		return processFilePath;
+	}
+
+
+
+	/**
+	 * @param processFilePath the processFilePath to set
+	 */
+	public void setProcessFilePath(boolean processFilePath) {
+		this.processFilePath = processFilePath;
+	}
+
+
+
+	/**
+	 * @return the extensionNames
+	 */
+	public String[] getExtensionNames() {
+		return extensionNames;
+	}
+
+	/**
+	 * @param extensionNames the extensionNames to set
+	 */
+	public void setExtensionNames(String[] extensionNames) {
+		this.extensionNames = extensionNames;
 	}
 
 	/* (non-Javadoc)

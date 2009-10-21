@@ -46,7 +46,7 @@ public class EDIEdiPartDirectEditManager extends DirectEditManager {
 	 * @param locator
 	 *            the CellEditorLocator
 	 */
-	public EDIEdiPartDirectEditManager(GraphicalEditPart source, Class editorType, CellEditorLocator locator,
+	public EDIEdiPartDirectEditManager(GraphicalEditPart source, Class<?> editorType, CellEditorLocator locator,
 			Label label) {
 		super(source, editorType, locator);
 		textLabel = label;

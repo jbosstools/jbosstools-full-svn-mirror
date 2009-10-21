@@ -148,7 +148,7 @@ public class EDIMappingNodeGraphModel extends TreeNodeModel {
 	 * @see org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#isLinkable()
 	 */
 	@Override
-	public boolean isLinkable() {
+	public boolean isLinkable(Class<?> type) {
 		Object nodeModel = getData();
 		if (!(nodeModel instanceof Segment)) {
 			return false;
@@ -157,7 +157,7 @@ public class EDIMappingNodeGraphModel extends TreeNodeModel {
 				return false;
 			}
 		}
-		return super.isLinkable();
+		return super.isLinkable(type);
 	}
 
 	/*

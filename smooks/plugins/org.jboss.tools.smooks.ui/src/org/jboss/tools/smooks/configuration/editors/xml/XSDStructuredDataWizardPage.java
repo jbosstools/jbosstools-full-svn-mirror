@@ -20,9 +20,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -230,62 +227,6 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 			}
 
 		});
-
-	}
-
-	private class XSDListLabelProvider extends LabelProvider {
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
-		 */
-		@Override
-		public String getText(Object element) {
-			if (element instanceof XSDElementDeclaration) {
-				return ((XSDElementDeclaration) element).getAliasName();
-			}
-			return super.getText(element);
-		}
-
-	}
-
-	private class XSDListContentProvider implements IStructuredContentProvider {
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(
-		 * java.lang.Object)
-		 */
-		public Object[] getElements(Object inputElement) {
-			if (inputElement instanceof List) {
-				return ((List<?>) inputElement).toArray();
-			}
-			return new Object[] {};
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
-		 */
-		public void dispose() {
-
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse
-		 * .jface.viewers.Viewer, java.lang.Object, java.lang.Object)
-		 */
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-
-		}
 
 	}
 

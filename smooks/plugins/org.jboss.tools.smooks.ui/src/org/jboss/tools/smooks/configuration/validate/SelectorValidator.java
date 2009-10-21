@@ -136,9 +136,9 @@ public class SelectorValidator extends AbstractValidator {
 			}
 			final FileEditorInput input = new FileEditorInput(file);
 			final SmooksResourceListType finalList = listType;
-			Display dis = Display.getDefault();
+			Display dis = SmooksConfigurationActivator.getDefault().getWorkbench().getDisplay();
 			if (dis != null && !dis.isDisposed()) {
-				dis.syncExec(new Runnable() {
+				dis.asyncExec(new Runnable() {
 
 					/*
 					 * (non-Javadoc)

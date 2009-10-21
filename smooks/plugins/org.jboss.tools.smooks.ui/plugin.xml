@@ -163,5 +163,72 @@
           </include>
        </validator>
     </extension>
+    <extension
+          point="org.eclipse.ui.views.properties.tabbed.propertySections">
+       <propertySections
+             contributorId="org.jboss.tools.smooks.configuration.editors.MultiPageEditor">
+          <propertySection
+                class="org.jboss.tools.smooks.editor.propertySections.SmooksPropertySection"
+                filter="org.jboss.tools.smooks.editor.propertySections.SmooksPropertySectionFilter"
+                id="org.jboss.tools.smooks.ui.propertySection.properties"
+                tab="org.jboss.tools.smooks.ui.propertySection.propertiesTab">
+          </propertySection>
+          <propertySection
+                class="org.jboss.tools.smooks.editor.propertySections.ValidationSection"
+                filter="org.jboss.tools.smooks.editor.propertySections.ValidationSectionFilter"
+                id="org.jboss.tools.smooks.ui.propertySection.validation"
+                tab="org.jboss.tools.smooks.ui.propertySection.validationTab">
+          </propertySection>
+          <propertySection
+                class="org.jboss.tools.smooks.editor.propertySections.RuleBaseSection"
+                filter="org.jboss.tools.smooks.editor.propertySections.RuleBaseSectionFilter"
+                id="org.jboss.tools.smooks.ui.propertySection.ruleBases"
+                tab="org.jboss.tools.smooks.ui.propertySection.ruleBasesTab">
+          </propertySection>
+          <propertySection
+                class="org.jboss.tools.smooks.editor.propertySections.ValueDecodeParamSection"
+                filter="org.jboss.tools.smooks.editor.propertySections.ValueDecodeParamSectionFilter"
+                id="org.jboss.tools.smooks.ui.propertySection.decodeParam"
+                tab="org.jboss.tools.smooks.ui.propertySection.decodeParamTab">
+          </propertySection>
+       </propertySections>
+    </extension>
+    <extension
+          point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+       <propertyTabs
+             contributorId="org.jboss.tools.smooks.configuration.editors.MultiPageEditor">
+          <propertyTab
+                category="properties"
+                id="org.jboss.tools.smooks.ui.propertySection.propertiesTab"
+                label="Properties">
+          </propertyTab>
+          <propertyTab
+                category="validation"
+                id="org.jboss.tools.smooks.ui.propertySection.validationTab"
+                label="Validation">
+          </propertyTab>
+          <propertyTab
+                category="validation"
+                id="org.jboss.tools.smooks.ui.propertySection.ruleBasesTab"
+                label="Rule Bases">
+          </propertyTab>
+          <propertyTab
+                category="properties"
+                id="org.jboss.tools.smooks.ui.propertySection.decodeParamTab"
+                label="Decode Parameter">
+          </propertyTab>
+       </propertyTabs>
+    </extension>
+    <extension
+          point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+       <propertyContributor
+             contributorId="org.jboss.tools.smooks.configuration.editors.MultiPageEditor">
+          <propertyCategory
+                category="properties"></propertyCategory>
+          <propertyCategory
+                category="validation">
+          </propertyCategory>
+       </propertyContributor>
+    </extension>
 
 </plugin>

@@ -93,7 +93,7 @@ public class XMLObjectAnalyzer {
 		tag.setReferenceElement(element);
 		tag.setName(element.getName());
 		fillProperties(element, tag ,ignoreNodeNames);
-		tag.setNamespaceURL(element.getNamespaceURI());
+		tag.setNamespaceURI(element.getNamespaceURI());
 		List<?> list = element.elements();
 		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 			Element childElement = (Element) iterator.next();
@@ -132,7 +132,7 @@ public class XMLObjectAnalyzer {
 			TagPropertyObject pro = new TagPropertyObject();
 			pro.setName(attr.getName());
 			pro.setValue(value);
-			pro.setNamespaceURL(attr.getNamespaceURI());
+			pro.setNamespaceURI(attr.getNamespaceURI());
 			tag.addProperty(pro);
 		}
 	}

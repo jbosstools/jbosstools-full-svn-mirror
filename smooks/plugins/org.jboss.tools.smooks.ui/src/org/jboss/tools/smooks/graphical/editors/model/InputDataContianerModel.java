@@ -14,6 +14,8 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
+import org.jboss.tools.smooks.gef.tree.model.ValueBindingConnection;
 
 /**
  * @author Dart
@@ -32,4 +34,15 @@ public class InputDataContianerModel extends TreeContainerModel {
 		return new InputDataTreeNodeModel(model, contentProvider, labelProvider);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#isLinkable(java.lang.Class)
+	 */
+	@Override
+	public boolean isLinkable(Class<?> connectionType) {
+		if(connectionType == TriggerConnection.class || connectionType == ValueBindingConnection.class){
+			return true;
+		}
+		return false;
+	}
+	
 }

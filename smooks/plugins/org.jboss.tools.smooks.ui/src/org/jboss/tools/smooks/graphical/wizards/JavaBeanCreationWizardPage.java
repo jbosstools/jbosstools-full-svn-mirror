@@ -76,12 +76,16 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 		super(pageName, title, titleImage);
 		this.project = project;
 		this.exsitingBeanIDs = exsitingBeanIDs;
+		this.setTitle("Java Bean Creation");
+		this.setDescription("Create a Java Bean model");
 	}
 
 	public JavaBeanCreationWizardPage(String pageName, IJavaProject project, List<String> exsitingBeanIDs) {
 		super(pageName);
 		this.project = project;
 		this.exsitingBeanIDs = exsitingBeanIDs;
+		this.setTitle("Java Bean Creation");
+		this.setDescription("Create a Java Bean model");
 	}
 
 	/**

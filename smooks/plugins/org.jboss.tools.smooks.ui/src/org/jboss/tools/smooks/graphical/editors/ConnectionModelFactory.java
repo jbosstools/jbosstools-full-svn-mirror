@@ -33,4 +33,9 @@ public interface ConnectionModelFactory {
 			AbstractSmooksGraphicalModel model);
 
 	public boolean hasSelectorConnection(AbstractSmooksGraphicalModel model);
+	
+	public boolean hasXSLConnection(AbstractSmooksGraphicalModel model);
+	
+	public  Collection<TreeNodeConnection> createXSLConnection(List<Object> inputDataList, RootModel root,
+			AbstractSmooksGraphicalModel model);
 }

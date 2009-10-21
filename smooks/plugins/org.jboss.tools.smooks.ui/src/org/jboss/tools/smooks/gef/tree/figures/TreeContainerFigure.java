@@ -73,7 +73,7 @@ public class TreeContainerFigure extends Figure {
 		graphics.pushState();
 		graphics.setForegroundColor(headerColor);
 		graphics.setBackgroundColor(ColorConstants.white);
-		graphics.fillGradient(getBounds(), true);
+		graphics.fillGradient(headerFigure.getBounds().expand(20, 0), true);
 		graphics.setForegroundColor(headerColor);
 		graphics.drawLine(getBounds().getBottomLeft().translate(0, -1), getBounds().getBottomRight().translate(0, -1));
 		graphics.popState();

@@ -30,6 +30,8 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode {
 
 	public static final String PRO_ADD_CHILD = "_pro_add_child";
 
+	public static final String PRO_MOVE_CHILD = "_pro_move_child";
+
 	public static final String PRO_REMOVE_CHILD = "_pro_remove_child";
 
 	public static final String PRO_ADD_SOURCE_CONNECTION = "_pro_add_source_connected";
@@ -93,7 +95,7 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode {
 		}
 		return children;
 	}
-	
+
 	public List<AbstractSmooksGraphicalModel> getChildrenWithoutDynamic() {
 		if (children == null) {
 			children = new ArrayList<AbstractSmooksGraphicalModel>();
@@ -102,6 +104,11 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode {
 	}
 
 	public static void disconnectAllConnections(AbstractSmooksGraphicalModel node) {
+		disconnectAllConnections(node, null);
+	}
+
+	public static void disconnectAllConnections(AbstractSmooksGraphicalModel node,
+			List<TreeNodeConnection> deletedConnections) {
 		List<TreeNodeConnection> sourceConnections = node.getSourceConnections();
 		List<TreeNodeConnection> targetConnections = node.getTargetConnections();
 		List<TreeNodeConnection> tempSourceConnections = new ArrayList<TreeNodeConnection>(sourceConnections);
@@ -112,14 +119,20 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode {
 			AbstractSmooksGraphicalModel sourceNode = treeNodeConnection.getSourceNode();
 			sourceNode.getSourceConnections().remove(treeNodeConnection);
 			sourceNode.fireConnectionChanged();
+			if (deletedConnections != null) {
+				deletedConnections.add(treeNodeConnection);
+			}
 		}
 
 		for (Iterator<?> iterator2 = tempSourceConnections.iterator(); iterator2.hasNext();) {
 			TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
-//			treeNodeConnection.disconnectTarget();
+			// treeNodeConnection.disconnectTarget();
 			AbstractSmooksGraphicalModel targetNode = treeNodeConnection.getTargetNode();
 			targetNode.getTargetConnections().remove(treeNodeConnection);
 			targetNode.fireConnectionChanged();
+			if (deletedConnections != null) {
+				deletedConnections.add(treeNodeConnection);
+			}
 		}
 
 		tempSourceConnections.clear();
@@ -130,7 +143,7 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode {
 		List<AbstractSmooksGraphicalModel> children = node.getChildren();
 		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
 			TreeNodeModel treeNodeModel = (TreeNodeModel) iterator.next();
-			disconnectAllConnections(treeNodeModel);
+			disconnectAllConnections(treeNodeModel, deletedConnections);
 		}
 	}
 
@@ -199,6 +212,22 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode {
 		}
 	}
 
+	public void addChild(int index, AbstractSmooksGraphicalModel node) {
+		this.addChild(node);
+		this.moveChild(index, node);
+	}
+
+	public void moveChild(int index, AbstractSmooksGraphicalModel node) {
+		int oldIndex = getChildrenWithoutDynamic().indexOf(node);
+		if (index >= 0 && index <= getChildrenWithoutDynamic().size() - 1) {
+			if (oldIndex != -1 && index != oldIndex) {
+				getChildrenWithoutDynamic().remove(node);
+				getChildrenWithoutDynamic().add(index, node);
+				support.firePropertyChange(PRO_MOVE_CHILD, oldIndex, index);
+			}
+		}
+	}
+
 	public void removeChild(AbstractSmooksGraphicalModel node) {
 		if (getChildrenWithoutDynamic().indexOf(node) != -1) {
 			getChildrenWithoutDynamic().remove(node);
@@ -237,7 +266,7 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode {
 		return null;
 	}
 
-	public boolean isLinkable() {
+	public boolean isLinkable(Class<?> connectionType) {
 		return linkable;
 	}
 
