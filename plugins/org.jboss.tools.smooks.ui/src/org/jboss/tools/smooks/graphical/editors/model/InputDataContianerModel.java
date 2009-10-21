@@ -12,26 +12,43 @@ package org.jboss.tools.smooks.graphical.editors.model;
 
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
-import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
-import org.jboss.tools.smooks.gef.tree.model.ValueBindingConnection;
 
 /**
  * @author Dart
  *
  */
 public class InputDataContianerModel extends TreeContainerModel {
+	
+	private ISmooksModelProvider smooksModelProvider;
 
-	public InputDataContianerModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider) {
+	public InputDataContianerModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider, ISmooksModelProvider modelProvider) {
 		super(data, contentProvider, labelProvider);
-		// TODO Auto-generated constructor stub
+		this.smooksModelProvider = modelProvider;
 	}
 
 	@Override
 	protected TreeNodeModel createChildModel(Object model, ITreeContentProvider contentProvider,
-			ILabelProvider labelProvider) {
+			ILabelProvider labelProvider ) {
 		return new InputDataTreeNodeModel(model, contentProvider, labelProvider);
+	}
+	
+	
+
+	/**
+	 * @return the smooksModelProvider
+	 */
+	public ISmooksModelProvider getSmooksModelProvider() {
+		return smooksModelProvider;
+	}
+
+	/**
+	 * @param smooksModelProvider the smooksModelProvider to set
+	 */
+	public void setSmooksModelProvider(ISmooksModelProvider smooksModelProvider) {
+		this.smooksModelProvider = smooksModelProvider;
 	}
 
 	/* (non-Javadoc)
@@ -39,10 +56,24 @@ public class InputDataContianerModel extends TreeContainerModel {
 	 */
 	@Override
 	public boolean isLinkable(Class<?> connectionType) {
-		if(connectionType == TriggerConnection.class || connectionType == ValueBindingConnection.class){
-			return true;
-		}
+		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#canLinkWithSource(java.lang.Object)
+	 */
+	@Override
+	public boolean canLinkWithSource(Object model) {
+		return super.canLinkWithSource(model);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#canLinkWithTarget(java.lang.Object)
+	 */
+	@Override
+	public boolean canLinkWithTarget(Object model) {
 		return false;
 	}
+	
 	
 }

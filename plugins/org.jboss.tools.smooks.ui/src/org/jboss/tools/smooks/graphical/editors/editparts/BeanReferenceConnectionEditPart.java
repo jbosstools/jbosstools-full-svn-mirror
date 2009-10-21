@@ -11,17 +11,21 @@
 package org.jboss.tools.smooks.graphical.editors.editparts;
 
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Connection;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.Graphics;
-import org.eclipse.draw2d.ManhattanConnectionRouter;
 import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
+import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.LineAttributes;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.forms.editor.FormPage;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeConnectionEditPart;
 import org.jboss.tools.smooks.gef.tree.figures.LeftOrRightAnchor;
+import org.jboss.tools.smooks.graphical.editors.SmooksTaskDetailsEditorSite;
 
 /**
  * @author Dart
@@ -39,8 +43,6 @@ public class BeanReferenceConnectionEditPart extends TreeNodeConnectionEditPart 
 			@Override
 			public void paintFigure(Graphics graphics) {
 				graphics.setAlpha(alpha);
-				graphics.setForegroundColor(ColorConstants.darkBlue);
-				graphics.setLineStyle(Graphics.LINE_DASHDOTDOT);
 				super.paintFigure(graphics);
 			}
 
@@ -83,8 +85,19 @@ public class BeanReferenceConnectionEditPart extends TreeNodeConnectionEditPart 
 				return list;
 			}
 		};
-		
-		connection.setConnectionRouter(new ManhattanConnectionRouter());
+		DefaultEditDomain domain = (DefaultEditDomain) getViewer().getEditDomain();
+		IEditorPart editorPart = domain.getEditorPart();
+		IEditorSite site = editorPart.getEditorSite();
+		if(site instanceof SmooksTaskDetailsEditorSite){
+			FormPage page = ((SmooksTaskDetailsEditorSite)site).getParentEditor();
+			connection.setForegroundColor(page.getManagedForm().getToolkit().getColors().getBorderColor());
+			
+		}
+		connection.setLineStyle(Graphics.LINE_CUSTOM);
+		connection.setLineDash(new float[]{10,5});
+		connection.setLineCap(SWT.CAP_ROUND);
+//		connection.set
+//		connection.setConnectionRouter(new ManhattanConnectionRouter());
 		return connection;
 	}
 

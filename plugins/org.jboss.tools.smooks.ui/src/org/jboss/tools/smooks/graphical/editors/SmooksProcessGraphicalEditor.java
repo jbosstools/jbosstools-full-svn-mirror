@@ -56,7 +56,6 @@ import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
-import org.eclipse.ui.part.MultiPageEditorSite;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutStyles;
@@ -559,7 +558,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	protected IEditorSite createSite(IEditorPart editor) {
-		return new MultiPageEditorSite(this.getEditor(), editor);
+		return new SmooksTaskDetailsEditorSite(this.getEditor(), editor, this);
 	}
 
 	protected void createTaskPage(IEditorPart editorPart, Composite parent) throws PartInitException {
@@ -578,18 +577,43 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	public void sourceChange(Object model) {
+		Collection<Object> editors = registedTaskPages.values();
+		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			if (object instanceof ISmooksGraphChangeListener) {
+				((ISourceSynchronizeListener) object).sourceChange(model);
+			}
+		}
 	}
 
 	public void graphChanged(SmooksGraphicsExtType extType) {
-
+		Collection<Object> editors = registedTaskPages.values();
+		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			if (object instanceof ISmooksGraphChangeListener) {
+				((ISmooksGraphChangeListener) object).graphChanged(extType);
+			}
+		}
 	}
 
 	public void graphPropertyChange(EStructuralFeature featre, Object value) {
-
+		Collection<Object> editors = registedTaskPages.values();
+		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			if (object instanceof ISmooksGraphChangeListener) {
+				((ISmooksGraphChangeListener) object).graphPropertyChange(featre, value);
+			}
+		}
 	}
 
 	public void inputTypeChanged(SmooksGraphicsExtType extType) {
-
+		Collection<Object> editors = registedTaskPages.values();
+		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			if (object instanceof ISmooksGraphChangeListener) {
+				((ISmooksGraphChangeListener) object).inputTypeChanged(extType);
+			}
+		}
 	}
 
 	public void propertyChanged(Object source, int propId) {

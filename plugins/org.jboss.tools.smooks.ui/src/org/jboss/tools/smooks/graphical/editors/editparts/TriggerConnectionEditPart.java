@@ -11,20 +11,28 @@
 package org.jboss.tools.smooks.graphical.editors.editparts;
 
 import org.eclipse.draw2d.Connection;
+import org.eclipse.draw2d.Shape;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeConnectionEditPart;
 
 /**
  * @author Dart
- *
+ * 
  */
 public class TriggerConnectionEditPart extends TreeNodeConnectionEditPart {
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.gef.tree.editparts.TreeNodeConnectionEditPart#createConnectionFigure()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.editparts.TreeNodeConnectionEditPart#
+	 * createConnectionFigure()
 	 */
 	@Override
 	protected Connection createConnectionFigure() {
-		return super.createConnectionFigure();
+		Connection c = super.createConnectionFigure();
+		if (c instanceof Shape) {
+			((Shape) c).setLineWidth(2);
+		}
+		return c;
 	}
-
 }

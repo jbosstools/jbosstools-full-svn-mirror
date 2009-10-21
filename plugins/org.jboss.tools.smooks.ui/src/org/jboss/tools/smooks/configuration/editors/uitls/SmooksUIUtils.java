@@ -2475,9 +2475,6 @@ public class SmooksUIUtils {
 				input.getParam().addAll(params);
 				Command command = AddCommand.create(domain, extType,
 						GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__INPUT, input);
-				if (command.canExecute()) {
-					System.out.println("aaa");
-				}
 				domain.getCommandStack().execute(command);
 				// extType.getInput().add(input);
 			}
