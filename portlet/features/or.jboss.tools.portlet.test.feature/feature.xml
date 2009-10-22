@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="or.jboss.tools.portlet.test.feature"
+      id="org.jboss.tools.portlet.test.feature"
       label="Portlet Test Suite Feature"
       version="1.0.0">
 
