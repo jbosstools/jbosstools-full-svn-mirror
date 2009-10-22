@@ -11,6 +11,8 @@
 package org.jboss.tools.smooks.graphical.editors.model;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -23,6 +25,7 @@ import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
@@ -134,6 +137,15 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 			}
 		}
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#getChildren()
+	 */
+	@Override
+	public List<AbstractSmooksGraphicalModel> getChildren() {
+		List<AbstractSmooksGraphicalModel> list = Collections.emptyList();
+		return list;
 	}
 
 	/*

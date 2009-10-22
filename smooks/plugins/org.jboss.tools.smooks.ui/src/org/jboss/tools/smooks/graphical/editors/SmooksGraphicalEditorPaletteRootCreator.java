@@ -78,7 +78,7 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 				return null;
 			}
 		};
-		drawer.add(new ConnectionCreationToolEntry("Trigger Link", "Link", factory, null, null));
+		drawer.add(new ConnectionCreationToolEntry("Link", "Connect node", factory, null, null));
 		root.add(drawer);
 
 		createPaletteDrawer(root);
@@ -222,11 +222,14 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 		}
 		return false;
 	}
+	
+	protected void fillActionGrouper(List<ISmooksActionGrouper> grouperList){
+		
+	}
 
-	private List<ISmooksActionGrouper> getSmooksActionGrouper() {
+	protected List<ISmooksActionGrouper> getSmooksActionGrouper() {
 		List<ISmooksActionGrouper> grouperList = new ArrayList<ISmooksActionGrouper>();
-
-		grouperList.add(new JavaBean11ActionGrouper());
+		fillActionGrouper(grouperList);
 		// grouperList.add(new Reader11ActionGrouper());
 		// grouperList.add(new Calc11ActionGrouper());
 		// grouperList.add(new Database11ActionGrouper());

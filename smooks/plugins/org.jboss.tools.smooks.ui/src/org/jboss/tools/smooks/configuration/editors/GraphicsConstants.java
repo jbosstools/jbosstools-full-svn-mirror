@@ -6,6 +6,12 @@ public final class GraphicsConstants {
 	
 	public static final Color BORDER_CORLOER = new Color(null,128,128,128);
 	
+	public static final String IMAGE_JAVA_AMPPING_TASK = "icons/full/obj32/java_mapping_task.jpg";
+	
+	public static final String IMAGE_APPLY_FREEMARKER_TASK = "icons/full/obj32/freemarker_task.jpg";
+	
+	public static final String IMAGE_INPUT_TASK = "icons/full/obj32/input_task.jpg";
+	
 	public static final String IMAGE_JAVA_ATTRIBUTE = "icons/full/obj16/att_obj.gif";
 	
 	public static final String IMAGE_VALIDATED_TAG = "icons/full/obj16/validated_tag.gif";

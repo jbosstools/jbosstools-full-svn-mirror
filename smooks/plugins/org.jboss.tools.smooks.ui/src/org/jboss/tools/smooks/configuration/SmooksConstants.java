@@ -31,8 +31,4 @@ public class SmooksConstants {
 	public static final String VERSION_1_2 = "1.2";
 	
 	public static final String[] SMOOKS_VERSIONS = new String[]{VERSION_1_0,VERSION_1_1,VERSION_1_2};
-	
-	public static final String TASK_ID_INPUT = "input";
-	
-	public static final String TASK_ID_JAVA_MAPPING = "java_mapping";
 }

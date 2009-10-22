@@ -1,12 +1,14 @@
 package org.jboss.tools.smooks.graphical.actions;
 
-import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
+import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 import org.jboss.tools.smooks.model.graphics.ext.TaskType;
 
 public class AddTaskNodeAction extends AbstractProcessGraphAction {
-
+	
 	protected String taskID = null;
+	
+	protected TaskTypeRules rules = new TaskTypeRules();
 
 	public AddTaskNodeAction(String taskID, String text, ISmooksModelProvider provider) {
 		super(text, provider);
@@ -32,7 +34,7 @@ public class AddTaskNodeAction extends AbstractProcessGraphAction {
 			TaskType currentTask = this.getCurrentSelectedTask().get(0);
 			String taskID = currentTask.getId();
 			if (taskID != null) {
-				if (taskID.equals(SmooksConstants.TASK_ID_INPUT) || taskID.equals(SmooksConstants.TASK_ID_JAVA_MAPPING))
+				if (taskID.equals(TaskTypeManager.TASK_ID_INPUT) || taskID.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING))
 					this.setEnabled(true);
 			}
 		}
