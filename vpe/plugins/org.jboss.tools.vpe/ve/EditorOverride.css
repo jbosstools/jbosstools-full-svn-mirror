@@ -60,7 +60,7 @@ a/*:link*/ {
   color: -moz-hyperlinktext;
 }
 
-input, button, textarea {
+button, textarea {
   -moz-user-select: all !important;
   -moz-user-input: auto !important;
   -moz-user-focus: none !important;
