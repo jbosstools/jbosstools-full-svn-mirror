@@ -65,7 +65,7 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 
 	public PaletteRoot createPaletteRoot() {
 		PaletteRoot root = new PaletteRoot();
-		PaletteDrawer drawer = new PaletteDrawer("Noraml Tools");
+		PaletteDrawer drawer = new PaletteDrawer("General");
 		drawer.add(new SelectionToolEntry());
 		drawer.add(new MarqueeToolEntry());
 		CreationFactory factory = new CreationFactory() {
