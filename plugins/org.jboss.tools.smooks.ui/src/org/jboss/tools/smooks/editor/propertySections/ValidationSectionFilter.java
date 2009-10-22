@@ -11,7 +11,6 @@
 package org.jboss.tools.smooks.editor.propertySections;
 
 import org.eclipse.jface.viewers.IFilter;
-import org.jboss.tools.smooks.graphical.editors.editparts.InputDataTreeNodeEditPart;
 
 /**
  * @author Dart
@@ -23,10 +22,10 @@ public class ValidationSectionFilter implements IFilter{
 	 * @see org.eclipse.jface.viewers.IFilter#select(java.lang.Object)
 	 */
 	public boolean select(Object toTest) {
-		if(toTest == null) return false;
-		if(toTest instanceof InputDataTreeNodeEditPart){
-			return true;
-		}
+//		if(toTest == null) return false;
+//		if(toTest instanceof InputDataTreeNodeEditPart){
+//			return true;
+//		}
 		return false;
 	}
 

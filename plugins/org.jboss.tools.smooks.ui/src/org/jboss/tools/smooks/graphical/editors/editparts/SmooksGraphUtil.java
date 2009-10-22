@@ -25,6 +25,7 @@ import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks.model.xsl.Xsl;
 
 /**
  * @author Dart
@@ -48,7 +49,16 @@ public class SmooksGraphUtil {
 				return null;
 			}
 			beanId = beanId.trim();
-			return "BeanType" + beanId;
+			return "BeanType_" + beanId;
+		}
+		
+		if (data instanceof Xsl) {
+			String id = ((Xsl) data).getApplyOnElement();
+			if (id == null) {
+				id = "";
+			}
+			id = id.trim();
+			return "XSL_" + id;
 		}
 		return null;
 	}

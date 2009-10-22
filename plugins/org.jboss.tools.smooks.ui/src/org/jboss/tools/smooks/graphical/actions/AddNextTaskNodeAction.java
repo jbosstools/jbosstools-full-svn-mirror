@@ -10,12 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.actions;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.edit.command.AddCommand;
-import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
 import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
@@ -26,7 +22,7 @@ import org.jboss.tools.smooks.model.graphics.ext.TaskType;
  * 
  */
 public class AddNextTaskNodeAction extends AddTaskNodeAction {
-
+	
 	public AddNextTaskNodeAction(String taskID, String text, ISmooksModelProvider provider) {
 		super(taskID, text, provider);
 	}
@@ -54,25 +50,9 @@ public class AddNextTaskNodeAction extends AddTaskNodeAction {
 	public void update() {
 		super.update();
 		if (this.isEnabled()) {
-			TaskType parentTask = this.getCurrentSelectedTask().get(0);
-			String currentTaskID = parentTask.getId();
-			if (currentTaskID.equals(SmooksConstants.TASK_ID_INPUT)) {
-				if (!SmooksConstants.TASK_ID_JAVA_MAPPING.equals(taskID)){
-					this.setEnabled(false);
-				}else{
-					List<?> taskList = parentTask.getTask();
-					for (Iterator<?> iterator = taskList.iterator(); iterator.hasNext();) {
-						TaskType object = (TaskType) iterator.next();
-						if(SmooksConstants.TASK_ID_JAVA_MAPPING.equals(object.getId())){
-							this.setEnabled(false);
-						}
-					}
-				}
-			}
-			if (currentTaskID.equals(SmooksConstants.TASK_ID_JAVA_MAPPING)) {
-//				if (!SmooksConstants.TASK_ID_JAVA_MAPPING.equals(taskID))
-					this.setEnabled(false);
-			}
+			TaskType testTaskType = GraphFactory.eINSTANCE.createTaskType();
+			testTaskType.setId(taskID);
+			setEnabled(rules.isNextTask(this.getCurrentSelectedTask().get(0),testTaskType));
 		}
 	}
 

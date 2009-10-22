@@ -106,17 +106,17 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 
 	private DefaultEditDomain editDomain = null;
 
-	private ISmooksModelProvider smooksModelProvider = null;
+	protected ISmooksModelProvider smooksModelProvider = null;
 
-	private RootModel root;
+	protected RootModel root;
 
-	private SmooksResourceListType smooksResourceList;
+	protected SmooksResourceListType smooksResourceList;
 
-	private List<Object> inputDataList = null;
+	protected List<Object> inputDataList = null;
 
-	private GraphicalModelFactory graphicalModelFactory;
+	protected GraphicalModelFactory graphicalModelFactory;
 
-	private ConnectionModelFactory connectionModelFactory;
+	protected ConnectionModelFactory connectionModelFactory;
 
 	public SmooksGraphicalEditorPart(ISmooksModelProvider provider) {
 		super();
@@ -183,10 +183,6 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 				getEditorSite().getShell().getDisplay().asyncExec(new Runnable() {
 					public void run() {
 						if (mostRecentCommand != null) {
-							// if (getProcessGraphViewer() != null) {
-							// getProcessGraphViewer().refresh();
-							// getProcessGraphViewer().applyLayout();
-							// }
 							Command rawCommand = mostRecentCommand;
 							while (rawCommand instanceof CommandWrapper) {
 								rawCommand = ((CommandWrapper) rawCommand).getCommand();
@@ -223,7 +219,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 		return connectionModelFactory;
 	}
 
-	private ConnectionModelFactory createConnectionModelFactory() {
+	protected ConnectionModelFactory createConnectionModelFactory() {
 		return new ConnectionModelFactoryImpl();
 	}
 
@@ -238,7 +234,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 		return graphicalModelFactory;
 	}
 
-	private GraphicalModelFactory createGraphicalModelFactory() {
+	protected GraphicalModelFactory createGraphicalModelFactory() {
 		return new GraphicalModelFactoryImpl();
 	}
 
@@ -610,11 +606,9 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 
 	@Override
 	protected void hookGraphicalViewer() {
-		// super.hookGraphicalViewer();
+		super.hookGraphicalViewer();
 		getGraphicalViewer().addSelectionChangedListener(getSelectionSynchronizer());
 		getGraphicalViewer().addSelectionChangedListener(this);
-
-		getEditorSite().setSelectionProvider(getGraphicalViewer());
 	}
 
 	protected void initGraphicalModel() {
