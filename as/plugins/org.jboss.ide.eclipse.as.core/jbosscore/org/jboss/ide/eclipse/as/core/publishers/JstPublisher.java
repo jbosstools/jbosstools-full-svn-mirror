@@ -69,7 +69,7 @@ public class JstPublisher extends PublishUtil implements IJBossServerPublisher {
 		IDeployableServer ds = ServerConverter.getDeployableServer(server);
 		boolean shouldAccept = ds != null && LocalPublishMethod.LOCAL_PUBLISH_METHOD.equals(type)
 			&& ModuleCoreNature.isFlexibleProject(module[0].getProject())
-			&& ds.zipsWTPDeployments();
+			&& !ds.zipsWTPDeployments();
 		return shouldAccept;
 	}
 	
