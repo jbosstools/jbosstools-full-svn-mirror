@@ -120,8 +120,8 @@
 	
 	<note>
 		<title>Note:</title>
-		<para>On Linux system with 64-bit JVM the visual editor may fail to start. In this case you need the xpLib.i386 package.
-			See the <link linkend="question_1">FAQ</link>.</para>
+		<para>On Linux system with 64-bit JVM the visual editor may fail to start. In this case you need the <literal>libstdc++.so.5</literal> library.
+			See also the <link linkend="question_1">FAQ</link>.</para>
 	</note>
 </section>
  
