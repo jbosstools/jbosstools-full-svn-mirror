@@ -191,6 +191,10 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 		hookBrowseButtonSelectionAdapter();
 		hookFileTextModifyListener();
 		this.setControl(mainComposite);
+		
+		changeWizardPageStatus();
+		// don't show the error message when first open the dialog
+		this.setErrorMessage(null);
 	}
 
 	protected void hookFileTextModifyListener() {
@@ -361,7 +365,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 		gd.grabExcessHorizontalSpace = true;
 		gd.horizontalAlignment = GridData.END;
 		fileSystemBrowseButton.setLayoutData(gd);
-		changeWizardPageStatus();
+		
 		return xsdComposite;
 	}
 

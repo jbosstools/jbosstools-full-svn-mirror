@@ -35,6 +35,7 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
+ * @deprecated
  * @author Dart
  * 
  */

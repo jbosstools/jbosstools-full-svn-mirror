@@ -54,6 +54,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableColorProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -83,7 +84,9 @@ import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.ide.IDE;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
 import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelectionWizard;
+import org.jboss.tools.smooks.configuration.editors.wizard.ViewerInitorStore;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
@@ -537,7 +540,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		deactiveAllInputFile(compoundCommand);
 		if (!compoundCommand.isEmpty()) {
 			getEditingDomain().getCommandStack().execute(compoundCommand);
-			if(reader != null && reader instanceof EObject){
+			if (reader != null && reader instanceof EObject) {
 				createReaderPanel(((EObject) reader));
 			}
 		}
@@ -820,8 +823,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 							IJavaProject javaProject = JavaCore.create(file.getProject());
 							if (javaProject != null) {
 								try {
-									if(filePath.endsWith("[]")){
-										filePath = filePath.substring(0,filePath.length() - 2);
+									if (filePath.endsWith("[]")) {
+										filePath = filePath.substring(0, filePath.length() - 2);
 									}
 									IJavaElement result = javaProject.findType(filePath);
 									if (result != null)
@@ -950,18 +953,39 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	}
 
 	protected void showInputDataWizard() {
-		StructuredDataSelectionWizard wizard = new StructuredDataSelectionWizard();
-		wizard.setInput(getEditorInput());
-		wizard.setSite(getEditorSite());
-		wizard.setForcePreviousAndNextButtons(true);
-		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(
-				getEditorSite().getShell(), wizard, getSmooksGraphicsExtType());
-		if (dialog.show() == Dialog.OK) {
-			SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
-			String type = dialog.getType();
-			String path = dialog.getPath();
-			Properties pros = dialog.getProperties();
-			SmooksUIUtils.recordInputDataInfomation(getEditingDomain(), null, extType, type, path, pros);
+
+		SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
+		String inputType = extType.getInputType();
+		List<InputType> inputTypes = null;
+		if (inputType == null || SmooksModelUtils.INPUT_TYPE_CUSTOME.equals(inputType) || inputType.trim().equals("")) {
+			StructuredDataSelectionWizard wizard = new StructuredDataSelectionWizard();
+			wizard.setInput(getEditorInput());
+			wizard.setSite(getEditorSite());
+			wizard.setForcePreviousAndNextButtons(true);
+			StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(getEditorSite()
+					.getShell(), wizard, getSmooksGraphicsExtType());
+			
+			if (dialog.show() == Dialog.OK) {
+				String type = dialog.getType();
+				String path = dialog.getPath();
+				Properties pros = dialog.getProperties();
+				inputTypes = SmooksUIUtils.recordInputDataInfomation(getEditingDomain(), null, extType, type, path, pros);
+			}
+		} else {
+			IStructuredDataSelectionWizard wizard = ViewerInitorStore.getInstance().getStructuredDataCreationWizard(
+					inputType);
+			WizardDialog dialog = new WizardDialog(getEditorSite().getShell(), wizard);
+			wizard.init(getEditorSite(), getEditorInput());
+			if (dialog.open() == Dialog.OK) {
+				String path = wizard.getStructuredDataSourcePath();
+				Properties pros = wizard.getProperties();
+				inputTypes = SmooksUIUtils.recordInputDataInfomation(getEditingDomain(), null, extType, inputType, path, pros);
+			}
+		}
+		
+		if(inputTypes != null && !inputTypes.isEmpty()){
+			deactiveAllInputFile(null);
+			setInputDataActiveStatus(true, inputTypes.get(0), null);
 		}
 	}
 
@@ -974,8 +998,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	}
 
 	public void inputTypeChanged(SmooksGraphicsExtType extType) {
-		if (inputDataViewer != null)
-			inputDataViewer.refresh();
+//		if (inputDataViewer != null)
+//			inputDataViewer.refresh();
 		refreshInputModelView();
 	}
 

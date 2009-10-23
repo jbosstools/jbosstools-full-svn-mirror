@@ -889,9 +889,10 @@ public class SmooksUIUtils {
 
 			});
 		}
-//		boolean valueIsSet = true;
+		// boolean valueIsSet = true;
 		if (model != null && model instanceof EObject && itemPropertyDescriptor != null) {
-//			valueIsSet = ((EObject) model).eIsSet((EAttribute) itemPropertyDescriptor.getFeature(model));
+			// valueIsSet = ((EObject) model).eIsSet((EAttribute)
+			// itemPropertyDescriptor.getFeature(model));
 		}
 		if (editValue != null) {
 			valueText.setText(editValue);
@@ -1215,8 +1216,8 @@ public class SmooksUIUtils {
 							if (fresource.getProject().hasNature(JavaCore.NATURE_ID)) {
 								IJavaProject javaProject = JavaCore.create(fresource.getProject());
 								String typeName = searchComposite.getText().getText();
-								if(typeName.endsWith("[]")){
-									typeName = typeName.substring(0,typeName.length() - 2);
+								if (typeName.endsWith("[]")) {
+									typeName = typeName.substring(0, typeName.length() - 2);
 								}
 								IJavaElement result = javaProject.findType(typeName);
 								if (result != null)
@@ -1412,8 +1413,8 @@ public class SmooksUIUtils {
 	}
 
 	public static SmooksResourceListType getSmooks11ResourceListType(EObject model) {
-		if(model instanceof org.jboss.tools.smooks.model.smooks.DocumentRoot){
-			return ((org.jboss.tools.smooks.model.smooks.DocumentRoot)model).getSmooksResourceList();
+		if (model instanceof org.jboss.tools.smooks.model.smooks.DocumentRoot) {
+			return ((org.jboss.tools.smooks.model.smooks.DocumentRoot) model).getSmooksResourceList();
 		}
 		if (model instanceof SmooksResourceListType)
 			return (SmooksResourceListType) model;
@@ -2439,8 +2440,9 @@ public class SmooksUIUtils {
 		return false;
 	}
 
-	public static void recordInputDataInfomation(EditingDomain domain, InputType input, SmooksGraphicsExtType extType,
+	public static List<InputType> recordInputDataInfomation(EditingDomain domain, InputType input, SmooksGraphicsExtType extType,
 			String type, String path, Properties properties) {
+		List<InputType> inputTypeList = new ArrayList<InputType>();
 		if (type != null && path != null && extType != null && domain != null) {
 			String[] values = path.split(";");
 			if (values == null || values.length == 0) {
@@ -2475,7 +2477,10 @@ public class SmooksUIUtils {
 				input.getParam().addAll(params);
 				Command command = AddCommand.create(domain, extType,
 						GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__INPUT, input);
-				domain.getCommandStack().execute(command);
+				if (command.canExecute()) {
+					domain.getCommandStack().execute(command);
+					inputTypeList.add(input);
+				}
 				// extType.getInput().add(input);
 			}
 			// try {
@@ -2489,6 +2494,8 @@ public class SmooksUIUtils {
 			// SmooksConfigurationActivator.getDefault().log(e);
 			// }
 		}
+		
+		return inputTypeList;
 	}
 
 	public static void expandGraphTree(List<?> expandNodes, TreeNodeEditPart rootEditPart) {
