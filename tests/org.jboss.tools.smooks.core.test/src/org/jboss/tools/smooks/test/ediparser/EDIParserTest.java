@@ -28,6 +28,7 @@ import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
 import org.jboss.tools.smooks.test.model11.BaseTestCase;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -36,27 +37,24 @@ import org.jboss.tools.smooks.test.model11.BaseTestCase;
 public class EDIParserTest extends BaseTestCase {
 
 	public void testEDIParser() throws IOException, DocumentException, ParserConfigurationException {
-		
-		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(null);
 
-	
-		
+		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(null);
 
 		smooksResource.load(EDIParserTest.class.getResourceAsStream("smooks-config.xml"), null);
 
 		SmooksResourceListType resourceList = ((org.jboss.tools.smooks.model.smooks.DocumentRoot) smooksResource
 				.getContents().get(0)).getSmooksResourceList();
 		assertNotNull(resourceList);
-		
+
 		SmooksGraphicsExtType extType = getSmooksGraphExtType(resourceList);
-		
+
 		assertNotNull(extType);
 		InputType inputType = null;
 		List<?> ilist = extType.getInput();
 		for (Iterator<?> iterator = ilist.iterator(); iterator.hasNext();) {
 			Object object = (Object) iterator.next();
 			if (object instanceof InputType) {
-				if ("EDI".equalsIgnoreCase(((InputType) object).getType())) {
+				if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equalsIgnoreCase(((InputType) object).getType())) {
 					inputType = (InputType) object;
 					break;
 				}
@@ -65,7 +63,8 @@ public class EDIParserTest extends BaseTestCase {
 		assertNotNull(inputType);
 
 		EDIDataParser parser = new EDIDataParser();
-		TagList tagList = parser.parseEDIFile(EDIParserTest.class.getResourceAsStream("input-message.edi"), inputType,resourceList);
+		TagList tagList = parser.parseEDIFile(EDIParserTest.class.getResourceAsStream("input-message.edi"), inputType,
+				resourceList);
 		assertNotNull(tagList);
 		List<String> namesList = new ArrayList<String>();
 		namesList.add("Orderaaa");
@@ -74,7 +73,8 @@ public class EDIParserTest extends BaseTestCase {
 		for (Iterator<?> iterator = ilist.iterator(); iterator.hasNext();) {
 			Object object = (Object) iterator.next();
 			if (object instanceof InputType) {
-				if ("EDI".equalsIgnoreCase(((InputType) object).getType()) && object != inputType) {
+				if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equalsIgnoreCase(((InputType) object).getType())
+						&& object != inputType) {
 					inputType = (InputType) object;
 					break;
 				}
