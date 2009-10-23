@@ -26,7 +26,7 @@
  </section>
 
 <section>
- <title>Key Features of JBoss Developer Studio</title>
+	<title>Key Features of JBoss Developer Studio  and Requirements</title>
  <para>For a start, we propose you to look through the table of main features of JBoss Developer Studio:</para>
 
  <table>
@@ -107,26 +107,29 @@
      <entry><para>JBossWeb Service</para></entry>
      <entry><para>JBoss WS is a web service framework developed as a part of the JBoss Application Server. It implements the JAX-WS specification that defines a programming model and run-time architecture for implementing web services in Java, targeted at the Java Platform, Enterprise Edition 5 (Java EE 5).</para></entry>
     </row>
-    
-    
    </tbody>
-   
   </tgroup>
  </table>
  
+ <para><property>JBDS</property> requires JDK 5+ (JDK 6 in case of EAP 5.0). Also it&apos;s important that 
+ 	the JVM&apos;s architecture matches the particular <property>JBDS</property> build, i.e. if you&apos;re on a 
+ 	64-bit system and use the 64-bit JVM, you need the 64-bit JBDS.</para>
+ 	
+	<para>For the 32-bit version of JBDS use the 32-bit JVM or just use <literal>-vm</literal> flag to 
+	tell JBDS to use 32-bit java if the 64-bit one is found as the default.</para>
+	
+	<note>
+		<title>Note:</title>
+		<para>On Linux system with 64-bit JVM the visual editor may fail to start. In this case you need the xpLib.i386 package.
+			See the <link linkend="question_1">FAQ</link>.</para>
+	</note>
 </section>
  
- 
-
-
-
-
  <section id="ConfigJavaEnvironment">
   <?dbhtml filename="ConfigJavaEnvironment.html"?>
   <title>Configuring Your Java Environment</title>
-  <para>You must have a working installation of JDK 5 before you install <property>JBoss Developer
-    Studio</property>. Currently it will only fully work with a 32-bit JVM, not a 64-bit JVM. On a
-   64-bit JVM the visual editor fails to launch because of feature of OS architecture. Thus in this
+  <para>You must have a working installation of JDK before you install <property>JBoss Developer
+    Studio</property>. Thus in this
    guide we will show you how to install a 32-bit Sun JDK 5.0 on a Linux Platform and Microsoft
    Windows Platform.</para>
 
