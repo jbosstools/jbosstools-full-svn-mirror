@@ -9,7 +9,6 @@ import java.util.Set;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
-import org.eclipse.ui.part.IPage;
 import org.jboss.tools.common.el.core.resolver.ELContextImpl;
 import org.jboss.tools.jst.web.kb.IIncludedContextSupport;
 import org.jboss.tools.jst.web.kb.IPageContext;
