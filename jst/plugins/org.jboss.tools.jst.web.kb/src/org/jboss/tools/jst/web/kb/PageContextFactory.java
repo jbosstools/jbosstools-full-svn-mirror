@@ -309,15 +309,20 @@ public class PageContextFactory {
 		if (file == null)
 			return;
 		
+		// Fix for JBIDE-5083 >>>
+		if (context.contextExistsInParents(file))
+			return;
+		// Fix for JBIDE-5083 <<<
+		
 		IStructuredModel sModel = null; 
 			
 		try {
 			sModel = StructuredModelManager.getModelManager()
 				.getModelForRead(file);
 		} catch (IOException e) {
-			// Ignore. The sModel will be set to null
+			WebKbPlugin.getDefault().logError(e);
 		} catch (CoreException e) {
-			// Ignore. The sModel will be set to null
+			WebKbPlugin.getDefault().logError(e);
 		}
 
 		if (sModel == null)
@@ -400,9 +405,9 @@ public class PageContextFactory {
 			sModel = StructuredModelManager.getModelManager()
 				.getModelForRead(file);
 		} catch (IOException e) {
-			// Ignore. The sModel will be set to null
+			WebKbPlugin.getDefault().logError(e);
 		} catch (CoreException e) {
-			// Ignore. The sModel will be set to null
+			WebKbPlugin.getDefault().logError(e);
 		}
 
 		if (sModel == null)
@@ -433,9 +438,9 @@ public class PageContextFactory {
 			sModel = StructuredModelManager.getModelManager()
 				.getModelForRead(context.getResource());
 		} catch (IOException e) {
-			// Ignore. The sModel will be set to null
+			WebKbPlugin.getDefault().logError(e);
 		} catch (CoreException e) {
-			// Ignore. The sModel will be set to null
+			WebKbPlugin.getDefault().logError(e);
 		}
 
 		if (sModel == null)
@@ -538,9 +543,9 @@ public class PageContextFactory {
 			sModel = StructuredModelManager.getModelManager()
 				.getModelForRead(context.getResource());
 		} catch (IOException e) {
-			// Ignore. The sModel will be set to null
+			WebKbPlugin.getDefault().logError(e);
 		} catch (CoreException e) {
-			// Ignore. The sModel will be set to null
+			WebKbPlugin.getDefault().logError(e);
 		}
 
 		if (sModel == null)
@@ -656,9 +661,9 @@ public class PageContextFactory {
 		try {
 			sModel = StructuredModelManager.getModelManager().getModelForRead(context.getResource());
 		} catch (IOException e) {
-			// Ignore. The sModel will be set to null
+			WebKbPlugin.getDefault().logError(e);
 		} catch (CoreException e) {
-			// Ignore. The sModel will be set to null
+			WebKbPlugin.getDefault().logError(e);
 		}
 		
 		if (sModel == null) 

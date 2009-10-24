@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.ui.part.IPage;
@@ -21,6 +22,7 @@ public class XmlContextImpl extends ELContextImpl implements IPageContext {
 	protected ITagLibrary[] libs;
 	protected Map<IRegion, Map<String, INameSpace>> nameSpaces = new HashMap<IRegion, Map<String, INameSpace>>();
 	protected IResourceBundle[] bundles;
+	private IIncludedContextSupport parentContext = null;
 
 	/*
 	 * (non-Javadoc)
@@ -149,14 +151,48 @@ public class XmlContextImpl extends ELContextImpl implements IPageContext {
 		nameSpaces.get(region).put(nameSpace.getURI(), nameSpace);
 	}
 
+	/**
+	 * (non-Javadoc)
+	 * @see org.jboss.tools.jst.web.kb.IIncludedContextSupport#addIncludedContext(org.jboss.tools.jst.web.kb.IPageContext)
+	 */
 	public void addIncludedContext(IPageContext includedContext) {
 		throw new UnsupportedOperationException();
 		
 	}
 
+	/**
+	 * (non-Javadoc)
+	 * @see org.jboss.tools.jst.web.kb.IIncludedContextSupport#getIncludedContexts()
+	 */
 	public List<IPageContext> getIncludedContexts() {
 		return null;
 	}
-	
-	
+
+	/**
+	 * (non-Javadoc)
+	 * @see org.jboss.tools.jst.web.kb.IIncludedContextSupport#contextExistsInParents(org.eclipse.core.resources.IFile)
+	 */
+	public boolean contextExistsInParents(IFile resource) {
+		// Assuming that the resource must not be null here
+		if (resource.equals(getResource()))
+			return true;
+		
+		return getParent() == null ? false : getParent().contextExistsInParents(resource);
+	}
+
+	/**
+	 * (non-Javadoc)
+	 * @see org.jboss.tools.jst.web.kb.IIncludedContextSupport#getParent()
+	 */
+	public IIncludedContextSupport getParent() {
+		return parentContext;
+	}
+
+	/**
+	 * (non-Javadoc)
+	 * @see org.jboss.tools.jst.web.kb.IIncludedContextSupport#setParent(org.jboss.tools.jst.web.kb.IIncludedContextSupport)
+	 */
+	public void setParent(IIncludedContextSupport parent) {
+		parentContext = parent;
+	}
 }
