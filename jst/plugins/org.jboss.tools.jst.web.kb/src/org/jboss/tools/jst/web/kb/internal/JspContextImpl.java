@@ -26,12 +26,12 @@ import org.w3c.dom.css.CSSStyleSheet;
 
 /**
  * JSP page context
+ * 
  * @author Alexey Kazakov
  */
 public class JspContextImpl extends XmlContextImpl implements ICSSContainerSupport {
 	protected List<IPageContext> fIncludedContexts = null;
 	protected List<CSSStyleSheet> fCSSStyleSheets = null;
-	
 	
 	@Override
 	public void addIncludedContext(IPageContext includedContext) {
@@ -39,6 +39,9 @@ public class JspContextImpl extends XmlContextImpl implements ICSSContainerSuppo
 			fIncludedContexts = new ArrayList<IPageContext>();
 		}
 		fIncludedContexts.add(includedContext);
+		// Fix for JBIDE-5083 >>>
+		includedContext.setParent(this);
+		// Fix for JBIDE-5083 <<<
 	}
 
 	@Override

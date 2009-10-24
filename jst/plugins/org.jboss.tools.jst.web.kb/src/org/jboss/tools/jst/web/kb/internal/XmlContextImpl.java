@@ -157,7 +157,6 @@ public class XmlContextImpl extends ELContextImpl implements IPageContext {
 	 */
 	public void addIncludedContext(IPageContext includedContext) {
 		throw new UnsupportedOperationException();
-		
 	}
 
 	/**

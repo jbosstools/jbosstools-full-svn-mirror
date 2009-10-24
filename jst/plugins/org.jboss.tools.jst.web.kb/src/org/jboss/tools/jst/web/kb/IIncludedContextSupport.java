@@ -52,7 +52,6 @@ public interface IIncludedContextSupport {
 	 */
 	Map<String, List<INameSpace>> getNameSpaces(int offset);
 
-	
 	/**
 	 * Checks if the context exists in parent contexts for the specified resource
 	 * 
