@@ -92,11 +92,11 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>Click the <property>Next</property> button. On the second page make sure that the folder <property>HelloWorld/bpel</property> is selected.
+        <para>Click the <property>Next</property> button. On the second page make sure that the folder <property>HelloWorld/bpelContent</property> is selected.
               Click <property>Finish</property>.
         </para>
         <note>
-            <para>All of your files that are used in your BPEL project must be under the <property>bpel</property> folder. Only in this case 
+            <para>All of your files that are used in your BPEL project must be under the <property>bpelContent</property> folder. Only in this case 
             these files can be deployed to JBoss server.
             </para>
         </note>

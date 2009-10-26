@@ -23,7 +23,7 @@
             <listitem>
                 <para>On the next wizard page you should enter the following information:</para>
                 <para><emphasis><property>BPEL Project</property></emphasis>: Click  the <property>Browse...</property> button to select the BPEL project in your workspace which you want to deploy to the runtime.
-                    Please note, that you should select the <property>bpel</property> folder in your new BPEL project as a value of <property>BPEL Project</property> field because the bpel-deploy.xml should be created in this place.
+                    Please note, that you should select the <property>bpelContent</property> folder in your new BPEL project as a value of <property>BPEL Project</property> field because the bpel-deploy.xml should be created in this place.
                 </para>
                 <para><emphasis><property>File name</property></emphasis>: The default value is bpel-deploy.xml. Please, don't change it.</para>
                 <para>Click on <property>Finish</property> button to close the wizard and a new bpel-deploy.xml file will be created.</para>
