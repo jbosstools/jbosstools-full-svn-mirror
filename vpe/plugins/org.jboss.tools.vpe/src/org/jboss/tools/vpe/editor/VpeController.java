@@ -869,7 +869,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void processPostModelEvent(ModelLifecycleEvent event) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+		//A part of fix JBIDE-5066
+		if ((switcher==null)||(!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE))) {
 			return;
 		}
 		try {
@@ -903,7 +904,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				// pageContext.fireTaglibsChanged();
 			}
 		} finally {
-			switcher.stopActiveEditor();
+			//A part of fix JBIDE-5066
+			if (switcher!=null) {
+				switcher.stopActiveEditor();
+			}
 		}
 	}
 
