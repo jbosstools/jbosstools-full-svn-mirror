@@ -16,12 +16,13 @@ import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.draw2d.graph.DirectedGraph;
-import org.eclipse.draw2d.graph.DirectedGraphLayout;
 import org.eclipse.draw2d.graph.Edge;
 import org.eclipse.draw2d.graph.Node;
 import org.eclipse.emf.common.command.Command;
@@ -34,6 +35,7 @@ import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.gef.ContextMenuProvider;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
@@ -47,6 +49,7 @@ import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithPalette;
 import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.util.TransferDropTargetListener;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
@@ -76,11 +79,14 @@ import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
 import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
+import org.jboss.tools.smooks.gef.tree.figures.GraphAnimation;
 import org.jboss.tools.smooks.gef.tree.figures.IMoveableModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.actions.AutoLayoutAction;
 import org.jboss.tools.smooks.graphical.editors.commands.IgnoreException;
+import org.jboss.tools.smooks.graphical.editors.editparts.IAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataContainerEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
@@ -256,6 +262,10 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 	@Override
 	protected void createActions() {
 		super.createActions();
+		IAction autoLayout = new AutoLayoutAction(this);
+		autoLayout.setId(AutoLayoutAction.ID);
+		this.getActionRegistry().registerAction(autoLayout);
+		getSelectionActions().add(autoLayout.getId());
 	}
 
 	private void deleteRelatedConnection(AbstractSmooksGraphicalModel effecedNode, EStructuralFeature feature,
@@ -572,11 +582,14 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 		keyHandler.put(org.eclipse.gef.KeyStroke.getPressed(SWT.DEL, 0), this.getActionRegistry().getAction(
 				ActionFactory.DELETE.getId()));
 
-		SmooksGraphicalEditorMenuContextProvider provider = new SmooksGraphicalEditorMenuContextProvider(
-				getGraphicalViewer(), this.getActionRegistry());
+		ContextMenuProvider provider = getContextMenuProvider();
 		getGraphicalViewer().setContextMenu(provider);
 
 		hookSelectionActions();
+	}
+
+	protected ContextMenuProvider getContextMenuProvider() {
+		return new SmooksGraphicalEditorMenuContextProvider(getGraphicalViewer(), this.getActionRegistry());
 	}
 
 	private void hookSelectionActions() {
@@ -891,6 +904,26 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 		applyGraphicalInformation(graph1, graphicalModel);
 	}
 
+	protected boolean needToAutoLayout(List<AbstractSmooksGraphicalModel> list, GraphType graph) {
+		int missFigure = 0;
+		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+			AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator.next();
+			String id = SmooksGraphUtil.generateFigureID(abstractSmooksGraphicalModel);
+			if (id != null) {
+				FigureType ft = SmooksGraphUtil.findFigureType(graph, id);
+				if (ft == null) {
+					missFigure++;
+				}
+			} else {
+				missFigure++;
+			}
+		}
+		if (missFigure >= (list.size() / 2)) {
+			return true;
+		}
+		return false;
+	}
+
 	protected void applyGraphicalInformation(GraphType graph, AbstractSmooksGraphicalModel graphicalModel) {
 		if (graphicalModel instanceof IMoveableModel) {
 			String id = SmooksGraphUtil.generateFigureID(graphicalModel);
@@ -905,65 +938,105 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 			}
 		}
 	}
+	
+	public boolean autoLayout() {
+		return autoLayout(false);
+	}
 
-	protected void initModelGraphicsInformation(SmooksGraphicsExtType ext) {
-		if (false) {
-			DirectedGraph graph = new DirectedGraph();
-			EditPart rootEditorPart = this.getGraphicalViewer().getContents();
-			List<?> children = rootEditorPart.getChildren();
-			HashMap<Object, Node> nodeMap = new HashMap<Object, Node>();
-			// HashMap<Object, Edge> edgeMap = new HashMap<Object, Edge>();
-			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
-				Object object = (Object) iterator.next();
-				if (object instanceof GraphicalEditPart) {
-					IFigure figure = ((GraphicalEditPart) object).getFigure();
-					Node node = new Node();
-					nodeMap.put(object, node);
-					node.height = figure.getPreferredSize().height;
-					node.width = figure.getPreferredSize().width;
-					graph.nodes.add(node);
-				}
-			}
-
-			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
-				GraphicalEditPart object = (GraphicalEditPart) iterator.next();
-				for (Iterator<?> iterator2 = children.iterator(); iterator2.hasNext();) {
-					GraphicalEditPart testEditPart = (GraphicalEditPart) iterator2.next();
-					Node node = nodeMap.get(object);
-					Node testNode = nodeMap.get(testEditPart);
-					if (node != null && testNode != null) {
-						if (hasConnectionAssociation(object, testEditPart, SOURCE_CONNECT_TYPE)) {
-							Edge edge = new Edge(node, testNode);
-							graph.edges.add(edge);
-						}
-						if (hasConnectionAssociation(object, testEditPart, TARGET_CONNECT_TYPE)) {
-							Edge edge = new Edge(testNode, node);
-							graph.edges.add(edge);
-						}
-					}
-				}
-			}
-
-			DirectedGraphLayout layout = new DirectedGraphLayout();
-			layout.visit(graph);
+	public boolean autoLayout(boolean animation) {
+		GraphAnimation graphAnimation = new GraphAnimation();
+		HashMap<Object, Node> nodeMap = new HashMap<Object, Node>();
+		DirectedGraph directedGraph = collectionGraphInformation(nodeMap);
+		IAutoLayout layout = getAutoLayout();
+		if (layout != null) {
+			layout.visit(directedGraph);
 			Iterator<?> it = nodeMap.keySet().iterator();
+			Map<IMoveableModel, Point> map = new HashMap<IMoveableModel, Point>();
+			List<GraphicalEditPart> figureList = new ArrayList<GraphicalEditPart>();
 			while (it.hasNext()) {
 				GraphicalEditPart part = (GraphicalEditPart) it.next();
 				Node node = (Node) nodeMap.get(part);
+				figureList.add(part);
+				graphAnimation.recordInit(part);
 				IMoveableModel graphicalModel = (IMoveableModel) part.getModel();
-				((IMoveableModel) graphicalModel).setLocation(new Point(node.x, node.y));
+				map.put(graphicalModel, new Point(node.x, node.y));
+				graphAnimation.recordFinal(part, new Rectangle(node.x, node.y, 0, 0));
 			}
-			return;
-
+			if (animation) {
+				graphAnimation.start(figureList);
+			}
+			Iterator<IMoveableModel> it1 = map.keySet().iterator();
+			while (it1.hasNext()) {
+				IMoveableModel graphModel = it1.next();
+				Point p = map.get(graphModel);
+				((IMoveableModel) graphModel).setLocation(p);
+			}
+			return true;
 		}
+		return false;
+	}
+
+	protected void initModelGraphicsInformation(SmooksGraphicsExtType ext) {
+		List<AbstractSmooksGraphicalModel> list = root.getChildren();
 		GraphType graph = ext.getGraph();
+		if (needToAutoLayout(list, graph)) {
+			if (autoLayout()) {
+				return;
+			}
+		}
 		if (graph == null)
 			return;
-		List<AbstractSmooksGraphicalModel> list = root.getChildren();
 		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 			AbstractSmooksGraphicalModel treeNodeModel = (AbstractSmooksGraphicalModel) iterator.next();
 			applyGraphicalInformation(graph, treeNodeModel);
 		}
+	}
+
+	public IAutoLayout getAutoLayout() {
+		return null;
+	}
+
+	protected DirectedGraph collectionGraphInformation(HashMap<Object, Node> nodeMap) {
+		DirectedGraph graph = new DirectedGraph();
+		if (getGraphicalViewer() == null) {
+			return graph;
+		}
+		EditPart rootEditorPart = this.getGraphicalViewer().getContents();
+		List<?> children = rootEditorPart.getChildren();
+		// HashMap<Object, Edge> edgeMap = new HashMap<Object, Edge>();
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			if (object instanceof GraphicalEditPart) {
+				IFigure figure = ((GraphicalEditPart) object).getFigure();
+				Node node = new Node();
+				node.data = object;
+				nodeMap.put(object, node);
+				node.height = figure.getPreferredSize().height;
+				node.width = figure.getPreferredSize().width;
+				graph.nodes.add(node);
+			}
+		}
+
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			GraphicalEditPart object = (GraphicalEditPart) iterator.next();
+			for (Iterator<?> iterator2 = children.iterator(); iterator2.hasNext();) {
+				GraphicalEditPart testEditPart = (GraphicalEditPart) iterator2.next();
+				Node node = nodeMap.get(object);
+				Node testNode = nodeMap.get(testEditPart);
+				if (node != null && testNode != null) {
+					if (hasConnectionAssociation(object, testEditPart, SOURCE_CONNECT_TYPE)) {
+						Edge edge = new Edge(node, testNode);
+						edge.data = testEditPart;
+						graph.edges.add(edge);
+					}
+					if (hasConnectionAssociation(object, testEditPart, TARGET_CONNECT_TYPE)) {
+						Edge edge = new Edge(testNode, node);
+						graph.edges.add(edge);
+					}
+				}
+			}
+		}
+		return graph;
 	}
 
 	private boolean hasAssociation(Object model, GraphicalEditPart editPart) {

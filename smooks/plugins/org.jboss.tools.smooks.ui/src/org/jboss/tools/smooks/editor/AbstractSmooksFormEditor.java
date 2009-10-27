@@ -560,12 +560,14 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 		if (resourceList != null) {
 			smooksGraphicsExt = GraphFactory.eINSTANCE.createSmooksGraphicsExtType();
+			smooksGraphicsExt.setGraph(GraphFactory.eINSTANCE.createGraphType());
+			smooksGraphicsExt.setProcesses(GraphFactory.eINSTANCE.createProcessesType());
 			smooksGraphicsExt.setInputType(inputType);
 			smooksGraphicsExt.setPlatformVersion(version);
 			AddCommand.create(
 					this.editingDomain,
 					resourceList,
-					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP,
+					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
 					FeatureMapUtil.createEntry(
 							GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT,
 							smooksGraphicsExt)).execute();

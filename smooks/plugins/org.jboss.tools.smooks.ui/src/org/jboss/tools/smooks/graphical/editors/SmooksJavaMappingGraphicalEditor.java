@@ -21,6 +21,8 @@ import org.jboss.tools.smooks.configuration.editors.actions.ISmooksActionGrouper
 import org.jboss.tools.smooks.configuration.editors.actions.JavaBean11ActionGrouper;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.editparts.IAutoLayout;
+import org.jboss.tools.smooks.graphical.editors.editparts.JavaMappingAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.model.JavaBeanGraphModel;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.ExpressionType;
@@ -34,12 +36,12 @@ import org.jboss.tools.smooks.model.javabean12.BeanType;
  */
 public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart {
 
+	private IAutoLayout javaMappingAutoLayout;
+
 	public SmooksJavaMappingGraphicalEditor(ISmooksModelProvider provider) {
 		super(provider);
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#getPaletteRoot()
@@ -60,6 +62,18 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 			
 		};
 		return creator.createPaletteRoot();
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#getAutoLayout()
+	 */
+	@Override
+	public IAutoLayout getAutoLayout() {
+		if(javaMappingAutoLayout == null){
+			javaMappingAutoLayout = new JavaMappingAutoLayout();
+		}
+		return javaMappingAutoLayout;
 	}
 
 
