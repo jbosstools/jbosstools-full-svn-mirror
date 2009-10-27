@@ -11,15 +11,20 @@
 package org.jboss.tools.smooks.graphical.editors;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
+import org.jboss.tools.smooks.model.graphics.ext.TaskType;
+import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
  * @author Dart
  * 
  */
 public class TaskTypeManager {
+
 	public static final String TASK_ID_INPUT = "input";
 
 	public static final String TASK_ID_JAVA_MAPPING = "java_mapping";
@@ -29,6 +34,19 @@ public class TaskTypeManager {
 	public static final String TASK_ID_FREEMARKER_TEMPLATE = "freemarker_template";
 
 	private static List<TaskTypeDescriptor> allTaskList = null;
+
+	public static String[] getChildTaskIDs(String parentId) {
+		if (parentId == null)
+			return null;
+		if (parentId.equals(TaskTypeManager.TASK_ID_INPUT)) {
+			return new String[] { TaskTypeManager.TASK_ID_JAVA_MAPPING, TaskTypeManager.TASK_ID_XSL_TEMPLATE,
+					TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE };
+		}
+		if (parentId.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
+			return new String[] { TaskTypeManager.TASK_ID_XSL_TEMPLATE, TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE };
+		}
+		return null;
+	}
 
 	/**
 	 * @return the allTaskList
@@ -45,6 +63,55 @@ public class TaskTypeManager {
 					GraphicsConstants.IMAGE_APPLY_FREEMARKER_TASK));
 		}
 		return allTaskList;
+	}
+
+	public static List<Object> getAssociatedSmooksElementsType(TaskType taskType) {
+		return null;
+	}
+
+	public static List<Object> getAssociatedSmooksElementsType(String taskID) {
+		return null;
+	}
+
+	public static String getTaskLabel(String taskId) {
+		if (taskId != null) {
+			if (taskId.equals(TASK_ID_FREEMARKER_TEMPLATE)) {
+				return "Apply Freemarker Template";
+			}
+			if (taskId.equals(TASK_ID_INPUT)) {
+				return "Input Task";
+			}
+			if (taskId.equals(TASK_ID_JAVA_MAPPING)) {
+				return "Java Mapping";
+			}
+			if (taskId.equals(TASK_ID_XSL_TEMPLATE)) {
+				return "Apply XSL Template";
+			}
+		}
+		return "";
+	}
+
+	/**
+	 * 
+	 * @param taskID
+	 * @param smooksResourceList
+	 * @return
+	 */
+	public static List<Object> getAssociatedSmooksElements(String taskID, SmooksResourceListType smooksResourceList) {
+		List<Object> elementTypes = getAssociatedSmooksElementsType(taskID);
+		List<AbstractResourceConfig> resourceConfigList = smooksResourceList.getAbstractResourceConfig();
+		List<Object> associatedElements = new ArrayList<Object>();
+		for (Iterator<?> iterator = resourceConfigList.iterator(); iterator.hasNext();) {
+			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
+			if (isSameType(abstractResourceConfig, elementTypes)) {
+				associatedElements.add(abstractResourceConfig);
+			}
+		}
+		return associatedElements;
+	}
+
+	private static boolean isSameType(Object element, List<Object> elementTypes) {
+		return true;
 	}
 
 	public static final class TaskTypeDescriptor {

@@ -13,11 +13,17 @@ package org.jboss.tools.smooks.graphical.editors;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EventObject;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.draw2d.graph.DirectedGraph;
+import org.eclipse.draw2d.graph.DirectedGraphLayout;
+import org.eclipse.draw2d.graph.Edge;
+import org.eclipse.draw2d.graph.Node;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandWrapper;
 import org.eclipse.emf.ecore.EObject;
@@ -30,6 +36,7 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.commands.CommandStackEvent;
 import org.eclipse.gef.commands.CommandStackEventListener;
@@ -103,6 +110,10 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 	public static final int REDO_COMMAND = 1;
 
 	public static final int UNDO_COMMAND = 2;
+
+	private static final int SOURCE_CONNECT_TYPE = 1;
+
+	private static final int TARGET_CONNECT_TYPE = 0;
 
 	private DefaultEditDomain editDomain = null;
 
@@ -876,8 +887,8 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 	}
 
 	protected void applyGraphicalInformation(AbstractSmooksGraphicalModel graphicalModel) {
-		GraphType graph = getSmooksGraphicsExtType().getGraph();
-		applyGraphicalInformation(graph, graphicalModel);
+		GraphType graph1 = getSmooksGraphicsExtType().getGraph();
+		applyGraphicalInformation(graph1, graphicalModel);
 	}
 
 	protected void applyGraphicalInformation(GraphType graph, AbstractSmooksGraphicalModel graphicalModel) {
@@ -896,6 +907,55 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 	}
 
 	protected void initModelGraphicsInformation(SmooksGraphicsExtType ext) {
+		if (false) {
+			DirectedGraph graph = new DirectedGraph();
+			EditPart rootEditorPart = this.getGraphicalViewer().getContents();
+			List<?> children = rootEditorPart.getChildren();
+			HashMap<Object, Node> nodeMap = new HashMap<Object, Node>();
+			// HashMap<Object, Edge> edgeMap = new HashMap<Object, Edge>();
+			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+				Object object = (Object) iterator.next();
+				if (object instanceof GraphicalEditPart) {
+					IFigure figure = ((GraphicalEditPart) object).getFigure();
+					Node node = new Node();
+					nodeMap.put(object, node);
+					node.height = figure.getPreferredSize().height;
+					node.width = figure.getPreferredSize().width;
+					graph.nodes.add(node);
+				}
+			}
+
+			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+				GraphicalEditPart object = (GraphicalEditPart) iterator.next();
+				for (Iterator<?> iterator2 = children.iterator(); iterator2.hasNext();) {
+					GraphicalEditPart testEditPart = (GraphicalEditPart) iterator2.next();
+					Node node = nodeMap.get(object);
+					Node testNode = nodeMap.get(testEditPart);
+					if (node != null && testNode != null) {
+						if (hasConnectionAssociation(object, testEditPart, SOURCE_CONNECT_TYPE)) {
+							Edge edge = new Edge(node, testNode);
+							graph.edges.add(edge);
+						}
+						if (hasConnectionAssociation(object, testEditPart, TARGET_CONNECT_TYPE)) {
+							Edge edge = new Edge(testNode, node);
+							graph.edges.add(edge);
+						}
+					}
+				}
+			}
+
+			DirectedGraphLayout layout = new DirectedGraphLayout();
+			layout.visit(graph);
+			Iterator<?> it = nodeMap.keySet().iterator();
+			while (it.hasNext()) {
+				GraphicalEditPart part = (GraphicalEditPart) it.next();
+				Node node = (Node) nodeMap.get(part);
+				IMoveableModel graphicalModel = (IMoveableModel) part.getModel();
+				((IMoveableModel) graphicalModel).setLocation(new Point(node.x, node.y));
+			}
+			return;
+
+		}
 		GraphType graph = ext.getGraph();
 		if (graph == null)
 			return;
@@ -904,6 +964,58 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 			AbstractSmooksGraphicalModel treeNodeModel = (AbstractSmooksGraphicalModel) iterator.next();
 			applyGraphicalInformation(graph, treeNodeModel);
 		}
+	}
+
+	private boolean hasAssociation(Object model, GraphicalEditPart editPart) {
+		if (model == editPart.getModel()) {
+			return true;
+		}
+		AbstractSmooksGraphicalModel grphicalModel = (AbstractSmooksGraphicalModel) editPart.getModel();
+		if (!grphicalModel.getChildrenWithoutDynamic().isEmpty()) {
+			List<?> children = editPart.getChildren();
+			for (Iterator<?> iterator2 = children.iterator(); iterator2.hasNext();) {
+				GraphicalEditPart gpart = (GraphicalEditPart) iterator2.next();
+				if (hasAssociation(model, gpart)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean hasConnectionAssociation(GraphicalEditPart editPart, GraphicalEditPart testEditPart, int connectType) {
+		List<?> sourceConnections = null;
+		if (connectType == SOURCE_CONNECT_TYPE) {
+			sourceConnections = editPart.getSourceConnections();
+		}
+		if (connectType == TARGET_CONNECT_TYPE) {
+			sourceConnections = editPart.getTargetConnections();
+		}
+		for (Iterator<?> iterator = sourceConnections.iterator(); iterator.hasNext();) {
+			GraphicalEditPart object = (GraphicalEditPart) iterator.next();
+			TreeNodeConnection connection = (TreeNodeConnection) object.getModel();
+			Object testModel = null;
+			if (connectType == SOURCE_CONNECT_TYPE) {
+				testModel = connection.getTargetNode();
+			}
+			if (connectType == TARGET_CONNECT_TYPE) {
+				testModel = connection.getSourceNode();
+			}
+			if (hasAssociation(testModel, testEditPart)) {
+				return true;
+			}
+		}
+		AbstractSmooksGraphicalModel sourceGraphModel = (AbstractSmooksGraphicalModel) editPart.getModel();
+		if (!sourceGraphModel.getChildrenWithoutDynamic().isEmpty()) {
+			List<?> children = editPart.getChildren();
+			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+				GraphicalEditPart childEditPart = (GraphicalEditPart) iterator.next();
+				if (hasConnectionAssociation(childEditPart, testEditPart, connectType)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override

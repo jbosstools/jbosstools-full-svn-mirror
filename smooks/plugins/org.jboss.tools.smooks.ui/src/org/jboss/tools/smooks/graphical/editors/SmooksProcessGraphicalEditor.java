@@ -10,8 +10,10 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,6 +26,8 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandWrapper;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gef.dnd.TemplateTransfer;
 import org.eclipse.jface.action.IAction;
@@ -94,6 +98,7 @@ import org.jboss.tools.smooks.model.graphics.ext.ProcessesType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.graphics.ext.TaskType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
  * @author Dart
@@ -183,22 +188,25 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	protected void initProcessGraphicalViewer() {
 		SmooksGraphicsExtType ext = this.smooksModelProvider.getSmooksGraphicsExt();
 		ProcessesType processes = ext.getProcesses();
-		if (processes == null) {
-			processes = GraphFactory.eINSTANCE.createProcessesType();
-			ext.setProcesses(processes);
-		}
-		ProcessType process = null;
+		boolean disableProcessViewer = false;
 		if (processes != null) {
-			process = processes.getProcess();
+			ProcessType process = processes.getProcess();
+			if (process != null) {
+				getProcessGraphViewer().getControl().setBackground(
+						getManagedForm().getToolkit().getColors().getBackground());
+				getProcessGraphViewer().getControl().setEnabled(true);
+				getProcessGraphViewer().setInput(process);
+			} else {
+				disableProcessViewer = true;
+			}
+		} else {
+			disableProcessViewer = true;
 		}
-
-		if (process == null) {
-			process = GraphFactory.eINSTANCE.createProcessType();
-			processes.setProcess(process);
-		}
-
-		if (process != null) {
-			getProcessGraphViewer().setInput(process);
+		if (disableProcessViewer) {
+			getProcessGraphViewer().getControl().setBackground(
+					getManagedForm().getToolkit().getColors().getBorderColor());
+			getProcessGraphViewer().setInput(null);
+			getProcessGraphViewer().getControl().setEnabled(false);
 		}
 	}
 
@@ -230,8 +238,11 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 							}
 							if (this.process != null) {
 								AddNextTaskNodeAction action = new AddInputTaskAction(smooksModelProvider);
-//								IStructuredSelection selection = new StructuredSelection(taskType);
-//								action.selectionChanged(new SelectionChangedEvent(getProcessGraphViewer(), selection));
+								// IStructuredSelection selection = new
+								// StructuredSelection(taskType);
+								// action.selectionChanged(new
+								// SelectionChangedEvent(getProcessGraphViewer(),
+								// selection));
 								action.run();
 								return;
 							}
@@ -448,7 +459,8 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 			private Object data = null;
 
-			public void dragStart(DragSourceEvent event) {this.data = null;
+			public void dragStart(DragSourceEvent event) {
+				this.data = null;
 				DragSource source = (DragSource) event.getSource();
 				ToolBar control = (ToolBar) source.getControl();
 				ToolItem item = control.getItem(new Point(event.x, event.y));
@@ -635,6 +647,23 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		SmooksXSLTemplateGraphicalEditor xsltemplatePart = new SmooksXSLTemplateGraphicalEditor(smooksModelProvider);
 		this.registeTaskDetailsPage(xsltemplatePart, TaskTypeManager.TASK_ID_XSL_TEMPLATE);
 
+		ProcessAnalyzer processAnalyzer = new ProcessAnalyzer();
+		EObject smooksModel = getSmooksResourceList();
+		if (smooksModel != null && smooksModel instanceof SmooksResourceListType) {
+			boolean needSave = processAnalyzer.analyzeSmooksModels((SmooksResourceListType) smooksModel);
+			if (needSave) {
+				ResourceSet rs = this.smooksModelProvider.getEditingDomain().getResourceSet();
+				List<Resource> resourceLis = rs.getResources();
+				for (Iterator<?> iterator = resourceLis.iterator(); iterator.hasNext();) {
+					Resource resource = (Resource) iterator.next();
+					try {
+						resource.save(Collections.emptyMap());
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}
+		}
 	}
 
 	@Override

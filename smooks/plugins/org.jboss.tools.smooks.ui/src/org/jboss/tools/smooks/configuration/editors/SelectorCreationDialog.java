@@ -11,6 +11,7 @@
 package org.jboss.tools.smooks.configuration.editors;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -53,6 +54,7 @@ import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
 import org.jboss.tools.smooks.configuration.editors.xml.XSDObjectAnalyzer;
+import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
@@ -440,7 +442,19 @@ public class SelectorCreationDialog extends Dialog {
 	}
 
 	protected List<Object> generateInputData() {
-		Object obj = ((SmooksMultiFormEditor) editorPart).getSmooksModel();
+		Object obj  = null;
+		if(editorPart instanceof ISmooksModelProvider){
+			obj = ((ISmooksModelProvider)editorPart).getSmooksModel();
+		}else{
+			ISmooksModelProvider provider = (ISmooksModelProvider) editorPart.getAdapter(ISmooksModelProvider.class);
+			if(provider != null){
+				obj = provider.getSmooksModel();
+			}
+		}
+		if(obj == null){
+			List<Object> ll = Collections.emptyList();
+			return ll;
+		}
 		SmooksResourceListType resourceList = null;
 		if (obj instanceof DocumentRoot) {
 			resourceList = ((DocumentRoot) obj).getSmooksResourceList();

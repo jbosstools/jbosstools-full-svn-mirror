@@ -221,12 +221,14 @@ public class EDIDataParser {
 
 				/* this codes are for the plug-in unit tests */
 				Bundle bundle = Platform.getBundle("org.jboss.tools.smooks.core.test");
-				URL ur = bundle.getEntry("/src" + mappingModel);
-				if (ur != null) {
-					try {
-						modelPath = ur.toURI().toString();
-					} catch (URISyntaxException e) {
-						e.printStackTrace();
+				if (bundle != null) {
+					URL ur = bundle.getEntry("/src" + mappingModel);
+					if (ur != null) {
+						try {
+							modelPath = ur.toURI().toString();
+						} catch (URISyntaxException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
