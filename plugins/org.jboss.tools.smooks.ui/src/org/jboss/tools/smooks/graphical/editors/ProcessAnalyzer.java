@@ -91,7 +91,7 @@ public class ProcessAnalyzer {
 	 */
 	public boolean analyzeSmooksModels(SmooksResourceListType resourceList) {
 		boolean modelWasChanged = false;
-		SmooksGraphicsExtType ext = getSmooksGraphicsType(resourceList);
+		SmooksGraphicsExtType ext = this. getSmooksGraphicsType(resourceList);
 		if (ext == null)
 			throw new RuntimeException("Can't find the smooks-graph-ext element");
 

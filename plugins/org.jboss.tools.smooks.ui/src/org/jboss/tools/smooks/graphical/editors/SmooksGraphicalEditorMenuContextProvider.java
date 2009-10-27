@@ -15,12 +15,12 @@ import java.util.Iterator;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.ui.actions.ActionRegistry;
 import org.eclipse.gef.ui.actions.GEFActionConstants;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.jboss.tools.smooks.gef.common.SmooksGraphicalMenuContextProvider;
 import org.jboss.tools.smooks.graphical.actions.AddSmooksModelAction;
+import org.jboss.tools.smooks.graphical.actions.AutoLayoutAction;
 import org.jboss.tools.smooks.graphical.actions.xsltemplate.AddAttributeAction;
 import org.jboss.tools.smooks.graphical.actions.xsltemplate.AddElementAction;
 
@@ -60,21 +60,10 @@ public class SmooksGraphicalEditorMenuContextProvider extends SmooksGraphicalMen
 				}
 			}
 		}
-		
-		Action layout = new Action(){
-
-			/* (non-Javadoc)
-			 * @see org.eclipse.jface.action.Action#run()
-			 */
-			@Override
-			public void run() {
-			}
-			
-		};
-		
-		layout.setText("Auto Layout");
-		
-//		menu.appendToGroup(GEFActionConstants.ADD_EXT, layout);
+		IAction action = getActionRegistry().getAction(AutoLayoutAction.ID);
+		if (action != null) {
+			menu.appendToGroup(GEFActionConstants.GROUP_VIEW, action);
+		}
 	}
 
 }
