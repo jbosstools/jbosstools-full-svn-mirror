@@ -18,7 +18,6 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.edimap.editor.EDIMapFormEditor;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.edi12.Edi12Package;
 
@@ -46,7 +45,7 @@ public class EDIReader12UICreator extends PropertyUICreator {
 		}
 		if (feature == Edi12Package.eINSTANCE.getEDI12Reader_MappingModel()) {
 			return SmooksUIUtils.createFileSelectionTextFieldEditor(null, parent, null, toolkit, propertyDescriptor,
-					model, SmooksUIUtils.VALUE_TYPE_VALUE, EDIMapFormEditor.EDITOR_ID, null);
+					model, SmooksUIUtils.VALUE_TYPE_VALUE, null, null);
 		}
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor, part);
 	}

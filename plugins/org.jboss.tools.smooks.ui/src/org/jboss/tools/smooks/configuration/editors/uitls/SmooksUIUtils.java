@@ -1004,6 +1004,7 @@ public class SmooksUIUtils {
 				"Browse", new IFieldDialog() {
 					public Object open(Shell shell) {
 						SelectorCreationDialog dialog = new SelectorCreationDialog(shell, extType, currentEditorPart);
+						try{
 						if (dialog.open() == Dialog.OK) {
 							Object currentSelection = dialog.getCurrentSelection();
 							SelectorAttributes sa = dialog.getSelectorAttributes();
@@ -1011,6 +1012,9 @@ public class SmooksUIUtils {
 								String s = SmooksUIUtils.generatePath((IXMLStructuredObject) currentSelection, sa);
 								return s;
 							}
+						}
+						}catch(Exception e){
+							e.printStackTrace();
 						}
 						return null;
 					}

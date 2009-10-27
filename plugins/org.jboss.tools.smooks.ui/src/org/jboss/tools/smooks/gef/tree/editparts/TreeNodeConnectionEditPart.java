@@ -3,6 +3,7 @@
  */
 package org.jboss.tools.smooks.gef.tree.editparts;
 
+import org.eclipse.draw2d.BendpointConnectionRouter;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Connection;
 import org.eclipse.draw2d.ConnectionAnchor;
@@ -36,8 +37,8 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 	public void changeLineAlpha(int alpha) {
 		this.alpha = alpha;
 	}
-	
-	protected IFigure createSourceFlagFigure(){
+
+	protected IFigure createSourceFlagFigure() {
 		Figure sourceFlagFigure = new Figure() {
 
 			/*
@@ -87,8 +88,8 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 		};
 		return sourceFlagFigure;
 	}
-	
-	protected IFigure createTargetFlagFigure(){
+
+	protected IFigure createTargetFlagFigure() {
 		Figure targetFlagFigure = new Figure() {
 			/*
 			 * (non-Javadoc)
@@ -142,8 +143,8 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 		};
 		return targetFlagFigure;
 	}
-	
-	protected Connection createConnectionFigure(){
+
+	protected Connection createConnectionFigure() {
 		PolylineConnection connection = new PolylineConnection() {
 
 			@Override
@@ -198,7 +199,6 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 
 	public IFigure createFigure() {
 		Connection connection = createConnectionFigure();
-		connection.setConnectionRouter(new ManhattanConnectionRouter());
 		IFigure targetFlagFigure = createTargetFlagFigure();
 		IFigure sourceFlagFigure = createSourceFlagFigure();
 		targetFlagFigure.setSize(7, 7);
@@ -207,6 +207,7 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 		connection.add(targetFlagFigure, targetLocator);
 		ConnectionLocator sourceLocator = new ConnectionLocator(connection, ConnectionLocator.SOURCE);
 		connection.add(sourceFlagFigure, sourceLocator);
+		connection.setConnectionRouter(new BendpointConnectionRouter());
 		return connection;
 	}
 }

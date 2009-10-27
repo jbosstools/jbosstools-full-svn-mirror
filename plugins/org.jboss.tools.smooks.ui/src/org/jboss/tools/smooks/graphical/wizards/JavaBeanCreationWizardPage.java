@@ -12,8 +12,10 @@ package org.jboss.tools.smooks.graphical.wizards;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
@@ -22,6 +24,8 @@ import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.ITreeViewerListener;
+import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -34,6 +38,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.TreeItem;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModelFactory;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanContentProvider;
@@ -154,6 +159,35 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 		});
 		viewer.setLabelProvider(new JavabeanlabelProvider());
 
+		viewer.addTreeListener(new ITreeViewerListener() {
+
+			private Map<String, Object> expandRecord = new HashMap<String, Object>();
+
+			public void treeExpanded(TreeExpansionEvent event) {
+				Object element = event.getElement();
+				if (element instanceof TreeItem) {
+					element = ((TreeItem) element).getData();
+				}
+				if (element instanceof JavaBeanModel) {
+					Object key = expandRecord.get(((JavaBeanModel) element).getID().toString());
+					if (key == null) {
+						expandRecord.put(((JavaBeanModel) element).getID().toString(), new Object());
+						if (viewer.getChecked(element)) {
+							for (Iterator<?> iterator = ((JavaBeanModel) element).getChildren().iterator(); iterator
+									.hasNext();) {
+								Object child = (Object) iterator.next();
+								viewer.setChecked(child, true);
+							}
+						}
+					}
+				}
+			}
+
+			public void treeCollapsed(TreeExpansionEvent event) {
+
+			}
+		});
+
 		viewer.addCheckStateListener(new ICheckStateListener() {
 
 			public void checkStateChanged(CheckStateChangedEvent event) {
@@ -162,6 +196,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 				boolean checked = event.getChecked();
 				if (checked) {
 					checkParents(element, viewer);
+					checkChildren((JavaBeanModel)element, true);
 				} else {
 					unCheckChildren(element, viewer);
 				}
@@ -177,6 +212,16 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 							viewer.setChecked(child, false);
 							unCheckChildren(child, viewer);
 						}
+					}
+				}
+			}
+
+			private void checkChildren(JavaBeanModel model, boolean flag) {
+				if (((JavaBeanModel) model).isExpaned()) {
+					for (Iterator<?> iterator = ((JavaBeanModel) model).getChildren().iterator(); iterator.hasNext();) {
+						JavaBeanModel child = (JavaBeanModel) iterator.next();
+						viewer.setChecked(child, flag);
+						checkChildren(child, flag);
 					}
 				}
 			}
@@ -405,7 +450,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 					arrayButton.setEnabled(false);
 					collectionClassBrowseButton.setEnabled(true);
 					colllectionClassText.setEnabled(true);
-				}else{
+				} else {
 					collectionClassBrowseButton.setEnabled(false);
 					colllectionClassText.setEnabled(false);
 					colllectionClassText.setText("");
