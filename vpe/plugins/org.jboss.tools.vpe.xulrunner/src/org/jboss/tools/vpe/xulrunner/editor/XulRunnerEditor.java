@@ -61,15 +61,23 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	private IXulRunnerVpeResizer xulRunnerVpeResizer;
 	
 	/**
-	 * color which used for highlight elements which user can see
+	 * color which used for highlight elements which user can see, blue color
 	 */
-	public static final String flasherVisialElementColor = "blue"; //$NON-NLS-1$
+	public static final String flasherVisialElementColor = "#0000ff"; //$NON-NLS-1$
 	
 	/**
-	 * color which used for highlight parent elements for elements which user 
+	 * color which used for highlight parent elements for elements which user, red color
 	 * can't see. 
 	 */
-	public static final String flasherHiddentElementColor = "red"; //$NON-NLS-1$
+	public static final String flasherHiddentElementColor = "#ff0000"; //$NON-NLS-1$
+	
+	//added by Maksim Areshkau as element for which we 
+	//have drowed border. When we draw new border,
+	//we should remove old one;
+	private nsIDOMElement lastBorderedElement;
+	private static final String INVISIBLE_ELEMENT_BORDER = "border: 2px solid red;";//$NON-NLS-1$
+	private static final String VISIBLE_ELEMENT_BORDER = "border: 2px solid blue;";//$NON-NLS-1$
+	private static final String PREV_STYLE_ATTR_NAME = "oldstyle";//$NON-NLS-1$
 	
 	/**
 	 * Contains name of attribute for inIFLasher drawing
@@ -352,6 +360,13 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 			
 			scrollRegtangleFlag = scroll && node != null;
 			
+			try {
+				((nsIBaseWindow) getWebBrowser().queryInterface(
+						nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
+			} catch (XPCOMException ex) {
+				// just ignore its
+				BrowserPlugin.getDefault().logInfo("repaint failed", ex); //$NON-NLS-1$
+			}
 			if(checkVisability(getLastSelectedElement())){
 				
 					if((getLastSelectedElement().getAttribute(VPEFLASHERCOLORATTRIBUTE)==null)||
@@ -362,7 +377,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 						getIFlasher().setColor(flasherHiddentElementColor);
 					}
 					
-					getIFlasher().repaintElement(getLastSelectedElement());
+					drawElementOutline(getLastSelectedElement());
 
 			}else {
 				
@@ -371,17 +386,17 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 				
 				if(domElement!=null) {
 			
-					getIFlasher().repaintElement(domElement);
+					drawElementOutline(domElement);
 				}
 				
 			}
-			try {
-				((nsIBaseWindow) getWebBrowser().queryInterface(
-						nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
-			} catch (XPCOMException ex) {
-				// just ignore its
-				BrowserPlugin.getDefault().logInfo("repaint failed", ex); //$NON-NLS-1$
-			}
+//			try {
+//				((nsIBaseWindow) getWebBrowser().queryInterface(
+//						nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
+//			} catch (XPCOMException ex) {
+//				// just ignore its
+//				BrowserPlugin.getDefault().logInfo("repaint failed", ex); //$NON-NLS-1$
+//			}
 
 		} else if (element != null) {
 			
@@ -574,16 +589,17 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 					drawElementOutline(domElement);
 				}
 			}
-		} else if(getIFlasher()!=null&&Platform.OS_MACOSX.equals(Platform.getOS())){
-			//Max Areshkau (bug on Mac OS X, when we switch to preview from other view, selection rectangle doesn't disappear
-			//TODO Max Areshkau (may be exist passability not draw selection on resize event when we switches to other view)
-			try {
-			((nsIBaseWindow)getWebBrowser().queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
-			} catch(XPCOMException ex) {
-				//just ignore its
-				BrowserPlugin.getDefault().logInfo("repaint failed", ex); //$NON-NLS-1$
-			}
-		}
+		} 
+//		else if(getIFlasher()!=null&&Platform.OS_MACOSX.equals(Platform.getOS())){
+//			//Max Areshkau (bug on Mac OS X, when we switch to preview from other view, selection rectangle doesn't disappear
+//			//TODO Max Areshkau (may be exist passability not draw selection on resize event when we switches to other view)
+//			try {
+//			((nsIBaseWindow)getWebBrowser().queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
+//			} catch(XPCOMException ex) {
+//				//just ignore its
+//				BrowserPlugin.getDefault().logInfo("repaint failed", ex); //$NON-NLS-1$
+//			}
+//		}
 	}
 	/**
 	 * Scrools viiew to some elements
@@ -664,10 +680,29 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 */
 	private void drawElementOutline(nsIDOMElement domElement) {
 		//fix for JBIDE-3969
-		if(Platform.OS_MACOSX.equals(Platform.getOS())&&hasSelectInParenNodes(domElement.getParentNode())) {
-			return;
+//		if(Platform.OS_MACOSX.equals(Platform.getOS())&&hasSelectInParenNodes(domElement.getParentNode())) {
+//			return;
+//		}
+				//restore style for previously bordered element
+		if(this.lastBorderedElement!=null && this.lastBorderedElement.getAttribute(STYLE_ATTR)!=null) {
+			String style = this.lastBorderedElement.getAttribute(PREV_STYLE_ATTR_NAME); 
+			this.lastBorderedElement.removeAttribute(PREV_STYLE_ATTR_NAME);
+			this.lastBorderedElement.setAttribute(STYLE_ATTR, style);
 		}
-		getIFlasher().drawElementOutline(domElement);
+		
+		//save style for early bordered element
+		String oldstyle = domElement.getAttribute(STYLE_ATTR);
+		if(flasherHiddentElementColor.equals(getIFlasher().getColor())) {
+				domElement.setAttribute(STYLE_ATTR,domElement.getAttribute(STYLE_ATTR)+';'+XulRunnerEditor.INVISIBLE_ELEMENT_BORDER);
+		}else {
+			domElement.setAttribute(STYLE_ATTR,domElement.getAttribute(STYLE_ATTR)+';'+ XulRunnerEditor.VISIBLE_ELEMENT_BORDER);
+		}
+		this.lastBorderedElement = domElement;
+		this.lastBorderedElement.setAttribute(PREV_STYLE_ATTR_NAME, oldstyle);
+		//under osx function drawElementOutline not works
+		if(!Platform.OS_MACOSX.equals(Platform.getOS())){
+			getIFlasher().drawElementOutline(domElement);
+		}
 	}
 	/**
 	 * Checks if node has select in parent node, if has it's cause crash 
@@ -675,15 +710,15 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * @param domElement
 	 * @return
 	 */
-	private boolean hasSelectInParenNodes(nsIDOMNode domNode){
-		if(domNode==null) {
-			return false;
-		}else if("select".equalsIgnoreCase(domNode.getNodeName())){ //$NON-NLS-1$
-			return true;
-		} else {
-			return hasSelectInParenNodes(domNode.getParentNode());
-		}
-	}
+//	private boolean hasSelectInParenNodes(nsIDOMNode domNode){
+//		if(domNode==null) {
+//			return false;
+//		}else if("select".equalsIgnoreCase(domNode.getNodeName())){ //$NON-NLS-1$
+//			return true;
+//		} else {
+//			return hasSelectInParenNodes(domNode.getParentNode());
+//		}
+//	}
 }
 
 
