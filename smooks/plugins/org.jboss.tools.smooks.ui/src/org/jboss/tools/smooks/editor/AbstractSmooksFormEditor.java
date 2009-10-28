@@ -3,6 +3,7 @@ package org.jboss.tools.smooks.editor;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -48,6 +49,7 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.editor.FormEditor;
+import org.eclipse.ui.ide.FileStoreEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
@@ -484,9 +486,33 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
-		IFile file = ((IFileEditorInput) input).getFile();
-		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(URI.createPlatformResourceURI(file
-				.getFullPath().toPortableString(), false));
+		String filePath = null;
+		String partName = "smooks editor";
+		IFile file = null;
+		if (input instanceof FileStoreEditorInput) {
+			try {
+				filePath = ((FileStoreEditorInput) input).getURI().toURL().getFile();
+			} catch (MalformedURLException e) {
+				throw new PartInitException("Transform URL to URL error.", e);
+			}
+		}
+		if (input instanceof IFileEditorInput) {
+			file = ((IFileEditorInput) input).getFile();
+			filePath = file.getFullPath().toPortableString();
+			partName = file.getName();
+		}
+
+		if (filePath == null)
+			throw new PartInitException("Can't get the input file");
+
+		Resource smooksResource = null;
+
+		if (file != null) {
+			smooksResource = new SmooksResourceFactoryImpl().createResource(URI.createPlatformResourceURI(filePath,
+					false));
+		} else {
+			smooksResource = new SmooksResourceFactoryImpl().createResource(URI.createFileURI(filePath));
+		}
 		try {
 			smooksResource.load(Collections.emptyMap());
 			smooksModel = smooksResource.getContents().get(0);
@@ -504,7 +530,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		// smooks config file
 		// create new one for it
 
-		setPartName(file.getName());
+		setPartName(partName);
 
 		smooksGraphicsExt = createSmooksGraphcsExtType(smooksModel);
 

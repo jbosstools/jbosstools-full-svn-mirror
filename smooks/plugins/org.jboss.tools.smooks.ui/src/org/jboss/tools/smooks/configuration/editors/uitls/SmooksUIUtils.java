@@ -32,7 +32,10 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.content.IContentType;
+import org.eclipse.core.runtime.content.IContentTypeManager;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
@@ -1004,16 +1007,16 @@ public class SmooksUIUtils {
 				"Browse", new IFieldDialog() {
 					public Object open(Shell shell) {
 						SelectorCreationDialog dialog = new SelectorCreationDialog(shell, extType, currentEditorPart);
-						try{
-						if (dialog.open() == Dialog.OK) {
-							Object currentSelection = dialog.getCurrentSelection();
-							SelectorAttributes sa = dialog.getSelectorAttributes();
-							if (currentSelection instanceof IXMLStructuredObject) {
-								String s = SmooksUIUtils.generatePath((IXMLStructuredObject) currentSelection, sa);
-								return s;
+						try {
+							if (dialog.open() == Dialog.OK) {
+								Object currentSelection = dialog.getCurrentSelection();
+								SelectorAttributes sa = dialog.getSelectorAttributes();
+								if (currentSelection instanceof IXMLStructuredObject) {
+									String s = SmooksUIUtils.generatePath((IXMLStructuredObject) currentSelection, sa);
+									return s;
+								}
 							}
-						}
-						}catch(Exception e){
+						} catch (Exception e) {
 							e.printStackTrace();
 						}
 						return null;
@@ -2444,8 +2447,8 @@ public class SmooksUIUtils {
 		return false;
 	}
 
-	public static List<InputType> recordInputDataInfomation(EditingDomain domain, InputType input, SmooksGraphicsExtType extType,
-			String type, String path, Properties properties) {
+	public static List<InputType> recordInputDataInfomation(EditingDomain domain, InputType input,
+			SmooksGraphicsExtType extType, String type, String path, Properties properties) {
 		List<InputType> inputTypeList = new ArrayList<InputType>();
 		if (type != null && path != null && extType != null && domain != null) {
 			String[] values = path.split(";");
@@ -2498,7 +2501,7 @@ public class SmooksUIUtils {
 			// SmooksConfigurationActivator.getDefault().log(e);
 			// }
 		}
-		
+
 		return inputTypeList;
 	}
 
@@ -2910,5 +2913,24 @@ public class SmooksUIUtils {
 			}
 		}
 		return inputType;
+	}
+
+	public static boolean isSmooksFile(IFile file) {
+		if(file.getName().indexOf(".xml") != -1) return true;
+		IContentTypeManager contentTypeManager = Platform.getContentTypeManager();
+		IContentType[] types = contentTypeManager.findContentTypesFor(file.getName());
+		for (IContentType contentType : types) {
+			if (contentType.equals(contentTypeManager.getContentType("org.jboss.tools.smooks.ui.smooks.contentType"))) {
+				return true;
+			}
+			if (contentType.equals(contentTypeManager.getContentType("org.jboss.tools.smooks.ui.edimap.contentType"))) {
+				return true;
+			}
+			if (contentType
+					.equals(contentTypeManager.getContentType("org.jboss.tools.smooks.ui.smooks1_0.contentType"))) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

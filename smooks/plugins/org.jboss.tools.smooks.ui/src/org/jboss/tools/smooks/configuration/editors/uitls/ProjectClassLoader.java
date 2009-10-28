@@ -40,6 +40,9 @@ public class ProjectClassLoader extends URLClassLoader {
 	private static URL[] getURLSFromProject(IJavaProject project,
 			URL[] extraUrls, boolean cludeRequiredProject)
 			throws JavaModelException {
+		if(project == null || !project.exists()){
+			return new URL[]{};
+		}
 		List<URL> list = new ArrayList<URL>();
 		if (null != extraUrls) {
 			for (int i = 0; i < extraUrls.length; i++) {

@@ -29,6 +29,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.ide.IDE;
@@ -225,6 +226,7 @@ public class EDIDataParser {
 					URL ur = bundle.getEntry("/src" + mappingModel);
 					if (ur != null) {
 						try {
+							ur = FileLocator.resolve(ur);
 							modelPath = ur.toURI().toString();
 						} catch (URISyntaxException e) {
 							e.printStackTrace();

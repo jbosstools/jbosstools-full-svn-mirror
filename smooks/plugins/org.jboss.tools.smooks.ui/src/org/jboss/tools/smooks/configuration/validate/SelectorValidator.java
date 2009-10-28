@@ -134,6 +134,8 @@ public class SelectorValidator extends AbstractValidator {
 			if (r instanceof IFile) {
 				file = (IFile) r;
 			}
+			if (file == null)
+				return;
 			final FileEditorInput input = new FileEditorInput(file);
 			final SmooksResourceListType finalList = listType;
 			Display dis = SmooksConfigurationActivator.getDefault().getWorkbench().getDisplay();
