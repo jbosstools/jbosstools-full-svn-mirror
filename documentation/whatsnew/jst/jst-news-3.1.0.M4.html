@@ -5,96 +5,79 @@
 <head>
 <meta http-equiv="Content-Language" content="en-us" />
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link rel="stylesheet" href="../whatsnew.css"/>
-<title>JST/JSF 3.1.0.M3 What's New</title>
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>JST/JSF 3.1.0.M4 What's New</title>
 </head>
 <body>
-<h1>JST/JSF 3.1.0.M3 What's New</h1>
+<h1>JST/JSF 3.1.0.M4 What's New</h1>
 
-<p align="right"><a href="../core/core-news-3.1.0.M4.html">&lt; Main Index</a> <a href="../as/as-news-3.1.0.M4.html">Server Tools &gt;</a></p>
+<p align="right"><a href="../core/core-news-3.1.0.M4.html">&lt;
+Main Index</a> <a href="../as/as-news-3.1.0.M4.html">Server Tools &gt;</a></p>
 
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
-  <tr>
-    <td colspan="2">
-      <hr/>
-      <h3>OpenOn</h3>
-	<hr/>
-    </td>
-  </tr>
-  <tr>
-    <td valign="top" align="left">
-      <p><b>EL Variables</b></p></td>
-      <td valign="top"><p>OpenOn's are now available for source elements.</p>
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>Web Projects View</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Menu
+		key is supported</b></td>
+		<td valign="top">
+		<p>Menu key now shows the same context menu in 'Web Projects' view
+		as right mouse click does.</p>
 
-    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-2806">Related Jira</a></small></p>
-    </td>
-  </tr>
+		<p><small><a
+			href="https://jira.jboss.org/jira/browse/JBIDE-5041">Related Jira</a></small></p>
 
-  <tr>
-    <td colspan="2">
-      <hr/>
-      <h3>Code assist</h3>
-	<hr/>
-    </td>
-  </tr>
-  <tr>
-    <td valign="top" align="left">
-      <p><b>Unified EL completion for Seam and JSF projects</b></p></td>
-      <td valign="top"><p>EL completion for Seam and JSF projects are now unified (uses same codebase).</p>
+		</td>
+	</tr>
 
-<p>In previous releases there were small differences between how code completion were done for projects with or without Seam configured, i.e. code completion for Seam variables were not available in Wizards and property sheets and some of the features of JBoss EL were not honored in JSF projects.</p>
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>RichFaces 3.3.2.SR1 Update</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Menu
+		key is supported</b></td>
+		<td valign="top">
+		<p>Richfaces 3.3 Capability was updated to Richfaces 3.3.2.SR1
+		release</p>
 
-    <p><small>Related jiras: <a href="https://jira.jboss.org/jira/browse/JBIDE-2920">1</a>, <a href="https://jira.jboss.org/jira/browse/JBIDE-1826">2</a></small></p>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2"><hr />
-    </td>
-  </tr>
+		<p><small><a
+			href="https://jira.jboss.org/jira/browse/JBIDE-5025">Related Jira</a></small></p>
 
-  <tr>
-    <td valign="top" align="left">
-      <p><b>EL completion in style attributes</b></p></td>
-      <td valign="top"><p>Code assist for EL variables are now available in style attributes of XHTML files.</p>
+		</td>
+	</tr>
 
-    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3750">Related Jira</a></small></p>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2"><hr />
-    </td>
-  </tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>Code Assists</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>JSF 2 Composite Component Attributes</b></td>
+		<td valign="top">
+		<p>Content assists support added for JSF 2 Composite UI Components</p>
+	 	<p><img src="images/composite-comp-ca.png" /></p>
+		<p><small><a
+			href="https://jira.jboss.org/jira/browse/JBIDE-5025">Related Jira</a></small></p>
 
-  <tr>
-    <td valign="top" align="left">
-      <p><b>Information hover for JSF tags</b></p></td>
-      <td valign="top"><p>When code completing JSF/Facelets tags we now show a information box with the related tag documentation. Descriptions are fetched from TLD and facelet information.</p>
+		</td>
+	</tr>
 
-	<p><img src="../images/tagdocs.png"/></p>
-
-    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-534">Related Jira</a></small></p>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2"><hr />
-    </td>
-  </tr>
-  <tr>
-    <td valign="top" align="left">
-      <p><b>Code assist for attributes expecting an ID in richfaces</b></p></td>
-      <td valign="top"><p>Code assist now provides id completion for attributes that is known to work with ID's (for, focus, reRender, etc.). Both single and multi-valued (comma separated) completion are supported.</p>
-
-	<p><img src="../images/forid_like_codeassist.png"/></p>
-	
-	
-    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3571">Related Jira</a></small></p>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2"><hr />
-    </td>
-  </tr>
-
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
 
 </table>
 
