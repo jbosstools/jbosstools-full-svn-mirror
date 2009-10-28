@@ -122,7 +122,7 @@ public class GraphAnimation {
 
 			}
 			try {
-				Thread.sleep(10);
+				Thread.sleep(5);
 				Thread.yield();
 			} catch (InterruptedException e) {
 				e.printStackTrace();

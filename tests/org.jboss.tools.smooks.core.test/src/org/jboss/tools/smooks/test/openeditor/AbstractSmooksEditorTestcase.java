@@ -37,6 +37,10 @@ public class AbstractSmooksEditorTestcase extends TestCase {
 	protected List<IEditorPart> editorList = new ArrayList<IEditorPart>();
 
 	protected IProject testProject = null;
+	
+	public void test(){
+		
+	}
 
 	private void setUpEnvironment() throws CoreException {
 		if (getTestProjectName() != null) {

@@ -52,6 +52,7 @@ public class ClassFieldEditorValidator extends AbstractValidator {
 			return classLoader;
 		}
 		IResource resource = SmooksUIUtils.getResource(obj);
+		if(resource == null) return null;
 		try {
 			classLoader = new ProjectClassLoader(JavaCore.create(resource.getProject()));
 		} catch (JavaModelException e) {

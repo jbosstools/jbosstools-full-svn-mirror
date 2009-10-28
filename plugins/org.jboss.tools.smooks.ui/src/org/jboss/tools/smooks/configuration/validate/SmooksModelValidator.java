@@ -164,16 +164,20 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 
 		List<Diagnostic> list = new ArrayList<Diagnostic>();
 		list.add(diagnostic);
-		for (Iterator<?> iterator = this.validatorList.iterator(); iterator.hasNext();) {
-			ISmooksValidator validator = (ISmooksValidator) iterator.next();
-			validator.initValidator(selectedObjects, domain);
-			List<Diagnostic> d = validator.validate(selectedObjects, domain);
-			if (d != null) {
-				for (Iterator<?> iterator2 = d.iterator(); iterator2.hasNext();) {
-					Diagnostic diagnostic2 = (Diagnostic) iterator2.next();
-					((BasicDiagnostic) diagnostic).add(diagnostic2);
+		try {
+			for (Iterator<?> iterator = this.validatorList.iterator(); iterator.hasNext();) {
+				ISmooksValidator validator = (ISmooksValidator) iterator.next();
+				validator.initValidator(selectedObjects, domain);
+				List<Diagnostic> d = validator.validate(selectedObjects, domain);
+				if (d != null) {
+					for (Iterator<?> iterator2 = d.iterator(); iterator2.hasNext();) {
+						Diagnostic diagnostic2 = (Diagnostic) iterator2.next();
+						((BasicDiagnostic) diagnostic).add(diagnostic2);
+					}
 				}
 			}
+		} catch (Exception e) {
+
 		}
 		return list;
 	}
