@@ -18,136 +18,84 @@
   <tr>
     <td colspan="2">
       <hr/>
-      <h3>Dali Integration</h3>
+      <h3>Source Editing</h3>
 	<hr/>
     </td>
   </tr>
 
   <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Validation via NamingStrategy</b></td>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Properties editor for hibernate.properties</b></td>
     <td valign="top">
-    <p>When using Hibernate Platform with Dali (JPA Tooling) we now validate through the chosen NamingStrategy (if none chosen the default NamingStrategy is used).</p>
+    <p>JBoss Tools Properties editor now can be extended to recognize particular files by name and provides content assist with help hoover for available properties.</p>
 
-    <p>This allows those users who have custom naming strategies in place to utilize the nice Dali JPA validation of wether the reference table and column names are enabled.</p>
-
-    <p>Note: Remember for Dali validation to work you have to enable the JPA facet on your project and have the chosen DTP connection be connected to the database. If not, Dali will not perform any validation!</p>
-
-    <p>In case you do not want the NamingStrategy to be used, i.e. your NamingStrategy requires custom setup or have dependencies not available during design time you can disable the use of it on the Hibernate project preference page.</p>
-<p></p>
-
-
-    <p><small>Releated jiras: <a href="http://jira.jboss.org/jira/browse/JBIDE-4761">1</a>, <a href="http://jira.jboss.org/jira/browse/JBIDE-4803">2</a></p>
-
+    <p>For hibernate.properties files editor shows available properties in 'Add/Edit property' dialog.</p>
+	<img src="images/hibernate-props-ca1.png" />
+    <p>the same content assists works for source tab if you prefer use text editor to edit properties files.</p>
+	<img src="images/hibernate-props-ca2.png" />
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4916">Releated jira</a></small></p>
     </td>
   </tr>
-
-
-
-
   <tr>
     <td colspan="2">
       <hr/>
-    </td>
-  </tr>
-
-  <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Hibernate specific annotations</b></td>
-    <td valign="top">
-    <p>The JPA UI and validation has been extended to cover a few more Hibernate specific annotations.</p>
-
-    <ul>
-      <li><code>@GenericGenerators</code> (before only supported the singular <code>@GenericGenerator</code></li>
-      <li><code>@DiscriminatorFormula</code></li>
-      <li><code>@NamedQuery</code></li>
-      <li><code>@NamedNativeQuery</code></li>
-      <li><code>@Embeddable</code> with associations (not allowed in JPA spec, but ok in Hibernate)</li>
-</ul>
-
-    <p>This means that these annotations now have UI support and if possible also validated in Dali.</p>
-
-    <p>This screenshot shows a @NamedQuery being edited/shown in the UI.</p>
-
-    <p><img src="../images/hibernatenamedquerydaliui.png"/></p>
-
-<p></p>
-
-
-    <p><small>Releated jiras: <a href="http://jira.jboss.org/jira/browse/JBIDE-4521">1</a>, <a href="http://jira.jboss.org/jira/browse/JBIDE-4649">2</a>,<a href="http://jira.jboss.org/jira/browse/JBIDE-4613">3</a>, <a href="http://jira.jboss.org/jira/browse/JBIDE-4527">4</a>, <a href="http://jira.jboss.org/jira/browse/JBIDE-4716">5</a></p>
-
-
-    </td>
-  </tr>
-
-  <tr>
-    <td colspan="2">
-      <hr/>
-      <h3>Wizards</h3>
+      <h3>Code Generation</h3>
 	<hr/>
     </td>
   </tr>
 
   <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>hbm.xml Wizard now generates mapping for object graph</b></td>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>DDL generation dialog</b></td>
     <td valign="top">
-    <p>When using New Hibernate Mapping wizard the generated hbm.xml now contains basic mappings for properties and associations.</p>
 
-<p><img src="../images/new_hbm_xml_selection.png"/></p>
-
-<p>You can select a package or multiple individual classes and then from there the wizard will traverse the object graph and generate mappings for the full object graph.</p>
-    <p><small><a href="http://jira.jboss.org/jira/browse/JBIDE-3457">Related jira</a></p>
-
+    <p>In DDL generation dialog new option added to execute generated script in selected DB.</p>
+	<img src="images/ddl-gen-export-to-db.png" />
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4733">Releated jira</a></small></p>
     </td>
   </tr>
-
   <tr>
     <td colspan="2">
       <hr/>
-      <h3>Views</h3>
+      <h3>Mapping Diagram</h3>
 	<hr/>
     </td>
   </tr>
 
   <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Pending... node</b></td>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Views improvements</b></td>
     <td valign="top">
-    <p>Creation/opening of a Console Configuration is now visualized with a Pending... node until it completes.</p>
 
-<p><img src="../images/hc_pending_icon.png"/></p>
-
-    <p><small><a href="http://jira.jboss.org/jira/browse/JBIDE-4622">Related jira</a></p>
-
+    <p>'Outline' View for hibernate mapping diagram supports alphabet sorting. 'Sort' button was added to view's action bar.</p>
+	<img src="images/sortedoutline.png" />
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4715">Releated jira</a></small></p>
     </td>
   </tr>
-
   <tr>
     <td colspan="2">
       <hr/>
     </td>
   </tr>
-
   <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Mapping Diagram</b></td>
-    <td valign="top">
-    <p>The mapping diagram now has support for showing Grid, Rules and Snap-to-Geometry.</p>
-
-    <p><img src="../images/hibernate_rulers_grid_snap2geometry.jpg"/></p>
-
-    <p><small><a href="http://jira.jboss.org/jira/browse/JBIDE-4643">Related jira</a></p>
-
+    <td colspan="2">
+      <hr/>
+      <h3>Dali Support</h3>
+	<hr/>
     </td>
   </tr>
 
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>@GenerationTime annotation</b></td>
+    <td valign="top">
 
-
-
-
+    <p><b>TBD: Add description</b></p>
+	<img src="images/generatedannotation.png" />
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4665">Releated jira</a></small></p>
+    </td>
+  </tr>
   <tr>
     <td colspan="2">
       <hr/>
     </td>
   </tr>
-
-
 </table>
 
 </body>
