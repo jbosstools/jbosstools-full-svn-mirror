@@ -1167,7 +1167,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		/*
 		 * Update MozillaEditor's toolbar items
 		 */
-		visualEditor.updateToolbarItemsAccordingToPreferences();
+		if (visualEditor != null) {
+			visualEditor.updateToolbarItemsAccordingToPreferences();
+		}
 		/*
 		 * When switching from Source view to Visual/Source controller could be null.
 		 */
