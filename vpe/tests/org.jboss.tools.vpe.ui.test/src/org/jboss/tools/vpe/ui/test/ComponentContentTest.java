@@ -19,6 +19,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
+import org.jboss.tools.test.util.WorkbenchUtils;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -65,17 +66,11 @@ public abstract class ComponentContentTest extends VpeTest {
 		IFile elementPageFile = (IFile) TestUtil.getComponentPath(
 				elementPagePath, getTestProjectName());
 
-		IEditorInput input = new FileEditorInput(elementPageFile);
+		TestUtil.waitForIdle();
 
-		TestUtil.waitForJobs();
-
-		IEditorPart editor = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().openEditor(input,
-						EDITOR_ID, true);
+		IEditorPart editor = WorkbenchUtils.openEditor(elementPageFile,EDITOR_ID);
 
 		assertNotNull(editor);
-
-		TestUtil.waitForJobs();
 
 		VpeController controller = TestUtil.getVpeController((JSPMultiPageEditor) editor);
 
