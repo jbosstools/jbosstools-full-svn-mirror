@@ -1,4 +1,4 @@
-package org.jboss.tools.portlet.core;
+package org.jboss.tools.portlet.core.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

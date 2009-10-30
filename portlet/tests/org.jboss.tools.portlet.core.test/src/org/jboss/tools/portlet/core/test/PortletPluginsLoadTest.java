@@ -1,4 +1,4 @@
-package org.jboss.tools.portlet.core;
+package org.jboss.tools.portlet.core.test;
 
 import org.jboss.tools.tests.AbstractPluginsLoadTest;
 
