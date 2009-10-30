@@ -6,8 +6,8 @@
 	<params>
 		<param name="stream.filter.type">SAX</param>
 	</params>
-	<abstract-reader xsi:type="edi:reader" encoding="UTF-8"
-		mappingModel="/org/jboss/tools/smooks/test/ediparser/edi-to-xml-order-mapping.xml" />
+	<abstract-reader  xsi:type="edi:reader" encoding="UTF-8"
+		mappingModel="platform:/plugin/org.jboss.tools.smooks.core.test/projects/smooks-all-config-files/smooks-mapping-files/edi-to-xml-order-mapping.xml" />
 	<jb:bindings beanId="a" class="example.A">
 		<jb:value data="a" property="name" />
 		<jb:wiring beanIdRef="a" property="b" />
