@@ -2150,7 +2150,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return false;
 	}
 
-	protected boolean isCurrentMainDocument() {
+	public boolean isCurrentMainDocument() {
 		return includeStack.size() <= 1;
 	}
 

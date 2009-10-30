@@ -95,7 +95,7 @@ public class VpeCustomTemplate extends VpeIncludeTemplate {
 		VpeCreationData creationData = createInclude(
 				document, visualDocument);
 
-			VpeCustomTemplate.addAttributesToELExcpressions(
+			addAttributesToELExcpressions(
 										sourceNode, pageContext);
 				creationData.setData(storage);
 		pageContext.getVisualBuilder().pushIncludeStack(
@@ -107,22 +107,22 @@ public class VpeCustomTemplate extends VpeIncludeTemplate {
 	@Override
 	public void validate(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument, VpeCreationData data){
-		NamedNodeMap attributesMap = sourceNode.getAttributes();
-		for(int i=0;i<attributesMap.getLength();i++) {
-			Attr attr = (Attr) attributesMap.item(i);
-			pageContext.removeAttributeFromCustomElementMap(attr.getName());
-		}		
+
+		pageContext.clearCustomElementAttributesMap();
+		
 		super.validate(pageContext, sourceNode, visualDocument, data);
 	}
 
 	/**
 	 * Temparary add to attribute for custom el expressions
+	 * @author mareshkau
+	 * 
 	 * @param pageContext Page Context
 	 * @param sourceNode source Node
 	 * @param processedFile processed File
 	 * @return resourceReferences - unchanged resource references
 	 */
-	private static final void addAttributesToELExcpressions(
+	protected void addAttributesToELExcpressions(
 			final Node sourceNode, final VpePageContext vpePageContext){
 		NamedNodeMap attributesMap = sourceNode.getAttributes();
 

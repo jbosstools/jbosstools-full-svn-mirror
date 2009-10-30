@@ -88,8 +88,8 @@ public class VpePageContext implements IVisualContext {
 	 * Removes attribute from custom attribute map
 	 * @param sourceBuilder
 	 */
-	public void removeAttributeFromCustomElementMap(String key) {
-		getCustomElementsAttributes().remove(key);
+	public void clearCustomElementAttributesMap() {
+		getCustomElementsAttributes().clear();
 	}
 
 	public void setSourceDomBuilder(VpeSourceDomBuilder sourceBuilder) {
