@@ -88,7 +88,7 @@
                 <para>Go to the menu bar and select <emphasis><property>File &gt; New &gt; Other...</property></emphasis>
                 </para></listitem>
             
-            <listitem><para>Select <emphasis><property>Jboss Tools &gt; Project Examples</property></emphasis>(You can also call the <emphasis><property>Project Examples</property></emphasis> from menu bar: <property>Help &gt; Project Examples...</property>)</para></listitem>
+            <listitem><para>Select <emphasis><property>Jboss Tools &gt; Project Examples</property></emphasis> (You can also call the <emphasis><property>Project Examples</property></emphasis> from menu bar: <property>Help &gt; Project Examples...</property> or directly from <emphasis><property>File &gt; New &gt; Example...</property></emphasis> menu )</para></listitem>
             
             
         </itemizedlist>
