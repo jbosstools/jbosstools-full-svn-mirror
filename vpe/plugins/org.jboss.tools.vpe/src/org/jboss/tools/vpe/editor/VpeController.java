@@ -2728,10 +2728,15 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	private void reinitImpl() {
 		try {
-			if(switcher==null||!switcher
-			.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-				return;
+			if(switcher==null ||
+					!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+					return;
 			}
+
+			// this method must be invoked before any visual
+			// node is created, see JBIDE-5105
+			visualEditor.reinitDesignMode();
+
 			visualBuilder.setSelectionRectangle(null);
 			visualEditor.setEditorDomEventListener(this);	
 			IDOMModel sourceModel = (IDOMModel) getModel();
@@ -2742,7 +2747,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				visualBuilder.rebuildDom(null);
 			}
 			//reinits selection controller+ controller
-			visualEditor.reinitDesignMode();
 			visualSelectionController = new VpeSelectionController(visualEditor.getEditor().getSelectionController());
 		
 			selectionBuilder = new VpeSelectionBuilder(domMapping, sourceBuilder,

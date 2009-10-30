@@ -1,48 +1,27 @@
 <tests>
 	<test id="xmp">
 		<XMP ID="xmp" STYLE="-moz-user-modify: read-only;" >
-<SPAN><BR _MOZ_DIRTY=""/>
-
-while (&lt;&gt;) {<BR _MOZ_DIRTY=""/>
-
-$org=$_;<BR _MOZ_DIRTY=""/>
-
-s/\\["']//g;<BR _MOZ_DIRTY=""/>
-
-s/\/\/[^:].*//;<BR _MOZ_DIRTY=""/>
-
-s/\/\*.*\*\///g;<BR _MOZ_DIRTY=""/>
-
-if ($comment == 1) {<BR _MOZ_DIRTY=""/>
-
-if (s/.*\*\///) {<BR _MOZ_DIRTY=""/>
-
-$comment = 0;<BR _MOZ_DIRTY=""/>
-
-}<BR _MOZ_DIRTY=""/>
-
-else {<BR _MOZ_DIRTY=""/>
-
-next;<BR _MOZ_DIRTY=""/>
-
-}<BR _MOZ_DIRTY=""/>
-
-}<BR _MOZ_DIRTY=""/>
-
-if (s/\/\*.*//) {<BR _MOZ_DIRTY=""/>
-
-$comment = 1;<BR _MOZ_DIRTY=""/>
-
-}<BR _MOZ_DIRTY=""/>
-
-if (/^\s*#/) {<BR _MOZ_DIRTY=""/>
-
-next;<BR _MOZ_DIRTY=""/>
-
-}<BR _MOZ_DIRTY=""/>
-
-}<BR _MOZ_DIRTY=""/>
-
+<SPAN>
+while (&lt;&gt;) {  
+      $org=$_;  
+      s/\\["']//g;  
+      s/\/\/[^:].*//;  
+      s/\/\*.*\*\///g;  
+      if ($comment == 1) {  
+        if (s/.*\*\///) {  
+          $comment = 0;  
+        }  
+        else {  
+          next;  
+        }  
+      }  
+      if (s/\/\*.*//) {  
+        $comment = 1;  
+      }  
+      if (/^\s*#/) {  
+        next;  
+      }  
+    }
 </SPAN>
 </XMP>
 	</test>

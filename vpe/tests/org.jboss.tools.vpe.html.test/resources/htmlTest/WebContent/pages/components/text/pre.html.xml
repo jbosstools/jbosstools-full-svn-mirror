@@ -3,14 +3,8 @@
 		<PRE WIDTH="30" ID="pre" CLASS="preClass"
 			STYLE="color: red; -moz-user-modify: read-write;">
 			<SPAN CLASS="vpe-text">
-				<BR _MOZ_DIRTY="" />
-
-				string 1
-				<BR _MOZ_DIRTY="" />
-
-				string 2
-				<BR _MOZ_DIRTY="" />
-
+	string 1
+	string 2 
 			</SPAN>
 		</PRE>
 	</test>

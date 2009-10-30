@@ -909,6 +909,11 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		
 			toolBar = visualEditor.createVisualToolbar(verticalToolbarSplitter);
 			visualEditor.createPartControl(visualContent);
+
+			// initialize editor
+			// this method must be invoked before any visual
+			// node is created, see JBIDE-5105
+			visualEditor.getEditor();
 	}
 
 	public void createPreviewBrowser() {
