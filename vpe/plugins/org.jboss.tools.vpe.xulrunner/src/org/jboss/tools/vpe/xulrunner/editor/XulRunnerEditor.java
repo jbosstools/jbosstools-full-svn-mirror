@@ -17,6 +17,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -53,7 +55,10 @@ import org.mozilla.xpcom.XPCOMException;
  * @author Sergey Vasilyev (svasilyev@exadel.com)
  * 
  */
-public class XulRunnerEditor extends XulRunnerBrowser {
+public class XulRunnerEditor extends XulRunnerBrowser{
+	
+	private VisualPaintListener paintListener;
+	
 	/** IVpeResizeListener */
 	private IVpeResizeListener resizeListener;
 
@@ -153,6 +158,10 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 				// under Mac OS
 				// getWebBrowser().removeWebBrowserListener(XulRunnerEditor.this,
 				// nsIWebProgressListener.NS_IWEBPROGRESSLISTENER_IID);
+				if (paintListener != null) {
+					getBrowser().getParent().removePaintListener(paintListener);
+					paintListener = null;
+				}
 				getWebBrowser().removeWebBrowserListener(XulRunnerEditor.this,
 						nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
 				removeSelectionListener();
@@ -167,7 +176,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 					removeListener(SWT.Show, eventListenet);
 					removeListener(SWT.FocusIn, eventListenet);
 					removeListener(SWT.Selection, eventListenet);
-					removeListener(SWT.Paint, eventListenet);
+					removeListener(SWT.Resize, eventListenet);
 					eventListenet = null;
 				}
 				getBrowser().removeDisposeListener(this);
@@ -175,7 +184,9 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 			}
 
 		});
-
+		//Part of fix https://jira.jboss.org/jira/browse/JBIDE-4022
+		paintListener = new VisualPaintListener();
+		getBrowser().getParent().addPaintListener(paintListener);
 		// addListener(SWT.Activate, eventListenet);
 		addListener(SWT.Paint, eventListenet);
 		/*
@@ -187,7 +198,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		// when switch from visual to preview selection rectangle doen't
 		// disappear
 		addListener(SWT.Resize, eventListenet);
-
 		addListener(SWT.Show, eventListenet);
 		addListener(SWT.FocusIn, eventListenet);
 		// Commented by Max Areshkau (bug on Mac OS X10.4
@@ -196,7 +206,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		// addListener(SWT.FocusOut, eventListenet);
 		addListener(SWT.Selection, eventListenet);
 		addListener(SWT.Paint, eventListenet);
-
+	
 		resizeListener = new IVpeResizeListener() {
 			public void onEndResizing(int usedResizeMarkerHandle, int top,
 					int left, int width, int height,
@@ -793,4 +803,13 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	// return hasSelectInParenNodes(domNode.getParentNode());
 	// }
 	// }
+	
+	private class VisualPaintListener implements PaintListener{
+
+		public void paintControl(PaintEvent e) {
+			showSelectionRectangle();
+		}
+		
+	}
+	
 }
