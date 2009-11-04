@@ -25,14 +25,17 @@ import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
+import org.jboss.tools.smooks.gef.tree.editpolicy.IShowHighlighFigure;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 
 /**
  * @author DartPeng
  * 
  */
-public class TreeNodeFigure extends Figure {
+public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHighlighFigure {
 	private List<ITreeFigureListener> treeListener = new ArrayList<ITreeFigureListener>();
 
 	private final int SPACE_INT = 14;
@@ -60,6 +63,8 @@ public class TreeNodeFigure extends Figure {
 	private boolean selected;
 
 	private Image labelImage = null;
+
+	private boolean showHighlight;
 
 	public TreeNodeFigure(TreeNodeModel model) {
 		super();
@@ -271,7 +276,8 @@ public class TreeNodeFigure extends Figure {
 	}
 
 	/**
-	 * @param labelImage the labelImage to set
+	 * @param labelImage
+	 *            the labelImage to set
 	 */
 	public void setLabelImage(Image labelImage) {
 		this.labelImage = labelImage;
@@ -282,17 +288,11 @@ public class TreeNodeFigure extends Figure {
 	}
 
 	public void paint(Graphics graphics) {
-		if (isFocus()) {
-			label.setForegroundColor(ColorConstants.blue);
-		} else {
-			label.setForegroundColor(ColorConstants.black);
+		label.setForegroundColor(ColorConstants.black);
+		if (isFocus() || isSelected() || showHighlight) {
+			label.setForegroundColor(GraphicsConstants.FONT_COLOR);
 		}
 
-		if (isSelected()) {
-			label.setForegroundColor(ColorConstants.lightBlue);
-		} else {
-			label.setForegroundColor(ColorConstants.black);
-		}
 		super.paint(graphics);
 	}
 
@@ -384,5 +384,15 @@ public class TreeNodeFigure extends Figure {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void showHighlightBackgroudColor(Color color) {
+		showHighlight = true;
+		repaint();
+	}
+
+	public void showbackOldbackgroundColor(Color color) {
+		showHighlight = false;
+		repaint();
 	}
 }

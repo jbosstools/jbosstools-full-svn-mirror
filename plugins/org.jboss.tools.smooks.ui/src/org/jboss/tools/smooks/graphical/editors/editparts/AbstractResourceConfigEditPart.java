@@ -117,7 +117,6 @@ public class AbstractResourceConfigEditPart extends TreeContainerEditPart {
 			 */
 			@Override
 			protected Command createAddCommand(EditPart child, EditPart after) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 

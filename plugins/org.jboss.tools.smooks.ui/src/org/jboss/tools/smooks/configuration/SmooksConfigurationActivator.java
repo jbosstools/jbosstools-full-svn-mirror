@@ -64,12 +64,19 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 	@Override
 	protected void initializeImageRegistry(ImageRegistry reg) {
 		super.initializeImageRegistry(reg);
+		// regist palette image
+		reg.put(GraphicsConstants.IMAGE_LINK16, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_LINK16));
+		reg.put(GraphicsConstants.IMAGE_LINK24, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_LINK24));
 
 		// registe task image
 		reg.put(GraphicsConstants.IMAGE_APPLY_FREEMARKER_TASK, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_APPLY_FREEMARKER_TASK));
 		reg.put(GraphicsConstants.IMAGE_JAVA_AMPPING_TASK, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_JAVA_AMPPING_TASK));
+		reg.put(GraphicsConstants.IMAGE_APPLY_XSL_TASK, imageDescriptorFromPlugin(PLUGIN_ID,
+				GraphicsConstants.IMAGE_APPLY_XSL_TASK));
 		reg.put(GraphicsConstants.IMAGE_INPUT_TASK, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_INPUT_TASK));
 
