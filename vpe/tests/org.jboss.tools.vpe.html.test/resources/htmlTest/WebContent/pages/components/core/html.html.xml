@@ -1,6 +1,6 @@
 <tests>
 	<test id="html">
-		<DIV STYLE="border: 2px solid blue; -moz-user-modify: read-write;">
+		<DIV STYLE="-moz-user-modify: read-write;">
 			<DIV STYLE="display: none; -moz-user-modify: read-only;">
 				<BR VPE:PSEUDO-ELEMENT="yes"
 					STYLE="font-style: italic; color: green; -moz-user-modify: read-only;" />

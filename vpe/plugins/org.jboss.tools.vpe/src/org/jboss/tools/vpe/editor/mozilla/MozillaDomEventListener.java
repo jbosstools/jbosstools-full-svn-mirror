@@ -33,6 +33,10 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 	private EditorDomEventListener editorDomEventListener;
 	
 	//possible events
+	public static final String MOZAFTERPAINT = "MozAfterPaint"; //$NON-NLS-1$
+
+	public static final String SCROLL = "scroll"; //$NON-NLS-1$
+	
 	public static final String MOUSEMOVEEVENTTYPE="mousemove"; //$NON-NLS-1$
 	
 	public static final String MOUSEDOWNEVENTTYPE="mousedown"; //$NON-NLS-1$
@@ -57,6 +61,7 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 	
 	public static final String DRAGEXITEVENT = "dragexit"; //$NON-NLS-1$
 	
+
 	void setEditorDomEventListener(EditorDomEventListener listener) {
 		editorDomEventListener = listener;
 	}

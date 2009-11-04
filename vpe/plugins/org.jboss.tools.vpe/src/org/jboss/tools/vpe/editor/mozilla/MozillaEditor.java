@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -35,8 +34,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.custom.BusyIndicator;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
@@ -47,7 +44,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
@@ -81,6 +77,7 @@ import org.mozilla.interfaces.nsIDOMEventTarget;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
+import org.mozilla.interfaces.nsIDOMWindow;
 import org.mozilla.interfaces.nsIEditingSession;
 import org.mozilla.interfaces.nsIEditor;
 import org.mozilla.interfaces.nsIHTMLAbsPosEditor;
@@ -847,7 +844,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			if (getContentAreaEventListener() != null) {
 				getContentAreaEventListener().setVisualEditor(xulRunnerEditor);
 				setContentAreaEventTarget((nsIDOMEventTarget) contentArea.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID));
-				
 				//add mozilla event handlers
 				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.CLICKEVENTTYPE, getContentAreaEventListener(), false); 
 				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.MOUSEDOWNEVENTTYPE, getContentAreaEventListener(), false); 
@@ -862,6 +858,12 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				getContentAreaEventTarget().addEventListener(MozillaDomEventListener.DBLCLICK, getContentAreaEventListener(), false);
 				documentEventTarget = (nsIDOMEventTarget) xulRunnerEditor.getDOMDocument().queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
 				documentEventTarget.addEventListener(MozillaDomEventListener.KEYPRESS, getContentAreaEventListener(), false);
+				//as a fix of https://jira.jboss.org/jira/browse/JBIDE-4022
+				//scroll event listener was added for selection border redrawing
+				documentEventTarget.addEventListener(MozillaDomEventListener.SCROLL, getContentAreaEventListener(), false);
+				nsIDOMWindow window = xulRunnerEditor.getWebBrowser().getContentDOMWindow();
+				nsIDOMEventTarget eventTarget = (nsIDOMEventTarget) window.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
+				eventTarget.addEventListener(MozillaDomEventListener.MOZAFTERPAINT, getContentAreaEventListener(), false);
 			} else {
 				//baseEventListener = new MozillaBaseEventListener();
 			}
@@ -884,6 +886,12 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		
 			if (xulRunnerEditor.getDOMDocument() != null && documentEventTarget != null) {
 				documentEventTarget.removeEventListener(MozillaDomEventListener.KEYPRESS, getContentAreaEventListener(), false); 
+				documentEventTarget.removeEventListener(MozillaDomEventListener.SCROLL, getContentAreaEventListener(), false); 
+			}
+			if ((xulRunnerEditor!=null) && (xulRunnerEditor.getWebBrowser()!= null)) {
+				nsIDOMWindow window = xulRunnerEditor.getWebBrowser().getContentDOMWindow();
+				nsIDOMEventTarget eventTarget = (nsIDOMEventTarget) window.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
+				eventTarget.removeEventListener(MozillaDomEventListener.MOZAFTERPAINT, getContentAreaEventListener(), false);
 			}
 			getContentAreaEventListener().setVisualEditor(null);
 			getContentAreaEventListener().setEditorDomEventListener(null);

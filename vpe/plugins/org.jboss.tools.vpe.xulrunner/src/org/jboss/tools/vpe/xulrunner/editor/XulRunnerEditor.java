@@ -760,30 +760,31 @@ public class XulRunnerEditor extends XulRunnerBrowser{
 		// {
 		// return;
 		// }
-		// restore style for previously bordered element
-		if (this.lastBorderedElement != null
-				&& this.lastBorderedElement.getAttribute(STYLE_ATTR) != null) {
-			String style = this.lastBorderedElement
-					.getAttribute(PREV_STYLE_ATTR_NAME);
-			this.lastBorderedElement.removeAttribute(PREV_STYLE_ATTR_NAME);
-			this.lastBorderedElement.setAttribute(STYLE_ATTR, style);
-		}
+		if (Platform.OS_MACOSX.equals(Platform.getOS())) {
+			// restore style for previously bordered element
+			if (this.lastBorderedElement != null
+					&& this.lastBorderedElement.getAttribute(STYLE_ATTR) != null) {
+				String style = this.lastBorderedElement
+						.getAttribute(PREV_STYLE_ATTR_NAME);
+				this.lastBorderedElement.removeAttribute(PREV_STYLE_ATTR_NAME);
+				this.lastBorderedElement.setAttribute(STYLE_ATTR, style);
+			}
 
-		// save style for early bordered element
-		String oldstyle = domElement.getAttribute(STYLE_ATTR);
-		if (flasherHiddentElementColor.equals(getIFlasher().getColor())) {
-			domElement.setAttribute(STYLE_ATTR, domElement
-					.getAttribute(STYLE_ATTR)
-					+ ';' + XulRunnerEditor.INVISIBLE_ELEMENT_BORDER);
+			// save style for early bordered element
+			String oldstyle = domElement.getAttribute(STYLE_ATTR);
+			if (flasherHiddentElementColor.equals(getIFlasher().getColor())) {
+				domElement.setAttribute(STYLE_ATTR, domElement
+						.getAttribute(STYLE_ATTR)
+						+ ';' + XulRunnerEditor.INVISIBLE_ELEMENT_BORDER);
+			} else {
+				domElement.setAttribute(STYLE_ATTR, domElement
+						.getAttribute(STYLE_ATTR)
+						+ ';' + XulRunnerEditor.VISIBLE_ELEMENT_BORDER);
+			}
+			this.lastBorderedElement = domElement;
+			this.lastBorderedElement.setAttribute(PREV_STYLE_ATTR_NAME, oldstyle);
 		} else {
-			domElement.setAttribute(STYLE_ATTR, domElement
-					.getAttribute(STYLE_ATTR)
-					+ ';' + XulRunnerEditor.VISIBLE_ELEMENT_BORDER);
-		}
-		this.lastBorderedElement = domElement;
-		this.lastBorderedElement.setAttribute(PREV_STYLE_ATTR_NAME, oldstyle);
-		// under osx function drawElementOutline not works
-		if (!Platform.OS_MACOSX.equals(Platform.getOS())) {
+			// under osx function drawElementOutline not works
 			getIFlasher().drawElementOutline(domElement);
 		}
 	}
