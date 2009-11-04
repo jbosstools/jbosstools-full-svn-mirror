@@ -139,7 +139,7 @@ public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 		fillLayout.marginWidth = 1;
 		gd = new GridData(GridData.FILL_BOTH);
 		tableComposite.setLayoutData(gd);
-		tableComposite.setBackground(GraphicsConstants.BORDER_CORLOER);
+		tableComposite.setBackground(GraphicsConstants.BORDER_CORLOR);
 		tableComposite.setLayout(fillLayout);
 
 		inputDataViewer = CheckboxTableViewer.newCheckList(tableComposite, SWT.MULTI | SWT.FULL_SELECTION);

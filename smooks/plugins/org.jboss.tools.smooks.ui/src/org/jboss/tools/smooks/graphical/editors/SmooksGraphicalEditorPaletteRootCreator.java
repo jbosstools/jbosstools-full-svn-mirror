@@ -34,8 +34,10 @@ import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.SelectionToolEntry;
 import org.eclipse.gef.requests.CreationFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ImageRegistry;
+import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.actions.ISmooksActionGrouper;
-import org.jboss.tools.smooks.configuration.editors.actions.JavaBean11ActionGrouper;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
@@ -78,7 +80,10 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 				return null;
 			}
 		};
-		drawer.add(new ConnectionCreationToolEntry("Link", "Connect node", factory, null, null));
+		ImageRegistry imageRegistry = SmooksConfigurationActivator.getDefault().getImageRegistry();
+		drawer.add(new ConnectionCreationToolEntry("Link", "Connect node", factory, imageRegistry
+				.getDescriptor(GraphicsConstants.IMAGE_LINK16), imageRegistry
+				.getDescriptor(GraphicsConstants.IMAGE_LINK16)));
 		root.add(drawer);
 
 		createPaletteDrawer(root);
@@ -101,7 +106,7 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 				PaletteDrawer drawer = new PaletteDrawer(iSmooksActionGrouper.getGroupName());
 				fillDrawer(drawer, newChildrenDescripter, iSmooksActionGrouper);
 				root.add(drawer);
-				
+
 			}
 		}
 	}
@@ -222,9 +227,9 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 		}
 		return false;
 	}
-	
-	protected void fillActionGrouper(List<ISmooksActionGrouper> grouperList){
-		
+
+	protected void fillActionGrouper(List<ISmooksActionGrouper> grouperList) {
+
 	}
 
 	protected List<ISmooksActionGrouper> getSmooksActionGrouper() {
@@ -236,7 +241,7 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 		// grouperList.add(new Datasources11ActionGrouper());
 		// grouperList.add(new FragmentRouting11ActionGrouper());
 		// grouperList.add(new Scripting11ActionGrouper());
-//		 grouperList.add(new Templating11ActionGrouper());
+		// grouperList.add(new Templating11ActionGrouper());
 		// grouperList.add(new PersistenceActionGrouper());
 		// grouperList.add(new Validation10ActionGrouper());
 		return grouperList;

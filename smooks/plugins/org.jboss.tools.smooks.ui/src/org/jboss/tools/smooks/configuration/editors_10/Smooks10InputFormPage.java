@@ -193,7 +193,7 @@ public class Smooks10InputFormPage extends FormPage implements ISmooksModelValid
 		FillLayout fillLayout = new FillLayout();
 		fillLayout.marginHeight = 1;
 		fillLayout.marginWidth = 1;
-		viewerContainer.setBackground(GraphicsConstants.BORDER_CORLOER);
+		viewerContainer.setBackground(GraphicsConstants.BORDER_CORLOR);
 		viewerContainer.setLayout(fillLayout);
 		inputModelViewer = new TreeViewer(viewerContainer, SWT.NONE);
 		inputModelViewer.setContentProvider(new CompoundStructuredDataContentProvider());
@@ -558,7 +558,7 @@ public class Smooks10InputFormPage extends FormPage implements ISmooksModelValid
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.heightHint = 200;
 		tableComposite.setLayoutData(gd);
-		tableComposite.setBackground(GraphicsConstants.BORDER_CORLOER);
+		tableComposite.setBackground(GraphicsConstants.BORDER_CORLOR);
 		tableComposite.setLayout(fillLayout);
 
 		inputDataViewer = CheckboxTableViewer.newCheckList(tableComposite, SWT.MULTI | SWT.FULL_SELECTION);

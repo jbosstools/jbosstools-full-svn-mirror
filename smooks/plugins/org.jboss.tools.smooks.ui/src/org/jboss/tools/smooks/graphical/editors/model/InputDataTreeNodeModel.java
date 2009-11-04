@@ -15,6 +15,9 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
+import org.jboss.tools.smooks.configuration.editors.xml.XSLModelAnalyzer;
+import org.jboss.tools.smooks.configuration.editors.xml.XSLTagObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 
@@ -68,9 +71,24 @@ public class InputDataTreeNodeModel extends TreeNodeModel {
 	 */
 	@Override
 	public boolean canLinkWithTarget(Object model) {
-		Object data = ((AbstractSmooksGraphicalModel)model).getData();
+		Object data = ((AbstractSmooksGraphicalModel) model).getData();
 		data = AdapterFactoryEditingDomain.unwrap(data);
-		if (SmooksUIUtils.getSelectorFeature((EObject)data) != null) {
+		if (data instanceof EObject) {
+			if (SmooksUIUtils.getSelectorFeature((EObject) data) != null) {
+				return true;
+			}
+		}
+		if (data instanceof XSLTagObject) {
+			if (XSLModelAnalyzer.isXSLTagObject((XSLTagObject) data)) {
+				if (((XSLTagObject) data).isForeachElement() || ((XSLTagObject) data).isTemplateElement()
+						|| ((XSLTagObject) data).isSortElement()) {
+					return true;
+				}
+			} else {
+				return true;
+			}
+		}
+		if (data instanceof TagPropertyObject) {
 			return true;
 		}
 		return false;

@@ -22,6 +22,9 @@ import org.jboss.tools.smooks.configuration.editors.actions.ISmooksActionGrouper
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
+import org.jboss.tools.smooks.graphical.actions.xsltemplate.XSLActionCreator;
+import org.jboss.tools.smooks.graphical.editors.editparts.IAutoLayout;
+import org.jboss.tools.smooks.graphical.editors.editparts.XSLMappingAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.model.XSLTemplateContentProvider;
 import org.jboss.tools.smooks.graphical.editors.model.XSLTemplateGraphicalModel;
 import org.jboss.tools.smooks.model.xsl.Xsl;
@@ -31,12 +34,41 @@ import org.jboss.tools.smooks.model.xsl.Xsl;
  * 
  */
 public class SmooksXSLTemplateGraphicalEditor extends SmooksGraphicalEditorPart {
+	
+	private XSLMappingAutoLayout autoLayout = null;
 
 	public SmooksXSLTemplateGraphicalEditor(ISmooksModelProvider provider) {
 		super(provider);
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#getAutoLayout()
+	 */
+	@Override
+	public IAutoLayout getAutoLayout() {
+		if(autoLayout == null){
+			autoLayout = new XSLMappingAutoLayout();
+		}
+		return autoLayout;
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#createActions()
+	 */
+	@Override
+	protected void createActions() {
+		super.createActions();
+		XSLActionCreator creator = new XSLActionCreator();
+		creator.registXSLActions(getActionRegistry(), getSelectionActions(), this);
+	}
+
+
+
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#getPaletteRoot()
 	 */

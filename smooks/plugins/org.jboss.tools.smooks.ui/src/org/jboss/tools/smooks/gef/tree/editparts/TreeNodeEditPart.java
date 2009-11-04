@@ -28,6 +28,7 @@ import org.eclipse.gef.tools.ConnectionDragCreationTool;
 import org.eclipse.gef.tools.DirectEditManager;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.graphics.Image;
+import org.jboss.tools.smooks.gef.tree.editpolicy.FigureHighlightEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeGraphicalNodeEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeSelectEditPolicy;
 import org.jboss.tools.smooks.gef.tree.figures.ITreeFigureListener;
@@ -177,6 +178,7 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 		});
 		this.installEditPolicy(EditPolicy.NODE_ROLE, new TreeNodeGraphicalNodeEditPolicy());
 		this.installEditPolicy("SELECTED", new TreeNodeSelectEditPolicy());
+		this.installEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE, new FigureHighlightEditPolicy());
 	}
 
 	@Override

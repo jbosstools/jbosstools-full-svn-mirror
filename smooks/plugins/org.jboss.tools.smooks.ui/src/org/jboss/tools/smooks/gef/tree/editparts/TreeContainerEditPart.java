@@ -16,6 +16,7 @@ import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
+import org.jboss.tools.smooks.gef.tree.editpolicy.FigureHighlightEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeGraphicalNodeEditPolicy;
 import org.jboss.tools.smooks.gef.tree.figures.IMoveableModel;
 import org.jboss.tools.smooks.gef.tree.figures.TreeContainerFigure;
@@ -114,6 +115,7 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 	@Override
 	protected void createEditPolicies() {
 		this.installEditPolicy(EditPolicy.NODE_ROLE, new TreeNodeGraphicalNodeEditPolicy());
+		this.installEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE, new FigureHighlightEditPolicy());
 	}
 
 	// @Override

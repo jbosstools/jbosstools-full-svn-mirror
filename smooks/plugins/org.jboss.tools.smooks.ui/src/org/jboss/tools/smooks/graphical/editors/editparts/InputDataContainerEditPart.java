@@ -14,6 +14,7 @@ import java.beans.PropertyChangeEvent;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
+import org.eclipse.draw2d.FigureUtilities;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
@@ -110,7 +111,11 @@ public class InputDataContainerEditPart extends TreeContainerEditPart {
 			@Override
 			protected void paintBorder(Graphics graphics) {
 				// super.paintBorder(graphics);
-				graphics.setForegroundColor(ColorConstants.black);
+				if (isSelected() || isFocus()) {
+					graphics.setForegroundColor(GraphicsConstants.BORDER_CORLOR);
+				} else {
+					graphics.setForegroundColor(ColorConstants.black);
+				}
 
 				Point p2 = new Point();
 				p2.setLocation(getBounds().getTopLeft().x, getBounds().getTopLeft().y);
@@ -129,7 +134,7 @@ public class InputDataContainerEditPart extends TreeContainerEditPart {
 				graphics.drawLine(p4, p3);
 
 				Point p5 = new Point();
-				p5.setLocation(getBounds().getTopRight().x - 1, getBounds().getTopRight().y + zwidth);
+				p5.setLocation(getBounds().getTopRight().x - 1, getBounds().getTopRight().y + zwidth - 1);
 				graphics.drawLine(p4, p5);
 
 				graphics.drawLine(p1, p5);
