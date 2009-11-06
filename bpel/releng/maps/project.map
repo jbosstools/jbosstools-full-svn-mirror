@@ -1,7 +1,6 @@
 !*** Generated with org.eclipse.dash.common.releng/tools/scripts/buildAllHelper.xml#dir2svnmap task
 feature@org.jboss.tools.bpel.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/features/org.jboss.tools.bpel.feature
 feature@org.jboss.tools.bpel.sdk.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/features/org.jboss.tools.bpel.sdk.feature
-feature@org.jboss.tools.bpel.tests.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/features/org.jboss.tools.bpel.tests.feature
 plugin@org.eclipse.bpel.apache.ode.deploy.model=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.apache.ode.deploy.model
 plugin@org.eclipse.bpel.apache.ode.deploy.ui=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui
 plugin@org.eclipse.bpel.apache.ode.runtime=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.apache.ode.runtime
@@ -14,4 +13,7 @@ plugin@org.eclipse.bpel.validator=SVN,,http://anonsvn.jboss.org/repos,,jbosstool
 plugin@org.eclipse.bpel.wsil.model=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.wsil.model
 plugin@org.eclipse.bpel.xpath10=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.xpath10
 plugin@org.jboss.tools.bpel.as.integration=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.jboss.tools.bpel.as.integration
+plugin@org.eclipse.tools.bpel.cheatsheet=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.tools.bpel.cheatsheet
+
+feature@org.jboss.tools.bpel.tests.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/features/org.jboss.tools.bpel.tests.feature
 plugin@org.eclipse.tools.bpel.ui.test=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/tests/org.eclipse.tools.bpel.ui.test
