@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="framework">
+    <?dbhtml filename="framework.html"?>
+
+    <chapterinfo>
+        <keywordset>
+
+            <keyword>Eclipse</keyword>
+            <keyword>JBoss</keyword>
+            <keyword>JBoss Tools</keyword>
+                   <keyword>BIRT Integration</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>JBoss BIRT Integraion Framework API Reference</title>
+
+
+<section>
+    
+    <title>
+        <emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> Component
+    </title>
+    
+    
+   
+<para>
+    The <emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> component servers to integrate a BIRT report into Seam/JSF  container. 
+    The <emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> tag recognizes most of the parameters described on the BIRT 
+    <ulink url="http://www.eclipse.org/birt/phoenix/deploy/viewerUsage2.2.php#parameters">Report Viewer Parameters</ulink> page, though it has attributes of its own.
+    
+</para>
+        
+        
+    <table>
+        <title><emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> Component Reference</title>   
+    <tgroup cols="3">
+        <thead>
+            <row>
+                <entry>Attribute</entry>
+                <entry>Correspondance to BIRT Report Viewer parameters</entry>
+                <entry>Description/</entry>
+                
+            </row>
+        </thead>
+        <tbody>
+            <row>
+                <entry>designType</entry>
+                <entry> - </entry>
+                <entry>Corresponds to the BIRT servlet mappings. Possible values are run, frameset, preview and embed. 
+                If the attribute is set to  embed the component is used for 
+                embeddable html. This type ignores all the attributes except designName 
+                and masterpage.
+               </entry>
+            </row> 
+            <row>
+                <entry>embeddable</entry>
+                <entry> - </entry>
+                <entry>A BIRT report occupies the whole page by default. It contains the &lt;html&gt;,
+                    &lt;head&gt;, &lt;body&gt; etc., tags. Embedded report can be a part of another page.
+                    It doesn't contain the above mentioned tags. Only HTML report can be embedded.</entry>
+            </row> 
+            <row>
+                <entry>designName</entry>
+                <entry>__report</entry>
+                <entry>Sets the name of the report design to process. This can be an absolute path or relative to the working folder. Valid values are  run, frameset and preview</entry>
+            </row> 
+            
+            <row>
+                <entry>format</entry>
+                <entry>__format</entry>
+                <entry>Specifies the desired output format, such as pdf, html, doc, ppt, or xls.</entry>
+            </row> 
+            
+            <row>
+                <entry>title</entry>
+                <entry>__title</entry>
+                <entry>Sets the report title.</entry>
+            </row> 
+            
+            <row>
+                <entry>showtitle</entry>
+                <entry>__showtitle</entry>
+                <entry>Determines if the report title is shown in the frameset viewer. Defaults to true.</entry>
+            </row> 
+            
+            <row>
+                <entry>toolbar</entry>
+                <entry>__toolbar</entry>
+                <entry>                    
+                    
+                    Determines if the report toolbar is shown in the frameset viewer.Defaults to true. Valid values are true and false.</entry>
+            </row> 
+            
+            
+            
+            <row>
+                <entry>navigationbar</entry>
+                <entry>__navigationbar</entry>
+                <entry>                    
+       
+                    Determines if the navigation bar is shown in the frameset viewer. Defaults to true. Valid values are true and false.</entry>
+            </row> 
+            
+            
+            <row>
+                <entry>document</entry>
+                <entry>__document</entry>
+                <entry>                    
+                    Sets the name for the rptdocument. The document is created when the report engine separates run and render tasks, and
+                    is used to support features like table of contents and pagination. 
+                    This setting can be an absolute path or relative to the working folder. If no document parameter is used, a unique document is created in the document folder.
+                    </entry>
+            </row> 
+            
+            <row>
+                <entry>locale</entry>
+                <entry>__locale</entry>
+                <entry>                    
+     Specifies the locale for the specific operation. Note that this will override the default locale.
+                </entry>
+            </row> 
+            <row>
+                <entry>svg</entry>
+                <entry>__svg</entry>
+                <entry>                    
+             Specifies whether SVG is supported.
+                </entry>
+            </row> 
+            
+            
+            
+            <row>
+                <entry>page</entry>
+                <entry>__page</entry>
+                <entry>                    
+                  Specifies specific page to render.
+                </entry>
+            </row> 
+            
+            
+            <row>
+                <entry>pagerange</entry>
+                <entry>__pagerange</entry>
+                <entry>                    
+                    Specifies page range to render. Eg 1-4,7.
+                </entry>
+            </row> 
+            
+            
+            <row>
+                <entry>masterpage</entry>
+                <entry>__masterpage</entry>
+                <entry> 
+                    
+                    Indicates that the report master page should be used or not. Validvalues are true and false.
+                </entry>
+            </row>
+            
+            
+            <row>
+                <entry>overwrite</entry>
+                <entry>__overwrite</entry>
+                <entry> 
+                    
+                    This setting if set to true will force an overwrite of the existing report document. 
+                </entry>
+            </row>
+            
+            <row>
+                <entry>bookmark</entry>
+                <entry>__bookmark</entry>
+                <entry> 
+                    
+                    Specifies a specific bookmark within the report to load. The viewer will automatically load the appropriate page.
+                </entry>
+            </row>
+            
+            
+            
+            <row>
+                <entry>rtl</entry>
+                <entry>__rtl</entry>
+                <entry> 
+                    Specifies whether to display the report in right to left format. This setting defaults to false.
+                </entry>
+            </row>
+            
+            
+            
+            <row>
+                <entry>fittopage</entry>
+                <entry>__fittopage</entry>
+                <entry> 
+                Specifies whether PDF generation should fit content to a page. Valid values are true and false.
+                </entry>
+            </row>
+            
+            
+            <row>
+                <entry>resourceFolder</entry>
+                <entry>__resourceFolder</entry>
+                <entry> 
+                Specifies the resource folder to use. This setting will override the default setting in the web.xml. The resource folder is used to locate libraries, images, and resource files.
+                </entry>
+            </row>
+            
+        </tbody>
+    </tgroup>
+    </table>
+    
+</section>
+    
+    <section>
+        <title><emphasis role="bold"> <property>&lt;b:param&gt;</property></emphasis> Component</title>   
+        <para>
+            The <emphasis role="bold"> <property>&lt;b:param&gt;</property></emphasis> tag describes report parameter.
+        </para>
+        
+        <table>
+            <title><emphasis role="bold"> <property>&lt;b:param&gt;</property></emphasis> Component</title>   
+            <tgroup cols="2">
+                <thead>
+                    <row>
+                        <entry>Attribute</entry>
+                        
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>name</entry>
+                        <entry>The parameter name. Required.</entry>
+                    </row> 
+                    <row>
+                        <entry>value</entry>
+                        <entry>The parameter value. Required.</entry>
+                    </row> 
+                    
+                    <row>
+                        <entry>isnull</entry>
+                        <entry>Specifies that a report parameter has a null value</entry>
+                    </row> 
+                    <row>
+                        <entry>islocale</entry>
+                        <entry>Specifies whether the parameter is localized</entry>
+                    </row> 
+                    
+                </tbody>
+                
+            </tgroup>
+        </table>
+    </section>
+    
+    
+    
+   
+      
+
+
+</chapter>
