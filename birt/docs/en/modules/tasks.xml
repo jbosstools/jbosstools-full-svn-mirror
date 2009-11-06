@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+ 
+<chapter id="tasks" xreflabel="tasks">
+    <?dbhtml filename="tasks.html"?>
+    <chapterinfo>
+        <keywordset>
+
+            <keyword>Eclipse</keyword>
+            <keyword>JBoss</keyword>
+            <keyword>JBoss Tools</keyword>
+                   <keyword>BIRT Integration</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>Tasks</title>
+    <para> In this chapter of the guide you will find information on the tasks that you can perform integrating BIRT. </para>
+
+    
+    
+   
+   &birt_integration_with_seam;
+   &hibernate_datasource;
+   &birt_reports_deployment;
+
+
+</chapter>
