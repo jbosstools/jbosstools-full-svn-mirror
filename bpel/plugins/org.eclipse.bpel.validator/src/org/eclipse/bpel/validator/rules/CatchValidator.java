@@ -191,7 +191,7 @@ public class CatchValidator extends CatchAllValidator {
 		
 		
 		setValue("fault.variable", fFaultVariableName);
-		setValue("fault.variable.type",fFaultVariableType);
+		setValue("type",fFaultVariableType);
 
 	}
 	
