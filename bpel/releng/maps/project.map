@@ -14,6 +14,7 @@ plugin@org.eclipse.bpel.wsil.model=SVN,,http://anonsvn.jboss.org/repos,,jbosstoo
 plugin@org.eclipse.bpel.xpath10=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.xpath10
 plugin@org.jboss.tools.bpel.as.integration=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.jboss.tools.bpel.as.integration
 plugin@org.jboss.tools.bpel.cheatsheet=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.jboss.tools.bpel.cheatsheet
+plugin@org.jboss.tools.bpel.runtimes=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.jboss.tools.bpel.runtimes
 
 feature@org.jboss.tools.bpel.tests.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/features/org.jboss.tools.bpel.tests.feature
 plugin@org.eclipse.tools.bpel.ui.test=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/tests/org.eclipse.tools.bpel.ui.test
