@@ -8,16 +8,21 @@
   * Contributor:
   *     Red Hat, Inc. - initial API and implementation
   ******************************************************************************/
-package org.jboss.tools.seam.core;
-
-import org.eclipse.jdt.core.IMember;
-import org.jboss.tools.common.model.project.ext.ITextSourceReference;
+package org.jboss.tools.common.text;
 
 /**
- * An interface of seam tools model object that has associated source object in JDT model
+ * An interface of seam tools model object that has text source.
  * @author Alexey Kazakov
  */
-public interface ISeamJavaSourceReference extends ITextSourceReference {
+public interface ITextSourceReference {
 
-	public IMember getSourceMember();
+	/**
+	 * @return start position of element in text
+	 */
+	public int getStartPosition();
+
+	/**
+	 * @return number of characters of element in text
+	 */
+	public int getLength();
 }

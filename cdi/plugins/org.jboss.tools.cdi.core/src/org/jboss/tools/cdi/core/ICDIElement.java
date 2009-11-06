@@ -8,42 +8,33 @@
  * Contributors: 
  * Red Hat, Inc. - initial API and implementation 
  ******************************************************************************/ 
-package org.jboss.tools.common.el.core.resolver;
-
-import java.util.List;
+package org.jboss.tools.cdi.core;
 
 import org.eclipse.core.resources.IResource;
-import org.jboss.tools.common.el.core.parser.LexicalToken;
-import org.jboss.tools.common.text.ITextSourceReference;
+import org.eclipse.core.runtime.IPath;
 
 /**
- * Describes a segment of EL operand.
+ * Common interface for objects of CDI model.
+ * 
  * @author Alexey Kazakov
  */
-public interface ELSegment {
+public interface ICDIElement {
 
 	/**
-	 * @return source EL token.
+	 * Returns CDI project that contains this object.
+	 * @return
 	 */
-	LexicalToken getToken();
+	ICDIProject getCDIProject();
 
 	/**
-	 * @return true if the segment has been resolved.
+	 * Returns path of resource that declares this object.
+	 * @return
 	 */
-	boolean isResolved();
+	IPath getSourcePath();
 
 	/**
-	 * @return resource of underlying object.
+	 * Returns resource that declares this object.
+	 * @return resource 
 	 */
 	IResource getResource();
-
-	/**
-	 * @return source reference of underlying object.
-	 */
-	ITextSourceReference getSourceReference();
-
-	/**
-	 * @return underlying variables.
-	 */
-	List<IVariable> getVariables();
 }
