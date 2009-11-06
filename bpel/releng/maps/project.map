@@ -19,3 +19,6 @@ plugin@org.jboss.tools.bpel.runtimes=SVN,,http://anonsvn.jboss.org/repos,,jbosst
 feature@org.jboss.tools.bpel.tests.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/features/org.jboss.tools.bpel.tests.feature
 plugin@org.eclipse.tools.bpel.ui.test=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/tests/org.eclipse.tools.bpel.ui.test
 org.jboss.tools.bpel.cheatsheet
+
+!*** required shared/common plugins instead of pulling sources, build against http://download.jboss.org/jbosstools/updates/nightly/trunk/
+!*** plugin@org.jboss.ide.eclipse.as.wtp.core=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/as/plugins/org.jboss.ide.eclipse.as.wtp.core
