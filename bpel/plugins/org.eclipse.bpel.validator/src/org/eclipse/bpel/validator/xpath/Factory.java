@@ -48,7 +48,8 @@ public class Factory implements IFactory<Validator> {
 		
 		String nsURI = qname.getNamespaceURI();
 		if (IConstants.XMLNS_XPATH_EXPRESSION_LANGUAGE.equals ( nsURI ) ||
-			IConstants.XMLNS_XPATH_EXPRESSION_LANGUAGE_2.equals (nsURI ) ) 
+			IConstants.XMLNS_XPATH_EXPRESSION_LANGUAGE_2.equals (nsURI ) ||
+			IConstants.XMLNS_XPATH_EXPRESSION_LANGUAGE_XPATH2.equals (nsURI )) 
 		{
 			Validator val = createValidator(qname.getLocalPart()) ;
 			if (val == null) {
