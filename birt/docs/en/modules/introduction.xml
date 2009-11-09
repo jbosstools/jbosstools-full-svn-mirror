@@ -14,6 +14,9 @@
     </chapterinfo>
 
     <title>Introduction</title>
+    
+    
+    
 
     <section>
 
@@ -52,85 +55,30 @@
             Eclipse BIRT you&apos;ll find out in the next sections.</para>
     </section>
 
-<section id="BIRT_key_features">
-    <title>Key Features of BIRT</title>
-    <para>For a start, we propose you to look through the table of main features of BIRT plugin:</para>
 
-    <table>
-        
-        <title>Key Functionality for BIRT Plugin</title>
-        <tgroup cols="3">
-            
-            <colspec colnum="1" align="left" colwidth="2*"/>
-            <colspec colnum="2" colwidth="4*"/>
-            <colspec colnum="3" align="left" colwidth="2*"/>
-            
-            <thead>
-                <row>
-                    <entry>Feature</entry>
-                    <entry>Benefit</entry>
-                    <entry>Chapter</entry>
-                </row>
-            </thead>
-            
-            <tbody>
-                
-                <row>
-                    <entry><para>Integration with Seam</para></entry>
-                    <entry><para>You can add a BIRT report to an .xhtml file or embed it in some Seam .xhtml page.</para></entry>
-                    <entry>
-                        <link linkend="integration">integration with Seam</link>
-                    </entry>
-                </row>
-                
-                <row>
-                    <entry><para>Hibernate ODA Data Source</para></entry>
-                    <entry><para>Hibernate ODA Data Source for the JBoss BIRT Integration feature is completely integrated with Hibernate Tools.</para></entry>
-                    <entry>
-                        <link linkend="hibernate_datasource">Hibernate ODA data source</link>
-                    </entry>
-                </row>
-                
-                                
-            </tbody>
-            
-        </tgroup>
-    </table>
-
-
-
-
-
-
-</section>
-    
     
     <section>
         <title>JBoss BIRT Integration Functionality Overview</title>
+        
+        <para>
+            The key feature of JBoss BIRT Integration  is the JBoss BIRT Integration Framework, which allows to integrate a BIRT report into Seam/JSF container.
+            The framework API reference is in the 
+            <link linkend="framework">JBoss BIRT Integraion Framework API Reference</link> chapter of the guide.
+        </para>     
+        <para>
+            
+            This  guide also covers functionality of <property>JBoss Tools</property> module  which assists in  
+            integration with BIRT.
+            The integration plug-in allows you to visually configure <property>Hibernate Data Source</property> (specify a Hibernate configuration or JNDI URL),  
+            compose HQL queries with syntax-highlighting, content-assist, formatting as well as other functionalities available in the HQL editor. 
+           
+           
+          </para>
 
-        <para>This reference guide describes the one module of the <property>JBoss Tools</property> project which 
-           performs the integration with BIRT. The integration includes the following functionalities:</para>
-        <itemizedlist>
-            <listitem>
-                <para>Hibernate ODA driver that includes a dialog to create HQL queries with
-                    syntax-highlighting, content-assist, formatting as well as other functionalities
-                    available in the HQL editor. There is also a possibility to add
-                    parameters.</para>
-            </listitem>
-            <listitem>
-                <para>possibility to add JBoss BIRT functionality to the standard Seam web
-                    project</para>
-            </listitem>
-            <listitem>
-                <para>BIRT JSF/Seam control</para>
-            </listitem>
-            <listitem>
-                <para>deployment of BIRT reports within web projects (Seam, JSF, etc.)</para>
-            </listitem>
-        </itemizedlist>
-
-        <para>To enable <property>JBoss Tools</property> integration with BIRT you are intended to
-            have the next:</para>
+        <para>
+            To enable <property>JBoss Tools</property> integration with BIRT you are intended to
+            have the next:
+        </para>
         <itemizedlist>
             <listitem>
                 <para>Eclipse with <property>JBoss Tools</property>
@@ -160,11 +108,6 @@
         </note>
     </section>
 
-    <section id="birt_plugin_rel_resources">
-        <title>Other Relevant Resources on the Topic</title>
-
-        <para>All JBoss Developer Studio/JBoss Tools release documentation you can find at<ulink url="http://docs.jboss.org/tools/">http://docs.jboss.org/tools</ulink> in the corresponding release directory.</para>
-        <para>The latest documentation builds are available at <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">http://download.jboss.org/jbosstools/nightly-docs</ulink>.</para>
-    </section>
+    
 
 </chapter>

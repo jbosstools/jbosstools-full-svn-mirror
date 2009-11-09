@@ -1,30 +1,25 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<chapter id="hibernate_datasource" xreflabel="hibernate_datasource">
+<section id="hibernate_datasource">
 
-    <?dbhtml filename="hibernate_datasource.html"?>
-    <chapterinfo>
-        <keywordset>
-            <keyword>JBoss</keyword>
-            <keyword>BIRT</keyword>
-            <keyword>Seam</keyword>
-        </keywordset>
-    </chapterinfo>
 
-    <title>Hibernate ODA Data Source</title>
+    <title>Using Hibernate ODA Data Source</title>
 
-    <para>The JBoss BIRT Integration feature includes the Hibernate ODA Data Source completely
-        integrated with Hibernate Tools. You can use it in the way you use any of BIRT ODA drivers.
-        Let&apos;s perform simple actions that demonstrate it.</para>
+    <para>The JBoss BIRT Integration feature includes the Hibernate ODA Data Source which is  completely
+        integrated with Hibernate Tools. You can use it the way as you would use any of BIRT ODA drivers.
+       
+       
 
-    <para>First, run the <emphasis>
-            <property>Seam Generate Entities</property>
-        </emphasis> action (You can access it from <emphasis>
+    
+    </para>
+
+    <para>First, you need to reverse engineer from the database to generate Seam entities. You can perform this operation going to  <emphasis>
             <property>File &gt; New &gt; Seam Generate Entities</property>
         </emphasis> in the <property>Seam perspective</property>. More details on the Seam Generate
-        Entities read in our <ulink
+        Entities please read <ulink
             url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#generate_entities"
-            >Seam Dev Tools Reference guide</ulink>). This action will create a Hibernate Console
-        configuration.</para>
+            >Seam Dev Tools Reference guide</ulink>). 
+        In this guide we will use the <property>Employees</property> table of the <property>DATAMODELS</property> database.      
+</para>
 
     <tip>
         <title>Tip:</title>
@@ -32,28 +27,24 @@
             adjusted and connected to a database. How to do this see in the <ulink
                 url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#d0e2725"
                 >CRUD Database Application</ulink> chapter of the Seam Dev Tools Reference
-            guide.</para>
+                guide.</para>
+        <para>
+            If you followed the steps described in the
+            <link linkend="birt_integration">Adding BIRT Functionality to Standard Seam Web Project</link> chapter,
+            you would have a connection profile already configured.        
+                </para>
     </tip>
 
-    <para>Next add a new BIRT report. To do that navigate to <emphasis>
-            <property>File &gt; New &gt; Other &gt; Business Intelligence and Reporting
-                Tools &gt; Report</property>.</emphasis> In the <property>New Report
-            wizard</property> enter the report name, for instance <emphasis>
-            <property>testHibernateOda.rptdesign</property>,</emphasis> then click <emphasis>
-            <property>Finish</property>.</emphasis></para>
+<para>
+    Next you should create a new BIRT report file ( <emphasis>><property>File &gt; New &gt; Other &gt; Business Intelligence and Reporting
+        Tools &gt; Report</property></emphasis>) to represent the data from the <property>Employees</property> table. Call the file <property>employees.rptdesign</property>.
+</para>
+    
 
-    <figure>
-        <title>Creating a New BIRT Report </title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/creatingNewBirtReport.png"/>
-            </imageobject>
-        </mediaobject>
-    </figure>
 
-    <para>Now switch to the <property>Report Design perspective</property>.</para>
+    <para>Now switch to the <property>BIRT Report Design</property> perspective.</para>
 
-    <para>In the <property>Data Explorer View</property> right-click the <emphasis>
+    <para>In the <property>Data Explorer</property> view right-click the <emphasis>
             <property>Data Source</property>
         </emphasis> node and choose <emphasis>
             <property>New Data Source</property>.</emphasis></para>
@@ -67,12 +58,12 @@
         </mediaobject>
     </figure>
 
-    <para>In the wizard select <emphasis>
+    <para>The wizard will prompt you to select data source type.  Choose <emphasis>
             <property>Hibernate Data Source</property>
-        </emphasis> and give it a proper name, <emphasis>
-            <property>HbDataSource</property>
-        </emphasis> for instance. Hit <emphasis>
-            <property>Next</property>.</emphasis></para>
+        </emphasis> and give it a meaningful name, for instance <emphasis>
+            <property>HibernateDataSource</property>
+        </emphasis>. Hit <emphasis>
+            <property>Next</property> to proceed.</emphasis></para>
 
     <figure>
         <title>Creating Hibernate Data Source</title>
@@ -83,9 +74,14 @@
         </mediaobject>
     </figure>
 
-    <para>On the next wizard page leave everything as it is, just press the <emphasis>
+    <para>On the next wizard's dialog you can leave the everything with default values, press the <emphasis>
             <property>Test Connection</property>
-        </emphasis> button to verify the connection is successful.</para>
+    </emphasis> button to verify  that the connection is established successfully.</para>
+    
+    <para>
+        The <property>Hibernate Data Source</property> enables you to specify a Hibernate Configuration or JNDI URL. 
+        
+    </para>
 
     <figure>
         <title>Hibernate Data Source Profile</title>
@@ -96,32 +92,23 @@
         </mediaobject>
     </figure>
 
-    <para>Click <emphasis>
-            <property>Ok</property>
-        </emphasis> and then <emphasis>
+    <para>Press  <emphasis>
             <property>Finish</property>
-        </emphasis> to complete.</para>
+        </emphasis> to complete <property>New Data Source</property> wizard.</para>
 
-    <para>Now let&apos;s add a Hibernate ODA dataset. To do that you should bring up the
-            <property>New Data Set wizard</property>. In the <property>Data Explorer View</property>
+    <para>Now you need to configure a new Hibernate ODA data set. Launch the
+        <property>New Data Set</property> wizard. In the <property>Data Explorer View</property>
         right-click the <emphasis>
             <property>Data Set</property>
         </emphasis> node and select <emphasis>
             <property>New Data Set</property>.</emphasis></para>
 
-    <figure>
-        <title>Creating a New Data Set</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/creatingDataSet.png"/>
-            </imageobject>
-        </mediaobject>
-    </figure>
 
-    <para>In the <emphasis>
-            <property>Data Set Name</property>
-        </emphasis> section specify the name. Let&apos;s it be <emphasis>
-            <property>HbDataSet</property>.</emphasis></para>
+    <para>Select <property>HibernateDataSource</property> as target data source and type in the new data set name.
+        Call it <property>HibernateDataSet</property>.</para>
+
+
+
 
     <figure>
         <title>Creating a Hibernate ODA Data Set</title>
@@ -132,14 +119,26 @@
         </mediaobject>
     </figure>
 
-    <para>Next you&apos;ll be prompted to define the query for this data set. To validate the
+
+    <para>The next dialog of the wizard will help you compose a query for the new data set.</para>
+    <para>We will make a report that will print all employees in the database who has Sales Rep job title.</para>
+
+       <programlisting role="SQL"><![CDATA[...
+select jobtitle, firstname, lastname, email
+from Employees as employees where employees.jobtitle = 'Sales Rep'
+...]]></programlisting>  
+        
+        
+ <para>       
+        
+        To validate the
         entered query you can press the <emphasis>
             <property>Test query</property>
         </emphasis> button. All the HQL features like syntax highlighting, content assist,
-        formatting, Drag and Drop, etc., are available to you here.</para>
+        formatting, drag-and-drop, etc., are available to facilitate query composing.</para>
 
     <figure>
-        <title>Testing Query </title>
+        <title>Composing query for Data Set</title>
         <mediaobject>
             <imageobject>
                 <imagedata fileref="images/hibernate_datasource/testingQuery.png"/>
@@ -147,32 +146,12 @@
         </mediaobject>
     </figure>
 
-    <para>Next the output columns will be displayed. It&apos;s possible to edit them
-        here.</para>
+    <para>Pressing <property>Finish</property> will call the <property>Edit Data Set</property>  dialog where you can adjust the parameters of the data set and preview the resulted set.. 
+        If everything looks good, hit <property>Ok</property> to generate a new data set.
+     </para>
 
-    <figure>
-        <title>HQL Features - Output Columns Section</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/hqlFeaturesOutputColumns.png"/>
-            </imageobject>
-        </mediaobject>
-    </figure>
-
-    <para>To preview the results of the defined query click the <emphasis>
-            <property>Preview Results</property>
-        </emphasis> item.</para>
-    <figure>
-        <title>HQL Features - Preview Results Section</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/hqlFeaturesPreviewResults.png"/>
-            </imageobject>
-        </mediaobject>
-    </figure>
-
-    <para>So far you have the Hibernate data source and data set defined. Now you can create a BIRT
-        report using this data source and data set.</para>
+    <para>Now you can insert the  data set items of <property>HibernateDataSet</property> into the <property>employees.rptdesign</property>.</para>
+    
 
     <tip>
         <title>Tip:</title>
@@ -180,60 +159,35 @@
                 url="http://www.eclipse.org/birt/phoenix/tutorial/">Eclipse BIRT Tutorial</ulink>.</para>
     </tip>
 
-    <figure>
-        <title>Creating a BIRT Report using Created Data Source and Data Set</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata
-                    fileref="images/hibernate_datasource/BIRTReportUsingDataSourceAndSet.png "/>
-            </imageobject>
-        </mediaobject>
-    </figure>
+<para>You can also use parameters in the query to add  dynamics to your report. In the previous example we hardcoded the selection criterion in the <code>where</code> clause. </para>
+    <para>To specify the job title on-the-fly your query should look like this:</para>
+    <programlisting role="XML"><![CDATA[
+select jobtitle,firstname, lastname,email
+from Employees as employees where employees.jobtitle = ?
+]]></programlisting> 
+    
+    <para>The question mark represents a data set input parameter, which is not the same as a report parameter.
+        Now you need to define an new report parameter to pass the data to the report, call it <code>JobTitle</code>.
+        
+        
+        
+        The dataset parameter can be linked to a report parameter.
+        In the <property>Data Explorer</property> view click the Data Set node to open it and right-click
+        on the data set you created previously( in our case it is <property>HibernateDataSet</property>),
+        choose <property>Edit</property> and navigate to the <property>Parameters</property> section.  
+        Declare a new data set parameter, name it <code>jobtitle</code> and map it to the already existing <code>JobTitle</code> report parameter.
+        </para>
 
-    <para>If you switch to the <emphasis>
-        <property>Preview</property></emphasis> tab, it will run your report and show the output.</para>
+    <para>You report is ready, you can view it by clicking on  the <property>Preview</property> tab of the <property>BIRT Report Designer</property> editor. </para>
+    <para>You will be prompted to assign a value to the report parameter. For instance you can enter &quot;Sales Rep&quot;. </para>
     
     <figure>
-        <title>BIRT Report -Preview Tab</title>
+        <title>Resulted Dynamic Report</title>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="images/hibernate_datasource/BIRTReportPreviewTab.png"/>
+                <imagedata fileref="images/hibernate_datasource/finalReport.png"/>
             </imageobject>
         </mediaobject>
     </figure>
-
-    <para>You can also use parameters within the Hibernate ODA driver.</para>
-
-    <figure>
-        <title>Using Parameters within the Hibernate ODA Driver</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata
-                    fileref="images/hibernate_datasource/parametersWithinHibernateODADriver.png"/>
-            </imageobject>
-        </mediaobject>
-    </figure>
-
-
-    <figure>
-        <title>Adding New Parameter</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/addingNewParameter.png"/>
-            </imageobject>
-        </mediaobject>
-    </figure>
-
-    <para>Again, to preview the results switch to the <emphasis>
-            <property>Preview Results</property>
-        </emphasis> item.</para>
-    <figure>
-        <title>Previewing the Results</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/previewingResults.png"/>
-            </imageobject>
-        </mediaobject>
-    </figure>
-
-</chapter>
+    
+</section>
