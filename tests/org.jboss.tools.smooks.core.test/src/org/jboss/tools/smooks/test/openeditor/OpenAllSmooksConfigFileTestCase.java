@@ -91,8 +91,8 @@ public class OpenAllSmooksConfigFileTestCase extends AbstractSmooksEditorTestcas
 						IEditorPart part = IDE.openEditor(window.getActivePage(), cf);
 						Assert.assertNotNull(part);
 						Assert.assertTrue(
-								"Editor isn't Smooks editor , there are some errors occur when create Smooks Editor",
-								(part instanceof AbstractSmooksFormEditor));
+								"Editor isn't Smooks editor , there are some errors occur when create Smooks Editor for file : '"
+										+ cf.getName() + "'", (part instanceof AbstractSmooksFormEditor));
 						System.out.println("successful to open file : '" + cf.getName() + "'");
 					}
 				}

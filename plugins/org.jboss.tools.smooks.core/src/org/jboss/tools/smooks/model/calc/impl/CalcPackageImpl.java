@@ -455,7 +455,7 @@ public class CalcPackageImpl extends EPackageImpl implements CalcPackage {
 		   source, 
 		   new String[] {
 			 "name", "counter",
-			 "kind", "elementOnly"
+			 "kind", "mixed"
 		   });			
 		addAnnotation
 		  (getCounter_StartExpression(), 
