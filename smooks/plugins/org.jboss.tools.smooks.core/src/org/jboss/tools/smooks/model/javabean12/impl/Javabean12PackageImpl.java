@@ -768,7 +768,7 @@ public class Javabean12PackageImpl extends EPackageImpl implements Javabean12Pac
 		   source, 
 		   new String[] {
 			 "name", "bean_._type",
-			 "kind", "elementOnly"
+			 "kind", "mixed"
 		   });		
 		addAnnotation
 		  (getBeanType_Group(), 
@@ -992,7 +992,7 @@ public class Javabean12PackageImpl extends EPackageImpl implements Javabean12Pac
 		   source, 
 		   new String[] {
 			 "name", "result_._type",
-			 "kind", "elementOnly"
+			 "kind", "mixed"
 		   });			
 		addAnnotation
 		  (getResultType_RetainBeans(), 
@@ -1006,7 +1006,7 @@ public class Javabean12PackageImpl extends EPackageImpl implements Javabean12Pac
 		   source, 
 		   new String[] {
 			 "name", "value_._type",
-			 "kind", "elementOnly"
+			 "kind", "mixed"
 		   });			
 		addAnnotation
 		  (getValueType_DecodeParam(), 
