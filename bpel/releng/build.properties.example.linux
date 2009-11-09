@@ -27,7 +27,7 @@ build.steps=buildUpdate,buildTests,generateDigests,test,publish,cleanup
 # note: to run tests locally, these plugins must be pre-checked out into the local source folder:
 #org.jboss.tools.common.test -> /path/to/common/tests/org.jboss.tools.common.test/
 #org.jboss.tools.common -> /path/to/common/plugins/org.jboss.tools.common/
-#org.jboss.tools.test -> /path/to/tests/tests/org.jboss.tools.test/
+#org.jboss.tools.tests -> /path/to/tests/tests/org.jboss.tools.tests/
 
 localSourceCheckoutDir=/home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/bpel
 relengBuilderDir=/home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/bpel/releng
