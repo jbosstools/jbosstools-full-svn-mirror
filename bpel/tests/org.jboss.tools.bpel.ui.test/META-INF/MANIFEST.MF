@@ -7,13 +7,13 @@ Bundle-Activator: org.jboss.tools.bpel.ui.test.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.junit;bundle-version="3.8.2",
- org.jboss.tools.common.test;bundle-version="2.0.0"
+ org.jboss.tools.common.test,
+ org.jboss.tools.common.test.util
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: JBoss by Red Hat
 Import-Package: org.eclipse.core.resources,
- org.eclipse.ui.ide,
- org.jboss.tools.common.test.util
+ org.eclipse.ui.ide
 Export-Package: org.jboss.tools.bpel.ui.test,
  org.jboss.tools.bpel.ui.test.editor
-Bundle-ClassPath: bpel.ui.test.jar
+Bundle-ClassPath: .
