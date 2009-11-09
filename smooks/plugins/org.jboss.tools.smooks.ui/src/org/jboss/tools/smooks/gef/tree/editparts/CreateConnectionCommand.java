@@ -37,7 +37,8 @@ public class CreateConnectionCommand extends Command {
 				connection = new BeanReferenceConnection(source, target);
 			}
 
-			if (target instanceof InputDataTreeNodeModel && connection == null) {
+			// default connection type
+			if (source instanceof InputDataTreeNodeModel && connection == null) {
 				connection = new TriggerConnection(source, target);
 			}
 			if (connection == null) {

@@ -88,16 +88,16 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 
 		// addSmooksGraphicalEditor();
 
-		// configurationPage = createSmooksConfigurationFormPage();
-		// addValidateListener(configurationPage);
-		// addSourceSynchronizeListener(configurationPage);
-		// addSmooksGraphExtetionListener(configurationPage);
-		// try {
-		// int index = this.addPage(configurationPage);
-		// setPageText(index, "Message Filter");
-		// } catch (PartInitException e) {
-		// e.printStackTrace();
-		// }
+//		configurationPage = createSmooksConfigurationFormPage();
+//		addValidateListener(configurationPage);
+//		addSourceSynchronizeListener(configurationPage);
+//		addSmooksGraphExtetionListener(configurationPage);
+//		try {
+//			int index = this.addPage(configurationPage);
+//			setPageText(index, "Message Filter");
+//		} catch (PartInitException e) {
+//			e.printStackTrace();
+//		}
 
 		super.addPages();
 	}
@@ -231,5 +231,14 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 
 	public String getContributorId() {
 		return getSite().getId();
+	}
+
+	@Override
+	public void dispose() {
+		try {
+			super.dispose();
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
 	}
 }

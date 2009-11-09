@@ -168,6 +168,7 @@ import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.ParamType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
+import org.jboss.tools.smooks.model.graphics.ext.TaskType;
 import org.jboss.tools.smooks.model.graphics.ext.util.GraphResourceFactoryImpl;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
@@ -186,6 +187,7 @@ import org.jboss.tools.smooks.model.json.JsonReader;
 import org.jboss.tools.smooks.model.json12.Json12Package;
 import org.jboss.tools.smooks.model.json12.Json12Reader;
 import org.jboss.tools.smooks.model.persistence12.Persistence12Package;
+import org.jboss.tools.smooks.model.rules10.RuleBasesType;
 import org.jboss.tools.smooks.model.rules10.Rules10Package;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
@@ -1279,6 +1281,10 @@ public class SmooksUIUtils {
 		if (model == null)
 			return null;
 		final Resource resource = ((EObject) model).eResource();
+		return getResource(resource);
+	}
+	
+	public static IResource getResource(Resource resource) {
 		if (resource == null)
 			return null;
 		URI uri = resource.getURI();
@@ -2430,6 +2436,15 @@ public class SmooksUIUtils {
 		return types;
 	}
 
+	public static void fillAllTask(TaskType task, List<TaskType> taskList) {
+		taskList.add(task);
+		List<TaskType> children = task.getTask();
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			TaskType taskType = (TaskType) iterator.next();
+			fillAllTask(taskType, taskList);
+		}
+	}
+
 	public static boolean isActivedInput(InputType input) {
 		List<ParamType> params = input.getParam();
 		for (Iterator<?> iterator2 = params.iterator(); iterator2.hasNext();) {
@@ -2916,7 +2931,8 @@ public class SmooksUIUtils {
 	}
 
 	public static boolean isSmooksFile(IFile file) {
-		if(file.getName().indexOf(".xml") != -1) return true;
+		if (file.getName().indexOf(".xml") != -1)
+			return true;
 		IContentTypeManager contentTypeManager = Platform.getContentTypeManager();
 		IContentType[] types = contentTypeManager.findContentTypesFor(file.getName());
 		for (IContentType contentType : types) {
@@ -2932,5 +2948,24 @@ public class SmooksUIUtils {
 			}
 		}
 		return false;
+	}
+
+	public static EStructuralFeature getFeature(Object model) {
+		if (model instanceof BindingsType) {
+			return JavabeanPackage.Literals.DOCUMENT_ROOT__BINDINGS;
+		}
+		if (model instanceof BeanType) {
+			return Javabean12Package.Literals.JAVABEAN12_DOCUMENT_ROOT__BEAN;
+		}
+		if (model instanceof Xsl) {
+			return XslPackage.Literals.DOCUMENT_ROOT__XSL;
+		}
+		if(model instanceof Freemarker){
+			return FreemarkerPackage.Literals.DOCUMENT_ROOT__FREEMARKER;
+		}
+		if(model instanceof RuleBasesType){
+			return Rules10Package.Literals.RULES10_DOCUMENT_ROOT__RULE_BASES;
+		}
+		return null;
 	}
 }

@@ -15,9 +15,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
+import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.graphics.ext.TaskType;
+import org.jboss.tools.smooks.model.javabean.BindingsType;
+import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks.model.xsl.Xsl;
 
 /**
  * @author Dart
@@ -61,8 +65,9 @@ public class TaskTypeManager {
 					GraphicsConstants.IMAGE_JAVA_AMPPING_TASK));
 			allTaskList.add(new TaskTypeDescriptor(TASK_ID_FREEMARKER_TEMPLATE, "Apply Freemaker Template",
 					GraphicsConstants.IMAGE_APPLY_FREEMARKER_TASK));
-//			allTaskList.add(new TaskTypeDescriptor(TASK_ID_XSL_TEMPLATE, "Apply XSL Template",
-//					GraphicsConstants.IMAGE_APPLY_XSL_TASK));
+			// allTaskList.add(new TaskTypeDescriptor(TASK_ID_XSL_TEMPLATE,
+			// "Apply XSL Template",
+			// GraphicsConstants.IMAGE_APPLY_XSL_TASK));
 		}
 		return allTaskList;
 	}
@@ -72,7 +77,20 @@ public class TaskTypeManager {
 	}
 
 	public static List<Object> getAssociatedSmooksElementsType(String taskID) {
-		return null;
+		List<Object> elementsType = new ArrayList<Object>();
+		if (taskID == null)
+			return null;
+		if (TASK_ID_JAVA_MAPPING.equals(taskID)) {
+			elementsType.add(BeanType.class);
+			elementsType.add(BindingsType.class);
+		}
+		if (TASK_ID_FREEMARKER_TEMPLATE.equals(taskID)) {
+			elementsType.add(Freemarker.class);
+		}
+		if (TASK_ID_XSL_TEMPLATE.equals(taskID)) {
+			elementsType.add(Xsl.class);
+		}
+		return elementsType;
 	}
 
 	public static String getTaskLabel(String taskId) {
@@ -113,7 +131,13 @@ public class TaskTypeManager {
 	}
 
 	private static boolean isSameType(Object element, List<Object> elementTypes) {
-		return true;
+		for (Iterator<?> iterator = elementTypes.iterator(); iterator.hasNext();) {
+			Class<?> object = (Class<?>) iterator.next();
+			if (object.isInstance(element)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static final class TaskTypeDescriptor {

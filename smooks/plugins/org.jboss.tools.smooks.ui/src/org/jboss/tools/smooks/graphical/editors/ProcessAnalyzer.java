@@ -14,8 +14,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.Assert;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
+import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.graphics.ext.ProcessType;
 import org.jboss.tools.smooks.model.graphics.ext.ProcessesType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
@@ -31,6 +39,13 @@ import org.jboss.tools.smooks.model.xsl.Xsl;
  * 
  */
 public class ProcessAnalyzer {
+
+	protected IEditingDomainProvider domainProvider;
+
+	public ProcessAnalyzer(IEditingDomainProvider domainProvider) {
+		this.domainProvider = domainProvider;
+		Assert.isNotNull(this.domainProvider);
+	}
 
 	public List<String> analyzeTaskID(SmooksResourceListType resourceList) {
 		List<String> taskIDs = new ArrayList<String>();
@@ -75,12 +90,7 @@ public class ProcessAnalyzer {
 	}
 
 	private void fillAllTask(TaskType task, List<TaskType> taskList) {
-		taskList.add(task);
-		List<TaskType> children = task.getTask();
-		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
-			TaskType taskType = (TaskType) iterator.next();
-			fillAllTask(taskType, taskList);
-		}
+		SmooksUIUtils.fillAllTask(task, taskList);
 	}
 
 	/**
@@ -91,14 +101,18 @@ public class ProcessAnalyzer {
 	 */
 	public boolean analyzeSmooksModels(SmooksResourceListType resourceList) {
 		boolean modelWasChanged = false;
-		SmooksGraphicsExtType ext = this. getSmooksGraphicsType(resourceList);
+		CompoundCommand compoundCommand = new CompoundCommand();
+		SmooksGraphicsExtType ext = this.getSmooksGraphicsType(resourceList);
 		if (ext == null)
 			throw new RuntimeException("Can't find the smooks-graph-ext element");
 
 		ProcessesType processes = ext.getProcesses();
 		if (processes == null) {
 			processes = GraphFactory.eINSTANCE.createProcessesType();
-			ext.setProcesses(processes);
+			Command c = SetCommand.create(domainProvider.getEditingDomain(), ext,
+					GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__PROCESSES, processes);
+			compoundCommand.append(c);
+			// ext.setProcesses(processes);
 			modelWasChanged = true;
 		}
 		ProcessType process = null;
@@ -108,7 +122,9 @@ public class ProcessAnalyzer {
 
 		if (process == null) {
 			process = GraphFactory.eINSTANCE.createProcessType();
-			processes.setProcess(process);
+			Command c = SetCommand.create(domainProvider.getEditingDomain(), processes,
+					GraphPackage.Literals.PROCESSES_TYPE__PROCESS, process);
+			compoundCommand.append(c);
 			modelWasChanged = true;
 		}
 
@@ -123,7 +139,11 @@ public class ProcessAnalyzer {
 			TaskType inputTask = GraphFactory.eINSTANCE.createTaskType();
 			inputTask.setId(TaskTypeManager.TASK_ID_INPUT);
 			inputTask.setName(TaskTypeManager.getTaskLabel(TaskTypeManager.TASK_ID_INPUT));
-			process.getTask().add(inputTask);
+
+			Command command = AddCommand.create(domainProvider.getEditingDomain(), process,
+					GraphPackage.Literals.PROCESS_TYPE__TASK, inputTask);
+			compoundCommand.append(command);
+
 			taskList.add(inputTask);
 			modelWasChanged = true;
 		}
@@ -139,7 +159,8 @@ public class ProcessAnalyzer {
 				taskList.add(task);
 			}
 		}
-		modelWasChanged = linkTask(taskList);
+		modelWasChanged = linkTask(taskList, compoundCommand);
+		compoundCommand.execute();
 		return modelWasChanged;
 	}
 
@@ -153,15 +174,15 @@ public class ProcessAnalyzer {
 		return null;
 	}
 
-	private boolean linkTask(List<TaskType> taskList) {
+	private boolean linkTask(List<TaskType> taskList, CompoundCommand compoundCommand) {
 		TaskType first = getTaskType(TaskTypeManager.TASK_ID_INPUT, taskList);
 		if (first != null) {
-			return linkTask(first, taskList);
+			return linkTask(first, taskList, compoundCommand);
 		}
 		return false;
 	}
 
-	private boolean linkTask(TaskType taskType, List<TaskType> taskList) {
+	private boolean linkTask(TaskType taskType, List<TaskType> taskList, CompoundCommand compoundCommand) {
 		String id = taskType.getId();
 		String[] childrenIds = TaskTypeManager.getChildTaskIDs(id);
 		boolean changed = false;
@@ -172,11 +193,14 @@ public class ProcessAnalyzer {
 				if (childTask != null) {
 					if (!taskType.getTask().contains(childTask)
 							&& ((childTask.eContainer() == null) || (childTask.eContainer() instanceof ProcessType))) {
-						taskType.getTask().add(childTask);
+						Command c = AddCommand.create(domainProvider.getEditingDomain(), taskType,
+								GraphPackage.Literals.TASK_TYPE__TASK, childTask);
+						compoundCommand.append(c);
+						// taskType.getTask().add(childTask);
 						changed = true;
 					}
 					taskList.remove(childTask);
-					boolean cchange = linkTask(childTask, taskList);
+					boolean cchange = linkTask(childTask, taskList, compoundCommand);
 					changed = (changed || cchange);
 				}
 			}

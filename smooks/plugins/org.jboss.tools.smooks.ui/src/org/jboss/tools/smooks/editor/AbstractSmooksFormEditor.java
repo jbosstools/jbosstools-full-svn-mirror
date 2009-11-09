@@ -3,6 +3,7 @@ package org.jboss.tools.smooks.editor;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +16,13 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.dom4j.Document;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -59,6 +66,7 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.configuration.validate.SmooksMarkerHelper;
 import org.jboss.tools.smooks.configuration.validate.SmooksModelValidator;
+import org.jboss.tools.smooks.graphical.editors.ProcessAnalyzer;
 import org.jboss.tools.smooks.model.calc.provider.CalcItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.common.provider.CommonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.csv.provider.CsvItemProviderAdapterFactory;
@@ -170,6 +178,46 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		return textEditor;
 	}
 
+	protected ByteArrayOutputStream getFormattedXMLContentsStream(InputStream outstream) throws IOException {
+		XMLWriter writer = null;
+		try {
+			SAXReader parser = new SAXReader();
+			Document doc = parser.read(outstream);
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			OutputFormat format = OutputFormat.createPrettyPrint();
+			writer = new XMLWriter(stream, format);
+			writer.write(doc);
+			return stream;
+		} catch (Throwable t) {
+
+		} finally {
+			if (writer != null) {
+				writer.close();
+			}
+		}
+		return null;
+	}
+
+	protected String getFormattedXMLContents(String contents) throws IOException {
+		InputStream istream = null;
+		ByteArrayOutputStream stream = null;
+		try {
+			istream = new ByteArrayInputStream(contents.getBytes());
+			stream = getFormattedXMLContentsStream(istream);
+			return new String(stream.toByteArray());
+		} catch (Throwable t) {
+
+		} finally {
+			if (istream != null) {
+				istream.close();
+			}
+			if (stream != null) {
+				stream.close();
+			}
+		}
+		return null;
+	}
+
 	protected void handleEMFModelChange() {
 		IDocument document = textEditor.getDocumentProvider().getDocument(textEditor.getEditorInput());
 
@@ -178,6 +226,8 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			smooksModel.eResource().save(out, null);
 
 			String newContent = out.toString();
+			newContent = getFormattedXMLContents(newContent);
+
 			String oldContent = document.get();
 
 			int startIndex = 0;
@@ -382,6 +432,10 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			this.smooksModel = resource.getContents().get(0);
 			SmooksGraphicsExtType oldGraphModel = smooksGraphicsExt;
 			smooksGraphicsExt = createSmooksGraphcsExtType(smooksModel);
+			if (smooksGraphicsExt == null) {
+				generateSmooksGraphExt(false);
+				analyzeSmooksProcess(false);
+			}
 			if (oldGraphModel != null) {
 				smooksGraphicsExt.getChangeListeners().addAll(oldGraphModel.getChangeListeners());
 				oldGraphModel.getChangeListeners().clear();
@@ -444,7 +498,29 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 					for (Iterator<Resource> iterator = resourceList.iterator(); iterator.hasNext();) {
 						handleEMFModelChange = true;
 						Resource resource = (Resource) iterator.next();
-						resource.save(options);
+						ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+						resource.save(outputStream, options);
+						IResource file = SmooksUIUtils.getResource(resource);
+						if (file.exists() && file instanceof IFile) {
+							ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+							ByteArrayOutputStream newOutputStream = getFormattedXMLContentsStream(inputStream);
+							try {
+								((IFile) file).setContents(new ByteArrayInputStream(newOutputStream.toByteArray()),
+										IResource.FORCE, monitor);
+							} catch (CoreException e) {
+								e.printStackTrace();
+							} finally {
+								if (outputStream != null) {
+									outputStream.close();
+								}
+								if (newOutputStream != null) {
+									newOutputStream.close();
+								}
+								if (inputStream != null) {
+									inputStream.close();
+								}
+							}
+						}
 						monitor.worked(1);
 					}
 					((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
@@ -564,7 +640,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 					smooksResource.save(Collections.emptyMap());
 				}
 			} else {
-				generateSmooksGraphExt();
+				generateSmooksGraphExtWithSave();
 			}
 
 		} catch (Exception e) {
@@ -573,9 +649,48 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		if (smooksGraphicsExt != null) {
 			smooksGraphicsExt.addSmooksGraphChangeListener(this);
 		}
+
+		// analyze procss contents
+		analyzeSmooksProcess(true);
 	}
 
-	protected void generateSmooksGraphExt() {
+	protected void analyzeSmooksProcess(boolean forceSave) {
+		ProcessAnalyzer processAnalyzer = new ProcessAnalyzer(this);
+		EObject smooksModel = getSmooksResourceList();
+		if (smooksModel != null && smooksModel instanceof SmooksResourceListType) {
+			boolean needSave = processAnalyzer.analyzeSmooksModels((SmooksResourceListType) smooksModel);
+			if (needSave && forceSave) {
+				ResourceSet rs = this.getEditingDomain().getResourceSet();
+				List<Resource> resourceLis = rs.getResources();
+				for (Iterator<?> iterator = resourceLis.iterator(); iterator.hasNext();) {
+					Resource resource = (Resource) iterator.next();
+					try {
+						resource.save(Collections.emptyMap());
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}
+		}
+	}
+
+	public EObject getSmooksResourceList() {
+		EObject m = null;
+		EObject smooksModel = getSmooksModel();
+		if (smooksModel instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
+			m = ((org.jboss.tools.smooks10.model.smooks.DocumentRoot) smooksModel).getSmooksResourceList();
+		}
+		if (smooksModel instanceof DocumentRoot) {
+			m = ((DocumentRoot) smooksModel).getSmooksResourceList();
+		}
+		return m;
+	}
+
+	protected void generateSmooksGraphExtWithSave() {
+		generateSmooksGraphExt(true);
+	}
+
+	protected void generateSmooksGraphExt(boolean forceSave) {
 		String version = SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel);
 		String inputType = SmooksUIUtils.judgeInputType(smooksModel);
 
@@ -597,10 +712,12 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 					FeatureMapUtil.createEntry(
 							GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT,
 							smooksGraphicsExt)).execute();
-			try {
-				smooksModel.eResource().save(Collections.emptyMap());
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (forceSave) {
+				try {
+					smooksModel.eResource().save(Collections.emptyMap());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

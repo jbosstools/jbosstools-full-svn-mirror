@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model;
 
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -29,6 +30,8 @@ public class JavaBeanGraphModel extends AbstractResourceConfigGraphModel {
 	@Override
 	protected TreeNodeModel createChildModel(Object model, ITreeContentProvider contentProvider,
 			ILabelProvider labelProvider) {
+		Object m = AdapterFactoryEditingDomain.unwrap(model);
+		if(m instanceof String) return null;
 		return new JavaBeanChildGraphModel(model, contentProvider, labelProvider, this.domainProvider);
 	}
 	
