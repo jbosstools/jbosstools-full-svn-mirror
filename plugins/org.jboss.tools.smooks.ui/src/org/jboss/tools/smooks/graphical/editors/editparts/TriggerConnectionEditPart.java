@@ -11,7 +11,9 @@
 package org.jboss.tools.smooks.graphical.editors.editparts;
 
 import org.eclipse.draw2d.Connection;
+import org.eclipse.draw2d.FigureUtilities;
 import org.eclipse.draw2d.Shape;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeConnectionEditPart;
 
 /**
@@ -32,6 +34,7 @@ public class TriggerConnectionEditPart extends TreeNodeConnectionEditPart {
 		Connection c = super.createConnectionFigure();
 		if (c instanceof Shape) {
 			((Shape) c).setLineWidth(2);
+			((Shape) c).setForegroundColor(FigureUtilities.darker(GraphicsConstants.FONT_COLOR));
 		}
 		return c;
 	}

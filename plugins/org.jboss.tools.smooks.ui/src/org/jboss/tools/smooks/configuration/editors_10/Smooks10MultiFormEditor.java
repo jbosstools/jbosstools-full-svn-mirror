@@ -118,8 +118,8 @@ public class Smooks10MultiFormEditor extends AbstractSmooksFormEditor implements
 	}
 
 	@Override
-	protected void generateSmooksGraphExt() {
-		super.generateSmooksGraphExt();
+	protected void generateSmooksGraphExtWithSave() {
+		super.generateSmooksGraphExtWithSave();
 	}
 
 	private Smooks10ConfigurationOverviewPage createSmooksConfigurationOverviewPage() {

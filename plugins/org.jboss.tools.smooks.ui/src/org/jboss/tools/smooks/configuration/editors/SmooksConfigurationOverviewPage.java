@@ -64,7 +64,6 @@ import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
-import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
@@ -1396,12 +1395,16 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 	public void sourceChange(Object model) {
 
 		lockEventFire = true;
+		SmooksGraphicsExtType extType = smooksModelProvider.getSmooksGraphicsExt();
+		if (extType == null) {
+			return;
+		}
 
-		String name = smooksModelProvider.getSmooksGraphicsExt().getName();
+		String name = extType.getName();
 		if (name != null)
 			smooksNameText.setText(name);
 
-		String author = smooksModelProvider.getSmooksGraphicsExt().getAuthor();
+		String author = extType.getAuthor();
 		if (author != null)
 			smooksAuthorText.setText(author);
 

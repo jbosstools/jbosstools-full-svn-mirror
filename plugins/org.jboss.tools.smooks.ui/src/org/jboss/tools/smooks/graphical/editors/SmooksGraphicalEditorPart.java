@@ -27,6 +27,7 @@ import org.eclipse.draw2d.graph.Edge;
 import org.eclipse.draw2d.graph.Node;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandWrapper;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -215,10 +216,24 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 							if (redoCommand != null || rawCommand.equals(redoCommand)) {
 								commandType = UNDO_COMMAND;
 							}
-							if (rawCommand instanceof SetCommand || rawCommand instanceof AddCommand
-									|| rawCommand instanceof DeleteCommand || rawCommand instanceof RemoveCommand) {
-								refershRecentAffectedModel(rawCommand, mostRecentCommand.getAffectedObjects(),
-										commandType);
+							if (rawCommand instanceof CompoundCommand) {
+								List<Command> commandList = ((CompoundCommand) rawCommand).getCommandList();
+								for (Iterator<?> iterator = commandList.iterator(); iterator.hasNext();) {
+									Command command = (Command) iterator.next();
+									while (command instanceof CommandWrapper) {
+										command = ((CommandWrapper) command).getCommand();
+									}
+									if (command instanceof SetCommand || command instanceof AddCommand
+											|| command instanceof DeleteCommand || command instanceof RemoveCommand) {
+										refershRecentAffectedModel(command, command.getAffectedObjects(), commandType);
+									}
+								}
+							} else {
+								if (rawCommand instanceof SetCommand || rawCommand instanceof AddCommand
+										|| rawCommand instanceof DeleteCommand || rawCommand instanceof RemoveCommand) {
+									refershRecentAffectedModel(rawCommand, mostRecentCommand.getAffectedObjects(),
+											commandType);
+								}
 							}
 						}
 					}
@@ -753,6 +768,23 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 		return cs;
 	}
 
+	/**
+	 * @return the inputDataList
+	 */
+	public List<Object> getInputDataList() {
+		if(inputDataList == null){
+			inputDataList = new ArrayList<Object>();
+		}
+		return inputDataList;
+	}
+
+	/**
+	 * @param inputDataList the inputDataList to set
+	 */
+	public void setInputDataList(List<Object> inputDataList) {
+		this.inputDataList = inputDataList;
+	}
+
 	public SmooksGraphicsExtType getSmooksGraphicsExtType() {
 		if (smooksModelProvider != null) {
 			return smooksModelProvider.getSmooksGraphicsExt();
@@ -938,7 +970,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 			}
 		}
 	}
-	
+
 	public boolean autoLayout() {
 		return autoLayout(false);
 	}
@@ -1154,7 +1186,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 	}
 
 	public void inputTypeChanged(SmooksGraphicsExtType extType) {
-		if (root != null) {
+		if (root != null && inputDataList != null) {
 			List<Object> newInputDataList = SelectorCreationDialog.generateInputData(smooksModelProvider
 					.getSmooksGraphicsExt(), getSmooksResourceListType());
 

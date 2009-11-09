@@ -314,7 +314,10 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 
 	private void initReaderConfigSection() {
 		Object reader = getCurrentReaderModel();
-		String type = getSmooksGraphicsExtType().getInputType();
+		SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
+		if (extType == null)
+			return;
+		String type = extType.getInputType();
 		if (reader instanceof EObject && type != null) {
 			SmooksResourceListType list = getSmooksConfigResourceList();
 			createReaderPanel((EObject) list.getAbstractReader().get(0));
@@ -626,25 +629,28 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		Collection<?> collections = provider.getNewChildDescriptors(resourceList, editDomain, null);
 
 		SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
-		String version = extType.getPlatformVersion();
-		OnlyReaderViewerFilter filter = new OnlyReaderViewerFilter();
-		for (Iterator<?> iterator = collections.iterator(); iterator.hasNext();) {
-			Object object = (Object) iterator.next();
-			if (object instanceof CommandParameter) {
-				Object value = ((CommandParameter) object).getValue();
 
-				value = AdapterFactoryEditingDomain.unwrap(value);
+		if (extType != null) {
+			String version = extType.getPlatformVersion();
+			OnlyReaderViewerFilter filter = new OnlyReaderViewerFilter();
+			for (Iterator<?> iterator = collections.iterator(); iterator.hasNext();) {
+				Object object = (Object) iterator.next();
+				if (object instanceof CommandParameter) {
+					Object value = ((CommandParameter) object).getValue();
 
-				if (filter.select(null, null, value)) {
-					if (SmooksUIUtils.isUnSupportElement(version, (EObject) value)) {
-						continue;
+					value = AdapterFactoryEditingDomain.unwrap(value);
+
+					if (filter.select(null, null, value)) {
+						if (SmooksUIUtils.isUnSupportElement(version, (EObject) value)) {
+							continue;
+						}
+
+						IItemLabelProvider lp = (IItemLabelProvider) editDomain.getAdapterFactory().adapt(value,
+								IItemLabelProvider.class);
+						String text = lp.getText(value);
+						readerCombo.add(text);
+						readerTypeList.add(value);
 					}
-
-					IItemLabelProvider lp = (IItemLabelProvider) editDomain.getAdapterFactory().adapt(value,
-							IItemLabelProvider.class);
-					String text = lp.getText(value);
-					readerCombo.add(text);
-					readerTypeList.add(value);
 				}
 			}
 		}

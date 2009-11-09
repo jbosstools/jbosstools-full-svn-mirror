@@ -149,8 +149,8 @@ public class EDIMapFormEditor extends AbstractSmooksFormEditor {
 	}
 
 	@Override
-	protected void generateSmooksGraphExt() {
-		super.generateSmooksGraphExt();
+	protected void generateSmooksGraphExtWithSave() {
+		super.generateSmooksGraphExtWithSave();
 	}
 	
 }

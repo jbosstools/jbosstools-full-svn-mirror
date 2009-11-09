@@ -10,7 +10,10 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.editparts;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Connection;
+import org.eclipse.draw2d.FigureUtilities;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeConnectionEditPart;
 
 /**
@@ -25,7 +28,7 @@ public class ValueBindingConnectionEditPart extends TreeNodeConnectionEditPart {
 	@Override
 	protected Connection createConnectionFigure() {
 		Connection connection =  super.createConnectionFigure();
-//		connection.setForegroundColor(GraphicsConstants.BORDER_CORLOER);
+		connection.setForegroundColor(ColorConstants.blue);
 		return connection;
 	}
 }
