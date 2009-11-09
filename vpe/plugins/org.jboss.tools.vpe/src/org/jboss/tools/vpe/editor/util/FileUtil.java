@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.zip.ZipEntry;
-
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -62,30 +61,32 @@ public class FileUtil {
      * @return
      */
     public static final String processJSF2Resource(VpePageContext pageContext, String resStr){
-    	String resulString = resStr;
-    	resulString=resulString.replaceAll(":", "/");  //$NON-NLS-1$//$NON-NLS-2$
-    	resulString = "/resources/"+resulString; //$NON-NLS-1$
+    	String tempString = resStr;
+    	tempString=tempString.replaceAll(":", "/");  //$NON-NLS-1$//$NON-NLS-2$
+    	tempString = FileUtil.JSF2_RESOURCES+tempString;
+    	String result = ""; //$NON-NLS-1$
     	// if file not accessible and try to search in jar files
-    	if(VpeCreatorUtil.getFile(resulString, pageContext)==null) {
-    		String tempEntryPath =seachResourceInClassPath(pageContext, "META-INF"+resulString); //$NON-NLS-1$
+    	if(VpeCreatorUtil.getFile(tempString, pageContext)==null) {
+    		String tempEntryPath =seachResourceInClassPath(pageContext, "META-INF"+tempString); //$NON-NLS-1$
     		if(tempEntryPath!=null) {
-    			resulString = tempEntryPath;
+    			result = tempEntryPath;
     		}
+    	} else {
+    		result = tempString;
     	}
-    	return resulString;
+    	return result;
     }
-    
+
     public static boolean isExistsInJSF2Resources(VpePageContext pageContext, String resStr) {
     	String resourceString = resStr;
     	resourceString = resourceString.replaceAll(":", "/");  //$NON-NLS-1$//$NON-NLS-2$
-    	resourceString = "/resources/"+resourceString; //$NON-NLS-1$
+    	resourceString = FileUtil.JSF2_RESOURCES+resourceString;
     	if(FileUtil.getFile(pageContext.getEditPart().getEditorInput(), resourceString)!=null || 
-    			seachResourceInClassPath(pageContext, "META-INF"+resourceString)!=null) {
+    			FileUtil.seachResourceInClassPath(pageContext, "META-INF"+resourceString)!=null) {
     		return true;
     	}
     	return false;	
     }
-    
     /**
      * Function search into project class path resource, if resource founded in jar file, make a 
      * temp copy of this resource and return path to copy.

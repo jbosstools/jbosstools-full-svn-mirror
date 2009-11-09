@@ -11,27 +11,14 @@
 package org.jboss.tools.vpe.editor.template.expression;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.IPackageFragmentRoot;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.internal.core.JarPackageFragmentRoot;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
@@ -54,14 +41,15 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
 import org.jboss.tools.vpe.editor.util.ElService;
 import org.jboss.tools.vpe.editor.util.FileUtil;
+import org.jboss.tools.vpe.editor.util.Jsf2ResourceUtil;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.w3c.dom.Node;
 
 public class VpeFunctionSrc extends VpeFunction {
     static final String IMG_UNRESOLVED = "unresolved_image.gif"; //$NON-NLS-1$
     static final String IMG_PREFIX = "file:///"; //$NON-NLS-1$
-    private static final Pattern resourcePatternWithSinglCoat= Pattern.compile("[#\\$]\\{\\s*resource\\s*\\[\\s*'(.*)'\\s*\\]\\s*\\}"); //$NON-NLS-1$
-    private static final Pattern resourcePatternWithDoableCoat= Pattern.compile("[#\\$]\\{\\s*resource\\s*\\[\\s*\"(.*)\"\\s*\\]\\s*\\}"); //$NON-NLS-1$
+//    private static final Pattern resourcePatternWithSinglCoat= Pattern.compile("[#\\$]\\{\\s*resource\\s*\\[\\s*'(.*)'\\s*\\]\\s*\\}"); //$NON-NLS-1$
+//    private static final Pattern resourcePatternWithDoableCoat= Pattern.compile("[#\\$]\\{\\s*resource\\s*\\[\\s*\"(.*)\"\\s*\\]\\s*\\}"); //$NON-NLS-1$
     
     
     public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
@@ -270,13 +258,9 @@ public class VpeFunctionSrc extends VpeFunction {
         String resolvedValue = value.replaceFirst("^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", ""); //$NON-NLS-1$ //$NON-NLS-2$
         
         //fix for JBIDE-2550, author Maksim Areshkau
-          Matcher singleCoatMatcher = resourcePatternWithSinglCoat.matcher(resolvedValue);
-          Matcher doubleCoatMatcher = resourcePatternWithDoableCoat.matcher(resolvedValue);
-          if(doubleCoatMatcher.find()) {
-        	  resolvedValue = FileUtil.processJSF2Resource(pageContext, doubleCoatMatcher.group(1));      	  
-          }else if(singleCoatMatcher.find()){
-        	  resolvedValue = FileUtil.processJSF2Resource(pageContext, singleCoatMatcher.group(1));
-          }
+        if(Jsf2ResourceUtil.isJSF2ResourceString(resolvedValue)){
+        	resolvedValue = Jsf2ResourceUtil.processCustomJSFAttributes(pageContext, resolvedValue);
+        }
 
         //Fix for JBIDE-3030
         if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null

@@ -19,7 +19,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.ui.texteditor.TextNavigationAction;
 import org.jboss.tools.common.el.core.ELReferenceList;
 import org.jboss.tools.common.el.core.GlobalELReferenceList;
 import org.jboss.tools.common.resref.core.ResourceReference;
@@ -28,7 +27,6 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import org.w3c.dom.Text;
 
 
 /**
@@ -93,6 +91,7 @@ public final class ElService implements IELService {
      * @see IELService#replaceEl(IFile, String)
      */
     public String replaceEl(IFile resourceFile, String resourceString) {
+    	
      //   Assert.isNotNull(resourceString);
         if ((resourceString == null) || (resourceFile == null)) {
             return ""; //$NON-NLS-1$
@@ -187,6 +186,9 @@ public final class ElService implements IELService {
         if (((this.isAvailable(file) && this.isAvailableForNode(sourceNode, file))) 
         		|| isInResourcesBundle(pageContext, sourceNode)){
             rst = true;
+        }else if(Jsf2ResourceUtil.isContainJSF2ResourceAttributes(sourceNode)) {
+            //added by Maksim Areshkau, see JBIDE-4812
+        	rst = true;
         }
         return rst;
     }
@@ -383,6 +385,10 @@ public final class ElService implements IELService {
         rst = ResourceUtil.getBundleValue(pageContext, value);
         //replace custom attributes
         rst = replaceCustomAttributes(pageContext,rst);
+        
+        if(Jsf2ResourceUtil.isJSF2ResourceString(rst)){
+        	rst = Jsf2ResourceUtil.processCustomJSFAttributes(pageContext, rst);
+        }
         //fix for JBIDE-3030
         if((pageContext.getVisualBuilder().getCurrentIncludeInfo()==null)
         		|| !(pageContext.getVisualBuilder().getCurrentIncludeInfo().getStorage() instanceof IFile)) {
@@ -393,7 +399,7 @@ public final class ElService implements IELService {
         
         return rst;
     }
-
+    
     private String replaceCustomAttributes(VpePageContext pageContext, String value){
     	String result = value;
 		for (String el : pageContext.getCustomElementsAttributes().keySet()) {
