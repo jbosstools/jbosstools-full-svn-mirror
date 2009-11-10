@@ -198,6 +198,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 
 	public void buildDom(Document sourceDocument) {
+		nsIDOMNodeList children = getContentArea().getChildNodes();
+		long len = children.getLength();
+		for (long i = len - 1; i >= 0; i--) {
+			getContentArea().removeChild(children.item(i));
+		}
 		VpeSourceDomBuilder sourceBuilder = pageContext.getSourceBuilder();
 		IDocument document = sourceBuilder.getStructuredTextViewer()
 				.getDocument();
@@ -252,12 +257,15 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		// FIXED FOR JBIDE-3799 by sdzmitrovich, moved calling of this method to buid dom 
 		// refreshExternalLinks();
 		pageContext.getBundle().refreshRegisteredBundles();
-
-		nsIDOMNodeList children = getContentArea().getChildNodes();
-		long len = children.getLength();
-		for (long i = len - 1; i >= 0; i--) {
-			getContentArea().removeChild(children.item(i));
-		}
+		
+		//Next path was moved to buildDom method
+		//to avoid <br> in a visual DOM before editor browser
+		//load and after reload 
+//		nsIDOMNodeList children = getContentArea().getChildNodes();
+//		long len = children.getLength();
+//		for (long i = len - 1; i >= 0; i--) {
+//			getContentArea().removeChild(children.item(i));
+//		}
 
 		if (sourceDocument != null) {
 			buildDom(sourceDocument);

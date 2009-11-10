@@ -913,7 +913,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			// initialize editor
 			// this method must be invoked before any visual
 			// node is created, see JBIDE-5105
-			visualEditor.getEditor();
+			// this method should be called after browser was loading
+			// see JBIDE-5161
+			// visualEditor.getEditor();
 	}
 
 	public void createPreviewBrowser() {

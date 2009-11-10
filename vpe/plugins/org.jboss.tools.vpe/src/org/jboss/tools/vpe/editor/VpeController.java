@@ -274,7 +274,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						WebAppHelper.getWebApp(xm));
 			}
 		}
-
+		
+		// Fix for JBIDE-5105, JBIDE-5161
+		visualEditor.getEditor();
+		
 		IDOMDocument sourceDocument = sourceModel.getDocument();
 		// FIXED FOR JBIDE-3799 by sdzmitrovich, moved calling of this method to buid dom 
 		// visualBuilder.refreshExternalLinks();
