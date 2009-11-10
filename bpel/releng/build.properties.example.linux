@@ -12,16 +12,7 @@ version=1.0.0
 mainFeatureToBuildID=org.jboss.tools.bpel.sdk.feature
 testFeatureToBuildID=org.jboss.tools.bpel.tests.feature
 
-# tests do not run due to missing dependencies for o.j.t.c - xulrunner and xpcom?
 build.steps=buildUpdate,buildTests,generateDigests,test,publish,cleanup
-#build.steps=buildUpdate,generateDigests,publish,cleanup
-
-# to (re)generate map and psfs, use these settings
-#build.steps=dir2svnmap,map2psf
-#dir2map.reporoot = http://anonsvn.jboss.org/repos
-#dir2map.repopath = jbosstools/trunk/bpel
-#dir2map.dir = /home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/bpel
-#dir2map.map = /home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/bpel/releng/maps/project.map
 
 # Re-use local sources?
 # note: to run tests locally, these plugins must be pre-checked out into the local source folder:
@@ -46,18 +37,24 @@ http://repository.jboss.org/eclipse/galileo/dtp_1.7.1.zip,\
 http://repository.jboss.org/eclipse/galileo/eclipse-SDK-3.5.1-linux-gtk.tar.gz
 #http://repository.jboss.org/eclipse/galileo/eclipse-SDK-3.5.1-linux-gtk-x86_64.tar.gz
 
+# use precompiled binaries from latest build as input to this build
+repositoryURLs=http://download.eclipse.org/releases/galileo/,http://download.jboss.org/jbosstools/updates/nightly/trunk/
+pluginIDsToInstall=org.jboss.ide.eclipse.as.wtp.core+org.jboss.tools.vpe.resref+org.jboss.tools.jst.web.ui+org.eclipse.core.net
+
 flattenDependencies=true
 parallelCompilation=true
 generateFeatureVersionSuffix=true
 individualSourceBundles=true
 
+# don't suppress cleanup if tests fail
+noclean=false
+
+# do not sign or pack jars
+#skipPack=true
+skipSign=true
+
 domainNamespace=*
 projNamespace=org.jboss.tools.bpel
 projRelengName=org.jboss.tools.bpel.releng
-
-# needed for Hudson, not for local?
-#projRelengRoot=svn://svn.jboss.org/repos/jbosstools/trunk/bpel
-#projRelengPath=releng
-#basebuilderBranch=R35_M6
 
 ## END PROJECT BUILD PROPERTIES ##
