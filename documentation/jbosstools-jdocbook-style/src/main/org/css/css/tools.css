@@ -85,7 +85,7 @@ div.abstract {
 .corpauthor img{
 	display:none !important;
 }
-
+.othercredit h3 {font-size: 12px;}
 ul.docnav {
     margin:0px;
     width: 57em;
@@ -323,4 +323,5 @@ h3#feedback-header{
 p.remark i{
 	font-style:normal;
 }
+
 
