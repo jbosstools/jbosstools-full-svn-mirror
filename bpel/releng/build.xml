@@ -1,4 +1,4 @@
-<project default="run" name="org.jboss.tools.bpel.releng/build.xml - Run a JBoss Tools component build using the Athena CBI">
+<project default="run" name="org.jboss.tools.*.releng/build.xml - Run a JBoss Tools component build using the Athena CBI">
 	<target name="run">
 		<!-- 
 			You must check out the following projects to your workspace:
