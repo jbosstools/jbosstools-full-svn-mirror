@@ -6,7 +6,7 @@ Bundle-Version: 2.1.0
 Bundle-Activator: org.jboss.tools.vpe.xulrunner.BrowserPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.mozilla.xpcom,
+ org.mozilla.xpcom;bundle-version="1.9.1",
  org.jboss.tools.common
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.vpe.xulrunner;uses:="org.eclipse.jface.resource,org.eclipse.ui.plugin,org.osgi.framework",

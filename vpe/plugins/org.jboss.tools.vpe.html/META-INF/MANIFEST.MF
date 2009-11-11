@@ -8,7 +8,7 @@ Bundle-Vendor: %providerName
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.jboss.tools.vpe,
- org.mozilla.xpcom,
+ org.mozilla.xpcom;bundle-version="1.9.1",
  org.jboss.tools.jst.jsp,
  org.jboss.tools.common,
  org.eclipse.jface.text;bundle-version="3.5.0"
