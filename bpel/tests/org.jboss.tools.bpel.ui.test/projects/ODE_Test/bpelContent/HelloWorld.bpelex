@@ -18,7 +18,7 @@
   </extensions>
   <extensions>
     <extendedObject href="HelloWorld.bpel#/"/>
-    <extensionObject xsi:type="org.eclipse.bpel.ui.uiextensionmodel:ProcessExtension" modificationStamp="1245829716000"/>
+    <extensionObject xsi:type="org.eclipse.bpel.ui.uiextensionmodel:ProcessExtension" modificationStamp="1257926006000"/>
   </extensions>
   <extensions>
     <extendedObject href="HelloWorld.bpel#//@activity/@activities.1"/>

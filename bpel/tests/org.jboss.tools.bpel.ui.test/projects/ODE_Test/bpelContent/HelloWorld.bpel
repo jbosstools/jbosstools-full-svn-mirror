@@ -27,13 +27,13 @@
     <bpel:variables>
         <!-- Reference to the message passed as input during initiation -->
         <bpel:variable name="input"
-                  messageType="tns:HelloWorldRequestMessage"/>
+                  messageType="ns1:HelloWorldRequestMessage"/>
                   
         <!-- 
           Reference to the message that will be returned to the requester
           -->
         <bpel:variable name="output"
-                  messageType="tns:HelloWorldResponseMessage"/>
+                  messageType="ns1:HelloWorldResponseMessage"/>
     </bpel:variables>
 
     <!-- ================================================================= -->         
@@ -48,7 +48,7 @@
              -->
         
         <bpel:receive name="receiveInput" partnerLink="client"
-                 portType="tns:HelloWorld"
+                 portType="ns1:HelloWorld"
                  operation="process" variable="input"
                  createInstance="yes"/>
         
@@ -65,16 +65,19 @@
             </bpel:copy>
             <bpel:copy>
                 <bpel:from>
-                    <![CDATA[concat("Hello ", $input.payload/tns:input)]]>
+                    <![CDATA[concat("Hello ", $input.payload/ns1:input)]]>
                 </bpel:from>
                 <bpel:to part="payload" variable="output">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[ns1:result]]>
+                    </bpel:query>
                 </bpel:to>
             </bpel:copy>
             
         </bpel:assign>
         <bpel:reply name="replyOutput" 
                partnerLink="client"
-               portType="tns:HelloWorld"
+               portType="ns1:HelloWorld"
                operation="process" 
                variable="output"
                />
