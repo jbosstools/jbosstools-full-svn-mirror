@@ -38,7 +38,11 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName
 Bundle-ClassPath: libs/dom4j-1.6.1.jar,
  .
-Export-Package: org.jboss.tools.smooks.configuration,
+Export-Package: org.jboss.template,
+ org.jboss.template.csv,
+ org.jboss.template.exception,
+ org.jboss.template.xsd,
+ org.jboss.tools.smooks.configuration,
  org.jboss.tools.smooks.configuration.editors,
  org.jboss.tools.smooks.configuration.editors.csv,
  org.jboss.tools.smooks.configuration.editors.edi,

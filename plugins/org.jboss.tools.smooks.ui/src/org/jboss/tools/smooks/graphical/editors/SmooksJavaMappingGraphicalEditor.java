@@ -21,9 +21,9 @@ import org.jboss.tools.smooks.configuration.editors.actions.ISmooksActionGrouper
 import org.jboss.tools.smooks.configuration.editors.actions.JavaBean11ActionGrouper;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
-import org.jboss.tools.smooks.graphical.editors.editparts.IAutoLayout;
-import org.jboss.tools.smooks.graphical.editors.editparts.JavaMappingAutoLayout;
-import org.jboss.tools.smooks.graphical.editors.model.JavaBeanGraphModel;
+import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
+import org.jboss.tools.smooks.graphical.editors.autolayout.JavaMappingAutoLayout;
+import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.ExpressionType;
 import org.jboss.tools.smooks.model.javabean.ValueType;

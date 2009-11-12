@@ -23,10 +23,10 @@ import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.graphical.actions.xsltemplate.XSLActionCreator;
-import org.jboss.tools.smooks.graphical.editors.editparts.IAutoLayout;
-import org.jboss.tools.smooks.graphical.editors.editparts.XSLMappingAutoLayout;
-import org.jboss.tools.smooks.graphical.editors.model.XSLTemplateContentProvider;
-import org.jboss.tools.smooks.graphical.editors.model.XSLTemplateGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
+import org.jboss.tools.smooks.graphical.editors.autolayout.XSLMappingAutoLayout;
+import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLTemplateContentProvider;
+import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLTemplateGraphicalModel;
 import org.jboss.tools.smooks.model.xsl.Xsl;
 
 /**

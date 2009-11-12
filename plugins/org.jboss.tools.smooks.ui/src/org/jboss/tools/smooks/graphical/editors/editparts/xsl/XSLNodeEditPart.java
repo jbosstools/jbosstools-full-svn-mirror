@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors.editparts;
+package org.jboss.tools.smooks.graphical.editors.editparts.xsl;
 
 import java.util.Iterator;
 import java.util.List;
@@ -46,10 +46,10 @@ import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
 import org.jboss.tools.smooks.gef.tree.figures.TreeNodeFigure;
 import org.jboss.tools.smooks.graphical.actions.xsltemplate.XSLConstants;
-import org.jboss.tools.smooks.graphical.editors.commands.AddXMLModelCommand;
+import org.jboss.tools.smooks.graphical.editors.commands.AddSmooksGraphicalModelCommand;
 import org.jboss.tools.smooks.graphical.editors.commands.ChangeXSLNodeNameCommand;
 import org.jboss.tools.smooks.graphical.editors.commands.DeleteXSLNodeCommand;
-import org.jboss.tools.smooks.graphical.editors.model.XSLNodeGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLNodeGraphicalModel;
 
 /**
  * @author Dart
@@ -176,7 +176,7 @@ public class XSLNodeEditPart extends TreeNodeEditPart {
 						((TagPropertyObject) model).setReferenceAttibute(element);
 
 					}
-					AddXMLModelCommand command = new AddXMLModelCommand((AbstractSmooksGraphicalModel) graphModel,
+					AddSmooksGraphicalModelCommand command = new AddSmooksGraphicalModelCommand((AbstractSmooksGraphicalModel) graphModel,
 							childGraphModel);
 					return command;
 				}

@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors.editparts;
+package org.jboss.tools.smooks.graphical.editors.autolayout;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,16 +17,18 @@ import java.util.List;
 import org.eclipse.draw2d.graph.DirectedGraph;
 import org.eclipse.draw2d.graph.Node;
 import org.eclipse.draw2d.graph.NodeList;
+import org.jboss.tools.smooks.graphical.editors.editparts.InputDataContainerEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.JavaBeanEditPart;
 
 /**
  * @author Dart
  *
  */
-public class XSLMappingAutoLayout implements IAutoLayout{
+public class JavaMappingAutoLayout implements IAutoLayout{
 	
 	private  int INPUT_JAVA_WIDTH = 200;
 	
-	private  int SPACE_XSL = 20;
+	private  int SPACE_JAVA = 20;
 	
 	private  int INIT_X = 50;
 	
@@ -42,10 +44,10 @@ public class XSLMappingAutoLayout implements IAutoLayout{
 		for (Iterator<?> iterator = nodeList.iterator(); iterator.hasNext();) {
 			Node node = (Node) iterator.next();
 			Object data = node.data;
-			if(data instanceof XSLTemplateEditPart){
-				javaHeight = javaHeight + SPACE_XSL + node.height;
+			if(data instanceof JavaBeanEditPart){
+				javaHeight = javaHeight + SPACE_JAVA + node.height;
 				node.y = java_y;
-				java_y = java_y + SPACE_XSL + node.height;
+				java_y = java_y + SPACE_JAVA + node.height;
 				javaNodes.add(node);
 			}
 			if(data instanceof InputDataContainerEditPart){

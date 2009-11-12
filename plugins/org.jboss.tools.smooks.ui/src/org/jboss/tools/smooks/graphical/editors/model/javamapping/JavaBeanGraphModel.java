@@ -8,19 +8,22 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors.model;
+package org.jboss.tools.smooks.graphical.editors.model.javamapping;
 
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVLinkConnection;
 
 /**
  * @author Dart
  * 
  */
 public class JavaBeanGraphModel extends AbstractResourceConfigGraphModel {
+	
 
 	public JavaBeanGraphModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider,
 			IEditingDomainProvider domainProvider) {
@@ -40,6 +43,10 @@ public class JavaBeanGraphModel extends AbstractResourceConfigGraphModel {
 	 */
 	@Override
 	public boolean isLinkable(Class<?> connectionType) {
+		if(connectionType == CSVLinkConnection.class){
+			return true;
+		}
 		return false;
+//		return super.isLinkable(connectionType);
 	}
 }

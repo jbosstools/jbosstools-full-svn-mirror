@@ -11,68 +11,81 @@
 package org.jboss.tools.smooks.graphical.editors.commands;
 
 import org.eclipse.gef.commands.Command;
-import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
+import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerCSVNodeGraphicalModel;
 
 /**
  * @author Dart
- *
+ * 
  */
-public class AddXMLModelCommand extends Command {
-	private int index = -1;
-	
-	private AbstractSmooksGraphicalModel parentModel;
-	
-	private AbstractSmooksGraphicalModel childModel;
-	
-	public AddXMLModelCommand(AbstractSmooksGraphicalModel parentModel , AbstractSmooksGraphicalModel childModel){
-		this.parentModel = parentModel;
-		this.childModel = childModel;
+public class ChangeCSVNodeNameCommand extends Command {
+
+	private FreemarkerCSVNodeGraphicalModel graphModel;
+
+	private Object value;
+
+	private String oldName;
+
+	public ChangeCSVNodeNameCommand(FreemarkerCSVNodeGraphicalModel model, Object value) {
+		this.graphModel = model;
+		this.value = value;
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.gef.commands.Command#canExecute()
 	 */
 	@Override
 	public boolean canExecute() {
-		if(parentModel != null && childModel != null){
+		if (graphModel != null && value != null && value instanceof String) {
 			return true;
 		}
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.gef.commands.Command#canUndo()
 	 */
 	@Override
 	public boolean canUndo() {
-		if(parentModel != null && childModel != null){
-			return true;
-		}
-		return false;
+		return super.canUndo();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.gef.commands.Command#execute()
 	 */
 	@Override
 	public void execute() {
-		parentModel.addChild(childModel);
+		AbstractXMLObject data = (AbstractXMLObject) graphModel.getData();
+		oldName = data.getName();
+		graphModel.setName((String) value);
+		super.execute();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.gef.commands.Command#redo()
 	 */
 	@Override
 	public void redo() {
-		parentModel.addChild(index,childModel);
+		// TODO Auto-generated method stub
+		super.redo();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.gef.commands.Command#undo()
 	 */
 	@Override
 	public void undo() {
-		index = parentModel.getChildren().indexOf(childModel);
-		parentModel.removeChild(childModel);
+		graphModel.setName((String) oldName);
 	}
-	
+
 }

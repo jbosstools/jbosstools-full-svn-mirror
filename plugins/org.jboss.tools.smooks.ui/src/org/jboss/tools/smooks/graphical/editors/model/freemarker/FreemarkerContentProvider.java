@@ -8,31 +8,24 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors.model;
+package org.jboss.tools.smooks.graphical.editors.model.freemarker;
 
-import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.dom4j.DocumentException;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.wst.xsl.core.XSLCore;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataContentProvider;
 import org.jboss.tools.smooks.configuration.editors.xml.XSLModelAnalyzer;
-import org.jboss.tools.smooks.model.xsl.Template;
-import org.jboss.tools.smooks.model.xsl.Xsl;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
+import org.jboss.tools.smooks.model.freemarker.Freemarker;
+import org.jboss.tools.smooks.model.freemarker.Template;
 
 /**
  * @author Dart
- * 
+ *
  */
-public class XSLTemplateContentProvider implements ITreeContentProvider {
+public class FreemarkerContentProvider implements ITreeContentProvider {
 
 	private ITreeContentProvider parentProvider = null;
 
@@ -40,7 +33,7 @@ public class XSLTemplateContentProvider implements ITreeContentProvider {
 
 	private Map<Object, Object> buffer = new HashMap<Object, Object>();
 
-	public XSLTemplateContentProvider(ITreeContentProvider parentProvider) {
+	public FreemarkerContentProvider(ITreeContentProvider parentProvider) {
 		this.parentProvider = parentProvider;
 	}
 	
@@ -58,45 +51,45 @@ public class XSLTemplateContentProvider implements ITreeContentProvider {
 	 * Object)
 	 */
 	public Object[] getChildren(Object parentElement) {
-		if (parentElement instanceof Xsl) {
-			Template template = ((Xsl) parentElement).getTemplate();
+		if (parentElement instanceof Freemarker) {
+			Template template = ((Freemarker) parentElement).getTemplate();
 			if (template != null) {
 				Object obj = buffer.get(template);
-				if (obj == null) {
-					String filePath = SmooksModelUtils.getAnyTypeText(template);
-					if(filePath != null) filePath = filePath.trim();
-					if (filePath != null && !"".equals(filePath)) {
-						IFile file = SmooksUIUtils.getFile(filePath, SmooksUIUtils.getResource(template).getProject());
-						if (file != null && XSLCore.isXSLFile(file)) {
-							XSLModelAnalyzer analyzer = new XSLModelAnalyzer();
-							try {
-								obj = analyzer.parse(file.getContents());
-							} catch (DocumentException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (CoreException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-					}else{
-						String contents = SmooksModelUtils.getAnyTypeCDATA(template);
-						if(contents != null){
-							XSLModelAnalyzer analyzer = new XSLModelAnalyzer();
-							try {
-								obj = analyzer.parse(new ByteArrayInputStream(contents.getBytes()));
-							} catch (DocumentException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} 
-						}
-					}
-				}
-
-				if (obj != null) {
-					buffer.put(template, obj);
-					return new Object[] { obj };
-				}
+//				if (obj == null) {
+//					String filePath = SmooksModelUtils.getAnyTypeText(template);
+//					if(filePath != null) filePath = filePath.trim();
+//					if (filePath != null && !"".equals(filePath)) {
+//						IFile file = SmooksUIUtils.getFile(filePath, SmooksUIUtils.getResource(template).getProject());
+//						if (file != null && XSLCore.isXSLFile(file)) {
+//							XSLModelAnalyzer analyzer = new XSLModelAnalyzer();
+//							try {
+//								obj = analyzer.parse(file.getContents());
+//							} catch (DocumentException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							} catch (CoreException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//						}
+//					}else{
+//						String contents = SmooksModelUtils.getAnyTypeCDATA(template);
+//						if(contents != null){
+//							XSLModelAnalyzer analyzer = new XSLModelAnalyzer();
+//							try {
+//								obj = analyzer.parse(new ByteArrayInputStream(contents.getBytes()));
+//							} catch (DocumentException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							} 
+//						}
+//					}
+//				}
+//
+//				if (obj != null) {
+//					buffer.put(template, obj);
+//					return new Object[] { obj };
+//				}
 			}
 			return new Object[] {};
 		}
@@ -128,12 +121,12 @@ public class XSLTemplateContentProvider implements ITreeContentProvider {
 	 * Object)
 	 */
 	public boolean hasChildren(Object element) {
-		if (element instanceof Xsl) {
+		if (element instanceof Freemarker) {
 			return true;
 		}
-		if(element instanceof AbstractXMLObject && XSLModelAnalyzer.isXSLTagObject((AbstractXMLObject)element)){
-			return !((AbstractXMLObject)element).getXMLNodeChildren().isEmpty();
-		}
+//		if(element instanceof AbstractXMLObject && XSLModelAnalyzer.isXSLTagObject((AbstractXMLObject)element)){
+//			return !((AbstractXMLObject)element).getXMLNodeChildren().isEmpty();
+//		}
 		return xmlObjectContentProvider.hasChildren(element);
 	}
 

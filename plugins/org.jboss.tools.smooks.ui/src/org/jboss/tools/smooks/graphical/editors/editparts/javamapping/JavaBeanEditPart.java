@@ -8,13 +8,14 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors.editparts;
+package org.jboss.tools.smooks.graphical.editors.editparts.javamapping;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfigEditPart;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
@@ -34,7 +35,7 @@ public class JavaBeanEditPart extends AbstractResourceConfigEditPart {
 	}
 
 	@Override
-	protected EStructuralFeature getFeature(EObject model) {
+	protected EStructuralFeature getHostFeature(EObject model) {
 		if (model instanceof BindingsType) {
 			return JavabeanPackage.Literals.DOCUMENT_ROOT__BINDINGS;
 		}

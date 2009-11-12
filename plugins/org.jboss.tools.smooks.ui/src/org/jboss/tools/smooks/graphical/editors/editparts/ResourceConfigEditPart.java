@@ -28,7 +28,7 @@ public class ResourceConfigEditPart extends AbstractResourceConfigEditPart {
 	}
 
 	@Override
-	protected EStructuralFeature getFeature(EObject model) {
+	protected EStructuralFeature getHostFeature(EObject model) {
 		if(model instanceof BindingsType){
 			return JavabeanPackage.Literals.DOCUMENT_ROOT__BINDINGS;
 		}

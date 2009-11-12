@@ -38,11 +38,11 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHighlighFigure {
 	private List<ITreeFigureListener> treeListener = new ArrayList<ITreeFigureListener>();
 
-	private final int SPACE_INT = 14;
+	protected int SPACE_INT = 14;
 
-	private final int CLICKNODE_HEIGHT = 18;
+	protected int CLICKNODE_HEIGHT = 18;
 
-	private final int CLICKNODE_WIDTH = 18;
+	protected int CLICKNODE_WIDTH = 18;
 
 	private Figure contentFigure;
 
@@ -70,9 +70,18 @@ public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHi
 		super();
 		this.model = model;
 		this.setBorder(new MarginBorder(2, 2, 2, 2));
-		this.setLayoutManager(new ToolbarLayout());
+		this.setLayoutManager(createTreeNodeFigureLayout());
 		createLabelContainer();
 		createContentFigure();
+		initFigure();
+	}
+
+	protected ToolbarLayout createTreeNodeFigureLayout() {
+		return new ToolbarLayout();
+	}
+
+	protected void initFigure() {
+
 	}
 
 	public void addTreeListener(ITreeFigureListener listener) {
@@ -142,20 +151,27 @@ public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHi
 				return new Dimension(SPACE_INT, 0);
 			}
 		};
-		panelFigure.add(spaceFigure);
+		if (needSpaceFigure()) {
+			panelFigure.add(spaceFigure);
+		}
 		contentFigure = new Figure() {
 
 			@Override
 			protected void paintFigure(Graphics graphics) {
 				super.paintFigure(graphics);
-				// graphics.drawRectangle(getBounds().x + 1 , getBounds().y + 1
-				// , getBounds().width - 2 ,getBounds().height - 2 );
+				// graphics.drawRectangle(getBounds().x + 1, getBounds().y + 1,
+				// getBounds().width - 2,
+				// getBounds().height - 2);
 			}
 
 		};
 		panelFigure.add(contentFigure);
-		contentFigure.setLayoutManager(new ToolbarLayout());
+		contentFigure.setLayoutManager(createContentFigureLayout());
 		this.add(panelFigure);
+	}
+
+	protected boolean needSpaceFigure() {
+		return true;
 	}
 
 	public Figure getContentFigure() {
@@ -188,7 +204,23 @@ public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHi
 	}
 
 	protected void createLabelContainer() {
-		labelContainer = new Figure();
+		labelContainer = new Figure() {
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.draw2d.Figure#paintFigure(org.eclipse.draw2d.Graphics
+			 * )
+			 */
+			@Override
+			protected void paintFigure(Graphics graphics) {
+				super.paintFigure(graphics);
+				// graphics.drawRectangle(getBounds().x + 1, getBounds().y + 1,
+				// getBounds().width - 2,
+				// getBounds().height - 2);
+			}
+
+		};
 		clickNode = new Clickable() {
 
 			public void paintBorder(Graphics graphics) {
@@ -258,13 +290,23 @@ public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHi
 		} else {
 			label.setText("");
 		}
-		labelContainer.add(clickNode);
+		if (needClickFigure()) {
+			labelContainer.add(clickNode);
+		}
 		labelContainer.add(imageFigure);
 		labelContainer.add(label);
+		labelContainer.setLayoutManager(createLabelContainerLayout());
+		this.add(labelContainer);
+	}
+
+	protected boolean needClickFigure() {
+		return true;
+	}
+
+	protected LayoutManager createLabelContainerLayout() {
 		ToolbarLayout tl = new ToolbarLayout();
 		tl.setVertical(false);
-		labelContainer.setLayoutManager(tl);
-		this.add(labelContainer);
+		return tl;
 	}
 
 	public void updateLabel() {
@@ -285,6 +327,11 @@ public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHi
 
 	public void setLabelText(String text) {
 		label.setText(text);
+	}
+
+	protected ToolbarLayout createContentFigureLayout() {
+		ToolbarLayout layout = new ToolbarLayout();
+		return layout;
 	}
 
 	public void paint(Graphics graphics) {
@@ -363,7 +410,7 @@ public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHi
 					contentFigure.setLayoutManager(null);
 					contentFigure.setSize(new Dimension(0, 0));
 				} else {
-					contentFigure.setLayoutManager(new ToolbarLayout());
+					contentFigure.setLayoutManager(createContentFigureLayout());
 					contentFigure.setSize(contentFigure.getPreferredSize());
 				}
 				Rectangle newRectangle = parent.getClientArea();

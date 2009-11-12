@@ -18,6 +18,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
+import org.jboss.tools.smooks.gef.tree.command.GEFAdapterCommand;
+import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.xsl.Xsl;
@@ -59,9 +61,17 @@ public class DefaultSmooksCommandProvider implements ISmooksCommandProvider {
 		if (model instanceof BeanType || model instanceof BindingsType) {
 			command = new CreateJavaBeanModelCommand(domain, emfCommand, editorPart, provider);
 		}
-		
-		if(model instanceof Xsl){
+
+		if (model instanceof Xsl) {
 			command = new CreateXSLTemplateModelCommand(domain, emfCommand, editorPart, provider);
+		}
+
+		if (model instanceof Freemarker) {
+			command = new CreateFreemarkerTemplateModelCommand(domain, emfCommand, editorPart, provider);
+		}
+
+		if (command == null) {
+			command = new GEFAdapterCommand(domain, emfCommand);
 		}
 
 		return command;

@@ -24,18 +24,26 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
  */
 public interface ConnectionModelFactory {
 
-	public boolean hasBeanIDConnection(AbstractSmooksGraphicalModel model);
+	public boolean hasConnection(AbstractSmooksGraphicalModel model);
 
-	public Collection<TreeNodeConnection> createBeanIDReferenceConnection(EObject rootModel, RootModel root,
-			AbstractSmooksGraphicalModel model);
+	public Collection<TreeNodeConnection> createConnection(List<Object> inputDataList, EObject rootModel,
+			RootModel root, AbstractSmooksGraphicalModel model);
 
-	public Collection<TreeNodeConnection> createSelectorConnection(List<Object> inputDataList, RootModel root,
-			AbstractSmooksGraphicalModel model);
-
-	public boolean hasSelectorConnection(AbstractSmooksGraphicalModel model);
-	
-	public boolean hasXSLConnection(AbstractSmooksGraphicalModel model);
-	
-	public  Collection<TreeNodeConnection> createXSLConnection(List<Object> inputDataList, RootModel root,
-			AbstractSmooksGraphicalModel model);
+	// public boolean hasBeanIDConnection(AbstractSmooksGraphicalModel model);
+	//
+	// public Collection<TreeNodeConnection>
+	// createBeanIDReferenceConnection(EObject rootModel, RootModel root,
+	// AbstractSmooksGraphicalModel model);
+	//
+	// public Collection<TreeNodeConnection>
+	// createSelectorConnection(List<Object> inputDataList, RootModel root,
+	// AbstractSmooksGraphicalModel model);
+	//
+	// public boolean hasSelectorConnection(AbstractSmooksGraphicalModel model);
+	//	
+	// public boolean hasXSLConnection(AbstractSmooksGraphicalModel model);
+	//	
+	// public Collection<TreeNodeConnection> createXSLConnection(List<Object>
+	// inputDataList, RootModel root,
+	// AbstractSmooksGraphicalModel model);
 }

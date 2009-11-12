@@ -65,9 +65,8 @@ public class TaskTypeManager {
 					GraphicsConstants.IMAGE_JAVA_AMPPING_TASK));
 			allTaskList.add(new TaskTypeDescriptor(TASK_ID_FREEMARKER_TEMPLATE, "Apply Freemaker Template",
 					GraphicsConstants.IMAGE_APPLY_FREEMARKER_TASK));
-			// allTaskList.add(new TaskTypeDescriptor(TASK_ID_XSL_TEMPLATE,
-			// "Apply XSL Template",
-			// GraphicsConstants.IMAGE_APPLY_XSL_TASK));
+			allTaskList.add(new TaskTypeDescriptor(TASK_ID_XSL_TEMPLATE, "Apply XSL Template",
+					GraphicsConstants.IMAGE_APPLY_XSL_TASK));
 		}
 		return allTaskList;
 	}

@@ -10,8 +10,8 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
 import org.jboss.tools.smooks.gef.tree.model.ValueBindingConnection;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
-import org.jboss.tools.smooks.graphical.editors.model.JavaBeanChildGraphModel;
-import org.jboss.tools.smooks.graphical.editors.model.JavaBeanGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanChildGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
 
 /**
  * @author DartPeng

@@ -22,7 +22,7 @@ import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.ui.IWorkbenchPart;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart;
-import org.jboss.tools.smooks.graphical.editors.editparts.IAutoLayout;
+import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
 
 /**
  * @author Dart

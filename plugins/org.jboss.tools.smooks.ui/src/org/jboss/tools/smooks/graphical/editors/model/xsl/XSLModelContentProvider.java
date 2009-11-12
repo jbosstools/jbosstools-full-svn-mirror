@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors.model;
+package org.jboss.tools.smooks.graphical.editors.model.xsl;
 
 import java.util.List;
 

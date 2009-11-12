@@ -631,7 +631,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 											}
 										}
 									}
-									
+
 								}
 							}
 						}
@@ -695,10 +695,12 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		SmooksJavaMappingGraphicalEditor javaMappingPart = new SmooksJavaMappingGraphicalEditor(smooksModelProvider);
 		this.registeTaskDetailsPage(javaMappingPart, TaskTypeManager.TASK_ID_JAVA_MAPPING);
 
-		// SmooksXSLTemplateGraphicalEditor xsltemplatePart = new
-		// SmooksXSLTemplateGraphicalEditor(smooksModelProvider);
-		// this.registeTaskDetailsPage(xsltemplatePart,
-		// TaskTypeManager.TASK_ID_XSL_TEMPLATE);
+		SmooksFreemarkerTemplateGraphicalEditor freemarkerPart = new SmooksFreemarkerTemplateGraphicalEditor(
+				smooksModelProvider);
+		this.registeTaskDetailsPage(freemarkerPart, TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE);
+		
+		SmooksXSLTemplateGraphicalEditor xsltemplatePart = new SmooksXSLTemplateGraphicalEditor(smooksModelProvider);
+		this.registeTaskDetailsPage(xsltemplatePart, TaskTypeManager.TASK_ID_XSL_TEMPLATE);
 	}
 
 	@Override

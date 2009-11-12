@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors.model;
+package org.jboss.tools.smooks.graphical.editors.model.javamapping;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -27,7 +27,11 @@ import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
+import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVLinkConnection;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVNodeModel;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
+import org.jboss.tools.smooks.model.javabean.ValueType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 
 /**
@@ -56,18 +60,45 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 		if (TreeNodeConnection.class.isAssignableFrom(connectionType)) {
 			Object data = this.getData();
 			data = AdapterFactoryEditingDomain.unwrap(data);
-			if (SmooksUIUtils.getBeanIDRefFeature((EObject)data) != null) {
+			if (SmooksUIUtils.getBeanIDRefFeature((EObject) data) != null) {
 				return true;
 			}
 		}
-//		if (connectionType == ValueBindingConnection.class) {
-//			Object data = this.getData();
-//			data = AdapterFactoryEditingDomain.unwrap(data);
-//			if (SmooksUIUtils.getSelectorFeature((EObject)data) != null) {
-//				return true;
-//			}
-//		}
+		if (data instanceof ValueType || data instanceof org.jboss.tools.smooks.model.javabean12.ValueType
+				|| connectionType == CSVLinkConnection.class) {
+			return true;
+		}
+		// if (connectionType == ValueBindingConnection.class) {
+		// Object data = this.getData();
+		// data = AdapterFactoryEditingDomain.unwrap(data);
+		// if (SmooksUIUtils.getSelectorFeature((EObject)data) != null) {
+		// return true;
+		// }
+		// }
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel#canLinkWithSource(java.lang.Object)
+	 */
+	@Override
+	public boolean canLinkWithSource(Object model) {
+		// TODO Auto-generated method stub
+		return super.canLinkWithSource(model);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel#canLinkWithTarget(java.lang.Object)
+	 */
+	@Override
+	public boolean canLinkWithTarget(Object model) {
+		AbstractSmooksGraphicalModel gm = (AbstractSmooksGraphicalModel)model;
+		Object m = gm.getData();
+		if (data instanceof ValueType || data instanceof org.jboss.tools.smooks.model.javabean12.ValueType
+				|| m instanceof CSVNodeModel) {
+			return !((CSVNodeModel)m).isRecord();
+		}
+		return super.canLinkWithTarget(model);
 	}
 
 	/*
@@ -139,7 +170,9 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#getChildren()
 	 */
 	@Override
