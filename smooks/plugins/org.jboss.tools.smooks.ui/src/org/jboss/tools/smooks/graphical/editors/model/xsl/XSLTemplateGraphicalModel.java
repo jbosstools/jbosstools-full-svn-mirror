@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors.model;
+package org.jboss.tools.smooks.graphical.editors.model.xsl;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
@@ -25,6 +25,7 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.XSLTagObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
 import org.jboss.tools.smooks.model.xsl.Template;
 import org.jboss.tools.smooks.model.xsl.Xsl;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;

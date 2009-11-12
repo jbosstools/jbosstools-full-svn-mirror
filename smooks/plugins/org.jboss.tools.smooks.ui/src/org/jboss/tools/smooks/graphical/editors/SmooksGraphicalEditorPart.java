@@ -39,6 +39,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gef.ContextMenuProvider;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.commands.CommandStackEvent;
@@ -86,17 +87,17 @@ import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.actions.AutoLayoutAction;
+import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.commands.IgnoreException;
-import org.jboss.tools.smooks.graphical.editors.editparts.IAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataContainerEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataRootModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
-import org.jboss.tools.smooks.graphical.editors.model.JavaBeanChildGraphModel;
-import org.jboss.tools.smooks.graphical.editors.model.JavaBeanGraphModel;
-import org.jboss.tools.smooks.graphical.editors.model.XSLNodeGraphicalModel;
-import org.jboss.tools.smooks.graphical.editors.model.XSLTemplateGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanChildGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLNodeGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLTemplateGraphicalModel;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
@@ -110,7 +111,7 @@ import org.jboss.tools.smooks.model.validation10.RuleType;
  * 
  */
 public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implements ISelectionChangedListener,
-		ISourceSynchronizeListener, ISmooksGraphChangeListener {
+		ISourceSynchronizeListener, ISmooksGraphChangeListener, IGraphicalEditorPart {
 
 	public static final int EXECUTE_COMMAND = 0;
 
@@ -463,7 +464,11 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 							AbstractSmooksGraphicalModel graphModel = createGraphModel(object);
 							if (graphModel == null)
 								continue;
-							root.addTreeNode(graphModel);
+							try {
+								root.addTreeNode(graphModel);
+							} catch (Throwable t) {
+								t.printStackTrace();
+							}
 							applyGraphicalInformation(graphModel);
 							Collection<TreeNodeConnection> connections = createAllConnection(graphModel);
 							expandConnectedModels(connections);
@@ -582,11 +587,15 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 		getPaletteViewer().addDragSourceListener(new TemplateTransferDragSourceListener(getPaletteViewer()));
 	}
 
+	protected EditPartFactory createEdtiPartFactory() {
+		return new SmooksEditFactory();
+	}
+
 	@Override
 	protected void configureGraphicalViewer() {
 		super.configureGraphicalViewer();
 		getGraphicalViewer().setEditDomain(editDomain);
-		getGraphicalViewer().setEditPartFactory(new SmooksEditFactory());
+		getGraphicalViewer().setEditPartFactory(createEdtiPartFactory());
 
 		getGraphicalViewer().setRootEditPart(new FreeformGraphicalRootEditPart());
 
@@ -739,29 +748,31 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 		ConnectionModelFactory connectionModelFactory = getConnectionModelFactory();
 		List<TreeNodeConnection> cs = new ArrayList<TreeNodeConnection>();
 		if (connectionModelFactory != null) {
-			if (connectionModelFactory.hasSelectorConnection(model)) {
-				Collection<TreeNodeConnection> cList = connectionModelFactory.createSelectorConnection(inputDataList,
-						root, model);
+			if (connectionModelFactory.hasConnection(model)) {
+				Collection<TreeNodeConnection> cList = connectionModelFactory.createConnection(inputDataList,
+						getSmooksResourceList(), root, model);
 				if (cList != null) {
 					cs.addAll(cList);
 				}
 			}
-			if (connectionModelFactory.hasBeanIDConnection(model)) {
-				Collection<TreeNodeConnection> c = connectionModelFactory.createBeanIDReferenceConnection(
-						getSmooksResourceList(), root, model);
-				if (c != null) {
-					cs.addAll(c);
-				}
-			}
-			// for xsl template
-
-			if (connectionModelFactory.hasXSLConnection(model)) {
-				Collection<TreeNodeConnection> c = connectionModelFactory.createXSLConnection(inputDataList, root,
-						model);
-				if (c != null) {
-					cs.addAll(c);
-				}
-			}
+			// if (connectionModelFactory.hasBeanIDConnection(model)) {
+			// Collection<TreeNodeConnection> c =
+			// connectionModelFactory.createBeanIDReferenceConnection(
+			// getSmooksResourceList(), root, model);
+			// if (c != null) {
+			// cs.addAll(c);
+			// }
+			// }
+			// // for xsl template
+			//
+			// if (connectionModelFactory.hasXSLConnection(model)) {
+			// Collection<TreeNodeConnection> c =
+			// connectionModelFactory.createXSLConnection(inputDataList, root,
+			// model);
+			// if (c != null) {
+			// cs.addAll(c);
+			// }
+			// }
 		}
 		if (cs.isEmpty())
 			return null;
@@ -772,14 +783,15 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 	 * @return the inputDataList
 	 */
 	public List<Object> getInputDataList() {
-		if(inputDataList == null){
+		if (inputDataList == null) {
 			inputDataList = new ArrayList<Object>();
 		}
 		return inputDataList;
 	}
 
 	/**
-	 * @param inputDataList the inputDataList to set
+	 * @param inputDataList
+	 *            the inputDataList to set
 	 */
 	public void setInputDataList(List<Object> inputDataList) {
 		this.inputDataList = inputDataList;
@@ -1218,5 +1230,17 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 				expandConnectedModels(connections);
 			}
 		}
+	}
+
+	public String getID() {
+		return null;
+	}
+
+	public boolean canDelete(AbstractSmooksGraphicalModel graphModel) {
+		return true;
+	}
+
+	public boolean canLink(AbstractSmooksGraphicalModel graphModel) {
+		return false;
 	}
 }

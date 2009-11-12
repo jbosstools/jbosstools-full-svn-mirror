@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors.editparts;
+package org.jboss.tools.smooks.graphical.editors.editparts.xsl;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -27,9 +27,10 @@ import org.jboss.tools.smooks.configuration.editors.xml.XSLModelAnalyzer;
 import org.jboss.tools.smooks.configuration.editors.xml.XSLTagObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.graphical.actions.xsltemplate.XSLConstants;
-import org.jboss.tools.smooks.graphical.editors.commands.AddXMLModelCommand;
+import org.jboss.tools.smooks.graphical.editors.commands.AddSmooksGraphicalModelCommand;
+import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfigEditPart;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
-import org.jboss.tools.smooks.graphical.editors.model.XSLNodeGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLNodeGraphicalModel;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
 
 /**
@@ -45,7 +46,7 @@ public class XSLTemplateEditPart extends AbstractResourceConfigEditPart {
 	 * AbstractResourceConfigEditPart#getFeature(org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
-	protected EStructuralFeature getFeature(EObject model) {
+	protected EStructuralFeature getHostFeature(EObject model) {
 		return XslPackage.Literals.DOCUMENT_ROOT__XSL;
 	}
 
@@ -88,7 +89,7 @@ public class XSLTemplateEditPart extends AbstractResourceConfigEditPart {
 				documentRoot.setRootElement(element);
 				
 				((XSLTagObject) model).setReferenceElement(element);
-				AddXMLModelCommand command = new AddXMLModelCommand((AbstractSmooksGraphicalModel) graphModel,
+				AddSmooksGraphicalModelCommand command = new AddSmooksGraphicalModelCommand((AbstractSmooksGraphicalModel) graphModel,
 						childGraphModel);
 				return command;
 			}

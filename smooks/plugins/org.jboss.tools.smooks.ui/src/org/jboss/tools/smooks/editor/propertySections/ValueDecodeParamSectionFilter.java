@@ -13,7 +13,7 @@ package org.jboss.tools.smooks.editor.propertySections;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.IFilter;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
-import org.jboss.tools.smooks.graphical.editors.editparts.JavaBeanChildNodeEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.JavaBeanChildNodeEditPart;
 import org.jboss.tools.smooks.model.javabean.ValueType;
 
 /**

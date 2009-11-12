@@ -64,13 +64,9 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 		this.resourceList = resourceList;
 		this.smooksModelProvider = provider;
 	}
-
-	public PaletteRoot createPaletteRoot() {
-		PaletteRoot root = new PaletteRoot();
-		PaletteDrawer drawer = new PaletteDrawer("General");
-		drawer.add(new SelectionToolEntry());
-		drawer.add(new MarqueeToolEntry());
-		CreationFactory factory = new CreationFactory() {
+	
+	protected CreationFactory createConnectionCreationFactory(){
+		return new CreationFactory() {
 
 			public Object getObjectType() {
 				return TriggerConnection.class;
@@ -80,10 +76,18 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 				return null;
 			}
 		};
+	}
+
+	public PaletteRoot createPaletteRoot() {
+		PaletteRoot root = new PaletteRoot();
+		PaletteDrawer drawer = new PaletteDrawer("General");
+		drawer.add(new SelectionToolEntry());
+		drawer.add(new MarqueeToolEntry());
+		CreationFactory factory = createConnectionCreationFactory();
 		ImageRegistry imageRegistry = SmooksConfigurationActivator.getDefault().getImageRegistry();
 		drawer.add(new ConnectionCreationToolEntry("Link", "Connect node", factory, imageRegistry
 				.getDescriptor(GraphicsConstants.IMAGE_LINK16), imageRegistry
-				.getDescriptor(GraphicsConstants.IMAGE_LINK16)));
+				.getDescriptor(GraphicsConstants.IMAGE_LINK24)));
 		root.add(drawer);
 
 		createPaletteDrawer(root);

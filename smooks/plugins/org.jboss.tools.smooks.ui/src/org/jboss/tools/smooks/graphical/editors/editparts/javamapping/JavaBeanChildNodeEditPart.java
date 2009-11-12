@@ -8,13 +8,18 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors.editparts;
+package org.jboss.tools.smooks.graphical.editors.editparts.javamapping;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
+import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
+import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfigChildNodeEditPart;
 import org.jboss.tools.smooks.model.javabean.ExpressionType;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.javabean.ValueType;
@@ -40,6 +45,23 @@ public class JavaBeanChildNodeEditPart extends AbstractResourceConfigChildNodeEd
 		supportTypes.add(org.jboss.tools.smooks.model.javabean12.ValueType.class);
 		supportTypes.add(org.jboss.tools.smooks.model.javabean12.ExpressionType.class);
 		supportTypes.add(org.jboss.tools.smooks.model.javabean12.WiringType.class);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfigChildNodeEditPart#isDragLink()
+	 */
+	@Override
+	protected boolean isDragLink() {
+		IGraphicalEditorPart part = (IGraphicalEditorPart)getEditorPart();
+		if(SmooksFreemarkerTemplateGraphicalEditor.ID.equals(part.getID())){
+			AbstractSmooksGraphicalModel model = (AbstractSmooksGraphicalModel) this.getModel();
+			Object data = model.getData();
+			data = AdapterFactoryEditingDomain.unwrap(data);
+			if(data instanceof ValueType || data instanceof org.jboss.tools.smooks.model.javabean12.ValueType){
+				return true;
+			}
+		}
+		return super.isDragLink();
 	}
 
 

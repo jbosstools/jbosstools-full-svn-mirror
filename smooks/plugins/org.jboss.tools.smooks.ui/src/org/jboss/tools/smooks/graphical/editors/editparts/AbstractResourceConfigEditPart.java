@@ -69,7 +69,7 @@ public class AbstractResourceConfigEditPart extends TreeContainerEditPart {
 						if (provider != null) {
 							EditingDomain domain = provider.getEditingDomain();
 
-							EStructuralFeature feature = getFeature((EObject) data);
+							EStructuralFeature feature = getHostFeature((EObject) data);
 							if (feature != null) {
 								// FeatureMapUtil
 								// .createEntry(Javabean12Package.Literals.JAVABEAN12_DOCUMENT_ROOT__BEAN,data);
@@ -192,7 +192,7 @@ public class AbstractResourceConfigEditPart extends TreeContainerEditPart {
 		return null;
 	}
 
-	protected EStructuralFeature getFeature(EObject model) {
+	protected EStructuralFeature getHostFeature(EObject model) {
 		return null;
 	}
 

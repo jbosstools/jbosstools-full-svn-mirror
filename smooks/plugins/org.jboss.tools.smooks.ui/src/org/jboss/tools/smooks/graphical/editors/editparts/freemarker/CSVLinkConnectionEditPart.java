@@ -8,14 +8,14 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors.editparts;
+package org.jboss.tools.smooks.graphical.editors.editparts.freemarker;
 
-import org.eclipse.draw2d.graph.DirectedGraph;
+import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeConnectionEditPart;
 
 /**
  * @author Dart
  *
  */
-public interface IAutoLayout {
-	public void visit(DirectedGraph graph);
+public class CSVLinkConnectionEditPart extends TreeNodeConnectionEditPart {
+
 }

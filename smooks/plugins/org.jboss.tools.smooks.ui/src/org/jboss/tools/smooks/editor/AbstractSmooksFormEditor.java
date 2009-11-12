@@ -139,6 +139,17 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		super();
 		initEditingDomain();
 	}
+	
+	@Override
+	public Object getAdapter(Class adapter) {
+		if(adapter == ISmooksModelProvider.class)
+			return this;
+		if(adapter == IEditingDomainProvider.class){
+			return this;
+		}
+		return super.getAdapter(adapter);
+	}
+
 
 	public void addSourceSynchronizeListener(ISourceSynchronizeListener listener) {
 		this.sourceSynchronizeListener.add(listener);

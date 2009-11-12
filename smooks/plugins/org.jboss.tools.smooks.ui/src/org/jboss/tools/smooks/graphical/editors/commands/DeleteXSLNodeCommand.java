@@ -29,8 +29,8 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataContainerEditPart;
-import org.jboss.tools.smooks.graphical.editors.model.XSLNodeGraphicalModel;
-import org.jboss.tools.smooks.graphical.editors.model.XSLTemplateGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLNodeGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLTemplateGraphicalModel;
 
 /**
  * @author Dart

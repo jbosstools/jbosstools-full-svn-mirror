@@ -23,19 +23,21 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
 import org.jboss.tools.smooks.gef.tree.model.ValueBindingConnection;
-import org.jboss.tools.smooks.graphical.editors.editparts.BeanReferenceConnectionEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataContainerEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataTreeNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.ResourceConfigEditFactory;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksRootEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.TriggerConnectionEditPart;
-import org.jboss.tools.smooks.graphical.editors.editparts.ValueBindingConnectionEditPart;
-import org.jboss.tools.smooks.graphical.editors.editparts.XSLNodeEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.FreemarkerCSVNodeEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.BeanReferenceConnectionEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.ValueBindingConnectionEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.xsl.XSLNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
-import org.jboss.tools.smooks.graphical.editors.model.XSLNodeGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerCSVNodeGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLNodeGraphicalModel;
 
 /**
  * @author Dart
@@ -43,11 +45,32 @@ import org.jboss.tools.smooks.graphical.editors.model.XSLNodeGraphicalModel;
  */
 public class SmooksEditFactory extends SmooksGEFEditFactory implements EditPartFactory {
 	private ResourceConfigEditFactory resourceConfigFactory;
+	
+	private boolean displayInput = true;
 
 	public SmooksEditFactory() {
 		super();
 		resourceConfigFactory = new ResourceConfigEditFactory();
 	}
+	
+
+	/**
+	 * @return the displayInput
+	 */
+	public boolean isDisplayInput() {
+		return displayInput;
+	}
+
+
+
+	/**
+	 * @param displayInput the displayInput to set
+	 */
+	public void setDisplayInput(boolean displayInput) {
+		this.displayInput = displayInput;
+	}
+
+
 
 	public EditPart createEditPart(EditPart context, Object model) {
 		EditPart editPart = null;
@@ -60,15 +83,19 @@ public class SmooksEditFactory extends SmooksGEFEditFactory implements EditPartF
 		if (model.getClass() == TreeContainerModel.class) {
 			editPart = new TreeContainerEditPart();
 		}
-		if (model.getClass() == InputDataTreeNodeModel.class) {
+		if (model.getClass() == InputDataTreeNodeModel.class && displayInput) {
 			editPart = new InputDataTreeNodeEditPart();
 		}
-		if (model.getClass() == InputDataContianerModel.class) {
+		if (model.getClass() == InputDataContianerModel.class && displayInput) {
 			editPart = new InputDataContainerEditPart();
 		}
 
-		if (model.getClass() == XSLNodeGraphicalModel.class) {
+		if (model.getClass() == XSLNodeGraphicalModel.class ) {
 			editPart = new XSLNodeEditPart();
+		}
+		
+		if (model.getClass() == FreemarkerCSVNodeGraphicalModel.class) {
+			editPart = new FreemarkerCSVNodeEditPart();
 		}
 		
 		if (model instanceof AbstractResourceConfigGraphModel

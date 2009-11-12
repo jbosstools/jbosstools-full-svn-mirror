@@ -30,7 +30,7 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
 import org.jboss.tools.smooks.gef.tree.model.ValueBindingConnection;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
-import org.jboss.tools.smooks.graphical.editors.model.JavaBeanChildGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanChildGraphModel;
 
 /**
  * @author Dart
@@ -317,5 +317,29 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 				return true;
 		}
 		return false;
+	}
+
+	public Collection<TreeNodeConnection> createConnection(List<Object> inputDataList, EObject rootModel,
+			RootModel root, AbstractSmooksGraphicalModel model) {
+		Collection<TreeNodeConnection> allconnections = new ArrayList<TreeNodeConnection>();
+		Collection<TreeNodeConnection> connections = createBeanIDReferenceConnection(rootModel, root, model);
+		if(connections != null && !connections.isEmpty()){
+			allconnections.addAll(connections);
+		}
+		
+		connections = createSelectorConnection(inputDataList, root, model);
+		if(connections != null && !connections.isEmpty()){
+			allconnections.addAll(connections);
+		}
+		
+		connections = createXSLConnection(inputDataList, root, model);
+		if(connections != null && !connections.isEmpty()){
+			allconnections.addAll(connections);
+		}
+		return allconnections;
+	}
+
+	public boolean hasConnection(AbstractSmooksGraphicalModel model) {
+		return hasBeanIDConnection(model) || hasSelectorConnection(model) || hasXSLConnection(model);
 	}
 }

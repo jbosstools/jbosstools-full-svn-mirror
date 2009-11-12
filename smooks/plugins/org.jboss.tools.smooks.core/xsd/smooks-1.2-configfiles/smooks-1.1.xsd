@@ -5,7 +5,7 @@
            elementFormDefault="qualified">
 
     <xs:element name="smooks-resource-list">
-        <xs:complexType>
+        <xs:complexType mixed="true">
             <xs:annotation>
                 <xs:documentation xml:lang="en">List of Smooks Resource Configuration.</xs:documentation>
             </xs:annotation>
