@@ -14,11 +14,9 @@ testFeatureToBuildID=org.jboss.tools.bpel.tests.feature
 
 build.steps=buildUpdate,buildTests,generateDigests,test,publish,cleanup
 
-# JBoss Hudson Variables defined in /home/hudson/config_repository/resources/common.variables
-JAVA_HOME=${JAVA_HOME_PARENT}
-JAVA14_HOME=${JAVA_HOME_PARENT}
-JAVA50_HOME=${JAVA_HOME_PARENT}
-JAVA60_HOME=${JAVA_HOME_PARENT}
+JAVA14_HOME=${JAVA_HOME}
+JAVA50_HOME=${JAVA_HOME}
+JAVA60_HOME=${JAVA_HOME}
 
 dependencyURLs=\
 http://repository.jboss.org/eclipse/galileo/GEF-runtime-3.5.1.zip,\
@@ -26,8 +24,8 @@ http://repository.jboss.org/eclipse/galileo/emf-runtime-2.5.0.zip,\
 http://repository.jboss.org/eclipse/galileo/xsd-runtime-2.5.0.zip,\
 http://repository.jboss.org/eclipse/galileo/wtp-R-3.1.1-20090917225226.zip,\
 http://repository.jboss.org/eclipse/galileo/dtp_1.7.1.zip,\
-http://repository.jboss.org/eclipse/galileo/eclipse-SDK-3.5.1-linux-gtk.tar.gz
-#http://repository.jboss.org/eclipse/galileo/eclipse-SDK-3.5.1-linux-gtk-x86_64.tar.gz
+http://repository.jboss.org/eclipse/galileo/eclipse-SDK-3.5.1-linux-gtk-x86_64.tar.gz
+#http://repository.jboss.org/eclipse/galileo/eclipse-SDK-3.5.1-linux-gtk.tar.gz
 # build throws OOM/Permgen errors on 64-bit hudson slaves
 
 # use precompiled binaries from latest build as input to this build
