@@ -215,7 +215,7 @@ public class StyleAttribute {
 		for(int i=0; i<tokens.size(); i++) {
 			if(tokens.get(i) instanceof StyleProperty) {
 				StyleProperty property = (StyleProperty)tokens.get(i);
-				if(name.equalsIgnoreCase(property.getName().getCleanValue())) {
+				if (property.getName()!=null && name.equalsIgnoreCase(property.getName().getCleanValue())) {
 					return property;
 				}
 			}
