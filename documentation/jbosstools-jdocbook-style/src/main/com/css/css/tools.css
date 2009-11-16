@@ -22,6 +22,15 @@ top:0px;
 left:0px;
 z-index:-1;
 }
+
+ol {
+padding-left: 25px;
+}
+
+p {
+text-align: left;
+}
+.othercredit h3 {font-size: 12px;}
 /*
 
 body {
@@ -126,6 +135,7 @@ h1, h2, h3, h4, h5, h6{
 h1.title {
 display:block;
 }
+
 
 /* Feedback styles */
 
