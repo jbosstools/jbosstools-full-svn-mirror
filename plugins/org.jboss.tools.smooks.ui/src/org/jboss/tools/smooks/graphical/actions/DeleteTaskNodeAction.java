@@ -50,6 +50,13 @@ public class DeleteTaskNodeAction extends AbstractProcessGraphAction {
 	@Override
 	public void update() {
 		List<TaskType> taskList = this.getCurrentSelectedTask();
+		if(!taskList.isEmpty() && taskList.size() == 1){
+			TaskType task = taskList.get(0);
+			if(TaskTypeManager.TASK_ID_INPUT.equals(task.getId())){
+				this.setEnabled(false);
+				return;
+			}
+		}
 		this.setEnabled((taskList != null && !taskList.isEmpty() && taskList.size() == 1));
 	}
 

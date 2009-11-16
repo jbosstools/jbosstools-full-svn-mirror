@@ -41,15 +41,14 @@ import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.commands.CommandStackEvent;
 import org.eclipse.gef.commands.CommandStackEventListener;
-import org.eclipse.gef.dnd.TemplateTransferDragSourceListener;
 import org.eclipse.gef.dnd.TemplateTransferDropTargetListener;
 import org.eclipse.gef.editparts.FreeformGraphicalRootEditPart;
-import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.actions.SelectionAction;
-import org.eclipse.gef.ui.parts.GraphicalEditorWithPalette;
+import org.eclipse.gef.ui.parts.GraphicalEditor;
 import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.util.TransferDropTargetListener;
@@ -110,7 +109,7 @@ import org.jboss.tools.smooks.model.validation10.RuleType;
  * @author Dart
  * 
  */
-public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implements ISelectionChangedListener,
+public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelectionChangedListener,
 		ISourceSynchronizeListener, ISmooksGraphChangeListener, IGraphicalEditorPart {
 
 	public static final int EXECUTE_COMMAND = 0;
@@ -172,6 +171,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 		this.smooksModelProvider = provider;
 		this.setEditDomain(editDomain);
 	}
+	
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -191,6 +191,10 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 		}
 
 		super.createPartControl(parent);
+	}
+	
+	public GraphicalViewer getGraphicalViewer() {
+		return super.getGraphicalViewer();
 	}
 
 	private void handleCommandStack(org.eclipse.emf.common.command.CommandStack commandStack) {
@@ -581,11 +585,11 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 		return editDomain;
 	}
 
-	@Override
-	protected void configurePaletteViewer() {
-		super.configurePaletteViewer();
-		getPaletteViewer().addDragSourceListener(new TemplateTransferDragSourceListener(getPaletteViewer()));
-	}
+//	@Override
+//	protected void configurePaletteViewer() {
+//		super.configurePaletteViewer();
+//		getPaletteViewer().addDragSourceListener(new TemplateTransferDragSourceListener(getPaletteViewer()));
+//	}
 
 	protected EditPartFactory createEdtiPartFactory() {
 		return new SmooksEditFactory();
@@ -1169,13 +1173,13 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 		initGraphicalModel();
 	}
 
-	@Override
-	protected PaletteRoot getPaletteRoot() {
-		SmooksGraphicalEditorPaletteRootCreator creator = new SmooksGraphicalEditorPaletteRootCreator(
-				this.smooksModelProvider, (AdapterFactoryEditingDomain) this.smooksModelProvider.getEditingDomain(),
-				getSmooksResourceListType());
-		return creator.createPaletteRoot();
-	}
+//	@Override
+//	protected PaletteRoot getPaletteRoot() {
+//		SmooksGraphicalEditorPaletteRootCreator creator = new SmooksGraphicalEditorPaletteRootCreator(
+//				this.smooksModelProvider, (AdapterFactoryEditingDomain) this.smooksModelProvider.getEditingDomain(),
+//				getSmooksResourceListType());
+//		return creator.createPaletteRoot();
+//	}
 
 	public SmooksResourceListType getSmooksResourceListType() {
 		if (smooksModelProvider != null) {
@@ -1234,13 +1238,5 @@ public class SmooksGraphicalEditorPart extends GraphicalEditorWithPalette implem
 
 	public String getID() {
 		return null;
-	}
-
-	public boolean canDelete(AbstractSmooksGraphicalModel graphModel) {
-		return true;
-	}
-
-	public boolean canLink(AbstractSmooksGraphicalModel graphModel) {
-		return false;
 	}
 }

@@ -14,6 +14,7 @@ public class TreeContainerModel extends TreeNodeModel implements IMoveableModel 
 	private boolean headerVisable = false;
 	
 	private Point location = new Point(0, 0);
+	
 
 	public TreeContainerModel(Object data,
 			ITreeContentProvider contentProvider, ILabelProvider labelProvider) {
@@ -27,6 +28,10 @@ public class TreeContainerModel extends TreeNodeModel implements IMoveableModel 
 	public void setSourceLinkNode(boolean sourceLinkNode) {
 		this.sourceLinkNode = sourceLinkNode;
 	}
+	
+	public boolean canDragLink(){
+		return false;
+	}
 
 	public Point getLocation() {
 		return location;
@@ -39,6 +44,7 @@ public class TreeContainerModel extends TreeNodeModel implements IMoveableModel 
 			support.firePropertyChange(IMoveableModel.PRO_BOUNDS_CHANGED, oldLocation, this.location);
 		}
 	}
+	
 
 	public Rectangle getBounds() {
 		return new Rectangle(getLocation(),new Dimension(0,0));

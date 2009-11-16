@@ -11,13 +11,18 @@ import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.DefaultEditDomain;
+import org.eclipse.gef.DragTracker;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.gef.Request;
+import org.eclipse.gef.requests.SelectionRequest;
+import org.eclipse.gef.tools.ConnectionDragCreationTool;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.editpolicy.FigureHighlightEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeGraphicalNodeEditPolicy;
+import org.jboss.tools.smooks.gef.tree.figures.DragLinkFigure;
 import org.jboss.tools.smooks.gef.tree.figures.IMoveableModel;
 import org.jboss.tools.smooks.gef.tree.figures.TreeContainerFigure;
 import org.jboss.tools.smooks.gef.tree.figures.TreeFigureExpansionEvent;
@@ -40,8 +45,8 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 	protected IFigure createFigure() {
 		return new TreeContainerFigure((TreeContainerModel) getModel());
 	}
-	
-	protected String getLabelText(){
+
+	protected String getLabelText() {
 		TreeContainerModel model = (TreeContainerModel) getModel();
 		String text = model.getText();
 		return text;
@@ -53,7 +58,7 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 		if (text != null && model.isHeaderVisable() && getFigure() instanceof TreeContainerFigure) {
 			TreeContainerFigure figure = (TreeContainerFigure) getFigure();
 			Image i = model.getImage();
-			if(i != null){
+			if (i != null) {
 				figure.setIcon(i);
 			}
 			figure.setText(text);
@@ -62,7 +67,8 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 		if (!isSource) {
 			IFigure figure = getFigure();
 			if (figure instanceof TreeContainerFigure) {
-//				((TreeContainerFigure) figure).setHeaderColor(ColorConstants.orange);
+				// ((TreeContainerFigure)
+				// figure).setHeaderColor(ColorConstants.orange);
 			}
 		}
 		Point location = model.getLocation();
@@ -103,11 +109,11 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 			DefaultEditDomain domain = (DefaultEditDomain) getViewer().getEditDomain();
 			IEditorPart editor = domain.getEditorPart();
 			ISmooksModelProvider modelProvider = (ISmooksModelProvider) editor.getAdapter(ISmooksModelProvider.class);
-			
-			if(modelProvider != null  && getModel() instanceof IMoveableModel){
+
+			if (modelProvider != null && getModel() instanceof IMoveableModel) {
 				SmooksGraphicsExtType graph = modelProvider.getSmooksGraphicsExt();
-				Rectangle rect = ((IMoveableModel)getModel()).getBounds();
-				recordBounds(graph,rect);
+				Rectangle rect = ((IMoveableModel) getModel()).getBounds();
+				recordBounds(graph, rect);
 			}
 		}
 	}
@@ -116,6 +122,27 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 	protected void createEditPolicies() {
 		this.installEditPolicy(EditPolicy.NODE_ROLE, new TreeNodeGraphicalNodeEditPolicy());
 		this.installEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE, new FigureHighlightEditPolicy());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.gef.editparts.AbstractGraphicalEditPart#getDragTracker(org
+	 * .eclipse.gef.Request)
+	 */
+	public DragTracker getDragTracker(Request request) {
+		Object model = getModel();
+		if (model instanceof TreeContainerModel && request instanceof SelectionRequest) {
+			Point location = ((SelectionRequest)request).getLocation();
+			IFigure figure = getFigure();
+			IFigure figure1 = figure.findFigureAt(location);
+			if (figure1 instanceof DragLinkFigure && ((TreeContainerModel) model).canDragLink()) {
+				getViewer().select(this);
+				return new ConnectionDragCreationTool();
+			}
+		}
+		return super.getDragTracker(request);
 	}
 
 	// @Override

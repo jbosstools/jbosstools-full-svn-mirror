@@ -2949,6 +2949,49 @@ public class SmooksUIUtils {
 		}
 		return false;
 	}
+	
+	public static boolean  isCollectionJavaGraphModel(EObject parent){
+		String classString = null;
+		if (parent instanceof BeanType) {
+			classString = ((BeanType) parent).getClass_();
+		}
+		if (parent instanceof BindingsType) {
+			classString = ((BindingsType) parent).getClass_();
+		}
+		if (classString != null)
+			classString = classString.trim();
+
+		IJavaProject project = SmooksUIUtils.getJavaProject(parent);
+		if (project != null) {
+			try {
+				ProjectClassLoader loader = new ProjectClassLoader(project);
+				Class<?> clazz = loader.loadClass(classString);
+				if (Collection.class.isAssignableFrom(clazz)) {
+					return true;
+				}
+			} catch (Throwable t) {
+
+			}
+		}
+		
+		return false;
+	}
+	
+	public static boolean isArrayJavaGraphModel(EObject parent){
+		String classString = null;
+		if (parent instanceof BeanType) {
+			classString = ((BeanType) parent).getClass_();
+		}
+		if (parent instanceof BindingsType) {
+			classString = ((BindingsType) parent).getClass_();
+		}
+		if (classString != null)
+			classString = classString.trim();
+		if (classString.endsWith("]")) {
+			return true;
+		}
+		return false;
+	}
 
 	public static EStructuralFeature getFeature(Object model) {
 		if (model instanceof BindingsType) {

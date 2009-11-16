@@ -100,9 +100,6 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 	 * .eclipse.gef.Request)
 	 */
 	public DragTracker getDragTracker(Request request) {
-		// if(true){
-		// return super.getDragTracker(request);
-		// }
 		if (isDragLink()) {
 			getViewer().select(this);
 			return new ConnectionDragCreationTool();
@@ -404,11 +401,21 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 	}
 
 	public ConnectionAnchor getSourceConnectionAnchor(ConnectionEditPart connection) {
-		return new LeftOrRightAnchor(getAnchorFigure());
+		try {
+			return new LeftOrRightAnchor(getAnchorFigure());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public ConnectionAnchor getSourceConnectionAnchor(Request request) {
-		return new LeftOrRightAnchor(getAnchorFigure());
+		try {
+			return new LeftOrRightAnchor(getAnchorFigure());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public ConnectionAnchor getTargetConnectionAnchor(ConnectionEditPart connection) {

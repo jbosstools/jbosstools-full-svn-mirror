@@ -94,9 +94,12 @@ public class AbstractResourceConfigEditPart extends TreeContainerEditPart {
 		});
 
 		this.installEditPolicy(EditPolicy.CONTAINER_ROLE, new FlowLayoutEditPolicy() {
-			
-			/* (non-Javadoc)
-			 * @see org.eclipse.gef.editpolicies.FlowLayoutEditPolicy#isHorizontal()
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.gef.editpolicies.FlowLayoutEditPolicy#isHorizontal()
 			 */
 			@Override
 			protected boolean isHorizontal() {
@@ -174,6 +177,8 @@ public class AbstractResourceConfigEditPart extends TreeContainerEditPart {
 			}
 			org.eclipse.emf.common.command.Command emfCommand = createModelCreationEMFCommand(domain,
 					((AbstractResourceConfigGraphModel) graphModel).getData(), type, model);
+			if (emfCommand == null || !emfCommand.canExecute())
+				return null;
 			return createModelCreationCommand(domain, emfCommand);
 		}
 		return null;

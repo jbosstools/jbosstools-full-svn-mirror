@@ -7,13 +7,18 @@ import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.FigureUtilities;
 import org.eclipse.draw2d.Graphics;
+import org.eclipse.draw2d.GridData;
+import org.eclipse.draw2d.GridLayout;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.MouseEvent;
+import org.eclipse.draw2d.MouseMotionListener;
 import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.gef.tree.editpolicy.IShowHighlighFigure;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
@@ -44,13 +49,88 @@ public class TreeContainerFigure extends Figure implements ISelectableFigure, IS
 
 	private boolean showHightlight = false;
 
+	private IFigure dragLinkFigure = null;
+
+	private boolean showDragLink = false;
+
 	public TreeContainerFigure(TreeContainerModel model) {
 		super();
 		this.model = model;
 		this.addChildrenFigures();
+		hookFigure();
+	}
+
+	protected void hookFigure() {
+		this.addMouseMotionListener(new MouseMotionListener() {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.draw2d.MouseMotionListener#mouseDragged(org.eclipse
+			 * .draw2d.MouseEvent)
+			 */
+			public void mouseDragged(MouseEvent me) {
+
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.draw2d.MouseMotionListener#mouseEntered(org.eclipse
+			 * .draw2d.MouseEvent)
+			 */
+			public void mouseEntered(MouseEvent me) {
+				showDragLink = true;
+				dragLinkFigure.repaint();
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.draw2d.MouseMotionListener#mouseExited(org.eclipse
+			 * .draw2d.MouseEvent)
+			 */
+			public void mouseExited(MouseEvent me) {
+				showDragLink = false;
+				dragLinkFigure.repaint();
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.draw2d.MouseMotionListener#mouseHover(org.eclipse
+			 * .draw2d.MouseEvent)
+			 */
+			public void mouseHover(MouseEvent me) {
+
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.draw2d.MouseMotionListener#mouseMoved(org.eclipse
+			 * .draw2d.MouseEvent)
+			 */
+			public void mouseMoved(MouseEvent me) {
+
+			}
+
+		});
 	}
 
 	protected void addChildrenFigures() {
+
+		IFigure headerContainerFigure = new Figure();
+
+		GridLayout gl = new GridLayout();
+		gl.numColumns = 2;
+		headerContainerFigure.setLayoutManager(gl);
+
 		headerFigure = new Figure() {
 
 			@Override
@@ -66,10 +146,108 @@ public class TreeContainerFigure extends Figure implements ISelectableFigure, IS
 				return new Dimension(width, 25);
 			}
 		};
+		headerFigure.add(headerContainerFigure);
+
 		label = new Label();
-		headerFigure.add(label);
+		headerContainerFigure.add(label);
 		ToolbarLayout layout = new ToolbarLayout();
 		layout.setMinorAlignment(ToolbarLayout.ALIGN_CENTER);
+		GridData gd = new GridData(GridData.FILL_BOTH);
+		gl.setConstraint(label, gd);
+
+		dragLinkFigure = new DragLinkFigure() {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.draw2d.Figure#paintFigure(org.eclipse.draw2d.Graphics
+			 * )
+			 */
+			@Override
+			protected void paintFigure(Graphics graphics) {
+				super.paintFigure(graphics);
+				if (showDragLink) {
+					if (model instanceof TreeContainerModel) {
+						if (!((TreeContainerModel) model).canDragLink()) {
+							return;
+						}
+					}
+					Image img = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
+							GraphicsConstants.IMAGE_DRAG_LINK);
+					if (img != null) {
+						graphics.drawImage(img, getLocation());
+					}
+				}
+			}
+		};
+		dragLinkFigure.addMouseMotionListener(new MouseMotionListener() {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.draw2d.MouseMotionListener#mouseDragged(org.eclipse
+			 * .draw2d.MouseEvent)
+			 */
+			public void mouseDragged(MouseEvent me) {
+
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.draw2d.MouseMotionListener#mouseEntered(org.eclipse
+			 * .draw2d.MouseEvent)
+			 */
+			public void mouseEntered(MouseEvent me) {
+				showDragLink = true;
+				dragLinkFigure.repaint();
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.draw2d.MouseMotionListener#mouseExited(org.eclipse
+			 * .draw2d.MouseEvent)
+			 */
+			public void mouseExited(MouseEvent me) {
+				showDragLink = false;
+				dragLinkFigure.repaint();
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.draw2d.MouseMotionListener#mouseHover(org.eclipse
+			 * .draw2d.MouseEvent)
+			 */
+			public void mouseHover(MouseEvent me) {
+
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.draw2d.MouseMotionListener#mouseMoved(org.eclipse
+			 * .draw2d.MouseEvent)
+			 */
+			public void mouseMoved(MouseEvent me) {
+
+			}
+
+		});
+		dragLinkFigure.setSize(16, 16);
+		gd = new GridData();
+		gd.horizontalAlignment = GridData.END;
+		gl.setConstraint(dragLinkFigure, gd);
+
+		headerContainerFigure.add(dragLinkFigure);
+
 		headerFigure.setLayoutManager(layout);
 		headerFigure.setOpaque(true);
 

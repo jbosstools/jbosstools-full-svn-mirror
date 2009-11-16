@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors.model.freemarker;
+package org.jboss.tools.smooks.graphical.editors.model.javamapping;
 
 import java.util.List;
 
@@ -21,21 +21,23 @@ import org.jboss.tools.smooks.editor.ISmooksModelProvider;
  * @author Dart
  * 
  */
-public class FreemarkerActionCreator {
+public class JavaMappingActionCreator {
 	public void registXSLActions(ActionRegistry actionRegistry, List selectionActions, IEditorPart editorPart,
-			ISmooksModelProvider provider) {
-		// add xsl actions
+			ISmooksModelProvider smooksModelProvider) {
+		IAction addBeanAction = new AddJavaBeanAction(editorPart, smooksModelProvider);
+		actionRegistry.registerAction(addBeanAction);
+		selectionActions.add(addBeanAction.getId());
 
-		IAction addFreemarkerNodeAction = new AddFreemarkerAction(editorPart, provider);
-		actionRegistry.registerAction(addFreemarkerNodeAction);
-		selectionActions.add(addFreemarkerNodeAction.getId());
+		IAction addValueAction = new AddValueAction(editorPart, smooksModelProvider);
+		actionRegistry.registerAction(addValueAction);
+		selectionActions.add(addValueAction.getId());
 
-		IAction addXSLNodeAction = new AddFreemarkerCSVRecordAction(editorPart);
-		actionRegistry.registerAction(addXSLNodeAction);
-		selectionActions.add(addXSLNodeAction.getId());
+		IAction addWiringAction = new AddWiringAction(editorPart, smooksModelProvider);
+		actionRegistry.registerAction(addWiringAction);
+		selectionActions.add(addWiringAction.getId());
 
-		IAction addFieldNodeAction = new AddFreemarkerCSVFieldAction(editorPart);
-		actionRegistry.registerAction(addFieldNodeAction);
-		selectionActions.add(addFieldNodeAction.getId());
+		IAction addExpression = new AddExpressionAction(editorPart, smooksModelProvider);
+		actionRegistry.registerAction(addExpression);
+		selectionActions.add(addExpression.getId());
 	}
 }

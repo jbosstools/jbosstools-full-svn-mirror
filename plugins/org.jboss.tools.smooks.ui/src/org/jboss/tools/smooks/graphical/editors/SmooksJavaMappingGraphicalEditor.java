@@ -24,6 +24,7 @@ import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.autolayout.JavaMappingAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaMappingActionCreator;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.ExpressionType;
 import org.jboss.tools.smooks.model.javabean.ValueType;
@@ -43,40 +44,47 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#getPaletteRoot()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#
+	 * getPaletteRoot()
 	 */
-	@Override
+	// @Override
 	protected PaletteRoot getPaletteRoot() {
 		SmooksGraphicalEditorPaletteRootCreator creator = new SmooksGraphicalEditorPaletteRootCreator(
 				this.smooksModelProvider, (AdapterFactoryEditingDomain) this.smooksModelProvider.getEditingDomain(),
-				getSmooksResourceListType()){
+				getSmooksResourceListType()) {
 
-					/* (non-Javadoc)
-					 * @see org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPaletteRootCreator#fillActionGrouper(java.util.List)
-					 */
-					@Override
-					protected void fillActionGrouper(List<ISmooksActionGrouper> grouperList) {
-						grouperList.add(new JavaBean11ActionGrouper());
-					}
-			
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @seeorg.jboss.tools.smooks.graphical.editors.
+			 * SmooksGraphicalEditorPaletteRootCreator
+			 * #fillActionGrouper(java.util.List)
+			 */
+			@Override
+			protected void fillActionGrouper(List<ISmooksActionGrouper> grouperList) {
+				grouperList.add(new JavaBean11ActionGrouper());
+			}
+
 		};
 		return creator.createPaletteRoot();
 	}
 
-
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#getAutoLayout()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#
+	 * getAutoLayout()
 	 */
 	@Override
 	public IAutoLayout getAutoLayout() {
-		if(javaMappingAutoLayout == null){
+		if (javaMappingAutoLayout == null) {
 			javaMappingAutoLayout = new JavaMappingAutoLayout();
 		}
 		return javaMappingAutoLayout;
 	}
-
-
 
 	/*
 	 * (non-Javadoc)
@@ -98,6 +106,19 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 	@Override
 	protected GraphicalModelFactory createGraphicalModelFactory() {
 		return new JavaMappingGraphicalModelFactory();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#
+	 * createActions()
+	 */
+	@Override
+	protected void createActions() {
+		super.createActions();
+		JavaMappingActionCreator creator = new JavaMappingActionCreator();
+		creator.registXSLActions(getActionRegistry(), getSelectionActions(), this, this.getSmooksModelProvider());
 	}
 
 	private class JavaMappingConnectionModelFactory extends ConnectionModelFactoryImpl {
@@ -199,7 +220,8 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 				ILabelProvider labelProvider = createLabelProvider(editingDomain.getAdapterFactory());
 
 				if (model instanceof BindingsType || model instanceof BeanType) {
-					graphModel = new JavaBeanGraphModel(model, contentProvider, labelProvider, provider);
+					graphModel = new JavaBeanGraphModel(model, contentProvider, labelProvider, provider,
+							SmooksJavaMappingGraphicalEditor.this);
 					((JavaBeanGraphModel) graphModel).setHeaderVisable(true);
 				}
 				// if (model instanceof Xsl) {

@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.requests.CreateRequest;
@@ -21,15 +22,14 @@ import org.eclipse.gef.requests.CreationFactory;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
+import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart;
 
 /**
  * @author Dart
- *
+ * 
  */
 public abstract class AddSmooksModelAction extends SelectionAction {
-	
-	
-	
+
 	public AddSmooksModelAction(IWorkbenchPart part, int style) {
 		super(part, style);
 		// TODO Auto-generated constructor stub
@@ -53,29 +53,40 @@ public abstract class AddSmooksModelAction extends SelectionAction {
 		return cmd.canExecute();
 	}
 
-	protected Command createAddChildNodeCommand(List<?> objects){
+	protected Command createAddChildNodeCommand(List<?> objects) {
 		if (objects.isEmpty())
 			return null;
 		if (!(objects.get(0) instanceof EditPart))
 			return null;
 
-		CreateRequest addReq =	new CreateRequest();
-		addReq.setLocation(new Point(0,0));
+		CreateRequest addReq = new CreateRequest();
+		Point location = new Point(0, 0);
+		if (this.getWorkbenchPart() != null) {
+			IWorkbenchPart part = this.getWorkbenchPart();
+			org.eclipse.swt.graphics.Point mouseLocation = part.getSite().getShell().getDisplay().getCursorLocation();
+			if (part instanceof SmooksGraphicalEditorPart) {
+				GraphicalViewer viewer = ((SmooksGraphicalEditorPart) part).getGraphicalViewer();
+				mouseLocation = viewer.getControl().toControl(mouseLocation);
+			}
+			location = new Point(mouseLocation.x, mouseLocation.y);
+		}
+		addReq.setLocation(location);
 		addReq.setFactory(getCreationFactory());
 
-		CompoundCommand compoundCmd = new CompoundCommand("Add Child Node");
+		CompoundCommand compoundCmd = new CompoundCommand("Add " + getActionText());
 		for (int i = 0; i < objects.size(); i++) {
 			EditPart object = (EditPart) objects.get(i);
 			Command cmd = object.getCommand(addReq);
-			if (cmd != null) compoundCmd.add(cmd);
+			if (cmd != null)
+				compoundCmd.add(cmd);
 		}
 
 		return compoundCmd;
 	}
-	
+
 	public abstract String getActionText();
-	
-//	public abstract Imag
+
+	// public abstract Imag
 
 	/*
 	 * (non-Javadoc)
@@ -84,9 +95,13 @@ public abstract class AddSmooksModelAction extends SelectionAction {
 	 */
 	@Override
 	public void run() {
-		execute(createAddChildNodeCommand(getSelectedObjects()));
+		try {
+			execute(createAddChildNodeCommand(getSelectedObjects()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -98,10 +113,10 @@ public abstract class AddSmooksModelAction extends SelectionAction {
 		this.setText(getActionText());
 		this.setImageDescriptor(getActionImageDescriptor());
 	}
-	
+
 	protected abstract CreationFactory getCreationFactory();
 
-	public abstract ImageDescriptor getActionImageDescriptor() ;
+	public abstract ImageDescriptor getActionImageDescriptor();
 
 	/*
 	 * (non-Javadoc)
