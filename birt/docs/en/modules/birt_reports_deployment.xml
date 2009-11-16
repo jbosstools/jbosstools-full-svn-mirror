@@ -7,19 +7,25 @@
         a Seam web project and how to use Hibernate data source to generate a dynamic report.
         In this section we will create a Seam web project that can make a dynamic report using the parameters that are defined on a web page.</para>
 
+
     <para>We will use the <property>PRODUCTS</property> table of <property>DATAMODELS</property> database for the purpose of this demo project.
         In the first place, you need to generate Seam entities like we did in the previous chapter (<link linkend="hibernate_datasource">Hibernate ODA Data Source</link> ). The demo application will generate a report about the company's products, whereas it will allow to specify a product line. </para>
 
+<orderedlist>
+    <listitem>
     <para>The next step is to create a Java class that will store the <code>sortOrder</code> variable and its assessors, register the class in faces.config.xml.  
     The variable will be needed to pass dynamic data to the report via report parameters, therefore it has to be of session scope.</para>
-    
-<para>
+    </listitem>
+
+    <listitem>
+    <para>
     
     
     The report will print the data from the <code>Products</code> table, hence you need to create a report file first. 
     You can use either the <property>BIRT JDBC Data Source</property> or <property>Hibernate Data Source</property> data source to create the  data set for this project. If you want to use the latter please read the previous chapter <link linkend="hibernate_datasource">Hibernate ODA Data Source</link>.
 </para>    
-  
+   
+    
   <para>
       The data set should have at least the following data set items: product vendor, product name, quantity in stock and buy price. The data is retrieved from the database with this query :
   </para>
@@ -33,9 +39,12 @@ buyprice
 FROM Products as products        
 
 ]]></programlisting> 
-    
+    </listitem>
+    <listitem>
     <para>Make a table in the report and put each data set item into a column.</para>
-    <para>As it was stated in the beginning of the chapter the report will be dynamic, therefore you need to declare a report parameter first, let it be <code>sortOrder</code> and to add the parameter to the query. BIRT offers rich JavaScript API, so you can modify the query programmatically like this:</para>
+    </listitem>
+     <listitem>   
+        <para>As it was stated in the beginning of the chapter the report will be dynamic, therefore you need to declare a report parameter first, let it be <code>sortOrder</code> and to add the parameter to the query. BIRT offers rich JavaScript API, so you can modify the query programmatically like this:</para>
 <programlisting role="XML">
 
 &lt;xml-property name=&quot;queryText&quot;&gt;&lt;![CDATA[
@@ -51,10 +60,14 @@ this.queryText = this.queryText+queryString;
 ]]&gt;&lt;/method&gt;
     
 </programlisting>    
-
+     </listitem>
+    <listitem>
 <para>The report is ready. You can preview it to make sure it works properly. </para>
-    <para>To set the report parameter you should create an <property>.xhtml</property> view page, call it <property>Products.xhtml</property>. On the page you can set the value of the <code>sortOrder</code> Java bean variable and press the <property>Generate Report</property> button to open another view page that will display the resulted report.
-    </para>
+    </listitem>
+        <listitem>        <para>To set the report parameter you should create an <property>.xhtml</property> view page, call it <property>Products.xhtml</property>. On the page you can set the value of the <code>sortOrder</code> Java bean variable and press the <property>Generate Report</property> button to open another view page that will display the resulted report.
+        </para>
+     
+    
     <para>The source code of the  <property>Products.xhtml</property> should be the following:</para>
    
    <programlisting role="XML"><![CDATA[
@@ -91,7 +104,8 @@ this.queryText = this.queryText+queryString;
 ]]></programlisting> 
     <para>The logic of the file is quite simple, when the sort order criterion is select the value of  <code>yourJavaBean.sortOrder</code>
     is set automatically via Ajax and the report is ready to be generated.</para>  
-    
+        </listitem>
+    <listitem>
     <para>Now you need to create the web page that will print the report, name the file <property>ProductsReport.xhtml</property>.
         The file to output the report should have the following content:</para>
    
@@ -135,7 +149,9 @@ this.queryText = this.queryText+queryString;
         &lt;head&gt;, &lt;body&gt; etc., tags. However if your HTML page already has those tags, you can rid of them using the <code>embeddable=&quot;true&quot;</code> attribute of 
        
        the <emphasis role="bold"><property>&lt;b:birt&gt;</property></emphasis>  component.</para>
-   <para>Deploy the project onto the server and open your browser to see the report is successfully generated. You should navigate to 
+    </listitem>
+        <listitem>
+        <para>Deploy the project onto the server and open your browser to see the report is successfully generated. You should navigate to 
    
        <code>http://localhost:8080/yourProjectName/Products.seam</code> to select the criterion and press the <property>Generate Report</property> button. You will be redirected to the  <code>http://localhost:8080/HelloBirt/ProductsReport.seam</code>
    
@@ -148,6 +164,8 @@ this.queryText = this.queryText+queryString;
            </imageobject>
        </mediaobject>
    </figure>
+        </listitem>
+</orderedlist>
      <para>Thus, a Seam project that includes the BIRT facet can be deployed as any project. If you
         define the Hibernate ODA driver, the JBoss BIRT engine will use JNDI URL that has to be bound
         to either Hibernate Session Factory or Hibernate Entity Manager Factory. If you

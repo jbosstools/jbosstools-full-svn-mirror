@@ -6,12 +6,11 @@
 
     <para>The JBoss BIRT Integration feature includes the Hibernate ODA Data Source which is  completely
         integrated with Hibernate Tools. You can use it the way as you would use any of BIRT ODA drivers.
-       
-       
 
-    
     </para>
 
+<orderedlist>
+    <listitem>
     <para>First, you need to reverse engineer from the database to generate Seam entities. You can perform this operation going to  <emphasis>
             <property>File &gt; New &gt; Seam Generate Entities</property>
         </emphasis> in the <property>Seam perspective</property>. More details on the Seam Generate
@@ -34,16 +33,20 @@
             you would have a connection profile already configured.        
                 </para>
     </tip>
-
+    </listitem>
+    <listitem>
 <para>
     Next you should create a new BIRT report file ( <emphasis>><property>File &gt; New &gt; Other &gt; Business Intelligence and Reporting
         Tools &gt; Report</property></emphasis>) to represent the data from the <property>Employees</property> table. Call the file <property>employees.rptdesign</property>.
 </para>
+    </listitem>
+
+<listitem>
+   
     
-
-
     <para>Now switch to the <property>BIRT Report Design</property> perspective.</para>
-
+</listitem>
+    <listitem>
     <para>In the <property>Data Explorer</property> view right-click the <emphasis>
             <property>Data Source</property>
         </emphasis> node and choose <emphasis>
@@ -57,7 +60,8 @@
             </imageobject>
         </mediaobject>
     </figure>
-
+</listitem>
+    <listitem>
     <para>The wizard will prompt you to select data source type.  Choose <emphasis>
             <property>Hibernate Data Source</property>
         </emphasis> and give it a meaningful name, for instance <emphasis>
@@ -73,7 +77,8 @@
             </imageobject>
         </mediaobject>
     </figure>
-
+    </listitem>
+    <listitem>
     <para>On the next wizard's dialog you can leave the everything with default values, press the <emphasis>
             <property>Test Connection</property>
     </emphasis> button to verify  that the connection is established successfully.</para>
@@ -91,11 +96,14 @@
             </imageobject>
         </mediaobject>
     </figure>
-
+    </listitem>
+    <listitem>
     <para>Press  <emphasis>
             <property>Finish</property>
         </emphasis> to complete <property>New Data Source</property> wizard.</para>
-
+    </listitem>
+    
+    <listitem>
     <para>Now you need to configure a new Hibernate ODA data set. Launch the
         <property>New Data Set</property> wizard. In the <property>Data Explorer View</property>
         right-click the <emphasis>
@@ -103,7 +111,8 @@
         </emphasis> node and select <emphasis>
             <property>New Data Set</property>.</emphasis></para>
 
-
+    </listitem>
+    <listitem>
     <para>Select <property>HibernateDataSource</property> as target data source and type in the new data set name.
         Call it <property>HibernateDataSet</property>.</para>
 
@@ -118,7 +127,8 @@
             </imageobject>
         </mediaobject>
     </figure>
-
+    </listitem>
+    <listitem>
 
     <para>The next dialog of the wizard will help you compose a query for the new data set.</para>
     <para>We will make a report that will print all employees in the database who has Sales Rep job title.</para>
@@ -128,7 +138,8 @@ select jobtitle, firstname, lastname, email
 from Employees as employees where employees.jobtitle = 'Sales Rep'
 ...]]></programlisting>  
         
-        
+    
+    
  <para>       
         
         To validate the
@@ -145,11 +156,15 @@ from Employees as employees where employees.jobtitle = 'Sales Rep'
             </imageobject>
         </mediaobject>
     </figure>
-
-    <para>Pressing <property>Finish</property> will call the <property>Edit Data Set</property>  dialog where you can adjust the parameters of the data set and preview the resulted set.. 
+    </listitem>
+    <listitem>
+        
+    <para>Pressing <property>Finish</property> will call the <property>Edit Data Set</property>  dialog where you can adjust the parameters of the data set and preview the resulted set.
         If everything looks good, hit <property>Ok</property> to generate a new data set.
      </para>
-
+    </listitem>
+    <listitem>
+        
     <para>Now you can insert the  data set items of <property>HibernateDataSet</property> into the <property>employees.rptdesign</property>.</para>
     
 
@@ -158,6 +173,7 @@ from Employees as employees where employees.jobtitle = 'Sales Rep'
         <para>If you don&apos;t know how to do this we suggest that you refer to the <ulink
                 url="http://www.eclipse.org/birt/phoenix/tutorial/">Eclipse BIRT Tutorial</ulink>.</para>
     </tip>
+  
 
 <para>You can also use parameters in the query to add  dynamics to your report. In the previous example we hardcoded the selection criterion in the <code>where</code> clause. </para>
     <para>To specify the job title on-the-fly your query should look like this:</para>
@@ -177,10 +193,13 @@ from Employees as employees where employees.jobtitle = ?
         choose <property>Edit</property> and navigate to the <property>Parameters</property> section.  
         Declare a new data set parameter, name it <code>jobtitle</code> and map it to the already existing <code>JobTitle</code> report parameter.
         </para>
-
+    </listitem>
+    <listitem>
     <para>You report is ready, you can view it by clicking on  the <property>Preview</property> tab of the <property>BIRT Report Designer</property> editor. </para>
-    <para>You will be prompted to assign a value to the report parameter. For instance you can enter &quot;Sales Rep&quot;. </para>
+
     
+        <para>You will be prompted to assign a value to the report parameter. For instance you can enter &quot;Sales Rep&quot;. </para>
+
     <figure>
         <title>Resulted Dynamic Report</title>
         <mediaobject>
@@ -189,5 +208,6 @@ from Employees as employees where employees.jobtitle = ?
             </imageobject>
         </mediaobject>
     </figure>
-    
+    </listitem>
+</orderedlist>
 </section>
