@@ -72,7 +72,7 @@ public class SmooksXSLTemplateGraphicalEditor extends SmooksGraphicalEditorPart 
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#getPaletteRoot()
 	 */
-	@Override
+//	@Override
 	protected PaletteRoot getPaletteRoot() {
 		SmooksGraphicalEditorPaletteRootCreator creator = new SmooksGraphicalEditorPaletteRootCreator(
 				this.smooksModelProvider, (AdapterFactoryEditingDomain) this.smooksModelProvider.getEditingDomain(),

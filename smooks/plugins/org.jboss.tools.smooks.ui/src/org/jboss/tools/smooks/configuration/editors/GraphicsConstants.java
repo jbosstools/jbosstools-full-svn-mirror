@@ -22,6 +22,10 @@ public final class GraphicsConstants {
 	}
 
 	public static final String IMAGE_JAVA_AMPPING_TASK = "icons/full/obj32/java_mapping_task.jpg";
+	
+	public static final String IMAGE_DRAG_LINK = "icons/full/obj16/drag_link.gif";
+	
+	public static final String IMAGE_ADD_TASK_BUTTON = "icons/full/obj16/add_task_button.png";
 
 	public static final String IMAGE_LINK16 = "icons/full/obj16/connection16.gif";
 

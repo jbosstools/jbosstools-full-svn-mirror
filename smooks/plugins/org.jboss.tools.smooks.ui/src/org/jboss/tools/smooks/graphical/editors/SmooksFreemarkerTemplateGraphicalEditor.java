@@ -91,7 +91,7 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 	protected void createActions() {
 		super.createActions();
 		FreemarkerActionCreator creator = new FreemarkerActionCreator();
-		creator.registXSLActions(getActionRegistry(), getSelectionActions(), this);
+		creator.registXSLActions(getActionRegistry(), getSelectionActions(), this, this.smooksModelProvider);
 	}
 
 	/*
@@ -100,7 +100,6 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 	 * @seeorg.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#
 	 * getPaletteRoot()
 	 */
-	@Override
 	protected PaletteRoot getPaletteRoot() {
 		SmooksGraphicalEditorPaletteRootCreator creator = new SmooksGraphicalEditorPaletteRootCreator(
 				this.smooksModelProvider, (AdapterFactoryEditingDomain) this.smooksModelProvider.getEditingDomain(),
@@ -232,7 +231,8 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 					((TreeContainerModel) graphModel).setHeaderVisable(true);
 				}
 				if (model instanceof BindingsType || model instanceof BeanType) {
-					graphModel = new JavaBeanGraphModel(model, contentProvider, labelProvider, provider);
+					graphModel = new JavaBeanGraphModel(model, contentProvider, labelProvider, provider,
+							SmooksFreemarkerTemplateGraphicalEditor.this);
 					((JavaBeanGraphModel) graphModel).setHeaderVisable(true);
 				}
 				if (graphModel != null) {
@@ -260,38 +260,12 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#canDelete
-	 * (org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel)
-	 */
-	@Override
-	public boolean canDelete(AbstractSmooksGraphicalModel graphModel) {
-		return super.canDelete(graphModel);
-	}
-	
-	
-
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#createInputDataGraphModel()
+	 * @seeorg.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#
+	 * createInputDataGraphModel()
 	 */
 	@Override
 	protected List<AbstractSmooksGraphicalModel> createInputDataGraphModel() {
 		return Collections.emptyList();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#canLink
-	 * (org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel)
-	 */
-	@Override
-	public boolean canLink(AbstractSmooksGraphicalModel graphModel) {
-		if (graphModel instanceof JavaBeanGraphModel) {
-			return true;
-		}
-		return super.canLink(graphModel);
 	}
 
 	private class FreemarkerTemplateEditFactory extends SmooksEditFactory {

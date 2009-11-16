@@ -15,38 +15,55 @@ import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
+import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
-import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVLinkConnection;
 
 /**
  * @author Dart
  * 
  */
 public class JavaBeanGraphModel extends AbstractResourceConfigGraphModel {
-	
 
+	private IGraphicalEditorPart editorPart;
+	
 	public JavaBeanGraphModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider,
-			IEditingDomainProvider domainProvider) {
-	    super(data,contentProvider,labelProvider,domainProvider);
+			IEditingDomainProvider domainProvider , IGraphicalEditorPart editorPart) {
+		super(data, contentProvider, labelProvider, domainProvider);
+		this.editorPart = editorPart;
 	}
 
 	@Override
 	protected TreeNodeModel createChildModel(Object model, ITreeContentProvider contentProvider,
 			ILabelProvider labelProvider) {
 		Object m = AdapterFactoryEditingDomain.unwrap(model);
-		if(m instanceof String) return null;
+		if (m instanceof String)
+			return null;
 		return new JavaBeanChildGraphModel(model, contentProvider, labelProvider, this.domainProvider);
 	}
 	
+	
+
 	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#isLinkable(java.lang.Class)
+	 * @see org.jboss.tools.smooks.gef.tree.model.TreeContainerModel#canDragLink()
 	 */
 	@Override
-	public boolean isLinkable(Class<?> connectionType) {
-		if(connectionType == CSVLinkConnection.class){
+	public boolean canDragLink() {
+		if(SmooksFreemarkerTemplateGraphicalEditor.ID.equals(editorPart.getID())){
 			return true;
 		}
 		return false;
-//		return super.isLinkable(connectionType);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#isLinkable
+	 * (java.lang.Class)
+	 */
+	@Override
+	public boolean isLinkable(Class<?> connectionType) {
+		return canDragLink();
 	}
 }

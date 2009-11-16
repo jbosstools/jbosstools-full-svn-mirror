@@ -33,22 +33,17 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.DragSourceListener;
-import org.eclipse.swt.dnd.DropTarget;
-import org.eclipse.swt.dnd.DropTargetEvent;
-import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -74,8 +69,9 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.zest.core.viewers.GraphViewer;
+import org.eclipse.zest.core.widgets.CGraphNode;
 import org.eclipse.zest.core.widgets.Graph;
-import org.eclipse.zest.core.widgets.GraphNode;
+import org.eclipse.zest.core.widgets.GraphItem;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.HorizontalTreeLayoutAlgorithm;
@@ -84,14 +80,11 @@ import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
 import org.jboss.tools.smooks.graphical.actions.AbstractProcessGraphAction;
-import org.jboss.tools.smooks.graphical.actions.AddInputTaskAction;
 import org.jboss.tools.smooks.graphical.actions.AddNextTaskNodeAction;
-import org.jboss.tools.smooks.graphical.actions.AddPreviousTaskNodeAction;
-import org.jboss.tools.smooks.graphical.actions.AddTaskNodeAction;
 import org.jboss.tools.smooks.graphical.actions.DeleteTaskNodeAction;
-import org.jboss.tools.smooks.graphical.actions.TaskTypeRules;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager.TaskTypeDescriptor;
-import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
+import org.jboss.tools.smooks.graphical.editors.process.ProcessGraphicalViewerLabelProvider;
+import org.jboss.tools.smooks.graphical.editors.process.TaskNodeFigure;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.ProcessType;
 import org.jboss.tools.smooks.model.graphics.ext.ProcessesType;
@@ -123,6 +116,10 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	private ScrolledPageBook pageBook;
 
 	private Map<String, Object> registedTaskPages = new HashMap<String, Object>();
+
+	private MenuManager manager;
+
+	protected boolean needupdatewhenshow = true;
 
 	public SmooksProcessGraphicalEditor(FormEditor editor, String id, String title, ISmooksModelProvider provider) {
 		super(editor, id, title);
@@ -156,43 +153,9 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		});
 		// GridData gd = new GridData(GridData.FILL_BOTH);
 		// processGraphViewer.getControl().setLayoutData(gd);
-		processGraphViewer.setNodeStyle(ZestStyles.NODES_FISHEYE);
+		// processGraphViewer.setNodeStyle(ZestStyles.NODES_FISHEYE);
 		processGraphViewer.setContentProvider(new ProcessGraphContentProvider());
-		processGraphViewer.setLabelProvider(new LabelProvider() {
-
-			@Override
-			public Image getImage(Object element) {
-				if (element instanceof TaskType) {
-					String id = ((TaskType) element).getId();
-					List<TaskTypeDescriptor> des = TaskTypeManager.getAllTaskList();
-					for (Iterator<?> iterator = des.iterator(); iterator.hasNext();) {
-						TaskTypeDescriptor taskTypeDescriptor = (TaskTypeDescriptor) iterator.next();
-						if (taskTypeDescriptor.getId().equals(id)) {
-							return SmooksConfigurationActivator.getDefault().getImageRegistry().get(
-									taskTypeDescriptor.getImagePath());
-						}
-					}
-				}
-				return super.getImage(element);
-			}
-
-			@Override
-			public String getText(Object element) {
-				if (element instanceof TaskType) {
-					String id = ((TaskType) element).getId();
-					String name = ((TaskType) element).getName();
-					if (name == null) {
-						name = id;
-					}
-					if (name == null) {
-						name = "null";
-					}
-					return name;
-				}
-				return "";
-			}
-
-		});
+		processGraphViewer.setLabelProvider(new ProcessGraphicalViewerLabelProvider(this));
 		processGraphViewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
 		HorizontalTreeLayoutAlgorithm layoutAlgorithm = new HorizontalTreeLayoutAlgorithm(
 				LayoutStyles.NO_LAYOUT_NODE_RESIZING);
@@ -230,112 +193,165 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	protected void hookProcessGraphicalViewer() {
-
-		getProcessGraphViewer().getControl();
-		final DropTarget dropTarge = new DropTarget(getProcessGraphViewer().getControl(), DND.DROP_MOVE | DND.DROP_COPY);
-		dropTarge.setTransfer(new Transfer[] { TemplateTransfer.getInstance() });
-		dropTarge.addDropListener(new DropTargetListener() {
-			private TaskType taskType = null;
-
-			private ProcessType process = null;
-
-			public void dropAccept(DropTargetEvent event) {
-
-			}
-
-			public void drop(DropTargetEvent event) {
-				if (event.detail == DND.DROP_COPY) {
-					if (this.taskType != null) {
-						TaskTypeDescriptor des = (TaskTypeDescriptor) TemplateTransfer.getInstance().getTemplate();
-						AddNextTaskNodeAction action = new AddNextTaskNodeAction(des.getId(), des.getLabel(),
-								smooksModelProvider);
-						TaskType taskType = this.taskType;
-						IStructuredSelection selection = new StructuredSelection(taskType);
-						action.selectionChanged(new SelectionChangedEvent(getProcessGraphViewer(), selection));
-						action.run();
-						return;
-					}
-					if (this.process != null) {
-						AddNextTaskNodeAction action = new AddInputTaskAction(smooksModelProvider);
-						// IStructuredSelection selection = new
-						// StructuredSelection(taskType);
-						// action.selectionChanged(new
-						// SelectionChangedEvent(getProcessGraphViewer(),
-						// selection));
-						action.run();
-						return;
-					}
-				}
-			}
-
-			public void dragOver(DropTargetEvent event) {
-				Control control = getProcessGraphViewer().getControl();
-				if (control != null && control instanceof Graph) {
-					Graph graph = (Graph) control;
-					Point pp = graph.toControl(new Point(event.x, event.y));
-					TaskTypeDescriptor des = (TaskTypeDescriptor) TemplateTransfer.getInstance().getTemplate();
-					TaskType testType = GraphFactory.eINSTANCE.createTaskType();
-					testType.setId(des.getId());
-					IFigure figure = graph.getFigureAt(pp.x, pp.y);
-					if (figure == null) {
-						if (testType.getId().equals(TaskTypeManager.TASK_ID_INPUT)) {
-							ProcessType process = (ProcessType) getProcessGraphViewer().getInput();
-							if (process.getTask().isEmpty()) {
-								event.detail = DND.DROP_COPY;
-								this.process = process;
-								return;
-							}
-						}
-						event.detail = DND.DROP_NONE;
-						this.taskType = null;
-						process = null;
-						return;
-					}
-					List<?> nodes = graph.getNodes();
-					for (Iterator<?> iterator = nodes.iterator(); iterator.hasNext();) {
-						Object object = (Object) iterator.next();
-						if (object instanceof GraphNode) {
-							IFigure f = ((GraphNode) object).getNodeFigure();
-							if (figure == f) {
-								TaskTypeRules rules = new TaskTypeRules();
-								if (rules.isNextTask((TaskType) ((GraphNode) object).getData(), testType)) {
-									event.detail = DND.DROP_COPY;
-									this.taskType = (TaskType) ((GraphNode) object).getData();
-									return;
-								}
-							}
-						}
-					}
-					event.detail = DND.DROP_NONE;
-					this.taskType = null;
-					this.process = null;
-				}
-			}
-
-			public void dragOperationChanged(DropTargetEvent event) {
-			}
-
-			public void dragLeave(DropTargetEvent event) {
-			}
-
-			public void dragEnter(DropTargetEvent event) {
-				event.detail = DND.DROP_MOVE;
-				this.taskType = null;
-				process = null;
-			}
-		});
+		// final DropTarget dropTarge = new
+		// DropTarget(getProcessGraphViewer().getControl(), DND.DROP_MOVE |
+		// DND.DROP_COPY);
+		// dropTarge.setTransfer(new Transfer[] { TemplateTransfer.getInstance()
+		// });
+		// dropTarge.addDropListener(new DropTargetListener() {
+		// private TaskType taskType = null;
+		//
+		// private ProcessType process = null;
+		//
+		// public void dropAccept(DropTargetEvent event) {
+		//
+		// }
+		//
+		// public void drop(DropTargetEvent event) {
+		// if (event.detail == DND.DROP_COPY) {
+		// if (this.taskType != null) {
+		// TaskTypeDescriptor des = (TaskTypeDescriptor)
+		// TemplateTransfer.getInstance().getTemplate();
+		// AddNextTaskNodeAction action = new AddNextTaskNodeAction(des.getId(),
+		// des.getLabel(),
+		// smooksModelProvider);
+		// TaskType taskType = this.taskType;
+		// IStructuredSelection selection = new StructuredSelection(taskType);
+		// action.selectionChanged(new
+		// SelectionChangedEvent(getProcessGraphViewer(), selection));
+		// action.run();
+		// return;
+		// }
+		// if (this.process != null) {
+		// AddNextTaskNodeAction action = new
+		// AddInputTaskAction(smooksModelProvider);
+		// // IStructuredSelection selection = new
+		// // StructuredSelection(taskType);
+		// // action.selectionChanged(new
+		// // SelectionChangedEvent(getProcessGraphViewer(),
+		// // selection));
+		// action.run();
+		// return;
+		// }
+		// }
+		// }
+		//
+		// public void dragOver(DropTargetEvent event) {
+		// Control control = getProcessGraphViewer().getControl();
+		// if (control != null && control instanceof Graph) {
+		// Graph graph = (Graph) control;
+		// Point pp = graph.toControl(new Point(event.x, event.y));
+		// TaskTypeDescriptor des = (TaskTypeDescriptor)
+		// TemplateTransfer.getInstance().getTemplate();
+		// TaskType testType = GraphFactory.eINSTANCE.createTaskType();
+		// testType.setId(des.getId());
+		// IFigure figure = graph.getFigureAt(pp.x, pp.y);
+		// if (figure == null) {
+		// if (testType.getId().equals(TaskTypeManager.TASK_ID_INPUT)) {
+		// ProcessType process = (ProcessType)
+		// getProcessGraphViewer().getInput();
+		// if (process.getTask().isEmpty()) {
+		// event.detail = DND.DROP_COPY;
+		// this.process = process;
+		// return;
+		// }
+		// }
+		// event.detail = DND.DROP_NONE;
+		// this.taskType = null;
+		// process = null;
+		// return;
+		// }
+		// List<?> nodes = graph.getNodes();
+		// for (Iterator<?> iterator = nodes.iterator(); iterator.hasNext();) {
+		// Object object = (Object) iterator.next();
+		// if (object instanceof GraphNode) {
+		// IFigure f = ((GraphNode) object).getNodeFigure();
+		// if (figure == f) {
+		// TaskTypeRules rules = new TaskTypeRules();
+		// if (rules.isNextTask((TaskType) ((GraphNode) object).getData(),
+		// testType)) {
+		// event.detail = DND.DROP_COPY;
+		// this.taskType = (TaskType) ((GraphNode) object).getData();
+		// return;
+		// }
+		// }
+		// }
+		// }
+		// event.detail = DND.DROP_NONE;
+		// this.taskType = null;
+		// this.process = null;
+		// }
+		// }
+		//
+		// public void dragOperationChanged(DropTargetEvent event) {
+		// }
+		//
+		// public void dragLeave(DropTargetEvent event) {
+		// }
+		//
+		// public void dragEnter(DropTargetEvent event) {
+		// event.detail = DND.DROP_MOVE;
+		// this.taskType = null;
+		// process = null;
+		// }
+		// });
 		getProcessGraphViewer().addSelectionChangedListener(new ISelectionChangedListener() {
 
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 				Object firstElement = selection.getFirstElement();
+				if (firstElement == null) {
+					unhighlightGraphNodes();
+				}
+				Graph graph = getProcessGraphViewer().getGraphControl();
+				List<?> nodes = graph.getNodes();
+				GraphItem item = null;
+				for (Iterator<?> iterator = nodes.iterator(); iterator.hasNext();) {
+					GraphItem graphItem = (GraphItem) iterator.next();
+					if (graphItem.getData() == firstElement) {
+						item = graphItem;
+						break;
+					}
+				}
+				if (item != null) {
+					unhighlightGraphNodes();
+					highlightGraphNode(item);
+				}
 				showTaskControl(firstElement);
 			}
 		});
 	}
 
+	protected void unhighlightGraphNodes() {
+
+		Graph graph = this.getProcessGraphViewer().getGraphControl();
+		List<?> elements = graph.getNodes();
+		for (Iterator<?> iterator = elements.iterator(); iterator.hasNext();) {
+			GraphItem graphItem = (GraphItem) iterator.next();
+			unhighlightGraphNode(graphItem);
+		}
+	}
+
+	protected void unhighlightGraphNode(GraphItem item) {
+		if (item instanceof CGraphNode) {
+			IFigure figure = ((CGraphNode) item).getFigure();
+			if (figure instanceof TaskNodeFigure) {
+				((TaskNodeFigure) figure).unhighlightLabel();
+			}
+		}
+	}
+
+	protected void highlightGraphNode(GraphItem item) {
+		if (item instanceof CGraphNode) {
+			IFigure figure = ((CGraphNode) item).getFigure();
+			if (figure instanceof TaskNodeFigure) {
+				((TaskNodeFigure) figure).highlightLabel(org.eclipse.draw2d.ColorConstants.darkBlue);
+			}
+		}
+	}
+
 	protected void configProcessGraphicalViewer() {
-		MenuManager manager = new MenuManager();
+		manager = new MenuManager();
 
 		initProcessGraphicalPanelActions(manager);
 
@@ -344,33 +360,86 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		manager.addMenuListener(new IMenuListener() {
 
 			public void menuAboutToShow(IMenuManager manager) {
-				for (Iterator<?> iterator = processPanelActions.iterator(); iterator.hasNext();) {
-					IAction a = (IAction) iterator.next();
-					if (a instanceof AbstractProcessGraphAction) {
-						((AbstractProcessGraphAction) a).selectionChanged(new SelectionChangedEvent(processGraphViewer,
-								processGraphViewer.getSelection()));
+				manager.removeAll();
+				if (needupdatewhenshow) {
+					updateProcessActions(processGraphViewer.getSelection());
+					fillProcessMenu(manager);
+				} else {
+					for (Iterator<?> iterator = processPanelActions.iterator(); iterator.hasNext();) {
+						IAction action = (IAction) iterator.next();
+						if (action.isEnabled() && !(action instanceof DeleteTaskNodeAction)) {
+							manager.add(action);
+						}
 					}
 				}
-				manager.update();
+				needupdatewhenshow = true;
 			}
 		});
 	}
 
-	protected void initProcessGraphicalPanelActions(IMenuManager manager) {
-
-		AddTaskNodeAction addInputTaskAction = new AddInputTaskAction(smooksModelProvider);
-		manager.add(addInputTaskAction);
-		processPanelActions.add(addInputTaskAction);
-
-		MenuManager addNextTaskMenuManager = new MenuManager("Add Next Task");
+	public void fillProcessMenu(IMenuManager manager) {
+		MenuManager addNextTaskMenuManager = new MenuManager("Add Task");
 		manager.add(addNextTaskMenuManager);
 
-		fillNextTaskMenu(addNextTaskMenuManager);
+		for (Iterator<?> iterator = processPanelActions.iterator(); iterator.hasNext();) {
+			IAction action = (IAction) iterator.next();
+			if (action instanceof DeleteTaskNodeAction) {
+				manager.add(action);
+			} else {
+				addNextTaskMenuManager.add(action);
+			}
+		}
 
-		MenuManager addPreTaskMenuManager = new MenuManager("Add Previous Task");
-		manager.add(addPreTaskMenuManager);
+		// MenuManager addPreTaskMenuManager = new
+		// MenuManager("Add Previous Task");
+		// manager.add(addPreTaskMenuManager);
+		//
+		// fillPreTaskMenu(addPreTaskMenuManager);
+	}
 
-		fillPreTaskMenu(addPreTaskMenuManager);
+	/**
+	 * @return the needupdatewhenshow
+	 */
+	public boolean isNeedupdatewhenshow() {
+		return needupdatewhenshow;
+	}
+
+	/**
+	 * @param needupdatewhenshow
+	 *            the needupdatewhenshow to set
+	 */
+	public void setNeedupdatewhenshow(boolean needupdatewhenshow) {
+		this.needupdatewhenshow = needupdatewhenshow;
+	}
+
+	public void updateProcessActions(ISelection selection) {
+		for (Iterator<?> iterator = processPanelActions.iterator(); iterator.hasNext();) {
+			IAction a = (IAction) iterator.next();
+			if (a instanceof AbstractProcessGraphAction) {
+				((AbstractProcessGraphAction) a).selectionChanged(new SelectionChangedEvent(processGraphViewer,
+						selection));
+			}
+		}
+		manager.update();
+	}
+
+	protected void initProcessGraphicalPanelActions(IMenuManager manager) {
+
+		// AddTaskNodeAction addInputTaskAction = new
+		// AddInputTaskAction(smooksModelProvider);
+		// manager.add(addInputTaskAction);
+		// processPanelActions.add(addInputTaskAction);
+
+		MenuManager addNextTaskMenuManager = new MenuManager("Add Task");
+		manager.add(addNextTaskMenuManager);
+
+		generateNextTaskActions(addNextTaskMenuManager);
+
+		// MenuManager addPreTaskMenuManager = new
+		// MenuManager("Add Previous Task");
+		// manager.add(addPreTaskMenuManager);
+		//
+		// fillPreTaskMenu(addPreTaskMenuManager);
 
 		DeleteTaskNodeAction deleteAction = new DeleteTaskNodeAction(smooksModelProvider);
 		manager.add(deleteAction);
@@ -379,7 +448,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 	}
 
-	private void fillNextTaskMenu(MenuManager addNextTaskMenuManager) {
+	private void generateNextTaskActions(MenuManager addNextTaskMenuManager) {
 		List<TaskTypeDescriptor> list = TaskTypeManager.getAllTaskList();
 		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 			TaskTypeDescriptor taskTypeDescriptor = (TaskTypeDescriptor) iterator.next();
@@ -390,16 +459,18 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		}
 	}
 
-	private void fillPreTaskMenu(MenuManager addPreTaskMenuManager) {
-		List<TaskTypeDescriptor> list = TaskTypeManager.getAllTaskList();
-		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-			TaskTypeDescriptor taskTypeDescriptor = (TaskTypeDescriptor) iterator.next();
-			AddPreviousTaskNodeAction addNextInputAction = new AddPreviousTaskNodeAction(taskTypeDescriptor.getId(),
-					taskTypeDescriptor.getLabel(), smooksModelProvider);
-			this.processPanelActions.add(addNextInputAction);
-			addPreTaskMenuManager.add(addNextInputAction);
-		}
-	}
+	// private void fillPreTaskMenu(MenuManager addPreTaskMenuManager) {
+	// List<TaskTypeDescriptor> list = TaskTypeManager.getAllTaskList();
+	// for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+	// TaskTypeDescriptor taskTypeDescriptor = (TaskTypeDescriptor)
+	// iterator.next();
+	// AddPreviousTaskNodeAction addNextInputAction = new
+	// AddPreviousTaskNodeAction(taskTypeDescriptor.getId(),
+	// taskTypeDescriptor.getLabel(), smooksModelProvider);
+	// this.processPanelActions.add(addNextInputAction);
+	// addPreTaskMenuManager.add(addNextInputAction);
+	// }
+	// }
 
 	public void registeTaskDetailsPage(IEditorPart editor, String taskID) {
 		editor.addPropertyListener(this);
@@ -437,17 +508,20 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 		processGraphSection.setClient(processGraphComposite);
 
-		Composite toolBarComposite = toolkit.createComposite(processGraphComposite);
-		FillLayout l = new FillLayout();
-		l.marginHeight = 1;
-		l.marginWidth = 1;
-		toolBarComposite.setLayout(l);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		toolBarComposite.setLayoutData(gd);
 
-		toolBarComposite.setBackground(toolkit.getColors().getBorderColor());
+		// Composite toolBarComposite =
+		// toolkit.createComposite(processGraphComposite);
+		// FillLayout l = new FillLayout();
+		// l.marginHeight = 1;
+		// l.marginWidth = 1;
+		// toolBarComposite.setLayout(l);
 
-		createProcessToolBar(toolBarComposite, toolkit);
+		// toolBarComposite.setLayoutData(gd);
+		//
+		// toolBarComposite.setBackground(toolkit.getColors().getBorderColor());
+		//
+		// createProcessToolBar(toolBarComposite, toolkit);
 
 		Composite graphMainComposite = toolkit.createComposite(processGraphComposite);
 		FillLayout l1 = new FillLayout();
@@ -698,9 +772,11 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		SmooksFreemarkerTemplateGraphicalEditor freemarkerPart = new SmooksFreemarkerTemplateGraphicalEditor(
 				smooksModelProvider);
 		this.registeTaskDetailsPage(freemarkerPart, TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE);
-		
-		SmooksXSLTemplateGraphicalEditor xsltemplatePart = new SmooksXSLTemplateGraphicalEditor(smooksModelProvider);
-		this.registeTaskDetailsPage(xsltemplatePart, TaskTypeManager.TASK_ID_XSL_TEMPLATE);
+
+		// SmooksXSLTemplateGraphicalEditor xsltemplatePart = new
+		// SmooksXSLTemplateGraphicalEditor(smooksModelProvider);
+		// this.registeTaskDetailsPage(xsltemplatePart,
+		// TaskTypeManager.TASK_ID_XSL_TEMPLATE);
 	}
 
 	@Override
