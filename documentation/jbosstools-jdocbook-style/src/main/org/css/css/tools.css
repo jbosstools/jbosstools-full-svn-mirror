@@ -24,6 +24,13 @@ left:0px;
 z-index:-1;
 }
 
+ol {
+padding-left: 25px;
+}
+
+p {
+text-align: left;
+}
 /*
 body {
 background-image:url(../images/jbosstools_label2.png);
