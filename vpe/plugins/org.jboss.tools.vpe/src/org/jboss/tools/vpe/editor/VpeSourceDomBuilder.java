@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 package org.jboss.tools.vpe.editor;
 
 import java.util.HashSet;
@@ -41,6 +41,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -58,14 +59,16 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 	IDOMModel model;
 	private Document sourceDocument;
 	private VpePageContext pageContext;
-	private  StructuredTextEditor sourceEditor;
-	
-	public VpeSourceDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter, VpeTemplateManager templateManager, StructuredTextEditor sourceEditor, VpePageContext pageContext) {
+	private StructuredTextEditor sourceEditor;
+
+	public VpeSourceDomBuilder(VpeDomMapping domMapping,
+			INodeAdapter sorceAdapter, VpeTemplateManager templateManager,
+			StructuredTextEditor sourceEditor, VpePageContext pageContext) {
 		super(domMapping, sorceAdapter);
 		this.sourceEditor = sourceEditor;
 		structuredTextViewer = sourceEditor.getTextViewer();
 		selectionManager = sourceEditor.getSelectionProvider();
-		model = (IDOMModel)sourceEditor.getModel();
+		model = (IDOMModel) sourceEditor.getModel();
 		if (model != null) {
 			sourceDocument = model.getDocument();
 		}
@@ -76,7 +79,9 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		nsIDOMNode visualContainer = visualNode.getParentNode();
 		Node sourceContainer = domMapping.getSourceNode(visualContainer);
 
-		if (sourceContainer != null && (sourceContainer.getNodeType() == Node.ELEMENT_NODE || sourceContainer.getNodeType() == Node.DOCUMENT_NODE)) {
+		if (sourceContainer != null
+				&& (sourceContainer.getNodeType() == Node.ELEMENT_NODE || sourceContainer
+						.getNodeType() == Node.DOCUMENT_NODE)) {
 			nsIDOMNode visualNextNode = visualNode.getNextSibling();
 			Node sourceNextNode = domMapping.getSourceNode(visualNextNode);
 			addNode(visualNode, sourceNextNode, sourceContainer);
@@ -91,7 +96,8 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 				sourceContainer.removeChild(sourceNode);
 				getSourceNodes().remove(sourceNode);
 				if (sourceNode instanceof INodeNotifier) {
-					((INodeNotifier) sourceNode).removeAdapter(getSorceAdapter());
+					((INodeNotifier) sourceNode)
+							.removeAdapter(getSorceAdapter());
 				}
 				domMapping.remove(sourceNode);
 			}
@@ -104,136 +110,154 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 			}
 		}
 	}
-	
+
 	public void setText(nsIDOMNode visualText) {
 		Node sourceText = domMapping.getSourceNode(visualText);
 		if (sourceText != null) {
-			sourceText.setNodeValue(TextUtil.sourceText(visualText.getNodeValue()));
+			sourceText.setNodeValue(TextUtil.sourceText(visualText
+					.getNodeValue()));
 		} else {
 			nsIDOMNode visualParent = visualText.getParentNode();
 			if (visualParent != null) {
 				Node sourceParent = domMapping.getNearSourceNode(visualText);
 				if (sourceParent != null) {
 					if (sourceParent.getNodeType() == Node.ELEMENT_NODE) {
-						VpeElementMapping elementMapping = (VpeElementMapping)domMapping.getNodeMapping(sourceParent);
+						VpeElementMapping elementMapping = (VpeElementMapping) domMapping
+								.getNodeMapping(sourceParent);
 						if (elementMapping != null) {
 							VpeTemplate template = elementMapping.getTemplate();
-							template.setSourceAttributeValue(pageContext, (Element)sourceParent, elementMapping.getData());
+							template.setSourceAttributeValue(pageContext,
+									(Element) sourceParent, elementMapping
+											.getData());
 						}
 					} else if (sourceParent.getNodeType() == Node.COMMENT_NODE) {
 						setComment(sourceParent, visualParent);
-//						VpeElementMapping elementMapping = (VpeElementMapping)domMapping.getNodeMapping(sourceParent);
-//						if (elementMapping != null) {
-//							VpeTemplate template = elementMapping.getTemplate();
-//							template.setSourceCommentValue(pageContext, (Comment)sourceParent, elementMapping.getData());
-//						}
+						// VpeElementMapping elementMapping =
+						// (VpeElementMapping)domMapping.getNodeMapping(sourceParent);
+						// if (elementMapping != null) {
+						// VpeTemplate template = elementMapping.getTemplate();
+						// template.setSourceCommentValue(pageContext,
+						// (Comment)sourceParent, elementMapping.getData());
+						// }
 					}
 				}
 			}
 		}
 	}
-	
+
 	public void setSelectedRange(Node sourceNode, int start, int length) {
-//glory
+		// glory
 		structuredTextViewer.setSelectedRange(start, length);
 		structuredTextViewer.revealRange(start, length);
-//		ISelection selection = new StructuredSelection(sourceNode);
-//		SelectionChangedEvent event = new SelectionChangedEvent(outline, selection);
-//		selectionManager.selectionChanged(event);
-//		selectionManager.setSelection(new TextSelection(start, length));
+		// ISelection selection = new StructuredSelection(sourceNode);
+		// SelectionChangedEvent event = new SelectionChangedEvent(outline,
+		// selection);
+		// selectionManager.selectionChanged(event);
+		// selectionManager.setSelection(new TextSelection(start, length));
 	}
-	
+
 	public void setSelectChanged(Node sourceNode) {
-//		structuredTextViewer.setSelectedRange(start, length);
-//		structuredTextViewer.revealRange(start, length);
-		
-//glory
-//		ISelection selection = new StructuredSelection(sourceNode);
-//		SelectionChangedEvent event = new SelectionChangedEvent(outline, selection);
-//		selectionManager.selectionChanged(event);
-		if(sourceNode instanceof IDOMNode) {
-			IDOMNode n = (IDOMNode)sourceNode;
+		// structuredTextViewer.setSelectedRange(start, length);
+		// structuredTextViewer.revealRange(start, length);
+
+		// glory
+		// ISelection selection = new StructuredSelection(sourceNode);
+		// SelectionChangedEvent event = new SelectionChangedEvent(outline,
+		// selection);
+		// selectionManager.selectionChanged(event);
+		if (sourceNode instanceof IDOMNode) {
+			IDOMNode n = (IDOMNode) sourceNode;
 			int start = n.getStartOffset();
 			int length = n.getLength();
 			selectionManager.setSelection(new TextSelection(start, length));
 		}
 	}
-	
+
 	void setSelectionAtDocumentEnd() {
-		if (sourceDocument == null) return;
-		int offset = ((IndexedRegion)sourceDocument).getEndOffset();
+		if (sourceDocument == null)
+			return;
+		int offset = ((IndexedRegion) sourceDocument).getEndOffset();
 		structuredTextViewer.setSelectedRange(offset, 0);
 		structuredTextViewer.revealRange(offset, 0);
 	}
-	
+
 	public void setSelection(Node sourceNode, int offset, int length) {
 		setSelection(sourceNode, offset, length, false);
 	}
-	
+
 	void setSelection(Node sourceNode, int offset, int length, boolean innerFlag) {
 		if (sourceNode != null) {
-			int start = ((IndexedRegion)sourceNode).getStartOffset() + offset;
+			int start = ((IndexedRegion) sourceNode).getStartOffset() + offset;
 			if (innerFlag && offset == 0 && sourceNode instanceof ElementImpl) {
-		 		ElementImpl element = (ElementImpl)sourceNode;
-		 		if (element.isContainer()) {
-		 			start  = element.getStartEndOffset();
-		 			length = 0;
-		 		}
+				ElementImpl element = (ElementImpl) sourceNode;
+				if (element.isContainer()) {
+					start = element.getStartEndOffset();
+					length = 0;
+				}
 			} else if (sourceNode.getNodeType() == Node.COMMENT_NODE) {
 				start += 4;
 			}
-//glory
-//			ISelection selection = new StructuredSelection(sourceNode);
-//			SelectionChangedEvent event = new SelectionChangedEvent(outline, selection);
-//			selectionManager.selectionChanged(event);
+			// glory
+			// ISelection selection = new StructuredSelection(sourceNode);
+			// SelectionChangedEvent event = new SelectionChangedEvent(outline,
+			// selection);
+			// selectionManager.selectionChanged(event);
 			structuredTextViewer.setSelectedRange(start, length);
 			structuredTextViewer.revealRange(start, length);
-//			selectionManager.setSelection(new TextSelection(start, length));
+			// selectionManager.setSelection(new TextSelection(start, length));
 		}
 	}
-	
+
 	Node getSelectedNode() {
-		List nodes = VpeSelectionHelper.getTextWidgetSelectedNodes(model, selectionManager);
-			//selectionManager.getSelectedNodes();
+		List nodes = VpeSelectionHelper.getTextWidgetSelectedNodes(model,
+				selectionManager);
+		// selectionManager.getSelectedNodes();
 		if (nodes != null && nodes.size() > 0) {
-			return (Node)nodes.get(0);
+			return (Node) nodes.get(0);
 		} else {
 			return null;
 		}
 	}
-	
+
 	int getCaretPosition() {
-//		return selectionManager.getCaretPosition();
-		ITextViewer v = (sourceEditor == null) ? null : sourceEditor.getTextViewer();
-		StyledText t = (v == null) ? null : v.getTextWidget(); 
+		// return selectionManager.getCaretPosition();
+		ITextViewer v = (sourceEditor == null) ? null : sourceEditor
+				.getTextViewer();
+		StyledText t = (v == null) ? null : v.getTextWidget();
 		return (t == null) ? 0 : t.getCaretOffset();
 	}
-	
-	private void addNode(nsIDOMNode visualNewNode, Node sourceNextNode, Node sourceContainer) {
+
+	private void addNode(nsIDOMNode visualNewNode, Node sourceNextNode,
+			Node sourceContainer) {
 		Node sourceNewNode = createNode(visualNewNode);
 		if (sourceNewNode != null) {
 			if (sourceNextNode == null) {
 				sourceContainer.appendChild(sourceNewNode);
 			} else {
-				sourceContainer.insertBefore(sourceNewNode, sourceNextNode);  
+				sourceContainer.insertBefore(sourceNewNode, sourceNextNode);
 			}
 		}
 	}
-	
+
 	private Node createNode(nsIDOMNode visualNewNode) {
 		if (sourceDocument != null) {
 			switch (visualNewNode.getNodeType()) {
 			case Node.ELEMENT_NODE:
-				Element sourceNewElement = sourceDocument.createElement(visualNewNode.getNodeName());
+				Element sourceNewElement = sourceDocument
+						.createElement(visualNewNode.getNodeName());
 				Set ifDependencySet = new HashSet();
-				//VpeVisualDomBuilder visualBuildet = 
-					pageContext.getVisualBuilder();
-				VpeTemplate template = getTemplateManager().getTemplate(pageContext, sourceNewElement, ifDependencySet);
-				registerNodes(new VpeElementMapping(sourceNewElement, (nsIDOMElement)visualNewNode, null, template, ifDependencySet, null));
+				// VpeVisualDomBuilder visualBuildet =
+				pageContext.getVisualBuilder();
+				VpeTemplate template = getTemplateManager().getTemplate(
+						pageContext, sourceNewElement, ifDependencySet);
+				registerNodes(new VpeElementMapping(sourceNewElement,
+						(nsIDOMElement) visualNewNode, null, template,
+						ifDependencySet, null));
 				addChildren(visualNewNode, sourceNewElement);
 				return sourceNewElement;
 			case Node.TEXT_NODE:
-				Node sourceTextNode = sourceDocument.createTextNode(visualNewNode.getNodeValue());
+				Node sourceTextNode = sourceDocument
+						.createTextNode(visualNewNode.getNodeValue());
 				registerNodes(new VpeNodeMapping(sourceTextNode, visualNewNode));
 				return sourceTextNode;
 			}
@@ -250,43 +274,70 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 			addNode(visualNode, null, sourceContainer);
 		}
 	}
-	
+
 	/**
 	 * 
-	 *This method calls when openOn event occures in
-	 *visual part of VPE 
+	 *This method calls when openOn event occures in visual part of VPE
 	 * 
-	 * @param visualNode - node on which event has occured
+	 * @param visualNode
+	 *            - node on which event has occured
 	 * 
 	 * @author mareshkau
 	 */
-	
-	public void openOn(nsIDOMNode visualNode) {
-		
-	VpeNodeMapping nodeMapping = NodesManagingUtil.getNodeMapping(
-				this.domMapping, visualNode);
-	if (nodeMapping != null
-			&& nodeMapping instanceof VpeElementMapping) {
 
-		VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
-		VpeTemplate template = elementMapping.getTemplate();
-		IRegion regionForOpenOn = template.getSourceRegionForOpenOn(this.pageContext, elementMapping.getSourceNode(), visualNode);
-		IHyperlinkDetector [] hyperlinkDetectors = ((JSPTextEditor)this.sourceEditor).getHyperlinkDetectors();
-		IHyperlink [] hyperLinks = null;
+	public void openOn(nsIDOMNode visualNode) {
+		if (!openOnOnVisualNode(visualNode)) {
+			// fir for JBIDE-5183, openon for href.
+			// added by mareshkau, here we search for <a> and try to open on on
+			// href attribute
+			nsIDOMNode node = visualNode.getParentNode();
+			while (node != null) {
+				if (HTML.TAG_A.equalsIgnoreCase(node.getNodeName())) {
+					openOnOnVisualNode(node);
+					break;
+				}
+				node = node.getParentNode();
+			}
+		}
+	}
+
+	/**
+	 * method which makes openon for visual node
+	 * @param visualNode
+	 * @return true if openOn was successfull
+	 * 		   false otherwise
+	 */
+	private boolean openOnOnVisualNode(nsIDOMNode visualNode) {
+		VpeNodeMapping nodeMapping = NodesManagingUtil.getNodeMapping(
+				this.domMapping, visualNode);
+		if (nodeMapping != null && nodeMapping instanceof VpeElementMapping) {
+
+			VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
+			VpeTemplate template = elementMapping.getTemplate();
+			IRegion regionForOpenOn = template.getSourceRegionForOpenOn(
+					this.pageContext, elementMapping.getSourceNode(),
+					visualNode);
+			IHyperlinkDetector[] hyperlinkDetectors = ((JSPTextEditor) this.sourceEditor)
+					.getHyperlinkDetectors();
+			IHyperlink[] hyperLinks = null;
 			for (IHyperlinkDetector iHyperlinkDetector : hyperlinkDetectors) {
-				hyperLinks = iHyperlinkDetector.detectHyperlinks(this.sourceEditor.getTextViewer(), regionForOpenOn, true);
-				if(hyperLinks!=null && hyperLinks.length>0 && hyperLinks[0] instanceof AbstractHyperlink) {
+				hyperLinks = iHyperlinkDetector.detectHyperlinks(
+						this.sourceEditor.getTextViewer(), regionForOpenOn,
+						true);
+				if (hyperLinks != null && hyperLinks.length > 0
+						&& hyperLinks[0] instanceof AbstractHyperlink) {
 					AbstractHyperlink abstractHyperlink = (AbstractHyperlink) hyperLinks[0];
 					abstractHyperlink.open();
-					return;
+					return true;
 				}
 			}
-		}	
+		}
+		return false;
 	}
-	
-	
+
 	boolean isEmptyDocument() {
-		if (sourceDocument == null) return true;
+		if (sourceDocument == null)
+			return true;
 		boolean empty = false;
 		NodeList sourceNodes = sourceDocument.getChildNodes();
 		int len = sourceNodes.getLength();
@@ -294,37 +345,38 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 			empty = true;
 		} else if (len == 1) {
 			Node sourceNode = sourceNodes.item(0);
-			if (sourceNode.getNodeType() == Node.TEXT_NODE && sourceNode.getNodeValue().trim().length() == 0) {
+			if (sourceNode.getNodeType() == Node.TEXT_NODE
+					&& sourceNode.getNodeValue().trim().length() == 0) {
 				empty = true;
 			}
 		}
 		return empty;
 	}
-	
+
 	int getPosition(Node sourceNode, int offset, boolean innerFlag) {
 		int start = 0;
 		if (sourceNode != null) {
-			start = ((IndexedRegion)sourceNode).getStartOffset() + offset;
+			start = ((IndexedRegion) sourceNode).getStartOffset() + offset;
 			if (innerFlag && offset == 0 && sourceNode instanceof ElementImpl) {
-		 		ElementImpl element = (ElementImpl)sourceNode;
-		 		if (element.isContainer()) {
-		 			start  = element.getStartEndOffset();
-		 		}
+				ElementImpl element = (ElementImpl) sourceNode;
+				if (element.isContainer()) {
+					start = element.getStartEndOffset();
+				}
 			}
 		}
 		return start;
 	}
-	
+
 	void setAttributeSelection(nsIDOMNode visualText, int offset, int length) {
 		nsIDOMNode visualParent = visualText.getParentNode();
 		if (visualParent != null) {
 			Node sourceParent = domMapping.getNearSourceNode(visualText);
 			if (sourceParent != null) {
 				if (sourceParent.getNodeType() == Node.ELEMENT_NODE) {
-					
+
 					VpeElementMapping elementMapping = (VpeElementMapping) domMapping
 							.getNodeMapping(sourceParent);
-					
+
 					if (elementMapping != null) {
 
 						VpeTemplate template = elementMapping.getTemplate();
@@ -334,28 +386,32 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 								elementMapping.getData());
 					}
 				} else if (sourceParent.getNodeType() == Node.COMMENT_NODE) {
-//					VpeVisualElementInfo info = domMapping.getVisualElementInfo(sourceParent);
-//					if (info != null) {
-//						info.setSourceCommentValue(pageContext, (Comment)sourceParent);
-//					}
-					//Added by Max Areshkau in scope of bug JBIDE-1209
-				} else  {
+					// VpeVisualElementInfo info =
+					// domMapping.getVisualElementInfo(sourceParent);
+					// if (info != null) {
+					// info.setSourceCommentValue(pageContext,
+					// (Comment)sourceParent);
+					// }
+					// Added by Max Areshkau in scope of bug JBIDE-1209
+				} else {
 					String text = sourceParent.getNodeValue();
-					int start= TextUtil.sourcePosition(text, visualText.getNodeValue(), offset);
-					int end =TextUtil.sourcePosition(text, visualText.getNodeValue(), offset+length);
-					offset=start;
-					length=end-start;
+					int start = TextUtil.sourcePosition(text, visualText
+							.getNodeValue(), offset);
+					int end = TextUtil.sourcePosition(text, visualText
+							.getNodeValue(), offset + length);
+					offset = start;
+					length = end - start;
 
 					setSelection(sourceParent, offset, length);
 				}
 			}
 		}
 	}
-	
-//	boolean 
-	
+
+	// boolean
+
 	public void setAttributeSelection(Attr sourceAttr, int offset, int length) {
-		IDOMAttr xmlAttr = (IDOMAttr)sourceAttr;
+		IDOMAttr xmlAttr = (IDOMAttr) sourceAttr;
 		int start = xmlAttr.getValueRegionStartOffset() + offset;
 		String value = xmlAttr.getValueRegionText();
 		if (value.startsWith("\"") || value.startsWith("\'")) { //$NON-NLS-1$ //$NON-NLS-2$
@@ -368,24 +424,26 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		if (start + length > end) {
 			length = end - start;
 		}
-		
-//glory
-//		ISelection selection = new StructuredSelection(sourceAttr);
-//		SelectionChangedEvent event = new SelectionChangedEvent(outline, selection);
-//		selectionManager.selectionChanged(event);
+
+		// glory
+		// ISelection selection = new StructuredSelection(sourceAttr);
+		// SelectionChangedEvent event = new SelectionChangedEvent(outline,
+		// selection);
+		// selectionManager.selectionChanged(event);
 		structuredTextViewer.setSelectedRange(start, length);
 		structuredTextViewer.revealRange(start, length);
-		
-//		selectionManager.setSelection(new TextSelection(start, length));
+
+		// selectionManager.setSelection(new TextSelection(start, length));
 	}
-	
+
 	Point getOutputAttributesPositions(Element sourceElement) {
-		VpeElementMapping elementMapping = (VpeElementMapping)domMapping.getNodeMapping(sourceElement);
+		VpeElementMapping elementMapping = (VpeElementMapping) domMapping
+				.getNodeMapping(sourceElement);
 		if (elementMapping != null) {
 			VpeTemplate template = elementMapping.getTemplate();
 			if (template.isOutputAttributes()) {
-				int start = ((IndexedRegion)sourceElement).getStartOffset();
-				int end = ((IndexedRegion)sourceElement).getEndOffset();
+				int start = ((IndexedRegion) sourceElement).getStartOffset();
+				int end = ((IndexedRegion) sourceElement).getEndOffset();
 				return new Point(start, end);
 			}
 		}
@@ -395,13 +453,13 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 	public Point getSelectionRange() {
 		return sourceEditor.getTextViewer().getSelectedRange();
 	}
-	
+
 	public void setComment(Node sourceComment, nsIDOMNode visualElement) {
 		nsIDOMNodeList visualNodes = visualElement.getChildNodes();
 		long len = visualNodes.getLength();
-		
+
 		if (len > 0) {
-			nsIDOMNode visualText = visualNodes.item(0); 
+			nsIDOMNode visualText = visualNodes.item(0);
 			sourceComment.setNodeValue(visualText.getNodeValue());
 		}
 	}
@@ -409,7 +467,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 	public StructuredTextViewer getStructuredTextViewer() {
 		return structuredTextViewer;
 	}
-	
+
 	public Document getSourceDocument() {
 		return sourceDocument;
 	}

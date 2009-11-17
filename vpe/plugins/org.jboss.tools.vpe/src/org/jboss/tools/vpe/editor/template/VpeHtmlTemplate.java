@@ -559,8 +559,9 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 			    file = ((Element)sourceNode).getAttributeNode("file"); //$NON-NLS-1$
 		    } else if ("jsp:include".equals(sourceNode.getNodeName())) { //$NON-NLS-1$
 			    file = ((Element)sourceNode).getAttributeNode("page"); //$NON-NLS-1$
+		    } else if(HTML.TAG_A.equalsIgnoreCase(sourceNode.getNodeName())) {
+		    	file = ((Element)sourceNode).getAttributeNode(HTML.ATTR_HREF);
 		    }
-		    
 		    if(file!=null) {
 		    	return new Region(NodesManagingUtil.getStartOffsetNode(file),0);
 		    }
