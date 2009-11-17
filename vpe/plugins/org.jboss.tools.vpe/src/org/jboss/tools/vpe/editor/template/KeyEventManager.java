@@ -52,7 +52,9 @@ public class KeyEventManager implements IKeyEventHandler {
 	 * page context
 	 */
 	private VpePageContext pageContext;
-	
+
+	private IZoomEventManager zoomEventManager;
+
 	/**
 	 * 
 	 * 
@@ -67,6 +69,7 @@ public class KeyEventManager implements IKeyEventHandler {
 		this.sourceEditor = sourceEditor;
 		this.domMapping = domMapping;
 		this.pageContext = pageContext;
+		this.zoomEventManager = pageContext.getEditPart().getVisualEditor().getController().getZoomEventManager();
 	}
 
 	final public boolean handleKeyPress(nsIDOMKeyEvent keyEvent) {
@@ -75,6 +78,18 @@ public class KeyEventManager implements IKeyEventHandler {
 
 		if (keyCode == nsIDOMKeyEvent.DOM_VK_ENTER) {
 			return handleEnter(keyEvent);
+
+		} else if (keyEvent.getCtrlKey()
+				&& (keyEvent.getCharCode() == IZoomEventManager.ZOOM_IN_CH_CODE)) {
+			return handleZoomInEvent(keyEvent);
+
+		} else if (keyEvent.getCtrlKey()
+				&& (keyEvent.getCharCode() == IZoomEventManager.ZOOM_OUT_CH_CODE)) {
+			return handleZoomOutEvent(keyEvent);
+
+		} else if (keyEvent.getCtrlKey()
+				&& (keyEvent.getCharCode() == IZoomEventManager.ZOOM_RESET_CH_CODE)) {
+			return handleResetZoomView(keyEvent);
 
 		} else if ((keyCode == nsIDOMKeyEvent.DOM_VK_LEFT)
 				&& (!keyEvent.getShiftKey())) {
@@ -118,8 +133,8 @@ public class KeyEventManager implements IKeyEventHandler {
 		} else if ((keyEvent.getKeyCode() == nsIDOMKeyEvent.DOM_VK_INSERT)
 				&& keyEvent.getShiftKey()) {
 			return handleInsert(keyEvent);
-		}
 
+		}
 		return false;
 	}
 
@@ -262,7 +277,7 @@ public class KeyEventManager implements IKeyEventHandler {
 					return true;
 
 				}
-				
+
 				editable = nodeData.isEditable()
 						&& !isBorderPosition(
 								nodeData.getSourceNode(),
@@ -288,9 +303,9 @@ public class KeyEventManager implements IKeyEventHandler {
 
 		if (editable) {
 
-			Point range =  SelectionUtil
-			.getSourceSelectionRange(getSourceEditor());
-			
+			Point range = SelectionUtil
+					.getSourceSelectionRange(getSourceEditor());
+
 			if (range.y == 0) {
 				int offset = getEscOffset(visibleSourceNode, range, delete);
 				if (offset != 0)
@@ -302,6 +317,18 @@ public class KeyEventManager implements IKeyEventHandler {
 		}
 
 		return true;
+	}
+
+	private boolean handleZoomInEvent(nsIDOMKeyEvent keyEvent) {
+		return zoomEventManager.zoomIn();
+	}
+
+	private boolean handleZoomOutEvent(nsIDOMKeyEvent keyEvent) {
+		return zoomEventManager.zoomOut();
+	}
+
+	private boolean handleResetZoomView(nsIDOMKeyEvent keyEvent) {
+		return zoomEventManager.resetZoomView();
 	}
 
 	/**
@@ -458,11 +485,11 @@ public class KeyEventManager implements IKeyEventHandler {
 		}
 		return false;
 	}
-	
+
 	private int getEscOffset(Node visibleNode, Point selectionRange, int delete) {
 
 		int offset = 0;
-		
+
 		if (delete == ST.DELETE_NEXT) {
 			offset = TextUtil.checkEscToRight(NodesManagingUtil
 					.getSourceText(visibleNode), selectionRange.x
@@ -476,4 +503,13 @@ public class KeyEventManager implements IKeyEventHandler {
 		return offset;
 
 	}
+
+	public IZoomEventManager getZoomEventManager() {
+		return zoomEventManager;
+	}
+
+	public void setZoomEventManager(IZoomEventManager zoomManager) {
+		this.zoomEventManager = zoomManager;
+	}
+
 }

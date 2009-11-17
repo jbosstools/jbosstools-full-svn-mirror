@@ -32,6 +32,10 @@ import org.w3c.dom.Node;
  * @author yradtsevich
  */
 public class VpeMenuUtil {
+	
+	public static final String ICON_MENU_ZOOM_IN = "icons/menu/zoom_in.png"; //$NON-NLS-1$
+	public static final String ICON_MENU_ZOOM_OUT = "icons/menu/zoom_out.png"; //$NON-NLS-1$
+	
 	private JSPMultiPageEditor editor;
 	private boolean editorInitialized = false;
 	private StructuredTextEditor sourceEditor;

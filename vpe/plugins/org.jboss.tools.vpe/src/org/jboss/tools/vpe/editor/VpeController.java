@@ -13,13 +13,11 @@ package org.jboss.tools.vpe.editor;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.MenuManager;
@@ -120,11 +118,13 @@ import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
 import org.jboss.tools.vpe.editor.template.IKeyEventHandler;
 import org.jboss.tools.vpe.editor.template.ISelectionManager;
+import org.jboss.tools.vpe.editor.template.IZoomEventManager;
 import org.jboss.tools.vpe.editor.template.KeyEventManager;
 import org.jboss.tools.vpe.editor.template.SelectionManager;
 import org.jboss.tools.vpe.editor.template.VpeIncludeList;
 import org.jboss.tools.vpe.editor.template.VpeTemplateListener;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.editor.template.ZoomEventManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
@@ -206,7 +206,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	private UIJob uiJob;
 	// JBIDE-675, visual refresh job
 	private UIJob visualRefreshJob;
-	private UIJob reinitJob; 
+	private UIJob reinitJob;
+	private IZoomEventManager zoomEventManager;
 
 	/**
 	 * Added by Max Areshkau JBIDE-675, stores information about modification
@@ -227,9 +228,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	private IKeyEventHandler keyEventHandler;
 
 	public final static String MODEL_FLAVOR = ModelTransfer.MODEL;
-	//contains vpe update delau time in miliseconds
+	// contains vpe update delau time in miliseconds
 	private int vpeUpdateDelayTime;
-	
+
 	public VpeController(VpeEditorPart editPart) {
 
 		this.editPart = editPart;
@@ -250,7 +251,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		domMapping = new VpeDomMapping(pageContext);
 		sourceBuilder = new VpeSourceDomBuilder(domMapping, this,
 				VpeTemplateManager.getInstance(), sourceEditor, pageContext);
-		visualBuilder = new VpeVisualDomBuilder(domMapping, this, visualEditor, pageContext);
+		visualBuilder = new VpeVisualDomBuilder(domMapping, this, visualEditor,
+				pageContext);
 		pageContext.setSourceDomBuilder(sourceBuilder);
 		pageContext.setVisualDomBuilder(visualBuilder);
 		IDOMModel sourceModel = (IDOMModel) getModel();
@@ -260,8 +262,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		sourceModel.addModelLifecycleListener(this);
 
 		IEditorInput editorInput = pageContext.getEditPart().getEditorInput();
-		//commented by Maksim Areshkau, as fix for https://jira.jboss.org/jira/browse/JBIDE-4534
-		if(editorInput instanceof IFileEditorInput) {
+		// commented by Maksim Areshkau, as fix for
+		// https://jira.jboss.org/jira/browse/JBIDE-4534
+		if (editorInput instanceof IFileEditorInput) {
 			XModel xm = null;
 			IProject project = ((IFileEditorInput) editorInput).getFile()
 					.getProject();
@@ -274,29 +277,32 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						WebAppHelper.getWebApp(xm));
 			}
 		}
-		
+
 		// Fix for JBIDE-5105, JBIDE-5161
 		visualEditor.getEditor();
-		
+
 		IDOMDocument sourceDocument = sourceModel.getDocument();
-		// FIXED FOR JBIDE-3799 by sdzmitrovich, moved calling of this method to buid dom 
+		// FIXED FOR JBIDE-3799 by sdzmitrovich, moved calling of this method to
+		// buid dom
 		// visualBuilder.refreshExternalLinks();
 		visualBuilder.buildDom(sourceDocument);
 
 		VpeTemplateManager.getInstance().addTemplateListener(this);
 
 		xulRunnerEditor = visualEditor.getXulRunnerEditor();
+		zoomEventManager = new ZoomEventManager(xulRunnerEditor);
 		// TODO Sergey Vasilyev figure out with nsIPressShell
 		// presShell = browser.getPresShell();
-		
-		//initialization visual selection controller
-		visualSelectionController = new VpeSelectionController(visualEditor.getEditor().getSelectionController());
-		
+
+		// initialization visual selection controller
+		visualSelectionController = new VpeSelectionController(visualEditor
+				.getEditor().getSelectionController());
+
 		selectionBuilder = new VpeSelectionBuilder(domMapping, sourceBuilder,
 				visualBuilder, visualSelectionController);
 
-		selectionManager = new SelectionManager(pageContext,
-				sourceEditor, visualSelectionController);
+		selectionManager = new SelectionManager(pageContext, sourceEditor,
+				visualSelectionController);
 
 		keyEventHandler = new KeyEventManager(sourceEditor, domMapping,
 				pageContext);
@@ -347,15 +353,17 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		relativeFolderReferenceListListener = RelativeFolderReferenceList
 				.getInstance();
 		relativeFolderReferenceListListener.addChangeListener(this);
-		
+
 		elReferenceListListener = ELReferenceList.getInstance();
 		elReferenceListListener.addChangeListener(this);
-		
-		//initialization of vpe update delay time
+
+		// initialization of vpe update delay time
 		vpeUpdateDelayTime = 400;
+
 		// pageContext.fireTaglibsChanged();
 
-		// yradtsevich: we have to refresh VPE selection on init (fix of JBIDE-4037)
+		// yradtsevich: we have to refresh VPE selection on init (fix of
+		// JBIDE-4037)
 		sourceSelectionChanged(true);
 	}
 
@@ -377,7 +385,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 
 		if (optionsListener != null) {
-			XModelObject optionsObject = ModelUtilities.getPreferenceModel().getByPath(VpePreference.EDITOR_PATH);
+			XModelObject optionsObject = ModelUtilities.getPreferenceModel()
+					.getByPath(VpePreference.EDITOR_PATH);
 			optionsObject.getModel().removeModelTreeListener(optionsListener);
 			optionsListener.dispose();
 			optionsListener = null;
@@ -418,7 +427,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		if (visualEditor != null) {
 			visualEditor.setEditorDomEventListener(null);
 			if (visualSelectionController != null) {
-//				visualSelectionController.Release();
+				// visualSelectionController.Release();
 				visualSelectionController = null;
 			}
 			// TODO Sergey Vasilyev figure out with Press Shell
@@ -438,8 +447,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		if (absoluteFolderReferenceListListener != null) {
 			absoluteFolderReferenceListListener.removeChangeListener(this);
 		}
-		if(elReferenceListListener!=null){
-		    elReferenceListListener.removeChangeListener(this);
+		if (elReferenceListListener != null) {
+			elReferenceListListener.removeChangeListener(this);
 		}
 		if (relativeFolderReferenceListListener != null) {
 			relativeFolderReferenceListListener.removeChangeListener(this);
@@ -474,18 +483,23 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				uiJob = new UIJob(VpeUIMessages.VPE_UPDATE_JOB_TITLE) {
 					@Override
 					public IStatus runInUIThread(IProgressMonitor monitor) {
-						monitor.beginTask(VpeUIMessages.VPE_UPDATE_JOB_TITLE, 100);
+						monitor.beginTask(VpeUIMessages.VPE_UPDATE_JOB_TITLE,
+								100);
 						while (getChangeEvents().size() > 0) {
-							monitor.worked((int) (100 / getChangeEvents().size()));
-							VpeEventBean eventBean = getChangeEvents().getFirst();
+							monitor.worked((int) (100 / getChangeEvents()
+									.size()));
+							VpeEventBean eventBean = getChangeEvents()
+									.getFirst();
 							if (monitor.isCanceled()) {
-								/* 
-								 * Yahor Radtsevich: the following line is commented 
-								 * as fix of JBIDE-3758: VPE autorefresh is broken in some cases.
-								 * Now if the change events queue should be cleared, the user have to do it explicitly.
+								/*
+								 * Yahor Radtsevich: the following line is
+								 * commented as fix of JBIDE-3758: VPE
+								 * autorefresh is broken in some cases. Now if
+								 * the change events queue should be cleared,
+								 * the user have to do it explicitly.
 								 */
 								// getChangeEvents().clear();
-								
+
 								return Status.CANCEL_STATUS;
 							}
 							try {
@@ -515,20 +529,24 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 							}
 							getChangeEvents().remove(eventBean);
 						}
-						// cause is to lock calls others events  
-						if (switcher != null &&
-								switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE))
+						// cause is to lock calls others events
+						if (switcher != null
+								&& switcher
+										.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE))
 							try {
 								sourceSelectionChanged();
 								/*
 								 * https://jira.jboss.org/jira/browse/JBIDE-3619
-								 * VpeViewUpdateJob takes place after toolbar selection have been updated.
-								 * New nodes haven't been put into dom mapping 
-								 * thus toolbar becomes desabled.
-								 * Updating toolbar state here takes into account updated vpe nodes.
+								 * VpeViewUpdateJob takes place after toolbar
+								 * selection have been updated. New nodes
+								 * haven't been put into dom mapping thus
+								 * toolbar becomes desabled. Updating toolbar
+								 * state here takes into account updated vpe
+								 * nodes.
 								 */
 								if (toolbarFormatControllerManager != null) {
-								    toolbarFormatControllerManager.selectionChanged();
+									toolbarFormatControllerManager
+											.selectionChanged();
 								}
 							} finally {
 								switcher.stopActiveEditor();
@@ -563,7 +581,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				} else {
-					notifyChangedInUiThread(notifier, eventType, feature, oldValue, newValue, pos);
+					notifyChangedInUiThread(notifier, eventType, feature,
+							oldValue, newValue, pos);
 				}
 				return Status.OK_STATUS;
 			}
@@ -574,13 +593,15 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	public void notifyChangedInUiThread(INodeNotifier notifier, int eventType,
 			Object feature, Object oldValue, Object newValue, int pos) {
-		if (switcher == null ||
-				!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+		if (switcher == null
+				|| !switcher
+						.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
 		try {
 			if (VpeDebug.PRINT_SOURCE_MUTATION_EVENT) {
-				printSourceEvent(notifier, eventType, feature, oldValue, newValue, pos);
+				printSourceEvent(notifier, eventType, feature, oldValue,
+						newValue, pos);
 			}
 			if (visualBuilder == null) {
 				return;
@@ -610,14 +631,16 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						if ((Attr) feature == lastRemovedAttr
 								&& !attrName.equals(lastRemovedAttrName)) {
 							lastRemovedAttr = null;
-							visualBuilder.removeAttribute((Element) notifier, lastRemovedAttrName);
+							visualBuilder.removeAttribute((Element) notifier,
+									lastRemovedAttrName);
 						}
 						visualBuilder.setAttribute((Element) notifier,
 								((Attr) feature).getName(), (String) newValue);
 					} else {
 						lastRemovedAttr = (Attr) feature;
 						lastRemovedAttrName = ((Attr) feature).getName();
-						visualBuilder.removeAttribute((Element) notifier, lastRemovedAttrName);
+						visualBuilder.removeAttribute((Element) notifier,
+								lastRemovedAttrName);
 					}
 				}
 				visualEditor.showResizer();
@@ -625,9 +648,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 			case INodeNotifier.ADD:
 				/*
-				 * https://jira.jboss.org/jira/browse/JBIDE-4102
-				 * Do nothing on comment node adding,
-				 * it is already updated in {@code INodeNotifier.REMOVE} case. 
+				 * https://jira.jboss.org/jira/browse/JBIDE-4102 Do nothing on
+				 * comment node adding, it is already updated in {@code
+				 * INodeNotifier.REMOVE} case.
 				 */
 				if (Node.COMMENT_NODE != ((Node) newValue).getNodeType()) {
 					/*
@@ -639,10 +662,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 			case INodeNotifier.REMOVE:
 				/*
-				 * https://jira.jboss.org/jira/browse/JBIDE-4102
-				 * When comment is changed there is no need
-				 * to update its parent or the whole structure, 
-				 * only the comment node should be updated.
+				 * https://jira.jboss.org/jira/browse/JBIDE-4102 When comment is
+				 * changed there is no need to update its parent or the whole
+				 * structure, only the comment node should be updated.
 				 */
 				if (Node.COMMENT_NODE == ((Node) feature).getNodeType()) {
 					visualBuilder.updateNode((Node) feature);
@@ -655,8 +677,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 			case INodeNotifier.STRUCTURE_CHANGED:
 				/*
-				 * https://jira.jboss.org/jira/browse/JBIDE-4102
-				 * Do not update parent tag when a comment was changed,
+				 * https://jira.jboss.org/jira/browse/JBIDE-4102 Do not update
+				 * parent tag when a comment was changed,
 				 */
 				if (!commentNodeChanged) {
 					visualEditor.hideResizer();
@@ -698,7 +720,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	// INodeSelectionListener implementation
 	public void nodeSelectionChanged(NodeSelectionChangedEvent event) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
 		try {
@@ -706,8 +729,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			if (nodes != null && nodes.size() > 0) {
 				Node sourceNode = (Node) nodes.get(0);
 				if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-					System.out.println(">>>>>>>>>>>>>> nodeSelectionChanged  sourceNode: " + //$NON-NLS-1$
-							sourceNode.getNodeName() + Constants.WHITE_SPACE + event.getCaretPosition());
+					System.out
+							.println(">>>>>>>>>>>>>> nodeSelectionChanged  sourceNode: " + //$NON-NLS-1$
+									sourceNode.getNodeName()
+									+ Constants.WHITE_SPACE
+									+ event.getCaretPosition());
 				}
 				if (event.getSource() instanceof IContentOutlinePage) {
 					sourceSelectionChanged();
@@ -721,12 +747,14 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	// ITextSelectionListener implementation
 	// TODO Max Areshau looks like this method don't used
 	public void textSelectionChanged(TextSelectionChangedEvent event) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
 		try {
 			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-				System.out.println(">>>>>>>>>>>>>> textSelectionChanged  " + event.getSource()); //$NON-NLS-1$
+				System.out
+						.println(">>>>>>>>>>>>>> textSelectionChanged  " + event.getSource()); //$NON-NLS-1$
 			}
 			// if (event.getSource() instanceof StyledText) {
 			sourceSelectionChanged();
@@ -738,7 +766,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	// SelectionListener implementation
 	public void widgetSelected(SelectionEvent event) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
 		try {
@@ -760,7 +789,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void sourceSelectionChanged() {
-			sourceSelectionChanged(false);
+		sourceSelectionChanged(false);
 	}
 
 	public void sourceSelectionChanged(boolean showCaret) {
@@ -770,18 +799,18 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			return;
 		}
 
-//		Point range = sourceEditor.getTextViewer().getSelectedRange();
-//		int anchorPosition = range.x;
-//		int focusPosition = range.x + range.y;
-//
-//		boolean extendFlag = range.y != 0;
-//		boolean reversionFlag = extendFlag
-//				&& anchorPosition == VpeSelectionHelper
-//						.getCaretOffset(sourceEditor);
-//		if (reversionFlag) {
-//			anchorPosition = focusPosition;
-//			focusPosition = range.x;
-//		}
+		// Point range = sourceEditor.getTextViewer().getSelectedRange();
+		// int anchorPosition = range.x;
+		// int focusPosition = range.x + range.y;
+		//
+		// boolean extendFlag = range.y != 0;
+		// boolean reversionFlag = extendFlag
+		// && anchorPosition == VpeSelectionHelper
+		// .getCaretOffset(sourceEditor);
+		// if (reversionFlag) {
+		// anchorPosition = focusPosition;
+		// focusPosition = range.x;
+		// }
 
 		if (selectionManager != null)
 			selectionManager.refreshVisualSelection();
@@ -857,7 +886,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void sourceSelectionToVisualSelection(boolean showCaret) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
 		try {
@@ -872,43 +902,47 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void processPostModelEvent(ModelLifecycleEvent event) {
-		//A part of fix JBIDE-5066
-		if ((switcher==null)||(!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE))) {
+		// A part of fix JBIDE-5066
+		if ((switcher == null)
+				|| (!switcher
+						.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE))) {
 			return;
 		}
 		try {
 			/*
 			 * Added by Max Areshkau JBIDE-1457
-			 * ModelLifecycleEvent.MODEL_RELEASED is generated when model in model
-			 * calls methods releaseFromRead() or releaseFromEdit(). When editor
-			 * is open he has only when href on model, so nothing can generated
-			 * this event.When editor closes generation of this event depends
-			 * from containing any service href on model or not. It's can be a
-			 * reason of problems on reopen file.
-			 *
+			 * ModelLifecycleEvent.MODEL_RELEASED is generated when model in
+			 * model calls methods releaseFromRead() or releaseFromEdit(). When
+			 * editor is open he has only when href on model, so nothing can
+			 * generated this event.When editor closes generation of this event
+			 * depends from containing any service href on model or not. It's
+			 * can be a reason of problems on reopen file.
+			 * 
 			 * We shouldn't call here rebuild dom.
 			 */
 			if (event.getType() == ModelLifecycleEvent.MODEL_RELEASED) {
 				if (VpeDebug.PRINT_SOURCE_MODEL_LIFECYCLE_EVENT) {
-					System.out.println(">>> processPostModelEvent: " + event.toString()); //$NON-NLS-1$
+					System.out
+							.println(">>> processPostModelEvent: " + event.toString()); //$NON-NLS-1$
 				}
-				// commented to fix org.mozilla.xpcom.XPCOMException: The function "repaint" returned an error condition  (0x8000ffff)
-				//visualBuilder.setSelectionRectangle(null);
+				// commented to fix org.mozilla.xpcom.XPCOMException: The
+				// function "repaint" returned an error condition (0x8000ffff)
+				// visualBuilder.setSelectionRectangle(null);
 				IStructuredModel model = event.getModel();
 				model.removeModelLifecycleListener(this);
 				IDOMModel sourceModel = (IDOMModel) getModel();
 				sourceModel.addModelLifecycleListener(this);
 				bundle.clearAll();
 				bundle.refresh();
-				//visualBuilder.setSelectionRectangle(null);
+				// visualBuilder.setSelectionRectangle(null);
 				IDOMDocument sourceDocument = sourceModel.getDocument();
 				// JBIDE-1457
 				// visualBuilder.rebuildDom(sourceDocument);
 				// pageContext.fireTaglibsChanged();
 			}
 		} finally {
-			//A part of fix JBIDE-5066
-			if (switcher!=null) {
+			// A part of fix JBIDE-5066
+			if (switcher != null) {
 				switcher.stopActiveEditor();
 			}
 		}
@@ -916,7 +950,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	// EditorDomEventListener implementation
 	public void subtreeModified(nsIDOMMutationEvent mutationEvent) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
 		try {
@@ -929,7 +964,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void nodeInserted(nsIDOMMutationEvent mutationEvent) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
 		try {
@@ -947,7 +983,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void nodeRemoved(nsIDOMMutationEvent mutationEvent) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
 		try {
@@ -966,7 +1003,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void nodeRemovedFromDocument(nsIDOMMutationEvent mutationEvent) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
 		try {
@@ -979,7 +1017,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void nodeInsertedIntoDocument(nsIDOMMutationEvent mutationEvent) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
 		try {
@@ -992,7 +1031,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void attrModified(nsIDOMMutationEvent mutationEvent) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
 		try {
@@ -1005,7 +1045,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void characterDataModified(nsIDOMMutationEvent mutationEvent) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
 		try {
@@ -1020,8 +1061,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 	}
 
-	public void notifySelectionChanged(nsIDOMDocument doc, nsISelection selection, short reason) {
-		if (switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+	public void notifySelectionChanged(nsIDOMDocument doc,
+			nsISelection selection, short reason) {
+		if (switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			try {
 				mouseUpSelectionReasonFlag = (reason & nsISelectionListener.MOUSEUP_REASON) > 0;
 				if (mouseUpSelectionReasonFlag
@@ -1033,19 +1076,20 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 						|| reason == nsISelectionListener.SELECTALL_REASON
 						|| (reason & nsISelectionListener.MOUSEDOWN_REASON) > 0) {
 					if (VpeDebug.PRINT_VISUAL_SELECTION_EVENT) {
-						System.out.println("<<< notifySelectionChanged: " + reason); //$NON-NLS-1$
+						System.out
+								.println("<<< notifySelectionChanged: " + reason); //$NON-NLS-1$
 					}
 					nsIDOMNode node = SelectionUtil.getSelectedNode(selection);
 					/*
 					 * Fixes https://jira.jboss.org/jira/browse/JBIDE-2571
-					 * Checking if the node is of text type was removed
-					 * to allow <select> node to be selected on the first click.
+					 * Checking if the node is of text type was removed to allow
+					 * <select> node to be selected on the first click.
 					 */
 					if (node != null) {
 						selectionManager.setSelection(selection);
 					}
 				}
-				//enables cursor on selection event
+				// enables cursor on selection event
 				visualSelectionController.setCaretEnabled(true);
 			} finally {
 				switcher.stopActiveEditor();
@@ -1054,7 +1098,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void mouseDown(nsIDOMMouseEvent mouseEvent) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
 		try {
@@ -1071,22 +1116,12 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			// .getDragElement(mouseEvent);
 			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
 				System.out.println("<<< mouseDown  targetNode: " //$NON-NLS-1$
-																/*
-																 * +visualNode.
-																 * getNodeName()
-																 * + " (" +
-																 * visualNode +
-																 * ")  selectedElement: "
-																 * +(
-																 * visualDragElement
-																 * != null ?
-																 * visualDragElement
-																 * .
-																 * getNodeName()
-																 * + " (" +
-																 * visualDragElement
-																 * + ")" : null)
-																 */);
+						/*
+						 * +visualNode. getNodeName() + " (" + visualNode +
+						 * ")  selectedElement: " +( visualDragElement != null ?
+						 * visualDragElement . getNodeName() + " (" +
+						 * visualDragElement + ")" : null)
+						 */);
 			}
 			//
 			// if (visualDragElement != null) {
@@ -1115,10 +1150,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			// selection will be set only if press left button
 			if (mouseEvent.getButton() == LEFT_BUTTON) {
 				selectionManager.setSelection(mouseEvent);
-				//drag gesture isn't generated in XR 1.9 for Linux Platforms, so we start it's manually
-				//mareshkau
-				nsIDOMElement selectedElement = getXulRunnerEditor().getLastSelectedElement();
-				if (VpeVisualDomBuilder.inDragArea(XulRunnerVpeUtils.getElementBounds(selectedElement), VisualDomUtil
+				// drag gesture isn't generated in XR 1.9 for Linux Platforms,
+				// so we start it's manually
+				// mareshkau
+				nsIDOMElement selectedElement = getXulRunnerEditor()
+						.getLastSelectedElement();
+				if (VpeVisualDomBuilder.inDragArea(XulRunnerVpeUtils
+						.getElementBounds(selectedElement), VisualDomUtil
 						.getMousePoint(mouseEvent))) {
 					dragGesture(mouseEvent);
 				}
@@ -1129,7 +1167,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void mouseUp(nsIDOMMouseEvent mouseEvent) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
 		try {
@@ -1148,7 +1187,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void mouseClick(nsIDOMMouseEvent mouseEvent) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
 		try {
@@ -1156,8 +1196,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			if (visualNode != null) {
 				if (!mouseUpSelectionReasonFlag) {
 					if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-						System.out.println("<<< mouseClick  visualNode: " + visualNode.getNodeName() + //$NON-NLS-1$
-								" (" + visualNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+						System.out
+								.println("<<< mouseClick  visualNode: " + visualNode.getNodeName() + //$NON-NLS-1$
+										" (" + visualNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 					if (visualBuilder.isContentArea(visualNode)) {
 						// selectionBuilder.setClickContentAreaSelection();
@@ -1166,7 +1207,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					mouseUpSelectionReasonFlag = false;
 				}
 
-				if (visualBuilder.doToggle(VisualDomUtil.getTargetNode(mouseEvent))) {
+				if (visualBuilder.doToggle(VisualDomUtil
+						.getTargetNode(mouseEvent))) {
 					// selectionBuilder.setClickContentAreaSelection();
 				}
 			}
@@ -1176,16 +1218,18 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void mouseDblClick(nsIDOMMouseEvent mouseEvent) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
 		try {
 			nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 			if (visualNode != null) {
-					sourceBuilder.openOn(visualNode);
+				sourceBuilder.openOn(visualNode);
 				if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-					System.out.println("<<< mouseDblClick  visualNode: " + visualNode.getNodeName() + //$NON-NLS-1$
-							" (" + visualNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+					System.out
+							.println("<<< mouseDblClick  visualNode: " + visualNode.getNodeName() + //$NON-NLS-1$
+									" (" + visualNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
 		} finally {
@@ -1194,7 +1238,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void mouseMove(nsIDOMMouseEvent mouseEvent) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
 		try {
@@ -1213,12 +1258,16 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void keyPress(nsIDOMKeyEvent keyEvent) {
-		if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
-			System.out.println("<<< keyPress  type: " + keyEvent.getType() + //$NON-NLS-1$
-					"  Ctrl: " + keyEvent.getCtrlKey() + "  Shift: " + keyEvent.getShiftKey() + //$NON-NLS-1$ //$NON-NLS-2$
-					"  CharCode: " + keyEvent.getCharCode() + "  KeyCode: " + keyEvent.getKeyCode()); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+		// if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
+		System.out.println("<<< keyPress  type: " + keyEvent.getType() + //$NON-NLS-1$
+				"  Ctrl: "
+				+ keyEvent.getCtrlKey()
+				+ "  Shift: " + keyEvent.getShiftKey() + //$NON-NLS-1$ //$NON-NLS-2$
+				"  CharCode: " + keyEvent.getCharCode()
+				+ "  KeyCode: " + keyEvent.getKeyCode()); //$NON-NLS-1$ //$NON-NLS-2$
+		// }
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			switcher.stopActiveEditor();
 			return;
 		}
@@ -1227,100 +1276,121 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		} finally {
 			switcher.stopActiveEditor();
 		}
-			setVpeUpdateDelayTime(0);
-			/*
-			 * adding calls of core event handlers, for example' CTR+H' or
-			 * 'CTRL+M' event handler dialog
-			 */
-			boolean keyBindingPressed = false;
-			Event keyboardEvent = new Event();
-			/*
-			 * widget where event occur
-			 */
-			keyboardEvent.widget = xulRunnerEditor.getBrowser();
+		setVpeUpdateDelayTime(0);
+		/*
+		 * adding calls of core event handlers, for example' CTR+H' or 'CTRL+M'
+		 * event handler dialog
+		 */
+		boolean keyBindingPressed = false;
+		Event keyboardEvent = new Event();
+		/*
+		 * widget where event occur
+		 */
+		keyboardEvent.widget = xulRunnerEditor.getBrowser();
 
-			keyboardEvent.stateMask = (keyEvent.getAltKey() ? SWT.ALT : 0)
-					| (keyEvent.getCtrlKey() ? SWT.CTRL : 0)
-					| (keyEvent.getShiftKey() ? SWT.SHIFT : 0)
-					| (keyEvent.getMetaKey() ? SWT.MOD1 : 0);
-			keyboardEvent.x = 0;
-			keyboardEvent.y = 0;
-			keyboardEvent.type = SWT.KeyDown;
+		keyboardEvent.stateMask = (keyEvent.getAltKey() ? SWT.ALT : 0)
+				| (keyEvent.getCtrlKey() ? SWT.CTRL : 0)
+				| (keyEvent.getShiftKey() ? SWT.SHIFT : 0)
+				| (keyEvent.getMetaKey() ? SWT.MOD1 : 0);
+		keyboardEvent.x = 0;
+		keyboardEvent.y = 0;
+		keyboardEvent.type = SWT.KeyDown;
 
-			if (keyEvent.getKeyCode() == 0) {
-				keyboardEvent.keyCode = (int) keyEvent.getCharCode();
-			} else {
-				keyboardEvent.keyCode = (int) keyEvent.getKeyCode();
-			}
-			/*
-			 * JBIDE-1627
-			 */
-			List<KeyStroke> possibleKeyStrokes = WorkbenchKeyboard
-					.generatePossibleKeyStrokes(keyboardEvent);
-			IWorkbench iWorkbench = VpePlugin.getDefault().getWorkbench();
-			if (iWorkbench.hasService(IBindingService.class)) {
-				IBindingService iBindingService = (IBindingService) iWorkbench
-						.getService(IBindingService.class);
+		if (keyEvent.getKeyCode() == 0) {
+			keyboardEvent.keyCode = (int) keyEvent.getCharCode();
+		} else {
+			keyboardEvent.keyCode = (int) keyEvent.getKeyCode();
+		}
+		/*
+		 * JBIDE-1627
+		 */
+		List<KeyStroke> possibleKeyStrokes = WorkbenchKeyboard
+				.generatePossibleKeyStrokes(keyboardEvent);
+		IWorkbench iWorkbench = VpePlugin.getDefault().getWorkbench();
+		if (iWorkbench.hasService(IBindingService.class)) {
+			IBindingService iBindingService = (IBindingService) iWorkbench
+					.getService(IBindingService.class);
 
-				KeySequence sequenceBeforeKeyStroke = KeySequence.getInstance();
-				
-				for (Iterator<KeyStroke> iterator = possibleKeyStrokes.iterator(); iterator.hasNext();) {
-					KeySequence sequenceAfterKeyStroke =
-						KeySequence.getInstance(sequenceBeforeKeyStroke, iterator.next());
-					if (iBindingService.isPerfectMatch(sequenceAfterKeyStroke)) {
-						final Binding binding = iBindingService.getPerfectMatch(sequenceAfterKeyStroke);
-						if ((binding != null)
-								&& (binding.getParameterizedCommand() != null)
-								&& (binding.getParameterizedCommand().getCommand() != null)) {
-							keyBindingPressed = true;
-						}
+			KeySequence sequenceBeforeKeyStroke = KeySequence.getInstance();
+
+			for (Iterator<KeyStroke> iterator = possibleKeyStrokes.iterator(); iterator
+					.hasNext();) {
+				KeySequence sequenceAfterKeyStroke = KeySequence.getInstance(
+						sequenceBeforeKeyStroke, iterator.next());
+				if (iBindingService.isPerfectMatch(sequenceAfterKeyStroke)) {
+					final Binding binding = iBindingService
+							.getPerfectMatch(sequenceAfterKeyStroke);
+					if ((binding != null)
+							&& (binding.getParameterizedCommand() != null)
+							&& (binding.getParameterizedCommand().getCommand() != null)) {
+						keyBindingPressed = true;
 					}
 				}
 			}
-			/*
-			 * Sends xulrunner event to eclipse environment. 
-			 * dmaliarevich: while fixing JBIDE-2562 I found that
-			 * eclipse handles key shortcuts without this notification.
-			 */
-			// getXulRunnerEditor().getBrowser().notifyListeners(
-			// keyboardEvent.type, keyboardEvent);
+		}
+		/*
+		 * Sends xulrunner event to eclipse environment. dmaliarevich: while
+		 * fixing JBIDE-2562 I found that eclipse handles key shortcuts without
+		 * this notification.
+		 */
+		// getXulRunnerEditor().getBrowser().notifyListeners(
+		// keyboardEvent.type, keyboardEvent);
 
-			/*
-			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-2562 
-			 * author: dmaliarevich
-			 * 
-			 * When shortcut key is pressed do not handle this event in the
-			 * handler.
-			 */
-			if (!keyBindingPressed) {
-				if (keyEventHandler.handleKeyPress(keyEvent)) {
-					/*
-					 *  JBIDE-2670	
-					 */
-					keyEvent.preventDefault();
-//					switcher
-//							.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
-//					try {
-						/*
-						 *  Edward
-						 */
-					// commented by sdzmitrovich because cursor disappear after
-					// trying to edit of read-only elements
-					// TODO check editing and if are appear errors then
-					// uncommented next code
-//					 sourceSelectionChanged(true);
-//					 visualSelectionController.setCaretEnabled(true);
-						
-//					} finally {
-//						switcher.stopActiveEditor();
-//					}
+		/*
+		 * Fixes https://jira.jboss.org/jira/browse/JBIDE-2562 author:
+		 * dmaliarevich
+		 * 
+		 * When shortcut key is pressed do not handle this event in the handler.
+		 */
+		boolean isHandleCurrentEvent = !keyBindingPressed
+				|| isZoomEvent(keyEvent);
+		if (isHandleCurrentEvent) {
+			if (keyEventHandler instanceof KeyEventManager) {
+				IZoomEventManager zoomEventManager = ((KeyEventManager) keyEventHandler)
+						.getZoomEventManager();
+				if (zoomEventManager == null) {
+					this.zoomEventManager = new ZoomEventManager(
+							getXulRunnerEditor());
+					((KeyEventManager) keyEventHandler)
+							.setZoomEventManager(this.zoomEventManager);
 				}
 			}
+			if (keyEventHandler.handleKeyPress(keyEvent)) {
+				/*
+				 * JBIDE-2670
+				 */
+				keyEvent.preventDefault();
+				// switcher
+				// .startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
+				// try {
+				/*
+				 * Edward
+				 */
+				// commented by sdzmitrovich because cursor disappear after
+				// trying to edit of read-only elements
+				// TODO check editing and if are appear errors then
+				// uncommented next code
+				// sourceSelectionChanged(true);
+				// visualSelectionController.setCaretEnabled(true);
+
+				// } finally {
+				// switcher.stopActiveEditor();
+				// }
+			}
+		}
 	}
 
-	public void elementResized(nsIDOMElement element, int constrains,
-			int top, int left, int width, int height) {
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+	private boolean isZoomEvent(nsIDOMKeyEvent keyEvent) {
+		return keyEvent.getCtrlKey()
+				&& (keyEvent.getCharCode() == IZoomEventManager.ZOOM_IN_CH_CODE
+						|| keyEvent.getCharCode() == IZoomEventManager.ZOOM_OUT_CH_CODE || keyEvent
+						.getCharCode() == IZoomEventManager.ZOOM_RESET_CH_CODE);
+	}
+
+	public void elementResized(nsIDOMElement element, int constrains, int top,
+			int left, int width, int height) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			return;
 		}
 		try {
@@ -1333,19 +1403,19 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void dragGesture(nsIDOMEvent domEvent) {
-		nsIDOMMouseEvent mouseEvent =
-			(nsIDOMMouseEvent) domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) domEvent
+				.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 		boolean canDragFlag = canInnerDrag(mouseEvent);
 		// start drag sessionvpe-element
 		if (canDragFlag) {
-			
+
 			startDragSession(domEvent);
 		}
 	}
 
 	/**
 	 * Calls when on when browser receive context menu event.
-	 *
+	 * 
 	 * @param contextFlags
 	 *            -not used in this function, just for because this parameter
 	 *            exist in nsIContextMenuListener
@@ -1354,22 +1424,26 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	 * @param node
 	 *            where this event are occur
 	 */
-	public void onShowContextMenu(long contextFlags, nsIDOMEvent event, nsIDOMNode node) {
-		//FIXED FOR JBIDE-3072 by sdzmitrovich 
+	public void onShowContextMenu(long contextFlags, nsIDOMEvent event,
+			nsIDOMNode node) {
+		// FIXED FOR JBIDE-3072 by sdzmitrovich
 
-//		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(event);
-//		if (visualNode != null) {
+		// nsIDOMNode visualNode = VisualDomUtil.getTargetNode(event);
+		// if (visualNode != null) {
 		Node selectedSourceNode = null;
 
-		VpeNodeMapping nodeMapping = SelectionUtil.getNodeMappingBySourceSelection(sourceEditor, domMapping);
+		VpeNodeMapping nodeMapping = SelectionUtil
+				.getNodeMappingBySourceSelection(sourceEditor, domMapping);
 		if (nodeMapping != null) {
 			selectedSourceNode = nodeMapping.getSourceNode();
 		}
 
 		MenuManager menuManager = new MenuManager("#popup"); //$NON-NLS-1$
-		final Menu contextMenu = menuManager.createContextMenu(visualEditor.getControl());
+		final Menu contextMenu = menuManager.createContextMenu(visualEditor
+				.getControl());
 		contextMenu.addMenuListener(new MenuListener() {
 			Menu menu = contextMenu;
+
 			public void menuHidden(MenuEvent e) {
 				Display.getCurrent().asyncExec(new Runnable() {
 					public void run() {
@@ -1377,14 +1451,17 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					}
 				});
 			}
+
 			public void menuShown(MenuEvent e) {
 			}
 		});
 
 		// create context menu
-//		MenuCreationHelper menuCreationHelper =
-//			new MenuCreationHelper(domMapping, pageContext, sourceEditor, visualEditor);
-//		menuCreationHelper.createMenuForNode(selectedSourceNode, menuManager, true);
+		// MenuCreationHelper menuCreationHelper =
+		// new MenuCreationHelper(domMapping, pageContext, sourceEditor,
+		// visualEditor);
+		// menuCreationHelper.createMenuForNode(selectedSourceNode, menuManager,
+		// true);
 		new VpeMenuCreator(menuManager, selectedSourceNode).createMenu();
 		contextMenu.setVisible(true);
 	}
@@ -1409,11 +1486,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					if (monitor.isCanceled()) {
 						return Status.CANCEL_STATUS;
 					}
-					if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+					if (!switcher
+							.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 						return Status.CANCEL_STATUS;
 					}
 					try {
-						monitor.beginTask(VpeUIMessages.VPE_VISUAL_REFRESH_JOB, IProgressMonitor.UNKNOWN);
+						monitor.beginTask(VpeUIMessages.VPE_VISUAL_REFRESH_JOB,
+								IProgressMonitor.UNKNOWN);
 						visualRefreshImpl();
 						monitor.done();
 						setSynced(true);
@@ -1444,27 +1523,28 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	void visualRefreshImpl() {
 		visualEditor.hideResizer();
-		
-		String currentDoctype = DocTypeUtil.getDoctype(visualEditor.getEditorInput());
+
+		String currentDoctype = DocTypeUtil.getDoctype(visualEditor
+				.getEditorInput());
 		/*
-		 * https://jira.jboss.org/jira/browse/JBIDE-3591
-		 * Avoid using missing resource.
+		 * https://jira.jboss.org/jira/browse/JBIDE-3591 Avoid using missing
+		 * resource.
 		 */
 		String visualEditorDoctype = visualEditor.getDoctype();
 		if ((null != currentDoctype) && (null != visualEditorDoctype)
-			&& (!visualEditorDoctype.equals(currentDoctype))) {
+				&& (!visualEditorDoctype.equals(currentDoctype))) {
 			visualEditor.reload();
 		} else {
-		    //Fix bugs JBIDE-2750
+			// Fix bugs JBIDE-2750
 			visualBuilder.setSelectionRectangle(null);
 			visualEditor.reload();
-//			IDOMModel sourceModel = (IDOMModel) getModel();
-//			if (sourceModel != null) {
-//				IDOMDocument sourceDocument = sourceModel.getDocument();
-//				visualBuilder.rebuildDom(sourceDocument);
-//			} else {
-//				visualBuilder.rebuildDom(null);
-//			}
+			// IDOMModel sourceModel = (IDOMModel) getModel();
+			// if (sourceModel != null) {
+			// IDOMDocument sourceDocument = sourceModel.getDocument();
+			// visualBuilder.rebuildDom(sourceDocument);
+			// } else {
+			// visualBuilder.rebuildDom(null);
+			// }
 		}
 	}
 
@@ -1480,30 +1560,38 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	// for debug
 	private void printSourceEvent(INodeNotifier notifier, int eventType,
 			Object feature, Object oldValue, Object newValue, int pos) {
-		System.out.println(">>> eventType: " + INodeNotifier.EVENT_TYPE_STRINGS[eventType] + //$NON-NLS-1$
-				"  pos: " + pos + "  notifier: " + ((Node) notifier).getNodeName() + //$NON-NLS-1$ //$NON-NLS-2$
-				"  hashCode: " + notifier.hashCode()); //$NON-NLS-1$
+		System.out
+				.println(">>> eventType: " + INodeNotifier.EVENT_TYPE_STRINGS[eventType] + //$NON-NLS-1$
+						"  pos: " + pos
+						+ "  notifier: " + ((Node) notifier).getNodeName() + //$NON-NLS-1$ //$NON-NLS-2$
+						"  hashCode: " + notifier.hashCode()); //$NON-NLS-1$
 		if (feature != null) {
 			if (feature instanceof Node) {
-				System.out.println("     feature: " + ((Node) feature).getNodeType() + //$NON-NLS-1$
-						Constants.WHITE_SPACE + ((Node) feature).getNodeName() +
-						"  hashCode: " + feature.hashCode()); //$NON-NLS-1$
+				System.out
+						.println("     feature: " + ((Node) feature).getNodeType() + //$NON-NLS-1$
+								Constants.WHITE_SPACE
+								+ ((Node) feature).getNodeName()
+								+ "  hashCode: " + feature.hashCode()); //$NON-NLS-1$
 			} else {
 				System.out.println("     feature: " + feature); //$NON-NLS-1$
 			}
 		}
 		if (oldValue != null) {
 			if (oldValue instanceof Node) {
-				System.out.println("     oldValue: " + ((Node) oldValue).getNodeName() + //$NON-NLS-1$
-						"  hashCode: " + oldValue.hashCode()); //$NON-NLS-1$
+				System.out
+						.println("     oldValue: " + ((Node) oldValue).getNodeName() + //$NON-NLS-1$
+								"  hashCode: " + oldValue.hashCode()); //$NON-NLS-1$
 			} else {
 				System.out.println("     oldValue: " + oldValue); //$NON-NLS-1$
 			}
 		}
 		if (newValue != null) {
 			if (newValue instanceof Node) {
-				System.out.println("     newValue: " + ((Node) newValue).getNodeName() + //$NON-NLS-1$
-						"  hashCode: " + newValue.hashCode() + Constants.WHITE_SPACE + ((Node) newValue).getNodeType()); //$NON-NLS-1$
+				System.out
+						.println("     newValue: " + ((Node) newValue).getNodeName() + //$NON-NLS-1$
+								"  hashCode: " + newValue.hashCode()
+								+ Constants.WHITE_SPACE
+								+ ((Node) newValue).getNodeType()); //$NON-NLS-1$
 			} else {
 				System.out.println("     newValue: " + newValue); //$NON-NLS-1$
 			}
@@ -1519,14 +1607,17 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			System.out.print("  EventPhase: " + mutationEvent.getEventPhase()); //$NON-NLS-1$
 
 			nsIDOMNode relatedNode = mutationEvent.getRelatedNode();
-			System.out.print("  RelatedNode: " + (relatedNode == null ? null : relatedNode.getNodeName())); //$NON-NLS-1$
+			System.out
+					.print("  RelatedNode: " + (relatedNode == null ? null : relatedNode.getNodeName())); //$NON-NLS-1$
 
 			nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
 			String name = targetNode != null ? targetNode.getNodeName() : null;
 			System.out.print("  TargetNode: " + name + " (" + targetNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-			System.out.print("  PrevValue: " + mutationEvent.getPrevValue().trim()); //$NON-NLS-1$
-			System.out.print("  NewValue: " + mutationEvent.getNewValue().trim()); //$NON-NLS-1$
+			System.out
+					.print("  PrevValue: " + mutationEvent.getPrevValue().trim()); //$NON-NLS-1$
+			System.out
+					.print("  NewValue: " + mutationEvent.getNewValue().trim()); //$NON-NLS-1$
 		}
 		System.out.println();
 	}
@@ -1566,22 +1657,24 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 	}
 
-//	void refreshBundleValues() {
-//		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-//			return;
-//		}
-//		try {
-//			if (bundle != null) {
-//				bundle.refresh();
-//				if (pageContext != null) {
-//					pageContext.refreshBundleValues();
-//				}
-//			}
-//		} finally {
-//			switcher.stopActiveEditor();
-//		}
-//	}
-//
+	// void refreshBundleValues() {
+	// if
+	// (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE))
+	// {
+	// return;
+	// }
+	// try {
+	// if (bundle != null) {
+	// bundle.refresh();
+	// if (pageContext != null) {
+	// pageContext.refreshBundleValues();
+	// }
+	// }
+	// } finally {
+	// switcher.stopActiveEditor();
+	// }
+	// }
+	//
 	void refreshTemplates() {
 		if (includeList.includesRefresh()) {
 			visualRefresh();
@@ -1592,7 +1685,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		if (bundle != null) {
 			bundle.refresh();
 			if (pageContext != null) {
-				if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+				if (!switcher
+						.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 					return;
 				}
 				try {
@@ -1612,162 +1706,163 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	public void structureChanged(XModelTreeEvent event) {
 	}
 
-//	private Node getSourceNodeAt(int offset) {
-//		if (sourceEditor != null && getModel() != null) {
-//			IndexedRegion node = getModel().getIndexedRegion(offset);
-//			if (node instanceof IDOMNode) {
-//				VpeElementMapping elementMapping = domMapping
-//						.getNearElementMapping((IDOMNode) node);
-//				if (elementMapping != null) {
-//					if (node instanceof IDOMElement) {
-//						IDOMElement element = (IDOMElement) node;
-//
-//						if (offset < element.getEndStartOffset()) {
-//							NamedNodeMap attrs = element.getAttributes();
-//							if (attrs != null) {
-//								for (int i = 0; i < attrs.getLength(); i++) {
-//									if (attrs.item(i) instanceof AttrImpl) {
-//										AttrImpl attr = (AttrImpl) attrs.item(i);
-//										if (getSourceAttributeOffset(attr, offset) != -1) {
-//											String[] atributeNames = elementMapping.getTemplate().getOutputAtributeNames();
-//											if (atributeNames != null
-//													&& atributeNames.length > 0
-//													&& attr.getName().equalsIgnoreCase(atributeNames[0])) {
-//												return attr;
-//											}
-//										}
-//									}
-//								}
-//							}
-//						}
-//					}
-//				}
-//			}
-//			if (node == null) {
-//				node = getModel().getIndexedRegion(offset - 1);
-//			}
-//			if (node instanceof Node) {
-//				return (Node) node;
-//			}
-//		}
-//		return null;
-//	}
-//
-//	private int getSourceNodeOffset(Node node, int pos, boolean endFlag) {
-//		if (node == null)
-//			return 0;
-//		int start = ((IndexedRegion) node).getStartOffset();
-//		int end = ((IndexedRegion) node).getEndOffset();
-//
-//		switch (node.getNodeType()) {
-//		case Node.ATTRIBUTE_NODE:
-//			if (node instanceof AttrImpl) {
-//				return getSourceAttributeOffset((AttrImpl) node, pos);
-//			}
-//		case Node.TEXT_NODE:
-//			if (pos < start) {
-//				return 0;
-//			} else if (pos > end) {
-//				return end - start;
-//			} else {
-//				return pos - start;
-//			}
-//		case Node.COMMENT_NODE:
-//			if (pos > end) {
-//				pos = end;
-//			}
-//			int offset = pos - start - 4;
-//			return offset < 0 ? 0 : offset;
-//		case Node.ELEMENT_NODE:
-//			ElementImpl element = (ElementImpl) node;
-//			if (element.isContainer()) {
-//				if (pos < element.getStartEndOffset()) {
-//					return 0;
-//				} else {
-//					return 1;
-//				}
-//			} else {
-//				return endFlag ? 1 : 0;
-//			}
-//		default:
-//			return endFlag ? 1 : 0;
-//		}
-//	}
-//
-//	private int getSourceAttributeOffset(AttrImpl attr, int pos) {
-//		if (attr.getValueRegion() != null) {
-//			int start = attr.getValueRegionStartOffset();
-//			String value = attr.getValueRegionText();
-//			int len = value.length();
-//			if (pos >= start && pos <= start + len) {
-//				int offset = pos - start;
-//				if (len > 1 && value.charAt(0) == '"'
-//						&& value.charAt(len - 1) == '"') {
-//					if (offset <= 0 || offset >= len) {
-//						return -1;
-//					}
-//					offset--;
-//				}
-//				return offset;
-//			}
-//		}
-//		return -1;
-//	}
-//
-//	private int getSourceNodeOffset1(Node node, int pos, boolean endFlag) {
-//		if (node == null)
-//			return 0;
-//		int start = ((IndexedRegion) node).getStartOffset();
-//		int end = ((IndexedRegion) node).getEndOffset();
-//
-//		switch (node.getNodeType()) {
-//		case Node.ATTRIBUTE_NODE:
-//			if (node instanceof AttrImpl) {
-//				AttrImpl attr = (AttrImpl) node;
-//				start = attr.getValueRegionStartOffset();
-//				end = start + attr.getValueRegion().getLength();
-//				int ret = 0;
-//				if (pos > end) {
-//					ret = end - start;
-//				} else {
-//					ret = pos - start;
-//				}
-//				if (ret > 0 && attr.getValueRegionText().charAt(0) == '"') {
-//					ret--;
-//				}
-//				return ret;
-//			}
-//		case Node.TEXT_NODE:
-//			if (pos < start) {
-//				return 0;
-//			} else if (pos > end) {
-//				return end - start;
-//			} else {
-//				return pos - start;
-//			}
-//		case Node.COMMENT_NODE:
-//			if (pos > end) {
-//				pos = end;
-//			}
-//			int offset = pos - start - 4;
-//			return offset < 0 ? 0 : offset;
-//		case Node.ELEMENT_NODE:
-//			ElementImpl element = (ElementImpl) node;
-//			if (element.isContainer()) {
-//				if (pos < element.getStartEndOffset()) {
-//					return 0;
-//				} else if (pos < element.getStartEndOffset()) {
-//					return 1;
-//				} else if (pos == element.getStartEndOffset()) {
-//					return 2;
-//				}
-//			} else {
-//				return endFlag ? 1 : 0;
-//			}
-//		default:
-//			return endFlag ? 1 : 0;
-//		}
-//	}
+	// private Node getSourceNodeAt(int offset) {
+	// if (sourceEditor != null && getModel() != null) {
+	// IndexedRegion node = getModel().getIndexedRegion(offset);
+	// if (node instanceof IDOMNode) {
+	// VpeElementMapping elementMapping = domMapping
+	// .getNearElementMapping((IDOMNode) node);
+	// if (elementMapping != null) {
+	// if (node instanceof IDOMElement) {
+	// IDOMElement element = (IDOMElement) node;
+	//
+	// if (offset < element.getEndStartOffset()) {
+	// NamedNodeMap attrs = element.getAttributes();
+	// if (attrs != null) {
+	// for (int i = 0; i < attrs.getLength(); i++) {
+	// if (attrs.item(i) instanceof AttrImpl) {
+	// AttrImpl attr = (AttrImpl) attrs.item(i);
+	// if (getSourceAttributeOffset(attr, offset) != -1) {
+	// String[] atributeNames =
+	// elementMapping.getTemplate().getOutputAtributeNames();
+	// if (atributeNames != null
+	// && atributeNames.length > 0
+	// && attr.getName().equalsIgnoreCase(atributeNames[0])) {
+	// return attr;
+	// }
+	// }
+	// }
+	// }
+	// }
+	// }
+	// }
+	// }
+	// }
+	// if (node == null) {
+	// node = getModel().getIndexedRegion(offset - 1);
+	// }
+	// if (node instanceof Node) {
+	// return (Node) node;
+	// }
+	// }
+	// return null;
+	// }
+	//
+	// private int getSourceNodeOffset(Node node, int pos, boolean endFlag) {
+	// if (node == null)
+	// return 0;
+	// int start = ((IndexedRegion) node).getStartOffset();
+	// int end = ((IndexedRegion) node).getEndOffset();
+	//
+	// switch (node.getNodeType()) {
+	// case Node.ATTRIBUTE_NODE:
+	// if (node instanceof AttrImpl) {
+	// return getSourceAttributeOffset((AttrImpl) node, pos);
+	// }
+	// case Node.TEXT_NODE:
+	// if (pos < start) {
+	// return 0;
+	// } else if (pos > end) {
+	// return end - start;
+	// } else {
+	// return pos - start;
+	// }
+	// case Node.COMMENT_NODE:
+	// if (pos > end) {
+	// pos = end;
+	// }
+	// int offset = pos - start - 4;
+	// return offset < 0 ? 0 : offset;
+	// case Node.ELEMENT_NODE:
+	// ElementImpl element = (ElementImpl) node;
+	// if (element.isContainer()) {
+	// if (pos < element.getStartEndOffset()) {
+	// return 0;
+	// } else {
+	// return 1;
+	// }
+	// } else {
+	// return endFlag ? 1 : 0;
+	// }
+	// default:
+	// return endFlag ? 1 : 0;
+	// }
+	// }
+	//
+	// private int getSourceAttributeOffset(AttrImpl attr, int pos) {
+	// if (attr.getValueRegion() != null) {
+	// int start = attr.getValueRegionStartOffset();
+	// String value = attr.getValueRegionText();
+	// int len = value.length();
+	// if (pos >= start && pos <= start + len) {
+	// int offset = pos - start;
+	// if (len > 1 && value.charAt(0) == '"'
+	// && value.charAt(len - 1) == '"') {
+	// if (offset <= 0 || offset >= len) {
+	// return -1;
+	// }
+	// offset--;
+	// }
+	// return offset;
+	// }
+	// }
+	// return -1;
+	// }
+	//
+	// private int getSourceNodeOffset1(Node node, int pos, boolean endFlag) {
+	// if (node == null)
+	// return 0;
+	// int start = ((IndexedRegion) node).getStartOffset();
+	// int end = ((IndexedRegion) node).getEndOffset();
+	//
+	// switch (node.getNodeType()) {
+	// case Node.ATTRIBUTE_NODE:
+	// if (node instanceof AttrImpl) {
+	// AttrImpl attr = (AttrImpl) node;
+	// start = attr.getValueRegionStartOffset();
+	// end = start + attr.getValueRegion().getLength();
+	// int ret = 0;
+	// if (pos > end) {
+	// ret = end - start;
+	// } else {
+	// ret = pos - start;
+	// }
+	// if (ret > 0 && attr.getValueRegionText().charAt(0) == '"') {
+	// ret--;
+	// }
+	// return ret;
+	// }
+	// case Node.TEXT_NODE:
+	// if (pos < start) {
+	// return 0;
+	// } else if (pos > end) {
+	// return end - start;
+	// } else {
+	// return pos - start;
+	// }
+	// case Node.COMMENT_NODE:
+	// if (pos > end) {
+	// pos = end;
+	// }
+	// int offset = pos - start - 4;
+	// return offset < 0 ? 0 : offset;
+	// case Node.ELEMENT_NODE:
+	// ElementImpl element = (ElementImpl) node;
+	// if (element.isContainer()) {
+	// if (pos < element.getStartEndOffset()) {
+	// return 0;
+	// } else if (pos < element.getStartEndOffset()) {
+	// return 1;
+	// } else if (pos == element.getStartEndOffset()) {
+	// return 2;
+	// }
+	// } else {
+	// return endFlag ? 1 : 0;
+	// }
+	// default:
+	// return endFlag ? 1 : 0;
+	// }
+	// }
 
 	class VpeSelectionProvider implements ISelectionProvider {
 		VpeSelection selection;
@@ -1784,10 +1879,12 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			selection = new VpeSelection(offset, length);
 		}
 
-		public void addSelectionChangedListener(ISelectionChangedListener listener) {
+		public void addSelectionChangedListener(
+				ISelectionChangedListener listener) {
 		}
 
-		public void removeSelectionChangedListener(ISelectionChangedListener listener) {
+		public void removeSelectionChangedListener(
+				ISelectionChangedListener listener) {
 		}
 
 		public ISelection getSelection() {
@@ -1812,12 +1909,12 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			this.length = length;
 			if (length > 0) {
 
-					try {
-						text = sourceEditor.getTextViewer().getDocument().get(
-								offset, length);
-					} catch (BadLocationException e) {
-						VpePlugin.getPluginLog().logError(e);
-					}
+				try {
+					text = sourceEditor.getTextViewer().getDocument().get(
+							offset, length);
+				} catch (BadLocationException e) {
+					VpePlugin.getPluginLog().logError(e);
+				}
 
 			}
 		}
@@ -1968,13 +2065,14 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			}
 			switch (dragNode.getNodeType()) {
 			case nsIDOMNode.ELEMENT_NODE: {
-				canDrag = visualBuilder.canInnerDrag((nsIDOMElement) dragNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
+				canDrag = visualBuilder.canInnerDrag((nsIDOMElement) dragNode
+						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
 				break;
 			}
 			case nsIDOMNode.TEXT_NODE: {
 				canDrag = visualBuilder.isTextEditable(dragNode);
 				break;
-				}
+			}
 			}
 			if (canDrag) {
 				VpeSourceInnerDragInfo sourceInnerDragInfo = visualBuilder
@@ -2039,24 +2137,24 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					.getInnerDropInfo(event);
 			if (visualDropInfo.getDropContainer() != null) {
 				if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
-					System.out.print(
-							"  x: "  //$NON-NLS-1$
-							+ visualDropInfo.getMouseX() 
-							+ "  y: "			//$NON-NLS-1$
-							+ visualDropInfo.getMouseY() 
-							+ "  container: " 	//$NON-NLS-1$
+					System.out.print("  x: " //$NON-NLS-1$
+							+ visualDropInfo.getMouseX()
+							+ "  y: " //$NON-NLS-1$
+							+ visualDropInfo.getMouseY()
+							+ "  container: " //$NON-NLS-1$
 							+ visualDropInfo.getDropContainer().getNodeName()
-							+ "(" 				//$NON-NLS-1$
-							+ visualDropInfo.getDropContainer() 
-							+ ")  parent: " 	//$NON-NLS-1$
-							+ visualDropInfo.getDropContainer().getParentNode().getNodeName()
-							+ "("				//$NON-NLS-1$
+							+ "(" //$NON-NLS-1$
+							+ visualDropInfo.getDropContainer()
+							+ ")  parent: " //$NON-NLS-1$
 							+ visualDropInfo.getDropContainer().getParentNode()
-							+ ")  offset: " 	//$NON-NLS-1$
+									.getNodeName()
+							+ "(" //$NON-NLS-1$
+							+ visualDropInfo.getDropContainer().getParentNode()
+							+ ")  offset: " //$NON-NLS-1$
 							+ visualDropInfo.getDropOffset());
 				}
-				VpeSourceInnerDragInfo sourceInnerDragInfo = 
-					visualBuilder.getSourceInnerDragInfo(innerDragInfo);
+				VpeSourceInnerDragInfo sourceInnerDragInfo = visualBuilder
+						.getSourceInnerDragInfo(innerDragInfo);
 				VpeSourceInnerDropInfo sourceDropInfo = visualBuilder
 						.getSourceInnerDropInfo(sourceInnerDragInfo.getNode(),
 								visualDropInfo, true);
@@ -2241,8 +2339,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		IDropCommand dropCommand = DropCommandFactory.getInstance()
 				.getDropCommand(flavor, JSPTagProposalFactory.getInstance());
 
-		boolean promptAttributes = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
-				IVpePreferencesPage.ASK_TAG_ATTRIBUTES_ON_TAG_INSERT);
+		boolean promptAttributes = JspEditorPlugin.getDefault()
+				.getPreferenceStore().getBoolean(
+						IVpePreferencesPage.ASK_TAG_ATTRIBUTES_ON_TAG_INSERT);
 		dropCommand.getDefaultModel().setPromptForTagAttributesRequired(
 				promptAttributes);
 		DropData dropData = new DropData(flavor, data, sourceEditor
@@ -2250,13 +2349,14 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				.getAdapter(ISourceViewer.class), new VpeSelectionProvider(
 				range.x, range.y), container);
 		/*
-		 * https://jira.jboss.org/jira/browse/JBIDE-4982
-		 * Setting the value provider to create tag insert dialog.
+		 * https://jira.jboss.org/jira/browse/JBIDE-4982 Setting the value
+		 * provider to create tag insert dialog.
 		 */
 		if (sourceEditor instanceof JSPTextEditor) {
-			dropData.setValueProvider(((JSPTextEditor) sourceEditor).createAttributeDescriptorValueProvider());
+			dropData.setValueProvider(((JSPTextEditor) sourceEditor)
+					.createAttributeDescriptorValueProvider());
 		}
-		
+
 		dropCommand.execute(dropData);
 	}
 
@@ -2274,82 +2374,88 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 		return tagname;
 	}
-	
-	public void externalDrop(nsIDOMMouseEvent mouseEvent, String flavor, String data) {
-        onHideTooltip();
 
-        VpeVisualInnerDropInfo visualDropInfo = selectionBuilder.getInnerDropInfo(mouseEvent);
-        Point range = selectionBuilder.getSourceSelectionRangeAtVisualNode(visualDropInfo.getDropContainer(), (int) visualDropInfo
-                .getDropOffset());
-        
-        // if (MODEL_FLAVOR.equals(flavor)) {
-        // XModelObject object = PreferenceModelUtilities.getPreferenceModel()
-        // .getModelBuffer().source();
-        // if(object == null)
+	public void externalDrop(nsIDOMMouseEvent mouseEvent, String flavor,
+			String data) {
+		onHideTooltip();
 
-        final DragTransferData dragTransferData = DndUtil.getDragTransferData();
+		VpeVisualInnerDropInfo visualDropInfo = selectionBuilder
+				.getInnerDropInfo(mouseEvent);
+		Point range = selectionBuilder.getSourceSelectionRangeAtVisualNode(
+				visualDropInfo.getDropContainer(), (int) visualDropInfo
+						.getDropOffset());
+
+		// if (MODEL_FLAVOR.equals(flavor)) {
+		// XModelObject object = PreferenceModelUtilities.getPreferenceModel()
+		// .getModelBuffer().source();
+		// if(object == null)
+
+		final DragTransferData dragTransferData = DndUtil.getDragTransferData();
 		final nsISupports aValue = dragTransferData.getValue();
 
-        String aFlavor = ""; //$NON-NLS-1$
-        if (VpeDndUtil.isNsIFileInstance(aValue)) {
-            nsIFile aFile = (nsIFile) aValue.queryInterface(nsIFile.NS_IFILE_IID);
-            
-        		// because it is external, convert the path to URL
-            final String path = aFile.getPath();
-			data = path != null ? DropUtils.convertPathToUrl(path) 
-									: null;
+		String aFlavor = ""; //$NON-NLS-1$
+		if (VpeDndUtil.isNsIFileInstance(aValue)) {
+			nsIFile aFile = (nsIFile) aValue
+					.queryInterface(nsIFile.NS_IFILE_IID);
+
+			// because it is external, convert the path to URL
+			final String path = aFile.getPath();
+			data = path != null ? DropUtils.convertPathToUrl(path) : null;
 			aFlavor = DndUtil.kFileMime;
 
-        } else if (VpeDndUtil.isNsICStringInstance(aValue)) {
-            nsISupportsCString aString = (nsISupportsCString) aValue.queryInterface(nsISupportsCString.NS_ISUPPORTSCSTRING_IID);
-            data = aString.getData();
-            aFlavor = DndUtil.kHTMLMime;
-        } else if (VpeDndUtil.isNsIStringInstance(aValue)) {
-        	nsISupportsString aString =  (nsISupportsString) aValue.queryInterface(nsISupportsString.NS_ISUPPORTSSTRING_IID);
-        	data = aString.getData();
-        	if (MODEL_FLAVOR.equals( dragTransferData.getFlavor() )) {
-        		aFlavor = dragTransferData.getFlavor();
-        	} else {
-        		aFlavor = DndUtil.kURLMime;
-        	}
-        }
+		} else if (VpeDndUtil.isNsICStringInstance(aValue)) {
+			nsISupportsCString aString = (nsISupportsCString) aValue
+					.queryInterface(nsISupportsCString.NS_ISUPPORTSCSTRING_IID);
+			data = aString.getData();
+			aFlavor = DndUtil.kHTMLMime;
+		} else if (VpeDndUtil.isNsIStringInstance(aValue)) {
+			nsISupportsString aString = (nsISupportsString) aValue
+					.queryInterface(nsISupportsString.NS_ISUPPORTSSTRING_IID);
+			data = aString.getData();
+			if (MODEL_FLAVOR.equals(dragTransferData.getFlavor())) {
+				aFlavor = dragTransferData.getFlavor();
+			} else {
+				aFlavor = DndUtil.kURLMime;
+			}
+		}
 
-        // if (object.getFileType() == XModelObject.FILE
-        // && !TLDUtil.isTaglib(object)) {
-        //              flavor = "application/x-moz-file"; //$NON-NLS-1$
-        // IFile f = (IFile) EclipseResourceUtil.getResource(object);
-        // try {
-        // data = f.getLocation().toFile().toURL().toString();
-        // } catch (Exception e) {
-        // VpePlugin.getPluginLog().logError(e);
-        // }
-        // } else {
-        // String tagname = getTagName(object);
-        //              if (tagname.indexOf("taglib") >= 0)tagname = "taglib"; //$NON-NLS-1$ //$NON-NLS-2$
-        // Node sourceDragNode = ((Document) getModel().getAdapter(
-        // Document.class)).createElement(tagname);
-        // if (visualDropInfo.getDropContainer() != null) {
-        // sourceDropInfo = visualBuilder.getSourceInnerDropInfo(
-        // sourceDragNode, visualDropInfo, true);
-        // range = selectionBuilder.getSourceSelectionRange(
-        // sourceDropInfo.getContainer(), sourceDropInfo
-        // .getOffset());
-        // }
-        // }
+		// if (object.getFileType() == XModelObject.FILE
+		// && !TLDUtil.isTaglib(object)) {
+		//              flavor = "application/x-moz-file"; //$NON-NLS-1$
+		// IFile f = (IFile) EclipseResourceUtil.getResource(object);
+		// try {
+		// data = f.getLocation().toFile().toURL().toString();
+		// } catch (Exception e) {
+		// VpePlugin.getPluginLog().logError(e);
+		// }
+		// } else {
+		// String tagname = getTagName(object);
+		//              if (tagname.indexOf("taglib") >= 0)tagname = "taglib"; //$NON-NLS-1$ //$NON-NLS-2$
+		// Node sourceDragNode = ((Document) getModel().getAdapter(
+		// Document.class)).createElement(tagname);
+		// if (visualDropInfo.getDropContainer() != null) {
+		// sourceDropInfo = visualBuilder.getSourceInnerDropInfo(
+		// sourceDragNode, visualDropInfo, true);
+		// range = selectionBuilder.getSourceSelectionRange(
+		// sourceDropInfo.getContainer(), sourceDropInfo
+		// .getOffset());
+		// }
+		// }
 
-        if (visualDropInfo.getDropContainer() != null && data != null) {
-            if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
-                System.out.println("  drop!  container: " + visualDropInfo.getDropContainer().getNodeName()); //$NON-NLS-1$
-            }
-            externalDropAny(aFlavor, data, range,null);
+		if (visualDropInfo.getDropContainer() != null && data != null) {
+			if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
+				System.out
+						.println("  drop!  container: " + visualDropInfo.getDropContainer().getNodeName()); //$NON-NLS-1$
+			}
+			externalDropAny(aFlavor, data, range, null);
 
-            // TypedEvent tEvent = new TypedEvent(mouseEvent);
-            // tEvent.data = data;
-            // dropContext.setFlavor(aFlavor);
-            // dropContext.setMimeData(data);
-            // DnDUtil.fireDnDEvent(dropContext, textEditor, tEvent);
-        }
-    }
+			// TypedEvent tEvent = new TypedEvent(mouseEvent);
+			// tEvent.data = data;
+			// dropContext.setFlavor(aFlavor);
+			// dropContext.setMimeData(data);
+			// DnDUtil.fireDnDEvent(dropContext, textEditor, tEvent);
+		}
+	}
 
 	public void onShowTooltip(int x, int y, final String text) {
 
@@ -2525,16 +2631,15 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	public VpeIncludeList getIncludeList() {
 
 		if (includeList == null)
-				VpePlugin.getPluginLog().logError("includeList - NULL!!!"); //$NON-NLS-1$
+			VpePlugin.getPluginLog().logError("includeList - NULL!!!"); //$NON-NLS-1$
 
 		return includeList;
 	}
-	
+
 	/**
-	 * Processed selection events from source editor,
-	 * if reason of selection is visial editor,
-	 * selection will be stopped processing by 
-	 * this condition (!switcher.startActiveEditor)
+	 * Processed selection events from source editor, if reason of selection is
+	 * visial editor, selection will be stopped processing by this condition
+	 * (!switcher.startActiveEditor)
 	 */
 	public void selectionChanged(SelectionChangedEvent event) {
 		if (selectionBar != null)
@@ -2551,13 +2656,15 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				toolbarFormatControllerManager.selectionChanged();
 		}
 
-		if (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
 			return;
 		}
 		try {
-			
+
 			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-				System.out.println(">>>>>>>>>>>>>> selectionChanged  " + event.getSource()); //$NON-NLS-1$
+				System.out
+						.println(">>>>>>>>>>>>>> selectionChanged  " + event.getSource()); //$NON-NLS-1$
 			}
 			sourceSelectionChanged();
 		} finally {
@@ -2566,7 +2673,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	// nsIClipboardDragDropHooks implementation
-	public void onPasteOrDrop(nsIDOMMouseEvent mouseEvent, String flavor, String data) {
+	public void onPasteOrDrop(nsIDOMMouseEvent mouseEvent, String flavor,
+			String data) {
 		onHideTooltip();
 
 		VpeVisualInnerDropInfo visualDropInfo = selectionBuilder
@@ -2592,7 +2700,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 		if (visualDropInfo.getDropContainer() != null) {
 			if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
-				System.out.println("  drop!  container: " + visualDropInfo.getDropContainer().getNodeName()); //$NON-NLS-1$
+				System.out
+						.println("  drop!  container: " + visualDropInfo.getDropContainer().getNodeName()); //$NON-NLS-1$
 			}
 			final String finalFlavor = flavor;
 			final String finalData = data;
@@ -2711,15 +2820,16 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 		return changeEvents;
 	}
-	public void reinit(){
-		if(reinitJob!=null) {
+
+	public void reinit() {
+		if (reinitJob != null) {
 			reinitJob.cancel();
 		}
 		reinitJob = new UIJob(VpeUIMessages.VPE_VISUAL_REFRESH_JOB) {
 
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
-				if(monitor.isCanceled()) {
+				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
 				reinitImpl();
@@ -2731,9 +2841,10 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	private void reinitImpl() {
 		try {
-			if(switcher==null ||
-					!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-					return;
+			if (switcher == null
+					|| !switcher
+							.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+				return;
 			}
 
 			// this method must be invoked before any visual
@@ -2741,7 +2852,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			visualEditor.reinitDesignMode();
 
 			visualBuilder.setSelectionRectangle(null);
-			visualEditor.setEditorDomEventListener(this);	
+			visualEditor.setEditorDomEventListener(this);
 			IDOMModel sourceModel = (IDOMModel) getModel();
 			if (sourceModel != null) {
 				IDOMDocument sourceDocument = sourceModel.getDocument();
@@ -2749,29 +2860,33 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			} else {
 				visualBuilder.rebuildDom(null);
 			}
-			//reinits selection controller+ controller
-			visualSelectionController = new VpeSelectionController(visualEditor.getEditor().getSelectionController());
-		
-			selectionBuilder = new VpeSelectionBuilder(domMapping, sourceBuilder,
-					visualBuilder, visualSelectionController);
-	
-			selectionManager = new SelectionManager(pageContext,
-					sourceEditor, visualSelectionController);
-	
+			// reinits selection controller+ controller
+			visualSelectionController = new VpeSelectionController(visualEditor
+					.getEditor().getSelectionController());
+
+			selectionBuilder = new VpeSelectionBuilder(domMapping,
+					sourceBuilder, visualBuilder, visualSelectionController);
+
+			selectionManager = new SelectionManager(pageContext, sourceEditor,
+					visualSelectionController);
+
 			keyEventHandler = new KeyEventManager(sourceEditor, domMapping,
 					pageContext);
-			//restore selection in visula part
+			float currentZoom = zoomEventManager.getCurrentZoom();
+			zoomEventManager = new ZoomEventManager(getXulRunnerEditor());
+			zoomEventManager.setCurrentZoom(currentZoom);
+			((KeyEventManager)keyEventHandler).setZoomEventManager(zoomEventManager);
+			// restore selection in visula part
 			sourceSelectionChanged();
-		}catch(VpeDisposeException ex) {
-			//vpe vas closed when refresh job is running, so just 
-			//ignore this exception
-		}
-		finally {
-			if(switcher!=null) {
+		} catch (VpeDisposeException ex) {
+			// vpe vas closed when refresh job is running, so just
+			// ignore this exception
+		} finally {
+			if (switcher != null) {
 				switcher.stopActiveEditor();
 			}
 		}
-			
+
 	}
 
 	/**
@@ -2780,7 +2895,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	public VpeSelectionController getVisualSelectionController() {
 		return visualSelectionController;
 	}
-	
+
 	/**
 	 * 
 	 * @return sourceBuilder
@@ -2788,7 +2903,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	public VpeSourceDomBuilder getSourceBuilder() {
 		return sourceBuilder;
 	}
-	
+
 	/**
 	 * 
 	 * @return visualBuilder
@@ -2805,7 +2920,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	/**
-	 * @param vpeUpdateDelayTime the vpeUpdateDelayTime to set
+	 * @param vpeUpdateDelayTime
+	 *            the vpeUpdateDelayTime to set
 	 */
 	private void setVpeUpdateDelayTime(int vpeUpdateDelayTime) {
 		this.vpeUpdateDelayTime = vpeUpdateDelayTime;
@@ -2817,12 +2933,21 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	public ISelectionManager getSelectionManager() {
 		return selectionManager;
 	}
-	
+
 	/*
-	 * https://jira.jboss.org/jira/browse/JBIDE-4968
-	 * Updating VPE toolbar on selection bar changes.
+	 * https://jira.jboss.org/jira/browse/JBIDE-4968 Updating VPE toolbar on
+	 * selection bar changes.
 	 */
 	public void updateVpeToolbar() {
 		visualEditor.updateShowSelectionBarItem(selectionBar.isVisible());
 	}
+
+	public IZoomEventManager getZoomEventManager() {
+		return zoomEventManager;
+	}
+
+	public void setZoomEventManager(IZoomEventManager zoomEventManager) {
+		this.zoomEventManager = zoomEventManager;
+	}
+
 }

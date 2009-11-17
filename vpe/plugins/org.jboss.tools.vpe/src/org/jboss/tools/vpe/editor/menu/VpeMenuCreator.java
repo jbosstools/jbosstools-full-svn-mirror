@@ -23,6 +23,7 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.vpe.VpeDebug;
+import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.menu.action.EditAttributesAction;
@@ -30,6 +31,7 @@ import org.jboss.tools.vpe.editor.menu.action.SelectThisTagAction;
 import org.jboss.tools.vpe.editor.menu.action.StripTagAction;
 import org.jboss.tools.vpe.editor.menu.action.ComplexAction;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
+import org.jboss.tools.vpe.editor.template.IZoomEventManager;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.xulrunner.browser.util.DOMTreeDumper;
@@ -39,8 +41,7 @@ import org.w3c.dom.Node;
 /**
  * This class is used to create context menu for VPE.
  * 
- * @author yradtsevich 
- * (based on the implementation of MenuCreationHelper)
+ * @author yradtsevich (based on the implementation of MenuCreationHelper)
  */
 public class VpeMenuCreator {
 	private final MenuManager menuManager;
@@ -63,9 +64,10 @@ public class VpeMenuCreator {
 	/**
 	 * Inserts new menu items into {@link #menuManager}.
 	 * 
-	 * @param topLevelMenu if it is {@code true} then the menu will contain
-	 * elements for the top level variant of the VPE menu, otherwise - elements 
-	 * for the sub menu variant.
+	 * @param topLevelMenu
+	 *            if it is {@code true} then the menu will contain elements for
+	 *            the top level variant of the VPE menu, otherwise - elements
+	 *            for the sub menu variant.
 	 * 
 	 * @see #addParentTagMenuItem(Element)
 	 */
@@ -86,7 +88,10 @@ public class VpeMenuCreator {
 		menuManager.add(new InsertContributionItem(node));
 		addIfEnabled(new StripTagAction(node));
 		addSeparator();
-
+		if (topLevelMenu) {
+			addZoomActions();
+		}
+		addSeparator();
 		if (topLevelMenu) {
 			addIfEnabled(new DumpSourceAction());
 			addIfEnabled(new DumpSelectedElementAction());
@@ -98,7 +103,7 @@ public class VpeMenuCreator {
 	}
 
 	/**
-	 * Creates the Cut, Copy and Paste actions. 
+	 * Creates the Cut, Copy and Paste actions.
 	 */
 	private void addCutCopyPasteActions(boolean topLevelMenu) {
 		final IAction cutAction = getSourceEditorAction(ActionFactory.CUT);
@@ -118,14 +123,13 @@ public class VpeMenuCreator {
 				menuManager.add(new ComplexAction(copyAction.getText(),
 						selectAction, copyAction));
 				menuManager.add(new ComplexAction(pasteAction.getText(),
-						selectAction, pasteAction));				
+						selectAction, pasteAction));
 			}
 		}
 	}
 
 	/**
-	 * If the {@code action} is enabled, adds it to
-	 * the {@link #menuManager}.
+	 * If the {@code action} is enabled, adds it to the {@link #menuManager}.
 	 */
 	private void addIfEnabled(IAction action) {
 		if (action.isEnabled()) {
@@ -136,7 +140,8 @@ public class VpeMenuCreator {
 	/**
 	 * Adds a menu item for operations on {@code parent} element.
 	 * 
-	 * @param parent the parent element
+	 * @param parent
+	 *            the parent element
 	 */
 	private void addParentTagMenuItem(final Element parent) {
 		final String itemName = MessageFormat.format(
@@ -155,8 +160,8 @@ public class VpeMenuCreator {
 	}
 
 	/**
-	 * Adds a separator. If {@link #menuManager} is empty or the last
-	 * item already is a separator, does nothing.
+	 * Adds a separator. If {@link #menuManager} is empty or the last item
+	 * already is a separator, does nothing.
 	 */
 	private void addSeparator() {
 		final int size = menuManager.getSize();
@@ -170,16 +175,16 @@ public class VpeMenuCreator {
 
 	/**
 	 * Returns an action of the source editor.
-	 *
-	 * @param actionFactory instance of {@link ActionFactory} 
-	 *        which identifies the action of the item.
+	 * 
+	 * @param actionFactory
+	 *            instance of {@link ActionFactory} which identifies the action
+	 *            of the item.
 	 */
 	private IAction getSourceEditorAction(final ActionFactory actionFactory) {
 		final AbstractTextEditor sourceEditor = vpeMenuUtil.getSourceEditor();
 		final IAction action = sourceEditor.getAction(actionFactory.getId());
 		return action;
 	}
-
 
 	/**
 	 * Test action. For the debugging purposes only.
@@ -198,10 +203,9 @@ public class VpeMenuCreator {
 			return VpeDebug.VISUAL_CONTEXTMENU_TEST;
 		}
 	}
-	
+
 	/**
-	 * Action to dump source of VPE.
-	 * For debugging purposes only.
+	 * Action to dump source of VPE. For debugging purposes only.
 	 */
 	public class DumpSourceAction extends Action {
 		public DumpSourceAction() {
@@ -210,12 +214,11 @@ public class VpeMenuCreator {
 
 		@Override
 		public void run() {
-			final MozillaEditor visualEditor
-					= vpeMenuUtil.getMozillaEditor();
+			final MozillaEditor visualEditor = vpeMenuUtil.getMozillaEditor();
 			DOMTreeDumper dumper = new DOMTreeDumper(
 					VpeDebug.VISUAL_DUMP_PRINT_HASH);
-			dumper.setIgnoredAttributes(
-					VpeDebug.VISUAL_DUMP_IGNORED_ATTRIBUTES);
+			dumper
+					.setIgnoredAttributes(VpeDebug.VISUAL_DUMP_IGNORED_ATTRIBUTES);
 			dumper.dumpToStream(System.out, visualEditor.getDomDocument());
 		}
 
@@ -226,8 +229,8 @@ public class VpeMenuCreator {
 	}
 
 	/**
-	 * Action to dump source of the selected VPE element.
-	 * For debugging purposes only.
+	 * Action to dump source of the selected VPE element. For debugging purposes
+	 * only.
 	 */
 	public class DumpSelectedElementAction extends Action {
 		public DumpSelectedElementAction() {
@@ -236,18 +239,16 @@ public class VpeMenuCreator {
 
 		@Override
 		public void run() {
-			final StructuredTextEditor sourceEditor
-					= vpeMenuUtil.getSourceEditor();
-			final VpeDomMapping domMapping
-					= vpeMenuUtil.getDomMapping();
-			final VpeNodeMapping nodeMapping
-					= SelectionUtil.getNodeMappingBySourceSelection(
-							sourceEditor, domMapping);
+			final StructuredTextEditor sourceEditor = vpeMenuUtil
+					.getSourceEditor();
+			final VpeDomMapping domMapping = vpeMenuUtil.getDomMapping();
+			final VpeNodeMapping nodeMapping = SelectionUtil
+					.getNodeMappingBySourceSelection(sourceEditor, domMapping);
 			if (nodeMapping != null) {
 				DOMTreeDumper dumper = new DOMTreeDumper(
 						VpeDebug.VISUAL_DUMP_PRINT_HASH);
-				dumper.setIgnoredAttributes(
-						VpeDebug.VISUAL_DUMP_IGNORED_ATTRIBUTES);
+				dumper
+						.setIgnoredAttributes(VpeDebug.VISUAL_DUMP_IGNORED_ATTRIBUTES);
 				dumper.dumpNode(nodeMapping.getVisualNode());
 			}
 		}
@@ -257,10 +258,9 @@ public class VpeMenuCreator {
 			return VpeDebug.VISUAL_CONTEXTMENU_DUMP_SELECTED_ELEMENT;
 		}
 	}
-	
+
 	/**
-	 * Action to print the {@link #domMapping}.
-	 * For debugging purposes only. 
+	 * Action to print the {@link #domMapping}. For debugging purposes only.
 	 */
 	public class DumpMappingAction extends Action {
 		public DumpMappingAction() {
@@ -269,8 +269,7 @@ public class VpeMenuCreator {
 
 		@Override
 		public void run() {
-			final VpeDomMapping domMapping
-					= vpeMenuUtil.getDomMapping();
+			final VpeDomMapping domMapping = vpeMenuUtil.getDomMapping();
 			domMapping.printMapping();
 		}
 
@@ -278,5 +277,13 @@ public class VpeMenuCreator {
 		public boolean isEnabled() {
 			return VpeDebug.VISUAL_CONTEXTMENU_DUMP_MAPPING;
 		}
+	}
+
+	private void addZoomActions() {
+		IZoomEventManager zoomEventManager = ((VpeEditorPart) vpeMenuUtil
+				.getEditor().getVisualEditor()).getController()
+				.getZoomEventManager();
+		ZoomActionMenuManager manager = new ZoomActionMenuManager(zoomEventManager);
+		menuManager.add(manager);
 	}
 }
