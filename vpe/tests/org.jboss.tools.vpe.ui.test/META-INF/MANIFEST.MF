@@ -16,7 +16,6 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.common.text.ext,
  org.jboss.tools.common.model,
  org.jboss.tools.vpe.xulrunner,
- org.mozilla.xpcom;bundle-version="1.9.1",
  org.jboss.tools.jst.firstrun,
  org.eclipse.wst.server.core,
  org.eclipse.jface.text,
@@ -31,4 +30,5 @@ Export-Package: org.jboss.tools.vpe.ui.test,
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.jboss.tools.vpe.resref.core
+Import-Package: org.jboss.tools.vpe.resref.core,
+ org.mozilla.xpcom;version="[1.9.1,2.0.0)"

@@ -8,7 +8,6 @@ Bundle-Vendor: %providerName
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.jboss.tools.vpe,
- org.mozilla.xpcom;bundle-version="1.9.1",
  org.jboss.tools.jst.jsp,
  org.jboss.tools.common,
  org.eclipse.jface.text;bundle-version="3.5.0"
@@ -16,3 +15,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Export-Package: org.jboss.tools.vpe.html.template
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: org.mozilla.xpcom;version="[1.9.1,2.0.0)"
