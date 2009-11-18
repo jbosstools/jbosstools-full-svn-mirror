@@ -1258,14 +1258,14 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	public void keyPress(nsIDOMKeyEvent keyEvent) {
-		// if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
-		System.out.println("<<< keyPress  type: " + keyEvent.getType() + //$NON-NLS-1$
-				"  Ctrl: "
-				+ keyEvent.getCtrlKey()
-				+ "  Shift: " + keyEvent.getShiftKey() + //$NON-NLS-1$ //$NON-NLS-2$
-				"  CharCode: " + keyEvent.getCharCode()
-				+ "  KeyCode: " + keyEvent.getKeyCode()); //$NON-NLS-1$ //$NON-NLS-2$
-		// }
+		if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
+			System.out.println("<<< keyPress  type: " + keyEvent.getType() + //$NON-NLS-1$
+					"  Ctrl: "
+					+ keyEvent.getCtrlKey()
+					+ "  Shift: " + keyEvent.getShiftKey() + //$NON-NLS-1$ //$NON-NLS-2$
+					"  CharCode: " + keyEvent.getCharCode()
+					+ "  KeyCode: " + keyEvent.getKeyCode()); //$NON-NLS-1$ //$NON-NLS-2$
+		}
 		if (!switcher
 				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			switcher.stopActiveEditor();
@@ -2875,7 +2875,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			float currentZoom = zoomEventManager.getCurrentZoom();
 			zoomEventManager = new ZoomEventManager(getXulRunnerEditor());
 			zoomEventManager.setCurrentZoom(currentZoom);
-			((KeyEventManager)keyEventHandler).setZoomEventManager(zoomEventManager);
+			((KeyEventManager) keyEventHandler)
+					.setZoomEventManager(zoomEventManager);
 			// restore selection in visula part
 			sourceSelectionChanged();
 		} catch (VpeDisposeException ex) {
