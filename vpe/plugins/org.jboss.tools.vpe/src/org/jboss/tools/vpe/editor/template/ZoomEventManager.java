@@ -80,12 +80,10 @@ public class ZoomEventManager implements IZoomEventManager{
 		return availableZoomValues[currentZoomPos];
 	}
 
-	@Override
 	public float getMaxZoom() {
 		return minZoom;
 	}
 
-	@Override
 	public float getMinZoom() {
 		return maxZoom;
 	}
@@ -110,12 +108,10 @@ public class ZoomEventManager implements IZoomEventManager{
 		return currentZoomPos;
 	}
 
-	@Override
 	public float getBasicZoom() {
 		return basicZoom;
 	}
 
-	@Override
 	public float[] getAvailableZoomValues() {
 		return availableZoomValues;
 	}
