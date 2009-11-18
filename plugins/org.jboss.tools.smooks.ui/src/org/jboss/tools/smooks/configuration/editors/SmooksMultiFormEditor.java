@@ -45,7 +45,7 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 
 	private SmooksGraphicalEditorPart graphicalPage;
 
-	private SmooksConfigurationOverviewPage overViewPage;
+	private SmooksConfigurationOverviewPage optionsPage;
 
 	private SmooksReaderFormPage readerPage;
 
@@ -64,30 +64,29 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 	 */
 	@Override
 	protected void addPages() {
-		overViewPage = createSmooksConfigurationOverviewPage();
-		addValidateListener(overViewPage);
-		addSourceSynchronizeListener(overViewPage);
-		addSmooksGraphExtetionListener(overViewPage);
-		try {
-			int index = this.addPage(overViewPage);
-			setPageText(index, "Overview");
-		} catch (PartInitException e) {
-			e.printStackTrace();
-		}
-
-		readerPage = new SmooksReaderFormPage(this, "reader_page", "Input");
-		addValidateListener(readerPage);
-		addSourceSynchronizeListener(readerPage);
-		addSmooksGraphExtetionListener(readerPage);
-		try {
-			int index = this.addPage(readerPage);
-			setPageText(index, "Input");
-		} catch (PartInitException e) {
-			e.printStackTrace();
-		}
+//		readerPage = new SmooksReaderFormPage(this, "reader_page", "Input");
+//		addValidateListener(readerPage);
+//		addSourceSynchronizeListener(readerPage);
+//		addSmooksGraphExtetionListener(readerPage);
+//		try {
+//			int index = this.addPage(readerPage);
+//			setPageText(index, "Input");
+//		} catch (PartInitException e) {
+//			e.printStackTrace();
+//		}
 
 		addProcessGraphicalEditor();
 
+		optionsPage = createSmooksConfigurationOverviewPage();
+		addValidateListener(optionsPage);
+		addSourceSynchronizeListener(optionsPage);
+		addSmooksGraphExtetionListener(optionsPage);
+		try {
+			int index = this.addPage(optionsPage);
+			setPageText(index, "Options");
+		} catch (PartInitException e) {
+			e.printStackTrace();
+		}
 		// addSmooksGraphicalEditor();
 
 //		configurationPage = createSmooksConfigurationFormPage();
@@ -143,7 +142,7 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 	// }
 
 	private SmooksConfigurationOverviewPage createSmooksConfigurationOverviewPage() {
-		return new SmooksConfigurationOverviewPage(this, "overview_page", "Overview", this);
+		return new SmooksConfigurationOverviewPage(this, "options_page", "Options", this);
 	}
 
 	@Override

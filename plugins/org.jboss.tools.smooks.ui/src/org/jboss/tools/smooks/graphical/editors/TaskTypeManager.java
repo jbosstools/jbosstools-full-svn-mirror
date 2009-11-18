@@ -63,10 +63,10 @@ public class TaskTypeManager {
 			allTaskList.add(new TaskTypeDescriptor(TASK_ID_INPUT, "Input", GraphicsConstants.IMAGE_INPUT_TASK));
 			allTaskList.add(new TaskTypeDescriptor(TASK_ID_JAVA_MAPPING, "Java Mapping",
 					GraphicsConstants.IMAGE_JAVA_AMPPING_TASK));
-			allTaskList.add(new TaskTypeDescriptor(TASK_ID_FREEMARKER_TEMPLATE, "Apply Freemaker Template",
+			allTaskList.add(new TaskTypeDescriptor(TASK_ID_FREEMARKER_TEMPLATE, "Apply Template",
 					GraphicsConstants.IMAGE_APPLY_FREEMARKER_TASK));
-			allTaskList.add(new TaskTypeDescriptor(TASK_ID_XSL_TEMPLATE, "Apply XSL Template",
-					GraphicsConstants.IMAGE_APPLY_XSL_TASK));
+//			allTaskList.add(new TaskTypeDescriptor(TASK_ID_XSL_TEMPLATE, "Apply XSL Template",
+//					GraphicsConstants.IMAGE_APPLY_XSL_TASK));
 		}
 		return allTaskList;
 	}
@@ -95,7 +95,7 @@ public class TaskTypeManager {
 	public static String getTaskLabel(String taskId) {
 		if (taskId != null) {
 			if (taskId.equals(TASK_ID_FREEMARKER_TEMPLATE)) {
-				return "Apply Freemarker Template";
+				return "Apply Template";
 			}
 			if (taskId.equals(TASK_ID_INPUT)) {
 				return "Input Task";
