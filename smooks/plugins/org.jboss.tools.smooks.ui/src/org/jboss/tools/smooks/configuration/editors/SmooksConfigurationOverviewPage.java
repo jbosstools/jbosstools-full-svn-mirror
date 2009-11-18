@@ -10,21 +10,21 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -41,6 +41,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -53,9 +54,6 @@ import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
-import org.eclipse.ui.forms.events.HyperlinkAdapter;
-import org.eclipse.ui.forms.events.HyperlinkEvent;
-import org.eclipse.ui.forms.widgets.FormText;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.ScrolledPageBook;
@@ -115,6 +113,11 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 	private Text smooksNameText;
 	private Text smooksAuthorText;
 	protected boolean lockEventFire = false;
+	
+	private Combo streamFilterTypeCombo;
+	private boolean streamFilterTypeSet = false;
+	private Button defaultSerializationOnCheckbox;
+	private boolean defaultSerializationOnSet = false;
 
 	public SmooksConfigurationOverviewPage(FormEditor editor, String id, String title, ISmooksModelProvider provider) {
 		super(editor, id, title);
@@ -142,40 +145,35 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		Composite mainComposite = pageBook.createPage(pageBook);
 		pageBook.showPage(pageBook);
 
-		// Composite mainComposite = toolkit.createComposite(form.getBody());
-
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		pageBook.setLayoutData(gd);
 
 		GridLayout mgl = new GridLayout();
 		mgl.numColumns = 2;
-		mgl.marginHeight = 13;
 		mgl.horizontalSpacing = 20;
 		mainComposite.setLayout(mgl);
 
-		settingSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR);
+		settingSection = toolkit.createSection(mainComposite, Section.TITLE_BAR);
 		settingSection.setLayout(new FillLayout());
 		settingSection.setText("Smooks configuration");
-		settingSection.setDescription("Set the description for this Smooks configuration file.");
+//		settingSection.setDescription("Set the description for this Smooks configuration file.");
 		Composite settingComposite = toolkit.createComposite(settingSection);
 		settingSection.setClient(settingComposite);
 		gd = new GridData();
 		gd.widthHint = 500;
+		gd.verticalAlignment = GridData.BEGINNING;
 		settingSection.setLayoutData(gd);
 
 		GridLayout sgl = new GridLayout();
 		settingComposite.setLayout(sgl);
 		sgl.numColumns = 2;
-		// sgl.verticalSpacing = 8;
 
 		createSettingSection(settingComposite, toolkit);
 
-		createSmooksEditorNavigator(mainComposite, toolkit);
-
-		globalParamSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
+		globalParamSection = toolkit.createSection(mainComposite, Section.TITLE_BAR
 				| Section.TWISTIE | Section.EXPANDED);
-		globalParamSection.setDescription("Define the global parameters for the Smooks configuration file");
-		globalParamSection.setText("Global Paramters");
+//		globalParamSection.setDescription("Optional settings to change how Smooks processes and serializes input");
+		globalParamSection.setText("Filter Settings");
 		globalParamSection.setLayout(new FillLayout());
 		Composite globalParamComposite = toolkit.createComposite(globalParamSection);
 		globalParamSection.setClient(globalParamComposite);
@@ -190,59 +188,59 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 
 		createGlobalParamterSection(globalParamComposite, toolkit);
 
-		generalSettingSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
-				| Section.TWISTIE | Section.EXPANDED);
-		generalSettingSection.setLayout(new FillLayout());
-		generalSettingSection.setText("Smooks Default Setting");
-		generalSettingSection.setDescription("Define the Smooks configuration file default setting");
-		defaultSettingComposite = toolkit.createComposite(generalSettingSection);
-		generalSettingSection.setClient(defaultSettingComposite);
-		gd = new GridData();
-		gd.widthHint = 500;
-		generalSettingSection.setLayoutData(gd);
-
-		GridLayout ggl = new GridLayout();
-		defaultSettingComposite.setLayout(ggl);
-		ggl.numColumns = 2;
-		ggl.verticalSpacing = 0;
-
-		createDefaultSection(defaultSettingComposite, toolkit);
-
-		conditionSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
-				| Section.TWISTIE);
-		conditionSection.setText("Conditions");
-		conditionSection.setDescription("Define the conditions");
-		conditionSection.setLayout(new FillLayout());
-		Composite conditionComposite = toolkit.createComposite(conditionSection);
-		conditionSection.setClient(conditionComposite);
-		gd = new GridData();
-		gd.verticalAlignment = GridData.BEGINNING;
-		gd.widthHint = 500;
-		conditionSection.setLayoutData(gd);
-
-		GridLayout cgl = new GridLayout();
-		conditionComposite.setLayout(cgl);
-		cgl.numColumns = 2;
-
-		createConditionsSection(conditionComposite, toolkit);
-
-		profilesSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
-				| Section.TWISTIE);
-		profilesSection.setDescription("Define the profiles");
-		profilesSection.setText("Profiles");
-		profilesSection.setLayout(new FillLayout());
-		Composite profilesComposite = toolkit.createComposite(profilesSection);
-		profilesSection.setClient(profilesComposite);
-		gd = new GridData();
-		gd.verticalAlignment = GridData.BEGINNING;
-		gd.widthHint = 500;
-		profilesSection.setLayoutData(gd);
-
-		GridLayout pgl = new GridLayout();
-		profilesComposite.setLayout(pgl);
-		pgl.numColumns = 2;
-
-		createProfilesSection(profilesComposite, toolkit);
+//		generalSettingSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
+//				| Section.TWISTIE | Section.EXPANDED);
+//		generalSettingSection.setLayout(new FillLayout());
+//		generalSettingSection.setText("Smooks Default Setting");
+//		generalSettingSection.setDescription("Define the Smooks configuration file default setting");
+//		defaultSettingComposite = toolkit.createComposite(generalSettingSection);
+//		generalSettingSection.setClient(defaultSettingComposite);
+//		gd = new GridData();
+//		gd.widthHint = 500;
+//		generalSettingSection.setLayoutData(gd);
+//
+//		GridLayout ggl = new GridLayout();
+//		defaultSettingComposite.setLayout(ggl);
+//		ggl.numColumns = 2;
+//		ggl.verticalSpacing = 0;
+//
+//		createDefaultSection(defaultSettingComposite, toolkit);
+//
+//		conditionSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
+//				| Section.TWISTIE);
+//		conditionSection.setText("Conditions");
+//		conditionSection.setDescription("Define the conditions");
+//		conditionSection.setLayout(new FillLayout());
+//		Composite conditionComposite = toolkit.createComposite(conditionSection);
+//		conditionSection.setClient(conditionComposite);
+//		gd = new GridData();
+//		gd.verticalAlignment = GridData.BEGINNING;
+//		gd.widthHint = 500;
+//		conditionSection.setLayoutData(gd);
+//
+//		GridLayout cgl = new GridLayout();
+//		conditionComposite.setLayout(cgl);
+//		cgl.numColumns = 2;
+//
+//		createConditionsSection(conditionComposite, toolkit);
+//
+//		profilesSection = toolkit.createSection(mainComposite, Section.DESCRIPTION | Section.TITLE_BAR
+//				| Section.TWISTIE);
+//		profilesSection.setDescription("Define the profiles");
+//		profilesSection.setText("Profiles");
+//		profilesSection.setLayout(new FillLayout());
+//		Composite profilesComposite = toolkit.createComposite(profilesSection);
+//		profilesSection.setClient(profilesComposite);
+//		gd = new GridData();
+//		gd.verticalAlignment = GridData.BEGINNING;
+//		gd.widthHint = 500;
+//		profilesSection.setLayoutData(gd);
+//
+//		GridLayout pgl = new GridLayout();
+//		profilesComposite.setLayout(pgl);
+//		pgl.numColumns = 2;
+//
+//		createProfilesSection(profilesComposite, toolkit);
 
 	}
 
@@ -275,51 +273,51 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 			}
 		});
 
-		toolkit.createLabel(settingComposite, "Name : ").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
-		smooksNameText = toolkit.createText(settingComposite, "", SWT.NONE);
-		smooksNameText.setLayoutData(gd);
-		String name = smooksModelProvider.getSmooksGraphicsExt().getName();
-		if (name != null)
-			smooksNameText.setText(name);
-		smooksNameText.addModifyListener(new ModifyListener() {
-
-			public void modifyText(ModifyEvent e) {
-				if (lockEventFire)
-					return;
-				if (smooksModelProvider != null) {
-					Command setCommand = SetCommand.create(smooksModelProvider.getEditingDomain(), smooksModelProvider
-							.getSmooksGraphicsExt(), GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__NAME,
-							smooksNameText.getText());
-					smooksModelProvider.getEditingDomain().getCommandStack().execute(setCommand);
-				}
-			}
-		});
-
-		toolkit.paintBordersFor(settingComposite);
-
-		toolkit.createLabel(settingComposite, "Author : ").setForeground(
-				toolkit.getColors().getColor(IFormColors.TITLE));
-		smooksAuthorText = toolkit.createText(settingComposite, "", SWT.NONE);
-		smooksAuthorText.setLayoutData(gd);
-
-		String author = smooksModelProvider.getSmooksGraphicsExt().getAuthor();
-		if (author != null)
-			smooksAuthorText.setText(author);
-		smooksAuthorText.addModifyListener(new ModifyListener() {
-
-			public void modifyText(ModifyEvent e) {
-				if (lockEventFire)
-					return;
-				if (smooksModelProvider != null) {
-					Command setCommand = SetCommand.create(smooksModelProvider.getEditingDomain(), smooksModelProvider
-							.getSmooksGraphicsExt(), GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__AUTHOR,
-							smooksAuthorText.getText());
-					smooksModelProvider.getEditingDomain().getCommandStack().execute(setCommand);
-				}
-			}
-		});
-
-		toolkit.createLabel(settingComposite, "");
+//		toolkit.createLabel(settingComposite, "Name : ").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
+//		smooksNameText = toolkit.createText(settingComposite, "", SWT.NONE);
+//		smooksNameText.setLayoutData(gd);
+//		String name = smooksModelProvider.getSmooksGraphicsExt().getName();
+//		if (name != null)
+//			smooksNameText.setText(name);
+//		smooksNameText.addModifyListener(new ModifyListener() {
+//
+//			public void modifyText(ModifyEvent e) {
+//				if (lockEventFire)
+//					return;
+//				if (smooksModelProvider != null) {
+//					Command setCommand = SetCommand.create(smooksModelProvider.getEditingDomain(), smooksModelProvider
+//							.getSmooksGraphicsExt(), GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__NAME,
+//							smooksNameText.getText());
+//					smooksModelProvider.getEditingDomain().getCommandStack().execute(setCommand);
+//				}
+//			}
+//		});
+//
+//		toolkit.paintBordersFor(settingComposite);
+//
+//		toolkit.createLabel(settingComposite, "Author : ").setForeground(
+//				toolkit.getColors().getColor(IFormColors.TITLE));
+//		smooksAuthorText = toolkit.createText(settingComposite, "", SWT.NONE);
+//		smooksAuthorText.setLayoutData(gd);
+//
+//		String author = smooksModelProvider.getSmooksGraphicsExt().getAuthor();
+//		if (author != null)
+//			smooksAuthorText.setText(author);
+//		smooksAuthorText.addModifyListener(new ModifyListener() {
+//
+//			public void modifyText(ModifyEvent e) {
+//				if (lockEventFire)
+//					return;
+//				if (smooksModelProvider != null) {
+//					Command setCommand = SetCommand.create(smooksModelProvider.getEditingDomain(), smooksModelProvider
+//							.getSmooksGraphicsExt(), GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__AUTHOR,
+//							smooksAuthorText.getText());
+//					smooksModelProvider.getEditingDomain().getCommandStack().execute(setCommand);
+//				}
+//			}
+//		});
+//
+//		toolkit.createLabel(settingComposite, "");
 
 		toolkit.paintBordersFor(settingComposite);
 	}
@@ -949,85 +947,233 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 			// if (m == null)
 			// return;
 
-			paramViewer = new TableViewer(globalParamComposite);
-			GridData gd = new GridData(GridData.FILL_BOTH);
-			paramViewer.getControl().setLayoutData(gd);
-			toolkit.paintBordersFor(globalParamComposite);
-			Composite buttonArea = toolkit.createComposite(globalParamComposite);
-			gd = new GridData(GridData.FILL_VERTICAL);
-			gd.widthHint = 30;
-			GridLayout bgl = new GridLayout();
-			buttonArea.setLayout(bgl);
+			toolkit.createLabel(globalParamComposite, "Stream Filter Type:").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
+			GridData gd = new GridData(SWT.FILL, SWT.NONE, true, false);
+			streamFilterTypeCombo = new Combo(globalParamComposite, SWT.DROP_DOWN | SWT.READ_ONLY );
+			streamFilterTypeCombo.setItems(new String[] {"SAX", "DOM"});
+			streamFilterTypeCombo.setLayoutData(gd);
 
-			newParamButton = toolkit.createButton(buttonArea, "New", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			newParamButton.setLayoutData(gd);
+			toolkit.createLabel(globalParamComposite, "Default Serialization is On:").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
+			gd = new GridData(SWT.FILL, SWT.NONE, true, false);
+			defaultSerializationOnCheckbox = toolkit.createButton(globalParamComposite, "", SWT.CHECK);
+			defaultSerializationOnCheckbox.setLayoutData(gd);
 
-			removeParamButton = toolkit.createButton(buttonArea, "Remove", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			removeParamButton.setLayoutData(gd);
-
-			upParamButton = toolkit.createButton(buttonArea, "Up", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			upParamButton.setLayoutData(gd);
-
-			downParamButton = toolkit.createButton(buttonArea, "Down", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			downParamButton.setLayoutData(gd);
-
-			paramPropertiesButton = toolkit.createButton(buttonArea, "Properties..", SWT.NONE);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			paramPropertiesButton.setLayoutData(gd);
-
-			paramViewer.setContentProvider(new AdapterFactoryContentProvider(editingDomain.getAdapterFactory()) {
-
-				@Override
-				public boolean hasChildren(Object object) {
-					return false;
-				}
-
-			});
-
-			paramViewer.setLabelProvider(new DecoratingLabelProvider(new AdapterFactoryLabelProvider(editingDomain
-					.getAdapterFactory()) {
-
-				/*
-				 * (non-Javadoc)
-				 * 
-				 * @see
-				 * org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider
-				 * # getText(java.lang.Object)
-				 */
-				@Override
-				public String getText(Object object) {
-					Object obj = AdapterFactoryEditingDomain.unwrap(object);
-					if (obj instanceof AbstractAnyType) {
-						return super.getText(obj);
-					}
-					return super.getText(object);
-				}
-
-			}, SmooksConfigurationActivator.getDefault().getWorkbench().getDecoratorManager().getLabelDecorator()));
 			if (m != null) {
-				paramViewer.setInput(m);
+				EList<?> parmList = m.getParam();
+				for (int i = 0; i < parmList.size(); i++) {
+					ParamType param = (ParamType)parmList.get(i);
+					if (param.getName().equals("stream.filter.type")) {
+						streamFilterTypeCombo.setText(param.getStringValue());
+					}
+					else if (param.getName().equals("default.serialization.on")) {
+						Boolean boolValue = Boolean.valueOf(param.getStringValue());
+						defaultSerializationOnCheckbox.setSelection(boolValue.booleanValue());
+					}
+				}
+			}
+			else { // set defaults
+				streamFilterTypeCombo.setText("SAX");
+				defaultSerializationOnCheckbox.setSelection(true);
 			}
 
-			paramViewer.addDoubleClickListener(new IDoubleClickListener() {
+			toolkit.paintBordersFor(globalParamComposite);
+			
+			streamFilterTypeCombo.addSelectionListener( new SelectionListener() {
+				
+				public void widgetSelected(SelectionEvent e) {
+					String value = streamFilterTypeCombo.getText();
+					EObject resource = getSmooksResourceList();
+					if (resource == null)
+						return;
+					if (getSmooksVersion() == null || getSmooksVersion().equals(SmooksConstants.VERSION_1_0)) {
+						return;
+					}
+					ParamsType parent = getParamsType();
+					ParamType param = null;
+					ParamType newparam = null;
+					if (parent != null) {
+						EList<?> parmList = parent.getParam();
+						for (int i = 0; i < parmList.size(); i++) {
+							param = (ParamType)parmList.get(i);
+							if (param.getName().equals("stream.filter.type")) {
+								streamFilterTypeSet = true;
+								break;
+							}
+						}
+					}
+					newparam = SmooksFactory.eINSTANCE.createParamType();
+					newparam.setName("stream.filter.type");
+					newparam.setStringValue(value);
 
-				public void doubleClick(DoubleClickEvent event) {
-					openParamPropertiesModifyDialog();
+					if (parent == null) {
+						parent = SmooksFactory.eINSTANCE.createParamsType();
+						Command command = SetCommand.create(smooksModelProvider.getEditingDomain(), resource,
+								SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__PARAMS, parent);
+						if (command.canExecute()) {
+							((SmooksResourceListType) resource).setParams((ParamsType) parent);
+						}
+					}
+					EditingDomain editingDomain = smooksModelProvider.getEditingDomain();
+					Command command = null;
+					Command command2 = null;
+					EStructuralFeature feature = SmooksPackage.Literals.PARAMS_TYPE__PARAM;
+					if (feature instanceof EReference) {
+						if (streamFilterTypeSet) {
+							command2 = RemoveCommand.create(editingDomain, parent, feature, param);
+						}
+						command = AddCommand.create(editingDomain, parent, feature, newparam);
+					}
+					if (command2 != null && command2.canExecute())
+						editingDomain.getCommandStack().execute(command2);
+					if (command != null)
+						editingDomain.getCommandStack().execute(command);
+					((SmooksResourceListType) resource).setParams((ParamsType) parent);
+					streamFilterTypeCombo.setText(value);
+				}
+				
+				public void widgetDefaultSelected(SelectionEvent e) {
+					widgetSelected(e);
 				}
 			});
+			
+			defaultSerializationOnCheckbox.addSelectionListener( new SelectionListener() {
 
-			paramViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+				public void widgetDefaultSelected(SelectionEvent e) {
+					String value = Boolean.toString(defaultSerializationOnCheckbox.getSelection());
+					EObject resource = getSmooksResourceList();
+					if (resource == null)
+						return;
+					if (getSmooksVersion() == null || getSmooksVersion().equals(SmooksConstants.VERSION_1_0)) {
+						return;
+					}
+					ParamsType parent = getParamsType();
+					ParamType param = null;
+					ParamType newparam = null;
+					if (parent != null) {
+						EList<?> parmList = parent.getParam();
+						for (int i = 0; i < parmList.size(); i++) {
+							param = (ParamType)parmList.get(i);
+							if (param.getName().equals("default.serialization.on")) {
+								defaultSerializationOnSet = true;
+								break;
+							}
+						}
+					}
+					newparam = SmooksFactory.eINSTANCE.createParamType();
+					newparam.setName("default.serialization.on");
+					newparam.setStringValue(value);
 
-				public void selectionChanged(SelectionChangedEvent event) {
-					updateParamButtons();
+					if (parent == null) {
+						parent = SmooksFactory.eINSTANCE.createParamsType();
+						Command command = SetCommand.create(smooksModelProvider.getEditingDomain(), resource,
+								SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__PARAMS, parent);
+						if (command.canExecute()) {
+							((SmooksResourceListType) resource).setParams((ParamsType) parent);
+						}
+					}
+					EditingDomain editingDomain = smooksModelProvider.getEditingDomain();
+					Command command = null;
+					Command command2 = null;
+					EStructuralFeature feature = SmooksPackage.Literals.PARAMS_TYPE__PARAM;
+					if (feature instanceof EReference) {
+						if (defaultSerializationOnSet) {
+							command2 = RemoveCommand.create(editingDomain, parent, feature, param);
+						}
+						command = AddCommand.create(editingDomain, parent, feature, newparam);
+					}
+					if (command2 != null && command2.canExecute())
+						editingDomain.getCommandStack().execute(command2);
+					if (command != null)
+						editingDomain.getCommandStack().execute(command);
+					((SmooksResourceListType) resource).setParams((ParamsType) parent);
+					
+//					defaultSerializationOnCheckbox.setSelection(Boolean.parseBoolean(value));
+				}
+
+				public void widgetSelected(SelectionEvent e) {
+					widgetDefaultSelected(e);
 				}
 			});
-
-			hookGlobalParamterButtons();
-			updateParamButtons();
+			
+//			paramViewer = new TableViewer(globalParamComposite);
+//			GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
+//			paramViewer.getControl().setLayoutData(gd);
+//			toolkit.paintBordersFor(globalParamComposite);
+//			Composite buttonArea = toolkit.createComposite(globalParamComposite);
+//			gd = new GridData(GridData.FILL_VERTICAL | GridData.FILL_HORIZONTAL);
+//			gd.widthHint = 200;
+//			GridLayout bgl = new GridLayout();
+//			buttonArea.setLayout(bgl);
+//
+//			newParamButton = toolkit.createButton(buttonArea, "New", SWT.NONE);
+//			gd = new GridData(GridData.FILL_HORIZONTAL);
+//			newParamButton.setLayoutData(gd);
+//
+//			removeParamButton = toolkit.createButton(buttonArea, "Remove", SWT.NONE);
+//			gd = new GridData(GridData.FILL_HORIZONTAL);
+//			removeParamButton.setLayoutData(gd);
+//
+//			upParamButton = toolkit.createButton(buttonArea, "Up", SWT.NONE);
+//			gd = new GridData(GridData.FILL_HORIZONTAL);
+//			upParamButton.setLayoutData(gd);
+//
+//			downParamButton = toolkit.createButton(buttonArea, "Down", SWT.NONE);
+//			gd = new GridData(GridData.FILL_HORIZONTAL);
+//			downParamButton.setLayoutData(gd);
+//
+//			paramPropertiesButton = toolkit.createButton(buttonArea, "Properties..", SWT.NONE);
+//			gd = new GridData(GridData.FILL_HORIZONTAL);
+//			paramPropertiesButton.setLayoutData(gd);
+//
+//			paramViewer.setContentProvider(new AdapterFactoryContentProvider(editingDomain.getAdapterFactory()) {
+//
+//				@Override
+//				public boolean hasChildren(Object object) {
+//					return false;
+//				}
+//
+//			});
+//
+//			paramViewer.setLabelProvider(new DecoratingLabelProvider(new AdapterFactoryLabelProvider(editingDomain
+//					.getAdapterFactory()) {
+//
+//				/*
+//				 * (non-Javadoc)
+//				 * 
+//				 * @see
+//				 * org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider
+//				 * # getText(java.lang.Object)
+//				 */
+//				@Override
+//				public String getText(Object object) {
+//					Object obj = AdapterFactoryEditingDomain.unwrap(object);
+//					if (obj instanceof AbstractAnyType) {
+//						return super.getText(obj);
+//					}
+//					return super.getText(object);
+//				}
+//
+//			}, SmooksConfigurationActivator.getDefault().getWorkbench().getDecoratorManager().getLabelDecorator()));
+//			if (m != null) {
+//				paramViewer.setInput(m);
+//			}
+//
+//			paramViewer.addDoubleClickListener(new IDoubleClickListener() {
+//
+//				public void doubleClick(DoubleClickEvent event) {
+//					openParamPropertiesModifyDialog();
+//				}
+//			});
+//
+//			paramViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+//
+//				public void selectionChanged(SelectionChangedEvent event) {
+//					updateParamButtons();
+//				}
+//			});
+//
+//			hookGlobalParamterButtons();
+//			updateParamButtons();
 		}
 
 	}
@@ -1225,123 +1371,6 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		}
 	}
 
-	private void createNavigatorSection(Composite mainNavigatorComposite, FormToolkit toolkit, String title,
-			String navigatorFilePath) {
-		Section navigator = toolkit.createSection(mainNavigatorComposite, Section.TITLE_BAR);
-		navigator.setText(title);
-		navigator.setLayout(new FillLayout());
-		Composite navigatorComposite = toolkit.createComposite(navigator);
-		navigator.setClient(navigatorComposite);
-
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.verticalAlignment = GridData.BEGINNING;
-		navigator.setLayoutData(gd);
-
-		FormText formText = toolkit.createFormText(navigatorComposite, true);
-		StringBuffer buf = new StringBuffer();
-		InputStream inputStream = this.getClass().getResourceAsStream(navigatorFilePath);
-		BufferedReader reader = null;
-		if (inputStream != null) {
-			try {
-				reader = new BufferedReader(new InputStreamReader(inputStream));
-				String line = reader.readLine();
-				while (line != null) {
-					buf.append(line);
-					line = reader.readLine();
-				}
-			} catch (IOException e) {
-
-			} finally {
-				try {
-					if (reader != null) {
-						reader.close();
-					}
-					if (inputStream != null) {
-						inputStream.close();
-					}
-				} catch (Throwable t) {
-
-				}
-			}
-		}
-		formText.setWhitespaceNormalized(true);
-		String content = buf.toString();
-		if (content != null) {
-			try {
-				formText.setText(content, true, false);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		formText.addHyperlinkListener(new HyperlinkAdapter() {
-			public void linkActivated(HyperlinkEvent e) {
-				Object href = e.getHref();
-				if (href == null)
-					return;
-				activeNavigatorLink(href.toString());
-			}
-		});
-		navigatorComposite.setLayout(new GridLayout());
-		gd = new GridData(GridData.FILL_BOTH);
-		formText.setLayoutData(gd);
-
-		toolkit.createLabel(navigatorComposite, "");
-	}
-
-	private void createSmooksEditorNavigator(Composite mainComposite, FormToolkit toolkit) {
-		Composite mainNavigatorComposite = toolkit.createComposite(mainComposite);
-		GridData gd = new GridData(GridData.FILL_BOTH);
-		gd.verticalSpan = 5;
-		mainNavigatorComposite.setLayoutData(gd);
-
-		GridLayout gl = new GridLayout();
-		// gl.numColumns = 2;
-		gl.marginWidth = 0;
-		gl.marginHeight = 0;
-		mainNavigatorComposite.setLayout(gl);
-
-		createNavigatorSection(mainNavigatorComposite, toolkit, "Configuring Smooks Input",
-				"/org/jboss/tools/smooks/configuration/navigator/DefaultSetting.htm");
-		createNavigatorSection(mainNavigatorComposite, toolkit, "Configuring Smooks Transform Processes",
-				"/org/jboss/tools/smooks/configuration/navigator/MessageFilterNavigator.htm");
-	}
-
-	protected void activeNavigatorLink(String href) {
-		if (href == null)
-			return;
-		if (href.equals("overview_default_setting")) {
-			generalSettingSection.setFocus();
-			return;
-		}
-		if (href.equals("overview_global_param")) {
-			globalParamSection.setFocus();
-			globalParamSection.setExpanded(true);
-			return;
-		}
-		if (href.equals("overview_condition")) {
-			conditionSection.setFocus();
-			conditionSection.setExpanded(true);
-			return;
-		}
-		if (href.equals("overview_profile")) {
-			profilesSection.setFocus();
-			profilesSection.setExpanded(true);
-			return;
-		}
-		if (href.equals("selector_dialog")) {
-			SelectorCreationDialog dialog = new SelectorCreationDialog(getEditorSite().getShell(),
-					this.smooksModelProvider.getSmooksGraphicsExt(), this.getEditor());
-			try {
-				dialog.open();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return;
-		}
-
-		this.getEditor().setActivePage(href);
-	}
-
 	private EObject getSmooksResourceList() {
 		if (smooksModelProvider != null) {
 			EObject m = null;
@@ -1400,23 +1429,23 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 			return;
 		}
 
-		String name = extType.getName();
-		if (name != null)
-			smooksNameText.setText(name);
-
-		String author = extType.getAuthor();
-		if (author != null)
-			smooksAuthorText.setText(author);
+//		String name = extType.getName();
+//		if (name != null)
+//			smooksNameText.setText(name);
+//
+//		String author = extType.getAuthor();
+//		if (author != null)
+//			smooksAuthorText.setText(author);
 
 		lockEventFire = false;
 
-		disposeDefaultSettingCompositeControls();
-		createDefaultSection(defaultSettingComposite, this.getManagedForm().getToolkit());
-		defaultSettingComposite.getParent().layout();
-
-		paramViewer.setInput(getParamsType());
-		conditionViewer.setInput(getConditionsType());
-		profileViewer.setInput(getProfilesType());
+//		disposeDefaultSettingCompositeControls();
+//		createDefaultSection(defaultSettingComposite, this.getManagedForm().getToolkit());
+//		defaultSettingComposite.getParent().layout();
+//
+//		paramViewer.setInput(getParamsType());
+//		conditionViewer.setInput(getConditionsType());
+//		profileViewer.setInput(getProfilesType());
 	}
 
 	protected void disposeCompositeControls(Composite composite, Control[] ignoreControl) {

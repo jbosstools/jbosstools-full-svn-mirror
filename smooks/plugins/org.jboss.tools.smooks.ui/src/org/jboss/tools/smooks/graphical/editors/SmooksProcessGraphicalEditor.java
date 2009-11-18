@@ -76,6 +76,7 @@ import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.HorizontalTreeLayoutAlgorithm;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.editors.SmooksReaderFormPage;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
@@ -495,9 +496,8 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	protected void createProcessGraphicalSection(FormToolkit toolkit, Composite parent) {
-		Section processGraphSection = toolkit.createSection(parent, Section.DESCRIPTION | Section.TITLE_BAR);
+		Section processGraphSection = toolkit.createSection(parent, Section.TITLE_BAR);
 		processGraphSection.setText("Process Map");
-		processGraphSection.setDescription("Right-Click to open the PopMenu to add or remove task node");
 
 		Composite processGraphComposite = toolkit.createComposite(processGraphSection);
 
@@ -604,9 +604,8 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		taskDetailsFillLayout.marginHeight = 5;
 		taskDetailsComposite.setLayout(taskDetailsFillLayout);
 
-		Section section = toolkit.createSection(taskDetailsComposite, Section.DESCRIPTION | Section.TITLE_BAR);
+		Section section = toolkit.createSection(taskDetailsComposite, Section.TITLE_BAR);
 		section.setText("Task Configuration");
-		section.setDescription("Configurate the selected task");
 		pageBook = new ScrolledPageBook(section);
 		pageBook.setBackground(toolkit.getColors().getBackground());
 		section.setClient(pageBook);
@@ -773,6 +772,12 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 				smooksModelProvider);
 		this.registeTaskDetailsPage(freemarkerPart, TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE);
 
+	    SmooksReaderFormPage readerPage = new SmooksReaderFormPage(getEditor(), "input", "input");
+	    this.registeTaskDetailsPage(readerPage, TaskTypeManager.TASK_ID_INPUT);
+
+	    if (smooksModelProvider != null) {
+            this.handleCommandStack(smooksModelProvider.getEditingDomain().getCommandStack());
+    }
 		// SmooksXSLTemplateGraphicalEditor xsltemplatePart = new
 		// SmooksXSLTemplateGraphicalEditor(smooksModelProvider);
 		// this.registeTaskDetailsPage(xsltemplatePart,

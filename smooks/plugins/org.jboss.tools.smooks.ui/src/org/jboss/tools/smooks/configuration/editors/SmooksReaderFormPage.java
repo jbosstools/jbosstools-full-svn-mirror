@@ -145,13 +145,13 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	protected void createFormContent(IManagedForm managedForm) {
 		final ScrolledForm form = managedForm.getForm();
 		FormToolkit toolkit = managedForm.getToolkit();
-		toolkit.decorateFormHeading(form.getForm());
-		form.setText("Input");
+//		toolkit.decorateFormHeading(form.getForm());
+//		form.setText("Input");
 		// // create master details UI
 		// createMasterDetailBlock(managedForm);
 		Composite leftComposite = toolkit.createComposite(form.getBody());
 		GridData gd = new GridData(GridData.FILL_BOTH);
-		gd.widthHint = 700;
+		gd.widthHint = 300;
 		leftComposite.setLayoutData(gd);
 
 		Composite rightComposite = toolkit.createComposite(form.getBody());
@@ -186,12 +186,12 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	}
 
 	private void createInputModelViewerSection(FormToolkit toolkit, Composite parent) {
-		Section section = toolkit.createSection(parent, Section.TITLE_BAR | Section.DESCRIPTION);
+		Section section = toolkit.createSection(parent, Section.TITLE_BAR | Section.TWISTIE  | Section.EXPANDED);
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		// gd.verticalAlignment = GridData.BEGINNING;
 		section.setLayoutData(gd);
 		section.setText("Input Model View");
-		section.setDescription("View the XML structure model of the input data");
+//		section.setDescription("View the XML structure model of the input data");
 		FillLayout flayout = new FillLayout();
 		section.setLayout(flayout);
 
@@ -200,7 +200,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		mainContainer.setLayout(gl);
 		section.setClient(mainContainer);
 
-		Hyperlink refreshLink = toolkit.createHyperlink(mainContainer, "Refresh Input Model Viewer", SWT.NONE);
+		Hyperlink refreshLink = toolkit.createHyperlink(mainContainer, "Refresh", SWT.NONE);
 		refreshLink.addHyperlinkListener(new IHyperlinkListener() {
 
 			public void linkExited(HyperlinkEvent e) {
@@ -256,11 +256,11 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	}
 
 	private void createReaderConfigSection(FormToolkit toolkit, Composite parent) {
-		Section section = toolkit.createSection(parent, Section.TITLE_BAR);
+		Section section = toolkit.createSection(parent, Section.TITLE_BAR | Section.TWISTIE  | Section.EXPANDED);
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		section.setLayoutData(gd);
 		section.setText("Input Configuration");
-		section.setDescription("Configurate the input data");
+		section.setDescription("Specify reader details");
 		FillLayout flayout = new FillLayout();
 		section.setLayout(flayout);
 
@@ -279,12 +279,12 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	}
 
 	private void createReaderSection(FormToolkit toolkit, Composite parent) {
-		Section section = toolkit.createSection(parent, Section.TITLE_BAR | Section.DESCRIPTION);
+		Section section = toolkit.createSection(parent, Section.TITLE_BAR | Section.TWISTIE  | Section.EXPANDED);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.verticalAlignment = GridData.BEGINNING;
 		section.setLayoutData(gd);
 		section.setText("Input Type");
-		section.setDescription("Select the input type");
+//		section.setDescription("Select the input type");
 		FillLayout flayout = new FillLayout();
 		section.setLayout(flayout);
 
@@ -294,7 +294,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		gl.numColumns = 2;
 		mainComposite.setLayout(gl);
 
-		toolkit.createLabel(mainComposite, "Input Type : ");
+		toolkit.createLabel(mainComposite, "Input Type:");
 
 		readerCombo = new Combo(mainComposite, SWT.NONE | SWT.READ_ONLY);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -701,11 +701,11 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	}
 
 	protected void createInputDataSection(FormToolkit toolkit, Composite parent) {
-		Section section = toolkit.createSection(parent, Section.TITLE_BAR | Section.DESCRIPTION);
+		Section section = toolkit.createSection(parent, Section.TITLE_BAR | Section.DESCRIPTION | Section.TWISTIE  | Section.EXPANDED);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		section.setLayoutData(gd);
 		section.setText("Input Data");
-		section.setDescription("Add a file to be the input data");
+		section.setDescription("Select a sample data file");
 		FillLayout flayout = new FillLayout();
 		section.setLayout(flayout);
 
@@ -720,7 +720,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		fillLayout.marginHeight = 1;
 		fillLayout.marginWidth = 1;
 		gd = new GridData(GridData.FILL_BOTH);
-		gd.heightHint = 200;
+		gd.heightHint = 70;
 		tableComposite.setLayoutData(gd);
 		tableComposite.setBackground(GraphicsConstants.BORDER_CORLOR);
 		tableComposite.setLayout(fillLayout);
