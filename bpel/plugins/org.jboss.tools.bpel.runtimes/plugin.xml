@@ -167,7 +167,15 @@
              adaptableType="org.eclipse.core.resources.IFile">
             <adapter type="org.eclipse.debug.ui.actions.ILaunchable"/>
        </factory>
-   </extension> 
+   </extension>
+ <extension
+       point="org.jboss.ide.eclipse.as.core.publishers">
+    <publisher
+          class="org.jboss.tools.bpel.runtimes.module.JBTBPELPublisher"
+          priority="10"
+          zipDelegate="false">
+    </publisher>
+ </extension> 
 
 <!--=========================================================================-->
 <!-- TO MAKE PROCESSES ACTUALLY LAUNCHABLE VIA RUN ON SERVER				 -->
@@ -187,5 +195,62 @@
 <!-- 																		 -->
 <!--=========================================================================-->
 
-
+	<extension
+      point="org.eclipse.ui.navigator.navigatorContent">
+	   <navigatorContent
+	         id="org.jboss.tools.bpel.runtimes.ui.view.server.content"
+	         activeByDefault="true"
+	         contentProvider="org.jboss.tools.bpel.runtimes.ui.view.server.BPELModuleContentProvider"
+	         icon="icons/obj16/bpelfacet.gif"
+	         labelProvider="org.jboss.tools.bpel.runtimes.ui.view.server.BPELModuleLabelProvider"
+	         name="BPEL Modules"
+	         priority="highest">
+	      <triggerPoints>
+	         <instanceof
+	               value="java.lang.Object">
+	         </instanceof>
+	      </triggerPoints>
+	      <possibleChildren>
+             <instanceof
+                value="java.lang.Object">
+             </instanceof>
+          </possibleChildren>
+	      <actionProvider
+	            class="org.jboss.tools.bpel.runtimes.ui.view.server.BPELModuleActionProvider"
+	            id="org.jboss.tools.bpel.runtimes.ui.view.server.BPELModuleActionProvider"
+	            priority="highest">
+			<enablement>
+             <or>
+                <instanceof
+                      value="org.eclipse.wst.server.core.IServer">
+                </instanceof>
+                <instanceof
+                      value="org.eclipse.wst.server.ui.internal.view.servers.ModuleServer">
+                </instanceof>
+                <instanceof
+                      value="org.eclipse.core.resources.IWorkspaceRoot">
+                </instanceof>
+               <adapt type="java.util.Collection">
+                  <count value="0"/>
+               </adapt>
+               <instanceof
+                     value="org.jboss.tools.bpel.runtimes.ui.view.server.BPELModuleContentProvider$BPELVersionDeployment">
+               </instanceof>
+             </or>
+            </enablement>
+	      </actionProvider>
+	   </navigatorContent>
+	</extension>
+	<extension
+	      point="org.eclipse.ui.navigator.viewer">
+	   <viewerContentBinding
+	         viewerId="org.eclipse.wst.server.ui.ServersView">
+	      <includes>
+	         <contentExtension
+	               isRoot="true"
+	               pattern="org.jboss.tools.bpel.runtimes.ui.view.server.content">
+	         </contentExtension>
+	      </includes>
+	   </viewerContentBinding>
+	</extension>
 </plugin>
