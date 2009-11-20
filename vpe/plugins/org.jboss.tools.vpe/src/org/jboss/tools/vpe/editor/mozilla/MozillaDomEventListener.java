@@ -156,9 +156,11 @@ class MozillaDomEventListener implements nsIDOMEventListener, nsISelectionListen
 				//first param are null 0, because this not used in event handler
 				getEditorDomEventListener().onShowContextMenu(0, domEvent, (nsIDOMNode) domEvent.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID));
 			} else if(DRAGGESTUREEVENT.equals(eventType)) {
-				if(getEditorDomEventListener()!=null) {
-					getEditorDomEventListener().dragGesture(domEvent);
-				}
+				// fix of JBIDE-4998: since drag events now are implemented by
+				// handling CLICKEVENTTYPE, there is no need to handle them here 
+				// if(getEditorDomEventListener()!=null) {
+				// 	getEditorDomEventListener().dragGesture(domEvent);
+				// }
 			} else if(DRAGDROPEVENT.equals(eventType)) {
 				// calls when drop event occure		 
 				getEditorDomEventListener().dragDrop(domEvent);

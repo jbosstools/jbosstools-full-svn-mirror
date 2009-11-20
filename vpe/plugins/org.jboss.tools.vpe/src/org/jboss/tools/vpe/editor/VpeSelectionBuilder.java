@@ -1209,65 +1209,74 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 	}
 	
 	VpeVisualInnerDragInfo getInnerDragInfo(nsIDOMMouseEvent event) {
-		nsISelection selection = visualSelectionController.getSelection(
-				nsISelectionController.SELECTION_NORMAL);
-		nsIDOMNode focusNode = selection.getFocusNode();
-		nsIDOMNode anchorNode = selection.getAnchorNode();
-		//when we select input this function return null
-		//but we select elemnt
-		if(focusNode==null && anchorNode==null) {
-			nsIDOMNode  visualNode =(nsIDOMNode) event.getTarget()
-					.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
-			//fix of JBIDE-1097
-			if(HTML.TAG_SPAN.equalsIgnoreCase(visualNode.getNodeName())) {
-				if(visualBuilder.getXulRunnerEditor().getLastSelectedElement() != null
-						&& !visualBuilder.getNodeBounds(
-								visualBuilder.getXulRunnerEditor()
-										.getLastSelectedElement())
-								.contains(VisualDomUtil.getMousePoint(event))) {
-					return null;
-				}
-			}
-			int offset = (int) VisualDomUtil.getOffset(visualNode);
-			selection.removeAllRanges();
-			selection.collapse(visualNode.getParentNode(), offset);
-			try {
-				selection.extend(visualNode.getParentNode(), offset + 1);
-			} catch(XPCOMException ex) {
-				//just ignore exception
-				// throws when we trying drag element which already resizing
-				return null;
-			}
-			focusNode = selection.getFocusNode();
-			anchorNode = selection.getAnchorNode();
-		}
-		if (focusNode != null && focusNode.equals(anchorNode)) {
-			int focusOffset = selection.getFocusOffset();
-			int anchorOffset = selection.getAnchorOffset();
-			int offset = Math.min(focusOffset, anchorOffset);
-			int length = Math.max(focusOffset, anchorOffset) - offset;
-
-			int focusNodeType = focusNode.getNodeType();
-			if (focusNodeType == nsIDOMNode.ELEMENT_NODE) {
-				if (length == 1) {
-					nsIDOMNodeList children = focusNode.getChildNodes();
-					nsIDOMNode selectedNode = children.item(
-							Math.min(focusOffset, anchorOffset));
-					if (visualBuilder.getNodeBounds(selectedNode).contains(VisualDomUtil.getMousePoint(event))) {
-						int selectedNodeType = selectedNode.getNodeType();
-						if (selectedNodeType == nsIDOMNode.ELEMENT_NODE) {
-							return new VpeVisualInnerDragInfo((nsIDOMElement)selectedNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
-						} else if (selectedNodeType == nsIDOMNode.TEXT_NODE) {
-							return new VpeVisualInnerDragInfo(selectedNode, 0, selectedNode.getNodeValue().length());
-						}
-					}
-				}
-			} else if (focusNodeType == nsIDOMNode.TEXT_NODE) {
-				return new VpeVisualInnerDragInfo(focusNode, offset, length);
-			}
+		nsIDOMElement selectedElement
+				= visualBuilder.getXulRunnerEditor().getLastSelectedElement();
+		if (selectedElement == null) {
+			return null;
+		} else {
+			return new VpeVisualInnerDragInfo(selectedElement);
 		}
 
-		return null;
+		// fix of JBIDE-4998
+//		nsISelection selection = visualSelectionController.getSelection(
+//				nsISelectionController.SELECTION_NORMAL);
+//		nsIDOMNode focusNode = selection.getFocusNode();
+//		nsIDOMNode anchorNode = selection.getAnchorNode();
+//		//when we select input this function return null
+//		//but we select elemnt
+//		if(focusNode==null && anchorNode==null) {
+//			nsIDOMNode  visualNode =(nsIDOMNode) event.getTarget()
+//					.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
+//			//fix of JBIDE-1097
+//			if(HTML.TAG_SPAN.equalsIgnoreCase(visualNode.getNodeName())) {
+//				if(visualBuilder.getXulRunnerEditor().getLastSelectedElement() != null
+//						&& !visualBuilder.getNodeBounds(
+//								visualBuilder.getXulRunnerEditor()
+//										.getLastSelectedElement())
+//								.contains(VisualDomUtil.getMousePoint(event))) {
+//					return null;
+//				}
+//			}
+//			int offset = (int) VisualDomUtil.getOffset(visualNode);
+//			selection.removeAllRanges();
+//			selection.collapse(visualNode.getParentNode(), offset);
+//			try {
+//				selection.extend(visualNode.getParentNode(), offset + 1);
+//			} catch(XPCOMException ex) {
+//				//just ignore exception
+//				// throws when we trying drag element which already resizing
+//				return null;
+//			}
+//			focusNode = selection.getFocusNode();
+//			anchorNode = selection.getAnchorNode();
+//		}
+//		if (focusNode != null && focusNode.equals(anchorNode)) {
+//			int focusOffset = selection.getFocusOffset();
+//			int anchorOffset = selection.getAnchorOffset();
+//			int offset = Math.min(focusOffset, anchorOffset);
+//			int length = Math.max(focusOffset, anchorOffset) - offset;
+//
+//			int focusNodeType = focusNode.getNodeType();
+//			if (focusNodeType == nsIDOMNode.ELEMENT_NODE) {
+//				if (length == 1) {
+//					nsIDOMNodeList children = focusNode.getChildNodes();
+//					nsIDOMNode selectedNode = children.item(
+//							Math.min(focusOffset, anchorOffset));
+//					if (visualBuilder.getNodeBounds(selectedNode).contains(VisualDomUtil.getMousePoint(event))) {
+//						int selectedNodeType = selectedNode.getNodeType();
+//						if (selectedNodeType == nsIDOMNode.ELEMENT_NODE) {
+//							return new VpeVisualInnerDragInfo((nsIDOMElement)selectedNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
+//						} else if (selectedNodeType == nsIDOMNode.TEXT_NODE) {
+//							return new VpeVisualInnerDragInfo(selectedNode, 0, selectedNode.getNodeValue().length());
+//						}
+//					}
+//				}
+//			} else if (focusNodeType == nsIDOMNode.TEXT_NODE) {
+//				return new VpeVisualInnerDragInfo(focusNode, offset, length);
+//			}
+//		}
+//
+//		return null;
 	}
 	
 	void setMouseUpSelection(nsIDOMMouseEvent mouseEvent) {

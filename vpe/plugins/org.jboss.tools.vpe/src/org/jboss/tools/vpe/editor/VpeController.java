@@ -1149,16 +1149,19 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 			// selection will be set only if press left button
 			if (mouseEvent.getButton() == LEFT_BUTTON) {
-				selectionManager.setSelection(mouseEvent);
 				// drag gesture isn't generated in XR 1.9 for Linux Platforms,
 				// so we start it's manually
 				// mareshkau
 				nsIDOMElement selectedElement = getXulRunnerEditor()
 						.getLastSelectedElement();
-				if (VpeVisualDomBuilder.inDragArea(XulRunnerVpeUtils
-						.getElementBounds(selectedElement), VisualDomUtil
-						.getMousePoint(mouseEvent))) {
+				if (selectedElement != null
+						&& VpeVisualDomBuilder.inDragArea(
+								XulRunnerVpeUtils.getElementBounds(
+										selectedElement),
+								VisualDomUtil.getMousePoint(mouseEvent))) {
 					dragGesture(mouseEvent);
+				} else {
+					selectionManager.setSelection(mouseEvent);					
 				}
 			}
 		} finally {
