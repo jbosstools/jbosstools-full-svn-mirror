@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.Path;
@@ -34,7 +35,6 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
 import org.eclipse.wst.sse.core.internal.provisional.INodeNotifier;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
-import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.document.NodeImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.jboss.tools.common.resref.core.ResourceReference;
@@ -63,13 +63,11 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
-import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.ElService;
 import org.jboss.tools.vpe.editor.util.FaceletUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
-import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.jboss.tools.vpe.resref.core.CSSReferenceList;
@@ -78,6 +76,7 @@ import org.jboss.tools.vpe.xulrunner.editor.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMHTMLDocument;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
@@ -94,6 +93,14 @@ import org.w3c.dom.NodeList;
 public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	/**
+	 * 
+	 */
+	private static final String CURSOR_MOVE_STYLE_ID = "vpeCursorMoveStyle";
+	/**
+	 * 
+	 */
+	private static final String CURSOR_MOVE_SELECTOR = "*{cursor: move !important}";
+	/**
      * 
      */
     public static final String SRC_NODE = "SRC_NODE"; //$NON-NLS-1$
@@ -108,7 +115,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private static final String INCLUDE_ELEMENT_ATTR = "vpe:include-element"; //$NON-NLS-1$
 	private static final int DRAG_AREA_WIDTH = 10;
 	private static final int DRAG_AREA_HEIGHT = 10;
-	private static final String ATTR_DRAG_AVAILABLE_CLASS = "__drag__available_style"; //$NON-NLS-1$
 	private static String DOTTED_BORDER = "border: 1px dotted #FF6600; padding: 5px;"; //$NON-NLS-1$
 	private static final String CSS_STYLE_FOR_BORDER_FOR_UNKNOWN_TAGS = ";border: 1px solid green;"; //$NON-NLS-1$
 
@@ -2023,33 +2029,43 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				"read-only"); //$NON-NLS-1$
 		node.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
 	}
+	
+	/**
+	 * Changes the mouse cursor icon in VPE to 'move'.
+	 */
+	private void showMoveCursor(boolean show) {
+		nsIDOMHTMLDocument document = (nsIDOMHTMLDocument) xulRunnerEditor
+				.getDOMDocument()
+				.queryInterface(nsIDOMHTMLDocument.NS_IDOMHTMLDOCUMENT_IID);
+
+		nsIDOMElement moveStyle = document.getElementById(CURSOR_MOVE_STYLE_ID);
+		// If moveStyle == null then the move cursor icon is shown
+		// otherwise it is not.
+
+		if (show && moveStyle == null) {
+			moveStyle = document.createElement(HTML.TAG_STYLE);
+			moveStyle.setAttribute(HTML.ATTR_ID, CURSOR_MOVE_STYLE_ID);
+			nsIDOMText selector = document.createTextNode(CURSOR_MOVE_SELECTOR);
+			moveStyle.appendChild(selector);
+			document.getBody().appendChild(moveStyle);
+		} else if (!show && moveStyle != null) {
+				moveStyle.getParentNode().removeChild(moveStyle);
+		}
+	}
 
 	void setMoveCursor(nsIDOMMouseEvent mouseEvent) {
-
 		nsIDOMElement selectedElement = xulRunnerEditor
 				.getLastSelectedElement();
-		if (selectedElement != null && canInnerDrag(selectedElement)) {
-			String styleClasses = selectedElement.getAttribute(HTML.ATTR_CLASS);
-			if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil
-					.getMousePoint(mouseEvent))) {
-				// change cursor
-				if (styleClasses == null
-						|| !(styleClasses.contains(ATTR_DRAG_AVAILABLE_CLASS))) {
-					// change cursor style to move
-					styleClasses = ATTR_DRAG_AVAILABLE_CLASS + " " //$NON-NLS-1$
-							+ styleClasses;
-				}
-				//if mouse in drag area, and left button is pressed than we should
-				//start drag session manually.
-			} else {
-				// change cursor style to normal
-				if (styleClasses != null) {
-
-					styleClasses = styleClasses.replaceAll(
-							ATTR_DRAG_AVAILABLE_CLASS, ""); //$NON-NLS-1$
-				}
-			}
-			selectedElement.setAttribute(HTML.ATTR_CLASS, styleClasses);
+		if (selectedElement != null && canInnerDrag(selectedElement)
+					&& inDragArea(getNodeBounds(selectedElement), VisualDomUtil
+							.getMousePoint(mouseEvent))) {
+			// change cursor
+			showMoveCursor(true);
+			//if mouse in drag area, and left button is pressed than we should
+			//start drag session manually.
+		} else {
+			// change cursor style to normal
+			showMoveCursor(false);
 		}
 	}
 
