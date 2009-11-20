@@ -1209,20 +1209,22 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 	}
 	
 	VpeVisualInnerDragInfo getInnerDragInfo(nsIDOMMouseEvent event) {
-		VpeVisualInnerDragInfo info = null;
-	
-		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
+		nsISelection selection = visualSelectionController.getSelection(
+				nsISelectionController.SELECTION_NORMAL);
 		nsIDOMNode focusNode = selection.getFocusNode();
 		nsIDOMNode anchorNode = selection.getAnchorNode();
 		//when we select input this function return null
 		//but we select elemnt
 		if(focusNode==null && anchorNode==null) {
-		
-			nsIDOMNode  visualNode =(nsIDOMNode) event.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
+			nsIDOMNode  visualNode =(nsIDOMNode) event.getTarget()
+					.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
 			//fix of JBIDE-1097
-			if(HTML.TAG_SPAN.equalsIgnoreCase(visualNode.getNodeName()))
-			{
-				if(visualBuilder.getXulRunnerEditor().getLastSelectedElement()!=null&&!visualBuilder.getNodeBounds(visualBuilder.getXulRunnerEditor().getLastSelectedElement()).contains(VisualDomUtil.getMousePoint(event))){
+			if(HTML.TAG_SPAN.equalsIgnoreCase(visualNode.getNodeName())) {
+				if(visualBuilder.getXulRunnerEditor().getLastSelectedElement() != null
+						&& !visualBuilder.getNodeBounds(
+								visualBuilder.getXulRunnerEditor()
+										.getLastSelectedElement())
+								.contains(VisualDomUtil.getMousePoint(event))) {
 					return null;
 				}
 			}
@@ -1230,7 +1232,7 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 			selection.removeAllRanges();
 			selection.collapse(visualNode.getParentNode(), offset);
 			try {
-			selection.extend(visualNode.getParentNode(), offset + 1);
+				selection.extend(visualNode.getParentNode(), offset + 1);
 			} catch(XPCOMException ex) {
 				//just ignore exception
 				// throws when we trying drag element which already resizing
@@ -1245,29 +1247,27 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 			int offset = Math.min(focusOffset, anchorOffset);
 			int length = Math.max(focusOffset, anchorOffset) - offset;
 
-			switch (focusNode.getNodeType()) {
-			case nsIDOMNode.ELEMENT_NODE:
+			int focusNodeType = focusNode.getNodeType();
+			if (focusNodeType == nsIDOMNode.ELEMENT_NODE) {
 				if (length == 1) {
 					nsIDOMNodeList children = focusNode.getChildNodes();
-					nsIDOMNode selectedNode = children.item(Math.min(focusOffset, anchorOffset));
+					nsIDOMNode selectedNode = children.item(
+							Math.min(focusOffset, anchorOffset));
 					if (visualBuilder.getNodeBounds(selectedNode).contains(VisualDomUtil.getMousePoint(event))) {
-						switch(selectedNode.getNodeType()) {
-						case nsIDOMNode.ELEMENT_NODE:
-							info = new VpeVisualInnerDragInfo((nsIDOMElement)selectedNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
-							break;
-						case nsIDOMNode.TEXT_NODE:
-							info = new VpeVisualInnerDragInfo(selectedNode, 0, selectedNode.getNodeValue().length());
-							break;
+						int selectedNodeType = selectedNode.getNodeType();
+						if (selectedNodeType == nsIDOMNode.ELEMENT_NODE) {
+							return new VpeVisualInnerDragInfo((nsIDOMElement)selectedNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
+						} else if (selectedNodeType == nsIDOMNode.TEXT_NODE) {
+							return new VpeVisualInnerDragInfo(selectedNode, 0, selectedNode.getNodeValue().length());
 						}
 					}
 				}
-				break;
-			case nsIDOMNode.TEXT_NODE:
-				info = new VpeVisualInnerDragInfo(focusNode, offset, length);
-				break;
+			} else if (focusNodeType == nsIDOMNode.TEXT_NODE) {
+				return new VpeVisualInnerDragInfo(focusNode, offset, length);
 			}
 		}
-		return info;
+
+		return null;
 	}
 	
 	void setMouseUpSelection(nsIDOMMouseEvent mouseEvent) {
