@@ -91,18 +91,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class VpeVisualDomBuilder extends VpeDomBuilder {
-
-	/**
-	 * 
-	 */
-	private static final String CURSOR_MOVE_STYLE_ID = "vpeCursorMoveStyle";
-	/**
-	 * 
-	 */
-	private static final String CURSOR_MOVE_SELECTOR = "*{cursor: move !important}";
-	/**
-     * 
-     */
+	private static final String CURSOR_MOVE_STYLE_ID = "vpeCursorMoveStyle"; //$NON-NLS-1$
+	private static final String CURSOR_MOVE_SELECTOR = "*{cursor: move !important}"; //$NON-NLS-1$
     public static final String SRC_NODE = "SRC_NODE"; //$NON-NLS-1$
     public static final String PARENT = "PARENT"; //$NON-NLS-1$
     public static final String VPE_USER_TOGGLE_ID = "vpe-user-toggle-id"; //$NON-NLS-1$
