@@ -22,6 +22,7 @@ import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.xsl.Xsl;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart
@@ -43,11 +44,10 @@ public class TaskTypeManager {
 		if (parentId == null)
 			return null;
 		if (parentId.equals(TaskTypeManager.TASK_ID_INPUT)) {
-			return new String[] { TaskTypeManager.TASK_ID_JAVA_MAPPING, TaskTypeManager.TASK_ID_XSL_TEMPLATE,
-					TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE };
+			return new String[] { TaskTypeManager.TASK_ID_JAVA_MAPPING };
 		}
 		if (parentId.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
-			return new String[] { TaskTypeManager.TASK_ID_XSL_TEMPLATE, TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE };
+			return new String[] { TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE };
 		}
 		return null;
 	}
@@ -65,8 +65,6 @@ public class TaskTypeManager {
 					GraphicsConstants.IMAGE_JAVA_AMPPING_TASK));
 			allTaskList.add(new TaskTypeDescriptor(TASK_ID_FREEMARKER_TEMPLATE, "Apply Template",
 					GraphicsConstants.IMAGE_APPLY_FREEMARKER_TASK));
-//			allTaskList.add(new TaskTypeDescriptor(TASK_ID_XSL_TEMPLATE, "Apply XSL Template",
-//					GraphicsConstants.IMAGE_APPLY_XSL_TASK));
 		}
 		return allTaskList;
 	}
@@ -116,17 +114,30 @@ public class TaskTypeManager {
 	 * @param smooksResourceList
 	 * @return
 	 */
-	public static List<Object> getAssociatedSmooksElements(String taskID, SmooksResourceListType smooksResourceList) {
-		List<Object> elementTypes = getAssociatedSmooksElementsType(taskID);
+	public static List<Object> getAssociatedSmooksElements(TaskType taskType, SmooksResourceListType smooksResourceList) {
+		List<Object> elementTypes = getAssociatedSmooksElementsType(taskType.getId());
 		List<AbstractResourceConfig> resourceConfigList = smooksResourceList.getAbstractResourceConfig();
 		List<Object> associatedElements = new ArrayList<Object>();
 		for (Iterator<?> iterator = resourceConfigList.iterator(); iterator.hasNext();) {
 			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
-			if (isSameType(abstractResourceConfig, elementTypes)) {
+			if (isSameType(abstractResourceConfig, elementTypes) && canRemove(abstractResourceConfig, taskType)) {
 				associatedElements.add(abstractResourceConfig);
 			}
 		}
 		return associatedElements;
+	}
+
+	private static boolean canRemove(AbstractResourceConfig abstractResourceConfig, TaskType taskType) {
+		if (abstractResourceConfig instanceof Freemarker) {
+			String refid = SmooksModelUtils.getParamValue(taskType, SmooksModelUtils.KEY_TASK_ID_REF);
+			String id = SmooksModelUtils.getParamValue(((Freemarker) abstractResourceConfig).getParam(),
+					SmooksModelUtils.KEY_OBJECT_ID);
+			if (refid != null && id != null && id.equals(refid)) {
+				return true;
+			}
+			return false;
+		}
+		return true;
 	}
 
 	private static boolean isSameType(Object element, List<Object> elementTypes) {

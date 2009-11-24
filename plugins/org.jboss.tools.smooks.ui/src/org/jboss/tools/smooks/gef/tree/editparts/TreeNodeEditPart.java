@@ -28,6 +28,8 @@ import org.eclipse.gef.tools.ConnectionDragCreationTool;
 import org.eclipse.gef.tools.DirectEditManager;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.graphics.Image;
+import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.gef.tree.editpolicy.FigureHighlightEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeGraphicalNodeEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeSelectEditPolicy;
@@ -41,6 +43,7 @@ import org.jboss.tools.smooks.gef.tree.figures.TreeNodeTextDirectManagerLocator;
 import org.jboss.tools.smooks.gef.tree.model.IConnectableNode;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
+import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
@@ -58,6 +61,10 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 	private IFigure anchorFigure = null;
 
 	protected DirectEditManager editManager = null;
+
+	protected Label errorLabel = new Label();
+
+	protected Label warningLabel = new Label();
 
 	@Override
 	protected IFigure createFigure() {
@@ -190,10 +197,28 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 		if (text != null) {
 			((TreeNodeFigure) getFigure()).setLabelText(text);
 		}
+		Label tooltip = null;
+		int serverity = node.getSeverity();
+		String message = getSeverityMessage(node);
 		Image image = node.getImage();
+		if (serverity == IValidatableModel.NONE) {
+			image = node.getImage();
+
+		}
+		if (serverity == IValidatableModel.ERROR) {
+			image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_ERROR);
+			tooltip = errorLabel;
+			tooltip.setText(message);
+		}
+		if (serverity == IValidatableModel.WARNING) {
+			image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_WARNING);
+			tooltip = warningLabel;
+			tooltip.setText(message);
+		}
 		if (image != null) {
 			((TreeNodeFigure) getFigure()).setLabelImage(image);
 		}
+		((TreeNodeFigure) getFigure()).setToolTip(tooltip);
 		super.refreshVisuals();
 
 		// Dimension size = getFigure().getPreferredSize(-1, -1);
@@ -203,12 +228,26 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 		// this.getFigure(), rect);
 	}
 
+	protected String getSeverityMessage(IValidatableModel model) {
+		List<String> messages = model.getMessage();
+		String message = null;
+		for (Iterator<?> iterator = messages.iterator(); iterator.hasNext();) {
+			String string = (String) iterator.next();
+			if (message == null) {
+				message = " - " + string;
+			} else {
+				message = message + "\n" + " - " + string;
+			}
+		}
+		return message;
+	}
+
 	public List<?> getModelChildren() {
 		if (childrenLoaded) {
 			TreeNodeModel node = (TreeNodeModel) getModel();
 			return node.getChildren();
 		} else {
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
 	}
 
@@ -239,6 +278,9 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 
 	public void propertyChange(PropertyChangeEvent evt) {
 		String proName = evt.getPropertyName();
+		if (TreeNodeModel.PRO_SEVERITY_CHANGED.equals(proName)) {
+			refreshVisuals();
+		}
 		if (TreeNodeModel.PRO_FORCE_VISUAL_CHANGED.equals(proName) || TreeNodeModel.PRO_TEXT_CHANGED.equals(proName)) {
 			refreshVisuals();
 		}

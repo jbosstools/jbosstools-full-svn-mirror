@@ -151,6 +151,9 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 
 		reg.put(GraphicsConstants.IMAGE_XSD_FILE,
 				imageDescriptorFromPlugin(PLUGIN_ID, GraphicsConstants.IMAGE_XSD_FILE));
+		
+		reg.put(GraphicsConstants.IMAGE_CSV_FILE,
+				imageDescriptorFromPlugin(PLUGIN_ID, GraphicsConstants.IMAGE_CSV_FILE));
 
 		reg.put(GraphicsConstants.IMAGE_BINDING_LINE, imageDescriptorFromPlugin(PLUGIN_ID,
 				GraphicsConstants.IMAGE_BINDING_LINE));

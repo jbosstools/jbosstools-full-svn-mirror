@@ -6,9 +6,9 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext;
 
-import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.common.util.EList;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='input_._type' kind='elementOnly'"
  * @generated
  */
-public interface InputType extends EObject {
+public interface InputType extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Param</b></em>' containment reference list.
 	 * The list contents are of type {@link org.jboss.tools.smooks.model.graphics.ext.ParamType}.

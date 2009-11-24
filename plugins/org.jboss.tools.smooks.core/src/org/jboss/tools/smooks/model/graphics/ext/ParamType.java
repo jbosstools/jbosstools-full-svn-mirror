@@ -6,7 +6,7 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext;
 
-import org.eclipse.emf.ecore.EObject;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='param_._type' kind='simple'"
  * @generated
  */
-public interface ParamType extends EObject {
+public interface ParamType extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->

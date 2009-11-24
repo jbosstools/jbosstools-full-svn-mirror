@@ -19,6 +19,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.graphics.ext.TaskType;
 
@@ -32,8 +33,11 @@ public abstract class AbstractProcessGraphAction extends Action implements ISele
 	
 	protected ISelection currentSelection = null;
 	
-	public AbstractProcessGraphAction(String text , ISmooksModelProvider provider){
+	protected IEditorPart editorPart;
+	
+	public AbstractProcessGraphAction(String text , ISmooksModelProvider provider , IEditorPart editorPart){
 		super();
+		this.editorPart = editorPart;
 		this.provider = provider;
 		this.setText(text);
 		init();

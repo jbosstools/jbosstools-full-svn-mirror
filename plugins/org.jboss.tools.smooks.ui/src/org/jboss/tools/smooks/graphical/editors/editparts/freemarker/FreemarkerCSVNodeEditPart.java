@@ -18,6 +18,7 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.ToolbarLayout;
+import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.gef.EditPart;
@@ -112,6 +113,19 @@ public class FreemarkerCSVNodeEditPart extends TreeNodeEditPart {
 					SPACE_INT = 0;
 					CLICKNODE_HEIGHT = 0;
 					CLICKNODE_WIDTH = 0;
+					expand = true;
+				}
+
+				/*
+				 * (non-Javadoc)
+				 * 
+				 * @seeorg.jboss.tools.smooks.gef.tree.figures.TreeNodeFigure#
+				 * getPreferredSize(int, int)
+				 */
+				@Override
+				public Dimension getPreferredSize(int hint, int hint2) {
+					expand = true;
+					return super.getPreferredSize(hint, hint2);
 				}
 
 				/*
@@ -200,10 +214,42 @@ public class FreemarkerCSVNodeEditPart extends TreeNodeEditPart {
 					return layout;
 				}
 
+				/*
+				 * (non-Javadoc)
+				 * 
+				 * @seeorg.jboss.tools.smooks.gef.tree.figures.TreeNodeFigure#
+				 * collapsedNode()
+				 */
+				@Override
+				public void collapsedNode() {
+				}
+
+				/*
+				 * (non-Javadoc)
+				 * 
+				 * @see
+				 * org.jboss.tools.smooks.gef.tree.figures.TreeNodeFigure#expandNode
+				 * ()
+				 */
+				@Override
+				public void expandNode() {
+				}
+
 			};
 			return figure;
 		}
 		return super.createFigure();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart#expandNode()
+	 */
+	@Override
+	public void expandNode() {
+		super.expandNode();
 	}
 
 	/*
@@ -215,6 +261,7 @@ public class FreemarkerCSVNodeEditPart extends TreeNodeEditPart {
 	 */
 	@Override
 	public void treeCollapsed(TreeFigureExpansionEvent event) {
+		System.out.println();
 	}
 
 	/*
@@ -226,6 +273,7 @@ public class FreemarkerCSVNodeEditPart extends TreeNodeEditPart {
 	 */
 	@Override
 	public void treeExpanded(TreeFigureExpansionEvent event) {
+		System.out.println();
 	}
 
 	/*
@@ -248,8 +296,11 @@ public class FreemarkerCSVNodeEditPart extends TreeNodeEditPart {
 					AbstractSmooksGraphicalModel graphModel = (AbstractSmooksGraphicalModel) editPart.getModel();
 					Object data = graphModel.getData();
 					data = AdapterFactoryEditingDomain.unwrap(data);
-					DeleteSmooksGraphicalModelCommand deleteCommand = new DeleteSmooksGraphicalModelCommand(graphModel);
-					return deleteCommand;
+					if (data instanceof CSVNodeModel && !((CSVNodeModel) data).isRecord()) {
+						DeleteSmooksGraphicalModelCommand deleteCommand = new DeleteSmooksGraphicalModelCommand(
+								graphModel);
+						return deleteCommand;
+					}
 				}
 				return null;
 			}
@@ -267,11 +318,19 @@ public class FreemarkerCSVNodeEditPart extends TreeNodeEditPart {
 							.getContentProvider();
 					IEditingDomainProvider provider2 = ((FreemarkerCSVNodeGraphicalModel) graphModel)
 							.getDomainProvider();
-					FreemarkerCSVNodeGraphicalModel childGraphModel = new FreemarkerCSVNodeGraphicalModel(model,
-							provider1, provider, provider2);
-					AddSmooksGraphicalModelCommand command = new AddSmooksGraphicalModelCommand(
-							(AbstractSmooksGraphicalModel) graphModel, childGraphModel);
-					return command;
+					Object parentData = ((FreemarkerCSVNodeGraphicalModel) graphModel).getData();
+					if (parentData instanceof CSVNodeModel) {
+						if (((CSVNodeModel) parentData).isRecord()) {
+							if (model instanceof CSVNodeModel && !((CSVNodeModel) model).isRecord()) {
+								FreemarkerCSVNodeGraphicalModel childGraphModel = new FreemarkerCSVNodeGraphicalModel(
+										model, provider1, provider, provider2);
+
+								AddSmooksGraphicalModelCommand command = new AddSmooksGraphicalModelCommand(
+										(AbstractSmooksGraphicalModel) graphModel, childGraphModel);
+								return command;
+							}
+						}
+					}
 				}
 				return null;
 			}
@@ -332,7 +391,7 @@ public class FreemarkerCSVNodeEditPart extends TreeNodeEditPart {
 	@Override
 	protected boolean canDirectEdit() {
 		Object data = ((AbstractSmooksGraphicalModel) getModel()).getData();
-		if (data instanceof CSVNodeModel) {
+		if (data instanceof CSVNodeModel && !((CSVNodeModel) data).isRecord()) {
 			return true;
 		}
 		return false;

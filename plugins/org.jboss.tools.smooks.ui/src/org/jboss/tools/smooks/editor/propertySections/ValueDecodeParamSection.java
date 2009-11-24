@@ -82,7 +82,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 		TabbedPropertySheetWidgetFactory factory = aTabbedPropertySheetPage.getWidgetFactory();
 
 		Section section = createRootSection(factory, parent);
-		section.setText("Validation Rules Setting");
+		section.setText("Decode Parameters");
 
 		controlComposite = factory.createComposite(section, SWT.NONE);
 

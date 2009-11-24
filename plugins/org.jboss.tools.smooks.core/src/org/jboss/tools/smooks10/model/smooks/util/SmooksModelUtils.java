@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
@@ -28,9 +29,12 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.jboss.tools.smooks.model.freemarker.Freemarker;
+import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
+import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
 import org.jboss.tools.smooks.model.smooks.ConditionsType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -46,6 +50,20 @@ import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
  */
 
 public class SmooksModelUtils {
+
+	public static final String KEY_TEMPLATE_TYPE = "messageType";
+
+	public static final String FREEMARKER_TEMPLATE_TYPE_CSV = "CSV";
+
+	public static final String KEY_CSV_FIELDS = "csvFields";
+
+	public static final String KEY_TASK_ID_REF = "idref";
+
+	public static final String KEY_OBJECT_ID = "id";
+
+	public static final String KEY_CSV_SEPERATOR = "seperator";
+
+	public static final String KEY_CSV_QUOTE = "quote";
 
 	public static final String INPUT_TYPE_JAVA = "java";
 
@@ -108,11 +126,11 @@ public class SmooksModelUtils {
 			if ("bindings".equals(param.getName())) {
 				if (param.eContents().isEmpty())
 					continue;
-				List<Object> bindingList = (List<Object>) param.getMixed().get(SmooksModelUtils.ELEMENT_BINDING, false);
+				List<Object> bindingList = (List<Object>) param.getMixed().list(SmooksModelUtils.ELEMENT_BINDING);
 				return bindingList;
 			}
 		}
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 
 	public static boolean isBeanPopulatorResource(ResourceConfigType type) {
@@ -327,13 +345,11 @@ public class SmooksModelUtils {
 	}
 
 	public static String getAnyTypeComment(AnyType anyType) {
-		Object value = anyType.getMixed().get(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT, true);
-		if (value != null) {
-			if (value instanceof List && !((List<?>) value).isEmpty()) {
-				Object v = ((List<?>) value).get(0);
-				if (v != null) {
-					return v.toString().trim();
-				}
+		EList<Object> value = anyType.getMixed().list(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__COMMENT);
+		if (value != null && !value.isEmpty()) {
+			Object v = ((List<?>) value).get(0);
+			if (v != null) {
+				return v.toString().trim();
 			}
 			// return value.toString();
 		}
@@ -534,6 +550,136 @@ public class SmooksModelUtils {
 			return conditions.getCondition();
 		}
 		return Collections.emptyList();
+	}
+
+	public static List<org.jboss.tools.smooks.model.smooks.ParamType> getParams(AnyType model) {
+		if (model == null)
+			return Collections.emptyList();
+		List<org.jboss.tools.smooks.model.smooks.ParamType> obj = model.getMixed().list(
+				org.jboss.tools.smooks.model.smooks.SmooksPackage.Literals.DOCUMENT_ROOT__PARAM);
+		return obj;
+	}
+
+	public static void addParam(AnyType model, org.jboss.tools.smooks.model.smooks.ParamType param) {
+		if (model == null)
+			return;
+		model.getMixed().add(
+				XMLTypePackage.Literals.ANY_TYPE__MIXED,
+				FeatureMapUtil.createEntry(
+						org.jboss.tools.smooks.model.smooks.SmooksPackage.Literals.DOCUMENT_ROOT__PARAM, param));
+	}
+
+	public static char getFreemarkerCSVSeperator(Template template) {
+		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(template, KEY_CSV_SEPERATOR);
+		if (typeParam != null) {
+			String value = typeParam.getStringValue();
+			if (value != null && value.length() == 1) {
+				return value.toCharArray()[0];
+			}
+		}
+		return 0;
+	}
+
+	public static char getFreemarkerCSVQuote(Template template) {
+		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(template, KEY_CSV_QUOTE);
+		if (typeParam != null) {
+			String value = typeParam.getStringValue();
+			if (value != null && value.length() == 1) {
+				return value.toCharArray()[0];
+			}
+		}
+		return 0;
+	}
+
+	public static String getTemplateType(AnyType template) {
+		if (template == null)
+			return null;
+		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(template, KEY_TEMPLATE_TYPE);
+		if (typeParam != null) {
+			return typeParam.getStringValue();
+		}
+		return null;
+	}
+
+	public static String[] getFreemarkerCSVFileds(Template template) {
+		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(template, KEY_CSV_FIELDS);
+		if (typeParam != null) {
+			String value = typeParam.getStringValue();
+			if (value != null) {
+				value = value.trim();
+				return value.split(",");
+			}
+		}
+		return null;
+	}
+
+	public static org.jboss.tools.smooks.model.smooks.ParamType getParam(AnyType model, String paramName) {
+		List<org.jboss.tools.smooks.model.smooks.ParamType> params = getParams(model);
+		for (Iterator<?> iterator = params.iterator(); iterator.hasNext();) {
+			org.jboss.tools.smooks.model.smooks.ParamType paramType = (org.jboss.tools.smooks.model.smooks.ParamType) iterator
+					.next();
+			if (paramName.equals(paramType.getName())) {
+				return paramType;
+			}
+		}
+		return null;
+	}
+
+	public static String getParamValue(AnyType model, String paramName) {
+		List<org.jboss.tools.smooks.model.smooks.ParamType> params = getParams(model);
+		for (Iterator<?> iterator = params.iterator(); iterator.hasNext();) {
+			org.jboss.tools.smooks.model.smooks.ParamType paramType = (org.jboss.tools.smooks.model.smooks.ParamType) iterator
+					.next();
+			if (paramName.equals(paramType.getName())) {
+				return paramType.getStringValue();
+			}
+		}
+		return null;
+	}
+
+	public static String getParamValue(List<org.jboss.tools.smooks.model.smooks.ParamType> params, String paramName) {
+		for (Iterator<?> iterator = params.iterator(); iterator.hasNext();) {
+			org.jboss.tools.smooks.model.smooks.ParamType paramType = (org.jboss.tools.smooks.model.smooks.ParamType) iterator
+					.next();
+			if (paramName.equals(paramType.getName())) {
+				return paramType.getStringValue();
+			}
+		}
+		return null;
+	}
+
+	public static String generateTaskID(SmooksResourceListType resourceList, Class<?> modelClass, String baseID) {
+		List<AbstractResourceConfig> configList = resourceList.getAbstractResourceConfig();
+		int index = 0;
+		List<AbstractResourceConfig> modelList = new ArrayList<AbstractResourceConfig>();
+		for (Iterator<?> iterator = configList.iterator(); iterator.hasNext();) {
+			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
+			if (modelClass.isInstance(abstractResourceConfig)) {
+				modelList.add(abstractResourceConfig);
+				// index++;
+			}
+		}
+		String id = baseID + String.valueOf(index);
+		int i = 0;
+		for (i = 0; i < modelList.size(); i++) {
+			AbstractResourceConfig abstractResourceConfig = modelList.get(i);
+			String idref = null;
+			if (abstractResourceConfig instanceof Freemarker) {
+				idref = SmooksModelUtils.getParamValue(((Freemarker) abstractResourceConfig).getParam(),
+						SmooksModelUtils.KEY_OBJECT_ID);
+			}
+			if (idref == null) {
+				idref = SmooksModelUtils.getParamValue(abstractResourceConfig, SmooksModelUtils.KEY_OBJECT_ID);
+			}
+			if (id.equals(idref)) {
+				index++;
+				id = baseID + String.valueOf(index);
+				i = 0;
+				continue;
+			}
+		}
+		return id;
+
 	}
 
 }

@@ -38,7 +38,7 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  */
 public class JavabeanStrucutredDataWizard extends Wizard implements
 		IStructuredDataSelectionWizard, INewWizard {
-	JavaBeanConfigWizardPage page = null;
+	JavaBeanSelectionWizardPage page = null;
 	IJavaProject project = null;
 	
 	
@@ -67,7 +67,7 @@ public class JavabeanStrucutredDataWizard extends Wizard implements
 	public void addPages() {
 		super.addPages();
 		if (page == null) {
-			page = new JavaBeanConfigWizardPage(project);
+			page = new JavaBeanSelectionWizardPage("javaclass",project);
 			this.addPage(page);
 		}
 	}
@@ -85,7 +85,7 @@ public class JavabeanStrucutredDataWizard extends Wizard implements
 
 	public JavaBeanList getJavaBeanList() {
 		JavaBeanList list = new JavaBeanList();
-		if (result != null && result instanceof List) {
+		if (result != null && result instanceof List<?>) {
 			for (Iterator<?> iterator = ((List<?>) result).iterator(); iterator
 					.hasNext();) {
 				JavaBeanModel javabean = (JavaBeanModel) iterator.next();
@@ -176,12 +176,12 @@ public class JavabeanStrucutredDataWizard extends Wizard implements
 			JavaBeanModel javaBeanModel = (JavaBeanModel) iterator.next();
 			Class<?> clazz = javaBeanModel.getBeanClass();
 			if (clazz != null) {
-				boolean isArray = "array".equals(javaBeanModel
-						.getExtendProperty("many"));
+				boolean isArray = clazz.isArray();
 //				boolean isList = "list".equals(javaBeanModel
 //						.getExtendProperty("many"));
 				String cname = clazz.getName();
 				if(isArray){
+					cname = clazz.getComponentType().getName();
 					cname = cname+ "[]";
 				}
 				buffer.append(cname);

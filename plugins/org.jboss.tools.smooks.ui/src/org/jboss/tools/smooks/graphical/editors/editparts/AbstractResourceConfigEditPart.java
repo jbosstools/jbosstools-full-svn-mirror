@@ -13,6 +13,7 @@ package org.jboss.tools.smooks.graphical.editors.editparts;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -35,6 +36,7 @@ import org.eclipse.gef.requests.GroupRequest;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.command.GEFAdapterCommand;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart;
+import org.jboss.tools.smooks.gef.tree.figures.TreeContainerFigure;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
@@ -44,6 +46,24 @@ import org.jboss.tools.smooks.model.smooks.SmooksPackage;
  * 
  */
 public class AbstractResourceConfigEditPart extends TreeContainerEditPart {
+	
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart#createFigure()
+	 */
+	@Override
+	protected IFigure createFigure() {
+		IFigure figure =  super.createFigure();
+		if(figure instanceof TreeContainerFigure){
+			((TreeContainerFigure)figure).setSource(isSource());
+		}
+		return figure;
+	}
+	
+	protected boolean isSource(){
+		return true;
+	}
+
 
 	@Override
 	protected String generateFigureID() {

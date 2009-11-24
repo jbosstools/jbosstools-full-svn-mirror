@@ -6,9 +6,9 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext;
 
-import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.common.util.EList;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='process_._type' kind='elementOnly'"
  * @generated
  */
-public interface ProcessType extends EObject {
+public interface ProcessType extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Task</b></em>' containment reference list.
 	 * The list contents are of type {@link org.jboss.tools.smooks.model.graphics.ext.TaskType}.

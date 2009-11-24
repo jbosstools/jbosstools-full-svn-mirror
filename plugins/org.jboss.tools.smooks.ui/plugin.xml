@@ -191,6 +191,12 @@
                 id="org.jboss.tools.smooks.ui.propertySection.decodeParam"
                 tab="org.jboss.tools.smooks.ui.propertySection.decodeParamTab">
           </propertySection>
+          <propertySection
+                class="org.jboss.tools.smooks.editor.propertySections.CSVRecordSection"
+                filter="org.jboss.tools.smooks.editor.propertySections.CSVRecordSectionFilter"
+                id="org.jboss.tools.smooks.ui.propertySection.csvrecord"
+                tab="org.jboss.tools.smooks.ui.propertySection.csvrecordTab">
+          </propertySection>
        </propertySections>
     </extension>
     <extension
@@ -203,6 +209,7 @@
                 label="Properties">
           </propertyTab>
           <propertyTab
+                afterTab="org.jboss.tools.smooks.ui.propertySection.ruleBasesTab"
                 category="validation"
                 id="org.jboss.tools.smooks.ui.propertySection.validationTab"
                 label="Validation">
@@ -213,9 +220,16 @@
                 label="Rule Bases">
           </propertyTab>
           <propertyTab
+                afterTab="org.jboss.tools.smooks.ui.propertySection.propertiesTab"
                 category="properties"
                 id="org.jboss.tools.smooks.ui.propertySection.decodeParamTab"
                 label="Decode Parameter">
+          </propertyTab>
+          <propertyTab
+                afterTab="org.jboss.tools.smooks.ui.propertySection.propertiesTab"
+                category="properties"
+                id="org.jboss.tools.smooks.ui.propertySection.csvrecordTab"
+                label="CSV Record Properties">
           </propertyTab>
        </propertyTabs>
     </extension>

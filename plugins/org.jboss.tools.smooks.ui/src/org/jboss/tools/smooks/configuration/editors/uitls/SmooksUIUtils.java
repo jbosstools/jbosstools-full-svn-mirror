@@ -1079,6 +1079,16 @@ public class SmooksUIUtils {
 				arrayInstance = null;
 				return clazz;
 			}
+			if(className.endsWith("]") && !className.endsWith("[]")){
+//				int index = className.indexOf("[");
+//				String collectionName = className.substring(0,index);
+//				String componentName = className.substring(index + 1 , className.length() - 1);
+//				Class<?> clazz = loader.loadClass(className);
+//				Object arrayInstance = Array.newInstance(clazz, 0);
+//				clazz = arrayInstance.getClass();
+//				arrayInstance = null;
+//				return clazz;
+			}
 			return loader.loadClass(className);
 		}
 
@@ -1283,7 +1293,7 @@ public class SmooksUIUtils {
 		final Resource resource = ((EObject) model).eResource();
 		return getResource(resource);
 	}
-	
+
 	public static IResource getResource(Resource resource) {
 		if (resource == null)
 			return null;
@@ -2949,8 +2959,8 @@ public class SmooksUIUtils {
 		}
 		return false;
 	}
-	
-	public static boolean  isCollectionJavaGraphModel(EObject parent){
+
+	public static boolean isCollectionJavaGraphModel(EObject parent) {
 		String classString = null;
 		if (parent instanceof BeanType) {
 			classString = ((BeanType) parent).getClass_();
@@ -2973,11 +2983,11 @@ public class SmooksUIUtils {
 
 			}
 		}
-		
+
 		return false;
 	}
-	
-	public static boolean isArrayJavaGraphModel(EObject parent){
+
+	public static boolean isArrayJavaGraphModel(EObject parent) {
 		String classString = null;
 		if (parent instanceof BeanType) {
 			classString = ((BeanType) parent).getClass_();
@@ -3003,10 +3013,10 @@ public class SmooksUIUtils {
 		if (model instanceof Xsl) {
 			return XslPackage.Literals.DOCUMENT_ROOT__XSL;
 		}
-		if(model instanceof Freemarker){
+		if (model instanceof Freemarker) {
 			return FreemarkerPackage.Literals.DOCUMENT_ROOT__FREEMARKER;
 		}
-		if(model instanceof RuleBasesType){
+		if (model instanceof RuleBasesType) {
 			return Rules10Package.Literals.RULES10_DOCUMENT_ROOT__RULE_BASES;
 		}
 		return null;

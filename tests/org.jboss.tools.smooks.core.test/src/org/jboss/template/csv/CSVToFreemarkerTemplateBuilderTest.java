@@ -19,6 +19,8 @@
  */
 package org.jboss.template.csv;
 
+import java.io.IOException;
+
 import junit.framework.TestCase;
 
 import org.jboss.template.exception.TemplateBuilderException;
@@ -30,88 +32,131 @@ import org.w3c.dom.Element;
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
 public class CSVToFreemarkerTemplateBuilderTest extends TestCase {
-	
-	public static void main(String[] args) throws TemplateBuilderException{
-		new CSVToFreemarkerTemplateBuilderTest().test_all_fields_mapped();
+
+	public static void main(String[] args) throws TemplateBuilderException {
+		// new CSVToFreemarkerTemplateBuilderTest().test_all_fields_mapped();
 	}
 
-    public void test_all_fields_mapped() throws TemplateBuilderException {
-        CSVModelBuilder modelBuilder = new CSVModelBuilder(new String[]{"firstname", "lastname", "country"});
-        Document model = modelBuilder.buildModel();
-        CSVToFreemarkerTemplateBuilder builder;
-        
-        builder = new CSVToFreemarkerTemplateBuilder(model, ',', '\"');
+	public void test_all_fields_mapped_01() throws TemplateBuilderException, IOException {
+		CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
+		Document model = modelBuilder.buildModel();
+		CSVFreeMarkerTemplateBuilder builder1 = new CSVFreeMarkerTemplateBuilder(model, ',', '\"');
 
-        builder.addCollectionMapping("people", getRecordElement(model),"person");
-        builder.addValueMapping("person.fname", getFieldElement(model, "firstname"));
-        builder.addValueMapping("person.lname", getFieldElement(model, "lastname"));
-        builder.addValueMapping("person.address.country", getFieldElement(model, "country"));
+		builder1.addCollectionMapping("people", getRecordElement(model), "person");
+		builder1.addValueMapping("person.fname", getFieldElement(model, "firstname"));
+		builder1.addValueMapping("person.lname", getFieldElement(model, "lastname"));
+		builder1.addValueMapping("person.address.country", getFieldElement(model, "country"));
 
-        String template = builder.buildTemplate();
-        System.out.println(template);
-        assertEquals("<#list people as person>\n" +
-                "\"${person.fname}\",\"${person.lname}\",\"${person.address.country}\"\n" +
-                "</#list>",
-                template);
-    }
+		String template = builder1.buildTemplate();
+		// System.out.println(template);
+		assertEquals("<#list people as person>\n"
+				+ "\"${person.fname}\",\"${person.lname}\",\"${person.address.country}\"\n" + "</#list>", template);
 
-    public void test_all_fields_not_mapped() throws TemplateBuilderException {
-        CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
-        Document model = modelBuilder.buildModel();
-        CSVToFreemarkerTemplateBuilder builder;
+		CSVFreeMarkerTemplateBuilder builder2 = new CSVFreeMarkerTemplateBuilder(model, ',', '\"', template);
+		template = builder2.buildTemplate();
+		// System.out.println(template);
+		assertEquals("<#list people as person>\n"
+				+ "\"${person.fname}\",\"${person.lname}\",\"${person.address.country}\"\n" + "</#list>", template);
+	}
 
-        builder = new CSVToFreemarkerTemplateBuilder(model, ',', '\"');
+	/**
+	 * Same as test above accept it uses different delimiters.
+	 */
+	public void test_all_fields_mapped_02() throws TemplateBuilderException, IOException {
+		CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
+		Document model = modelBuilder.buildModel();
+		CSVFreeMarkerTemplateBuilder builder1 = new CSVFreeMarkerTemplateBuilder(model, '|', '\'');
 
-        builder.addCollectionMapping("people", getRecordElement(model), "person");
-        builder.addValueMapping("person.fname", getFieldElement(model, "firstname"));
-        builder.addValueMapping("person.address.country", getFieldElement(model, "country"));
+		builder1.addCollectionMapping("people", getRecordElement(model), "person");
+		builder1.addValueMapping("person.fname", getFieldElement(model, "firstname"));
+		builder1.addValueMapping("person.lname", getFieldElement(model, "lastname"));
+		builder1.addValueMapping("person.address.country", getFieldElement(model, "country"));
 
-        String template = builder.buildTemplate();
-        System.out.println(template);
-        assertEquals("<#list people as person>\n" +
-                "\"${person.fname}\",,\"${person.address.country}\"\n" +
-                "</#list>",
-                template);
-    }
+		String template = builder1.buildTemplate();
+		// System.out.println(template);
+		assertEquals("<#list people as person>\n" + "'${person.fname}'|'${person.lname}'|'${person.address.country}'\n"
+				+ "</#list>", template);
 
-    public void test_collection_not_mapped_01() throws TemplateBuilderException {
-        CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
-        Document model = modelBuilder.buildModel();
-        CSVToFreemarkerTemplateBuilder builder;
+		CSVFreeMarkerTemplateBuilder builder2 = new CSVFreeMarkerTemplateBuilder(model, '|', '\'', template);
+		template = builder2.buildTemplate();
+		// System.out.println(template);
+		assertEquals("<#list people as person>\n" + "'${person.fname}'|'${person.lname}'|'${person.address.country}'\n"
+				+ "</#list>", template);
+	}
 
-        builder = new CSVToFreemarkerTemplateBuilder(model, ',', '\"');
+	public void test_all_fields_not_mapped() throws TemplateBuilderException {
+		CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
+		Document model = modelBuilder.buildModel();
+		CSVFreeMarkerTemplateBuilder builder;
 
-        try {
-            // Shouldn't be able to add a value binding where the model target is inside
-            // an unmapped collection...
-            builder.addValueMapping("person.fname", getFieldElement(model, "firstname"));
-            fail("Expected UnmappedCollectionNodeException");
-        } catch(UnmappedCollectionNodeException e) {
-            assertEquals("Unmapped collection node 'csv-record'.", e.getMessage());
-        }
-    }
+		builder = new CSVFreeMarkerTemplateBuilder(model, ',', '\"');
 
-    public void test_collection_not_mapped_02() throws TemplateBuilderException {
-        CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
-        Document model = modelBuilder.buildModel();
-        CSVToFreemarkerTemplateBuilder builder;
+		builder.addCollectionMapping("people", getRecordElement(model), "person");
+		builder.addValueMapping("person.fname", getFieldElement(model, "firstname"));
+		builder.addValueMapping("person.address.country", getFieldElement(model, "country"));
 
-        builder = new CSVToFreemarkerTemplateBuilder(model, ',', '\"');
+		String template = builder.buildTemplate();
+		// System.out.println(template);
+		assertEquals(
+				"<#list people as person>\n" + "\"${person.fname}\",,\"${person.address.country}\"\n" + "</#list>",
+				template);
 
-        try {
-            // For CSV, you need to have at least mapped the collection...
-            builder.buildTemplate();
-            fail("Expected UnmappedCollectionNodeException");
-        } catch(UnmappedCollectionNodeException e) {
-            assertEquals("Unmapped collection node 'csv-record'.", e.getMessage());
-        }
-    }
+		CSVFreeMarkerTemplateBuilder builder2 = new CSVFreeMarkerTemplateBuilder(model, ',', '\"', template);
+		template = builder2.buildTemplate();
+		// System.out.println(template);
+		assertEquals(
+				"<#list people as person>\n" + "\"${person.fname}\",,\"${person.address.country}\"\n" + "</#list>",
+				template);
 
-    private Element getRecordElement(Document model) {
-        return model.getDocumentElement();
-    }
+		try {
+			new CSVFreeMarkerTemplateBuilder(model, ';', '\"', template);
+			fail("Expected TemplateBuilderException");
+		} catch (TemplateBuilderException e) {
+			assertEquals(
+					"CSV Template fieldset size does not match that of the specified message model.  Check the supplied fieldset.  Check the specified 'separator' and 'quote' characters match those used in the template.",
+					e.getMessage());
+		}
+	}
 
-    private Element getFieldElement(Document model, String fieldName) {
-         return (Element) model.getElementsByTagName(fieldName).item(0);
-    }
+	public void test_collection_not_mapped_01() throws TemplateBuilderException {
+		CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
+		Document model = modelBuilder.buildModel();
+		CSVFreeMarkerTemplateBuilder builder;
+
+		builder = new CSVFreeMarkerTemplateBuilder(model, ',', '\"');
+
+		try {
+			// Shouldn't be able to add a value binding where the model target
+			// is inside
+			// an unmapped collection...
+			builder.addValueMapping("person.fname", getFieldElement(model, "firstname"));
+			fail("Expected UnmappedCollectionNodeException");
+		} catch (UnmappedCollectionNodeException e) {
+			assertEquals("Unmapped collection node 'csv-record'.", e.getMessage());
+		}
+	}
+
+	public void test_collection_not_mapped_02() throws TemplateBuilderException {
+		CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
+		Document model = modelBuilder.buildModel();
+		CSVFreeMarkerTemplateBuilder builder;
+
+		builder = new CSVFreeMarkerTemplateBuilder(model, ',', '\"');
+
+		try {
+			// For CSV, you need to have at least mapped the collection...
+			builder.buildTemplate();
+			fail("Expected UnmappedCollectionNodeException");
+		} catch (UnmappedCollectionNodeException e) {
+			assertEquals("Unmapped collection node 'csv-record'.", e.getMessage());
+		}
+	}
+
+	private Element getRecordElement(Document model) {
+		return model.getDocumentElement();
+	}
+
+	private Element getFieldElement(Document model, String fieldName) {
+		return (Element) model.getElementsByTagName(fieldName).item(0);
+	}
 }

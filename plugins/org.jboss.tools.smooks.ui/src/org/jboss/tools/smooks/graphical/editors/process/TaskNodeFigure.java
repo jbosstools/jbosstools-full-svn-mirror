@@ -18,12 +18,15 @@ import org.eclipse.draw2d.ActionListener;
 import org.eclipse.draw2d.Clickable;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
+import org.eclipse.draw2d.GridData;
+import org.eclipse.draw2d.GridLayout;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.MouseEvent;
 import org.eclipse.draw2d.MouseMotionListener;
 import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.graphics.Color;
@@ -72,6 +75,29 @@ public class TaskNodeFigure extends Figure {
 	}
 
 	private void hookTaskNodeFigure() {
+		// this.addMouseMotionListener(new MouseMotionListener() {
+		//
+		// public void mouseDragged(MouseEvent me) {
+		// }
+		//
+		// public void mouseEntered(MouseEvent me) {
+		// showAddFigure = true;
+		// imageSourceRectangle = null;
+		// addTaskFigure.repaint();
+		// }
+		//
+		// public void mouseExited(MouseEvent me) {
+		// showAddFigure = false;
+		// addTaskFigure.repaint();
+		// }
+		//
+		// public void mouseHover(MouseEvent me) {
+		// }
+		//
+		// public void mouseMoved(MouseEvent me) {
+		// }
+		//
+		// });
 		addTaskFigure.addMouseMotionListener(new MouseMotionListener() {
 
 			public void mouseDragged(MouseEvent me) {
@@ -100,12 +126,16 @@ public class TaskNodeFigure extends Figure {
 	protected void initFigure() {
 		initMainFigure();
 		initAddTaskFigure();
-		ToolbarLayout layout = new ToolbarLayout(true);
-		layout.setMinorAlignment(ToolbarLayout.ALIGN_CENTER);
+		GridLayout girdlLayout = new GridLayout();
+		girdlLayout.numColumns = 2;
+		this.setLayoutManager(girdlLayout);
+		GridData d = new GridData(GridData.FILL_VERTICAL);
+		// ToolbarLayout layout = new ToolbarLayout(true);
+		// layout.setMinorAlignment(ToolbarLayout.ALIGN_CENTER);
 		this.add(mainFigure);
 		this.add(addTaskFigure);
-
-		this.setLayoutManager(layout);
+		girdlLayout.setConstraint(addTaskFigure, d);
+		// this.setLayoutManager(layout);
 	}
 
 	private void initAddTaskFigure() {
@@ -117,20 +147,27 @@ public class TaskNodeFigure extends Figure {
 			@Override
 			protected void paintFigure(Graphics graphics) {
 				super.paintFigure(graphics);
+				Rectangle rect = getBounds();
+				Point center = rect.getCenter();
 				if (!showAddFigure) {
-					int feet = 4;
-					Rectangle rect = getBounds();
-					imageSourceRectangle = new Rectangle(rect.x + feet, rect.y + feet, rect.width - feet * 2,
-							rect.height - feet * 2);
+//					int feet = 4;
+					graphics.fillRectangle(rect);
+					return;
+					// imageSourceRectangle = new Rectangle(rect.x + feet,
+					// rect.y + feet, rect.width - feet * 2,
+					// rect.height - feet * 2);
 				}
 				Image image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
 						GraphicsConstants.IMAGE_ADD_TASK_BUTTON);
 				if (image != null) {
-					Rectangle sourceRectangle = new Rectangle(0, 0, image.getBounds().width, image.getBounds().height);
+//					System.out.println(center.x - image.getBounds().width / 2);
+					Point location = new Point(center.x - image.getBounds().width / 2, center.y
+							- image.getBounds().height / 2);
+					graphics.drawImage(image, location);
 					if (imageSourceRectangle == null) {
-						graphics.drawImage(image, getLocation());
+//						graphics.drawImage(image, getLocation());
 					} else {
-						graphics.drawImage(image, sourceRectangle, imageSourceRectangle);
+//						graphics.drawImage(image, sourceRectangle, imageSourceRectangle);
 					}
 				}
 			}

@@ -10,10 +10,12 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.gef.tree.editpolicy;
 
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.ConnectionEditPolicy;
 import org.eclipse.gef.requests.GroupRequest;
 import org.jboss.tools.smooks.gef.tree.command.DeleteConnectionCommand;
+import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeConnectionEditPart;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 
 /**
@@ -37,7 +39,13 @@ public class TreeNodeConnectionEditPolicy extends ConnectionEditPolicy {
 	@Override
 	protected Command getDeleteCommand(GroupRequest request) {
 		Object connection = getHost().getModel();
+		EditPart host = getHost();
 		if (connection != null && connection instanceof TreeNodeConnection) {
+			if(host instanceof TreeNodeConnectionEditPart){
+				if(!((TreeNodeConnectionEditPart)host).isCanDelete()){
+					return null;
+				}
+			}
 			DeleteConnectionCommand command = new DeleteConnectionCommand((TreeNodeConnection) connection);
 			return command;
 		}

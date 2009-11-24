@@ -106,6 +106,8 @@ public final class GraphicsConstants {
 	public static final String IMAGE_UNKNOWN_OBJ = "icons/full/obj16/unknown_obj.gif";
 
 	public static final String IMAGE_JAVA_FILE = "icons/full/obj16/jcu_obj.gif";
+	
+	public static final String IMAGE_CSV_FILE = "icons/full/obj16/csvfile.gif";
 
 	public static final String IMAGE_XML_FILE = "icons/full/obj16/XMLFile.gif";
 

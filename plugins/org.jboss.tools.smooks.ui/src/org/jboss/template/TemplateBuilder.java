@@ -43,7 +43,7 @@ public abstract class TemplateBuilder {
      * @param model The model on which the template will be constructed.
      */
     public TemplateBuilder(Document model) {
-        Assert.isNotNull(model, "model");
+    	Assert.isNotNull(model, "model");
         this.model = model;
     }
 
@@ -100,8 +100,16 @@ public abstract class TemplateBuilder {
     public boolean removeMapping(Mapping mapping) {
         return mappings.remove(mapping);
     }
+    
+    /**
+     * Get the full list of mappings.
+     * @return The full list of mappings.
+     */
+    public List<Mapping> getMappings() {
+		return mappings;
+	}
 
-    private void asserValidMappingNode(Node mappingNode) throws InvalidMappingException {
+	private void asserValidMappingNode(Node mappingNode) throws InvalidMappingException {
         if(mappingNode.getNodeType() != Node.ATTRIBUTE_NODE && mappingNode.getNodeType() != Node.ELEMENT_NODE) {
             throw new InvalidMappingException("Unsupported XML target node mapping.  Support XML elements and attributes only.");
         }

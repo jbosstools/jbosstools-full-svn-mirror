@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="libs/freemarker-2.3.11.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/opencsv-1.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/jackson-core-lgpl-1.0.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/milyn-commons-1.2.1.jar"/>

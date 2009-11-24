@@ -12,7 +12,11 @@ package org.jboss.tools.smooks.editor.propertySections;
 
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.IFilter;
+import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
+import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
+import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfigChildNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.JavaBeanChildNodeEditPart;
 import org.jboss.tools.smooks.model.javabean.ValueType;
 
@@ -31,6 +35,12 @@ public class ValueDecodeParamSectionFilter implements IFilter {
 		if (toTest == null)
 			return false;
 		if (toTest instanceof JavaBeanChildNodeEditPart) {
+			IEditorPart editorPart = ((AbstractResourceConfigChildNodeEditPart)toTest).getEditorPart();
+			if(toTest instanceof JavaBeanChildNodeEditPart && editorPart instanceof IGraphicalEditorPart){
+				if(SmooksFreemarkerTemplateGraphicalEditor.ID.equals(((IGraphicalEditorPart)editorPart).getID())){
+					return false;
+				}
+			}
 			AbstractSmooksGraphicalModel model = (AbstractSmooksGraphicalModel) ((JavaBeanChildNodeEditPart) toTest)
 					.getModel();
 			Object data = model.getData();

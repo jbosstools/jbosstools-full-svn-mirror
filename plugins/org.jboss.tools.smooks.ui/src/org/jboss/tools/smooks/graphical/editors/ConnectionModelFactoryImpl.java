@@ -42,7 +42,7 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 			AbstractSmooksGraphicalModel model) {
 		Object mm = model.getData();
 		mm = AdapterFactoryEditingDomain.unwrap(mm);
-		if (mm == null && !(mm instanceof EObject))
+		if (mm == null || !(mm instanceof EObject))
 			return null;
 		EObject cmodel = (EObject) mm;
 		EStructuralFeature beanIDRefFeature = SmooksUIUtils.getBeanIDRefFeature(cmodel);

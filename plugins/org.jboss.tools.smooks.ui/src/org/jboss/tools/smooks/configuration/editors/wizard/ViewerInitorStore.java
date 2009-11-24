@@ -247,6 +247,7 @@ public class ViewerInitorStore {
 		csvViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
 		csvViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
 		csvViewerInitor.setStructuredDataLoadWizard(new CSVInputDataWizard());
+		csvViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_CSV_FILE);
 		map.put(typeID, csvViewerInitor);
 
 		// for Csv 1.2

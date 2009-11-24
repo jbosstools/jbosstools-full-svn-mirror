@@ -21,11 +21,13 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
+import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.xsl.Xsl;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart
@@ -59,6 +61,16 @@ public class SmooksGraphUtil {
 			}
 			id = id.trim();
 			return "XSL_" + id;
+		}
+		
+		if (data instanceof Freemarker) {
+			String id = SmooksModelUtils.getParamValue(((Freemarker)data).getParam(), SmooksModelUtils.KEY_OBJECT_ID);
+			if (id == null) {
+				id = "freemarker";
+			}else{
+				id = "freemarker_"+id;
+			}
+			return id;
 		}
 		return null;
 	}

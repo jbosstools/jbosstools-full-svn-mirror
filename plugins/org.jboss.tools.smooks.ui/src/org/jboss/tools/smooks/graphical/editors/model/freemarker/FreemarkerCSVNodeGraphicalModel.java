@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model.freemarker;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -17,6 +18,7 @@ import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
+import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
@@ -24,6 +26,7 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.Template;
+import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -72,6 +75,37 @@ public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
 		return false;
 	}
 
+	protected void resetFieldsList() {
+		AbstractSmooksGraphicalModel record = this;
+		CSVNodeModel model = (CSVNodeModel) record.getData();
+		while (!model.isRecord()) {
+			record = record.getParent();
+			model = (CSVNodeModel) record.getData();
+		}
+		List<AbstractSmooksGraphicalModel> children = record.getChildrenWithoutDynamic();
+		String fieldsString = "";
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			AbstractSmooksGraphicalModel ixmlStructuredObject = (AbstractSmooksGraphicalModel) iterator.next();
+			fieldsString += ((IXMLStructuredObject) ixmlStructuredObject.getData()).getNodeName() + ",";
+		}
+		if (fieldsString.length() > 1) {
+			fieldsString = fieldsString.substring(0, fieldsString.length() - 1);
+		}
+		AbstractSmooksGraphicalModel parent = this;
+		while (parent != null && !(parent instanceof FreemarkerTemplateGraphicalModel)) {
+			parent = parent.getParent();
+		}
+		Freemarker freemarker = (Freemarker) parent.getData();
+		Template template = freemarker.getTemplate();
+		if (template != null) {
+			ParamType param = SmooksModelUtils.getParam(template, SmooksModelUtils.KEY_CSV_FIELDS);
+			if (param != null) {
+				SmooksModelUtils.setTextToSmooksType(this.domainProvider.getEditingDomain(), param, fieldsString);
+				changeFreemarkerContents();
+			}
+		}
+	}
+
 	/**
 	 * 
 	 * @param name
@@ -82,33 +116,49 @@ public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
 		if (!oldName.equals(name)) {
 			node.setName(name);
 			fireVisualChanged();
-			changeFreemarkerContents();
+			resetFieldsList();
 		}
 	}
-	
-	
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#addChild(org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#removeChild
+	 * (org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel)
+	 */
+	@Override
+	public void removeChild(AbstractSmooksGraphicalModel node) {
+		super.removeChild(node);
+		resetFieldsList();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#addChild
+	 * (org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel)
 	 */
 	@Override
 	public void addChild(AbstractSmooksGraphicalModel node) {
 		super.addChild(node);
-		changeFreemarkerContents();
+		resetFieldsList();
 	}
-	
-	protected void changeFreemarkerContents(){
+
+	public void changeFreemarkerContents() {
 		AbstractSmooksGraphicalModel parent1 = this;
-		while(!(parent1 instanceof FreemarkerTemplateGraphicalModel)){
+		while (!(parent1 instanceof FreemarkerTemplateGraphicalModel)) {
 			parent1 = parent1.getParent();
 		}
 		Object data = parent1.getData();
 		data = AdapterFactoryEditingDomain.unwrap(data);
 		Template template = null;
-		if(data instanceof Freemarker){
-			template = ((Freemarker)data).getTemplate();
+		if (data instanceof Freemarker) {
+			template = ((Freemarker) data).getTemplate();
 		}
-		if(template == null) return;
+		if (template == null)
+			return;
 		String content = null;
 		try {
 			Object parent = this.getParent();
@@ -122,22 +172,28 @@ public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
 			t.printStackTrace();
 		}
 		String version = SmooksConstants.VERSION_1_1;
-		if(this.domainProvider instanceof ISmooksModelProvider){
-			version = ((ISmooksModelProvider)domainProvider).getSmooksGraphicsExt().getPlatformVersion();
+		if (this.domainProvider instanceof ISmooksModelProvider) {
+			version = ((ISmooksModelProvider) domainProvider).getSmooksGraphicsExt().getPlatformVersion();
 		}
+		// if (content != null) {
 		if (SmooksConstants.VERSION_1_1.equals(version)) {
 			// CDATA
 			SmooksModelUtils.setCDATAToSmooksType(domainProvider.getEditingDomain(), template, content);
 		}
-		
+
 		if (SmooksConstants.VERSION_1_2.equals(version)) {
 			// Comment
 			SmooksModelUtils.setCommentToSmooksType(domainProvider.getEditingDomain(), template, content);
 		}
+		// }
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#addTargetConnection(org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#
+	 * addTargetConnection
+	 * (org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection)
 	 */
 	@Override
 	public void addTargetConnection(TreeNodeConnection connection) {
@@ -146,8 +202,12 @@ public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
 		changeFreemarkerContents();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#removeTargetConnection(org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#
+	 * removeTargetConnection
+	 * (org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection)
 	 */
 	@Override
 	public void removeTargetConnection(TreeNodeConnection connection) {

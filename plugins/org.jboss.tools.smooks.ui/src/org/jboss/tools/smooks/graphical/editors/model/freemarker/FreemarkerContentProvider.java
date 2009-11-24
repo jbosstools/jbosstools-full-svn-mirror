@@ -11,15 +11,22 @@
 package org.jboss.tools.smooks.graphical.editors.model.freemarker;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataContentProvider;
 import org.jboss.tools.smooks.configuration.editors.xml.XSLModelAnalyzer;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.Template;
+import org.jboss.tools.smooks.model.smooks.ParamType;
+import org.jboss.tools.smooks.model.smooks.SmooksFactory;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelConstants;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart
@@ -55,6 +62,16 @@ public class FreemarkerContentProvider implements ITreeContentProvider {
 			Template template = ((Freemarker) parentElement).getTemplate();
 			if (template != null) {
 				Object obj = buffer.get(template);
+				String comments = SmooksModelUtils.getAnyTypeComment(template);
+				
+				List<ParamType> params = SmooksModelUtils.getParams(template);
+				
+				ParamType param = SmooksFactory.eINSTANCE.createParamType();
+				param.setName("name");
+				param.setStringValue("aaa");
+				
+				
+				System.out.println(comments);
 //				if (obj == null) {
 //					String filePath = SmooksModelUtils.getAnyTypeText(template);
 //					if(filePath != null) filePath = filePath.trim();

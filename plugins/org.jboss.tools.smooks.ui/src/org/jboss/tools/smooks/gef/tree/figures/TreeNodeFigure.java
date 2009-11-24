@@ -54,7 +54,7 @@ public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHi
 
 	private boolean mouseEnter = false;
 
-	private boolean expand = false;
+	protected boolean expand = false;
 
 	private TreeNodeModel model;
 

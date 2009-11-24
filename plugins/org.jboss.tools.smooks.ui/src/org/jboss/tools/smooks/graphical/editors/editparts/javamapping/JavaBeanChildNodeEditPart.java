@@ -19,6 +19,7 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.DirectEditRequest;
+import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.command.GEFAdapterCommand;
@@ -80,6 +81,12 @@ public class JavaBeanChildNodeEditPart extends AbstractResourceConfigChildNodeEd
 	 */
 	@Override
 	protected boolean canDirectEdit() {
+		IEditorPart editorPart = this.getEditorPart();
+		if (editorPart instanceof IGraphicalEditorPart) {
+			if (SmooksFreemarkerTemplateGraphicalEditor.ID.equals(((IGraphicalEditorPart) editorPart).getID())) {
+				return false;
+			}
+		}
 		JavaBeanChildGraphModel graphModel = (JavaBeanChildGraphModel) getModel();
 		boolean isArray = graphModel.parentIsArray();
 		boolean isCollection = graphModel.parentIsCollection();
@@ -142,6 +149,12 @@ public class JavaBeanChildNodeEditPart extends AbstractResourceConfigChildNodeEd
 
 	@Override
 	protected EStructuralFeature getFeature(EObject model) {
+		IEditorPart editorPart = this.getEditorPart();
+		if (editorPart instanceof IGraphicalEditorPart) {
+			if (SmooksFreemarkerTemplateGraphicalEditor.ID.equals(((IGraphicalEditorPart) editorPart).getID())) {
+				return null;
+			}
+		}
 		if (model instanceof WiringType) {
 			return JavabeanPackage.Literals.BINDINGS_TYPE__WIRING;
 		}
