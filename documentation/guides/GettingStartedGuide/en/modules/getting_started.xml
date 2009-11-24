@@ -548,7 +548,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
    <itemizedlist>
     <listitem>
-     <para>Get Eclipse and Web Tools</para>
+    	<para>Get Eclipse and Web Tools (make sure you have the 
+    		<ulink url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS">appropriate version of Eclipse</ulink>)</para>
     </listitem>
    </itemizedlist>
   	<para>The current version of JBoss Tools (3.1.M2) targets at Eclipse 3.5/Galileo which is available from <ulink url="http://www.eclipse.org/downloads/">eclipse.org</ulink></para>
@@ -782,8 +783,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <para>Subscription: <ulink url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">JBDS
    Subscription</ulink></para>
    
-
   <para>The latest documentation builds are available <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
+ 	
+ 	<para>
+ 		<ulink url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS">Matrix of supported platforms, runtimes and technologies in JBossTools/JBDS</ulink></para>
  </section>
 
 </chapter>
