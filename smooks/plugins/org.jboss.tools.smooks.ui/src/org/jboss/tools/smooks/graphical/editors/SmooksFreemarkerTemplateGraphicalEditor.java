@@ -10,9 +10,14 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.gef.EditPart;
@@ -21,23 +26,42 @@ import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.requests.CreationFactory;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.jboss.template.CollectionMapping;
+import org.jboss.template.Mapping;
+import org.jboss.template.TemplateBuilder;
+import org.jboss.template.csv.CSVFreeMarkerTemplateBuilder;
+import org.jboss.template.csv.CSVModelBuilder;
+import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.actions.AbstractSmooksActionGrouper;
 import org.jboss.tools.smooks.configuration.editors.actions.ISmooksActionGrouper;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
+import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
+import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
-import org.jboss.tools.smooks.graphical.editors.autolayout.XSLMappingAutoLayout;
+import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
 import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.CSVLinkConnectionEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.FreemarkerAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVLinkConnection;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVNodeModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerActionCreator;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerCSVNodeGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerContentProvider;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerLabelProvider;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
+import org.jboss.tools.smooks.model.freemarker.Template;
+import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
+import org.jboss.tools.smooks.model.javabean.ValueType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 /**
  * @author Dart
@@ -47,7 +71,7 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 
 	public static final String ID = "__smooks_freemarker_template_graphical_editpart";
 
-	private XSLMappingAutoLayout autoLayout = null;
+	private IAutoLayout autoLayout = null;
 
 	public SmooksFreemarkerTemplateGraphicalEditor(ISmooksModelProvider provider) {
 		super(provider);
@@ -75,9 +99,9 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 	 */
 	@Override
 	public IAutoLayout getAutoLayout() {
-		// if(autoLayout == null){
-		// autoLayout = new XSLMappingAutoLayout();
-		// }
+		if (autoLayout == null) {
+			autoLayout = new FreemarkerAutoLayout();
+		}
 		return autoLayout;
 	}
 
@@ -180,6 +204,8 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 
 	private class FreemarkerTemplateConnectionModelFactory extends ConnectionModelFactoryImpl {
 
+		private List<Mapping> mappingList = null;
+
 		/*
 		 * (non-Javadoc)
 		 * 
@@ -205,6 +231,182 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 		public boolean hasSelectorConnection(AbstractSmooksGraphicalModel model) {
 			return false;
 		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * org.jboss.tools.smooks.graphical.editors.ConnectionModelFactoryImpl
+		 * #createConnection(java.util.List, org.eclipse.emf.ecore.EObject,
+		 * org.jboss.tools.smooks.gef.common.RootModel,
+		 * org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel)
+		 */
+		@Override
+		public Collection<TreeNodeConnection> createConnection(List<Object> inputDataList, EObject rootModel,
+				RootModel root, AbstractSmooksGraphicalModel model) {
+			List<TreeNodeConnection> collections = new ArrayList<TreeNodeConnection>();
+
+			if (model instanceof FreemarkerCSVNodeGraphicalModel) {
+				CSVNodeModel data = (CSVNodeModel) model.getData();
+				AbstractSmooksGraphicalModel freemarkerGraphModel = model.getParent();
+				if (!(freemarkerGraphModel instanceof FreemarkerTemplateGraphicalModel)) {
+					freemarkerGraphModel = freemarkerGraphModel.getParent();
+				}
+
+				if (freemarkerGraphModel instanceof FreemarkerTemplateGraphicalModel) {
+					Freemarker freemarker = (Freemarker) AdapterFactoryEditingDomain.unwrap(freemarkerGraphModel
+							.getData());
+					Template template = freemarker.getTemplate();
+					fillMapping(template);
+				}
+				AbstractSmooksGraphicalModel sourceNode = null;
+				AbstractSmooksGraphicalModel targetNode = model;
+				SmooksResourceListType listType = SmooksUIUtils.getSmooks11ResourceListType(smooksModelProvider
+						.getSmooksModel());
+				List<EObject> beanidModels = new ArrayList<EObject>();
+				if (listType != null) {
+					SmooksUIUtils.fillBeanIdModelList(listType, beanidModels);
+				}
+				for (Iterator<?> iterator = mappingList.iterator(); iterator.hasNext();) {
+					Mapping mapping = (Mapping) iterator.next();
+					String path = mapping.getSrcPath();
+					Node node = mapping.getMappingNode();
+					String nodeName = node.getNodeName();
+					if (data.isRecord()) {
+						if (mapping instanceof CollectionMapping) {
+							for (Iterator<?> iterator2 = beanidModels.iterator(); iterator2.hasNext();) {
+								EObject eObject = (EObject) iterator2.next();
+								EStructuralFeature feature = SmooksUIUtils.getBeanIDFeature(eObject);
+								if (feature != null) {
+									String beanid = (String) eObject.eGet(feature);
+									if (path.equals(beanid)) {
+										sourceNode = SmooksGraphUtil.findSmooksGraphModel((RootModel) root, eObject);
+										if (sourceNode != null && targetNode != null) {
+											TreeNodeConnection connection = new TreeNodeConnection(sourceNode,
+													targetNode);
+											connection.connectSource();
+											targetNode.getTargetConnections().add(connection);
+											targetNode.fireConnectionChanged();
+											collections.add(connection);
+											break;
+										}
+									}
+								}
+							}
+						}
+					} else {
+						if (nodeName.equals(data.getName())) {
+							String[] subpath = path.split("\\.");
+							if (subpath.length >= 2) {
+								String[] temppath = new String[2];
+								System.arraycopy(subpath, subpath.length - 2, temppath, 0, 2);
+								Object beanModel = findJavaBeanModel(temppath[0], beanidModels);
+								if (beanModel != null) {
+									Object targetModel = findJavaGraphModel(temppath[1], beanModel);
+									sourceNode = SmooksGraphUtil.findSmooksGraphModel((RootModel) root, targetModel);
+									if (sourceNode != null && targetNode != null) {
+										TreeNodeConnection connection = new TreeNodeConnection(sourceNode, targetNode);
+										connection.connectSource();
+										targetNode.getTargetConnections().add(connection);
+										targetNode.fireConnectionChanged();
+										collections.add(connection);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			Collection<TreeNodeConnection> cs = super.createConnection(inputDataList, rootModel, root, model);
+			if (cs != null) {
+				collections.addAll(cs);
+			}
+			return collections;
+		}
+
+		private Object findJavaGraphModel(String propertyName, Object bean) {
+			if (bean instanceof BeanType) {
+				List<?> values = ((BeanType) bean).getValue();
+				for (Iterator<?> iterator = values.iterator(); iterator.hasNext();) {
+					org.jboss.tools.smooks.model.javabean12.ValueType value = (org.jboss.tools.smooks.model.javabean12.ValueType) iterator
+							.next();
+					if (propertyName.equals(value.getProperty())) {
+						return value;
+					}
+				}
+			}
+			if (bean instanceof BindingsType) {
+				List<?> values = ((BindingsType) bean).getValue();
+				for (Iterator<?> iterator = values.iterator(); iterator.hasNext();) {
+					ValueType value = (ValueType) iterator.next();
+					if (propertyName.equals(value.getProperty())) {
+						return value;
+					}
+				}
+			}
+			return null;
+		}
+
+		private Object findJavaBeanModel(String beanid, List<EObject> beans) {
+			for (Iterator<?> iterator = beans.iterator(); iterator.hasNext();) {
+				Object object = (Object) iterator.next();
+				if (object instanceof BindingsType) {
+					if (beanid.equals(((BindingsType) object).getBeanId())) {
+						return object;
+					}
+				}
+				if (object instanceof BeanType) {
+					if (beanid.equals(((BeanType) object).getBeanId())) {
+						return object;
+					}
+				}
+			}
+			return null;
+		}
+
+		private void fillMapping(Template template) {
+			if (mappingList == null) {
+				mappingList = new ArrayList<Mapping>();
+			} else {
+				mappingList.clear();
+			}
+			String contents = SmooksModelUtils.getAnyTypeCDATA(template);
+			char seprator = SmooksModelUtils.getFreemarkerCSVSeperator(template);
+			char quote = SmooksModelUtils.getFreemarkerCSVQuote(template);
+			String[] fields = SmooksModelUtils.getFreemarkerCSVFileds(template);
+			SmooksGraphicsExtType ext = smooksModelProvider.getSmooksGraphicsExt();
+			try {
+				if (ext != null) {
+					if (SmooksConstants.VERSION_1_2.equals(ext.getPlatformVersion())) {
+						contents = SmooksModelUtils.getAnyTypeComment(template);
+					}
+				}
+				CSVModelBuilder modelBuilder = new CSVModelBuilder(fields);
+				Document model = modelBuilder.buildModel();
+				TemplateBuilder builder = new CSVFreeMarkerTemplateBuilder(model, seprator, quote, contents);
+				List<Mapping> mappings = builder.getMappings();
+				mappingList.addAll(mappings);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * org.jboss.tools.smooks.graphical.editors.ConnectionModelFactoryImpl
+		 * #hasConnection
+		 * (org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel)
+		 */
+		@Override
+		public boolean hasConnection(AbstractSmooksGraphicalModel model) {
+			if (model instanceof FreemarkerCSVNodeGraphicalModel) {
+				return true;
+			}
+			return super.hasConnection(model);
+		}
 	}
 
 	private class FreemarkerTemplateGraphicalModelFactory extends GraphicalModelFactoryImpl {
@@ -226,9 +428,22 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 				ILabelProvider labelProvider = createLabelProvider(editingDomain.getAdapterFactory());
 
 				if (model instanceof Freemarker) {
-					graphModel = new FreemarkerTemplateGraphicalModel(model, new FreemarkerContentProvider(
-							contentProvider), new FreemarkerLabelProvider(labelProvider), provider);
-					((TreeContainerModel) graphModel).setHeaderVisable(true);
+					Template template = ((Freemarker) model).getTemplate();
+					String messageType = SmooksModelUtils.getTemplateType(template);
+					if (messageType != null && SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV.equals(messageType)) {
+						String id = SmooksModelUtils.getParamValue(((Freemarker) model).getParam(),
+								SmooksModelUtils.KEY_OBJECT_ID);
+						String refid = SmooksModelUtils.getParamValue(getTaskType(), SmooksModelUtils.KEY_TASK_ID_REF);
+
+						if (id != null && refid != null && id.equals(refid)) {
+							graphModel = new FreemarkerTemplateGraphicalModel(model, new FreemarkerContentProvider(
+									contentProvider), new FreemarkerLabelProvider(labelProvider), provider);
+							((TreeContainerModel) graphModel).setHeaderVisable(true);
+
+							((FreemarkerTemplateGraphicalModel) graphModel)
+									.setTemplateType(FreemarkerTemplateGraphicalModel.TYPE_CSV);
+						}
+					}
 				}
 				if (model instanceof BindingsType || model instanceof BeanType) {
 					graphModel = new JavaBeanGraphModel(model, contentProvider, labelProvider, provider,

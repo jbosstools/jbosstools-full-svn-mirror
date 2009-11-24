@@ -28,6 +28,8 @@ import org.eclipse.draw2d.graph.Node;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandWrapper;
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -75,6 +77,7 @@ import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanlabelProvid
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataContentProvider;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataLabelProvider;
+import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
 import org.jboss.tools.smooks.gef.common.RootModel;
@@ -90,9 +93,11 @@ import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.commands.IgnoreException;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataContainerEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
+import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataRootModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerCSVNodeGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanChildGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLNodeGraphicalModel;
@@ -101,6 +106,7 @@ import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
+import org.jboss.tools.smooks.model.graphics.ext.TaskType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.validation10.RuleType;
@@ -110,7 +116,8 @@ import org.jboss.tools.smooks.model.validation10.RuleType;
  * 
  */
 public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelectionChangedListener,
-		ISourceSynchronizeListener, ISmooksGraphChangeListener, IGraphicalEditorPart {
+		ISourceSynchronizeListener, ISmooksGraphChangeListener, IGraphicalEditorPart, ITaskNodeProvider,
+		ISmooksModelValidateListener {
 
 	public static final int EXECUTE_COMMAND = 0;
 
@@ -135,6 +142,8 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	protected GraphicalModelFactory graphicalModelFactory;
 
 	protected ConnectionModelFactory connectionModelFactory;
+
+	protected TaskType taskType;
 
 	public SmooksGraphicalEditorPart(ISmooksModelProvider provider) {
 		super();
@@ -171,7 +180,21 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		this.smooksModelProvider = provider;
 		this.setEditDomain(editDomain);
 	}
-	
+
+	/**
+	 * @return the taskType
+	 */
+	public TaskType getTaskType() {
+		return taskType;
+	}
+
+	/**
+	 * @param taskType
+	 *            the taskType to set
+	 */
+	public void setTaskType(TaskType taskType) {
+		this.taskType = taskType;
+	}
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -192,7 +215,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 
 		super.createPartControl(parent);
 	}
-	
+
 	public GraphicalViewer getGraphicalViewer() {
 		return super.getGraphicalViewer();
 	}
@@ -585,11 +608,12 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		return editDomain;
 	}
 
-//	@Override
-//	protected void configurePaletteViewer() {
-//		super.configurePaletteViewer();
-//		getPaletteViewer().addDragSourceListener(new TemplateTransferDragSourceListener(getPaletteViewer()));
-//	}
+	// @Override
+	// protected void configurePaletteViewer() {
+	// super.configurePaletteViewer();
+	// getPaletteViewer().addDragSourceListener(new
+	// TemplateTransferDragSourceListener(getPaletteViewer()));
+	// }
 
 	protected EditPartFactory createEdtiPartFactory() {
 		return new SmooksEditFactory();
@@ -874,6 +898,8 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		if (model instanceof XSLNodeGraphicalModel) {
 			return true;
 		}
+		if (model instanceof FreemarkerCSVNodeGraphicalModel)
+			return true;
 		return false;
 	}
 
@@ -1144,6 +1170,9 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		if (type == ISmooksModelProvider.class) {
 			return this.smooksModelProvider;
 		}
+		if (type == ITaskNodeProvider.class) {
+			return this;
+		}
 		return super.getAdapter(type);
 	}
 
@@ -1173,13 +1202,15 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		initGraphicalModel();
 	}
 
-//	@Override
-//	protected PaletteRoot getPaletteRoot() {
-//		SmooksGraphicalEditorPaletteRootCreator creator = new SmooksGraphicalEditorPaletteRootCreator(
-//				this.smooksModelProvider, (AdapterFactoryEditingDomain) this.smooksModelProvider.getEditingDomain(),
-//				getSmooksResourceListType());
-//		return creator.createPaletteRoot();
-//	}
+	// @Override
+	// protected PaletteRoot getPaletteRoot() {
+	// SmooksGraphicalEditorPaletteRootCreator creator = new
+	// SmooksGraphicalEditorPaletteRootCreator(
+	// this.smooksModelProvider, (AdapterFactoryEditingDomain)
+	// this.smooksModelProvider.getEditingDomain(),
+	// getSmooksResourceListType());
+	// return creator.createPaletteRoot();
+	// }
 
 	public SmooksResourceListType getSmooksResourceListType() {
 		if (smooksModelProvider != null) {
@@ -1238,5 +1269,87 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 
 	public String getID() {
 		return null;
+	}
+
+	protected void cleanValidationMarker() {
+		if (root == null)
+			return;
+		List<AbstractSmooksGraphicalModel> children = root.getChildren();
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator.next();
+			cleanValidationMarker(abstractSmooksGraphicalModel);
+		}
+	}
+
+	protected void cleanValidationMarker(AbstractSmooksGraphicalModel model) {
+		model.setSeverity(IValidatableModel.NONE);
+		model.getMessage().clear();
+		List<AbstractSmooksGraphicalModel> children = model.getChildrenWithoutDynamic();
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator.next();
+			cleanValidationMarker(abstractSmooksGraphicalModel);
+		}
+	}
+
+	public void validateEnd(List<Diagnostic> diagnosticResult) {
+		if (root == null)
+			return;
+		cleanValidationMarker();
+		for (Iterator<?> iterator = diagnosticResult.iterator(); iterator.hasNext();) {
+			Diagnostic diagnostic = (Diagnostic) iterator.next();
+			refreshValidateResult(diagnostic);
+		}
+	}
+
+	protected void refreshValidateResult(Diagnostic diagnostic) {
+		int severity = diagnostic.getSeverity();
+		String message = diagnostic.getMessage();
+		if (severity == Diagnostic.ERROR || severity == Diagnostic.WARNING) {
+			List<?> datas = diagnostic.getData();
+			AbstractSmooksGraphicalModel obj = null;
+			for (Iterator<?> iterator2 = datas.iterator(); iterator2.hasNext();) {
+				Object object = (Object) iterator2.next();
+				object = AdapterFactoryEditingDomain.unwrap(object);
+				if (object instanceof EObject) {
+					AbstractSmooksGraphicalModel graphModel = SmooksGraphUtil.findSmooksGraphModel(root, object);
+					if (graphModel == null)
+						continue;
+					obj = graphModel;
+					if (graphModel instanceof IValidatableModel) {
+						// ((IValidatableModel)
+						// graphModel).setSeverity(severity);
+					}
+				}
+			}
+			if (obj != null) {
+				for (Iterator<?> iterator2 = datas.iterator(); iterator2.hasNext();) {
+					Object object = (Object) iterator2.next();
+					object = AdapterFactoryEditingDomain.unwrap(object);
+					if (object instanceof EAttribute && obj != null) {
+						if (obj instanceof IValidatableModel) {
+							((IValidatableModel) obj).addMessage(message);
+							// int s = ((IValidatableModel) obj).getSeverity();
+							// if (s == IValidatableModel.ERROR && severity ==
+							// IValidatableModel.WARNING) {
+							// // if the serverity is error already , dont set
+							// it
+							// // to be warning;
+							// } else {
+							// }
+						}
+					}
+				}
+				((IValidatableModel) obj).setSeverity(severity);
+			}
+		}
+		List<Diagnostic> children = diagnostic.getChildren();
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			Diagnostic diagnostic2 = (Diagnostic) iterator.next();
+			refreshValidateResult(diagnostic2);
+		}
+	}
+
+	public void validateStart() {
+
 	}
 }

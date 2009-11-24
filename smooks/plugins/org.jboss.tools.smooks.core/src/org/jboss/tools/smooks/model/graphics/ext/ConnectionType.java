@@ -6,7 +6,7 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext;
 
-import org.eclipse.emf.ecore.EObject;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='connection_._type' kind='elementOnly'"
  * @generated
  */
-public interface ConnectionType extends EObject {
+public interface ConnectionType extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Source</b></em>' attribute.
 	 * <!-- begin-user-doc -->

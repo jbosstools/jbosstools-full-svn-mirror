@@ -156,6 +156,7 @@ public class FreemarkerImpl extends ElementVisitorImpl implements Freemarker {
 	 */
 	protected FreemarkerImpl() {
 		super();
+		this.setApplyOnElement("#document");
 		setTemplate(FreemarkerFactory.eINSTANCE.createTemplate());
 	}
 

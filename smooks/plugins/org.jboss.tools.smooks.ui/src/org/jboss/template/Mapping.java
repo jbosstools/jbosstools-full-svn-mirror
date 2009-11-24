@@ -69,7 +69,7 @@ public class Mapping {
     }
 
     public void addHideNode(Node node) {
-        Assert.isNotNull(node, "node");
+    	Assert.isNotNull(node, "node");
 
         if(hideNodes == null) {
             hideNodes = new ArrayList<Node>();
@@ -79,7 +79,7 @@ public class Mapping {
     }
 
     public void addShowNode(Node node) {
-        Assert.isNotNull(node, "node");
+    	Assert.isNotNull(node, "node");
 
         if(showNodes == null) {
             showNodes = new ArrayList<Node>();

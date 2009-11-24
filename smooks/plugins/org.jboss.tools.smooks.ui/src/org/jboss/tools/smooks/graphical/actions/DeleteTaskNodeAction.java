@@ -19,11 +19,13 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.RemoveCommand;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
+import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.graphics.ext.ProcessesType;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.graphics.ext.TaskType;
@@ -36,8 +38,8 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
  */
 public class DeleteTaskNodeAction extends AbstractProcessGraphAction {
 
-	public DeleteTaskNodeAction(ISmooksModelProvider provider) {
-		super("Delete", provider);
+	public DeleteTaskNodeAction(ISmooksModelProvider provider, IEditorPart editor) {
+		super("Delete", provider, editor);
 	}
 
 	@Override
@@ -50,9 +52,9 @@ public class DeleteTaskNodeAction extends AbstractProcessGraphAction {
 	@Override
 	public void update() {
 		List<TaskType> taskList = this.getCurrentSelectedTask();
-		if(!taskList.isEmpty() && taskList.size() == 1){
+		if (!taskList.isEmpty() && taskList.size() == 1) {
 			TaskType task = taskList.get(0);
-			if(TaskTypeManager.TASK_ID_INPUT.equals(task.getId())){
+			if (TaskTypeManager.TASK_ID_INPUT.equals(task.getId())) {
 				this.setEnabled(false);
 				return;
 			}
@@ -78,8 +80,7 @@ public class DeleteTaskNodeAction extends AbstractProcessGraphAction {
 					if (listType != null) {
 						for (Iterator<?> iterator = allTask.iterator(); iterator.hasNext();) {
 							TaskType taskType = (TaskType) iterator.next();
-							List<Object> elements = TaskTypeManager.getAssociatedSmooksElements(taskType.getId(),
-									listType);
+							List<Object> elements = TaskTypeManager.getAssociatedSmooksElements(taskType, listType);
 							if (elements != null && !elements.isEmpty()) {
 								associatedElements.addAll(elements);
 							}
@@ -87,12 +88,17 @@ public class DeleteTaskNodeAction extends AbstractProcessGraphAction {
 					}
 					Command remove = null;
 					if (associatedElements.isEmpty()) {
-						remove = RemoveCommand.create(p.getEditingDomain(), currentTask);
+						remove = RemoveCommand.create(p.getEditingDomain(), currentTask.eContainer(),
+								GraphPackage.Literals.TASK_TYPE__TASK, currentTask);
 						p.getEditingDomain().getCommandStack().execute(remove);
 					} else {
 						associatedElements = getDeletedObjects(associatedElements);
 						CompoundCommand ccommand = new CompoundCommand();
-						ccommand.append(RemoveCommand.create(p.getEditingDomain(), currentTask));
+						Command removeTaskCommand = RemoveCommand.create(p.getEditingDomain(),
+								currentTask.eContainer(), GraphPackage.Literals.TASK_TYPE__TASK, currentTask);
+						if (removeTaskCommand.canExecute()) {
+							ccommand.append(removeTaskCommand);
+						}
 						remove = RemoveCommand.create(p.getEditingDomain(), listType,
 								SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
 								associatedElements);

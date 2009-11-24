@@ -13,6 +13,8 @@ package org.jboss.tools.smooks.graphical.editors.model.freemarker;
 import org.eclipse.gef.requests.CreationFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
+import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.graphical.actions.AddSmooksModelAction;
 
 /**
@@ -31,7 +33,7 @@ public class AddFreemarkerCSVFieldAction extends AddSmooksModelAction {
 
 	@Override
 	public ImageDescriptor getActionImageDescriptor() {
-		return null;
+		return SmooksConfigurationActivator.getImageDescriptor(GraphicsConstants.IMAGE_JAVA_ARRAY);
 	}
 
 	@Override

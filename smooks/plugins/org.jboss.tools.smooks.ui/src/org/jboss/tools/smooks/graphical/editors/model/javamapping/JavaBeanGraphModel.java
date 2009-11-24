@@ -10,14 +10,20 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model.javamapping;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
 import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVNodeModel;
+import org.jboss.tools.smooks.model.javabean.BindingsType;
+import org.jboss.tools.smooks.model.javabean12.BeanType;
 
 /**
  * @author Dart
@@ -26,9 +32,9 @@ import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGrap
 public class JavaBeanGraphModel extends AbstractResourceConfigGraphModel {
 
 	private IGraphicalEditorPart editorPart;
-	
+
 	public JavaBeanGraphModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider,
-			IEditingDomainProvider domainProvider , IGraphicalEditorPart editorPart) {
+			IEditingDomainProvider domainProvider, IGraphicalEditorPart editorPart) {
 		super(data, contentProvider, labelProvider, domainProvider);
 		this.editorPart = editorPart;
 	}
@@ -39,17 +45,65 @@ public class JavaBeanGraphModel extends AbstractResourceConfigGraphModel {
 		Object m = AdapterFactoryEditingDomain.unwrap(model);
 		if (m instanceof String)
 			return null;
-		return new JavaBeanChildGraphModel(model, contentProvider, labelProvider, this.domainProvider);
+		return new JavaBeanChildGraphModel(model, contentProvider, labelProvider, this.domainProvider, this.editorPart);
 	}
-	
-	
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.gef.tree.model.TreeContainerModel#canDragLink()
+	protected boolean inJavaMapping() {
+		if (SmooksFreemarkerTemplateGraphicalEditor.ID.equals(editorPart.getID())) {
+			return false;
+		}
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#canLinkWithSource
+	 * (java.lang.Object)
+	 */
+	@Override
+	public boolean canLinkWithSource(Object model) {
+		if (!inJavaMapping())
+			return false;
+		return super.canLinkWithSource(model);
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#canLinkWithTarget
+	 * (java.lang.Object)
+	 */
+	@Override
+	public boolean canLinkWithTarget(Object model) {
+		AbstractSmooksGraphicalModel gm = (AbstractSmooksGraphicalModel) model;
+		Object m = gm.getData();
+		if (data instanceof BeanType || data instanceof BindingsType) {
+			if (m instanceof CSVNodeModel) {
+				if (data instanceof EObject) {
+					if (SmooksUIUtils.isCollectionJavaGraphModel((EObject) data)) {
+						return ((CSVNodeModel) m).isRecord();
+					}
+				}
+			}
+		}
+		if (!inJavaMapping())
+			return false;
+		return super.canLinkWithTarget(model);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.model.TreeContainerModel#canDragLink()
 	 */
 	@Override
 	public boolean canDragLink() {
-		if(SmooksFreemarkerTemplateGraphicalEditor.ID.equals(editorPart.getID())){
+		if (SmooksFreemarkerTemplateGraphicalEditor.ID.equals(editorPart.getID())) {
 			return true;
 		}
 		return false;

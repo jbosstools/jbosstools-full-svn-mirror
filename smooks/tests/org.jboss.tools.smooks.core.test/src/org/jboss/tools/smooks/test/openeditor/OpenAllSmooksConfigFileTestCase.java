@@ -25,6 +25,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.ide.IDE;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
+import org.jboss.tools.smooks.model.freemarker.Template;
 
 /**
  * @author Dart

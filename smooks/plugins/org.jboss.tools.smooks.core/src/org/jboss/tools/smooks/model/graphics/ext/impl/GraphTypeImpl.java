@@ -7,6 +7,7 @@
 package org.jboss.tools.smooks.model.graphics.ext.impl;
 
 
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -16,10 +17,9 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.graphics.ext.ConnectionType;
 import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
@@ -39,7 +39,7 @@ import org.jboss.tools.smooks.model.graphics.ext.GraphType;
  *
  * @generated
  */
-public class GraphTypeImpl extends EObjectImpl implements GraphType {
+public class GraphTypeImpl extends AbstractAnyTypeImpl implements GraphType {
 	/**
 	 * The cached value of the '{@link #getFigure() <em>Figure</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

@@ -6,10 +6,12 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext;
 
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.jboss.tools.smooks.model.common.CommonPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 
@@ -77,13 +79,40 @@ public interface GraphPackage extends EPackage {
 	int CONNECTION_TYPE = 0;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTION_TYPE__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTION_TYPE__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTION_TYPE__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Source</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION_TYPE__SOURCE = 0;
+	int CONNECTION_TYPE__SOURCE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Target</b></em>' attribute.
@@ -92,7 +121,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION_TYPE__TARGET = 1;
+	int CONNECTION_TYPE__TARGET = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -101,7 +130,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION_TYPE__ID = 2;
+	int CONNECTION_TYPE__ID = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Connection Type</em>' class.
@@ -110,7 +139,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION_TYPE_FEATURE_COUNT = 3;
+	int CONNECTION_TYPE_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.SmooksGraphExtensionDocumentRootImpl <em>Smooks Graph Extension Document Root</em>}' class.
@@ -268,13 +297,40 @@ public interface GraphPackage extends EPackage {
 	int FIGURE_TYPE = 2;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIGURE_TYPE__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIGURE_TYPE__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIGURE_TYPE__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Height</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FIGURE_TYPE__HEIGHT = 0;
+	int FIGURE_TYPE__HEIGHT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -283,7 +339,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIGURE_TYPE__ID = 1;
+	int FIGURE_TYPE__ID = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Parent Figure Id</b></em>' attribute.
@@ -292,7 +348,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIGURE_TYPE__PARENT_FIGURE_ID = 2;
+	int FIGURE_TYPE__PARENT_FIGURE_ID = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Width</b></em>' attribute.
@@ -301,7 +357,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIGURE_TYPE__WIDTH = 3;
+	int FIGURE_TYPE__WIDTH = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>X</b></em>' attribute.
@@ -310,7 +366,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIGURE_TYPE__X = 4;
+	int FIGURE_TYPE__X = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Y</b></em>' attribute.
@@ -319,7 +375,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIGURE_TYPE__Y = 5;
+	int FIGURE_TYPE__Y = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>Figure Type</em>' class.
@@ -328,7 +384,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIGURE_TYPE_FEATURE_COUNT = 6;
+	int FIGURE_TYPE_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.GraphTypeImpl <em>Type</em>}' class.
@@ -341,13 +397,40 @@ public interface GraphPackage extends EPackage {
 	int GRAPH_TYPE = 3;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_TYPE__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_TYPE__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_TYPE__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Figure</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_TYPE__FIGURE = 0;
+	int GRAPH_TYPE__FIGURE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Connection</b></em>' containment reference list.
@@ -356,7 +439,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_TYPE__CONNECTION = 1;
+	int GRAPH_TYPE__CONNECTION = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Type</em>' class.
@@ -365,7 +448,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_TYPE_FEATURE_COUNT = 2;
+	int GRAPH_TYPE_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.InputTypeImpl <em>Input Type</em>}' class.
@@ -378,13 +461,40 @@ public interface GraphPackage extends EPackage {
 	int INPUT_TYPE = 4;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_TYPE__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_TYPE__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INPUT_TYPE__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Param</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INPUT_TYPE__PARAM = 0;
+	int INPUT_TYPE__PARAM = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -393,7 +503,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INPUT_TYPE__TYPE = 1;
+	int INPUT_TYPE__TYPE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Input Type</em>' class.
@@ -402,7 +512,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INPUT_TYPE_FEATURE_COUNT = 2;
+	int INPUT_TYPE_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.ParamTypeImpl <em>Param Type</em>}' class.
@@ -415,13 +525,40 @@ public interface GraphPackage extends EPackage {
 	int PARAM_TYPE = 5;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAM_TYPE__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAM_TYPE__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAM_TYPE__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_TYPE__VALUE = 0;
+	int PARAM_TYPE__VALUE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -430,7 +567,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_TYPE__NAME = 1;
+	int PARAM_TYPE__NAME = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -439,7 +576,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_TYPE__TYPE = 2;
+	int PARAM_TYPE__TYPE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Param Type</em>' class.
@@ -448,7 +585,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_TYPE_FEATURE_COUNT = 3;
+	int PARAM_TYPE_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.ProcessesTypeImpl <em>Processes Type</em>}' class.
@@ -461,13 +598,40 @@ public interface GraphPackage extends EPackage {
 	int PROCESSES_TYPE = 6;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESSES_TYPE__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESSES_TYPE__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESSES_TYPE__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Process</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESSES_TYPE__PROCESS = 0;
+	int PROCESSES_TYPE__PROCESS = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Processes Type</em>' class.
@@ -476,7 +640,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESSES_TYPE_FEATURE_COUNT = 1;
+	int PROCESSES_TYPE_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.ProcessTypeImpl <em>Process Type</em>}' class.
@@ -489,13 +653,40 @@ public interface GraphPackage extends EPackage {
 	int PROCESS_TYPE = 7;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_TYPE__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_TYPE__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_TYPE__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Task</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS_TYPE__TASK = 0;
+	int PROCESS_TYPE__TASK = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -504,7 +695,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS_TYPE__ID = 1;
+	int PROCESS_TYPE__ID = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -513,7 +704,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS_TYPE__NAME = 2;
+	int PROCESS_TYPE__NAME = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Process Type</em>' class.
@@ -522,7 +713,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS_TYPE_FEATURE_COUNT = 3;
+	int PROCESS_TYPE_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.graphics.ext.impl.SmooksGraphicsExtTypeImpl <em>Smooks Graphics Ext Type</em>}' class.
@@ -653,13 +844,40 @@ public interface GraphPackage extends EPackage {
 	int TASK_TYPE = 9;
 
 	/**
+	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TYPE__MIXED = CommonPackage.ABSTRACT_ANY_TYPE__MIXED;
+
+	/**
+	 * The feature id for the '<em><b>Any</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TYPE__ANY = CommonPackage.ABSTRACT_ANY_TYPE__ANY;
+
+	/**
+	 * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_TYPE__ANY_ATTRIBUTE = CommonPackage.ABSTRACT_ANY_TYPE__ANY_ATTRIBUTE;
+
+	/**
 	 * The feature id for the '<em><b>Task</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_TYPE__TASK = 0;
+	int TASK_TYPE__TASK = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -668,7 +886,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_TYPE__ID = 1;
+	int TASK_TYPE__ID = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -677,7 +895,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_TYPE__NAME = 2;
+	int TASK_TYPE__NAME = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -686,7 +904,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_TYPE__TYPE = 3;
+	int TASK_TYPE__TYPE = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Task Type</em>' class.
@@ -695,7 +913,7 @@ public interface GraphPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_TYPE_FEATURE_COUNT = 4;
+	int TASK_TYPE_FEATURE_COUNT = CommonPackage.ABSTRACT_ANY_TYPE_FEATURE_COUNT + 4;
 
 
 	/**

@@ -163,18 +163,18 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		XMLTypePackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
-		SmooksPackageImpl theSmooksPackage = (SmooksPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) instanceof SmooksPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) : SmooksPackage.eINSTANCE);
 		CommonPackageImpl theCommonPackage = (CommonPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI) instanceof CommonPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI) : CommonPackage.eINSTANCE);
+		SmooksPackageImpl theSmooksPackage = (SmooksPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) instanceof SmooksPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI) : SmooksPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theGraphPackage.createPackageContents();
-		theSmooksPackage.createPackageContents();
 		theCommonPackage.createPackageContents();
+		theSmooksPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theGraphPackage.initializePackageContents();
-		theSmooksPackage.initializePackageContents();
 		theCommonPackage.initializePackageContents();
+		theSmooksPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theGraphPackage.freeze();
@@ -808,6 +808,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
+		CommonPackage theCommonPackage = (CommonPackage)EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI);
 		XMLTypePackage theXMLTypePackage = (XMLTypePackage)EPackage.Registry.INSTANCE.getEPackage(XMLTypePackage.eNS_URI);
 		SmooksPackage theSmooksPackage = (SmooksPackage)EPackage.Registry.INSTANCE.getEPackage(SmooksPackage.eNS_URI);
 
@@ -816,7 +817,15 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		connectionTypeEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
+		figureTypeEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
+		graphTypeEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
+		inputTypeEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
+		paramTypeEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
+		processesTypeEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
+		processTypeEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
 		smooksGraphicsExtTypeEClass.getESuperTypes().add(theSmooksPackage.getAbstractResourceConfig());
+		taskTypeEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(connectionTypeEClass, ConnectionType.class, "ConnectionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1190,7 +1199,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		   source, 
 		   new String[] {
 			 "name", "process_._type",
-			 "kind", "elementOnly"
+			 "kind", "mixed"
 		   });		
 		addAnnotation
 		  (getProcessType_Task(), 
@@ -1285,7 +1294,7 @@ public class GraphPackageImpl extends EPackageImpl implements GraphPackage {
 		   source, 
 		   new String[] {
 			 "name", "task_._type",
-			 "kind", "elementOnly"
+			 "kind", "mixed"
 		   });		
 		addAnnotation
 		  (getTaskType_Task(), 

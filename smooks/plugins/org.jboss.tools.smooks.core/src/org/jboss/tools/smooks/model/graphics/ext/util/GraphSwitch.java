@@ -96,6 +96,8 @@ public class GraphSwitch<T> {
 			case GraphPackage.CONNECTION_TYPE: {
 				ConnectionType connectionType = (ConnectionType)theEObject;
 				T result = caseConnectionType(connectionType);
+				if (result == null) result = caseAbstractAnyType(connectionType);
+				if (result == null) result = caseAnyType(connectionType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -108,36 +110,48 @@ public class GraphSwitch<T> {
 			case GraphPackage.FIGURE_TYPE: {
 				FigureType figureType = (FigureType)theEObject;
 				T result = caseFigureType(figureType);
+				if (result == null) result = caseAbstractAnyType(figureType);
+				if (result == null) result = caseAnyType(figureType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GraphPackage.GRAPH_TYPE: {
 				GraphType graphType = (GraphType)theEObject;
 				T result = caseGraphType(graphType);
+				if (result == null) result = caseAbstractAnyType(graphType);
+				if (result == null) result = caseAnyType(graphType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GraphPackage.INPUT_TYPE: {
 				InputType inputType = (InputType)theEObject;
 				T result = caseInputType(inputType);
+				if (result == null) result = caseAbstractAnyType(inputType);
+				if (result == null) result = caseAnyType(inputType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GraphPackage.PARAM_TYPE: {
 				ParamType paramType = (ParamType)theEObject;
 				T result = caseParamType(paramType);
+				if (result == null) result = caseAbstractAnyType(paramType);
+				if (result == null) result = caseAnyType(paramType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GraphPackage.PROCESSES_TYPE: {
 				ProcessesType processesType = (ProcessesType)theEObject;
 				T result = caseProcessesType(processesType);
+				if (result == null) result = caseAbstractAnyType(processesType);
+				if (result == null) result = caseAnyType(processesType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case GraphPackage.PROCESS_TYPE: {
 				ProcessType processType = (ProcessType)theEObject;
 				T result = caseProcessType(processType);
+				if (result == null) result = caseAbstractAnyType(processType);
+				if (result == null) result = caseAnyType(processType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -153,6 +167,8 @@ public class GraphSwitch<T> {
 			case GraphPackage.TASK_TYPE: {
 				TaskType taskType = (TaskType)theEObject;
 				T result = caseTaskType(taskType);
+				if (result == null) result = caseAbstractAnyType(taskType);
+				if (result == null) result = caseAnyType(taskType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

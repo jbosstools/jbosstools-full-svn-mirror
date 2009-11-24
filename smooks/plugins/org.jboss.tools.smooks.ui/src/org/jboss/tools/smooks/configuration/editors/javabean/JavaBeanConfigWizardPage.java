@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * @author Dart Peng
- * 
+ * @deprecated
  * @CreateTime Jul 21, 2008
  */
 public class JavaBeanConfigWizardPage extends WizardPage implements

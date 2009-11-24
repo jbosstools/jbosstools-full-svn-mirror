@@ -20,10 +20,16 @@ Bundle-ClassPath: .,
  libs/milyn-smooks-csv-1.2.1.jar,
  libs/milyn-smooks-edi-1.2.1.jar,
  libs/milyn-smooks-json-1.2.1.jar,
- libs/opencsv-1.8.jar
+ libs/opencsv-1.8.jar,
+ libs/freemarker-2.3.11.jar
 Bundle-Localization: plugin
 Bundle-Vendor: %providerName
-Export-Package: org.milyn,
+Export-Package: au.com.bytecode.opencsv,
+ au.com.bytecode.opencsv.bean,
+ freemarker.core,
+ freemarker.template,
+ freemarker.template.utility,
+ org.milyn,
  org.milyn.cdr,
  org.milyn.csv,
  org.milyn.json,

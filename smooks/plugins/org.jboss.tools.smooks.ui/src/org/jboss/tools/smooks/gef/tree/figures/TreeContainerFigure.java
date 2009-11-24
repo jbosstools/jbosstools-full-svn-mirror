@@ -37,9 +37,13 @@ public class TreeContainerFigure extends Figure implements ISelectableFigure, IS
 
 	private TreeContainerModel model;
 
-	private Color headerColor = ColorConstants.button;
+	private Color targetHeaderColor = GraphicsConstants.TB_BG_CORLOR;
 
-	protected Color headerSelectedColor = GraphicsConstants.TB_BG_CORLOR;
+	private Color sourceHeaderColor = ColorConstants.orange;
+
+	protected Color targetHeaderSelectedColor = FigureUtilities.lighter(targetHeaderColor);
+
+	protected Color sourceHeaderSelectedColor = FigureUtilities.lighter(sourceHeaderColor);
 
 	private boolean focus;
 
@@ -53,11 +57,28 @@ public class TreeContainerFigure extends Figure implements ISelectableFigure, IS
 
 	private boolean showDragLink = false;
 
+	private boolean isSource = true;
+
 	public TreeContainerFigure(TreeContainerModel model) {
 		super();
 		this.model = model;
 		this.addChildrenFigures();
 		hookFigure();
+	}
+
+	/**
+	 * @return the isSource
+	 */
+	public boolean isSource() {
+		return isSource;
+	}
+
+	/**
+	 * @param isSource
+	 *            the isSource to set
+	 */
+	public void setSource(boolean isSource) {
+		this.isSource = isSource;
 	}
 
 	protected void hookFigure() {
@@ -263,9 +284,13 @@ public class TreeContainerFigure extends Figure implements ISelectableFigure, IS
 	protected void drawHeaderFigure(Graphics graphics) {
 		try {
 			graphics.pushState();
-			Color currentColor = headerColor;
+			Color currentColor = sourceHeaderColor;
+			if (!isSource)
+				currentColor = targetHeaderColor;
 			if (isSelected() || isFocus()) {
-				currentColor = headerSelectedColor;
+				currentColor = sourceHeaderSelectedColor;
+				if (!isSource)
+					currentColor = targetHeaderSelectedColor;
 			}
 			if (showHightlight && highlightColor != null) {
 				currentColor = highlightColor;
@@ -302,11 +327,11 @@ public class TreeContainerFigure extends Figure implements ISelectableFigure, IS
 	}
 
 	public Color getHeaderColor() {
-		return headerColor;
+		return targetHeaderColor;
 	}
 
 	public void setHeaderColor(Color headerColor) {
-		this.headerColor = headerColor;
+		this.targetHeaderColor = headerColor;
 	}
 
 	public Rectangle getBounds() {

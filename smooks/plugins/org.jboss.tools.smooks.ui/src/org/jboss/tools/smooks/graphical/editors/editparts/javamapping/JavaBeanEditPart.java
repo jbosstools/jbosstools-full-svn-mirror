@@ -19,8 +19,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
+import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfigEditPart;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
@@ -42,6 +45,12 @@ public class JavaBeanEditPart extends AbstractResourceConfigEditPart {
 
 	@Override
 	protected EStructuralFeature getHostFeature(EObject model) {
+		IEditorPart editorPart = this.getEditorPart();
+		if (editorPart instanceof IGraphicalEditorPart) {
+			if (SmooksFreemarkerTemplateGraphicalEditor.ID.equals(((IGraphicalEditorPart) editorPart).getID())) {
+				return null;
+			}
+		}
 		if (model instanceof BindingsType) {
 			return JavabeanPackage.Literals.DOCUMENT_ROOT__BINDINGS;
 		}
@@ -50,15 +59,34 @@ public class JavaBeanEditPart extends AbstractResourceConfigEditPart {
 		}
 		return null;
 	}
-	
-	
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart#createFigure()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart#createFigure
+	 * ()
 	 */
 	@Override
 	protected IFigure createFigure() {
 		return super.createFigure();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.graphical.editors.editparts.
+	 * AbstractResourceConfigEditPart#isSource()
+	 */
+	@Override
+	protected boolean isSource() {
+		IEditorPart part = this.getEditorPart();
+		if (part instanceof IGraphicalEditorPart) {
+			if (SmooksFreemarkerTemplateGraphicalEditor.ID.equals(((IGraphicalEditorPart) part).getID())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/*
@@ -76,7 +104,7 @@ public class JavaBeanEditPart extends AbstractResourceConfigEditPart {
 		if (model instanceof EObject) {
 			boolean isArray = SmooksUIUtils.isArrayJavaGraphModel((EObject) model);
 			boolean isCollection = SmooksUIUtils.isCollectionJavaGraphModel((EObject) model);
-			if(isArray || isCollection){
+			if (isArray || isCollection) {
 				return null;
 			}
 		}

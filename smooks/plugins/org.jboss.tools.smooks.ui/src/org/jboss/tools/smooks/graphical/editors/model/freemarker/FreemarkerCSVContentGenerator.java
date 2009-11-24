@@ -24,9 +24,13 @@ import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanChildGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
+import org.jboss.tools.smooks.model.freemarker.Freemarker;
+import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.ValueType;
+import org.jboss.tools.smooks.model.javabean.WiringType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -39,11 +43,49 @@ public class FreemarkerCSVContentGenerator {
 	public String generateCSVContents(FreemarkerCSVNodeGraphicalModel csvRecordGraphicalModel)
 			throws TemplateBuilderException {
 
-		CSVNodeModel csvRecordModel = (CSVNodeModel) csvRecordGraphicalModel.getData();
+		// CSVNodeModel csvRecordModel = (CSVNodeModel)
+		// csvRecordGraphicalModel.getData();
 
-		String collectionName = csvRecordModel.getName();
-		char sperator = csvRecordModel.getSperator();
-		char quote = csvRecordModel.getQuto();
+		String collectionName = null;
+
+		List<TreeNodeConnection> recordConnections = csvRecordGraphicalModel.getTargetConnections();
+		if (recordConnections.size() > 1 || recordConnections.isEmpty()) {
+			return null;
+		}
+
+		TreeNodeConnection recordRootConnection = recordConnections.get(0);
+		AbstractSmooksGraphicalModel javabeanModel = recordRootConnection.getSourceNode();
+		List<AbstractSmooksGraphicalModel> javabeanChildren = javabeanModel.getChildrenWithoutDynamic();
+		for (Iterator<?> iterator = javabeanChildren.iterator(); iterator.hasNext();) {
+			AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator.next();
+			Object javabean = abstractSmooksGraphicalModel.getData();
+			javabean = AdapterFactoryEditingDomain.unwrap(javabean);
+			if (javabean instanceof WiringType) {
+				collectionName = ((WiringType) javabean).getBeanIdRef();
+			}
+			if (javabean instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
+				collectionName = ((org.jboss.tools.smooks.model.javabean12.WiringType) javabean).getBeanIdRef();
+			}
+		}
+
+		if (collectionName == null)
+			return null;
+		AbstractSmooksGraphicalModel freemarkerTemplateGraphmodel = csvRecordGraphicalModel.getParent();
+		if (!(freemarkerTemplateGraphmodel instanceof FreemarkerTemplateGraphicalModel)) {
+			return null;
+		}
+		Object freemarker = ((FreemarkerTemplateGraphicalModel) freemarkerTemplateGraphmodel).getData();
+		freemarker = AdapterFactoryEditingDomain.unwrap(freemarker);
+		if (!(freemarker instanceof Freemarker)) {
+			return null;
+		}
+		Template template = ((Freemarker) freemarker).getTemplate();
+		if (template == null)
+			return null;
+
+		char sperator = SmooksModelUtils.getFreemarkerCSVSeperator(template);
+		char quote = SmooksModelUtils.getFreemarkerCSVQuote(template);
+
 		List<AbstractSmooksGraphicalModel> childrenGraphModel = csvRecordGraphicalModel.getChildren();
 		List<String> fieldsName = new ArrayList<String>();
 		for (Iterator<?> iterator = childrenGraphModel.iterator(); iterator.hasNext();) {
@@ -100,8 +142,11 @@ public class FreemarkerCSVContentGenerator {
 			TreeNodeConnection recordConnection = connections.get(0);
 			AbstractSmooksGraphicalModel sourceGraphModel = recordConnection.getSourceNode();
 			String mappingString = generateMappingString(sourceGraphModel, recordRootNode);
-			if (mappingString != null) {
-				mappingString = recordName + "." + mappingString;
+			// if (mappingString != null) {
+			// mappingString = recordName + "." + mappingString;
+			// }
+			if (mappingString == null || mappingString.length() == 0) {
+				return;
 			}
 			builder.addValueMapping(mappingString, getFieldElement(model, elementName));
 		}
@@ -123,7 +168,7 @@ public class FreemarkerCSVContentGenerator {
 		List<Object> nodesList = new ArrayList<Object>();
 		fillParentList(nodesList, parentModel, recordRootNode);
 		String mappingString = "";
-		for (int i = nodesList.size() - 1; i >= 0; i--) {
+		for (int i = 0; i < nodesList.size(); i++) {
 			Object node = nodesList.get(i);
 			String beanName = null;
 			if (node instanceof BindingsType) {
@@ -142,23 +187,30 @@ public class FreemarkerCSVContentGenerator {
 		return mappingString;
 	}
 
-	private void fillParentList(List<Object> list, AbstractSmooksGraphicalModel node, JavaBeanGraphModel recordRootNode) {
+	private boolean fillParentList(List<Object> list, AbstractSmooksGraphicalModel node,
+			JavaBeanGraphModel recordRootNode) {
 		if (node instanceof JavaBeanChildGraphModel) {
 			node = node.getParent();
 		}
 		if (node != recordRootNode) {
 			if (node instanceof JavaBeanGraphModel) {
 				Object parent = node.getData();
-				parent = AdapterFactoryEditingDomain.unwrap(parent);
-				list.add(parent);
 				List<TreeNodeConnection> connections = ((JavaBeanGraphModel) node).getTargetConnections();
-				if (!connections.isEmpty() && connections.size() == 1) {
-					TreeNodeConnection connection = connections.get(0);
+				if (connections.isEmpty())
+					return false;
+				for (Iterator<?> iterator = connections.iterator(); iterator.hasNext();) {
+					TreeNodeConnection connection = (TreeNodeConnection) iterator.next();
 					AbstractSmooksGraphicalModel sourcenode = connection.getSourceNode();
-					fillParentList(list, sourcenode, recordRootNode);
+					if (fillParentList(list, sourcenode, recordRootNode)) {
+						parent = AdapterFactoryEditingDomain.unwrap(parent);
+						list.add(parent);
+					}
 				}
 			}
+		} else {
+			return true;
 		}
+		return true;
 	}
 
 	private Element getRecordElement(Document model) {

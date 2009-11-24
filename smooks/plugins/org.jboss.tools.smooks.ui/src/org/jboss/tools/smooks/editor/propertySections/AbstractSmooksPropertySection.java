@@ -51,6 +51,17 @@ public class AbstractSmooksPropertySection extends AbstractPropertySection {
 		}
 		return null;
 	}
+	
+	protected GraphicalEditPart getPresentSelectedEditPart() {
+		IStructuredSelection selection = (IStructuredSelection) this.getSelection();
+		if(selection == null) return null;
+		if(selection.size() > 1) return null;
+		Object obj = selection.getFirstElement();
+		if (obj != null && obj instanceof GraphicalEditPart) {
+			return (GraphicalEditPart)obj;
+		}
+		return null;
+	}
 
 	protected Object getPresentSelectedModel() {
 		IStructuredSelection selection = (IStructuredSelection) this.getSelection();
@@ -63,6 +74,18 @@ public class AbstractSmooksPropertySection extends AbstractPropertySection {
 				Object data = ((AbstractSmooksGraphicalModel) gmodel).getData();
 				return data;
 			}
+		}
+		return null;
+	}
+	
+	protected Object getPresentSelectedGraphModel() {
+		IStructuredSelection selection = (IStructuredSelection) this.getSelection();
+		if(selection == null) return null;
+		if(selection.size() > 1) return null;
+		Object obj = selection.getFirstElement();
+		if (obj != null && obj instanceof GraphicalEditPart) {
+			Object gmodel = ((GraphicalEditPart) obj).getModel();
+			return gmodel;
 		}
 		return null;
 	}

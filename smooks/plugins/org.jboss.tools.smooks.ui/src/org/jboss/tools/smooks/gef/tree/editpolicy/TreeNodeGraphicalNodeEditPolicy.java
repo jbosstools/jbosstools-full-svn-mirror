@@ -3,6 +3,7 @@
  */
 package org.jboss.tools.smooks.gef.tree.editpolicy;
 
+import org.eclipse.draw2d.FigureUtilities;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
@@ -173,7 +174,7 @@ public class TreeNodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 	protected void showHighlight() {
 		if (revertColor == null) {
 			revertColor = getContainerBackground();
-			setContainerBackground(highLightColor);
+			setContainerBackground(FigureUtilities.darker(revertColor));
 		}
 	}
 

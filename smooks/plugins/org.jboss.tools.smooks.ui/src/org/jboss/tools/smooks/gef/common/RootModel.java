@@ -7,7 +7,11 @@ import java.util.List;
 
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 
-public class RootModel {
+public class RootModel extends AbstractSmooksGraphicalModel{
+
+	public RootModel() {
+		super(null);
+	}
 
 	public static final String ADD_CHILDREN = "__pro_add_children";
 
@@ -31,6 +35,7 @@ public class RootModel {
 
 	public void removeTreeNode(AbstractSmooksGraphicalModel node) {
 		this.getChildren().remove(node);
+		node.setParent(null);
 		support.firePropertyChange(REMOVE_CHILDREN, node, null);
 	}
 
@@ -44,6 +49,7 @@ public class RootModel {
 
 	public void addTreeNode(AbstractSmooksGraphicalModel node) {
 		this.getChildren().add(node);
+		node.setParent(this);
 		support.firePropertyChange(ADD_CHILDREN, null, node);
 	}
 }

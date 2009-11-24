@@ -7,6 +7,7 @@ import java.beans.PropertyChangeEvent;
 import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -19,6 +20,8 @@ import org.eclipse.gef.requests.SelectionRequest;
 import org.eclipse.gef.tools.ConnectionDragCreationTool;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorPart;
+import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.editpolicy.FigureHighlightEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeGraphicalNodeEditPolicy;
@@ -28,6 +31,7 @@ import org.jboss.tools.smooks.gef.tree.figures.TreeContainerFigure;
 import org.jboss.tools.smooks.gef.tree.figures.TreeFigureExpansionEvent;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
 import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 
 /**
@@ -58,10 +62,27 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 		if (text != null && model.isHeaderVisable() && getFigure() instanceof TreeContainerFigure) {
 			TreeContainerFigure figure = (TreeContainerFigure) getFigure();
 			Image i = model.getImage();
+			Label tooltip = null;
+			int serverity = model.getSeverity();
+			String message = getSeverityMessage(model);
+			if (serverity == IValidatableModel.NONE) {
+				i =  model.getImage();
+			}
+			if (serverity == IValidatableModel.ERROR) {
+				i = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_ERROR);
+				tooltip = errorLabel;
+				tooltip.setText(message);
+			}
+			if (serverity == IValidatableModel.WARNING) {
+				i = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_WARNING);
+				tooltip = warningLabel;
+				tooltip.setText(message);
+			}
 			if (i != null) {
 				figure.setIcon(i);
 			}
 			figure.setText(text);
+			figure.setToolTip(tooltip);
 		}
 		boolean isSource = this.isSourceLinkNodeEditPart();
 		if (!isSource) {
@@ -134,7 +155,7 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 	public DragTracker getDragTracker(Request request) {
 		Object model = getModel();
 		if (model instanceof TreeContainerModel && request instanceof SelectionRequest) {
-			Point location = ((SelectionRequest)request).getLocation();
+			Point location = ((SelectionRequest) request).getLocation();
 			IFigure figure = getFigure();
 			IFigure figure1 = figure.findFigureAt(location);
 			if (figure1 instanceof DragLinkFigure && ((TreeContainerModel) model).canDragLink()) {

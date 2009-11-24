@@ -21,12 +21,17 @@ import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.gef.tree.model.IConnectableNode;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
 
 /**
  * @author Dart
  * 
  */
-public class AbstractSmooksGraphicalModel implements IConnectableNode {
+public class AbstractSmooksGraphicalModel implements IConnectableNode, IValidatableModel {
+
+	private int severity = NONE;
+	
+	private List<String> messages = null;
 
 	public static final String PRO_ADD_CHILD = "_pro_add_child";
 
@@ -35,6 +40,8 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode {
 	public static final String PRO_REMOVE_CHILD = "_pro_remove_child";
 
 	public static final String PRO_ADD_SOURCE_CONNECTION = "_pro_add_source_connected";
+
+	public static final String PRO_SEVERITY_CHANGED = "_pro_severity_changed";
 
 	public static final String PRO_ADD_TARGET_CONNECTION = "_pro_add_target_connected";
 
@@ -88,6 +95,25 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode {
 	// ILabelProvider labelProvider) {
 	// return new TreeNodeModel(model, contentProvider, labelProvider);
 	// }
+
+	/**
+	 * @return the severity
+	 */
+	public int getSeverity() {
+		return severity;
+	}
+
+	/**
+	 * @param severity
+	 *            the severity to set
+	 */
+	public void setSeverity(int severity) {
+		if (severity == this.severity)
+			return;
+		int old = this.severity;
+		this.severity = severity;
+		support.firePropertyChange(PRO_SEVERITY_CHANGED, old, this.severity);
+	}
 
 	public List<AbstractSmooksGraphicalModel> getChildren() {
 		if (children == null) {
@@ -303,5 +329,16 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode {
 
 	public void fireVisualChanged() {
 		support.firePropertyChange(PRO_FORCE_VISUAL_CHANGED, new Object(), null);
+	}
+
+	public void addMessage(String message) {
+		getMessage().add(message);
+	}
+
+	public List<String> getMessage() {
+		if(messages == null){
+			messages = new ArrayList<String>();
+		}
+		return messages;
 	}
 }

@@ -10,8 +10,13 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.commands;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.gef.commands.Command;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
+import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 
 /**
  * @author Dart
@@ -22,6 +27,8 @@ public class DeleteSmooksGraphicalModelCommand extends Command {
 	private AbstractSmooksGraphicalModel graphModel;
 	
 	private AbstractSmooksGraphicalModel parentModel;
+	
+	private List<TreeNodeConnection> deletedConnections = new ArrayList<TreeNodeConnection>();
 	
 	private int oldIndex = -1;
 	
@@ -46,8 +53,14 @@ public class DeleteSmooksGraphicalModelCommand extends Command {
 	 */
 	@Override
 	public void execute() {
+		if (deletedConnections != null) {
+			deletedConnections.clear();
+		} else {
+			deletedConnections = new ArrayList<TreeNodeConnection>();
+		}
 		oldIndex = parentModel.getChildrenWithoutDynamic().indexOf(graphModel);
 		parentModel.removeChild(graphModel);
+		AbstractSmooksGraphicalModel.disconnectAllConnections(graphModel, deletedConnections);
 	}
 
 	/* (non-Javadoc)
@@ -65,8 +78,18 @@ public class DeleteSmooksGraphicalModelCommand extends Command {
 	public void undo() {
 		if(oldIndex != -1 && parentModel != null){
 			parentModel.addChild(oldIndex, graphModel);
+			reconnectAllConnections();
 		}
 		super.undo();
+	}
+	
+	private void reconnectAllConnections() {
+		if (deletedConnections != null) {
+			for (Iterator<?> iterator = deletedConnections.iterator(); iterator.hasNext();) {
+				TreeNodeConnection connection = (TreeNodeConnection) iterator.next();
+				connection.connect();
+			}
+		}
 	}
 
 }

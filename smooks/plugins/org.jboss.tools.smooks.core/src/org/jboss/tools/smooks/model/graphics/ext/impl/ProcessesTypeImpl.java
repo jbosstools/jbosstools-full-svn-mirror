@@ -7,6 +7,7 @@
 package org.jboss.tools.smooks.model.graphics.ext.impl;
 
 
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -14,7 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.graphics.ext.ProcessType;
 import org.jboss.tools.smooks.model.graphics.ext.ProcessesType;
@@ -32,7 +33,7 @@ import org.jboss.tools.smooks.model.graphics.ext.ProcessesType;
  *
  * @generated
  */
-public class ProcessesTypeImpl extends EObjectImpl implements ProcessesType {
+public class ProcessesTypeImpl extends AbstractAnyTypeImpl implements ProcessesType {
 	/**
 	 * The cached value of the '{@link #getProcess() <em>Process</em>}' containment reference.
 	 * <!-- begin-user-doc -->

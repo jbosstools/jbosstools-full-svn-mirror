@@ -11,8 +11,13 @@
 package org.jboss.tools.smooks.editor.propertySections;
 
 import org.eclipse.jface.viewers.IFilter;
+import org.eclipse.ui.IEditorPart;
+import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
+import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfigChildNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfigEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.JavaBeanChildNodeEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.JavaBeanEditPart;
 
 /**
  * @author Dart
@@ -26,9 +31,21 @@ public class SmooksPropertySectionFilter implements IFilter{
 	public boolean select(Object toTest) {
 		if(toTest == null) return false;
 		if(toTest instanceof AbstractResourceConfigEditPart){
+			IEditorPart editorPart = ((AbstractResourceConfigEditPart)toTest).getEditorPart();
+			if(toTest instanceof JavaBeanEditPart && editorPart instanceof IGraphicalEditorPart){
+				if(SmooksFreemarkerTemplateGraphicalEditor.ID.equals(((IGraphicalEditorPart)editorPart).getID())){
+					return false;
+				}
+			}
 			return true;
 		}
 		if(toTest instanceof AbstractResourceConfigChildNodeEditPart){
+			IEditorPart editorPart = ((AbstractResourceConfigChildNodeEditPart)toTest).getEditorPart();
+			if(toTest instanceof JavaBeanChildNodeEditPart && editorPart instanceof IGraphicalEditorPart){
+				if(SmooksFreemarkerTemplateGraphicalEditor.ID.equals(((IGraphicalEditorPart)editorPart).getID())){
+					return false;
+				}
+			}
 			return true;
 		}
 		return false;

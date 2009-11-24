@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -31,8 +32,11 @@ import org.jboss.tools.smooks.model.graphics.ext.TaskType;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
+import org.jboss.tools.smooks.model.smooks.ParamType;
+import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.xsl.Xsl;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart
@@ -47,8 +51,9 @@ public class ProcessAnalyzer {
 		Assert.isNotNull(this.domainProvider);
 	}
 
-	public List<String> analyzeTaskID(SmooksResourceListType resourceList) {
+	public List<TaskType> analyzeTaskID(SmooksResourceListType resourceList) {
 		List<String> taskIDs = new ArrayList<String>();
+		List<TaskType> tasks = new ArrayList<TaskType>();
 		List<AbstractResourceConfig> resourceConfigList = resourceList.getAbstractResourceConfig();
 		for (Iterator<?> iterator = resourceConfigList.iterator(); iterator.hasNext();) {
 			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
@@ -59,12 +64,36 @@ public class ProcessAnalyzer {
 					continue;
 				}
 				taskIDs.add(TaskTypeManager.TASK_ID_JAVA_MAPPING);
+
+				TaskType task = GraphFactory.eINSTANCE.createTaskType();
+				task.setId(TaskTypeManager.TASK_ID_JAVA_MAPPING);
+				task.setName(TaskTypeManager.getTaskLabel(TaskTypeManager.TASK_ID_JAVA_MAPPING));
+				tasks.add(task);
 			}
 			// for freemarker template
 			if (abstractResourceConfig instanceof Freemarker) {
-				if (taskIDs.contains(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE)) {
-					continue;
+
+				TaskType task = GraphFactory.eINSTANCE.createTaskType();
+				task.setId(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE);
+				task.setName(TaskTypeManager.getTaskLabel(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE));
+				tasks.add(task);
+
+				String refid = SmooksModelUtils.getParamValue(((Freemarker) abstractResourceConfig).getParam(),
+						SmooksModelUtils.KEY_OBJECT_ID);
+				if (refid == null) {
+					refid = SmooksModelUtils.generateTaskID(resourceList, Freemarker.class, "freemarker");
+					ParamType idParam = SmooksFactory.eINSTANCE.createParamType();
+					idParam.setName(SmooksModelUtils.KEY_OBJECT_ID);
+					idParam.setStringValue(refid);
+					((Freemarker) abstractResourceConfig).getParam().add(idParam);
 				}
+				if (refid != null) {
+					ParamType idParam = SmooksFactory.eINSTANCE.createParamType();
+					idParam.setName(SmooksModelUtils.KEY_TASK_ID_REF);
+					idParam.setStringValue(refid);
+					SmooksModelUtils.addParam(task, idParam);
+				}
+
 				taskIDs.add(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE);
 			}
 			// for xsl template
@@ -75,7 +104,7 @@ public class ProcessAnalyzer {
 				// taskIDs.add(TaskTypeManager.TASK_ID_JAVA_MAPPING);
 			}
 		}
-		return taskIDs;
+		return tasks;
 	}
 
 	private SmooksGraphicsExtType getSmooksGraphicsType(SmooksResourceListType resouceList) {
@@ -148,20 +177,59 @@ public class ProcessAnalyzer {
 			modelWasChanged = true;
 		}
 
-		List<String> taskIDs = analyzeTaskID(resourceList);
-
-		for (Iterator<String> iterator = taskIDs.iterator(); iterator.hasNext();) {
-			String taskId = (String) iterator.next();
-			if (!taskIDIsExist(taskId, taskList)) {
-				TaskType task = GraphFactory.eINSTANCE.createTaskType();
-				task.setId(taskId);
-				task.setName(TaskTypeManager.getTaskLabel(taskId));
-				taskList.add(task);
+		List<TaskType> tasks = analyzeTaskID(resourceList);
+		for (Iterator<?> iterator = tasks.iterator(); iterator.hasNext();) {
+			TaskType taskType = (TaskType) iterator.next();
+			if (canAdd(taskList, taskType)) {
+				taskList.add(taskType);
 			}
 		}
-		modelWasChanged = linkTask(taskList, compoundCommand);
+		// for (Iterator<String> iterator = taskIDs.iterator();
+		// iterator.hasNext();) {
+		// String taskId = (String) iterator.next();
+		// if (!taskIDIsExist(taskId, taskList)) {
+		// TaskType task = GraphFactory.eINSTANCE.createTaskType();
+		// task.setId(taskId);
+		// task.setName(TaskTypeManager.getTaskLabel(taskId));
+		// taskList.add(task);
+		// }
+		// }
+		List<TaskType> dummyTasks = new ArrayList<TaskType>();
+		modelWasChanged = linkTask(taskList, dummyTasks, compoundCommand);
 		compoundCommand.execute();
 		return modelWasChanged;
+	}
+	
+	public static void main(String[] args){
+//		Properties pros = System.getProperties();
+//		Enumeration eee = pros.keys();
+//		while(eee.hasMoreElements()){
+//			Object key = eee.nextElement();
+//			System.out.println(key + " : " + pros.getProperty(key.toString()));
+//		}
+	}
+
+	private boolean canAdd(List<TaskType> list, TaskType taskType) {
+		if (TaskTypeManager.TASK_ID_JAVA_MAPPING.equals(taskType.getId())) {
+			for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+				TaskType taskType1 = (TaskType) iterator.next();
+				if (TaskTypeManager.TASK_ID_JAVA_MAPPING.equals(taskType1.getId())) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	private List<TaskType> getTaskTypes(String id, List<TaskType> taskList) {
+		List<TaskType> tasks = new ArrayList<TaskType>();
+		for (Iterator<?> iterator = taskList.iterator(); iterator.hasNext();) {
+			TaskType taskType = (TaskType) iterator.next();
+			if (id.equals(taskType.getId())) {
+				tasks.add(taskType);
+			}
+		}
+		return tasks;
 	}
 
 	private TaskType getTaskType(String id, List<TaskType> taskList) {
@@ -174,50 +242,78 @@ public class ProcessAnalyzer {
 		return null;
 	}
 
-	private boolean linkTask(List<TaskType> taskList, CompoundCommand compoundCommand) {
+	private boolean linkTask(List<TaskType> taskList, List<TaskType> dummyTasks, CompoundCommand compoundCommand) {
 		TaskType first = getTaskType(TaskTypeManager.TASK_ID_INPUT, taskList);
 		if (first != null) {
-			return linkTask(first, taskList, compoundCommand);
+			taskList.remove(first);
+			return linkTask(first, taskList, dummyTasks, compoundCommand);
 		}
 		return false;
 	}
 
-	private boolean linkTask(TaskType taskType, List<TaskType> taskList, CompoundCommand compoundCommand) {
+	private boolean linkTask(TaskType taskType, List<TaskType> taskList, List<TaskType> dummyTasks,
+			CompoundCommand compoundCommand) {
 		String id = taskType.getId();
 		String[] childrenIds = TaskTypeManager.getChildTaskIDs(id);
 		boolean changed = false;
 		if (childrenIds != null) {
 			for (int i = 0; i < childrenIds.length; i++) {
 				String childId = childrenIds[i];
-				TaskType childTask = getTaskType(childId, taskList);
-				if (childTask != null) {
-					if (!taskType.getTask().contains(childTask)
-							&& ((childTask.eContainer() == null) || (childTask.eContainer() instanceof ProcessType))) {
-						Command c = AddCommand.create(domainProvider.getEditingDomain(), taskType,
-								GraphPackage.Literals.TASK_TYPE__TASK, childTask);
-						compoundCommand.append(c);
-						// taskType.getTask().add(childTask);
-						changed = true;
+				List<TaskType> tasks = getTaskTypes(childId, taskList);
+				for (Iterator<?> iterator = tasks.iterator(); iterator.hasNext();) {
+					TaskType childTask = (TaskType) iterator.next();
+					if (childTask != null) {
+						EList<TaskType> exsitedTasks = taskType.getTask();
+						boolean duplited = false;
+						boolean canAdd = true;
+						for (Iterator<?> iterator2 = exsitedTasks.iterator(); iterator2.hasNext();) {
+							TaskType taskType2 = (TaskType) iterator2.next();
+							String refid = SmooksModelUtils.getParamValue(taskType2, SmooksModelUtils.KEY_TASK_ID_REF);
+							String refid2 = SmooksModelUtils.getParamValue(childTask, SmooksModelUtils.KEY_TASK_ID_REF);
+							if (refid != null && refid2 != null && refid.equals(refid2)) {
+								canAdd = false;
+								duplited = true;
+								break;
+							}
+							if (refid == null && refid2 == null) {
+								canAdd = false;
+								duplited = true;
+								break;
+							}
+						}
+						if (canAdd
+								&& !taskType.getTask().contains(childTask)
+								&& ((childTask.eContainer() == null) || (childTask.eContainer() instanceof ProcessType))) {
+							Command c = AddCommand.create(domainProvider.getEditingDomain(), taskType,
+									GraphPackage.Literals.TASK_TYPE__TASK, childTask);
+							compoundCommand.append(c);
+							// taskType.getTask().add(childTask);
+							changed = true;
+						}
+						if (!duplited) {
+							dummyTasks.add(childTask);
+						}
+						taskList.remove(childTask);
+						boolean cchange = linkTask(childTask, taskList, dummyTasks, compoundCommand);
+						changed = (changed || cchange);
 					}
-					taskList.remove(childTask);
-					boolean cchange = linkTask(childTask, taskList, compoundCommand);
-					changed = (changed || cchange);
 				}
+
 			}
 		}
 		return changed;
 	}
 
-	private boolean taskIDIsExist(String taskId, List<TaskType> taskList) {
-		for (Iterator<?> iterator = taskList.iterator(); iterator.hasNext();) {
-			TaskType task = (TaskType) iterator.next();
-			if (task.getId().equals(taskId)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
+	// private boolean taskIDIsExist(String taskId, List<TaskType> taskList) {
+	// for (Iterator<?> iterator = taskList.iterator(); iterator.hasNext();) {
+	// TaskType task = (TaskType) iterator.next();
+	// if (task.getId().equals(taskId)) {
+	// return true;
+	// }
+	// }
+	// return false;
+	// }
+	//
 	// private boolean taskIsExist(TaskType task , List<String> taskIDs){
 	// for (Iterator<?> iterator = taskIDs.iterator(); iterator.hasNext();) {
 	// String id = (String) iterator.next();

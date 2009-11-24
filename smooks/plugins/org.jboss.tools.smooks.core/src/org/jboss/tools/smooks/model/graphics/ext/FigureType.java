@@ -6,7 +6,7 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext;
 
-import org.eclipse.emf.ecore.EObject;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='figure_._type' kind='empty'"
  * @generated
  */
-public interface FigureType extends EObject {
+public interface FigureType extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Height</b></em>' attribute.
 	 * <!-- begin-user-doc -->

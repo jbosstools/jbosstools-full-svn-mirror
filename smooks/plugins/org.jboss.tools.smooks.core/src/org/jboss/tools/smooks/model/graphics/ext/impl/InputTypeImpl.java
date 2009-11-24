@@ -7,6 +7,7 @@
 package org.jboss.tools.smooks.model.graphics.ext.impl;
 
 
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -18,10 +19,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.jboss.tools.smooks.model.common.impl.AbstractAnyTypeImpl;
 import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
 import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.graphics.ext.ParamType;
@@ -40,7 +41,7 @@ import org.jboss.tools.smooks.model.graphics.ext.ParamType;
  *
  * @generated
  */
-public class InputTypeImpl extends EObjectImpl implements InputType {
+public class InputTypeImpl extends AbstractAnyTypeImpl implements InputType {
 	/**
 	 * The cached value of the '{@link #getParam() <em>Param</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

@@ -6,7 +6,7 @@
  */
 package org.jboss.tools.smooks.model.graphics.ext;
 
-import org.eclipse.emf.ecore.EObject;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model extendedMetaData="name='processes_._type' kind='elementOnly'"
  * @generated
  */
-public interface ProcessesType extends EObject {
+public interface ProcessesType extends AbstractAnyType {
 	/**
 	 * Returns the value of the '<em><b>Process</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

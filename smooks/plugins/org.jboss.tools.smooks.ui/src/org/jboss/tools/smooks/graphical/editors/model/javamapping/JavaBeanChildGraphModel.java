@@ -24,6 +24,8 @@ import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
+import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
+import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVLinkConnection;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVNodeModel;
@@ -35,9 +37,12 @@ import org.jboss.tools.smooks.model.javabean.ValueType;
  */
 public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGraphModel {
 
+	private IGraphicalEditorPart editorPart;
+
 	public JavaBeanChildGraphModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider,
-			IEditingDomainProvider domainProvider) {
+			IEditingDomainProvider domainProvider, IGraphicalEditorPart editorPart) {
 		super(data, contentProvider, labelProvider, domainProvider);
+		this.editorPart = editorPart;
 	}
 
 	/*
@@ -73,6 +78,13 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 		return false;
 	}
 
+	protected boolean inJavaMapping() {
+		if (SmooksFreemarkerTemplateGraphicalEditor.ID.equals(editorPart.getID())) {
+			return false;
+		}
+		return true;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -83,6 +95,8 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 	@Override
 	public boolean canLinkWithSource(Object model) {
 		// TODO Auto-generated method stub
+		if (!inJavaMapping())
+			return false;
 		return super.canLinkWithSource(model);
 	}
 
@@ -97,10 +111,13 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 	public boolean canLinkWithTarget(Object model) {
 		AbstractSmooksGraphicalModel gm = (AbstractSmooksGraphicalModel) model;
 		Object m = gm.getData();
-		if (data instanceof ValueType || data instanceof org.jboss.tools.smooks.model.javabean12.ValueType
-				|| m instanceof CSVNodeModel) {
-			return !((CSVNodeModel) m).isRecord();
+		if (data instanceof ValueType || data instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
+			if (m instanceof CSVNodeModel) {
+				return !((CSVNodeModel) m).isRecord();
+			}
 		}
+		if (!inJavaMapping())
+			return false;
 		return super.canLinkWithTarget(model);
 	}
 

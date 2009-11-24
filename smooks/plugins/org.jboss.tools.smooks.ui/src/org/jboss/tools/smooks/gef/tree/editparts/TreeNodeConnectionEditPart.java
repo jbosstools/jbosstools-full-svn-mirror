@@ -15,8 +15,11 @@ import org.eclipse.draw2d.ManhattanConnectionRouter;
 import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
+import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.editparts.AbstractConnectionEditPart;
+import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeConnectionEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeEndpointEditPolicy;
 import org.jboss.tools.smooks.gef.tree.figures.LeftOrRightAnchor;
@@ -27,6 +30,8 @@ import org.jboss.tools.smooks.gef.tree.figures.LeftOrRightAnchor;
  */
 public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 	protected int alpha = 255;
+	
+	protected boolean canDelete = true;
 
 	@Override
 	protected void createEditPolicies() {
@@ -36,6 +41,26 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 
 	public void changeLineAlpha(int alpha) {
 		this.alpha = alpha;
+	}
+
+	/**
+	 * @return the canDelete
+	 */
+	public boolean isCanDelete() {
+		return canDelete;
+	}
+
+	/**
+	 * @param canDelete the canDelete to set
+	 */
+	public void setCanDelete(boolean canDelete) {
+		this.canDelete = canDelete;
+	}
+	
+	protected IEditorPart getEditorPart(){
+		GraphicalViewer viewer = (GraphicalViewer) this.getViewer();
+		DefaultEditDomain domain =  (DefaultEditDomain)viewer.getEditDomain();
+		return domain.getEditorPart();
 	}
 
 	protected IFigure createSourceFlagFigure() {

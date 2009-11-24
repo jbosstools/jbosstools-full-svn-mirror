@@ -114,14 +114,14 @@ public class XSDModelBuilder extends ModelBuilder {
             }
         }
 
-        EList<XSDTypeDefinition> typeDefs = schema.getTypeDefinitions();
+        EList typeDefs = schema.getTypeDefinitions();
         for(int i = 0; i < typeDefs.size(); i++) {
             XSDTypeDefinition type = (XSDTypeDefinition) typeDefs.get(i);
             types.put(type.getName(), type);
         }
 
         // Load includes and imports types...
-        List<XSDSchemaContent> contents = schema.getContents();
+        List contents = schema.getContents();
         for(Object schemaComponentObj : contents) {
             if(schemaComponentObj instanceof XSDImport) {
                 XSDImport xsdImport = (XSDImport) schemaComponentObj;
@@ -188,7 +188,7 @@ public class XSDModelBuilder extends ModelBuilder {
 
     private void processComplexType(Document document, Element element, XSDComplexTypeDefinition complexTypeDef) {
         XSDParticle particle = complexTypeDef.getComplexType();
-        EList<XSDAttributeGroupContent> attributes = complexTypeDef.getAttributeContents();
+        EList attributes = complexTypeDef.getAttributeContents();
 
         addAttributes(element, attributes);
 

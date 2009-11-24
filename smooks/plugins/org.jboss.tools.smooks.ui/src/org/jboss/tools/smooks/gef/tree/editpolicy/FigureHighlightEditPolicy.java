@@ -1,5 +1,6 @@
 package org.jboss.tools.smooks.gef.tree.editpolicy;
 
+import org.eclipse.draw2d.FigureUtilities;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
@@ -13,7 +14,7 @@ public class FigureHighlightEditPolicy extends GraphicalEditPolicy {
 
 	private Color revertColor;
 
-	public static Color highLightColor = GraphicsConstants.TB_BG_CORLOR;
+	public static Color highLightColor = FigureUtilities.darker(GraphicsConstants.TB_BG_CORLOR);
 
 	public FigureHighlightEditPolicy() {
 		super();
