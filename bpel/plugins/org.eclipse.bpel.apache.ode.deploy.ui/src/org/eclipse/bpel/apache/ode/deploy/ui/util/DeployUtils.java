@@ -25,7 +25,6 @@ import org.eclipse.bpel.apache.ode.deploy.model.dd.TDeployment;
 import org.eclipse.bpel.apache.ode.deploy.model.dd.ddFactory;
 import org.eclipse.bpel.model.Process;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
@@ -43,10 +42,6 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.internal.core.JavaProject;
-import org.eclipse.wst.common.componentcore.ComponentCore;
-import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
-import org.eclipse.wst.common.componentcore.resources.IVirtualResource;
 import org.eclipse.wst.wsdl.Definition;
 import org.eclipse.wst.wsdl.Port;
 import org.eclipse.wst.wsdl.Service;
@@ -62,80 +57,88 @@ public class DeployUtils {
 	public static final String URL_PREFIX_RESOURCE = "resource"; //$NON-NLS-1$
 	public static final String NONE_STRING = "-- none -- "; //$NON-NLS-1$
 
-	
-	public static ProcessType findProcessTypeInDD(org.eclipse.bpel.model.Process process, TDeployment dd) {
+	public static ProcessType findProcessTypeInDD(
+			org.eclipse.bpel.model.Process process, TDeployment dd) {
 		for (ProcessType pt : dd.getProcess()) {
-			if (   pt.getName().getLocalPart().equals(process.getName())
-				&& pt.getName().getNamespaceURI().equals(process.getTargetNamespace())) {
+			if (pt.getName().getLocalPart().equals(process.getName())
+					&& pt.getName().getNamespaceURI().equals(
+							process.getTargetNamespace())) {
 				return pt;
 			}
 		}
 		return null;
 	}
 
-	public static ProcessType createProcessStub(org.eclipse.bpel.model.Process process) {
+	public static ProcessType createProcessStub(
+			org.eclipse.bpel.model.Process process) {
 		ProcessType pt = ddFactory.eINSTANCE.createProcessType();
-		QName processQName = new QName(process.getTargetNamespace(),process.getName() );
+		QName processQName = new QName(process.getTargetNamespace(), process
+				.getName());
 		pt.setName(processQName);
 		return pt;
 	}
 
 	public static QName getQNameFromSerialzedForm(String qNameAsString) {
-		
+
 		int pos = qNameAsString.lastIndexOf("}"); //$NON-NLS-1$
-		
+
 		String ns = qNameAsString.substring(1, pos);
-		String name = qNameAsString.substring(pos+1, qNameAsString.length());
-		
+		String name = qNameAsString.substring(pos + 1, qNameAsString.length());
+
 		QName qName = new QName(ns, name);
-		
+
 		return qName;
 	}
-	
-	
-	@SuppressWarnings("unchecked") //$NON-NLS-1$
-	public static Port findPortByName(String name, IProject bpelProject, ResourceSet resourceSet){
-	
+
+	@SuppressWarnings("unchecked")//$NON-NLS-1$
+	public static Port findPortByName(String name, IProject bpelProject,
+			ResourceSet resourceSet) {
+
 		List serviceList = new ArrayList();
 		List portList = new ArrayList();
-		
-		List<Definition> wsdlDefs = DeployUtils.loadAllWSDLFromProject(bpelProject, resourceSet);
-		//Assemble All Services from WSDL's 
-		for (Iterator<Definition> iterator = wsdlDefs.iterator(); iterator.hasNext();) {
+
+		List<Definition> wsdlDefs = DeployUtils.loadAllWSDLFromProject(
+				bpelProject, resourceSet);
+		// Assemble All Services from WSDL's
+		for (Iterator<Definition> iterator = wsdlDefs.iterator(); iterator
+				.hasNext();) {
 			Definition current = (Definition) iterator.next();
 			Map services = current.getServices();
-			if (!services.isEmpty()){
-				Collection values = services.values();	
-				for (Iterator iterator2 = values.iterator(); iterator2.hasNext();) {
-					Service name2 =(Service) iterator2.next();
-					serviceList.add(name2);					
+			if (!services.isEmpty()) {
+				Collection values = services.values();
+				for (Iterator iterator2 = values.iterator(); iterator2
+						.hasNext();) {
+					Service name2 = (Service) iterator2.next();
+					serviceList.add(name2);
 				}
 			}
 		}
-		
-		//now we have all services in a List .. get All Ports from these services
+
+		// now we have all services in a List .. get All Ports from these
+		// services
 		for (Iterator iterator = serviceList.iterator(); iterator.hasNext();) {
 			Service currentService = (Service) iterator.next();
 			Map portMap = currentService.getPorts();
 			Collection ports = portMap.values();
 			portList.addAll(ports);
 		}
-		
+
 		for (Iterator iterator = portList.iterator(); iterator.hasNext();) {
 			Port currentPort = (Port) iterator.next();
-			if (currentPort.getName().equals(name)){
+			if (currentPort.getName().equals(name)) {
 				return currentPort;
 			}
 		}
-		
+
 		return null;
-		
+
 	}
-	
+
 	public static Process loadBPEL(IFile bpelFile, ResourceSet resourceSet) {
 
 		IPath fullProcessPath = bpelFile.getFullPath();
-		URI uri = URI.createPlatformResourceURI(fullProcessPath.toString(), false);
+		URI uri = URI.createPlatformResourceURI(fullProcessPath.toString(),
+				false);
 		Resource bpelResource = resourceSet.getResource(uri, true);
 
 		EcorePackage instance = EcorePackage.eINSTANCE;
@@ -151,16 +154,17 @@ public class DeployUtils {
 				return (Process) contents.get(0);
 			}
 		} catch (Exception e) {
-			//swallow exception
+			// swallow exception
 		}
 
 		return null;
 	}
-	
+
 	public static Definition loadWSDL(IFile wsdlFile, ResourceSet resourceSet) {
 
 		IPath fullProcessPath = wsdlFile.getFullPath();
-		URI uri = URI.createPlatformResourceURI(fullProcessPath.toString(), false);
+		URI uri = URI.createPlatformResourceURI(fullProcessPath.toString(),
+				false);
 		Resource wsdlResource = resourceSet.getResource(uri, true);
 
 		EcorePackage instance = EcorePackage.eINSTANCE;
@@ -173,71 +177,69 @@ public class DeployUtils {
 				return (Definition) contents.get(0);
 			}
 		} catch (Exception e) {
-			//swallow exception
+			// swallow exception
 		}
 
 		return null;
 	}
-	
-	public static List<Definition> loadAllWSDLFromProject(IProject project, ResourceSet resourceSet) 
-	{
+
+	public static List<Definition> loadAllWSDLFromProject(IProject project,
+			ResourceSet resourceSet) {
 		List<Definition> wsdlFiles = new ArrayList<Definition>();
-		
+
 		List<IFile> allFiles = DeployUtils.getAllFilesInProject(project);
-		
+
 		for (IFile file : allFiles) {
 
-			if (file.getFileExtension().equalsIgnoreCase("wsdl")) {				 //$NON-NLS-1$
-//				load it 
+			if (file.getFileExtension().equalsIgnoreCase("wsdl")) { //$NON-NLS-1$
+			// load it
 				Definition currentDef = loadWSDL(file, resourceSet);
-//				stuff it in wsdlFiles
-				wsdlFiles.add(currentDef);				
+				// stuff it in wsdlFiles
+				wsdlFiles.add(currentDef);
 			}
 		}
-		
+
 		return wsdlFiles;
 	}
-	
-	public static List<Process> loadAllBPELFromProject(IProject project, ResourceSet resourceSet) 
-	{
+
+	public static List<Process> loadAllBPELFromProject(IProject project,
+			ResourceSet resourceSet) {
 		List<Process> bpelFiles = new ArrayList<Process>();
-		
+
 		List<IFile> allFiles = DeployUtils.getAllFilesInProject(project);
-		
+
 		for (IFile file : allFiles) {
 
-			if (file.getFileExtension().equalsIgnoreCase("bpel")) {				 //$NON-NLS-1$
-//				load it 
+			if (file.getFileExtension().equalsIgnoreCase("bpel")) { //$NON-NLS-1$
+			// load it
 				Process currentProcess = loadBPEL(file, resourceSet);
-//				stuff it in bpelFiles
-				bpelFiles.add(currentProcess);				
+				// stuff it in bpelFiles
+				bpelFiles.add(currentProcess);
 			}
 		}
-		
+
 		return bpelFiles;
 	}
-	
-	
+
 	public static List<IFile> getAllFilesInProject(IProject project) {
-		
+
 		final List<IFile> files = new ArrayList<IFile>();
 		IResourceVisitor visitor = new IResourceVisitor() {
-			public boolean visit(org.eclipse.core.resources.IResource resource) throws org.eclipse.core.runtime.CoreException {
+			public boolean visit(org.eclipse.core.resources.IResource resource)
+					throws org.eclipse.core.runtime.CoreException {
 				if (resource.getType() == IResource.FILE) {
-					files.add((IFile)resource);
+					files.add((IFile) resource);
 				}
 				return true;
 			}
 		};
 		try {
-			IResource[] reses = getSourceContainers(project);
-			for(IResource res : reses){
-				if(res instanceof IFolder){
-					res.accept(visitor);
-				}
+			IResource[] reses = project.getFolder("bpelContent").members();
+			for (IResource res : reses) {
+				res.accept(visitor);
+
 			}
-		} 
-		catch (CoreException e) {
+		} catch (CoreException e) {
 			e.printStackTrace();
 		}
 		return files;
@@ -247,9 +249,8 @@ public class DeployUtils {
 		IJavaProject jProject = JavaCore.create(project);
 		if (jProject == null)
 			return new IResource[0];
-		List list = new ArrayList();
-		IVirtualComponent vc = ComponentCore.createComponent(project);
-		
+		List<IResource> list = new ArrayList<IResource>();
+
 		IPackageFragmentRoot[] roots;
 		try {
 			roots = jProject.getPackageFragmentRoots();
@@ -258,41 +259,43 @@ public class DeployUtils {
 					continue;
 				IResource resource = roots[i].getResource();
 				list.add(resource);
-//				if (null != resource) {
-//					IVirtualResource[] vResources = ComponentCore.createResources(resource);
-//					boolean found = false;
-//					for (int j = 0; !found && j < vResources.length; j++) {
-//						if (vResources[j].getComponent().equals(vc)) {
-//							if (!list.contains(roots[i]))
-//								list.add(roots[i]);
-//							found = true;
-//						}
-//					}
-//				}
+				// if (null != resource) {
+				// IVirtualResource[] vResources =
+				// ComponentCore.createResources(resource);
+				// boolean found = false;
+				// for (int j = 0; !found && j < vResources.length; j++) {
+				// if (vResources[j].getComponent().equals(vc)) {
+				// if (!list.contains(roots[i]))
+				// list.add(roots[i]);
+				// found = true;
+				// }
+				// }
+				// }
 			}
 		} catch (JavaModelException e) {
-//			Logger.getLogger().logError(e);
+			// Logger.getLogger().logError(e);
 		}
 		return (IResource[]) list.toArray(new IResource[list.size()]);
 	}
-	
-	
+
 	public static IFile getIFileForURI(URI uri) {
 
-		if(uri == null) return null; 
-		
-	    String filePath = null;
+		if (uri == null)
+			return null;
+
+		String filePath = null;
 		String scheme = uri.scheme();
 
 		if (URL_PREFIX_FILE.equals(scheme)) {
 			filePath = uri.toFileString();
-		} else if (URL_PREFIX_PLATFORM.equals(scheme) && uri.segmentCount() > 1 && URL_PREFIX_RESOURCE.equals(uri.segment(0))) {
+		} else if (URL_PREFIX_PLATFORM.equals(scheme) && uri.segmentCount() > 1
+				&& URL_PREFIX_RESOURCE.equals(uri.segment(0))) {
 			StringBuffer platformResourcePath = new StringBuffer();
 			for (int i = 1, size = uri.segmentCount(); i < size; ++i) {
 				platformResourcePath.append('/');
 				platformResourcePath.append(uri.segment(i));
 			}
-			filePath = URI.decode(platformResourcePath.toString()); 
+			filePath = URI.decode(platformResourcePath.toString());
 		}
 
 		if (filePath == null)
@@ -300,15 +303,17 @@ public class DeployUtils {
 
 		IFile file = null;
 
-		if (URL_PREFIX_FILE.equals(scheme)){ //44110
-			if(uri.device()!= null){
+		if (URL_PREFIX_FILE.equals(scheme)) { // 44110
+			if (uri.device() != null) {
 				filePath = filePath.substring(filePath.indexOf(uri.device()));
 			}
-			file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(new Path(filePath));
-		}else
-			file = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(filePath));
+			file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(
+					new Path(filePath));
+		} else
+			file = ResourcesPlugin.getWorkspace().getRoot().getFile(
+					new Path(filePath));
 
-		return file; 
+		return file;
 	}
-	
+
 }
