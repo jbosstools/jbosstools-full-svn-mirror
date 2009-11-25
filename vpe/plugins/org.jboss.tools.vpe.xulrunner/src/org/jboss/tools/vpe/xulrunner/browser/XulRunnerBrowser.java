@@ -442,7 +442,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	}
 	
 	protected void onDispose() {
-		
+		webBrowser = null;
 	}
 	
 	public void setText(String html) {

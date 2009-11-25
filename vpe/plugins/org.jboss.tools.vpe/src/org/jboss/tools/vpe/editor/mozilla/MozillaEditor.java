@@ -34,6 +34,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.custom.BusyIndicator;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
@@ -205,7 +207,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 	
 	public ToolBar createVisualToolbar(Composite parent) {
-		ToolBarManager toolBarManager = new ToolBarManager(SWT.VERTICAL | SWT.FLAT);
+		final ToolBarManager toolBarManager = new ToolBarManager(SWT.VERTICAL | SWT.FLAT);
 		verBar = toolBarManager.createControl(parent);
 		
 		/*
@@ -441,6 +443,22 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		updateToolbarItemsAccordingToPreferences();
 		toolBarManager.update(true);
 
+		parent.addDisposeListener(new DisposeListener() {
+			
+			public void widgetDisposed(DisposeEvent e) {
+				toolBarManager.dispose();
+				toolBarManager.removeAll();
+				openVPEPreferencesAction = null;
+				visualRefreshAction = null;
+				showResouceDialogAction = null;
+				rotateEditorsAction = null;;
+				showBorderAction = null;
+				showNonVisualTagsAction = null;
+				showSelectionBarAction = null;
+				showTextFormattingAction = null;
+				showBundleAsELAction = null;
+			}
+		});
 		return verBar;
 	}
 	
@@ -515,7 +533,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		cmpEd.setBackground(buttonDarker);
 
 		try {
-			xulRunnerEditor = new XulRunnerEditor(cmpEd) {
+			/*xulRunnerEditor = new XulRunnerEditor(cmpEd) {
 				public void onLoadWindow() {
 					// if the first load page
 					if (!isRefreshPage()) {
@@ -546,10 +564,14 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 					}
 				}
 				public void onDispose() {
+					tearDownEditor();
 					removeDomEventListeners();
+					headNode = null;
+					contentArea = null;
 					super.onDispose();
 				}
-			};
+			};*/
+			xulRunnerEditor = new XulRunnerEditor2(cmpEd, this);
 			xulRunnerEditor.getBrowser().addProgressListener(new ProgressListener() {
 
 				public void changed(ProgressEvent event) {
@@ -692,6 +714,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		this.controller = null;
 		formatControllerManager.setVpeController(null);
 		formatControllerManager=null;
+		headNode = null;
+		contentArea = null;
 		super.dispose();
 		
 	}
@@ -702,9 +726,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 	public void setEditorDomEventListener(EditorDomEventListener listener) {
 		editorDomEventListener = listener;
-		if (getContentAreaEventListener() != null) {
+		if (contentAreaEventListener != null) {
 			
-			getContentAreaEventListener().setEditorDomEventListener(listener);
+			contentAreaEventListener.setEditorDomEventListener(listener);
 		}
 	}
 
@@ -961,7 +985,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	/**
 	 * 
 	 */
-	private void onReloadWindow() {
+	public void onReloadWindow() {
 		removeDomEventListeners();
 		xulRunnerEditor.removeResizerListener();
 		contentArea = findContentArea();
@@ -985,7 +1009,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 * Initialized design mode in visual refresh
 	 */
 	public void initDesingMode() {
-		editor=null;
+		tearDownEditor();
 		getEditor();
 	}
 	
@@ -996,7 +1020,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		return doctype;
 	}
 	
-	private boolean isRefreshPage() {
+	public boolean isRefreshPage() {
 		return isRefreshPage;
 	}
 
@@ -1005,9 +1029,21 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 	
 	public void reinitDesignMode() {
-		editor=null;
+		tearDownEditor();
 		getEditor();
 	}
+	
+	public void tearDownEditor() {
+		if (editor != null) {
+			nsIEditingSession iEditingSession = (nsIEditingSession) getXulRunnerEditor().
+							getComponentManager().createInstanceByContractID(XPCOM.NS_EDITINGSESSION_CONTRACTID, null, nsIEditingSession.NS_IEDITINGSESSION_IID);
+			nsIDOMWindow window = getXulRunnerEditor().getWebBrowser().getContentDOMWindow();
+			iEditingSession.detachFromWindow(window);
+			iEditingSession.tearDownEditorOnWindow(window);
+			editor = null;
+		}
+	}
+
 	/**
 	 * Returns Editor for This Document
 	 * @return
@@ -1087,5 +1123,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	
 	public void updateShowSelectionBarItem(boolean checked) {
 		showSelectionBarAction.setChecked(checked);
+	}
+
+	public EditorDomEventListener getEditorDomEventListener() {
+		return editorDomEventListener;
 	}
 }

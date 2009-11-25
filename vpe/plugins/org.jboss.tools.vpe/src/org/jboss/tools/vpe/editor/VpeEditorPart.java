@@ -594,6 +594,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			public void widgetDisposed(DisposeEvent e) {
 				parent.removeControlListener(controlListener);
 				parent.removeDisposeListener(this);
+				controlListener = null;
 			}
 			
 		});
@@ -876,6 +877,11 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		/*
 		 * Reinit listeners on the new container.
 		 */
+		if (controlListener != null) {
+			if (cmpEdTl != null && !cmpEdTl.isDisposed()) {
+				cmpEdTl.getParent().removeControlListener(controlListener);
+			}
+		}
 		controlListener = new ControlListener() {
 		    public void controlMoved(ControlEvent event) {}
 		    public void controlResized(ControlEvent event) {
@@ -883,6 +889,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		    }
 		};
 
+		if (cmpEdTl != null && !cmpEdTl.isDisposed()) {
+			cmpEdTl.getParent().addControlListener(controlListener);
+		}
 		/*
 		 * Layout the parent container for CustomSashForm, Selection Bar.
 		 */
@@ -944,6 +953,19 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 	@Override
 	public void dispose() {
+		deactivateServices();
+		sourceActivation = null;
+		sourceMaxmin = null;
+		visualActivation = null;
+		visualMaxmin = null;
+		jumpingActivation = null;
+		jumping = null;
+		if (verticalToolbarEmpty != null) {
+			if (!verticalToolbarEmpty.isDisposed()) {
+				verticalToolbarEmpty.dispose();
+			}
+			verticalToolbarEmpty = null;
+		}
 		if (optionsObject != null) {
 			optionsObject.getModel().removeModelTreeListener(listener);
 			listener=null;
@@ -1023,23 +1045,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		public void partDeactivated(IWorkbenchPart part) {
 			fActivePart = null;
 			if (part == multiPageEditor) {
-				IWorkbench workbench = PlatformUI.getWorkbench();
-				if (fContextActivation != null) {
-					IContextService contextService = (IContextService) workbench
-							.getAdapter(IContextService.class);
-					contextService.deactivateContext(fContextActivation);
-				}
-
-				IHandlerService handlerService = (IHandlerService) workbench
-						.getService(IHandlerService.class);
-				if (handlerService != null) {
-					if (sourceActivation != null)
-						handlerService.deactivateHandler(sourceActivation);
-					if (visualActivation != null)
-						handlerService.deactivateHandler(visualActivation);
-					if (jumpingActivation != null)
-						handlerService.deactivateHandler(jumpingActivation);
-				}
+				deactivateServices();
 			}
 		}
 
@@ -1243,6 +1249,26 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			selectionBar.setVisible(isSelectionBarVisible);
 		} else {
 			VpePlugin.getDefault().logError("VPE Selection Bar is not initialized."); //$NON-NLS-1$
+		}
+	}
+
+	private void deactivateServices() {
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		if (fContextActivation != null) {
+			IContextService contextService = (IContextService) workbench
+					.getAdapter(IContextService.class);
+			contextService.deactivateContext(fContextActivation);
+		}
+
+		IHandlerService handlerService = (IHandlerService) workbench
+				.getService(IHandlerService.class);
+		if (handlerService != null) {
+			if (sourceActivation != null)
+				handlerService.deactivateHandler(sourceActivation);
+			if (visualActivation != null)
+				handlerService.deactivateHandler(visualActivation);
+			if (jumpingActivation != null)
+				handlerService.deactivateHandler(jumpingActivation);
 		}
 	}
 	

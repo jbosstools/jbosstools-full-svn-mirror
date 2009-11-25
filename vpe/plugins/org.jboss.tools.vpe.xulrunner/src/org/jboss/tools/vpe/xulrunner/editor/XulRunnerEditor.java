@@ -48,6 +48,7 @@ import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsITooltipListener;
 import org.mozilla.interfaces.nsITransferable;
+import org.mozilla.interfaces.nsIWebProgress;
 import org.mozilla.xpcom.Mozilla;
 import org.mozilla.xpcom.XPCOMException;
 
@@ -164,6 +165,10 @@ public class XulRunnerEditor extends XulRunnerBrowser{
 				}
 				getWebBrowser().removeWebBrowserListener(XulRunnerEditor.this,
 						nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
+				nsIWebProgress webProgress = (nsIWebProgress) getServiceManager()
+	    		.getServiceByContractID("@mozilla.org/docloaderservice;1", //$NON-NLS-1$
+	    			nsIWebProgress.NS_IWEBPROGRESS_IID);
+	            webProgress.removeProgressListener(XulRunnerEditor.this);
 				removeSelectionListener();
 				if (resizeListener != null)
 					getIXulRunnerVpeResizer().removeResizeListener(
@@ -188,7 +193,7 @@ public class XulRunnerEditor extends XulRunnerBrowser{
 		paintListener = new VisualPaintListener();
 		getBrowser().getParent().addPaintListener(paintListener);
 		// addListener(SWT.Activate, eventListenet);
-		addListener(SWT.Paint, eventListenet);
+		// addListener(SWT.Paint, eventListenet);
 		/*
 		 * https://jira.jboss.org/jira/browse/JBIDE-3917 Resizer and selection
 		 * rectangle should be updated after eclipse window resizing. Need to
@@ -805,6 +810,13 @@ public class XulRunnerEditor extends XulRunnerBrowser{
 	// }
 	// }
 	
+	@Override
+	protected void onDispose() {
+		lastSelectedNode = null;
+		iFlasher = null;
+		super.onDispose();
+	}
+	
 	private class VisualPaintListener implements PaintListener{
 
 		public void paintControl(PaintEvent e) {
@@ -812,5 +824,6 @@ public class XulRunnerEditor extends XulRunnerBrowser{
 		}
 		
 	}
+	
 	
 }

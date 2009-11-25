@@ -55,7 +55,7 @@ public class MozillaPreview extends MozillaEditor {
 	@Override
 	public void createPartControl(final Composite parent) {
 		try {
-			setXulRunnerEditor(new XulRunnerEditor(parent) {
+			/*setXulRunnerEditor(new XulRunnerEditor(parent) {
 				public void onLoadWindow() {
 					super.onLoadWindow();
 					MozillaPreview.this.onLoadWindow();
@@ -75,7 +75,8 @@ public class MozillaPreview extends MozillaEditor {
 					removeDomEventListeners();
 					super.onDispose();
 				}
-			});
+			});*/
+			setXulRunnerEditor(new XulRunnerPreview(parent, this));
 			setInitialContent();
 			getXulRunnerEditor().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		} catch (Throwable e) {
@@ -92,7 +93,7 @@ public class MozillaPreview extends MozillaEditor {
 	/**
 	 * 
 	 */
-	private void onLoadWindow() {
+	public void onLoadWindow() {
 		setContentArea(findContentArea());
 		addDomEventListeners();
 		if (editorLoadWindowListener != null) {
