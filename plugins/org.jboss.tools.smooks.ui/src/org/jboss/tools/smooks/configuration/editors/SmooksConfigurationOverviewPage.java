@@ -47,8 +47,6 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
-import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks.model.smooks.ParamsType;
@@ -60,8 +58,7 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
  * @author Dart
  * 
  */
-public class SmooksConfigurationOverviewPage extends FormPage implements ISmooksModelValidateListener,
-		ISmooksGraphChangeListener, ISourceSynchronizeListener {
+public class SmooksConfigurationOverviewPage extends FormPage implements ISmooksModelValidateListener, ISourceSynchronizeListener {
 
 	private ISmooksModelProvider smooksModelProvider;
 	private ModelPanelCreator defaultSettingPanelCreator;
@@ -246,9 +243,9 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 
 			public void modifyText(ModifyEvent e) {
 				String v = combo.getText();
-				if (smooksModelProvider != null) {
-					smooksModelProvider.getSmooksGraphicsExt().setPlatformVersion(v);
-				}
+//				if (smooksModelProvider != null) {
+//					smooksModelProvider.getSmooksGraphicsExt().setPlatformVersion(v);
+//				}
 			}
 		});
 
@@ -511,9 +508,9 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 
 	}
 
-	public void graphChanged(SmooksGraphicsExtType extType) {
-
-	}
+//	public void graphChanged(SmooksGraphicsExtType extType) {
+//
+//	}
 
 	public void graphPropertyChange(EStructuralFeature featre, Object value) {
 
@@ -526,9 +523,9 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		return defaultSettingPanelCreator;
 	}
 
-	public void inputTypeChanged(SmooksGraphicsExtType extType) {
-
-	}
+//	public void inputTypeChanged(SmooksGraphicsExtType extType) {
+//
+//	}
 
 	public void validateEnd(List<Diagnostic> diagnosticResult) {
 		ModelPanelCreator creator = getDefaultSettingPanelCreator();
@@ -541,10 +538,10 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 	public void sourceChange(Object model) {
 
 		lockEventFire = true;
-		SmooksGraphicsExtType extType = smooksModelProvider.getSmooksGraphicsExt();
-		if (extType == null) {
-			return;
-		}
+//		SmooksGraphicsExtType extType = smooksModelProvider.getSmooksGraphicsExt();
+//		if (extType == null) {
+//			return;
+//		}
 
 //		String name = extType.getName();
 //		if (name != null)
@@ -600,10 +597,10 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 
 	private String getSmooksVersion() {
 		if (smooksModelProvider != null) {
-			SmooksGraphicsExtType ext = smooksModelProvider.getSmooksGraphicsExt();
-			if (ext != null) {
-				return ext.getPlatformVersion();
-			}
+			return smooksModelProvider.getPlatformVersion();
+//			if (ext != null) {
+//				return ext.getPlatformVersion();
+//			}
 		}
 		return null;
 	}

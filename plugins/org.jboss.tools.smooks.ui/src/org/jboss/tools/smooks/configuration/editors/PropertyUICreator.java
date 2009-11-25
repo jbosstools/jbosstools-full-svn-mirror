@@ -53,7 +53,6 @@ import org.jboss.tools.smooks.configuration.editors.uitls.IFieldDialog;
 import org.jboss.tools.smooks.configuration.editors.uitls.IModelProcsser;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
@@ -158,15 +157,16 @@ public class PropertyUICreator implements IPropertyUICreator {
 			public Object open(Shell shell) {
 				FileSelectionWizard wizard = new FileSelectionWizard();
 				EObject model = provider.getSmooksModel();
-				if(model != null){
+				if (model != null) {
 					URI uri = model.eResource().getURI();
-					if(uri.isPlatformResource()){
+					if (uri.isPlatformResource()) {
 						String path = uri.toPlatformString(true);
-						IResource workspaceResource = ResourcesPlugin.getWorkspace().getRoot().findMember(new Path(path));
-						if(workspaceResource instanceof IFile){
-							workspaceResource = ((IFile)workspaceResource).getParent();
+						IResource workspaceResource = ResourcesPlugin.getWorkspace().getRoot().findMember(
+								new Path(path));
+						if (workspaceResource instanceof IFile) {
+							workspaceResource = ((IFile) workspaceResource).getParent();
 						}
-						wizard.setInitSelections(new Object[]{workspaceResource});
+						wizard.setInitSelections(new Object[] { workspaceResource });
 					}
 				}
 				wizard.setViewerFilters(getFileDialogViewerFilters());
@@ -202,11 +202,8 @@ public class PropertyUICreator implements IPropertyUICreator {
 	public AttributeFieldEditPart createSelectorFieldEditor(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 			ISmooksModelProvider formEditor, IEditorPart editorPart) {
-		SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
-		if (ext != null) {
-			return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, ext, editorPart);
-		}
-		return null;
+		// SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
+		return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, editorPart);
 	}
 
 	public boolean isJavaTypeFeature(EAttribute attribute) {
@@ -217,7 +214,8 @@ public class PropertyUICreator implements IPropertyUICreator {
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 			ISmooksModelProvider formEditor) {
 		if (model instanceof EObject)
-			return SmooksUIUtils.createJavaTypeSearchFieldEditor(parent, toolkit, propertyDescriptor, (EObject) model , formEditor);
+			return SmooksUIUtils.createJavaTypeSearchFieldEditor(parent, toolkit, propertyDescriptor, (EObject) model,
+					formEditor);
 		return null;
 	}
 
@@ -422,7 +420,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 			name += "*";
 		}
 		AttributeFieldEditPart editPart1 = SmooksUIUtils.createSelectorFieldEditor(name, toolkit, container,
-				createOnElementFeature, model, formEditor.getSmooksGraphicsExt(), editorPart);
+				createOnElementFeature, model, editorPart);
 		editPart1.setAttribute(createOnElementFeature.getFeature(model));
 
 		String namespace = "Namespace";

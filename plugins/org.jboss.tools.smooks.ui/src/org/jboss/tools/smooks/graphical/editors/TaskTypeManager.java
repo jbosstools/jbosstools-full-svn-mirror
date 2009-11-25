@@ -15,14 +15,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
+import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.graphics.ext.TaskType;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.xsl.Xsl;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart
@@ -129,13 +128,7 @@ public class TaskTypeManager {
 
 	private static boolean canRemove(AbstractResourceConfig abstractResourceConfig, TaskType taskType) {
 		if (abstractResourceConfig instanceof Freemarker) {
-			String refid = SmooksModelUtils.getParamValue(taskType, SmooksModelUtils.KEY_TASK_ID_REF);
-			String id = SmooksModelUtils.getParamValue(((Freemarker) abstractResourceConfig).getParam(),
-					SmooksModelUtils.KEY_OBJECT_ID);
-			if (refid != null && id != null && id.equals(refid)) {
-				return true;
-			}
-			return false;
+			return taskType.inTheTask(abstractResourceConfig);
 		}
 		return true;
 	}

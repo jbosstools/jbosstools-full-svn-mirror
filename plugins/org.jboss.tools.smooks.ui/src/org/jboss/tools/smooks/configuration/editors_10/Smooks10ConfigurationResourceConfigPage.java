@@ -20,10 +20,10 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.SmooksConfigurationFormPage;
 import org.jboss.tools.smooks.configuration.editors.SmooksMasterDetailBlock;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.ConditionsType;
 import org.jboss.tools.smooks.model.smooks.ParamsType;
@@ -95,8 +95,9 @@ public class Smooks10ConfigurationResourceConfigPage extends SmooksConfiguration
 					if (obj instanceof org.jboss.tools.smooks10.model.smooks.ProfilesType) {
 						return false;
 					}
-					SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
-					String version = extType.getPlatformVersion();
+					// SmooksGraphicsExtType extType =
+					// getSmooksGraphicsExtType();
+					String version = SmooksConstants.VERSION_1_0;
 					if (SmooksUIUtils.isUnSupportElement(version, (EObject) obj)) {
 						return false;
 					}

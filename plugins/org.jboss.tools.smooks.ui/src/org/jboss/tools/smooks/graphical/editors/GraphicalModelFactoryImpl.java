@@ -18,7 +18,6 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.ExpressionType;
 import org.jboss.tools.smooks.model.javabean.ValueType;
@@ -119,10 +118,9 @@ public class GraphicalModelFactoryImpl implements GraphicalModelFactory {
 		}
 		return null;
 	}
-	
-	protected boolean canCreateGraphicalModel(Object model,ISmooksModelProvider provider){
-		SmooksGraphicsExtType extType = provider.getSmooksGraphicsExt();
-		String version = extType.getPlatformVersion();
+
+	protected boolean canCreateGraphicalModel(Object model, ISmooksModelProvider provider) {
+		String version = provider.getPlatformVersion();
 		if (SmooksUIUtils.isUnSupportElement(version, (EObject) model)) {
 			return false;
 		}
@@ -131,8 +129,7 @@ public class GraphicalModelFactoryImpl implements GraphicalModelFactory {
 
 	public Object createGraphicalModel(Object model, ISmooksModelProvider provider) {
 		AbstractSmooksGraphicalModel graphModel = null;
-		SmooksGraphicsExtType extType = provider.getSmooksGraphicsExt();
-		String version = extType.getPlatformVersion();
+		String version = provider.getPlatformVersion();
 
 		if (model instanceof RuleType || model instanceof RuleBase || model instanceof RuleBasesType) {
 			return null;
@@ -141,19 +138,22 @@ public class GraphicalModelFactoryImpl implements GraphicalModelFactory {
 		if (SmooksUIUtils.isUnSupportElement(version, (EObject) model)) {
 			return null;
 		}
-//		if (model instanceof BindingsType || model instanceof BeanType) {
-//			graphModel = new JavaBeanGraphModel(model, contentProvider, labelProvider, provider);
-//			((JavaBeanGraphModel) graphModel).setHeaderVisable(true);
-//		}
-//		if (model instanceof Xsl) {
-//			graphModel = new XSLTemplateGraphicalModel(model, new XSLTemplateContentProvider(contentProvider),
-//					new XSLLabelProvider(labelProvider), provider);
-//			((TreeContainerModel) graphModel).setHeaderVisable(true);
-//		}
-//		if (graphModel == null && model instanceof AbstractResourceConfig) {
-//			graphModel = new ResourceConfigGraphModelImpl(model, contentProvider, labelProvider, provider);
-//			((ResourceConfigGraphModelImpl) graphModel).setHeaderVisable(true);
-//		}
+		// if (model instanceof BindingsType || model instanceof BeanType) {
+		// graphModel = new JavaBeanGraphModel(model, contentProvider,
+		// labelProvider, provider);
+		// ((JavaBeanGraphModel) graphModel).setHeaderVisable(true);
+		// }
+		// if (model instanceof Xsl) {
+		// graphModel = new XSLTemplateGraphicalModel(model, new
+		// XSLTemplateContentProvider(contentProvider),
+		// new XSLLabelProvider(labelProvider), provider);
+		// ((TreeContainerModel) graphModel).setHeaderVisable(true);
+		// }
+		// if (graphModel == null && model instanceof AbstractResourceConfig) {
+		// graphModel = new ResourceConfigGraphModelImpl(model, contentProvider,
+		// labelProvider, provider);
+		// ((ResourceConfigGraphModelImpl) graphModel).setHeaderVisable(true);
+		// }
 
 		return graphModel;
 	}

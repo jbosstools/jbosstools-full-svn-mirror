@@ -24,7 +24,6 @@ import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -55,10 +54,10 @@ public class FreemarkerTemplateGraphicalModel extends AbstractResourceConfigGrap
 
 	private void initChildrenNodes() {
 		Freemarker freemarker = (Freemarker) getData();
-		Template template = freemarker.getTemplate();
-		if (template != null) {
-			String[] fields = SmooksModelUtils.getFreemarkerCSVFileds(template);
-			String type = SmooksModelUtils.getTemplateType(template);
+		// Template template = freemarker.getTemplate();
+		if (freemarker != null) {
+			String[] fields = SmooksModelUtils.getFreemarkerCSVFileds(freemarker);
+			String type = SmooksModelUtils.getTemplateType(freemarker);
 			if (SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV.equals(type)) {
 				if (fields != null) {
 					CSVNodeModel recordModel = new CSVNodeModel();

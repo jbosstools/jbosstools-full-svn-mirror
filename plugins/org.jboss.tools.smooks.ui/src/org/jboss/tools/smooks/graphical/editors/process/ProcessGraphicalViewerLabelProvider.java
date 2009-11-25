@@ -27,7 +27,6 @@ import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.graphical.editors.SmooksProcessGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager.TaskTypeDescriptor;
-import org.jboss.tools.smooks.model.graphics.ext.TaskType;
 
 /**
  * @author Dart

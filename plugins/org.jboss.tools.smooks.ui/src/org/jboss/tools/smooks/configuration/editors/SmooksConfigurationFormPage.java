@@ -12,12 +12,10 @@ package org.jboss.tools.smooks.configuration.editors;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Properties;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -27,19 +25,14 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelectionWizard;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
-import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 1, 2009
  */
-public class SmooksConfigurationFormPage extends FormPage implements ISmooksModelValidateListener,
-		ISmooksGraphChangeListener, ISourceSynchronizeListener {
+public class SmooksConfigurationFormPage extends FormPage implements ISmooksModelValidateListener, ISourceSynchronizeListener {
 
 	private SmooksMasterDetailBlock masterDetailBlock = null;
 
@@ -107,9 +100,17 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 		return new ViewerFilter[] { new TextEObjectModelFilter() };
 	}
 
-	protected SmooksGraphicsExtType getSmooksGraphicsExtType() {
-		SmooksGraphicsExtType extType = ((ISmooksModelProvider) getEditor()).getSmooksGraphicsExt();
-		return extType;
+//	protected SmooksGraphicsExtType getSmooksGraphicsExtType() {
+//		SmooksGraphicsExtType extType = ((ISmooksModelProvider) getEditor()).getSmooksGraphicsExt();
+//		return extType;
+//	}
+	
+	@Override
+	public Object getAdapter(Class clazz){
+		if(clazz == ISmooksModelProvider.class){
+			return (ISmooksModelProvider)getEditor();
+		}
+		return super.getAdapter(clazz);
 	}
 
 	public void setSmooksModel(Object model) {
@@ -119,20 +120,20 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 	}
 
 	protected void showInputDataWizard() {
-		StructuredDataSelectionWizard wizard = new StructuredDataSelectionWizard();
-		wizard.setInput(getEditorInput());
-		wizard.setSite(getEditorSite());
-		wizard.setForcePreviousAndNextButtons(true);
-		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(
-				getEditorSite().getShell(), wizard, getSmooksGraphicsExtType());
-		if (dialog.show() == Dialog.OK) {
-			SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
-			String type = dialog.getType();
-			String path = dialog.getPath();
-			Properties pros = dialog.getProperties();
-			SmooksUIUtils.recordInputDataInfomation(((SmooksMultiFormEditor) getEditor()).getEditingDomain(), null,
-					extType, type, path, pros);
-		}
+//		StructuredDataSelectionWizard wizard = new StructuredDataSelectionWizard();
+//		wizard.setInput(getEditorInput());
+//		wizard.setSite(getEditorSite());
+//		wizard.setForcePreviousAndNextButtons(true);
+//		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(
+//				getEditorSite().getShell(), wizard, getSmooksGraphicsExtType());
+//		if (dialog.show() == Dialog.OK) {
+//			SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
+//			String type = dialog.getType();
+//			String path = dialog.getPath();
+//			Properties pros = dialog.getProperties();
+//			SmooksUIUtils.recordInputDataInfomation(((SmooksMultiFormEditor) getEditor()).getEditingDomain(), null,
+//					extType, type, path, pros);
+//		}
 	}
 
 	public void setSelectionToViewer(final Collection<?> collection) {
@@ -168,17 +169,17 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksMode
 
 	}
 
-	public void inputTypeChanged(SmooksGraphicsExtType extType) {
-	}
+//	public void inputTypeChanged(SmooksGraphicsExtType extType) {
+//	}
 
 	public void sourceChange(Object model) {
 		this.setSmooksModel(model);
 	}
 
-	public void graphChanged(SmooksGraphicsExtType extType) {
-		// TODO Auto-generated method stub
-
-	}
+//	public void graphChanged(SmooksGraphicsExtType extType) {
+//		// TODO Auto-generated method stub
+//
+//	}
 
 	public void graphPropertyChange(EStructuralFeature featre, Object value) {
 		// TODO Auto-generated method stub

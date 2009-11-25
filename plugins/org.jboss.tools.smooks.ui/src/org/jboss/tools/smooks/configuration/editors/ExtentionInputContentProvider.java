@@ -10,35 +10,49 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors;
 
+import java.util.List;
+
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 
 /**
- * @author Dart (dpeng@redhat.com)<p>
- * Apr 12, 2009
+ * @author Dart (dpeng@redhat.com)
+ *         <p>
+ *         Apr 12, 2009
  */
 public class ExtentionInputContentProvider implements IStructuredContentProvider {
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java
+	 * .lang.Object)
 	 */
 	public Object[] getElements(Object inputElement) {
-		if(inputElement instanceof SmooksGraphicsExtType){
-			return ((SmooksGraphicsExtType)inputElement).getInput().toArray();
+		if (inputElement instanceof List<?>) {
+			return ((List<?>) inputElement).toArray();
+			// return
+			// ((SmooksGraphicsExtType)inputElement).getInput().toArray();
 		}
-		return new Object[]{};
+		return new Object[] {};
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
 	 */
 	public void dispose() {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface
+	 * .viewers.Viewer, java.lang.Object, java.lang.Object)
 	 */
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		// TODO Auto-generated method stub

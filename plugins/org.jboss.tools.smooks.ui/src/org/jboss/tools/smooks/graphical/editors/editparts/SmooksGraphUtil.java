@@ -22,8 +22,6 @@ import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.graphics.ext.FigureType;
-import org.jboss.tools.smooks.model.graphics.ext.GraphType;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.xsl.Xsl;
@@ -75,17 +73,17 @@ public class SmooksGraphUtil {
 		return null;
 	}
 	
-
-	public static FigureType findFigureType(GraphType graph, String figureId) {
-		List<FigureType> list = graph.getFigure();
-		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-			FigureType figureType = (FigureType) iterator.next();
-			if (figureId.equals(figureType.getId())) {
-				return figureType;
-			}
-		}
-		return null;
-	}
+//
+//	public static FigureType findFigureType(GraphType graph, String figureId) {
+//		List<FigureType> list = graph.getFigure();
+//		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+//			FigureType figureType = (FigureType) iterator.next();
+//			if (figureId.equals(figureType.getId())) {
+//				return figureType;
+//			}
+//		}
+//		return null;
+//	}
 
 
 	public static String generateFigureID(AbstractSmooksGraphicalModel model) {

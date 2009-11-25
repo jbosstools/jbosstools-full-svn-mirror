@@ -28,7 +28,6 @@ import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
 import org.jboss.tools.smooks.model.csv.CsvReader;
 import org.jboss.tools.smooks.model.csv12.CSV12Reader;
-import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.milyn.Smooks;
@@ -57,9 +56,9 @@ public class CSVDataParser {
 
 	public static final String RECORD_NAME = "recordName";
 
-	public TagList parseCSV(String filePath, InputType inputType, SmooksResourceListType resourceList)
+	public TagList parseCSV(String filePath, SmooksResourceListType resourceList)
 			throws FileNotFoundException, DocumentException, InvocationTargetException, ParserConfigurationException {
-		return parseCSV(new FileInputStream(SmooksUIUtils.parseFilePath(filePath)), inputType, resourceList);
+		return parseCSV(new FileInputStream(SmooksUIUtils.parseFilePath(filePath)), resourceList);
 	}
 
 	public TagList parseCSV(InputStream inputStream, Object readerObj) throws ParserConfigurationException,
@@ -95,7 +94,7 @@ public class CSVDataParser {
 		return this.parseCSV(inputStream, fields, rootName, recordName, separator, quoteChar, skiplines, encoding);
 	}
 
-	public TagList parseCSV(InputStream stream, InputType inputType, SmooksResourceListType resourceList)
+	public TagList parseCSV(InputStream stream, SmooksResourceListType resourceList)
 			throws DocumentException, ParserConfigurationException {
 		List<AbstractReader> readers = resourceList.getAbstractReader();
 		int count = 0;

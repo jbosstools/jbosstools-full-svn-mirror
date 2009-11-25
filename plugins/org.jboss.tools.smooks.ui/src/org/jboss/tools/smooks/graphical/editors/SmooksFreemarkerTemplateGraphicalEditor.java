@@ -52,9 +52,9 @@ import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerConte
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerLabelProvider;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
+import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.Template;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.ValueType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
@@ -256,8 +256,8 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 				if (freemarkerGraphModel instanceof FreemarkerTemplateGraphicalModel) {
 					Freemarker freemarker = (Freemarker) AdapterFactoryEditingDomain.unwrap(freemarkerGraphModel
 							.getData());
-					Template template = freemarker.getTemplate();
-					fillMapping(template);
+					// Template template = freemarker.getTemplate();
+					fillMapping(freemarker);
 				}
 				AbstractSmooksGraphicalModel sourceNode = null;
 				AbstractSmooksGraphicalModel targetNode = model;
@@ -365,22 +365,20 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 			return null;
 		}
 
-		private void fillMapping(Template template) {
+		private void fillMapping(Freemarker freemarker) {
 			if (mappingList == null) {
 				mappingList = new ArrayList<Mapping>();
 			} else {
 				mappingList.clear();
 			}
+			Template template = freemarker.getTemplate();
 			String contents = SmooksModelUtils.getAnyTypeCDATA(template);
-			char seprator = SmooksModelUtils.getFreemarkerCSVSeperator(template);
-			char quote = SmooksModelUtils.getFreemarkerCSVQuote(template);
-			String[] fields = SmooksModelUtils.getFreemarkerCSVFileds(template);
-			SmooksGraphicsExtType ext = smooksModelProvider.getSmooksGraphicsExt();
+			char seprator = SmooksModelUtils.getFreemarkerCSVSeperator(freemarker);
+			char quote = SmooksModelUtils.getFreemarkerCSVQuote(freemarker);
+			String[] fields = SmooksModelUtils.getFreemarkerCSVFileds(freemarker);
 			try {
-				if (ext != null) {
-					if (SmooksConstants.VERSION_1_2.equals(ext.getPlatformVersion())) {
-						contents = SmooksModelUtils.getAnyTypeComment(template);
-					}
+				if (SmooksConstants.VERSION_1_2.equals(smooksModelProvider.getPlatformVersion())) {
+					contents = SmooksModelUtils.getAnyTypeComment(template);
 				}
 				CSVModelBuilder modelBuilder = new CSVModelBuilder(fields);
 				Document model = modelBuilder.buildModel();
@@ -428,18 +426,14 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 				ILabelProvider labelProvider = createLabelProvider(editingDomain.getAdapterFactory());
 
 				if (model instanceof Freemarker) {
-					Template template = ((Freemarker) model).getTemplate();
-					String messageType = SmooksModelUtils.getTemplateType(template);
+					// Template template = ((Freemarker) model).getTemplate();
+					String messageType = SmooksModelUtils.getTemplateType((Freemarker) model);
 					if (messageType != null && SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV.equals(messageType)) {
-						String id = SmooksModelUtils.getParamValue(((Freemarker) model).getParam(),
-								SmooksModelUtils.KEY_OBJECT_ID);
-						String refid = SmooksModelUtils.getParamValue(getTaskType(), SmooksModelUtils.KEY_TASK_ID_REF);
-
-						if (id != null && refid != null && id.equals(refid)) {
+						TaskType taskType = getTaskType();
+						if (taskType.inTheTask(model)) {
 							graphModel = new FreemarkerTemplateGraphicalModel(model, new FreemarkerContentProvider(
 									contentProvider), new FreemarkerLabelProvider(labelProvider), provider);
 							((TreeContainerModel) graphModel).setHeaderVisable(true);
-
 							((FreemarkerTemplateGraphicalModel) graphModel)
 									.setTemplateType(FreemarkerTemplateGraphicalModel.TYPE_CSV);
 						}

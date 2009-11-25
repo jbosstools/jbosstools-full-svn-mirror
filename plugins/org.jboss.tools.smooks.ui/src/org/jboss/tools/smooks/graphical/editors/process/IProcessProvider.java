@@ -8,18 +8,13 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors;
+package org.jboss.tools.smooks.graphical.editors.process;
 
-import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 
 /**
  * @author Dart
  *
  */
-public interface ITaskNodeProvider {
-	
-	public TaskType getTaskType();
-	
-	public void setTaskType(TaskType taskType);
-	
+public interface IProcessProvider {
+	ProcessType getProcess();
 }

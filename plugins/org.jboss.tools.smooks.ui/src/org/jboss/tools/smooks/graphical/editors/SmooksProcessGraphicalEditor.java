@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EventObject;
@@ -25,7 +27,6 @@ import org.eclipse.emf.common.command.CommandWrapper;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
@@ -56,10 +57,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
-import org.eclipse.ui.forms.events.HyperlinkEvent;
-import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
@@ -71,6 +69,7 @@ import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.HorizontalTreeLayoutAlgorithm;
 import org.jboss.tools.smooks.configuration.editors.SmooksReaderFormPage;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
@@ -79,22 +78,24 @@ import org.jboss.tools.smooks.graphical.actions.AbstractProcessGraphAction;
 import org.jboss.tools.smooks.graphical.actions.AddNextTaskNodeAction;
 import org.jboss.tools.smooks.graphical.actions.DeleteTaskNodeAction;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager.TaskTypeDescriptor;
+import org.jboss.tools.smooks.graphical.editors.process.IProcessProvider;
+import org.jboss.tools.smooks.graphical.editors.process.ProcessFactory;
 import org.jboss.tools.smooks.graphical.editors.process.ProcessGraphicalViewerLabelProvider;
+import org.jboss.tools.smooks.graphical.editors.process.ProcessTaskAnalyzer;
+import org.jboss.tools.smooks.graphical.editors.process.ProcessType;
 import org.jboss.tools.smooks.graphical.editors.process.TaskNodeFigure;
-import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
-import org.jboss.tools.smooks.model.graphics.ext.ProcessType;
-import org.jboss.tools.smooks.model.graphics.ext.ProcessesType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks.model.graphics.ext.TaskType;
+import org.jboss.tools.smooks.graphical.editors.process.TaskType;
+import org.jboss.tools.smooks.graphical.editors.process.TemplateAppyTaskNode;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
  * @author Dart
  * 
  */
 public class SmooksProcessGraphicalEditor extends FormPage implements ISelectionChangedListener,
-		ISourceSynchronizeListener, ISmooksGraphChangeListener, IPropertyListener, ISmooksModelValidateListener {
+		ISourceSynchronizeListener, IPropertyListener, ISmooksModelValidateListener,
+		IProcessProvider, PropertyChangeListener {
 
 	private List<IAction> processPanelActions = new ArrayList<IAction>();
 
@@ -118,6 +119,10 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 	protected boolean needupdatewhenshow = true;
 
+	private ProcessType process;
+
+	private Map<Object, String> smooksModelIdMap = new HashMap<Object, String>();
+
 	public SmooksProcessGraphicalEditor(FormEditor editor, String id, String title, ISmooksModelProvider provider) {
 		super(editor, id, title);
 		this.smooksModelProvider = provider;
@@ -126,6 +131,13 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	public SmooksProcessGraphicalEditor(String id, String title, ISmooksModelProvider provider) {
 		super(id, title);
 		this.smooksModelProvider = provider;
+	}
+
+	/**
+	 * @return the process
+	 */
+	public ProcessType getProcess() {
+		return process;
 	}
 
 	protected void createProcessGraphicalPanel(Composite parent) {
@@ -163,23 +175,34 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	protected void initProcessGraphicalViewer() {
-		SmooksGraphicsExtType ext = this.smooksModelProvider.getSmooksGraphicsExt();
-		if (ext == null)
-			return;
-		ProcessesType processes = ext.getProcesses();
+		// SmooksGraphicsExtType ext =
+		// this.smooksModelProvider.getSmooksGraphicsExt();
+		// if (ext == null)
+		// return;
+		// ProcessesType processes = ext.getProcesses();
 		boolean disableProcessViewer = false;
-		if (processes != null) {
-			ProcessType process = processes.getProcess();
-			if (process != null) {
-				getProcessGraphViewer().getControl().setBackground(
-						getManagedForm().getToolkit().getColors().getBackground());
-				getProcessGraphViewer().getControl().setEnabled(true);
-				getProcessGraphViewer().setInput(process);
-			} else {
-				disableProcessViewer = true;
-			}
-		} else {
-			disableProcessViewer = true;
+		// if (processes != null) {
+		// ProcessType process = processes.getProcess();
+		// if (process != null) {
+		// getProcessGraphViewer().getControl().setBackground(
+		// getManagedForm().getToolkit().getColors().getBackground());
+		// getProcessGraphViewer().getControl().setEnabled(true);
+		// getProcessGraphViewer().setInput(process);
+		// } else {
+		// disableProcessViewer = true;
+		// }
+		// } else {
+		// disableProcessViewer = true;
+		// }
+		if (process == null) {
+			process = ProcessFactory.eINSTANCE.createProcessType();
+			process.addPropertyChangeListener(this);
+		}
+		ProcessTaskAnalyzer analyzer = new ProcessTaskAnalyzer();
+		analyzer.analyzeTaskNode(process, getSmooksResourceListType());
+
+		if (getProcessGraphViewer() != null) {
+			getProcessGraphViewer().setInput(process);
 		}
 		if (disableProcessViewer) {
 			getProcessGraphViewer().getControl().setBackground(
@@ -357,17 +380,22 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		manager.addMenuListener(new IMenuListener() {
 
 			public void menuAboutToShow(IMenuManager manager) {
-				manager.removeAll();
-				if (needupdatewhenshow) {
-					updateProcessActions(processGraphViewer.getSelection());
-					fillProcessMenu(manager);
-				} else {
-					for (Iterator<?> iterator = processPanelActions.iterator(); iterator.hasNext();) {
-						IAction action = (IAction) iterator.next();
-						if (action.isEnabled() && !(action instanceof DeleteTaskNodeAction)) {
-							manager.add(action);
+				try {
+					manager.removeAll();
+					if (needupdatewhenshow) {
+						updateProcessActions(processGraphViewer.getSelection());
+						fillProcessMenu(manager);
+					} else {
+						for (Iterator<?> iterator = processPanelActions.iterator(); iterator.hasNext();) {
+							IAction action = (IAction) iterator.next();
+							if (action.isEnabled() && !(action instanceof DeleteTaskNodeAction)) {
+								manager.add(action);
+							}
 						}
 					}
+					needupdatewhenshow = true;
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 				needupdatewhenshow = true;
 			}
@@ -438,7 +466,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		//
 		// fillPreTaskMenu(addPreTaskMenuManager);
 
-		DeleteTaskNodeAction deleteAction = new DeleteTaskNodeAction(smooksModelProvider, this);
+		DeleteTaskNodeAction deleteAction = new DeleteTaskNodeAction(this, smooksModelProvider, this);
 		manager.add(deleteAction);
 
 		this.processPanelActions.add(deleteAction);
@@ -677,12 +705,12 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		});
 	}
 
-	public SmooksGraphicsExtType getSmooksGraphicsExtType() {
-		if (smooksModelProvider != null) {
-			return smooksModelProvider.getSmooksGraphicsExt();
-		}
-		return null;
-	}
+//	public SmooksGraphicsExtType getSmooksGraphicsExtType() {
+//		if (smooksModelProvider != null) {
+//			return smooksModelProvider.getSmooksGraphicsExt();
+//		}
+//		return null;
+//	}
 
 	/**
 	 * @return the smooksModelProvider
@@ -738,7 +766,14 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		}
 	}
 
-	protected IEditorPart createEditorPart(String taskID) {
+	protected SmooksResourceListType getSmooksResourceListType() {
+		if (smooksModelProvider != null) {
+			return SmooksUIUtils.getSmooks11ResourceListType(smooksModelProvider.getSmooksModel());
+		}
+		return null;
+	}
+
+	protected IEditorPart createEditorPart(Object taskID) {
 		if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE)) {
 			SmooksFreemarkerTemplateGraphicalEditor freemarkerPart = new SmooksFreemarkerTemplateGraphicalEditor(
 					smooksModelProvider);
@@ -756,7 +791,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		return null;
 	}
 
-	protected boolean isSingltonEditor(String taskID) {
+	protected boolean isSingltonEditor(Object taskID) {
 		if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE)) {
 			return false;
 		}
@@ -767,6 +802,9 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	public Object getAdapter(Class type) {
 		if (type == ISmooksModelProvider.class) {
 			return this.smooksModelProvider;
+		}
+		if (type == IProcessProvider.class) {
+			return this;
 		}
 		return super.getAdapter(type);
 	}
@@ -812,40 +850,59 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 	protected Control createTaskPanel(Composite parent, FormToolkit toolkit, String taskID) {
 
-		if (taskID == null)
-			return null;
+		// if (taskID == null)
+		// return null;
+		//
+		// if (taskID.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
+		// return null;
+		// }
+		//
+		// if (taskID.equals(TaskTypeManager.TASK_ID_INPUT)) {
+		// GridLayout gl = new GridLayout();
+		// gl.numColumns = 2;
+		// parent.setLayout(gl);
+		// toolkit.createLabel(parent,
+		// "Click the link to switch to the \"Input\" tab to configurate the Smooks Input : ");
+		// Hyperlink link = toolkit.createHyperlink(parent,
+		// "Go to the Input page", SWT.NONE);
+		// link.addHyperlinkListener(new IHyperlinkListener() {
+		//
+		// public void linkExited(HyperlinkEvent e) {
+		//
+		// }
+		//
+		// public void linkEntered(HyperlinkEvent e) {
+		//
+		// }
+		//
+		// public void linkActivated(HyperlinkEvent e) {
+		// if (smooksModelProvider instanceof AbstractSmooksFormEditor) {
+		// ((AbstractSmooksFormEditor)
+		// smooksModelProvider).setActivePage("reader_page");
+		// }
+		// }
+		// });
+		//
+		// return parent;
+		// }
 
-		if (taskID.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
-			return null;
+		return null;
+	}
+
+	protected String generateTaskSpecailID(TaskType task) {
+		if (task instanceof TemplateAppyTaskNode) {
+			if (!((TemplateAppyTaskNode) task).getSmooksModel().isEmpty()
+					&& ((TemplateAppyTaskNode) task).getSmooksModel().size() == 1) {
+				Object freemarker = ((TemplateAppyTaskNode) task).getSmooksModel().get(0);
+				String taskID = smooksModelIdMap.get(freemarker);
+				if (taskID == null) {
+					String tempstamp = String.valueOf(System.currentTimeMillis());
+					taskID = "freemarker" + "_" + tempstamp;
+					this.smooksModelIdMap.put(freemarker, taskID);
+				}
+				return taskID;
+			}
 		}
-
-		if (taskID.equals(TaskTypeManager.TASK_ID_INPUT)) {
-			GridLayout gl = new GridLayout();
-			gl.numColumns = 2;
-			parent.setLayout(gl);
-			toolkit.createLabel(parent,
-					"Click the link to switch to the \"Input\" tab to configurate the Smooks Input : ");
-			Hyperlink link = toolkit.createHyperlink(parent, "Go to the Input page", SWT.NONE);
-			link.addHyperlinkListener(new IHyperlinkListener() {
-
-				public void linkExited(HyperlinkEvent e) {
-
-				}
-
-				public void linkEntered(HyperlinkEvent e) {
-
-				}
-
-				public void linkActivated(HyperlinkEvent e) {
-					if (smooksModelProvider instanceof AbstractSmooksFormEditor) {
-						((AbstractSmooksFormEditor) smooksModelProvider).setActivePage("reader_page");
-					}
-				}
-			});
-
-			return parent;
-		}
-
 		return null;
 	}
 
@@ -856,9 +913,9 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		if (model instanceof TaskType) {
 			String id = ((TaskType) model).getId();
 			if (!isSingltonEditor(id)) {
-				String idref = SmooksModelUtils.getParamValue((TaskType) model, "idref");
+				String idref = generateTaskSpecailID((TaskType) model);
 				if (idref != null) {
-					idref = id + "_" + idref;
+//					idref = id + "_" + idref;
 					if (getRegisteTaskPage(idref) == null) {
 						IEditorPart editor = createEditorPart(id);
 						this.registeTaskDetailsPage(editor, idref);
@@ -881,12 +938,12 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 							if (nodeProvider != null) {
 								nodeProvider.setTaskType((TaskType) model);
 							}
-
 							createTaskPage((IEditorPart) page, parent);
 							pageBook.showPage(id);
 							parent.setData(page);
 
-						} catch (PartInitException e) {
+						} catch (Throwable e) {
+							e.printStackTrace();
 							pageBook.removePage(id);
 							pageBook.showPage(emptyKey);
 						}
@@ -900,6 +957,12 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 						}
 					}
 				} else {
+					Object page = getRegisteTaskPage(id);
+					ITaskNodeProvider nodeProvider = (ITaskNodeProvider) ((IEditorPart) page)
+							.getAdapter(ITaskNodeProvider.class);
+					if (nodeProvider != null) {
+						nodeProvider.setTaskType((TaskType) model);
+					}
 					pageBook.showPage(id);
 				}
 			}
@@ -934,41 +997,77 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		Collection<Object> editors = registedTaskPages.values();
 		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
 			Object object = (Object) iterator.next();
-			if (object instanceof ISmooksGraphChangeListener) {
-				((ISourceSynchronizeListener) object).sourceChange(model);
+			if (object instanceof IEditorPart) {
+				((IEditorPart) object).removePropertyListener(this);
+				if (((IEditorPart) object).getEditorSite() == null) {
+					continue;
+				}
+				((IEditorPart) object).dispose();
 			}
 		}
+		registedTaskPages.clear();
+
+		if (pageBook != null) {
+			List<TaskTypeDescriptor> tasks = TaskTypeManager.getAllTaskList();
+			for (Iterator<?> iterator = tasks.iterator(); iterator.hasNext();) {
+				TaskTypeDescriptor taskTypeDescriptor = (TaskTypeDescriptor) iterator.next();
+				pageBook.removePage(taskTypeDescriptor.getId(), true);
+			}
+			for (Iterator<String> iterator = smooksModelIdMap.values().iterator(); iterator.hasNext();) {
+				String id = (String) iterator.next();
+				pageBook.removePage(id, true);
+			}
+		}
+
+		List<TaskTypeDescriptor> tasks = TaskTypeManager.getAllTaskList();
+		for (Iterator<?> iterator = tasks.iterator(); iterator.hasNext();) {
+			TaskTypeDescriptor taskTypeDescriptor = (TaskTypeDescriptor) iterator.next();
+			IEditorPart part = createEditorPart(taskTypeDescriptor.getId());
+			if (part != null) {
+				this.registeTaskDetailsPage(part, taskTypeDescriptor.getId());
+			}
+		}
+
+		// registedTaskPages.clear();
+		// Collection<Object> editors = registedTaskPages.values();
+		// for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();)
+		// {
+		// Object object = (Object) iterator.next();
+		// if (object instanceof ISmooksGraphChangeListener) {
+		// ((ISourceSynchronizeListener) object).sourceChange(model);
+		// }
+		// }
 	}
 
-	public void graphChanged(SmooksGraphicsExtType extType) {
-		Collection<Object> editors = registedTaskPages.values();
-		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
-			Object object = (Object) iterator.next();
-			if (object instanceof ISmooksGraphChangeListener) {
-				((ISmooksGraphChangeListener) object).graphChanged(extType);
-			}
-		}
-	}
+//	public void graphChanged(SmooksGraphicsExtType extType) {
+//		Collection<Object> editors = registedTaskPages.values();
+//		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
+//			Object object = (Object) iterator.next();
+//			if (object instanceof ISmooksGraphChangeListener) {
+//				((ISmooksGraphChangeListener) object).graphChanged(extType);
+//			}
+//		}
+//	}
 
-	public void graphPropertyChange(EStructuralFeature featre, Object value) {
-		Collection<Object> editors = registedTaskPages.values();
-		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
-			Object object = (Object) iterator.next();
-			if (object instanceof ISmooksGraphChangeListener) {
-				((ISmooksGraphChangeListener) object).graphPropertyChange(featre, value);
-			}
-		}
-	}
+//	public void graphPropertyChange(EStructuralFeature featre, Object value) {
+//		Collection<Object> editors = registedTaskPages.values();
+//		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
+//			Object object = (Object) iterator.next();
+//			if (object instanceof ISmooksGraphChangeListener) {
+//				((ISmooksGraphChangeListener) object).graphPropertyChange(featre, value);
+//			}
+//		}
+//	}
 
-	public void inputTypeChanged(SmooksGraphicsExtType extType) {
-		Collection<Object> editors = registedTaskPages.values();
-		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
-			Object object = (Object) iterator.next();
-			if (object instanceof ISmooksGraphChangeListener) {
-				((ISmooksGraphChangeListener) object).inputTypeChanged(extType);
-			}
-		}
-	}
+//	public void inputTypeChanged(SmooksGraphicsExtType extType) {
+//		Collection<Object> editors = registedTaskPages.values();
+//		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
+//			Object object = (Object) iterator.next();
+//			if (object instanceof ISmooksGraphChangeListener) {
+//				((ISmooksGraphChangeListener) object).inputTypeChanged(extType);
+//			}
+//		}
+//	}
 
 	public void propertyChanged(Object source, int propId) {
 		this.firePropertyChange(propId);
@@ -996,7 +1095,6 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 			}
 		}
 		registedTaskPages.clear();
-		registedTaskPages = null;
 		super.dispose();
 	}
 
@@ -1020,5 +1118,15 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 			}
 		}
 
+	}
+
+	public void propertyChange(PropertyChangeEvent evt) {
+		String name = evt.getPropertyName();
+		if (ProcessType.PRO_ADD_CHILD.equals(name) || ProcessType.PRO_REMOVE_CHILD.equals(name)) {
+			if (getProcessGraphViewer() != null) {
+				getProcessGraphViewer().refresh();
+				getProcessGraphViewer().applyLayout();
+			}
+		}
 	}
 }

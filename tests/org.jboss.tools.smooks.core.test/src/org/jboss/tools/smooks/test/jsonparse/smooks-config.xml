@@ -5,6 +5,8 @@
 	xmlns:g="http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd">
 	<params>
 		<param name="stream.filter.type">SAX</param>
+		<param name="inputType">input.json</param>
+		<param name="input.json" type="input.type.actived">Workspace://test/src/json.jsn</param>
 	</params>
 	<abstract-reader xsi:type="json:reader"
 		arrayElementName="element" encoding="UTF-8" keyWhitspaceReplacement="-"

@@ -61,7 +61,7 @@ public class TemplateUICreator extends PropertyUICreator {
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
 
-		String version = formEditor.getSmooksGraphicsExt().getPlatformVersion();
+		String version = formEditor.getPlatformVersion();
 
 		OpenEditorEditInnerContentsAction openCDATAEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,
 				(AnyType) model, SmooksUIUtils.VALUE_TYPE_CDATA, "flt");

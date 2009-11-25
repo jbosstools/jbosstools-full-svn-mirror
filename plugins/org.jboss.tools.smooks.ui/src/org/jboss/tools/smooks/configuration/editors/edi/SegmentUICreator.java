@@ -62,9 +62,9 @@ public class SegmentUICreator extends PropertyUICreator {
 //		if (feature == MEdiPackage.Literals.MAPPING_NODE__XMLTAG) {
 //			return true;
 //		}
-		if (feature == MEdiPackage.Literals.SEGMENT__SEGCODE) {
-			return true;
-		}
+//		if (feature == MEdiPackage.Literals.SEGMENT__SEGCODE) {
+//			return true;
+//		}
 		return super.ignoreProperty(feature);
 	}
 

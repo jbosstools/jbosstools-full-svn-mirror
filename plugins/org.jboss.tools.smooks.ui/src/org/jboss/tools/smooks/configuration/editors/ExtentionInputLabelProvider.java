@@ -17,8 +17,8 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
-import org.jboss.tools.smooks.model.graphics.ext.InputType;
-import org.jboss.tools.smooks.model.graphics.ext.ParamType;
+import org.jboss.tools.smooks.configuration.editors.input.InputParameter;
+import org.jboss.tools.smooks.configuration.editors.input.InputType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -68,16 +68,16 @@ public class ExtentionInputLabelProvider extends LabelProvider implements ITable
 	 */
 	public String getColumnText(Object element, int columnIndex) {
 		if (element instanceof InputType) {
-			String value = SmooksModelUtils.getInputPath((InputType) element);
+			String value = ((InputType) element).getPath();
 			if (value == null)
 				value = "";
 			String extValue = "";
-			List<ParamType> paramers = ((InputType) element).getParam();
+			List<InputParameter> paramers = ((InputType) element).getParameters();
 			for (Iterator<?> iterator = paramers.iterator(); iterator.hasNext();) {
-				ParamType paramType = (ParamType) iterator.next();
-				if ("path".equalsIgnoreCase(paramType.getName())) {
-					continue;
-				}
+				InputParameter paramType = (InputParameter) iterator.next();
+//				if ("path".equalsIgnoreCase(paramType.getName())) {
+//					continue;
+//				}
 				extValue += paramType.getName() + "=" + paramType.getValue() + ",";
 			}
 			if (extValue.length() != 0) {

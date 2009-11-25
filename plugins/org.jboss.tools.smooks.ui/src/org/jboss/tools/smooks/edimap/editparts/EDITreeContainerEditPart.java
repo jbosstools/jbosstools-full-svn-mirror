@@ -13,7 +13,6 @@ package org.jboss.tools.smooks.edimap.editparts;
 import java.beans.PropertyChangeEvent;
 
 import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gef.DefaultEditDomain;
@@ -36,7 +35,6 @@ import org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
 import org.jboss.tools.smooks.gef.tree.figures.TreeContainerFigure;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
-import org.jboss.tools.smooks.model.graphics.ext.FigureType;
 import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.medi.MappingNode;
 import org.jboss.tools.smooks.model.medi.Segments;
@@ -95,14 +93,14 @@ public class EDITreeContainerEditPart extends TreeContainerEditPart {
 	}
 	
 	
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart#recordFigureBounds(org.jboss.tools.smooks.model.graphics.ext.FigureType, org.eclipse.draw2d.geometry.Rectangle)
-	 */
-	@Override
-	protected void recordFigureBounds(FigureType figureType, Rectangle bounds) {
-		figureType.setX(String.valueOf(bounds.getLocation().x));
-		figureType.setY(String.valueOf(bounds.getLocation().y));
-	}
+//	/* (non-Javadoc)
+//	 * @see org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart#recordFigureBounds(org.jboss.tools.smooks.model.graphics.ext.FigureType, org.eclipse.draw2d.geometry.Rectangle)
+//	 */
+//	@Override
+//	protected void recordFigureBounds(FigureType figureType, Rectangle bounds) {
+//		figureType.setX(String.valueOf(bounds.getLocation().x));
+//		figureType.setY(String.valueOf(bounds.getLocation().y));
+//	}
 	
 	public static String generateFigureId(Object data){
 		if(data instanceof Segments){

@@ -111,7 +111,9 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 	public boolean canLinkWithTarget(Object model) {
 		AbstractSmooksGraphicalModel gm = (AbstractSmooksGraphicalModel) model;
 		Object m = gm.getData();
-		if (data instanceof ValueType || data instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
+		Object obj = getData();
+		obj = AdapterFactoryEditingDomain.unwrap(obj);
+		if (obj instanceof ValueType || obj instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
 			if (m instanceof CSVNodeModel) {
 				return !((CSVNodeModel) m).isRecord();
 			}

@@ -70,9 +70,6 @@ import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListene
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
-import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
-import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks10.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks10.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
@@ -82,7 +79,7 @@ import org.jboss.tools.smooks10.model.smooks.SmooksPackage;
  * 
  */
 public class Smooks10ConfigurationOverviewPage extends FormPage implements ISmooksModelValidateListener,
-		ISmooksGraphChangeListener, ISourceSynchronizeListener {
+		ISourceSynchronizeListener {
 
 	private ISmooksModelProvider smooksModelProvider;
 	private boolean lockEventFire = false;
@@ -228,10 +225,11 @@ public class Smooks10ConfigurationOverviewPage extends FormPage implements ISmoo
 		combo.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
-				if(lockEventFire) return;
+				if (lockEventFire)
+					return;
 				String v = combo.getText();
 				if (smooksModelProvider != null) {
-					smooksModelProvider.getSmooksGraphicsExt().setPlatformVersion(v);
+//					smooksModelProvider.setPlatformVersion(v);
 				}
 			}
 		});
@@ -239,17 +237,20 @@ public class Smooks10ConfigurationOverviewPage extends FormPage implements ISmoo
 		toolkit.createLabel(settingComposite, "Name : ").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
 		smooksNameText = toolkit.createText(settingComposite, "", SWT.NONE);
 		smooksNameText.setLayoutData(gd);
-		String name = smooksModelProvider.getSmooksGraphicsExt().getName();
+		String name = null;// smooksModelProvider.getSmooksGraphicsExt().getName();
 		if (name != null)
 			smooksNameText.setText(name);
+		smooksNameText.setEnabled(false);
 		smooksNameText.addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
-				if(lockEventFire) return;
+				if (lockEventFire)
+					return;
 				if (smooksModelProvider != null) {
-					Command setCommand = SetCommand.create(smooksModelProvider.getEditingDomain(), smooksModelProvider
-							.getSmooksGraphicsExt(), GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__NAME, smooksNameText.getText());
-					smooksModelProvider.getEditingDomain().getCommandStack().execute(setCommand);
+//					Command setCommand = SetCommand.create(smooksModelProvider.getEditingDomain(), smooksModelProvider
+//							.getSmooksGraphicsExt(), GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__NAME,
+//							smooksNameText.getText());
+//					smooksModelProvider.getEditingDomain().getCommandStack().execute(setCommand);
 				}
 			}
 		});
@@ -261,20 +262,10 @@ public class Smooks10ConfigurationOverviewPage extends FormPage implements ISmoo
 		smooksAuthorText = toolkit.createText(settingComposite, "", SWT.NONE);
 		smooksAuthorText.setLayoutData(gd);
 
-		String author = smooksModelProvider.getSmooksGraphicsExt().getAuthor();
+		String author = null;//smooksModelProvider.getSmooksGraphicsExt().getAuthor();
 		if (author != null)
 			smooksAuthorText.setText(author);
-		smooksAuthorText.addModifyListener(new ModifyListener() {
-
-			public void modifyText(ModifyEvent e) {
-				if(lockEventFire) return;
-				if (smooksModelProvider != null) {
-					Command setCommand = SetCommand.create(smooksModelProvider.getEditingDomain(), smooksModelProvider
-							.getSmooksGraphicsExt(), GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__AUTHOR, smooksAuthorText.getText());
-					smooksModelProvider.getEditingDomain().getCommandStack().execute(setCommand);
-				}
-			}
-		});
+		smooksAuthorText.setEnabled(false);
 
 		toolkit.createLabel(settingComposite, "");
 
@@ -605,10 +596,7 @@ public class Smooks10ConfigurationOverviewPage extends FormPage implements ISmoo
 
 	private String getSmooksVersion() {
 		if (smooksModelProvider != null) {
-			SmooksGraphicsExtType ext = smooksModelProvider.getSmooksGraphicsExt();
-			if (ext != null) {
-				return ext.getPlatformVersion();
-			}
+			return smooksModelProvider.getPlatformVersion();
 		}
 		return null;
 	}
@@ -722,8 +710,7 @@ public class Smooks10ConfigurationOverviewPage extends FormPage implements ISmoo
 			profilesSection.setExpanded(true);
 		}
 		if (href.equals("selector_dialog")) {
-			SelectorCreationDialog dialog = new SelectorCreationDialog(getEditorSite().getShell(),
-					this.smooksModelProvider.getSmooksGraphicsExt(), this.getEditor());
+			SelectorCreationDialog dialog = new SelectorCreationDialog(getEditorSite().getShell(), this.getEditor());
 			try {
 				dialog.open();
 			} catch (Exception e) {
@@ -770,9 +757,9 @@ public class Smooks10ConfigurationOverviewPage extends FormPage implements ISmoo
 		return defaultSettingPanelCreator;
 	}
 
-	public void inputTypeChanged(SmooksGraphicsExtType extType) {
-
-	}
+//	public void inputTypeChanged(SmooksGraphicsExtType extType) {
+//
+//	}
 
 	public void validateEnd(List<Diagnostic> diagnosticResult) {
 		ModelPanelCreator creator = getDefaultSettingPanelCreator();
@@ -784,18 +771,17 @@ public class Smooks10ConfigurationOverviewPage extends FormPage implements ISmoo
 
 	public void sourceChange(Object model) {
 		lockEventFire = true;
-		
-		String name = smooksModelProvider.getSmooksGraphicsExt().getName();
-		if (name != null)
-			smooksNameText.setText(name);
 
-		String author = smooksModelProvider.getSmooksGraphicsExt().getAuthor();
-		if (author != null)
-			smooksAuthorText.setText(author);
-		
+//		String name = smooksModelProvider.getSmooksGraphicsExt().getName();
+//		if (name != null)
+//			smooksNameText.setText(name);
+//
+//		String author = smooksModelProvider.getSmooksGraphicsExt().getAuthor();
+//		if (author != null)
+//			smooksAuthorText.setText(author);
+
 		lockEventFire = false;
-		
-		
+
 		disposeDefaultSettingCompositeControls();
 		createDefaultSection(defaultSettingComposite, this.getManagedForm().getToolkit());
 		defaultSettingComposite.getParent().layout();
@@ -824,9 +810,9 @@ public class Smooks10ConfigurationOverviewPage extends FormPage implements ISmoo
 		disposeCompositeControls(defaultSettingComposite, null);
 	}
 
-	public void graphChanged(SmooksGraphicsExtType extType) {
-
-	}
+//	public void graphChanged(SmooksGraphicsExtType extType) {
+//
+//	}
 
 	public void graphPropertyChange(EStructuralFeature featre, Object value) {
 

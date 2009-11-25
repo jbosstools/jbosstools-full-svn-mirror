@@ -16,7 +16,6 @@ import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 
 /**
  * @author Dart Peng
@@ -24,17 +23,14 @@ import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
  */
 public class StructuredDataSelectionWizardDailog extends WizardDialog {
 
-	protected SmooksGraphicsExtType smooksGraphicsExtType;
-
 	private String type = null;
 
 	private String path = null;
 
 	private Properties properties = null;
 
-	public StructuredDataSelectionWizardDailog(Shell parentShell, IWizard newWizard, SmooksGraphicsExtType extType) {
+	public StructuredDataSelectionWizardDailog(Shell parentShell, IWizard newWizard) {
 		super(parentShell, newWizard);
-		this.setSmooksGraphicsExtType(extType);
 	}
 
 	public IStructuredDataSelectionWizard getCurrentCreationWizard() {
@@ -45,28 +41,13 @@ public class StructuredDataSelectionWizardDailog extends WizardDialog {
 		return null;
 	}
 
-//	public SmooksMultiFormEditor getFormEditor() {
-//		return formEditor;
-//	}
-//
-//	public void setFormEditor(SmooksMultiFormEditor formEditor) {
-//		this.formEditor = formEditor;
-//	}
-
-	/**
-	 * @return the smooksGraphicsExtType
-	 */
-	public SmooksGraphicsExtType getSmooksGraphicsExtType() {
-		return smooksGraphicsExtType;
-	}
-
-	/**
-	 * @param smooksGraphicsExtType
-	 *            the smooksGraphicsExtType to set
-	 */
-	public void setSmooksGraphicsExtType(SmooksGraphicsExtType smooksGraphicsExtType) {
-		this.smooksGraphicsExtType = smooksGraphicsExtType;
-	}
+	// public SmooksMultiFormEditor getFormEditor() {
+	// return formEditor;
+	// }
+	//
+	// public void setFormEditor(SmooksMultiFormEditor formEditor) {
+	// this.formEditor = formEditor;
+	// }
 
 	public int show() {
 		int openResult = this.open();

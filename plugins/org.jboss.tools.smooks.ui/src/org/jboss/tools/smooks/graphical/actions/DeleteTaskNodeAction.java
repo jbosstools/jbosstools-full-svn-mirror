@@ -25,10 +25,9 @@ import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
-import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
-import org.jboss.tools.smooks.model.graphics.ext.ProcessesType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks.model.graphics.ext.TaskType;
+import org.jboss.tools.smooks.graphical.editors.process.IProcessProvider;
+import org.jboss.tools.smooks.graphical.editors.process.ProcessType;
+import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
@@ -38,8 +37,11 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
  */
 public class DeleteTaskNodeAction extends AbstractProcessGraphAction {
 
-	public DeleteTaskNodeAction(ISmooksModelProvider provider, IEditorPart editor) {
-		super("Delete", provider, editor);
+	private IProcessProvider processProvider;
+
+	public DeleteTaskNodeAction(IProcessProvider processProvider, ISmooksModelProvider modelProvider, IEditorPart editor) {
+		super("Delete", modelProvider, editor);
+		this.processProvider = processProvider;
 	}
 
 	@Override
@@ -66,17 +68,16 @@ public class DeleteTaskNodeAction extends AbstractProcessGraphAction {
 	public void run() {
 		super.run();
 		if (getProvider() != null) {
-			ISmooksModelProvider p = getProvider();
-			SmooksGraphicsExtType graph = p.getSmooksGraphicsExt();
-			if (graph != null) {
-				ProcessesType processes = graph.getProcesses();
-				if (processes != null) {
+			if (processProvider != null) {
+				ProcessType process = processProvider.getProcess();
+				if (process != null) {
 					List<TaskType> currentTasks = getCurrentSelectedTask();
 					TaskType currentTask = currentTasks.get(0);
 					List<TaskType> allTask = new ArrayList<TaskType>();
 					SmooksUIUtils.fillAllTask(currentTask, allTask);
 					List<Object> associatedElements = new ArrayList<Object>();
-					SmooksResourceListType listType = SmooksUIUtils.getSmooks11ResourceListType(p.getSmooksModel());
+					SmooksResourceListType listType = SmooksUIUtils.getSmooks11ResourceListType(provider
+							.getSmooksModel());
 					if (listType != null) {
 						for (Iterator<?> iterator = allTask.iterator(); iterator.hasNext();) {
 							TaskType taskType = (TaskType) iterator.next();
@@ -88,24 +89,25 @@ public class DeleteTaskNodeAction extends AbstractProcessGraphAction {
 					}
 					Command remove = null;
 					if (associatedElements.isEmpty()) {
-						remove = RemoveCommand.create(p.getEditingDomain(), currentTask.eContainer(),
-								GraphPackage.Literals.TASK_TYPE__TASK, currentTask);
-						p.getEditingDomain().getCommandStack().execute(remove);
+						process.removeTask(currentTask);
 					} else {
 						associatedElements = getDeletedObjects(associatedElements);
 						CompoundCommand ccommand = new CompoundCommand();
-						Command removeTaskCommand = RemoveCommand.create(p.getEditingDomain(),
-								currentTask.eContainer(), GraphPackage.Literals.TASK_TYPE__TASK, currentTask);
-						if (removeTaskCommand.canExecute()) {
-							ccommand.append(removeTaskCommand);
-						}
-						remove = RemoveCommand.create(p.getEditingDomain(), listType,
+						// Command removeTaskCommand =
+						// RemoveCommand.create(p.getEditingDomain(),
+						// currentTask.eContainer(),
+						// GraphPackage.Literals.TASK_TYPE__TASK, currentTask);
+						// if (removeTaskCommand.canExecute()) {
+						// ccommand.append(removeTaskCommand);
+						// }
+						process.removeTask(currentTask);
+						remove = RemoveCommand.create(this.provider.getEditingDomain(), listType,
 								SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
 								associatedElements);
 						if (remove.canExecute()) {
 							ccommand.append(remove);
 						}
-						p.getEditingDomain().getCommandStack().execute(ccommand);
+						provider.getEditingDomain().getCommandStack().execute(ccommand);
 					}
 				}
 			}

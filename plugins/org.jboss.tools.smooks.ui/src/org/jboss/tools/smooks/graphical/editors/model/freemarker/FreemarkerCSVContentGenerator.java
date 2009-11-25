@@ -25,7 +25,6 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanChildGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.ValueType;
 import org.jboss.tools.smooks.model.javabean.WiringType;
@@ -79,12 +78,9 @@ public class FreemarkerCSVContentGenerator {
 		if (!(freemarker instanceof Freemarker)) {
 			return null;
 		}
-		Template template = ((Freemarker) freemarker).getTemplate();
-		if (template == null)
-			return null;
 
-		char sperator = SmooksModelUtils.getFreemarkerCSVSeperator(template);
-		char quote = SmooksModelUtils.getFreemarkerCSVQuote(template);
+		char sperator = SmooksModelUtils.getFreemarkerCSVSeperator((Freemarker) freemarker);
+		char quote = SmooksModelUtils.getFreemarkerCSVQuote((Freemarker) freemarker);
 
 		List<AbstractSmooksGraphicalModel> childrenGraphModel = csvRecordGraphicalModel.getChildren();
 		List<String> fieldsName = new ArrayList<String>();

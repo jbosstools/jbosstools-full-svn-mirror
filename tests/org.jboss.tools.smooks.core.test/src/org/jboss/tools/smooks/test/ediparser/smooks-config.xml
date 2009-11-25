@@ -5,6 +5,9 @@
 	xmlns:g="http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd">
 	<params>
 		<param name="stream.filter.type">SAX</param>
+		<param name="inputType">input.edi</param>
+		<param name="input.edi" type="input.type.actived">Workspace://javabean_test/src/example/input-message.edi
+		</param>
 	</params>
 	<abstract-reader  xsi:type="edi:reader" encoding="UTF-8"
 		mappingModel="platform:/plugin/org.jboss.tools.smooks.core.test/projects/smooks-all-config-files/smooks-mapping-files/edi-to-xml-order-mapping.xml" />
@@ -12,20 +15,5 @@
 		<jb:value data="a" property="name" />
 		<jb:wiring beanIdRef="a" property="b" />
 	</jb:bindings>
-
-	<g:smooks-graphics-ext
-		>
-		<g:input type="EDI">
-			<g:param name="path">Workspace://javabean_test/src/example/input-message.edi
-			</g:param>
-			<g:param name="use_availableReader">true</g:param>
-		</g:input>
-		<g:input type="EDI">
-			<g:param name="path">Workspace://javabean_test/src/example/input-message.edi
-			</g:param>
-			<g:param name="encoding">UTF-8</g:param>
-			<g:param name="mappingModelFile">/org/jboss/tools/smooks/test/ediparser/edi-to-xml-order-mapping.xml
-			</g:param>
-		</g:input>
-	</g:smooks-graphics-ext>
+	
 </smooks-resource-list>

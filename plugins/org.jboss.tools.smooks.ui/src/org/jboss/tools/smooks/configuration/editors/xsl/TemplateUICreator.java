@@ -82,7 +82,7 @@ public class TemplateUICreator extends PropertyUICreator {
 		TextTypeSwicher swicher = new TextTypeSwicher();
 		swicher.createSwicherGUI("External Template File", "Inline Template", parent, toolkit);
 
-		String version = formEditor.getSmooksGraphicsExt().getPlatformVersion();
+		String version = formEditor.getPlatformVersion();
 
 		if (SmooksConstants.VERSION_1_1.equals(version)) {
 

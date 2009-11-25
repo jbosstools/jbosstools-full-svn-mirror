@@ -22,7 +22,6 @@ import java.util.EventObject;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
@@ -31,12 +30,10 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandWrapper;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -90,7 +87,6 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
-import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.IFilePathProcessor;
 import org.jboss.tools.smooks.configuration.editors.ModelPanelCreator;
@@ -110,23 +106,13 @@ import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.editparts.RootEditPart;
-import org.jboss.tools.smooks.gef.tree.figures.IMoveableModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
-import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
-import org.jboss.tools.smooks.model.graphics.ext.FigureType;
-import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
-import org.jboss.tools.smooks.model.graphics.ext.GraphType;
-import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
-import org.jboss.tools.smooks.model.graphics.ext.InputType;
-import org.jboss.tools.smooks.model.graphics.ext.ParamType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.medi.Delimiters;
 import org.jboss.tools.smooks.model.medi.Description;
 import org.jboss.tools.smooks.model.medi.DocumentRoot;
 import org.jboss.tools.smooks.model.medi.Segment;
 import org.jboss.tools.smooks.model.medi.Segments;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.milyn.Smooks;
 import org.milyn.SmooksUtil;
 import org.milyn.cdr.SmooksResourceConfiguration;
@@ -138,7 +124,7 @@ import org.w3c.dom.Document;
  * @author Dart
  * 
  */
-public class EDIMapFormPage extends FormPage implements ISmooksModelValidateListener, ISmooksGraphChangeListener,
+public class EDIMapFormPage extends FormPage implements ISmooksModelValidateListener,
 		ISelectionChangedListener, ModifyListener {
 
 	private ISmooksModelProvider modelProvider;
@@ -179,7 +165,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		super(editor, id, title);
 		if (editor instanceof ISmooksModelProvider) {
 			modelProvider = (ISmooksModelProvider) editor;
-			modelProvider.getSmooksGraphicsExt().addSmooksGraphChangeListener(this);
+//			modelProvider.getSmooksGraphicsExt().addSmooksGraphChangeListener(this);
 		}
 		segmentsCreator = new ModelPanelCreator();
 	}
@@ -267,8 +253,8 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 
 		List<TreeNodeModel> linkedSourceModel = createLinkModel();
 
-		SmooksGraphicsExtType exttype = this.modelProvider.getSmooksGraphicsExt();
-		initModelGraphicsInformation(exttype);
+//		SmooksGraphicsExtType exttype = this.modelProvider.getSmooksGraphicsExt();
+//		initModelGraphicsInformation(exttype);
 		getGraphicalViewer().setContents(graphicalRootModel);
 
 		expandSegmentNode(linkedSourceModel);
@@ -297,30 +283,30 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		initGraphicalModel();
 	}
 
-	protected void initModelGraphicsInformation(SmooksGraphicsExtType ext) {
-		GraphType graph = ext.getGraph();
-		if (graph == null)
-			return;
-
-		List<AbstractSmooksGraphicalModel> list = graphicalRootModel.getChildren();
-		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-			AbstractSmooksGraphicalModel treeNodeModel = (AbstractSmooksGraphicalModel) iterator.next();
-			if (treeNodeModel instanceof IMoveableModel) {
-				Object data = treeNodeModel.getData();
-				String id = EDISegementsEditPart.generateFigureId(data);
-				if (id != null) {
-					FigureType ft = SmooksGraphUtil.findFigureType(graph, id);
-					try {
-						int x = Integer.parseInt(ft.getX());
-						int y = Integer.parseInt(ft.getY());
-						((IMoveableModel) treeNodeModel).setLocation(new Point(x, y));
-					} catch (Throwable t) {
-						continue;
-					}
-				}
-			}
-		}
-	}
+//	protected void initModelGraphicsInformation(SmooksGraphicsExtType ext) {
+//		GraphType graph = ext.getGraph();
+//		if (graph == null)
+//			return;
+//
+//		List<AbstractSmooksGraphicalModel> list = graphicalRootModel.getChildren();
+//		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+//			AbstractSmooksGraphicalModel treeNodeModel = (AbstractSmooksGraphicalModel) iterator.next();
+//			if (treeNodeModel instanceof IMoveableModel) {
+//				Object data = treeNodeModel.getData();
+//				String id = EDISegementsEditPart.generateFigureId(data);
+//				if (id != null) {
+//					FigureType ft = SmooksGraphUtil.findFigureType(graph, id);
+//					try {
+//						int x = Integer.parseInt(ft.getX());
+//						int y = Integer.parseInt(ft.getY());
+//						((IMoveableModel) treeNodeModel).setLocation(new Point(x, y));
+//					} catch (Throwable t) {
+//						continue;
+//					}
+//				}
+//			}
+//		}
+//	}
 
 	protected void createGEFActions() {
 		ActionRegistry registry = getActionRegistry();
@@ -431,42 +417,42 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	}
 
 	private String getEDIFilePath() {
-		if (modelProvider != null) {
-			SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
-			List<InputType> inputList = ext.getInput();
-			for (Iterator<?> iterator = inputList.iterator(); iterator.hasNext();) {
-				InputType inputType = (InputType) iterator.next();
-				if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(inputType.getType())) {
-					List<ParamType> paramList = inputType.getParam();
-					for (Iterator<?> iterator2 = paramList.iterator(); iterator2.hasNext();) {
-						ParamType paramType = (ParamType) iterator2.next();
-						if (SmooksModelUtils.PARAM_NAME_PATH.equals(paramType.getName())) {
-							return paramType.getValue();
-						}
-					}
-				}
-			}
-		}
+//		if (modelProvider != null) {
+//			SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
+//			List<InputType> inputList = ext.getInput();
+//			for (Iterator<?> iterator = inputList.iterator(); iterator.hasNext();) {
+//				InputType inputType = (InputType) iterator.next();
+//				if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(inputType.getType())) {
+//					List<ParamType> paramList = inputType.getParam();
+//					for (Iterator<?> iterator2 = paramList.iterator(); iterator2.hasNext();) {
+//						ParamType paramType = (ParamType) iterator2.next();
+//						if (SmooksModelUtils.PARAM_NAME_PATH.equals(paramType.getName())) {
+//							return paramType.getValue();
+//						}
+//					}
+//				}
+//			}
+//		}
 		return null;
 	}
 
 	private String getEDIFileEncoding() {
-		if (modelProvider != null) {
-			SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
-			List<InputType> inputList = ext.getInput();
-			for (Iterator<?> iterator = inputList.iterator(); iterator.hasNext();) {
-				InputType inputType = (InputType) iterator.next();
-				if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(inputType.getType())) {
-					List<ParamType> paramList = inputType.getParam();
-					for (Iterator<?> iterator2 = paramList.iterator(); iterator2.hasNext();) {
-						ParamType paramType = (ParamType) iterator2.next();
-						if ("encoding".equals(paramType.getName())) {
-							return paramType.getValue();
-						}
-					}
-				}
-			}
-		}
+//		if (modelProvider != null) {
+//			SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
+//			List<InputType> inputList = ext.getInput();
+//			for (Iterator<?> iterator = inputList.iterator(); iterator.hasNext();) {
+//				InputType inputType = (InputType) iterator.next();
+//				if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(inputType.getType())) {
+//					List<ParamType> paramList = inputType.getParam();
+//					for (Iterator<?> iterator2 = paramList.iterator(); iterator2.hasNext();) {
+//						ParamType paramType = (ParamType) iterator2.next();
+//						if ("encoding".equals(paramType.getName())) {
+//							return paramType.getValue();
+//						}
+//					}
+//				}
+//			}
+//		}
 		return null;
 	}
 
@@ -596,7 +582,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		super.doSave(monitor);
 		if (modelProvider != null) {
 			try {
-				modelProvider.getSmooksGraphicsExt().eResource().save(Collections.emptyMap());
+//				modelProvider.getSmooksGraphicsExt().eResource().save(Collections.emptyMap());
 				editDomain.getCommandStack().flush();
 				firePropertyChange(PROP_DIRTY);
 			} catch (Throwable t) {
@@ -686,6 +672,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		}
 
 		Section testSection = toolkit.createSection(form.getBody(), Section.TITLE_BAR | Section.DESCRIPTION);
+		testSection.setVisible(false);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.verticalAlignment = GridData.BEGINNING;
 		// gd.horizontalSpan = 2;
@@ -753,65 +740,65 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			 * swt.events.ModifyEvent)
 			 */
 			public void modifyText(ModifyEvent e) {
-				ediFileEncoding = encodingText.getText();
-				ediFilePath = ediFileText.getText();
-				final InputType[] inputType1 = new InputType[1];
-				SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
-				List<InputType> list = ext.getInput();
-				for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-					InputType inputType = (InputType) iterator.next();
-					if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(inputType.getType())) {
-						inputType1[0] = inputType;
-						break;
-					}
-				}
-
-				final Properties pro = new Properties();
-				pro.setProperty("encoding", ediFileEncoding);
-				getEditorSite().getShell().getDisplay().syncExec(new Runnable() {
-
-					/*
-					 * (non-Javadoc)
-					 * 
-					 * @see java.lang.Runnable#run()
-					 */
-					public void run() {
-						String type = SmooksModelUtils.INPUT_TYPE_EDI_1_1;
-						SmooksGraphicsExtType extType = modelProvider.getSmooksGraphicsExt();
-						InputType input = inputType1[0];
-						if (input == null) {
-							input = GraphFactory.eINSTANCE.createInputType();
-						}
-						input.setType(type);
-						ParamType encodingParam = null;
-						List<ParamType> paramList = input.getParam();
-						for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
-							ParamType paramType = (ParamType) iterator.next();
-							if ("encoding".equals(paramType.getName())) {
-								encodingParam = paramType;
-								break;
-							}
-						}
-						if (encodingParam == null) {
-							encodingParam = GraphFactory.eINSTANCE.createParamType();
-							encodingParam.setName("encoding");
-						}
-						encodingParam.setValue(ediFileEncoding);
-
-						input.getParam().add(encodingParam);
-						try {
-							extType.eResource().save(Collections.emptyMap());
-							List<ISmooksGraphChangeListener> listeners = extType.getChangeListeners();
-							for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
-								ISmooksGraphChangeListener smooksGraphChangeListener = (ISmooksGraphChangeListener) iterator
-										.next();
-								smooksGraphChangeListener.inputTypeChanged(extType);
-							}
-						} catch (IOException e) {
-							SmooksConfigurationActivator.getDefault().log(e);
-						}
-					}
-				});
+//				ediFileEncoding = encodingText.getText();
+//				ediFilePath = ediFileText.getText();
+//				final InputType[] inputType1 = new InputType[1];
+//				SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
+//				List<InputType> list = ext.getInput();
+//				for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+//					InputType inputType = (InputType) iterator.next();
+//					if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(inputType.getType())) {
+//						inputType1[0] = inputType;
+//						break;
+//					}
+//				}
+//
+//				final Properties pro = new Properties();
+//				pro.setProperty("encoding", ediFileEncoding);
+//				getEditorSite().getShell().getDisplay().syncExec(new Runnable() {
+//
+//					/*
+//					 * (non-Javadoc)
+//					 * 
+//					 * @see java.lang.Runnable#run()
+//					 */
+//					public void run() {
+//						String type = SmooksModelUtils.INPUT_TYPE_EDI_1_1;
+//						SmooksGraphicsExtType extType = modelProvider.getSmooksGraphicsExt();
+//						InputType input = inputType1[0];
+//						if (input == null) {
+//							input = GraphFactory.eINSTANCE.createInputType();
+//						}
+//						input.setType(type);
+//						ParamType encodingParam = null;
+//						List<ParamType> paramList = input.getParam();
+//						for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
+//							ParamType paramType = (ParamType) iterator.next();
+//							if ("encoding".equals(paramType.getName())) {
+//								encodingParam = paramType;
+//								break;
+//							}
+//						}
+//						if (encodingParam == null) {
+//							encodingParam = GraphFactory.eINSTANCE.createParamType();
+//							encodingParam.setName("encoding");
+//						}
+//						encodingParam.setValue(ediFileEncoding);
+//
+//						input.getParam().add(encodingParam);
+//						try {
+//							extType.eResource().save(Collections.emptyMap());
+//							List<ISmooksGraphChangeListener> listeners = extType.getChangeListeners();
+//							for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
+//								ISmooksGraphChangeListener smooksGraphChangeListener = (ISmooksGraphChangeListener) iterator
+//										.next();
+//								smooksGraphChangeListener.inputTypeChanged(extType);
+//							}
+//						} catch (IOException e) {
+//							SmooksConfigurationActivator.getDefault().log(e);
+//						}
+//					}
+//				});
 
 			}
 
@@ -853,6 +840,8 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		gd = new GridData();
 		gd.horizontalSpan = 2;
 		showTransformResultLink.setLayoutData(gd);
+		showTransformResultLink.setEnabled(false);
+		showTransformResultLink.setVisible(false);
 
 		SashForm sashForm = new SashForm(viewerComposite, SWT.NONE);
 
@@ -1161,8 +1150,8 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	 * saveComplete
 	 * (org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType)
 	 */
-	public void inputTypeChanged(SmooksGraphicsExtType extType) {
-	}
+//	public void inputTypeChanged(SmooksGraphicsExtType extType) {
+//	}
 
 	protected void disposeCompositeControls(Composite composite, Control[] ignoreControl) {
 		if (composite != null) {
@@ -1296,53 +1285,53 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	}
 
 	public void modifyText(ModifyEvent e) {
-		Text ediFileText = (Text) e.getSource();
-		ediFilePath = ediFileText.getText();
-		final InputType[] inputType1 = new InputType[1];
-		SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
-		List<InputType> list = ext.getInput();
-		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-			InputType inputType = (InputType) iterator.next();
-			if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(inputType.getType())) {
-				inputType1[0] = inputType;
-				break;
-			}
-		}
-		getEditorSite().getShell().getDisplay().syncExec(new Runnable() {
-
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see java.lang.Runnable#run()
-			 */
-			public void run() {
-				if (modelProvider != null) {
-					SmooksUIUtils.recordInputDataInfomation(modelProvider.getEditingDomain(),inputType1[0], modelProvider.getSmooksGraphicsExt(),
-							SmooksModelUtils.INPUT_TYPE_EDI_1_1, ediFilePath, null);
-				}
-			}
-
-		});
-		rebuildEDIGraph();
+//		Text ediFileText = (Text) e.getSource();
+//		ediFilePath = ediFileText.getText();
+//		final InputType[] inputType1 = new InputType[1];
+//		SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
+//		List<InputType> list = ext.getInput();
+//		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+//			InputType inputType = (InputType) iterator.next();
+//			if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(inputType.getType())) {
+//				inputType1[0] = inputType;
+//				break;
+//			}
+//		}
+//		getEditorSite().getShell().getDisplay().syncExec(new Runnable() {
+//
+//			/*
+//			 * (non-Javadoc)
+//			 * 
+//			 * @see java.lang.Runnable#run()
+//			 */
+//			public void run() {
+//				if (modelProvider != null) {
+//					SmooksUIUtils.recordInputDataInfomation(modelProvider.getEditingDomain(),inputType1[0], modelProvider.getSmooksGraphicsExt(),
+//							SmooksModelUtils.INPUT_TYPE_EDI_1_1, ediFilePath, null);
+//				}
+//			}
+//
+//		});
+//		rebuildEDIGraph();
 	}
 
 	private void rebuildEDIGraph() {
-		SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
-		disconnectSegements();
-		removeEDIGraphModel();
-		createEDIDataGraphModel();
-		initModelGraphicsInformation(ext);
-		List<TreeNodeModel> sourceLinkedModel = this.createLinkModel();
-		expandSegmentNode(sourceLinkedModel);
+//		SmooksGraphicsExtType ext = modelProvider.getSmooksGraphicsExt();
+//		disconnectSegements();
+//		removeEDIGraphModel();
+//		createEDIDataGraphModel();
+//		initModelGraphicsInformation(ext);
+//		List<TreeNodeModel> sourceLinkedModel = this.createLinkModel();
+//		expandSegmentNode(sourceLinkedModel);
 	}
 
-	public void graphChanged(SmooksGraphicsExtType extType) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void graphPropertyChange(EStructuralFeature featre, Object value) {
-		// TODO Auto-generated method stub
-
-	}
+//	public void graphChanged(SmooksGraphicsExtType extType) {
+//		// TODO Auto-generated method stub
+//
+//	}
+//
+//	public void graphPropertyChange(EStructuralFeature featre, Object value) {
+//		// TODO Auto-generated method stub
+//
+//	}
 }

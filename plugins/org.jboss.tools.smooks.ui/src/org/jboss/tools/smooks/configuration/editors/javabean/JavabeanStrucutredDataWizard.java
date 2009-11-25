@@ -187,6 +187,9 @@ public class JavabeanStrucutredDataWizard extends Wizard implements
 				buffer.append(cname);
 			}
 		}
+		if(buffer.toString().endsWith(";")){
+			return buffer.substring(0, buffer.length() - 1);
+		}
 		return buffer.toString();
 	}
 

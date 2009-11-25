@@ -14,7 +14,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.jface.dialogs.Dialog;
@@ -24,14 +23,13 @@ import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
+import org.jboss.tools.smooks.graphical.editors.process.ProcessFactory;
+import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.graphical.wizard.TemplateMessageTypeWizard;
 import org.jboss.tools.smooks.graphical.wizard.freemarker.FreemarkerCSVTemplateCreationWizard;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerFactory;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
-import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
-import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
-import org.jboss.tools.smooks.model.graphics.ext.TaskType;
 import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
@@ -81,12 +79,6 @@ public class AddNextTaskNodeAction extends AddTaskNodeAction {
 
 						Freemarker freemarker = FreemarkerFactory.eINSTANCE.createFreemarker();
 
-						String idref = SmooksModelUtils.generateTaskID(resourceList, Freemarker.class, "freemarker");
-
-						ParamType idParam = SmooksFactory.eINSTANCE.createParamType();
-						idParam.setName(SmooksModelUtils.KEY_OBJECT_ID);
-						idParam.setStringValue(idref);
-
 						ParamType messageTypeParam = SmooksFactory.eINSTANCE.createParamType();
 						messageTypeParam.setName(SmooksModelUtils.KEY_TEMPLATE_TYPE);
 						messageTypeParam.setStringValue(SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV);
@@ -103,65 +95,64 @@ public class AddNextTaskNodeAction extends AddTaskNodeAction {
 						fieldsParam.setName(SmooksModelUtils.KEY_CSV_FIELDS);
 						fieldsParam.setStringValue(fieldsString);
 
-						SmooksModelUtils.addParam(freemarker.getTemplate(), messageTypeParam);
-						SmooksModelUtils.addParam(freemarker.getTemplate(), quoteParam);
-						SmooksModelUtils.addParam(freemarker.getTemplate(), speratorParam);
-						SmooksModelUtils.addParam(freemarker.getTemplate(), fieldsParam);
-						freemarker.getParam().add(idParam);
+						freemarker.getParam().add(messageTypeParam);
+						freemarker.getParam().add(speratorParam);
+						freemarker.getParam().add(quoteParam);
+						freemarker.getParam().add(fieldsParam);
+						
+//						SmooksModelUtils.addParam(freemarker.getTemplate(), messageTypeParam);
+//						SmooksModelUtils.addParam(freemarker.getTemplate(), quoteParam);
+//						SmooksModelUtils.addParam(freemarker.getTemplate(), speratorParam);
+//						SmooksModelUtils.addParam(freemarker.getTemplate(), fieldsParam);
 
 						Command addFreemarkerCommand = AddCommand.create(this.provider.getEditingDomain(),
 								resourceList,
 								SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
 								FeatureMapUtil.createEntry(FreemarkerPackage.Literals.DOCUMENT_ROOT__FREEMARKER,
 										freemarker));
-						TaskType parentTask = this.getCurrentSelectedTask().get(0);
-						TaskType childTask = GraphFactory.eINSTANCE.createTaskType();
-						childTask.setId(taskID);
-						childTask.setName(this.getText());
-						Command addTaskCommand = AddCommand.create(provider.getEditingDomain(), parentTask,
-								GraphPackage.Literals.TASK_TYPE__TASK, childTask);
 
-						ParamType idrefParam = SmooksFactory.eINSTANCE.createParamType();
-						idrefParam.setName(SmooksModelUtils.KEY_TASK_ID_REF);
+						if (addFreemarkerCommand.canExecute()) {
+							provider.getEditingDomain().getCommandStack().execute(addFreemarkerCommand);
+							TaskType parentTask = this.getCurrentSelectedTask().get(0);
+							TaskType childTask = ProcessFactory.eINSTANCE.createTemplateTask();
+							childTask.addSmooksModel(freemarker);
+							parentTask.addTask(childTask);
+						}
 
-						idrefParam.setStringValue(idref);
-						SmooksModelUtils.addParam(childTask, idrefParam);
-
-						CompoundCommand cc = new CompoundCommand();
-						cc.append(addFreemarkerCommand);
-						cc.append(addTaskCommand);
-
-						provider.getEditingDomain().getCommandStack().execute(cc);
 					}
 				} else {
 					return;
 				}
 			} else {
-				Command command = createAddTaskCommand();
-				provider.getEditingDomain().getCommandStack().execute(command);
+				TaskType parentTask = this.getCurrentSelectedTask().get(0);
+				TaskType childTask = ProcessFactory.eINSTANCE.createTaskType();
+				childTask.setId(taskID);
+				childTask.setName(TaskTypeManager.getTaskLabel(taskID));
+				parentTask.addTask(childTask);
 			}
 		}
 	}
 
-	private Command createAddTaskCommand() {
-		TaskType parentTask = this.getCurrentSelectedTask().get(0);
-		TaskType childTask = GraphFactory.eINSTANCE.createTaskType();
-		childTask.setId(taskID);
-		childTask.setName(this.getText());
-		Command command = AddCommand.create(provider.getEditingDomain(), parentTask,
-				GraphPackage.Literals.TASK_TYPE__TASK, childTask);
-		return command;
-	}
+	// private Command createAddTaskCommand() {
+	// TaskType parentTask = this.getCurrentSelectedTask().get(0);
+	// TaskType childTask = GraphFactory.eINSTANCE.createTaskType();
+	// childTask.setId(taskID);
+	// childTask.setName(this.getText());
+	// Command command = AddCommand.create(provider.getEditingDomain(),
+	// parentTask,
+	// GraphPackage.Literals.TASK_TYPE__TASK, childTask);
+	// return command;
+	// }
 
 	protected TaskType createTaskType() {
-		return GraphFactory.eINSTANCE.createTaskType();
+		return ProcessFactory.eINSTANCE.createTaskType();
 	}
 
 	@Override
 	public void update() {
 		super.update();
 		if (this.isEnabled()) {
-			TaskType testTaskType = GraphFactory.eINSTANCE.createTaskType();
+			TaskType testTaskType = ProcessFactory.eINSTANCE.createTaskType();
 			testTaskType.setId(taskID);
 			setEnabled(rules.isNextTask(this.getCurrentSelectedTask().get(0), testTaskType));
 		}

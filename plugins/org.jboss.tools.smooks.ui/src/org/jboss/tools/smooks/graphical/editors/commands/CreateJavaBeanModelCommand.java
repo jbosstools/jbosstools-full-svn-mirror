@@ -30,12 +30,7 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.command.GEFAdapterCommand;
 import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart;
-import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
 import org.jboss.tools.smooks.graphical.wizards.JavaBeanCreationWizard;
-import org.jboss.tools.smooks.model.graphics.ext.FigureType;
-import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
-import org.jboss.tools.smooks.model.graphics.ext.GraphType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.JavabeanFactory;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
@@ -46,19 +41,20 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
  * @author Dart
- *
+ * 
  */
 public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
-	
+
 	private IEditorPart editorPart = null;
-	
+
 	public static final int BEAN_TYPE = 2;
 
 	public static final int BINDINGS_TYPE = 1;
-	
+
 	private ISmooksModelProvider provider = null;
-	
-	public CreateJavaBeanModelCommand(EditingDomain domain, Command emfCommand , IEditorPart editorPart,ISmooksModelProvider provider) {
+
+	public CreateJavaBeanModelCommand(EditingDomain domain, Command emfCommand, IEditorPart editorPart,
+			ISmooksModelProvider provider) {
 		super(domain, emfCommand);
 		this.editorPart = editorPart;
 		this.provider = provider;
@@ -84,35 +80,41 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 					if (editorPart instanceof SmooksGraphicalEditorPart) {
 						resourceListType = ((SmooksGraphicalEditorPart) editorPart).getSmooksResourceListType();
 					}
-					List<Object> models = createJavaBeanModel(type, wizard.getJavaBeanModel(), wizard
-							.getBindings(), resourceListType, new ArrayList<String>());
+					List<Object> models = createJavaBeanModel(type, wizard.getJavaBeanModel(), wizard.getBindings(),
+							resourceListType, new ArrayList<String>());
 					String figureID = null;
 					int index = 0;
-					for (Iterator<?> iterator = models.iterator(); iterator.hasNext();) {
-						Object object = (Object) iterator.next();
-						if (object instanceof EObject) {
-							figureID = SmooksGraphUtil.generateFigureIDViaModel((EObject) object);
-							if (figureID != null && editorPart instanceof SmooksGraphicalEditorPart) {
-								SmooksGraphicsExtType ext = ((SmooksGraphicalEditorPart) editorPart)
-										.getSmooksGraphicsExtType();
-								GraphType graph = ext.getGraph();
-								if (graph != null) {
-									FigureType figureType = SmooksGraphUtil.findFigureType(graph, figureID);
-									if (figureType == null) {
-										figureType = GraphFactory.eINSTANCE.createFigureType();
-										graph.getFigure().add(figureType);
-										figureType.setId(figureID);
-									}
-									String x = String.valueOf(this.x + index);
-									String y = String.valueOf(this.y + index);
-									figureType.setX(x);
-									figureType.setY(y);
-									index += 20;
-								}
-							}
-						}
-					}
-					
+					// for (Iterator<?> iterator = models.iterator();
+					// iterator.hasNext();) {
+					// Object object = (Object) iterator.next();
+					// if (object instanceof EObject) {
+					// figureID =
+					// SmooksGraphUtil.generateFigureIDViaModel((EObject)
+					// object);
+					// if (figureID != null && editorPart instanceof
+					// SmooksGraphicalEditorPart) {
+					// SmooksGraphicsExtType ext = ((SmooksGraphicalEditorPart)
+					// editorPart)
+					// .getSmooksGraphicsExtType();
+					// GraphType graph = ext.getGraph();
+					// if (graph != null) {
+					// FigureType figureType =
+					// SmooksGraphUtil.findFigureType(graph, figureID);
+					// if (figureType == null) {
+					// figureType = GraphFactory.eINSTANCE.createFigureType();
+					// graph.getFigure().add(figureType);
+					// figureType.setId(figureID);
+					// }
+					// String x = String.valueOf(this.x + index);
+					// String y = String.valueOf(this.y + index);
+					// figureType.setX(x);
+					// figureType.setY(y);
+					// index += 20;
+					// }
+					// }
+					// }
+					// }
+
 					List<Object> creationModels = new ArrayList<Object>();
 
 					if (collections instanceof FeatureMap.Entry) {
@@ -133,7 +135,7 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 		}
 		super.execute();
 	}
-	
+
 	private List<Object> createJavaBeanModel(int type, JavaBeanModel parentBeanModel, Object[] properties,
 			SmooksResourceListType resourceListType, List<String> ids) {
 		List<Object> creationObject = new ArrayList<Object>();
@@ -224,8 +226,15 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 		Collection<EObject> models = SmooksUIUtils.getBeanIdModelList(listType);
 		for (Iterator<?> iterator = models.iterator(); iterator.hasNext();) {
 			EObject eObject = (EObject) iterator.next();
+			if (eObject == null)
+				continue;
 			EStructuralFeature feature = SmooksUIUtils.getBeanIDFeature(eObject);
-			String id1 = eObject.eGet(feature).toString();
+			if (feature == null)
+				continue;
+			Object obj = eObject.eGet(feature);
+			if (obj == null)
+				continue;
+			String id1 = obj.toString();
 			if (id != null && id1 != null) {
 				if (id.equals(id1)) {
 					return true;

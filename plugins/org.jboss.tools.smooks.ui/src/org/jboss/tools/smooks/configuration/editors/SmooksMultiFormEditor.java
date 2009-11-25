@@ -25,10 +25,7 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
-import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart;
 import org.jboss.tools.smooks.graphical.editors.SmooksProcessGraphicalEditor;
-import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 
 /**
  * 
@@ -41,11 +38,11 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 
 	private SmooksConfigurationFormPage configurationPage;
 
-	private SmooksGraphicalEditorPart graphicalPage;
+	// private SmooksGraphicalEditorPart graphicalPage;
 
 	private SmooksConfigurationOverviewPage optionsPage;
 
-	private SmooksReaderFormPage readerPage;
+	// private SmooksReaderFormPage readerPage;
 
 	private SmooksProcessGraphicalEditor processPage;
 
@@ -78,7 +75,6 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 		optionsPage = createSmooksConfigurationOverviewPage();
 		addValidateListener(optionsPage);
 		addSourceSynchronizeListener(optionsPage);
-		addSmooksGraphExtetionListener(optionsPage);
 		try {
 			int index = this.addPage(optionsPage);
 			setPageText(index, "Options");
@@ -104,7 +100,6 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 	private void addProcessGraphicalEditor() {
 		processPage = new SmooksProcessGraphicalEditor(this, "process", "Processing", this);
 		addSourceSynchronizeListener(processPage);
-		addSmooksGraphExtetionListener(processPage);
 		addValidateListener(processPage);
 		try {
 			int index = this.addPage(processPage);
@@ -114,17 +109,16 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 		}
 	}
 
-	private void addSmooksGraphicalEditor() {
-		graphicalPage = new SmooksGraphicalEditorPart(this);
-		addSourceSynchronizeListener(graphicalPage);
-		addSmooksGraphExtetionListener(graphicalPage);
-		try {
-			int index = this.addPage(graphicalPage, getEditorInput());
-			setPageText(index, "Process");
-		} catch (PartInitException e) {
-			e.printStackTrace();
-		}
-	}
+	// private void addSmooksGraphicalEditor() {
+	// graphicalPage = new SmooksGraphicalEditorPart(this);
+	// addSourceSynchronizeListener(graphicalPage);
+	// try {
+	// int index = this.addPage(graphicalPage, getEditorInput());
+	// setPageText(index, "Process");
+	// } catch (PartInitException e) {
+	// e.printStackTrace();
+	// }
+	// }
 
 	public Object getAdapter(Class adapter) {
 		if (adapter == IPropertySheetPage.class) {
@@ -212,20 +206,6 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 		for (Iterator<?> iterator = this.selectionChangeListener.iterator(); iterator.hasNext();) {
 			ISelectionChangedListener l = (ISelectionChangedListener) iterator.next();
 			l.selectionChanged(new SelectionChangedEvent(this, getSelection()));
-		}
-	}
-
-	public void addSmooksGraphExtetionListener(ISmooksGraphChangeListener listener) {
-		SmooksGraphicsExtType ex = getSmooksGraphicsExt();
-		if (ex != null) {
-			ex.addSmooksGraphChangeListener(listener);
-		}
-	}
-
-	public void removeSmooksGraphExtetionListener(ISmooksGraphChangeListener listener) {
-		SmooksGraphicsExtType ex = getSmooksGraphicsExt();
-		if (ex != null) {
-			ex.removeSmooksGraphChangeListener(listener);
 		}
 	}
 

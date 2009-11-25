@@ -96,9 +96,8 @@ public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
 			parent = parent.getParent();
 		}
 		Freemarker freemarker = (Freemarker) parent.getData();
-		Template template = freemarker.getTemplate();
-		if (template != null) {
-			ParamType param = SmooksModelUtils.getParam(template, SmooksModelUtils.KEY_CSV_FIELDS);
+		if (freemarker != null) {
+			ParamType param = SmooksModelUtils.getParam(freemarker.getParam(), SmooksModelUtils.KEY_CSV_FIELDS);
 			if (param != null) {
 				SmooksModelUtils.setTextToSmooksType(this.domainProvider.getEditingDomain(), param, fieldsString);
 				changeFreemarkerContents();
@@ -173,7 +172,7 @@ public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
 		}
 		String version = SmooksConstants.VERSION_1_1;
 		if (this.domainProvider instanceof ISmooksModelProvider) {
-			version = ((ISmooksModelProvider) domainProvider).getSmooksGraphicsExt().getPlatformVersion();
+			version = ((ISmooksModelProvider) domainProvider).getPlatformVersion();
 		}
 		// if (content != null) {
 		if (SmooksConstants.VERSION_1_1.equals(version)) {

@@ -29,7 +29,6 @@ import org.jboss.tools.smooks.gef.tree.figures.TreeContainerFigure;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -172,8 +171,7 @@ public class InputDataContainerEditPart extends TreeContainerEditPart {
 	protected void refreshVisuals() {
 		InputDataContianerModel model = (InputDataContianerModel) getModel();
 		ISmooksModelProvider provider = model.getSmooksModelProvider();
-		SmooksGraphicsExtType ext = provider.getSmooksGraphicsExt();
-		if (ext != null) {
+		if (provider != null) {
 
 			Image image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
 					GraphicsConstants.IMAGE_INPUT_DATA_HEADER);
@@ -181,12 +179,12 @@ public class InputDataContainerEditPart extends TreeContainerEditPart {
 			String text = "Input Model";
 
 			if (inputType != null) {
-				if (inputType.equals(ext.getInputType())) {
+				if (inputType.equals(provider.getInputType())) {
 					super.refreshVisuals();
 					return;
 				}
 			}
-			inputType = ext.getInputType();
+			inputType = provider.getInputType();
 			if (inputType.equals(SmooksModelUtils.INPUT_TYPE_JAVA)) {
 				image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
 						GraphicsConstants.IMAGE_JAVA_FILE);

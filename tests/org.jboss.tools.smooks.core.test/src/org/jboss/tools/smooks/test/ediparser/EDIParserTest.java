@@ -23,12 +23,9 @@ import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.edi.EDIDataParser;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
-import org.jboss.tools.smooks.model.graphics.ext.InputType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
 import org.jboss.tools.smooks.test.model11.BaseTestCase;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -46,45 +43,12 @@ public class EDIParserTest extends BaseTestCase {
 				.getContents().get(0)).getSmooksResourceList();
 		assertNotNull(resourceList);
 
-		SmooksGraphicsExtType extType = getSmooksGraphExtType(resourceList);
-
-		assertNotNull(extType);
-		InputType inputType = null;
-		List<?> ilist = extType.getInput();
-		for (Iterator<?> iterator = ilist.iterator(); iterator.hasNext();) {
-			Object object = (Object) iterator.next();
-			if (object instanceof InputType) {
-				if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equalsIgnoreCase(((InputType) object).getType())) {
-					inputType = (InputType) object;
-					break;
-				}
-			}
-		}
-		assertNotNull(inputType);
-
 		EDIDataParser parser = new EDIDataParser();
-		TagList tagList = parser.parseEDIFile(EDIParserTest.class.getResourceAsStream("input-message.edi"), inputType,
+		TagList tagList = parser.parseEDIFile(EDIParserTest.class.getResourceAsStream("input-message.edi"),
 				resourceList);
 		assertNotNull(tagList);
 		List<String> namesList = new ArrayList<String>();
 		namesList.add("Orderaaa");
-		checkTagList1(tagList.getChildren(), namesList, new String[] { "header", "customer-details", "order-item" });
-
-		for (Iterator<?> iterator = ilist.iterator(); iterator.hasNext();) {
-			Object object = (Object) iterator.next();
-			if (object instanceof InputType) {
-				if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equalsIgnoreCase(((InputType) object).getType())
-						&& object != inputType) {
-					inputType = (InputType) object;
-					break;
-				}
-			}
-		}
-
-		parser = new EDIDataParser();
-		tagList = parser.parseEDIFile(EDIParserTest.class.getResourceAsStream("input-message.edi"), inputType,
-				resourceList);
-		assertNotNull(tagList);
 		checkTagList1(tagList.getChildren(), namesList, new String[] { "header", "customer-details", "order-item" });
 	}
 

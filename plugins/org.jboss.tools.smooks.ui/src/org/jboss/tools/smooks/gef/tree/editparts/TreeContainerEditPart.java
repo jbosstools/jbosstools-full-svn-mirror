@@ -32,7 +32,6 @@ import org.jboss.tools.smooks.gef.tree.figures.TreeFigureExpansionEvent;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 
 /**
  * @author DartPeng
@@ -132,9 +131,8 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 			ISmooksModelProvider modelProvider = (ISmooksModelProvider) editor.getAdapter(ISmooksModelProvider.class);
 
 			if (modelProvider != null && getModel() instanceof IMoveableModel) {
-				SmooksGraphicsExtType graph = modelProvider.getSmooksGraphicsExt();
 				Rectangle rect = ((IMoveableModel) getModel()).getBounds();
-				recordBounds(graph, rect);
+//				recordBounds(graph, rect);
 			}
 		}
 	}
