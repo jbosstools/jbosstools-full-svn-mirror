@@ -33,7 +33,11 @@ import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
+import org.jboss.tools.smooks.model.javabean.BindingsType;
+import org.jboss.tools.smooks.model.javabean.ExpressionType;
+import org.jboss.tools.smooks.model.javabean.ValueType;
+import org.jboss.tools.smooks.model.javabean.WiringType;
+import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
@@ -42,8 +46,6 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
  * 
  */
 public class SelectorValidator extends AbstractValidator {
-
-	private SmooksGraphicsExtType extType = null;
 
 	private List<Object> list = new ArrayList<Object>();
 
@@ -108,6 +110,13 @@ public class SelectorValidator extends AbstractValidator {
 					}
 				}
 				if (node == null && feature instanceof EAttribute) {
+					if (model instanceof BeanType || model instanceof BindingsType || model instanceof ValueType
+							|| model instanceof org.jboss.tools.smooks.model.javabean12.ValueType || model instanceof WiringType
+							|| model instanceof org.jboss.tools.smooks.model.javabean12.WiringType || model instanceof ExpressionType
+							|| model instanceof org.jboss.tools.smooks.model.javabean12.ExpressionType) {
+						return newWaringDiagnostic("Can't find the input source node :   '" + path + "'", model,
+								(EAttribute) feature);
+					}
 					return newWaringDiagnostic("Selector '" + path + "' isn't available", model, (EAttribute) feature);
 				}
 			}
@@ -140,7 +149,7 @@ public class SelectorValidator extends AbstractValidator {
 			final SmooksResourceListType finalList = listType;
 			Display dis = SmooksConfigurationActivator.getDefault().getWorkbench().getDisplay();
 			if (dis != null && !dis.isDisposed()) {
-				dis.asyncExec(new Runnable() {
+				dis.syncExec(new Runnable() {
 
 					/*
 					 * (non-Javadoc)
@@ -155,12 +164,9 @@ public class SelectorValidator extends AbstractValidator {
 							try {
 								IEditorPart part = activePage.findEditor(input);
 								if (part != null && part instanceof AbstractSmooksFormEditor) {
-									extType = ((AbstractSmooksFormEditor) part).getSmooksGraphicsExt();
-									if (extType != null) {
-										List<Object> l = SelectorCreationDialog.generateInputData(extType, finalList);
-										if (l != null) {
-											list.addAll(l);
-										}
+									List<Object> l = SelectorCreationDialog.generateInputData(finalList);
+									if (l != null) {
+										list.addAll(l);
 									}
 								}
 							} catch (Throwable t) {

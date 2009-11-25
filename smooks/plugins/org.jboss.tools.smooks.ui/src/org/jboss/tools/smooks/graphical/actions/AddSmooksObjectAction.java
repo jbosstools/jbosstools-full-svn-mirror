@@ -18,7 +18,6 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 
 /**
  * @author Dart
@@ -123,10 +122,10 @@ public abstract class AddSmooksObjectAction extends AddSmooksModelAction {
 	protected abstract Object getSmooks12Type();
 
 	protected Object getNewObject() {
-		SmooksGraphicsExtType ext = this.getProvider().getSmooksGraphicsExt();
-		if (ext == null)
-			return null;
-		String version = ext.getPlatformVersion();
+//		SmooksGraphicsExtType ext = this.getProvider().getSmooksGraphicsExt();
+//		if (ext == null)
+//			return null;
+		String version = this.getProvider().getPlatformVersion();
 		if (SmooksConstants.VERSION_1_1.equals(version)) {
 			return getSmooks11Object();
 		}
@@ -137,10 +136,10 @@ public abstract class AddSmooksObjectAction extends AddSmooksModelAction {
 	}
 
 	protected Object getNewType() {
-		SmooksGraphicsExtType ext = this.getProvider().getSmooksGraphicsExt();
-		if (ext == null)
-			return null;
-		String version = ext.getPlatformVersion();
+//		SmooksGraphicsExtType ext = this.getProvider().getSmooksGraphicsExt();
+//		if (ext == null)
+//			return null;
+		String version = this.getProvider().getPlatformVersion();
 		if (SmooksConstants.VERSION_1_1.equals(version)) {
 			return getSmooks11Type();
 		}

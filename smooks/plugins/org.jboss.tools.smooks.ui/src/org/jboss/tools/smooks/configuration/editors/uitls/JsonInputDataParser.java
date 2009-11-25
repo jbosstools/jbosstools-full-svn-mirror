@@ -24,7 +24,6 @@ import org.dom4j.DocumentException;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
-import org.jboss.tools.smooks.model.graphics.ext.InputType;
 import org.jboss.tools.smooks.model.json.JsonReader;
 import org.jboss.tools.smooks.model.json.Key;
 import org.jboss.tools.smooks.model.json.KeyMap;
@@ -115,9 +114,8 @@ public class JsonInputDataParser {
 				illegalElementNameCharReplacement, nullValueReplacement, keyMap, indent, encoding);
 	}
 
-	public IXMLStructuredObject parseJsonFile(InputStream stream, InputType inputType,
-			SmooksResourceListType resourceList) throws FileNotFoundException, ParserConfigurationException,
-			DocumentException, InvocationTargetException {
+	public IXMLStructuredObject parseJsonFile(InputStream stream, SmooksResourceListType resourceList)
+			throws FileNotFoundException, ParserConfigurationException, DocumentException, InvocationTargetException {
 
 		List<AbstractReader> readers = resourceList.getAbstractReader();
 		int count = 0;
@@ -142,10 +140,10 @@ public class JsonInputDataParser {
 		return null;
 	}
 
-	public IXMLStructuredObject parseJsonFile(String filePath, InputType inputType, SmooksResourceListType resourceList)
+	public IXMLStructuredObject parseJsonFile(String filePath, SmooksResourceListType resourceList)
 			throws FileNotFoundException, ParserConfigurationException, DocumentException, InvocationTargetException {
 		FileInputStream stream = new FileInputStream(filePath);
-		return this.parseJsonFile(stream, inputType, resourceList);
+		return this.parseJsonFile(stream, resourceList);
 	}
 
 	public IXMLStructuredObject parseJsonFile(String filePath, String rootName, String arrayElementName,

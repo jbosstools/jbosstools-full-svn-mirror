@@ -16,7 +16,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -24,12 +23,6 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.ui.PartInitException;
 import org.jboss.tools.smooks.configuration.editors.SmooksConfigurationFormPage;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
-import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
-import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
-import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks10.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks10.model.smooks.SmooksResourceListType;
 
 /**
  * 
@@ -59,7 +52,7 @@ public class Smooks10MultiFormEditor extends AbstractSmooksFormEditor implements
 		overViewPage = createSmooksConfigurationOverviewPage();
 		addValidateListener(overViewPage);
 		addSourceSynchronizeListener(overViewPage);
-		addSmooksGraphExtetionListener(overViewPage);
+		// addSmooksGraphExtetionListener(overViewPage);
 		try {
 			int index = this.addPage(overViewPage);
 			setPageText(index, "Overview");
@@ -67,21 +60,21 @@ public class Smooks10MultiFormEditor extends AbstractSmooksFormEditor implements
 			e.printStackTrace();
 		}
 
-		readerPage = new Smooks10InputFormPage(this, "reader_page", "Input");
-		addValidateListener(readerPage);
-		addSourceSynchronizeListener(readerPage);
-		addSmooksGraphExtetionListener(readerPage);
-		try {
-			int index = this.addPage(readerPage);
-			setPageText(index, "Input");
-		} catch (PartInitException e) {
-			e.printStackTrace();
-		}
+		// readerPage = new Smooks10InputFormPage(this, "reader_page", "Input");
+		// addValidateListener(readerPage);
+		// addSourceSynchronizeListener(readerPage);
+		// // addSmooksGraphExtetionListener(readerPage);
+		// try {
+		// int index = this.addPage(readerPage);
+		// setPageText(index, "Input");
+		// } catch (PartInitException e) {
+		// e.printStackTrace();
+		// }
 
 		configurationPage = createSmooksConfigurationFormPage();
 		addValidateListener(configurationPage);
 		addSourceSynchronizeListener(configurationPage);
-		addSmooksGraphExtetionListener(configurationPage);
+		// addSmooksGraphExtetionListener(configurationPage);
 		try {
 			int index = this.addPage(configurationPage);
 			setPageText(index, "Message Filter");
@@ -92,35 +85,38 @@ public class Smooks10MultiFormEditor extends AbstractSmooksFormEditor implements
 		super.addPages();
 	}
 
-	@Override
-	protected SmooksGraphicsExtType createSmooksGraphcsExtType(Object smooksModel) {
-		SmooksResourceListType resourceList = null;
-		if (smooksModel instanceof DocumentRoot) {
-			resourceList = ((DocumentRoot) smooksModel).getSmooksResourceList();
-		}
-
-		if (resourceList == null) {
-			return null;
-		}
-
-		FeatureMap map = resourceList.getMixed();
-		Object obj = map.get(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT, true);
-		if(obj instanceof List<?>){
-			if(((List<?>)obj).isEmpty()){
-				((List<Object>)obj).add(GraphFactory.eINSTANCE.createSmooksGraphicsExtType());
-			}
-			Object oooo = ((List<?>)obj).get(0);
-			if(oooo instanceof SmooksGraphicsExtType){
-				return ((SmooksGraphicsExtType)oooo);
-			}
-		}
-		return null;
-	}
-
-	@Override
-	protected void generateSmooksGraphExtWithSave() {
-		super.generateSmooksGraphExtWithSave();
-	}
+	// @Override
+	// protected SmooksGraphicsExtType createSmooksGraphcsExtType(Object
+	// smooksModel) {
+	// SmooksResourceListType resourceList = null;
+	// if (smooksModel instanceof DocumentRoot) {
+	// resourceList = ((DocumentRoot) smooksModel).getSmooksResourceList();
+	// }
+	//
+	// if (resourceList == null) {
+	// return null;
+	// }
+	//
+	// FeatureMap map = resourceList.getMixed();
+	// Object obj =
+	// map.get(GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT,
+	// true);
+	// if(obj instanceof List<?>){
+	// if(((List<?>)obj).isEmpty()){
+	// ((List<Object>)obj).add(GraphFactory.eINSTANCE.createSmooksGraphicsExtType());
+	// }
+	// Object oooo = ((List<?>)obj).get(0);
+	// if(oooo instanceof SmooksGraphicsExtType){
+	// return ((SmooksGraphicsExtType)oooo);
+	// }
+	// }
+	// return null;
+	// }
+	//
+	// @Override
+	// protected void generateSmooksGraphExtWithSave() {
+	// super.generateSmooksGraphExtWithSave();
+	// }
 
 	private Smooks10ConfigurationOverviewPage createSmooksConfigurationOverviewPage() {
 		return new Smooks10ConfigurationOverviewPage(this, "overview_page", "Overview", this);
@@ -194,17 +190,19 @@ public class Smooks10MultiFormEditor extends AbstractSmooksFormEditor implements
 		}
 	}
 
-	public void addSmooksGraphExtetionListener(ISmooksGraphChangeListener listener) {
-		SmooksGraphicsExtType ex = getSmooksGraphicsExt();
-		if (ex != null) {
-			ex.addSmooksGraphChangeListener(listener);
-		}
-	}
-
-	public void removeSmooksGraphExtetionListener(ISmooksGraphChangeListener listener) {
-		SmooksGraphicsExtType ex = getSmooksGraphicsExt();
-		if (ex != null) {
-			ex.removeSmooksGraphChangeListener(listener);
-		}
-	}
+	// public void addSmooksGraphExtetionListener(ISmooksGraphChangeListener
+	// listener) {
+	// SmooksGraphicsExtType ex = getSmooksGraphicsExt();
+	// if (ex != null) {
+	// ex.addSmooksGraphChangeListener(listener);
+	// }
+	// }
+	//
+	// public void removeSmooksGraphExtetionListener(ISmooksGraphChangeListener
+	// listener) {
+	// SmooksGraphicsExtType ex = getSmooksGraphicsExt();
+	// if (ex != null) {
+	// ex.removeSmooksGraphChangeListener(listener);
+	// }
+	// }
 }

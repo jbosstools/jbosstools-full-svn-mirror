@@ -45,6 +45,8 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.jboss.tools.smooks.configuration.editors.csv.CSVDataParser;
 import org.jboss.tools.smooks.configuration.editors.edi.EDIDataParser;
+import org.jboss.tools.smooks.configuration.editors.input.InputParameter;
+import org.jboss.tools.smooks.configuration.editors.input.InputType;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModelFactory;
 import org.jboss.tools.smooks.configuration.editors.uitls.JsonInputDataParser;
@@ -55,9 +57,6 @@ import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
 import org.jboss.tools.smooks.configuration.editors.xml.XSDObjectAnalyzer;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
-import org.jboss.tools.smooks.model.graphics.ext.InputType;
-import org.jboss.tools.smooks.model.graphics.ext.ParamType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
@@ -69,7 +68,6 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  */
 public class SelectorCreationDialog extends Dialog {
 
-	private SmooksGraphicsExtType graphicsExt;
 	private TreeViewer viewer;
 	private Object currentSelection;
 	private Button onlyNameButton;
@@ -83,9 +81,8 @@ public class SelectorCreationDialog extends Dialog {
 		super(parentShell);
 	}
 
-	public SelectorCreationDialog(Shell parentShell, SmooksGraphicsExtType graphicsExt, IEditorPart editorPart) {
+	public SelectorCreationDialog(Shell parentShell, IEditorPart editorPart) {
 		super(parentShell);
-		this.graphicsExt = graphicsExt;
 		selectorAttributes = new SelectorAttributes();
 		this.editorPart = editorPart;
 	}
@@ -243,26 +240,25 @@ public class SelectorCreationDialog extends Dialog {
 		});
 	}
 
-	public static List<Object> generateInputData(SmooksGraphicsExtType extType,
-			SmooksResourceListType smooksResourceListType) {
+	public static List<Object> generateInputData(SmooksResourceListType smooksResourceListType) {
 		List<Object> list = new ArrayList<Object>();
-		if (extType != null) {
-			IJavaProject project = SmooksUIUtils.getJavaProject(extType);
+		if (smooksResourceListType != null) {
+			IJavaProject project = SmooksUIUtils.getJavaProject(smooksResourceListType);
 			try {
-				List<InputType> inputLists = extType.getInput();
+				List<InputType> inputLists = SmooksUIUtils.getInputTypeList(smooksResourceListType);
 				for (Iterator<?> iterator = inputLists.iterator(); iterator.hasNext();) {
 					InputType inputType = (InputType) iterator.next();
-					if (!SmooksUIUtils.isActivedInput(inputType))
+					if (!inputType.isActived())
 						continue;
 					String type = inputType.getType();
-					String path = SmooksModelUtils.getInputPath(inputType);
+					String path = inputType.getPath();
 					if (type != null && path != null) {
 						path = path.trim();
 						if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(type)
 								|| SmooksModelUtils.INPUT_TYPE_EDI_1_2.equals(type)) {
 							EDIDataParser parser = new EDIDataParser();
 							try {
-								TagList tl = parser.parseEDIFile(path, inputType, smooksResourceListType);
+								TagList tl = parser.parseEDIFile(path, smooksResourceListType);
 								if (tl != null) {
 									list.addAll(((TagList) tl).getChildren());
 								}
@@ -274,7 +270,7 @@ public class SelectorCreationDialog extends Dialog {
 								|| SmooksModelUtils.INPUT_TYPE_CSV_1_2.equals(type)) {
 							CSVDataParser parser = new CSVDataParser();
 							try {
-								TagList tl = parser.parseCSV(path, inputType, smooksResourceListType);
+								TagList tl = parser.parseCSV(path, smooksResourceListType);
 								if (tl != null) {
 									list.addAll(((TagList) tl).getChildren());
 								}
@@ -287,7 +283,7 @@ public class SelectorCreationDialog extends Dialog {
 							try {
 								JsonInputDataParser parser = new JsonInputDataParser();
 								IXMLStructuredObject tagList = parser.parseJsonFile(SmooksUIUtils.parseFilePath(path),
-										inputType, smooksResourceListType);
+										smooksResourceListType);
 								if (tagList instanceof TagList) {
 									list.addAll(((TagList) tagList).getChildren());
 								} else {
@@ -313,10 +309,11 @@ public class SelectorCreationDialog extends Dialog {
 							try {
 								path = SmooksUIUtils.parseFilePath(path);
 								String rootElementName = null;
-								List<ParamType> paramers = inputType.getParam();
+								List<InputParameter> paramers = inputType.getParameters();
 								for (Iterator<?> iterator2 = paramers.iterator(); iterator2.hasNext();) {
-									ParamType paramType = (ParamType) iterator2.next();
-									if ("rootElement".equals(paramType.getName())) {
+									InputParameter paramType = (InputParameter) iterator2.next();
+									String pn = paramType.getName();
+									if ("rootElement".equals(pn)) {
 										rootElementName = paramType.getValue();
 										break;
 									}
@@ -358,100 +355,104 @@ public class SelectorCreationDialog extends Dialog {
 		return list;
 	}
 
-	public static List<Object> generateInputDataForSmooks10(SmooksGraphicsExtType extType) {
+	public static List<Object> generateInputDataForSmooks10() {
 		List<Object> list = new ArrayList<Object>();
-		if (extType != null) {
-			IJavaProject project = SmooksUIUtils.getJavaProject(extType);
-			try {
-				List<InputType> inputLists = extType.getInput();
-				for (Iterator<?> iterator = inputLists.iterator(); iterator.hasNext();) {
-					InputType inputType = (InputType) iterator.next();
-					if (!SmooksUIUtils.isActivedInput(inputType))
-						continue;
-					String type = inputType.getType();
-					String path = SmooksModelUtils.getInputPath(inputType);
-					if (type != null && path != null) {
-						path = path.trim();
-						if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(type)
-								|| SmooksModelUtils.INPUT_TYPE_EDI_1_2.equals(type)) {
-						}
-						if (SmooksModelUtils.INPUT_TYPE_CSV.equals(type)
-								|| SmooksModelUtils.INPUT_TYPE_CSV_1_2.equals(type)) {
-						}
-						if (SmooksModelUtils.INPUT_TYPE_JSON_1_1.equals(type)
-								|| SmooksModelUtils.INPUT_TYPE_JSON_1_2.equals(type)) {
-						}
-						if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(type)) {
-							try {
-								Class<?> clazz = SmooksUIUtils.loadClass(path, project);
-								JavaBeanModel model = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
-								if (model != null) {
-									list.add(model);
-								}
-							} catch (Throwable t) {
-								// ignore
-							}
-						}
-						if (SmooksModelUtils.INPUT_TYPE_XSD.equals(type)) {
-							try {
-								path = SmooksUIUtils.parseFilePath(path);
-								String rootElementName = null;
-								List<ParamType> paramers = inputType.getParam();
-								for (Iterator<?> iterator2 = paramers.iterator(); iterator2.hasNext();) {
-									ParamType paramType = (ParamType) iterator2.next();
-									if ("rootElement".equals(paramType.getName())) {
-										rootElementName = paramType.getValue();
-										break;
-									}
-								}
-								if (rootElementName != null) {
-									rootElementName = rootElementName.trim();
-									list.add(new XSDObjectAnalyzer().loadElement(path, rootElementName));
-								}
-							} catch (Throwable tt) {
-								// ingore
-							}
-						}
-						if (SmooksModelUtils.INPUT_TYPE_XML.equals(type)) {
-							try {
-								path = SmooksUIUtils.parseFilePath(path);
-
-								// XMLObjectAnalyzer analyzer = new
-								// XMLObjectAnalyzer();
-								// TagList doc = analyzer.analyze(path, null);
-
-								AbstractXMLObject model = new XMLObjectAnalyzer().analyze(path, null);
-								if (model != null) {
-									if (model instanceof TagList) {
-										list.addAll(((TagList) model).getChildren());
-									} else {
-										list.add(model);
-									}
-								}
-							} catch (Throwable e) {
-
-							}
-						}
-					}
-				}
-			} catch (Exception e) {
-				// SmooksConfigurationActivator.getDefault().log(e);
-			}
-		}
+		// if (extType != null) {
+		// IJavaProject project = SmooksUIUtils.getJavaProject(extType);
+		// try {
+		// List<InputType> inputLists = extType.getInput();
+		// for (Iterator<?> iterator = inputLists.iterator();
+		// iterator.hasNext();) {
+		// InputType inputType = (InputType) iterator.next();
+		// if (!SmooksUIUtils.isActivedInput(inputType))
+		// continue;
+		// String type = inputType.getType();
+		// String path = SmooksModelUtils.getInputPath(inputType);
+		// if (type != null && path != null) {
+		// path = path.trim();
+		// if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(type)
+		// || SmooksModelUtils.INPUT_TYPE_EDI_1_2.equals(type)) {
+		// }
+		// if (SmooksModelUtils.INPUT_TYPE_CSV.equals(type)
+		// || SmooksModelUtils.INPUT_TYPE_CSV_1_2.equals(type)) {
+		// }
+		// if (SmooksModelUtils.INPUT_TYPE_JSON_1_1.equals(type)
+		// || SmooksModelUtils.INPUT_TYPE_JSON_1_2.equals(type)) {
+		// }
+		// if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(type)) {
+		// try {
+		// Class<?> clazz = SmooksUIUtils.loadClass(path, project);
+		// JavaBeanModel model =
+		// JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
+		// if (model != null) {
+		// list.add(model);
+		// }
+		// } catch (Throwable t) {
+		// // ignore
+		// }
+		// }
+		// if (SmooksModelUtils.INPUT_TYPE_XSD.equals(type)) {
+		// try {
+		// path = SmooksUIUtils.parseFilePath(path);
+		// String rootElementName = null;
+		// List<ParamType> paramers = inputType.getParam();
+		// for (Iterator<?> iterator2 = paramers.iterator();
+		// iterator2.hasNext();) {
+		// ParamType paramType = (ParamType) iterator2.next();
+		// if ("rootElement".equals(paramType.getName())) {
+		// rootElementName = paramType.getValue();
+		// break;
+		// }
+		// }
+		// if (rootElementName != null) {
+		// rootElementName = rootElementName.trim();
+		// list.add(new XSDObjectAnalyzer().loadElement(path, rootElementName));
+		// }
+		// } catch (Throwable tt) {
+		// // ingore
+		// }
+		// }
+		// if (SmooksModelUtils.INPUT_TYPE_XML.equals(type)) {
+		// try {
+		// path = SmooksUIUtils.parseFilePath(path);
+		//
+		// // XMLObjectAnalyzer analyzer = new
+		// // XMLObjectAnalyzer();
+		// // TagList doc = analyzer.analyze(path, null);
+		//
+		// AbstractXMLObject model = new XMLObjectAnalyzer().analyze(path,
+		// null);
+		// if (model != null) {
+		// if (model instanceof TagList) {
+		// list.addAll(((TagList) model).getChildren());
+		// } else {
+		// list.add(model);
+		// }
+		// }
+		// } catch (Throwable e) {
+		//
+		// }
+		// }
+		// }
+		// }
+		// } catch (Exception e) {
+		// // SmooksConfigurationActivator.getDefault().log(e);
+		// }
+		// }
 		return list;
 	}
 
 	protected List<Object> generateInputData() {
-		Object obj  = null;
-		if(editorPart instanceof ISmooksModelProvider){
-			obj = ((ISmooksModelProvider)editorPart).getSmooksModel();
-		}else{
+		Object obj = null;
+		if (editorPart instanceof ISmooksModelProvider) {
+			obj = ((ISmooksModelProvider) editorPart).getSmooksModel();
+		} else {
 			ISmooksModelProvider provider = (ISmooksModelProvider) editorPart.getAdapter(ISmooksModelProvider.class);
-			if(provider != null){
+			if (provider != null) {
 				obj = provider.getSmooksModel();
 			}
 		}
-		if(obj == null){
+		if (obj == null) {
 			List<Object> ll = Collections.emptyList();
 			return ll;
 		}
@@ -459,7 +460,7 @@ public class SelectorCreationDialog extends Dialog {
 		if (obj instanceof DocumentRoot) {
 			resourceList = ((DocumentRoot) obj).getSmooksResourceList();
 		}
-		return generateInputData(graphicsExt, resourceList);
+		return generateInputData(resourceList);
 	}
 
 	protected void showInputDataWizard() {
@@ -470,8 +471,7 @@ public class SelectorCreationDialog extends Dialog {
 		}
 
 		wizard.setForcePreviousAndNextButtons(true);
-		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(this.getShell(), wizard,
-				this.graphicsExt);
+		StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(this.getShell(), wizard);
 		if (dialog.show() == WizardDialog.OK) {
 			List<Object> input = this.generateInputData();
 			this.viewer.setInput(input);

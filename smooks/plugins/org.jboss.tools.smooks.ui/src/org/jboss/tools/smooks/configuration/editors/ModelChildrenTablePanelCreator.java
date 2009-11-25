@@ -399,7 +399,7 @@ public class ModelChildrenTablePanelCreator {
 
 	public String getSmooksVersion() {
 		if (this.smooksModelProvider != null) {
-			return this.smooksModelProvider.getSmooksGraphicsExt().getPlatformVersion();
+			return this.smooksModelProvider.getPlatformVersion();
 		}
 		return null;
 	}

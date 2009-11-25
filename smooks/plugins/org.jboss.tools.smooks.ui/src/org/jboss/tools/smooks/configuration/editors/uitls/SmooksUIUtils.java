@@ -11,12 +11,10 @@
 package org.jboss.tools.smooks.configuration.editors.uitls;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -45,6 +43,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -132,6 +131,8 @@ import org.jboss.tools.smooks.configuration.editors.OpenFileHyperLinkListener;
 import org.jboss.tools.smooks.configuration.editors.SelectorAttributes;
 import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
 import org.jboss.tools.smooks.configuration.editors.groovy.GroovyUICreator;
+import org.jboss.tools.smooks.configuration.editors.input.InputParameter;
+import org.jboss.tools.smooks.configuration.editors.input.InputType;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaMethodsSelectionDialog;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaPropertiesSelectionDialog;
@@ -142,6 +143,7 @@ import org.jboss.tools.smooks.core.SmooksCoreActivator;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.calc.CalcPackage;
 import org.jboss.tools.smooks.model.calc.Counter;
 import org.jboss.tools.smooks.model.csv.CsvPackage;
@@ -161,15 +163,6 @@ import org.jboss.tools.smooks.model.fileRouting.OutputStream;
 import org.jboss.tools.smooks.model.freemarker.BindTo;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
-import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
-import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
-import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
-import org.jboss.tools.smooks.model.graphics.ext.InputType;
-import org.jboss.tools.smooks.model.graphics.ext.ParamType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphExtensionDocumentRoot;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
-import org.jboss.tools.smooks.model.graphics.ext.TaskType;
-import org.jboss.tools.smooks.model.graphics.ext.util.GraphResourceFactoryImpl;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.ExpressionType;
@@ -192,8 +185,11 @@ import org.jboss.tools.smooks.model.rules10.Rules10Package;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
+import org.jboss.tools.smooks.model.smooks.ParamType;
+import org.jboss.tools.smooks.model.smooks.ParamsType;
 import org.jboss.tools.smooks.model.smooks.ReaderType;
 import org.jboss.tools.smooks.model.smooks.ResourceConfigType;
+import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.validation10.Validation10Package;
@@ -997,18 +993,17 @@ public class SmooksUIUtils {
 	}
 
 	public static AttributeFieldEditPart createSelectorFieldEditor(FormToolkit toolkit, Composite parent,
-			final IItemPropertyDescriptor propertyDescriptor, Object model, final SmooksGraphicsExtType extType,
-			final IEditorPart currentEditorPart) {
-		return createSelectorFieldEditor(null, toolkit, parent, propertyDescriptor, model, extType, currentEditorPart);
+			final IItemPropertyDescriptor propertyDescriptor, Object model, final IEditorPart currentEditorPart) {
+		return createSelectorFieldEditor(null, toolkit, parent, propertyDescriptor, model, currentEditorPart);
 	}
 
 	public static AttributeFieldEditPart createSelectorFieldEditor(String labelText, FormToolkit toolkit,
 			Composite parent, final IItemPropertyDescriptor propertyDescriptor, Object model,
-			final SmooksGraphicsExtType extType, final IEditorPart currentEditorPart) {
+			final IEditorPart currentEditorPart) {
 		AttributeFieldEditPart fieldEditPart = createDialogFieldEditor(labelText, parent, toolkit, propertyDescriptor,
 				"Browse", new IFieldDialog() {
 					public Object open(Shell shell) {
-						SelectorCreationDialog dialog = new SelectorCreationDialog(shell, extType, currentEditorPart);
+						SelectorCreationDialog dialog = new SelectorCreationDialog(shell, currentEditorPart);
 						try {
 							if (dialog.open() == Dialog.OK) {
 								Object currentSelection = dialog.getCurrentSelection();
@@ -1036,7 +1031,7 @@ public class SmooksUIUtils {
 
 		SearchComposite sc = (SearchComposite) fieldEditPart.getContentControl();
 
-		final FieldAssistDisposer disposer = addSelectorFieldAssistToText(sc.getText(), extType,
+		final FieldAssistDisposer disposer = addSelectorFieldAssistToText(sc.getText(),
 				getSmooks11ResourceListType((EObject) model));
 		sc.addDisposeListener(new DisposeListener() {
 
@@ -1079,15 +1074,16 @@ public class SmooksUIUtils {
 				arrayInstance = null;
 				return clazz;
 			}
-			if(className.endsWith("]") && !className.endsWith("[]")){
-//				int index = className.indexOf("[");
-//				String collectionName = className.substring(0,index);
-//				String componentName = className.substring(index + 1 , className.length() - 1);
-//				Class<?> clazz = loader.loadClass(className);
-//				Object arrayInstance = Array.newInstance(clazz, 0);
-//				clazz = arrayInstance.getClass();
-//				arrayInstance = null;
-//				return clazz;
+			if (className.endsWith("]") && !className.endsWith("[]")) {
+				// int index = className.indexOf("[");
+				// String collectionName = className.substring(0,index);
+				// String componentName = className.substring(index + 1 ,
+				// className.length() - 1);
+				// Class<?> clazz = loader.loadClass(className);
+				// Object arrayInstance = Array.newInstance(clazz, 0);
+				// clazz = arrayInstance.getClass();
+				// arrayInstance = null;
+				// return clazz;
 			}
 			return loader.loadClass(className);
 		}
@@ -1095,18 +1091,20 @@ public class SmooksUIUtils {
 		return null;
 	}
 
-	public static SmooksGraphicsExtType loadSmooksGraphicsExt(IFile file) throws IOException {
-		Resource resource = new GraphResourceFactoryImpl().createResource(URI.createPlatformResourceURI(file
-				.getFullPath().toPortableString(), false));
-		resource.load(Collections.emptyMap());
-		if (resource.getContents().size() > 0) {
-			Object obj = resource.getContents().get(0);
-			if (obj instanceof SmooksGraphExtensionDocumentRoot) {
-				return ((SmooksGraphExtensionDocumentRoot) obj).getSmooksGraphicsExt();
-			}
-		}
-		return null;
-	}
+	// public static SmooksGraphicsExtType loadSmooksGraphicsExt(IFile file)
+	// throws IOException {
+	// Resource resource = new
+	// GraphResourceFactoryImpl().createResource(URI.createPlatformResourceURI(file
+	// .getFullPath().toPortableString(), false));
+	// resource.load(Collections.emptyMap());
+	// if (resource.getContents().size() > 0) {
+	// Object obj = resource.getContents().get(0);
+	// if (obj instanceof SmooksGraphExtensionDocumentRoot) {
+	// return ((SmooksGraphExtensionDocumentRoot) obj).getSmooksGraphicsExt();
+	// }
+	// }
+	// return null;
+	// }
 
 	public static AttributeFieldEditPart createTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, OpenEditorEditInnerContentsAction action) {
@@ -1800,8 +1798,137 @@ public class SmooksUIUtils {
 		return loadedNodes;
 	}
 
-	public static FieldAssistDisposer addSelectorFieldAssistToText(Text text, SmooksGraphicsExtType extType,
-			SmooksResourceListType resourceList) {
+	public static ParamType getInputTypeAssociatedParamType(InputType inputType, SmooksResourceListType resourceList) {
+		ParamsType params = resourceList.getParams();
+		if (params != null) {
+			List<ParamType> paramList = params.getParam();
+
+			for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
+				ParamType paramType = (ParamType) iterator.next();
+				String name = paramType.getName();
+				String value = paramType.getStringValue();
+				if (inputType.getType().equals(name) && inputType.getPath().equals(value)) {
+					// find the associated param
+					return paramType;
+				}
+			}
+		}
+		return null;
+	}
+
+	public static void removeInputType(InputType inputType, ISmooksModelProvider smooksModelProvider) {
+		SmooksResourceListType resourceList = getSmooks11ResourceListType(smooksModelProvider.getSmooksModel());
+		if (resourceList != null) {
+			ParamsType params = resourceList.getParams();
+			if (params != null) {
+				List<ParamType> paramList = params.getParam();
+				List<ParamType> removingList = new ArrayList<ParamType>();
+				for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
+					ParamType paramType = (ParamType) iterator.next();
+					String name = paramType.getName();
+					String value = paramType.getStringValue();
+					if (inputType.getType().equals(name) && inputType.getPath().equals(value)) {
+						// find the associated param
+						removingList.add(paramType);
+						continue;
+					}
+					if (isInputAssociatedParameter(paramType, inputType)) {
+						removingList.add(paramType);
+					}
+				}
+				if (!removingList.isEmpty()) {
+					Command removeCommand = RemoveCommand.create(smooksModelProvider.getEditingDomain(), removingList);
+					if (removeCommand.canExecute()) {
+						smooksModelProvider.getEditingDomain().getCommandStack().execute(removeCommand);
+					}
+				}
+			}
+		}
+	}
+
+	public static ParamType getInputTypeParam(SmooksResourceListType resourceList) {
+		ParamsType params = resourceList.getParams();
+		if (params != null) {
+			List<ParamType> paramList = params.getParam();
+			for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
+				ParamType paramType = (ParamType) iterator.next();
+				if (SmooksModelUtils.INPUT_TYPE.equals(paramType.getName())) {
+					return paramType;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public static boolean isInputParamType(ParamType param){
+		String type = param.getType();
+		if (SmooksModelUtils.INPUT_ACTIVE_TYPE.equals(type)
+				|| SmooksModelUtils.INPUT_DEACTIVE_TYPE.equals(type)) {
+			return true;
+		}
+		return false;
+	}
+
+	public static List<InputType> getInputTypeList(SmooksResourceListType resourceList) {
+		List<InputType> inputList = new ArrayList<org.jboss.tools.smooks.configuration.editors.input.InputType>();
+		ParamsType params = resourceList.getParams();
+		if (params != null) {
+			List<org.jboss.tools.smooks.model.smooks.ParamType> paramList = params.getParam();
+			for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
+				org.jboss.tools.smooks.model.smooks.ParamType paramType = (org.jboss.tools.smooks.model.smooks.ParamType) iterator
+						.next();
+				String type = paramType.getType();
+				if (isInputParamType(paramType)) {
+					org.jboss.tools.smooks.configuration.editors.input.InputType input = new org.jboss.tools.smooks.configuration.editors.input.InputType();
+					input.setType(paramType.getName());
+					input.setActived(SmooksModelUtils.INPUT_ACTIVE_TYPE.equals(type));
+					String path = paramType.getStringValue();
+					if (path != null) {
+						path = path.trim();
+					}
+					input.setPath(path);
+					inputList.add(input);
+				}
+			}
+
+			for (Iterator<?> iterator = inputList.iterator(); iterator.hasNext();) {
+				org.jboss.tools.smooks.configuration.editors.input.InputType input = (org.jboss.tools.smooks.configuration.editors.input.InputType) iterator
+						.next();
+				for (Iterator<?> iterator2 = paramList.iterator(); iterator2.hasNext();) {
+					org.jboss.tools.smooks.model.smooks.ParamType paramType = (org.jboss.tools.smooks.model.smooks.ParamType) iterator2
+							.next();
+					if (isInputAssociatedParameter(paramType, input)) {
+						InputParameter p = new InputParameter();
+						p.setName(getInputParameterName(input.getType(), paramType.getName()));
+						p.setValue(paramType.getStringValue());
+						input.getParameters().add(p);
+					}
+				}
+			}
+		}
+		return inputList;
+	}
+
+	public static boolean isInputAssociatedParameter(org.jboss.tools.smooks.model.smooks.ParamType param,
+			org.jboss.tools.smooks.configuration.editors.input.InputType input) {
+		String type = input.getType();
+		String pn = param.getName();
+		if (pn != null && pn.startsWith(type) && !pn.equals(type)) {
+			return true;
+		}
+		return false;
+	}
+
+	public static String generateInputParameterName(String type, String name) {
+		return type + "." + name;
+	}
+
+	public static String getInputParameterName(String type, String name) {
+		int index = name.indexOf(type);
+		return name.substring(index + type.length() + 1, name.length());
+	}
+
+	public static FieldAssistDisposer addSelectorFieldAssistToText(Text text, SmooksResourceListType resourceList) {
 		// Decorate the text widget with the light-bulb image denoting content
 		// assist
 		int bits = SWT.DOWN | SWT.LEFT;
@@ -1831,7 +1958,7 @@ public class SmooksUIUtils {
 		char[] autoActivationChars = new char[] { '/' };
 
 		// Create the proposal provider
-		SelectorContentProposalProvider proposalProvider = new SelectorContentProposalProvider(extType, resourceList);
+		SelectorContentProposalProvider proposalProvider = new SelectorContentProposalProvider(resourceList);
 		// Create the adapter
 		ContentAssistCommandAdapter adapter = new ContentAssistCommandAdapter(text, textContentAdapter,
 				proposalProvider, command, autoActivationChars);
@@ -2434,17 +2561,17 @@ public class SmooksUIUtils {
 		return false;
 	}
 
-	public static List<InputType> getActivedInputTypes(SmooksGraphicsExtType extType) {
-		List<InputType> inputTypes = extType.getInput();
-		List<InputType> types = new ArrayList<InputType>();
-		for (Iterator<?> iterator = inputTypes.iterator(); iterator.hasNext();) {
-			InputType inputType = (InputType) iterator.next();
-			if (isActivedInput(inputType)) {
-				types.add(inputType);
-			}
-		}
-		return types;
-	}
+	// public static List<InputType> getActivedInputTypes(Smooks extType) {
+	// List<InputType> inputTypes = extType.getInput();
+	// List<InputType> types = new ArrayList<InputType>();
+	// for (Iterator<?> iterator = inputTypes.iterator(); iterator.hasNext();) {
+	// InputType inputType = (InputType) iterator.next();
+	// if (isActivedInput(inputType)) {
+	// types.add(inputType);
+	// }
+	// }
+	// return types;
+	// }
 
 	public static void fillAllTask(TaskType task, List<TaskType> taskList) {
 		taskList.add(task);
@@ -2455,27 +2582,10 @@ public class SmooksUIUtils {
 		}
 	}
 
-	public static boolean isActivedInput(InputType input) {
-		List<ParamType> params = input.getParam();
-		for (Iterator<?> iterator2 = params.iterator(); iterator2.hasNext();) {
-			ParamType paramType = (ParamType) iterator2.next();
-			if (SmooksModelUtils.PARAM_NAME_ACTIVED.equals(paramType.getName())) {
-				String value = paramType.getValue();
-				if (value == null)
-					continue;
-				value = value.trim();
-				if ("true".equals(value)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	public static List<InputType> recordInputDataInfomation(EditingDomain domain, InputType input,
-			SmooksGraphicsExtType extType, String type, String path, Properties properties) {
+	public static List<InputType> recordInputDataInfomation(EditingDomain domain, ParamsType paramsType, String type,
+			String path, Properties properties) {
 		List<InputType> inputTypeList = new ArrayList<InputType>();
-		if (type != null && path != null && extType != null && domain != null) {
+		if (type != null && path != null && domain != null) {
 			String[] values = path.split(";");
 			if (values == null || values.length == 0) {
 				values = new String[] { path };
@@ -2485,43 +2595,40 @@ public class SmooksUIUtils {
 				value = value.trim();
 				if (value.length() == 0)
 					continue;
-				if (input == null) {
-					input = GraphFactory.eINSTANCE.createInputType();
-				}
+				ParamType inputParam = SmooksFactory.eINSTANCE.createParamType();
+				InputType input = new InputType();
+				input.setPath(path);
 				input.setType(type);
-				ParamType pathParam = null;
-				List<ParamType> paramList = input.getParam();
-				for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
-					ParamType paramType = (ParamType) iterator.next();
-					if (SmooksModelUtils.PARAM_NAME_PATH.equals(paramType.getName())) {
-						pathParam = paramType;
-						break;
-					}
-				}
-				if (pathParam == null) {
-					pathParam = GraphFactory.eINSTANCE.createParamType();
-					pathParam.setName(SmooksModelUtils.PARAM_NAME_PATH);
-				}
-				pathParam.setValue(value);
+				input.setActived(false);
 
-				input.getParam().add(pathParam);
+				inputParam.setName(type);
+				inputParam.setStringValue(path);
 				List<ParamType> params = generateExtParams(type, path, properties);
-				input.getParam().addAll(params);
-				Command command = AddCommand.create(domain, extType,
-						GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__INPUT, input);
+				for (Iterator<?> iterator = params.iterator(); iterator.hasNext();) {
+					ParamType paramType2 = (ParamType) iterator.next();
+					InputParameter p = new InputParameter();
+					p.setName(getInputParameterName(input.getType(), paramType2.getName()));
+					p.setValue(paramType2.getStringValue());
+					input.getParameters().add(p);
+				}
+				params.add(inputParam);
+				Command command = AddCommand.create(domain, paramsType, SmooksPackage.Literals.PARAMS_TYPE__PARAM,
+						params);
 				if (command.canExecute()) {
 					domain.getCommandStack().execute(command);
 					inputTypeList.add(input);
 				}
-				// extType.getInput().add(input);
 			}
 			// try {
 			// extType.eResource().save(Collections.emptyMap());
-			List<ISmooksGraphChangeListener> listeners = extType.getChangeListeners();
-			for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
-				ISmooksGraphChangeListener smooksGraphChangeListener = (ISmooksGraphChangeListener) iterator.next();
-				smooksGraphChangeListener.inputTypeChanged(extType);
-			}
+			// List<ISmooksGraphChangeListener> listeners =
+			// extType.getChangeListeners();
+			// for (Iterator<?> iterator = listeners.iterator();
+			// iterator.hasNext();) {
+			// ISmooksGraphChangeListener smooksGraphChangeListener =
+			// (ISmooksGraphChangeListener) iterator.next();
+			// smooksGraphChangeListener.inputTypeChanged(extType);
+			// }
 			// } catch (IOException e) {
 			// SmooksConfigurationActivator.getDefault().log(e);
 			// }
@@ -2585,9 +2692,9 @@ public class SmooksUIUtils {
 			Enumeration<?> enumerations = properties.keys();
 			while (enumerations.hasMoreElements()) {
 				Object key = (Object) enumerations.nextElement();
-				ParamType param = GraphFactory.eINSTANCE.createParamType();
-				param.setValue(properties.getProperty(key.toString()));
-				param.setName(key.toString());
+				ParamType param = SmooksFactory.eINSTANCE.createParamType();
+				param.setStringValue(properties.getProperty(key.toString()));
+				param.setName(generateInputParameterName(type, key.toString()));
 				lists.add(param);
 			}
 		}
@@ -2875,9 +2982,6 @@ public class SmooksUIUtils {
 		if (version == null || element == null)
 			return false;
 		String ns = element.eClass().getEPackage().getNsURI();
-		if (GraphPackage.eNS_URI.equals(ns)) {
-			return true;
-		}
 		if (SmooksConstants.VERSION_1_1.equals(version)) {
 			if (isSmooks1_2PlatformSpecialXMLNS(ns)) {
 				return true;
@@ -2995,10 +3099,11 @@ public class SmooksUIUtils {
 		if (parent instanceof BindingsType) {
 			classString = ((BindingsType) parent).getClass_();
 		}
-		if (classString != null)
+		if (classString != null) {
 			classString = classString.trim();
-		if (classString.endsWith("]")) {
-			return true;
+			if (classString.endsWith("]")) {
+				return true;
+			}
 		}
 		return false;
 	}

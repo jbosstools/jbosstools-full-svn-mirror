@@ -8,18 +8,24 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors;
-
-import org.jboss.tools.smooks.graphical.editors.process.TaskType;
+package org.jboss.tools.smooks.graphical.editors.process;
 
 /**
  * @author Dart
  *
  */
-public interface ITaskNodeProvider {
+public class ProcessFactory {
+	public static ProcessFactory eINSTANCE = new ProcessFactory();
 	
-	public TaskType getTaskType();
+	public TaskType createTaskType(){
+		return new TaskTypeImpl();
+	}
 	
-	public void setTaskType(TaskType taskType);
+	public ProcessType createProcessType(){
+		return new ProcessTypeImpl();
+	}
 	
+	public TemplateAppyTaskNode createTemplateTask(){
+		return new TemplateAppyTaskNode();
+	}
 }

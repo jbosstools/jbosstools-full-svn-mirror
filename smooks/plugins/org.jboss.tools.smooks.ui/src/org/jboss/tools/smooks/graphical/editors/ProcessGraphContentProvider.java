@@ -16,8 +16,8 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.zest.core.viewers.IGraphEntityContentProvider;
-import org.jboss.tools.smooks.model.graphics.ext.ProcessType;
-import org.jboss.tools.smooks.model.graphics.ext.TaskType;
+import org.jboss.tools.smooks.graphical.editors.process.ProcessType;
+import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 
 /**
  * @author Dart

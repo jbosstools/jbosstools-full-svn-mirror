@@ -14,11 +14,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EObject;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
-import org.jboss.tools.smooks.model.graphics.ext.ProcessType;
-import org.jboss.tools.smooks.model.graphics.ext.TaskType;
+import org.jboss.tools.smooks.graphical.editors.process.ProcessType;
+import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 
 /**
  * @author Dart
@@ -30,10 +29,14 @@ public class TaskTypeRules {
 		TaskType parentTask = testTask;
 		String parentID = parentTask.getId();
 
-		EObject parent = currentTask;
-		while (!(parent instanceof ProcessType)) {
-			parent = parent.eContainer();
+		Object parent = currentTask;
+		while (!(parent instanceof ProcessType) && parent != null) {
+			if (parent instanceof TaskType) {
+				parent = ((TaskType) parent).getParent();
+			}
 		}
+		
+		if(parent == null) return false;
 
 		List<TaskType> currentList = ((ProcessType) parent).getTask();
 		List<TaskType> taskList = new ArrayList<TaskType>();

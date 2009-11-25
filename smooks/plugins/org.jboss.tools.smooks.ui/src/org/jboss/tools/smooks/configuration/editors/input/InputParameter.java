@@ -8,18 +8,44 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.graphical.editors;
-
-import org.jboss.tools.smooks.graphical.editors.process.TaskType;
+package org.jboss.tools.smooks.configuration.editors.input;
 
 /**
  * @author Dart
  *
  */
-public interface ITaskNodeProvider {
+public class InputParameter {
+	private String name;
 	
-	public TaskType getTaskType();
+	private String value;
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the value
+	 */
+	public String getValue() {
+		return value;
+	}
+
+	/**
+	 * @param value the value to set
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 	
-	public void setTaskType(TaskType taskType);
 	
 }

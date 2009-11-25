@@ -18,7 +18,6 @@ import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
@@ -27,12 +26,11 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
  */
 public class SelectorContentProposalProvider implements IContentProposalProvider {
 
-	private SmooksGraphicsExtType extType;
-	
+	// private SmooksGraphicsExtType extType;
+
 	private SmooksResourceListType resourceList;
 
-	public SelectorContentProposalProvider(SmooksGraphicsExtType extType,SmooksResourceListType resourceList) {
-		this.extType = extType;
+	public SelectorContentProposalProvider(SmooksResourceListType resourceList) {
 		this.resourceList = resourceList;
 	}
 
@@ -44,12 +42,9 @@ public class SelectorContentProposalProvider implements IContentProposalProvider
 	 * .lang.String, int)
 	 */
 	public IContentProposal[] getProposals(String contents, int position) {
-		if(contents.indexOf("h") != -1){
-			System.out.println();
-		}
-		List<Object> list = SelectorCreationDialog.generateInputData(extType,resourceList);
-		if(list == null || list.isEmpty()){
-			return new IContentProposal[]{};
+		List<Object> list = SelectorCreationDialog.generateInputData(resourceList);
+		if (list == null || list.isEmpty()) {
+			return new IContentProposal[] {};
 		}
 		List<IContentProposal> contentList = new ArrayList<IContentProposal>();
 		List<IXMLStructuredObject> models = new ArrayList<IXMLStructuredObject>();

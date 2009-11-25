@@ -64,8 +64,8 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 		this.resourceList = resourceList;
 		this.smooksModelProvider = provider;
 	}
-	
-	protected CreationFactory createConnectionCreationFactory(){
+
+	protected CreationFactory createConnectionCreationFactory() {
 		return new CreationFactory() {
 
 			public Object getObjectType() {
@@ -130,8 +130,7 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 					IItemLabelProvider itemLabelProvider = (IItemLabelProvider) editingDomain.getAdapterFactory()
 							.adapt(v, IItemLabelProvider.class);
 
-					if (SmooksUIUtils.isUnSupportElement(smooksModelProvider.getSmooksGraphicsExt()
-							.getPlatformVersion(), (EObject) v)) {
+					if (SmooksUIUtils.isUnSupportElement(smooksModelProvider.getPlatformVersion(), (EObject) v)) {
 						continue;
 					}
 					if (isIgnoreType(v)) {
@@ -191,8 +190,7 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 					Object imageObj = itemLabelProvider.getImage(v);
 					smallImage = ExtendedImageRegistry.getInstance().getImageDescriptor(imageObj);
 				}
-				if (SmooksUIUtils.isUnSupportElement(smooksModelProvider.getSmooksGraphicsExt().getPlatformVersion(),
-						(EObject) v)) {
+				if (SmooksUIUtils.isUnSupportElement(smooksModelProvider.getPlatformVersion(), (EObject) v)) {
 					continue;
 				}
 				if (isIgnoreType(v)) {

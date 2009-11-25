@@ -22,7 +22,6 @@ import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 
 /**
@@ -41,18 +40,15 @@ public class ResourceConfigTypeUICreator extends PropertyUICreator {
 	 */
 	public AttributeFieldEditPart createPropertyUI(FormToolkit toolkit, Composite parent,
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
-			ISmooksModelProvider formEditor,IEditorPart part) {
+			ISmooksModelProvider formEditor, IEditorPart part) {
 		if (feature == SmooksPackage.eINSTANCE.getResourceConfigType_Selector()) {
-			SmooksGraphicsExtType ext = formEditor.getSmooksGraphicsExt();
-			if (ext != null) {
-				return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, ext,part);
-			}
+			return SmooksUIUtils.createSelectorFieldEditor(toolkit, parent, propertyDescriptor, model, part);
 		}
 		if (feature == SmooksPackage.eINSTANCE.getResourceConfigType_SelectorNamespace()) {
 		}
 		if (feature == SmooksPackage.eINSTANCE.getResourceConfigType_TargetProfile()) {
 		}
-		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor,part);
+		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor, part);
 	}
 
 	@Override
@@ -74,9 +70,9 @@ public class ResourceConfigTypeUICreator extends PropertyUICreator {
 	 * org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor)
 	 */
 	@Override
-	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
-			Composite parent, Object model, ISmooksModelProvider formEditor,IEditorPart part) {
-		return createElementSelectionSection("Selector", editingdomain, toolkit, parent, model, formEditor,part,
+	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
+			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
+		return createElementSelectionSection("Selector", editingdomain, toolkit, parent, model, formEditor, part,
 				SmooksPackage.eINSTANCE.getResourceConfigType_Selector(), SmooksPackage.eINSTANCE
 						.getResourceConfigType_SelectorNamespace());
 	}

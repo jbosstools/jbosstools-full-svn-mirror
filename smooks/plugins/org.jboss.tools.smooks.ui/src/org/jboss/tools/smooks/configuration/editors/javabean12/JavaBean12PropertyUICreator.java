@@ -149,6 +149,8 @@ public class JavaBean12PropertyUICreator extends PropertyUICreator {
 		separator.setLayoutData(gd);
 
 		Hyperlink link = toolkit.createHyperlink(parent, "Add Binding", SWT.NONE);
+		link.setEnabled(false);
+		link.setVisible(false);
 		final Composite fp = parent;
 		final BeanType fb = (BeanType) model;
 		final IEditorPart ff = part;

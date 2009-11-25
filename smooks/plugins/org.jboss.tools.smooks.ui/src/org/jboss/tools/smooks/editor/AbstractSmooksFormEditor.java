@@ -36,7 +36,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -66,7 +65,6 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.configuration.validate.SmooksMarkerHelper;
 import org.jboss.tools.smooks.configuration.validate.SmooksModelValidator;
-import org.jboss.tools.smooks.graphical.editors.ProcessAnalyzer;
 import org.jboss.tools.smooks.model.calc.provider.CalcItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.common.provider.CommonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.csv.provider.CsvItemProviderAdapterFactory;
@@ -78,13 +76,6 @@ import org.jboss.tools.smooks.model.edi12.provider.Edi12ItemProviderAdapterFacto
 import org.jboss.tools.smooks.model.esbrouting.provider.EsbroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.fileRouting.provider.FileRoutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.freemarker.provider.FreemarkerItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
-import org.jboss.tools.smooks.model.graphics.ext.GraphPackage;
-import org.jboss.tools.smooks.model.graphics.ext.GraphType;
-import org.jboss.tools.smooks.model.graphics.ext.ISmooksGraphChangeListener;
-import org.jboss.tools.smooks.model.graphics.ext.ProcessType;
-import org.jboss.tools.smooks.model.graphics.ext.ProcessesType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.groovy.provider.GroovyItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.iorouting.provider.IoroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.javabean.provider.JavabeanItemProviderAdapterFactory;
@@ -97,15 +88,18 @@ import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory
 import org.jboss.tools.smooks.model.persistence12.provider.Persistence12ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.rules10.provider.Rules10ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks.model.smooks.SmooksPackage;
-import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.validation10.provider.Validation10ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
 
 public class AbstractSmooksFormEditor extends FormEditor implements IEditingDomainProvider,
-		ISmooksModelValidateListener, ISmooksModelProvider, ISmooksGraphChangeListener {
+		ISmooksModelValidateListener, ISmooksModelProvider {
+
+	protected String platformVersion = SmooksConstants.VERSION_1_2;
+
+	protected String inputType = null;
 
 	protected List<ISourceSynchronizeListener> sourceSynchronizeListener = new ArrayList<ISourceSynchronizeListener>();
 
@@ -118,8 +112,6 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	protected EditingDomain editingDomain = null;
 
 	// private PropertySheetPage propertySheetPage = null;
-
-	protected SmooksGraphicsExtType smooksGraphicsExt = null;
 
 	protected SmooksModelValidator validator = null;
 
@@ -139,17 +131,50 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		super();
 		initEditingDomain();
 	}
-	
+
+	/**
+	 * @return the inputType
+	 */
+	public String getInputType() {
+		ParamType inputParam = SmooksUIUtils.getInputTypeParam(SmooksUIUtils.getSmooks11ResourceListType(smooksModel));
+		if (inputParam != null) {
+			return inputParam.getStringValue();
+		}
+		return null;
+	}
+
+	/**
+	 * @param inputType
+	 *            the inputType to set
+	 */
+	public void setInputType(String inputType) {
+		this.inputType = inputType;
+	}
+
+	/**
+	 * @return the platformVersion
+	 */
+	public String getPlatformVersion() {
+		return platformVersion;
+	}
+
+	/**
+	 * @param platformVersion
+	 *            the platformVersion to set
+	 */
+	public void setPlatformVersion(String platformVersion) {
+		this.platformVersion = platformVersion;
+	}
+
 	@Override
 	public Object getAdapter(Class adapter) {
-		if(adapter == ISmooksModelProvider.class)
+		if (adapter == ISmooksModelProvider.class)
 			return this;
-		if(adapter == IEditingDomainProvider.class){
+		if (adapter == IEditingDomainProvider.class) {
 			return this;
 		}
 		return super.getAdapter(adapter);
 	}
-
 
 	public void addSourceSynchronizeListener(ISourceSynchronizeListener listener) {
 		this.sourceSynchronizeListener.add(listener);
@@ -363,21 +388,6 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		}
 	}
 
-	/**
-	 * @return the smooksGraphicsExt
-	 */
-	public SmooksGraphicsExtType getSmooksGraphicsExt() {
-		return smooksGraphicsExt;
-	}
-
-	/**
-	 * @param smooksGraphicsExt
-	 *            the smooksGraphicsExt to set
-	 */
-	public void setSmooksGraphicsExt(SmooksGraphicsExtType smooksGraphicsExt) {
-		this.smooksGraphicsExt = smooksGraphicsExt;
-	}
-
 	protected StructuredTextEditor createTextEditor() {
 		SmooksXMLEditor xmlEditor = new SmooksXMLEditor() {
 
@@ -441,20 +451,10 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		try {
 			resource.load(new ByteArrayInputStream(conents.getBytes()), Collections.emptyMap());
 			this.smooksModel = resource.getContents().get(0);
-			SmooksGraphicsExtType oldGraphModel = smooksGraphicsExt;
-			smooksGraphicsExt = createSmooksGraphcsExtType(smooksModel);
-			if (smooksGraphicsExt == null) {
-				generateSmooksGraphExt(false);
-				analyzeSmooksProcess(false);
-			}
-			if (oldGraphModel != null) {
-				smooksGraphicsExt.getChangeListeners().addAll(oldGraphModel.getChangeListeners());
-				oldGraphModel.getChangeListeners().clear();
-			}
 		} catch (IOException e) {
 			smooksModel = null;
-			smooksGraphicsExt = null;
 		}
+		setPlatformVersion(SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel));
 		for (Iterator<?> iterator = this.sourceSynchronizeListener.iterator(); iterator.hasNext();) {
 			ISourceSynchronizeListener l = (ISourceSynchronizeListener) iterator.next();
 			try {
@@ -551,26 +551,6 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		}
 	}
 
-	protected SmooksGraphicsExtType createSmooksGraphcsExtType(Object smooksModel) {
-		SmooksResourceListType resourceList = null;
-		if (smooksModel instanceof DocumentRoot) {
-			resourceList = ((DocumentRoot) smooksModel).getSmooksResourceList();
-		}
-
-		if (resourceList == null) {
-			return null;
-		}
-
-		List<?> children = resourceList.getAbstractResourceConfig();
-		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
-			Object object = (Object) iterator.next();
-			if (object instanceof SmooksGraphicsExtType) {
-				return (SmooksGraphicsExtType) object;
-			}
-		}
-		return null;
-	}
-
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
 		String filePath = null;
@@ -619,69 +599,11 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 		setPartName(partName);
 
-		smooksGraphicsExt = createSmooksGraphcsExtType(smooksModel);
-
 		String version = SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel);
 		try {
-			if (smooksGraphicsExt != null) {
-				if (smooksGraphicsExt.getGraph() == null) {
-					GraphType graph = GraphFactory.eINSTANCE.createGraphType();
-					smooksGraphicsExt.setGraph(graph);
-				}
-				if (smooksGraphicsExt.getProcesses() == null) {
-					ProcessesType processes = GraphFactory.eINSTANCE.createProcessesType();
-					ProcessType process = GraphFactory.eINSTANCE.createProcessType();
-					processes.setProcess(process);
-					smooksGraphicsExt.setProcesses(processes);
-				} else {
-					if (smooksGraphicsExt.getProcesses().getProcess() == null) {
-						ProcessesType processes = smooksGraphicsExt.getProcesses();
-						ProcessType process = GraphFactory.eINSTANCE.createProcessType();
-						processes.setProcess(process);
-					}
-				}
-
-				if (SmooksConstants.VERSION_1_2.equals(smooksGraphicsExt.getPlatformVersion())) {
-					if (version.equals(SmooksConstants.VERSION_1_1)) {
-						version = SmooksConstants.VERSION_1_2;
-					}
-				}
-				if (!version.equals(smooksGraphicsExt.getPlatformVersion())) {
-					smooksGraphicsExt.setPlatformVersion(version);
-					smooksResource.save(Collections.emptyMap());
-				}
-			} else {
-				generateSmooksGraphExtWithSave();
-			}
-
+			this.setPlatformVersion(version);
 		} catch (Exception e) {
 
-		}
-		if (smooksGraphicsExt != null) {
-			smooksGraphicsExt.addSmooksGraphChangeListener(this);
-		}
-
-		// analyze procss contents
-		analyzeSmooksProcess(true);
-	}
-
-	protected void analyzeSmooksProcess(boolean forceSave) {
-		ProcessAnalyzer processAnalyzer = new ProcessAnalyzer(this);
-		EObject smooksModel = getSmooksResourceList();
-		if (smooksModel != null && smooksModel instanceof SmooksResourceListType) {
-			boolean needSave = processAnalyzer.analyzeSmooksModels((SmooksResourceListType) smooksModel);
-			if (needSave && forceSave) {
-				ResourceSet rs = this.getEditingDomain().getResourceSet();
-				List<Resource> resourceLis = rs.getResources();
-				for (Iterator<?> iterator = resourceLis.iterator(); iterator.hasNext();) {
-					Resource resource = (Resource) iterator.next();
-					try {
-						resource.save(Collections.emptyMap());
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					}
-				}
-			}
 		}
 	}
 
@@ -695,42 +617,6 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			m = ((DocumentRoot) smooksModel).getSmooksResourceList();
 		}
 		return m;
-	}
-
-	protected void generateSmooksGraphExtWithSave() {
-		generateSmooksGraphExt(true);
-	}
-
-	protected void generateSmooksGraphExt(boolean forceSave) {
-		String version = SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel);
-		String inputType = SmooksUIUtils.judgeInputType(smooksModel);
-
-		SmooksResourceListType resourceList = null;
-		if (smooksModel instanceof DocumentRoot) {
-			resourceList = ((DocumentRoot) smooksModel).getSmooksResourceList();
-		}
-
-		if (resourceList != null) {
-			smooksGraphicsExt = GraphFactory.eINSTANCE.createSmooksGraphicsExtType();
-			smooksGraphicsExt.setGraph(GraphFactory.eINSTANCE.createGraphType());
-			smooksGraphicsExt.setProcesses(GraphFactory.eINSTANCE.createProcessesType());
-			smooksGraphicsExt.setInputType(inputType);
-			smooksGraphicsExt.setPlatformVersion(version);
-			AddCommand.create(
-					this.editingDomain,
-					resourceList,
-					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
-					FeatureMapUtil.createEntry(
-							GraphPackage.Literals.SMOOKS_GRAPH_EXTENSION_DOCUMENT_ROOT__SMOOKS_GRAPHICS_EXT,
-							smooksGraphicsExt)).execute();
-			if (forceSave) {
-				try {
-					smooksModel.eResource().save(Collections.emptyMap());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
 	}
 
 	public IPath getNewPath(IFile file) {
@@ -810,15 +696,6 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 	public void validateStart() {
 
-	}
-
-	public void graphChanged(SmooksGraphicsExtType extType) {
-
-	}
-
-	public void inputTypeChanged(SmooksGraphicsExtType extType) {
-		// graphChanged = true;
-		// firePropertyChange(PROP_DIRTY);
 	}
 
 	public void graphPropertyChange(EStructuralFeature featre, Object value) {

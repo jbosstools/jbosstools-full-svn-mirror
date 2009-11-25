@@ -29,7 +29,6 @@ import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.FreemarkerC
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerCSVNodeGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
@@ -80,7 +79,7 @@ public class CSVRecordSection extends AbstractSmooksPropertySection {
 		hookTextControls();
 	}
 
-	private Template getFreemarkerTemplate() {
+	private Freemarker getFreemarker() {
 		Object graphModel = this.getPresentSelectedGraphModel();
 		if (graphModel instanceof AbstractSmooksGraphicalModel) {
 			AbstractSmooksGraphicalModel templateGModel = (AbstractSmooksGraphicalModel) graphModel;
@@ -91,31 +90,31 @@ public class CSVRecordSection extends AbstractSmooksPropertySection {
 				Object freemarker = templateGModel.getData();
 				freemarker = AdapterFactoryEditingDomain.unwrap(freemarker);
 				if (freemarker instanceof Freemarker) {
-					return ((Freemarker) freemarker).getTemplate();
+					return ((Freemarker) freemarker);
 				}
 			}
 		}
 		return null;
 	}
-	
-	private FreemarkerCSVNodeEditPart getRecordCSVEditPart(){
+
+	private FreemarkerCSVNodeEditPart getRecordCSVEditPart() {
 		GraphicalEditPart editPart = getPresentSelectedEditPart();
 		List<?> children = editPart.getChildren();
 		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
 			Object childEditPart = (Object) iterator.next();
-			if(childEditPart instanceof FreemarkerCSVNodeEditPart){
-				return ((FreemarkerCSVNodeEditPart)childEditPart);
+			if (childEditPart instanceof FreemarkerCSVNodeEditPart) {
+				return ((FreemarkerCSVNodeEditPart) childEditPart);
 			}
 		}
 		return null;
 	}
-	
-	private void generateNewTemplateContent(){
+
+	private void generateNewTemplateContent() {
 		FreemarkerCSVNodeEditPart editPart = getRecordCSVEditPart();
-		if(editPart != null){
+		if (editPart != null) {
 			Object data = editPart.getModel();
-			if(data instanceof FreemarkerCSVNodeGraphicalModel){
-				((FreemarkerCSVNodeGraphicalModel)data).changeFreemarkerContents();
+			if (data instanceof FreemarkerCSVNodeGraphicalModel) {
+				((FreemarkerCSVNodeGraphicalModel) data).changeFreemarkerContents();
 			}
 		}
 	}
@@ -124,9 +123,10 @@ public class CSVRecordSection extends AbstractSmooksPropertySection {
 		speratorText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				if (fireEvent) {
-					Template template = getFreemarkerTemplate();
+					Freemarker template = getFreemarker();
 					if (template != null) {
-						ParamType param = SmooksModelUtils.getParam(template, SmooksModelUtils.KEY_CSV_SEPERATOR);
+						ParamType param = SmooksModelUtils.getParam(template.getParam(),
+								SmooksModelUtils.KEY_CSV_SEPERATOR);
 						if (param == null)
 							return;
 						SmooksModelUtils.setTextToSmooksType(getSmooksModelProvider().getEditingDomain(), param,
@@ -140,9 +140,10 @@ public class CSVRecordSection extends AbstractSmooksPropertySection {
 		quoteText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				if (fireEvent) {
-					Template template = getFreemarkerTemplate();
+					Freemarker template = getFreemarker();
 					if (template != null) {
-						ParamType param = SmooksModelUtils.getParam(template, SmooksModelUtils.KEY_CSV_QUOTE);
+						ParamType param = SmooksModelUtils
+								.getParam(template.getParam(), SmooksModelUtils.KEY_CSV_QUOTE);
 						if (param == null)
 							return;
 						SmooksModelUtils.setTextToSmooksType(getSmooksModelProvider().getEditingDomain(), param,
@@ -165,11 +166,10 @@ public class CSVRecordSection extends AbstractSmooksPropertySection {
 	public void refresh() {
 		fireEvent = false;
 		super.refresh();
-
-		Template template = getFreemarkerTemplate();
-		if (template != null) {
-			String quote = SmooksModelUtils.getParamValue(template, SmooksModelUtils.KEY_CSV_QUOTE);
-			String sperator = SmooksModelUtils.getParamValue(template, SmooksModelUtils.KEY_CSV_SEPERATOR);
+		Freemarker freemarker = getFreemarker();
+		if (freemarker != null) {
+			String quote = SmooksModelUtils.getParamValue(freemarker.getParam(), SmooksModelUtils.KEY_CSV_QUOTE);
+			String sperator = SmooksModelUtils.getParamValue(freemarker.getParam(), SmooksModelUtils.KEY_CSV_SEPERATOR);
 
 			speratorText.setText(sperator);
 			quoteText.setText(quote);
