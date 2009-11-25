@@ -31,9 +31,6 @@ import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.Template;
-import org.jboss.tools.smooks.model.graphics.ext.GraphFactory;
-import org.jboss.tools.smooks.model.graphics.ext.InputType;
-import org.jboss.tools.smooks.model.graphics.ext.SmooksGraphicsExtType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
 import org.jboss.tools.smooks.model.smooks.ConditionsType;
@@ -65,15 +62,21 @@ public class SmooksModelUtils {
 
 	public static final String KEY_CSV_QUOTE = "quote";
 
-	public static final String INPUT_TYPE_JAVA = "java";
+	public static final String INPUT_TYPE_JAVA = "input.java";
 
-	public static final String INPUT_TYPE_CUSTOME = "custom";
+	public static final String INPUT_TYPE = "inputType";
 
-	public static final String INPUT_TYPE_JSON_1_1 = "json";
+	public static final String INPUT_TYPE_CUSTOME = "input.custom";
 
-	public static final String INPUT_TYPE_CSV = "csv";
+	public static final String INPUT_TYPE_JSON_1_1 = "input.json";
 
-	public static final String INPUT_TYPE_CSV_1_2 = "csv";
+	public static final String INPUT_TYPE_CSV = "input.csv";
+
+	public static final String INPUT_ACTIVE_TYPE = "input.type.actived";
+
+	public static final String INPUT_DEACTIVE_TYPE = "input.type.deactived";
+
+	public static final String INPUT_TYPE_CSV_1_2 = "input.csv";
 
 	public static final String PARAM_NAME_CLASS = "class";
 
@@ -81,9 +84,9 @@ public class SmooksModelUtils {
 
 	public static final String PARAM_NAME_ACTIVED = "actived";
 
-	public static final String INPUT_TYPE_XML = "xml";
+	public static final String INPUT_TYPE_XML = "input.xml";
 
-	public static final String INPUT_TYPE_XSD = "xsd";
+	public static final String INPUT_TYPE_XSD = "input.xsd";
 
 	public static final String TYPE_XSL = "xsl";
 
@@ -95,11 +98,11 @@ public class SmooksModelUtils {
 
 	public static final String BINDINGS = "bindings";
 
-	public static final String INPUT_TYPE_EDI_1_1 = "EDI";
+	public static final String INPUT_TYPE_EDI_1_1 = "input.edi";
 
-	public static final String INPUT_TYPE_EDI_1_2 = "EDI";
+	public static final String INPUT_TYPE_EDI_1_2 = "input.edi";
 
-	public static final String INPUT_TYPE_JSON_1_2 = "json";
+	public static final String INPUT_TYPE_JSON_1_2 = "input.json";
 
 	public static EStructuralFeature ATTRIBUTE_PROPERTY = ExtendedMetaData.INSTANCE.demandFeature(null, "property",
 			false);
@@ -513,36 +516,32 @@ public class SmooksModelUtils {
 		return new CommandParameter(owner, feature, child);
 	}
 
-	public static void addJavaInput(SmooksGraphicsExtType ext, String className) {
-		InputType javaInput = GraphFactory.eINSTANCE.createInputType();
-		javaInput.setType(INPUT_TYPE_JAVA);
-		org.jboss.tools.smooks.model.graphics.ext.ParamType p = GraphFactory.eINSTANCE.createParamType();
-		p.setName(PARAM_NAME_CLASS);
-		p.setValue(className);
-		javaInput.getParam().add(p);
-		ext.getInput().add(javaInput);
-	}
-
-	public static String getInputPath(InputType input) {
-		List<org.jboss.tools.smooks.model.graphics.ext.ParamType> list = input.getParam();
-		if (INPUT_TYPE_JAVA.equals(input.getType()) || INPUT_TYPE_XML.equals(input.getType())
-				|| INPUT_TYPE_XSD.equals(input.getType()) || INPUT_TYPE_JSON_1_1.equals(input.getType())
-				|| INPUT_TYPE_JSON_1_2.equals(input.getType()) || INPUT_TYPE_CSV.equals(input.getType())
-				|| INPUT_TYPE_EDI_1_1.equals(input.getType()) || INPUT_TYPE_EDI_1_2.equals(input.getType())
-				|| INPUT_TYPE_CSV_1_2.equals(input.getType())) {
-			for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-				org.jboss.tools.smooks.model.graphics.ext.ParamType paramType = (org.jboss.tools.smooks.model.graphics.ext.ParamType) iterator
-						.next();
-				if ("path".equals(paramType.getName())) {
-					String value = paramType.getValue();
-					if (value != null)
-						value = value.trim();
-					return value;
-				}
-			}
-		}
-		return null;
-	}
+	// public static String getInputPath(InputType input) {
+	// List<org.jboss.tools.smooks.model.graphics.ext.ParamType> list =
+	// input.getParam();
+	// if (INPUT_TYPE_JAVA.equals(input.getType()) ||
+	// INPUT_TYPE_XML.equals(input.getType())
+	// || INPUT_TYPE_XSD.equals(input.getType()) ||
+	// INPUT_TYPE_JSON_1_1.equals(input.getType())
+	// || INPUT_TYPE_JSON_1_2.equals(input.getType()) ||
+	// INPUT_TYPE_CSV.equals(input.getType())
+	// || INPUT_TYPE_EDI_1_1.equals(input.getType()) ||
+	// INPUT_TYPE_EDI_1_2.equals(input.getType())
+	// || INPUT_TYPE_CSV_1_2.equals(input.getType())) {
+	// for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+	// org.jboss.tools.smooks.model.graphics.ext.ParamType paramType =
+	// (org.jboss.tools.smooks.model.graphics.ext.ParamType) iterator
+	// .next();
+	// if ("path".equals(paramType.getName())) {
+	// String value = paramType.getValue();
+	// if (value != null)
+	// value = value.trim();
+	// return value;
+	// }
+	// }
+	// }
+	// return null;
+	// }
 
 	public static List<ConditionType> collectConditionType(SmooksResourceListType resourceList) {
 		ConditionsType conditions = resourceList.getConditions();
@@ -569,8 +568,8 @@ public class SmooksModelUtils {
 						org.jboss.tools.smooks.model.smooks.SmooksPackage.Literals.DOCUMENT_ROOT__PARAM, param));
 	}
 
-	public static char getFreemarkerCSVSeperator(Template template) {
-		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(template, KEY_CSV_SEPERATOR);
+	public static char getFreemarkerCSVSeperator(Freemarker freemarker) {
+		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(freemarker.getParam(), KEY_CSV_SEPERATOR);
 		if (typeParam != null) {
 			String value = typeParam.getStringValue();
 			if (value != null && value.length() == 1) {
@@ -580,8 +579,8 @@ public class SmooksModelUtils {
 		return 0;
 	}
 
-	public static char getFreemarkerCSVQuote(Template template) {
-		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(template, KEY_CSV_QUOTE);
+	public static char getFreemarkerCSVQuote(Freemarker freemarker) {
+		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(freemarker.getParam(), KEY_CSV_QUOTE);
 		if (typeParam != null) {
 			String value = typeParam.getStringValue();
 			if (value != null && value.length() == 1) {
@@ -591,18 +590,18 @@ public class SmooksModelUtils {
 		return 0;
 	}
 
-	public static String getTemplateType(AnyType template) {
-		if (template == null)
+	public static String getTemplateType(Freemarker freemarker) {
+		if (freemarker == null)
 			return null;
-		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(template, KEY_TEMPLATE_TYPE);
+		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(freemarker.getParam(), KEY_TEMPLATE_TYPE);
 		if (typeParam != null) {
 			return typeParam.getStringValue();
 		}
 		return null;
 	}
 
-	public static String[] getFreemarkerCSVFileds(Template template) {
-		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(template, KEY_CSV_FIELDS);
+	public static String[] getFreemarkerCSVFileds(Freemarker freemarker) {
+		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(freemarker.getParam(), KEY_CSV_FIELDS);
 		if (typeParam != null) {
 			String value = typeParam.getStringValue();
 			if (value != null) {
@@ -615,6 +614,18 @@ public class SmooksModelUtils {
 
 	public static org.jboss.tools.smooks.model.smooks.ParamType getParam(AnyType model, String paramName) {
 		List<org.jboss.tools.smooks.model.smooks.ParamType> params = getParams(model);
+		for (Iterator<?> iterator = params.iterator(); iterator.hasNext();) {
+			org.jboss.tools.smooks.model.smooks.ParamType paramType = (org.jboss.tools.smooks.model.smooks.ParamType) iterator
+					.next();
+			if (paramName.equals(paramType.getName())) {
+				return paramType;
+			}
+		}
+		return null;
+	}
+
+	public static org.jboss.tools.smooks.model.smooks.ParamType getParam(
+			List<org.jboss.tools.smooks.model.smooks.ParamType> params, String paramName) {
 		for (Iterator<?> iterator = params.iterator(); iterator.hasNext();) {
 			org.jboss.tools.smooks.model.smooks.ParamType paramType = (org.jboss.tools.smooks.model.smooks.ParamType) iterator
 					.next();
