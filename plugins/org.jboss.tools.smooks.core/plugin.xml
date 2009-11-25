@@ -133,19 +133,6 @@
             class="org.jboss.tools.smooks.model.fileRouting.util.FileRoutingResourceFactoryImpl"/>
    </extension>
    
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <package
-            uri="http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd"
-            class="org.jboss.tools.smooks.model.graphics.ext.GraphPackage"
-            genModel="model/smooks-graphics-ext.genmodel"/>
-   </extension>
-
-   <extension point="org.eclipse.emf.ecore.extension_parser">
-      <parser
-            type="smooks-graphics-ext"
-            class="org.jboss.tools.smooks.model.graphics.ext.util.SmooksGraphicsExtResourceFactoryImpl"/>
-   </extension>
-   
      <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.milyn.org/xsd/smooks/csv-1.1.xsd"
