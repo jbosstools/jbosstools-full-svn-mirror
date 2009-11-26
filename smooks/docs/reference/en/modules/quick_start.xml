@@ -106,7 +106,10 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>The second wizard page is a Smooks configuration file version choose page.Select appropriate one and click <emphasis><property>Finish</property></emphasis>.</para>
+		<para>The second wizard page is  allows you to select Smooks configuration file version. Select the appropriate one and click <emphasis><property>Finish</property></emphasis> to complete the wizard.</para>
+		
+		
+		
 		<!--<para> As the quick start introduces how to create/edit the Java-to-Java Smooks
 			configuration file, let&apos;s select the<emphasis>
 				<property>Java-to-Java</property>
