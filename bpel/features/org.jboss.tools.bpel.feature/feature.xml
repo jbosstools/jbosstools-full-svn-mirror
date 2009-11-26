@@ -3,7 +3,8 @@
       id="org.jboss.tools.bpel.feature"
       label="%featureName"
       version="1.0.0.qualifier"
-      provider-name="%providerName">
+      provider-name="%providerName"
+      plugin="org.eclipse.bpel.ui">
 
    <description>
       %description
@@ -56,7 +57,6 @@
          version="0.0.0"
          unpack="false"/>
 
-
    <plugin
          id="org.eclipse.bpel.ui"
          download-size="0"
@@ -95,6 +95,5 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
 
 </feature>
