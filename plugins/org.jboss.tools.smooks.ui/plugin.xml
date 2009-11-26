@@ -245,4 +245,28 @@
        </propertyContributor>
     </extension>
 
+	<extension
+       point="org.eclipse.debug.core.launchConfigurationTypes">
+	    <launchConfigurationType
+	        name="Smooks Configuration"
+	        delegate="org.jboss.tools.smooks.launch.SmooksLaunchConfigurationDelegate"
+	        modes="run"               
+	        id="org.jboss.tools.smooks.ui.smooksLauncher">        
+	    </launchConfigurationType>
+	</extension>
+	<extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+	    <launchConfigurationTypeImage
+	        icon="icons/smooks-sm.gif"
+	        configTypeID="org.jboss.tools.smooks.ui.smooksLauncher"
+	        id="org.jboss.tools.smooks.ui.launchConfigurationTypeImage.smooksLauncher">
+	    </launchConfigurationTypeImage>
+	</extension>
+	<extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+	    <launchConfigurationTabGroup
+	        type="org.jboss.tools.smooks.ui.smooksLauncher"
+	        class="org.jboss.tools.smooks.launch.SmooksLaunchTabGroup"
+	        id="org.jboss.tools.smooks.ui.launchConfigurationTabGroup.smooksLauncher">
+	    </launchConfigurationTabGroup>
+	</extension>
+ 
 </plugin>

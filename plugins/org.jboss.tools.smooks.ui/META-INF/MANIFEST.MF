@@ -31,13 +31,20 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.views.properties.tabbed,
  org.eclipse.wst.xsl.core,
  org.eclipse.zest.core,
- org.eclipse.zest.layouts
+ org.eclipse.zest.layouts,
+ org.eclipse.debug.core;bundle-version="3.5.0",
+ org.eclipse.debug.ui;bundle-version="3.5.1",
+ org.eclipse.jdt.debug.ui;bundle-version="3.4.1",
+ org.eclipse.jdt.junit;bundle-version="3.5.1",
+ org.eclipse.ui.console;bundle-version="3.4.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName
-Bundle-ClassPath: libs/dom4j-1.6.1.jar,
- .
+Bundle-ClassPath: bin/,
+ libs/dom4j-1.6.1.jar,
+ .,
+ libs/xstream-1.2.2.jar
 Export-Package: org.jboss.template,
  org.jboss.template.csv,
  org.jboss.template.exception,
@@ -52,4 +59,5 @@ Export-Package: org.jboss.template,
  org.jboss.tools.smooks.configuration.editors_10,
  org.jboss.tools.smooks.edimap.editor,
  org.jboss.tools.smooks.editor,
+ org.jboss.tools.smooks.launch,
  org.jboss.tools.smooks.graphical.editors
