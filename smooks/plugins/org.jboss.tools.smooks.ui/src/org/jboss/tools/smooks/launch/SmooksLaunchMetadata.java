@@ -48,11 +48,6 @@ import org.milyn.delivery.sax.SAXVisitBefore;
  */
 public class SmooksLaunchMetadata {
 	
-	public static enum ProcessNodeType {
-		TEMPLATING,
-		JAVA_BINDING
-	}
-
 	private Smooks inputParamExtractor;
 	private boolean isValidSmooksConfig;
 	private File configFile;
@@ -71,6 +66,28 @@ public class SmooksLaunchMetadata {
 		return isValidSmooksConfig;
 	}
 
+	public String getErrorMessage() {
+		if(isValidSmooksConfig) {
+			throw new IllegalStateException("Invalid call to 'getErrorMessage()'.  Smooks configuration is NOT invalid.");
+		}
+		
+		if(configFile == null) {
+			return "Smooks configuration file not configured.";
+		} else if(!configFile.exists()) {
+			return "Specified Smooks configuration file not found.";
+		} else if(!configFile.isFile()) {
+			return "Specified Smooks configuration file is not a readable file.";		
+		} else if(inputFile == null) {
+			return "Specified Smooks configuration file 'Input' task is not configured with a sample input file.  Please configure the 'Input' task in the Process flow.";		
+		} else if(!inputFile.exists()) {
+			return "Specified Smooks configuration file 'Input' task is configured with a sample input file, but the file cannot be found.  Please reconfigure the 'Input' task in the Process flow.";		
+		} else if(!inputFile.isFile()) {
+			return "Specified Smooks configuration file 'Input' task is configured with a sample input file, but the file cannot be read.  Please reconfigure the 'Input' task in the Process flow.";		
+		}
+
+		return "";		
+	}
+	
 	public File getConfigFile() {
 		return configFile;
 	}
@@ -98,22 +115,11 @@ public class SmooksLaunchMetadata {
 		return builder.toString();
 	}
 	
-	public static Set<ProcessNodeType> fromNodeTypeString(String nodeTypeString) {
-		String[] tokens = nodeTypeString.split(",");
-		Set<ProcessNodeType> nodeTypes = new HashSet<ProcessNodeType>();
-		
-		for(String token : tokens) {
-			nodeTypes.add(ProcessNodeType.valueOf(token));
-		}
-		
-		return nodeTypes;
-	}
-
 	public void setSmooksConfig(IResource smooksConfig) {
 		reset();
 		
 		if(smooksConfig != null) {
-			configFile = new File(smooksConfig.getRawLocation().toOSString());
+			configFile = new File(smooksConfig.getRawLocation().toOSString().trim());
 			if(configFile.exists() && configFile.isFile()) {
 				ExecutionContext execContext = inputParamExtractor.createExecutionContext();
 				Properties inputParams = new Properties();
@@ -125,15 +131,21 @@ public class SmooksLaunchMetadata {
 					
 					inputParamExtractor.filterSource(execContext, new StreamSource(new FileInputStream(configFile)));
 					
-					String inputType = inputParams.getProperty(SmooksModelUtils.INPUT_TYPE);
+					inputType = inputParams.getProperty(SmooksModelUtils.INPUT_TYPE);
 					if(inputType != null) {
 						String inputPath = inputParams.getProperty(inputType);
 						if(inputPath != null) {
-							File inputFile = new File(SmooksUIUtils.parseFilePath(inputPath));
+							String resolvedFilePath;
+							try {
+								resolvedFilePath = SmooksUIUtils.parseFilePath(inputPath.trim());
+							} catch(Exception e) {
+								// It's not a valid config...
+								inputFile = new File(inputPath.trim());
+								return;
+							}
 							
+							inputFile = new File(resolvedFilePath);							
 							if(inputFile.exists() && inputFile.isFile()) {
-								this.inputType = inputType;
-								this.inputFile = inputFile;
 								isValidSmooksConfig = true;
 							}
 						}

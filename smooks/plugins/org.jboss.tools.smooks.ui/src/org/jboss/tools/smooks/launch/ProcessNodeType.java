@@ -19,31 +19,12 @@
  */
 package org.jboss.tools.smooks.launch;
 
-import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup;
-import org.eclipse.debug.ui.CommonTab;
-import org.eclipse.debug.ui.ILaunchConfigurationDialog;
-import org.eclipse.debug.ui.ILaunchConfigurationTab;
-import org.eclipse.jdt.debug.ui.launchConfigurations.JavaArgumentsTab;
-import org.eclipse.jdt.debug.ui.launchConfigurations.JavaClasspathTab;
-import org.eclipse.jdt.debug.ui.launchConfigurations.JavaJRETab;
-
 /**
- * Smooks Launcher Tab Group.
+ * Configuration process node type enumeration.
+ * 
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class SmooksLaunchTabGroup extends AbstractLaunchConfigurationTabGroup {
-
-	/* (non-Javadoc)
-	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#createTabs(org.eclipse.debug.ui.ILaunchConfigurationDialog, java.lang.String)
-	 */
-	public void createTabs(ILaunchConfigurationDialog lcDialog, String mode) {
-		ILaunchConfigurationTab[] tabs = new ILaunchConfigurationTab[] {
-				new SmooksRunTab(),
-				new JavaArgumentsTab(),
-				new JavaJRETab(),
-				new JavaClasspathTab(), 
-				new CommonTab()
-		};
-		setTabs(tabs);
-	}
+public enum ProcessNodeType {
+	TEMPLATING,
+	JAVA_BINDING
 }

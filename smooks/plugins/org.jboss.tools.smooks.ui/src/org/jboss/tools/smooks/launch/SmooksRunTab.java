@@ -66,13 +66,13 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 
-import org.eclipse.jdt.internal.junit.ui.JUnitMessages;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 
 import org.eclipse.jdt.ui.JavaElementLabelProvider;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 
 /**
+ * Smooks Run Tab.
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
 public class SmooksRunTab extends AbstractLaunchConfigurationTab {
@@ -290,8 +290,8 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 		
 		ILabelProvider labelProvider= new JavaElementLabelProvider(JavaElementLabelProvider.SHOW_DEFAULT);
 		ElementListSelectionDialog dialog= new ElementListSelectionDialog(getShell(), labelProvider);
-		dialog.setTitle(JUnitMessages.JUnitLaunchConfigurationTab_projectdialog_title); 
-		dialog.setMessage(JUnitMessages.JUnitLaunchConfigurationTab_projectdialog_message); 
+		dialog.setTitle("Select Smooks Configuration"); 
+		dialog.setMessage("Type Project name to narrow selection:"); 
 		dialog.setElements(projects);
 		
 		IJavaProject javaProject = getJavaProject();
@@ -378,7 +378,7 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 		}
 		
 		if(!launchMetaData.isValidSmooksConfig()) {
-			setErrorMessage("The selected Smooks configuration is not valid.  Must be a valid Smooks configuration, with a valid configured input.");
+			setErrorMessage(launchMetaData.getErrorMessage());
 		}
 	}
 	

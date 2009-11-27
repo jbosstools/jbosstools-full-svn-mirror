@@ -41,8 +41,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName
-Bundle-ClassPath: bin/,
- libs/dom4j-1.6.1.jar,
+Bundle-ClassPath: libs/dom4j-1.6.1.jar,
  .,
  libs/xstream-1.2.2.jar
 Export-Package: org.jboss.template,
