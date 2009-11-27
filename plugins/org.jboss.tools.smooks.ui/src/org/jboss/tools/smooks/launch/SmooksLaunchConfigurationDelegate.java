@@ -20,29 +20,34 @@
 package org.jboss.tools.smooks.launch;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.jdt.junit.launcher.JUnitLaunchConfigurationDelegate;
 import org.eclipse.jdt.launching.ExecutionArguments;
 import org.eclipse.jdt.launching.IVMRunner;
 import org.eclipse.jdt.launching.VMRunnerConfiguration;
-import org.eclipse.osgi.baseadaptor.loader.BaseClassLoader;
-import org.eclipse.osgi.baseadaptor.loader.ClasspathEntry;
-import org.eclipse.osgi.baseadaptor.loader.ClasspathManager;
-import org.osgi.framework.BundleException;
+import org.jboss.tools.smooks.core.SmooksInputType;
 
 /**
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
 public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationDelegate {
 	
+	private static final String PLUGIN_ID = "org.jboss.tools.smooks.ui.smooksLauncher";
 	public static final String SMOOKS_INPUT = "SmooksInput";
 	public static final String SMOOKS_INPUT_TYPE = "SmooksInputType";
 	public static final String SMOOKS_PROCESS_TYPES = "SmooksProcessTypes";
@@ -74,34 +79,15 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 	private VMRunnerConfiguration buildRunnerConfig(ILaunchConfiguration launchConfig) throws CoreException {
 		List<String> classpath = new ArrayList<String>(Arrays.asList(getClasspath(launchConfig)));
 
-		// ====================================================================================================================
-		// TODO Total Hack... Fixme: We're using classes here that we shouldn't, as well as adding bundle paths that we 
-		// probably shouldn't, but how do I get the SmooksLauncher class on the launcher classpath?
-		// I added the "bin" folder to the bundle classpath as a workaround (with the following code) for getting 
-		// the SmooksLauncher class onto the classpath.  Need to fix this properly!!!!
-		//
-		ClassLoader classloader = getClass().getClassLoader();
-		if(classloader instanceof BaseClassLoader) {
-			ClasspathManager cpManager = ((BaseClassLoader)classloader).getClasspathManager();
-			ClasspathEntry[] entries = cpManager.getHostClasspathEntries();
-			
-			for(ClasspathEntry entry : entries) {
-				File baseFile = entry.getBundleFile().getBaseFile();
-				try {
-					String[] bundleEntries = entry.getBaseData().getClassPath();
-					for(String bundleEntry : bundleEntries) {
-						String path = baseFile.getAbsolutePath() + "/" + bundleEntry;
-						if(!classpath.contains(path)) {
-							classpath.add(path);
-						}
-					}
-				} catch (BundleException e) {
-					e.printStackTrace();
-				}				
-			}
-		}
-		//
-		// ====================================================================================================================
+		File wsRootDir = ResourcesPlugin.getWorkspace().getRoot().getRawLocation().toFile();
+		File wsTempClasses = new File(wsRootDir, "temp/classes");
+		
+		// We need to add the SmooksLauncher to the launch classpath because it will not be part of the projects
+		// classpath.  Bit of a hack... there's probably a nicer way of doing this!!!
+		addToCP(wsTempClasses, SmooksLauncher.class);
+		addToCP(wsTempClasses, SmooksInputType.class);
+		addToCP(wsTempClasses, ProcessNodeType.class);
+		classpath.add(wsTempClasses.getAbsolutePath());
 		
 		VMRunnerConfiguration runConfig= new VMRunnerConfiguration(SmooksLauncher.class.getName(), classpath.toArray(new String[classpath.size()]));
 		String[] envp= getEnvironment(launchConfig);
@@ -120,5 +106,50 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		runConfig.setBootClassPath(getBootpath(launchConfig));
 		
 		return runConfig;
+	}
+
+	private void addToCP(File wsTempClasses, Class<?> theClass) throws CoreException {
+		String className = theClass.getName().replace(".", "/") + ".class";
+		URL classURI = getClass().getResource("/" + className);
+		
+		if(classURI != null) {
+			try {
+				InputStream classStream = classURI.openStream();
+				
+				if(classStream != null) {
+					try {
+						File classOutFile = new File(wsTempClasses, className);
+						File classPackage = classOutFile.getParentFile();
+						
+						classPackage.mkdirs();
+						if(classPackage.exists()) {
+							FileOutputStream classOutStream = new FileOutputStream(classOutFile);
+							
+							try {
+								byte[] readBuf = new byte[100];
+								int readCount = 0;
+								
+								while(readCount != -1) {
+									readCount = classStream.read(readBuf);
+									if(readCount != -1) {
+										classOutStream.write(readBuf, 0, readCount);
+									}
+								}
+							} finally {
+								try {
+									classOutStream.flush();
+								} finally {									
+									classOutStream.close();
+								}
+							}
+						}
+					} finally {
+						classStream.close();
+					}
+				}
+			} catch (IOException e) {
+				new CoreException(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.OK, "Error copying SmooksLauncher to classpath.", e));
+			}
+		}
 	}
 }

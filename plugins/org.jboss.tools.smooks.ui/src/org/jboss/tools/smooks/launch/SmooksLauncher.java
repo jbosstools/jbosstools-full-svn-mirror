@@ -22,14 +22,14 @@ package org.jboss.tools.smooks.launch;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.Map.Entry;
 
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.jboss.tools.smooks.launch.SmooksLaunchMetadata.ProcessNodeType;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
+import org.jboss.tools.smooks.core.SmooksInputType;
 import org.milyn.Smooks;
 import org.milyn.payload.JavaResult;
 import org.xml.sax.SAXException;
@@ -52,7 +52,7 @@ public class SmooksLauncher {
 			throw new RuntimeException("Expected 4 Launch arguments: <Smooks Config> <Input Type> <Input Path> <Node Types>");
 		}
 		
-		if(args[1].equals(SmooksModelUtils.INPUT_TYPE_JAVA)) {
+		if(args[1].equals(SmooksInputType.INPUT_TYPE_JAVA)) {
 			System.out.println("Sorry... we don't support Java Inputs yet.");
 		} else {
 			File smooksConfig = new File(args[0]);
@@ -63,7 +63,7 @@ public class SmooksLauncher {
 			
 			Smooks smooks = new Smooks(smooksConfig.getAbsolutePath());
 			try {
-				Set<ProcessNodeType> processNodeTypes = SmooksLaunchMetadata.fromNodeTypeString(args[3]);
+				Set<ProcessNodeType> processNodeTypes = SmooksLauncher.fromNodeTypeString(args[3]);
 				JavaResult javaResult = new JavaResult();
 				
 				if(processNodeTypes.contains(ProcessNodeType.TEMPLATING)) {
@@ -95,5 +95,16 @@ public class SmooksLauncher {
 		if(file.isDirectory()) {
 			throw new RuntimeException("Specified '" + name + "' File '" + file.getAbsolutePath() + "' is a Directory.");
 		}
+	}
+
+	public static Set<ProcessNodeType> fromNodeTypeString(String nodeTypeString) {
+		String[] tokens = nodeTypeString.split(",");
+		Set<ProcessNodeType> nodeTypes = new HashSet<ProcessNodeType>();
+		
+		for(String token : tokens) {
+			nodeTypes.add(ProcessNodeType.valueOf(token));
+		}
+		
+		return nodeTypes;
 	}
 }

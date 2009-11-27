@@ -29,6 +29,7 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.jboss.tools.smooks.core.SmooksInputType;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
@@ -62,21 +63,21 @@ public class SmooksModelUtils {
 
 	public static final String KEY_CSV_QUOTE = "quote";
 
-	public static final String INPUT_TYPE_JAVA = "input.java";
+	public static final String INPUT_TYPE_JAVA = SmooksInputType.INPUT_TYPE_JAVA;
 
 	public static final String INPUT_TYPE = "inputType";
 
-	public static final String INPUT_TYPE_CUSTOME = "input.custom";
+	public static final String INPUT_TYPE_CUSTOME = SmooksInputType.INPUT_TYPE_CUSTOM;
 
-	public static final String INPUT_TYPE_JSON_1_1 = "input.json";
+	public static final String INPUT_TYPE_JSON_1_1 = SmooksInputType.INPUT_TYPE_JSON;
 
-	public static final String INPUT_TYPE_CSV = "input.csv";
+	public static final String INPUT_TYPE_CSV = SmooksInputType.INPUT_TYPE_CSV;
 
 	public static final String INPUT_ACTIVE_TYPE = "input.type.actived";
 
 	public static final String INPUT_DEACTIVE_TYPE = "input.type.deactived";
 
-	public static final String INPUT_TYPE_CSV_1_2 = "input.csv";
+	public static final String INPUT_TYPE_CSV_1_2 = SmooksInputType.INPUT_TYPE_CSV;
 
 	public static final String PARAM_NAME_CLASS = "class";
 
@@ -84,9 +85,9 @@ public class SmooksModelUtils {
 
 	public static final String PARAM_NAME_ACTIVED = "actived";
 
-	public static final String INPUT_TYPE_XML = "input.xml";
+	public static final String INPUT_TYPE_XML = SmooksInputType.INPUT_TYPE_XML;
 
-	public static final String INPUT_TYPE_XSD = "input.xsd";
+	public static final String INPUT_TYPE_XSD = SmooksInputType.INPUT_TYPE_XSD;
 
 	public static final String TYPE_XSL = "xsl";
 
@@ -98,11 +99,11 @@ public class SmooksModelUtils {
 
 	public static final String BINDINGS = "bindings";
 
-	public static final String INPUT_TYPE_EDI_1_1 = "input.edi";
+	public static final String INPUT_TYPE_EDI_1_1 = SmooksInputType.INPUT_TYPE_EDI;
 
-	public static final String INPUT_TYPE_EDI_1_2 = "input.edi";
+	public static final String INPUT_TYPE_EDI_1_2 = SmooksInputType.INPUT_TYPE_EDI;
 
-	public static final String INPUT_TYPE_JSON_1_2 = "input.json";
+	public static final String INPUT_TYPE_JSON_1_2 = SmooksInputType.INPUT_TYPE_EDI;
 
 	public static EStructuralFeature ATTRIBUTE_PROPERTY = ExtendedMetaData.INSTANCE.demandFeature(null, "property",
 			false);

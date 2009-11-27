@@ -17,33 +17,25 @@
  *
  * (C) 2005-2006, JBoss Inc.
  */
-package org.jboss.tools.smooks.launch;
-
-import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup;
-import org.eclipse.debug.ui.CommonTab;
-import org.eclipse.debug.ui.ILaunchConfigurationDialog;
-import org.eclipse.debug.ui.ILaunchConfigurationTab;
-import org.eclipse.jdt.debug.ui.launchConfigurations.JavaArgumentsTab;
-import org.eclipse.jdt.debug.ui.launchConfigurations.JavaClasspathTab;
-import org.eclipse.jdt.debug.ui.launchConfigurations.JavaJRETab;
+package org.jboss.tools.smooks.core;
 
 /**
- * Smooks Launcher Tab Group.
+ * Smooks Input Type Enumeration.
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class SmooksLaunchTabGroup extends AbstractLaunchConfigurationTabGroup {
+public class SmooksInputType {
+	
+	public static final String INPUT_TYPE_JAVA = "input.java";
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.debug.ui.ILaunchConfigurationTabGroup#createTabs(org.eclipse.debug.ui.ILaunchConfigurationDialog, java.lang.String)
-	 */
-	public void createTabs(ILaunchConfigurationDialog lcDialog, String mode) {
-		ILaunchConfigurationTab[] tabs = new ILaunchConfigurationTab[] {
-				new SmooksRunTab(),
-				new JavaArgumentsTab(),
-				new JavaJRETab(),
-				new JavaClasspathTab(), 
-				new CommonTab()
-		};
-		setTabs(tabs);
-	}
+	public static final String INPUT_TYPE_CUSTOM = "input.custom";
+
+	public static final String INPUT_TYPE_JSON = "input.json";
+
+	public static final String INPUT_TYPE_CSV = "input.csv";
+
+	public static final String INPUT_TYPE_XML = "input.xml";
+
+	public static final String INPUT_TYPE_XSD = "input.xsd";
+
+	public static final String INPUT_TYPE_EDI = "input.edi";
 }
