@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -38,41 +38,58 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.jdt.junit.launcher.JUnitLaunchConfigurationDelegate;
 import org.eclipse.jdt.launching.ExecutionArguments;
+import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jdt.launching.IVMRunner;
 import org.eclipse.jdt.launching.VMRunnerConfiguration;
+import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.smooks.core.SmooksInputType;
 
 /**
+ * Smooks Launch Configuration Delegate.
+ * 
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
 public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationDelegate {
 	
 	private static final String PLUGIN_ID = "org.jboss.tools.smooks.ui.smooksLauncher";
-	public static final String SMOOKS_INPUT = "SmooksInput";
-	public static final String SMOOKS_INPUT_TYPE = "SmooksInputType";
-	public static final String SMOOKS_PROCESS_TYPES = "SmooksProcessTypes";
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void launch(ILaunchConfiguration launchConfig, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
-		IVMRunner runner= getVMRunner(launchConfig, mode);		
-		VMRunnerConfiguration runConfig = buildRunnerConfig(launchConfig);
-		
-		// check for cancellation
-		if (monitor.isCanceled()) {
-			return;
-		}		
+		IProject project = getJavaProject(launchConfig).getProject();
+		final String smooksConfigName = launchConfig.getAttribute(IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, "");
+		final SmooksLaunchMetadata launchMetadata = new SmooksLaunchMetadata();
 
-		IResource smooksConfig = SmooksRunTab.getSmooksConfig(launchConfig);
-		if(smooksConfig != null) {
-			String inputType = launchConfig.getAttribute(SMOOKS_INPUT_TYPE, "");
-			String inputPath = launchConfig.getAttribute(SMOOKS_INPUT, "");
-			String nodeTypes = launchConfig.getAttribute(SMOOKS_PROCESS_TYPES, "");
+		launchMetadata.setSmooksConfig(project.findMember(smooksConfigName));
+		
+		if(launchMetadata.isValidSmooksConfig()) {
+			IVMRunner runner= getVMRunner(launchConfig, mode);		
+			VMRunnerConfiguration runConfig = buildRunnerConfig(launchConfig);
+			
+			// check for cancellation
+			if (monitor.isCanceled()) {
+				return;
+			}		
 	
-			runConfig.setProgramArguments(new String[] {smooksConfig.getRawLocation().toOSString(), inputType, inputPath, nodeTypes});
+			String inputType = launchMetadata.getInputType();
+			String inputPath = launchMetadata.getInputFile().getAbsolutePath();
+			String nodeTypes = launchMetadata.getNodeTypesString();
+	
+			runConfig.setProgramArguments(new String[] {launchMetadata.getConfigFile().getAbsolutePath(), inputType, inputPath, nodeTypes});
 			
 			runner.run(runConfig, launch, monitor);
+		} else {
+			final Display display = PlatformUI.getWorkbench().getDisplay();
+			display.syncExec(new Runnable() {
+			    public void run(){
+					Shell shell = display.getActiveShell();
+					ErrorDialog.openError(shell, "Error", "Error Launching Smooks Configuration '" + smooksConfigName + "'.", new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, launchMetadata.getErrorMessage(), new Exception()));
+			    }
+			});
 		}
 	}
 
@@ -148,7 +165,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 					}
 				}
 			} catch (IOException e) {
-				new CoreException(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.OK, "Error copying SmooksLauncher to classpath.", e));
+				new CoreException(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, "Error copying SmooksLauncher to classpath.", e));
 			}
 		}
 	}

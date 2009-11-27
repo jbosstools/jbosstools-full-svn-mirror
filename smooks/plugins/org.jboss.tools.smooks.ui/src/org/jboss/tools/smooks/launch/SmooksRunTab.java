@@ -173,8 +173,6 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 		
 		launchConfigWC.setAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, ""); //$NON-NLS-1$
 		launchConfigWC.setAttribute(IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, ""); //$NON-NLS-1$
-		launchConfigWC.setAttribute(SmooksLaunchConfigurationDelegate.SMOOKS_INPUT, ""); //$NON-NLS-1$
-		launchConfigWC.setAttribute(SmooksLaunchConfigurationDelegate.SMOOKS_INPUT_TYPE, ""); //$NON-NLS-1$
 
 		if(activePage != null) {
 			IEditorPart editor = activePage.getActiveEditor();
@@ -218,15 +216,6 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 	public void performApply(ILaunchConfigurationWorkingCopy launchConfigWC) {
 		launchConfigWC.setAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, fProjText.getText());
 		launchConfigWC.setAttribute(IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, fConfigurationText.getText());
-		if(launchMetaData.isValidSmooksConfig()) {
-			launchConfigWC.setAttribute(SmooksLaunchConfigurationDelegate.SMOOKS_INPUT, launchMetaData.getInputFile().getAbsolutePath()); //$NON-NLS-1$
-			launchConfigWC.setAttribute(SmooksLaunchConfigurationDelegate.SMOOKS_INPUT_TYPE, launchMetaData.getInputType()); //$NON-NLS-1$
-			launchConfigWC.setAttribute(SmooksLaunchConfigurationDelegate.SMOOKS_PROCESS_TYPES, launchMetaData.getNodeTypesString()); //$NON-NLS-1$
-		} else {
-			launchConfigWC.setAttribute(SmooksLaunchConfigurationDelegate.SMOOKS_INPUT, ""); //$NON-NLS-1$
-			launchConfigWC.setAttribute(SmooksLaunchConfigurationDelegate.SMOOKS_INPUT_TYPE, ""); //$NON-NLS-1$
-			launchConfigWC.setAttribute(SmooksLaunchConfigurationDelegate.SMOOKS_PROCESS_TYPES, ""); //$NON-NLS-1$
-		}
 	}
 
 	/*
