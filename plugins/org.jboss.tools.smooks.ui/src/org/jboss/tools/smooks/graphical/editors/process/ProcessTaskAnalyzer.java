@@ -28,6 +28,7 @@ public class ProcessTaskAnalyzer {
 
 	public void analyzeTaskNode(ProcessType process, SmooksResourceListType resourceList) {
 		process.getTask().clear();
+		if(resourceList == null) return;
 		// Input task node must be in process:
 		TaskType inputTask = ProcessFactory.eINSTANCE.createTaskType();
 		inputTask.setId(TaskTypeManager.TASK_ID_INPUT);

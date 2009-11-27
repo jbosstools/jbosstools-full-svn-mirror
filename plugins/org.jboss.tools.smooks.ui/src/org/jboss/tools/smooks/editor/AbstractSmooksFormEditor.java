@@ -17,6 +17,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.dom4j.Document;
+import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
@@ -66,6 +67,7 @@ import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListene
 import org.jboss.tools.smooks.configuration.validate.SmooksMarkerHelper;
 import org.jboss.tools.smooks.configuration.validate.SmooksModelValidator;
 import org.jboss.tools.smooks.model.calc.provider.CalcItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.common.provider.CommonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.csv.provider.CsvItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.csv12.provider.Csv12ItemProviderAdapterFactory;
@@ -219,6 +221,8 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		try {
 			SAXReader parser = new SAXReader();
 			Document doc = parser.read(outstream);
+			EObject rootModel = this.getSmooksModel();
+			fillComments(doc, rootModel);
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			OutputFormat format = OutputFormat.createPrettyPrint();
 			writer = new XMLWriter(stream, format);
@@ -232,6 +236,53 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			}
 		}
 		return null;
+	}
+
+	protected void fillComments(Document document, EObject rootModel) {
+		if (rootModel instanceof DocumentRoot) {
+			EObject rootElementModel = ((DocumentRoot) rootModel).getSmooksResourceList();
+			Element rootElement = document.getRootElement();
+			try {
+				fillComments(rootElementModel, rootElement);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	protected void fillComments(EObject rootElementModel, Element rootElement) {
+		if (rootElementModel instanceof AbstractAnyType) {
+			List<String> comments = ((AbstractAnyType) rootElementModel).getCommentList();
+			for (Iterator<?> iterator = comments.iterator(); iterator.hasNext();) {
+				String string = (String) iterator.next();
+				Integer commentIndex = ((AbstractAnyType) rootElementModel).getCommentIndex(string);
+				List<?> content = rootElement.elements();
+				List<Object> deletedElementList = new ArrayList<Object>();
+				if (commentIndex.intValue() < content.size()) {
+					List<Object> tempelements = new ArrayList<Object>(content);
+					for (int i = commentIndex.intValue(); i < content.size(); i++) {
+						Element deleteObj = (Element) tempelements.get(i);
+						if (rootElement.remove(deleteObj)) {
+							deletedElementList.add(deleteObj);
+						}
+					}
+				}
+				rootElement.addComment(string);
+				for (int j = 0; j < deletedElementList.size(); j++) {
+					Element deleteElement = (Element) deletedElementList.get(j);
+					rootElement.add(deleteElement);
+				}
+			}
+
+			List<EObject> childrenModel = ((AbstractAnyType) rootElementModel).eContents();
+			List<?> elements = rootElement.elements();
+			int length = Math.min(childrenModel.size(), elements.size());
+			for (int index = 0; index < length; index++) {
+				EObject child = childrenModel.get(index);
+				Element childElement = (Element) elements.get(index);
+				fillComments(child, childElement);
+			}
+		}
 	}
 
 	protected String getFormattedXMLContents(String contents) throws IOException {
@@ -581,6 +632,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			smooksResource = new SmooksResourceFactoryImpl().createResource(URI.createFileURI(filePath));
 		}
 		try {
+
 			smooksResource.load(Collections.emptyMap());
 			smooksModel = smooksResource.getContents().get(0);
 		} catch (IOException e) {

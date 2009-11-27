@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.jboss.tools.smooks.core.SmooksXMLParserPool;
 
 /**
  * <!-- begin-user-doc -->
@@ -50,6 +51,7 @@ public class SmooksResourceFactoryImpl extends ResourceFactoryImpl {
 		result.getDefaultSaveOptions().put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
 
 		result.getDefaultLoadOptions().put(XMLResource.OPTION_USE_LEXICAL_HANDLER, Boolean.TRUE);
+		result.getDefaultLoadOptions().put(XMLResource.OPTION_USE_PARSER_POOL, new SmooksXMLParserPool());
 		return result;
 	}
 

@@ -1950,7 +1950,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		   source, 
 		   new String[] {
 			 "name", "smooks-resource-list_._type",
-			 "kind", "mixed"
+			 "kind", "elementOnly"
 		   });		
 		addAnnotation
 		  (getSmooksResourceListType_Params(), 
