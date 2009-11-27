@@ -377,14 +377,13 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 			char quote = SmooksModelUtils.getFreemarkerCSVQuote(freemarker);
 			String[] fields = SmooksModelUtils.getFreemarkerCSVFileds(freemarker);
 			try {
-				if (SmooksConstants.VERSION_1_2.equals(smooksModelProvider.getPlatformVersion())) {
-					contents = SmooksModelUtils.getAnyTypeComment(template);
+				if(contents != null) {
+					CSVModelBuilder modelBuilder = new CSVModelBuilder(fields);
+					Document model = modelBuilder.buildModel();
+					TemplateBuilder builder = new CSVFreeMarkerTemplateBuilder(model, seprator, quote, contents);
+					List<Mapping> mappings = builder.getMappings();
+					mappingList.addAll(mappings);
 				}
-				CSVModelBuilder modelBuilder = new CSVModelBuilder(fields);
-				Document model = modelBuilder.buildModel();
-				TemplateBuilder builder = new CSVFreeMarkerTemplateBuilder(model, seprator, quote, contents);
-				List<Mapping> mappings = builder.getMappings();
-				mappingList.addAll(mappings);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
