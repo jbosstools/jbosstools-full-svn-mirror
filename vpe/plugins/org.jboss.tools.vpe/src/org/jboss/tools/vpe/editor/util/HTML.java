@@ -60,6 +60,11 @@ public final class HTML {
 	public static final String TAG_LABEL = "label"; //$NON-NLS-1$
 	public static final String TAG_A = "a"; //$NON-NLS-1$
 	public static final String TAG_H1 = "h1"; //$NON-NLS-1$
+	public static final String TAG_H2 = "h2"; //$NON-NLS-1$
+	public static final String TAG_H3 = "h3"; //$NON-NLS-1$
+	public static final String TAG_H4 = "h4"; //$NON-NLS-1$
+	public static final String TAG_H5 = "h5"; //$NON-NLS-1$
+	public static final String TAG_H6 = "h6"; //$NON-NLS-1$
 	public static final String TAG_FORM = "form"; //$NON-NLS-1$
 	
 	/**Use this class if you want to wrap a text node in a span that
@@ -118,6 +123,7 @@ public final class HTML {
 	public static final String VALUE_ALIGN_BOTTOM = "bottom"; //$NON-NLS-1$
 	public static final String VALUE_ALIGN_MIDDLE = "middle"; //$NON-NLS-1$
 	public static final String VALUE_ALIGN_CENTER = "center"; //$NON-NLS-1$
+	public static final String VALUE_ALIGN_JUSTIFY = "justify"; //$NON-NLS-1$
 	public static final String VALUE_CLASS_DELIMITER = " "; //$NON-NLS-1$
 	public static final String VALUE_STYLE_DELIMITER = ";"; //$NON-NLS-1$
 	public static final String VALUE_TYPE_TEXT = "text"; //$NON-NLS-1$
