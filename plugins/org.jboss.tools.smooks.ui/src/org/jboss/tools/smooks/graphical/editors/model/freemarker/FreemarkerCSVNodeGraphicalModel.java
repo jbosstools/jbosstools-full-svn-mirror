@@ -174,17 +174,7 @@ public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
 		if (this.domainProvider instanceof ISmooksModelProvider) {
 			version = ((ISmooksModelProvider) domainProvider).getPlatformVersion();
 		}
-		// if (content != null) {
-		if (SmooksConstants.VERSION_1_1.equals(version)) {
-			// CDATA
-			SmooksModelUtils.setCDATAToSmooksType(domainProvider.getEditingDomain(), template, content);
-		}
-
-		if (SmooksConstants.VERSION_1_2.equals(version)) {
-			// Comment
-			SmooksModelUtils.setCommentToSmooksType(domainProvider.getEditingDomain(), template, content);
-		}
-		// }
+		SmooksModelUtils.setCDATAToSmooksType(domainProvider.getEditingDomain(), template, content);
 	}
 
 	/*
