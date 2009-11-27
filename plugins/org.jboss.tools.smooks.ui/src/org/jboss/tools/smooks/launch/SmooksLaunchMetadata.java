@@ -49,6 +49,7 @@ import org.milyn.delivery.sax.SAXVisitBefore;
 public class SmooksLaunchMetadata {
 	
 	private Smooks inputParamExtractor;
+	private boolean isSmooksConfig;
 	private boolean isValidSmooksConfig;
 	private File configFile;
 	private String inputType;
@@ -57,11 +58,16 @@ public class SmooksLaunchMetadata {
 
 	public SmooksLaunchMetadata() {
 		inputParamExtractor = new Smooks();
+		inputParamExtractor.addVisitor(new SmooksConfigAsserter(), "/smooks-resource-list", "http://www.milyn.org/xsd/smooks-1.1.xsd");
 		inputParamExtractor.addVisitor(new InputParamExtractor(), "/smooks-resource-list/params/param", "http://www.milyn.org/xsd/smooks-1.1.xsd");
 		inputParamExtractor.addVisitor(new ConfigTypeTracker().setNodeType(ProcessNodeType.TEMPLATING), "/smooks-resource-list/freemarker");
 		inputParamExtractor.addVisitor(new ConfigTypeTracker().setNodeType(ProcessNodeType.JAVA_BINDING), "/smooks-resource-list/bean");
 	}
 	
+	public boolean isSmooksConfig() {
+		return isSmooksConfig;
+	}
+
 	public boolean isValidSmooksConfig() {
 		return isValidSmooksConfig;
 	}
@@ -72,17 +78,19 @@ public class SmooksLaunchMetadata {
 		}
 		
 		if(configFile == null) {
-			return "Smooks configuration file not configured.";
+			return "Smooks configuration file not configured, or does not exist.";
 		} else if(!configFile.exists()) {
 			return "Specified Smooks configuration file not found.";
 		} else if(!configFile.isFile()) {
 			return "Specified Smooks configuration file is not a readable file.";		
+		} else if(!isSmooksConfig) {
+			return "Specified Smooks configuration file is not a valid Smooks Configuration.";		
 		} else if(inputFile == null) {
-			return "Specified Smooks configuration file 'Input' task is not configured with a sample input file.  Please configure the 'Input' task in the Process flow.";		
+			return "Specified Smooks configuration 'Input' task is not configured with a sample input file.  Please configure the 'Input' task in the Process flow.";		
 		} else if(!inputFile.exists()) {
-			return "Specified Smooks configuration file 'Input' task is configured with a sample input file, but the file cannot be found.  Please reconfigure the 'Input' task in the Process flow.";		
+			return "Specified Smooks configuration 'Input' task is configured with a sample input file, but the file cannot be found.  Please reconfigure the 'Input' task in the Process flow.";		
 		} else if(!inputFile.isFile()) {
-			return "Specified Smooks configuration file 'Input' task is configured with a sample input file, but the file cannot be read.  Please reconfigure the 'Input' task in the Process flow.";		
+			return "Specified Smooks configuration 'Input' task is configured with a sample input file, but the file cannot be read.  Please reconfigure the 'Input' task in the Process flow.";		
 		}
 
 		return "";		
@@ -158,11 +166,19 @@ public class SmooksLaunchMetadata {
 	}
 			
 	private void reset() {
+		isSmooksConfig = false;
 		isValidSmooksConfig = false;
 		configFile = null;
 		inputType = null;
 		inputFile = null;
 		processNodeTypes.clear();
+	}
+
+	private static class SmooksConfigAsserter implements SAXVisitBefore {		
+		public void visitBefore(SAXElement paramElement, ExecutionContext execContext) throws SmooksException, IOException {
+			SmooksLaunchMetadata metadata = (SmooksLaunchMetadata) execContext.getAttribute(SmooksLaunchMetadata.class);
+			metadata.isSmooksConfig = true;
+		}
 	}
 
 	private static class InputParamExtractor implements SAXVisitBefore, SAXVisitAfter {

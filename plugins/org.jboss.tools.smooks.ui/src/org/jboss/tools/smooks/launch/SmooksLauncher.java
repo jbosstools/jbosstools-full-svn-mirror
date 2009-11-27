@@ -19,9 +19,12 @@
  */
 package org.jboss.tools.smooks.launch;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -32,6 +35,7 @@ import javax.xml.transform.stream.StreamSource;
 import org.jboss.tools.smooks.core.SmooksInputType;
 import org.milyn.Smooks;
 import org.milyn.payload.JavaResult;
+import org.milyn.payload.StringResult;
 import org.xml.sax.SAXException;
 
 import com.thoughtworks.xstream.XStream;
@@ -67,18 +71,26 @@ public class SmooksLauncher {
 				JavaResult javaResult = new JavaResult();
 				
 				if(processNodeTypes.contains(ProcessNodeType.TEMPLATING)) {
-					smooks.filterSource(new StreamSource(new FileInputStream(input)), new StreamResult(System.out), javaResult);
+					StringResult stringResult = new StringResult();
+					
+					smooks.filterSource(new StreamSource(new FileInputStream(input)), stringResult, javaResult);
+					System.out.println("[StreamResult ...]\n");
+					System.out.println("    |--");
+					System.out.println(indent(stringResult.toString()));
+					System.out.println("    |--\n");
 				} else {
 					smooks.filterSource(new StreamSource(new FileInputStream(input)), javaResult);
-					if(processNodeTypes.contains(ProcessNodeType.JAVA_BINDING)) {
-						System.out.println("[Java Bindings (XML Serialized)...]");
-						Set<Entry<String, Object>> bindings = javaResult.getResultMap().entrySet();
-						
-						for(Entry<String, Object> binding : bindings) {
-							System.out.println("\n" + binding.getKey() + ":");
-							System.out.println("\n" + (new XStream()).toXML(binding.getValue()));
-							System.out.println("=============================================");
-						}
+				}
+
+				Set<Entry<String, Object>> bindings = javaResult.getResultMap().entrySet();
+				if(!bindings.isEmpty()) {
+					System.out.println("[JavaResult Objects (XML Serialized)...]");
+					
+					for(Entry<String, Object> binding : bindings) {
+						System.out.println("\n" + binding.getKey() + ":");
+						System.out.println("    |--");
+						System.out.println(indent((new XStream()).toXML(binding.getValue())));
+						System.out.println("    |--");
 					}
 				}
 				
@@ -106,5 +118,21 @@ public class SmooksLauncher {
 		}
 		
 		return nodeTypes;
+	}
+
+	private static String indent(String in) throws IOException {
+		BufferedReader lineReader = new BufferedReader(new StringReader(in));
+		StringBuilder indentBuf = new StringBuilder();
+		
+		String line = lineReader.readLine();
+		while(line != null) {
+			indentBuf.append("    |").append(line);
+			line = lineReader.readLine();
+			if(line != null) {
+				indentBuf.append('\n');
+			}
+		}
+		
+		return indentBuf.toString();
 	}
 }
