@@ -724,7 +724,7 @@ public class JavabeanPackageImpl extends EPackageImpl implements JavabeanPackage
 		   source, 
 		   new String[] {
 			 "name", "bindings_._type",
-			 "kind", "mixed"
+			 "kind", "elementOnly"
 		   });		
 		addAnnotation
 		  (getBindingsType_Group(), 
@@ -932,7 +932,7 @@ public class JavabeanPackageImpl extends EPackageImpl implements JavabeanPackage
 		   source, 
 		   new String[] {
 			 "name", "value_._type",
-			 "kind", "mixed"
+			 "kind", "elementOnly"
 		   });			
 		addAnnotation
 		  (getValueType_DecodeParam(), 

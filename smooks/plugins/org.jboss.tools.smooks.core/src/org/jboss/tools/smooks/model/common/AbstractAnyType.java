@@ -6,8 +6,9 @@
  */
 package org.jboss.tools.smooks.model.common;
 
-import org.eclipse.emf.ecore.EObject;
+import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 
 /**
@@ -21,6 +22,17 @@ import org.eclipse.emf.ecore.xml.type.AnyType;
  * @generated
  */
 public interface AbstractAnyType extends EObject, AnyType {
+	
+	public static final Object NULL_OBJECT = new Object();
+	
+	Integer getCommentIndex(String comment);
+	
+	void setCommentIndex(String comment , Integer index);
+	
+	void addComment(String comment , Integer index);
+	
+	List<String> getCommentList();
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -20,6 +20,7 @@ import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileInfo;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.common.command.Command;
@@ -136,6 +137,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 
 	public SmooksReaderFormPage(String id, String title) {
 		super(id, title);
+		IResource resource;
 	}
 
 	@Override
