@@ -17,6 +17,7 @@ import junit.framework.TestCase;
 public class JBossBPELEditorTest extends TestCase{
 	
 	static String bpelFileName = "HelloWorld.bpel";
+	static String folder = "bpelContent";
 	IProject fproject;
 	IFile bpelFile;
 	static String BUNDLE = "org.jboss.tools.bpel.ui.test";
@@ -26,7 +27,7 @@ public class JBossBPELEditorTest extends TestCase{
 
 		//create jboss bpel project
 		fproject = createProject("ODE_Test");
-		bpelFile = fproject.getProject().getFile(bpelFileName);
+		bpelFile = fproject.getProject().getFile(folder+"/"+bpelFileName);
 		assertTrue(bpelFile.exists());
 	}
 	public void tearDown() throws Exception {
