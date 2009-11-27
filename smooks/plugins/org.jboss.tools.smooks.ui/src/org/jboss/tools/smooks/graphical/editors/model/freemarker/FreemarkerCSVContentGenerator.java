@@ -15,8 +15,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.jboss.template.csv.CSVFreeMarkerTemplateBuilder;
 import org.jboss.template.csv.CSVModelBuilder;
-import org.jboss.template.csv.CSVToFreemarkerTemplateBuilder;
 import org.jboss.template.exception.InvalidMappingException;
 import org.jboss.template.exception.TemplateBuilderException;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
@@ -95,9 +95,9 @@ public class FreemarkerCSVContentGenerator {
 
 		CSVModelBuilder modelBuilder = new CSVModelBuilder(fieldsName.toArray(new String[] {}));
 		Document model = modelBuilder.buildModel();
-		CSVToFreemarkerTemplateBuilder builder;
+		CSVFreeMarkerTemplateBuilder builder;
 
-		builder = new CSVToFreemarkerTemplateBuilder(model, sperator, quote);
+		builder = new CSVFreeMarkerTemplateBuilder(model, sperator, quote);
 
 		List<TreeNodeConnection> connections = csvRecordGraphicalModel.getTargetConnections();
 		if (!connections.isEmpty() && connections.size() == 1) {
@@ -129,7 +129,7 @@ public class FreemarkerCSVContentGenerator {
 		return builder.buildTemplate();
 	}
 
-	protected void addValueMapping(CSVToFreemarkerTemplateBuilder builder, FreemarkerCSVNodeGraphicalModel filedNode,
+	protected void addValueMapping(CSVFreeMarkerTemplateBuilder builder, FreemarkerCSVNodeGraphicalModel filedNode,
 			Document model, String recordName, JavaBeanGraphModel recordRootNode) throws InvalidMappingException {
 		CSVNodeModel csvFieldNode = (CSVNodeModel) filedNode.getData();
 		String elementName = csvFieldNode.getName();
