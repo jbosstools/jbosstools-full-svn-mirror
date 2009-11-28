@@ -192,8 +192,6 @@ public class FreemarkerCSVContentGenerator {
 			if (node instanceof JavaBeanGraphModel) {
 				Object parent = node.getData();
 				List<TreeNodeConnection> connections = ((JavaBeanGraphModel) node).getTargetConnections();
-				if (connections.isEmpty())
-					return false;
 				for (Iterator<?> iterator = connections.iterator(); iterator.hasNext();) {
 					TreeNodeConnection connection = (TreeNodeConnection) iterator.next();
 					AbstractSmooksGraphicalModel sourcenode = connection.getSourceNode();
