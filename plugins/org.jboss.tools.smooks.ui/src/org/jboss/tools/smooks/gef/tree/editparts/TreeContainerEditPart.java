@@ -65,7 +65,7 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 			int serverity = model.getSeverity();
 			String message = getSeverityMessage(model);
 			if (serverity == IValidatableModel.NONE) {
-				i =  model.getImage();
+				i = model.getImage();
 			}
 			if (serverity == IValidatableModel.ERROR) {
 				i = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_ERROR);
@@ -96,6 +96,8 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 		try {
 			((GraphicalEditPart) this.getParent()).setLayoutConstraint(this, this.getFigure(), new Rectangle(location,
 					size));
+			IFigure figure = getFigure().getParent();
+			figure.repaint();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -131,8 +133,8 @@ public class TreeContainerEditPart extends TreeNodeEditPart {
 			ISmooksModelProvider modelProvider = (ISmooksModelProvider) editor.getAdapter(ISmooksModelProvider.class);
 
 			if (modelProvider != null && getModel() instanceof IMoveableModel) {
-				Rectangle rect = ((IMoveableModel) getModel()).getBounds();
-//				recordBounds(graph, rect);
+				// Rectangle rect = ((IMoveableModel) getModel()).getBounds();
+				// recordBounds(graph, rect);
 			}
 		}
 	}

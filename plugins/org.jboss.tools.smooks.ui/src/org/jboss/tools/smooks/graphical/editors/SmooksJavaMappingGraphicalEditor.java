@@ -12,6 +12,7 @@ package org.jboss.tools.smooks.graphical.editors;
 
 import java.util.List;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.gef.palette.PaletteRoot;
@@ -27,9 +28,11 @@ import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphM
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaMappingActionCreator;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.ExpressionType;
+import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.javabean.ValueType;
 import org.jboss.tools.smooks.model.javabean.WiringType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
 /**
  * @author Dart
@@ -42,6 +45,56 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 	public SmooksJavaMappingGraphicalEditor(ISmooksModelProvider provider) {
 		super(provider);
 		// TODO Auto-generated constructor stub
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#
+	 * getDiagnosticMessage(org.eclipse.emf.common.util.Diagnostic)
+	 */
+	@Override
+	protected String getDiagnosticMessage(Diagnostic diagnostic) {
+		List<?> datas = diagnostic.getData();
+		if (datas.size() == 2) {
+			Object parentObj = datas.get(0);
+
+			if (parentObj instanceof BeanType || parentObj instanceof BindingsType) {
+				Object obj = datas.get(1);
+				if (obj == JavabeanPackage.Literals.BINDINGS_TYPE__BEAN_ID
+						|| obj == Javabean12Package.Literals.BEAN_TYPE__BEAN_ID) {
+					String message = diagnostic.getMessage();
+					if (message != null && message.startsWith("The required feature")) {
+						return "The Bean ID shouldn't be empty";
+					}
+				}
+			}
+
+			if (parentObj instanceof ValueType
+					|| parentObj instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
+				Object obj = datas.get(1);
+				if (obj == JavabeanPackage.Literals.VALUE_TYPE__DATA
+						|| obj == Javabean12Package.Literals.VALUE_TYPE__DATA) {
+					String message = diagnostic.getMessage();
+					if (message != null && message.startsWith("The required feature")) {
+						return "The node must be linked with input source";
+					}
+				}
+			}
+
+			if (parentObj instanceof WiringType
+					|| parentObj instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
+				Object obj = datas.get(1);
+				if (obj == JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF
+						|| obj == Javabean12Package.Literals.WIRING_TYPE__BEAN_ID_REF) {
+					String message = diagnostic.getMessage();
+					if (message != null && message.startsWith("The required feature")) {
+						return "The node must link to another Java Bean";
+					}
+				}
+			}
+		}
+		return super.getDiagnosticMessage(diagnostic);
 	}
 
 	/*

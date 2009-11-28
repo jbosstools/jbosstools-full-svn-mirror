@@ -1351,10 +1351,14 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 
 		}
 	}
+	
+	protected String getDiagnosticMessage(Diagnostic diagnostic){
+		return diagnostic.getMessage();
+	}
 
 	protected void refreshValidateResult(Diagnostic diagnostic) {
 		int severity = diagnostic.getSeverity();
-		String message = diagnostic.getMessage();
+		String message = getDiagnosticMessage(diagnostic);
 		if (severity == Diagnostic.ERROR || severity == Diagnostic.WARNING) {
 			List<?> datas = diagnostic.getData();
 			AbstractSmooksGraphicalModel obj = null;
