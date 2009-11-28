@@ -96,6 +96,10 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 public class SmooksProcessGraphicalEditor extends FormPage implements ISelectionChangedListener,
 		ISourceSynchronizeListener, IPropertyListener, ISmooksModelValidateListener, IProcessProvider,
 		PropertyChangeListener {
+	
+	private boolean processChanged = false;
+	
+	private boolean lockProcessChangeEvent = false;
 
 	private List<IAction> processPanelActions = new ArrayList<IAction>();
 
@@ -199,8 +203,9 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 			process.addPropertyChangeListener(this);
 		}
 		ProcessTaskAnalyzer analyzer = new ProcessTaskAnalyzer();
+		lockProcessChangeEvent = true;
 		analyzer.analyzeTaskNode(process, getSmooksResourceListType());
-
+		lockProcessChangeEvent = false;
 		if (getProcessGraphViewer() != null) {
 			getProcessGraphViewer().setInput(process);
 		}
@@ -821,7 +826,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 				dirty = (((IEditorPart) object).isDirty() || dirty);
 			}
 		}
-		return dirty;
+		return( dirty || processChanged);
 	}
 
 	/*
@@ -839,6 +844,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 				((IEditorPart) object).doSave(monitor);
 			}
 		}
+		processChanged = false;
 		firePropertyChange(PROP_DIRTY);
 	}
 
@@ -1120,6 +1126,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	public void propertyChange(PropertyChangeEvent evt) {
+		if(lockProcessChangeEvent) return;
 		String name = evt.getPropertyName();
 		Object newtask = evt.getNewValue();
 		if (ProcessType.PRO_ADD_CHILD.equals(name) || ProcessType.PRO_REMOVE_CHILD.equals(name)) {
@@ -1127,6 +1134,8 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 				getProcessGraphViewer().refresh();
 				getProcessGraphViewer().applyLayout();
 			}
+			processChanged = true;
+			getManagedForm().dirtyStateChanged();
 		}
 		
 		if (ProcessType.PRO_ADD_CHILD.equals(name)) {
