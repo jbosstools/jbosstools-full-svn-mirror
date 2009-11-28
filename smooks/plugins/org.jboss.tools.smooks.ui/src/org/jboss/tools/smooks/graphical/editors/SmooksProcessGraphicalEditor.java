@@ -521,7 +521,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 	protected void createProcessGraphicalSection(FormToolkit toolkit, Composite parent) {
 		Section processGraphSection = toolkit.createSection(parent, Section.TITLE_BAR);
-		processGraphSection.setText("Process Map");
+		processGraphSection.setText("Tasks Map");
 
 		Composite processGraphComposite = toolkit.createComposite(processGraphSection);
 
@@ -596,7 +596,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		FormToolkit toolkit = managedForm.getToolkit();
 		toolkit.decorateFormHeading(form.getForm());
 		form.getBody().setLayout(new FillLayout());
-		form.setText("Processing");
+		form.setText("Smooks Processing");
 
 		Composite mainComposite = toolkit.createComposite(form.getBody());
 
@@ -904,6 +904,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	protected void showTaskControl(Object model) {
+		if(pageBook == null) return;
 		if (model == null)
 			pageBook.showEmptyPage();
 		FormToolkit toolkit = ((AbstractSmooksFormEditor) this.smooksModelProvider).getToolkit();
