@@ -19,6 +19,7 @@ import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart
@@ -28,12 +29,13 @@ public class ProcessTaskAnalyzer {
 
 	public void analyzeTaskNode(ProcessType process, SmooksResourceListType resourceList) {
 		process.getTask().clear();
-		if(resourceList == null) return;
+		if (resourceList == null)
+			return;
 		// Input task node must be in process:
 		TaskType inputTask = ProcessFactory.eINSTANCE.createTaskType();
 		inputTask.setId(TaskTypeManager.TASK_ID_INPUT);
 		inputTask.setName(TaskTypeManager.getTaskLabel(TaskTypeManager.TASK_ID_INPUT));
-		
+
 		process.addTask(inputTask);
 
 		List<AbstractResourceConfig> resourceConfigList = resourceList.getAbstractResourceConfig();
@@ -56,9 +58,15 @@ public class ProcessTaskAnalyzer {
 			for (Iterator<?> iterator = resourceConfigList.iterator(); iterator.hasNext();) {
 				AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
 				if (abstractResourceConfig instanceof Freemarker) {
-					TemplateAppyTaskNode templateTask =(TemplateAppyTaskNode) ProcessFactory.eINSTANCE.createTemplateTask();
-					templateTask.addSmooksModel(abstractResourceConfig);
-					javaMappingTask.addTask(templateTask);
+					String messageType = SmooksModelUtils.getParamValue(((Freemarker) abstractResourceConfig)
+							.getParam(), SmooksModelUtils.KEY_TEMPLATE_TYPE);
+					if (SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV.equals(messageType)) {
+						TemplateAppyTaskNode templateTask = (TemplateAppyTaskNode) ProcessFactory.eINSTANCE
+								.createTemplateTask();
+						templateTask.setType(messageType);
+						templateTask.addSmooksModel(abstractResourceConfig);
+						javaMappingTask.addTask(templateTask);
+					}
 				}
 			}
 		}

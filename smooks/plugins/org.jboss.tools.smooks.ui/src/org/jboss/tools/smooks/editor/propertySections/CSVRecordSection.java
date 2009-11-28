@@ -30,6 +30,7 @@ import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerCSVNo
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.smooks.ParamType;
+import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -123,12 +124,15 @@ public class CSVRecordSection extends AbstractSmooksPropertySection {
 		speratorText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				if (fireEvent) {
-					Freemarker template = getFreemarker();
-					if (template != null) {
-						ParamType param = SmooksModelUtils.getParam(template.getParam(),
+					Freemarker freemarker = getFreemarker();
+					if (freemarker != null) {
+						ParamType param = SmooksModelUtils.getParam(freemarker.getParam(),
 								SmooksModelUtils.KEY_CSV_SEPERATOR);
-						if (param == null)
-							return;
+						if (param == null){
+							param = SmooksFactory.eINSTANCE.createParamType();
+							param.setName(SmooksModelUtils.KEY_CSV_SEPERATOR);
+							freemarker.getParam().add(param);
+						}
 						SmooksModelUtils.setTextToSmooksType(getSmooksModelProvider().getEditingDomain(), param,
 								speratorText.getText());
 						generateNewTemplateContent();
@@ -140,12 +144,15 @@ public class CSVRecordSection extends AbstractSmooksPropertySection {
 		quoteText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				if (fireEvent) {
-					Freemarker template = getFreemarker();
-					if (template != null) {
+					Freemarker freemarker = getFreemarker();
+					if (freemarker != null) {
 						ParamType param = SmooksModelUtils
-								.getParam(template.getParam(), SmooksModelUtils.KEY_CSV_QUOTE);
-						if (param == null)
-							return;
+								.getParam(freemarker.getParam(), SmooksModelUtils.KEY_CSV_QUOTE);
+						if (param == null){
+							param = SmooksFactory.eINSTANCE.createParamType();
+							param.setName(SmooksModelUtils.KEY_CSV_QUOTE);
+							freemarker.getParam().add(param);
+						}
 						SmooksModelUtils.setTextToSmooksType(getSmooksModelProvider().getEditingDomain(), param,
 								quoteText.getText());
 						generateNewTemplateContent();
@@ -170,7 +177,8 @@ public class CSVRecordSection extends AbstractSmooksPropertySection {
 		if (freemarker != null) {
 			String quote = SmooksModelUtils.getParamValue(freemarker.getParam(), SmooksModelUtils.KEY_CSV_QUOTE);
 			String sperator = SmooksModelUtils.getParamValue(freemarker.getParam(), SmooksModelUtils.KEY_CSV_SEPERATOR);
-
+			if(quote == null) quote = "";
+			if(sperator == null) sperator = "";
 			speratorText.setText(sperator);
 			quoteText.setText(quote);
 		}

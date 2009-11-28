@@ -27,6 +27,7 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks.model.smooks.ParamType;
+import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -98,6 +99,11 @@ public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
 		Freemarker freemarker = (Freemarker) parent.getData();
 		if (freemarker != null) {
 			ParamType param = SmooksModelUtils.getParam(freemarker.getParam(), SmooksModelUtils.KEY_CSV_FIELDS);
+			if (param == null){
+				param = SmooksFactory.eINSTANCE.createParamType();
+				param.setName(SmooksModelUtils.KEY_CSV_FIELDS);
+				freemarker.getParam().add(param);
+			}
 			if (param != null) {
 				SmooksModelUtils.setTextToSmooksType(this.domainProvider.getEditingDomain(), param, fieldsString);
 				changeFreemarkerContents();
