@@ -91,10 +91,12 @@ import org.jboss.tools.smooks.model.persistence12.provider.Persistence12ItemProv
 import org.jboss.tools.smooks.model.rules10.provider.Rules10ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.ParamType;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
 import org.jboss.tools.smooks.model.validation10.provider.Validation10ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 public class AbstractSmooksFormEditor extends FormEditor implements IEditingDomainProvider,
 		ISmooksModelValidateListener, ISmooksModelProvider {
@@ -506,6 +508,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			smooksModel = null;
 		}
 		setPlatformVersion(SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel));
+		judgeInputReader();
 		for (Iterator<?> iterator = this.sourceSynchronizeListener.iterator(); iterator.hasNext();) {
 			ISourceSynchronizeListener l = (ISourceSynchronizeListener) iterator.next();
 			try {
@@ -650,13 +653,39 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		// create new one for it
 
 		setPartName(partName);
-
 		String version = SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel);
-		try {
-			this.setPlatformVersion(version);
-		} catch (Exception e) {
+		this.setPlatformVersion(version);
+		judgeInputReader();
+	}
 
+	protected void judgeInputReader() {
+		SmooksResourceListType resourceList = SmooksUIUtils.getSmooks11ResourceListType(smooksModel);
+		if (resourceList == null)
+			return;
+		ParamType param = SmooksUIUtils.getInputTypeParam(resourceList);
+		String inputType = null;
+		if (param != null) {
+			inputType = param.getStringValue();
+			String realInputType = SmooksUIUtils.judgeInputType(smooksModel);
+			if (realInputType == null) {
+				if (inputType != null) {
+					if (inputType.equals(SmooksModelUtils.INPUT_TYPE_XML)
+							|| inputType.equals(SmooksModelUtils.INPUT_TYPE_JAVA)
+							|| inputType.equals(SmooksModelUtils.INPUT_TYPE_XSD)) {
+
+					}
+				}
+			} else {
+				if (!realInputType.equals(inputType)) {
+					param.setStringValue(realInputType);
+					inputType = realInputType;
+				}
+			}
+		} else {
+			inputType = SmooksUIUtils.judgeInputType(smooksModel);
+			SmooksUIUtils.addInputTypeParam(inputType, resourceList);
 		}
+		this.setInputType(inputType);
 	}
 
 	public EObject getSmooksResourceList() {
