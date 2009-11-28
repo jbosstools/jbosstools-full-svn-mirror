@@ -3011,6 +3011,20 @@ public class SmooksUIUtils {
 		}
 		return SmooksConstants.VERSION_1_2;
 	}
+	
+	public static void addInputTypeParam(String inputType, SmooksResourceListType resourceList){
+		ParamsType params = resourceList.getParams();
+		if(params == null){
+			params = SmooksFactory.eINSTANCE.createParamsType();
+			resourceList.setParams(params);
+		}
+		
+		ParamType param = SmooksFactory.eINSTANCE.createParamType();
+		param.setName(SmooksModelUtils.INPUT_TYPE);
+		param.setStringValue(inputType);
+		
+		params.getParam().add(param);
+	}
 
 	public static String judgeInputType(EObject smooksModel) {
 		String inputType = null;
