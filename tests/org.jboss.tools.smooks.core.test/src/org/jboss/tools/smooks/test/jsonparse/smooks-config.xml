@@ -15,21 +15,4 @@
 			<json:key from="date&amp;time" to="timeanddate" />
 		</json:keyMap>
 	</abstract-reader>
-
-	<g:smooks-graphics-ext>
-		<g:input type="json">
-			<g:param name="path">Workspace://test/src/json.jsn</g:param>
-			<g:param name="linkJSONReader">true</g:param>
-		</g:input>
-
-		<g:input type="json">
-			<g:param name="path">Workspace://test/src/json.jsn</g:param>
-			<g:param name="encoding">UTF-8</g:param>
-			<g:param name="_key_date&amp;time">date-time</g:param>
-			<g:param name="spaceReplace">-</g:param>
-			<g:param name="arrayElementName">element</g:param>
-			<g:param name="rootName">root</g:param>
-		</g:input>
-	</g:smooks-graphics-ext>
-
 </smooks-resource-list>
