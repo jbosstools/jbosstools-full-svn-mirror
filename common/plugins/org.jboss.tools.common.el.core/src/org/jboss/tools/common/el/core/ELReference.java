@@ -8,7 +8,7 @@
  * Contributors: 
  * Red Hat, Inc. - initial API and implementation 
  ******************************************************************************/ 
-package org.jboss.tools.jst.web.kb.validation;
+package org.jboss.tools.common.el.core;
 
 import java.util.HashSet;
 import java.util.List;
@@ -30,14 +30,13 @@ import org.jboss.tools.common.el.core.parser.ELParserUtil;
 import org.jboss.tools.common.el.core.parser.SyntaxError;
 import org.jboss.tools.common.text.ITextSourceReference;
 import org.jboss.tools.common.util.FileUtil;
-import org.jboss.tools.jst.web.kb.WebKbPlugin;
 import org.w3c.dom.Element;
 
 /**
  * Represents a reference to EL in a resource
  * @author Alexey Kazakov
  */
-public class ELReference implements ITextSourceReference {
+public abstract class ELReference implements ITextSourceReference {
 
 	private IFile resource;
 	private IPath path;
@@ -47,6 +46,7 @@ public class ELReference implements ITextSourceReference {
 	private Set<IMarker> markers;
 	private IMarker[] markerArray;
 	private boolean needToInitMarkers = false;
+	private List<SyntaxError> syntaxErrors;
 
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.seam.core.ISeamTextSourceReference#getLength()
@@ -121,7 +121,7 @@ public class ELReference implements ITextSourceReference {
 			try {
 				content = FileUtil.readStream(getResource());
 			} catch (CoreException e) {
-				WebKbPlugin.getDefault().logError(e);
+				ELCorePlugin.getDefault().logError(e);
 			}
 			String elText = content.substring(startPosition, startPosition + length);
 			int startEl = elText.indexOf("#{"); //$NON-NLS-1$
@@ -130,13 +130,13 @@ public class ELReference implements ITextSourceReference {
 				ELModel model = parser.parse(elText);
 				List<SyntaxError> errors = model.getSyntaxErrors();
 				if(!errors.isEmpty()) {
-					WebKbPlugin.getDefault().logWarning("ELObject hold incorrect information. Maybe resource " + getResource() + " has been changed.");
+					ELCorePlugin.getDefault().logWarning("ELObject hold incorrect information. Maybe resource " + getResource() + " has been changed.");
 					return null;
 				}
 				List<ELInstance> is = model.getInstances();
 				for (ELInstance i : is) {
 					if(!i.getErrors().isEmpty()) {
-						WebKbPlugin.getDefault().logWarning("ELObject hold incorrect information. Maybe resource " + getResource() + " has been changed.");
+						ELCorePlugin.getDefault().logWarning("ELObject hold incorrect information. Maybe resource " + getResource() + " has been changed.");
 						continue;
 					}
 					exps.add(i.getExpression());
@@ -177,11 +177,11 @@ public class ELReference implements ITextSourceReference {
 					try {
 						markers = file.findMarkers(null, true, IResource.DEPTH_INFINITE);
 					} catch (CoreException e) {
-						WebKbPlugin.getDefault().logError(e);
+						ELCorePlugin.getDefault().logError(e);
 					}
 					for(int i=0; i<markers.length; i++){
 						String groupName = markers[i].getAttribute("groupName", null); //$NON-NLS-1$
-						if(groupName!=null && (groupName.equals(groupName.equals(IValidator.MARKED_RESOURCE_MESSAGE_GROUP)))) {
+						if(groupName!=null && (groupName.equals(getMarkerGroupId()))) {
 							int start = markers[i].getAttribute(IMarker.CHAR_START, -1);
 							int end = markers[i].getAttribute(IMarker.CHAR_END, -1);
 							if(start>=startPosition && end<=startPosition+length) {
@@ -194,6 +194,22 @@ public class ELReference implements ITextSourceReference {
 			needToInitMarkers = false;
 		}
 	}
+
+	/**
+	 * @return the syntaxErrors
+	 */
+	public List<SyntaxError> getSyntaxErrors() {
+		return syntaxErrors;
+	}
+
+	/**
+	 * @param syntaxErrors the syntaxErrors to set
+	 */
+	public void setSyntaxErrors(List<SyntaxError> syntaxErrors) {
+		this.syntaxErrors = syntaxErrors;
+	}
+
+	protected abstract String getMarkerGroupId();
 
 	/**
 	 * @param needToInitMarkers the needToInitMarkers to set
@@ -244,7 +260,7 @@ public class ELReference implements ITextSourceReference {
 			try {
 				marker.delete();
 			} catch (CoreException e) {
-				WebKbPlugin.getDefault().logError(e);
+				ELCorePlugin.getDefault().logError(e);
 			}
 		}
 		markers.clear();				
