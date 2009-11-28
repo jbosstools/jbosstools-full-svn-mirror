@@ -12,6 +12,10 @@ package org.jboss.tools.smooks.core;
 
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -27,6 +31,94 @@ public class SmooksSAXXMLHandler extends SAXXMLHandler {
 
 	public SmooksSAXXMLHandler(XMLResource xmiResource, XMLHelper helper, Map<?, ?> options) {
 		super(xmiResource, helper, options);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.emf.ecore.xmi.impl.SAXXMLHandler#processObject(org.eclipse
+	 * .emf.ecore.EObject)
+	 */
+	@Override
+	protected void processObject(EObject object) {
+		if (object instanceof AbstractAnyType) {
+			((AbstractAnyType) object).setLockCOmmentIndexChange(true);
+		}
+		super.processObject(object);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.emf.ecore.xmi.impl.XMLHandler#endElement(java.lang.String,
+	 * java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void endElement(String uri, String localName, String name) {
+		elements.pop();
+		Object type = types.pop();
+		if (type == OBJECT_TYPE) {
+			if (text == null) {
+				Object object = objects.pop();
+				if (object instanceof AbstractAnyType) {
+					((AbstractAnyType) object).setLockCOmmentIndexChange(false);
+				}
+				mixedTargets.pop();
+			} else {
+				EObject object = objects.popEObject();
+				if (object instanceof AbstractAnyType) {
+					((AbstractAnyType) object).setLockCOmmentIndexChange(false);
+				}
+				if (mixedTargets.peek() != null
+						&& (object.eContainer() != null || recordUnknownFeature
+								&& (eObjectToExtensionMap.containsValue(object) || ((InternalEObject) object)
+										.eDirectResource() != null))) {
+					handleMixedText();
+					mixedTargets.pop();
+				} else {
+					if (text.length() != 0) {
+						handleProxy((InternalEObject) object, text.toString().trim());
+					}
+					mixedTargets.pop();
+					text = null;
+				}
+			}
+		} else if (isIDREF) {
+			Object object = objects.pop();
+			if (object instanceof AbstractAnyType) {
+				((AbstractAnyType) object).setLockCOmmentIndexChange(false);
+			}
+			mixedTargets.pop();
+			if (text != null) {
+				setValueFromId(objects.peekEObject(), (EReference) type, text.toString());
+				text = null;
+			}
+			isIDREF = false;
+		} else if (isTextFeatureValue(type)) {
+			EObject eObject = objects.popEObject();
+			if (eObject instanceof AbstractAnyType) {
+				((AbstractAnyType) eObject).setLockCOmmentIndexChange(false);
+			}
+			mixedTargets.pop();
+			if (eObject == null) {
+				eObject = objects.peekEObject();
+			}
+			setFeatureValue(eObject, (EStructuralFeature) type, text == null ? null : text.toString());
+			text = null;
+		}
+
+		if (isSimpleFeature) {
+			types.pop();
+			Object object = objects.pop();
+			if (object instanceof AbstractAnyType) {
+				((AbstractAnyType) object).setLockCOmmentIndexChange(false);
+			}
+			mixedTargets.pop();
+			isSimpleFeature = false;
+		}
+		helper.popContext(prefixesToFactories);
 	}
 
 	/*

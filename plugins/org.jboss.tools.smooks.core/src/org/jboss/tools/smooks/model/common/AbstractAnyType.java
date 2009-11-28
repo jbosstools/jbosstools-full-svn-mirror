@@ -31,6 +31,10 @@ public interface AbstractAnyType extends EObject, AnyType {
 	
 	void addComment(String comment , Integer index);
 	
+	boolean isLockCommentIndexChange();
+	
+	void setLockCOmmentIndexChange(boolean lock);
+	
 	List<String> getCommentList();
 	
 	/**

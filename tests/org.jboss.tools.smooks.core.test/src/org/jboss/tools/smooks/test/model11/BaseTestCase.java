@@ -68,8 +68,6 @@ public class BaseTestCase extends TestCase {
 		Registry.INSTANCE.put(MEdiPackage.eNS_URI, MEdiPackage.eINSTANCE);
 		Registry.INSTANCE.put(XslPackage.eNS_URI, XslPackage.eINSTANCE);
 		Registry.INSTANCE.put(EsbroutingPackage.eNS_URI, EsbroutingPackage.eINSTANCE);
-		Registry.INSTANCE.put(org.jboss.tools.smooks10.model.smooks.SmooksPackage.eNS_URI,
-				org.jboss.tools.smooks10.model.smooks.SmooksPackage.eINSTANCE);
 	}
 	public void testNull(){//ignore
 	}

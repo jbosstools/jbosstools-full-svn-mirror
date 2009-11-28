@@ -4,30 +4,6 @@
    <extension
          point="org.eclipse.core.contenttype.contentTypes">
    </extension>
-  <extension point="org.eclipse.emf.ecore.generated_package">
-      <package
-            uri="http://www.milyn.org/xsd/smooks-1.0.xsd"
-            class="org.jboss.tools.smooks10.model.smooks.SmooksPackage"
-            genModel="model/smooks_1_0.genmodel"/>
-   </extension>
-
-   <extension point="org.eclipse.emf.ecore.extension_parser">
-      <parser
-            type="smooks10"
-            class="org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl"/>
-   </extension>
-      <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
-      <factory
-            uri="http://www.milyn.org/xsd/smooks-1.0.xsd"
-            class="org.jboss.tools.smooks10.model.smooks.provider.SmooksItemProviderAdapterFactory"
-            supportedTypes=
-              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
-               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
-               org.eclipse.emf.edit.provider.ITreeItemContentProvider
-               org.eclipse.emf.edit.provider.IItemLabelProvider
-               org.eclipse.emf.edit.provider.IItemPropertySource"/>
-   </extension>
-   
      <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.milyn.org/xsd/smooks/groovy-1.1.xsd"
