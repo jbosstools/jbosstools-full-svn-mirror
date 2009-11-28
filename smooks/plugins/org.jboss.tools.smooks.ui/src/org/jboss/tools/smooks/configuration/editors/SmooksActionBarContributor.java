@@ -86,7 +86,7 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 /**
  * This is the action bar contributor for the Smooks model editor. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- * 
+ * @deprecated
  * @generated
  */
 public class SmooksActionBarContributor extends EditingDomainActionBarContributor implements ISelectionChangedListener {
@@ -138,7 +138,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 
 		@Override
 		public void run() {
-			addSmooks10ResourceList();
+//			addSmooks10ResourceList();
 		}
 
 	};
@@ -240,18 +240,18 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		}
 	}
 
-	protected void addSmooks10ResourceList() {
-		ISmooksModelProvider formEditor = (ISmooksModelProvider) this.getActiveEditor();
-		EObject model = formEditor.getSmooksModel();
-		if (model instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
-			org.jboss.tools.smooks10.model.smooks.SmooksResourceListType resourceList = org.jboss.tools.smooks10.model.smooks.SmooksFactory.eINSTANCE
-					.createSmooksResourceListType();
-			Command command = AddCommand.create(formEditor.getEditingDomain(), model,
-					org.jboss.tools.smooks10.model.smooks.SmooksPackage.eINSTANCE.getSmooksResourceListType(),
-					resourceList);
-			formEditor.getEditingDomain().getCommandStack().execute(command);
-		}
-	}
+//	protected void addSmooks10ResourceList() {
+//		ISmooksModelProvider formEditor = (ISmooksModelProvider) this.getActiveEditor();
+//		EObject model = formEditor.getSmooksModel();
+//		if (model instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
+//			org.jboss.tools.smooks10.model.smooks.SmooksResourceListType resourceList = org.jboss.tools.smooks10.model.smooks.SmooksFactory.eINSTANCE
+//					.createSmooksResourceListType();
+//			Command command = AddCommand.create(formEditor.getEditingDomain(), model,
+//					org.jboss.tools.smooks10.model.smooks.SmooksPackage.eINSTANCE.getSmooksResourceListType(),
+//					resourceList);
+//			formEditor.getEditingDomain().getCommandStack().execute(command);
+//		}
+//	}
 
 	protected void addSmooks11ResourceList() {
 		ISmooksModelProvider formEditor = (ISmooksModelProvider) this.getActiveEditor();
@@ -770,14 +770,14 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 					MEdiPackage.eINSTANCE.getEdiMap(), mappingNode);
 			addMap10ResourceListAction.setEnabled(command.canExecute());
 		}
-		if (model instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
-			org.jboss.tools.smooks10.model.smooks.SmooksResourceListType resourceList = org.jboss.tools.smooks10.model.smooks.SmooksFactory.eINSTANCE
-					.createSmooksResourceListType();
-			Command command = AddCommand.create(formEditor.getEditingDomain(), model,
-					org.jboss.tools.smooks10.model.smooks.SmooksPackage.eINSTANCE.getSmooksResourceListType(),
-					resourceList);
-			addSmooks10ResourceListAction.setEnabled(command.canExecute());
-		}
+//		if (model instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
+//			org.jboss.tools.smooks10.model.smooks.SmooksResourceListType resourceList = org.jboss.tools.smooks10.model.smooks.SmooksFactory.eINSTANCE
+//					.createSmooksResourceListType();
+//			Command command = AddCommand.create(formEditor.getEditingDomain(), model,
+//					org.jboss.tools.smooks10.model.smooks.SmooksPackage.eINSTANCE.getSmooksResourceListType(),
+//					resourceList);
+//			addSmooks10ResourceListAction.setEnabled(command.canExecute());
+//		}
 	}
 
 	/**

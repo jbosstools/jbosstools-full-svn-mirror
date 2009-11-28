@@ -92,6 +92,9 @@ public class SelectorValidator extends AbstractValidator {
 				sperator = " ";
 			}
 			if (feature != null && path != null) {
+				if("#document".equals(path)){
+					return null;
+				}
 				Object node = null;
 				for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 					Object obj = (Object) iterator.next();

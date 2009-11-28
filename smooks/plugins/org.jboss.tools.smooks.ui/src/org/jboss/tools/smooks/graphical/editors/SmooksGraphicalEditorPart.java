@@ -891,9 +891,6 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		if (smooksModelProvider != null) {
 			EObject m = null;
 			EObject smooksModel = smooksModelProvider.getSmooksModel();
-			if (smooksModel instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
-				m = ((org.jboss.tools.smooks10.model.smooks.DocumentRoot) smooksModel).getSmooksResourceList();
-			}
 			if (smooksModel instanceof DocumentRoot) {
 				m = ((DocumentRoot) smooksModel).getSmooksResourceList();
 			}

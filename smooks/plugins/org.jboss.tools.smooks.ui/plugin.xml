@@ -23,16 +23,7 @@
                contentTypeId="org.jboss.tools.smooks.ui.edimap.contentType">
          </contentTypeBinding>
       </editor>
-      <editor
-            class="org.jboss.tools.smooks.configuration.editors_10.Smooks10MultiFormEditor"
-            contributorClass="org.jboss.tools.smooks.configuration.editors.SmooksActionBarContributor"
-            icon="icons/smooks-sm.gif"
-            id="org.jboss.tools.smooks.configuration.editors.MultiPageEditor_1_0"
-            name="Smooks Configuration Editor">
-         <contentTypeBinding
-               contentTypeId="org.jboss.tools.smooks.ui.smooks1_0.contentType">
-         </contentTypeBinding>
-      </editor>
+      
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
@@ -74,14 +65,7 @@
             name="EDI Map File"
             priority="low">
       </content-type>
-      <content-type
-            base-type="org.eclipse.core.runtime.xml"
-            describer="org.jboss.tools.smooks.configuration.editors_10.Smooks10ConfigfileContentDescriber"
-            file-extensions="xml"
-            id="org.jboss.tools.smooks.ui.smooks1_0.contentType"
-            name="Smooks Configuration File"
-            priority="low">
-      </content-type>
+      
    </extension>
     <extension
           point="org.eclipse.ui.startup">
@@ -111,9 +95,6 @@
                 </objectClass>
                 <objectClass
                       name="org.eclipse.emf.ecore.util.FeatureMap$Entry">
-                </objectClass>
-                <objectClass
-                      name="org.jboss.tools.smooks10.model.smooks.AbstractType">
                 </objectClass>
                 <objectClass
                       name="org.eclipse.emf.ecore.EObject">

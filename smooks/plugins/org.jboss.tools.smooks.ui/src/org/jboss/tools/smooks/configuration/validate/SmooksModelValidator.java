@@ -61,8 +61,8 @@ import org.jboss.tools.smooks.model.jmsrouting.provider.JmsroutingItemProviderAd
 import org.jboss.tools.smooks.model.json.provider.JsonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
 import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
 
 /**
  * @author Dart (dpeng@redhat.com)

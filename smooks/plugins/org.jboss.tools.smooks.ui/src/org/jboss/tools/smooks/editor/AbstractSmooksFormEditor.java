@@ -92,9 +92,9 @@ import org.jboss.tools.smooks.model.rules10.provider.Rules10ItemProviderAdapterF
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
 import org.jboss.tools.smooks.model.validation10.provider.Validation10ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
 
 public class AbstractSmooksFormEditor extends FormEditor implements IEditingDomainProvider,
 		ISmooksModelValidateListener, ISmooksModelProvider {
@@ -239,14 +239,18 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	}
 
 	protected void fillComments(Document document, EObject rootModel) {
-		if (rootModel instanceof DocumentRoot) {
-			EObject rootElementModel = ((DocumentRoot) rootModel).getSmooksResourceList();
-			Element rootElement = document.getRootElement();
-			try {
-				fillComments(rootElementModel, rootElement);
-			} catch (Exception e) {
-				e.printStackTrace();
+		try {
+			if (rootModel instanceof DocumentRoot) {
+				EObject rootElementModel = ((DocumentRoot) rootModel).getSmooksResourceList();
+				Element rootElement = document.getRootElement();
+				try {
+					fillComments(rootElementModel, rootElement);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
+		} catch (Throwable t) {
+			// ignore exception;
 		}
 	}
 
@@ -361,10 +365,6 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 	protected void initEditingDomain() {
 		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-
-		// add smooks 1.0 item provider model
-		adapterFactory
-				.addAdapterFactory(new org.jboss.tools.smooks10.model.smooks.provider.SmooksItemProviderAdapterFactory());
 
 		// add smooks 1.1.2 EMF item provider model
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
@@ -662,9 +662,6 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	public EObject getSmooksResourceList() {
 		EObject m = null;
 		EObject smooksModel = getSmooksModel();
-		if (smooksModel instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
-			m = ((org.jboss.tools.smooks10.model.smooks.DocumentRoot) smooksModel).getSmooksResourceList();
-		}
 		if (smooksModel instanceof DocumentRoot) {
 			m = ((DocumentRoot) smooksModel).getSmooksResourceList();
 		}

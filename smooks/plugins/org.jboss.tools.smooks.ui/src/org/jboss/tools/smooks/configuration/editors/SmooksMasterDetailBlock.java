@@ -311,11 +311,11 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 
 	private void setTreeViewerModel(Object smooksModel) {
 		boolean seted = false;
-		if (smooksModel instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
-			smooksTreeViewer.setInput(((org.jboss.tools.smooks10.model.smooks.DocumentRoot) smooksModel)
-					.getSmooksResourceList());
-			seted = true;
-		}
+//		if (smooksModel instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
+//			smooksTreeViewer.setInput(((org.jboss.tools.smooks10.model.smooks.DocumentRoot) smooksModel)
+//					.getSmooksResourceList());
+//			seted = true;
+//		}
 		if (smooksModel instanceof DocumentRoot) {
 			SmooksResourceListType list = ((DocumentRoot) smooksModel).getSmooksResourceList();
 			try {
@@ -332,9 +332,9 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 
 	private EObject getTreeViewerInput() {
 		EObject smooksModel = ((ISmooksModelProvider) this.formEditor).getSmooksModel();
-		if (smooksModel instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
-			return ((org.jboss.tools.smooks10.model.smooks.DocumentRoot) smooksModel).getSmooksResourceList();
-		}
+//		if (smooksModel instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
+//			return ((org.jboss.tools.smooks10.model.smooks.DocumentRoot) smooksModel).getSmooksResourceList();
+//		}
 		if (smooksModel instanceof DocumentRoot) {
 			return (((DocumentRoot) smooksModel).getSmooksResourceList());
 		}

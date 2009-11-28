@@ -315,7 +315,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		EObject resource = getSmooksResourceList();
 		if (resource == null)
 			return;
-		if (getSmooksVersion() == null || getSmooksVersion().equals(SmooksConstants.VERSION_1_0)) {
+		if (getSmooksVersion() == null) {
 			return;
 		}
 		ParamsType parent = getParamsType();
@@ -584,9 +584,6 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		if (smooksModelProvider != null) {
 			EObject m = null;
 			EObject smooksModel = smooksModelProvider.getSmooksModel();
-			if (smooksModel instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
-				m = ((org.jboss.tools.smooks10.model.smooks.DocumentRoot) smooksModel).getSmooksResourceList();
-			}
 			if (smooksModel instanceof DocumentRoot) {
 				m = ((DocumentRoot) smooksModel).getSmooksResourceList();
 			}

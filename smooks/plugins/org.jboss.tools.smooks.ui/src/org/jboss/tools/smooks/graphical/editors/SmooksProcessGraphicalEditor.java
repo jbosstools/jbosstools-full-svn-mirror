@@ -94,8 +94,8 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
  * 
  */
 public class SmooksProcessGraphicalEditor extends FormPage implements ISelectionChangedListener,
-		ISourceSynchronizeListener, IPropertyListener, ISmooksModelValidateListener,
-		IProcessProvider, PropertyChangeListener {
+		ISourceSynchronizeListener, IPropertyListener, ISmooksModelValidateListener, IProcessProvider,
+		PropertyChangeListener {
 
 	private List<IAction> processPanelActions = new ArrayList<IAction>();
 
@@ -705,12 +705,12 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		});
 	}
 
-//	public SmooksGraphicsExtType getSmooksGraphicsExtType() {
-//		if (smooksModelProvider != null) {
-//			return smooksModelProvider.getSmooksGraphicsExt();
-//		}
-//		return null;
-//	}
+	// public SmooksGraphicsExtType getSmooksGraphicsExtType() {
+	// if (smooksModelProvider != null) {
+	// return smooksModelProvider.getSmooksGraphicsExt();
+	// }
+	// return null;
+	// }
 
 	/**
 	 * @return the smooksModelProvider
@@ -731,9 +731,6 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		if (smooksModelProvider != null) {
 			EObject m = null;
 			EObject smooksModel = smooksModelProvider.getSmooksModel();
-			if (smooksModel instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
-				m = ((org.jboss.tools.smooks10.model.smooks.DocumentRoot) smooksModel).getSmooksResourceList();
-			}
 			if (smooksModel instanceof DocumentRoot) {
 				m = ((DocumentRoot) smooksModel).getSmooksResourceList();
 			}
@@ -915,7 +912,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 			if (!isSingltonEditor(id)) {
 				String idref = generateTaskSpecailID((TaskType) model);
 				if (idref != null) {
-//					idref = id + "_" + idref;
+					// idref = id + "_" + idref;
 					if (getRegisteTaskPage(idref) == null) {
 						IEditorPart editor = createEditorPart(id);
 						this.registeTaskDetailsPage(editor, idref);
@@ -1039,35 +1036,36 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		// }
 	}
 
-//	public void graphChanged(SmooksGraphicsExtType extType) {
-//		Collection<Object> editors = registedTaskPages.values();
-//		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
-//			Object object = (Object) iterator.next();
-//			if (object instanceof ISmooksGraphChangeListener) {
-//				((ISmooksGraphChangeListener) object).graphChanged(extType);
-//			}
-//		}
-//	}
+	// public void graphChanged(SmooksGraphicsExtType extType) {
+	// Collection<Object> editors = registedTaskPages.values();
+	// for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
+	// Object object = (Object) iterator.next();
+	// if (object instanceof ISmooksGraphChangeListener) {
+	// ((ISmooksGraphChangeListener) object).graphChanged(extType);
+	// }
+	// }
+	// }
 
-//	public void graphPropertyChange(EStructuralFeature featre, Object value) {
-//		Collection<Object> editors = registedTaskPages.values();
-//		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
-//			Object object = (Object) iterator.next();
-//			if (object instanceof ISmooksGraphChangeListener) {
-//				((ISmooksGraphChangeListener) object).graphPropertyChange(featre, value);
-//			}
-//		}
-//	}
+	// public void graphPropertyChange(EStructuralFeature featre, Object value)
+	// {
+	// Collection<Object> editors = registedTaskPages.values();
+	// for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
+	// Object object = (Object) iterator.next();
+	// if (object instanceof ISmooksGraphChangeListener) {
+	// ((ISmooksGraphChangeListener) object).graphPropertyChange(featre, value);
+	// }
+	// }
+	// }
 
-//	public void inputTypeChanged(SmooksGraphicsExtType extType) {
-//		Collection<Object> editors = registedTaskPages.values();
-//		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
-//			Object object = (Object) iterator.next();
-//			if (object instanceof ISmooksGraphChangeListener) {
-//				((ISmooksGraphChangeListener) object).inputTypeChanged(extType);
-//			}
-//		}
-//	}
+	// public void inputTypeChanged(SmooksGraphicsExtType extType) {
+	// Collection<Object> editors = registedTaskPages.values();
+	// for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
+	// Object object = (Object) iterator.next();
+	// if (object instanceof ISmooksGraphChangeListener) {
+	// ((ISmooksGraphChangeListener) object).inputTypeChanged(extType);
+	// }
+	// }
+	// }
 
 	public void propertyChanged(Object source, int propId) {
 		this.firePropertyChange(propId);

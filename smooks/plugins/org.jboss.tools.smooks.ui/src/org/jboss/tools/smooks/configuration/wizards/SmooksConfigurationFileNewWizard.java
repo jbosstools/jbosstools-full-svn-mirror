@@ -32,7 +32,6 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
-import org.jboss.tools.smooks.configuration.editors_10.Smooks10MultiFormEditor;
 
 /**
  * 
@@ -139,9 +138,6 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 				FileEditorInput editorInput = new FileEditorInput(configFile);
 				try {
-					if (fversion.equals(SmooksConstants.VERSION_1_0)) {
-						page.openEditor(editorInput, Smooks10MultiFormEditor.EDITOR_ID, true);
-					}
 					if (fversion.equals(SmooksConstants.VERSION_1_1) || fversion.equals(SmooksConstants.VERSION_1_2)) {
 						page.openEditor(editorInput, SmooksMultiFormEditor.EDITOR_ID, true);
 					}
@@ -191,15 +187,6 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 
 	private InputStream openContentStream(String version) {
 		String contents = "";
-		if (SmooksConstants.VERSION_1_0.equals(version)) {
-			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
-					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.0.xsd\" xmlns:graph = \"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\">\n"//$NON-NLS-1$
-					+ "		<resource-config selector=\"global-parameters\">\n"//$NON-NLS-1$
-					+ "			<param name=\"stream.filter.type\">SAX</param>\n"//$NON-NLS-1$
-					+ "		</resource-config>\n"//$NON-NLS-1$
-					+ "		<graph:smooks-graphics-ext platformVersion = \"1.0\"/>\n"//$NON-NLS-1$
-					+ "</smooks-resource-list>"; //$NON-NLS-1$
-		}
 		if (SmooksConstants.VERSION_1_1.equals(version)) {
 			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
 					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.1.xsd\" xmlns:graph = \"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\">\n"//$NON-NLS-1$

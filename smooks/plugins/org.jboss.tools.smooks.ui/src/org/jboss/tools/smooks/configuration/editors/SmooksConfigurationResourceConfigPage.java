@@ -62,11 +62,6 @@ public class SmooksConfigurationResourceConfigPage extends SmooksConfigurationFo
 							&& eObject instanceof AbstractResourceConfig) {
 						return eObject;
 					}
-
-					if (smooksTreeViewerInput instanceof org.jboss.tools.smooks10.model.smooks.SmooksResourceListType
-							&& eObject instanceof org.jboss.tools.smooks10.model.smooks.AbstractResourceConfig) {
-						return eObject;
-					}
 				}
 				return super.getEmptyDefaultSelection(smooksTreeViewerInput);
 			}
@@ -92,9 +87,6 @@ public class SmooksConfigurationResourceConfigPage extends SmooksConfigurationFo
 						return false;
 					}
 					if (obj instanceof ProfilesType) {
-						return false;
-					}
-					if (obj instanceof org.jboss.tools.smooks10.model.smooks.ProfilesType) {
 						return false;
 					}
 					ISmooksModelProvider provider = (ISmooksModelProvider) getAdapter(ISmooksModelProvider.class);

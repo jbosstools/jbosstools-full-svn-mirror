@@ -669,6 +669,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		}
 
 		AdapterFactoryEditingDomain editDomain = getEditingDomain();
+		Object obj = editDomain.getAdapterFactory().adapt(resourceList, IEditingDomainItemProvider.class);
 		IEditingDomainItemProvider provider = (IEditingDomainItemProvider) editDomain.getAdapterFactory().adapt(
 				resourceList, IEditingDomainItemProvider.class);
 		Collection<?> collections = provider.getNewChildDescriptors(resourceList, editDomain, null);
@@ -859,7 +860,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				}
 
 				getEditingDomain().getCommandStack().execute(compoundCommand);
-//				inputTypeChanged();
+				// inputTypeChanged();
 				refreshInputModelView();
 
 			}
@@ -970,8 +971,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 						InputType input = (InputType) iterator.next();
 						SmooksUIUtils.removeInputType(input, smooksModelProvider);
 					}
-					if(!inputs.isEmpty()){
-						List<?> viewerInput = (List<?>)inputDataViewer.getInput();
+					if (!inputs.isEmpty()) {
+						List<?> viewerInput = (List<?>) inputDataViewer.getInput();
 						viewerInput.removeAll(inputs);
 						inputTypeChanged();
 					}
