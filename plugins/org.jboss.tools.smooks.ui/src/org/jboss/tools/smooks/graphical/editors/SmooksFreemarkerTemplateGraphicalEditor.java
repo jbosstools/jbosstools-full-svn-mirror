@@ -385,7 +385,8 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 					mappingList.addAll(mappings);
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				// ignore exception
+//				e.printStackTrace();
 			}
 		}
 

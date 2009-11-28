@@ -195,7 +195,6 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.validation10.Validation10Package;
 import org.jboss.tools.smooks.model.xsl.Xsl;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
-import org.jboss.tools.smooks10.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -2998,9 +2997,6 @@ public class SmooksUIUtils {
 	}
 
 	public static String judgeSmooksPlatformVersion(EObject smooksModel) {
-		if (smooksModel instanceof DocumentRoot) {
-			return SmooksConstants.VERSION_1_0;
-		}
 
 		if (smooksModel instanceof org.jboss.tools.smooks.model.smooks.DocumentRoot) {
 			EMap<String, String> nsMap = ((org.jboss.tools.smooks.model.smooks.DocumentRoot) smooksModel)
@@ -3018,10 +3014,6 @@ public class SmooksUIUtils {
 
 	public static String judgeInputType(EObject smooksModel) {
 		String inputType = null;
-		if (smooksModel instanceof DocumentRoot) {
-			return null;
-		}
-
 		if (smooksModel instanceof org.jboss.tools.smooks.model.smooks.DocumentRoot) {
 			SmooksResourceListType rlist = ((org.jboss.tools.smooks.model.smooks.DocumentRoot) smooksModel)
 					.getSmooksResourceList();

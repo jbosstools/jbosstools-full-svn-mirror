@@ -36,7 +36,7 @@ public interface ProcessType {
 
 	public static final String PRO_ADD_CHILD = "pro_add_child";
 
-	public static final String PRO_REMOVE_CHILD = "pro_add_child";
+	public static final String PRO_REMOVE_CHILD = "pro_remove_child";
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener);
 	
