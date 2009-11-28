@@ -113,9 +113,6 @@ Export-Package: org.jboss.tools.smooks.core,
  org.jboss.tools.smooks.model.xsl.impl,
  org.jboss.tools.smooks.model.xsl.provider,
  org.jboss.tools.smooks.model.xsl.util,
- org.jboss.tools.smooks10.model.smooks,
- org.jboss.tools.smooks10.model.smooks.impl,
- org.jboss.tools.smooks10.model.smooks.provider,
  org.jboss.tools.smooks10.model.smooks.util
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-Localization: plugin

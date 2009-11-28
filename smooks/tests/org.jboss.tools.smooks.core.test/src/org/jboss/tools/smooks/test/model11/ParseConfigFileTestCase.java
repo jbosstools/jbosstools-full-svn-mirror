@@ -21,7 +21,7 @@ import junit.framework.Assert;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
+import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -58,20 +58,21 @@ public class ParseConfigFileTestCase extends AbstractSmooks11ModelTestCase {
 						smooksModel = smooksResource.getContents().get(0);
 						Assert.assertNotNull(smooksModel);
 						Assert.assertTrue(smooksModel instanceof org.jboss.tools.smooks.model.medi.DocumentRoot
-								|| smooksModel instanceof DocumentRoot
-								|| smooksModel instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot);
+								|| smooksModel instanceof DocumentRoot);
 						if (smooksModel instanceof DocumentRoot) {
-							System.out.println("load smooks 1.1.2 config file : \"" + file.getName() +"/"+ configFile.getName()
-									+ "\" success.");
+							System.out.println("load smooks 1.1.2 config file : \"" + file.getName() + "/"
+									+ configFile.getName() + "\" success.");
 						}
-						if (smooksModel instanceof  org.jboss.tools.smooks.model.medi.DocumentRoot) {
-							System.out.println("load edi-message-mapping-1.0 file config file : \"" + file.getName() +"/"+ configFile.getName()
-									+ "\" success.");
+						if (smooksModel instanceof org.jboss.tools.smooks.model.medi.DocumentRoot) {
+							System.out.println("load edi-message-mapping-1.0 file config file : \"" + file.getName()
+									+ "/" + configFile.getName() + "\" success.");
 						}
-						if (smooksModel instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
-							System.out.println("load smooks 1.0 config file : \"" + file.getName() +"/"+ configFile.getName()
-									+ "\" success.");
-						}
+						// if (smooksModel instanceof
+						// org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
+						// System.out.println("load smooks 1.0 config file : \""
+						// + file.getName() +"/"+ configFile.getName()
+						// + "\" success.");
+						// }
 					}
 				}
 

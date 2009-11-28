@@ -40,8 +40,8 @@ import org.jboss.tools.smooks.model.medi.MappingNode;
 import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
 import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksResourceFactoryImpl;
 
 /**
  * 
@@ -71,8 +71,6 @@ public abstract class AbstractSmooks11ModelTestCase extends BaseTestCase {
 		adapterFactory.addAdapterFactory(new CommonItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new SmooksItemProviderAdapterFactory());
 
-		adapterFactory
-				.addAdapterFactory(new org.jboss.tools.smooks10.model.smooks.provider.SmooksItemProviderAdapterFactory());
 
 		adapterFactory.addAdapterFactory(new MEdiItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new EdiItemProviderAdapterFactory());
@@ -155,14 +153,14 @@ public abstract class AbstractSmooks11ModelTestCase extends BaseTestCase {
 		return null;
 	}
 	
-	public org.jboss.tools.smooks10.model.smooks.SmooksResourceListType getSmooksResourceList10() {
-		EObject root = this.getSmooksModel();
-		if (root instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
-			org.jboss.tools.smooks10.model.smooks.DocumentRoot documentRoot = (org.jboss.tools.smooks10.model.smooks.DocumentRoot) root;
-			org.jboss.tools.smooks10.model.smooks.SmooksResourceListType resourceConfig = (org.jboss.tools.smooks10.model.smooks.SmooksResourceListType) documentRoot.eContents().get(0);
-			return resourceConfig;
-		}
-		return null;
-	}
+//	public org.jboss.tools.smooks10.model.smooks.SmooksResourceListType getSmooksResourceList10() {
+//		EObject root = this.getSmooksModel();
+//		if (root instanceof org.jboss.tools.smooks10.model.smooks.DocumentRoot) {
+//			org.jboss.tools.smooks10.model.smooks.DocumentRoot documentRoot = (org.jboss.tools.smooks10.model.smooks.DocumentRoot) root;
+//			org.jboss.tools.smooks10.model.smooks.SmooksResourceListType resourceConfig = (org.jboss.tools.smooks10.model.smooks.SmooksResourceListType) documentRoot.eContents().get(0);
+//			return resourceConfig;
+//		}
+//		return null;
+//	}
 
 }
