@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.draw2d.ConnectionAnchor;
+import org.eclipse.draw2d.FreeformLayer;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.gef.ConnectionEditPart;
@@ -184,34 +185,45 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 	}
 
 	protected void refreshVisuals() {
-		TreeNodeModel node = (TreeNodeModel) getModel();
-		String text = node.getText();
-		if (text != null) {
-			((TreeNodeFigure) getFigure()).setLabelText(text);
-		}
-		Label tooltip = null;
-		int serverity = node.getSeverity();
-		String message = getSeverityMessage(node);
-		Image image = node.getImage();
-		if (serverity == IValidatableModel.NONE) {
-			image = node.getImage();
+		try {
+			TreeNodeModel node = (TreeNodeModel) getModel();
+			String text = node.getText();
+			if (text != null) {
+				((TreeNodeFigure) getFigure()).setLabelText(text);
+			}
+			Label tooltip = null;
+			int serverity = node.getSeverity();
+			String message = getSeverityMessage(node);
+			Image image = node.getImage();
+			if (serverity == IValidatableModel.NONE) {
+				image = node.getImage();
 
+			}
+			if (serverity == IValidatableModel.ERROR) {
+				image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_ERROR);
+				tooltip = errorLabel;
+				tooltip.setText(message);
+			}
+			if (serverity == IValidatableModel.WARNING) {
+				image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
+						GraphicsConstants.IMAGE_WARNING);
+				tooltip = warningLabel;
+				tooltip.setText(message);
+			}
+			if (image != null) {
+				((TreeNodeFigure) getFigure()).setLabelImage(image);
+			}
+			((TreeNodeFigure) getFigure()).setToolTip(tooltip);
+			IFigure parent = getFigure();
+			while (parent != null && !(parent instanceof FreeformLayer)) {
+				parent = parent.getParent();
+			}
+			if (parent != null) {
+				parent.repaint();
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
 		}
-		if (serverity == IValidatableModel.ERROR) {
-			image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_ERROR);
-			tooltip = errorLabel;
-			tooltip.setText(message);
-		}
-		if (serverity == IValidatableModel.WARNING) {
-			image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_WARNING);
-			tooltip = warningLabel;
-			tooltip.setText(message);
-		}
-		if (image != null) {
-			((TreeNodeFigure) getFigure()).setLabelImage(image);
-		}
-		((TreeNodeFigure) getFigure()).setToolTip(tooltip);
-		super.refreshVisuals();
 
 		// Dimension size = getFigure().getPreferredSize(-1, -1);
 		// Rectangle rect = getFigure().getBounds();
@@ -298,45 +310,49 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 		}
 	}
 
-//	protected void recordBounds(SmooksGraphicsExtType graphicsExt, Rectangle bounds) {
-//		GraphType graph = graphicsExt.getGraph();
-//		if (graph == null) {
-//			graph = GraphFactory.eINSTANCE.createGraphType();
-//			graphicsExt.setGraph(graph);
-//		}
-//		String figureId = generateFigureID();
-//		if (figureId == null)
-//			return;
-//		FigureType figure = SmooksGraphUtil.findFigureType(graph, figureId);
-//
-//		if (figure == null) {
-//			figure = GraphFactory.eINSTANCE.createFigureType();
-//			figure.setId(figureId);
-//			graph.getFigure().add(figure);
-//		}
-//		recordFigureBounds(figure, bounds);
-//	}
-//
-//	protected void recordFigureBounds(FigureType figureType, Rectangle bounds) {
-//		figureType.setX(String.valueOf(bounds.getLocation().x));
-//		figureType.setY(String.valueOf(bounds.getLocation().y));
-//
-//		figureType.setHeight(String.valueOf(bounds.getSize().height));
-//		figureType.setWidth(String.valueOf(bounds.getSize().width));
-//
-//		EObject ext = figureType;
-//		while (ext != null && !(ext instanceof SmooksGraphicsExtType)) {
-//			ext = ext.eContainer();
-//		}
-//
-//		if (ext != null && ext instanceof SmooksGraphicsExtType) {
-//			List<ISmooksGraphChangeListener> listeners = ((SmooksGraphicsExtType) ext).getChangeListeners();
-//			for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
-//				ISmooksGraphChangeListener smooksGraphChangeListener = (ISmooksGraphChangeListener) iterator.next();
-//				smooksGraphChangeListener.graphChanged((SmooksGraphicsExtType) ext);
-//			}
-//		}
-//	}
+	// protected void recordBounds(SmooksGraphicsExtType graphicsExt, Rectangle
+	// bounds) {
+	// GraphType graph = graphicsExt.getGraph();
+	// if (graph == null) {
+	// graph = GraphFactory.eINSTANCE.createGraphType();
+	// graphicsExt.setGraph(graph);
+	// }
+	// String figureId = generateFigureID();
+	// if (figureId == null)
+	// return;
+	// FigureType figure = SmooksGraphUtil.findFigureType(graph, figureId);
+	//
+	// if (figure == null) {
+	// figure = GraphFactory.eINSTANCE.createFigureType();
+	// figure.setId(figureId);
+	// graph.getFigure().add(figure);
+	// }
+	// recordFigureBounds(figure, bounds);
+	// }
+	//
+	// protected void recordFigureBounds(FigureType figureType, Rectangle
+	// bounds) {
+	// figureType.setX(String.valueOf(bounds.getLocation().x));
+	// figureType.setY(String.valueOf(bounds.getLocation().y));
+	//
+	// figureType.setHeight(String.valueOf(bounds.getSize().height));
+	// figureType.setWidth(String.valueOf(bounds.getSize().width));
+	//
+	// EObject ext = figureType;
+	// while (ext != null && !(ext instanceof SmooksGraphicsExtType)) {
+	// ext = ext.eContainer();
+	// }
+	//
+	// if (ext != null && ext instanceof SmooksGraphicsExtType) {
+	// List<ISmooksGraphChangeListener> listeners = ((SmooksGraphicsExtType)
+	// ext).getChangeListeners();
+	// for (Iterator<?> iterator = listeners.iterator(); iterator.hasNext();) {
+	// ISmooksGraphChangeListener smooksGraphChangeListener =
+	// (ISmooksGraphChangeListener) iterator.next();
+	// smooksGraphChangeListener.graphChanged((SmooksGraphicsExtType) ext);
+	// }
+	// }
+	// }
 
 	protected String generateFigureID() {
 		return null;

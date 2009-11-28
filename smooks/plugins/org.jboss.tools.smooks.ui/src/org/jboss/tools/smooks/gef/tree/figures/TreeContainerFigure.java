@@ -444,6 +444,7 @@ public class TreeContainerFigure extends Figure implements ISelectableFigure, IS
 	 */
 	public void setContentFigure(IFigure contentFigure) {
 		this.contentFigure = contentFigure;
+//		this.repaint(0,0,0,0);
 		repaint();
 	}
 
