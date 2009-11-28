@@ -170,12 +170,12 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		}
 		String contents = "";
 		if (typeContents == null) {
-			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "    <smooks-graphics-ext platformVersion = \""
-					+ version + "\" xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
+			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"; // + "    <smooks-graphics-ext platformVersion = \""
+//					+ version + "\" xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
 		} else {
-			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "    <smooks-graphics-ext platformVersion = \""
-					+ version + "\" " + typeContents
-					+ " xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
+			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";// + "    <smooks-graphics-ext platformVersion = \""
+//					+ version + "\" " + typeContents
+//					+ " xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
 		}
 		return new ByteArrayInputStream(contents.getBytes());
 	}
@@ -189,20 +189,20 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 		String contents = "";
 		if (SmooksConstants.VERSION_1_1.equals(version)) {
 			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
-					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.1.xsd\" xmlns:graph = \"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\">\n"//$NON-NLS-1$
+					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.1.xsd\">\n"// xmlns:graph = \"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\">\n"//$NON-NLS-1$
 					+ "		<params>\n"//$NON-NLS-1$
 					+ "			<param name=\"stream.filter.type\">SAX</param>\n"//$NON-NLS-1$
 					+ "		</params>\n"//$NON-NLS-1$
-					+ "		<graph:smooks-graphics-ext platformVersion = \"1.1\"/>\n"//$NON-NLS-1$
+//					+ "		<graph:smooks-graphics-ext platformVersion = \"1.1\"/>\n"//$NON-NLS-1$
 					+ "</smooks-resource-list>"; //$NON-NLS-1$
 		}
 		if (SmooksConstants.VERSION_1_2.equals(version)) {
 			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
-					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.1.xsd\" xmlns:graph = \"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\">\n"//$NON-NLS-1$
+					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.1.xsd\">\n"// xmlns:graph = \"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\">\n"//$NON-NLS-1$
 					+ "		<params>\n"//$NON-NLS-1$
 					+ "			<param name=\"stream.filter.type\">SAX</param>\n"//$NON-NLS-1$
 					+ "		</params>\n"//$NON-NLS-1$
-					+ "		<graph:smooks-graphics-ext platformVersion = \"1.2\"/>\n"//$NON-NLS-1$
+//					+ "		<graph:smooks-graphics-ext platformVersion = \"1.2\"/>\n"//$NON-NLS-1$
 					+ "</smooks-resource-list>"; //$NON-NLS-1$
 		}
 		return new ByteArrayInputStream(contents.getBytes());
