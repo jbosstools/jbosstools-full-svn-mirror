@@ -273,7 +273,6 @@ public class FreemarkerCSVNodeEditPart extends TreeNodeEditPart {
 	 */
 	@Override
 	public void treeExpanded(TreeFigureExpansionEvent event) {
-		System.out.println();
 	}
 
 	/*

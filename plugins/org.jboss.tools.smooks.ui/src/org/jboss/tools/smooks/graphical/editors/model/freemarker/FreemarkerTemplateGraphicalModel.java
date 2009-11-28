@@ -38,7 +38,7 @@ public class FreemarkerTemplateGraphicalModel extends AbstractResourceConfigGrap
 
 	public static final int TYPE_XML = 3;
 
-	public static final int TYPE_XSD = 3;
+	public static final int TYPE_XSD = 4;
 
 	private ISmooksModelProvider smooksModelProvider;
 
@@ -56,17 +56,17 @@ public class FreemarkerTemplateGraphicalModel extends AbstractResourceConfigGrap
 		Freemarker freemarker = (Freemarker) getData();
 		// Template template = freemarker.getTemplate();
 		if (freemarker != null) {
+			CSVNodeModel recordModel = new CSVNodeModel();
+			recordModel.setName("CSV-Record");
+			recordModel.setRecord(true);
+			FreemarkerCSVNodeGraphicalModel recordGraphNode = new FreemarkerCSVNodeGraphicalModel(recordModel,
+					contentProvider, labelProvider, smooksModelProvider);
+			this.getChildrenWithoutDynamic().add(recordGraphNode);
+			recordGraphNode.setParent(this);
 			String[] fields = SmooksModelUtils.getFreemarkerCSVFileds(freemarker);
 			String type = SmooksModelUtils.getTemplateType(freemarker);
 			if (SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV.equals(type)) {
 				if (fields != null) {
-					CSVNodeModel recordModel = new CSVNodeModel();
-					recordModel.setName("CSV-Record");
-					recordModel.setRecord(true);
-					FreemarkerCSVNodeGraphicalModel recordGraphNode = new FreemarkerCSVNodeGraphicalModel(recordModel,
-							contentProvider, labelProvider, smooksModelProvider);
-					this.getChildrenWithoutDynamic().add(recordGraphNode);
-					recordGraphNode.setParent(this);
 					List<FreemarkerCSVNodeGraphicalModel> fieldsGraphNodeList = new ArrayList<FreemarkerCSVNodeGraphicalModel>();
 					for (int i = 0; i < fields.length; i++) {
 						String field = fields[i];

@@ -512,6 +512,10 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 	public void sourceChange(Object model) {
 
 		lockEventFire = true;
+		if (streamFilterTypeCombo == null || defaultSerializationOnCheckbox == null || versionCombo == null) {
+			lockEventFire = false;
+			return;
+		}
 		streamFilterTypeCombo.setEnabled(true);
 		defaultSerializationOnCheckbox.setEnabled(true);
 		String version = getSmooksVersion();
