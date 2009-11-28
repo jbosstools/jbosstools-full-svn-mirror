@@ -89,7 +89,13 @@ public class DeleteTaskNodeAction extends AbstractProcessGraphAction {
 					}
 					Command remove = null;
 					if (associatedElements.isEmpty()) {
-						process.removeTask(currentTask);
+						Object parent = currentTask.getParent();
+						if (parent instanceof Process) {
+							((ProcessType) parent).removeTask(currentTask);
+						}
+						if (parent instanceof TaskType) {
+							((TaskType) parent).removeTask(currentTask);
+						}
 					} else {
 						associatedElements = getDeletedObjects(associatedElements);
 						CompoundCommand ccommand = new CompoundCommand();
@@ -100,12 +106,18 @@ public class DeleteTaskNodeAction extends AbstractProcessGraphAction {
 						// if (removeTaskCommand.canExecute()) {
 						// ccommand.append(removeTaskCommand);
 						// }
-						process.removeTask(currentTask);
 						remove = RemoveCommand.create(this.provider.getEditingDomain(), listType,
 								SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
 								associatedElements);
 						if (remove.canExecute()) {
 							ccommand.append(remove);
+							Object parent = currentTask.getParent();
+							if (parent instanceof Process) {
+								((ProcessType) parent).removeTask(currentTask);
+							}
+							if (parent instanceof TaskType) {
+								((TaskType) parent).removeTask(currentTask);
+							}
 						}
 						provider.getEditingDomain().getCommandStack().execute(ccommand);
 					}

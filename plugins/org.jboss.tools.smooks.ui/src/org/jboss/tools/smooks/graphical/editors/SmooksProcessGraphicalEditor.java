@@ -1120,11 +1120,19 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 	public void propertyChange(PropertyChangeEvent evt) {
 		String name = evt.getPropertyName();
+		Object newtask = evt.getNewValue();
 		if (ProcessType.PRO_ADD_CHILD.equals(name) || ProcessType.PRO_REMOVE_CHILD.equals(name)) {
 			if (getProcessGraphViewer() != null) {
 				getProcessGraphViewer().refresh();
 				getProcessGraphViewer().applyLayout();
 			}
+		}
+		
+		if (ProcessType.PRO_ADD_CHILD.equals(name)) {
+			this.showTaskControl(newtask);
+		}
+		if (ProcessType.PRO_REMOVE_CHILD.equals(name)) {
+			this.showTaskControl(null);
 		}
 	}
 }
