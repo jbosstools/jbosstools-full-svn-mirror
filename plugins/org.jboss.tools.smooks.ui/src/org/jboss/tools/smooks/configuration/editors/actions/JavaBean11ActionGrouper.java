@@ -18,7 +18,7 @@ public class JavaBean11ActionGrouper extends AbstractSmooksActionGrouper {
 	}
 
 	public String getGroupName() {
-		return "Java Binding";
+		return Messages.JavaBean11ActionGrouper_GroupName;
 	}
 
 }

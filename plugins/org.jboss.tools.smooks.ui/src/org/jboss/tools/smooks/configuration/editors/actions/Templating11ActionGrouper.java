@@ -17,7 +17,7 @@ public class Templating11ActionGrouper extends AbstractSmooksActionGrouper {
 	}
 
 	public String getGroupName() {
-		return "Templating";
+		return Messages.Templating11ActionGrouper_GroupName;
 	}
 
 }

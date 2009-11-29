@@ -54,17 +54,17 @@ public class Json12DataConfiguraitonWizardPage extends WizardPage {
 
 	private String rootName = null;
 
-	private String arrayElementName = "element";
+	private String arrayElementName = "element"; //$NON-NLS-1$
 
-	private String keyWhitspaceReplacement = "-";
+	private String keyWhitspaceReplacement = "-"; //$NON-NLS-1$
 
 	private String keyPrefixOnNumeric;
 
 	private String illegalElementNameCharReplacement;
 
-	private String nullValueReplacement = "";
+	private String nullValueReplacement = ""; //$NON-NLS-1$
 
-	private String encoding = "UTF-8";
+	private String encoding = "UTF-8"; //$NON-NLS-1$
 
 	private Text rootNameText;
 
@@ -126,15 +126,15 @@ public class Json12DataConfiguraitonWizardPage extends WizardPage {
 
 		createJsonReader = true;
 
-		arrayElementName = "element";
+		arrayElementName = "element"; //$NON-NLS-1$
 
-		keyWhitspaceReplacement = "-";
+		keyWhitspaceReplacement = "-"; //$NON-NLS-1$
 
 		keyPrefixOnNumeric = null;
 
 		illegalElementNameCharReplacement = null;
-		nullValueReplacement = "";
-		encoding = "UTF-8";
+		nullValueReplacement = ""; //$NON-NLS-1$
+		encoding = "UTF-8"; //$NON-NLS-1$
 		if (keyValueList != null) {
 			keyValueList.clear();
 		} else {
@@ -184,11 +184,11 @@ public class Json12DataConfiguraitonWizardPage extends WizardPage {
 		spaceComposite.setLayoutData(gd);
 
 		newReaderConfigButton = new Button(radioButtonComposite, SWT.RADIO);
-		newReaderConfigButton.setText("Create new JSON reader configurations");
+		newReaderConfigButton.setText("Create new JSON reader configurations"); //$NON-NLS-1$
 		newReaderConfigButton.setSelection(true);
 
 		useAvailableReaderConfigButton = new Button(radioButtonComposite, SWT.RADIO);
-		useAvailableReaderConfigButton.setText("Use available JSON reader configurations");
+		useAvailableReaderConfigButton.setText("Use available JSON reader configurations"); //$NON-NLS-1$
 
 		configComposite = new Composite(mainComposite, SWT.NONE);
 		gd = new GridData(GridData.FILL_BOTH);
@@ -203,57 +203,57 @@ public class Json12DataConfiguraitonWizardPage extends WizardPage {
 
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		Label rootnameLabel = new Label(configComposite, SWT.NONE);
-		rootnameLabel.setText("Root Element Name");
+		rootnameLabel.setText("Root Element Name"); //$NON-NLS-1$
 		rootNameText = new Text(configComposite, SWT.BORDER);
 		rootNameText.setLayoutData(gd);
 
 		Label arrayElementNameLabel = new Label(configComposite, SWT.NONE);
-		arrayElementNameLabel.setText("Array Element Name");
+		arrayElementNameLabel.setText("Array Element Name"); //$NON-NLS-1$
 		arrayElementNameText = new Text(configComposite, SWT.BORDER);
 		arrayElementNameText.setLayoutData(gd);
 		arrayElementNameText.setText(arrayElementName);
 
 		Label keyWhitspaceReplacementLabel = new Label(configComposite, SWT.NONE);
-		keyWhitspaceReplacementLabel.setText("Space Replacement");
+		keyWhitspaceReplacementLabel.setText("Space Replacement"); //$NON-NLS-1$
 		keyWhitspaceReplacementText = new Text(configComposite, SWT.BORDER);
 		keyWhitspaceReplacementText.setLayoutData(gd);
 		if (keyWhitspaceReplacement == null) {
-			keyWhitspaceReplacement = "";
+			keyWhitspaceReplacement = ""; //$NON-NLS-1$
 		}
 		keyWhitspaceReplacementText.setText(keyWhitspaceReplacement);
 
 		Label keyPrefixOnNumeric = new Label(configComposite, SWT.NONE);
-		keyPrefixOnNumeric.setText("Prefix On Numeric");
+		keyPrefixOnNumeric.setText("Prefix On Numeric"); //$NON-NLS-1$
 		keyPrefixOnNumericText = new Text(configComposite, SWT.BORDER);
 		keyPrefixOnNumericText.setLayoutData(gd);
 
 		Label illegalElementNameCharReplacementLabel = new Label(configComposite, SWT.NONE);
-		illegalElementNameCharReplacementLabel.setText("IllegalChar Replacement");
+		illegalElementNameCharReplacementLabel.setText("IllegalChar Replacement"); //$NON-NLS-1$
 		illegalElementNameCharReplacementText = new Text(configComposite, SWT.BORDER);
 		illegalElementNameCharReplacementText.setLayoutData(gd);
 
 		Label nullValueReplacementlabel = new Label(configComposite, SWT.NONE);
-		nullValueReplacementlabel.setText("NullValue Replacement");
+		nullValueReplacementlabel.setText("NullValue Replacement"); //$NON-NLS-1$
 		nullValueReplacementText = new Text(configComposite, SWT.BORDER);
 		nullValueReplacementText.setLayoutData(gd);
 		nullValueReplacementText.setText(nullValueReplacement);
 
 		Label encodingLabel = new Label(configComposite, SWT.NONE);
-		encodingLabel.setText("Encoding");
+		encodingLabel.setText("Encoding"); //$NON-NLS-1$
 		encodingText = new Text(configComposite, SWT.BORDER);
 		encodingText.setLayoutData(gd);
 		encodingText.setText(encoding);
 
 		Label indentLabel = new Label(configComposite, SWT.NONE);
-		indentLabel.setText("Indent");
+		indentLabel.setText("Indent"); //$NON-NLS-1$
 		indentText = new Combo(configComposite, SWT.BORDER | SWT.READ_ONLY);
-		indentText.add("");
-		indentText.add("TRUE");
-		indentText.add("FALSE");
+		indentText.add(""); //$NON-NLS-1$
+		indentText.add("TRUE"); //$NON-NLS-1$
+		indentText.add("FALSE"); //$NON-NLS-1$
 		indentText.setLayoutData(gd);
 
 		Label keyMapLabel = new Label(configComposite, SWT.NONE);
-		keyMapLabel.setText("Key Map:");
+		keyMapLabel.setText("Key Map:"); //$NON-NLS-1$
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		keyMapLabel.setLayoutData(gd);
@@ -283,7 +283,7 @@ public class Json12DataConfiguraitonWizardPage extends WizardPage {
 
 		keyMapViewer.setCellEditors(new CellEditor[] { keyCellEditor, valueCellEditor });
 
-		keyMapViewer.setColumnProperties(new String[] { "key", "value" });
+		keyMapViewer.setColumnProperties(new String[] { "key", "value" }); //$NON-NLS-1$ //$NON-NLS-2$
 
 		keyMapViewer.setCellModifier(new ICellModifier() {
 
@@ -295,10 +295,10 @@ public class Json12DataConfiguraitonWizardPage extends WizardPage {
 				if (el == null)
 					return;
 				if (el instanceof KeyValueModel && value instanceof String) {
-					if (property.equals("key")) {
+					if (property.equals("key")) { //$NON-NLS-1$
 						((KeyValueModel) el).setKey(value.toString());
 					}
-					if (property.equals("value")) {
+					if (property.equals("value")) { //$NON-NLS-1$
 						((KeyValueModel) el).setValue(value.toString());
 					}
 					keyMapViewer.refresh(el);
@@ -312,10 +312,10 @@ public class Json12DataConfiguraitonWizardPage extends WizardPage {
 				// }
 				// if(el == null) return null;
 				if (element instanceof KeyValueModel) {
-					if (property.equals("key")) {
+					if (property.equals("key")) { //$NON-NLS-1$
 						return ((KeyValueModel) element).getKey();
 					}
-					if (property.equals("value")) {
+					if (property.equals("value")) { //$NON-NLS-1$
 						return ((KeyValueModel) element).getValue();
 					}
 				}
@@ -330,7 +330,7 @@ public class Json12DataConfiguraitonWizardPage extends WizardPage {
 				// }
 				// if(el == null) return false;
 				if (element instanceof KeyValueModel) {
-					if (property.equals("key") || property.equals("value")) {
+					if (property.equals("key") || property.equals("value")) { //$NON-NLS-1$ //$NON-NLS-2$
 						return true;
 					}
 				}
@@ -340,11 +340,11 @@ public class Json12DataConfiguraitonWizardPage extends WizardPage {
 
 		TableColumn keyColumn = new TableColumn(keyMapViewer.getTable(), SWT.BORDER);
 		keyColumn.setWidth(150);
-		keyColumn.setText("Key");
+		keyColumn.setText("Key"); //$NON-NLS-1$
 
 		TableColumn replaceColumn = new TableColumn(keyMapViewer.getTable(), SWT.BORDER);
 		replaceColumn.setWidth(150);
-		replaceColumn.setText("Replace");
+		replaceColumn.setText("Replace"); //$NON-NLS-1$
 
 		keyMapViewer.setInput(keyValueList);
 
@@ -359,14 +359,14 @@ public class Json12DataConfiguraitonWizardPage extends WizardPage {
 
 		addButton = new Button(buttonComposite, SWT.NONE);
 		addButton.setLayoutData(gd);
-		addButton.setText("Add");
+		addButton.setText("Add"); //$NON-NLS-1$
 
 		removeButton = new Button(buttonComposite, SWT.NONE);
 		removeButton.setLayoutData(gd);
-		removeButton.setText("Remove");
+		removeButton.setText("Remove"); //$NON-NLS-1$
 
 		createJsonReaderButton = new Button(configComposite, SWT.CHECK);
-		createJsonReaderButton.setText("Create a JSON Reader");
+		createJsonReaderButton.setText("Create a JSON Reader"); //$NON-NLS-1$
 
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
@@ -451,7 +451,7 @@ public class Json12DataConfiguraitonWizardPage extends WizardPage {
 		addButton.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
-				keyValueList.add(new KeyValueModel("key", "value"));
+				keyValueList.add(new KeyValueModel("key", "value")); //$NON-NLS-1$ //$NON-NLS-2$
 				keyMapViewer.refresh();
 			}
 
@@ -554,12 +554,12 @@ public class Json12DataConfiguraitonWizardPage extends WizardPage {
 		}
 		rootName = rootNameText.getText();
 		if (rootName == null || rootName.length() == 0) {
-			error = "Root Name can't be null";
+			error = "Root Name can't be null"; //$NON-NLS-1$
 		}
 
 		arrayElementName = arrayElementNameText.getText();
 		if (arrayElementName == null || arrayElementName.length() == 0) {
-			error = "Array Element Name can't be null";
+			error = "Array Element Name can't be null"; //$NON-NLS-1$
 		}
 
 		// if (keyWhitspaceReplacement == null
@@ -569,7 +569,7 @@ public class Json12DataConfiguraitonWizardPage extends WizardPage {
 
 		encoding = encodingText.getText();
 		if (encoding == null || encoding.length() == 0) {
-			error = "Encoding can't be null";
+			error = "Encoding can't be null"; //$NON-NLS-1$
 		}
 
 		setErrorMessage(error);
@@ -582,8 +582,8 @@ public class Json12DataConfiguraitonWizardPage extends WizardPage {
 
 	public Json12DataConfiguraitonWizardPage(String pageName) {
 		super(pageName);
-		this.setTitle("JSON Reader configurations (version 1.2)");
-		this.setDescription("Set the configurations for parsing JSON file.");
+		this.setTitle("JSON Reader configurations (version 1.2)"); //$NON-NLS-1$
+		this.setDescription("Set the configurations for parsing JSON file."); //$NON-NLS-1$
 	}
 
 	public String getRootName() {

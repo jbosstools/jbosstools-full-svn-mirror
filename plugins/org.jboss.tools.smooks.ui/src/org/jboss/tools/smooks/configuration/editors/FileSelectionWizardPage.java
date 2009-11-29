@@ -26,8 +26,8 @@ public class FileSelectionWizardPage extends AbstractFileSelectionWizardPage {
 		super(pageName, new String[] {});
 		processor = new ProtableFileStringProcessor();
 		setFilePathProcessor(processor);
-		setTitle("File Selection");
-		setDescription("Select the file from workspace or from file system.");
+		setTitle(Messages.FileSelectionWizardPage_PageTitle);
+		setDescription(Messages.FileSelectionWizardPage_PageDescription);
 		this.processFilePath = processFilePath;
 	}
 

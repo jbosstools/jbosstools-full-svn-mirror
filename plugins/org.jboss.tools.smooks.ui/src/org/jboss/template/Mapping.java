@@ -46,8 +46,8 @@ public class Mapping {
      * @param mappingNode The mapping node.
      */
     public Mapping(String srcPath, Node mappingNode) {
-        Assert.isNotNull(srcPath, "srcPath");
-        Assert.isNotNull(mappingNode, "mappingNode");
+        Assert.isNotNull(srcPath, "srcPath"); //$NON-NLS-1$
+        Assert.isNotNull(mappingNode, "mappingNode"); //$NON-NLS-1$
         this.srcPath = srcPath;
         this.mappingNode = mappingNode;
     }
@@ -69,7 +69,7 @@ public class Mapping {
     }
 
     public void addHideNode(Node node) {
-    	Assert.isNotNull(node, "node");
+    	Assert.isNotNull(node, "node"); //$NON-NLS-1$
 
         if(hideNodes == null) {
             hideNodes = new ArrayList<Node>();
@@ -79,7 +79,7 @@ public class Mapping {
     }
 
     public void addShowNode(Node node) {
-    	Assert.isNotNull(node, "node");
+    	Assert.isNotNull(node, "node"); //$NON-NLS-1$
 
         if(showNodes == null) {
             showNodes = new ArrayList<Node>();

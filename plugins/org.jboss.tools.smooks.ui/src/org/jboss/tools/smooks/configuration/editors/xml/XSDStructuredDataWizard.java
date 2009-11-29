@@ -24,7 +24,7 @@ public class XSDStructuredDataWizard extends AbstractStructuredDdataWizard {
 	
 	public XSDStructuredDataWizard() {
 		super();
-		setWindowTitle("XSD/WSDL Input Data Wizard");
+		setWindowTitle(Messages.XSDStructuredDataWizard_WizardTitle);
 	}
 
 	/* (non-Javadoc)
@@ -33,7 +33,7 @@ public class XSDStructuredDataWizard extends AbstractStructuredDdataWizard {
 	@Override
 	protected AbstractFileSelectionWizardPage createAbstractFileSelectionWizardPage() {
 		// TODO Auto-generated method stub
-		return new XSDStructuredDataWizardPage("XSD");
+		return new XSDStructuredDataWizardPage("XSD"); //$NON-NLS-1$
 	}
 
 	/* (non-Javadoc)
@@ -48,7 +48,7 @@ public class XSDStructuredDataWizard extends AbstractStructuredDdataWizard {
 	 */
 	public Properties getProperties() {
 		Properties pro = new Properties();
-		pro.setProperty("rootElement", ((XSDStructuredDataWizardPage)page).getRootElementName());
+		pro.setProperty("rootElement", ((XSDStructuredDataWizardPage)page).getRootElementName()); //$NON-NLS-1$
 		return pro;
 	}
 

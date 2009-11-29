@@ -83,16 +83,16 @@ public class SmooksMultiPageEditorContributor extends MultiPageEditorActionBarCo
 	private void createActions() {
 		sampleAction = new Action() {
 			public void run() {
-				MessageDialog.openInformation(null, "Configuration Plug-in", "Sample Action Executed");
+				MessageDialog.openInformation(null, "Configuration Plug-in", "Sample Action Executed"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		};
-		sampleAction.setText("Sample Action");
-		sampleAction.setToolTipText("Sample Action tool tip");
+		sampleAction.setText("Sample Action"); //$NON-NLS-1$
+		sampleAction.setToolTipText("Sample Action tool tip"); //$NON-NLS-1$
 		sampleAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(IDE.SharedImages.IMG_OBJS_TASK_TSK));
 	}
 	public void contributeToMenu(IMenuManager manager) {
-		IMenuManager menu = new MenuManager("Editor &Menu");
+		IMenuManager menu = new MenuManager("Editor &Menu"); //$NON-NLS-1$
 		manager.prependToGroup(IWorkbenchActionConstants.MB_ADDITIONS, menu);
 		menu.add(sampleAction);
 	}

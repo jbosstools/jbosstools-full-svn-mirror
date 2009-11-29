@@ -27,14 +27,14 @@ import org.jboss.tools.smooks.model.medi.MEdiPackage;
  */
 public class DelimitersUICreator extends PropertyUICreator {
 	
-	public static final String ENTER_CHAR_STRING = "<Enter>";
+	public static final String ENTER_CHAR_STRING = "<Enter>"; //$NON-NLS-1$
 
 	private class DelimiterChoiceModelProcsser implements IModelProcsser {
 		public Object unwrapValue(Object model) {
 			if (model == null)
 				return null;
 			if (model instanceof String) {
-				if (((String) model).equals("\n")) {
+				if (((String) model).equals("\n")) { //$NON-NLS-1$
 					return ENTER_CHAR_STRING;
 				}
 				return model.toString();
@@ -47,7 +47,7 @@ public class DelimitersUICreator extends PropertyUICreator {
 				return null;
 			if (model instanceof String) {
 				if (((String) model).equals(ENTER_CHAR_STRING)) {
-					return "\n";
+					return "\n"; //$NON-NLS-1$
 				}
 				return model.toString();
 			}

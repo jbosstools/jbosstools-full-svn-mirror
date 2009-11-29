@@ -70,15 +70,15 @@ public class ExtentionInputLabelProvider extends LabelProvider implements ITable
 		if (element instanceof InputType) {
 			String value = ((InputType) element).getPath();
 			if (value == null)
-				value = "";
-			String extValue = "";
+				value = ""; //$NON-NLS-1$
+			String extValue = ""; //$NON-NLS-1$
 			List<InputParameter> paramers = ((InputType) element).getParameters();
 			for (Iterator<?> iterator = paramers.iterator(); iterator.hasNext();) {
 				InputParameter paramType = (InputParameter) iterator.next();
 //				if ("path".equalsIgnoreCase(paramType.getName())) {
 //					continue;
 //				}
-				extValue += paramType.getName() + "=" + paramType.getValue() + ",";
+				extValue += paramType.getName() + "=" + paramType.getValue() + ","; //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			if (extValue.length() != 0) {
 				extValue = extValue.substring(0, extValue.length() - 1);
@@ -92,6 +92,6 @@ public class ExtentionInputLabelProvider extends LabelProvider implements ITable
 				return extValue;
 			}
 		}
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 }

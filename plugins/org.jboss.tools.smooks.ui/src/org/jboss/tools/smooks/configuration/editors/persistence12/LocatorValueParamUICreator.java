@@ -60,7 +60,7 @@ public class LocatorValueParamUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return createElementSelectionSection("Data", editingdomain, toolkit, parent, model, formEditor,
+		return createElementSelectionSection(Messages.LocatorValueParamUICreator_DataGroupText, editingdomain, toolkit, parent, model, formEditor,
 				part, Persistence12Package.Literals.VALUE_PARAMETER__DATA,
 				Persistence12Package.Literals.VALUE_PARAMETER__DATA_NS);
 	}

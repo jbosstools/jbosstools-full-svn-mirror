@@ -214,9 +214,9 @@ public class SmooksUIUtils {
 
 	public static final String WORKSPACE_PRIX = "Workspace:/"; //$NON-NLS-1$
 
-	public static final String RESOURCE = "Resource:/";
+	public static final String RESOURCE = "Resource:/"; //$NON-NLS-1$
 
-	public static final String XSL_NAMESPACE = " xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" ";
+	public static final String XSL_NAMESPACE = " xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" "; //$NON-NLS-1$
 
 	public static int VALUE_TYPE_VALUE = 1;
 
@@ -232,7 +232,7 @@ public class SmooksUIUtils {
 			'F', 'g', 'G', 'h', 'H', 'i', 'I', 'j', 'J', 'k', 'K', 'l', 'L', 'm', 'M', 'n', 'N', 'o', 'O', 'p', 'P',
 			'q', 'Q', 'r', 'R', 's', 'S', 't', 'T', 'u', 'U', 'v', 'V', 'w', 'W', 'x', 'X', 'y', 'Y' };
 
-	public static final String[] SELECTOR_SPERATORS = new String[] { " ", "/" };
+	public static final String[] SELECTOR_SPERATORS = new String[] { " ", "/" }; //$NON-NLS-1$ //$NON-NLS-2$
 
 	private static void fillBeanIdStringList(EObject model, final Collection<String> beanIdList) {
 		EStructuralFeature beanIDFeature = getBeanIDFeature(model);
@@ -420,7 +420,7 @@ public class SmooksUIUtils {
 				displayName = itemPropertyDescriptor.getDisplayName(model);
 				EAttribute feature = (EAttribute) itemPropertyDescriptor.getFeature(model);
 				if (feature.isRequired()) {
-					displayName = displayName + "*";
+					displayName = displayName + "*"; //$NON-NLS-1$
 				}
 			}
 		}
@@ -435,11 +435,11 @@ public class SmooksUIUtils {
 		Control labelControl = null;
 
 		if (!isLink) {
-			Label label = formToolKit.createLabel(labelComposite, displayName + " :");
+			Label label = formToolKit.createLabel(labelComposite, displayName + " :"); //$NON-NLS-1$
 			label.setForeground(formToolKit.getColors().getColor(IFormColors.TITLE));
 			labelControl = label;
 		} else {
-			Hyperlink link = formToolKit.createHyperlink(labelComposite, displayName + " :", SWT.NONE);
+			Hyperlink link = formToolKit.createHyperlink(labelComposite, displayName + " :", SWT.NONE); //$NON-NLS-1$
 			labelControl = link;
 		}
 		if (description != null) {
@@ -484,14 +484,14 @@ public class SmooksUIUtils {
 				link.addHyperlinkListener(listener);
 			}
 		} else {
-			toolkit.createLabel(parent, label + " :").setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
+			toolkit.createLabel(parent, label + " :").setForeground(toolkit.getColors().getColor(IFormColors.TITLE)); //$NON-NLS-1$
 		}
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		int textType = SWT.FLAT;
 		if (multiText) {
 			textType = SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL;
 		}
-		final Text valueText = toolkit.createText(parent, "", textType);
+		final Text valueText = toolkit.createText(parent, "", textType); //$NON-NLS-1$
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		if (multiText && height > 0) {
 			gd.heightHint = height;
@@ -536,7 +536,7 @@ public class SmooksUIUtils {
 		if (multiText) {
 			textType = SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL;
 		}
-		final Text valueText = toolkit.createText(parent, "", textType);
+		final Text valueText = toolkit.createText(parent, "", textType); //$NON-NLS-1$
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		if (multiText && height > 0) {
 			gd.heightHint = height;
@@ -606,8 +606,8 @@ public class SmooksUIUtils {
 	}
 
 	public static boolean isLinuxOS() {
-		Object osName = System.getProperties().get("os.name");
-		if (osName != null && "linux".equalsIgnoreCase(osName.toString())) {
+		Object osName = System.getProperties().get("os.name"); //$NON-NLS-1$
+		if (osName != null && "linux".equalsIgnoreCase(osName.toString())) { //$NON-NLS-1$
 			return true;
 		}
 		return false;
@@ -632,7 +632,7 @@ public class SmooksUIUtils {
 			label = itemPropertyDescriptor.getDisplayName(model);
 			EAttribute feature = (EAttribute) itemPropertyDescriptor.getFeature(model);
 			if (feature.isRequired()) {
-				label = label + "*";
+				label = label + "*"; //$NON-NLS-1$
 			}
 		}
 		FieldMarkerWrapper warpper = createFieldEditorLabel(label, parent, toolkit, itemPropertyDescriptor, model,
@@ -664,7 +664,7 @@ public class SmooksUIUtils {
 		notificationComposite.setLayoutData(gd);
 		fieldEditPart.setFieldMarker(notificationComposite);
 
-		final Text valueText = toolkit.createText(tcom, "", textType);
+		final Text valueText = toolkit.createText(tcom, "", textType); //$NON-NLS-1$
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		valueText.setLayoutData(gd);
 
@@ -743,7 +743,7 @@ public class SmooksUIUtils {
 			label = itemPropertyDescriptor.getDisplayName(model);
 			EAttribute feature = (EAttribute) itemPropertyDescriptor.getFeature(model);
 			if (feature.isRequired()) {
-				label = label + "*";
+				label = label + "*"; //$NON-NLS-1$
 			}
 		}
 		if (multiText) {
@@ -854,7 +854,7 @@ public class SmooksUIUtils {
 		notificationComposite.setLayoutData(gd);
 		fieldEditPart.setFieldMarker(notificationComposite);
 
-		final Text valueText = toolkit.createText(tcom, "", textType);
+		final Text valueText = toolkit.createText(tcom, "", textType); //$NON-NLS-1$
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		if (multiText && height > 0) {
 			gd.heightHint = height;
@@ -866,7 +866,7 @@ public class SmooksUIUtils {
 		toolkit.paintBordersFor(textContainer);
 		if (openFile) {
 			final IFilePathProcessor processor = filePathProcessor;
-			Button fileBrowseButton = toolkit.createButton(textContainer, "Browse", SWT.NONE);
+			Button fileBrowseButton = toolkit.createButton(textContainer, Messages.SmooksUIUtils_BrowseButtonLabel, SWT.NONE);
 			fileBrowseButton.addSelectionListener(new SelectionAdapter() {
 
 				public void widgetSelected(SelectionEvent e) {
@@ -913,7 +913,7 @@ public class SmooksUIUtils {
 						if (!valueText.getText().equals(text)) {
 							String vt = valueText.getText();
 							if (vt != null) {
-								vt = vt.replaceAll("\r", "");
+								vt = vt.replaceAll("\r", ""); //$NON-NLS-1$ //$NON-NLS-2$
 							}
 							SmooksModelUtils.setTextToSmooksType(fEditingDomain, (AnyType) fm, vt);
 						}
@@ -934,7 +934,7 @@ public class SmooksUIUtils {
 						if (!valueText.getText().equals(text)) {
 							String vt = valueText.getText();
 							if (vt != null) {
-								vt = vt.replaceAll("\r", "");
+								vt = vt.replaceAll("\r", ""); //$NON-NLS-1$ //$NON-NLS-2$
 							}
 							SmooksModelUtils.setCommentToSmooksType(fEditingDomain, (AnyType) fm, vt);
 						}
@@ -955,7 +955,7 @@ public class SmooksUIUtils {
 						if (!valueText.getText().equals(text)) {
 							String vt = valueText.getText();
 							if (vt != null) {
-								vt = vt.replaceAll("\r", "");
+								vt = vt.replaceAll("\r", ""); //$NON-NLS-1$ //$NON-NLS-2$
 							}
 							SmooksModelUtils.setCDATAToSmooksType(fEditingDomain, (AnyType) fm, vt);
 						}
@@ -1000,7 +1000,7 @@ public class SmooksUIUtils {
 			Composite parent, final IItemPropertyDescriptor propertyDescriptor, Object model,
 			final IEditorPart currentEditorPart) {
 		AttributeFieldEditPart fieldEditPart = createDialogFieldEditor(labelText, parent, toolkit, propertyDescriptor,
-				"Browse", new IFieldDialog() {
+				Messages.SmooksUIUtils_BrowseButtonLabel, new IFieldDialog() {
 					public Object open(Shell shell) {
 						SelectorCreationDialog dialog = new SelectorCreationDialog(shell, currentEditorPart);
 						try {
@@ -1065,7 +1065,7 @@ public class SmooksUIUtils {
 		}
 		if (jp != null) {
 			ProjectClassLoader loader = new ProjectClassLoader(jp);
-			if (className.endsWith("[]")) {
+			if (className.endsWith("[]")) { //$NON-NLS-1$
 				className = className.substring(0, className.length() - 2);
 				Class<?> clazz = loader.loadClass(className);
 				Object arrayInstance = Array.newInstance(clazz, 0);
@@ -1073,7 +1073,7 @@ public class SmooksUIUtils {
 				arrayInstance = null;
 				return clazz;
 			}
-			if (className.endsWith("]") && !className.endsWith("[]")) {
+			if (className.endsWith("]") && !className.endsWith("[]")) { //$NON-NLS-1$ //$NON-NLS-2$
 				// int index = className.indexOf("[");
 				// String collectionName = className.substring(0,index);
 				// String componentName = className.substring(index + 1 ,
@@ -1193,7 +1193,7 @@ public class SmooksUIUtils {
 				notificationComposite.setLayoutData(gd);
 				editpart.setFieldMarker(notificationComposite);
 
-				final SearchComposite searchComposite = new SearchComposite(tcom, toolkit, "Browse", dialog, SWT.NONE);
+				final SearchComposite searchComposite = new SearchComposite(tcom, toolkit, Messages.SmooksUIUtils_BrowseButtonLabel, dialog, SWT.NONE);
 				gd = new GridData(GridData.FILL_HORIZONTAL);
 				searchComposite.setLayoutData(gd);
 				Object editValue = getEditValue(propertyDescriptor, model);
@@ -1232,16 +1232,16 @@ public class SmooksUIUtils {
 							if (fresource.getProject().hasNature(JavaCore.NATURE_ID)) {
 								IJavaProject javaProject = JavaCore.create(fresource.getProject());
 								String typeName = searchComposite.getText().getText();
-								if (typeName.endsWith("[]")) {
+								if (typeName.endsWith("[]")) { //$NON-NLS-1$
 									typeName = typeName.substring(0, typeName.length() - 2);
 								}
 								IJavaElement result = javaProject.findType(typeName);
 								if (result != null)
 									JavaUI.openInEditor(result);
 								else {
-									MessageDialog.openError(classTextComposite.getShell(), "Can't find type",
-											"Can't find type \"" + typeName + "\" in \""
-													+ javaProject.getProject().getName() + "\" project.");
+									MessageDialog.openError(classTextComposite.getShell(), Messages.SmooksUIUtils_CantFindTypeErrorDialogTitle,
+											"Can't find type \"" + typeName + "\" in \"" //$NON-NLS-1$ //$NON-NLS-2$
+													+ javaProject.getProject().getName() + "\" project."); //$NON-NLS-1$
 								}
 							}
 						} catch (PartInitException ex) {
@@ -1385,7 +1385,7 @@ public class SmooksUIUtils {
 		String sperator = selectorAttributes.getSelectorSperator();
 		String policy = selectorAttributes.getSelectorPolicy();
 		if (sperator == null)
-			sperator = " ";
+			sperator = " "; //$NON-NLS-1$
 		if (policy == null)
 			policy = SelectorAttributes.FULL_PATH;
 		if (policy.equals(SelectorAttributes.FULL_PATH)) {
@@ -1405,7 +1405,7 @@ public class SmooksUIUtils {
 
 	public static String generatePath(IXMLStructuredObject startNode, IXMLStructuredObject stopNode,
 			final String sperator, boolean includeContext) {
-		String name = "";
+		String name = ""; //$NON-NLS-1$
 		if (startNode == stopNode) {
 			return startNode.getNodeName();
 		}
@@ -1425,7 +1425,7 @@ public class SmooksUIUtils {
 			IXMLStructuredObject n = nodeList.get(i);
 			String nodeName = n.getNodeName();
 			if (n.isAttribute()) {
-				nodeName = "@" + nodeName;
+				nodeName = "@" + nodeName; //$NON-NLS-1$
 			}
 			name = sperator + nodeName + name;
 		}
@@ -1504,7 +1504,7 @@ public class SmooksUIUtils {
 		if (model instanceof EObject) {
 			valueIsSet = ((EObject) model).eIsSet((EAttribute) itemPropertyDescriptor.getFeature(model));
 		}
-		combo.add("");
+		combo.add(""); //$NON-NLS-1$
 		if (items != null) {
 			for (int i = 0; i < items.length; i++) {
 				combo.add(items[i]);
@@ -1919,7 +1919,7 @@ public class SmooksUIUtils {
 	}
 
 	public static String generateInputParameterName(String type, String name) {
-		return type + "." + name;
+		return type + "." + name; //$NON-NLS-1$
 	}
 
 	public static String getInputParameterName(String type, String name) {
@@ -1937,9 +1937,9 @@ public class SmooksUIUtils {
 		controlDecoration.setMarginWidth(0);
 		// Custom hover tip text
 		if (isLinuxOS()) {
-			controlDecoration.setDescriptionText("Content Assist Available (Ctrl + space)");
+			controlDecoration.setDescriptionText(Messages.SmooksUIUtils_CtrlSpaceTooltip);
 		} else {
-			controlDecoration.setDescriptionText("Content Assist Available (Alt + /)");
+			controlDecoration.setDescriptionText(Messages.SmooksUIUtils_AltTooltip);
 		}
 		// Custom hover properties
 		controlDecoration.setShowHover(true);
@@ -2017,9 +2017,9 @@ public class SmooksUIUtils {
 		controlDecoration.setMarginWidth(0);
 		// Custom hover tip text
 		if (isLinuxOS()) {
-			controlDecoration.setDescriptionText("Content Assist Available (Ctrl + space)");
+			controlDecoration.setDescriptionText(Messages.SmooksUIUtils_CtrlSpaceTooltip);
 		} else {
-			controlDecoration.setDescriptionText("Content Assist Available (Alt + /)");
+			controlDecoration.setDescriptionText(Messages.SmooksUIUtils_AltTooltip);
 		}
 		// Custom hover properties
 		controlDecoration.setShowHover(true);
@@ -2101,9 +2101,9 @@ public class SmooksUIUtils {
 		controlDecoration.setMarginWidth(0);
 		// Custom hover tip text
 		if (isLinuxOS()) {
-			controlDecoration.setDescriptionText("Content Assist Available (Ctrl + space)");
+			controlDecoration.setDescriptionText(Messages.SmooksUIUtils_CtrlSpaceTooltip);
 		} else {
-			controlDecoration.setDescriptionText("Content Assist Available (Alt + /)");
+			controlDecoration.setDescriptionText(Messages.SmooksUIUtils_AltTooltip);
 		}
 		// Custom hover properties
 		controlDecoration.setShowHover(true);
@@ -2180,9 +2180,9 @@ public class SmooksUIUtils {
 		controlDecoration.setMarginWidth(0);
 		// Custom hover tip text
 		if (isLinuxOS()) {
-			controlDecoration.setDescriptionText("Content Assist Available (Ctrl + space)");
+			controlDecoration.setDescriptionText(Messages.SmooksUIUtils_CtrlSpaceTooltip);
 		} else {
-			controlDecoration.setDescriptionText("Content Assist Available (Alt + /)");
+			controlDecoration.setDescriptionText(Messages.SmooksUIUtils_AltTooltip);
 		}
 		// Custom hover properties
 		controlDecoration.setShowHover(true);
@@ -2230,9 +2230,9 @@ public class SmooksUIUtils {
 		controlDecoration.setMarginWidth(0);
 		// Custom hover tip text
 		if (isLinuxOS()) {
-			controlDecoration.setDescriptionText("Content Assist Available (Ctrl + space)");
+			controlDecoration.setDescriptionText(Messages.SmooksUIUtils_CtrlSpaceTooltip);
 		} else {
-			controlDecoration.setDescriptionText("Content Assist Available (Alt + /)");
+			controlDecoration.setDescriptionText(Messages.SmooksUIUtils_AltTooltip);
 		}
 		// Custom hover properties
 		controlDecoration.setShowHover(true);
@@ -2273,13 +2273,13 @@ public class SmooksUIUtils {
 					int type = ((BindingsContextContentProposal) element).getType();
 					switch (type) {
 					case BindingsContextContentProposal.BINDINGS:
-						return SmooksCoreActivator.getDefault().getImageRegistry().get("BindingsType");
+						return SmooksCoreActivator.getDefault().getImageRegistry().get("BindingsType"); //$NON-NLS-1$
 					case BindingsContextContentProposal.EXPRESSIONS:
-						return SmooksCoreActivator.getDefault().getImageRegistry().get("ExpressionType");
+						return SmooksCoreActivator.getDefault().getImageRegistry().get("ExpressionType"); //$NON-NLS-1$
 					case BindingsContextContentProposal.PROPERTIES:
-						return SmooksCoreActivator.getDefault().getImageRegistry().get("ValueType");
+						return SmooksCoreActivator.getDefault().getImageRegistry().get("ValueType"); //$NON-NLS-1$
 					case BindingsContextContentProposal.WIRTINGS:
-						return SmooksCoreActivator.getDefault().getImageRegistry().get("WiringType");
+						return SmooksCoreActivator.getDefault().getImageRegistry().get("WiringType"); //$NON-NLS-1$
 					}
 				}
 				return super.getImage(element);
@@ -2324,9 +2324,9 @@ public class SmooksUIUtils {
 		controlDecoration.setMarginWidth(0);
 		// Custom hover tip text
 		if (isLinuxOS()) {
-			controlDecoration.setDescriptionText("Content Assist Available (Ctrl + space)");
+			controlDecoration.setDescriptionText(Messages.SmooksUIUtils_CtrlSpaceTooltip);
 		} else {
-			controlDecoration.setDescriptionText("Content Assist Available (Alt + /)");
+			controlDecoration.setDescriptionText(Messages.SmooksUIUtils_AltTooltip);
 		}
 		// Custom hover properties
 		controlDecoration.setShowHover(true);
@@ -2384,7 +2384,7 @@ public class SmooksUIUtils {
 	private static boolean isAttributeName(String name) {
 		if (name == null)
 			return false;
-		return name.trim().startsWith("@");
+		return name.trim().startsWith("@"); //$NON-NLS-1$
 	}
 
 	private static String getRawAttributeName(String name) {
@@ -2481,7 +2481,7 @@ public class SmooksUIUtils {
 		if (contextNode == null || path == null)
 			return null;
 		if (sperator == null) {
-			sperator = " ";
+			sperator = " "; //$NON-NLS-1$
 		}
 		if (path != null)
 			path = path.trim();
@@ -2504,7 +2504,7 @@ public class SmooksUIUtils {
 
 			if (firstModel == null) {
 				if (throwException)
-					throw new RuntimeException("Can't find the node : " + firstNodeName);
+					throw new RuntimeException("Can't find the node : " + firstNodeName); //$NON-NLS-1$
 				else {
 					return null;
 				}
@@ -2512,7 +2512,7 @@ public class SmooksUIUtils {
 			for (int i = index + 1; i < pathes.length; i++) {
 				firstModel = getChildNodeWithName(pathes[i], firstModel);
 				if (firstModel == null && throwException) {
-					throw new RuntimeException("Can't find the node : " + pathes[i] + " from parent node "
+					throw new RuntimeException("Can't find the node : " + pathes[i] + " from parent node " //$NON-NLS-1$ //$NON-NLS-2$
 							+ pathes[i - 1]);
 				}
 			}
@@ -2585,7 +2585,7 @@ public class SmooksUIUtils {
 			String path, Properties properties) {
 		List<InputType> inputTypeList = new ArrayList<InputType>();
 		if (type != null && path != null && domain != null) {
-			String[] values = path.split(";");
+			String[] values = path.split(";"); //$NON-NLS-1$
 			if (values == null || values.length == 0) {
 				values = new String[] { path };
 			}
@@ -3051,19 +3051,19 @@ public class SmooksUIUtils {
 	}
 
 	public static boolean isSmooksFile(IFile file) {
-		if (file.getName().indexOf(".xml") != -1)
+		if (file.getName().indexOf(".xml") != -1) //$NON-NLS-1$
 			return true;
 		IContentTypeManager contentTypeManager = Platform.getContentTypeManager();
 		IContentType[] types = contentTypeManager.findContentTypesFor(file.getName());
 		for (IContentType contentType : types) {
-			if (contentType.equals(contentTypeManager.getContentType("org.jboss.tools.smooks.ui.smooks.contentType"))) {
+			if (contentType.equals(contentTypeManager.getContentType("org.jboss.tools.smooks.ui.smooks.contentType"))) { //$NON-NLS-1$
 				return true;
 			}
-			if (contentType.equals(contentTypeManager.getContentType("org.jboss.tools.smooks.ui.edimap.contentType"))) {
+			if (contentType.equals(contentTypeManager.getContentType("org.jboss.tools.smooks.ui.edimap.contentType"))) { //$NON-NLS-1$
 				return true;
 			}
 			if (contentType
-					.equals(contentTypeManager.getContentType("org.jboss.tools.smooks.ui.smooks1_0.contentType"))) {
+					.equals(contentTypeManager.getContentType("org.jboss.tools.smooks.ui.smooks1_0.contentType"))) { //$NON-NLS-1$
 				return true;
 			}
 		}
@@ -3107,7 +3107,7 @@ public class SmooksUIUtils {
 		}
 		if (classString != null) {
 			classString = classString.trim();
-			if (classString.endsWith("]")) {
+			if (classString.endsWith("]")) { //$NON-NLS-1$
 				return true;
 			}
 		}

@@ -50,7 +50,7 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 	
 	public CSVInputDataWizard() {
 		super();
-		this.setWindowTitle("CSV Input Data Wizard");
+		this.setWindowTitle(Messages.CSVInputDataWizard_WizardTitle);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 //		}
 		
 		if (pathPage == null) {
-			pathPage = new CSVDataPathWizardPage("CSV Path Page", new String[] {"csv"},configPage);
+			pathPage = new CSVDataPathWizardPage(Messages.CSVInputDataWizard_WizardPageText, new String[] {"csv"},configPage); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$
 			if(folder != null){
 				pathPage.setInitSelections(new Object[]{folder});
 			}
@@ -107,11 +107,11 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 				String fields = null;
 				List<FieldString> fieldList = configPage.getFieldsList();
 				if (fieldList != null && !fieldList.isEmpty()) {
-					fields = "";
+					fields = ""; //$NON-NLS-1$
 					for (Iterator<?> iterator = fieldList.iterator(); iterator.hasNext();) {
 						FieldString fieldString = (FieldString) iterator.next();
 						String f = fieldString.getText();
-						fields += (f + ",");
+						fields += (f + ","); //$NON-NLS-1$
 					}
 					if (fields.length() > 1) {
 						fields = fields.substring(0, fields.length() - 1);
@@ -180,18 +180,18 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 			boolean useAvailabelReader = configPage.isUseAvailabelReader();
 
 			if (useAvailabelReader || createCSVReader) {
-				pro.put(CSVDataParser.LINK_CSV_READER, "true");
+				pro.put(CSVDataParser.LINK_CSV_READER, "true"); //$NON-NLS-1$
 				return;
 			}
 
 			String fields = null;
 			List<FieldString> fieldList = configPage.getFieldsList();
 			if (fieldList != null && !fieldList.isEmpty()) {
-				fields = "";
+				fields = ""; //$NON-NLS-1$
 				for (Iterator<?> iterator = fieldList.iterator(); iterator.hasNext();) {
 					FieldString fieldString = (FieldString) iterator.next();
 					String f = fieldString.getText();
-					fields += (f + ",");
+					fields += (f + ","); //$NON-NLS-1$
 				}
 				if (fields.length() > 1) {
 					fields = fields.substring(0, fields.length() - 1);

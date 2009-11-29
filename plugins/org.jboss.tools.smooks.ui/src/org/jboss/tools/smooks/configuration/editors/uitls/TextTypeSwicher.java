@@ -96,7 +96,7 @@ public class TextTypeSwicher {
 				Text t = (Text) tp.getContentControl();
 				String text = t.getText();
 				if (text != null) {
-					text = text.replaceAll("\r", "");
+					text = text.replaceAll("\r", ""); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				if (text.length() == 0)
 					text = null;
@@ -132,7 +132,7 @@ public class TextTypeSwicher {
 				Text t = (Text) cp.getContentControl();
 				String text = t.getText();
 				if (text != null) {
-					text = text.replaceAll("\r", "");
+					text = text.replaceAll("\r", ""); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				if (text.length() == 0)
 					text = null;

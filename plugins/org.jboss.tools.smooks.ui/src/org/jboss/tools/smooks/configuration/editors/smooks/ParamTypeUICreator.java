@@ -55,7 +55,7 @@ public class ParamTypeUICreator extends PropertyUICreator {
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
 		TextTypeSwicher swicher = new TextTypeSwicher();
-		swicher.createSwicherGUI("Text Value", "CDATA Value", parent, toolkit);
+		swicher.createSwicherGUI("Text Value", "CDATA Value", parent, toolkit); //$NON-NLS-1$ //$NON-NLS-2$
 		// GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		// gd.horizontalSpan = 2;
 		// gd.heightHint = 2;
@@ -68,9 +68,9 @@ public class ParamTypeUICreator extends PropertyUICreator {
 		// String cdata = SmooksModelUtils.getAnyTypeCDATA((AnyType) model);
 		// String text = SmooksModelUtils.getAnyTypeText((AnyType) model);
 
-		final AttributeFieldEditPart tp = SmooksUIUtils.createMixedTextFieldEditor("Text Value", editingdomain,
+		final AttributeFieldEditPart tp = SmooksUIUtils.createMixedTextFieldEditor("Text Value", editingdomain, //$NON-NLS-1$
 				toolkit, parent, model, false, 500, false, false, null, null);
-		final AttributeFieldEditPart cp = SmooksUIUtils.createCDATAFieldEditor("CDATA Value", editingdomain, toolkit,
+		final AttributeFieldEditPart cp = SmooksUIUtils.createCDATAFieldEditor("CDATA Value", editingdomain, toolkit, //$NON-NLS-1$
 				parent, model, null);
 		list.add(tp);
 		list.add(cp);

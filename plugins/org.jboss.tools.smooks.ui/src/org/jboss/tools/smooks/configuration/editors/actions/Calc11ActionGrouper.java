@@ -13,7 +13,7 @@ public class Calc11ActionGrouper extends AbstractSmooksActionGrouper {
 	}
 
 	public String getGroupName() {
-		return "Calc";
+		return Messages.Calc11ActionGrouper_GroupName;
 	}
 
 }

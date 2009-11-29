@@ -133,7 +133,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 
 		settingSection = toolkit.createSection(mainComposite, Section.TITLE_BAR);
 		settingSection.setLayout(new FillLayout());
-		settingSection.setText("Smooks configuration");
+		settingSection.setText(Messages.SmooksConfigurationOverviewPage_ConfigurationSectionTitle);
 		Composite settingComposite = toolkit.createComposite(settingSection);
 		settingSection.setClient(settingComposite);
 		gd = new GridData();
@@ -149,7 +149,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 
 		globalParamSection = toolkit.createSection(mainComposite, Section.TITLE_BAR | Section.TWISTIE
 				| Section.EXPANDED);
-		globalParamSection.setText("Filter Settings");
+		globalParamSection.setText(Messages.SmooksConfigurationOverviewPage_FilterSettingSectionTitle);
 		globalParamSection.setLayout(new FillLayout());
 		Composite globalParamComposite = toolkit.createComposite(globalParamSection);
 		globalParamSection.setClient(globalParamComposite);
@@ -229,7 +229,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 	}
 
 	private void createSettingSection(Composite settingComposite, FormToolkit toolkit) {
-		toolkit.createLabel(settingComposite, "Smooks Platform Version : ").setForeground(
+		toolkit.createLabel(settingComposite, Messages.SmooksConfigurationOverviewPage_VersionLabel).setForeground(
 				toolkit.getColors().getColor(IFormColors.TITLE));
 		int type = SWT.BORDER;
 		if (SmooksUIUtils.isLinuxOS()) {
@@ -323,17 +323,17 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 	private void createGlobalParamterSection(Composite globalParamComposite, FormToolkit toolkit) {
 		if (smooksModelProvider != null) {
 
-			toolkit.createLabel(globalParamComposite, "Stream Filter Type:").setForeground(
+			toolkit.createLabel(globalParamComposite, Messages.SmooksConfigurationOverviewPage_FilterTypeLabel).setForeground(
 					toolkit.getColors().getColor(IFormColors.TITLE));
 			GridData gd = new GridData(SWT.FILL, SWT.NONE, true, false);
 			streamFilterTypeCombo = new Combo(globalParamComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
-			streamFilterTypeCombo.setItems(new String[] { "SAX", "DOM" });
+			streamFilterTypeCombo.setItems(new String[] { "SAX", "DOM" }); //$NON-NLS-1$ //$NON-NLS-2$
 			streamFilterTypeCombo.setLayoutData(gd);
 
-			toolkit.createLabel(globalParamComposite, "Default Serialization is On:").setForeground(
+			toolkit.createLabel(globalParamComposite, Messages.SmooksConfigurationOverviewPage_SerializationLabel).setForeground(
 					toolkit.getColors().getColor(IFormColors.TITLE));
 			gd = new GridData(SWT.FILL, SWT.NONE, true, false);
-			defaultSerializationOnCheckbox = toolkit.createButton(globalParamComposite, "", SWT.CHECK);
+			defaultSerializationOnCheckbox = toolkit.createButton(globalParamComposite, "", SWT.CHECK); //$NON-NLS-1$
 			defaultSerializationOnCheckbox.setLayoutData(gd);
 
 			initGlobalSettingControls();
@@ -346,7 +346,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 					if (lockEventFire)
 						return;
 					String value = streamFilterTypeCombo.getText();
-					updateGlobalProperty("stream.filter.type", value);
+					updateGlobalProperty("stream.filter.type", value); //$NON-NLS-1$
 				}
 
 				public void widgetDefaultSelected(SelectionEvent e) {
@@ -360,7 +360,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 					if (lockEventFire)
 						return;
 					String value = Boolean.toString(defaultSerializationOnCheckbox.getSelection());
-					updateGlobalProperty("default.serialization.on", value);
+					updateGlobalProperty("default.serialization.on", value); //$NON-NLS-1$
 				}
 
 				public void widgetSelected(SelectionEvent e) {
@@ -477,15 +477,15 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 			EList<?> parmList = m.getParam();
 			for (int i = 0; i < parmList.size(); i++) {
 				ParamType param = (ParamType) parmList.get(i);
-				if (param.getName().equals("stream.filter.type")) {
+				if (param.getName().equals("stream.filter.type")) { //$NON-NLS-1$
 					streamFilterTypeCombo.setText(param.getStringValue());
-				} else if (param.getName().equals("default.serialization.on")) {
+				} else if (param.getName().equals("default.serialization.on")) { //$NON-NLS-1$
 					Boolean boolValue = Boolean.valueOf(param.getStringValue());
 					defaultSerializationOnCheckbox.setSelection(boolValue.booleanValue());
 				}
 			}
 		} else { // set defaults
-			streamFilterTypeCombo.setText("SAX");
+			streamFilterTypeCombo.setText("SAX"); //$NON-NLS-1$
 			defaultSerializationOnCheckbox.setSelection(true);
 		}
 	}
@@ -520,7 +520,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		defaultSerializationOnCheckbox.setEnabled(true);
 		String version = getSmooksVersion();
 		if (version == null)
-			version = "";
+			version = ""; //$NON-NLS-1$
 		versionCombo.setText(version);
 
 		if (model == null) {

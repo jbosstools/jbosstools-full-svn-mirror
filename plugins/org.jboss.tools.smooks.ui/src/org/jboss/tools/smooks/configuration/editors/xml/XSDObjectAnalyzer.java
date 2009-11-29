@@ -204,10 +204,10 @@ public class XSDObjectAnalyzer {
 	}
 
 	public static void main(String[] args) throws IOException {
-		Resource resource = new XSDResourceFactoryImpl().createResource(URI.createFileURI("F:/smooks-1.1.xsd"));
+		Resource resource = new XSDResourceFactoryImpl().createResource(URI.createFileURI("F:/smooks-1.1.xsd")); //$NON-NLS-1$
 		resource.load(Collections.EMPTY_MAP);
 		XSDSchema schema = (XSDSchema) resource.getContents().get(0);
-		TagObject rootTag = new XSDObjectAnalyzer().loadElement(schema, "smooks-resource-list");
+		TagObject rootTag = new XSDObjectAnalyzer().loadElement(schema, "smooks-resource-list"); //$NON-NLS-1$
 		System.out.println(rootTag);
 		// List<XSDElementDeclaration> elements =
 		// schema.getElementDeclarations();

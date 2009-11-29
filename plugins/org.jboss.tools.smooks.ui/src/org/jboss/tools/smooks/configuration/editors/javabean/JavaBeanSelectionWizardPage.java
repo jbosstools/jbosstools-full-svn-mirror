@@ -63,15 +63,15 @@ public class JavaBeanSelectionWizardPage extends WizardPage {
 	public JavaBeanSelectionWizardPage(String pageName, String title, ImageDescriptor titleImage, IJavaProject project) {
 		super(pageName, title, titleImage);
 		this.project = project;
-		this.setTitle("Input Java Class");
-		this.setDescription("Input Java Class");
+		this.setTitle(Messages.JavaBeanSelectionWizardPage_WizardTitle);
+		this.setDescription(Messages.JavaBeanSelectionWizardPage_WizardDes);
 	}
 
 	public JavaBeanSelectionWizardPage(String pageName, IJavaProject project) {
 		super(pageName);
 		this.project = project;
-		this.setTitle("Input Java Class");
-		this.setDescription("Input Java Class");
+		this.setTitle(Messages.JavaBeanSelectionWizardPage_WizardTitle);
+		this.setDescription(Messages.JavaBeanSelectionWizardPage_WizardDes);
 	}
 
 	public List<JavaBeanModel> getJavaBeanModelList() {
@@ -129,7 +129,7 @@ public class JavaBeanSelectionWizardPage extends WizardPage {
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 
 		Label beanTypeLabel = new Label(mainComposite, SWT.NONE);
-		beanTypeLabel.setText("Bean Type :");
+		beanTypeLabel.setText(Messages.JavaBeanSelectionWizardPage_BeanTypeLabel);
 
 		Composite composite = new Composite(mainComposite, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -143,13 +143,13 @@ public class JavaBeanSelectionWizardPage extends WizardPage {
 		composite.setLayout(gl);
 
 		arrayButton = new Button(composite, SWT.CHECK);
-		arrayButton.setText("Array");
+		arrayButton.setText(Messages.JavaBeanSelectionWizardPage_ArrayCheckBoxLabel);
 
 		final Button collectionButton = new Button(composite, SWT.CHECK);
-		collectionButton.setText("Collection");
+		collectionButton.setText(Messages.JavaBeanSelectionWizardPage_CollectionLabel);
 
 		Label beanClassLabel = new Label(mainComposite, SWT.NONE);
-		beanClassLabel.setText("Collection Class :");
+		beanClassLabel.setText(Messages.JavaBeanSelectionWizardPage_CollectionClassLabel);
 
 		Composite beanClassComposite = new Composite(mainComposite, SWT.NONE);
 		GridLayout gl1 = new GridLayout();
@@ -181,7 +181,7 @@ public class JavaBeanSelectionWizardPage extends WizardPage {
 		beanClassComposite.setLayoutData(gd);
 
 		collectionClassBrowseButton = new Button(beanClassComposite, SWT.NONE);
-		collectionClassBrowseButton.setText("Browse...");
+		collectionClassBrowseButton.setText(Messages.JavaBeanSelectionWizardPage_BrowseButtonLabel);
 		collectionClassBrowseButton.addSelectionListener(new SelectionAdapter() {
 
 			/*
@@ -258,7 +258,7 @@ public class JavaBeanSelectionWizardPage extends WizardPage {
 	}
 
 	protected void refreshJavaBeanModel() {
-		if (beanClass == null || "".equals(beanClass.trim())) {
+		if (beanClass == null || "".equals(beanClass.trim())) { //$NON-NLS-1$
 		} else {
 			try {
 				ProjectClassLoader loader = new ProjectClassLoader(project);
@@ -295,7 +295,7 @@ public class JavaBeanSelectionWizardPage extends WizardPage {
 
 	private void createBeanClassControls(Composite mainComposite) {
 		Label beanClassLabel = new Label(mainComposite, SWT.NONE);
-		beanClassLabel.setText("Bean Class :");
+		beanClassLabel.setText(Messages.JavaBeanSelectionWizardPage_BeanClassLabel);
 
 		Composite beanClassComposite = new Composite(mainComposite, SWT.NONE);
 		GridLayout gl = new GridLayout();
@@ -337,7 +337,7 @@ public class JavaBeanSelectionWizardPage extends WizardPage {
 		beanClassComposite.setLayoutData(gd);
 
 		Button javaTypeBrowseButton = new Button(beanClassComposite, SWT.NONE);
-		javaTypeBrowseButton.setText("Browse...");
+		javaTypeBrowseButton.setText(Messages.JavaBeanSelectionWizardPage_BrowseButtonLabel);
 		javaTypeBrowseButton.addSelectionListener(new SelectionAdapter() {
 
 			/*
@@ -391,8 +391,8 @@ public class JavaBeanSelectionWizardPage extends WizardPage {
 
 	protected void updateWizardPageStatus() {
 		String error = null;
-		if (beanClass == null || "".equals(beanClass.trim())) {
-			error = "Bean Class is empty";
+		if (beanClass == null || "".equals(beanClass.trim())) { //$NON-NLS-1$
+			error = Messages.JavaBeanSelectionWizardPage_BeanClassEmptyErrorMessage;
 		} else {
 			try {
 				beanClass = beanClass.trim();
@@ -401,13 +401,13 @@ public class JavaBeanSelectionWizardPage extends WizardPage {
 			} catch (JavaModelException e) {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				error = "Can't find the class \"" + beanClass + "\"";
+				error = Messages.JavaBeanSelectionWizardPage_CantFindClass1 + beanClass + "\""; //$NON-NLS-2$
 			}
 		}
 
 		if (isCollection) {
-			if (collectionClass == null || "".equals(collectionClass.trim())) {
-				error = "Colletion component class is empty";
+			if (collectionClass == null || "".equals(collectionClass.trim())) { //$NON-NLS-1$
+				error = Messages.JavaBeanSelectionWizardPage_CollectionComponentClassEmptyErrorMessage;
 			} else {
 				try {
 					ProjectClassLoader loader = new ProjectClassLoader(project);
@@ -415,7 +415,7 @@ public class JavaBeanSelectionWizardPage extends WizardPage {
 				} catch (JavaModelException e) {
 					e.printStackTrace();
 				} catch (ClassNotFoundException e) {
-					error = "Can't find the class \"" + beanClass;
+					error = Messages.JavaBeanSelectionWizardPage_CantFindClass1 + beanClass;
 				}
 			}
 		}

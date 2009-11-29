@@ -54,7 +54,7 @@ public class CSVToFreemarkerTemplateBuilder extends TemplateBuilder {
             NodeList nodeList = recordElement.getChildNodes();
             int fieldIndex = 0;
 
-            template.append("<#list " + collectionMapping.getSrcPath() + " as " + collectionMapping.getCollectionItemName() + ">\n");
+            template.append("<#list " + collectionMapping.getSrcPath() + " as " + collectionMapping.getCollectionItemName() + ">\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             for(int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
                 if(node.getNodeType() == Node.ELEMENT_NODE) {
@@ -66,14 +66,14 @@ public class CSVToFreemarkerTemplateBuilder extends TemplateBuilder {
 
                     if(fieldMapping != null) {
                         template.append(quoteChar);
-                        template.append("${" + fieldMapping.getSrcPath() + "}");
+                        template.append("${" + fieldMapping.getSrcPath() + "}"); //$NON-NLS-1$ //$NON-NLS-2$
                         template.append(quoteChar);
                     }
 
                     fieldIndex++;
                 }
             }
-            template.append("\n</#list>");
+            template.append("\n</#list>"); //$NON-NLS-1$
 
             return template.toString();
         }

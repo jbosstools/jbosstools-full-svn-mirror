@@ -81,7 +81,7 @@ public class JavabeanValueBinding12UICreator extends PropertiesAndSetterMethodSe
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		List<AttributeFieldEditPart> list = createElementSelectionSection("Data", editingdomain, toolkit, parent,
+		List<AttributeFieldEditPart> list = createElementSelectionSection(Messages.JavabeanValueBinding12UICreator_DataGroupText, editingdomain, toolkit, parent,
 				model, formEditor, part, Javabean12Package.eINSTANCE.getValueType_Data(), Javabean12Package.eINSTANCE
 						.getValueType_DataNS());
 		Composite groupParent = parent;

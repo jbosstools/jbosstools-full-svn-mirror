@@ -13,7 +13,7 @@ public class FragmentRouting12ActionGrouper extends AbstractSmooksActionGrouper 
 	}
 
 	public String getGroupName() {
-		return "Fragment Routing v1.2";
+		return Messages.FragmentRouting12ActionGrouper_GroupName;
 	}
 
 }

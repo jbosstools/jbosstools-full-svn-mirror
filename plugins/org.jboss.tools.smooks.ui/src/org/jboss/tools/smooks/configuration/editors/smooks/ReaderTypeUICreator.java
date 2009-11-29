@@ -81,7 +81,7 @@ public class ReaderTypeUICreator extends PropertyUICreator {
 	private void createParametersGroup(Composite parent, ReaderType reader, FormToolkit toolkit,
 			ISmooksModelProvider modelProvider, IEditorPart editorPart) {
 		Group group = new Group(parent, SWT.NONE);
-		group.setText("Parameters");
+		group.setText(Messages.ReaderTypeUICreator_ParameterGroupLabel);
 		group.setBackground(ColorConstants.white);
 		FillLayout fl = new FillLayout();
 		group.setLayout(fl);
@@ -116,7 +116,7 @@ public class ReaderTypeUICreator extends PropertyUICreator {
 	private void createFeaturesGroup(Composite parent, ReaderType reader, FormToolkit toolkit,
 			ISmooksModelProvider modelProvider, IEditorPart editorPart) {
 		Group group = new Group(parent, SWT.NONE);
-		group.setText("Features");
+		group.setText(Messages.ReaderTypeUICreator_FeaturesGroupLabel);
 		group.setBackground(ColorConstants.white);
 		FillLayout fl = new FillLayout();
 		group.setLayout(fl);
@@ -164,7 +164,7 @@ public class ReaderTypeUICreator extends PropertyUICreator {
 	private void createHandlerGroup(Composite parent, ReaderType reader, FormToolkit toolkit,
 			ISmooksModelProvider modelProvider, IEditorPart editorPart) {
 		Group group = new Group(parent, SWT.NONE);
-		group.setText("Handlers");
+		group.setText(Messages.ReaderTypeUICreator_HandlersGroupLabel);
 		group.setBackground(ColorConstants.white);
 		FillLayout fl = new FillLayout();
 		group.setLayout(fl);

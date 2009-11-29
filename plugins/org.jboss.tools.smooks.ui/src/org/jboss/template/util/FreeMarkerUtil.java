@@ -34,11 +34,11 @@ public class FreeMarkerUtil {
 		if(isDollarVariable(dollarVariable)) {
 			return dollarVariable.substring(2, dollarVariable.length() - 1);
 		} else {
-			throw new TemplateBuilderException("");
+			throw new TemplateBuilderException(""); //$NON-NLS-1$
 		}
 	}
 
 	public static boolean isDollarVariable(String variable) {
-		return (variable.startsWith("${") && variable.endsWith("}"));
+		return (variable.startsWith("${") && variable.endsWith("}")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

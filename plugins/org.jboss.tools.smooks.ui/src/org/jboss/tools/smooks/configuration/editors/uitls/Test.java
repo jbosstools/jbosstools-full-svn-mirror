@@ -20,7 +20,7 @@ public class Test {
 		for (i = 97; i < 122; i++) {
 			char c = (char) i;
 			String s = new String(new char[]{c});
-			System.out.print("'"+s+"'," + "'" + s.toUpperCase() +"',");
+			System.out.print("'"+s+"'," + "'" + s.toUpperCase() +"',"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		}
 	}
 }

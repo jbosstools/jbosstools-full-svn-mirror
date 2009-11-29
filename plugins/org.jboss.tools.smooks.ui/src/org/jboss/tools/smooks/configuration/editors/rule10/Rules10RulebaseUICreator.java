@@ -58,7 +58,7 @@ public class Rules10RulebaseUICreator extends PropertyUICreator {
 			return createBeanClassTextWithButton(parent, toolkit, propertyDescriptor, model, formEditor);
 		}
 		if (feature == Rules10Package.Literals.RULE_BASE__SRC) {
-			return SmooksUIUtils.createFileSelectionTextFieldEditor("Source Path", parent, formEditor
+			return SmooksUIUtils.createFileSelectionTextFieldEditor(Messages.Rules10RulebaseUICreator_SourcePathLabel, parent, formEditor
 					.getEditingDomain(), toolkit, this.getPropertyDescriptor((AdapterFactoryEditingDomain) formEditor
 					.getEditingDomain(), feature, model), model, SmooksUIUtils.VALUE_TYPE_VALUE, null, null);
 		}

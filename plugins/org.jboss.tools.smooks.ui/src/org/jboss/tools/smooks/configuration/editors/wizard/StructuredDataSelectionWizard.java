@@ -32,7 +32,7 @@ public class StructuredDataSelectionWizard extends Wizard {
 	
 	public StructuredDataSelectionWizard() {
 		super();
-		setWindowTitle("Smooks Input Data Selection Wizard");
+		setWindowTitle(Messages.StructuredDataSelectionWizard_WizardTitle);
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class StructuredDataSelectionWizard extends Wizard {
 	@Override
 	public void addPages() {
 //		super.addPages();
-		selectTypePage = new TransformDataWizardSelectionPage("Select type");
+		selectTypePage = new TransformDataWizardSelectionPage("Select type"); //$NON-NLS-1$
 		this.addPage(selectTypePage);
 	}
 

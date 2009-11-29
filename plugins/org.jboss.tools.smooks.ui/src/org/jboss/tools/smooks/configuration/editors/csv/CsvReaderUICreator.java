@@ -101,7 +101,7 @@ public class CsvReaderUICreator extends PropertyUICreator {
 		gd.horizontalSpan = 2;
 		Group fieldsComposite = new Group(parent, SWT.NONE);
 		fieldsComposite.setBackground(toolkit.getColors().getBackground());
-		fieldsComposite.setText("Fields");
+		fieldsComposite.setText(Messages.CsvReaderUICreator_FieldsLabel);
 		fieldsComposite.setLayoutData(gd);
 		GridLayout gl = new GridLayout();
 		gl.numColumns = 2;
@@ -129,7 +129,7 @@ public class CsvReaderUICreator extends PropertyUICreator {
 
 		fieldsViewer.setCellEditors(new CellEditor[] { fieldCellEditor });
 
-		fieldsViewer.setColumnProperties(new String[] { "field" });
+		fieldsViewer.setColumnProperties(new String[] { "field" }); //$NON-NLS-1$
 
 		fieldsViewer.setCellModifier(new ICellModifier() {
 
@@ -141,7 +141,7 @@ public class CsvReaderUICreator extends PropertyUICreator {
 				if (el == null)
 					return;
 				if (el instanceof FieldText && value instanceof String) {
-					if (property.equals("field")) {
+					if (property.equals("field")) { //$NON-NLS-1$
 
 						if (value.toString().equals(((FieldText) el).getText())) {
 							return;
@@ -157,7 +157,7 @@ public class CsvReaderUICreator extends PropertyUICreator {
 
 			public Object getValue(Object element, String property) {
 				if (element instanceof FieldText) {
-					if (property.equals("field")) {
+					if (property.equals("field")) { //$NON-NLS-1$
 						return ((FieldText) element).getText();
 					}
 				}
@@ -167,7 +167,7 @@ public class CsvReaderUICreator extends PropertyUICreator {
 
 			public boolean canModify(Object element, String property) {
 				if (element instanceof FieldText) {
-					if (property.equals("field")) {
+					if (property.equals("field")) { //$NON-NLS-1$
 						return true;
 					}
 				}
@@ -175,7 +175,7 @@ public class CsvReaderUICreator extends PropertyUICreator {
 			}
 		});
 		if (fields == null) {
-			fields = "";
+			fields = ""; //$NON-NLS-1$
 		}
 		fillFieldsList(fields);
 		fieldsViewer.setInput(fieldsList);
@@ -192,18 +192,18 @@ public class CsvReaderUICreator extends PropertyUICreator {
 
 		final Button addButton = new Button(buttonComposite, SWT.NONE);
 		addButton.setLayoutData(gd);
-		addButton.setText("Add Field");
+		addButton.setText(Messages.CsvReaderUICreator_AddButtonLabel);
 
 		final Button removeButton = new Button(buttonComposite, SWT.NONE);
 		removeButton.setLayoutData(gd);
-		removeButton.setText("Remove");
+		removeButton.setText(Messages.CsvReaderUICreator_RemoveButtonLabel);
 
 		addButton.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
 				addButton.setEnabled(false);
 				try {
-					FieldText field = new FieldText("field");
+					FieldText field = new FieldText("field"); //$NON-NLS-1$
 					fieldsList.add(field);
 					fieldsViewer.refresh();
 					setFieldsValue(readOnlyMoel, descriptor);
@@ -236,12 +236,12 @@ public class CsvReaderUICreator extends PropertyUICreator {
 	}
 
 	private void setFieldsValue(Object model, IItemPropertyDescriptor ps) {
-		String fieldsString = "";
+		String fieldsString = ""; //$NON-NLS-1$
 		for (int i = 0; i < fieldsList.size(); i++) {
 			FieldText fieldText = fieldsList.get(i);
 			fieldsString += fieldText.getText();
 			if (i < fieldsList.size() - 1) {
-				fieldsString += ",";
+				fieldsString += ","; //$NON-NLS-1$
 			}
 		}
 		ps.setPropertyValue(model, fieldsString);
@@ -252,8 +252,8 @@ public class CsvReaderUICreator extends PropertyUICreator {
 			return;
 		String input = fieldsString.toString();
 		input = input.trim();
-		if (input.indexOf(",") != -1) {
-			String[] fields = input.split(",");
+		if (input.indexOf(",") != -1) { //$NON-NLS-1$
+			String[] fields = input.split(","); //$NON-NLS-1$
 			if (fields != null && fields.length > 0) {
 				for (int i = 0; i < fields.length; i++) {
 					String field = fields[i];

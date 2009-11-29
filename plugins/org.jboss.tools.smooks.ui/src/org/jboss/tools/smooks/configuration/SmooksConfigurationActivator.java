@@ -13,7 +13,7 @@ import org.osgi.framework.BundleContext;
 public class SmooksConfigurationActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jboss.tools.smooks.ui";
+	public static final String PLUGIN_ID = "org.jboss.tools.smooks.ui"; //$NON-NLS-1$
 
 	// The shared instance
 	private static SmooksConfigurationActivator plugin;
@@ -58,7 +58,7 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 	}
 
 	public void log(Throwable e) {
-		getLog().log(new Status(Status.ERROR, PLUGIN_ID, Status.ERROR, "Error", e));
+		getLog().log(new Status(Status.ERROR, PLUGIN_ID, Status.ERROR, Messages.SmooksConfigurationActivator_Smooks_ErrorDialog_Title, e));
 	}
 
 	@Override

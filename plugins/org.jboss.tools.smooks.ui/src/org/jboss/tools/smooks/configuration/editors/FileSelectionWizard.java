@@ -43,7 +43,7 @@ public class FileSelectionWizard extends Wizard implements INewWizard {
 
 	@Override
 	public void addPages() {
-		fileSelectionWizardPage = new FileSelectionWizardPage("File Selection" ,null,isProcessFilePath());
+		fileSelectionWizardPage = new FileSelectionWizardPage(Messages.FileSelectionWizard_WizardPageName ,null,isProcessFilePath());
 		fileSelectionWizardPage.setFilters(viewerFilters);
 		fileSelectionWizardPage.setInitSelections(getInitSelections());
 		fileSelectionWizardPage.setMultiSelect(isMultiSelect());

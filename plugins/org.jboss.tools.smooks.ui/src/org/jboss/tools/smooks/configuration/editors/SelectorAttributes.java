@@ -9,14 +9,14 @@ package org.jboss.tools.smooks.configuration.editors;
  *
  */
 public class SelectorAttributes {
-	public static final String ONLY_NAME = "only_name";
+	public static final String ONLY_NAME = "only_name"; //$NON-NLS-1$
 
-	public static final String FULL_PATH = "full_path";
+	public static final String FULL_PATH = "full_path"; //$NON-NLS-1$
 
-	public static final String IGNORE_ROOT = "ignore_root";
+	public static final String IGNORE_ROOT = "ignore_root"; //$NON-NLS-1$
 
-	public static final String INCLUDE_PARENT = "include_parent";
-	private String selectorSperator = "/";
+	public static final String INCLUDE_PARENT = "include_parent"; //$NON-NLS-1$
+	private String selectorSperator = "/"; //$NON-NLS-1$
 	private String selectorPolicy = SelectorAttributes.FULL_PATH;
 	public String getSelectorSperator() {
 		return selectorSperator;

@@ -31,11 +31,11 @@ import org.w3c.dom.Element;
  */
 public class CSVModelBuilder extends ModelBuilder {
 
-    public static final String CSV_RECORD_ELEMENT = "csv-record";
+    public static final String CSV_RECORD_ELEMENT = "csv-record"; //$NON-NLS-1$
     private String[] csvFields;
 
     public CSVModelBuilder(String... csvFields) {
-        Assert.isNotNull(csvFields, "csvFields");
+        Assert.isNotNull(csvFields, "csvFields"); //$NON-NLS-1$
         this.csvFields = csvFields;
     }
 

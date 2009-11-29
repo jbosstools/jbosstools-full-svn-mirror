@@ -63,7 +63,7 @@ public class TransformDataWizardSelectionPage extends WizardSelectionPage {
 		main.setLayout(gridLayout);
 
 		Label label = new Label(main, SWT.NONE);
-		label.setText("Input Data Type");
+		label.setText(Messages.TransformDataWizardSelectionPage_InputTypeLabel);
 
 		viewer = new TreeViewer(main, SWT.BORDER);
 		viewer.setContentProvider(new WizardNodeContentProvider());

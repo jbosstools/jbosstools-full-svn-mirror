@@ -39,7 +39,7 @@ public class CollectionMapping extends Mapping {
      */
     public CollectionMapping(String srcPath, Node mappingNode, String collectionItemName) {
         super(srcPath, mappingNode);
-        Assert.isNotNull(collectionItemName, "collectionItemName");
+        Assert.isNotNull(collectionItemName, "collectionItemName"); //$NON-NLS-1$
         this.collectionItemName = collectionItemName;
     }
 

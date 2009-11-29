@@ -60,7 +60,7 @@ public class LocatorExpressionParamUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return createElementSelectionSection("Execute On Element", editingdomain, toolkit, parent, model, formEditor,
+		return createElementSelectionSection(Messages.LocatorExpressionParamUICreator_ExecuteOnElementGroupText, editingdomain, toolkit, parent, model, formEditor,
 				part, Persistence12Package.Literals.EXPRESSION_PARAMETER__EXEC_ON_ELEMENT,
 				Persistence12Package.Literals.EXPRESSION_PARAMETER__EXEC_ON_ELEMENT_NS);
 	}

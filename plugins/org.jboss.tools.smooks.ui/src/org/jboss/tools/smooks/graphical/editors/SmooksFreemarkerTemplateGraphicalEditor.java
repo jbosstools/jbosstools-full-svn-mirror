@@ -69,7 +69,7 @@ import org.w3c.dom.Node;
  */
 public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEditorPart {
 
-	public static final String ID = "__smooks_freemarker_template_graphical_editpart";
+	public static final String ID = "__smooks_freemarker_template_graphical_editpart"; //$NON-NLS-1$
 
 	private IAutoLayout autoLayout = null;
 
@@ -162,7 +162,7 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 				AbstractSmooksActionGrouper xslgrouper = new AbstractSmooksActionGrouper() {
 
 					public String getGroupName() {
-						return "Freemarker Template";
+						return "Freemarker Template"; //$NON-NLS-1$
 					}
 
 					@Override
@@ -296,7 +296,7 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 						}
 					} else {
 						if (nodeName.equals(data.getName())) {
-							String[] subpath = path.split("\\.");
+							String[] subpath = path.split("\\."); //$NON-NLS-1$
 							if (subpath.length >= 2) {
 								String[] temppath = new String[2];
 								System.arraycopy(subpath, subpath.length - 2, temppath, 0, 2);

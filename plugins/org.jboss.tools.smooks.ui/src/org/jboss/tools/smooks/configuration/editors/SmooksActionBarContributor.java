@@ -114,18 +114,18 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 * 
 	 * @generated
 	 */
-	protected IAction showPropertiesViewAction = new Action("Show Properties") {
+	protected IAction showPropertiesViewAction = new Action(Messages.SmooksActionBarContributor_OpenProperyViewActionLabel) {
 		@Override
 		public void run() {
 			try {
-				getPage().showView("org.eclipse.ui.views.PropertySheet");
+				getPage().showView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
 			} catch (PartInitException exception) {
 				SmooksConfigurationActivator.getDefault().log(exception);
 			}
 		}
 	};
 
-	protected IAction addSmooks11ResourceListAction = new Action("Add Smooks Resource List") {
+	protected IAction addSmooks11ResourceListAction = new Action("Add Smooks Resource List") { //$NON-NLS-1$
 
 		@Override
 		public void run() {
@@ -134,7 +134,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 
 	};
 
-	protected IAction addSmooks10ResourceListAction = new Action("Add Smooks Resource List") {
+	protected IAction addSmooks10ResourceListAction = new Action("Add Smooks Resource List") { //$NON-NLS-1$
 
 		@Override
 		public void run() {
@@ -143,7 +143,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 
 	};
 
-	protected IAction addMap10ResourceListAction = new Action("Add MappNode") {
+	protected IAction addMap10ResourceListAction = new Action("Add MappNode") { //$NON-NLS-1$
 
 		@Override
 		public void run() {
@@ -159,7 +159,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 * 
 	 * @generated
 	 */
-	protected IAction refreshViewerAction = new Action("Refresh Viewer") {
+	protected IAction refreshViewerAction = new Action(Messages.SmooksActionBarContributor_RefreshViewActionLabel) {
 		@Override
 		public boolean isEnabled() {
 			return activeEditorPart instanceof IViewerProvider;
@@ -277,8 +277,8 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 */
 	@Override
 	public void contributeToToolBar(IToolBarManager toolBarManager) {
-		toolBarManager.add(new Separator("smooks-settings"));
-		toolBarManager.add(new Separator("smooks-additions"));
+		toolBarManager.add(new Separator("smooks-settings")); //$NON-NLS-1$
+		toolBarManager.add(new Separator("smooks-additions")); //$NON-NLS-1$
 	}
 
 	/**
@@ -292,24 +292,24 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	public void contributeToMenu(IMenuManager menuManager) {
 		super.contributeToMenu(menuManager);
 
-		IMenuManager submenuManager = new MenuManager("Smooks", "smooksMenuID");
-		menuManager.insertAfter("additions", submenuManager);
-		submenuManager.add(new Separator("settings"));
-		submenuManager.add(new Separator("actions"));
-		submenuManager.add(new Separator("additions"));
-		submenuManager.add(new Separator("additions-end"));
+		IMenuManager submenuManager = new MenuManager("Smooks", "smooksMenuID"); //$NON-NLS-1$ //$NON-NLS-2$
+		menuManager.insertAfter("additions", submenuManager); //$NON-NLS-1$
+		submenuManager.add(new Separator("settings")); //$NON-NLS-1$
+		submenuManager.add(new Separator("actions")); //$NON-NLS-1$
+		submenuManager.add(new Separator("additions")); //$NON-NLS-1$
+		submenuManager.add(new Separator("additions-end")); //$NON-NLS-1$
 
 		// Prepare for CreateChild item addition or removal.
 		//
-		createChildMenuManager = new MenuManager("Add Smooks Resource");
-		submenuManager.insertBefore("additions", createChildMenuManager);
+		createChildMenuManager = new MenuManager(Messages.SmooksActionBarContributor_AddSmooksReasourceActionLabel);
+		submenuManager.insertBefore("additions", createChildMenuManager); //$NON-NLS-1$
 
 		// Prepare for CreateSibling item addition or removal.
 		//
-		createSiblingMenuManager = new MenuManager("New Sibling");
-		submenuManager.insertBefore("additions", createSiblingMenuManager);
+		createSiblingMenuManager = new MenuManager(Messages.SmooksActionBarContributor_NewSiblingActionLabel);
+		submenuManager.insertBefore("additions", createSiblingMenuManager); //$NON-NLS-1$
 
-		submenuManager.insertBefore("additions", addSmooks11ResourceListAction);
+		submenuManager.insertBefore("additions", addSmooks11ResourceListAction); //$NON-NLS-1$
 
 		// Force an update because Eclipse hides empty menus now.
 		//
@@ -359,7 +359,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
 
 		validateSmooksAction = new ValidateSmooksAction();
-		validateSmooksAction.setText("Validate");
+		validateSmooksAction.setText(Messages.SmooksActionBarContributor_ValidateActionLabel);
 
 		cutAction = new CutAction() {
 
@@ -615,7 +615,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 	 */
 	@Override
 	public void menuAboutToShow(IMenuManager menuManager) {
-		menuManager.add(new Separator("edit"));
+		menuManager.add(new Separator("edit")); //$NON-NLS-1$
 		menuManager.add(new ActionContributionItem(undoAction));
 		menuManager.add(new ActionContributionItem(redoAction));
 		menuManager.add(new Separator());
@@ -633,37 +633,37 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		// }
 		// Add our other standard marker.
 		//
-		menuManager.add(new Separator("additions-end"));
+		menuManager.add(new Separator("additions-end")); //$NON-NLS-1$
 		MenuManager submenuManager = null;
 
 		updateRootElementAddAction();
 
 		if (addSmooks11ResourceListAction.isEnabled()) {
-			menuManager.insertBefore("edit", addSmooks11ResourceListAction);
+			menuManager.insertBefore("edit", addSmooks11ResourceListAction); //$NON-NLS-1$
 		}
 
 		if (addSmooks10ResourceListAction.isEnabled()) {
-			menuManager.insertBefore("edit", addSmooks10ResourceListAction);
+			menuManager.insertBefore("edit", addSmooks10ResourceListAction); //$NON-NLS-1$
 		}
 
 		if (addMap10ResourceListAction.isEnabled()) {
-			menuManager.insertBefore("edit", addMap10ResourceListAction);
+			menuManager.insertBefore("edit", addMap10ResourceListAction); //$NON-NLS-1$
 		}
 
-		submenuManager = new MenuManager("Add Smooks Resource");
+		submenuManager = new MenuManager(Messages.SmooksActionBarContributor_AddSmooksResourceActionLabel);
 		if (isSmooksResourceListElement()) {
 			groupActions(submenuManager, createChildActions);
 		} else {
 			populateManager(submenuManager, createChildActions, null);
 		}
-		menuManager.insertBefore("edit", submenuManager);
+		menuManager.insertBefore("edit", submenuManager); //$NON-NLS-1$
 
-		submenuManager = new MenuManager("Create Sibling");
+		submenuManager = new MenuManager(Messages.SmooksActionBarContributor_CreateSiblingActionLabel);
 		populateManager(submenuManager, createSiblingActions, null);
-		menuManager.insertBefore("edit", submenuManager);
+		menuManager.insertBefore("edit", submenuManager); //$NON-NLS-1$
 		// don't show properties that
 		// menuManager.insertAfter("additions-end", showPropertiesViewAction);
-		menuManager.insertAfter("additions-end", validateSmooksAction);
+		menuManager.insertAfter("additions-end", validateSmooksAction); //$NON-NLS-1$
 		this.addGlobalActions(menuManager);
 	}
 
@@ -688,13 +688,13 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 		grouperList.add(new FragmentRouting11ActionGrouper());
 		grouperList.add(new Scripting11ActionGrouper());
 		grouperList.add(new Templating11ActionGrouper());
-		grouperList.add(new SeparatorActionGrouper("V1.1-V1.2"));
+		grouperList.add(new SeparatorActionGrouper("V1.1-V1.2")); //$NON-NLS-1$
 		grouperList.add(new JavaBean12ActionGrouper());
 		grouperList.add(new Reader12ActionGrouper());
 		grouperList.add(new FragmentRouting12ActionGrouper());
 		grouperList.add(new PersistenceActionGrouper());
 		grouperList.add(new Validation10ActionGrouper());
-		grouperList.add(new SeparatorActionGrouper("No Group actions"));
+		grouperList.add(new SeparatorActionGrouper("No Group actions")); //$NON-NLS-1$
 		return grouperList;
 	}
 
@@ -707,7 +707,7 @@ public class SmooksActionBarContributor extends EditingDomainActionBarContributo
 			ISmooksActionGrouper grouper = (ISmooksActionGrouper) iterator1.next();
 			if (grouper.isSeparator()) {
 				String name = grouper.getGroupName();
-				if(name == null) name = "";
+				if(name == null) name = Messages.SmooksActionBarContributor_33;
 				Separator s = new Separator(name);
 				manager.add(s);
 				continue;

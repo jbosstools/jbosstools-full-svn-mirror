@@ -13,7 +13,7 @@ public class Database11ActionGrouper extends AbstractSmooksActionGrouper {
 	}
 
 	public String getGroupName() {
-		return "Database";
+		return Messages.Database11ActionGrouper_GroupName;
 	}
 
 }

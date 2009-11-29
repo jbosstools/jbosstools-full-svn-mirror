@@ -50,11 +50,11 @@ public class PropertiesAndSetterMethodSearchFieldEditorCreator extends PropertyU
 	}
 
 	protected String getPropertiesSearchButtonName() {
-		return "Browse";
+		return Messages.PropertiesAndSetterMethodSearchFieldEditorCreator_BrowseButtonLabel;
 	}
 
 	protected String getMethodsSearchButtonName() {
-		return "Browse";
+		return Messages.PropertiesAndSetterMethodSearchFieldEditorCreator_BrowseButtonLabel;
 	}
 
 	protected AttributeFieldEditPart createPropertiesSearchFieldEditor(FormToolkit toolkit, Composite parent,

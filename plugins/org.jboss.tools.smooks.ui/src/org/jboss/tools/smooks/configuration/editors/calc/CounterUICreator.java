@@ -80,7 +80,7 @@ public class CounterUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return createElementSelectionSection("Count On Element", editingdomain, toolkit, parent, model, formEditor,part,
+		return createElementSelectionSection(Messages.CounterUICreator_CountOnElementGroupText, editingdomain, toolkit, parent, model, formEditor,part,
 				CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT, CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT_NS);
 	}
 

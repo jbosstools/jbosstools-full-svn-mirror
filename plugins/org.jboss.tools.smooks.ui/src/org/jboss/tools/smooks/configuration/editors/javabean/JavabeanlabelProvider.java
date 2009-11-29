@@ -23,31 +23,31 @@ public class JavabeanlabelProvider extends LabelProvider {
 		if (element instanceof JavaBeanModel) {
 			String name = ((JavaBeanModel) element).getName();
 			if (name == null)
-				name = "<nonamed>";
+				name = "<nonamed>"; //$NON-NLS-1$
 
 			Object error = ((JavaBeanModel) element).getError();
 			if (error != null) {
-				name = name + "    " + "<" + error.toString() + ">";
+				name = name + "    " + "<" + error.toString() + ">"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				return name;
 			}
 
 			Class<?> typeRef = ((JavaBeanModel) element).getBeanClass();
-			String typeStr = "";
+			String typeStr = ""; //$NON-NLS-1$
 			if (typeRef != null) {
 				if (typeRef.isArray()) {
 					typeRef = typeRef.getComponentType();
-					typeStr = typeRef.getName() + "[]";
+					typeStr = typeRef.getName() + "[]"; //$NON-NLS-1$
 				} else {
 					typeStr = typeRef.getName();
 				}
 			}
-			if (!typeStr.equals("")) {
-				name = name + "       " + typeStr;
+			if (!typeStr.equals("")) { //$NON-NLS-1$
+				name = name + "       " + typeStr; //$NON-NLS-1$
 			}
 
 			return name;
 		}
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	@Override

@@ -87,21 +87,21 @@ public class BindingsContextContentProposal implements IContentProposal {
 	 * @see org.eclipse.jface.fieldassist.IContentProposal#getLabel()
 	 */
 	public String getLabel() {
-		String name = "";
+		String name = ""; //$NON-NLS-1$
 		if(type == BINDINGS){
-			name = "Bean";
+			name = "Bean"; //$NON-NLS-1$
 		}
 		if(type == PROPERTIES){
-			name = "Value Binding";
+			name = "Value Binding"; //$NON-NLS-1$
 		}
 		if(type == WIRTINGS){
-			name = "Bean Binding";
+			name = "Bean Binding"; //$NON-NLS-1$
 		}
 		if(type == EXPRESSIONS){
-			name = "Expression Binding";
+			name = "Expression Binding"; //$NON-NLS-1$
 		}
 		if(name.length() != 0 && content != null){
-			return content + " - ( " + name + " )";
+			return content + " - ( " + name + " )"; //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		return  content;
 	}

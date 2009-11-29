@@ -50,7 +50,7 @@ public class OpenEditorEditInnerContentsAction extends Action {
 
 	private int textType = SmooksUIUtils.VALUE_TYPE_TEXT;
 
-	private String fileExtensionName = "txt";
+	private String fileExtensionName = "txt"; //$NON-NLS-1$
 
 	private String editorID = null;
 
@@ -80,8 +80,8 @@ public class OpenEditorEditInnerContentsAction extends Action {
 		this.editorID = editorID;
 		tempFileListener = new TempFileChangeListener();
 		setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_FILE));
-		setDescription("Open an editor to edit inner contents");
-		setText("Open Editor");
+		setDescription(Messages.OpenEditorEditInnerContentsAction_OpenEditor_Des);
+		setText(Messages.OpenEditorEditInnerContentsAction_OpenEditor_Label);
 
 		actionMap = elementTempFileMap.get(model);
 		if (actionMap != null) {
@@ -176,15 +176,15 @@ public class OpenEditorEditInnerContentsAction extends Action {
 
 	private String getTypeKey() {
 		if (textType == SmooksUIUtils.VALUE_TYPE_TEXT) {
-			return "text";
+			return "text"; //$NON-NLS-1$
 		}
 		if (textType == SmooksUIUtils.VALUE_TYPE_COMMENT) {
-			return "comment";
+			return "comment"; //$NON-NLS-1$
 		}
 		if (textType == SmooksUIUtils.VALUE_TYPE_CDATA) {
-			return "cdata";
+			return "cdata"; //$NON-NLS-1$
 		}
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	private void cleanOldActionListeners(OpenEditorEditInnerContentsAction action) {
@@ -279,11 +279,11 @@ public class OpenEditorEditInnerContentsAction extends Action {
 				if (resource != null) {
 					IProject project = resource.getProject();
 					String name = generateFileName();
-					tempFile = project.getFile(name + "." + fileExtensionName);
+					tempFile = project.getFile(name + "." + fileExtensionName); //$NON-NLS-1$
 					int i = 0;
 					while (tempFile.exists()) {
 						name += String.valueOf(i);
-						tempFile = project.getFile(name + "." + fileExtensionName);
+						tempFile = project.getFile(name + "." + fileExtensionName); //$NON-NLS-1$
 						i++;
 					}
 					tempFile.create(new ByteArrayInputStream(editValue.getBytes()), true, new NullProgressMonitor());
@@ -309,7 +309,7 @@ public class OpenEditorEditInnerContentsAction extends Action {
 
 	private String generateFileName() {
 		int number = (int) System.currentTimeMillis();
-		return "tempFile_" + String.valueOf(number);
+		return "tempFile_" + String.valueOf(number); //$NON-NLS-1$
 	}
 
 	private class TempFileChangeListener implements IResourceChangeListener {
@@ -344,9 +344,9 @@ public class OpenEditorEditInnerContentsAction extends Action {
 			FileReader fr = new FileReader(file);
 			BufferedReader reader = new BufferedReader(fr);
 			String line = reader.readLine();
-			String contents = "";
+			String contents = ""; //$NON-NLS-1$
 			while (line != null) {
-				contents += line + "\n";
+				contents += line + "\n"; //$NON-NLS-1$
 				line = reader.readLine();
 			}
 			return contents;

@@ -19,7 +19,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
  */
 public class BaseViewerInitor implements IViewerInitor {
 	protected String typeID = null;
-	protected String name = "nonamed";
+	protected String name = "nonamed"; //$NON-NLS-1$
 	protected String wizardIconPath = null;
 	protected String description;
 	protected ITreeContentProvider treeContentProvider;

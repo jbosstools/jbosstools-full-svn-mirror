@@ -135,7 +135,7 @@ public class SmooksConfigFileHandle extends DefaultHandler {
 		super.startPrefixMapping(prefix, uri);
 		if (containtSmooksURI(uri)) {
 			setCorrectContentFile(true);
-			throw new SAXException("Stop parsing");
+			throw new SAXException(Messages.SmooksConfigFileHandle_exception);
 		}
 	}
 
@@ -159,11 +159,11 @@ public class SmooksConfigFileHandle extends DefaultHandler {
 	public final void startElement(final String uri, final String elementName, final String qualifiedName,
 			final Attributes attributes) throws SAXException {
 		if (isCorrectContentFile()) {
-			throw new SAXException("Stop parsing");
+			throw new SAXException(Messages.SmooksConfigFileHandle_exception);
 		}
 		if (containtSmooksURI(uri)) {
 			setCorrectContentFile(true);
-			throw new SAXException("Stop parsing");
+			throw new SAXException(Messages.SmooksConfigFileHandle_exception);
 		}
 	}
 

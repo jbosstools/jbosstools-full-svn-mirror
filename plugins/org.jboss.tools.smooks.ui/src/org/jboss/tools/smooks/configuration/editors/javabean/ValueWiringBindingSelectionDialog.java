@@ -68,7 +68,7 @@ public class ValueWiringBindingSelectionDialog extends Dialog {
 
 		Label label = new Label(composite, SWT.NONE);
 		label.setLayoutData(gd);
-		label.setText("Choose Java bean property");
+		label.setText(Messages.ValueWiringBindingSelectionDialog_SelectJavaLabel);
 
 		viewer = CheckboxTableViewer.newCheckList(composite, SWT.BORDER);
 
@@ -128,7 +128,7 @@ public class ValueWiringBindingSelectionDialog extends Dialog {
 		linkComposite.setLayout(gl);
 		
 		toolkit = new FormToolkit(parent.getDisplay());
-		Hyperlink allselectlink = toolkit.createHyperlink(linkComposite, "Select All", SWT.NONE);
+		Hyperlink allselectlink = toolkit.createHyperlink(linkComposite, Messages.ValueWiringBindingSelectionDialog_SelectAllLink, SWT.NONE);
 		allselectlink.setBackground(linkComposite.getBackground());
 		allselectlink.addHyperlinkListener(new IHyperlinkListener() {
 
@@ -169,7 +169,7 @@ public class ValueWiringBindingSelectionDialog extends Dialog {
 
 		});
 
-		Hyperlink allunselectlink = toolkit.createHyperlink(linkComposite, "Deselect All", SWT.NONE);
+		Hyperlink allunselectlink = toolkit.createHyperlink(linkComposite, Messages.ValueWiringBindingSelectionDialog_DeselectAllLink, SWT.NONE);
 		allunselectlink.setBackground(linkComposite.getBackground());
 		allunselectlink.addHyperlinkListener(new IHyperlinkListener() {
 
@@ -209,7 +209,7 @@ public class ValueWiringBindingSelectionDialog extends Dialog {
 			}
 
 		});
-		getShell().setText("Add Binding");
+		getShell().setText(Messages.ValueWiringBindingSelectionDialog_AddBindingLabel);
 		return composite;
 	}
 	

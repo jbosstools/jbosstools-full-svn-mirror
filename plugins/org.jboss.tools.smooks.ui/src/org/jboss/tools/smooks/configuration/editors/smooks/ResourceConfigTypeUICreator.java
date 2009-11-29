@@ -72,7 +72,7 @@ public class ResourceConfigTypeUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return createElementSelectionSection("Selector", editingdomain, toolkit, parent, model, formEditor, part,
+		return createElementSelectionSection(Messages.ResourceConfigTypeUICreator_SelectorLabel, editingdomain, toolkit, parent, model, formEditor, part,
 				SmooksPackage.eINSTANCE.getResourceConfigType_Selector(), SmooksPackage.eINSTANCE
 						.getResourceConfigType_SelectorNamespace());
 	}

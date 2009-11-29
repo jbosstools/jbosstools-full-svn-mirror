@@ -23,7 +23,7 @@ import org.jboss.tools.smooks.model.persistence12.Updater;
  */
 public class PersistenceActionGrouper extends AbstractSmooksActionGrouper {
 
-	public static final String NAME = "Persistence";
+	public static final String NAME = Messages.PersistenceActionGrouper_GroupName;
 	
 	
 

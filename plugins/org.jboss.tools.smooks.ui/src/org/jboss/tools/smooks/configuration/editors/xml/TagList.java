@@ -51,7 +51,7 @@ public class TagList extends AbstractXMLObject {
 
 	@Override
 	public String getName() {
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 
@@ -70,7 +70,7 @@ public class TagList extends AbstractXMLObject {
 //		if(rootTag != null)
 //		return "Document : " + getName() + "\n" + getRootTag().toString();
 		
-		return "Docuement Object :  " +getName();
+		return "Docuement Object :  " +getName(); //$NON-NLS-1$
 	}
 
 	/* (non-Javadoc)

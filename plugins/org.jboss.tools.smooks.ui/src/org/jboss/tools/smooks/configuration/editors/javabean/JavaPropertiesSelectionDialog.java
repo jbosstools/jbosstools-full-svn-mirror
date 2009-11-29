@@ -61,9 +61,9 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 	}
 
 	public Object open(Shell shell) {
-		String errorMessage = "";
+		String errorMessage = ""; //$NON-NLS-1$
 		if (project == null) {
-			errorMessage = "Please make sure the project is the 'Java Project'";
+			errorMessage = Messages.JavaPropertiesSelectionDialog_ProjectisJavaProjectErrorMessage;
 		}
 		try {
 			if (project != null && className != null) {
@@ -83,11 +83,11 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 				}
 			}
 		} catch (JavaModelException e) {
-			errorMessage = "";
+			errorMessage = ""; //$NON-NLS-1$
 		} catch (ClassNotFoundException e) {
-			errorMessage = "'" + className + "' can't be found.";
+			errorMessage = "'" + className + "' can't be found."; //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		MessageDialog.openInformation(shell, "Can't open dialog", "Can't get properties of '" + className + "'.\n"
+		MessageDialog.openInformation(shell, Messages.JavaPropertiesSelectionDialog_CantOpenDialogTitle, Messages.JavaPropertiesSelectionDialog_CantOpenDialogErrorMessage1 + className + "'.\n" //$NON-NLS-3$
 				+ errorMessage);
 		return null;
 	}
@@ -124,10 +124,10 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 			Table table = viewer.getTable();
 			TableColumn nameColumn = new TableColumn(table, SWT.NONE);
 			nameColumn.setWidth(100);
-			nameColumn.setText("Name");
+			nameColumn.setText(Messages.JavaPropertiesSelectionDialog_NameColumnText);
 			TableColumn typeColumn = new TableColumn(table, SWT.NONE);
 			typeColumn.setWidth(200);
-			typeColumn.setText("Type");
+			typeColumn.setText(Messages.JavaPropertiesSelectionDialog_TypeColumnText);
 			table.setHeaderVisible(true);
 			viewer.setContentProvider(new PropertyDescriptorContentProvider());
 			viewer.setLabelProvider(new PropertyDescriptorLabelProvider());
@@ -142,7 +142,7 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 					currentSelection = ((IStructuredSelection) event.getSelection()).getFirstElement();
 				}
 			});
-			getShell().setText(beanModel.getName() + "'s Properties");
+			getShell().setText(beanModel.getName() + Messages.JavaPropertiesSelectionDialog_DialogTitle);
 			return composite;
 		}
 

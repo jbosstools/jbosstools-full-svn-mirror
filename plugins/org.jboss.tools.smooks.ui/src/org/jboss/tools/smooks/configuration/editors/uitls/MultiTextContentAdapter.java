@@ -105,19 +105,19 @@ public class MultiTextContentAdapter extends TextContentAdapter {
 			content = content.substring(endIndex + 1, content.length());
 		}
 		String all = te.getText();
-		String first="";
+		String first=""; //$NON-NLS-1$
 		if(all.length() != 0){
 			first = all.substring(0, endIndex + 1);
 		}
 		if (endIndex == 0) {
-			first = "";
+			first = ""; //$NON-NLS-1$
 		}
-		String second  = "";
+		String second  = ""; //$NON-NLS-1$
 		if(all.length() != 0){
 			second = all.substring(endIndex + 1 + content.length(), all.length());
 		}
 		if (all.length() == 1) {
-			second = "";
+			second = ""; //$NON-NLS-1$
 		}
 		all = first + text + second;
 		te.setText(all);

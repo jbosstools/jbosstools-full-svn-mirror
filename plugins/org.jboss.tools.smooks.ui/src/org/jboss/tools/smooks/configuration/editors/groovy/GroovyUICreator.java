@@ -60,7 +60,7 @@ public class GroovyUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return createElementSelectionSection("Execute On Element", editingdomain, toolkit, parent, model, formEditor,part,
+		return createElementSelectionSection(Messages.GroovyUICreator_ExecuteOnElemenGroupName, editingdomain, toolkit, parent, model, formEditor,part,
 				GroovyPackage.eINSTANCE.getGroovy_ExecuteOnElement(), GroovyPackage.eINSTANCE
 						.getGroovy_ExecuteOnElementNS());
 		// SmooksUIUtils.createCommentFieldEditor("Script Contents",editingdomain,

@@ -35,11 +35,11 @@ import javax.xml.parsers.ParserConfigurationException;
  */
 public abstract class ModelBuilder {
     
-    public static final String NAMESPACE = "http://www.jboss.org/xsd/tools/smooks"; // TODO: Make same as JBT eclipse extension namespace ??
-    public static final String REQUIRED = "#required";
-    public static final String OPTIONAL = "#optional";
+    public static final String NAMESPACE = "http://www.jboss.org/xsd/tools/smooks"; // TODO: Make same as JBT eclipse extension namespace ?? //$NON-NLS-1$
+    public static final String REQUIRED = "#required"; //$NON-NLS-1$
+    public static final String OPTIONAL = "#optional"; //$NON-NLS-1$
 
-    private static final String HIDDEN_ELEMENT = "hidden";
+    private static final String HIDDEN_ELEMENT = "hidden"; //$NON-NLS-1$
 
     /**
      * Build the templating model.
@@ -56,7 +56,7 @@ public abstract class ModelBuilder {
      * @param fragment The fragment to be marked as hidden.
      */
     public static void hideFragment(Element fragment) {
-        fragment.setAttributeNS(NAMESPACE, HIDDEN_ELEMENT, "true");
+        fragment.setAttributeNS(NAMESPACE, HIDDEN_ELEMENT, "true"); //$NON-NLS-1$
     }
 
     /**
@@ -83,7 +83,7 @@ public abstract class ModelBuilder {
                 case Node.ATTRIBUTE_NODE :
                     return isHidden(node.getParentNode());
                 case Node.ELEMENT_NODE :
-                    if(((Element)node).getAttributeNS(NAMESPACE, HIDDEN_ELEMENT).equals("true")) {
+                    if(((Element)node).getAttributeNS(NAMESPACE, HIDDEN_ELEMENT).equals("true")) { //$NON-NLS-1$
                         return true;
                     }
                     return isHidden(node.getParentNode());
@@ -100,21 +100,21 @@ public abstract class ModelBuilder {
         try {
             builder = builderFactory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-            throw new TemplateBuilderException("Error constructing DOM DocumentBuilder.", e);
+            throw new TemplateBuilderException("Error constructing DOM DocumentBuilder.", e); //$NON-NLS-1$
         }
 
         return builder.newDocument();
     }
 
     protected void setMinMax(Element element, int minOccurs, int maxOccurs) {
-        element.setAttributeNS(NAMESPACE, "smk:minOccurs", Integer.toString(minOccurs));
-        element.setAttributeNS(NAMESPACE, "smk:maxOccurs", Integer.toString(maxOccurs));
+        element.setAttributeNS(NAMESPACE, "smk:minOccurs", Integer.toString(minOccurs)); //$NON-NLS-1$
+        element.setAttributeNS(NAMESPACE, "smk:maxOccurs", Integer.toString(maxOccurs)); //$NON-NLS-1$
     }
 
     public static int getMinOccurs(Element element) {
-        String minOccurs = element.getAttributeNS(NAMESPACE, "minOccurs");
+        String minOccurs = element.getAttributeNS(NAMESPACE, "minOccurs"); //$NON-NLS-1$
 
-        if(minOccurs.equals("")) {
+        if(minOccurs.equals("")) { //$NON-NLS-1$
             return 1;
         }
 
@@ -122,9 +122,9 @@ public abstract class ModelBuilder {
     }
 
     public static int getMaxOccurs(Element element) {
-        String maxOccurs = element.getAttributeNS(NAMESPACE, "maxOccurs");
+        String maxOccurs = element.getAttributeNS(NAMESPACE, "maxOccurs"); //$NON-NLS-1$
 
-        if(maxOccurs.equals("")) {
+        if(maxOccurs.equals("")) { //$NON-NLS-1$
             return 1;
         }
 

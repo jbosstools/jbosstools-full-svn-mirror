@@ -100,27 +100,27 @@ public class ModelChildrenTablePanelCreator {
 			GridLayout bgl = new GridLayout();
 			buttonArea.setLayout(bgl);
 
-			newChildButton = toolkit.createButton(buttonArea, "New", SWT.NONE);
+			newChildButton = toolkit.createButton(buttonArea, Messages.ModelChildrenTablePanelCreator_NewButtonLabel, SWT.NONE);
 			gd = new GridData(GridData.FILL_HORIZONTAL);
 			gd.verticalAlignment = GridData.BEGINNING;
 			newChildButton.setLayoutData(gd);
 
-			removeRemoveButton = toolkit.createButton(buttonArea, "Remove", SWT.NONE);
+			removeRemoveButton = toolkit.createButton(buttonArea, Messages.ModelChildrenTablePanelCreator_RemoveButtonLabel, SWT.NONE);
 			gd = new GridData(GridData.FILL_HORIZONTAL);
 			gd.verticalAlignment = GridData.BEGINNING;
 			removeRemoveButton.setLayoutData(gd);
 
-			upChildButton = toolkit.createButton(buttonArea, "Up", SWT.NONE);
+			upChildButton = toolkit.createButton(buttonArea, Messages.ModelChildrenTablePanelCreator_UpButtonLabel, SWT.NONE);
 			gd = new GridData(GridData.FILL_HORIZONTAL);
 			gd.verticalAlignment = GridData.BEGINNING;
 			upChildButton.setLayoutData(gd);
 
-			downChildButton = toolkit.createButton(buttonArea, "Down", SWT.NONE);
+			downChildButton = toolkit.createButton(buttonArea, Messages.ModelChildrenTablePanelCreator_DownButtonLable, SWT.NONE);
 			gd = new GridData(GridData.FILL_HORIZONTAL);
 			gd.verticalAlignment = GridData.BEGINNING;
 			downChildButton.setLayoutData(gd);
 
-			childPropertiesButton = toolkit.createButton(buttonArea, "Properties..", SWT.NONE);
+			childPropertiesButton = toolkit.createButton(buttonArea, Messages.ModelChildrenTablePanelCreator_PropertiesButtonLabel, SWT.NONE);
 			gd = new GridData(GridData.FILL_HORIZONTAL);
 			gd.verticalAlignment = GridData.BEGINNING;
 			childPropertiesButton.setLayoutData(gd);

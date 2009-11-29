@@ -60,7 +60,7 @@ public class LocatorWiringParamUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return createElementSelectionSection("Wire On Element", editingdomain, toolkit, parent, model, formEditor,
+		return createElementSelectionSection(Messages.LocatorWiringParamUICreator_WiringOnElementGroupLabel, editingdomain, toolkit, parent, model, formEditor,
 				part, Persistence12Package.Literals.WIRING_PARAMETER__WIRE_ON_ELEMENT,
 				Persistence12Package.Literals.WIRING_PARAMETER__WIRE_ON_ELEMENT_NS);
 	}

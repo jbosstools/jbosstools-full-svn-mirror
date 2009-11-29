@@ -109,11 +109,11 @@ public class SelectorCreationDialog extends Dialog {
 		composite.setLayout(layout);
 
 		Label viewerLabel = new Label(composite, SWT.NONE);
-		viewerLabel.setText("Input Message:");
+		viewerLabel.setText(Messages.SelectorCreationDialog_InputViewerlabel);
 
 		toolkit = new FormToolkit(getShell().getDisplay());
 
-		Hyperlink link = toolkit.createHyperlink(composite, "Click to add Input Data", SWT.NONE);// new
+		Hyperlink link = toolkit.createHyperlink(composite, Messages.SelectorCreationDialog_AddInputLinkLabel, SWT.NONE);// new
 		// Hyperlink(composite,SWT.NONE);
 		link.setBackground(composite.getBackground());
 		link.addHyperlinkListener(new IHyperlinkListener() {
@@ -177,10 +177,10 @@ public class SelectorCreationDialog extends Dialog {
 		viewer.getTree().setLayoutData(gd);
 
 		Label label = new Label(composite, SWT.NONE);
-		label.setText("Sperator Char : ");
+		label.setText(Messages.SelectorCreationDialog_SperatorCharlabel);
 		final Combo speratorCombo = new Combo(composite, SWT.BORDER | SWT.READ_ONLY);
-		speratorCombo.add(" ");
-		speratorCombo.add("/");
+		speratorCombo.add(" "); //$NON-NLS-1$
+		speratorCombo.add("/"); //$NON-NLS-1$
 		speratorCombo.select(1);
 		// speratorCombo.setEditable(false);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -194,7 +194,7 @@ public class SelectorCreationDialog extends Dialog {
 		});
 
 		Label l = new Label(composite, SWT.NONE);
-		l.setText("Selector generate policy : ");
+		l.setText(Messages.SelectorCreationDialog_PolicyLabel);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		l.setLayoutData(gd);
@@ -208,16 +208,16 @@ public class SelectorCreationDialog extends Dialog {
 		gl.numColumns = 2;
 		com.setLayout(gl);
 		fullPathButton = new Button(com, SWT.RADIO);
-		fullPathButton.setText("Full Path");
+		fullPathButton.setText(Messages.SelectorCreationDialog_FullPathPolicy);
 		onlyNameButton = new Button(com, SWT.RADIO);
-		onlyNameButton.setText("Only Name");
+		onlyNameButton.setText(Messages.SelectorCreationDialog_OnlyNamePolicy);
 		// Button containtParentButton = new Button(com,SWT.RADIO);
 		// containtParentButton.setText("Containt Parent Name");
 		fullPathButton.setSelection(true);
 
 		handleButtons();
 
-		getShell().setText("Selector generate dialog");
+		getShell().setText(Messages.SelectorCreationDialog_DialogTitle);
 
 		SmooksUIUtils.expandSelectorViewer(inputList, viewer);
 
@@ -313,7 +313,7 @@ public class SelectorCreationDialog extends Dialog {
 								for (Iterator<?> iterator2 = paramers.iterator(); iterator2.hasNext();) {
 									InputParameter paramType = (InputParameter) iterator2.next();
 									String pn = paramType.getName();
-									if ("rootElement".equals(pn)) {
+									if ("rootElement".equals(pn)) { //$NON-NLS-1$
 										rootElementName = paramType.getValue();
 										break;
 									}

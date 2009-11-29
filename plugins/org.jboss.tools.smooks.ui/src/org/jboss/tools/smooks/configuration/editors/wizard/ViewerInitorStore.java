@@ -147,8 +147,8 @@ public class ViewerInitorStore {
 
 		// for json 1.1
 		BaseViewerInitor jsonViewerInitor = new BaseViewerInitor();
-		String name = "JSON";
-		String description = "Select Json data file as the input data.";
+		String name = "JSON"; //$NON-NLS-1$
+		String description = "Select Json data file as the input data."; //$NON-NLS-1$
 		String iconPath = null;
 		String typeID = SmooksModelUtils.INPUT_TYPE_JSON_1_1;
 
@@ -164,8 +164,8 @@ public class ViewerInitorStore {
 
 		// for json 1.2
 		BaseViewerInitor json12ViewerInitor = new BaseViewerInitor();
-		name = "Json 1.2";
-		description = "Select Json data file as the input data.(version 1.2)";
+		name = "Json 1.2"; //$NON-NLS-1$
+		description = "Select Json data file as the input data.(version 1.2)"; //$NON-NLS-1$
 		iconPath = null;
 		typeID = SmooksModelUtils.INPUT_TYPE_JSON_1_2;
 
@@ -182,8 +182,8 @@ public class ViewerInitorStore {
 
 		// for java
 		BaseViewerInitor javabeanViewerInitor = new BaseViewerInitor();
-		name = "Java";
-		description = "Select a Java type(class,interface) as the input data.";
+		name = "Java"; //$NON-NLS-1$
+		description = "Select a Java type(class,interface) as the input data."; //$NON-NLS-1$
 		iconPath = null;
 		typeID = SmooksModelUtils.INPUT_TYPE_JAVA;
 
@@ -200,8 +200,8 @@ public class ViewerInitorStore {
 		// for XML
 
 		BaseViewerInitor xmlViewerInitor = new BaseViewerInitor();
-		name = "XML";
-		description = "Select a XML file to be the input data. ";
+		name = "XML"; //$NON-NLS-1$
+		description = "Select a XML file to be the input data. "; //$NON-NLS-1$
 		iconPath = null;
 		typeID = SmooksModelUtils.INPUT_TYPE_XML;
 
@@ -218,8 +218,8 @@ public class ViewerInitorStore {
 		// for XSD
 
 		BaseViewerInitor xsdViewerInitor = new BaseViewerInitor();
-		name = "XSD/WSDL";
-		description = "Select a XSD file to be the input data. Need to figure out a Root Element. ";
+		name = "XSD/WSDL"; //$NON-NLS-1$
+		description = "Select a XSD file to be the input data. Need to figure out a Root Element. "; //$NON-NLS-1$
 		iconPath = null;
 		typeID = SmooksModelUtils.INPUT_TYPE_XSD;
 
@@ -235,8 +235,8 @@ public class ViewerInitorStore {
 
 		// for Csv 1.1
 		BaseViewerInitor csvViewerInitor = new BaseViewerInitor();
-		name = "CSV";
-		description = "Select CSV data file as the input data.";
+		name = "CSV"; //$NON-NLS-1$
+		description = "Select CSV data file as the input data."; //$NON-NLS-1$
 		iconPath = null;
 		typeID = SmooksModelUtils.INPUT_TYPE_CSV;
 
@@ -252,8 +252,8 @@ public class ViewerInitorStore {
 
 		// for Csv 1.2
 		BaseViewerInitor csv12ViewerInitor = new BaseViewerInitor();
-		name = "CSV 1.2";
-		description = "Select CSV data file as the input data (version 1.2).";
+		name = "CSV 1.2"; //$NON-NLS-1$
+		description = "Select CSV data file as the input data (version 1.2)."; //$NON-NLS-1$
 		iconPath = null;
 		typeID = SmooksModelUtils.INPUT_TYPE_CSV_1_2;
 
@@ -268,8 +268,8 @@ public class ViewerInitorStore {
 
 		// for EDI 1.1
 		BaseViewerInitor ediViewerInitor = new BaseViewerInitor();
-		name = "EDI";
-		description = "Select EDI data file as the input data.";
+		name = "EDI"; //$NON-NLS-1$
+		description = "Select EDI data file as the input data."; //$NON-NLS-1$
 		iconPath = null;
 		typeID = SmooksModelUtils.INPUT_TYPE_EDI_1_1;
 
@@ -285,8 +285,8 @@ public class ViewerInitorStore {
 
 		// for EDI 1.2
 		BaseViewerInitor edi12ViewerInitor = new BaseViewerInitor();
-		name = "EDI 1.2";
-		description = "Select EDI data file as the input data. (version 1.2)";
+		name = "EDI 1.2"; //$NON-NLS-1$
+		description = "Select EDI data file as the input data. (version 1.2)"; //$NON-NLS-1$
 		iconPath = null;
 		typeID = SmooksModelUtils.INPUT_TYPE_EDI_1_2;
 

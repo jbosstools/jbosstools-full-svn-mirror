@@ -64,13 +64,13 @@ public class XSDModelBuilder extends ModelBuilder {
 
     public Document buildModel() throws TemplateBuilderException {
         if(rootElementName == null) {
-            throw new IllegalStateException("The 'rootElementName' property has not been set.");
+            throw new IllegalStateException("The 'rootElementName' property has not been set."); //$NON-NLS-1$
         }
 
         XSDElementDeclaration rootElement = elements.get(rootElementName);
 
         if(rootElement == null) {
-            throw new IllegalArgumentException("Unknown root element '" + rootElementName + "'.");
+            throw new IllegalArgumentException("Unknown root element '" + rootElementName + "'."); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         Document model = createModelInstance();
@@ -102,7 +102,7 @@ public class XSDModelBuilder extends ModelBuilder {
         resource.load(options);
 
         if(resource.getContents().isEmpty()) {
-            throw new TemplateBuilderException("Failed to load schema '" + schemaURI + "'.");
+            throw new TemplateBuilderException("Failed to load schema '" + schemaURI + "'."); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         XSDSchema schema = (XSDSchema) resource.getContents().get(0);
@@ -179,7 +179,7 @@ public class XSDModelBuilder extends ModelBuilder {
                     processComplexType(document, element, (XSDComplexTypeDefinition) loadedType);
                 }
             } else if(typeDef != null) {
-                System.out.println("?? " + typeDef);
+                System.out.println("?? " + typeDef); //$NON-NLS-1$
             }
         } finally {
             elementExpandStack.pop();
@@ -205,10 +205,10 @@ public class XSDModelBuilder extends ModelBuilder {
         XSDCompositor compositor = modelGroup.getCompositor();
         String compositorType = compositor.getName();
 
-        if(particles.size() > 1 && compositorType.equals("choice")) {
-            Element composite = document.createElementNS(NAMESPACE, "smk:composite");
+        if(particles.size() > 1 && compositorType.equals("choice")) { //$NON-NLS-1$
+            Element composite = document.createElementNS(NAMESPACE, "smk:composite"); //$NON-NLS-1$
 
-            composite.setAttribute("type", compositorType);
+            composite.setAttribute("type", compositorType); //$NON-NLS-1$
             setMinMax(composite, minOccurs, maxOccurs);
             element.appendChild(composite);
             element = composite;
@@ -245,13 +245,13 @@ public class XSDModelBuilder extends ModelBuilder {
                 XSDAttributeDeclaration attributeDecl = attributeUse.getAttributeDeclaration();
                 String name = attributeDecl.getQName();
                 String attributeNS = attributeDecl.getTargetNamespace();
-                String value = "";
+                String value = ""; //$NON-NLS-1$
                 XSDAttributeUseCategory use = attributeUse.getUse();
 
                 if(use == XSDAttributeUseCategory.REQUIRED_LITERAL) {
                     value = REQUIRED;
                 } else if(attributeUse.getValue() != null) {
-                    value = OPTIONAL + "=" + attributeUse.getValue().toString();
+                    value = OPTIONAL + "=" + attributeUse.getValue().toString(); //$NON-NLS-1$
                 } else {
                     value = OPTIONAL;
                 }

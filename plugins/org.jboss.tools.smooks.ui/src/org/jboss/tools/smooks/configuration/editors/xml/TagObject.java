@@ -97,7 +97,7 @@ public class TagObject extends AbstractXMLObject {
 	}
 
 	public String toString() {
-		String blankString = "";
+		String blankString = ""; //$NON-NLS-1$
 		int deep = -1;
 		AbstractXMLObject parent = this;
 		while (parent != null && !(parent instanceof TagList)) {
@@ -106,36 +106,36 @@ public class TagObject extends AbstractXMLObject {
 		}
 
 		for (int i = 0; i < deep; i++) {
-			blankString = blankString + "\t";
+			blankString = blankString + "\t"; //$NON-NLS-1$
 		}
 
 		StringBuffer propertyesBuffer = new StringBuffer();
 		for (Iterator<?> iterator = properties.iterator(); iterator.hasNext();) {
 			TagPropertyObject pro = (TagPropertyObject) iterator.next();
-			propertyesBuffer.append(" " + pro.getName() + "=\"\"");
+			propertyesBuffer.append(" " + pro.getName() + "=\"\""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		StringBuffer buffer = null;
 		if (propertyesBuffer.length() == 0) {
-			buffer = new StringBuffer(blankString + "<" + getName() + ">");
+			buffer = new StringBuffer(blankString + "<" + getName() + ">"); //$NON-NLS-1$ //$NON-NLS-2$
 		} else {
-			buffer = new StringBuffer(blankString + "<" + getName() + propertyesBuffer.toString() + ">");
+			buffer = new StringBuffer(blankString + "<" + getName() + propertyesBuffer.toString() + ">"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 		List<?> l = getXMLNodeChildren();
 		if (!l.isEmpty()) {
-			buffer.append("\n");
+			buffer.append("\n"); //$NON-NLS-1$
 		}
 		for (Iterator<?> iterator = l.iterator(); iterator.hasNext();) {
 			TagObject tag = (TagObject) iterator.next();
 			buffer.append(tag.toString());
 			if (iterator.hasNext())
-				buffer.append("\n");
+				buffer.append("\n"); //$NON-NLS-1$
 		}
 
 		if (l.isEmpty()) {
-			buffer.append("</" + getName() + ">");
+			buffer.append("</" + getName() + ">"); //$NON-NLS-1$ //$NON-NLS-2$
 		} else {
-			buffer.append("\n" + blankString + "</" + getName() + ">");
+			buffer.append("\n" + blankString + "</" + getName() + ">"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 
 		return buffer.toString();
