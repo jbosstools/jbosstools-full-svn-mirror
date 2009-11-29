@@ -121,7 +121,7 @@ public class JavaBean12PropertyUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return createElementSelectionSection("Create On Element", editingdomain, toolkit, parent, model, formEditor,
+		return createElementSelectionSection(Messages.JavaBean12PropertyUICreator_CreateOnElementGroupText, editingdomain, toolkit, parent, model, formEditor,
 				part, Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT,
 				Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT_NS);
 	}
@@ -148,7 +148,7 @@ public class JavaBean12PropertyUICreator extends PropertyUICreator {
 		gd.horizontalSpan = 2;
 		separator.setLayoutData(gd);
 
-		Hyperlink link = toolkit.createHyperlink(parent, "Add Binding", SWT.NONE);
+		Hyperlink link = toolkit.createHyperlink(parent, "Add Binding", SWT.NONE); //$NON-NLS-1$
 		link.setEnabled(false);
 		link.setVisible(false);
 		final Composite fp = parent;
@@ -205,12 +205,12 @@ public class JavaBean12PropertyUICreator extends PropertyUICreator {
 			haveClassValue = true;
 		}
 		if (!haveClassValue) {
-			MessageDialog.openError(parent.getShell(), "Error", "Can't get the 'class' value.");
+			MessageDialog.openError(parent.getShell(), Messages.JavaBean12PropertyUICreator_ErrorDialogTitle, Messages.JavaBean12PropertyUICreator_CantGetClassValueErrorMessage);
 			return;
 		}
 		String className = bindings.getClass_();
 		if (className == null || className.length() == 0) {
-			MessageDialog.openError(parent.getShell(), "Error", "The 'class' value shouldn't be empty.");
+			MessageDialog.openError(parent.getShell(), Messages.JavaBean12PropertyUICreator_ErrorDialogTitle, Messages.JavaBean12PropertyUICreator_ClassValueEmptyErrorMessage);
 			return;
 		}
 		try {
@@ -241,8 +241,8 @@ public class JavaBean12PropertyUICreator extends PropertyUICreator {
 	private void generateValueWiringModel(Object[] models, IEditingDomainProvider editor, BeanType owner) {
 		EditingDomain domain = editor.getEditingDomain();
 		CompoundCommand command = new CompoundCommand();
-		command.setDescription("Add Binding");
-		command.setLabel("Auto add binding");
+		command.setDescription("Add Binding"); //$NON-NLS-1$
+		command.setLabel("Auto add binding"); //$NON-NLS-1$
 		for (int i = 0; i < models.length; i++) {
 			Object model = models[i];
 			if (model instanceof JavaBeanModel) {

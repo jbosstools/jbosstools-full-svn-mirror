@@ -129,7 +129,7 @@ public class SmooksConfigurationResourceConfigPage extends SmooksConfigurationFo
 		// title = "Smooks 1.0 - " + title;
 		// }
 		// }
-		form.setText("Message Filter");
+		form.setText(Messages.SmooksConfigurationResourceConfigPage_FormTitle);
 	}
 
 	@Override
@@ -149,6 +149,6 @@ public class SmooksConfigurationResourceConfigPage extends SmooksConfigurationFo
 
 	@Override
 	protected String getMainSectionTitle() {
-		return "Message Filtering Resources";
+		return Messages.SmooksConfigurationResourceConfigPage_SectionTitle;
 	}
 }

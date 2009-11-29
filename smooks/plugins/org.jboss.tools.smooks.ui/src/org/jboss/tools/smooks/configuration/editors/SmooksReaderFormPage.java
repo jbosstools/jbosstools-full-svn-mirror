@@ -187,7 +187,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		// gd.verticalAlignment = GridData.BEGINNING;
 		section.setLayoutData(gd);
-		section.setText("Input Model View");
+		section.setText(Messages.SmooksReaderFormPage_InputSectionTitle);
 		// section.setDescription("View the XML structure model of the input data");
 		FillLayout flayout = new FillLayout();
 		section.setLayout(flayout);
@@ -197,7 +197,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		mainContainer.setLayout(gl);
 		section.setClient(mainContainer);
 
-		Hyperlink refreshLink = toolkit.createHyperlink(mainContainer, "Refresh", SWT.NONE);
+		Hyperlink refreshLink = toolkit.createHyperlink(mainContainer, Messages.SmooksReaderFormPage_RefreshLinkLabel, SWT.NONE);
 		refreshLink.addHyperlinkListener(new IHyperlinkListener() {
 
 			public void linkExited(HyperlinkEvent e) {
@@ -256,8 +256,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		Section section = toolkit.createSection(parent, Section.TITLE_BAR | Section.TWISTIE | Section.EXPANDED);
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		section.setLayoutData(gd);
-		section.setText("Input Configuration");
-		section.setDescription("Specify reader details");
+		section.setText(Messages.SmooksReaderFormPage_InputConfigurationSectionTitle);
+		section.setDescription(Messages.SmooksReaderFormPage_InputConfigurationSectionDes);
 		FillLayout flayout = new FillLayout();
 		section.setLayout(flayout);
 
@@ -280,7 +280,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.verticalAlignment = GridData.BEGINNING;
 		section.setLayoutData(gd);
-		section.setText("Input Type");
+		section.setText(Messages.SmooksReaderFormPage_InputTypeSectionTitle);
 		// section.setDescription("Select the input type");
 		FillLayout flayout = new FillLayout();
 		section.setLayout(flayout);
@@ -291,13 +291,13 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		gl.numColumns = 2;
 		mainComposite.setLayout(gl);
 
-		toolkit.createLabel(mainComposite, "Input Type:");
+		toolkit.createLabel(mainComposite, Messages.SmooksReaderFormPage_InputTypeLabel);
 
 		readerCombo = new Combo(mainComposite, SWT.NONE | SWT.READ_ONLY);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		readerCombo.setLayoutData(gd);
 
-		toolkit.createLabel(mainComposite, " ");
+		toolkit.createLabel(mainComposite, " "); //$NON-NLS-1$
 
 		bindingReaderCombo();
 
@@ -532,7 +532,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		this.removeInputDataButton.setEnabled(true);
 
 		String inputType = getSmooksModelProvider().getInputType();
-		if (inputType == null || inputType.trim().equals("")) {
+		if (inputType == null || inputType.trim().equals("")) { //$NON-NLS-1$
 			this.addInputDataButton.setEnabled(false);
 			this.removeInputDataButton.setEnabled(false);
 		}
@@ -671,13 +671,13 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		readerCombo.removeAll();
 		readerTypeList.clear();
 
-		readerCombo.add("No Input");
+		readerCombo.add(Messages.SmooksReaderFormPage_NoInputComboText);
 		readerTypeList.add(new NullReader());
-		readerCombo.add("XML");
+		readerCombo.add(Messages.SmooksReaderFormPage_XMLReaderComboText);
 		readerTypeList.add(new XMLReader());
-		readerCombo.add("Java");
+		readerCombo.add(Messages.SmooksReaderFormPage_JavaReaderComboText);
 		readerTypeList.add(new JavaReader());
-		readerCombo.add("XSD/WSDL");
+		readerCombo.add(Messages.SmooksReaderFormPage_XSDReaderComboText);
 		readerTypeList.add(new XSDReader());
 
 		SmooksResourceListType resourceList = getSmooksConfigResourceList();
@@ -754,8 +754,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				| Section.EXPANDED);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		section.setLayoutData(gd);
-		section.setText("Input Data");
-		section.setDescription("Select a sample data file");
+		section.setText(Messages.SmooksReaderFormPage_InputDataSectionTitle);
+		section.setDescription(Messages.SmooksReaderFormPage_InputDataSectionDes);
 		FillLayout flayout = new FillLayout();
 		section.setLayout(flayout);
 
@@ -896,7 +896,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 							IJavaProject javaProject = JavaCore.create(file.getProject());
 							if (javaProject != null) {
 								try {
-									if (filePath.endsWith("[]")) {
+									if (filePath.endsWith("[]")) { //$NON-NLS-1$
 										filePath = filePath.substring(0, filePath.length() - 2);
 									}
 									IJavaElement result = javaProject.findType(filePath);
@@ -904,8 +904,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 										JavaUI.openInEditor(result);
 									else {
 										MessageDialog.openError(getSite().getWorkbenchWindow().getShell(),
-												"Can't find type", "Can't find type \"" + filePath + "\" in \""
-														+ javaProject.getProject().getName() + "\" project.");
+												Messages.SmooksReaderFormPage_CantFindTypeErrorTitle, "Can't find type \"" + filePath + "\" in \""  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+														+ javaProject.getProject().getName() + "\" project."); //$NON-NLS-1$
 									}
 								} catch (Exception e) {
 
@@ -923,15 +923,15 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 										try {
 											IDE.openEditorOnFileStore(page, fileStore);
 										} catch (PartInitException e) {
-											MessageDialog.open(MessageDialog.ERROR, window.getShell(), "Open File",
-													"Can't open the file : '" + filePath + "'", SWT.SHEET);
+											MessageDialog.open(MessageDialog.ERROR, window.getShell(), Messages.SmooksReaderFormPage_OpenFileErrorTitle,
+													"Can't open the file : '" + filePath + "'", SWT.SHEET); //$NON-NLS-1$ //$NON-NLS-2$
 										}
 									} else {
 									}
 								}
 							} catch (Exception e) {
 								MessageDialog.open(MessageDialog.ERROR, getSite().getWorkbenchWindow().getShell(),
-										"Open File", "Can't open the file : '" + filePath + "'", SWT.SHEET);
+										Messages.SmooksReaderFormPage_OpenFileErrorTitle, "Can't open the file : '" + filePath + "'", SWT.SHEET);  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 							}
 						}
 					}
@@ -939,10 +939,10 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 			}
 		});
 		TableColumn header = new TableColumn(inputDataViewer.getTable(), SWT.NONE);
-		header.setText("Type");
+		header.setText(Messages.SmooksReaderFormPage_TypeColumnText);
 		header.setWidth(100);
 		TableColumn pathColumn = new TableColumn(inputDataViewer.getTable(), SWT.NONE);
-		pathColumn.setText("Path");
+		pathColumn.setText(Messages.SmooksReaderFormPage_PathColumnText);
 		pathColumn.setWidth(300);
 
 		// TableColumn extColumn = new TableColumn(inputDataViewer.getTable(),
@@ -963,7 +963,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		GridLayout l = new GridLayout();
 		buttonComposite.setLayout(l);
 
-		addInputDataButton = toolkit.createButton(buttonComposite, "Add", SWT.FLAT);
+		addInputDataButton = toolkit.createButton(buttonComposite, Messages.SmooksReaderFormPage_AddButtonLabel, SWT.FLAT);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		addInputDataButton.setLayoutData(gd);
 		addInputDataButton.addSelectionListener(new SelectionAdapter() {
@@ -974,7 +974,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 
 		});
 
-		removeInputDataButton = toolkit.createButton(buttonComposite, "Delete", SWT.FLAT);
+		removeInputDataButton = toolkit.createButton(buttonComposite, Messages.SmooksReaderFormPage_DeleteButtonLabel, SWT.FLAT);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		removeInputDataButton.setLayoutData(gd);
 		removeInputDataButton.addSelectionListener(new SelectionAdapter() {
@@ -1027,7 +1027,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		// SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
 		String inputType = getSmooksModelProvider().getInputType();
 		List<InputType> inputTypes = null;
-		if (inputType == null || SmooksModelUtils.INPUT_TYPE_CUSTOME.equals(inputType) || inputType.trim().equals("")) {
+		if (inputType == null || SmooksModelUtils.INPUT_TYPE_CUSTOME.equals(inputType) || inputType.trim().equals("")) { //$NON-NLS-1$
 			StructuredDataSelectionWizard wizard = new StructuredDataSelectionWizard();
 			wizard.setInput(getEditorInput());
 			wizard.setSite(getEditorSite());

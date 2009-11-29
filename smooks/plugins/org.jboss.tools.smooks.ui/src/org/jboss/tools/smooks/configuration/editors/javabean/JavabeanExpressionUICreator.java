@@ -61,7 +61,7 @@ public class JavabeanExpressionUICreator extends PropertiesAndSetterMethodSearch
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
-		AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Expression", editingdomain, toolkit,
+		AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor(Messages.JavabeanExpressionUICreator_ExpressionLabel, editingdomain, toolkit,
 				parent, model, null, true);
 		if (cdatatext != null) {
 			list.add(cdatatext);
@@ -101,7 +101,7 @@ public class JavabeanExpressionUICreator extends PropertiesAndSetterMethodSearch
 				editingdomain, JavabeanPackage.Literals.EXPRESSION_TYPE__SETTER_METHOD, model), model);
 		list.add(pEditPart);
 		list.add(mEditPart);
-		list.addAll(createElementSelectionSection("Execute On Element", editingdomain, toolkit, parent, model,
+		list.addAll(createElementSelectionSection(Messages.JavabeanExpressionUICreator_ExecuteOngroupname, editingdomain, toolkit, parent, model,
 				formEditor, part,JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT,
 				JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS));
 

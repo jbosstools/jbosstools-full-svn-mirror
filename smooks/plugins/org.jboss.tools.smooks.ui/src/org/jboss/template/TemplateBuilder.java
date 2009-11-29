@@ -43,7 +43,7 @@ public abstract class TemplateBuilder {
      * @param model The model on which the template will be constructed.
      */
     public TemplateBuilder(Document model) {
-    	Assert.isNotNull(model, "model");
+    	Assert.isNotNull(model, "model"); //$NON-NLS-1$
         this.model = model;
     }
 
@@ -111,13 +111,13 @@ public abstract class TemplateBuilder {
 
 	private void asserValidMappingNode(Node mappingNode) throws InvalidMappingException {
         if(mappingNode.getNodeType() != Node.ATTRIBUTE_NODE && mappingNode.getNodeType() != Node.ELEMENT_NODE) {
-            throw new InvalidMappingException("Unsupported XML target node mapping.  Support XML elements and attributes only.");
+            throw new InvalidMappingException("Unsupported XML target node mapping.  Support XML elements and attributes only."); //$NON-NLS-1$
         }
         if(ModelBuilder.NAMESPACE.equals(mappingNode.getNamespaceURI())) {
-            throw new InvalidMappingException("Unsupported XML target node mapping.  Cannot map to a reserved model node from the '" + ModelBuilder.NAMESPACE + "' namespace.");
+            throw new InvalidMappingException("Unsupported XML target node mapping.  Cannot map to a reserved model node from the '" + ModelBuilder.NAMESPACE + "' namespace."); //$NON-NLS-1$ //$NON-NLS-2$
         }
         if(ModelBuilder.isHidden(mappingNode)) {
-            throw new InvalidMappingException("Illegal XML target node mapping for node '" + mappingNode + "'.  This node (or one of it's ancestors) is hidden.");
+            throw new InvalidMappingException("Illegal XML target node mapping for node '" + mappingNode + "'.  This node (or one of it's ancestors) is hidden."); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         // Make sure any parent collection nodes are mapped...

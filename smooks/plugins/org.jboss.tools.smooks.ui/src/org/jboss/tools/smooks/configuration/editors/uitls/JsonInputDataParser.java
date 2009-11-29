@@ -43,16 +43,16 @@ import org.w3c.dom.Element;
  */
 public class JsonInputDataParser {
 
-	public static final String LINK_JSON_READER = "linkJSONReader";
-	public static final String KEY = "_key_";
-	public static final String NULL_REPLACE = "nullReplace";
-	public static final String ENCODING2 = "encoding";
-	public static final String SPACE_REPLACE = "spaceReplace";
-	public static final String PREFIX_ON_NUMERIC = "prefixOnNumeric";
-	public static final String ILLEGAL_REPLACE = "illegalReplace";
-	public static final String INDENT = "indent";
-	public static final String ARRAY_ELEMENT_NAME = "arrayElementName";
-	public static final String ROOT_NAME = "rootName";
+	public static final String LINK_JSON_READER = "linkJSONReader"; //$NON-NLS-1$
+	public static final String KEY = "_key_"; //$NON-NLS-1$
+	public static final String NULL_REPLACE = "nullReplace"; //$NON-NLS-1$
+	public static final String ENCODING2 = "encoding"; //$NON-NLS-1$
+	public static final String SPACE_REPLACE = "spaceReplace"; //$NON-NLS-1$
+	public static final String PREFIX_ON_NUMERIC = "prefixOnNumeric"; //$NON-NLS-1$
+	public static final String ILLEGAL_REPLACE = "illegalReplace"; //$NON-NLS-1$
+	public static final String INDENT = "indent"; //$NON-NLS-1$
+	public static final String ARRAY_ELEMENT_NAME = "arrayElementName"; //$NON-NLS-1$
+	public static final String ROOT_NAME = "rootName"; //$NON-NLS-1$
 
 	public IXMLStructuredObject parseJsonFile(InputStream inputStream, Object readerObj)
 			throws ParserConfigurationException, DocumentException {
@@ -231,15 +231,15 @@ public class JsonInputDataParser {
 	}
 
 	protected Parameter keyMapToParameter(Map<String, String> keyMap) throws ParserConfigurationException {
-		Parameter keyMapParam = new Parameter("keyMap", "dummyVal");
+		Parameter keyMapParam = new Parameter("keyMap", "dummyVal"); //$NON-NLS-1$ //$NON-NLS-2$
 		DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		Element keyMapElement = docBuilder.newDocument().createElement("keyMap");
+		Element keyMapElement = docBuilder.newDocument().createElement("keyMap"); //$NON-NLS-1$
 		Set<Map.Entry<String, String>> keyMapEntries = keyMap.entrySet();
 
 		for (Map.Entry<String, String> keyMapEntry : keyMapEntries) {
-			Element keyElement = keyMapElement.getOwnerDocument().createElementNS("*", "key");
-			keyElement.setAttribute("from", keyMapEntry.getKey());
-			keyElement.setAttribute("to", keyMapEntry.getValue());
+			Element keyElement = keyMapElement.getOwnerDocument().createElementNS("*", "key"); //$NON-NLS-1$ //$NON-NLS-2$
+			keyElement.setAttribute("from", keyMapEntry.getKey()); //$NON-NLS-1$
+			keyElement.setAttribute("to", keyMapEntry.getValue()); //$NON-NLS-1$
 			keyMapElement.appendChild(keyElement);
 		}
 

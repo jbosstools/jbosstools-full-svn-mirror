@@ -66,7 +66,7 @@ public class XSLTagObject extends TagObject {
 		List<TagPropertyObject> properties = this.getProperties();
 		for (Iterator<?> iterator = properties.iterator(); iterator.hasNext();) {
 			TagPropertyObject tagPropertyObject = (TagPropertyObject) iterator.next();
-			if (tagPropertyObject.getName().equalsIgnoreCase("select")) {
+			if (tagPropertyObject.getName().equalsIgnoreCase("select")) { //$NON-NLS-1$
 				return tagPropertyObject.getValue();
 			}
 		}
@@ -78,7 +78,7 @@ public class XSLTagObject extends TagObject {
 		List<TagPropertyObject> properties = this.getProperties();
 		for (Iterator<?> iterator = properties.iterator(); iterator.hasNext();) {
 			TagPropertyObject tagPropertyObject1 = (TagPropertyObject) iterator.next();
-			if (tagPropertyObject1.getName().equalsIgnoreCase("select")) {
+			if (tagPropertyObject1.getName().equalsIgnoreCase("select")) { //$NON-NLS-1$
 				tagPropertyObject = tagPropertyObject1;
 				break;
 			}
@@ -96,7 +96,7 @@ public class XSLTagObject extends TagObject {
 		List<TagPropertyObject> properties = this.getProperties();
 		for (Iterator<?> iterator = properties.iterator(); iterator.hasNext();) {
 			TagPropertyObject tagPropertyObject1 = (TagPropertyObject) iterator.next();
-			if (tagPropertyObject1.getName().equalsIgnoreCase("match")) {
+			if (tagPropertyObject1.getName().equalsIgnoreCase("match")) { //$NON-NLS-1$
 				tagPropertyObject = tagPropertyObject1;
 				break;
 			}
@@ -118,7 +118,7 @@ public class XSLTagObject extends TagObject {
 		List<TagPropertyObject> properties = this.getProperties();
 		for (Iterator<?> iterator = properties.iterator(); iterator.hasNext();) {
 			TagPropertyObject tagPropertyObject1 = (TagPropertyObject) iterator.next();
-			if (tagPropertyObject1.getName().equalsIgnoreCase("select")) {
+			if (tagPropertyObject1.getName().equalsIgnoreCase("select")) { //$NON-NLS-1$
 				tagPropertyObject = tagPropertyObject1;
 				break;
 			}
@@ -127,7 +127,7 @@ public class XSLTagObject extends TagObject {
 			tagPropertyObject = new TagPropertyObject();
 			DocumentFactory factory = DOMDocumentFactory.getInstance();
 			Element parentElement = this.getReferenceElement();
-			Attribute attribute = factory.createAttribute(parentElement, new QName("select"), value);
+			Attribute attribute = factory.createAttribute(parentElement, new QName("select"), value); //$NON-NLS-1$
 			tagPropertyObject.setReferenceAttibute(attribute);
 			parentElement.add(attribute);
 			this.addProperty(tagPropertyObject);
@@ -141,7 +141,7 @@ public class XSLTagObject extends TagObject {
 		List<TagPropertyObject> properties = this.getProperties();
 		for (Iterator<?> iterator = properties.iterator(); iterator.hasNext();) {
 			TagPropertyObject tagPropertyObject1 = (TagPropertyObject) iterator.next();
-			if (tagPropertyObject1.getName().equalsIgnoreCase("match")) {
+			if (tagPropertyObject1.getName().equalsIgnoreCase("match")) { //$NON-NLS-1$
 				tagPropertyObject = tagPropertyObject1;
 				break;
 			}
@@ -150,7 +150,7 @@ public class XSLTagObject extends TagObject {
 			tagPropertyObject = new TagPropertyObject();
 			DocumentFactory factory = DOMDocumentFactory.getInstance();
 			Element parentElement = this.getReferenceElement();
-			Attribute attribute = factory.createAttribute(parentElement, new QName("match"), value);
+			Attribute attribute = factory.createAttribute(parentElement, new QName("match"), value); //$NON-NLS-1$
 			parentElement.add(attribute);
 			tagPropertyObject.setReferenceAttibute(attribute);
 			this.addProperty(tagPropertyObject);
@@ -159,38 +159,38 @@ public class XSLTagObject extends TagObject {
 	}
 
 	public boolean isChoiceElement() {
-		return "choose".equalsIgnoreCase(this.getName()) && isXSLTag();
+		return "choose".equalsIgnoreCase(this.getName()) && isXSLTag(); //$NON-NLS-1$
 	}
 
 	public boolean isIfElement() {
-		return "if".equalsIgnoreCase(this.getName()) && isXSLTag();
+		return "if".equalsIgnoreCase(this.getName()) && isXSLTag(); //$NON-NLS-1$
 	}
 
 	public boolean isSortElement() {
-		return "sort".equalsIgnoreCase(this.getName()) && isXSLTag();
+		return "sort".equalsIgnoreCase(this.getName()) && isXSLTag(); //$NON-NLS-1$
 	}
 
 	public boolean isForeachElement() {
-		return "for-each".equalsIgnoreCase(this.getName()) && isXSLTag();
+		return "for-each".equalsIgnoreCase(this.getName()) && isXSLTag(); //$NON-NLS-1$
 	}
 
 	public boolean isValueOfElement() {
-		return "value-of".equalsIgnoreCase(this.getName()) && isXSLTag();
+		return "value-of".equalsIgnoreCase(this.getName()) && isXSLTag(); //$NON-NLS-1$
 	}
 
 	public boolean isTemplateElement() {
-		return "template".equalsIgnoreCase(this.getName()) && isXSLTag();
+		return "template".equalsIgnoreCase(this.getName()) && isXSLTag(); //$NON-NLS-1$
 	}
 
 	public boolean isApplyTemplatesElement() {
-		return "apply-templates".equalsIgnoreCase(this.getName()) && isXSLTag();
+		return "apply-templates".equalsIgnoreCase(this.getName()) && isXSLTag(); //$NON-NLS-1$
 	}
 
 	public String getMatchValue() {
 		List<TagPropertyObject> properties = this.getProperties();
 		for (Iterator<?> iterator = properties.iterator(); iterator.hasNext();) {
 			TagPropertyObject tagPropertyObject = (TagPropertyObject) iterator.next();
-			if (tagPropertyObject.getName().equalsIgnoreCase("match")) {
+			if (tagPropertyObject.getName().equalsIgnoreCase("match")) { //$NON-NLS-1$
 				return tagPropertyObject.getValue();
 			}
 		}
@@ -202,7 +202,7 @@ public class XSLTagObject extends TagObject {
 	}
 
 	public boolean isStyleSheetElement() {
-		return "stylesheet".equalsIgnoreCase(this.getName()) && isXSLTag();
+		return "stylesheet".equalsIgnoreCase(this.getName()) && isXSLTag(); //$NON-NLS-1$
 	}
 
 }

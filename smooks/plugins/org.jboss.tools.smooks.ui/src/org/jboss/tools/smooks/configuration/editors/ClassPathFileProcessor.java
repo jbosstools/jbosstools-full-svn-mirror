@@ -64,7 +64,7 @@ public class ClassPathFileProcessor implements IFilePathProcessor {
 		if(path.charAt(0) == '\\' || path.charAt(0) == '/' ){
 			
 		}else{
-			path = "/" + path;
+			path = "/" + path; //$NON-NLS-1$
 		}
 		return path;
 	}

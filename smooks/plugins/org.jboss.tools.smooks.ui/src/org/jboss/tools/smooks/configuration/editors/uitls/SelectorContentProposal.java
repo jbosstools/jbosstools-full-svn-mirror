@@ -26,7 +26,7 @@ public class SelectorContentProposal implements IContentProposal {
 	
 	public SelectorContentProposal(IXMLStructuredObject node){
 		this.node = node;
-		this.content = SmooksUIUtils.generateFullPath(node, "/");
+		this.content = SmooksUIUtils.generateFullPath(node, "/"); //$NON-NLS-1$
 	}
 	
 	

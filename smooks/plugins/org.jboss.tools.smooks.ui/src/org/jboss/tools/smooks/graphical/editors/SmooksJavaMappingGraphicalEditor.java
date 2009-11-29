@@ -64,8 +64,8 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 				if (obj == JavabeanPackage.Literals.BINDINGS_TYPE__BEAN_ID
 						|| obj == Javabean12Package.Literals.BEAN_TYPE__BEAN_ID) {
 					String message = diagnostic.getMessage();
-					if (message != null && message.startsWith("The required feature")) {
-						return "The Bean ID shouldn't be empty";
+					if (message != null && message.startsWith("The required feature")) { //$NON-NLS-1$
+						return Messages.SmooksJavaMappingGraphicalEditor_BeanIdEmptyErrormessage;
 					}
 				}
 			}
@@ -76,8 +76,8 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 				if (obj == JavabeanPackage.Literals.VALUE_TYPE__DATA
 						|| obj == Javabean12Package.Literals.VALUE_TYPE__DATA) {
 					String message = diagnostic.getMessage();
-					if (message != null && message.startsWith("The required feature")) {
-						return "The node must be linked with input source";
+					if (message != null && message.startsWith("The required feature")) { //$NON-NLS-1$
+						return Messages.SmooksJavaMappingGraphicalEditor_NodeMustLinkWithSource;
 					}
 				}
 			}
@@ -88,8 +88,8 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 				if (obj == JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF
 						|| obj == Javabean12Package.Literals.WIRING_TYPE__BEAN_ID_REF) {
 					String message = diagnostic.getMessage();
-					if (message != null && message.startsWith("The required feature")) {
-						return "The node must link to another Java Bean";
+					if (message != null && message.startsWith("The required feature")) { //$NON-NLS-1$
+						return Messages.SmooksJavaMappingGraphicalEditor_NodeMustLinkWithJavaBean;
 					}
 				}
 			}
@@ -197,14 +197,14 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 			if (obj instanceof BeanType) {
 				String p = ((BeanType) obj).getBeanId();
 				if (p == null) {
-					p = "<NULL>";
+					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
 				}
 				return p;
 			}
 			if (obj instanceof BindingsType) {
 				String p = ((BindingsType) obj).getBeanId();
 				if (p == null) {
-					p = "<NULL>";
+					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
 				}
 				return p;
 			}
@@ -212,21 +212,21 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 			if (obj instanceof ValueType) {
 				String p = ((ValueType) obj).getProperty();
 				if (p == null) {
-					p = "<NULL>";
+					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
 				}
 				return p;
 			}
 			if (obj instanceof WiringType) {
 				String p = ((WiringType) obj).getProperty();
 				if (p == null) {
-					p = "<NULL>";
+					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
 				}
 				return p;
 			}
 			if (obj instanceof ExpressionType) {
 				String p = ((ExpressionType) obj).getProperty();
 				if (p == null) {
-					p = "<NULL>";
+					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
 				}
 				return p;
 			}
@@ -234,21 +234,21 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 			if (obj instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
 				String p = ((org.jboss.tools.smooks.model.javabean12.ValueType) obj).getProperty();
 				if (p == null) {
-					p = "<NULL>";
+					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
 				}
 				return p;
 			}
 			if (obj instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
 				String p = ((org.jboss.tools.smooks.model.javabean12.WiringType) obj).getProperty();
 				if (p == null) {
-					p = "<NULL>";
+					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
 				}
 				return p;
 			}
 			if (obj instanceof org.jboss.tools.smooks.model.javabean12.ExpressionType) {
 				String p = ((org.jboss.tools.smooks.model.javabean12.ExpressionType) obj).getProperty();
 				if (p == null) {
-					p = "<NULL>";
+					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
 				}
 				return p;
 			}

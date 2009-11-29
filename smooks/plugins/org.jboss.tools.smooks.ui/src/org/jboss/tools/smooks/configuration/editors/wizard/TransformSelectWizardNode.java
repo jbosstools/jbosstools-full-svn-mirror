@@ -20,10 +20,10 @@ import org.eclipse.swt.graphics.Point;
  */
 public class TransformSelectWizardNode implements IWizardNode {
 	IWizard wizard = null;
-	String name = "";
+	String name = ""; //$NON-NLS-1$
 	String iconPath = null;
 	String pluginID = null;
-	String description = "";
+	String description = ""; //$NON-NLS-1$
 	public String getDescription() {
 		return description;
 	}

@@ -60,7 +60,7 @@ public class DeleterUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return createElementSelectionSection("Delete On Element", editingdomain, toolkit, parent, model, formEditor,
+		return createElementSelectionSection(Messages.DeleterUICreator_DeleteOnElementGroupLabel, editingdomain, toolkit, parent, model, formEditor,
 				part, Persistence12Package.Literals.DELETER__DELETE_ON_ELEMENT,
 				Persistence12Package.Literals.DELETER__DELETE_ON_ELEMENT_NS);
 	}

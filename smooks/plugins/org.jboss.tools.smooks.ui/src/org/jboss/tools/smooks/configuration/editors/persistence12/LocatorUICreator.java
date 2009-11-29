@@ -60,7 +60,7 @@ public class LocatorUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return createElementSelectionSection("Lookup On Element", editingdomain, toolkit, parent, model, formEditor,
+		return createElementSelectionSection(Messages.LocatorUICreator_LookupOnElementGroupLabel, editingdomain, toolkit, parent, model, formEditor,
 				part, Persistence12Package.Literals.LOCATOR__LOOKUP_ON_ELEMENT,
 				Persistence12Package.Literals.LOCATOR__LOOKUP_ON_ELEMENT_NS);
 	}

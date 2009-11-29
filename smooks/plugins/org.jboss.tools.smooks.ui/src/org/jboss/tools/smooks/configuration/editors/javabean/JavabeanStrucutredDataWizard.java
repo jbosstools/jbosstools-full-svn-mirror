@@ -44,7 +44,7 @@ public class JavabeanStrucutredDataWizard extends Wizard implements
 	
 	public JavabeanStrucutredDataWizard() {
 		super();
-		this.setWindowTitle("JavaBean Model Wizard");
+		this.setWindowTitle(Messages.JavabeanStrucutredDataWizard_WizardTitle);
 	}
 
 	public IJavaProject getProject() {
@@ -67,7 +67,7 @@ public class JavabeanStrucutredDataWizard extends Wizard implements
 	public void addPages() {
 		super.addPages();
 		if (page == null) {
-			page = new JavaBeanSelectionWizardPage("javaclass",project);
+			page = new JavaBeanSelectionWizardPage("javaclass",project); //$NON-NLS-1$
 			this.addPage(page);
 		}
 	}
@@ -89,10 +89,10 @@ public class JavabeanStrucutredDataWizard extends Wizard implements
 			for (Iterator<?> iterator = ((List<?>) result).iterator(); iterator
 					.hasNext();) {
 				JavaBeanModel javabean = (JavaBeanModel) iterator.next();
-				boolean isArray = "array".equals(javabean
-						.getExtendProperty("many"));
-				boolean isList = "list".equals(javabean
-						.getExtendProperty("many"));
+				boolean isArray = "array".equals(javabean //$NON-NLS-1$
+						.getExtendProperty("many")); //$NON-NLS-1$
+				boolean isList = "list".equals(javabean //$NON-NLS-1$
+						.getExtendProperty("many")); //$NON-NLS-1$
 				if (isArray) {
 					Object arrayInstance = Array.newInstance(javabean
 							.getBeanClass(), 0);
@@ -172,7 +172,7 @@ public class JavabeanStrucutredDataWizard extends Wizard implements
 		List<JavaBeanModel> list = page.getJavaBeanModelList();
 		StringBuffer buffer = new StringBuffer();
 		for (Iterator<JavaBeanModel> iterator = list.iterator(); iterator
-				.hasNext(); buffer.append(";")) {
+				.hasNext(); buffer.append(";")) { //$NON-NLS-1$
 			JavaBeanModel javaBeanModel = (JavaBeanModel) iterator.next();
 			Class<?> clazz = javaBeanModel.getBeanClass();
 			if (clazz != null) {
@@ -182,12 +182,12 @@ public class JavabeanStrucutredDataWizard extends Wizard implements
 				String cname = clazz.getName();
 				if(isArray){
 					cname = clazz.getComponentType().getName();
-					cname = cname+ "[]";
+					cname = cname+ "[]"; //$NON-NLS-1$
 				}
 				buffer.append(cname);
 			}
 		}
-		if(buffer.toString().endsWith(";")){
+		if(buffer.toString().endsWith(";")){ //$NON-NLS-1$
 			return buffer.substring(0, buffer.length() - 1);
 		}
 		return buffer.toString();

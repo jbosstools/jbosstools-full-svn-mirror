@@ -75,7 +75,7 @@ public class ConditionTypeUICreator extends PropertyUICreator {
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor,IEditorPart part) {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
-		AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Inline Condition", editingdomain,
+		AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor(Messages.ConditionTypeUICreator_InlineConditionLabel, editingdomain,
 				toolkit, parent, model, null,true);
 		Control c = cdatatext.getContentControl();
 		

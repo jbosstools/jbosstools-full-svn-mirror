@@ -56,7 +56,7 @@ public class Json12DataWizard extends Wizard implements IStructuredDataSelection
 
 	public Json12DataWizard() {
 		super();
-		this.setWindowTitle("JSON Input Data Wizard");
+		this.setWindowTitle(Messages.Json12DataWizard_WizardTitle);
 	}
 
 	public boolean canFinish() {
@@ -79,7 +79,7 @@ public class Json12DataWizard extends Wizard implements IStructuredDataSelection
 	public void addPages() {
 		super.addPages();
 		if (pathPage == null) {
-			pathPage = new Json12DataPathWizardPage("Json Input Data Selection ", new String[] {});
+			pathPage = new Json12DataPathWizardPage(Messages.Json12DataWizard_WizardDes, new String[] {});
 
 		}
 //		if (configPage == null) {
@@ -206,7 +206,7 @@ public class Json12DataWizard extends Wizard implements IStructuredDataSelection
 			boolean createJsonReader = configPage.isCreateJsonReader();
 			boolean useJsonReader = configPage.isUseAvailabelReader();
 			if (createJsonReader || useJsonReader) {
-				p.setProperty(JsonInputDataParser.LINK_JSON_READER, "true");
+				p.setProperty(JsonInputDataParser.LINK_JSON_READER, "true"); //$NON-NLS-1$
 				return;
 			}
 

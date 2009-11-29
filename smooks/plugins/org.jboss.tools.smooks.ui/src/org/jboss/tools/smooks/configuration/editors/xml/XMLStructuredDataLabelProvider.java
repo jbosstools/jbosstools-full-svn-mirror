@@ -56,12 +56,12 @@ public class XMLStructuredDataLabelProvider extends LabelProvider {
 	@Override
 	public String getText(Object element) {
 		if (element instanceof TagList) {
-			return "Root";
+			return "Root"; //$NON-NLS-1$
 		}
 		if (element instanceof AbstractXMLObject) {
 			return ((AbstractXMLObject) element).getName();
 		}
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 }

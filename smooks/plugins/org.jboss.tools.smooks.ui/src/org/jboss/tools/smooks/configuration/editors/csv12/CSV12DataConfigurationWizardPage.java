@@ -99,8 +99,8 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 
 	public CSV12DataConfigurationWizardPage(String pageName) {
 		super(pageName);
-		this.setTitle("CSV Reader configurations (version 1.2)");
-		this.setDescription("Set the configurations for parsing CSV file.");
+		this.setTitle("CSV Reader configurations (version 1.2)"); //$NON-NLS-1$
+		this.setDescription("Set the configurations for parsing CSV file."); //$NON-NLS-1$
 	}
 
 	/*
@@ -139,11 +139,11 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 		spaceComposite.setLayoutData(gd);
 
 		newReaderConfigButton = new Button(radioButtonComposite, SWT.RADIO);
-		newReaderConfigButton.setText("Create new CSV reader configurations");
+		newReaderConfigButton.setText("Create new CSV reader configurations"); //$NON-NLS-1$
 		newReaderConfigButton.setSelection(true);
 
 		useAvailableReaderConfigButton = new Button(radioButtonComposite, SWT.RADIO);
-		useAvailableReaderConfigButton.setText("Use available CSV reader configurations");
+		useAvailableReaderConfigButton.setText("Use available CSV reader configurations"); //$NON-NLS-1$
 
 		configComposite = new Composite(mainComposite, SWT.NONE);
 		gd = new GridData(GridData.FILL_BOTH);
@@ -158,47 +158,47 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 		
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		Label rootnameLabel = new Label(configComposite, SWT.NONE);
-		rootnameLabel.setText("Root Name");
+		rootnameLabel.setText("Root Name"); //$NON-NLS-1$
 		rootNameText = new Text(configComposite, SWT.BORDER);
 		rootNameText.setLayoutData(gd);
 
 		Label recordNameLabel = new Label(configComposite, SWT.NONE);
-		recordNameLabel.setText("Record Name");
+		recordNameLabel.setText("Record Name"); //$NON-NLS-1$
 		recordNameText = new Text(configComposite, SWT.BORDER);
 		recordNameText.setLayoutData(gd);
 		
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		Label separatorLabel = new Label(configComposite, SWT.NONE);
-		separatorLabel.setText("Separator");
+		separatorLabel.setText("Separator"); //$NON-NLS-1$
 		separatorText = new Text(configComposite, SWT.BORDER);
 		separatorText.setLayoutData(gd);
 
 		Label quoteCharLabel = new Label(configComposite, SWT.NONE);
-		quoteCharLabel.setText("Quote Char");
+		quoteCharLabel.setText("Quote Char"); //$NON-NLS-1$
 		quoteCharText = new Text(configComposite, SWT.BORDER);
 		quoteCharText.setLayoutData(gd);
 
 		Label skiplineLabel = new Label(configComposite, SWT.NONE);
-		skiplineLabel.setText("Skip Lines");
+		skiplineLabel.setText("Skip Lines"); //$NON-NLS-1$
 		skipLinesText = new Text(configComposite, SWT.BORDER);
 		skipLinesText.setLayoutData(gd);
 		
 		Label indentLabel = new Label(configComposite, SWT.NONE);
-		indentLabel.setText("Indent");
+		indentLabel.setText("Indent"); //$NON-NLS-1$
 		indentText = new Combo(configComposite, SWT.BORDER | SWT.READ_ONLY);
-		indentText.add("");
-		indentText.add("TRUE");
-		indentText.add("FALSE");
+		indentText.add(""); //$NON-NLS-1$
+		indentText.add("TRUE"); //$NON-NLS-1$
+		indentText.add("FALSE"); //$NON-NLS-1$
 		indentText.setLayoutData(gd);
 
 		Label encodingLabel = new Label(configComposite, SWT.NONE);
-		encodingLabel.setText("Encoding");
+		encodingLabel.setText("Encoding"); //$NON-NLS-1$
 		encodingText = new Text(configComposite, SWT.BORDER);
 		encodingText.setLayoutData(gd);
 		encodingText.setText(encoding);
 
 		Label keyMapLabel = new Label(configComposite, SWT.NONE);
-		keyMapLabel.setText("Fields List:");
+		keyMapLabel.setText("Fields List:"); //$NON-NLS-1$
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		keyMapLabel.setLayoutData(gd);
@@ -226,11 +226,11 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 		CellEditor fieldCellEditor = new TextCellEditor(fieldsViewer.getTable(), SWT.BORDER);
 
 		TableColumn fieldColumn = new TableColumn(fieldsViewer.getTable(), SWT.NONE);
-		fieldColumn.setText("Field");
+		fieldColumn.setText("Field"); //$NON-NLS-1$
 		fieldColumn.setWidth(150);
 
 		TableColumn exampleValueColumn = new TableColumn(fieldsViewer.getTable(), SWT.NONE);
-		exampleValueColumn.setText("Example Value");
+		exampleValueColumn.setText("Example Value"); //$NON-NLS-1$
 		exampleValueColumn.setWidth(150);
 
 		fieldsViewer.getTable().setHeaderVisible(true);
@@ -238,7 +238,7 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 
 		fieldsViewer.setCellEditors(new CellEditor[] { fieldCellEditor });
 
-		fieldsViewer.setColumnProperties(new String[] { "field" });
+		fieldsViewer.setColumnProperties(new String[] { "field" }); //$NON-NLS-1$
 
 		fieldsViewer.setCellModifier(new ICellModifier() {
 
@@ -250,7 +250,7 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 				if (el == null)
 					return;
 				if (el instanceof FieldString && value instanceof String) {
-					if (property.equals("field")) {
+					if (property.equals("field")) { //$NON-NLS-1$
 						((FieldString) el).setText(value.toString());
 					}
 					fieldsViewer.refresh(el);
@@ -265,7 +265,7 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 				// }
 				// if(el == null) return null;
 				if (element instanceof FieldString) {
-					if (property.equals("field")) {
+					if (property.equals("field")) { //$NON-NLS-1$
 						return ((FieldString) element).getText();
 					}
 				}
@@ -280,7 +280,7 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 				// }
 				// if(el == null) return false;
 				if (element instanceof FieldString) {
-					if (property.equals("field")) {
+					if (property.equals("field")) { //$NON-NLS-1$
 						return true;
 					}
 				}
@@ -303,14 +303,14 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 
 		addButton = new Button(buttonComposite, SWT.NONE);
 		addButton.setLayoutData(gd);
-		addButton.setText("Add");
+		addButton.setText("Add"); //$NON-NLS-1$
 
 		removeButton = new Button(buttonComposite, SWT.NONE);
 		removeButton.setLayoutData(gd);
-		removeButton.setText("Remove");
+		removeButton.setText("Remove"); //$NON-NLS-1$
 
 		createCSVReaderButton = new Button(configComposite, SWT.CHECK);
-		createCSVReaderButton.setText("Create a CSV Reader");
+		createCSVReaderButton.setText("Create a CSV Reader"); //$NON-NLS-1$
 
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
@@ -447,7 +447,7 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 		this.addButton.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
-				FieldString field = new FieldString("field");
+				FieldString field = new FieldString("field"); //$NON-NLS-1$
 				fieldsList.add(field);
 				fieldsViewer.refresh();
 			}
@@ -491,8 +491,8 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 							String s = exampleValues[i];
 							if (s != null) {
 								if (s.length() == 0)
-									s = "<Null>";
-								FieldString fs = new FieldString("");
+									s = "<Null>"; //$NON-NLS-1$
+								FieldString fs = new FieldString(""); //$NON-NLS-1$
 								fs.setExampleValue(s);
 								list.add(fs);
 							}
@@ -504,7 +504,7 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 				}
 			}
 		} catch (Exception e) {
-			this.setErrorMessage("Occurs an error when parse CSV file");
+			this.setErrorMessage("Occurs an error when parse CSV file"); //$NON-NLS-1$
 		}
 		fieldsViewer.refresh();
 	}
@@ -518,20 +518,20 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 		String error = null;
 
 		if (separator == null || separator.length() == 0) {
-			error = "Sperator can't be null";
+			error = "Sperator can't be null"; //$NON-NLS-1$
 		}
 		if (separator != null && separator.length() > 1) {
-			error = "Sperator needs only one char";
+			error = "Sperator needs only one char"; //$NON-NLS-1$
 		}
 		if (quoteChar == null || quoteChar.length() == 0) {
-			error = "QuoteChar can't be null";
+			error = "QuoteChar can't be null"; //$NON-NLS-1$
 		}
 		if (quoteChar != null && quoteChar.length() > 1) {
-			error = "QuoteChar needs only one char";
+			error = "QuoteChar needs only one char"; //$NON-NLS-1$
 		}
 
 		if (encoding == null || encoding.length() == 0) {
-			error = "Encoding can't be null";
+			error = "Encoding can't be null"; //$NON-NLS-1$
 		}
 
 		if (skipLines == null || skipLines.length() == 0) {
@@ -540,14 +540,14 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 			try {
 				Integer.parseInt(skipLines);
 			} catch (Throwable t) {
-				error = "Skip lines text must be the number";
+				error = "Skip lines text must be the number"; //$NON-NLS-1$
 			}
 		}
 		
 		for (Iterator<?> iterator = fieldsList.iterator(); iterator.hasNext();) {
 			FieldString field = (FieldString) iterator.next();
 			if(field.getText() == null || field.getText().length() == 0 ){
-				error = "Fields can't be null";
+				error = "Fields can't be null"; //$NON-NLS-1$
 			}
 		}
 
@@ -726,7 +726,7 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 
 		createCSVReader = true;
 
-		encoding = "UTF-8";
+		encoding = "UTF-8"; //$NON-NLS-1$
 
 		separator = null;
 
@@ -812,7 +812,7 @@ public class CSV12DataConfigurationWizardPage extends WizardPage {
 
 		public FieldsLabelProvider() {
 			FontData fd = new FontData();
-			fd.setName("Arial");
+			fd.setName("Arial"); //$NON-NLS-1$
 //			fd.setStyle(SWT.BOLD);
 			font = new Font(null, fd);
 		}

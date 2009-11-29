@@ -105,21 +105,21 @@ public class SelectorContentProposalProvider implements IContentProposalProvider
 		List<IXMLStructuredObject> loadedModels = SmooksUIUtils.loadSelectorObject(models);
 		for (Iterator<?> iterator = loadedModels.iterator(); iterator.hasNext();) {
 			IXMLStructuredObject structuredObject = (IXMLStructuredObject) iterator.next();
-			String fp = SmooksUIUtils.generateFullPath(structuredObject, "/");
+			String fp = SmooksUIUtils.generateFullPath(structuredObject, "/"); //$NON-NLS-1$
 			if (fp == null)
 				continue;
 			fp = fp.trim();
 			if (fp.length() == 0)
 				continue;
 			if (currentNode != null) {
-				String p = SmooksUIUtils.generatePath(structuredObject, currentNode, "/", true);
-				if (p.startsWith(contents) || p.startsWith("/" + contents) || fp.startsWith(contents)
-						|| fp.startsWith("/" + contents)) {
+				String p = SmooksUIUtils.generatePath(structuredObject, currentNode, "/", true); //$NON-NLS-1$
+				if (p.startsWith(contents) || p.startsWith("/" + contents) || fp.startsWith(contents) //$NON-NLS-1$
+						|| fp.startsWith(Messages.SelectorContentProposalProvider_3 + contents)) {
 					SelectorContentProposal p1 = new SelectorContentProposal(structuredObject);
 					contentList.add(p1);
 				}
 			} else {
-				if (fp.startsWith(contents) || fp.startsWith("/" + contents)) {
+				if (fp.startsWith(contents) || fp.startsWith("/" + contents)) { //$NON-NLS-1$
 					SelectorContentProposal p1 = new SelectorContentProposal(structuredObject);
 					contentList.add(p1);
 				}

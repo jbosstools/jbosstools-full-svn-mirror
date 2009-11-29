@@ -78,14 +78,14 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
     	Template template;
     	
     	try {
-			template = new Template("csvTemplate", new StringReader(ftlTemplate), new Configuration());
+			template = new Template("csvTemplate", new StringReader(ftlTemplate), new Configuration()); //$NON-NLS-1$
 		} catch (IOException e) {
-			throw new TemplateBuilderException ("Failed to parse the Supplied FreeMarker template.", e);
+			throw new TemplateBuilderException ("Failed to parse the Supplied FreeMarker template.", e); //$NON-NLS-1$
 		}
 
 		TemplateElement listElement = template.getRootTreeNode();
-		if(!listElement.getNodeName().equals("IteratorBlock") || !listElement.getDescription().startsWith("list")) {
-			throw new TemplateBuilderException ("Unable to recognize template as being a CSV template.  Expecting first template token to be a 'list' IteratorBlock node.");
+		if(!listElement.getNodeName().equals("IteratorBlock") || !listElement.getDescription().startsWith("list")) { //$NON-NLS-1$ //$NON-NLS-2$
+			throw new TemplateBuilderException ("Unable to recognize template as being a CSV template.  Expecting first template token to be a 'list' IteratorBlock node."); //$NON-NLS-1$
 		}
 		
 		// Add the mapping for the list itself...
@@ -96,7 +96,7 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
     }
 
 	private void addCSVListMapping(String description) throws TemplateBuilderException {
-		String[] tokens = description.split(" +?");
+		String[] tokens = description.split(" +?"); //$NON-NLS-1$
 		Element csvRecordElement = getModel().getDocumentElement();
 		
 		// 2nd and 4th tokens contain the info we're looking for e.g. "list message.people as person"
@@ -123,7 +123,7 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
 				Node node = csvFieldModelNodes.item(i);
 				if(node.getNodeType() == Node.ELEMENT_NODE) {
 					if(fieldIndex >= fields.length) {
-						throw new TemplateBuilderException("CSV Template fieldset size does not match that of the specified message model.  Check the supplied fieldset.  Check the specified 'separator' and 'quote' characters match those used in the template.");
+						throw new TemplateBuilderException("CSV Template fieldset size does not match that of the specified message model.  Check the supplied fieldset.  Check the specified 'separator' and 'quote' characters match those used in the template."); //$NON-NLS-1$
 					}
 					
 					if(FreeMarkerUtil.isDollarVariable(fields[fieldIndex])) {
@@ -133,7 +133,7 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
 				}
 			}
 		} catch (IOException e) {
-			throw new TemplateBuilderException("Failed to parse CSV fields in CSV template.", e);
+			throw new TemplateBuilderException("Failed to parse CSV fields in CSV template.", e); //$NON-NLS-1$
 		}
 	}
 
@@ -148,7 +148,7 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
             NodeList nodeList = recordElement.getChildNodes();
             int fieldIndex = 0;
 
-            template.append("<#list " + collectionMapping.getSrcPath() + " as " + collectionMapping.getCollectionItemName() + ">\n");
+            template.append("<#list " + collectionMapping.getSrcPath() + " as " + collectionMapping.getCollectionItemName() + ">\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             for(int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
                 if(node.getNodeType() == Node.ELEMENT_NODE) {
@@ -160,14 +160,14 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
 
                     if(fieldMapping != null) {
                         template.append(quoteChar);
-                        template.append("${" + fieldMapping.getSrcPath() + "}");
+                        template.append("${" + fieldMapping.getSrcPath() + "}"); //$NON-NLS-1$ //$NON-NLS-2$
                         template.append(quoteChar);
                     }
 
                     fieldIndex++;
                 }
             }
-            template.append("\n</#list>");
+            template.append("\n</#list>"); //$NON-NLS-1$
 
             return template.toString();
         }

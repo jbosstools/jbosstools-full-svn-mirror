@@ -48,13 +48,13 @@ import org.osgi.framework.Bundle;
  * 
  */
 public class EDIDataParser {
-	public static final String USE_AVAILABEL_READER = "use_availableReader";
+	public static final String USE_AVAILABEL_READER = "use_availableReader"; //$NON-NLS-1$
 
-	public static final String ENCODING = "encoding";
+	public static final String ENCODING = "encoding"; //$NON-NLS-1$
 
-	public static final Object MAPPING_MODEL = "mappingModelFile";
+	public static final Object MAPPING_MODEL = "mappingModelFile"; //$NON-NLS-1$
 
-	public static final Object VALIDATE = "validate";
+	public static final Object VALIDATE = "validate"; //$NON-NLS-1$
 
 	public TagList parseEDIFile(InputStream stream, SmooksResourceListType resourceList, IProject project)
 			throws IOException, DocumentException {
@@ -193,9 +193,9 @@ public class EDIDataParser {
 				// MappingModel.
 
 				/* this codes are for the plug-in unit tests */
-				Bundle bundle = Platform.getBundle("org.jboss.tools.smooks.core.test");
+				Bundle bundle = Platform.getBundle("org.jboss.tools.smooks.core.test"); //$NON-NLS-1$
 				if (bundle != null) {
-					URL ur = bundle.getEntry("/src" + mappingModel);
+					URL ur = bundle.getEntry("/src" + mappingModel); //$NON-NLS-1$
 					if (ur != null) {
 						try {
 							ur = FileLocator.resolve(ur);
@@ -209,7 +209,7 @@ public class EDIDataParser {
 		}
 		EDIReaderConfigurator readerConfig = new EDIReaderConfigurator(modelPath);
 		if (ediFileEncoding == null || ediFileEncoding.trim().length() == 0) {
-			ediFileEncoding = "UTF-8";
+			ediFileEncoding = "UTF-8"; //$NON-NLS-1$
 		}
 		// readerConfig.
 		// readerConfig.setParameter("encoding", ediFileEncoding);

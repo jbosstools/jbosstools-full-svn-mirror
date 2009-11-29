@@ -71,8 +71,8 @@ public class JavaMethodsSelectionDialog implements IFieldDialog {
 				return null;
 			}
 		}
-		MessageDialog.openInformation(shell, "Can't open dialog",
-				"Can't open java methods selection dialog.Please check the 'class' value of Java Object.");
+		MessageDialog.openInformation(shell, Messages.JavaMethodsSelectionDialog_ErrorDialogTitle,
+				Messages.JavaMethodsSelectionDialog_ErrorMessage);
 		return null;
 	}
 
@@ -110,10 +110,10 @@ public class JavaMethodsSelectionDialog implements IFieldDialog {
 			Table table = viewer.getTable();
 			TableColumn nameColumn = new TableColumn(table, SWT.NONE);
 			nameColumn.setWidth(100);
-			nameColumn.setText("Method Name");
+			nameColumn.setText(Messages.JavaMethodsSelectionDialog_MethodNameColumnText);
 			TableColumn typeColumn = new TableColumn(table, SWT.NONE);
 			typeColumn.setWidth(200);
-			typeColumn.setText("Paramters Type");
+			typeColumn.setText(Messages.JavaMethodsSelectionDialog_MethodParamsColumnText);
 			table.setHeaderVisible(true);
 			viewer.setContentProvider(new MethodContentProvider());
 			viewer.setLabelProvider(new MethodLabelProvider());
@@ -133,7 +133,7 @@ public class JavaMethodsSelectionDialog implements IFieldDialog {
 				}
 
 			});
-			getShell().setText(clazz.getSimpleName() + "'s Setter Methods");
+			getShell().setText(clazz.getSimpleName() + Messages.JavaMethodsSelectionDialog_SetterDialogTitle);
 			return composite;
 		}
 
@@ -182,15 +182,15 @@ public class JavaMethodsSelectionDialog implements IFieldDialog {
 					return p.getName();
 				case 1:
 					Class<?>[] pts = p.getParameterTypes();
-					String paramtersName = "";
-					for (int i = 0; i < pts.length; i++,paramtersName+=",") {
+					String paramtersName = ""; //$NON-NLS-1$
+					for (int i = 0; i < pts.length; i++,paramtersName+=",") { //$NON-NLS-1$
 						String name = pts[i].getName();
 						if(pts[i].isArray()){
-							name = pts[i].getComponentType().getName() + "[]";
+							name = pts[i].getComponentType().getName() + "[]"; //$NON-NLS-1$
 						}
 						paramtersName += name;
 					}
-					if(paramtersName.endsWith(",")){
+					if(paramtersName.endsWith(",")){ //$NON-NLS-1$
 						paramtersName = paramtersName.substring(0,paramtersName.length() - 1);
 					}
 					return paramtersName;

@@ -51,8 +51,8 @@ public class JavaTypeFieldDialog implements IFieldDialog {
 				return openJavaTypeDialog(shell, jp);
 			}
 		}
-		MessageDialog.openInformation(shell, "Can't open dialog",
-				"Can't open java type search dialog.");
+		MessageDialog.openInformation(shell, Messages.JavaTypeFieldDialog_CantOpenErrorTitle,
+				Messages.JavaTypeFieldDialog_CantOpenErrorMessage);
 		return null;
 	}
 	
@@ -82,8 +82,8 @@ public class JavaTypeFieldDialog implements IFieldDialog {
 			dialog = JavaUI.createTypeDialog(shell, SmooksConfigurationActivator.getDefault().getWorkbench()
 					.getActiveWorkbenchWindow(), scope,
 					IJavaElementSearchConstants.CONSIDER_CLASSES_AND_INTERFACES, false);
-			dialog.setMessage("Search Java Type");
-			dialog.setTitle("Search Java Type");
+			dialog.setMessage(Messages.JavaTypeFieldDialog_SearchDialogTitle);
+			dialog.setTitle(Messages.JavaTypeFieldDialog_SearchDialogTitle);
 			if (dialog.open() == Window.OK) {
 				Object[] results = dialog.getResult();
 				if (results.length > 0) {

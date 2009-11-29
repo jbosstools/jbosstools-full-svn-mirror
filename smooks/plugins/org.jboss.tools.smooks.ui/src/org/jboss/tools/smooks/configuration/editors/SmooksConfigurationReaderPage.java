@@ -86,27 +86,27 @@ public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 
 	@Override
 	protected String getNewSmooksElementDescription() {
-		return "create new smooks reader";
+		return Messages.SmooksConfigurationReaderPage_NewReaderDes;
 	}
 
 	@Override
 	protected String getNewSmooksElementTitle() {
-		return "New Smooks Reader";
+		return Messages.SmooksConfigurationReaderPage_NewReaderTitle;
 	}
 
 	@Override
 	protected String getMainSectionDescription() {
-		return "Edit the smooks readers";
+		return Messages.SmooksConfigurationReaderPage_EditReaderDes;
 	}
 
 	@Override
 	protected String getMainSectionTitle() {
-		return "Reader";
+		return Messages.SmooksConfigurationReaderPage_ReaderSectionTitle;
 	}
 
 	@Override
 	protected void setPageTitle(ScrolledForm form) {
-		form.setText("Reader/Input");
+		form.setText(Messages.SmooksConfigurationReaderPage_PageTitle);
 	}
 
 	protected void createFormContent(IManagedForm managedForm) {
@@ -121,7 +121,7 @@ public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 		Section section = toolkit.createSection(form.getBody(), Section.TITLE_BAR | Section.TWISTIE | Section.EXPANDED);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		section.setLayoutData(gd);
-		section.setText("Input Data");
+		section.setText(Messages.SmooksConfigurationReaderPage_InputSectionTitle);
 		FillLayout flayout = new FillLayout();
 		section.setLayout(flayout);
 
@@ -258,14 +258,14 @@ public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 			}
 		});
 		TableColumn header = new TableColumn(inputDataViewer.getTable(), SWT.NONE);
-		header.setText("Type");
+		header.setText(Messages.SmooksConfigurationReaderPage_InputTableTypeColumnText);
 		header.setWidth(100);
 		TableColumn pathColumn = new TableColumn(inputDataViewer.getTable(), SWT.NONE);
-		pathColumn.setText("Path");
+		pathColumn.setText(Messages.SmooksConfigurationReaderPage_InputTablePathColumnLabel);
 		pathColumn.setWidth(300);
 
 		TableColumn extColumn = new TableColumn(inputDataViewer.getTable(), SWT.NONE);
-		extColumn.setText("Extension Paramers");
+		extColumn.setText(Messages.SmooksConfigurationReaderPage_InputTableExtensionLabel);
 		extColumn.setWidth(400);
 
 		inputDataViewer.setContentProvider(new ExtentionInputContentProvider());
@@ -283,7 +283,7 @@ public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 		GridLayout l = new GridLayout();
 		buttonComposite.setLayout(l);
 
-		Button addButton = toolkit.createButton(buttonComposite, "Add", SWT.FLAT);
+		Button addButton = toolkit.createButton(buttonComposite, Messages.SmooksConfigurationReaderPage_AddInputButtonLabel, SWT.FLAT);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		addButton.setLayoutData(gd);
 		addButton.addSelectionListener(new SelectionAdapter() {
@@ -294,7 +294,7 @@ public class SmooksConfigurationReaderPage extends SmooksConfigurationFormPage {
 
 		});
 
-		Button removeButton = toolkit.createButton(buttonComposite, "Delete", SWT.FLAT);
+		Button removeButton = toolkit.createButton(buttonComposite, Messages.SmooksConfigurationReaderPage_DeleteInputButtonLabel, SWT.FLAT);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		removeButton.setLayoutData(gd);
 		removeButton.addSelectionListener(new SelectionAdapter() {

@@ -25,7 +25,7 @@ import org.dom4j.dom.DOMDocumentFactory;
  */
 public class TagPropertyObject extends AbstractXMLObject {
 
-	protected String type = "string";
+	protected String type = "string"; //$NON-NLS-1$
 
 	protected String value = null;
 
@@ -179,7 +179,7 @@ public class TagPropertyObject extends AbstractXMLObject {
 
 	@Override
 	public Object getID() {
-		return "@" + super.getID();
+		return "@" + super.getID(); //$NON-NLS-1$
 	}
 
 	@Override

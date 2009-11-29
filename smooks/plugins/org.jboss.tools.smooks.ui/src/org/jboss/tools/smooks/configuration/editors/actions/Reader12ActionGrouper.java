@@ -22,7 +22,7 @@ public class Reader12ActionGrouper extends AbstractSmooksActionGrouper {
 	}
 
 	public String getGroupName() {
-		return "Reader v1.2";
+		return Messages.Reader12ActionGrouper_GroupName;
 	}
 
 	@Override

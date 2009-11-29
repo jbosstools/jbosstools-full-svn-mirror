@@ -44,7 +44,7 @@ public class Reader11ActionGrouper extends AbstractSmooksActionGrouper {
 	}
 
 	public String getGroupName() {
-		return "Reader";
+		return Messages.Reader11ActionGrouper_GroupName;
 	}
 
 	@Override

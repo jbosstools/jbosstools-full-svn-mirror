@@ -35,8 +35,8 @@ public class ChildrenSelectionWizard extends Wizard {
 		dialog = new PrivateWizardDialog(shell, this){
 			
 		};
-		page = new ChildrenSelectionWizardPage(childrenDescriptor, editingDomain, "children selection",
-				"Select children", null);
+		page = new ChildrenSelectionWizardPage(childrenDescriptor, editingDomain, "children selection", //$NON-NLS-1$
+				"Select children", null); //$NON-NLS-1$
 		page.setWizardDialog(dialog);
 	}
 	

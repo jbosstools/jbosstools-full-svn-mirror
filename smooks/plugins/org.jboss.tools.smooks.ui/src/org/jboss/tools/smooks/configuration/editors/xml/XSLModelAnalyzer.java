@@ -32,7 +32,7 @@ import org.eclipse.core.runtime.CoreException;
  */
 public class XSLModelAnalyzer {
 
-	public static final String XSL_NAME_SPACE = "http://www.w3.org/1999/XSL/Transform";
+	public static final String XSL_NAME_SPACE = "http://www.w3.org/1999/XSL/Transform"; //$NON-NLS-1$
 
 	public static boolean isXSLElement(Element element) {
 		if (element == null)
@@ -54,7 +54,7 @@ public class XSLModelAnalyzer {
 			if (XSL_NAME_SPACE.equals(uri)) {
 				return true;
 			}
-			if("http://www.w3.org/TR/WD-xsl".equals(uri)){
+			if("http://www.w3.org/TR/WD-xsl".equals(uri)){ //$NON-NLS-1$
 				return true;
 			}
 		}
@@ -74,13 +74,13 @@ public class XSLModelAnalyzer {
 		SAXReader reader = new SAXReader();
 		Document document = reader.read(inputStream);
 		Element rootElement = document.getRootElement();
-		Namespace namespace = rootElement.getNamespaceForURI("http://milyn.codehaus.org/Smooks");
+		Namespace namespace = rootElement.getNamespaceForURI("http://milyn.codehaus.org/Smooks"); //$NON-NLS-1$
 		TagObject tag = (TagObject) parseElement(rootElement, ignoreXSLElementnames, namespace);
 		return tag;
 	}
 
 	public TagObject parse(InputStream inputStream) throws DocumentException {
-		return parse(inputStream, new String[] { "output", "value-of" });
+		return parse(inputStream, new String[] { "output", "value-of" }); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private boolean isIgnoreXSLTag(Element element, String[] ignoreXSLElementNames) {

@@ -67,7 +67,7 @@ public class SmooksResourceListTypeUICreator extends PropertyUICreator {
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, ISmooksModelProvider formEditor,IEditorPart part) {
 
-		return createElementSelectionSection("Default Selector", editingdomain, toolkit, parent, model, formEditor,part,
+		return createElementSelectionSection(Messages.SmooksResourceListTypeUICreator_DefualtSelectorLabel, editingdomain, toolkit, parent, model, formEditor,part,
 				SmooksPackage.eINSTANCE.getSmooksResourceListType_DefaultSelector(), SmooksPackage.eINSTANCE
 						.getSmooksResourceListType_DefaultSelectorNamespace());
 	}

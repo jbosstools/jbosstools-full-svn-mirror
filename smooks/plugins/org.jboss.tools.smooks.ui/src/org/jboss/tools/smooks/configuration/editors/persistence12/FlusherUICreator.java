@@ -60,7 +60,7 @@ public class FlusherUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return createElementSelectionSection("Flush On Element", editingdomain, toolkit, parent, model, formEditor,
+		return createElementSelectionSection(Messages.FlusherUICreator_FlushGroupLabel, editingdomain, toolkit, parent, model, formEditor,
 				part, Persistence12Package.Literals.FLUSHER__FLUSH_ON_ELEMENT,
 				Persistence12Package.Literals.FLUSHER__FLUSH_ON_ELEMENT_NS);
 	}

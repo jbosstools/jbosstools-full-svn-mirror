@@ -28,8 +28,8 @@ public class Json12DataPathWizardPage extends AbstractFileSelectionWizardPage {
 
 	public Json12DataPathWizardPage(String pageName, String[] fileExtensionNames) {
 		super(pageName, fileExtensionNames);
-		this.setTitle("JSON file selection");
-		this.setDescription("Select a JSON data file");
+		this.setTitle(Messages.Json12DataPathWizardPage_WizardTitle);
+		this.setDescription(Messages.Json12DataPathWizardPage_WizardDes);
 	}
 	
 	

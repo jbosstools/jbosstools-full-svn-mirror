@@ -60,7 +60,7 @@ public class UpdaterUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return createElementSelectionSection("Update On Element", editingdomain, toolkit, parent, model, formEditor,
+		return createElementSelectionSection(Messages.UpdaterUICreator_UpdateOnElementgroupLabel, editingdomain, toolkit, parent, model, formEditor,
 				part, Persistence12Package.Literals.UPDATER__UPDATE_ON_ELEMENT,
 				Persistence12Package.Literals.UPDATER__UPDATE_ON_ELEMENT_NS);
 	}

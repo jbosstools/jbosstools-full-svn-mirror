@@ -31,7 +31,7 @@ public class XMLObjectAnalyzer2 {
 		Document doc = reader.read(stream);
 		Element rootElement = doc.getRootElement();
 		TagList dco = new TagList();
-		dco.setName("Docuement");
+		dco.setName("Docuement"); //$NON-NLS-1$
 		dco.addRootTag(parseElement(rootElement, null, ignoreNodeNames));
 		return dco;
 	}

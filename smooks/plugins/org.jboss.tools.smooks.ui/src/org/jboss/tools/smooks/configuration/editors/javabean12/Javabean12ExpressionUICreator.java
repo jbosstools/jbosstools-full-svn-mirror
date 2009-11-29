@@ -54,7 +54,7 @@ public class Javabean12ExpressionUICreator extends PropertiesAndSetterMethodSear
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
-		AttributeFieldEditPart cdatatext = SmooksUIUtils.createTextFieldEditor("Expression", editingdomain, toolkit,
+		AttributeFieldEditPart cdatatext = SmooksUIUtils.createTextFieldEditor(Messages.Javabean12ExpressionUICreator_ExpressionLabel, editingdomain, toolkit,
 				parent, model, null, true);
 		if (cdatatext != null) {
 			list.add(cdatatext);
@@ -94,7 +94,7 @@ public class Javabean12ExpressionUICreator extends PropertiesAndSetterMethodSear
 				editingdomain, Javabean12Package.Literals.EXPRESSION_TYPE__SETTER_METHOD, model), model);
 		list.add(pEditPart);
 		list.add(mEditPart);
-		list.addAll(createElementSelectionSection("Execute On Element", editingdomain, toolkit, parent, model,
+		list.addAll(createElementSelectionSection(Messages.Javabean12ExpressionUICreator_ExecuteOnGroupText, editingdomain, toolkit, parent, model,
 				formEditor, part,Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT,
 				Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS));
 

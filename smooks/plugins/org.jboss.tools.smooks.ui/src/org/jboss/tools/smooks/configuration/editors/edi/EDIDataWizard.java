@@ -53,7 +53,7 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 
 	@Override
 	public void addPages() {
-		ediFilePage = new EDIDataPathWizardPage("EDI Data Page", new String[] { "edi" });
+		ediFilePage = new EDIDataPathWizardPage(Messages.EDIDataWizard_0, new String[] { "edi" }); //$NON-NLS-2$
 		this.addPage(ediFilePage);
 		if (folder != null) {
 			ediFilePage.setInitSelections(new Object[] { folder });
@@ -123,7 +123,7 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 		Properties pros = new Properties();
 		if (mappingFilePage != null) {
 			if (mappingFilePage.isUseAvaliableReader() || mappingFilePage.isCreateNewReader()) {
-				pros.put(EDIDataParser.USE_AVAILABEL_READER, "true");
+				pros.put(EDIDataParser.USE_AVAILABEL_READER, "true"); //$NON-NLS-1$
 				return pros;
 			}
 

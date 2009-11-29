@@ -34,7 +34,7 @@ public class JavaPropertyUtils {
 		for (int i = 0; i < methods.length; i++) {
 			Method method = methods[i];
 			String methodName = method.getName();
-			if(methodName.startsWith("set")){
+			if(methodName.startsWith("set")){ //$NON-NLS-1$
 				mlist.add(method);
 			}
 		}

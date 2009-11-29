@@ -157,7 +157,7 @@ public class JavaBeanModel implements IXMLStructuredObject, Cloneable {
 		if (this.isList()) {
 			Class genericType = getGenericType();
 			if (genericType != null)
-				s += "<" + genericType.getName() + ">";
+				s += "<" + genericType.getName() + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		return s;
 	}
@@ -394,7 +394,7 @@ public class JavaBeanModel implements IXMLStructuredObject, Cloneable {
 							this.lazyLoadProperties);
 					beanType = componentClass;
 				} else {
-					createListChildren(Object.class, "object", null, beanClass, this.lazyLoadProperties);
+					createListChildren(Object.class, "object", null, beanClass, this.lazyLoadProperties); //$NON-NLS-1$
 					beanType = componentClass;
 				}
 				return properties;

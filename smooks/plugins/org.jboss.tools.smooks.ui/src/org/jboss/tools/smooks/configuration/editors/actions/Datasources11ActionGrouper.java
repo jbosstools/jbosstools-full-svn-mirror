@@ -17,7 +17,7 @@ public class Datasources11ActionGrouper extends AbstractSmooksActionGrouper {
 	}
 
 	public String getGroupName() {
-		return "Datasources";
+		return Messages.Datasources11ActionGrouper_GroupName;
 	}
 
 }

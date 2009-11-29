@@ -408,7 +408,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	public void fillProcessMenu(IMenuManager manager) {
-		MenuManager addNextTaskMenuManager = new MenuManager("Add Task");
+		MenuManager addNextTaskMenuManager = new MenuManager(Messages.SmooksProcessGraphicalEditor_AddTaskActionText);
 		manager.add(addNextTaskMenuManager);
 
 		for (Iterator<?> iterator = processPanelActions.iterator(); iterator.hasNext();) {
@@ -460,7 +460,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		// manager.add(addInputTaskAction);
 		// processPanelActions.add(addInputTaskAction);
 
-		MenuManager addNextTaskMenuManager = new MenuManager("Add Task");
+		MenuManager addNextTaskMenuManager = new MenuManager(Messages.SmooksProcessGraphicalEditor_AddTaskActionText);
 		manager.add(addNextTaskMenuManager);
 
 		generateNextTaskActions(addNextTaskMenuManager);
@@ -526,7 +526,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 	protected void createProcessGraphicalSection(FormToolkit toolkit, Composite parent) {
 		Section processGraphSection = toolkit.createSection(parent, Section.TITLE_BAR);
-		processGraphSection.setText("Tasks Map");
+		processGraphSection.setText(Messages.SmooksProcessGraphicalEditor_TasksMapSectionTitle);
 
 		Composite processGraphComposite = toolkit.createComposite(processGraphSection);
 
@@ -576,7 +576,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		taskDetailsComposite.setLayout(taskDetailsFillLayout);
 
 		Section section = toolkit.createSection(taskDetailsComposite, Section.TITLE_BAR);
-		section.setText("Task Configuration");
+		section.setText(Messages.SmooksProcessGraphicalEditor_TaskConfigurationSectionTitle);
 		pageBook = new ScrolledPageBook(section);
 		pageBook.setBackground(toolkit.getColors().getBackground());
 		section.setClient(pageBook);
@@ -601,7 +601,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		FormToolkit toolkit = managedForm.getToolkit();
 		toolkit.decorateFormHeading(form.getForm());
 		form.getBody().setLayout(new FillLayout());
-		form.setText("Smooks Processing");
+		form.setText(Messages.SmooksProcessGraphicalEditor_FormText);
 
 		Composite mainComposite = toolkit.createComposite(form.getBody());
 
@@ -787,7 +787,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		}
 
 		if (taskID.equals(TaskTypeManager.TASK_ID_INPUT)) {
-			SmooksReaderFormPage readerPage = new SmooksReaderFormPage(getEditor(), "input", "input");
+			SmooksReaderFormPage readerPage = new SmooksReaderFormPage(getEditor(), "input", "input"); //$NON-NLS-1$ //$NON-NLS-2$
 			return readerPage;
 		}
 		return null;
@@ -900,7 +900,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 				String taskID = smooksModelIdMap.get(freemarker);
 				if (taskID == null) {
 					String tempstamp = String.valueOf(System.currentTimeMillis());
-					taskID = "freemarker" + "_" + tempstamp;
+					taskID = "freemarker" + "_" + tempstamp; //$NON-NLS-1$ //$NON-NLS-2$
 					this.smooksModelIdMap.put(freemarker, taskID);
 				}
 				return taskID;
@@ -926,7 +926,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 					}
 					id = idref;
 				} else {
-					id = id + "_unknown";
+					id = id + "_unknown"; //$NON-NLS-1$
 				}
 			}
 			if (id != null) {
@@ -991,7 +991,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 	protected Control createEmptyTaskPanel(Composite parent, FormToolkit toolkit) {
 		parent.setLayout(new FillLayout());
-		return toolkit.createLabel(parent, "Select the task node");
+		return toolkit.createLabel(parent, "Select the task node"); //$NON-NLS-1$
 	}
 
 	public void sourceChange(Object model) {

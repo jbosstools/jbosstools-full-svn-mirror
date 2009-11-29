@@ -280,11 +280,11 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		GridLayout buttonLayout = new GridLayout();
 		buttonComposite.setLayout(buttonLayout);
 
-		addButton = tool.createButton(buttonComposite, "Add...", SWT.NONE);
+		addButton = tool.createButton(buttonComposite, Messages.SmooksMasterDetailBlock_AddButtonLabel, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		addButton.setLayoutData(gd);
 
-		removeButton = tool.createButton(buttonComposite, "Remove", SWT.NONE);
+		removeButton = tool.createButton(buttonComposite, Messages.SmooksMasterDetailBlock_RemoveButtonlabel, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		removeButton.setLayoutData(gd);
 
@@ -293,11 +293,11 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 		gd.heightHint = 40;
 		sc.setLayoutData(gd);
 
-		upButton = tool.createButton(buttonComposite, "Up", SWT.NONE);
+		upButton = tool.createButton(buttonComposite, Messages.SmooksMasterDetailBlock_UpButtonLabel, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		upButton.setLayoutData(gd);
 
-		downButton = tool.createButton(buttonComposite, "Down", SWT.NONE);
+		downButton = tool.createButton(buttonComposite, Messages.SmooksMasterDetailBlock_DownButtonLabel, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		downButton.setLayoutData(gd);
 		// don't display button area

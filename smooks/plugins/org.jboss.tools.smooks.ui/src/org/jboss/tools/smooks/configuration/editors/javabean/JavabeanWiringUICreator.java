@@ -103,7 +103,7 @@ public class JavabeanWiringUICreator extends PropertiesAndSetterMethodSearchFiel
 				editingdomain, JavabeanPackage.eINSTANCE.getWiringType_SetterMethod(), model), model);
 		list.add(pEditPart);
 		list.add(mEditPart);
-		list.addAll(createElementSelectionSection("Wrie On Element", editingdomain, toolkit, parent, model, formEditor,part,
+		list.addAll(createElementSelectionSection(Messages.JavabeanWiringUICreator_WiringOnElementGroupName, editingdomain, toolkit, parent, model, formEditor,part,
 				JavabeanPackage.eINSTANCE.getWiringType_WireOnElement(),
 				JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT_NS));
 		return list;

@@ -29,7 +29,7 @@ public class FragmentRouting11ActionGrouper extends AbstractSmooksActionGrouper 
 	}
 
 	public String getGroupName() {
-		return "Fragment Routing";
+		return Messages.FragmentRouting11ActionGrouper_GroupName;
 	}
 
 }

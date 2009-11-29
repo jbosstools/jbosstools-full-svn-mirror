@@ -36,8 +36,8 @@ public class CSVDataPathWizardPage extends AbstractFileSelectionWizardPage {
 
 	public CSVDataPathWizardPage(String pageName, String[] fileExtensionNames,CSVDataConfigurationWizardPage configPage) {
 		super(pageName, fileExtensionNames);
-		this.setTitle("CSV file selection");
-		this.setDescription("Select a CSV data file");
+		this.setTitle(Messages.CSVDataPathWizardPage_WizardTitle);
+		this.setDescription(Messages.CSVDataPathWizardPage_WizardDes);
 		this.configPage = configPage;
 	}
 
@@ -83,10 +83,10 @@ public class CSVDataPathWizardPage extends AbstractFileSelectionWizardPage {
 		try {
 			filePath = SmooksUIUtils.parseFilePath(text);
 			if (!new File(filePath).exists()) {
-				error = "Can't find the file : " + filePath;
+				error = Messages.CSVDataPathWizardPage_CantFindFileErrorMessage + filePath;
 			}
 		} catch (InvocationTargetException e) {
-			error = "Error file path";
+			error = Messages.CSVDataPathWizardPage_ErrorPathErrorMessage;
 		}
 		
 		this.setErrorMessage(error);

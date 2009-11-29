@@ -146,7 +146,7 @@ public class RuleUICreator extends PropertyUICreator {
 			while (keys.hasMoreElements()) {
 				String keyName = keys.nextElement().toString();
 
-				namesString.add(ruleBasesName + "." + keyName);
+				namesString.add(ruleBasesName + "." + keyName); //$NON-NLS-1$
 			}
 			properties.clear();
 		}

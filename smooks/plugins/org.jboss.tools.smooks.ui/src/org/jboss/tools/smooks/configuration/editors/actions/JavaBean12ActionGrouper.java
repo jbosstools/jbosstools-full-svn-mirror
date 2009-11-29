@@ -13,7 +13,7 @@ public class JavaBean12ActionGrouper extends AbstractSmooksActionGrouper {
 	}
 
 	public String getGroupName() {
-		return "Java Binding v1.2";
+		return Messages.JavaBean12ActionGrouper_GroupName;
 	}
 
 }

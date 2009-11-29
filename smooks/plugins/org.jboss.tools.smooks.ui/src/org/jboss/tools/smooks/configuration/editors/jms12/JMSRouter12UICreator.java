@@ -68,7 +68,7 @@ public class JMSRouter12UICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, ISmooksModelProvider formEditor,IEditorPart part) {
-		return createElementSelectionSection("Route On Element", editingdomain, toolkit, parent, model, formEditor,part,
+		return createElementSelectionSection(Messages.JMSRouter12UICreator_RouteOnGroupText, editingdomain, toolkit, parent, model, formEditor,part,
 				Jmsrouting12Package.eINSTANCE.getJMS12Router_RouteOnElement(), Jmsrouting12Package.eINSTANCE
 						.getJMS12Router_RouteOnElementNS());
 	}

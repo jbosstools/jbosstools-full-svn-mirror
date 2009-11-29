@@ -191,7 +191,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 			}
 
 		};
-		return SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor, "Browse", dialog,
+		return SmooksUIUtils.createDialogFieldEditor(parent, toolkit, propertyDescriptor, Messages.PropertyUICreator_browsebutton, dialog,
 				(EObject) model, true, getFileFiledEditorLinkListener());
 	}
 
@@ -372,7 +372,7 @@ public class PropertyUICreator implements IPropertyUICreator {
 		// Section section = toolkit.createSection(parent, Section.TITLE_BAR);
 		// section.setText(sectionTitle);
 		if (sectionTitle != null) {
-			sectionTitle = " " + sectionTitle + " ";
+			sectionTitle = " " + sectionTitle + " "; //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		group.setText(sectionTitle);
 		// FontData fd = new FontData();
@@ -415,17 +415,17 @@ public class PropertyUICreator implements IPropertyUICreator {
 		GridLayout glayout = new GridLayout();
 		glayout.numColumns = 2;
 		container.setLayout(glayout);
-		String name = "Name";
+		String name = Messages.PropertyUICreator_namelabel;
 		if (((EAttribute) createOnElementFeature.getFeature(model)).isRequired()) {
-			name += "*";
+			name += "*"; //$NON-NLS-1$
 		}
 		AttributeFieldEditPart editPart1 = SmooksUIUtils.createSelectorFieldEditor(name, toolkit, container,
 				createOnElementFeature, model, editorPart);
 		editPart1.setAttribute(createOnElementFeature.getFeature(model));
 
-		String namespace = "Namespace";
+		String namespace = Messages.PropertyUICreator_nslabel;
 		if (((EAttribute) createOnElementFeatureNS.getFeature(model)).isRequired()) {
-			namespace += "*";
+			namespace += "*"; //$NON-NLS-1$
 		}
 		AttributeFieldEditPart editPart2 = SmooksUIUtils.createStringFieldEditor(namespace, container, editingdomain,
 				toolkit, createOnElementFeatureNS, model, false, false, false, 0, null, SmooksUIUtils.VALUE_TYPE_VALUE,

@@ -29,13 +29,13 @@ import org.jboss.tools.smooks.model.xsl.Xsl;
  */
 public class TaskTypeManager {
 
-	public static final String TASK_ID_INPUT = "input";
+	public static final String TASK_ID_INPUT = "input"; //$NON-NLS-1$
 
-	public static final String TASK_ID_JAVA_MAPPING = "java_mapping";
+	public static final String TASK_ID_JAVA_MAPPING = "java_mapping"; //$NON-NLS-1$
 
-	public static final String TASK_ID_XSL_TEMPLATE = "xsl_template";
+	public static final String TASK_ID_XSL_TEMPLATE = "xsl_template"; //$NON-NLS-1$
 
-	public static final String TASK_ID_FREEMARKER_TEMPLATE = "freemarker_template";
+	public static final String TASK_ID_FREEMARKER_TEMPLATE = "freemarker_template"; //$NON-NLS-1$
 
 	private static List<TaskTypeDescriptor> allTaskList = null;
 
@@ -59,10 +59,10 @@ public class TaskTypeManager {
 			allTaskList = new ArrayList<TaskTypeDescriptor>();
 
 			// init
-			allTaskList.add(new TaskTypeDescriptor(TASK_ID_INPUT, "Input", GraphicsConstants.IMAGE_INPUT_TASK));
-			allTaskList.add(new TaskTypeDescriptor(TASK_ID_JAVA_MAPPING, "Java Mapping",
+			allTaskList.add(new TaskTypeDescriptor(TASK_ID_INPUT, Messages.TaskTypeManager_Input, GraphicsConstants.IMAGE_INPUT_TASK));
+			allTaskList.add(new TaskTypeDescriptor(TASK_ID_JAVA_MAPPING, Messages.TaskTypeManager_JavaMappingTaskLabel,
 					GraphicsConstants.IMAGE_JAVA_AMPPING_TASK));
-			allTaskList.add(new TaskTypeDescriptor(TASK_ID_FREEMARKER_TEMPLATE, "Apply Template",
+			allTaskList.add(new TaskTypeDescriptor(TASK_ID_FREEMARKER_TEMPLATE, Messages.TaskTypeManager_ApplyTemplateTaskLabel,
 					GraphicsConstants.IMAGE_APPLY_FREEMARKER_TASK));
 		}
 		return allTaskList;
@@ -92,19 +92,19 @@ public class TaskTypeManager {
 	public static String getTaskLabel(String taskId) {
 		if (taskId != null) {
 			if (taskId.equals(TASK_ID_FREEMARKER_TEMPLATE)) {
-				return "Apply Template";
+				return Messages.TaskTypeManager_ApplyTemplateTaskLabel;
 			}
 			if (taskId.equals(TASK_ID_INPUT)) {
-				return "Input Task";
+				return Messages.TaskTypeManager_InputTaskLabel;
 			}
 			if (taskId.equals(TASK_ID_JAVA_MAPPING)) {
-				return "Java Mapping";
+				return Messages.TaskTypeManager_JavaMappingTaskLabel;
 			}
 			if (taskId.equals(TASK_ID_XSL_TEMPLATE)) {
-				return "Apply XSL Template";
+				return Messages.TaskTypeManager_ApplyXSLTemplateTaskLabel;
 			}
 		}
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	/**

@@ -17,7 +17,7 @@ public class Validation10ActionGrouper extends AbstractSmooksActionGrouper {
 	}
 
 	public String getGroupName() {
-		return "Validation";
+		return Messages.Validation10ActionGrouper_GroupName;
 	}
 
 }

@@ -60,7 +60,7 @@ public class InserterUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return createElementSelectionSection("Insert On Element", editingdomain, toolkit, parent, model, formEditor,
+		return createElementSelectionSection(Messages.InserterUICreator_InsertOnElementGroupText, editingdomain, toolkit, parent, model, formEditor,
 				part, Persistence12Package.Literals.INSERTER__INSERT_ON_ELEMENT,
 				Persistence12Package.Literals.INSERTER__INSERT_ON_ELEMENT_NS);
 	}

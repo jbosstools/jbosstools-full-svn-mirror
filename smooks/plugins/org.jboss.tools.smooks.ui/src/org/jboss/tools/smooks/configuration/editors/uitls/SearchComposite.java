@@ -46,7 +46,7 @@ public class SearchComposite extends Composite {
 			textStyle = SWT.BORDER;
 		}
 		if (toolkit != null) {
-			text = toolkit.createText(this, "" , textStyle);
+			text = toolkit.createText(this, "" , textStyle); //$NON-NLS-1$
 		} else {
 			text = new Text(this, SWT.BORDER);
 		}

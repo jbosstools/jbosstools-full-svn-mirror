@@ -82,7 +82,7 @@ public class NewOrModifySmooksElementDialog extends Dialog {
 		// create OK and Cancel buttons by default
 		String okLabel = IDialogConstants.OK_LABEL;
 		if (modify) {
-			okLabel = "Close";
+			okLabel = Messages.NewOrModifySmooksElementDialog_CloseButtonLabel;
 		}
 		createButton(parent, IDialogConstants.OK_ID, okLabel, true);
 		if (!modify) {

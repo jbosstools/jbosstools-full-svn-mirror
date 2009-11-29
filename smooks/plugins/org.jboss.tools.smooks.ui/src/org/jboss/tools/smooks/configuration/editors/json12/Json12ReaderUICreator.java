@@ -60,7 +60,7 @@ public class Json12ReaderUICreator extends PropertyUICreator {
 			EObject keyMap = ((Json12Reader) model).getKeyMap();
 			if (keyMap != null) {
 				Group group = new Group(parent, SWT.NONE);
-				group.setText("Key Maps");
+				group.setText(Messages.Json12ReaderUICreator_KeyMapsLabel);
 				group.setBackground(ColorConstants.white);
 				FillLayout fl = new FillLayout();
 				group.setLayout(fl);

@@ -96,7 +96,7 @@ public class JavabeanValueUICreator extends PropertiesAndSetterMethodSearchField
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		List<AttributeFieldEditPart> list = createElementSelectionSection("Data", editingdomain, toolkit, parent,
+		List<AttributeFieldEditPart> list = createElementSelectionSection(Messages.JavabeanValueUICreator_DatagroupName, editingdomain, toolkit, parent,
 				model, formEditor,part, JavabeanPackage.eINSTANCE.getValueType_Data(), JavabeanPackage.eINSTANCE
 						.getValueType_DataNS());
 		Composite groupParent = parent;

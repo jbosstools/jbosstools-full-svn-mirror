@@ -13,7 +13,7 @@ public class Scripting11ActionGrouper extends AbstractSmooksActionGrouper {
 	}
 
 	public String getGroupName() {
-		return "Scripting";
+		return Messages.Scripting11ActionGrouper_GroupName;
 	}
 
 }

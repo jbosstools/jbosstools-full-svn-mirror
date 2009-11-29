@@ -48,8 +48,8 @@ public class ScriptUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit, Composite parent, Object model,
 			ISmooksModelProvider formEditor, IEditorPart part) {
-		OpenEditorEditInnerContentsAction action2 = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "groovy");
-		AttributeFieldEditPart editPart = SmooksUIUtils.createCommentFieldEditor("Script Contents", editingdomain, toolkit, parent, model, action2);
+		OpenEditorEditInnerContentsAction action2 = new OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model, SmooksUIUtils.VALUE_TYPE_COMMENT, "groovy"); //$NON-NLS-1$
+		AttributeFieldEditPart editPart = SmooksUIUtils.createCommentFieldEditor(Messages.ScriptUICreator_1, editingdomain, toolkit, parent, model, action2);
 		action2.setRelateText((Text)editPart.getContentControl());
 		return Collections.emptyList();
 	}

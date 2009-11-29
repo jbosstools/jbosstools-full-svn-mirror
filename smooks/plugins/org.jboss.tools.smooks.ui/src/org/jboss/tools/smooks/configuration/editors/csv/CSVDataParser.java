@@ -40,21 +40,21 @@ import org.milyn.payload.StringResult;
  */
 public class CSVDataParser {
 
-	public static final String LINK_CSV_READER = "linkCSVReader";
+	public static final String LINK_CSV_READER = "linkCSVReader"; //$NON-NLS-1$
 
-	public static final String SEPARATOR = "separator";
+	public static final String SEPARATOR = "separator"; //$NON-NLS-1$
 
-	public static final String QUOTECHAR = "quoteChar";
+	public static final String QUOTECHAR = "quoteChar"; //$NON-NLS-1$
 
-	public static final String SKIPLINES = "skiplines";
+	public static final String SKIPLINES = "skiplines"; //$NON-NLS-1$
 
-	public static final String ENCODING = "encoding";
+	public static final String ENCODING = "encoding"; //$NON-NLS-1$
 
-	public static final String FIELDS = "fields";
+	public static final String FIELDS = "fields"; //$NON-NLS-1$
 
-	public static final String ROOT_ELEMENT_NAME = "rootElementName";
+	public static final String ROOT_ELEMENT_NAME = "rootElementName"; //$NON-NLS-1$
 
-	public static final String RECORD_NAME = "recordName";
+	public static final String RECORD_NAME = "recordName"; //$NON-NLS-1$
 
 	public TagList parseCSV(String filePath, SmooksResourceListType resourceList)
 			throws FileNotFoundException, DocumentException, InvocationTargetException, ParserConfigurationException {
@@ -140,11 +140,11 @@ public class CSVDataParser {
 			return null;
 		}
 		if (quoteChar == null)
-			quoteChar = "\"";
+			quoteChar = "\""; //$NON-NLS-1$
 		if (skiplines == null)
-			skiplines = "0";
+			skiplines = "0"; //$NON-NLS-1$
 		if (encoding == null)
-			encoding = "UTF-8";
+			encoding = "UTF-8"; //$NON-NLS-1$
 
 		CSVReaderConfigurator readerConfigurator = new CSVReaderConfigurator(fields);
 		if (separator != null && separator.length() >= 1) {

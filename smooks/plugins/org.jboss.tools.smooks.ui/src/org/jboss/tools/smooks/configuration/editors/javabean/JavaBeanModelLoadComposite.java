@@ -142,9 +142,9 @@ public class JavaBeanModelLoadComposite extends Composite implements SelectionLi
 
 		listViewer = new TableViewer(listViewerComposite, SWT.BORDER |SWT.FULL_SELECTION);
 		TableColumn nameColumn = new TableColumn(listViewer.getTable(), SWT.NONE);
-		nameColumn.setText("Class");
+		nameColumn.setText("Class"); //$NON-NLS-1$
 		TableColumn isArrayColumn = new TableColumn(listViewer.getTable(), SWT.NONE);
-		isArrayColumn.setText("Is Array");
+		isArrayColumn.setText("Is Array"); //$NON-NLS-1$
 //		TableColumn isListColumn = new TableColumn(listViewer.getTable(), SWT.NONE);
 //		isListColumn.setText("List");
 
@@ -186,13 +186,13 @@ public class JavaBeanModelLoadComposite extends Composite implements SelectionLi
 		buttonArea.setLayout(buttonAreaLayout);
 
 		Button addButton = new Button(buttonArea, SWT.NONE);
-		addButton.setText("Add");
+		addButton.setText("Add"); //$NON-NLS-1$
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		addButton.setLayoutData(gd);
 		addButton.addSelectionListener(this);
 
 		Button removeButton = new Button(buttonArea, SWT.NONE);
-		removeButton.setText("Remove");
+		removeButton.setText("Remove"); //$NON-NLS-1$
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		removeButton.setLayoutData(gd);
 		removeButton.addSelectionListener(new SelectionAdapter() {
@@ -300,17 +300,17 @@ public class JavaBeanModelLoadComposite extends Composite implements SelectionLi
 	private class BeanViewerCellModifyer implements ICellModifier {
 
 		public boolean canModify(Object element, String property) {
-			if (property.equals("name"))
+			if (property.equals("name")) //$NON-NLS-1$
 				return false;
 			return true;
 		}
 
 		public Object getValue(Object element, String property) {
 			if (element instanceof JavaBeanModel) {
-				if (property.equals("array")) {
+				if (property.equals("array")) { //$NON-NLS-1$
 					return ((JavaBeanModel) element).isArray();
 				}
-				if (property.equals("list")) {
+				if (property.equals("list")) { //$NON-NLS-1$
 					return ((JavaBeanModel) element).isList();
 				}
 			}
@@ -328,8 +328,8 @@ public class JavaBeanModelLoadComposite extends Composite implements SelectionLi
 		public Image getColumnImage(Object element, int columnIndex) {
 
 			if (element instanceof JavaBeanModel) {
-				boolean isArray = "array".equals(((JavaBeanModel) element).getExtendProperty("many"));
-				boolean isList = "list".equals(((JavaBeanModel) element).getExtendProperty("many"));
+				boolean isArray = "array".equals(((JavaBeanModel) element).getExtendProperty("many")); //$NON-NLS-1$ //$NON-NLS-2$
+				boolean isList = "list".equals(((JavaBeanModel) element).getExtendProperty("many")); //$NON-NLS-1$ //$NON-NLS-2$
 				switch (columnIndex) {
 				case 0:
 					if (isArray) {
@@ -400,19 +400,19 @@ public class JavaBeanModelLoadComposite extends Composite implements SelectionLi
 				Object element = cell.getElement();
 				if (element instanceof JavaBeanModel) {
 					if (cell.getColumnIndex() == 1) {
-						String many = ((JavaBeanModel) element).getExtendProperty("many");
-						if ("array".equals(many)) {
-							((JavaBeanModel) element).addExtendProperty("many", "");
+						String many = ((JavaBeanModel) element).getExtendProperty("many"); //$NON-NLS-1$
+						if ("array".equals(many)) { //$NON-NLS-1$
+							((JavaBeanModel) element).addExtendProperty("many", ""); //$NON-NLS-1$ //$NON-NLS-2$
 						} else {
-							((JavaBeanModel) element).addExtendProperty("many", "array");
+							((JavaBeanModel) element).addExtendProperty("many", "array"); //$NON-NLS-1$ //$NON-NLS-2$
 						}
 					}
 					if (cell.getColumnIndex() == 2) {
-						String many = ((JavaBeanModel) element).getExtendProperty("many");
-						if ("list".equals(many)) {
-							((JavaBeanModel) element).addExtendProperty("many", "");
+						String many = ((JavaBeanModel) element).getExtendProperty("many"); //$NON-NLS-1$
+						if ("list".equals(many)) { //$NON-NLS-1$
+							((JavaBeanModel) element).addExtendProperty("many", ""); //$NON-NLS-1$ //$NON-NLS-2$
 						} else {
-							((JavaBeanModel) element).addExtendProperty("many", "list");
+							((JavaBeanModel) element).addExtendProperty("many", "list"); //$NON-NLS-1$ //$NON-NLS-2$
 						}
 					}
 					try {

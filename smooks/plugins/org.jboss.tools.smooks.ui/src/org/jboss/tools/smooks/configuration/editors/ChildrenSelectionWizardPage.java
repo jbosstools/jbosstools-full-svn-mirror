@@ -96,7 +96,7 @@ public class ChildrenSelectionWizardPage extends WizardPage {
 	protected void updatePage() {
 		String error = null;
 		if (child == null) {
-			error = "Please choose a child type";
+			error = Messages.ChildrenSelectionWizardPage_selectchilderror;
 		}
 
 		this.setErrorMessage(error);
@@ -108,8 +108,8 @@ public class ChildrenSelectionWizardPage extends WizardPage {
 		super(pageName, title, titleImage);
 		this.childrenDescriptor = childrenDescriptor;
 		this.editingDomain = editingDomain;
-		this.setTitle("Select a Child's Type");
-		this.setDescription("Select a child's type");
+		this.setTitle(Messages.ChildrenSelectionWizardPage_wizardtitle);
+		this.setDescription(Messages.ChildrenSelectionWizardPage_wizardtitle);
 	}
 
 	public ChildrenSelectionWizardPage(Collection<?> childrenDescriptor,
@@ -117,8 +117,8 @@ public class ChildrenSelectionWizardPage extends WizardPage {
 		super(pageName);
 		this.childrenDescriptor = childrenDescriptor;
 		this.editingDomain = editingDomain;
-		this.setTitle("Select a Child's Type");
-		this.setDescription("Select a child's type");
+		this.setTitle(Messages.ChildrenSelectionWizardPage_wizardtitle);
+		this.setDescription(Messages.ChildrenSelectionWizardPage_wizardtitle);
 	}
 
 	private Object getValue(Object element) {

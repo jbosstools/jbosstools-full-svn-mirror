@@ -34,7 +34,7 @@ import org.jboss.tools.smooks.graphical.editors.SmooksProcessGraphicalEditor;
 public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements ISelectionProvider,
 		ITabbedPropertySheetPageContributor {
 
-	public static final String EDITOR_ID = "org.jboss.tools.smooks.configuration.editors.MultiPageEditor";
+	public static final String EDITOR_ID = "org.jboss.tools.smooks.configuration.editors.MultiPageEditor"; //$NON-NLS-1$
 
 	private SmooksConfigurationFormPage configurationPage;
 
@@ -77,7 +77,7 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 		addSourceSynchronizeListener(optionsPage);
 		try {
 			int index = this.addPage(optionsPage);
-			setPageText(index, "Options");
+			setPageText(index, Messages.SmooksMultiFormEditor_opetiontab_label);
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
@@ -98,12 +98,12 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 	}
 
 	private void addProcessGraphicalEditor() {
-		processPage = new SmooksProcessGraphicalEditor(this, "process", "Processing", this);
+		processPage = new SmooksProcessGraphicalEditor(this, "process", Messages.SmooksMultiFormEditor_processpage_name, this); //$NON-NLS-1$
 		addSourceSynchronizeListener(processPage);
 		addValidateListener(processPage);
 		try {
 			int index = this.addPage(processPage);
-			setPageText(index, "Process");
+			setPageText(index, Messages.SmooksMultiFormEditor_processtabel_label);
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
@@ -135,7 +135,7 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 	// }
 
 	private SmooksConfigurationOverviewPage createSmooksConfigurationOverviewPage() {
-		return new SmooksConfigurationOverviewPage(this, "options_page", "Options", this);
+		return new SmooksConfigurationOverviewPage(this, "options_page", Messages.SmooksMultiFormEditor_optinepage_name, this); //$NON-NLS-1$
 	}
 
 	@Override
@@ -147,7 +147,7 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 	}
 
 	protected SmooksConfigurationFormPage createSmooksConfigurationFormPage() {
-		return new SmooksConfigurationResourceConfigPage(this, "message_filter_page", "Design Page");
+		return new SmooksConfigurationResourceConfigPage(this, "message_filter_page", "Design Page"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/*

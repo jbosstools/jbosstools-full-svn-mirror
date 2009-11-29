@@ -314,7 +314,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 				String name = model.toString();
 				Object v = null;
 				try {
-					Method method = typeClass.getInstanceClass().getMethod("get", new Class<?>[] { String.class });
+					Method method = typeClass.getInstanceClass().getMethod("get", new Class<?>[] { String.class }); //$NON-NLS-1$
 					// it's static method
 					if (method != null) {
 						v = method.invoke(null, name);
@@ -336,12 +336,12 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 			public Object unwrapValue(Object model) {
 				if (model instanceof Boolean) {
 					if ((Boolean) model) {
-						return "TRUE";
+						return "TRUE"; //$NON-NLS-1$
 					} else {
-						return "FALSE";
+						return "FALSE"; //$NON-NLS-1$
 					}
 				}
-				return "FALSE";
+				return "FALSE"; //$NON-NLS-1$
 			}
 
 			public Object wrapValue(Object model) {
@@ -354,7 +354,7 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 
 		};
 		return SmooksUIUtils.createChoiceFieldEditor(propertyComposite, formToolkit, itemPropertyDescriptor,
-				getModel(), new String[] { "TRUE", "FALSE" }, processer, true);
+				getModel(), new String[] { "TRUE", "FALSE" }, processer, true); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	protected AttributeFieldEditPart createStringFieldEditor(final Composite propertyComposite, EAttribute feature,
