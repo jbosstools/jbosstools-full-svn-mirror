@@ -327,9 +327,29 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		for (int i = 0; i < readerTypeList.size(); i++) {
 			Object r = readerTypeList.get(i);
 			if (r instanceof EObject) {
-				if (r.getClass() == reader.getClass()) {
-					readerCombo.select(i);
-					break;
+				if (CsvReader.class.isInstance(reader) || CSV12Reader.class.isInstance(reader)) {
+					if (CsvReader.class.isInstance(r) || CSV12Reader.class.isInstance(r)) {
+						readerCombo.select(i);
+						break;
+					}
+				}
+				if (EDIReader.class.isInstance(reader) || EDI12Reader.class.isInstance(reader)) {
+					if (EDIReader.class.isInstance(r) || EDI12Reader.class.isInstance(r)) {
+						readerCombo.select(i);
+						break;
+					}
+				}
+				if (JsonReader.class.isInstance(reader) || Json12Reader.class.isInstance(reader)) {
+					if (JsonReader.class.isInstance(r) || Json12Reader.class.isInstance(r)) {
+						readerCombo.select(i);
+						break;
+					}
+				}
+				if (ReaderType.class.isInstance(reader)) {
+					if (ReaderType.class.isInstance(r)) {
+						readerCombo.select(i);
+						break;
+					}
 				}
 			}
 		}
