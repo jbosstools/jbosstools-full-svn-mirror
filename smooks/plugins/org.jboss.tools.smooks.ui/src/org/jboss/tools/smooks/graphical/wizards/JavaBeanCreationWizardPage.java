@@ -81,16 +81,16 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 		super(pageName, title, titleImage);
 		this.project = project;
 		this.exsitingBeanIDs = exsitingBeanIDs;
-		this.setTitle("Java Bean Creation");
-		this.setDescription("Create a Java Bean model");
+		this.setTitle(Messages.JavaBeanCreationWizardPage_WizardTitle);
+		this.setDescription(Messages.JavaBeanCreationWizardPage_WizardDes);
 	}
 
 	public JavaBeanCreationWizardPage(String pageName, IJavaProject project, List<String> exsitingBeanIDs) {
 		super(pageName);
 		this.project = project;
 		this.exsitingBeanIDs = exsitingBeanIDs;
-		this.setTitle("Java Bean Creation");
-		this.setDescription("Create a Java Bean model");
+		this.setTitle(Messages.JavaBeanCreationWizardPage_WizardTitle);
+		this.setDescription(Messages.JavaBeanCreationWizardPage_WizardDes);
 	}
 
 	/**
@@ -248,7 +248,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 
 		Label beanTypeLabel = new Label(mainComposite, SWT.NONE);
-		beanTypeLabel.setText("Bean Type :");
+		beanTypeLabel.setText(Messages.JavaBeanCreationWizardPage_BeanTypeLabel);
 
 		Composite composite = new Composite(mainComposite, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -262,13 +262,13 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 		composite.setLayout(gl);
 
 		arrayButton = new Button(composite, SWT.CHECK);
-		arrayButton.setText("Array");
+		arrayButton.setText(Messages.JavaBeanCreationWizardPage_ArrayButtonText);
 
 		final Button collectionButton = new Button(composite, SWT.CHECK);
-		collectionButton.setText("Collection");
+		collectionButton.setText(Messages.JavaBeanCreationWizardPage_CollectionButtonLabel);
 
 		Label beanClassLabel = new Label(mainComposite, SWT.NONE);
-		beanClassLabel.setText("Collection Class :");
+		beanClassLabel.setText(Messages.JavaBeanCreationWizardPage_CollectionClassLabel);
 
 		Composite beanClassComposite = new Composite(mainComposite, SWT.NONE);
 		GridLayout gl1 = new GridLayout();
@@ -300,7 +300,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 		beanClassComposite.setLayoutData(gd);
 
 		collectionClassBrowseButton = new Button(beanClassComposite, SWT.NONE);
-		collectionClassBrowseButton.setText("Browse...");
+		collectionClassBrowseButton.setText(Messages.JavaBeanCreationWizardPage_BrowseButtonLabel);
 		collectionClassBrowseButton.addSelectionListener(new SelectionAdapter() {
 
 			/*
@@ -368,7 +368,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 					colllectionClassText.setEnabled(false);
 				}
 				updateWizardPageStatus();
-				viewer.setInput("");
+				viewer.setInput(""); //$NON-NLS-1$
 			}
 
 		});
@@ -378,8 +378,8 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 	}
 
 	protected void refreshJavaBeanModel() {
-		if (beanClass == null || "".equals(beanClass.trim())) {
-			viewer.setInput("");
+		if (beanClass == null || "".equals(beanClass.trim())) { //$NON-NLS-1$
+			viewer.setInput(""); //$NON-NLS-1$
 		} else {
 			try {
 				ProjectClassLoader loader = new ProjectClassLoader(project);
@@ -392,7 +392,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 						javaBeanModel = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
 						javaBeanModel.setComponentClass(cclazz);
 					} else {
-						viewer.setInput("");
+						viewer.setInput(""); //$NON-NLS-1$
 					}
 				} else {
 					Class<?> clazz = loader.loadClass(beanClass);
@@ -409,19 +409,19 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 					viewer.setInput(javaBeanModel.getChildren());
 					viewer.setCheckedElements(javaBeanModel.getChildren().toArray());
 				} else {
-					viewer.setInput("");
+					viewer.setInput(""); //$NON-NLS-1$
 				}
 			} catch (JavaModelException e1) {
-				viewer.setInput("");
+				viewer.setInput(""); //$NON-NLS-1$
 			} catch (ClassNotFoundException e1) {
-				viewer.setInput("");
+				viewer.setInput(""); //$NON-NLS-1$
 			}
 		}
 	}
 
 	private void createBeanClassControls(Composite mainComposite) {
 		Label beanClassLabel = new Label(mainComposite, SWT.NONE);
-		beanClassLabel.setText("Bean Class :");
+		beanClassLabel.setText(Messages.JavaBeanCreationWizardPage_BeanClassLabel);
 
 		Composite beanClassComposite = new Composite(mainComposite, SWT.NONE);
 		GridLayout gl = new GridLayout();
@@ -453,7 +453,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 				} else {
 					collectionClassBrowseButton.setEnabled(false);
 					colllectionClassText.setEnabled(false);
-					colllectionClassText.setText("");
+					colllectionClassText.setText(""); //$NON-NLS-1$
 				}
 				refreshJavaBeanModel();
 				updateWizardPageStatus();
@@ -463,7 +463,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 		beanClassComposite.setLayoutData(gd);
 
 		Button javaTypeBrowseButton = new Button(beanClassComposite, SWT.NONE);
-		javaTypeBrowseButton.setText("Browse...");
+		javaTypeBrowseButton.setText(Messages.JavaBeanCreationWizardPage_BrowseButtonLabel);
 		javaTypeBrowseButton.addSelectionListener(new SelectionAdapter() {
 
 			/*
@@ -499,7 +499,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 
 	private void createBeanIDControls(Composite mainComposite) {
 		Label beanIDLabel = new Label(mainComposite, SWT.NONE);
-		beanIDLabel.setText("Bean ID :");
+		beanIDLabel.setText(Messages.JavaBeanCreationWizardPage_BeanIDLabel);
 
 		Text beanIDText = new Text(mainComposite, SWT.BORDER);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -517,21 +517,21 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 
 	protected void updateWizardPageStatus() {
 		String error = null;
-		if (beanID == null || "".equals(beanID.trim())) {
-			error = "Bean ID is empty";
+		if (beanID == null || "".equals(beanID.trim())) { //$NON-NLS-1$
+			error = Messages.JavaBeanCreationWizardPage_BeanIDEmptyErrorMessage;
 		} else {
 			if (exsitingBeanIDs != null) {
 				beanID = beanID.trim();
 				for (Iterator<?> iterator = exsitingBeanIDs.iterator(); iterator.hasNext();) {
 					String id = (String) iterator.next();
 					if (id.equals(beanID)) {
-						error = "Bean ID '" + beanID + "' is duplicate";
+						error = Messages.JavaBeanCreationWizardPage_BeanIDDuplicateErrorMessage1 + beanID + Messages.JavaBeanCreationWizardPage_BeanIDDuplicateErrorMessage2;
 					}
 				}
 			}
 		}
-		if (beanClass == null || "".equals(beanClass.trim())) {
-			error = "Bean Class is empty";
+		if (beanClass == null || "".equals(beanClass.trim())) { //$NON-NLS-1$
+			error = Messages.JavaBeanCreationWizardPage_BeanClassEmptyErrorMessage;
 		} else {
 			try {
 				beanClass = beanClass.trim();
@@ -540,13 +540,13 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 			} catch (JavaModelException e) {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				error = "Can't find the class \"" + beanClass + "\"";
+				error = Messages.JavaBeanCreationWizardPage_CatFindClassErrorMessage1 + beanClass + Messages.JavaBeanCreationWizardPage_27;
 			}
 		}
 
 		if (isCollection) {
-			if (collectionClass == null || "".equals(collectionClass.trim())) {
-				error = "Colletion component class is empty";
+			if (collectionClass == null || "".equals(collectionClass.trim())) { //$NON-NLS-1$
+				error = Messages.JavaBeanCreationWizardPage_CollectionComponentClassEmptyErrorMessage;
 			} else {
 				try {
 					ProjectClassLoader loader = new ProjectClassLoader(project);
@@ -554,7 +554,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 				} catch (JavaModelException e) {
 					e.printStackTrace();
 				} catch (ClassNotFoundException e) {
-					error = "Can't find the class \"" + beanClass;
+					error = Messages.JavaBeanCreationWizardPage_CatFindClassErrorMessage1 + beanClass;
 				}
 			}
 		}

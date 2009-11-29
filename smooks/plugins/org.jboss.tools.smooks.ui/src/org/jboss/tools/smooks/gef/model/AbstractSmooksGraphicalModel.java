@@ -33,29 +33,29 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode, IValidata
 	
 	private List<String> messages = null;
 
-	public static final String PRO_ADD_CHILD = "_pro_add_child";
+	public static final String PRO_ADD_CHILD = "_pro_add_child"; //$NON-NLS-1$
 
-	public static final String PRO_MOVE_CHILD = "_pro_move_child";
+	public static final String PRO_MOVE_CHILD = "_pro_move_child"; //$NON-NLS-1$
 
-	public static final String PRO_REMOVE_CHILD = "_pro_remove_child";
+	public static final String PRO_REMOVE_CHILD = "_pro_remove_child"; //$NON-NLS-1$
 
-	public static final String PRO_ADD_SOURCE_CONNECTION = "_pro_add_source_connected";
+	public static final String PRO_ADD_SOURCE_CONNECTION = "_pro_add_source_connected"; //$NON-NLS-1$
 
-	public static final String PRO_SEVERITY_CHANGED = "_pro_severity_changed";
+	public static final String PRO_SEVERITY_CHANGED = "_pro_severity_changed"; //$NON-NLS-1$
 
-	public static final String PRO_ADD_TARGET_CONNECTION = "_pro_add_target_connected";
+	public static final String PRO_ADD_TARGET_CONNECTION = "_pro_add_target_connected"; //$NON-NLS-1$
 
-	public static final String PRO_REMOVE_SOURCE_CONNECTION = "_pro_remove_source_connected";
+	public static final String PRO_REMOVE_SOURCE_CONNECTION = "_pro_remove_source_connected"; //$NON-NLS-1$
 
-	public static final String PRO_REMOVE_TARGET_CONNECTION = "_pro_remove_target_connected";
+	public static final String PRO_REMOVE_TARGET_CONNECTION = "_pro_remove_target_connected"; //$NON-NLS-1$
 
-	public static final String PRO_TEXT_CHANGED = "_pro_text_changed";
+	public static final String PRO_TEXT_CHANGED = "_pro_text_changed"; //$NON-NLS-1$
 
-	public static final String PRO_FORCE_VISUAL_CHANGED = "_pro_force_text_changed";
+	public static final String PRO_FORCE_VISUAL_CHANGED = "_pro_force_text_changed"; //$NON-NLS-1$
 
-	public static final String PRO_FORCE_CHIDLREN_CHANGED = "_pro_force_children_changed";
+	public static final String PRO_FORCE_CHIDLREN_CHANGED = "_pro_force_children_changed"; //$NON-NLS-1$
 
-	public static final String PRO_FORCE_CONNECTION_CHANGED = "_pro_force_connection_changed";
+	public static final String PRO_FORCE_CONNECTION_CHANGED = "_pro_force_connection_changed"; //$NON-NLS-1$
 
 	protected Object data = null;
 

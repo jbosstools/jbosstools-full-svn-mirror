@@ -53,8 +53,8 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 
 	public FreemarkerCSVCreationWizardPage(String pageName) {
 		super(pageName);
-		this.setTitle("CSV Template Configuration");
-		this.setDescription("Configurate CSV Template");
+		this.setTitle(Messages.FreemarkerCSVCreationWizardPage_WizardTitle);
+		this.setDescription(Messages.FreemarkerCSVCreationWizardPage_WizardDes);
 	}
 
 	/**
@@ -96,14 +96,14 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 		mainComposite.setLayout(layout);
 
 		Label seperatorLabel = new Label(mainComposite, SWT.NONE);
-		seperatorLabel.setText("Seperator Character : ");
+		seperatorLabel.setText(Messages.FreemarkerCSVCreationWizardPage_SeperatorCharLabel);
 		seperatorText = new Text(mainComposite, SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		seperatorText.setLayoutData(gd);
 		seperatorText.setTextLimit(1);
 		
 		Label quoteLabel = new Label(mainComposite, SWT.NONE);
-		quoteLabel.setText("Quote Character : ");
+		quoteLabel.setText(Messages.FreemarkerCSVCreationWizardPage_QuoteCharLabel);
 		quoteText = new Text(mainComposite, SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		quoteText.setLayoutData(gd);
@@ -115,7 +115,7 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 		gd.heightHint = 200;
 		gd.horizontalSpan = 2;
 		Group fieldsComposite = new Group(mainComposite, SWT.NONE);
-		fieldsComposite.setText("Fields");
+		fieldsComposite.setText(Messages.FreemarkerCSVCreationWizardPage_FieldsGroupText);
 		fieldsComposite.setLayoutData(gd);
 		GridLayout gl = new GridLayout();
 		gl.numColumns = 2;
@@ -137,7 +137,7 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 
 		fieldsViewer.setCellEditors(new CellEditor[] { fieldCellEditor });
 
-		fieldsViewer.setColumnProperties(new String[] { "field" });
+		fieldsViewer.setColumnProperties(new String[] { "field" }); //$NON-NLS-1$
 
 		fieldsViewer.setCellModifier(new ICellModifier() {
 
@@ -149,7 +149,7 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 				if (el == null)
 					return;
 				if (el instanceof FieldText && value instanceof String) {
-					if (property.equals("field")) {
+					if (property.equals("field")) { //$NON-NLS-1$
 						if (value.toString().equals(((FieldText) el).getText())) {
 							return;
 						}
@@ -162,7 +162,7 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 
 			public Object getValue(Object element, String property) {
 				if (element instanceof FieldText) {
-					if (property.equals("field")) {
+					if (property.equals("field")) { //$NON-NLS-1$
 						return ((FieldText) element).getText();
 					}
 				}
@@ -172,7 +172,7 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 
 			public boolean canModify(Object element, String property) {
 				if (element instanceof FieldText) {
-					if (property.equals("field")) {
+					if (property.equals("field")) { //$NON-NLS-1$
 						return true;
 					}
 				}
@@ -180,7 +180,7 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 			}
 		});
 		if (fields == null) {
-			fields = "";
+			fields = ""; //$NON-NLS-1$
 		}
 		fillFieldsList(fields);
 		fieldsViewer.setInput(fieldsList);
@@ -197,18 +197,18 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 
 		final Button addButton = new Button(buttonComposite, SWT.NONE);
 		addButton.setLayoutData(gd);
-		addButton.setText("Add Field");
+		addButton.setText(Messages.FreemarkerCSVCreationWizardPage_AddFieldButtonText);
 
 		final Button removeButton = new Button(buttonComposite, SWT.NONE);
 		removeButton.setLayoutData(gd);
-		removeButton.setText("Remove");
+		removeButton.setText(Messages.FreemarkerCSVCreationWizardPage_RemoveFieldButtonLabel);
 
 		addButton.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
 				addButton.setEnabled(false);
 				try {
-					FieldText field = new FieldText("field");
+					FieldText field = new FieldText("field"); //$NON-NLS-1$
 					fieldsList.add(field);
 					fieldsViewer.refresh();
 					updatePage();
@@ -241,8 +241,8 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 
 		this.setControl(mainComposite);
 		
-		seperatorText.setText(",");
-		quoteText.setText("\"");
+		seperatorText.setText(","); //$NON-NLS-1$
+		quoteText.setText("\""); //$NON-NLS-1$
 		
 		seperatorText.addModifyListener(new ModifyListener() {
 
@@ -265,8 +265,8 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 			return;
 		String input = fieldsString.toString();
 		input = input.trim();
-		if (input.indexOf(",") != -1) {
-			String[] fields = input.split(",");
+		if (input.indexOf(",") != -1) { //$NON-NLS-1$
+			String[] fields = input.split(","); //$NON-NLS-1$
 			if (fields != null && fields.length > 0) {
 				for (int i = 0; i < fields.length; i++) {
 					String field = fields[i];
@@ -286,20 +286,20 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 		String seperator = seperatorText.getText();
 		String quote = quoteText.getText();
 		if (seperator == null || seperator.length() == 0) {
-			error = "Seperator can't be null";
+			error = Messages.FreemarkerCSVCreationWizardPage_SeperatorEmptyErrorMessage;
 		}
 		if (quote == null || quote.length() == 0) {
-			error = "Quote can't be null";
+			error = Messages.FreemarkerCSVCreationWizardPage_QuoteEmptyErrorMessage;
 		}
 
 		if (seperator != null && seperator.length() > 1) {
-			error = "Seperator must be only one character";
+			error = "Seperator must be only one character"; //$NON-NLS-1$
 		}
 		if (quote != null && quote.length() > 1) {
-			error = "Quote must be only one character";
+			error = "Quote must be only one character"; //$NON-NLS-1$
 		}
 		if (fieldsList.isEmpty()) {
-			error = "Fields can't be null";
+			error = Messages.FreemarkerCSVCreationWizardPage_FieldEmptyErrorMessage;
 		}
 		this.setErrorMessage(error);
 		this.setPageComplete(error == null);

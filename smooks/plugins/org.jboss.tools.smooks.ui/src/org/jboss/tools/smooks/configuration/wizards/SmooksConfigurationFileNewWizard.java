@@ -48,7 +48,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 	public SmooksConfigurationFileNewWizard() {
 		super();
 		setNeedsProgressMonitor(true);
-		setDefaultPageImageDescriptor(SmooksConfigurationActivator.getImageDescriptor("icons/smooks-wiz.gif"));
+		setDefaultPageImageDescriptor(SmooksConfigurationActivator.getImageDescriptor(Messages.SmooksConfigurationFileNewWizard_0));
 	}
 
 	/**
@@ -56,11 +56,11 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 	 */
 
 	public void addPages() {
-		containerSelectionPage = new SmooksFileContainerSelectionPage("Smooks Configuration File",
+		containerSelectionPage = new SmooksFileContainerSelectionPage(Messages.SmooksConfigurationFileNewWizard_PageName,
 				(IStructuredSelection) selection);
 		addPage(containerSelectionPage);
 
-		versionSelectionPage = new SmooksVersionSelectionPage("Smooks Version Selection");
+		versionSelectionPage = new SmooksVersionSelectionPage(Messages.SmooksConfigurationFileNewWizard_VersionPageName);
 		addPage(versionSelectionPage);
 	}
 
@@ -89,7 +89,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 			return false;
 		} catch (InvocationTargetException e) {
 			Throwable realException = e.getTargetException();
-			MessageDialog.openError(getShell(), "Error", realException.getMessage());
+			MessageDialog.openError(getShell(), Messages.SmooksConfigurationFileNewWizard_ErrorDialogTitle, realException.getMessage());
 			return false;
 		}
 		return true;
@@ -104,7 +104,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 	private void doFinish(IPath containerPath, String fileName, IProgressMonitor monitor, String version)
 			throws CoreException {
 		// create a sample file
-		monitor.beginTask("Creating " + fileName, 2);
+		monitor.beginTask("Creating " + fileName, 2); //$NON-NLS-1$
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IResource resource = root.findMember(containerPath);
 		IContainer container = null;
@@ -112,7 +112,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 			container = (IContainer) resource;
 		}
 		if (container == null)
-			throwCoreException("Container \"" + containerPath.toPortableString() + "\" does not exist.");
+			throwCoreException("Container \"" + containerPath.toPortableString() + "\" does not exist."); //$NON-NLS-1$ //$NON-NLS-2$
 		final IFile configFile = container.getFile(new Path(fileName));
 		// String extFileName = fileName + ".ext";
 		// final IFile extFile = container.getFile(new Path(extFileName));
@@ -131,7 +131,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 			SmooksConfigurationActivator.getDefault().log(e);
 		}
 		monitor.worked(1);
-		monitor.setTaskName("Opening file with Smooks Editor.");
+		monitor.setTaskName("Opening file with Smooks Editor."); //$NON-NLS-1$
 		final String fversion = version;
 		getShell().getDisplay().asyncExec(new Runnable() {
 			public void run() {
@@ -166,14 +166,14 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 	public static InputStream createExtContentStream(String version, String inputType) {
 		String typeContents = null;
 		if (inputType != null) {
-			typeContents = "inputType = \"" + inputType + "\"";
+			typeContents = "inputType = \"" + inputType + "\""; //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		String contents = "";
+		String contents = ""; //$NON-NLS-1$
 		if (typeContents == null) {
-			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"; // + "    <smooks-graphics-ext platformVersion = \""
+			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"; // + "    <smooks-graphics-ext platformVersion = \"" //$NON-NLS-1$
 //					+ version + "\" xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
 		} else {
-			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";// + "    <smooks-graphics-ext platformVersion = \""
+			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";// + "    <smooks-graphics-ext platformVersion = \"" //$NON-NLS-1$
 //					+ version + "\" " + typeContents
 //					+ " xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\"/>";
 		}
@@ -186,7 +186,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 	 */
 
 	private InputStream openContentStream(String version) {
-		String contents = "";
+		String contents = ""; //$NON-NLS-1$
 		if (SmooksConstants.VERSION_1_1.equals(version)) {
 			contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
 					+ "<smooks-resource-list xmlns=\"http://www.milyn.org/xsd/smooks-1.1.xsd\">\n"// xmlns:graph = \"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\">\n"//$NON-NLS-1$
