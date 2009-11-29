@@ -82,7 +82,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 		TabbedPropertySheetWidgetFactory factory = aTabbedPropertySheetPage.getWidgetFactory();
 
 		Section section = createRootSection(factory, parent);
-		section.setText("Decode Parameters");
+		section.setText(Messages.ValueDecodeParamSection_SectionTitle);
 
 		controlComposite = factory.createComposite(section, SWT.NONE);
 
@@ -153,13 +153,13 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 						if (obj instanceof DecodeParamType) {
 							String name = ((DecodeParamType) obj).getName();
 							if (name == null)
-								name = "";
+								name = ""; //$NON-NLS-1$
 							return name;
 						}
 						if (obj instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
 							String name = ((org.jboss.tools.smooks.model.javabean12.DecodeParamType) obj).getName();
 							if (name == null)
-								name = "";
+								name = ""; //$NON-NLS-1$
 							return name;
 						}
 					}
@@ -168,13 +168,13 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 						if (obj instanceof DecodeParamType) {
 							String value = ((DecodeParamType) obj).getValue();
 							if (value == null)
-								value = "";
+								value = ""; //$NON-NLS-1$
 							return value;
 						}
 						if (obj instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
 							String name = ((org.jboss.tools.smooks.model.javabean12.DecodeParamType) obj).getValue();
 							if (name == null)
-								name = "";
+								name = ""; //$NON-NLS-1$
 							return name;
 						}
 					}
@@ -188,14 +188,14 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 
 		TableColumn nameColumn = new TableColumn(paramterViewer.getTable(), SWT.NONE);
 		nameColumn.setWidth(150);
-		nameColumn.setText("Name");
+		nameColumn.setText(Messages.ValueDecodeParamSection_ParamNameColumnText);
 		TableColumn valueColumn = new TableColumn(paramterViewer.getTable(), SWT.NONE);
 		valueColumn.setWidth(150);
-		valueColumn.setText("Value");
+		valueColumn.setText(Messages.ValueDecodeParamSection_ParamValueColumnText);
 
 		paramterViewer.setCellEditors(new CellEditor[] { new TextCellEditor(paramterViewer.getTable()),
 				new TextCellEditor(paramterViewer.getTable()) });
-		paramterViewer.setColumnProperties(new String[] { "name", "value" });
+		paramterViewer.setColumnProperties(new String[] { "name", "value" }); //$NON-NLS-1$ //$NON-NLS-2$
 
 		paramterViewer.setCellModifier(new ICellModifier() {
 
@@ -206,7 +206,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 					if (element == null)
 						return;
 					EStructuralFeature feature = null;
-					if (property.equals("name")) {
+					if (property.equals("name")) { //$NON-NLS-1$
 						if (element instanceof DecodeParamType) {
 							feature = JavabeanPackage.Literals.DECODE_PARAM_TYPE__NAME;
 						}
@@ -214,7 +214,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 							feature = Javabean12Package.Literals.DECODE_PARAM_TYPE__NAME;
 						}
 					}
-					if (property.equals("value")) {
+					if (property.equals("value")) { //$NON-NLS-1$
 						if (element instanceof DecodeParamType) {
 							feature = JavabeanPackage.Literals.DECODE_PARAM_TYPE__VALUE;
 						}
@@ -233,31 +233,31 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 
 			public Object getValue(Object element, String property) {
 				element = AdapterFactoryEditingDomain.unwrap(element);
-				if (property.equals("name")) {
+				if (property.equals("name")) { //$NON-NLS-1$
 					if (element instanceof DecodeParamType) {
 						String name = ((DecodeParamType) element).getName();
 						if (name == null)
-							name = "";
+							name = ""; //$NON-NLS-1$
 						return name;
 					}
 					if (element instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
 						String name = ((org.jboss.tools.smooks.model.javabean12.DecodeParamType) element).getName();
 						if (name == null)
-							name = "";
+							name = ""; //$NON-NLS-1$
 						return name;
 					}
 				}
-				if (property.equals("value")) {
+				if (property.equals("value")) { //$NON-NLS-1$
 					if (element instanceof DecodeParamType) {
 						String value = ((DecodeParamType) element).getValue();
 						if (value == null)
-							value = "";
+							value = ""; //$NON-NLS-1$
 						return value;
 					}
 					if (element instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
 						String value = ((org.jboss.tools.smooks.model.javabean12.DecodeParamType) element).getValue();
 						if (value == null)
-							value = "";
+							value = ""; //$NON-NLS-1$
 						return value;
 					}
 				}
@@ -279,7 +279,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 		GridLayout gl2 = new GridLayout();
 		buttonComposite.setLayout(gl2);
 
-		Button newRuleButton = factory.createButton(buttonComposite, "New Parameter", SWT.NONE);
+		Button newRuleButton = factory.createButton(buttonComposite, Messages.ValueDecodeParamSection_NewParamButtonText, SWT.NONE);
 		newRuleButton.addSelectionListener(new SelectionAdapter() {
 
 			/*
@@ -299,14 +299,14 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 					return;
 				if (element instanceof ValueType) {
 					model = JavabeanFactory.eINSTANCE.createDecodeParamType();
-					((DecodeParamType) model).setName("<null>");
-					((DecodeParamType) model).setValue("<null>");
+					((DecodeParamType) model).setName(Messages.ValueDecodeParamSection_NullText);
+					((DecodeParamType) model).setValue(Messages.ValueDecodeParamSection_NullText);
 					feature = JavabeanPackage.Literals.VALUE_TYPE__DECODE_PARAM;
 				}
 				if (element instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
 					model = Javabean12Factory.eINSTANCE.createDecodeParamType();
-					((org.jboss.tools.smooks.model.javabean12.DecodeParamType) model).setName("<null>");
-					((org.jboss.tools.smooks.model.javabean12.DecodeParamType) model).setValue("<null>");
+					((org.jboss.tools.smooks.model.javabean12.DecodeParamType) model).setName(Messages.ValueDecodeParamSection_NullText);
+					((org.jboss.tools.smooks.model.javabean12.DecodeParamType) model).setValue(Messages.ValueDecodeParamSection_NullText);
 					feature = Javabean12Package.Literals.VALUE_TYPE__DECODE_PARAM;
 				}
 				if (model != null && feature != null && element != null) {
@@ -320,7 +320,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 			}
 
 		});
-		Button deleteRuleButton = factory.createButton(buttonComposite, "Delete", SWT.NONE);
+		Button deleteRuleButton = factory.createButton(buttonComposite, Messages.ValueDecodeParamSection_DeleteButtonText, SWT.NONE);
 		deleteRuleButton.addSelectionListener(new SelectionAdapter() {
 
 			/*
@@ -425,13 +425,13 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 				if (obj instanceof DecodeParamType) {
 					String name = ((DecodeParamType) obj).getName();
 					if (name == null)
-						name = "";
+						name = ""; //$NON-NLS-1$
 					return name;
 				}
 				if (obj instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
 					String name = ((org.jboss.tools.smooks.model.javabean12.DecodeParamType) obj).getName();
 					if (name == null)
-						name = "";
+						name = ""; //$NON-NLS-1$
 					return name;
 				}
 			}
@@ -440,17 +440,17 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 				if (obj instanceof DecodeParamType) {
 					String value = ((DecodeParamType) obj).getValue();
 					if (value == null)
-						value = "";
+						value = ""; //$NON-NLS-1$
 					return value;
 				}
 				if (obj instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
 					String name = ((org.jboss.tools.smooks.model.javabean12.DecodeParamType) obj).getValue();
 					if (name == null)
-						name = "";
+						name = ""; //$NON-NLS-1$
 					return name;
 				}
 			}
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 
 	}
