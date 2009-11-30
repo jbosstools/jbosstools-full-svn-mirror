@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.junit.launcher.JUnitLaunchConfigurationDelegate;
 import org.eclipse.jdt.launching.ExecutionArguments;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
@@ -45,6 +46,10 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.jboss.tools.smooks.configuration.ProcessNodeType;
+import org.jboss.tools.smooks.configuration.RuntimeDependency;
+import org.jboss.tools.smooks.configuration.RuntimeMetadata;
+import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.core.SmooksInputType;
 
 /**
@@ -60,37 +65,52 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void launch(ILaunchConfiguration launchConfig, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
-		IProject project = getJavaProject(launchConfig).getProject();
+		IJavaProject javaProject = getJavaProject(launchConfig);
+		IProject project = javaProject.getProject();
 		final String smooksConfigName = launchConfig.getAttribute(IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, "");
-		final SmooksLaunchMetadata launchMetadata = new SmooksLaunchMetadata();
+		final RuntimeMetadata launchMetadata = new RuntimeMetadata();
 
 		launchMetadata.setSmooksConfig(project.findMember(smooksConfigName));
 		
-		if(launchMetadata.isValidSmooksConfig()) {
-			IVMRunner runner= getVMRunner(launchConfig, mode);		
-			VMRunnerConfiguration runConfig = buildRunnerConfig(launchConfig);
-			
-			// check for cancellation
-			if (monitor.isCanceled()) {
-				return;
-			}		
-	
-			String inputType = launchMetadata.getInputType();
-			String inputPath = launchMetadata.getInputFile().getAbsolutePath();
-			String nodeTypes = launchMetadata.getNodeTypesString();
-	
-			runConfig.setProgramArguments(new String[] {launchMetadata.getConfigFile().getAbsolutePath(), inputType, inputPath, nodeTypes});
-			
-			runner.run(runConfig, launch, monitor);
+		if(!launchMetadata.isValidSmooksConfig()) {
+			displayError(smooksConfigName, launchMetadata.getErrorMessage());
 		} else {
-			final Display display = PlatformUI.getWorkbench().getDisplay();
-			display.syncExec(new Runnable() {
-			    public void run(){
-					Shell shell = display.getActiveShell();
-					ErrorDialog.openError(shell, "Error", "Error Launching Smooks Configuration '" + smooksConfigName + "'.", new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, launchMetadata.getErrorMessage(), new Exception()));
-			    }
-			});
+			List<RuntimeDependency> dependencies = launchMetadata.getDependencies();
+			ProjectClassLoader projectClassLoader = new ProjectClassLoader(javaProject);
+			
+			for(RuntimeDependency dependency : dependencies) {
+				if(!dependency.isOnProjectClasspath(projectClassLoader)) {
+					displayError(smooksConfigName, "This configuration depends on the '" + dependency.getGroupId() + ":" + dependency.getArtifactId() + "' Smooks artifact.  Download Smooks and add the Smooks jars to the Project classpath, or update your Maven POM to include the missing artifact!!");
+					return;
+				}
+			}
 		}
+
+		IVMRunner runner= getVMRunner(launchConfig, mode);		
+		VMRunnerConfiguration runConfig = buildRunnerConfig(launchConfig);
+		
+		// check for cancellation
+		if (monitor.isCanceled()) {
+			return;
+		}		
+
+		String inputType = launchMetadata.getInputType();
+		String inputPath = launchMetadata.getInputFile().getAbsolutePath();
+		String nodeTypes = launchMetadata.getNodeTypesString();
+
+		runConfig.setProgramArguments(new String[] {launchMetadata.getConfigFile().getAbsolutePath(), inputType, inputPath, nodeTypes});
+		
+		runner.run(runConfig, launch, monitor);
+	}
+
+	private void displayError(final String smooksConfigName, final String errorMessage) {
+		final Display display = PlatformUI.getWorkbench().getDisplay();
+		display.syncExec(new Runnable() {
+		    public void run(){
+				Shell shell = display.getActiveShell();
+				ErrorDialog.openError(shell, "Error", "Error Launching Smooks Configuration '" + smooksConfigName + "'.", new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, errorMessage, new Exception()));
+		    }
+		});
 	}
 
 	private VMRunnerConfiguration buildRunnerConfig(ILaunchConfiguration launchConfig) throws CoreException {

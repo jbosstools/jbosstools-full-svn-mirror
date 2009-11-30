@@ -17,12 +17,14 @@
  *
  * (C) 2005-2006, JBoss Inc.
  */
-package org.jboss.tools.smooks.launch;
+package org.jboss.tools.smooks.configuration;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -39,29 +41,31 @@ import org.milyn.delivery.sax.SAXVisitAfter;
 import org.milyn.delivery.sax.SAXVisitBefore;
 
 /**
- * Smooks configuration launch metadata.
+ * Smooks configuration runtime metadata.
  * <p/>
- * Verifies the specified config is a Smooks configuration and extracts launch
- * metadata from the config (input file etc).
+ * Verifies the specified config is a Smooks configuration and extracts metadata from the 
+ * config e.g. input file, dependencies.
  * 
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class SmooksLaunchMetadata {
+public class RuntimeMetadata {
 	
-	private Smooks inputParamExtractor;
+	private Smooks metadataExtractor;
 	private boolean isSmooksConfig;
 	private boolean isValidSmooksConfig;
 	private File configFile;
 	private String inputType;
 	private File inputFile;
 	private Set<ProcessNodeType> processNodeTypes = new HashSet<ProcessNodeType>();
+	private List<RuntimeDependency> dependencies = new ArrayList<RuntimeDependency>();
 
-	public SmooksLaunchMetadata() {
-		inputParamExtractor = new Smooks();
-		inputParamExtractor.addVisitor(new SmooksConfigAsserter(), "/smooks-resource-list", "http://www.milyn.org/xsd/smooks-1.1.xsd");
-		inputParamExtractor.addVisitor(new InputParamExtractor(), "/smooks-resource-list/params/param", "http://www.milyn.org/xsd/smooks-1.1.xsd");
-		inputParamExtractor.addVisitor(new ConfigTypeTracker().setNodeType(ProcessNodeType.TEMPLATING), "/smooks-resource-list/freemarker");
-		inputParamExtractor.addVisitor(new ConfigTypeTracker().setNodeType(ProcessNodeType.JAVA_BINDING), "/smooks-resource-list/bean");
+	public RuntimeMetadata() {
+		metadataExtractor = new Smooks();
+		metadataExtractor.addVisitor(new SmooksConfigAsserter(), "/smooks-resource-list", "http://www.milyn.org/xsd/smooks-1.1.xsd");
+		metadataExtractor.addVisitor(new InputParamExtractor(), "/smooks-resource-list/params/param", "http://www.milyn.org/xsd/smooks-1.1.xsd");
+		
+		// Build dependency map...
+		RuntimeDependency.addDependencyChecklist(metadataExtractor);
 	}
 	
 	public boolean isSmooksConfig() {
@@ -107,6 +111,10 @@ public class SmooksLaunchMetadata {
 	public File getInputFile() {
 		return inputFile;
 	}
+	
+	public List<RuntimeDependency> getDependencies() {
+		return dependencies;
+	}
 
 	public Set<ProcessNodeType> getNodeTypes() {
 		return processNodeTypes;
@@ -129,15 +137,15 @@ public class SmooksLaunchMetadata {
 		if(smooksConfig != null) {
 			configFile = new File(smooksConfig.getRawLocation().toOSString().trim());
 			if(configFile.exists() && configFile.isFile()) {
-				ExecutionContext execContext = inputParamExtractor.createExecutionContext();
+				ExecutionContext execContext = metadataExtractor.createExecutionContext();
 				Properties inputParams = new Properties();
 				
 				try {
 					// Filter the config and capture the input params...
 					execContext.setAttribute(InputParamExtractor.class, inputParams);
-					execContext.setAttribute(SmooksLaunchMetadata.class, this);
+					execContext.setAttribute(RuntimeMetadata.class, this);
 					
-					inputParamExtractor.filterSource(execContext, new StreamSource(new FileInputStream(configFile)));
+					metadataExtractor.filterSource(execContext, new StreamSource(new FileInputStream(configFile)));
 					
 					inputType = inputParams.getProperty(SmooksModelUtils.INPUT_TYPE);
 					if(inputType != null) {
@@ -176,7 +184,7 @@ public class SmooksLaunchMetadata {
 
 	private static class SmooksConfigAsserter implements SAXVisitBefore {		
 		public void visitBefore(SAXElement paramElement, ExecutionContext execContext) throws SmooksException, IOException {
-			SmooksLaunchMetadata metadata = (SmooksLaunchMetadata) execContext.getAttribute(SmooksLaunchMetadata.class);
+			RuntimeMetadata metadata = (RuntimeMetadata) execContext.getAttribute(RuntimeMetadata.class);
 			metadata.isSmooksConfig = true;
 		}
 	}
@@ -204,21 +212,6 @@ public class SmooksLaunchMetadata {
 					}
 				}
 			}
-		}
-	}
-
-	private static class ConfigTypeTracker implements SAXVisitBefore {
-		
-		private ProcessNodeType nodeType;
-		
-		public ConfigTypeTracker setNodeType(ProcessNodeType nodeType) {
-			this.nodeType = nodeType;
-			return this;
-		}
-
-		public void visitBefore(SAXElement paramElement, ExecutionContext execContext) throws SmooksException, IOException {
-			SmooksLaunchMetadata metadata = (SmooksLaunchMetadata) execContext.getAttribute(SmooksLaunchMetadata.class);
-			metadata.getNodeTypes().add(nodeType);
 		}
 	}
 }
