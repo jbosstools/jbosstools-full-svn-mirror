@@ -135,7 +135,15 @@ public class RuntimeMetadata {
 		reset();
 		
 		if(smooksConfig != null) {
-			configFile = new File(smooksConfig.getRawLocation().toOSString().trim());
+			setSmooksConfig(new File(smooksConfig.getRawLocation().toOSString().trim()));
+		}
+	}
+			
+	public void setSmooksConfig(File file) {
+		reset();
+
+		if(file != null) {
+			configFile = file;
 			if(configFile.exists() && configFile.isFile()) {
 				ExecutionContext execContext = metadataExtractor.createExecutionContext();
 				Properties inputParams = new Properties();
@@ -172,7 +180,7 @@ public class RuntimeMetadata {
 			}
 		}
 	}
-			
+
 	private void reset() {
 		isSmooksConfig = false;
 		isValidSmooksConfig = false;

@@ -2,6 +2,7 @@ package org.jboss.tools.smooks.editor;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -59,6 +60,8 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.ide.FileStoreEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
+import org.jboss.tools.smooks.configuration.RuntimeDependency;
+import org.jboss.tools.smooks.configuration.RuntimeMetadata;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.SmooksXMLEditor;
@@ -610,21 +613,27 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		String filePath = null;
 		String partName = "smooks editor";
 		IFile file = null;
+		RuntimeMetadata runtimeMetadata = new RuntimeMetadata();
+		
 		if (input instanceof FileStoreEditorInput) {
 			try {
 				filePath = ((FileStoreEditorInput) input).getURI().toURL().getFile();
+				runtimeMetadata.setSmooksConfig(new File(filePath));
 			} catch (MalformedURLException e) {
 				throw new PartInitException("Transform URL to URL error.", e);
 			}
 		}
 		if (input instanceof IFileEditorInput) {
 			file = ((IFileEditorInput) input).getFile();
+			runtimeMetadata.setSmooksConfig(file);
 			filePath = file.getFullPath().toPortableString();
 			partName = file.getName();
 		}
 
 		if (filePath == null)
 			throw new PartInitException("Can't get the input file");
+		
+		assertConfigSupported(runtimeMetadata);
 
 		Resource smooksResource = null;
 
@@ -656,6 +665,16 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		String version = SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel);
 		this.setPlatformVersion(version);
 		judgeInputReader();
+	}
+
+	private void assertConfigSupported(RuntimeMetadata runtimeMetadata) throws PartInitException {
+		List<RuntimeDependency> dependencies = runtimeMetadata.getDependencies();
+		
+		for(RuntimeDependency dependency : dependencies) {
+			if(!dependency.isSupportedByEditor()) {
+				throw new PartInitException("\n\nSorry, this configuration is not yet supported by the Smooks Editor because it contains configurations from the '" + dependency.getNamespaceURI() + "' configuration namespace.\n\nPlease open this configuration using the XML Editor.");
+			}
+		}
 	}
 
 	protected void judgeInputReader() {
