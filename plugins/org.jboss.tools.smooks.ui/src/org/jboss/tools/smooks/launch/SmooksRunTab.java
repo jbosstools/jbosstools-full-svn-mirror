@@ -69,6 +69,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 
 import org.eclipse.jdt.ui.JavaElementLabelProvider;
+import org.jboss.tools.smooks.configuration.RuntimeMetadata;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 
 /**
@@ -82,7 +83,7 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 	private Button fProjButton;
 	private Text fConfigurationText;
 	private Button fSearchButton;
-	private SmooksLaunchMetadata launchMetaData = new SmooksLaunchMetadata();
+	private RuntimeMetadata launchMetaData = new RuntimeMetadata();
 	
 	private ILaunchConfiguration fLaunchConfiguration;
 

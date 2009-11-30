@@ -32,6 +32,7 @@ import java.util.Map.Entry;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.jboss.tools.smooks.configuration.ProcessNodeType;
 import org.jboss.tools.smooks.core.SmooksInputType;
 import org.milyn.Smooks;
 import org.milyn.payload.JavaResult;

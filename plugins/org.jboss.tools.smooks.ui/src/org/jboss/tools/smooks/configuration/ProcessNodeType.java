@@ -17,7 +17,7 @@
  *
  * (C) 2005-2006, JBoss Inc.
  */
-package org.jboss.tools.smooks.launch;
+package org.jboss.tools.smooks.configuration;
 
 /**
  * Configuration process node type enumeration.
@@ -25,6 +25,20 @@ package org.jboss.tools.smooks.launch;
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
 public enum ProcessNodeType {
+	INPUT_CSV,
+	INPUT_EDI,
+	INPUT_JSON,
+	
+	BASE,
+	CORE,
+	CALC,
+	DATASOURCE,
+	FIXED_LENGTH,
+	JAVA_BINDING,
+	PERSISTENCE,
+	ROUTING,
+	RULES,
+	SCRIPTING,	
 	TEMPLATING,
-	JAVA_BINDING
+	VALIDATION, 
 }
