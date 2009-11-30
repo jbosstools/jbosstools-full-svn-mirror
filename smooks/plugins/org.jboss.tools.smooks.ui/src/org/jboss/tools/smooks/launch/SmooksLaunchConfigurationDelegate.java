@@ -80,7 +80,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 			
 			for(RuntimeDependency dependency : dependencies) {
 				if(!dependency.isOnProjectClasspath(projectClassLoader)) {
-					displayError(smooksConfigName, "This configuration depends on the '" + dependency.getGroupId() + ":" + dependency.getArtifactId() + "' Smooks artifact.  Download Smooks and add the Smooks jars to the Project classpath, or update your Maven POM to include the missing artifact!!");
+					displayError(smooksConfigName, "This configuration depends on the '" + dependency.getGroupId() + ":" + dependency.getArtifactId() + "' Smooks artifact.  Download Smooks and add the Smooks jars to the Project classpath, or update your Maven POM to include the missing artifact.");
 					return;
 				}
 			}
