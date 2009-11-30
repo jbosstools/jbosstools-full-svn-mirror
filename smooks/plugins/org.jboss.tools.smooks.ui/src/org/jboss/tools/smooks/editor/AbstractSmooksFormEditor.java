@@ -683,7 +683,9 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			}
 		} else {
 			inputType = SmooksUIUtils.judgeInputType(smooksModel);
-			SmooksUIUtils.addInputTypeParam(inputType, resourceList);
+			if (inputType != null) {
+				SmooksUIUtils.addInputTypeParam(inputType, resourceList);
+			}
 		}
 		this.setInputType(inputType);
 	}

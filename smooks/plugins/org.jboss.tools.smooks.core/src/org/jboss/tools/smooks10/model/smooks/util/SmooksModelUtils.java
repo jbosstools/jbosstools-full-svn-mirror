@@ -96,7 +96,7 @@ public class SmooksModelUtils {
 
 	public static final String INPUT_TYPE_EDI_1_2 = SmooksInputType.INPUT_TYPE_EDI;
 
-	public static final String INPUT_TYPE_JSON_1_2 = SmooksInputType.INPUT_TYPE_EDI;
+	public static final String INPUT_TYPE_JSON_1_2 = SmooksInputType.INPUT_TYPE_JSON;
 
 	public static EStructuralFeature ATTRIBUTE_PROPERTY = ExtendedMetaData.INSTANCE.demandFeature(null, "property",
 			false);
