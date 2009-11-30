@@ -17,6 +17,9 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.content.IContentDescription;
+import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
@@ -24,15 +27,12 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean.ExpressionType;
 import org.jboss.tools.smooks.model.javabean.ValueType;
@@ -92,7 +92,7 @@ public class SelectorValidator extends AbstractValidator {
 				sperator = " ";
 			}
 			if (feature != null && path != null) {
-				if("#document".equals(path)){
+				if ("#document".equals(path)) {
 					return null;
 				}
 				Object node = null;
@@ -114,8 +114,10 @@ public class SelectorValidator extends AbstractValidator {
 				}
 				if (node == null && feature instanceof EAttribute) {
 					if (model instanceof BeanType || model instanceof BindingsType || model instanceof ValueType
-							|| model instanceof org.jboss.tools.smooks.model.javabean12.ValueType || model instanceof WiringType
-							|| model instanceof org.jboss.tools.smooks.model.javabean12.WiringType || model instanceof ExpressionType
+							|| model instanceof org.jboss.tools.smooks.model.javabean12.ValueType
+							|| model instanceof WiringType
+							|| model instanceof org.jboss.tools.smooks.model.javabean12.WiringType
+							|| model instanceof ExpressionType
 							|| model instanceof org.jboss.tools.smooks.model.javabean12.ExpressionType) {
 						return newWaringDiagnostic("Can't find the input source node :   '" + path + "'", model,
 								(EAttribute) feature);
@@ -148,7 +150,26 @@ public class SelectorValidator extends AbstractValidator {
 			}
 			if (file == null)
 				return;
-			final FileEditorInput input = new FileEditorInput(file);
+			IContentType contentType = null;
+			try {
+				IContentDescription contentDescription = file.getContentDescription();
+				if (contentDescription != null) {
+					contentType = contentDescription.getContentType();
+				}
+
+			} catch (Throwable t) {
+
+			}
+			IContentType smooksContentType = Platform.getContentTypeManager().getContentType(
+					"org.jboss.tools.smooks.ui.smooks.contentType");
+			IContentType ediMappingContentType = Platform.getContentTypeManager().getContentType(
+					"org.jboss.tools.smooks.ui.edimap.contentType");
+
+			if (!(smooksContentType.equals(contentType) || ediMappingContentType.equals(contentType))) {
+				return;
+			}
+
+			// final FileEditorInput input = new FileEditorInput(file);
 			final SmooksResourceListType finalList = listType;
 			Display dis = SmooksConfigurationActivator.getDefault().getWorkbench().getDisplay();
 			if (dis != null && !dis.isDisposed()) {
@@ -165,13 +186,15 @@ public class SelectorValidator extends AbstractValidator {
 						IWorkbenchPage activePage = window.getActivePage();
 						if (activePage != null) {
 							try {
-								IEditorPart part = activePage.findEditor(input);
-								if (part != null && part instanceof AbstractSmooksFormEditor) {
-									List<Object> l = SelectorCreationDialog.generateInputData(finalList);
-									if (l != null) {
-										list.addAll(l);
-									}
+								// IEditorPart part =
+								// activePage.findEditor(input);
+								// if (part != null && part instanceof
+								// AbstractSmooksFormEditor) {
+								List<Object> l = SelectorCreationDialog.generateInputData(finalList);
+								if (l != null) {
+									list.addAll(l);
 								}
+								// }
 							} catch (Throwable t) {
 								t.printStackTrace();
 							}

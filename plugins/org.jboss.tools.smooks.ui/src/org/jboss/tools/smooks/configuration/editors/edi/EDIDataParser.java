@@ -87,8 +87,8 @@ public class EDIDataParser {
 		return null;
 	}
 
-	public TagList parseEDIFile(InputStream stream,SmooksResourceListType resourceList)
-			throws IOException, DocumentException {
+	public TagList parseEDIFile(InputStream stream, SmooksResourceListType resourceList) throws IOException,
+			DocumentException {
 		// String encoding = null;
 		// String mappingModel = null;
 		// String validate = null;
@@ -227,9 +227,9 @@ public class EDIDataParser {
 		// FileInputStream stream
 		StringResult result = new StringResult();
 		smooks.filterSource(new StreamSource(ediInputStream), result);
-
+		String resultXMLContent = result.getResult();
 		XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();
-		ByteArrayInputStream byteinputStream = new ByteArrayInputStream(result.getResult().getBytes());
+		ByteArrayInputStream byteinputStream = new ByteArrayInputStream(resultXMLContent.getBytes());
 		TagList tagList = analyzer.analyze(byteinputStream, null);
 
 		try {
@@ -253,7 +253,7 @@ public class EDIDataParser {
 		return tagList;
 	}
 
-	public TagList parseEDIFile(String path,SmooksResourceListType smooksResourceListType)
+	public TagList parseEDIFile(String path, SmooksResourceListType smooksResourceListType)
 			throws InvocationTargetException, FileNotFoundException, IOException, DocumentException {
 		String filePath = SmooksUIUtils.parseFilePath(path);
 

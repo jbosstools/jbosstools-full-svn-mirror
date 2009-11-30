@@ -197,7 +197,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		mainContainer.setLayout(gl);
 		section.setClient(mainContainer);
 
-		Hyperlink refreshLink = toolkit.createHyperlink(mainContainer, Messages.SmooksReaderFormPage_RefreshLinkLabel, SWT.NONE);
+		Hyperlink refreshLink = toolkit.createHyperlink(mainContainer, Messages.SmooksReaderFormPage_RefreshLinkLabel,
+				SWT.NONE);
 		refreshLink.addHyperlinkListener(new IHyperlinkListener() {
 
 			public void linkExited(HyperlinkEvent e) {
@@ -691,10 +692,14 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				resourceList, IEditingDomainItemProvider.class);
 		Collection<?> collections = provider.getNewChildDescriptors(resourceList, editDomain, null);
 
+		String customReaderText = null;
+		Object customReaderInstance = null;
+
 		ISmooksModelProvider modelProvider = getSmooksModelProvider();
 		if (modelProvider != null) {
 			String version = modelProvider.getPlatformVersion();
 			OnlyReaderViewerFilter filter = new OnlyReaderViewerFilter();
+			// move the custom reader to the end of the reader type list.
 			for (Iterator<?> iterator = collections.iterator(); iterator.hasNext();) {
 				Object object = (Object) iterator.next();
 				if (object instanceof CommandParameter) {
@@ -710,12 +715,23 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 						IItemLabelProvider lp = (IItemLabelProvider) editDomain.getAdapterFactory().adapt(value,
 								IItemLabelProvider.class);
 						String text = lp.getText(value);
+
+						if (ReaderType.class.isInstance(value)) {
+							customReaderText = text;
+							customReaderInstance = value;
+							continue;
+						}
 						readerCombo.add(text);
 						readerTypeList.add(value);
 					}
 				}
 			}
 		}
+		if (customReaderInstance != null && customReaderText != null) {
+			readerCombo.add(customReaderText);
+			readerTypeList.add(customReaderInstance);
+		}
+
 	}
 
 	private void setInputDataActiveStatus(boolean active, InputType inputType, final CompoundCommand command) {
@@ -904,7 +920,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 										JavaUI.openInEditor(result);
 									else {
 										MessageDialog.openError(getSite().getWorkbenchWindow().getShell(),
-												Messages.SmooksReaderFormPage_CantFindTypeErrorTitle, "Can't find type \"" + filePath + "\" in \""  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+												Messages.SmooksReaderFormPage_CantFindTypeErrorTitle,
+												"Can't find type \"" + filePath + "\" in \"" //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 														+ javaProject.getProject().getName() + "\" project."); //$NON-NLS-1$
 									}
 								} catch (Exception e) {
@@ -923,7 +940,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 										try {
 											IDE.openEditorOnFileStore(page, fileStore);
 										} catch (PartInitException e) {
-											MessageDialog.open(MessageDialog.ERROR, window.getShell(), Messages.SmooksReaderFormPage_OpenFileErrorTitle,
+											MessageDialog.open(MessageDialog.ERROR, window.getShell(),
+													Messages.SmooksReaderFormPage_OpenFileErrorTitle,
 													"Can't open the file : '" + filePath + "'", SWT.SHEET); //$NON-NLS-1$ //$NON-NLS-2$
 										}
 									} else {
@@ -931,7 +949,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 								}
 							} catch (Exception e) {
 								MessageDialog.open(MessageDialog.ERROR, getSite().getWorkbenchWindow().getShell(),
-										Messages.SmooksReaderFormPage_OpenFileErrorTitle, "Can't open the file : '" + filePath + "'", SWT.SHEET);  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+										Messages.SmooksReaderFormPage_OpenFileErrorTitle,
+										"Can't open the file : '" + filePath + "'", SWT.SHEET); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 							}
 						}
 					}
@@ -963,7 +982,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		GridLayout l = new GridLayout();
 		buttonComposite.setLayout(l);
 
-		addInputDataButton = toolkit.createButton(buttonComposite, Messages.SmooksReaderFormPage_AddButtonLabel, SWT.FLAT);
+		addInputDataButton = toolkit.createButton(buttonComposite, Messages.SmooksReaderFormPage_AddButtonLabel,
+				SWT.FLAT);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		addInputDataButton.setLayoutData(gd);
 		addInputDataButton.addSelectionListener(new SelectionAdapter() {
@@ -974,7 +994,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 
 		});
 
-		removeInputDataButton = toolkit.createButton(buttonComposite, Messages.SmooksReaderFormPage_DeleteButtonLabel, SWT.FLAT);
+		removeInputDataButton = toolkit.createButton(buttonComposite, Messages.SmooksReaderFormPage_DeleteButtonLabel,
+				SWT.FLAT);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		removeInputDataButton.setLayoutData(gd);
 		removeInputDataButton.addSelectionListener(new SelectionAdapter() {
@@ -1075,7 +1096,11 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	private void refreshInputModelView() {
 		if (inputModelViewer != null) {
 			List<Object> input = generateInputData();
-			inputModelViewer.setInput(input);
+			try {
+				inputModelViewer.setInput(input);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			SmooksUIUtils.expandSelectorViewer(input, inputModelViewer);
 		}
 	}

@@ -55,45 +55,6 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 	 */
 	@Override
 	protected String getDiagnosticMessage(Diagnostic diagnostic) {
-		List<?> datas = diagnostic.getData();
-		if (datas.size() == 2) {
-			Object parentObj = datas.get(0);
-
-			if (parentObj instanceof BeanType || parentObj instanceof BindingsType) {
-				Object obj = datas.get(1);
-				if (obj == JavabeanPackage.Literals.BINDINGS_TYPE__BEAN_ID
-						|| obj == Javabean12Package.Literals.BEAN_TYPE__BEAN_ID) {
-					String message = diagnostic.getMessage();
-					if (message != null && message.startsWith("The required feature")) { //$NON-NLS-1$
-						return Messages.SmooksJavaMappingGraphicalEditor_BeanIdEmptyErrormessage;
-					}
-				}
-			}
-
-			if (parentObj instanceof ValueType
-					|| parentObj instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
-				Object obj = datas.get(1);
-				if (obj == JavabeanPackage.Literals.VALUE_TYPE__DATA
-						|| obj == Javabean12Package.Literals.VALUE_TYPE__DATA) {
-					String message = diagnostic.getMessage();
-					if (message != null && message.startsWith("The required feature")) { //$NON-NLS-1$
-						return Messages.SmooksJavaMappingGraphicalEditor_NodeMustLinkWithSource;
-					}
-				}
-			}
-
-			if (parentObj instanceof WiringType
-					|| parentObj instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
-				Object obj = datas.get(1);
-				if (obj == JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF
-						|| obj == Javabean12Package.Literals.WIRING_TYPE__BEAN_ID_REF) {
-					String message = diagnostic.getMessage();
-					if (message != null && message.startsWith("The required feature")) { //$NON-NLS-1$
-						return Messages.SmooksJavaMappingGraphicalEditor_NodeMustLinkWithJavaBean;
-					}
-				}
-			}
-		}
 		return super.getDiagnosticMessage(diagnostic);
 	}
 

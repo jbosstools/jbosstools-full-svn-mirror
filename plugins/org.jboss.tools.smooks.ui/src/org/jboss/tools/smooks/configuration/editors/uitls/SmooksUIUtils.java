@@ -866,7 +866,8 @@ public class SmooksUIUtils {
 		toolkit.paintBordersFor(textContainer);
 		if (openFile) {
 			final IFilePathProcessor processor = filePathProcessor;
-			Button fileBrowseButton = toolkit.createButton(textContainer, Messages.SmooksUIUtils_BrowseButtonLabel, SWT.NONE);
+			Button fileBrowseButton = toolkit.createButton(textContainer, Messages.SmooksUIUtils_BrowseButtonLabel,
+					SWT.NONE);
 			fileBrowseButton.addSelectionListener(new SelectionAdapter() {
 
 				public void widgetSelected(SelectionEvent e) {
@@ -1193,7 +1194,8 @@ public class SmooksUIUtils {
 				notificationComposite.setLayoutData(gd);
 				editpart.setFieldMarker(notificationComposite);
 
-				final SearchComposite searchComposite = new SearchComposite(tcom, toolkit, Messages.SmooksUIUtils_BrowseButtonLabel, dialog, SWT.NONE);
+				final SearchComposite searchComposite = new SearchComposite(tcom, toolkit,
+						Messages.SmooksUIUtils_BrowseButtonLabel, dialog, SWT.NONE);
 				gd = new GridData(GridData.FILL_HORIZONTAL);
 				searchComposite.setLayoutData(gd);
 				Object editValue = getEditValue(propertyDescriptor, model);
@@ -1239,7 +1241,8 @@ public class SmooksUIUtils {
 								if (result != null)
 									JavaUI.openInEditor(result);
 								else {
-									MessageDialog.openError(classTextComposite.getShell(), Messages.SmooksUIUtils_CantFindTypeErrorDialogTitle,
+									MessageDialog.openError(classTextComposite.getShell(),
+											Messages.SmooksUIUtils_CantFindTypeErrorDialogTitle,
 											"Can't find type \"" + typeName + "\" in \"" //$NON-NLS-1$ //$NON-NLS-2$
 													+ javaProject.getProject().getName() + "\" project."); //$NON-NLS-1$
 								}
@@ -1858,11 +1861,10 @@ public class SmooksUIUtils {
 		}
 		return null;
 	}
-	
-	public static boolean isInputParamType(ParamType param){
+
+	public static boolean isInputParamType(ParamType param) {
 		String type = param.getType();
-		if (SmooksModelUtils.INPUT_ACTIVE_TYPE.equals(type)
-				|| SmooksModelUtils.INPUT_DEACTIVE_TYPE.equals(type)) {
+		if (SmooksModelUtils.INPUT_ACTIVE_TYPE.equals(type) || SmooksModelUtils.INPUT_DEACTIVE_TYPE.equals(type)) {
 			return true;
 		}
 		return false;
@@ -2648,7 +2650,13 @@ public class SmooksUIUtils {
 			List<TreeNodeModel> parentList = new ArrayList<TreeNodeModel>();
 			boolean canExpand = true;
 			while (parent != rootEditPart.getModel()) {
-				parent = (TreeNodeModel) parent.getParent();
+				Object pa = parent.getParent();
+				if (pa instanceof TreeNodeModel) {
+					parent = (TreeNodeModel) pa;
+				} else {
+					canExpand = false;
+					break;
+				}
 				if (parent == null) {
 					canExpand = false;
 					break;
@@ -3011,18 +3019,18 @@ public class SmooksUIUtils {
 		}
 		return SmooksConstants.VERSION_1_2;
 	}
-	
-	public static void addInputTypeParam(String inputType, SmooksResourceListType resourceList){
+
+	public static void addInputTypeParam(String inputType, SmooksResourceListType resourceList) {
 		ParamsType params = resourceList.getParams();
-		if(params == null){
+		if (params == null) {
 			params = SmooksFactory.eINSTANCE.createParamsType();
 			resourceList.setParams(params);
 		}
-		
+
 		ParamType param = SmooksFactory.eINSTANCE.createParamType();
 		param.setName(SmooksModelUtils.INPUT_TYPE);
 		param.setStringValue(inputType);
-		
+
 		params.getParam().add(param);
 	}
 
