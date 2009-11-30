@@ -74,6 +74,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		
 		if(!launchMetadata.isValidSmooksConfig()) {
 			displayError(smooksConfigName, launchMetadata.getErrorMessage());
+			return;
 		} else {
 			List<RuntimeDependency> dependencies = launchMetadata.getDependencies();
 			ProjectClassLoader projectClassLoader = new ProjectClassLoader(javaProject);
