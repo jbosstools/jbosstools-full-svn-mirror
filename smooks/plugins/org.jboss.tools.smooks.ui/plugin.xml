@@ -14,15 +14,6 @@
                contentTypeId="org.jboss.tools.smooks.ui.smooks.contentType">
          </contentTypeBinding>
       </editor>
-      <editor
-            class="org.jboss.tools.smooks.edimap.editor.EDIMapFormEditor"
-            icon="icons/edi-mapping.gif"
-            id="org.jboss.tools.smooks.edimap.editors.MultiPageEditor"
-            name="EDI Message Mapping Editor">
-         <contentTypeBinding
-               contentTypeId="org.jboss.tools.smooks.ui.edimap.contentType">
-         </contentTypeBinding>
-      </editor>
       
    </extension>
    <extension
@@ -37,13 +28,6 @@
             category="org.jboss.tools.smooks.configuration"
             class="org.jboss.tools.smooks.configuration.wizards.SmooksConfigurationFileNewWizard"
             id="org.jboss.tools.smooks.configuration.wizards.NewConfigurationFileWizard">
-      </wizard>
-      <wizard
-            category="org.jboss.tools.smooks.configuration"
-            class="org.jboss.tools.smooks.edimap.wizard.EDIMappingConfigFileWizard"
-            icon="icons/edi-mapping.gif"
-            id="org.jboss.tools.smooks.configuration.wizards.NewEDIMappingConfigurationFileWizard"
-            name="EDI Message Mapping Configuration File">
       </wizard>
    </extension>
    
@@ -131,14 +115,6 @@
                 <contentType
                       exactMatch="true"
                       id="org.jboss.tools.smooks.ui.smooks.contentType">
-                </contentType>
-                <contentType
-                      exactMatch="true"
-                      id="org.jboss.tools.smooks.ui.edimap.contentType">
-                </contentType>
-                <contentType
-                      exactMatch="true"
-                      id="org.jboss.tools.smooks.ui.smooks1_0.contentType">
                 </contentType>
              </rules>
           </include>
