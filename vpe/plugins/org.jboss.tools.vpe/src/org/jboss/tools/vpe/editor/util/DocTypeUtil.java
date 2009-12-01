@@ -14,7 +14,6 @@ package org.jboss.tools.vpe.editor.util;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,12 +32,11 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.internal.core.JarEntryFile;
-import org.eclipse.jdt.internal.ui.javaeditor.JarEntryEditorInput;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.editors.text.ILocationProvider;
-import org.eclipse.wst.sse.core.internal.FileBufferModelManager;
 import org.eclipse.wst.sse.core.internal.model.ModelManagerImpl;
 import org.eclipse.wst.sse.core.internal.provisional.text.IStructuredDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
@@ -49,7 +47,6 @@ import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 public class DocTypeUtil {
 
@@ -107,7 +104,7 @@ public class DocTypeUtil {
 		 * https://jira.jboss.org/jira/browse/JBIDE-4510
 		 * When file is opened from jar archive.
 		 */
-		else if (editorInput instanceof JarEntryEditorInput) {
+		else if (editorInput instanceof IStorageEditorInput) {
 			/*
 			 * To determine the doctype of a file from jar archive
 			 * by means of eclipse's StructuredModelManager
@@ -116,8 +113,13 @@ public class DocTypeUtil {
 			 * in the root project folder.
 			 * After doctype processing temporally file will be deleted. 
 			 */
-			JarEntryEditorInput input = ((JarEntryEditorInput) editorInput);
-			IStorage storage = input.getStorage();
+			IStorageEditorInput input = ((IStorageEditorInput) editorInput);
+			IStorage storage = null;
+			try {
+				storage = input.getStorage();
+			} catch (CoreException ex) {
+				VpePlugin.getPluginLog().logError(ex);
+			}
 			JarEntryFile jarFile = null;
 			IFile iFile = null;
 			if (storage instanceof JarEntryFile) {
