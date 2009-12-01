@@ -8,15 +8,12 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.seam.ui.widget.editor;
+package org.jboss.tools.common.ui.widget.editor;
 
 import java.util.List;
 
-import org.jboss.tools.common.ui.widget.editor.ButtonFieldEditor;
-import org.jboss.tools.common.ui.widget.editor.IFieldEditor;
-import org.jboss.tools.common.ui.widget.editor.ITaggedFieldEditor;
+import org.jboss.tools.common.ui.IValidator;
 import org.jboss.tools.common.ui.widget.editor.ButtonFieldEditor.ButtonPressedAction;
-import org.jboss.tools.seam.ui.internal.project.facet.IValidator;
 
 public interface IFieldEditorFactory {
 
@@ -115,15 +112,6 @@ public interface IFieldEditorFactory {
 	 * @return
 	 */
 	IFieldEditor createBrowsePackageEditor(String name,	String label, String initSourceFolderPath, String defaultValue);
-
-	/**
-	 * 
-	 * @param name
-	 * @param label
-	 * @param defaultValue
-	 * @return
-	 */
-	IFieldEditor createBrowseSeamProjectEditor(String name,	String label, String defaultValue);
 
 	/**
 	 * 

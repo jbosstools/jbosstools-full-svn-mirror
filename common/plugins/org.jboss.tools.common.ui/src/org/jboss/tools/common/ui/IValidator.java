@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/  
-package org.jboss.tools.seam.ui.internal.project.facet;
+package org.jboss.tools.common.ui;
 
 import java.util.Map;
 
