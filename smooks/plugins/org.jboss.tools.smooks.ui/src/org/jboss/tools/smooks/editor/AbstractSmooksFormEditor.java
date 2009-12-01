@@ -672,7 +672,14 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		
 		for(RuntimeDependency dependency : dependencies) {
 			if(!dependency.isSupportedByEditor()) {
-				throw new PartInitException("\n\nSorry, this configuration is not yet supported by the Smooks Editor because it contains configurations from the '" + dependency.getNamespaceURI() + "' configuration namespace.\n\nPlease open this configuration using the XML Editor.");
+				java.net.URI changeToNS = dependency.getChangeToNS();
+				String errorMsg = "\n\nSorry, this configuration is not yet supported by the Smooks Editor because it contains configurations from the '" + dependency.getNamespaceURI() + "' configuration namespace.\n\nPlease open this configuration using the XML Editor.";
+				
+				if(changeToNS != null) {
+					errorMsg += "\n\nFix: Update the configuration to use the '" + changeToNS + "' configuration namespace.";
+				}
+
+				throw new PartInitException(errorMsg);
 			}
 		}
 	}
