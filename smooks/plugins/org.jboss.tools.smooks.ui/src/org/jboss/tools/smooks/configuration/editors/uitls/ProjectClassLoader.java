@@ -8,10 +8,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
@@ -84,6 +86,16 @@ public class ProjectClassLoader extends URLClassLoader {
 								roots[i].getPath().makeAbsolute().toFile()
 										.toURL()).getFile());
 					}
+					if (!f.exists()) {
+						IJavaElement javaElement = roots[i].getPrimaryElement();
+						String jarName = javaElement.getElementName();
+						IResource jarResource = project.getProject().findMember(jarName);
+
+						if(jarResource != null) {
+							f = jarResource.getRawLocation().toFile();
+						}
+					}
+
 					list.add(f.toURL());
 				} else {
 					IPath path = roots[i].getJavaProject().getOutputLocation();
@@ -99,6 +111,7 @@ public class ProjectClassLoader extends URLClassLoader {
 					}
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 
 		}
