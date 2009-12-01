@@ -41,14 +41,6 @@
             name="Smooks Configuration File"
             priority="low">
       </content-type>
-      <content-type
-            base-type="org.eclipse.core.runtime.xml"
-            describer="org.jboss.tools.smooks.edimap.editor.EDIMapFileContentDescriber"
-            file-extensions="xml"
-            id="org.jboss.tools.smooks.ui.edimap.contentType"
-            name="EDI Map File"
-            priority="low">
-      </content-type>
       
    </extension>
     <extension
