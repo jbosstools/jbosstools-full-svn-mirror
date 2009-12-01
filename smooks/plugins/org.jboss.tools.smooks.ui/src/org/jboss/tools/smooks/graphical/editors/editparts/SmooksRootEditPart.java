@@ -26,7 +26,7 @@ public class SmooksRootEditPart extends RootEditPart {
 	public static final int BEAN_TYPE = 2;
 
 	public static final int BINDINGS_TYPE = 1;
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -42,5 +42,4 @@ public class SmooksRootEditPart extends RootEditPart {
 		DefaultEditDomain editDomain = (DefaultEditDomain) viewer.getEditDomain();
 		return editDomain.getEditorPart();
 	}
-
 }

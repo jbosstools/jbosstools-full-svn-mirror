@@ -40,10 +40,12 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gef.ContextMenuProvider;
 import org.eclipse.gef.DefaultEditDomain;
+import org.eclipse.gef.DragTracker;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.GraphicalViewer;
+import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.commands.CommandStackEvent;
 import org.eclipse.gef.commands.CommandStackEventListener;
@@ -93,6 +95,7 @@ import org.jboss.tools.smooks.graphical.actions.AutoLayoutAction;
 import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.commands.IgnoreException;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataContainerEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.RightClickSelectMarqueeDragTraker;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
 import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
@@ -669,7 +672,11 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		getGraphicalViewer().setEditDomain(editDomain);
 		getGraphicalViewer().setEditPartFactory(createEdtiPartFactory());
 
-		getGraphicalViewer().setRootEditPart(new FreeformGraphicalRootEditPart());
+		getGraphicalViewer().setRootEditPart(new FreeformGraphicalRootEditPart() {
+			public DragTracker getDragTracker(Request req) {
+				return new RightClickSelectMarqueeDragTraker();
+			}
+		});
 
 		getGraphicalViewer().addDropTargetListener(
 				(TransferDropTargetListener) new TemplateTransferDropTargetListener(getGraphicalViewer()));
@@ -768,7 +775,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		expandConnectedModels(connections);
 
 		this.autoLayout(false);
-		
+
 		List<Diagnostic> diagnosticList = this.getSmooksModelProvider().getDiagnosticList();
 		this.validateEnd(diagnosticList);
 	}
@@ -1360,8 +1367,8 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 
 		}
 	}
-	
-	protected String getDiagnosticMessage(Diagnostic diagnostic){
+
+	protected String getDiagnosticMessage(Diagnostic diagnostic) {
 		List<?> datas = diagnostic.getData();
 		if (datas.size() == 2) {
 			Object parentObj = datas.get(0);
