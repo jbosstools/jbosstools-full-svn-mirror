@@ -1043,7 +1043,17 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 		
 		fDesignViewer.getTrayViewer().setContents(getProcess());
 		
-		updateMarkersHard();
+		//Bugzilla 294501 - When markers are added on the BPEL file, the meta-model 
+		//objects are notified about the marker change. But the display of the markers 
+		//on the diagram fails because of several invalid thread access exceptions.
+		//Thus, encapsulating the marker update into a separate thread
+		//Note: supposedly only happens on Galileo (== Eclipse 3.5)
+		Display.getDefault().asyncExec( new Runnable() {
+		    public void run() {
+		    	updateMarkersHard();
+		    }
+		});
+
 	}
 	
 	protected void updateMarkersHard () {
