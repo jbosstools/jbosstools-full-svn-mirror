@@ -11,8 +11,10 @@
 package org.jboss.tools.smooks.graphical.editors.editparts;
 
 import org.eclipse.gef.DefaultEditDomain;
+import org.eclipse.gef.DragTracker;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalViewer;
+import org.eclipse.gef.Request;
 import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.gef.tree.editparts.RootEditPart;
 import org.jboss.tools.smooks.gef.tree.editpolicy.SmooksRootEditPartLayoutEditPolicy;
@@ -26,7 +28,7 @@ public class SmooksRootEditPart extends RootEditPart {
 	public static final int BEAN_TYPE = 2;
 
 	public static final int BINDINGS_TYPE = 1;
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -42,5 +44,12 @@ public class SmooksRootEditPart extends RootEditPart {
 		DefaultEditDomain editDomain = (DefaultEditDomain) viewer.getEditDomain();
 		return editDomain.getEditorPart();
 	}
+
+	@Override
+	public DragTracker getDragTracker(Request request) {
+		return super.getDragTracker(request);
+	}
+	
+	
 
 }
