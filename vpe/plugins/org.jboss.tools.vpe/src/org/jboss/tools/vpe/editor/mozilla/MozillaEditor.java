@@ -616,10 +616,42 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	protected void setInitialContent() {
 		final String html = DocTypeUtil.prepareInitFile(
 				INIT_FILE, getEditorInput());
-
-		// there was a problem with setText in eclipse 3.5.0 (JBIDE-4345),
-		// but since 3.5.1 it should work
-		xulRunnerEditor.setText(html);
+		
+		// Workaround of JBIDE-4345.
+		// Due to a bug in org.eclipse.swt.browser.Mozilla we cannot simply
+		// set initial html code as xulRunnerEditor.setText(html).
+		// Instead of it we create a temporary file containing 
+		// the html code and set it to the Mozilla browser as URL.
+		// When we will not have to support Eclipse 3.5.0
+		// all the following code should be replaced by the following line:
+		// xulRunnerEditor.setText(html);
+		File tmp = null;
+		Writer out = null;
+		try {
+			tmp = File.createTempFile(
+					"temp", ".html"); //$NON-NLS-1$//$NON-NLS-2$
+			tmp.deleteOnExit();
+			out = new FileWriter(tmp);
+			out.write(html);
+		} catch (IOException e) {
+			VpePlugin.getPluginLog().logError(e);
+		} finally {
+			try {
+				if (out != null) {
+					out.close();
+					if (tmp != null) {
+						xulRunnerEditor.setURL("file://"	//$NON-NLS-1$
+								+ tmp.getCanonicalPath());
+					}
+				}
+			} catch (IOException e) {
+				VpePlugin.getPluginLog().logError(e);
+			} finally {
+				if (tmp != null) {
+					tmp.delete();
+				}
+			}
+		}
 	}
 
 	/**
