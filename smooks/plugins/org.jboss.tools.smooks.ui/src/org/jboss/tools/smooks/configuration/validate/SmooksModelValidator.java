@@ -98,6 +98,8 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 		validatorList.add(new DuplicatedBeanIDValidator());
 		validatorList.add(new BeanIdRefValidator());
 		validatorList.add(new SelectorValidator());
+		validatorList.add(new PropertyValidator());
+		validatorList.add(new SetterMethodValidator());
 		innerEditingDomain = newEditingDomain();
 	}
 
