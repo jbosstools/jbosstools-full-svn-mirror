@@ -177,12 +177,15 @@ public class XmlUtil {
 	 */	
 	private static void processAttribute(List<TaglibData> taglibs, Attr attr) {
 
-		String startStr = "xmlns:"; //$NON-NLS-1$
+		String startStr = "xmlns"; //$NON-NLS-1$
 		String name = attr.getName();
 		if (!name.startsWith(startStr)) {
 			return;
 		}
 		name = name.substring(startStr.length());
+		if(name.startsWith(":")){ //$NON-NLS-1$
+			name = name.substring(1);//remove : in start of name
+		}
 		addTaglib(taglibs , attr.getValue(), name, true);
 		return;
 	}

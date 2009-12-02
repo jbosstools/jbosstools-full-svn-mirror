@@ -371,9 +371,12 @@ public class VpeTemplateManager {
 			return  ATTRIBUTE_TEMPLATE_NAME;
 		case Node.ELEMENT_NODE:
 			String sourcePrefix = sourceNode.getPrefix();
-
-			if (sourcePrefix == null
-					|| ((IDOMElement)sourceNode).isJSPTag()
+			//added by Maksim Areshkau as fix for JBIDE-5352
+			if(sourcePrefix==null) {
+				sourcePrefix=""; //$NON-NLS-1$
+			}
+			
+			if (((IDOMElement)sourceNode).isJSPTag()
 						|| "jsp".equals(sourcePrefix)) { //$NON-NLS-1$
 				return sourceNode.getNodeName();
 			}
@@ -383,7 +386,7 @@ public class VpeTemplateManager {
 			TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix, taglibs);		
 
 			if(sourceNodeTaglib == null) {
-				return null;
+				return sourceNode.getNodeName();
 			}
 			
 			String sourceNodeUri = sourceNodeTaglib.getUri();
@@ -403,7 +406,7 @@ public class VpeTemplateManager {
 					&&CustomTLDReference.isExistInJsf2CustomComponenets(pageContext,sourceNodeUri,sourceNode.getLocalName()) ) {
 				return VpeTemplateManager.JSF2_CUSTOM_TEMPLATE;
 			}
-			return null;
+			return sourceNode.getNodeName();
 		default : 
 			return null;
 		}

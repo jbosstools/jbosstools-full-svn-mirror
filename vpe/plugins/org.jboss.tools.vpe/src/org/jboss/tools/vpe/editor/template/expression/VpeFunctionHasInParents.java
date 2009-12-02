@@ -27,6 +27,11 @@ public class VpeFunctionHasInParents extends VpeFunction {
 
 		while (parentNode != null) {
 			String parentSourcePrefix = parentNode.getPrefix();
+			//added by Maksim Areshkau, as fix for JBIDE-5352
+			//
+			if(parentSourcePrefix==null) {
+				parentSourcePrefix=""; //$NON-NLS-1$
+			}
 			List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(parentNode,
 					pageContext);
 			TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(
