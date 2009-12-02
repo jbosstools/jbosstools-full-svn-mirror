@@ -75,6 +75,7 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 		optionsPage = createSmooksConfigurationOverviewPage();
 		addValidateListener(optionsPage);
 		addSourceSynchronizeListener(optionsPage);
+		addSmooksEditorInitListener(optionsPage);
 		try {
 			int index = this.addPage(optionsPage);
 			setPageText(index, Messages.SmooksMultiFormEditor_opetiontab_label);
@@ -101,6 +102,7 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 		processPage = new SmooksProcessGraphicalEditor(this, "process", Messages.SmooksMultiFormEditor_processpage_name, this); //$NON-NLS-1$
 		addSourceSynchronizeListener(processPage);
 		addValidateListener(processPage);
+		addSmooksEditorInitListener(processPage);
 		try {
 			int index = this.addPage(processPage);
 			setPageText(index, Messages.SmooksMultiFormEditor_processtabel_label);

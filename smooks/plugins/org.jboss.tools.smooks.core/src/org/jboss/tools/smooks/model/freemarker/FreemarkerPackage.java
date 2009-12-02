@@ -58,7 +58,7 @@ public interface FreemarkerPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "flt";
+	String eNS_PREFIX = "ftl";
 
 	/**
 	 * The singleton instance of the package.

@@ -108,6 +108,7 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 					if (beanid.equals(idRefData)) {
 						AbstractSmooksGraphicalModel sourceGraphModel = SmooksGraphUtil.findSmooksGraphModel(root,
 								eObject);
+						if(sourceGraphModel == null) continue;
 						List<TreeNodeConnection> scs = sourceGraphModel.getSourceConnections();
 						boolean createNewConnection = true;
 						for (Iterator<?> iterator2 = scs.iterator(); iterator2.hasNext();) {

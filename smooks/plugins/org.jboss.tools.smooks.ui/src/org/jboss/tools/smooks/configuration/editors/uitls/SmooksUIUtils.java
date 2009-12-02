@@ -3005,7 +3005,6 @@ public class SmooksUIUtils {
 	}
 
 	public static String judgeSmooksPlatformVersion(EObject smooksModel) {
-
 		if (smooksModel instanceof org.jboss.tools.smooks.model.smooks.DocumentRoot) {
 			EMap<String, String> nsMap = ((org.jboss.tools.smooks.model.smooks.DocumentRoot) smooksModel)
 					.getXMLNSPrefixMap();
@@ -3034,25 +3033,112 @@ public class SmooksUIUtils {
 		params.getParam().add(param);
 	}
 
+	protected static String getSelectorValue(EObject model) {
+		if (getSelectorFeature(model) != null) {
+			EStructuralFeature feature = getSelectorFeature(model);
+			Object selectorValue = model.eGet(feature);
+			if (selectorValue != null)
+				return selectorValue.toString();
+		}
+		return null;
+	}
+
+	protected static boolean isJavaPatternSelector(String selector) {
+		if (selector.indexOf('.') != -1) {
+			String[] ss = selector.split("\\.");
+			for (int i = 0; i < ss.length; i++) {
+				String s = ss[i];
+				if (s != null) {
+					char[] chars = s.toCharArray();
+					for (int j = 0; j < chars.length; j++) {
+						char c = chars[j];
+						if (Character.isJavaIdentifierPart(c)) {
+
+						} else {
+							return false;
+						}
+					}
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	protected static void collectSelectorStrings(EObject model, List<String> selectors) {
+		EStructuralFeature feature = getSelectorFeature(model);
+		if (feature != null) {
+			String fullSelector = getSelectorValue(model);
+			if (fullSelector != null) {
+				selectors.add(fullSelector);
+			}
+		}
+		List<EObject> children = model.eContents();
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			EObject eObject = (EObject) iterator.next();
+			collectSelectorStrings(eObject, selectors);
+		}
+	}
+
+	protected static boolean isJavaPatternSelectorValue(EObject model) {
+		List<String> selectorList = new ArrayList<String>();
+		collectSelectorStrings(model, selectorList);
+		for (Iterator<?> iterator = selectorList.iterator(); iterator.hasNext();) {
+			String fullSelector = (String) iterator.next();
+			String[] selectors = null;
+
+			// '/' is selector seperator
+			if (fullSelector.indexOf("/") != -1) {
+				selectors = fullSelector.split("/");
+			} else {
+				// ' ' is selector seperator too
+				if (fullSelector.indexOf(" ") != -1) {
+					selectors = fullSelector.split(" ");
+				}
+			}
+			if (selectors != null) {
+				for (int k = 0; k < selectors.length; k++) {
+					String selector = selectors[k];
+					if (selector != null)
+						selector = selector.trim();
+					if (selector.length() == 0)
+						continue;
+					if (isJavaPatternSelector(selector)) {
+						return true;
+					}
+				}
+			} else {
+				if (isJavaPatternSelector(fullSelector)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public static String judgeInputType(EObject smooksModel) {
-		String inputType = null;
+		String inputType = SmooksModelUtils.INPUT_TYPE_XML;
 		if (smooksModel instanceof org.jboss.tools.smooks.model.smooks.DocumentRoot) {
 			SmooksResourceListType rlist = ((org.jboss.tools.smooks.model.smooks.DocumentRoot) smooksModel)
 					.getSmooksResourceList();
-			if (rlist.getAbstractReader().isEmpty())
-				return null;
-			AbstractReader reader = rlist.getAbstractReader().get(0);
-			if (CsvReader.class.isInstance(reader) || CSV12Reader.class.isInstance(reader)) {
-				inputType = SmooksModelUtils.INPUT_TYPE_CSV;
-			}
-			if (EDIReader.class.isInstance(reader) || EDI12Reader.class.isInstance(reader)) {
-				inputType = SmooksModelUtils.INPUT_TYPE_EDI_1_1;
-			}
-			if (JsonReader.class.isInstance(reader) || Json12Reader.class.isInstance(reader)) {
-				inputType = SmooksModelUtils.INPUT_TYPE_JSON_1_1;
-			}
-			if (ReaderType.class.isInstance(reader)) {
-				inputType = SmooksModelUtils.INPUT_TYPE_CUSTOME;
+			if (rlist.getAbstractReader().isEmpty()) {
+				if (isJavaPatternSelectorValue(rlist)) {
+					inputType = SmooksModelUtils.INPUT_TYPE_JAVA;
+				}
+			} else {
+				AbstractReader reader = rlist.getAbstractReader().get(0);
+				if (CsvReader.class.isInstance(reader) || CSV12Reader.class.isInstance(reader)) {
+					inputType = SmooksModelUtils.INPUT_TYPE_CSV;
+				}
+				if (EDIReader.class.isInstance(reader) || EDI12Reader.class.isInstance(reader)) {
+					inputType = SmooksModelUtils.INPUT_TYPE_EDI_1_1;
+				}
+				if (JsonReader.class.isInstance(reader) || Json12Reader.class.isInstance(reader)) {
+					inputType = SmooksModelUtils.INPUT_TYPE_JSON_1_1;
+				}
+				if (ReaderType.class.isInstance(reader)) {
+					inputType = SmooksModelUtils.INPUT_TYPE_CUSTOME;
+				}
 			}
 		}
 		return inputType;

@@ -37,6 +37,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -55,6 +56,7 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.IManagedForm;
+import org.eclipse.ui.forms.IMessage;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -68,6 +70,7 @@ import org.eclipse.zest.core.widgets.GraphItem;
 import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.HorizontalTreeLayoutAlgorithm;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.SmooksReaderFormPage;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
@@ -95,10 +98,14 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
  */
 public class SmooksProcessGraphicalEditor extends FormPage implements ISelectionChangedListener,
 		ISourceSynchronizeListener, IPropertyListener, ISmooksModelValidateListener, IProcessProvider,
-		PropertyChangeListener {
-	
+		PropertyChangeListener, ISmooksEditorInitListener {
+
+	private int currentMessageType = IMessageProvider.NONE;
+
+	private String currentMessage = null;
+
 	private boolean processChanged = false;
-	
+
 	private boolean lockProcessChangeEvent = false;
 
 	private List<IAction> processPanelActions = new ArrayList<IAction>();
@@ -135,6 +142,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	public SmooksProcessGraphicalEditor(String id, String title, ISmooksModelProvider provider) {
 		super(id, title);
 		this.smooksModelProvider = provider;
+		this.getManagedForm();
 	}
 
 	/**
@@ -518,6 +526,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	public void createPartControl(Composite parent) {
 		// TODO Auto-generated method stub
 		super.createPartControl(parent);
+		updateHeaderFormMessage();
 	}
 
 	public GraphViewer getProcessGraphViewer() {
@@ -826,7 +835,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 				dirty = (((IEditorPart) object).isDirty() || dirty);
 			}
 		}
-		return( dirty || processChanged);
+		return (dirty || processChanged);
 	}
 
 	/*
@@ -910,7 +919,8 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	protected void showTaskControl(Object model) {
-		if(pageBook == null) return;
+		if (pageBook == null)
+			return;
 		if (model == null)
 			pageBook.showEmptyPage();
 		FormToolkit toolkit = ((AbstractSmooksFormEditor) this.smooksModelProvider).getToolkit();
@@ -1126,7 +1136,8 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	public void propertyChange(PropertyChangeEvent evt) {
-		if(lockProcessChangeEvent) return;
+		if (lockProcessChangeEvent)
+			return;
 		String name = evt.getPropertyName();
 		Object newtask = evt.getNewValue();
 		if (ProcessType.PRO_ADD_CHILD.equals(name) || ProcessType.PRO_REMOVE_CHILD.equals(name)) {
@@ -1137,12 +1148,60 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 			processChanged = true;
 			getManagedForm().dirtyStateChanged();
 		}
-		
+
 		if (ProcessType.PRO_ADD_CHILD.equals(name)) {
 			this.showTaskControl(newtask);
 		}
 		if (ProcessType.PRO_REMOVE_CHILD.equals(name)) {
 			this.showTaskControl(null);
+		}
+	}
+
+	public void initFailed(int messageType, String message) {
+		this.currentMessage = message;
+		this.currentMessageType = messageType;
+		updateHeaderFormMessage();
+	}
+
+	protected void updateHeaderFormMessage() {
+		if (this.getManagedForm() != null) {
+			getManagedForm().getMessageManager().removeAllMessages();
+			getManagedForm().getMessageManager().update();
+			getProcessGraphViewer().getControl().setEnabled(true);
+			getProcessGraphViewer().getControl().setBackground(
+					getManagedForm().getToolkit().getColors().getBackground());
+		}
+		if (currentMessageType != IMessageProvider.NONE && currentMessage != null) {
+			if (this.getProcessGraphViewer() != null) {
+				getProcessGraphViewer().getControl().setBackground(GraphicsConstants.BORDER_CORLOR);
+				getProcessGraphViewer().getControl().setEnabled(false);
+				getProcessGraphViewer().setInput(new Object());
+				showTaskControl(null);
+			}
+			if (this.getManagedForm() != null) {
+
+				String[] messages = currentMessage.split("\n");
+				List<IMessage> messageList = new ArrayList<IMessage>();
+				for (int i = 0; i < messages.length; i++) {
+					String message = messages[i];
+					if (message != null)
+						message.trim();
+					if (message.length() == 0) {
+						continue;
+					}
+					messageList.add(new SmooksMessage(currentMessageType, message));
+				}
+				String mainMessage = null;
+				if (messageList.isEmpty()) {
+					mainMessage = currentMessage;
+				} else {
+					mainMessage = messageList.get(0).getMessage();
+				}
+
+				this.getManagedForm().getForm().getForm().setMessage(mainMessage, currentMessageType,
+						messageList.toArray(new IMessage[] {}));
+
+			}
 		}
 	}
 }
