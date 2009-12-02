@@ -24,6 +24,7 @@ import org.eclipse.bpel.model.Link;
 import org.eclipse.bpel.model.PartnerLink;
 import org.eclipse.bpel.model.Process;
 import org.eclipse.bpel.model.partnerlinktype.PartnerLinkType;
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.BPELEditor;
 import org.eclipse.bpel.ui.Messages;
 import org.eclipse.bpel.ui.adapters.IContainer;
@@ -114,7 +115,7 @@ public class DeleteChildCommand extends AutoUndoCommand {
 	@Override
 	public Resource[] getResources() {
 		if (resourcesToModify == null) {
-			Process process = ModelHelper.getProcess(fParent);
+			Process process = BPELUtils.getProcess(fParent);
 			if (process == null)
 				return EMPTY_RESOURCE_ARRAY;
 			BPELEditor bpelEditor = ModelHelper.getBPELEditor(process);
@@ -164,7 +165,7 @@ public class DeleteChildCommand extends AutoUndoCommand {
 			throw new IllegalStateException();
 		}
 
-		Process process = ModelHelper.getProcess(fParent);
+		Process process = BPELUtils.getProcess(fParent);
 		if (process == null)
 			return;
 		BPELEditor bpelEditor = ModelHelper.getBPELEditor(process);

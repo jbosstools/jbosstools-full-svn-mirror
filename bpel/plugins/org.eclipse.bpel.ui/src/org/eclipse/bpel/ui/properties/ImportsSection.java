@@ -17,6 +17,7 @@ import org.eclipse.bpel.common.ui.flatui.FlatFormAttachment;
 import org.eclipse.bpel.common.ui.flatui.FlatFormData;
 import org.eclipse.bpel.model.Import;
 import org.eclipse.bpel.model.Process;
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.IBPELUIConstants;
 import org.eclipse.bpel.ui.IHelpContextIds;
 import org.eclipse.bpel.ui.Messages;
@@ -26,7 +27,6 @@ import org.eclipse.bpel.ui.details.providers.ColumnTableProvider;
 import org.eclipse.bpel.ui.details.providers.ImportContentProvider;
 import org.eclipse.bpel.ui.dialogs.SchemaImportDialog;
 import org.eclipse.bpel.ui.util.BPELUtil;
-import org.eclipse.bpel.ui.util.ModelHelper;
 import org.eclipse.bpel.ui.util.MultiObjectAdapter;
 import org.eclipse.bpel.ui.util.NamespaceUtils;
 import org.eclipse.bpel.ui.util.TableCursor;
@@ -79,9 +79,9 @@ public class ImportsSection extends BPELPropertySection {
 	}
 
 	/**
-	 * Override the super-class because the input is Process not Import
+	 * Bug 290085 - Override the super-class because the input is Process not Import
 	 * If use super-class's directly, when change the import attributes
-	 * the properties section do not change.
+	 * the properties section do not change. Grid Qian
 	 */
 	@Override
 	protected void addAllAdapters() {
@@ -179,8 +179,8 @@ public class ImportsSection extends BPELPropertySection {
 		importLabel.setLayoutData(data);
 
 		// create table
-		importTable = fWidgetFactory.createTable(parent, SWT.FULL_SELECTION
-				| SWT.V_SCROLL | SWT.READ_ONLY);
+		importTable = fWidgetFactory.createTable(parent, SWT.FULL_SELECTION | SWT.V_SCROLL
+				| SWT.READ_ONLY);
 
 		data = new FlatFormData();
 		data.left = new FlatFormAttachment(0, IDetailsAreaConstants.HSPACE);
@@ -194,7 +194,7 @@ public class ImportsSection extends BPELPropertySection {
 		// set up table
 		importTable.setLinesVisible(true);
 		importTable.setHeaderVisible(true);
-
+		
 		tableProvider = new ColumnTableProvider();
 		tableProvider.add(new LocationColumn());
 		tableProvider.add(new NamespaceColumn());
@@ -230,7 +230,7 @@ public class ImportsSection extends BPELPropertySection {
 		@Override
 		public String getProperty() {
 			return "Namespace"; //$NON-NLS-1$
-		}
+		} 
 
 		@Override
 		public int getInitialWeight() {
@@ -288,15 +288,18 @@ public class ImportsSection extends BPELPropertySection {
 			return (s == null) ? "" : s; //$NON-NLS-1$			
 		}
 	}
+	
+	
 
 	@Override
-	protected void basicSetInput(EObject newInput) {
+	protected void basicSetInput(EObject newInput) {		
 		super.basicSetInput(newInput);
-
+		
 		if (getInput() != null) {
 			importViewer.setInput(getInput());
 		}
 	}
+	
 
 	@Override
 	protected void createClient(Composite parent) {
@@ -321,29 +324,30 @@ public class ImportsSection extends BPELPropertySection {
 		}
 	}
 
-	void removeImport() {
-
+	void removeImport () {
+		
 		ISelection selection = importViewer.getSelection();
 		if (selection.isEmpty()) {
-			return;
+			return ;
 		}
 		IStructuredSelection ssel = null;
-		if ((selection instanceof IStructuredSelection) == false) {
+		if ( (selection instanceof IStructuredSelection) == false) {
 			return;
 		}
-
-		ssel = (IStructuredSelection) selection;
+		
+		ssel = (IStructuredSelection) selection;		
 		Object obj = ssel.getFirstElement();
-
-		RemoveImportCommand cmd = new RemoveImportCommand(ModelHelper
-				.getProcess(getInput()), obj,
+		
+		RemoveImportCommand cmd = new RemoveImportCommand ( 
+				BPELUtils.getProcess( getInput() ), 
+				obj,
 				IBPELUIConstants.CMD_REMOVE_IMPORT);
-
+		
 		if (cmd.canDoExecute()) {
-			getCommandFramework().execute(cmd);
+			getCommandFramework().execute( cmd );
 		}
 	}
-
+	
 	void browseAndImportWSDL() {
 
 		SchemaImportDialog dialog = new SchemaImportDialog(importLabel
@@ -357,7 +361,7 @@ public class ImportsSection extends BPELPropertySection {
 			return;
 		}
 
-		AddImportCommand cmd = new AddImportCommand(ModelHelper
+		AddImportCommand cmd = new AddImportCommand(BPELUtils
 				.getProcess(getInput()), result[0]);
 		if (cmd.canDoExecute() && cmd.wouldCreateDuplicateImport() == false) {
 			getCommandFramework().execute(cmd);
@@ -377,26 +381,31 @@ public class ImportsSection extends BPELPropertySection {
 			return;
 		}
 
-		AddImportCommand cmd = new AddImportCommand(ModelHelper
+		AddImportCommand cmd = new AddImportCommand(BPELUtils
 				.getProcess(getInput()), result[0]);
 		if (cmd.canDoExecute() && cmd.wouldCreateDuplicateImport() == false) {
 			getCommandFramework().execute(cmd);
 		}
 	}
 
+	
+	
 	@Override
 	public void gotoMarker(IMarker marker) {
 		// TODO Auto-generated method stub
 		super.gotoMarker(marker);
 	}
-
+	
 	/**
 	 * 
 	 */
+	
 
 	@Override
 	public boolean isValidMarker(IMarker marker) {
 		return super.isValidMarker(marker);
 	}
 
+	
+	
 }

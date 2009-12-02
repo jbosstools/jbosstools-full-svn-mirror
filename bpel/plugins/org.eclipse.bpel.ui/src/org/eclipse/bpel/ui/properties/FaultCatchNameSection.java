@@ -47,6 +47,7 @@ import org.eclipse.bpel.model.Variable;
 import org.eclipse.bpel.model.While;
 import org.eclipse.bpel.model.partnerlinktype.Role;
 import org.eclipse.bpel.model.util.BPELConstants;
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.IBPELUIConstants;
 import org.eclipse.bpel.ui.IHelpContextIds;
 import org.eclipse.bpel.ui.Messages;
@@ -835,7 +836,7 @@ public class FaultCatchNameSection extends BPELPropertySection {
 		faultNameQNames = new Vector<QName>();
 		if (getInput() == null)
 			throw new IllegalStateException();
-		Process p = ModelHelper.getProcess(getInput());
+		Process p = BPELUtils.getProcess(getInput());
 
 		// get FaultNames from activities
 		getFaultNames(p.getActivity());

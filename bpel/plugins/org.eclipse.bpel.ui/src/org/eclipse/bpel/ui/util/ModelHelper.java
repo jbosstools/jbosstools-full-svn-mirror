@@ -69,6 +69,7 @@ import org.eclipse.bpel.model.partnerlinktype.PartnerLinkType;
 import org.eclipse.bpel.model.partnerlinktype.PartnerlinktypeFactory;
 import org.eclipse.bpel.model.partnerlinktype.PartnerlinktypePackage;
 import org.eclipse.bpel.model.partnerlinktype.Role;
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.model.util.ImportResolver;
 import org.eclipse.bpel.model.util.ImportResolverRegistry;
 import org.eclipse.bpel.ui.BPELEditor;
@@ -1201,23 +1202,23 @@ public class ModelHelper {
 		return null;
 	}
 	
-	/** 
-	 * Returns the root process for any model object 
-	 **/	
-	public static Process getProcess(Object object) {
-		if (object instanceof EObject) {
-			// check if *this* is already the process object
-			if (object instanceof Process)
-				return (Process)object;
-			EObject cont = ((EObject)object).eContainer();
-			while (cont != null) {
-				if (cont.eClass() == BPELPackage.eINSTANCE.getProcess())
-					return (Process)cont;
-				cont = cont.eContainer();
-			}
-		}
-		return null;
-	}
+//	/** 
+//	 * Returns the root process for any model object 
+//	 **/	
+//	public static Process getProcess(Object object) {
+//		if (object instanceof EObject) {
+//			// check if *this* is already the process object
+//			if (object instanceof Process)
+//				return (Process)object;
+//			EObject cont = ((EObject)object).eContainer();
+//			while (cont != null) {
+//				if (cont.eClass() == BPELPackage.eINSTANCE.getProcess())
+//					return (Process)cont;
+//				cont = cont.eContainer();
+//			}
+//		}
+//		return null;
+//	}
 	
 	/** 
 	 * Checks to see if an object is contained by a specified parent 
@@ -1248,8 +1249,10 @@ public class ModelHelper {
 
 	public static void setLocation(Activity activity, Point pos) {
 		ActivityExtension extension = (ActivityExtension)getExtension(activity);
-		extension.setX(pos.x);
-		extension.setY(pos.y);
+		if (extension != null) {
+			extension.setX(pos.x);
+			extension.setY(pos.y);
+		}
 	}
 	
 	public static Point getLocation(Activity activity) {
@@ -1425,7 +1428,7 @@ public class ModelHelper {
 	 * Given a model object returns whether the process is supposed to be spec-compliant.
 	 */
 	public static boolean isSpecCompliant(EObject model) {
-		return ((ProcessExtension)getExtension(getProcess(model))).isSpecCompliant();
+		return ((ProcessExtension)getExtension(BPELUtils.getProcess(model))).isSpecCompliant();
 	}
 
 	public static boolean isReferencePartnerLink(PartnerLink partner) {
@@ -1518,7 +1521,7 @@ public class ModelHelper {
     	ArrayList al = new ArrayList(8);    	
     	
     	// Try the BPEL imports if any exist.
-        Process process = getProcess(context);
+        Process process = BPELUtils.getProcess(context);
         if (process == null) {
         	return al;
         }
@@ -1556,7 +1559,7 @@ public class ModelHelper {
     	ArrayList<Definition> al = new ArrayList<Definition>(8);
     	
     	// Try the BPEL imports if any exist.
-        Process process = getProcess( context );
+        Process process = BPELUtils.getProcess( context );
         if (process == null) {
         	return al;
         }
@@ -1594,7 +1597,7 @@ public class ModelHelper {
 	 */
     
 	public static boolean containsImport (Object modelObject, Import imp) {
-		Process process = getProcess(modelObject);
+		Process process = BPELUtils.getProcess(modelObject);
 		if (process == null) {
 			return false;
 		}

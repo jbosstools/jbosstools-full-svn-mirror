@@ -23,6 +23,7 @@ import org.eclipse.bpel.model.Source;
 import org.eclipse.bpel.model.Sources;
 import org.eclipse.bpel.model.Target;
 import org.eclipse.bpel.model.Targets;
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.commands.util.AutoUndoCommand;
 import org.eclipse.bpel.ui.util.FlowLinkUtil;
 import org.eclipse.bpel.ui.util.ModelHelper;
@@ -47,7 +48,7 @@ public class RevalidateLinksCommand extends AutoUndoCommand {
 		this.activities = new ArrayList(activityCollection.size());
 		this.activities.addAll(activityCollection);
 		if (!activityCollection.isEmpty()) {
-			addModelRoot(ModelHelper.getProcess(activityCollection.iterator().next()));
+			addModelRoot(BPELUtils.getProcess(activityCollection.iterator().next()));
 		}
 	}
 	

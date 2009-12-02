@@ -30,6 +30,7 @@ import org.eclipse.bpel.model.Reply;
 import org.eclipse.bpel.model.ToPart;
 import org.eclipse.bpel.model.ToParts;
 import org.eclipse.bpel.model.Variable;
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.IBPELUIConstants;
 import org.eclipse.bpel.ui.Messages;
 import org.eclipse.bpel.ui.commands.AddFromPartCommand;
@@ -281,7 +282,7 @@ public class InvokeVariableSection extends BPELPropertySection {
 			}
 
 			public void run() {
-				createVariable(ModelHelper.getProcess(getInput()), null,
+				createVariable(BPELUtils.getProcess(getInput()), null,
 						isInvoke() ? ModelHelper.OUTGOING
 								: ModelHelper.INCOMING);
 			}
@@ -445,7 +446,7 @@ public class InvokeVariableSection extends BPELPropertySection {
 			}
 
 			public void run() {
-				createVariable(ModelHelper.getProcess(getInput()), null,
+				createVariable(BPELUtils.getProcess(getInput()), null,
 						isInvoke() ? ModelHelper.INCOMING
 								: ModelHelper.OUTGOING);
 			}
@@ -671,7 +672,7 @@ public class InvokeVariableSection extends BPELPropertySection {
 				}
 
 				public void run() {
-					createVariableForPartMapping(ModelHelper.getProcess(model),
+					createVariableForPartMapping(BPELUtils.getProcess(model),
 							model, part, isFromParts);
 				}
 

@@ -15,10 +15,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.editparts.ProcessEditPart;
 import org.eclipse.bpel.ui.util.BPELUtil;
 import org.eclipse.bpel.ui.util.IModelVisitor;
-import org.eclipse.bpel.ui.util.ModelHelper;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Viewport;
@@ -95,7 +95,7 @@ public class ScrollingBPELGraphicalViewer extends GraphicalViewerImpl {
 		if (selectionList.size() > 1){
 			indexVisit = 0;
 			orderMap = new HashMap<Object, Integer>();
-			BPELUtil.visitModelDepthFirst(ModelHelper.getProcess(editpart.getModel()), new numeratorVisitor());
+			BPELUtil.visitModelDepthFirst(BPELUtils.getProcess(editpart.getModel()), new numeratorVisitor());
 			Comparator cmp = new OrderedSelectionComparator();
 			Collections.sort(selectionList, cmp);	
 			StructuredSelection newSel = new StructuredSelection(selectionList);

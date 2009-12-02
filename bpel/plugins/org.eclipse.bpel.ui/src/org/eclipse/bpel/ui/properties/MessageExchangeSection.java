@@ -19,6 +19,7 @@ import org.eclipse.bpel.common.ui.flatui.FlatFormAttachment;
 import org.eclipse.bpel.common.ui.flatui.FlatFormData;
 import org.eclipse.bpel.model.BPELFactory;
 import org.eclipse.bpel.model.MessageExchange;
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.BPELUIPlugin;
 import org.eclipse.bpel.ui.IBPELUIConstants;
 import org.eclipse.bpel.ui.IHelpContextIds;
@@ -133,7 +134,7 @@ public class MessageExchangeSection extends BPELPropertySection {
 				return Messages.MessageExchangeImplSection_Create_Global;
 			}
 			public void run() {
-				createMessageExchange ( ModelHelper.getProcess( getInput () ) , null );
+				createMessageExchange ( BPELUtils.getProcess( getInput () ) , null );
 			}			
 		};
 

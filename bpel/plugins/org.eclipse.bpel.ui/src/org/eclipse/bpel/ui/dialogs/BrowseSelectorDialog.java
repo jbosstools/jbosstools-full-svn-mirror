@@ -212,7 +212,7 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 		}
 		
 		// define the prefix
-		BPELUtils.setPrefix( ModelHelper.getProcess(modelObject), targetNamespace, dialog.getPrefix()); 		
+		BPELUtils.setPrefix( BPELUtils.getProcess(modelObject), targetNamespace, dialog.getPrefix()); 		
 		
 		return true;
 	}
@@ -295,7 +295,7 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 			}
 		}
 
-		AddImportCommand cmd = new AddImportCommand(ModelHelper
+		AddImportCommand cmd = new AddImportCommand(BPELUtils
 				.getProcess(modelObject), obj);
 
 		if (cmd.canDoExecute() && cmd.wouldCreateDuplicateImport() == false) {

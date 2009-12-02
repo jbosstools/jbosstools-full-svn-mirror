@@ -12,6 +12,7 @@ package org.eclipse.bpel.ui.commands;
 
 import java.util.List;
 
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.util.ModelHelper;
 import org.eclipse.emf.ecore.EObject;
 
@@ -38,7 +39,7 @@ public class RemoveImportCommand extends RemoveFromListCommand {
 	 */
 	@Override
 	protected List getList() {
-		return ModelHelper.getProcess( target ).getImports();
+		return BPELUtils.getProcess( target ).getImports();
 	}
 
 }

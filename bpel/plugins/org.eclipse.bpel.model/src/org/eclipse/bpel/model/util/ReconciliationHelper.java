@@ -57,12 +57,15 @@ import org.eclipse.bpel.model.MessageExchanges;
 import org.eclipse.bpel.model.OnAlarm;
 import org.eclipse.bpel.model.OnEvent;
 import org.eclipse.bpel.model.OnMessage;
+import org.eclipse.bpel.model.PartnerActivity;
 import org.eclipse.bpel.model.PartnerLink;
 import org.eclipse.bpel.model.PartnerLinks;
 import org.eclipse.bpel.model.Pick;
 import org.eclipse.bpel.model.Process;
 import org.eclipse.bpel.model.Query;
+import org.eclipse.bpel.model.Receive;
 import org.eclipse.bpel.model.RepeatUntil;
+import org.eclipse.bpel.model.Reply;
 import org.eclipse.bpel.model.Scope;
 import org.eclipse.bpel.model.Sequence;
 import org.eclipse.bpel.model.ServiceRef;
@@ -71,6 +74,7 @@ import org.eclipse.bpel.model.Sources;
 import org.eclipse.bpel.model.Target;
 import org.eclipse.bpel.model.Targets;
 import org.eclipse.bpel.model.TerminationHandler;
+import org.eclipse.bpel.model.Throw;
 import org.eclipse.bpel.model.To;
 import org.eclipse.bpel.model.ToPart;
 import org.eclipse.bpel.model.ToParts;
@@ -84,6 +88,7 @@ import org.eclipse.bpel.model.impl.MessageExchangesImpl;
 import org.eclipse.bpel.model.impl.PartnerLinksImpl;
 import org.eclipse.bpel.model.impl.VariablesImpl;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.wst.wsdl.WSDLElement;
 import org.w3c.dom.CDATASection;
@@ -300,6 +305,183 @@ public class ReconciliationHelper {
 		return null;
 	}
 	
+	
+	private static void updateLinkNameReferences(Link link, String name) {
+		if(link.getSources() != null && !link.getSources().isEmpty()) {
+			((Source)link.getSources().get(0)).getElement().setAttribute(BPELConstants.AT_LINK_NAME, name);
+		}
+		if(link.getTargets() != null && !link.getTargets().isEmpty()) {
+			((Target)link.getTargets().get(0)).getElement().setAttribute(BPELConstants.AT_LINK_NAME, name);
+		}
+	}
+	
+	private static void updateMessageExchangeNameReferences(MessageExchange messExchange, String name) {
+		Process process = BPELUtils.getProcess(messExchange); 
+		TreeIterator iter = process.eAllContents();
+		//TODO make more efficient for Scope!!!
+		while(iter.hasNext()) {
+			Object object = iter.next();
+			// receive
+			if(object instanceof Receive) {
+				Receive receive = (Receive) object; 
+				if(messExchange.equals(receive.getMessageExchange())) {
+					receive.getElement().setAttribute(BPELConstants.AT_MESSAGE_EXCHANGE, name);
+				}
+			// reply
+			} else if(object instanceof Reply) {
+				Reply reply = (Reply) object; 
+				if(messExchange.equals(reply.getMessageExchange())) {
+					reply.getElement().setAttribute(BPELConstants.AT_MESSAGE_EXCHANGE, name);
+				}
+			// onMessage
+			} else if(object instanceof OnMessage) {
+				OnMessage onMessage = (OnMessage)object; 
+				if(messExchange.equals(onMessage.getMessageExchange())) {
+					onMessage.getElement().setAttribute(BPELConstants.AT_MESSAGE_EXCHANGE, name);
+				}
+			// onEvent
+			} else if(object instanceof OnEvent) {
+				OnEvent onEvent = (OnEvent)object; 
+				if(messExchange.equals(onEvent.getMessageExchange())) {
+					onEvent.getElement().setAttribute(BPELConstants.AT_MESSAGE_EXCHANGE, name);
+				}
+			}
+			// scope
+		}
+	}
+	
+	private static void updateCorrelationSetNameReferences(CorrelationSet corrSet, String name) {
+		// difference correlation and correlationsets?
+		Process process = BPELUtils.getProcess(corrSet); 
+		TreeIterator iter = process.eAllContents();
+		while(iter.hasNext()) {
+			Object object = iter.next();
+			// receive, reply, invoke
+			if(object instanceof PartnerActivity) {
+				PartnerActivity partnerAct = (PartnerActivity) object; 
+				partnerAct.getCorrelations();
+				// TODO
+			}
+			// scope
+			// correlation
+
+			// onMessage
+			else if(object instanceof OnMessage) {
+				OnMessage onMessage = (OnMessage)object; 
+				onMessage.getCorrelations();
+				// TODO
+			// onEvent
+			} else if(object instanceof OnEvent) {
+				OnEvent onEvent = (OnEvent)object; 
+				Correlations correlations = onEvent.getCorrelations(); 
+				// TODO
+			}
+			// TODO onEvent.getcorrelationssets does what?
+		}
+	}
+	
+	private static void updatePartnerLinkNameReferences(PartnerLink partnerLink, String name) {
+		// TODO
+	}
+	
+	private static void updateVariableNameReferences(Variable variable, String name) {
+		Process process = BPELUtils.getProcess(variable); 
+		TreeIterator iter = process.eAllContents();
+		while(iter.hasNext()) {
+			Object object = iter.next();
+			
+			// TODO refactor the code if possible
+			// from
+			if(object instanceof From) {
+				From from = (From) object; 
+				if(variable.equals(from.getVariable())) {
+					from.getElement().setAttribute(BPELConstants.AT_VARIABLE, name);
+				}
+			// to
+			} else if (object instanceof To) {
+				To to = (To) object; 
+				if(variable.equals(to.getVariable())) {
+					to.getElement().setAttribute(BPELConstants.AT_VARIABLE, name);
+				}
+			// receive
+			} else if(object instanceof Receive) {
+				Receive receive = (Receive)object;
+				if(variable.equals(receive.getVariable())) {
+					receive.getElement().setAttribute(BPELConstants.AT_VARIABLE, name);
+				}
+			// reply
+			} else if (object instanceof Reply) {
+				Reply reply = (Reply)object;
+				if(variable.equals(reply.getVariable())) {
+					reply.getElement().setAttribute(BPELConstants.AT_VARIABLE, name);
+				}
+			// invoke
+			} else if (object instanceof Invoke) {
+				Invoke invoke = (Invoke)object;
+				// fromparts
+				if(invoke.getFromParts() != null) {
+					FromParts fromParts = invoke.getFromParts();
+					EList<FromPart> list = fromParts.getChildren(); 
+					for (FromPart fromPart : list) {
+						if(variable.equals(fromPart.getToVariable())) {
+							fromPart.getElement().setAttribute(BPELConstants.AT_TO_VARIABLE, name);
+						}
+					}
+				}
+				// toparts
+				if(invoke.getToParts() != null) {
+					ToParts toParts = invoke.getToParts();
+					EList<ToPart> list = toParts.getChildren(); 
+					for (ToPart toPart : list) {
+						if(variable.equals(toPart.getFromVariable())) {
+							toPart.getElement().setAttribute(BPELConstants.AT_FROM_VARIABLE, name);
+						}
+					}
+				}
+				// inputvariable
+				if(variable.equals(invoke.getInputVariable())) {
+					invoke.getElement().setAttribute(BPELConstants.AT_INPUT_VARIABLE, name); 
+				}
+				// outputvariable
+				if(variable.equals(invoke.getOutputVariable())) {
+					invoke.getElement().setAttribute(BPELConstants.AT_OUTPUT_VARIABLE, name);
+				}
+			// throw 
+			} else if(object instanceof Throw) {
+				Throw _throw = (Throw) object;
+				if(variable.equals(_throw.getFaultVariable())) {
+					_throw.getElement().setAttribute(BPELConstants.AT_FAULT_VARIABLE, name);
+				}
+			// catch
+			} else if (object instanceof Catch) {
+				Catch _catch = (Catch) object; 
+				if(variable.equals(_catch.getFaultVariable())) {
+					_catch.getElement().setAttribute(BPELConstants.AT_FAULT_VARIABLE, name);
+				}
+			// validate: has list to reference real variable: nothing to implement
+			
+			// onMessage
+			} else if (object instanceof OnMessage) {
+				OnMessage onMessage = (OnMessage) object; 
+				if(variable.equals(onMessage)) {
+					onMessage.getElement().setAttribute(BPELConstants.AT_VARIABLE, name);
+				}
+			// onEvent
+			} else if (object instanceof OnEvent) {
+				OnEvent onEvent = (OnEvent) object; 
+				if(variable.equals(onEvent.getVariable())) {
+					onEvent.getElement().setAttribute(BPELConstants.AT_VARIABLE, name);
+				}
+			}
+			// forEach nothing to do: defines its own new variable, does not use existing one
+			// --> what if it uses existing one... this is not forbidden by UI
+			
+			// initialize variables from other variables?
+			// XPATH, Expressions, etc.?
+			// TODO TEST with local variables. make faster for local variables
+		}
+	}
+	
 	public static void replaceAttribute(WSDLElement element, String attributeName, String attributeValue) {
 		boolean oldUpdatingDom = isUpdatingDom(element);
 
@@ -321,11 +503,45 @@ public class ReconciliationHelper {
 			if (isEqual(parseElement.getAttribute(attributeName), attributeValue)) {
 				return;
 			}
+			
 			if (attributeValue != null && !attributeValue.equals("")) {
 				parseElement.setAttribute(attributeName, attributeValue);
 			} else {
 				parseElement.removeAttribute(attributeName);
 			}
+			
+			// HACK!!! 
+			// This is very hacky, but works and could show the way to another solution
+			if("name".equals(attributeName)) {
+				// link
+				if(element instanceof Link) {
+					updateLinkNameReferences((Link)element, attributeValue); 
+				}
+				
+				// variable
+				if(element instanceof Variable) {
+					updateVariableNameReferences((Variable)element, attributeValue); 
+				}
+				
+				// message exchange
+				else if(element instanceof MessageExchange) {
+					updateMessageExchangeNameReferences((MessageExchange)element, attributeValue); 
+				}
+				
+				// correlation set
+				else if(element instanceof CorrelationSet) {
+					updateCorrelationSetNameReferences((CorrelationSet)element, attributeValue);
+				}	
+				
+				// partner link
+				else if(element instanceof PartnerLink) {
+					updatePartnerLinkNameReferences((PartnerLink)element, attributeValue); 
+				}
+				
+				// partner link type: equivalent, but not with BPEL but WSDL
+				// property: correlation set + property alias --> WSDL
+			}
+			
 		} finally {
 			setUpdatingDom(element, oldUpdatingDom);
 		}

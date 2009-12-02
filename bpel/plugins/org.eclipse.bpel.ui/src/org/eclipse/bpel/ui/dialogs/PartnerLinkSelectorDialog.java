@@ -26,6 +26,7 @@ import org.eclipse.bpel.model.Reply;
 import org.eclipse.bpel.model.partnerlinktype.PartnerLinkType;
 import org.eclipse.bpel.model.partnerlinktype.PartnerlinktypeFactory;
 import org.eclipse.bpel.model.partnerlinktype.Role;
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.Messages;
 import org.eclipse.bpel.ui.commands.CompoundCommand;
 import org.eclipse.bpel.ui.commands.InsertInContainerCommand;
@@ -131,7 +132,7 @@ public class PartnerLinkSelectorDialog extends SelectionAndCreationDialog {
 	@Override
 	protected void handleNewButtonPushed() {
 		PartnerLink partner = BPELFactory.eINSTANCE.createPartnerLink();
-		Process process = ModelHelper.getProcess(modelObject);
+		Process process = BPELUtils.getProcess(modelObject);
 		String newName = filterText.getText();
 		newName = BPELUtil.generateUniqueModelName(process, newName, partner);
 		NameDialog nameDialog = new NameDialog(getShell(), Messages.PartnerLinkSelectorDialog_5, Messages.PartnerLinkSelectorDialog_6, 

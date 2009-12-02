@@ -12,7 +12,10 @@
 
 package org.eclipse.bpel.ui;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -28,6 +31,7 @@ import org.eclipse.bpel.model.MessageExchange;
 import org.eclipse.bpel.model.PartnerLink;
 import org.eclipse.bpel.model.Process;
 import org.eclipse.bpel.model.Variable;
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.adapters.AdapterNotification;
 import org.eclipse.bpel.ui.editparts.ProcessTrayEditPart;
 import org.eclipse.bpel.ui.editparts.util.OutlineTreePartFactory;
@@ -40,6 +44,7 @@ import org.eclipse.bpel.ui.util.ModelHelper;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IMarkerDelta;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -47,7 +52,10 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.draw2d.Viewport;
 import org.eclipse.draw2d.parts.ScrollableThumbnail;
@@ -71,6 +79,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.viewers.IPostSelectionProvider;
 import org.eclipse.jface.viewers.ISelection;
@@ -94,6 +103,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.ide.FileStoreEditorInput;
 import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.internal.views.properties.tabbed.view.TabDescriptor;
 import org.eclipse.ui.internal.views.properties.tabbed.view.TabbedPropertyViewer;
@@ -115,9 +125,9 @@ import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class BPELMultipageEditorPart extends MultiPageEditorPart 
-										implements IEditModelListener, 
-										           IGotoMarker/*, CommandStackListener*/ {
+public class BPELMultipageEditorPart extends MultiPageEditorPart
+implements IEditModelListener,
+IGotoMarker/*, CommandStackListener*/ {
 
 	class OutlinePage extends ContentOutlinePage {
 		private PageBook pageBook;
@@ -142,59 +152,59 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 			getViewer().setEditDomain(getEditDomain());
 			getViewer().setEditPartFactory(new OutlineTreePartFactory());
 
-			fDesignViewer.registerViewer(getViewer());
+			BPELMultipageEditorPart.this.fDesignViewer.registerViewer(getViewer());
 
 			//FIXME should we add the same for src tab?
-			ContextMenuProvider provider = new ProcessContextMenuProvider(getDesignEditor(), fDesignViewer.getActionRegistry());
+			ContextMenuProvider provider = new ProcessContextMenuProvider(getDesignEditor(), BPELMultipageEditorPart.this.fDesignViewer.getActionRegistry());
 
 			getViewer().setContextMenu(provider);
 			getSite().registerContextMenu("org.eclipse.bpel.outline.contextmenu", //$NON-NLS-1$
-				provider, 
-				getSite().getSelectionProvider());
-			getViewer().setKeyHandler(fDesignViewer.getKeyHandler());
+					provider,
+					getSite().getSelectionProvider());
+			getViewer().setKeyHandler(BPELMultipageEditorPart.this.fDesignViewer.getKeyHandler());
 			// TODO: Drag and drop support goes here
 			// getViewer().addDropTargetListener(new BPELTemplateTransferDropTargetListener(getViewer()));
 			IToolBarManager tbm = getSite().getActionBars().getToolBarManager();
-			showOutlineAction = new Action() {
+			this.showOutlineAction = new Action() {
 				@Override
 				public void run() {
 					showPage(ID_OUTLINE);
 				}
-                
-                @Override
+
+				@Override
 				public String getToolTipText() {
-                    return Messages.OutlinePage_showOutlineView;
-                }
+					return Messages.OutlinePage_showOutlineView;
+				}
 			};
-			showOutlineAction.setImageDescriptor(BPELUIPlugin.INSTANCE.getImageDescriptor(IBPELUIConstants.ICON_OUTLINE_16)); 
-			tbm.add(showOutlineAction);
-			showOverviewAction = new Action() {
+			this.showOutlineAction.setImageDescriptor(BPELUIPlugin.INSTANCE.getImageDescriptor(IBPELUIConstants.ICON_OUTLINE_16));
+			tbm.add(this.showOutlineAction);
+			this.showOverviewAction = new Action() {
 				@Override
 				public void run() {
 					showPage(ID_OVERVIEW);
 				}
-                
-                @Override
+
+				@Override
 				public String getToolTipText() {
-                    return Messages.OutlinePage_showOverviewView;
-                }
+					return Messages.OutlinePage_showOverviewView;
+				}
 			};
-			showOverviewAction.setImageDescriptor(BPELUIPlugin.INSTANCE.getImageDescriptor(IBPELUIConstants.ICON_OVERVIEW_16)); 	
-			tbm.add(showOverviewAction);
+			this.showOverviewAction.setImageDescriptor(BPELUIPlugin.INSTANCE.getImageDescriptor(IBPELUIConstants.ICON_OVERVIEW_16));
+			tbm.add(this.showOverviewAction);
 			showPage(ID_OUTLINE);
 		}
 
 		@Override
 		public Control getControl() {
-			return pageBook;
+			return this.pageBook;
 		}
 
 		@Override
 		public void createControl(Composite parent) {
-			pageBook = new PageBook(parent, SWT.NONE);
-			outline = getViewer().createControl(pageBook);
-			overview = new Canvas(pageBook, SWT.NONE);
-			pageBook.showPage(outline);
+			this.pageBook = new PageBook(parent, SWT.NONE);
+			this.outline = getViewer().createControl(this.pageBook);
+			this.overview = new Canvas(this.pageBook, SWT.NONE);
+			this.pageBook.showPage(this.outline);
 			configureOutlineViewer();
 			// TODO: Add to the adapting selection provider
 			//getSelectionSynchronizer().addViewer(getViewer());
@@ -203,29 +213,29 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 		}
 
 		private void initializeOverview() {
-			LightweightSystem lws = new LightweightSystem(overview);
-			RootEditPart rep = fDesignViewer.getGraphicalViewer().getRootEditPart();
+			LightweightSystem lws = new LightweightSystem(this.overview);
+			RootEditPart rep = BPELMultipageEditorPart.this.fDesignViewer.getGraphicalViewer().getRootEditPart();
 			if (rep instanceof GraphicalBPELRootEditPart) {
 				GraphicalBPELRootEditPart root = (GraphicalBPELRootEditPart)rep;
-				thumbnail = new ScrollableThumbnail((Viewport)root.getFigure());
-				thumbnail.setSource(root.getLayer(LayerConstants.PRINTABLE_LAYERS));
-				lws.setContents(thumbnail);
+				this.thumbnail = new ScrollableThumbnail((Viewport)root.getFigure());
+				this.thumbnail.setSource(root.getLayer(LayerConstants.PRINTABLE_LAYERS));
+				lws.setContents(this.thumbnail);
 			}
 		}
 
 		private void showPage(int id) {
 			if (id == ID_OUTLINE) {
-				showOutlineAction.setChecked(true);
-				showOverviewAction.setChecked(false);
-				pageBook.showPage(outline);
-				if (thumbnail != null)
-					thumbnail.setVisible(false);
+				this.showOutlineAction.setChecked(true);
+				this.showOverviewAction.setChecked(false);
+				this.pageBook.showPage(this.outline);
+				if (this.thumbnail != null)
+					this.thumbnail.setVisible(false);
 			} else if (id == ID_OVERVIEW) {
 				initializeOverview();
-				showOutlineAction.setChecked(false);
-				showOverviewAction.setChecked(true);
-				pageBook.showPage(overview);
-				thumbnail.setVisible(true);
+				this.showOutlineAction.setChecked(false);
+				this.showOverviewAction.setChecked(true);
+				this.pageBook.showPage(this.overview);
+				this.thumbnail.setVisible(true);
 			}
 		}
 
@@ -233,12 +243,12 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 		public void dispose() {
 			super.dispose();
 		}
-		
+
 		@Override
 		public void init(IPageSite pageSite) {
 			super.init(pageSite);
-			//should ActionRegistry be here too? 
-			ActionRegistry registry = fDesignViewer.getActionRegistry();
+			//should ActionRegistry be here too?
+			ActionRegistry registry = BPELMultipageEditorPart.this.fDesignViewer.getActionRegistry();
 			IActionBars bars = pageSite.getActionBars();
 			String id = ActionFactory.UNDO.getId();
 			bars.setGlobalActionHandler(id, registry.getAction(id));
@@ -261,37 +271,37 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 					for (Iterator<Object> i = ((IStructuredSelection) selection).iterator(); i.hasNext();) {
 						Object domNode = i.next();
 						if (domNode instanceof Element) {
-							Object facade = BPELEditorUtil.getInstance().findModelObjectForElement(process, (Element)domNode);
+							Object facade = BPELEditorUtil.getInstance().findModelObjectForElement(BPELMultipageEditorPart.this.process, (Element)domNode);
 							if (facade != null) {
 								selections.add(facade);
 							}
 						}
 					}
-					
+
 					if (!selections.isEmpty()) {
 						StructuredSelection bpelSelection = new StructuredSelection(selections);
-						fDesignViewer.getAdaptingSelectionProvider().setSelection(bpelSelection);
+						BPELMultipageEditorPart.this.fDesignViewer.getAdaptingSelectionProvider().setSelection(bpelSelection);
 					}
 				}
 			}
 		}
 	}
-	
+
 	protected class DesignViewerSelectionListener implements ISelectionChangedListener {
 		public void selectionChanged(SelectionChangedEvent event) {
 			//force selection update if only source page is not active
 			if (getActivePage() != SOURCE_PAGE_INDEX) {
 				try {
-					ISelection sel = fDesignViewer.getSelection();
+					ISelection sel = BPELMultipageEditorPart.this.fDesignViewer.getSelection();
 					Object selectedNode = ((IStructuredSelection)sel).getFirstElement();
 					Element selectedNodeElement = null;
-					
+
 					if (selectedNode instanceof StartNode) {
 						selectedNodeElement = ((StartNode)selectedNode).getProcess().getElement();
 					} else if (selectedNode instanceof ExtensibleElement) {
 						selectedNodeElement = ((ExtensibleElement)selectedNode).getElement();
-					} 
-				
+					}
+
 					if (selectedNodeElement != null) {
 						if (selectedNodeElement instanceof IDOMNode && ((IDOMNode)selectedNodeElement).getModel().isModelStateChanging()) {
 							return;
@@ -305,45 +315,45 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 			}
 		}
 	}
-	
+
 	private Process process;
-	
+
 	private DefaultEditDomain editDomain;
-	
+
 	protected ModelListenerAdapter modelListenerAdapter;
-	
+
 	private Resource extensionsResource;
-	
+
 	private ExtensionMap extensionMap;
-	
+
 	protected StructuredTextEditor fTextEditor = null;
 	protected BPELEditor fDesignViewer = null;
 	protected int currentPage = -1;
 
-	
+
 	protected TextEditorSelectionListener textEditorSelectionListener;
 	protected DesignViewerSelectionListener designViewerSelectionListener;
-	
+
 	// reacts to changes on the BPEL file (e.g. move, rename)
 	private IFileChangeListener fileChangeListener;
-	
+
 	// refactoring listeners
 	protected IResourceChangeListener postBuildRefactoringListener;
 
 	BPELModelReconcileAdapter bpelModelReconcileAdapter;
-	
+
 	private OutlinePage outlinePage;
 	protected BPELTabbedPropertySheetPage currentPropertySheetPage;
-	
+
 	protected ActionRegistry actionRegistry;
-	 
+
 	private static int DESIGN_PAGE_INDEX = 0;
 	private static int SOURCE_PAGE_INDEX = 1;
 
-	private Map<Long, EObject>fMarkers2EObject = new HashMap<Long, EObject>();
-	private Notification fMarkersStale = new NotificationImpl(
+	private final Map<Long, EObject>fMarkers2EObject = new HashMap<Long, EObject>();
+	private final Notification fMarkersStale = new NotificationImpl(
 			AdapterNotification.NOTIFICATION_MARKERS_STALE, null, null);
-	
+
 	public BPELMultipageEditorPart() {
 		super();
 		setEditDomain(new BPELEditDomain(this));
@@ -360,22 +370,22 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 		/*
 		 * Connect selection from the Design page to the selection provider of
 		 * the Source page so that selection in the Design page will drive
-		 * selection in the Source page. 
+		 * selection in the Source page.
 		 */
-		designViewerSelectionListener = new DesignViewerSelectionListener();
-		fDesignViewer.getAdaptingSelectionProvider().addSelectionChangedListener(designViewerSelectionListener);
-		
+		this.designViewerSelectionListener = new DesignViewerSelectionListener();
+		this.fDesignViewer.getAdaptingSelectionProvider().addSelectionChangedListener(this.designViewerSelectionListener);
+
 		/*
 		 * Connect selection from the Source page to the selection provider of
 		 * the Design page so that selection in the Source page will drive
-		 * selection in the Design page. 
+		 * selection in the Design page.
 		 */
-		textEditorSelectionListener = new TextEditorSelectionListener();
+		this.textEditorSelectionListener = new TextEditorSelectionListener();
 		ISelectionProvider provider = getTextEditor().getSelectionProvider();
 		if (provider instanceof IPostSelectionProvider) {
-			((IPostSelectionProvider) provider).addPostSelectionChangedListener(textEditorSelectionListener);
+			((IPostSelectionProvider) provider).addPostSelectionChangedListener(this.textEditorSelectionListener);
 		} else {
-			provider.addSelectionChangedListener(textEditorSelectionListener);
+			provider.addSelectionChangedListener(this.textEditorSelectionListener);
 		}
 
 	}
@@ -384,32 +394,40 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 	 * Creates the design page of the multi-page editor.
 	 */
 	protected void createDesignPage() {
-		fDesignViewer = new BPELEditor(getEditDomain(), this);
+		this.fDesignViewer = new BPELEditor(getEditDomain(), this);
+		// Bug #209341 - starting patch
+		if( getFileInput() == null ) {
+			MessageDialog.openError(
+					getSite().getShell(),
+					"Error while opening the file",
+			"The file could be opened, no input could be retrieved." );
+			return;
+		}
+		// End of patch
 		loadModel();
-		
 		try
-	    {
-			addPage(0, fDesignViewer, getEditorInput());
+		{
+			addPage(0, this.fDesignViewer, getEditorInput());
 			//FIXME I18N
 			setPageText(0, "Design");
-	    } catch (PartInitException e) {
-	    	ErrorDialog.openError(getSite().getShell(), "Error creating Design page", null, e.getStatus()); //$NON-NLS-1$
-	    }
+		} catch (PartInitException e) {
+			ErrorDialog.openError(getSite().getShell(), "Error creating Design page", null, e.getStatus()); //$NON-NLS-1$
+		}
 	}
 
 	/**
 	 * Creates the source page of the multi-page editor.
 	 */
 	protected void createSourcePage() throws PartInitException {
-		fTextEditor = new StructuredTextEditor();
+		this.fTextEditor = new StructuredTextEditor();
 		try
-	    {
-	    	addPage(0, fTextEditor, getEditorInput());
-	    	//FIXME I18N
-	    	setPageText(0, "Source");
-	    } catch (PartInitException e) {
-	    	ErrorDialog.openError(getSite().getShell(), "Error creating Source page", null, e.getStatus()); //$NON-NLS-1$
-	    }
+		{
+			addPage(0, this.fTextEditor, getEditorInput());
+			//FIXME I18N
+			setPageText(0, "Source");
+		} catch (PartInitException e) {
+			ErrorDialog.openError(getSite().getShell(), "Error creating Source page", null, e.getStatus()); //$NON-NLS-1$
+		}
 	}
 
 	/**
@@ -421,21 +439,21 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 			// source page must be created before design page
 			createSourcePage();
 			createDesignPage();
-	    	firePropertyChange(PROP_TITLE);
+			firePropertyChange(PROP_TITLE);
 			connectDesignPage();
 			initializeFileChangeListener();
-			initializeRefactoringListener();			
+			initializeRefactoringListener();
 		} catch (PartInitException e) {
 			//Logger.logException(e);
 			throw new RuntimeException(e);
-		} 
-		
+		}
+
 		if (BPELUIPlugin.INSTANCE.getDefaultPage().equals(IBPELUIConstants.SOURCE_PAGE)) {
 			setActivePage(SOURCE_PAGE_INDEX);
 		} else {
 			setActivePage(DESIGN_PAGE_INDEX);
 		}
-		
+
 		//updateTitle();
 	}
 
@@ -445,28 +463,30 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 		/*if (outlinePage != null && outlinePage.getViewer() != null) {
 			outlinePage.getViewer().setContents(null);
 		}*/
-		if (currentPage == SOURCE_PAGE_INDEX) {
+		if (this.currentPage == SOURCE_PAGE_INDEX) {
 			BPELUIPlugin.INSTANCE.setDefaultPage(IBPELUIConstants.SOURCE_PAGE);
 		} else {
 			BPELUIPlugin.INSTANCE.setDefaultPage(IBPELUIConstants.DESIGN_PAGE);
 		}
 
-		outlinePage = null;
- 		process = null;
- 		
-		if (fileChangeListener != null) {
-			BPELUIPlugin.INSTANCE.getResourceChangeListener().removeListener(fileChangeListener);
+		this.outlinePage = null;
+		this.process = null;
+
+		if (this.fileChangeListener != null) {
+			BPELUIPlugin.INSTANCE.getResourceChangeListener().removeListener(this.fileChangeListener);
 		}
 
-		if (postBuildRefactoringListener != null) {
+		if (this.postBuildRefactoringListener != null) {
 			IWorkspace workspace = ResourcesPlugin.getWorkspace();
-			workspace.removeResourceChangeListener(postBuildRefactoringListener);
+			workspace.removeResourceChangeListener(this.postBuildRefactoringListener);
 		}
 
-		IStructuredModel model = fTextEditor.getModel();
-		model.releaseFromEdit();
-		fDesignViewer.dispose();
-		fTextEditor.dispose();
+		IStructuredModel model = this.fTextEditor.getModel();
+		if (model != null) {
+			model.releaseFromEdit();
+			this.fDesignViewer.dispose();
+			this.fTextEditor.dispose();
+		}
 
 		super.dispose();
 	}
@@ -538,14 +558,14 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 	public void doSave(IProgressMonitor progressMonitor) {
 		// We use fTextEditor to save, because fDesignViewer.doSave() removes comments on save
 		// Save bpel only
-		fDesignViewer.getCommandFramework().applyCurrentChange();
-		fTextEditor.doSave(progressMonitor);
+		this.fDesignViewer.getCommandFramework().applyCurrentChange();
+		this.fTextEditor.doSave(progressMonitor);
 		// Reset sync stamp and modified flag after save
-		fDesignViewer.getEditModelClient().getPrimaryResourceInfo().resetSynchronizeStamp();
-		fDesignViewer.getEditModelClient().getPrimaryResourceInfo().getResource().setModified(false);
+		this.fDesignViewer.getEditModelClient().getPrimaryResourceInfo().resetSynchronizeStamp();
+		this.fDesignViewer.getEditModelClient().getPrimaryResourceInfo().getResource().setModified(false);
 		// Save extensions
-		fDesignViewer.doSave(progressMonitor);
-	    getCommandStack().markSaveLocation();
+		this.fDesignViewer.doSave(progressMonitor);
+		getCommandStack().markSaveLocation();
 	}
 
 	/*
@@ -557,49 +577,49 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 	public void doSaveAs() {
 		//saveAs is not allowed; do nothing
 	}
-	
+
 	protected BPELTabbedPropertySheetPage createBPELTabbedPropertySheetPage() {
 		//FIXME should the BPELTabbedPropertySheetPage has BPELMultiPageEditorPart as the 2nd argument?
 		return new BPELTabbedPropertySheetPage(new ITabbedPropertySheetPageContributor() {
-		    public String getContributorId() {
-		    	// same as the palette one
-		    	//return fDesignViewer.getPaletteAdditionsContributorId();
-		    	return IBPELUIConstants.BPEL_EDITOR_ID;
-		    }
-        }, fDesignViewer);
+			public String getContributorId() {
+				// same as the palette one
+				//return fDesignViewer.getPaletteAdditionsContributorId();
+				return IBPELUIConstants.BPEL_EDITOR_ID;
+			}
+		}, this.fDesignViewer);
 	}
 
-	
+
 	protected ActionRegistry getActionRegistry() {
-		if (actionRegistry == null)
-			actionRegistry = new ActionRegistry();
-		return actionRegistry;
+		if (this.actionRegistry == null)
+			this.actionRegistry = new ActionRegistry();
+		return this.actionRegistry;
 	}
 
-	
+
 	@Override
 	public Object getAdapter(Class type) {
 		if (type == Process.class) {
-			return process;
+			return this.process;
 		}
-		
+
 		if (type == BPELEditModelClient.class) {
-			return process;
+			return this.process;
 		}
 
 		//FIXME should we kill it?
 		if (type == ModelListenerAdapter.class) {
-			return modelListenerAdapter;
+			return this.modelListenerAdapter;
 		}
 
 		//FIXME should we kill it?
 		if (type == Resource.class) {
-			return extensionsResource;
+			return this.extensionsResource;
 		}
 
 		//FIXME should we kill it?
 		if (type == ExtensionMap.class) {
-			return extensionMap;
+			return this.extensionMap;
 		}
 
 		//FIXME should we kill it?
@@ -608,25 +628,25 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 		}
 
 		if (type == IContentOutlinePage.class) {
-			if (outlinePage == null) {
-				outlinePage = new OutlinePage(new TreeViewer());
+			if (this.outlinePage == null) {
+				this.outlinePage = new OutlinePage(new TreeViewer());
 			}
-			return outlinePage;
+			return this.outlinePage;
 		}
 
 		if (type == IPropertySheetPage.class) {
 			// We can't cache this object because the properties framework needs a new instance
-			// every time it calls this method. 
-			currentPropertySheetPage = createBPELTabbedPropertySheetPage();
-			return currentPropertySheetPage;
+			// every time it calls this method.
+			this.currentPropertySheetPage = createBPELTabbedPropertySheetPage();
+			return this.currentPropertySheetPage;
 		}
 
 		if (type == ActionRegistry.class) {
 			return getActionRegistry();
 		}
-		
+
 		return super.getAdapter(type);
-	  }
+	}
 
 	public CommandStack getCommandStack() {
 		return getEditDomain().getCommandStack();
@@ -640,13 +660,13 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 		return pageIndex;
 	}
 
-	
+
 	/**
 	 * Returns the design viewer
 	 * @return the design viewer
 	 */
 	protected BPELEditor getDesignEditor() {
-		return fDesignViewer;
+		return this.fDesignViewer;
 	}
 
 	/**
@@ -654,15 +674,70 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 	 * @return the edit domain
 	 */
 	protected DefaultEditDomain getEditDomain() {
-		return editDomain;
+		return this.editDomain;
 	}
 
+	// Bug #209341 - patch
+	// By Vincent Zurczak - EBM WebSourcing
+	private IFile openFile;
+	private static String filePrefix = new SimpleDateFormat( "yyyyMMF_" ).format( new GregorianCalendar().getTime());
+
+	/**
+	 * 
+	 * @return
+	 */
 	protected IFile getFileInput() {
-		return ((IFileEditorInput) getEditorInput()).getFile();
+
+		if( this.openFile == null ) {
+			try {
+				// Case where the file is in the workspace
+				if( getEditorInput() instanceof IFileEditorInput )
+					this.openFile = ((IFileEditorInput) getEditorInput()).getFile();
+
+				// Outside the workspace
+				// Since everything relies on IFiles, we create a temporary file in the workspace
+				// linking to the file outside the workspace
+				else if( getEditorInput() instanceof FileStoreEditorInput ) {
+					File f = new File(((FileStoreEditorInput) getEditorInput()).getURI());
+					IPath path = new Path( f.getAbsolutePath());
+
+					// Create a temporary project
+					IProgressMonitor monitor =  new NullProgressMonitor();
+					IProject tempProject = ResourcesPlugin.getWorkspace().getRoot().getProject( ".temp" );
+					if( ! tempProject.exists())
+						tempProject.create( monitor );
+
+					if( ! tempProject.isOpen())
+						tempProject.open( monitor );
+
+					// Remove old temporary files
+					// The file prefix is designed so that natural comparison order is enough
+					for( IResource res : tempProject.members()) {
+						if( res.getName().substring( 0, 7 ).compareTo( filePrefix ) < 0 ) {
+							try {
+								res.delete( false, monitor );
+							} catch( Exception e ) {
+								e.printStackTrace();
+							}
+						}
+					}
+
+					// Create a temporary file
+					this.openFile = tempProject.getFile( filePrefix + path.lastSegment());
+					this.openFile.createLink( path, IResource.NONE, monitor );
+				}
+
+			} catch( CoreException e ) {
+				e.printStackTrace();
+			}
+		}
+
+		return this.openFile;
 	}
+	// End of patch
 
 	public Process getProcess() {
-		return process;
+		return this.process;
 	}
 
 	/**
@@ -670,42 +745,42 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 	 * @return the design viewer
 	 */
 	protected StructuredTextEditor getSourceViewer() {
-		return fTextEditor;
+		return this.fTextEditor;
 	}
 
 	StructuredTextEditor getTextEditor() {
-		return fTextEditor;
+		return this.fTextEditor;
 	}
-	
+
 	public void gotoMarker(IMarker marker) {
-		
+
 		// One such mechanism is to use the href of the model object
 		// generated by the validator or whatever ...
-		
+
 		String href = null;
 		try {
 			href = (String) marker.getAttribute( "address.model" );
 		} catch (CoreException ex) {
 			BPELUIPlugin.log(ex);
-		}		
-		
+		}
+
 		// lookup by object href in the model.
 		EObject modelObject = null;
-		
+
 		if (href != null) {
 			try {
-				modelObject = fDesignViewer.getResource().getEObject( href );
+				modelObject = this.fDesignViewer.getResource().getEObject( href );
 			} catch (Throwable t) {
 				BPELUIPlugin.log(t);
 			}
 		}
-		
-		gotoText(marker);				
-		
+
+		gotoText(marker);
+
 		if (modelObject == null) {
 			return;
 		}
-		
+
 		gotoMarker ( marker, modelObject );
 	}
 
@@ -721,17 +796,17 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 		charStart = charStart == null ? 0 : charStart;
 		charEnd = charEnd == null ? charStart : charEnd;
 		try {
-			fTextEditor.setHighlightRange(charStart, charEnd - charStart, true);
+			this.fTextEditor.setHighlightRange(charStart, charEnd - charStart, true);
 		} catch (Throwable t) {
 			BPELUIPlugin.log(t);
 		}
 	}
-	
+
 	void gotoMarker ( IMarker marker, EObject modelObject ) {
-		
+
 		// TODO: is this bogus now that we have AdaptingSelectionProvider?
-				
-		
+
+
 		// The closest parent which has an edit part in the graph view.
 		//
 		// The following do not have viewers in the graph view:
@@ -739,60 +814,60 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 		// If it's any of those, then we have to reveal the closest container
 		// and then select the model object and show the properties.
 
-		GraphicalViewer graphViewer = fDesignViewer.getGraphicalViewer();
+		GraphicalViewer graphViewer = this.fDesignViewer.getGraphicalViewer();
 		EObject refObj = null;
-		
+
 		EditPart editPart = null;
 		if ( modelObject instanceof Variable ||
-		     modelObject instanceof PartnerLink ||
-		     modelObject instanceof CorrelationSet ||
-		     modelObject instanceof MessageExchange) {
-			
+				modelObject instanceof PartnerLink ||
+				modelObject instanceof CorrelationSet ||
+				modelObject instanceof MessageExchange) {
+
 			refObj = ModelHelper.getContainingScope(modelObject);
 			editPart = (EditPart)graphViewer.getEditPartRegistry().get(refObj);
 			if (editPart != null) {
 				graphViewer.reveal(editPart);
-			}			
-			fDesignViewer.selectModelObject(modelObject);
-			
+			}
+			this.fDesignViewer.selectModelObject(modelObject);
+
 		} else if (modelObject instanceof Activity) {
-			
+
 			// activity objects are on the graphical viewer
 			refObj = modelObject;
 			editPart = (EditPart)graphViewer.getEditPartRegistry().get(refObj);
-			
+
 			if (editPart != null) {
 				graphViewer.reveal(editPart);
 			}
-			
-			fDesignViewer.selectModelObject(modelObject);
-			
-			
+
+			this.fDesignViewer.selectModelObject(modelObject);
+
+
 		} else {
-				
+
 			refObj = modelObject;
 			while (refObj != null && !(refObj instanceof Activity) ) {
 				refObj = refObj.eContainer();
 			}
-			
+
 			// select process by default.
 			if (refObj == null) {
-				refObj = ModelHelper.getProcess( modelObject ) ;
+				refObj = BPELUtils.getProcess( modelObject ) ;
 			}
-			
+
 			modelObject = refObj;
-			
+
 			editPart = (EditPart)graphViewer.getEditPartRegistry().get(modelObject);
-			
+
 			if (editPart != null) {
 				graphViewer.reveal(editPart);
 			}
-			
-			fDesignViewer.selectModelObject(modelObject);
+
+			this.fDesignViewer.selectModelObject(modelObject);
 		}
-						
+
 		// If possible, try to display the marker in a property section.
-		BPELTabbedPropertySheetPage propertySheetPage = currentPropertySheetPage;
+		BPELTabbedPropertySheetPage propertySheetPage = this.currentPropertySheetPage;
 		if (propertySheetPage == null) {
 			return;
 			// if currentPropertySheetPage is null it means that the properties
@@ -802,9 +877,9 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 			// TODO: this doesn't work
 			//propertySheetPage = createBPELTabbedPropertySheetPage();
 		}
-		
+
 		TabbedPropertyViewer viewer = propertySheetPage.getTabbedPropertyViewer();
-		
+
 		int j = 0;
 		while (true) { // while we don't get an exception...
 			TabDescriptor descriptor = null;
@@ -813,19 +888,19 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 			} catch (IndexOutOfBoundsException iobe) {
 				break;
 			}
-			
+
 			if (descriptor == null) {
 				break; // no more descriptors
 			}
-			
+
 			TabContents tab = descriptor.createTab();
 			ISection[] sections = tab.getSections();
 			for (int i = 0; i < sections.length; i++) {
-			
+
 				if (BPELPropertySection.class.isInstance( sections[i]) == false) {
 					continue;
 				}
-				
+
 				BPELPropertySection section = (BPELPropertySection)sections[i];
 
 				// HACK: we have to fake the initialization of this section in order to
@@ -834,22 +909,22 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 				section.setInput(this, new StructuredSelection(modelObject));
 
 				if (section.isValidMarker (marker) ) {
-					
+
 					// the first section that handles this kind of marker wins
 					showPropertiesView();
 					// get real viewer, Tab and ISection objects since we are probably using fake ones
-					viewer = currentPropertySheetPage.getTabbedPropertyViewer();
+					viewer = this.currentPropertySheetPage.getTabbedPropertyViewer();
 					viewer.setSelection(new StructuredSelection(descriptor));
-					tab = currentPropertySheetPage.getCurrentTab();
+					tab = this.currentPropertySheetPage.getCurrentTab();
 					section = (BPELPropertySection)tab.getSectionAtIndex(i);
 					section.gotoMarker(marker);
 					return; // ignore other sections and tabs
-					
+
 				}
-			}					
+			}
 		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -860,15 +935,15 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
 		try {
 			super.init(site, input);
-//			getCommandStack().addCommandStackListener(this);
+			//			getCommandStack().addCommandStackListener(this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		setPartName(input.getName());
 	}
-	
+
 	protected void initializeFileChangeListener() {
-		fileChangeListener = new IFileChangeListener() {
+		this.fileChangeListener = new IFileChangeListener() {
 			public void deleted(IFile file) {
 				IFile current = ((IFileEditorInput)getEditorInput()).getFile();
 				if (current.equals(file)) {
@@ -919,16 +994,16 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 //				}
 			}
 		};
-		BPELUIPlugin.INSTANCE.getResourceChangeListener().addListener(fileChangeListener);
+		BPELUIPlugin.INSTANCE.getResourceChangeListener().addListener(this.fileChangeListener);
 	}
 
-	
+
 	/**
 	 * Installs the refactoring listener
 	 */
 	protected void initializeRefactoringListener() {
 		final IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		postBuildRefactoringListener = new IResourceChangeListener() {
+		this.postBuildRefactoringListener = new IResourceChangeListener() {
 			public void resourceChanged(IResourceChangeEvent event) {
 				IFile newFile = ((FileEditorInput)getEditorInput()).getFile();
 				final IResourceDelta bpelFileDelta = event.getDelta().findMember(newFile.getFullPath());
@@ -942,7 +1017,7 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 				}
 			}
 		};
-		workspace.addResourceChangeListener(postBuildRefactoringListener, IResourceChangeEvent.POST_BUILD);
+		workspace.addResourceChangeListener(this.postBuildRefactoringListener, IResourceChangeEvent.POST_BUILD);
 	}
 
 	/*
@@ -957,9 +1032,9 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 
 	protected void loadModel() {
 		Document structuredDocument = null;
-		
+
 		try {
-			IDocument doc = fTextEditor.getDocumentProvider().getDocument(getEditorInput());
+			IDocument doc = this.fTextEditor.getDocumentProvider().getDocument(getEditorInput());
 			if (doc instanceof IStructuredDocument) {
 				IStructuredModel model = StructuredModelManager.getModelManager().getExistingModelForEdit(doc);
 				if (model == null) {
@@ -971,35 +1046,39 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}    
-		
-		HashMap<String, Document> loadOptions = null; 
+		}
+
+		HashMap<String, Document> loadOptions = null;
 		if (structuredDocument != null) {
 			loadOptions = new HashMap<String, Document> (1);
 			loadOptions.put("DOMDocument", structuredDocument);
 		}
-		
-		//FIXME WSDLEditor has gef command stack; in order to have gef command stack we need to add design page first 
-		BPELEditModelClient editModelClient = new BPELEditModelClient(this, ((IFileEditorInput) getEditorInput()).getFile(), this, loadOptions);
-		fDesignViewer.setEditModelClient(editModelClient);
+
+		//FIXME WSDLEditor has gef command stack; in order to have gef command stack we need to add design page first
+
+		// Bug # 209341 - starting patch
+		// By Vincent Zurczak
+		IFile fileToOpen = getFileInput();
+		BPELEditModelClient editModelClient = new BPELEditModelClient(this, fileToOpen, this, loadOptions);
+		this.fDesignViewer.setEditModelClient(editModelClient);
 		getEditDomain().setCommandStack(editModelClient.getCommandStack());
 
 		Resource bpelResource = editModelClient.getPrimaryResourceInfo().getResource();
-		IFile file = getFileInput();
 		BPELReader reader = new BPELReader();
-	    reader.read(bpelResource, file, fDesignViewer.getResourceSet());
-	    process = reader.getProcess();
-	    
-	    bpelModelReconcileAdapter = new BPELModelReconcileAdapter (structuredDocument, process, bpelResource, fDesignViewer);
-	    
-	    if (getEditDomain() != null) {
-	    	((BPELEditDomain)getEditDomain()).setProcess(getProcess());
-	    }
-	    extensionsResource = reader.getExtensionsResource();
-	    extensionMap = reader.getExtensionMap();
+		reader.read(bpelResource, fileToOpen, this.fDesignViewer.getResourceSet());
+		// End of patch
 
-	    modelListenerAdapter = new ModelListenerAdapter();
-	    modelListenerAdapter.setExtensionMap(extensionMap);
+		this.process = reader.getProcess();
+		this.bpelModelReconcileAdapter = new BPELModelReconcileAdapter (structuredDocument, this.process, bpelResource, this.fDesignViewer);
+
+		if (getEditDomain() != null) {
+			((BPELEditDomain)getEditDomain()).setProcess(getProcess());
+		}
+		this.extensionsResource = reader.getExtensionsResource();
+		this.extensionMap = reader.getExtensionMap();
+
+		this.modelListenerAdapter = new ModelListenerAdapter();
+		this.modelListenerAdapter.setExtensionMap(this.extensionMap);
 	}
 
 	public void modelDeleted(ResourceInfo resourceInfo) {
@@ -1007,42 +1086,42 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 			getSite().getPage().closeEditor(this, false);
 		}
 	}
-	
+
 	public void modelDirtyStateChanged(ResourceInfo resourceInfo) {
 		firePropertyChange(PROP_DIRTY);
 	}
-	
+
 	public void modelLocationChanged(ResourceInfo resourceInfo, IFile movedToFile) {
 		// TODO!
 		//updateInputFile(movedToFile.getFullPath());
 	}
 
 	public void modelReloaded(ResourceInfo resourceInfo) {
-		Resource bpelResource = fDesignViewer.getEditModelClient().getPrimaryResourceInfo().getResource();
+		Resource bpelResource = this.fDesignViewer.getEditModelClient().getPrimaryResourceInfo().getResource();
 
 		IFile file = getFileInput();
 		BPELReader reader = new BPELReader();
-	    reader.read(bpelResource, file, fDesignViewer.getResourceSet());
-		 
-	    process = reader.getProcess();
-	    if (getEditDomain() != null) {
-	    	((BPELEditDomain)getEditDomain()).setProcess(getProcess());
-	    }
-	    extensionMap = reader.getExtensionMap();
-	    
-		modelListenerAdapter.setExtensionMap(fDesignViewer.getExtensionMap());
-	
-		fDesignViewer.getGraphicalViewer().setContents(getProcess());
+		reader.read(bpelResource, file, this.fDesignViewer.getResourceSet());
+
+		this.process = reader.getProcess();
+		if (getEditDomain() != null) {
+			((BPELEditDomain)getEditDomain()).setProcess(getProcess());
+		}
+		this.extensionMap = reader.getExtensionMap();
+
+		this.modelListenerAdapter.setExtensionMap(this.fDesignViewer.getExtensionMap());
+
+		this.fDesignViewer.getGraphicalViewer().setContents(getProcess());
 
 		// The ProcessTrayEditPart tries to remove its selection listener on deactivate.
 		// In this case, it will fail because the edit part can't find the editor because
 		// the process no longer belongs to a resource. Help it out and remove the
 		// listener manually.
-		ProcessTrayEditPart processTrayEditPart = (ProcessTrayEditPart)fDesignViewer.getTrayViewer().getContents();
-		fDesignViewer.getGraphicalViewer().removeSelectionChangedListener(processTrayEditPart.getSelectionChangedListener());
-		
-		fDesignViewer.getTrayViewer().setContents(getProcess());
-		
+		ProcessTrayEditPart processTrayEditPart = (ProcessTrayEditPart)this.fDesignViewer.getTrayViewer().getContents();
+		this.fDesignViewer.getGraphicalViewer().removeSelectionChangedListener(processTrayEditPart.getSelectionChangedListener());
+
+		this.fDesignViewer.getTrayViewer().setContents(getProcess());
+
 		//Bugzilla 294501 - When markers are added on the BPEL file, the meta-model 
 		//objects are notified about the marker change. But the display of the markers 
 		//on the diagram fails because of several invalid thread access exceptions.
@@ -1055,28 +1134,28 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 		});
 
 	}
-	
+
 	protected void updateMarkersHard () {
-		
-		for(EObject obj : fMarkers2EObject.values()) {
-			obj.eNotify(fMarkersStale);
+
+		for(EObject obj : this.fMarkers2EObject.values()) {
+			obj.eNotify(this.fMarkersStale);
 		}
-		
-		fMarkers2EObject.clear();
-		
+
+		this.fMarkers2EObject.clear();
+
 		IMarker[] markers = null;
 		IFile file = getFileInput();
 		Resource resource = getProcess().eResource();
-		
+
 		try {
-			markers = file.findMarkers(null, true, IResource.DEPTH_ZERO);							
+			markers = file.findMarkers(null, true, IResource.DEPTH_ZERO);
 		} catch (CoreException ex) {
 			BPELUIPlugin.log(ex);
 			return;
 		}
-		
+
 		for (IMarker m : markers) {
-			
+
 			String href = null;
 			EObject target = null;
 			try {
@@ -1085,24 +1164,24 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 					continue;
 				}
 				target = resource.getEObject(href);
-			} catch (CoreException ex) { 
+			} catch (CoreException ex) {
 				continue;
 			}
-			
+
 			if (target == null) {
 				continue;
 			}
-			
-			fMarkers2EObject.put(m.getId(), target);			
-			target.eNotify( new NotificationImpl (AdapterNotification.NOTIFICATION_MARKER_ADDED , null, m ));						
+
+			this.fMarkers2EObject.put(m.getId(), target);
+			target.eNotify( new NotificationImpl (AdapterNotification.NOTIFICATION_MARKER_ADDED , null, m ));
 		}
-					
+
 	}
 
 
 	@Override
 	protected void pageChange(int newPageIndex) {
-		currentPage = newPageIndex;
+		this.currentPage = newPageIndex;
 		super.pageChange(newPageIndex);
 	}
 
@@ -1124,7 +1203,7 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 			BPELUIPlugin.log(e);
 		}
 	}
-	
+
 	/**
 	 * The editor part name should be the same as the one appearing in the logical view.
 	 */
@@ -1133,46 +1212,46 @@ public class BPELMultipageEditorPart extends MultiPageEditorPart
 	}
 
 	public void modelMarkersChanged ( ResourceInfo resourceInfo , IMarkerDelta [] markerDelta ) {
-		
+
 		Resource resource = resourceInfo.getResource();
-					
+
 		for ( IMarkerDelta delta : markerDelta ) {
-		
+
 			String href = (String) delta.getAttribute( "address.model" ); //$NON-NLS-1$
 			if (href == null) {
 				continue;
 			}
-			
+
 			EObject target = null;
-			
+
 			switch (delta.getKind()) {
 			case IResourceDelta.ADDED :
 				target = resource.getEObject(href);
 				if (target != null) {
-					fMarkers2EObject.put(delta.getId(),target);
+					this.fMarkers2EObject.put(delta.getId(),target);
 					target.eNotify( new NotificationImpl(AdapterNotification.NOTIFICATION_MARKER_ADDED,null,delta.getMarker() ));
 				}
 				break;
 			case IResourceDelta.CHANGED :
-				target = fMarkers2EObject.remove(delta.getId());
+				target = this.fMarkers2EObject.remove(delta.getId());
 				if (target != null) {
 					target.eNotify( new NotificationImpl(AdapterNotification.NOTIFICATION_MARKER_CHANGED,delta.getMarker(),null));
 				}
 				break;
 			case IResourceDelta.REMOVED :
-				target = fMarkers2EObject.remove(delta.getId());
+				target = this.fMarkers2EObject.remove(delta.getId());
 				if (target != null) {
 					target.eNotify( new NotificationImpl(AdapterNotification.NOTIFICATION_MARKER_DELETED,delta.getMarker(),null));
 				}
-				break;				
+				break;
 			}
-			
+
 		}
 	}
 
 	@Override
 	public boolean isDirty() {
-		return fTextEditor.isDirty() || fDesignViewer.isDirty();
+		return this.fTextEditor.isDirty();
 	}
 
 	@Override

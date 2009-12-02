@@ -16,6 +16,7 @@ import java.util.Set;
 import org.eclipse.bpel.model.CorrelationSet;
 import org.eclipse.bpel.model.Process;
 import org.eclipse.bpel.model.messageproperties.Property;
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.BPELEditor;
 import org.eclipse.bpel.ui.Messages;
 import org.eclipse.bpel.ui.properties.PropertiesLabelProvider;
@@ -80,7 +81,7 @@ public class PropertySelectorDialog extends SelectionAndCreationDialog {
 	 * Finds all available properties from this process and the artifacts WSDL.
 	 */
 	protected void refreshProperties() {
-		Process process = ModelHelper.getProcess(correlationSet);
+		Process process = BPELUtils.getProcess(correlationSet);
 		Set properties = ModelHelper.getAvailableProperties(process);
 		 
 		// remove properties from the current correlation set
@@ -103,7 +104,7 @@ public class PropertySelectorDialog extends SelectionAndCreationDialog {
 	
 	@Override
 	protected void handleNewButtonPushed() {
-		Process process = ModelHelper.getProcess(correlationSet);
+		Process process = BPELUtils.getProcess(correlationSet);
 		BPELEditor bpelEditor = ModelHelper.getBPELEditor(process);
 		String newName = filterText.getText();
 		EditMessagePropertyDialog dialog = new EditMessagePropertyDialog(getShell(), null, newName, bpelEditor, wf);

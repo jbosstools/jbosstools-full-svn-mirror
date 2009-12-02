@@ -238,7 +238,7 @@ public class PartnerLinkTypeSelectorDialog extends BrowseSelectorDialog {
 		}
 		
 		// define the prefix
-		BPELUtils.setPrefix(ModelHelper.getProcess(modelObject), targetNamespace, dialog.getPrefix());
+		BPELUtils.setPrefix(BPELUtils.getProcess(modelObject), targetNamespace, dialog.getPrefix());
 		return true;
 	}
 

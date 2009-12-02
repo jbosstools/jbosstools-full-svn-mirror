@@ -30,6 +30,7 @@ import org.eclipse.bpel.model.Variable;
 import org.eclipse.bpel.model.Variables;
 import org.eclipse.bpel.model.partnerlinktype.PartnerLinkType;
 import org.eclipse.bpel.model.partnerlinktype.Role;
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.BPELUIPlugin;
 import org.eclipse.bpel.ui.IHelpContextIds;
 import org.eclipse.bpel.ui.Messages;
@@ -311,7 +312,7 @@ public class InvokeImplSection extends BPELPropertySection {
 				return Messages.InvokeImplSection_0;
 			}
 			public void run() {
-				createPartnerLink ( ModelHelper.getProcess( getInput () ) , null );
+				createPartnerLink ( BPELUtils.getProcess( getInput () ) , null );
 			}			
 		};
 

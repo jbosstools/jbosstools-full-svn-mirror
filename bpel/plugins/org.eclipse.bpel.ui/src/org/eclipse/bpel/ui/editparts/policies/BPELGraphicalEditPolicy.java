@@ -24,6 +24,7 @@ import org.eclipse.bpel.model.Process;
 import org.eclipse.bpel.model.Source;
 import org.eclipse.bpel.model.Target;
 import org.eclipse.bpel.model.Variable;
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.BPELLinkCreationFactory;
 import org.eclipse.bpel.ui.BPELUIPlugin;
 import org.eclipse.bpel.ui.IBPELUIConstants;
@@ -93,7 +94,7 @@ public class BPELGraphicalEditPolicy extends GraphicalNodeEditPolicy {
 			Target target = BPELFactory.eINSTANCE.createTarget();
 			link.getSources().add(source);
 			link.getTargets().add(target);
-			Process process = ModelHelper.getProcess(activity);
+			Process process = BPELUtils.getProcess(activity);
 			AddLinkCommand command = new AddLinkCommand(createSetNameCommand(link, process), process);
 			command.setLink(link);
 			command.setSource(activity);
@@ -218,7 +219,7 @@ public class BPELGraphicalEditPolicy extends GraphicalNodeEditPolicy {
 	protected Command getReconnectTargetCommand(ReconnectRequest request) {
 		Activity activity = getActivity();
 		Link link = (Link)request.getConnectionEditPart().getModel();
-		Process process = ModelHelper.getProcess(activity);
+		Process process = BPELUtils.getProcess(activity);
 		AddLinkCommand cmd = new AddLinkCommand(createSetNameCommand(link, process), process);
 		cmd.setLink(link);
 
@@ -235,7 +236,7 @@ public class BPELGraphicalEditPolicy extends GraphicalNodeEditPolicy {
 	protected Command getReconnectSourceCommand(ReconnectRequest request) {
 		Activity activity = getActivity();
 		Link link = (Link)request.getConnectionEditPart().getModel();
-		Process process = ModelHelper.getProcess(activity);
+		Process process = BPELUtils.getProcess(activity);
 		AddLinkCommand cmd = new AddLinkCommand(createSetNameCommand(link, process), process);
 		cmd.setLink(link);
 

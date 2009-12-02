@@ -19,6 +19,7 @@ import javax.xml.namespace.QName;
 import org.eclipse.bpel.model.BPELFactory;
 import org.eclipse.bpel.model.Process;
 import org.eclipse.bpel.model.Variable;
+import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.Messages;
 import org.eclipse.bpel.ui.commands.CompoundCommand;
 import org.eclipse.bpel.ui.commands.InsertInContainerCommand;
@@ -151,7 +152,7 @@ public class VariableSelectorDialog extends SelectionAndCreationDialog {
 	@Override
 	protected void handleNewButtonPushed() {
 		Variable variable = BPELFactory.eINSTANCE.createVariable();
-		Process process = ModelHelper.getProcess(modelObject);
+		Process process = BPELUtils.getProcess(modelObject);
 		String newName = filterText.getText();
 		newName = BPELUtil.generateUniqueModelName(process, newName, variable);
 		NameDialog nameDialog = new NameDialog(getShell(), Messages.VariableSelectorDialog_New_Variable_4, Messages.VariableSelectorDialog_Variable_Name_5, 

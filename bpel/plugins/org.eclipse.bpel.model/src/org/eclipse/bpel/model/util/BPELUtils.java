@@ -27,6 +27,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.xerces.dom.AttrImpl;
 import org.apache.xerces.dom.DocumentImpl;
 import org.apache.xerces.jaxp.DocumentBuilderFactoryImpl;
+import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.Correlation;
 import org.eclipse.bpel.model.CorrelationSet;
 import org.eclipse.bpel.model.CorrelationSets;
@@ -272,15 +273,17 @@ public class BPELUtils {
 	 *            the reference object.
 	 * @return the process object, or null
 	 */
-
-	static public Process getProcess(EObject eObj) {
-		EObject context = eObj;
-
-		while (context != null) {
-			if (context instanceof Process) {
-				return (Process) context;
+	public static Process getProcess(Object object) {
+		if (object instanceof EObject) {
+			// check if *this* is already the process object
+			if (object instanceof Process)
+				return (Process)object;
+			EObject cont = ((EObject)object).eContainer();
+			while (cont != null) {
+				if (cont.eClass() == BPELPackage.eINSTANCE.getProcess())
+					return (Process)cont;
+				cont = cont.eContainer();
 			}
-			context = context.eContainer();
 		}
 		return null;
 	}
