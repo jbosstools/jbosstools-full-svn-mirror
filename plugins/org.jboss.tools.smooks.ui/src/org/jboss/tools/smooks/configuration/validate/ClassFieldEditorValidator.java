@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.validate;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -23,6 +24,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.Modifier;
 import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.csv12.Binding;
@@ -127,8 +129,24 @@ public class ClassFieldEditorValidator extends AbstractValidator {
 								// ignore
 							}
 						}
-						String message = "Can't find class : \"" + classString + "\"";
+						String message = null;
 						if (clazz1 == null) {
+							message = "Can't find class : \"" + classString + "\"";
+						}else{
+							if(Modifier.isAbstract(clazz1.getModifiers())){
+								message = "The class can't be abstract";
+							}else{
+								try {
+									Constructor<?> constructor = clazz1.getConstructor(null);
+								} catch (SecurityException e) {
+									message = "The class '"+classString+"'can't be instanced";
+								} catch (NoSuchMethodException e) {
+									message = "The class '"+classString+"'can't be instanced";
+								}
+							}
+							
+						}
+						if(message != null){
 							list.add(newWaringDiagnostic(message, object,(EAttribute) feature));
 						}
 						break;
