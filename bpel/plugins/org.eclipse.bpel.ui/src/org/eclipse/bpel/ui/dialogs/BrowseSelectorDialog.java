@@ -165,7 +165,7 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 		computeResult();
 		Object obj[] = getResult();
 		
-		if (obj != null && obj.length > 0) {
+		if (obj != null || obj.length > 0) {
 			if (ensureXSDTypeNamespaceMappings ( obj[0] ) == false) {
 				return ;
 			}
@@ -285,9 +285,13 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 
 		// Do not import schema for schemas
 		if (obj instanceof XSDSimpleTypeDefinition) {
-			if (((XSDSimpleTypeDefinition) obj).getTargetNamespace().equals(
-					XSDConstants.SCHEMA_FOR_SCHEMA_URI_2001)) {
-				return false;
+			
+			String targetNamespace = ((XSDSimpleTypeDefinition) obj).getTargetNamespace();
+			if (targetNamespace != null) {
+				if (((XSDSimpleTypeDefinition) obj).getTargetNamespace().equals(
+						XSDConstants.SCHEMA_FOR_SCHEMA_URI_2001)) {
+					return false;
+				}
 			}
 		}
 
@@ -576,13 +580,11 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 			
 			fFilteredList.setEnabled(true);
 			fFilteredList.setAllowDuplicates(showDuplicates);
-			fFilteredList.setElements( contentProvider.getElements( fProjectObjects ) );	
-			// add by Grid.Qian
-			// update the fTreeViewer because for now the fTreeViewer's input is null
-			if (contentProvider.getElements( fProjectObjects ) != null && 
-			    contentProvider.getElements( fProjectObjects ).length > 0) {
+			fFilteredList.setElements( contentProvider.getElements( fProjectObjects ) );
+			
+			if (contentProvider.getElements( fProjectObjects ) != null && contentProvider.getElements( fProjectObjects ).length > 0) {
 				updateLowerViewWidget(fFilteredList.getSelection());
-			}
+			}		
 		}		
 	}
 
@@ -644,7 +646,7 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 	protected void handleEmptyList() {
 		fTreeViewer.setInput ( null );	
 		
-		// added by Grid.Qian
+		// Buzilla 290348 - added by Grid.Qian
 		// the tree view's input is null, but the selection maybe not 0
 		// for example the input is a list and we select a element, then
 		// set the input = null, this time, the selection is not 0
