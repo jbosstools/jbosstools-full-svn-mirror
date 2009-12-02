@@ -58,6 +58,7 @@ import org.eclipse.ui.part.FileEditorInput;
 
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.debug.core.ILaunchManager;
 
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 
@@ -184,8 +185,9 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 				if(editorInput instanceof FileEditorInput) {
 					FileEditorInput fileEI = (FileEditorInput) editorInput;					
 					IFile file = fileEI.getFile();
+					String configName = getLaunchManager().generateUniqueLaunchConfigurationNameFrom(editor.getTitle());
 					
-					launchConfigWC.rename("[" + file.getProject().getName() + "]" + editor.getTitle());
+					launchConfigWC.rename(configName);
 					launchConfigWC.setAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, file.getProject().getName()); //$NON-NLS-1$
 					launchConfigWC.setAttribute(IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, file.getProjectRelativePath().toString()); //$NON-NLS-1$
 				}
