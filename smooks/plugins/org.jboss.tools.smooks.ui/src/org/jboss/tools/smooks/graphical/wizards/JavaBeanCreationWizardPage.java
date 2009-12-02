@@ -125,7 +125,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 
 		createBeanClassControls(mainComposite);
 
-		createBeanTypeControls(mainComposite);
+		//createBeanTypeControls(mainComposite);
 
 		Label seperator = new Label(mainComposite, SWT.HORIZONTAL
 				| SWT.SEPARATOR);
@@ -261,7 +261,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 
 	private void createBeanTypeControls(Composite mainComposite) {
 
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		GridData gd;
 
 		Label beanTypeLabel = new Label(mainComposite, SWT.NONE);
 		beanTypeLabel
@@ -465,23 +465,11 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 
 			public void modifyText(ModifyEvent e) {
 				Text t = (Text) e.getSource();
-				arrayButton.setEnabled(true);
 				beanClass = t.getText();
 				if (beanClass != null) {
 					beanClass = beanClass.trim();
 				}
 				isCollection = isCollectionClass(beanClass);
-				if (isCollection) {
-					isArray = false;
-					arrayButton.setSelection(false);
-					arrayButton.setEnabled(false);
-					collectionClassBrowseButton.setEnabled(true);
-					colllectionClassText.setEnabled(true);
-				} else {
-					collectionClassBrowseButton.setEnabled(false);
-					colllectionClassText.setEnabled(false);
-					colllectionClassText.setText(""); //$NON-NLS-1$
-				}
 				refreshJavaBeanModel();
 				updateWizardPageStatus();
 			}
@@ -571,14 +559,14 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 				ProjectClassLoader loader = new ProjectClassLoader(project);
 				Class<?> clazz = loader.loadClass(beanClass);
 				if (Modifier.isAbstract(clazz.getModifiers())) {
-					error = "The class can't be abstract";
+					error = "Class is Abstract.  Cannot be instantiated.";
 				} else {
 					try {
-						Constructor<?> constructor = clazz.getConstructor(null);
+						clazz.getConstructor(null);
 					} catch (SecurityException e) {
-						error = "The class can't be instanced";
+						error = "Unable to determine if the class can be instantiated.";
 					} catch (NoSuchMethodException e) {
-						error = "The class can't be instanced";
+						error = "Class does not have a Public Default Constructor.";
 					}
 				}
 			} catch (JavaModelException e) {
@@ -586,34 +574,6 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 			} catch (ClassNotFoundException e) {
 				error = Messages.JavaBeanCreationWizardPage_CatFindClassErrorMessage1
 						+ beanClass + Messages.JavaBeanCreationWizardPage_27;
-			}
-		}
-
-		if (isCollection) {
-			if (collectionClass == null || "".equals(collectionClass.trim())) { //$NON-NLS-1$
-				error = Messages.JavaBeanCreationWizardPage_CollectionComponentClassEmptyErrorMessage;
-			} else {
-				try {
-					ProjectClassLoader loader = new ProjectClassLoader(project);
-					Class<?> clazz = loader.loadClass(collectionClass);
-					if (Modifier.isAbstract(clazz.getModifiers())) {
-						error = "The collection component class can't be abstract";
-					} else {
-						try {
-							Constructor<?> constructor = clazz
-									.getConstructor(null);
-						} catch (SecurityException e) {
-							error = "The collection component class can't be instanced";
-						} catch (NoSuchMethodException e) {
-							error = "The collection component class can't be instanced";
-						}
-					}
-				} catch (JavaModelException e) {
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					error = Messages.JavaBeanCreationWizardPage_CatFindClassErrorMessage1
-							+ beanClass;
-				}
 			}
 		}
 

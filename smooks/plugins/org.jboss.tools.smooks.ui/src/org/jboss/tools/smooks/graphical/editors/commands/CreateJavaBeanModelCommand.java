@@ -80,53 +80,28 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 					if (editorPart instanceof SmooksGraphicalEditorPart) {
 						resourceListType = ((SmooksGraphicalEditorPart) editorPart).getSmooksResourceListType();
 					}
-					List<Object> models = createJavaBeanModel(type, wizard.getJavaBeanModel(), wizard.getBindings(),
-							resourceListType, new ArrayList<String>());
-					String figureID = null;
-					int index = 0;
-					// for (Iterator<?> iterator = models.iterator();
-					// iterator.hasNext();) {
-					// Object object = (Object) iterator.next();
-					// if (object instanceof EObject) {
-					// figureID =
-					// SmooksGraphUtil.generateFigureIDViaModel((EObject)
-					// object);
-					// if (figureID != null && editorPart instanceof
-					// SmooksGraphicalEditorPart) {
-					// SmooksGraphicsExtType ext = ((SmooksGraphicalEditorPart)
-					// editorPart)
-					// .getSmooksGraphicsExtType();
-					// GraphType graph = ext.getGraph();
-					// if (graph != null) {
-					// FigureType figureType =
-					// SmooksGraphUtil.findFigureType(graph, figureID);
-					// if (figureType == null) {
-					// figureType = GraphFactory.eINSTANCE.createFigureType();
-					// graph.getFigure().add(figureType);
-					// figureType.setId(figureID);
-					// }
-					// String x = String.valueOf(this.x + index);
-					// String y = String.valueOf(this.y + index);
-					// figureType.setX(x);
-					// figureType.setY(y);
-					// index += 20;
-					// }
-					// }
-					// }
-					// }
-
-					List<Object> creationModels = new ArrayList<Object>();
-
-					if (collections instanceof FeatureMap.Entry) {
-						for (Iterator<?> iterator = models.iterator(); iterator.hasNext();) {
-							Object object = (Object) iterator.next();
-							creationModels.add(FeatureMapUtil.createEntry(((FeatureMap.Entry) collections)
-									.getEStructuralFeature(), object));
+					
+					JavaBeanModel javaBeanModel = wizard.getJavaBeanModel();					
+					if(javaBeanModel != null) {
+						List<Object> models = createJavaBeanModel(type, javaBeanModel, wizard.getBindings(),
+								resourceListType, new ArrayList<String>());
+						String figureID = null;
+						int index = 0;
+						List<Object> creationModels = new ArrayList<Object>();
+	
+						if (collections instanceof FeatureMap.Entry) {
+							for (Iterator<?> iterator = models.iterator(); iterator.hasNext();) {
+								Object object = (Object) iterator.next();
+								creationModels.add(FeatureMapUtil.createEntry(((FeatureMap.Entry) collections)
+										.getEStructuralFeature(), object));
+							}
 						}
+						collections = creationModels;
+	
+						emfCommand = AddCommand.create(domain, owner, feature, creationModels);
+					} else {
+						// TODO: There is no "model" e.g. for a Collection type... what do we do??
 					}
-					collections = creationModels;
-
-					emfCommand = AddCommand.create(domain, owner, feature, creationModels);
 				} else {
 					throw new IgnoreException();
 				}
