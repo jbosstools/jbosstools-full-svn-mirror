@@ -2858,6 +2858,21 @@ public class SmooksUIUtils {
 		}
 		return false;
 	}
+	
+	public static EStructuralFeature getClassFeature(EObject model){
+		if(model == null){
+			return null;
+		}
+		
+		if( model instanceof BindingsType){
+			return JavabeanPackage.Literals.BINDINGS_TYPE__CLASS;
+		}
+		if(model instanceof BeanType){
+			return Javabean12Package.Literals.BEAN_TYPE__CLASS;
+		}
+		
+		return null;
+	}
 
 	public static EStructuralFeature getBeanIDFeature(EObject model) {
 		if (model == null) {
