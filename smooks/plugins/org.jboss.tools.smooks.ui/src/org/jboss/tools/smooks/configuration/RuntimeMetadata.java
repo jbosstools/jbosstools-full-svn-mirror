@@ -21,7 +21,6 @@ package org.jboss.tools.smooks.configuration;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -150,35 +149,8 @@ public class RuntimeMetadata {
 		if (file != null) {
 			configFile = file;
 			if (configFile.exists() && configFile.isFile()) {
-				ExecutionContext execContext = metadataExtractor.createExecutionContext();
-				Properties inputParams = new Properties();
-
 				try {
-					// Filter the config and capture the input params...
-					execContext.setAttribute(InputParamExtractor.class, inputParams);
-					execContext.setAttribute(RuntimeMetadata.class, this);
-
-					metadataExtractor.filterSource(execContext, new StreamSource(new FileInputStream(configFile)));
-
-					inputType = inputParams.getProperty(SmooksModelUtils.INPUT_TYPE);
-					if (inputType != null) {
-						String inputPath = inputParams.getProperty(inputType);
-						if (inputPath != null) {
-							String resolvedFilePath;
-							try {
-								resolvedFilePath = SmooksUIUtils.parseFilePath(inputPath.trim());
-							} catch (Exception e) {
-								// It's not a valid config...
-								inputFile = new File(inputPath.trim());
-								return;
-							}
-
-							inputFile = new File(resolvedFilePath);
-							if (inputFile.exists() && inputFile.isFile()) {
-								isValidSmooksConfig = true;
-							}
-						}
-					}
+					digestSmooksConfig(new FileInputStream(configFile));
 				} catch (Exception e) {
 					// Not a valid Smooks config file
 				}
@@ -187,50 +159,48 @@ public class RuntimeMetadata {
 	}
 
 	public void setSmooksConfig(File file, InputStream inputStream) {
-		reset();
-		if (file != null) {
+		if (inputStream == null) {
+			setSmooksConfig(file);
+		} else {
 			configFile = file;
 			if (configFile.exists() && configFile.isFile()) {
-				if (inputStream == null) {
+				digestSmooksConfig(inputStream);
+			}
+		}
+	}
+
+	private void digestSmooksConfig(InputStream inputStream) {
+		ExecutionContext execContext = metadataExtractor.createExecutionContext();
+		Properties inputParams = new Properties();
+
+		try {
+			// Filter the config and capture the input params...
+			execContext.setAttribute(InputParamExtractor.class, inputParams);
+			execContext.setAttribute(RuntimeMetadata.class, this);
+
+			metadataExtractor.filterSource(execContext, new StreamSource(inputStream));
+
+			inputType = inputParams.getProperty(SmooksModelUtils.INPUT_TYPE);
+			if (inputType != null) {
+				String inputPath = inputParams.getProperty(inputType);
+				if (inputPath != null) {
+					String resolvedFilePath;
 					try {
-						inputStream = new FileInputStream(file);
-					} catch (FileNotFoundException e) {
-						e.printStackTrace();
+						resolvedFilePath = SmooksUIUtils.parseFilePath(inputPath.trim());
+					} catch (Exception e) {
+						// It's not a valid config...
+						inputFile = new File(inputPath.trim());
+						return;
 					}
-				}
-				ExecutionContext execContext = metadataExtractor.createExecutionContext();
-				Properties inputParams = new Properties();
 
-				try {
-					// Filter the config and capture the input params...
-					execContext.setAttribute(InputParamExtractor.class, inputParams);
-					execContext.setAttribute(RuntimeMetadata.class, this);
-
-					metadataExtractor.filterSource(execContext, new StreamSource(inputStream));
-
-					inputType = inputParams.getProperty(SmooksModelUtils.INPUT_TYPE);
-					if (inputType != null) {
-						String inputPath = inputParams.getProperty(inputType);
-						if (inputPath != null) {
-							String resolvedFilePath;
-							try {
-								resolvedFilePath = SmooksUIUtils.parseFilePath(inputPath.trim());
-							} catch (Exception e) {
-								// It's not a valid config...
-								inputFile = new File(inputPath.trim());
-								return;
-							}
-
-							inputFile = new File(resolvedFilePath);
-							if (inputFile.exists() && inputFile.isFile()) {
-								isValidSmooksConfig = true;
-							}
-						}
+					inputFile = new File(resolvedFilePath);
+					if (inputFile.exists() && inputFile.isFile()) {
+						isValidSmooksConfig = true;
 					}
-				} catch (Exception e) {
-					// Not a valid Smooks config file
 				}
 			}
+		} catch (Exception e) {
+			// Not a valid Smooks config file
 		}
 	}
 
