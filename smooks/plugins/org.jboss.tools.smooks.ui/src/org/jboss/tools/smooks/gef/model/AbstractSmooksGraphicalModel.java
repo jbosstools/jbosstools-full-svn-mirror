@@ -108,9 +108,10 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode, IValidata
 	 *            the severity to set
 	 */
 	public void setSeverity(int severity) {
-		if (severity == this.severity)
-			return;
 		int old = this.severity;
+		if (severity == this.severity){
+			old = -1;
+		}
 		this.severity = severity;
 		support.firePropertyChange(PRO_SEVERITY_CHANGED, old, this.severity);
 	}
