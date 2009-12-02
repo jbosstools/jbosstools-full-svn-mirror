@@ -56,7 +56,11 @@ public class JavaTypeFieldDialog implements IFieldDialog {
 		return null;
 	}
 	
-	public static String openJavaTypeDialog(Shell shell, IJavaProject javaProject) {
+	public static String openJavaTypeDialog(Shell shell, IJavaProject javaProject ) {
+		return openJavaTypeDialog(shell, javaProject, IJavaElementSearchConstants.CONSIDER_CLASSES);
+	}
+	
+	public static String openJavaTypeDialog(Shell shell, IJavaProject javaProject , int javaType) {
 		IJavaSearchScope scope = null;
 		String className = null;
 		if (javaProject == null) {
@@ -80,8 +84,7 @@ public class JavaTypeFieldDialog implements IFieldDialog {
 		SelectionDialog dialog;
 		try {
 			dialog = JavaUI.createTypeDialog(shell, SmooksConfigurationActivator.getDefault().getWorkbench()
-					.getActiveWorkbenchWindow(), scope,
-					IJavaElementSearchConstants.CONSIDER_CLASSES_AND_INTERFACES, false);
+					.getActiveWorkbenchWindow(), scope,javaType, false);
 			dialog.setMessage(Messages.JavaTypeFieldDialog_SearchDialogTitle);
 			dialog.setTitle(Messages.JavaTypeFieldDialog_SearchDialogTitle);
 			if (dialog.open() == Window.OK) {
