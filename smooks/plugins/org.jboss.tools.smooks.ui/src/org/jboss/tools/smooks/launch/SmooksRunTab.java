@@ -181,11 +181,11 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 			if(editor instanceof AbstractSmooksFormEditor) {
 				IEditorInput editorInput = editor.getEditorInput();
 
-				launchConfigWC.rename(editor.getTitle());
 				if(editorInput instanceof FileEditorInput) {
 					FileEditorInput fileEI = (FileEditorInput) editorInput;					
 					IFile file = fileEI.getFile();
 					
+					launchConfigWC.rename("[" + file.getProject().getName() + "]" + editor.getTitle());
 					launchConfigWC.setAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, file.getProject().getName()); //$NON-NLS-1$
 					launchConfigWC.setAttribute(IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, file.getProjectRelativePath().toString()); //$NON-NLS-1$
 				}
