@@ -57,7 +57,8 @@ public class SelectorValidator extends AbstractValidator {
 	 * (java.util.Collection, org.eclipse.emf.edit.domain.EditingDomain)
 	 */
 	@Override
-	public List<Diagnostic> validate(Collection<?> selectedObjects, EditingDomain editingDomain) {
+	public List<Diagnostic> validate(Collection<?> selectedObjects,
+			EditingDomain editingDomain) {
 		return super.validate(selectedObjects, editingDomain);
 	}
 
@@ -76,9 +77,19 @@ public class SelectorValidator extends AbstractValidator {
 				return null;
 			Object data = ((EObject) model).eGet(feature);
 			if (data == null) {
+				if (feature instanceof EAttribute) {
+					if (model instanceof BeanType
+							|| model instanceof BindingsType) {
+						return newWaringDiagnostic(
+								"Must be linked with source input node", model,
+								(EAttribute) feature);
+					}
+				}
 				return null;
 			}
 			String path = data.toString();
+			if (path != null)
+				path = path.trim();
 			// if (path == null) {
 			// return null;
 			// }
@@ -91,6 +102,16 @@ public class SelectorValidator extends AbstractValidator {
 			if (path.indexOf('/') == -1) {
 				sperator = " ";
 			}
+			if (path == null || path.length() == 0) {
+				if (feature instanceof EAttribute) {
+					if (model instanceof BeanType
+							|| model instanceof BindingsType) {
+						return newWaringDiagnostic(
+								"Must be linked with source input node", model,
+								(EAttribute) feature);
+					}
+				}
+			}
 			if (feature != null && path != null) {
 				if ("#document".equals(path)) {
 					return null;
@@ -101,10 +122,12 @@ public class SelectorValidator extends AbstractValidator {
 					if (obj instanceof IXMLStructuredObject) {
 						if (node == null) {
 							try {
-								node = SmooksUIUtils.localXMLNodeWithPath(path, (IXMLStructuredObject) obj, sperator,
+								node = SmooksUIUtils.localXMLNodeWithPath(path,
+										(IXMLStructuredObject) obj, sperator,
 										false);
 							} catch (Throwable e) {
-								SmooksConfigurationActivator.getDefault().log(e);
+								SmooksConfigurationActivator.getDefault()
+										.log(e);
 							}
 						}
 						if (node != null) {
@@ -113,16 +136,20 @@ public class SelectorValidator extends AbstractValidator {
 					}
 				}
 				if (node == null && feature instanceof EAttribute) {
-					if (model instanceof BeanType || model instanceof BindingsType || model instanceof ValueType
+					if (model instanceof BeanType
+							|| model instanceof BindingsType
+							|| model instanceof ValueType
 							|| model instanceof org.jboss.tools.smooks.model.javabean12.ValueType
 							|| model instanceof WiringType
 							|| model instanceof org.jboss.tools.smooks.model.javabean12.WiringType
 							|| model instanceof ExpressionType
 							|| model instanceof org.jboss.tools.smooks.model.javabean12.ExpressionType) {
-						return newWaringDiagnostic("Can't find the input source node :   '" + path + "'", model,
-								(EAttribute) feature);
+						return newWaringDiagnostic(
+								"Can't find the input source node :   '" + path
+										+ "'", model, (EAttribute) feature);
 					}
-					return newWaringDiagnostic("Selector '" + path + "' isn't available", model, (EAttribute) feature);
+					return newWaringDiagnostic("Selector '" + path
+							+ "' isn't available", model, (EAttribute) feature);
 				}
 			}
 		}
@@ -133,9 +160,11 @@ public class SelectorValidator extends AbstractValidator {
 		return SmooksUIUtils.getSelectorFeature((EObject) model);
 	}
 
-	public void initValidator(Collection<?> selectedObjects, EditingDomain editingDomain) {
+	public void initValidator(Collection<?> selectedObjects,
+			EditingDomain editingDomain) {
 		list.clear();
-		Resource resource = editingDomain.getResourceSet().getResources().get(0);
+		Resource resource = editingDomain.getResourceSet().getResources()
+				.get(0);
 		if (resource.getContents().isEmpty()) {
 			return;
 		}
@@ -152,7 +181,8 @@ public class SelectorValidator extends AbstractValidator {
 				return;
 			IContentType contentType = null;
 			try {
-				IContentDescription contentDescription = file.getContentDescription();
+				IContentDescription contentDescription = file
+						.getContentDescription();
 				if (contentDescription != null) {
 					contentType = contentDescription.getContentType();
 				}
@@ -160,18 +190,22 @@ public class SelectorValidator extends AbstractValidator {
 			} catch (Throwable t) {
 
 			}
-			IContentType smooksContentType = Platform.getContentTypeManager().getContentType(
-					"org.jboss.tools.smooks.ui.smooks.contentType");
-			IContentType ediMappingContentType = Platform.getContentTypeManager().getContentType(
-					"org.jboss.tools.smooks.ui.edimap.contentType");
+			IContentType smooksContentType = Platform.getContentTypeManager()
+					.getContentType(
+							"org.jboss.tools.smooks.ui.smooks.contentType");
+			IContentType ediMappingContentType = Platform
+					.getContentTypeManager().getContentType(
+							"org.jboss.tools.smooks.ui.edimap.contentType");
 
-			if (!(smooksContentType.equals(contentType) || ediMappingContentType.equals(contentType))) {
+			if (!(smooksContentType.equals(contentType) || ediMappingContentType
+					.equals(contentType))) {
 				return;
 			}
 
 			// final FileEditorInput input = new FileEditorInput(file);
 			final SmooksResourceListType finalList = listType;
-			Display dis = SmooksConfigurationActivator.getDefault().getWorkbench().getDisplay();
+			Display dis = SmooksConfigurationActivator.getDefault()
+					.getWorkbench().getDisplay();
 			if (dis != null && !dis.isDisposed()) {
 				dis.syncExec(new Runnable() {
 
@@ -181,7 +215,8 @@ public class SelectorValidator extends AbstractValidator {
 					 * @see java.lang.Runnable#run()
 					 */
 					public void run() {
-						IWorkbenchWindow window = SmooksConfigurationActivator.getDefault().getWorkbench()
+						IWorkbenchWindow window = SmooksConfigurationActivator
+								.getDefault().getWorkbench()
 								.getActiveWorkbenchWindow();
 						IWorkbenchPage activePage = window.getActivePage();
 						if (activePage != null) {
@@ -190,7 +225,8 @@ public class SelectorValidator extends AbstractValidator {
 								// activePage.findEditor(input);
 								// if (part != null && part instanceof
 								// AbstractSmooksFormEditor) {
-								List<Object> l = SelectorCreationDialog.generateInputData(finalList);
+								List<Object> l = SelectorCreationDialog
+										.generateInputData(finalList);
 								if (l != null) {
 									list.addAll(l);
 								}
