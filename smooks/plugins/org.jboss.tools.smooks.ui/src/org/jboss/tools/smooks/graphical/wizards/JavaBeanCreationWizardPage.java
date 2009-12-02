@@ -11,6 +11,7 @@
 package org.jboss.tools.smooks.graphical.wizards;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,6 +20,8 @@ import java.util.Map;
 
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.ui.IJavaElementSearchConstants;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
@@ -76,7 +79,8 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 
 	private Text colllectionClassText;
 
-	public JavaBeanCreationWizardPage(String pageName, String title, ImageDescriptor titleImage, IJavaProject project,
+	public JavaBeanCreationWizardPage(String pageName, String title,
+			ImageDescriptor titleImage, IJavaProject project,
 			List<String> exsitingBeanIDs) {
 		super(pageName, title, titleImage);
 		this.project = project;
@@ -85,7 +89,8 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 		this.setDescription(Messages.JavaBeanCreationWizardPage_WizardDes);
 	}
 
-	public JavaBeanCreationWizardPage(String pageName, IJavaProject project, List<String> exsitingBeanIDs) {
+	public JavaBeanCreationWizardPage(String pageName, IJavaProject project,
+			List<String> exsitingBeanIDs) {
 		super(pageName);
 		this.project = project;
 		this.exsitingBeanIDs = exsitingBeanIDs;
@@ -122,7 +127,8 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 
 		createBeanTypeControls(mainComposite);
 
-		Label seperator = new Label(mainComposite, SWT.HORIZONTAL | SWT.SEPARATOR);
+		Label seperator = new Label(mainComposite, SWT.HORIZONTAL
+				| SWT.SEPARATOR);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		gd.heightHint = 18;
@@ -169,11 +175,14 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 					element = ((TreeItem) element).getData();
 				}
 				if (element instanceof JavaBeanModel) {
-					Object key = expandRecord.get(((JavaBeanModel) element).getID().toString());
+					Object key = expandRecord.get(((JavaBeanModel) element)
+							.getID().toString());
 					if (key == null) {
-						expandRecord.put(((JavaBeanModel) element).getID().toString(), new Object());
+						expandRecord.put(((JavaBeanModel) element).getID()
+								.toString(), new Object());
 						if (viewer.getChecked(element)) {
-							for (Iterator<?> iterator = ((JavaBeanModel) element).getChildren().iterator(); iterator
+							for (Iterator<?> iterator = ((JavaBeanModel) element)
+									.getChildren().iterator(); iterator
 									.hasNext();) {
 								Object child = (Object) iterator.next();
 								viewer.setChecked(child, true);
@@ -192,20 +201,24 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				Object element = event.getElement();
-				CheckboxTreeViewer viewer = (CheckboxTreeViewer) event.getSource();
+				CheckboxTreeViewer viewer = (CheckboxTreeViewer) event
+						.getSource();
 				boolean checked = event.getChecked();
 				if (checked) {
 					checkParents(element, viewer);
-					checkChildren((JavaBeanModel)element, true);
+					checkChildren((JavaBeanModel) element, true);
 				} else {
 					unCheckChildren(element, viewer);
 				}
 			}
 
-			private void unCheckChildren(Object element, CheckboxTreeViewer viewer) {
-				ITreeContentProvider provider = (ITreeContentProvider) viewer.getContentProvider();
+			private void unCheckChildren(Object element,
+					CheckboxTreeViewer viewer) {
+				ITreeContentProvider provider = (ITreeContentProvider) viewer
+						.getContentProvider();
 				if (element instanceof JavaBeanModel) {
-					if (provider.hasChildren(element) && ((JavaBeanModel) element).isExpaned()) {
+					if (provider.hasChildren(element)
+							&& ((JavaBeanModel) element).isExpaned()) {
 						Object[] children = provider.getChildren(element);
 						for (int i = 0; i < children.length; i++) {
 							Object child = children[i];
@@ -218,7 +231,8 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 
 			private void checkChildren(JavaBeanModel model, boolean flag) {
 				if (((JavaBeanModel) model).isExpaned()) {
-					for (Iterator<?> iterator = ((JavaBeanModel) model).getChildren().iterator(); iterator.hasNext();) {
+					for (Iterator<?> iterator = ((JavaBeanModel) model)
+							.getChildren().iterator(); iterator.hasNext();) {
 						JavaBeanModel child = (JavaBeanModel) iterator.next();
 						viewer.setChecked(child, flag);
 						checkChildren(child, flag);
@@ -226,8 +240,10 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 				}
 			}
 
-			private void checkParents(Object element, final CheckboxTreeViewer viewer) {
-				ITreeContentProvider provider = (ITreeContentProvider) viewer.getContentProvider();
+			private void checkParents(Object element,
+					final CheckboxTreeViewer viewer) {
+				ITreeContentProvider provider = (ITreeContentProvider) viewer
+						.getContentProvider();
 				Object parent = provider.getParent(element);
 				if (parent != null && !viewer.getChecked(parent)) {
 					viewer.setChecked(parent, true);
@@ -248,7 +264,8 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 
 		Label beanTypeLabel = new Label(mainComposite, SWT.NONE);
-		beanTypeLabel.setText(Messages.JavaBeanCreationWizardPage_BeanTypeLabel);
+		beanTypeLabel
+				.setText(Messages.JavaBeanCreationWizardPage_BeanTypeLabel);
 
 		Composite composite = new Composite(mainComposite, SWT.NONE);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -262,13 +279,16 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 		composite.setLayout(gl);
 
 		arrayButton = new Button(composite, SWT.CHECK);
-		arrayButton.setText(Messages.JavaBeanCreationWizardPage_ArrayButtonText);
+		arrayButton
+				.setText(Messages.JavaBeanCreationWizardPage_ArrayButtonText);
 
 		final Button collectionButton = new Button(composite, SWT.CHECK);
-		collectionButton.setText(Messages.JavaBeanCreationWizardPage_CollectionButtonLabel);
+		collectionButton
+				.setText(Messages.JavaBeanCreationWizardPage_CollectionButtonLabel);
 
 		Label beanClassLabel = new Label(mainComposite, SWT.NONE);
-		beanClassLabel.setText(Messages.JavaBeanCreationWizardPage_CollectionClassLabel);
+		beanClassLabel
+				.setText(Messages.JavaBeanCreationWizardPage_CollectionClassLabel);
 
 		Composite beanClassComposite = new Composite(mainComposite, SWT.NONE);
 		GridLayout gl1 = new GridLayout();
@@ -300,23 +320,26 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 		beanClassComposite.setLayoutData(gd);
 
 		collectionClassBrowseButton = new Button(beanClassComposite, SWT.NONE);
-		collectionClassBrowseButton.setText(Messages.JavaBeanCreationWizardPage_BrowseButtonLabel);
-		collectionClassBrowseButton.addSelectionListener(new SelectionAdapter() {
+		collectionClassBrowseButton
+				.setText(Messages.JavaBeanCreationWizardPage_BrowseButtonLabel);
+		collectionClassBrowseButton
+				.addSelectionListener(new SelectionAdapter() {
 
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse
-			 * .swt.events.SelectionEvent)
-			 */
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				String classString = JavaTypeFieldDialog.openJavaTypeDialog(getShell(), project);
-				colllectionClassText.setText(classString);
-			}
+					/*
+					 * (non-Javadoc)
+					 * 
+					 * @see
+					 * org.eclipse.swt.events.SelectionAdapter#widgetSelected
+					 * (org.eclipse .swt.events.SelectionEvent)
+					 */
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						String classString = JavaTypeFieldDialog
+								.openJavaTypeDialog(getShell(), project);
+						colllectionClassText.setText(classString);
+					}
 
-		});
+				});
 		collectionClassBrowseButton.setEnabled(false);
 
 		arrayButton.addSelectionListener(new SelectionAdapter() {
@@ -389,7 +412,8 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 					if (collectionClass != null) {
 						Class<?> clazz = loader.loadClass(beanClass);
 						Class<?> cclazz = loader.loadClass(collectionClass);
-						javaBeanModel = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
+						javaBeanModel = JavaBeanModelFactory
+								.getJavaBeanModelWithLazyLoad(clazz);
 						javaBeanModel.setComponentClass(cclazz);
 					} else {
 						viewer.setInput(""); //$NON-NLS-1$
@@ -400,14 +424,16 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 						Object arrayInstance = Array.newInstance(clazz, 0);
 						clazz = arrayInstance.getClass();
 					}
-					javaBeanModel = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
+					javaBeanModel = JavaBeanModelFactory
+							.getJavaBeanModelWithLazyLoad(clazz);
 				}
 				if (javaBeanModel != null) {
 					if (beanID != null) {
 						javaBeanModel.setName(beanID);
 					}
 					viewer.setInput(javaBeanModel.getChildren());
-					viewer.setCheckedElements(javaBeanModel.getChildren().toArray());
+					viewer.setCheckedElements(javaBeanModel.getChildren()
+							.toArray());
 				} else {
 					viewer.setInput(""); //$NON-NLS-1$
 				}
@@ -421,7 +447,8 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 
 	private void createBeanClassControls(Composite mainComposite) {
 		Label beanClassLabel = new Label(mainComposite, SWT.NONE);
-		beanClassLabel.setText(Messages.JavaBeanCreationWizardPage_BeanClassLabel);
+		beanClassLabel
+				.setText(Messages.JavaBeanCreationWizardPage_BeanClassLabel);
 
 		Composite beanClassComposite = new Composite(mainComposite, SWT.NONE);
 		GridLayout gl = new GridLayout();
@@ -463,7 +490,8 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 		beanClassComposite.setLayoutData(gd);
 
 		Button javaTypeBrowseButton = new Button(beanClassComposite, SWT.NONE);
-		javaTypeBrowseButton.setText(Messages.JavaBeanCreationWizardPage_BrowseButtonLabel);
+		javaTypeBrowseButton
+				.setText(Messages.JavaBeanCreationWizardPage_BrowseButtonLabel);
 		javaTypeBrowseButton.addSelectionListener(new SelectionAdapter() {
 
 			/*
@@ -475,7 +503,9 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String classString = JavaTypeFieldDialog.openJavaTypeDialog(getShell(), project);
+				String classString = JavaTypeFieldDialog.openJavaTypeDialog(
+						getShell(), project,
+						IJavaElementSearchConstants.CONSIDER_CLASSES);
 				beanClassText.setText(classString);
 			}
 
@@ -522,10 +552,13 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 		} else {
 			if (exsitingBeanIDs != null) {
 				beanID = beanID.trim();
-				for (Iterator<?> iterator = exsitingBeanIDs.iterator(); iterator.hasNext();) {
+				for (Iterator<?> iterator = exsitingBeanIDs.iterator(); iterator
+						.hasNext();) {
 					String id = (String) iterator.next();
 					if (id.equals(beanID)) {
-						error = Messages.JavaBeanCreationWizardPage_BeanIDDuplicateErrorMessage1 + beanID + Messages.JavaBeanCreationWizardPage_BeanIDDuplicateErrorMessage2;
+						error = Messages.JavaBeanCreationWizardPage_BeanIDDuplicateErrorMessage1
+								+ beanID
+								+ Messages.JavaBeanCreationWizardPage_BeanIDDuplicateErrorMessage2;
 					}
 				}
 			}
@@ -536,11 +569,23 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 			try {
 				beanClass = beanClass.trim();
 				ProjectClassLoader loader = new ProjectClassLoader(project);
-				loader.loadClass(beanClass);
+				Class<?> clazz = loader.loadClass(beanClass);
+				if (Modifier.isAbstract(clazz.getModifiers())) {
+					error = "The class can't be abstract";
+				} else {
+					try {
+						Constructor<?> constructor = clazz.getConstructor(null);
+					} catch (SecurityException e) {
+						error = "The class can't be instanced";
+					} catch (NoSuchMethodException e) {
+						error = "The class can't be instanced";
+					}
+				}
 			} catch (JavaModelException e) {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				error = Messages.JavaBeanCreationWizardPage_CatFindClassErrorMessage1 + beanClass + Messages.JavaBeanCreationWizardPage_27;
+				error = Messages.JavaBeanCreationWizardPage_CatFindClassErrorMessage1
+						+ beanClass + Messages.JavaBeanCreationWizardPage_27;
 			}
 		}
 
@@ -550,11 +595,24 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 			} else {
 				try {
 					ProjectClassLoader loader = new ProjectClassLoader(project);
-					loader.loadClass(collectionClass);
+					Class<?> clazz = loader.loadClass(collectionClass);
+					if (Modifier.isAbstract(clazz.getModifiers())) {
+						error = "The collection component class can't be abstract";
+					} else {
+						try {
+							Constructor<?> constructor = clazz
+									.getConstructor(null);
+						} catch (SecurityException e) {
+							error = "The collection component class can't be instanced";
+						} catch (NoSuchMethodException e) {
+							error = "The collection component class can't be instanced";
+						}
+					}
 				} catch (JavaModelException e) {
 					e.printStackTrace();
 				} catch (ClassNotFoundException e) {
-					error = Messages.JavaBeanCreationWizardPage_CatFindClassErrorMessage1 + beanClass;
+					error = Messages.JavaBeanCreationWizardPage_CatFindClassErrorMessage1
+							+ beanClass;
 				}
 			}
 		}
