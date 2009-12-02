@@ -80,28 +80,23 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 					if (editorPart instanceof SmooksGraphicalEditorPart) {
 						resourceListType = ((SmooksGraphicalEditorPart) editorPart).getSmooksResourceListType();
 					}
-					
-					JavaBeanModel javaBeanModel = wizard.getJavaBeanModel();					
-					if(javaBeanModel != null) {
-						List<Object> models = createJavaBeanModel(type, javaBeanModel, wizard.getBindings(),
-								resourceListType, new ArrayList<String>());
-						String figureID = null;
-						int index = 0;
-						List<Object> creationModels = new ArrayList<Object>();
-	
-						if (collections instanceof FeatureMap.Entry) {
-							for (Iterator<?> iterator = models.iterator(); iterator.hasNext();) {
-								Object object = (Object) iterator.next();
-								creationModels.add(FeatureMapUtil.createEntry(((FeatureMap.Entry) collections)
-										.getEStructuralFeature(), object));
-							}
+					List<Object> models = createJavaBeanModel(type, wizard.getJavaBeanModel(), wizard.getBindings(),
+							resourceListType, new ArrayList<String>());
+					String figureID = null;
+					int index = 0;
+
+					List<Object> creationModels = new ArrayList<Object>();
+
+					if (collections instanceof FeatureMap.Entry) {
+						for (Iterator<?> iterator = models.iterator(); iterator.hasNext();) {
+							Object object = (Object) iterator.next();
+							creationModels.add(FeatureMapUtil.createEntry(((FeatureMap.Entry) collections)
+									.getEStructuralFeature(), object));
 						}
-						collections = creationModels;
-	
-						emfCommand = AddCommand.create(domain, owner, feature, creationModels);
-					} else {
-						// TODO: There is no "model" e.g. for a Collection type... what do we do??
 					}
+					collections = creationModels;
+
+					emfCommand = AddCommand.create(domain, owner, feature, creationModels);
 				} else {
 					throw new IgnoreException();
 				}
@@ -127,7 +122,7 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 		if (parent instanceof BeanType) {
 			((BeanType) parent).setBeanId(beanID);
 			((BeanType) parent).setClass(parentBeanModel.getBeanClassString());
-			if (properties != null) {
+			if (properties != null && properties.length > 0) {
 				for (int i = 0; i < properties.length; i++) {
 					Object pro = properties[i];
 					if (pro instanceof JavaBeanModel && belongsToMe(parentBeanModel, (JavaBeanModel) pro)) {
@@ -151,6 +146,9 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 						}
 					}
 				}
+			} else if(parentBeanModel.isList()) {
+				WiringType value = Javabean12Factory.eINSTANCE.createWiringType();
+				((BeanType) parent).getWiring().add(value);				
 			}
 		}
 		if (parent instanceof BindingsType) {

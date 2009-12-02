@@ -408,32 +408,17 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 				ProjectClassLoader loader = new ProjectClassLoader(project);
 				javaBeanModel = null;
 				isCollection = isCollectionClass(beanClass);
-				if (isCollection) {
-					if (collectionClass != null) {
-						Class<?> clazz = loader.loadClass(beanClass);
-						Class<?> cclazz = loader.loadClass(collectionClass);
-						javaBeanModel = JavaBeanModelFactory
-								.getJavaBeanModelWithLazyLoad(clazz);
-						javaBeanModel.setComponentClass(cclazz);
-					} else {
-						viewer.setInput(""); //$NON-NLS-1$
-					}
-				} else {
-					Class<?> clazz = loader.loadClass(beanClass);
-					if (isArray) {
-						Object arrayInstance = Array.newInstance(clazz, 0);
-						clazz = arrayInstance.getClass();
-					}
-					javaBeanModel = JavaBeanModelFactory
-							.getJavaBeanModelWithLazyLoad(clazz);
-				}
+				Class<?> clazz = loader.loadClass(beanClass);
+
+				javaBeanModel = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
 				if (javaBeanModel != null) {
 					if (beanID != null) {
 						javaBeanModel.setName(beanID);
 					}
-					viewer.setInput(javaBeanModel.getChildren());
-					viewer.setCheckedElements(javaBeanModel.getChildren()
-							.toArray());
+					if(!isCollection) {
+						viewer.setInput(javaBeanModel.getChildren());
+					}
+					viewer.setCheckedElements(javaBeanModel.getChildren().toArray());
 				} else {
 					viewer.setInput(""); //$NON-NLS-1$
 				}
