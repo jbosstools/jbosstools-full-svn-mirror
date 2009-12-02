@@ -99,7 +99,7 @@ public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
 		Freemarker freemarker = (Freemarker) parent.getData();
 		if (freemarker != null) {
 			ParamType param = SmooksModelUtils.getParam(freemarker.getParam(), SmooksModelUtils.KEY_CSV_FIELDS);
-			if (param == null){
+			if (param == null) {
 				param = SmooksFactory.eINSTANCE.createParamType();
 				param.setName(SmooksModelUtils.KEY_CSV_FIELDS);
 				freemarker.getParam().add(param);

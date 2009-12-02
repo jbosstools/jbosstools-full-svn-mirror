@@ -11,6 +11,7 @@
 package org.jboss.tools.smooks.graphical.editors.model.javamapping;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -29,6 +30,7 @@ import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphica
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVLinkConnection;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerCSVNodeGraphicalModel;
 import org.jboss.tools.smooks.model.javabean.ValueType;
 
 /**
@@ -115,7 +117,24 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 		obj = AdapterFactoryEditingDomain.unwrap(obj);
 		if (obj instanceof ValueType || obj instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
 			if (m instanceof CSVNodeModel) {
-				return !((CSVNodeModel) m).isRecord();
+				if (!((CSVNodeModel) m).isRecord()) {
+					List<TreeNodeConnection> exsitingConnection = gm.getTargetConnections();
+					if (!exsitingConnection.isEmpty())
+						return false;
+					for (Iterator<?> iterator = exsitingConnection.iterator(); iterator.hasNext();) {
+						TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator.next();
+						if (treeNodeConnection.getSourceNode() == this) {
+							return false;
+						}
+					}
+					AbstractSmooksGraphicalModel parent = gm.getParent();
+					if (parent instanceof FreemarkerCSVNodeGraphicalModel) {
+						List<TreeNodeConnection> connections = parent.getTargetConnections();
+						if (!connections.isEmpty()) {
+							return true;
+						}
+					}
+				}
 			}
 		}
 		if (!inJavaMapping())
