@@ -29,5 +29,5 @@ Export-Package: org.eclipse.bpel.model,
  org.eclipse.bpel.model.resource,
  org.eclipse.bpel.model.terms,
  org.eclipse.bpel.model.util
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: bin
