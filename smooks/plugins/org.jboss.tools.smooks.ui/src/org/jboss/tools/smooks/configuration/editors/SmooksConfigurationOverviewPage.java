@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
@@ -22,6 +23,7 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -36,6 +38,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
+import org.eclipse.ui.forms.IMessage;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -47,6 +50,8 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
+import org.jboss.tools.smooks.graphical.editors.ISmooksEditorInitListener;
+import org.jboss.tools.smooks.graphical.editors.SmooksMessage;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks.model.smooks.ParamsType;
@@ -59,8 +64,10 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
  * 
  */
 public class SmooksConfigurationOverviewPage extends FormPage implements ISmooksModelValidateListener,
-		ISourceSynchronizeListener {
+		ISourceSynchronizeListener, ISmooksEditorInitListener {
+	private int currentMessageType = IMessageProvider.NONE;
 
+	private String currentMessage = null;
 	private ISmooksModelProvider smooksModelProvider;
 	private ModelPanelCreator defaultSettingPanelCreator;
 	private Section globalParamSection;
@@ -225,7 +232,8 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 		// pgl.numColumns = 2;
 		//
 		// createProfilesSection(profilesComposite, toolkit);
-
+		
+		updateFormHeader();
 	}
 
 	private void createSettingSection(Composite settingComposite, FormToolkit toolkit) {
@@ -323,15 +331,15 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 	private void createGlobalParamterSection(Composite globalParamComposite, FormToolkit toolkit) {
 		if (smooksModelProvider != null) {
 
-			toolkit.createLabel(globalParamComposite, Messages.SmooksConfigurationOverviewPage_FilterTypeLabel).setForeground(
-					toolkit.getColors().getColor(IFormColors.TITLE));
+			toolkit.createLabel(globalParamComposite, Messages.SmooksConfigurationOverviewPage_FilterTypeLabel)
+					.setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
 			GridData gd = new GridData(SWT.FILL, SWT.NONE, true, false);
 			streamFilterTypeCombo = new Combo(globalParamComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
 			streamFilterTypeCombo.setItems(new String[] { "SAX", "DOM" }); //$NON-NLS-1$ //$NON-NLS-2$
 			streamFilterTypeCombo.setLayoutData(gd);
 
-			toolkit.createLabel(globalParamComposite, Messages.SmooksConfigurationOverviewPage_SerializationLabel).setForeground(
-					toolkit.getColors().getColor(IFormColors.TITLE));
+			toolkit.createLabel(globalParamComposite, Messages.SmooksConfigurationOverviewPage_SerializationLabel)
+					.setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
 			gd = new GridData(SWT.FILL, SWT.NONE, true, false);
 			defaultSerializationOnCheckbox = toolkit.createButton(globalParamComposite, "", SWT.CHECK); //$NON-NLS-1$
 			defaultSerializationOnCheckbox.setLayoutData(gd);
@@ -597,6 +605,48 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 			// }
 		}
 		return null;
+	}
+
+	public void initFailed(int messageType, String message) {
+		this.currentMessage = message;
+		this.currentMessageType = messageType;
+		updateFormHeader();
+	}
+
+	protected void updateFormHeader() {
+		if (currentMessageType == IMessageProvider.NONE) {
+			if (this.getManagedForm() != null) {
+				getManagedForm().getMessageManager().removeAllMessages();
+				getManagedForm().getMessageManager().update();
+
+				streamFilterTypeCombo.setEnabled(true);
+				defaultSerializationOnCheckbox.setEnabled(true);
+			}
+		} else {
+			if (this.getManagedForm() != null) {
+				streamFilterTypeCombo.setEnabled(false);
+				defaultSerializationOnCheckbox.setEnabled(false);
+				String[] messages = currentMessage.split("\n");
+				List<IMessage> messageList = new ArrayList<IMessage>();
+				for (int i = 0; i < messages.length; i++) {
+					String message = messages[i];
+					if (message != null)
+						message.trim();
+					if (message.length() == 0) {
+						continue;
+					}
+					messageList.add(new SmooksMessage(currentMessageType, message));
+				}
+				String mainMessage = null;
+				if (messageList.isEmpty()) {
+					mainMessage = currentMessage;
+				} else {
+					mainMessage = messageList.get(0).getMessage();
+				}
+				this.getManagedForm().getForm().getForm().setMessage(mainMessage, currentMessageType,
+						messageList.toArray(new IMessage[] {}));
+			}
+		}
 	}
 
 	/*

@@ -47,6 +47,7 @@ import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentListener;
@@ -69,6 +70,7 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.configuration.validate.SmooksMarkerHelper;
 import org.jboss.tools.smooks.configuration.validate.SmooksModelValidator;
+import org.jboss.tools.smooks.graphical.editors.ISmooksEditorInitListener;
 import org.jboss.tools.smooks.model.calc.provider.CalcItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.common.provider.CommonItemProviderAdapterFactory;
@@ -105,6 +107,8 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		ISmooksModelValidateListener, ISmooksModelProvider {
 
 	protected String platformVersion = SmooksConstants.VERSION_1_2;
+
+	protected List<ISmooksEditorInitListener> smooksInitListener = new ArrayList<ISmooksEditorInitListener>();
 
 	protected String inputType = null;
 
@@ -171,6 +175,14 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	 */
 	public void setPlatformVersion(String platformVersion) {
 		this.platformVersion = platformVersion;
+	}
+
+	public void addSmooksEditorInitListener(ISmooksEditorInitListener listener) {
+		this.smooksInitListener.add(listener);
+	}
+
+	public void removeSmooksEditorInitListener(ISmooksEditorInitListener listener) {
+		this.smooksInitListener.remove(listener);
 	}
 
 	@Override
@@ -426,21 +438,20 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	 */
 	@Override
 	protected void addPages() {
-		// configurationPage = createSmooksConfigurationFormPage();
-		// addValidateListener(configurationPage);
-		// try {
-		// int index = this.addPage(configurationPage);
-		// setPageText(index, "Design");
-		// } catch (PartInitException e) {
-		// e.printStackTrace();
-		// }
-
 		textEditor = createTextEditor();
 		try {
 			int index = this.addPage(textEditor, getEditorInput());
 			setPageText(index, "Source");
 		} catch (PartInitException e) {
 			e.printStackTrace();
+		}
+
+		Exception exception = checkSmooksConfigContents(null);
+		if (exception != null) {
+			for (Iterator<?> iterator = this.smooksInitListener.iterator(); iterator.hasNext();) {
+				ISmooksEditorInitListener initListener = (ISmooksEditorInitListener) iterator.next();
+				initListener.initFailed(IMessageProvider.WARNING, exception.getMessage());
+			}
 		}
 	}
 
@@ -500,15 +511,34 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		IDocumentProvider dp = textEditor.getDocumentProvider();
 		if (dp == null)
 			return;
+		Exception exception = null;
+		int messageType = IMessageProvider.NONE;
 		IDocument document = dp.getDocument(textEditor.getEditorInput());
 		String conents = document.get();
 		Resource resource = editingDomain.getResourceSet().getResources().get(0);
 		resource.unload();
+		InputStream stream = null;
 		try {
-			resource.load(new ByteArrayInputStream(conents.getBytes()), Collections.emptyMap());
+			stream = new ByteArrayInputStream(conents.getBytes());
+			resource.load(stream, Collections.emptyMap());
 			this.smooksModel = resource.getContents().get(0);
 		} catch (IOException e) {
 			smooksModel = null;
+			exception = e;
+			messageType = IMessageProvider.ERROR;
+		} finally {
+			if (stream != null) {
+				try {
+					stream.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+		if (exception == null) {
+			stream = new ByteArrayInputStream(conents.getBytes());
+			exception = checkSmooksConfigContents(stream);
+			if (exception != null)
+				messageType = IMessageProvider.WARNING;
 		}
 		setPlatformVersion(SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel));
 		judgeInputReader();
@@ -519,6 +549,14 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+		String message = null;
+		if (exception != null) {
+			message = exception.getMessage();
+		}
+		for (Iterator<?> iterator = this.smooksInitListener.iterator(); iterator.hasNext();) {
+			ISmooksEditorInitListener initListener = (ISmooksEditorInitListener) iterator.next();
+			initListener.initFailed(messageType, message);
 		}
 	}
 
@@ -614,7 +652,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		String partName = "smooks editor";
 		IFile file = null;
 		RuntimeMetadata runtimeMetadata = new RuntimeMetadata();
-		
+
 		if (input instanceof FileStoreEditorInput) {
 			try {
 				filePath = ((FileStoreEditorInput) input).getURI().toURL().getFile();
@@ -632,8 +670,6 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 		if (filePath == null)
 			throw new PartInitException("Can't get the input file");
-		
-		assertConfigSupported(runtimeMetadata);
 
 		Resource smooksResource = null;
 
@@ -669,19 +705,57 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 	private void assertConfigSupported(RuntimeMetadata runtimeMetadata) throws PartInitException {
 		List<RuntimeDependency> dependencies = runtimeMetadata.getDependencies();
-		
-		for(RuntimeDependency dependency : dependencies) {
-			if(!dependency.isSupportedByEditor()) {
+
+		for (RuntimeDependency dependency : dependencies) {
+			if (!dependency.isSupportedByEditor()) {
 				java.net.URI changeToNS = dependency.getChangeToNS();
-				String errorMsg = "\n\nSorry, this configuration is not yet supported by the Smooks Editor because it contains configurations from the '" + dependency.getNamespaceURI() + "' configuration namespace.\n\nPlease open this configuration using the XML Editor.";
-				
-				if(changeToNS != null) {
-					errorMsg += "\n\nFix: Update the configuration to use the '" + changeToNS + "' configuration namespace.";
+				String errorMsg = "\n\nSorry, this configuration is not yet supported by the Smooks Editor because it contains configurations from the '"
+						+ dependency.getNamespaceURI()
+						+ "' configuration namespace.\n\nPlease open this configuration using the XML Editor.";
+
+				if (changeToNS != null) {
+					errorMsg += "\n\nFix: Update the configuration to use the '" + changeToNS
+							+ "' configuration namespace.";
 				}
 
 				throw new PartInitException(errorMsg);
 			}
 		}
+	}
+
+	protected Exception checkSmooksConfigContents(InputStream stream) {
+		// Check
+		Exception exception = null;
+		IFile file = null;
+		String filePath = null;
+		RuntimeMetadata runtimeMetadata = new RuntimeMetadata();
+		IEditorInput input = getEditorInput();
+		if (input instanceof FileStoreEditorInput) {
+			try {
+				filePath = ((FileStoreEditorInput) input).getURI().toURL().getFile();
+				runtimeMetadata.setSmooksConfig(new File(filePath), stream);
+			} catch (MalformedURLException e) {
+				exception = e;
+				// throw new PartInitException("Transform URL to URL error.",
+				// e);
+			}
+		}
+		if (exception == null) {
+			if (input instanceof IFileEditorInput) {
+				file = ((IFileEditorInput) input).getFile();
+				File f = new File(file.getRawLocation().toOSString().trim());
+				runtimeMetadata.setSmooksConfig(f, stream);
+			}
+
+			try {
+
+				assertConfigSupported(runtimeMetadata);
+
+			} catch (PartInitException e) {
+				exception = e;
+			}
+		}
+		return exception;
 	}
 
 	protected void judgeInputReader() {

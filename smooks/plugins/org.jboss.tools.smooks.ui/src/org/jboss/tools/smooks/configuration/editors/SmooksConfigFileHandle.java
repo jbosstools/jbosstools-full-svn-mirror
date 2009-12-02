@@ -28,7 +28,6 @@ import org.jboss.tools.smooks.model.iorouting.IoroutingPackage;
 import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
 import org.jboss.tools.smooks.model.json.JsonPackage;
-import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -40,7 +39,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * @author Dart dpeng@redhat.com
- *
+ * 
  */
 public class SmooksConfigFileHandle extends DefaultHandler {
 	private boolean correctContentFile = false;
@@ -50,29 +49,17 @@ public class SmooksConfigFileHandle extends DefaultHandler {
 	private String[] smooksSpportURI = null;
 
 	private SAXParserFactory fFactory;
-	
-	public SmooksConfigFileHandle(){
+
+	public SmooksConfigFileHandle() {
 		super();
 		smooksSpportURI = createSupportURI();
 	}
-	
-	protected String[] createSupportURI(){
-		return new String[]{
-				org.jboss.tools.smooks.model.smooks.SmooksPackage.eNS_URI,
-				EdiPackage.eNS_URI,
-				XslPackage.eNS_URI,
-				FreemarkerPackage.eNS_URI,
-				GroovyPackage.eNS_URI,
-				MEdiPackage.eNS_URI,
-				CalcPackage.eNS_URI,
-				CsvPackage.eNS_URI,
-				DatasourcePackage.eNS_URI,
-				FileRoutingPackage.eNS_URI,
-				IoroutingPackage.eNS_URI,
-				JavabeanPackage.eNS_URI,
-				JmsroutingPackage.eNS_URI,
-				JsonPackage.eNS_URI,
-			};
+
+	protected String[] createSupportURI() {
+		return new String[] { org.jboss.tools.smooks.model.smooks.SmooksPackage.eNS_URI, EdiPackage.eNS_URI,
+				XslPackage.eNS_URI, FreemarkerPackage.eNS_URI, GroovyPackage.eNS_URI, CalcPackage.eNS_URI,
+				CsvPackage.eNS_URI, DatasourcePackage.eNS_URI, FileRoutingPackage.eNS_URI, IoroutingPackage.eNS_URI,
+				JavabeanPackage.eNS_URI, JmsroutingPackage.eNS_URI, JsonPackage.eNS_URI, };
 	}
 
 	private final SAXParser createParser(SAXParserFactory parserFactory) throws ParserConfigurationException,
@@ -117,13 +104,11 @@ public class SmooksConfigFileHandle extends DefaultHandler {
 	}
 
 	/*
-	 * Resolve external entity definitions to an empty string. This is to
-	 * speed up processing of files with external DTDs. Not resolving the
-	 * contents of the DTD is ok, as only the System ID of the DTD
-	 * declaration is used.
+	 * Resolve external entity definitions to an empty string. This is to speed
+	 * up processing of files with external DTDs. Not resolving the contents of
+	 * the DTD is ok, as only the System ID of the DTD declaration is used.
 	 * 
-	 * @see
-	 * org.xml.sax.helpers.DefaultHandler#resolveEntity(java.lang.String,
+	 * @see org.xml.sax.helpers.DefaultHandler#resolveEntity(java.lang.String,
 	 * java.lang.String)
 	 */
 	public InputSource resolveEntity(String publicId, String systemId) throws SAXException {
@@ -137,6 +122,13 @@ public class SmooksConfigFileHandle extends DefaultHandler {
 			setCorrectContentFile(true);
 			throw new SAXException(Messages.SmooksConfigFileHandle_exception);
 		}
+	}
+
+	private boolean unSupportUIR(String uri) {
+		if (EdiPackage.eNS_URI.equals(uri)) {
+			return true;
+		}
+		return false;
 	}
 
 	private boolean containtSmooksURI(String uri) {
