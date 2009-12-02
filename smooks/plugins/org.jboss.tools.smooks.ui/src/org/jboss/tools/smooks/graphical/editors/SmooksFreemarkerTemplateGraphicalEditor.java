@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -32,6 +31,7 @@ import org.jboss.template.Mapping;
 import org.jboss.template.TemplateBuilder;
 import org.jboss.template.csv.CSVFreeMarkerTemplateBuilder;
 import org.jboss.template.csv.CSVModelBuilder;
+import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.actions.AbstractSmooksActionGrouper;
 import org.jboss.tools.smooks.configuration.editors.actions.ISmooksActionGrouper;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
@@ -89,77 +89,6 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 		FreemarkerTemplateEditFactory factory = new FreemarkerTemplateEditFactory();
 		((FreemarkerTemplateEditFactory) factory).setDisplayInput(false);
 		return factory;
-	}
-
-	@Override
-	public void validateEnd(List<Diagnostic> diagnosticResult) {
-		cleanValidationMarker();
-		// validate freemarker model.Because the freemarker csv node
-		// model isn't EMF model so they need to validate separately
-		if(root == null) return;
-		List<AbstractSmooksGraphicalModel> children = root.getChildren();
-		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
-			AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator.next();
-			if (abstractSmooksGraphicalModel instanceof FreemarkerTemplateGraphicalModel) {
-				Object data = abstractSmooksGraphicalModel.getData();
-				data = AdapterFactoryEditingDomain.unwrap(data);
-				if (data instanceof Freemarker) {
-					String type = SmooksModelUtils.getTemplateType((Freemarker) data);
-					if (SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV.equals(type)) {
-						validateCSVTemplate(abstractSmooksGraphicalModel);
-					}
-				}
-			}
-		}
-	}
-
-	protected void validateCSVTemplate(AbstractSmooksGraphicalModel templateGraphModel) {
-		int s = AbstractSmooksGraphicalModel.NONE;
-		Object data = templateGraphModel.getData();
-		data = AdapterFactoryEditingDomain.unwrap(data);
-
-		char seperator = SmooksModelUtils.getFreemarkerCSVSeperator((Freemarker) data);
-
-		if (seperator == 0) {
-			templateGraphModel.getMessage().add("Seperator character can't be empty");
-			s = AbstractSmooksGraphicalModel.WARNING;
-		}
-
-		char quote = SmooksModelUtils.getFreemarkerCSVQuote((Freemarker) data);
-		if (quote == 0) {
-			templateGraphModel.getMessage().add("Quote character can't be empty");
-			s = AbstractSmooksGraphicalModel.WARNING;
-		}
-
-		String[] fields = SmooksModelUtils.getFreemarkerCSVFileds((Freemarker) data);
-		boolean missFields = false;
-		if (fields == null) {
-			missFields = true;
-		}
-
-		if (s != AbstractSmooksGraphicalModel.NONE) {
-			templateGraphModel.setSeverity(s);
-		}
-
-		List<AbstractSmooksGraphicalModel> csvRecordNode = templateGraphModel.getChildren();
-		for (Iterator<?> iterator = csvRecordNode.iterator(); iterator.hasNext();) {
-			AbstractSmooksGraphicalModel csvRecordGraphModel = (AbstractSmooksGraphicalModel) iterator.next();
-			if (missFields) {
-				csvRecordGraphModel.getMessage().add("CSV fields can't be empty");
-				csvRecordGraphModel.setSeverity(AbstractSmooksGraphicalModel.WARNING);
-			}
-			List<TreeNodeConnection> collectionConnections = csvRecordGraphModel.getTargetConnections();
-			if (collectionConnections.isEmpty()) {
-				csvRecordGraphModel.addMessage("Must be linked with source node");
-				csvRecordGraphModel.setSeverity(AbstractSmooksGraphicalModel.WARNING);
-				List<AbstractSmooksGraphicalModel> csvFields = csvRecordGraphModel.getChildren();
-				for (Iterator<?> iterator2 = csvFields.iterator(); iterator2.hasNext();) {
-					AbstractSmooksGraphicalModel csvFieldsGModel = (AbstractSmooksGraphicalModel) iterator2.next();
-					csvFieldsGModel.addMessage("Case CSV-Record isn't linked with source node , this node can't be linked.");
-					csvFieldsGModel.setSeverity(AbstractSmooksGraphicalModel.ERROR);
-				}
-			}
-		}
 	}
 
 	/*
@@ -448,7 +377,7 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 			char quote = SmooksModelUtils.getFreemarkerCSVQuote(freemarker);
 			String[] fields = SmooksModelUtils.getFreemarkerCSVFileds(freemarker);
 			try {
-				if (contents != null) {
+				if(contents != null) {
 					CSVModelBuilder modelBuilder = new CSVModelBuilder(fields);
 					Document model = modelBuilder.buildModel();
 					TemplateBuilder builder = new CSVFreeMarkerTemplateBuilder(model, seprator, quote, contents);
@@ -457,7 +386,7 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 				}
 			} catch (Exception e) {
 				// ignore exception
-				// e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 
