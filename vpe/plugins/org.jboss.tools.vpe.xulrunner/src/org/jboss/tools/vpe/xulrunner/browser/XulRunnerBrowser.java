@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.xulrunner.browser;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;

@@ -51,6 +51,8 @@ public class MainLocaleProvider implements ILocaleProvider {
 			.getExtensionPoint(VpePlugin.EXTESION_POINT_LOCALE_PROVIDER);
 	private static MainLocaleProvider instance;
 
+	private String localeString = ""; //$NON-NLS-1$
+	
 	private MainLocaleProvider() {
 		// private constructor
 		initNatureExtensionsMap();
@@ -83,6 +85,7 @@ public class MainLocaleProvider implements ILocaleProvider {
 					for (ILocaleProvider provider : getProviders(natureId)) {
 						Locale locale = provider.getLocale(editor);
 						if (locale != null) {
+							localeString = provider.getLocaleString();
 							return locale;
 						}
 					}
@@ -180,4 +183,9 @@ public class MainLocaleProvider implements ILocaleProvider {
 		}
 		return provider;
 	}
+
+	public String getLocaleString() {
+		return localeString;
+	}
+	
 }

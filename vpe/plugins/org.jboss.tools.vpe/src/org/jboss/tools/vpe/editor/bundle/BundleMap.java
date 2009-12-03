@@ -62,8 +62,11 @@ public class BundleMap {
 	private StructuredTextEditor editor;
 	
 	private String[] javaSources;
-    
-    private BundleEntry[] bundles = new BundleEntry[0];
+    /*
+     * Stores the current VPE locale.
+     */
+	private Locale locale;
+	private BundleEntry[] bundles = new BundleEntry[0];
     private Map<String,UsedKey> usedKeys = new HashMap<String,UsedKey>();
     
     boolean isShowBundleUsageAsEL = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
@@ -78,25 +81,53 @@ public class BundleMap {
 		if (input instanceof IFileEditorInput) {
 			javaSources = getJavaProjectSrcLocations(((IFileEditorInput)input).getFile().getProject());
 		}
+		/*
+		 * Initialize the locale with default value.
+		 */
+		locale = MainLocaleProvider.getInstance().getLocale(editor);
 		refreshRegisteredBundles();
 		PreferenceModelUtilities.getPreferenceModel().addModelTreeListener(modelListener);
 	}
 	
 	public void refreshRegisteredBundles() {
-		if (!hasJsfProjectNatureType() || !(editor.getEditorInput() instanceof IFileEditorInput)) return;
-		IProject project = ((IFileEditorInput)editor.getEditorInput()).getFile().getProject();
-		XModel model = EclipseResourceUtil.getModelNature(project).getModel();
-		List<Object> l = WebPromptingProvider.getInstance().getList(model, WebPromptingProvider.JSF_REGISTERED_BUNDLES, null, null);
-		if(l == null || l.size() < 2 || !(l.get(1) instanceof Map)) return;
-		Map<?,?> map = (Map<?,?>)l.get(1);
-		Iterator<?> it = map.keySet().iterator();
-		while(it.hasNext()) {
-			String uri = it.next().toString();
-			String prefix = map.get(uri).toString();
-			int hash = (prefix + ":" + uri).hashCode(); //$NON-NLS-1$
-			removeBundle(hash);
-			addBundle(hash, prefix, uri, true);
+		if (!hasJsfProjectNatureType()
+				|| !(editor.getEditorInput() instanceof IFileEditorInput)) {
+			return;
 		}
+		IProject project = ((IFileEditorInput) editor.getEditorInput())
+				.getFile().getProject();
+		XModel model = EclipseResourceUtil.getModelNature(project).getModel();
+		List<Object> l = WebPromptingProvider.getInstance().getList(model,
+				WebPromptingProvider.JSF_REGISTERED_BUNDLES, null, null);
+		if (l == null || l.size() < 2 || !(l.get(1) instanceof Map)) {
+			return;
+		}
+		Map<?, ?> map = (Map<?, ?>) l.get(1);
+		/*
+		 * Fix for https://jira.jboss.org/jira/browse/JBIDE-5218
+		 * When updating f:view's locale attribute right after template creation -
+		 * map of registered bundles is empty and couldn't be updated.
+		 * To change bundle's locale they should be accessed through 
+		 * <code>bundles</code> variable.
+		 */
+		if (map.keySet().size() > 0) {
+			Iterator<?> it = map.keySet().iterator();
+			while (it.hasNext()) {
+				String uri = it.next().toString();
+				String prefix = map.get(uri).toString();
+				int hash = (prefix + ":" + uri).hashCode(); //$NON-NLS-1$
+				removeBundle(hash);
+				addBundle(hash, prefix, uri, true);
+			}
+		} else if (bundles.length > 0) {
+			for (int i = 0; i < bundles.length; i++) {
+				String uri = bundles[i].uri;
+				String prefix = bundles[i].prefix;
+				int hash = (prefix + ":" + uri).hashCode(); //$NON-NLS-1$
+				removeBundle(hash);
+				addBundle(hash, prefix, uri, true);
+			}
+		} 
 	}
 	
 	public void clearAll() {
@@ -207,7 +238,8 @@ public class BundleMap {
 		return null;
 	}
 	
-	private ResourceBundle getBundleByUrl(String uri) {
+	
+	private ResourceBundle getBundleByUrl(String uri, Locale locale) {
 		try {
 			if (javaSources!=null) {
 				File file;
@@ -223,8 +255,6 @@ public class BundleMap {
 				}
 
 				ClassLoader classLoader = new URLClassLoader(urls, ClassLoader.getSystemClassLoader());
-
-				Locale locale = MainLocaleProvider.getInstance().getLocale(editor);
 				ResourceBundle bundle = ResourceBundle.getBundle(uri, locale, classLoader);
 
 				return bundle;
@@ -272,7 +302,7 @@ public class BundleMap {
 	}
 	
 	private void addBundle(int hashCode, String prefix, String uri,boolean refresh) {
-		ResourceBundle bundle = getBundleByUrl(uri);
+		ResourceBundle bundle = getBundleByUrl(uri, locale);
 		BundleEntry entry = new BundleEntry(bundle, uri, prefix, hashCode);
 		if (bundle != null) {
 			BundleEntry[] newBundles = new BundleEntry[bundles.length + 1];
@@ -480,9 +510,18 @@ public class BundleMap {
 			refresh();
 		}	
 	}
+	
 	public void updateShowBundleUsageAsEL() {
 		updateShowBundleUsageAsEL(JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
 				IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL));
+	}
+	
+	public Locale getLocale() {
+		return locale;
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
 	}
 	
 	static class Expression {

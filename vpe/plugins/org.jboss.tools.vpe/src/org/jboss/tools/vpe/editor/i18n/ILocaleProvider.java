@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.editor.i18n;
 import java.util.Locale;
 
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
+import org.jboss.tools.common.model.XModel;
 
 /**
  * This interface is intended for creation extensions of {@code localeProvider}
@@ -26,4 +27,12 @@ public interface ILocaleProvider {
 	 * may return {@code null} if they can not determine the locale. 
 	 */
 	Locale getLocale(StructuredTextEditor editor);
+
+	/**
+	 * Shows the string representation of the locale 
+	 * returned by  #getLocale(StructuredTextEditor) method.
+	 *  
+	 * @return the string representation of the locale
+	 */
+	String getLocaleString();
 }
