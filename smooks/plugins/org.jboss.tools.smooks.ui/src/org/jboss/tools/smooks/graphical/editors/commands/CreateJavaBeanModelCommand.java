@@ -115,24 +115,22 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 			((BeanType) parent).setClass(parentBeanModel.getBeanClassString());
 			if (properties != null && properties.length > 0) {
 				for (int i = 0; i < properties.length; i++) {
-					Object pro = properties[i];
-					if (pro instanceof JavaBeanModel && belongsToMe(parentBeanModel, (JavaBeanModel) pro)) {
-						if (((JavaBeanModel) pro).isPrimitive()) {
+					Object beanPropertyObj = properties[i];
+					if (beanPropertyObj instanceof JavaBeanModel && belongsToMe(parentBeanModel, (JavaBeanModel) beanPropertyObj)) {
+						JavaBeanModel beanProperty = (JavaBeanModel) beanPropertyObj;
+						if (beanProperty.isPrimitive()) {
 							ValueType value = Javabean12Factory.eINSTANCE.createValueType();
-							value.setProperty(((JavaBeanModel) pro).getName());
+							value.setProperty(beanProperty.getName());
 							((BeanType) parent).getValue().add(value);
 						} else {
 							WiringType value = Javabean12Factory.eINSTANCE.createWiringType();
-							if (((JavaBeanModel) parentBeanModel).isArray()
-									|| ((JavaBeanModel) parentBeanModel).isList()) {
-
-							} else {
-								value.setProperty(((JavaBeanModel) pro).getName());
+							if (!parentBeanModel.isArray() && !parentBeanModel.isList()) {
+								value.setProperty(beanProperty.getName());
 							}
-							String refID = generateBeanID((JavaBeanModel) pro, resourceListType, ids);
+							String refID = generateBeanID(beanProperty, resourceListType, ids);
 							value.setBeanIdRef(refID);
 							((BeanType) parent).getWiring().add(value);
-							creationObject.addAll(createJavaBeanModel(type, (JavaBeanModel) pro, properties,
+							creationObject.addAll(createJavaBeanModel(type, beanProperty, properties,
 									resourceListType, ids));
 						}
 					}

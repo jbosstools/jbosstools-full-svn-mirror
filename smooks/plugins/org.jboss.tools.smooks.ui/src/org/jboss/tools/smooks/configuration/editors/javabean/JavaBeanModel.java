@@ -21,8 +21,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.uitls.JavaPropertyUtils;
@@ -225,7 +229,7 @@ public class JavaBeanModel implements IXMLStructuredObject, Cloneable {
 	JavaBeanModel(Class beanClass, String beanName, PropertyDescriptor propertyDescriptor, Class parentClass,
 			boolean lazyLoadProperties) {
 		this.lazyLoadProperties = lazyLoadProperties;
-		this.beanClass = beanClass;
+		this.beanClass = toConcreteImpl(beanClass);
 		this.name = beanName;
 		if (beanClass == null)
 			return;
@@ -285,6 +289,23 @@ public class JavaBeanModel implements IXMLStructuredObject, Cloneable {
 
 	JavaBeanModel(Class<?> beanClass, boolean lazyLoadProperties) {
 		this(beanClass, null, null, null, lazyLoadProperties);
+	}
+
+	private Class<? extends Object> toConcreteImpl(Class declaredType) {		
+		
+		// Intentionally not doing an isAssignableFrom test... want to know is it the
+		// the exact class...
+		if(declaredType == List.class) {
+			return ArrayList.class;
+		} else if(declaredType == Set.class) {
+			return LinkedHashSet.class;
+		} else if(declaredType == Collection.class) {
+			return ArrayList.class;
+		} else if(declaredType == Map.class) {
+			return LinkedHashMap.class;
+		} 
+		
+		return declaredType;
 	}
 
 	public boolean isPrimitive() {
