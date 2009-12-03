@@ -386,7 +386,7 @@ public class VpeTemplateManager {
 			TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix, taglibs);		
 
 			if(sourceNodeTaglib == null) {
-				return sourceNode.getNodeName();
+				return sourceNode.getLocalName();
 			}
 			
 			String sourceNodeUri = sourceNodeTaglib.getUri();
