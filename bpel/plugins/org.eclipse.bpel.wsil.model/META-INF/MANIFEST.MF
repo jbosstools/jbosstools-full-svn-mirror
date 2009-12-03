@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: WSIL Model (Incubation)
 Bundle-SymbolicName: org.eclipse.bpel.wsil.model; singleton:=true
 Bundle-Version: 0.5.0
-Bundle-ClassPath: bin
+Bundle-ClassPath: wsli-model.jar
 Bundle-Vendor: eclispe.org
 Bundle-Localization: plugin
 Export-Package: org.eclipse.bpel.wsil.model.inspection;uses:="org.eclipse.emf.ecore.util,org.eclipse.emf.ecore,org.eclipse.emf.common.util",

@@ -65,5 +65,5 @@ Export-Package: org.eclipse.bpel.ui,
  org.eclipse.bpel.ui.util.filedialog,
  org.eclipse.bpel.ui.util.marker,
  org.eclipse.bpel.ui.wizards
-Bundle-ClassPath: bin
+Bundle-ClassPath: bpel-ui.jar
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

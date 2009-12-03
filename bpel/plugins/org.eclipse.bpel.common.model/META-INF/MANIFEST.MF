@@ -57,5 +57,5 @@ Export-Package: org.eclipse.bpel.common,
    org.eclipse.emf.ecore.xmi.util",
  org.eclipse.bpel.names
 Bundle-Vendor: eclipse.org
-Bundle-ClassPath: bin
+Bundle-ClassPath: common-model.jar
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
