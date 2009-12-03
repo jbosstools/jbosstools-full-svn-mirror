@@ -92,16 +92,10 @@ import org.jboss.tools.smooks.configuration.editors.wizard.ViewerInitorStore;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
-import org.jboss.tools.smooks.model.csv.CsvPackage;
-import org.jboss.tools.smooks.model.csv.CsvReader;
 import org.jboss.tools.smooks.model.csv12.CSV12Reader;
 import org.jboss.tools.smooks.model.csv12.Csv12Package;
-import org.jboss.tools.smooks.model.edi.EDIReader;
-import org.jboss.tools.smooks.model.edi.EdiPackage;
 import org.jboss.tools.smooks.model.edi12.EDI12Reader;
 import org.jboss.tools.smooks.model.edi12.Edi12Package;
-import org.jboss.tools.smooks.model.json.JsonPackage;
-import org.jboss.tools.smooks.model.json.JsonReader;
 import org.jboss.tools.smooks.model.json12.Json12Package;
 import org.jboss.tools.smooks.model.json12.Json12Reader;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
@@ -328,20 +322,20 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		for (int i = 0; i < readerTypeList.size(); i++) {
 			Object r = readerTypeList.get(i);
 			if (r instanceof EObject) {
-				if (CsvReader.class.isInstance(reader) || CSV12Reader.class.isInstance(reader)) {
-					if (CsvReader.class.isInstance(r) || CSV12Reader.class.isInstance(r)) {
+				if ( CSV12Reader.class.isInstance(reader)) {
+					if ( CSV12Reader.class.isInstance(r)) {
 						readerCombo.select(i);
 						break;
 					}
 				}
-				if (EDIReader.class.isInstance(reader) || EDI12Reader.class.isInstance(reader)) {
-					if (EDIReader.class.isInstance(r) || EDI12Reader.class.isInstance(r)) {
+				if ( EDI12Reader.class.isInstance(reader)) {
+					if (EDI12Reader.class.isInstance(r)) {
 						readerCombo.select(i);
 						break;
 					}
 				}
-				if (JsonReader.class.isInstance(reader) || Json12Reader.class.isInstance(reader)) {
-					if (JsonReader.class.isInstance(r) || Json12Reader.class.isInstance(r)) {
+				if ( Json12Reader.class.isInstance(reader)) {
+					if ( Json12Reader.class.isInstance(r)) {
 						readerCombo.select(i);
 						break;
 					}
@@ -395,7 +389,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		if (SmooksModelUtils.INPUT_TYPE_CSV.equals(inputType)) {
 			if (!rlist.getAbstractReader().isEmpty()) {
 				AbstractReader reader = rlist.getAbstractReader().get(0);
-				if (CsvReader.class.isInstance(reader) || CSV12Reader.class.isInstance(reader)) {
+				if ( CSV12Reader.class.isInstance(reader)) {
 					selectCorrectReaderItem(reader);
 				}
 			}
@@ -403,7 +397,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(inputType)) {
 			if (!rlist.getAbstractReader().isEmpty()) {
 				AbstractReader reader = rlist.getAbstractReader().get(0);
-				if (EDIReader.class.isInstance(reader) || EDI12Reader.class.isInstance(reader)) {
+				if ( EDI12Reader.class.isInstance(reader)) {
 					selectCorrectReaderItem(reader);
 				}
 			}
@@ -411,7 +405,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		if (SmooksModelUtils.INPUT_TYPE_JSON_1_1.equals(inputType)) {
 			if (!rlist.getAbstractReader().isEmpty()) {
 				AbstractReader reader = rlist.getAbstractReader().get(0);
-				if (JsonReader.class.isInstance(reader) || Json12Reader.class.isInstance(reader)) {
+				if ( Json12Reader.class.isInstance(reader)) {
 					selectCorrectReaderItem(reader);
 				}
 			}
@@ -454,20 +448,11 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		if (clone) {
 			reader = EcoreUtil.copy((EObject) reader);
 		}
-		if (reader instanceof CsvReader) {
-			return FeatureMapUtil.createEntry(CsvPackage.Literals.CSV_DOCUMENT_ROOT__READER, reader);
-		}
 		if (reader instanceof CSV12Reader) {
 			return FeatureMapUtil.createEntry(Csv12Package.Literals.CSV12_DOCUMENT_ROOT__READER, reader);
 		}
-		if (reader instanceof EDIReader) {
-			return FeatureMapUtil.createEntry(EdiPackage.Literals.EDI_DOCUMENT_ROOT__READER, reader);
-		}
 		if (reader instanceof EDI12Reader) {
 			return FeatureMapUtil.createEntry(Edi12Package.Literals.EDI12_DOCUMENT_ROOT__READER, reader);
-		}
-		if (reader instanceof JsonReader) {
-			return FeatureMapUtil.createEntry(JsonPackage.Literals.JSON_DOCUMENT_ROOT__READER, reader);
 		}
 		if (reader instanceof Json12Reader) {
 			return FeatureMapUtil.createEntry(Json12Package.Literals.JSON12_DOCUMENT_ROOT__READER, reader);
@@ -512,13 +497,13 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		if (reader instanceof EObject) {
 			Object obj = ((EObject) reader);
 
-			if (obj instanceof CsvReader || obj instanceof CSV12Reader) {
+			if ( obj instanceof CSV12Reader) {
 				return SmooksModelUtils.INPUT_TYPE_CSV;
 			}
-			if (obj instanceof EDIReader || obj instanceof EDI12Reader) {
+			if (obj instanceof EDI12Reader) {
 				return SmooksModelUtils.INPUT_TYPE_EDI_1_1;
 			}
-			if (obj instanceof JsonReader || obj instanceof Json12Reader) {
+			if ( obj instanceof Json12Reader) {
 				return SmooksModelUtils.INPUT_TYPE_JSON_1_1;
 			}
 			if (obj instanceof ReaderType) {
@@ -1208,17 +1193,17 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 			if (reader instanceof EObject) {
 				Object obj = ((EObject) reader);
 				obj = AdapterFactoryEditingDomain.unwrap(obj);
-				if (obj instanceof EDIReader || obj instanceof EDI12Reader) {
+				if ( obj instanceof EDI12Reader) {
 					if (!SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(type)) {
 						return true;
 					}
 				}
-				if (obj instanceof CsvReader || obj instanceof CSV12Reader) {
+				if ( obj instanceof CSV12Reader) {
 					if (!SmooksModelUtils.INPUT_TYPE_CSV.equals(type)) {
 						return true;
 					}
 				}
-				if (obj instanceof JsonReader || obj instanceof Json12Reader) {
+				if (obj instanceof Json12Reader) {
 					if (!SmooksModelUtils.INPUT_TYPE_JSON_1_1.equals(type)) {
 						return true;
 					}

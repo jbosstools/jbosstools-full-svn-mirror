@@ -72,41 +72,41 @@ public class TemplateUICreator extends PropertyUICreator {
 		TextTypeSwicher swicher = new TextTypeSwicher();
 		swicher.createSwicherGUI("External Template File", "Inline Template", parent, toolkit);
 
-		if (SmooksConstants.VERSION_1_1.equals(version)) {
-
-			AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Inline Template", editingdomain,
-					toolkit, parent, model, openCDATAEditorAction, true);
-			Control c = cdatatext.getContentControl();
-
-			if (c instanceof Text) {
-				final FieldAssistDisposer disposer = SmooksUIUtils.addBindingsContextAssistToText((Text) c,
-						SmooksUIUtils.getSmooks11ResourceListType((EObject) model));
-				c.addDisposeListener(new DisposeListener() {
-
-					/*
-					 * (non-Javadoc)
-					 * 
-					 * @see
-					 * org.eclipse.swt.events.DisposeListener#widgetDisposed(org
-					 * .eclipse.swt.events.DisposeEvent)
-					 */
-					public void widgetDisposed(DisposeEvent e) {
-						disposer.dispose();
-					}
-
-				});
-			}
-			list.add(cdatatext);
-			openCDATAEditorAction.setRelateText((Text) cdatatext.getContentControl());
-			
-			AttributeFieldEditPart textFieldEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor(
-					"External Template File", parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
-					null, null);
-			
-			swicher.hookSwicher(textFieldEditPart, cdatatext, editingdomain, model , SmooksUIUtils.VALUE_TYPE_CDATA);
-			
-			list.add(textFieldEditPart);
-		}
+//		if (SmooksConstants.VERSION_1_1.equals(version)) {
+//
+//			AttributeFieldEditPart cdatatext = SmooksUIUtils.createCDATAFieldEditor("Inline Template", editingdomain,
+//					toolkit, parent, model, openCDATAEditorAction, true);
+//			Control c = cdatatext.getContentControl();
+//
+//			if (c instanceof Text) {
+//				final FieldAssistDisposer disposer = SmooksUIUtils.addBindingsContextAssistToText((Text) c,
+//						SmooksUIUtils.getSmooks11ResourceListType((EObject) model));
+//				c.addDisposeListener(new DisposeListener() {
+//
+//					/*
+//					 * (non-Javadoc)
+//					 * 
+//					 * @see
+//					 * org.eclipse.swt.events.DisposeListener#widgetDisposed(org
+//					 * .eclipse.swt.events.DisposeEvent)
+//					 */
+//					public void widgetDisposed(DisposeEvent e) {
+//						disposer.dispose();
+//					}
+//
+//				});
+//			}
+//			list.add(cdatatext);
+//			openCDATAEditorAction.setRelateText((Text) cdatatext.getContentControl());
+//			
+//			AttributeFieldEditPart textFieldEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor(
+//					"External Template File", parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
+//					null, null);
+//			
+//			swicher.hookSwicher(textFieldEditPart, cdatatext, editingdomain, model , SmooksUIUtils.VALUE_TYPE_CDATA);
+//			
+//			list.add(textFieldEditPart);
+//		}
 		if (SmooksConstants.VERSION_1_2.equals(version)) {
 
 			AttributeFieldEditPart cdatatext = SmooksUIUtils.createCommentFieldEditor("Inline Template", editingdomain,

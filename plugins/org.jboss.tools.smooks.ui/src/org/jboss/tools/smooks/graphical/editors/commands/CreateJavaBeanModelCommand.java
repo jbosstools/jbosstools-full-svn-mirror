@@ -31,8 +31,6 @@ import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.command.GEFAdapterCommand;
 import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart;
 import org.jboss.tools.smooks.graphical.wizards.JavaBeanCreationWizard;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.JavabeanFactory;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Factory;
 import org.jboss.tools.smooks.model.javabean12.ValueType;
@@ -48,8 +46,6 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 	private IEditorPart editorPart = null;
 
 	public static final int BEAN_TYPE = 2;
-
-	public static final int BINDINGS_TYPE = 1;
 
 	private ISmooksModelProvider provider = null;
 
@@ -74,8 +70,6 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 						model = ((FeatureMap.Entry) collections).getValue();
 					}
 					int type = BEAN_TYPE;
-					if (model instanceof BindingsType)
-						type = BINDINGS_TYPE;
 					SmooksResourceListType resourceListType = null;
 					if (editorPart instanceof SmooksGraphicalEditorPart) {
 						resourceListType = ((SmooksGraphicalEditorPart) editorPart).getSmooksResourceListType();
@@ -143,9 +137,6 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 		if (type == BEAN_TYPE) {
 			parent = Javabean12Factory.eINSTANCE.createBeanType();
 		}
-		if (type == BINDINGS_TYPE) {
-			parent = JavabeanFactory.eINSTANCE.createBindingsType();
-		}
 		creationObject.add(parent);
 		String beanID = generateBeanID(parentBeanModel, resourceListType, ids);
 		ids.add(beanID);
@@ -178,37 +169,37 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 				}
 			}
 		}
-		if (parent instanceof BindingsType) {
-			((BindingsType) parent).setBeanId(beanID);
-			((BindingsType) parent).setClass(parentBeanModel.getBeanClassString());
-			if (properties != null) {
-				for (int i = 0; i < properties.length; i++) {
-					Object pro = properties[i];
-					if (pro instanceof JavaBeanModel && belongsToMe(parentBeanModel, (JavaBeanModel) pro)) {
-						if (((JavaBeanModel) pro).isPrimitive()) {
-							org.jboss.tools.smooks.model.javabean.ValueType value = JavabeanFactory.eINSTANCE
-									.createValueType();
-							value.setProperty(((JavaBeanModel) pro).getName());
-							((BindingsType) parent).getValue().add(value);
-						} else {
-							org.jboss.tools.smooks.model.javabean.WiringType value = JavabeanFactory.eINSTANCE
-									.createWiringType();
-							if (((JavaBeanModel) parentBeanModel).isArray()
-									|| ((JavaBeanModel) parentBeanModel).isList()) {
-
-							} else {
-								value.setProperty(((JavaBeanModel) pro).getName());
-							}
-							String refID = generateBeanID((JavaBeanModel) pro, resourceListType, ids);
-							value.setBeanIdRef(refID);
-							((BindingsType) parent).getWiring().add(value);
-							creationObject.addAll(createJavaBeanModel(type, (JavaBeanModel) pro, properties,
-									resourceListType, ids));
-						}
-					}
-				}
-			}
-		}
+//		if (parent instanceof BindingsType) {
+//			((BindingsType) parent).setBeanId(beanID);
+//			((BindingsType) parent).setClass(parentBeanModel.getBeanClassString());
+//			if (properties != null) {
+//				for (int i = 0; i < properties.length; i++) {
+//					Object pro = properties[i];
+//					if (pro instanceof JavaBeanModel && belongsToMe(parentBeanModel, (JavaBeanModel) pro)) {
+//						if (((JavaBeanModel) pro).isPrimitive()) {
+//							org.jboss.tools.smooks.model.javabean.ValueType value = JavabeanFactory.eINSTANCE
+//									.createValueType();
+//							value.setProperty(((JavaBeanModel) pro).getName());
+//							((BindingsType) parent).getValue().add(value);
+//						} else {
+//							org.jboss.tools.smooks.model.javabean.WiringType value = JavabeanFactory.eINSTANCE
+//									.createWiringType();
+//							if (((JavaBeanModel) parentBeanModel).isArray()
+//									|| ((JavaBeanModel) parentBeanModel).isList()) {
+//
+//							} else {
+//								value.setProperty(((JavaBeanModel) pro).getName());
+//							}
+//							String refID = generateBeanID((JavaBeanModel) pro, resourceListType, ids);
+//							value.setBeanIdRef(refID);
+//							((BindingsType) parent).getWiring().add(value);
+//							creationObject.addAll(createJavaBeanModel(type, (JavaBeanModel) pro, properties,
+//									resourceListType, ids));
+//						}
+//					}
+//				}
+//			}
+//		}
 		return creationObject;
 	}
 

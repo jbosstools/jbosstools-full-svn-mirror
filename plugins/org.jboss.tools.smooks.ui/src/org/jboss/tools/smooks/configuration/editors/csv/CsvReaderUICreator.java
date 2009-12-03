@@ -40,7 +40,6 @@ import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
-import org.jboss.tools.smooks.model.csv.CsvPackage;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
@@ -64,25 +63,25 @@ public class CsvReaderUICreator extends PropertyUICreator {
 			IItemPropertyDescriptor propertyDescriptor, Object model, EAttribute feature,
 			ISmooksModelProvider formEditor, IEditorPart part) {
 
-		if (feature == CsvPackage.eINSTANCE.getCsvReader_Encoding()) {
-		}
-		if (feature == CsvPackage.eINSTANCE.getCsvReader_Fields()) {
-		}
-		if (feature == CsvPackage.eINSTANCE.getCsvReader_Quote()) {
-		}
-		if (feature == CsvPackage.eINSTANCE.getCsvReader_Separator()) {
-		}
-		if (feature == CsvPackage.eINSTANCE.getCsvReader_SkipLines()) {
-		}
+//		if (feature == CsvPackage.eINSTANCE.getCsvReader_Encoding()) {
+//		}
+//		if (feature == CsvPackage.eINSTANCE.getCsvReader_Fields()) {
+//		}
+//		if (feature == CsvPackage.eINSTANCE.getCsvReader_Quote()) {
+//		}
+//		if (feature == CsvPackage.eINSTANCE.getCsvReader_Separator()) {
+//		}
+//		if (feature == CsvPackage.eINSTANCE.getCsvReader_SkipLines()) {
+//		}
 
 		return super.createPropertyUI(toolkit, parent, propertyDescriptor, model, feature, formEditor, part);
 	}
 
 	@Override
 	public boolean ignoreProperty(EAttribute feature) {
-		if (feature.equals(CsvPackage.Literals.CSV_READER__FIELDS)) {
-			return true;
-		}
+//		if (feature.equals(CsvPackage.Literals.CSV_READER__FIELDS)) {
+//			return true;
+//		}
 		return super.ignoreProperty(feature);
 	}
 
@@ -109,8 +108,8 @@ public class CsvReaderUICreator extends PropertyUICreator {
 
 		IItemPropertySource propertySource = (IItemPropertySource) editingdomain.getAdapterFactory().adapt(model,
 				IItemPropertySource.class);
-		final IItemPropertyDescriptor descriptor = propertySource.getPropertyDescriptor(model,
-				CsvPackage.Literals.CSV_READER__FIELDS);
+		final IItemPropertyDescriptor descriptor = null;//propertySource.getPropertyDescriptor(model,
+//				CsvPackage.Literals.CSV_READER__FIELDS);
 
 		final Object readOnlyMoel = model;
 

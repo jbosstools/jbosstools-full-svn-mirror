@@ -15,9 +15,6 @@ import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IContainer;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
-import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -31,13 +28,7 @@ import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.json.JsonDataConfiguraitonWizardPage.KeyValueModel;
 import org.jboss.tools.smooks.configuration.editors.uitls.JsonInputDataParser;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
-import org.jboss.tools.smooks.model.json.JsonFactory;
-import org.jboss.tools.smooks.model.json.JsonPackage;
-import org.jboss.tools.smooks.model.json.JsonReader;
-import org.jboss.tools.smooks.model.json.Key;
-import org.jboss.tools.smooks.model.json.KeyMap;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
@@ -107,61 +98,61 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 			return true;
 		}
 		if (configPage != null && configPage.isCreateJsonReader()) {
-			List<KeyValueModel> keyMapList = configPage.getKeyValueList();
-
-			JsonReader reader = JsonFactory.eINSTANCE.createJsonReader();
-			if (keyMapList != null && !keyMapList.isEmpty()) {
-				KeyMap map = JsonFactory.eINSTANCE.createKeyMap();
-				for (Iterator<?> iterator = keyMapList.iterator(); iterator.hasNext();) {
-					KeyValueModel keyValueModel = (KeyValueModel) iterator.next();
-					String key = keyValueModel.getKey();
-					String value = keyValueModel.getValue();
-					Key k = JsonFactory.eINSTANCE.createKey();
-					k.setFrom(key);
-					k.setTo(value);
-					map.getKey().add(k);
-				}
-				reader.setKeyMap(map);
-			}
-
-			String aen = configPage.getArrayElementName();
-			if (aen != null && aen.length() != 0) {
-				reader.setArrayElementName(aen);
-			}
-
-			String rn = configPage.getRootName();
-			if (rn != null && rn.length() != 0) {
-				reader.setRootName(rn);
-			}
-
-			String encoding = configPage.getEncoding();
-			if (encoding != null && encoding.length() != 0) {
-				reader.setEncoding(encoding);
-			}
-
-			String sr = configPage.getKeyWhitspaceReplacement();
-			if (sr != null && sr.length() != 0) {
-				reader.setKeyWhitspaceReplacement(sr);
-			}
-
-			String pon = configPage.getKeyPrefixOnNumeric();
-			if (pon != null && pon.length() != 0) {
-				reader.setKeyPrefixOnNumeric(pon);
-			}
-
-			String nvr = configPage.getNullValueReplacement();
-			if (nvr != null && nvr.length() != 0) {
-				reader.setNullValueReplacement(nvr);
-			}
-
-			String ier = configPage.getIllegalElementNameCharReplacement();
-			if (ier != null && ier.length() != 0) {
-				reader.setIllegalElementNameCharReplacement(ier);
-			}
-			Command command = AddCommand.create(editingDomain, resourceList,
-					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
-							.createEntry(JsonPackage.Literals.JSON_DOCUMENT_ROOT__READER, reader));
-			editingDomain.getCommandStack().execute(command);
+//			List<KeyValueModel> keyMapList = configPage.getKeyValueList();
+//
+//			JsonReader reader = JsonFactory.eINSTANCE.createJsonReader();
+//			if (keyMapList != null && !keyMapList.isEmpty()) {
+//				KeyMap map = JsonFactory.eINSTANCE.createKeyMap();
+//				for (Iterator<?> iterator = keyMapList.iterator(); iterator.hasNext();) {
+//					KeyValueModel keyValueModel = (KeyValueModel) iterator.next();
+//					String key = keyValueModel.getKey();
+//					String value = keyValueModel.getValue();
+//					Key k = JsonFactory.eINSTANCE.createKey();
+//					k.setFrom(key);
+//					k.setTo(value);
+//					map.getKey().add(k);
+//				}
+//				reader.setKeyMap(map);
+//			}
+//
+//			String aen = configPage.getArrayElementName();
+//			if (aen != null && aen.length() != 0) {
+//				reader.setArrayElementName(aen);
+//			}
+//
+//			String rn = configPage.getRootName();
+//			if (rn != null && rn.length() != 0) {
+//				reader.setRootName(rn);
+//			}
+//
+//			String encoding = configPage.getEncoding();
+//			if (encoding != null && encoding.length() != 0) {
+//				reader.setEncoding(encoding);
+//			}
+//
+//			String sr = configPage.getKeyWhitspaceReplacement();
+//			if (sr != null && sr.length() != 0) {
+//				reader.setKeyWhitspaceReplacement(sr);
+//			}
+//
+//			String pon = configPage.getKeyPrefixOnNumeric();
+//			if (pon != null && pon.length() != 0) {
+//				reader.setKeyPrefixOnNumeric(pon);
+//			}
+//
+//			String nvr = configPage.getNullValueReplacement();
+//			if (nvr != null && nvr.length() != 0) {
+//				reader.setNullValueReplacement(nvr);
+//			}
+//
+//			String ier = configPage.getIllegalElementNameCharReplacement();
+//			if (ier != null && ier.length() != 0) {
+//				reader.setIllegalElementNameCharReplacement(ier);
+//			}
+//			Command command = AddCommand.create(editingDomain, resourceList,
+//					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
+//							.createEntry(JsonPackage.Literals.JSON_DOCUMENT_ROOT__READER, reader));
+//			editingDomain.getCommandStack().execute(command);
 		}
 		return true;
 	}

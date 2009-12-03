@@ -20,8 +20,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.jboss.tools.smooks.model.freemarker.BindTo;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
+import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
 
 /**
@@ -56,11 +56,11 @@ public class DuplicatedBeanIDValidator extends AbstractValidator {
 	protected void validateModel(Collection<?> selectedObjects , List<Diagnostic> list){
 		for (Iterator<?> iterator = selectedObjects.iterator(); iterator.hasNext();) {
 			Object object = (Object) iterator.next();
-			if (object instanceof BindingsType) {
-				String beanId = ((BindingsType) object).getBeanId();
+			if (object instanceof BeanType) {
+				String beanId = ((BeanType) object).getBeanId();
 				if(isDuplicateBeanId(beanId)){
 					list.add(newWaringDiagnostic("Duplicated beanId : " + beanId, object,
-				JavabeanPackage.Literals.BINDINGS_TYPE__BEAN_ID));
+				Javabean12Package.Literals.BEAN_TYPE__BEAN_ID));
 				}
 				continue;
 			}
@@ -89,8 +89,8 @@ public class DuplicatedBeanIDValidator extends AbstractValidator {
 	protected void findDuplicatedBeanId(Collection<?> selectedObjects , List<String> idlist) {
 		for (Iterator<?> iterator = selectedObjects.iterator(); iterator.hasNext();) {
 			Object object = (Object) iterator.next();
-			if (object instanceof BindingsType) {
-				String beanId = ((BindingsType) object).getBeanId();
+			if (object instanceof BeanType) {
+				String beanId = ((BeanType) object).getBeanId();
 				if (beanId != null) {
 					beanId = beanId.trim();
 				}

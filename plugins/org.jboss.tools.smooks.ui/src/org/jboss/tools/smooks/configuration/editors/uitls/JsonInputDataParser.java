@@ -24,9 +24,6 @@ import org.dom4j.DocumentException;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
-import org.jboss.tools.smooks.model.json.JsonReader;
-import org.jboss.tools.smooks.model.json.Key;
-import org.jboss.tools.smooks.model.json.KeyMap;
 import org.jboss.tools.smooks.model.json12.Json12Package;
 import org.jboss.tools.smooks.model.json12.Json12Reader;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
@@ -67,24 +64,24 @@ public class JsonInputDataParser {
 		Map<String, String> keyMap = new HashMap<String, String>();
 		if (readerObj == null)
 			return null;
-		if (readerObj instanceof JsonReader) {
-			JsonReader reader = (JsonReader) readerObj;
-			rootName = reader.getRootName();
-			arrayElementName = reader.getArrayElementName();
-			keyPrefixOnNumeric = reader.getKeyPrefixOnNumeric();
-			keyWhitspaceReplacement = reader.getKeyWhitspaceReplacement();
-			illegalElementNameCharReplacement = reader.getIllegalElementNameCharReplacement();
-			nullValueReplacement = reader.getNullValueReplacement();
-			encoding = reader.getEncoding();
-			KeyMap km = reader.getKeyMap();
-			if (km != null) {
-				List<Key> keyList = km.getKey();
-				for (Iterator<?> iterator = keyList.iterator(); iterator.hasNext();) {
-					Key key = (Key) iterator.next();
-					keyMap.put(key.getFrom(), key.getTo());
-				}
-			}
-		}
+//		if (readerObj instanceof JsonReader) {
+//			JsonReader reader = (JsonReader) readerObj;
+//			rootName = reader.getRootName();
+//			arrayElementName = reader.getArrayElementName();
+//			keyPrefixOnNumeric = reader.getKeyPrefixOnNumeric();
+//			keyWhitspaceReplacement = reader.getKeyWhitspaceReplacement();
+//			illegalElementNameCharReplacement = reader.getIllegalElementNameCharReplacement();
+//			nullValueReplacement = reader.getNullValueReplacement();
+//			encoding = reader.getEncoding();
+//			KeyMap km = reader.getKeyMap();
+//			if (km != null) {
+//				List<Key> keyList = km.getKey();
+//				for (Iterator<?> iterator = keyList.iterator(); iterator.hasNext();) {
+//					Key key = (Key) iterator.next();
+//					keyMap.put(key.getFrom(), key.getTo());
+//				}
+//			}
+//		}
 
 		if (readerObj instanceof Json12Reader) {
 			Json12Reader reader = (Json12Reader) readerObj;
@@ -122,7 +119,7 @@ public class JsonInputDataParser {
 		int index = -1;
 		for (Iterator<?> iterator2 = readers.iterator(); iterator2.hasNext();) {
 			AbstractReader abstractReader = (AbstractReader) iterator2.next();
-			if (abstractReader instanceof JsonReader || abstractReader instanceof Json12Reader) {
+			if (abstractReader instanceof Json12Reader) {
 				count++;
 				if (index == -1) {
 					index = readers.indexOf(abstractReader);

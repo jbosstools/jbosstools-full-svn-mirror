@@ -13,9 +13,6 @@ package org.jboss.tools.smooks.configuration.editors.edi;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IContainer;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
-import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -27,11 +24,7 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
-import org.jboss.tools.smooks.model.edi.EDIReader;
-import org.jboss.tools.smooks.model.edi.EdiFactory;
-import org.jboss.tools.smooks.model.edi.EdiPackage;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
@@ -79,13 +72,13 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 			if (mappingFilePage.isCreateNewReader()) {
 				String encoding = mappingFilePage.getEncoding();
 				String path = mappingFilePage.getFilePath();
-				EDIReader reader = EdiFactory.eINSTANCE.createEDIReader();
-				reader.setEncoding(encoding);
-				reader.setMappingModel(path);
-				Command command = AddCommand.create(editingDomain, resourceList,
-						SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
-								.createEntry(EdiPackage.Literals.EDI_DOCUMENT_ROOT__READER, reader));
-				editingDomain.getCommandStack().execute(command);
+//				EDIReader reader = EdiFactory.eINSTANCE.createEDIReader();
+//				reader.setEncoding(encoding);
+//				reader.setMappingModel(path);
+//				Command command = AddCommand.create(editingDomain, resourceList,
+//						SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
+//								.createEntry(EdiPackage.Literals.EDI_DOCUMENT_ROOT__READER, reader));
+//				editingDomain.getCommandStack().execute(command);
 			}
 		}
 		return true;

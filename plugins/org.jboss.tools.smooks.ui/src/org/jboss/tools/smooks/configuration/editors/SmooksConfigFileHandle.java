@@ -18,16 +18,12 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.jboss.tools.smooks.model.calc.CalcPackage;
-import org.jboss.tools.smooks.model.csv.CsvPackage;
 import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
-import org.jboss.tools.smooks.model.edi.EdiPackage;
 import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.iorouting.IoroutingPackage;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
-import org.jboss.tools.smooks.model.json.JsonPackage;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -56,10 +52,10 @@ public class SmooksConfigFileHandle extends DefaultHandler {
 	}
 
 	protected String[] createSupportURI() {
-		return new String[] { org.jboss.tools.smooks.model.smooks.SmooksPackage.eNS_URI, EdiPackage.eNS_URI,
+		return new String[] { org.jboss.tools.smooks.model.smooks.SmooksPackage.eNS_URI,
 				XslPackage.eNS_URI, FreemarkerPackage.eNS_URI, GroovyPackage.eNS_URI, CalcPackage.eNS_URI,
-				CsvPackage.eNS_URI, DatasourcePackage.eNS_URI, FileRoutingPackage.eNS_URI, IoroutingPackage.eNS_URI,
-				JavabeanPackage.eNS_URI, JmsroutingPackage.eNS_URI, JsonPackage.eNS_URI, };
+				 DatasourcePackage.eNS_URI, FileRoutingPackage.eNS_URI, IoroutingPackage.eNS_URI,
+				 JmsroutingPackage.eNS_URI };
 	}
 
 	private final SAXParser createParser(SAXParserFactory parserFactory) throws ParserConfigurationException,
@@ -125,9 +121,9 @@ public class SmooksConfigFileHandle extends DefaultHandler {
 	}
 
 	private boolean unSupportUIR(String uri) {
-		if (EdiPackage.eNS_URI.equals(uri)) {
-			return true;
-		}
+//		if (EdiPackage.eNS_URI.equals(uri)) {
+//			return true;
+//		}
 		return false;
 	}
 

@@ -18,10 +18,6 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.ExpressionType;
-import org.jboss.tools.smooks.model.javabean.ValueType;
-import org.jboss.tools.smooks.model.javabean.WiringType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.rules10.RuleBase;
 import org.jboss.tools.smooks.model.rules10.RuleBasesType;
@@ -60,35 +56,6 @@ public class GraphicalModelFactoryImpl implements GraphicalModelFactory {
 		Object obj = AdapterFactoryEditingDomain.unwrap(element);
 		if (obj instanceof BeanType) {
 			String p = ((BeanType) obj).getBeanId();
-			if (p == null) {
-				p = "<NULL>";
-			}
-			return p;
-		}
-		if (obj instanceof BindingsType) {
-			String p = ((BindingsType) obj).getBeanId();
-			if (p == null) {
-				p = "<NULL>";
-			}
-			return p;
-		}
-
-		if (obj instanceof ValueType) {
-			String p = ((ValueType) obj).getProperty();
-			if (p == null) {
-				p = "<NULL>";
-			}
-			return p;
-		}
-		if (obj instanceof WiringType) {
-			String p = ((WiringType) obj).getProperty();
-			if (p == null) {
-				p = "<NULL>";
-			}
-			return p;
-		}
-		if (obj instanceof ExpressionType) {
-			String p = ((ExpressionType) obj).getProperty();
 			if (p == null) {
 				p = "<NULL>";
 			}

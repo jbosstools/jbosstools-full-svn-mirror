@@ -28,10 +28,6 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.jboss.tools.smooks.configuration.editors.uitls.JavaPropertyUtils;
 import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.javabean.ExpressionType;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
-import org.jboss.tools.smooks.model.javabean.ValueType;
-import org.jboss.tools.smooks.model.javabean.WiringType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
 /**
@@ -84,11 +80,11 @@ public class PropertyValidator extends AbstractValidator {
 	}
 
 	protected void initValidationTargetList() {
-		PropertySetterValidateTarget target = new PropertySetterValidateTarget();
-		target.setPropertyFeature(JavabeanPackage.Literals.VALUE_TYPE__PROPERTY);
-		target.setSetterMethodFeature(JavabeanPackage.Literals.VALUE_TYPE__SETTER_METHOD);
-		target.setTargetClass(ValueType.class);
-		validationTargetList.add(target);
+//		PropertySetterValidateTarget target = new PropertySetterValidateTarget();
+//		target.setPropertyFeature(JavabeanPackage.Literals.VALUE_TYPE__PROPERTY);
+//		target.setSetterMethodFeature(JavabeanPackage.Literals.VALUE_TYPE__SETTER_METHOD);
+//		target.setTargetClass(ValueType.class);
+//		validationTargetList.add(target);
 
 		PropertySetterValidateTarget target2 = new PropertySetterValidateTarget();
 		target2.setPropertyFeature(Javabean12Package.Literals.VALUE_TYPE__PROPERTY);
@@ -96,11 +92,11 @@ public class PropertyValidator extends AbstractValidator {
 		target2.setTargetClass(org.jboss.tools.smooks.model.javabean12.ValueType.class);
 		validationTargetList.add(target2);
 
-		PropertySetterValidateTarget target4 = new PropertySetterValidateTarget();
-		target4.setPropertyFeature(JavabeanPackage.Literals.WIRING_TYPE__PROPERTY);
-		target4.setSetterMethodFeature(JavabeanPackage.Literals.WIRING_TYPE__SETTER_METHOD);
-		target4.setTargetClass(WiringType.class);
-		validationTargetList.add(target4);
+//		PropertySetterValidateTarget target4 = new PropertySetterValidateTarget();
+//		target4.setPropertyFeature(JavabeanPackage.Literals.WIRING_TYPE__PROPERTY);
+//		target4.setSetterMethodFeature(JavabeanPackage.Literals.WIRING_TYPE__SETTER_METHOD);
+//		target4.setTargetClass(WiringType.class);
+//		validationTargetList.add(target4);
 
 		PropertySetterValidateTarget target6 = new PropertySetterValidateTarget();
 		target6.setPropertyFeature(Javabean12Package.Literals.WIRING_TYPE__PROPERTY);
@@ -108,11 +104,11 @@ public class PropertyValidator extends AbstractValidator {
 		target6.setTargetClass(org.jboss.tools.smooks.model.javabean12.WiringType.class);
 		validationTargetList.add(target6);
 
-		PropertySetterValidateTarget target8 = new PropertySetterValidateTarget();
-		target8.setPropertyFeature(JavabeanPackage.Literals.EXPRESSION_TYPE__PROPERTY);
-		target8.setSetterMethodFeature(JavabeanPackage.Literals.EXPRESSION_TYPE__SETTER_METHOD);
-		target8.setTargetClass(ExpressionType.class);
-		validationTargetList.add(target8);
+//		PropertySetterValidateTarget target8 = new PropertySetterValidateTarget();
+//		target8.setPropertyFeature(JavabeanPackage.Literals.EXPRESSION_TYPE__PROPERTY);
+//		target8.setSetterMethodFeature(JavabeanPackage.Literals.EXPRESSION_TYPE__SETTER_METHOD);
+//		target8.setTargetClass(ExpressionType.class);
+//		validationTargetList.add(target8);
 
 		PropertySetterValidateTarget target10 = new PropertySetterValidateTarget();
 		target10.setPropertyFeature(Javabean12Package.Literals.EXPRESSION_TYPE__PROPERTY);
