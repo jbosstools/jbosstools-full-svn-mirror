@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Extension Model (Incubation)
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.bpel.common.model; singleton:=true
-Bundle-Version: 0.5.0
+Bundle-Version: 0.5.0.qualifier
 Bundle-Activator: org.eclipse.bpel.common.extension.model.Activator
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
@@ -56,5 +56,6 @@ Export-Package: org.eclipse.bpel.common,
    org.eclipse.emf.ecore.resource.impl,
    org.eclipse.emf.ecore.xmi.util",
  org.eclipse.bpel.names
-Bundle-Vendor: eclipse.org
+Bundle-Vendor: %providerName
+Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
