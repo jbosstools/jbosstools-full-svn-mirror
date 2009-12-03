@@ -13,8 +13,6 @@ package org.jboss.tools.smooks.graphical.editors.model.javamapping;
 import org.eclipse.ui.IWorkbenchPart;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.graphical.actions.AddSmooksObjectAction;
-import org.jboss.tools.smooks.model.javabean.JavabeanFactory;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Factory;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
@@ -32,16 +30,6 @@ public class AddWiringAction extends AddSmooksObjectAction {
 	public AddWiringAction(IWorkbenchPart part, ISmooksModelProvider provider) {
 		super(part, provider);
 		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	protected Object getSmooks11Object() {
-		return JavabeanFactory.eINSTANCE.createWiringType();
-	}
-
-	@Override
-	protected Object getSmooks11Type() {
-		return JavabeanPackage.Literals.BINDINGS_TYPE__WIRING;
 	}
 
 	@Override

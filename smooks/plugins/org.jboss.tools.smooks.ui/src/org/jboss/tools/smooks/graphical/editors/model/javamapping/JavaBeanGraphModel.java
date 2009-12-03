@@ -22,7 +22,6 @@ import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
 import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVNodeModel;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 
 /**
@@ -81,7 +80,7 @@ public class JavaBeanGraphModel extends AbstractResourceConfigGraphModel {
 	public boolean canLinkWithTarget(Object model) {
 		AbstractSmooksGraphicalModel gm = (AbstractSmooksGraphicalModel) model;
 		Object m = gm.getData();
-		if (data instanceof BeanType || data instanceof BindingsType) {
+		if (data instanceof BeanType ) {
 			if (m instanceof CSVNodeModel) {
 				if (data instanceof EObject) {
 					if (SmooksUIUtils.isCollectionJavaGraphModel((EObject) data)) {

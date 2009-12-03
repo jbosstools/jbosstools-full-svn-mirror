@@ -107,10 +107,6 @@ import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphM
 import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLNodeGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
-import org.jboss.tools.smooks.model.javabean.ValueType;
-import org.jboss.tools.smooks.model.javabean.WiringType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
@@ -1373,10 +1369,9 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		if (datas.size() == 2) {
 			Object parentObj = datas.get(0);
 
-			if (parentObj instanceof BeanType || parentObj instanceof BindingsType) {
+			if (parentObj instanceof BeanType ) {
 				Object obj = datas.get(1);
-				if (obj == JavabeanPackage.Literals.BINDINGS_TYPE__BEAN_ID
-						|| obj == Javabean12Package.Literals.BEAN_TYPE__BEAN_ID) {
+				if (obj == Javabean12Package.Literals.BEAN_TYPE__BEAN_ID) {
 					String message = diagnostic.getMessage();
 					if (message != null && message.startsWith("The required feature")) { //$NON-NLS-1$
 						return Messages.SmooksJavaMappingGraphicalEditor_BeanIdEmptyErrormessage;
@@ -1384,11 +1379,9 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 				}
 			}
 
-			if (parentObj instanceof ValueType
-					|| parentObj instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
+			if (parentObj instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
 				Object obj = datas.get(1);
-				if (obj == JavabeanPackage.Literals.VALUE_TYPE__DATA
-						|| obj == Javabean12Package.Literals.VALUE_TYPE__DATA) {
+				if (obj == Javabean12Package.Literals.VALUE_TYPE__DATA) {
 					String message = diagnostic.getMessage();
 					if (message != null && message.startsWith("The required feature")) { //$NON-NLS-1$
 						return Messages.SmooksJavaMappingGraphicalEditor_NodeMustLinkWithSource;
@@ -1396,11 +1389,9 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 				}
 			}
 
-			if (parentObj instanceof WiringType
-					|| parentObj instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
+			if (parentObj instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
 				Object obj = datas.get(1);
-				if (obj == JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF
-						|| obj == Javabean12Package.Literals.WIRING_TYPE__BEAN_ID_REF) {
+				if (obj == Javabean12Package.Literals.WIRING_TYPE__BEAN_ID_REF) {
 					String message = diagnostic.getMessage();
 					if (message != null && message.startsWith("The required feature")) { //$NON-NLS-1$
 						return Messages.SmooksJavaMappingGraphicalEditor_NodeMustLinkWithJavaBean;

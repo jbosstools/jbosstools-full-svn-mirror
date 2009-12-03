@@ -14,8 +14,6 @@ import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.ui.IWorkbenchPart;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.graphical.actions.AddSmooksObjectAction;
-import org.jboss.tools.smooks.model.javabean.JavabeanFactory;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Factory;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
@@ -34,16 +32,6 @@ public class AddJavaBeanAction extends AddSmooksObjectAction {
 		super(part, provider);
 	}
 
-	@Override
-	protected Object getSmooks11Object() {
-		return FeatureMapUtil.createEntry(JavabeanPackage.Literals.DOCUMENT_ROOT__BINDINGS, JavabeanFactory.eINSTANCE
-				.createBindingsType());
-	}
-
-	@Override
-	protected Object getSmooks11Type() {
-		return SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP;
-	}
 
 	@Override
 	protected Object getSmooks12Object() {

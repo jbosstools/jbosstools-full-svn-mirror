@@ -22,7 +22,6 @@ import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.xsl.Xsl;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
@@ -34,14 +33,6 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 public class SmooksGraphUtil {
 
 	public static String generateFigureIDViaModel(EObject data) {
-		if (data instanceof BindingsType) {
-			String beanId = ((BindingsType) data).getBeanId();
-			if (beanId == null) {
-				return null;
-			}
-			beanId = beanId.trim();
-			return "BindingsType_" + beanId;
-		}
 
 		if (data instanceof BeanType) {
 			String beanId = ((BeanType) data).getBeanId();

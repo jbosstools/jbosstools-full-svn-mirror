@@ -33,10 +33,6 @@ import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.ExpressionType;
-import org.jboss.tools.smooks.model.javabean.ValueType;
-import org.jboss.tools.smooks.model.javabean.WiringType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -78,8 +74,7 @@ public class SelectorValidator extends AbstractValidator {
 			Object data = ((EObject) model).eGet(feature);
 			if (data == null) {
 				if (feature instanceof EAttribute) {
-					if (model instanceof BeanType
-							|| model instanceof BindingsType) {
+					if (model instanceof BeanType) {
 						return newWaringDiagnostic(
 								"Must be linked with source input node", model,
 								(EAttribute) feature);
@@ -104,8 +99,7 @@ public class SelectorValidator extends AbstractValidator {
 			}
 			if (path == null || path.length() == 0) {
 				if (feature instanceof EAttribute) {
-					if (model instanceof BeanType
-							|| model instanceof BindingsType) {
+					if (model instanceof BeanType) {
 						return newWaringDiagnostic(
 								"Must be linked with source input node", model,
 								(EAttribute) feature);
@@ -137,12 +131,8 @@ public class SelectorValidator extends AbstractValidator {
 				}
 				if (node == null && feature instanceof EAttribute) {
 					if (model instanceof BeanType
-							|| model instanceof BindingsType
-							|| model instanceof ValueType
 							|| model instanceof org.jboss.tools.smooks.model.javabean12.ValueType
-							|| model instanceof WiringType
 							|| model instanceof org.jboss.tools.smooks.model.javabean12.WiringType
-							|| model instanceof ExpressionType
 							|| model instanceof org.jboss.tools.smooks.model.javabean12.ExpressionType) {
 						return newWaringDiagnostic(
 								"Can't find the input source node :   '" + path

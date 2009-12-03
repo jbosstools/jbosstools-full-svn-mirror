@@ -55,8 +55,6 @@ import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphM
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.Template;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.ValueType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
@@ -96,7 +94,8 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 		cleanValidationMarker();
 		// validate freemarker model.Because the freemarker csv node
 		// model isn't EMF model so they need to validate separately
-		if(root == null) return;
+		if (root == null)
+			return;
 		List<AbstractSmooksGraphicalModel> children = root.getChildren();
 		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
 			AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator.next();
@@ -155,7 +154,8 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 				List<AbstractSmooksGraphicalModel> csvFields = csvRecordGraphModel.getChildren();
 				for (Iterator<?> iterator2 = csvFields.iterator(); iterator2.hasNext();) {
 					AbstractSmooksGraphicalModel csvFieldsGModel = (AbstractSmooksGraphicalModel) iterator2.next();
-					csvFieldsGModel.addMessage("Case CSV-Record isn't linked with source node , this node can't be linked.");
+					csvFieldsGModel
+							.addMessage("Case CSV-Record isn't linked with source node , this node can't be linked.");
 					csvFieldsGModel.setSeverity(AbstractSmooksGraphicalModel.ERROR);
 				}
 			}
@@ -407,26 +407,27 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 					}
 				}
 			}
-			if (bean instanceof BindingsType) {
-				List<?> values = ((BindingsType) bean).getValue();
-				for (Iterator<?> iterator = values.iterator(); iterator.hasNext();) {
-					ValueType value = (ValueType) iterator.next();
-					if (propertyName.equals(value.getProperty())) {
-						return value;
-					}
-				}
-			}
+			// if (bean instanceof BindingsType) {
+			// List<?> values = ((BindingsType) bean).getValue();
+			// for (Iterator<?> iterator = values.iterator();
+			// iterator.hasNext();) {
+			// ValueType value = (ValueType) iterator.next();
+			// if (propertyName.equals(value.getProperty())) {
+			// return value;
+			// }
+			// }
+			// }
 			return null;
 		}
 
 		private Object findJavaBeanModel(String beanid, List<EObject> beans) {
 			for (Iterator<?> iterator = beans.iterator(); iterator.hasNext();) {
 				Object object = (Object) iterator.next();
-				if (object instanceof BindingsType) {
-					if (beanid.equals(((BindingsType) object).getBeanId())) {
-						return object;
-					}
-				}
+				// if (object instanceof BindingsType) {
+				// if (beanid.equals(((BindingsType) object).getBeanId())) {
+				// return object;
+				// }
+				// }
 				if (object instanceof BeanType) {
 					if (beanid.equals(((BeanType) object).getBeanId())) {
 						return object;
@@ -510,7 +511,7 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 						}
 					}
 				}
-				if (model instanceof BindingsType || model instanceof BeanType) {
+				if (model instanceof BeanType) {
 					graphModel = new JavaBeanGraphModel(model, contentProvider, labelProvider, provider,
 							SmooksFreemarkerTemplateGraphicalEditor.this);
 					((JavaBeanGraphModel) graphModel).setHeaderVisable(true);

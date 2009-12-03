@@ -27,10 +27,6 @@ import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
 import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfigChildNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanChildGraphModel;
-import org.jboss.tools.smooks.model.javabean.ExpressionType;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
-import org.jboss.tools.smooks.model.javabean.ValueType;
-import org.jboss.tools.smooks.model.javabean.WiringType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
 /**
@@ -43,10 +39,7 @@ public class JavaBeanChildNodeEditPart extends AbstractResourceConfigChildNodeEd
 
 	public JavaBeanChildNodeEditPart() {
 		super();
-		supportTypes.add(ValueType.class);
-		supportTypes.add(ExpressionType.class);
-		supportTypes.add(WiringType.class);
-
+		
 		supportTypes.add(org.jboss.tools.smooks.model.javabean12.ValueType.class);
 		supportTypes.add(org.jboss.tools.smooks.model.javabean12.ExpressionType.class);
 		supportTypes.add(org.jboss.tools.smooks.model.javabean12.WiringType.class);
@@ -65,7 +58,7 @@ public class JavaBeanChildNodeEditPart extends AbstractResourceConfigChildNodeEd
 			AbstractSmooksGraphicalModel model = (AbstractSmooksGraphicalModel) this.getModel();
 			Object data = model.getData();
 			data = AdapterFactoryEditingDomain.unwrap(data);
-			if (data instanceof ValueType || data instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
+			if (data instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
 				return true;
 			}
 		}
@@ -125,15 +118,6 @@ public class JavaBeanChildNodeEditPart extends AbstractResourceConfigChildNodeEd
 	}
 
 	private EStructuralFeature getFeature(Object data) {
-		if (data instanceof ValueType) {
-			return JavabeanPackage.Literals.VALUE_TYPE__PROPERTY;
-		}
-		if (data instanceof WiringType) {
-			return JavabeanPackage.Literals.WIRING_TYPE__PROPERTY;
-		}
-		if (data instanceof ExpressionType) {
-			return JavabeanPackage.Literals.EXPRESSION_TYPE__PROPERTY;
-		}
 
 		if (data instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
 			return Javabean12Package.Literals.VALUE_TYPE__PROPERTY;
@@ -154,17 +138,6 @@ public class JavaBeanChildNodeEditPart extends AbstractResourceConfigChildNodeEd
 			if (SmooksFreemarkerTemplateGraphicalEditor.ID.equals(((IGraphicalEditorPart) editorPart).getID())) {
 				return null;
 			}
-		}
-		if (model instanceof WiringType) {
-			return JavabeanPackage.Literals.BINDINGS_TYPE__WIRING;
-		}
-
-		if (model instanceof ValueType) {
-			return JavabeanPackage.Literals.BINDINGS_TYPE__VALUE;
-		}
-
-		if (model instanceof ExpressionType) {
-			return JavabeanPackage.Literals.BINDINGS_TYPE__EXPRESSION;
 		}
 
 		if (model instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {

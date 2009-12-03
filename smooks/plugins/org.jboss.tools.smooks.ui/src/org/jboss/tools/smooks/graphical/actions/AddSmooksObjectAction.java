@@ -113,11 +113,9 @@ public abstract class AddSmooksObjectAction extends AddSmooksModelAction {
 		return new SmooksObjectCreationFactory(getNewObject(), getNewType());
 	}
 	
-	protected abstract Object getSmooks11Object();
 	
 	protected abstract Object getSmooks12Object();
 	
-	protected abstract Object getSmooks11Type();
 	
 	protected abstract Object getSmooks12Type();
 
@@ -126,9 +124,6 @@ public abstract class AddSmooksObjectAction extends AddSmooksModelAction {
 //		if (ext == null)
 //			return null;
 		String version = this.getProvider().getPlatformVersion();
-		if (SmooksConstants.VERSION_1_1.equals(version)) {
-			return getSmooks11Object();
-		}
 		if (SmooksConstants.VERSION_1_2.equals(version)) {
 			return getSmooks12Object();
 		}
@@ -140,9 +135,6 @@ public abstract class AddSmooksObjectAction extends AddSmooksModelAction {
 //		if (ext == null)
 //			return null;
 		String version = this.getProvider().getPlatformVersion();
-		if (SmooksConstants.VERSION_1_1.equals(version)) {
-			return getSmooks11Type();
-		}
 		if (SmooksConstants.VERSION_1_2.equals(version)) {
 			return getSmooks12Type();
 		}

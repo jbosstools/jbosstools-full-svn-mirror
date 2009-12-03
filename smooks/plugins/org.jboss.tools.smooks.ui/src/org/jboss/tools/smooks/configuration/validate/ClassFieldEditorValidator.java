@@ -29,8 +29,6 @@ import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.csv12.Binding;
 import org.jboss.tools.smooks.model.csv12.Csv12Package;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.rules10.RuleBase;
@@ -64,11 +62,6 @@ public class ClassFieldEditorValidator extends AbstractValidator {
 	}
 
 	protected void initValidationTargetList() {
-		ClassValidationTarget target = new ClassValidationTarget();
-		target.setFeature(JavabeanPackage.Literals.BINDINGS_TYPE__CLASS);
-		target.setSupportArrayClass(true);
-		target.setTarget(BindingsType.class);
-		validationTargetList.add(target);
 
 		ClassValidationTarget target1 = new ClassValidationTarget();
 		target1.setFeature(Javabean12Package.Literals.BEAN_TYPE__CLASS);

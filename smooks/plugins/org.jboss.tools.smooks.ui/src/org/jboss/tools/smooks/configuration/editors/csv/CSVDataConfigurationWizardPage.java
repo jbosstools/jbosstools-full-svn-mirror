@@ -42,8 +42,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.csv.CsvReader;
-import org.jboss.tools.smooks.model.csv.impl.CsvReaderImpl;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
@@ -639,12 +637,7 @@ public class CSVDataConfigurationWizardPage extends WizardPage {
 		filePath = null;
 
 		hasReader = false;
-
-		if (SmooksUIUtils.hasReaderAlready(CsvReader.class, smooksResourceList)
-				|| SmooksUIUtils.hasReaderAlready(CsvReaderImpl.class, smooksResourceList)) {
-			hasReader = true;
-		}
-
+		
 		createCSVReader = true;
 
 		encoding = "UTF-8"; //$NON-NLS-1$

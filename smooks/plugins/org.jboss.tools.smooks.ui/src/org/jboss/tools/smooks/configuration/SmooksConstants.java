@@ -23,9 +23,9 @@ public class SmooksConstants {
 	
 	public static final String SMOOKS_GRAPHICSEXT_EXTENTION_NAME_WITHDOT = "." + SMOOKS_GRAPHICSEXT_EXTENTION_NAME; //$NON-NLS-1$
 	
-	public static final String VERSION_1_1 = "1.1"; //$NON-NLS-1$
+//	public static final String VERSION_1_1 = "1.1"; //$NON-NLS-1$
 	
 	public static final String VERSION_1_2 = "1.2"; //$NON-NLS-1$
 	
-	public static final String[] SMOOKS_VERSIONS = new String[]{VERSION_1_1,VERSION_1_2};
+	public static final String[] SMOOKS_VERSIONS = new String[]{VERSION_1_2};
 }

@@ -7,11 +7,8 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.MenuManager;
 import org.jboss.tools.smooks.configuration.actions.AddSmooksResourceAction;
-import org.jboss.tools.smooks.model.csv.CsvReader;
 import org.jboss.tools.smooks.model.csv12.CSV12Reader;
-import org.jboss.tools.smooks.model.edi.EDIReader;
 import org.jboss.tools.smooks.model.edi12.EDI12Reader;
-import org.jboss.tools.smooks.model.json.JsonReader;
 import org.jboss.tools.smooks.model.json12.Json12Reader;
 import org.jboss.tools.smooks.model.smooks.ReaderType;
 
@@ -26,15 +23,6 @@ public class Reader11ActionGrouper extends AbstractSmooksActionGrouper {
 			return true;
 		}
 		if (value instanceof Json12Reader) {
-			return true;
-		}
-		if (value instanceof CsvReader) {
-			return true;
-		}
-		if (value instanceof EDIReader) {
-			return true;
-		}
-		if (value instanceof JsonReader) {
 			return true;
 		}
 		if (value instanceof ReaderType) {

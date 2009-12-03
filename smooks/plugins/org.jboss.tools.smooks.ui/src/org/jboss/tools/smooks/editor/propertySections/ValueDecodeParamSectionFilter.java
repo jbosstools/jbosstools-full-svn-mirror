@@ -18,7 +18,6 @@ import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
 import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfigChildNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.JavaBeanChildNodeEditPart;
-import org.jboss.tools.smooks.model.javabean.ValueType;
 
 /**
  * @author Dart
@@ -35,9 +34,9 @@ public class ValueDecodeParamSectionFilter implements IFilter {
 		if (toTest == null)
 			return false;
 		if (toTest instanceof JavaBeanChildNodeEditPart) {
-			IEditorPart editorPart = ((AbstractResourceConfigChildNodeEditPart)toTest).getEditorPart();
-			if(toTest instanceof JavaBeanChildNodeEditPart && editorPart instanceof IGraphicalEditorPart){
-				if(SmooksFreemarkerTemplateGraphicalEditor.ID.equals(((IGraphicalEditorPart)editorPart).getID())){
+			IEditorPart editorPart = ((AbstractResourceConfigChildNodeEditPart) toTest).getEditorPart();
+			if (toTest instanceof JavaBeanChildNodeEditPart && editorPart instanceof IGraphicalEditorPart) {
+				if (SmooksFreemarkerTemplateGraphicalEditor.ID.equals(((IGraphicalEditorPart) editorPart).getID())) {
 					return false;
 				}
 			}
@@ -45,8 +44,7 @@ public class ValueDecodeParamSectionFilter implements IFilter {
 					.getModel();
 			Object data = model.getData();
 			data = AdapterFactoryEditingDomain.unwrap(data);
-			if (data instanceof ValueType
-					|| data instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
+			if (data instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
 				return true;
 			}
 		}

@@ -12,8 +12,6 @@ package org.jboss.tools.smooks.graphical.editors.editparts;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
@@ -29,9 +27,7 @@ public class ResourceConfigEditPart extends AbstractResourceConfigEditPart {
 
 	@Override
 	protected EStructuralFeature getHostFeature(EObject model) {
-		if(model instanceof BindingsType){
-			return JavabeanPackage.Literals.DOCUMENT_ROOT__BINDINGS;
-		}
+		
 		if(model instanceof BeanType){
 			return Javabean12Package.Literals.JAVABEAN12_DOCUMENT_ROOT__BEAN;
 		}
