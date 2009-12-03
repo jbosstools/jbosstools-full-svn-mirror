@@ -34,13 +34,11 @@ public class AddFreemarkerAction extends AddSmooksObjectAction {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	protected Object getSmooks11Object() {
 		return FeatureMapUtil.createEntry(FreemarkerPackage.Literals.DOCUMENT_ROOT__FREEMARKER,
 				FreemarkerFactory.eINSTANCE.createFreemarker());
 	}
 
-	@Override
 	protected Object getSmooks11Type() {
 		return SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP;
 	}

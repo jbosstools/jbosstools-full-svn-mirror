@@ -3,15 +3,11 @@
  */
 package org.jboss.tools.smooks.configuration.editors.csv;
 
-import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IContainer;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
-import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -24,11 +20,7 @@ import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 import org.jboss.tools.smooks.configuration.editors.csv.CSVDataConfigurationWizardPage.FieldString;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
-import org.jboss.tools.smooks.model.csv.CsvFactory;
-import org.jboss.tools.smooks.model.csv.CsvPackage;
-import org.jboss.tools.smooks.model.csv.CsvReader;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
-import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
@@ -82,47 +74,47 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 		if (configPage != null) {
 			boolean createCSVReader = configPage.isCreateCSVReader();
 			if (createCSVReader) {
-				CsvReader reader = CsvFactory.eINSTANCE.createCsvReader();
-
-				String encoding = configPage.getEncoding();
-				reader.setEncoding(encoding);
-
-				String separator = configPage.getSeparator();
-				reader.setSeparator(separator);
-
-				String skipLines = configPage.getSkipLines();
-				long skip = -1;
-				try {
-					skip = Long.parseLong(skipLines);
-				} catch (Throwable t) {
-
-				}
-				if (skip >= 0) {
-					 reader.setSkipLines(BigInteger.valueOf(skip));
-				}
-
-				String quoteChar = configPage.getQuoteChar();
-				reader.setQuote(quoteChar);
-
-				String fields = null;
-				List<FieldString> fieldList = configPage.getFieldsList();
-				if (fieldList != null && !fieldList.isEmpty()) {
-					fields = ""; //$NON-NLS-1$
-					for (Iterator<?> iterator = fieldList.iterator(); iterator.hasNext();) {
-						FieldString fieldString = (FieldString) iterator.next();
-						String f = fieldString.getText();
-						fields += (f + ","); //$NON-NLS-1$
-					}
-					if (fields.length() > 1) {
-						fields = fields.substring(0, fields.length() - 1);
-					}
-				}
-				reader.setFields(fields);
-
-				Command command = AddCommand.create(editingDomain, resourceList,
-						SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
-								.createEntry(CsvPackage.Literals.CSV_DOCUMENT_ROOT__READER, reader));
-				editingDomain.getCommandStack().execute(command);
+//				CsvReader reader = CsvFactory.eINSTANCE.createCsvReader();
+//
+//				String encoding = configPage.getEncoding();
+//				reader.setEncoding(encoding);
+//
+//				String separator = configPage.getSeparator();
+//				reader.setSeparator(separator);
+//
+//				String skipLines = configPage.getSkipLines();
+//				long skip = -1;
+//				try {
+//					skip = Long.parseLong(skipLines);
+//				} catch (Throwable t) {
+//
+//				}
+//				if (skip >= 0) {
+//					 reader.setSkipLines(BigInteger.valueOf(skip));
+//				}
+//
+//				String quoteChar = configPage.getQuoteChar();
+//				reader.setQuote(quoteChar);
+//
+//				String fields = null;
+//				List<FieldString> fieldList = configPage.getFieldsList();
+//				if (fieldList != null && !fieldList.isEmpty()) {
+//					fields = ""; //$NON-NLS-1$
+//					for (Iterator<?> iterator = fieldList.iterator(); iterator.hasNext();) {
+//						FieldString fieldString = (FieldString) iterator.next();
+//						String f = fieldString.getText();
+//						fields += (f + ","); //$NON-NLS-1$
+//					}
+//					if (fields.length() > 1) {
+//						fields = fields.substring(0, fields.length() - 1);
+//					}
+//				}
+//				reader.setFields(fields);
+//
+//				Command command = AddCommand.create(editingDomain, resourceList,
+//						SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil
+//								.createEntry(CsvPackage.Literals.CSV_DOCUMENT_ROOT__READER, reader));
+//				editingDomain.getCommandStack().execute(command);
 
 			}
 		}

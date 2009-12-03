@@ -40,9 +40,6 @@ import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.model.json.JsonReader;
-import org.jboss.tools.smooks.model.json.impl.JsonReaderImpl;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
@@ -109,10 +106,10 @@ public class JsonDataConfiguraitonWizardPage extends WizardPage {
 
 	private void initValue() {
 		hasReader = false;
-		if (SmooksUIUtils.hasReaderAlready(JsonReaderImpl.class, resourceList)
-				|| SmooksUIUtils.hasReaderAlready(JsonReader.class, resourceList)) {
-			hasReader = true;
-		}
+//		if (SmooksUIUtils.hasReaderAlready(JsonReaderImpl.class, resourceList)
+//				|| SmooksUIUtils.hasReaderAlready(JsonReader.class, resourceList)) {
+//			hasReader = true;
+//		}
 		
 		useAvailabelReader= false;
 

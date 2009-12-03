@@ -25,9 +25,6 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanChildGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.ValueType;
-import org.jboss.tools.smooks.model.javabean.WiringType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.w3c.dom.Document;
@@ -59,9 +56,6 @@ public class FreemarkerCSVContentGenerator {
 			AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator.next();
 			Object javabean = abstractSmooksGraphicalModel.getData();
 			javabean = AdapterFactoryEditingDomain.unwrap(javabean);
-			if (javabean instanceof WiringType) {
-				collectionName = ((WiringType) javabean).getBeanIdRef();
-			}
 			if (javabean instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
 				collectionName = ((org.jboss.tools.smooks.model.javabean12.WiringType) javabean).getBeanIdRef();
 			}
@@ -107,9 +101,6 @@ public class FreemarkerCSVContentGenerator {
 				Object data = ((JavaBeanGraphModel) sourceGraphModel).getData();
 				data = AdapterFactoryEditingDomain.unwrap(data);
 				String beanName = null;
-				if (data instanceof BindingsType) {
-					beanName = ((BindingsType) data).getBeanId();
-				}
 				if (data instanceof BeanType) {
 					beanName = ((BeanType) data).getBeanId();
 				}
@@ -154,9 +145,6 @@ public class FreemarkerCSVContentGenerator {
 		Object sourceModel = sourceGraphModel.getData();
 		sourceModel = AdapterFactoryEditingDomain.unwrap(sourceModel);
 		String s = null;
-		if (sourceModel instanceof ValueType) {
-			s = ((ValueType) sourceModel).getProperty();
-		}
 		if (sourceModel instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
 			s = ((org.jboss.tools.smooks.model.javabean12.ValueType) sourceModel).getProperty();
 		}
@@ -167,9 +155,6 @@ public class FreemarkerCSVContentGenerator {
 		for (int i = 0; i < nodesList.size(); i++) {
 			Object node = nodesList.get(i);
 			String beanName = null;
-			if (node instanceof BindingsType) {
-				beanName = ((BindingsType) node).getBeanId();
-			}
 			if (node instanceof BeanType) {
 				beanName = ((BeanType) node).getBeanId();
 			}

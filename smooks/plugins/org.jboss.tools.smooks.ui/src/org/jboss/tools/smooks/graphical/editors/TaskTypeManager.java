@@ -17,7 +17,6 @@ import java.util.List;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -78,7 +77,6 @@ public class TaskTypeManager {
 			return null;
 		if (TASK_ID_JAVA_MAPPING.equals(taskID)) {
 			elementsType.add(BeanType.class);
-			elementsType.add(BindingsType.class);
 		}
 		if (TASK_ID_FREEMARKER_TEMPLATE.equals(taskID)) {
 			elementsType.add(Freemarker.class);

@@ -84,18 +84,18 @@ public class TemplateUICreator extends PropertyUICreator {
 
 		String version = formEditor.getPlatformVersion();
 
-		if (SmooksConstants.VERSION_1_1.equals(version)) {
-
-			AttributeFieldEditPart cdataFieldEditPart = SmooksUIUtils.createCDATAFieldEditor("Inline Template",
-					editingdomain, toolkit, parent, model, openCdataEditorAction, true);
-			openCdataEditorAction.setRelateText((Text) cdataFieldEditPart.getContentControl());
-			AttributeFieldEditPart textFieldEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor(
-					"External Template File", parent, editingdomain, toolkit, null, model,
-					SmooksUIUtils.VALUE_TYPE_TEXT, null, null);
-			list.add(textFieldEditPart);
-			list.add(cdataFieldEditPart);
-			swicher.hookSwicher(textFieldEditPart, cdataFieldEditPart, editingdomain, model , SmooksUIUtils.VALUE_TYPE_CDATA);
-		}
+//		if (SmooksConstants.VERSION_1_1.equals(version)) {
+//
+//			AttributeFieldEditPart cdataFieldEditPart = SmooksUIUtils.createCDATAFieldEditor("Inline Template",
+//					editingdomain, toolkit, parent, model, openCdataEditorAction, true);
+//			openCdataEditorAction.setRelateText((Text) cdataFieldEditPart.getContentControl());
+//			AttributeFieldEditPart textFieldEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor(
+//					"External Template File", parent, editingdomain, toolkit, null, model,
+//					SmooksUIUtils.VALUE_TYPE_TEXT, null, null);
+//			list.add(textFieldEditPart);
+//			list.add(cdataFieldEditPart);
+//			swicher.hookSwicher(textFieldEditPart, cdataFieldEditPart, editingdomain, model , SmooksUIUtils.VALUE_TYPE_CDATA);
+//		}
 		
 		if (SmooksConstants.VERSION_1_2.equals(version)) {
 

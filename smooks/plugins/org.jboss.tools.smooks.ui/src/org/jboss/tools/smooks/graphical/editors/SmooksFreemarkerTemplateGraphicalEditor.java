@@ -31,7 +31,6 @@ import org.jboss.template.Mapping;
 import org.jboss.template.TemplateBuilder;
 import org.jboss.template.csv.CSVFreeMarkerTemplateBuilder;
 import org.jboss.template.csv.CSVModelBuilder;
-import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.actions.AbstractSmooksActionGrouper;
 import org.jboss.tools.smooks.configuration.editors.actions.ISmooksActionGrouper;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
@@ -55,8 +54,6 @@ import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphM
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.Template;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.ValueType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
@@ -336,26 +333,26 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 					}
 				}
 			}
-			if (bean instanceof BindingsType) {
-				List<?> values = ((BindingsType) bean).getValue();
-				for (Iterator<?> iterator = values.iterator(); iterator.hasNext();) {
-					ValueType value = (ValueType) iterator.next();
-					if (propertyName.equals(value.getProperty())) {
-						return value;
-					}
-				}
-			}
+//			if (bean instanceof BindingsType) {
+//				List<?> values = ((BindingsType) bean).getValue();
+//				for (Iterator<?> iterator = values.iterator(); iterator.hasNext();) {
+//					ValueType value = (ValueType) iterator.next();
+//					if (propertyName.equals(value.getProperty())) {
+//						return value;
+//					}
+//				}
+//			}
 			return null;
 		}
 
 		private Object findJavaBeanModel(String beanid, List<EObject> beans) {
 			for (Iterator<?> iterator = beans.iterator(); iterator.hasNext();) {
 				Object object = (Object) iterator.next();
-				if (object instanceof BindingsType) {
-					if (beanid.equals(((BindingsType) object).getBeanId())) {
-						return object;
-					}
-				}
+//				if (object instanceof BindingsType) {
+//					if (beanid.equals(((BindingsType) object).getBeanId())) {
+//						return object;
+//					}
+//				}
 				if (object instanceof BeanType) {
 					if (beanid.equals(((BeanType) object).getBeanId())) {
 						return object;
@@ -439,7 +436,7 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 						}
 					}
 				}
-				if (model instanceof BindingsType || model instanceof BeanType) {
+				if (model instanceof BeanType) {
 					graphModel = new JavaBeanGraphModel(model, contentProvider, labelProvider, provider,
 							SmooksFreemarkerTemplateGraphicalEditor.this);
 					((JavaBeanGraphModel) graphModel).setHeaderVisable(true);

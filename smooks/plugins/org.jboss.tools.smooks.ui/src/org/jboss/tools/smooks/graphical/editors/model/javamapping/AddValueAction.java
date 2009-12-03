@@ -13,8 +13,6 @@ package org.jboss.tools.smooks.graphical.editors.model.javamapping;
 import org.eclipse.ui.IWorkbenchPart;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.graphical.actions.AddSmooksObjectAction;
-import org.jboss.tools.smooks.model.javabean.JavabeanFactory;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Factory;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
@@ -36,16 +34,6 @@ public class AddValueAction extends AddSmooksObjectAction {
 		// TODO Auto-generated constructor stub
 	}
 	
-	@Override
-	protected Object getSmooks11Object() {
-		return JavabeanFactory.eINSTANCE.createValueType();
-	}
-
-	@Override
-	protected Object getSmooks11Type() {
-		return JavabeanPackage.Literals.BINDINGS_TYPE__VALUE;
-	}
-
 	@Override
 	protected Object getSmooks12Object() {
 		return Javabean12Factory.eINSTANCE.createValueType();

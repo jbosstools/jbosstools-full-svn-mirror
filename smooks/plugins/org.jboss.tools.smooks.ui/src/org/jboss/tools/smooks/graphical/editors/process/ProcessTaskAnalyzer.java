@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -44,7 +43,7 @@ public class ProcessTaskAnalyzer {
 		TaskType javaMappingTask = null;
 		for (Iterator<?> iterator = resourceConfigList.iterator(); iterator.hasNext();) {
 			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
-			if (abstractResourceConfig instanceof BindingsType || abstractResourceConfig instanceof BeanType) {
+			if (abstractResourceConfig instanceof BeanType) {
 				javaMappingTask = ProcessFactory.eINSTANCE.createTaskType();
 				javaMappingTask.setId(TaskTypeManager.TASK_ID_JAVA_MAPPING);
 				javaMappingTask.setName(TaskTypeManager.getTaskLabel(TaskTypeManager.TASK_ID_JAVA_MAPPING));

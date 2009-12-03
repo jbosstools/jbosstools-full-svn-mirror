@@ -29,7 +29,6 @@ import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphica
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVLinkConnection;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVNodeModel;
-import org.jboss.tools.smooks.model.javabean.ValueType;
 
 /**
  * @author Dart
@@ -64,7 +63,7 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 				return true;
 			}
 		}
-		if (data instanceof ValueType || data instanceof org.jboss.tools.smooks.model.javabean12.ValueType
+		if ( data instanceof org.jboss.tools.smooks.model.javabean12.ValueType
 				|| connectionType == CSVLinkConnection.class) {
 			return true;
 		}
@@ -113,7 +112,7 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 		Object m = gm.getData();
 		Object obj = getData();
 		obj = AdapterFactoryEditingDomain.unwrap(obj);
-		if (obj instanceof ValueType || obj instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
+		if (obj instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
 			if (m instanceof CSVNodeModel) {
 				return !((CSVNodeModel) m).isRecord();
 			}

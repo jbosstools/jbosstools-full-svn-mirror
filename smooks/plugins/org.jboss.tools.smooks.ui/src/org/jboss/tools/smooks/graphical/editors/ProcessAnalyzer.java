@@ -22,7 +22,6 @@ import org.jboss.tools.smooks.graphical.editors.process.ProcessFactory;
 import org.jboss.tools.smooks.graphical.editors.process.ProcessType;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ParamType;
@@ -52,7 +51,7 @@ public class ProcessAnalyzer {
 			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
 
 			// for java-mapping
-			if (abstractResourceConfig instanceof BeanType || abstractResourceConfig instanceof BindingsType) {
+			if (abstractResourceConfig instanceof BeanType) {
 				if (taskIDs.contains(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
 					continue;
 				}

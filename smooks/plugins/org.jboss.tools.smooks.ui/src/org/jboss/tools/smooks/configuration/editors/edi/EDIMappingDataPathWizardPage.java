@@ -26,10 +26,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.smooks.configuration.editors.ClassPathFileProcessor;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractFileSelectionWizardPage;
-import org.jboss.tools.smooks.model.edi.EDIReader;
-import org.jboss.tools.smooks.model.edi.impl.EDIReaderImpl;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
@@ -90,10 +87,10 @@ public class EDIMappingDataPathWizardPage extends AbstractFileSelectionWizardPag
 		hasReader = false;
 		useAvaliableReader = false;
 		createNewReader = true;
-		if (SmooksUIUtils.hasReaderAlready(EDIReader.class, resourceList)
-				|| SmooksUIUtils.hasReaderAlready(EDIReaderImpl.class, resourceList)) {
-			hasReader = true;
-		}
+//		if (SmooksUIUtils.hasReaderAlready(EDIReader.class, resourceList)
+//				|| SmooksUIUtils.hasReaderAlready(EDIReaderImpl.class, resourceList)) {
+//			hasReader = true;
+//		}
 
 		mappingFile = null;
 

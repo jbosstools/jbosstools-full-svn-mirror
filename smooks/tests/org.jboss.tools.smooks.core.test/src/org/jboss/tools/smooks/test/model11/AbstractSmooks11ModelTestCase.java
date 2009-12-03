@@ -24,17 +24,13 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.calc.provider.CalcItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.common.provider.CommonItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.csv.provider.CsvItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.datasource.provider.DatasourceItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.dbrouting.provider.DbroutingItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.edi.provider.EdiItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.fileRouting.provider.FileRoutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.freemarker.provider.FreemarkerItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.groovy.provider.GroovyItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.iorouting.provider.IoroutingItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.javabean.provider.JavabeanItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.jmsrouting.provider.JmsroutingItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.json.provider.JsonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.medi.DocumentRoot;
 import org.jboss.tools.smooks.model.medi.MappingNode;
 import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
@@ -67,18 +63,14 @@ public abstract class AbstractSmooks11ModelTestCase extends BaseTestCase {
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new XslItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new FreemarkerItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new JavabeanItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new CommonItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new SmooksItemProviderAdapterFactory());
 
 
 		adapterFactory.addAdapterFactory(new MEdiItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new EdiItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new IoroutingItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new JsonItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new JmsroutingItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new DbroutingItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new CsvItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new DatasourceItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new CalcItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new GroovyItemProviderAdapterFactory());

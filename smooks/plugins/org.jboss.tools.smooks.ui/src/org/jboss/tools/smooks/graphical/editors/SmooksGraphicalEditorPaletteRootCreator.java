@@ -41,7 +41,6 @@ import org.jboss.tools.smooks.configuration.editors.actions.ISmooksActionGrouper
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -224,9 +223,9 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 		if (element instanceof BeanType) {
 			return true;
 		}
-		if (element instanceof BindingsType) {
-			return true;
-		}
+//		if (element instanceof BindingsType) {
+//			return true;
+//		}
 		return false;
 	}
 

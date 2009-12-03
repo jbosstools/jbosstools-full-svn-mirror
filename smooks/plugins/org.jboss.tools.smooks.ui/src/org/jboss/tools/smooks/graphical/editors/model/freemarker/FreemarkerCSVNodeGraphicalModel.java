@@ -17,10 +17,8 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
-import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
@@ -176,10 +174,10 @@ public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
-		String version = SmooksConstants.VERSION_1_1;
-		if (this.domainProvider instanceof ISmooksModelProvider) {
-			version = ((ISmooksModelProvider) domainProvider).getPlatformVersion();
-		}
+//		String version = SmooksConstants.VERSION_1_2;
+//		if (this.domainProvider instanceof ISmooksModelProvider) {
+//			version = ((ISmooksModelProvider) domainProvider).getPlatformVersion();
+//		}
 		SmooksModelUtils.setCDATAToSmooksType(domainProvider.getEditingDomain(), template, content);
 	}
 

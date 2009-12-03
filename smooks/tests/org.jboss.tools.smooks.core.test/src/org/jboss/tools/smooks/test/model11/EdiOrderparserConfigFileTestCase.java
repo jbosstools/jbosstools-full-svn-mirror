@@ -14,7 +14,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.jboss.tools.smooks.model.edi.EDIReader;
+import org.jboss.tools.smooks.model.edi12.EDI12Reader;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
@@ -38,7 +38,7 @@ public class EdiOrderparserConfigFileTestCase extends AbstractSmooks11ModelTestC
 		List<AbstractReader> readerList = resourceConfig.getAbstractReader();
 		Assert.assertEquals(readerList.size(), 1);
 		
-		EDIReader reader = (EDIReader) readerList.get(0);
+		EDI12Reader reader = (EDI12Reader) readerList.get(0);
 		
 		Assert.assertEquals("/edi-to-sax-order-mapping.xml", reader.getMappingModel());
 	}

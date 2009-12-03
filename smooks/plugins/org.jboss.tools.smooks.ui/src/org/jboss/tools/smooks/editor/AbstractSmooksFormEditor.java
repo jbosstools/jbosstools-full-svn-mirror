@@ -74,22 +74,18 @@ import org.jboss.tools.smooks.graphical.editors.ISmooksEditorInitListener;
 import org.jboss.tools.smooks.model.calc.provider.CalcItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.common.provider.CommonItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.csv.provider.CsvItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.csv12.provider.Csv12ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.datasource.provider.DatasourceItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.dbrouting.provider.DbroutingItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.edi.provider.EdiItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.edi12.provider.Edi12ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.esbrouting.provider.EsbroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.fileRouting.provider.FileRoutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.freemarker.provider.FreemarkerItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.groovy.provider.GroovyItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.iorouting.provider.IoroutingItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.javabean.provider.JavabeanItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.javabean12.provider.Javabean12ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.jmsrouting.provider.JmsroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.jmsrouting12.provider.Jmsrouting12ItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.json.provider.JsonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.json12.provider.Json12ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.persistence12.provider.Persistence12ItemProviderAdapterFactory;
@@ -105,6 +101,8 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 public class AbstractSmooksFormEditor extends FormEditor implements IEditingDomainProvider,
 		ISmooksModelValidateListener, ISmooksModelProvider {
+
+	private Exception initSmooksModelException = null;
 
 	protected String platformVersion = SmooksConstants.VERSION_1_2;
 
@@ -387,16 +385,20 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new XslItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new FreemarkerItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new JavabeanItemProviderAdapterFactory());
+		// adapterFactory.addAdapterFactory(new
+		// JavabeanItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new CommonItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new SmooksItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new MEdiItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new EdiItemProviderAdapterFactory());
+		// adapterFactory.addAdapterFactory(new
+		// EdiItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new IoroutingItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new JsonItemProviderAdapterFactory());
+		// adapterFactory.addAdapterFactory(new
+		// JsonItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new JmsroutingItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new DbroutingItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new CsvItemProviderAdapterFactory());
+		// adapterFactory.addAdapterFactory(new
+		// CsvItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new DatasourceItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new CalcItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new GroovyItemProviderAdapterFactory());
@@ -445,12 +447,16 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
-
-		Exception exception = checkSmooksConfigContents(null);
+		int messageType = IMessageProvider.ERROR;
+		Exception exception = initSmooksModelException;
+		if (exception == null) {
+			exception = checkSmooksConfigContents(null);
+			messageType = IMessageProvider.WARNING;
+		}
 		if (exception != null) {
 			for (Iterator<?> iterator = this.smooksInitListener.iterator(); iterator.hasNext();) {
 				ISmooksEditorInitListener initListener = (ISmooksEditorInitListener) iterator.next();
-				initListener.initFailed(IMessageProvider.WARNING, exception.getMessage());
+				initListener.initFailed(messageType, exception.getMessage());
 			}
 		}
 	}
@@ -518,27 +524,28 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		Resource resource = editingDomain.getResourceSet().getResources().get(0);
 		resource.unload();
 		InputStream stream = null;
-		try {
-			stream = new ByteArrayInputStream(conents.getBytes());
-			resource.load(stream, Collections.emptyMap());
-			this.smooksModel = resource.getContents().get(0);
-		} catch (IOException e) {
-			smooksModel = null;
-			exception = e;
-			messageType = IMessageProvider.ERROR;
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
+		stream = new ByteArrayInputStream(conents.getBytes());
+		exception = checkSmooksConfigContents(stream);
+		if (exception != null)
+			messageType = IMessageProvider.WARNING;
+		if (exception == null) {
+			try {
+				stream = new ByteArrayInputStream(conents.getBytes());
+				resource.load(stream, Collections.emptyMap());
+				this.smooksModel = resource.getContents().get(0);
+			} catch (Exception e) {
+				smooksModel = null;
+				exception = e;
+				messageType = IMessageProvider.ERROR;
+			} finally {
+				if (stream != null) {
+					try {
+						stream.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
-		}
-		if (exception == null) {
-			stream = new ByteArrayInputStream(conents.getBytes());
-			exception = checkSmooksConfigContents(stream);
-			if (exception != null)
-				messageType = IMessageProvider.WARNING;
 		}
 		setPlatformVersion(SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel));
 		judgeInputReader();
@@ -553,6 +560,9 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		String message = null;
 		if (exception != null) {
 			message = exception.getMessage();
+		}
+		if(message == null){
+			message = "Unknown error.Please check the file";
 		}
 		for (Iterator<?> iterator = this.smooksInitListener.iterator(); iterator.hasNext();) {
 			ISmooksEditorInitListener initListener = (ISmooksEditorInitListener) iterator.next();
@@ -589,7 +599,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	public void doSave(IProgressMonitor monitor) {
 		try {
 			IEditorPart activeEditor = getActiveEditor();
-			if (activeEditor != null && activeEditor == textEditor) {
+			if (this.smooksModel == null || (activeEditor != null && activeEditor == textEditor)) {
 				textEditor.doSave(monitor);
 				((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
 
@@ -634,9 +644,8 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 				}
 			}
 			graphChanged = false;
-
 			firePropertyChange(PROP_DIRTY);
-			if (this.smooksModel != null) {
+			if (this.smooksModel != null && validator != null) {
 				validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
 			}
 		} catch (IOException e) {
@@ -648,6 +657,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
+		super.init(site, input);
 		String filePath = null;
 		String partName = "smooks editor";
 		IFile file = null;
@@ -671,36 +681,42 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		if (filePath == null)
 			throw new PartInitException("Can't get the input file");
 
+		// create EMF resource
 		Resource smooksResource = null;
-
 		if (file != null) {
 			smooksResource = new SmooksResourceFactoryImpl().createResource(URI.createPlatformResourceURI(filePath,
 					false));
 		} else {
 			smooksResource = new SmooksResourceFactoryImpl().createResource(URI.createFileURI(filePath));
 		}
-		try {
-
-			smooksResource.load(Collections.emptyMap());
-			smooksModel = smooksResource.getContents().get(0);
-		} catch (IOException e) {
-			throw new PartInitException(e.getMessage());
-		}
 		editingDomain.getResourceSet().getResources().add(smooksResource);
-		super.init(site, input);
+		setPartName(partName);
 
+		// create Smooks validator
 		validator = new SmooksModelValidator();
 		addValidateListener(this);
-		setDiagnosticList(validator.validate(smooksModel.eResource().getContents(), editingDomain));
 
-		// if success to open editor , check if there isn't ext element in
-		// smooks config file
-		// create new one for it
+		Exception ex = checkSmooksConfigContents(null);
+		if (ex == null) {
+			try {
+				smooksResource.load(Collections.emptyMap());
+				smooksModel = smooksResource.getContents().get(0);
+			} catch (IOException e) {
+				initSmooksModelException = e;
+				// throw new PartInitException(e.getMessage());
+			}
 
-		setPartName(partName);
-		String version = SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel);
-		this.setPlatformVersion(version);
-		judgeInputReader();
+			if (smooksModel != null) {
+				setDiagnosticList(validator.validate(smooksModel.eResource().getContents(), editingDomain));
+				// if success to open editor , check if there isn't ext element
+				// in
+				// smooks config file
+				// create new one for it
+				String version = SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel);
+				this.setPlatformVersion(version);
+				judgeInputReader();
+			}
+		}
 	}
 
 	private void assertConfigSupported(RuntimeMetadata runtimeMetadata) throws PartInitException {

@@ -19,7 +19,6 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -61,14 +60,14 @@ public class JavaBeanCreationWizard extends SmooksCreationModelConfigureWizard {
 		List<String> ids = new ArrayList<String>();
 		if (rootModel instanceof DocumentRoot) {
 			SmooksResourceListType listType = ((DocumentRoot) rootModel).getSmooksResourceList();
-			List<BindingsType> bindingsTypes = SmooksUIUtils.getBindingsTypeList(listType);
-			for (Iterator<?> iterator = bindingsTypes.iterator(); iterator.hasNext();) {
-				BindingsType bindingsType = (BindingsType) iterator.next();
-				String id = bindingsType.getBeanId();
-				if (id != null) {
-					ids.add(id);
-				}
-			}
+//			List<BindingsType> bindingsTypes = SmooksUIUtils.getBindingsTypeList(listType);
+//			for (Iterator<?> iterator = bindingsTypes.iterator(); iterator.hasNext();) {
+//				BindingsType bindingsType = (BindingsType) iterator.next();
+//				String id = bindingsType.getBeanId();
+//				if (id != null) {
+//					ids.add(id);
+//				}
+//			}
 			List<BeanType> beanTypeTypes = SmooksUIUtils.getBeanTypeList(listType);
 
 			for (Iterator<?> iterator = beanTypeTypes.iterator(); iterator.hasNext();) {

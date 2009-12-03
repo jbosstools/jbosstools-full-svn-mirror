@@ -34,7 +34,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
-import org.jboss.tools.smooks.model.edi.EDIReader;
 import org.jboss.tools.smooks.model.edi12.EDI12Reader;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -63,12 +62,12 @@ public class EDIDataParser {
 		int index = -1;
 		for (Iterator<?> iterator2 = readers.iterator(); iterator2.hasNext();) {
 			AbstractReader abstractReader = (AbstractReader) iterator2.next();
-			if (abstractReader instanceof EDIReader) {
-				count++;
-				if (index == -1) {
-					index = readers.indexOf(abstractReader);
-				}
-			}
+//			if (abstractReader instanceof EDIReader) {
+//				count++;
+//				if (index == -1) {
+//					index = readers.indexOf(abstractReader);
+//				}
+//			}
 			if (abstractReader instanceof EDI12Reader) {
 				count++;
 				if (index == -1) {
@@ -98,7 +97,7 @@ public class EDIDataParser {
 		int index = -1;
 		for (Iterator<?> iterator2 = readers.iterator(); iterator2.hasNext();) {
 			AbstractReader abstractReader = (AbstractReader) iterator2.next();
-			if (abstractReader instanceof EDIReader || abstractReader instanceof EDI12Reader) {
+			if (abstractReader instanceof EDI12Reader) {
 				count++;
 				if (index == -1) {
 					index = readers.indexOf(abstractReader);
@@ -123,11 +122,11 @@ public class EDIDataParser {
 		String encoding = null;
 		String mappingModel = null;
 		String validate = null;
-		if (readerObj instanceof EDIReader) {
-			EDIReader reader = (EDIReader) readerObj;
-			encoding = reader.getEncoding();
-			mappingModel = reader.getMappingModel();
-		}
+//		if (readerObj instanceof EDIReader) {
+//			EDIReader reader = (EDIReader) readerObj;
+//			encoding = reader.getEncoding();
+//			mappingModel = reader.getMappingModel();
+//		}
 		if (readerObj instanceof EDI12Reader) {
 			EDI12Reader reader = (EDI12Reader) readerObj;
 			encoding = reader.getEncoding();
@@ -140,11 +139,11 @@ public class EDIDataParser {
 
 		String encoding = null;
 		String mappingModel = null;
-		if (readerObj instanceof EDIReader) {
-			EDIReader reader = (EDIReader) readerObj;
-			encoding = reader.getEncoding();
-			mappingModel = reader.getMappingModel();
-		}
+//		if (readerObj instanceof EDIReader) {
+//			EDIReader reader = (EDIReader) readerObj;
+//			encoding = reader.getEncoding();
+//			mappingModel = reader.getMappingModel();
+//		}
 		if (readerObj instanceof EDI12Reader) {
 			EDI12Reader reader = (EDI12Reader) readerObj;
 			encoding = reader.getEncoding();

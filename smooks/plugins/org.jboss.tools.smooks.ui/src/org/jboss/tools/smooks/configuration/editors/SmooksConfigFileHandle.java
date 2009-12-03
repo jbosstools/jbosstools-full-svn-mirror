@@ -18,16 +18,12 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.jboss.tools.smooks.model.calc.CalcPackage;
-import org.jboss.tools.smooks.model.csv.CsvPackage;
 import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
-import org.jboss.tools.smooks.model.edi.EdiPackage;
 import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.iorouting.IoroutingPackage;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
-import org.jboss.tools.smooks.model.json.JsonPackage;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -56,28 +52,20 @@ public class SmooksConfigFileHandle extends DefaultHandler {
 	}
 
 	protected String[] createSupportURI() {
-		return new String[] {
-				org.jboss.tools.smooks.model.smooks.SmooksPackage.eNS_URI,
-				EdiPackage.eNS_URI, XslPackage.eNS_URI,
-				FreemarkerPackage.eNS_URI, GroovyPackage.eNS_URI,
-				CalcPackage.eNS_URI, CsvPackage.eNS_URI,
-				DatasourcePackage.eNS_URI, FileRoutingPackage.eNS_URI,
-				IoroutingPackage.eNS_URI, JavabeanPackage.eNS_URI,
-				JmsroutingPackage.eNS_URI, JsonPackage.eNS_URI, };
+		return new String[] { org.jboss.tools.smooks.model.smooks.SmooksPackage.eNS_URI, XslPackage.eNS_URI,
+				FreemarkerPackage.eNS_URI, GroovyPackage.eNS_URI, CalcPackage.eNS_URI, DatasourcePackage.eNS_URI,
+				FileRoutingPackage.eNS_URI, IoroutingPackage.eNS_URI, JmsroutingPackage.eNS_URI, };
 	}
 
-	private final SAXParser createParser(SAXParserFactory parserFactory)
-			throws ParserConfigurationException, SAXException,
-			SAXNotRecognizedException, SAXNotSupportedException {
+	private final SAXParser createParser(SAXParserFactory parserFactory) throws ParserConfigurationException,
+			SAXException, SAXNotRecognizedException, SAXNotSupportedException {
 		// Initialize the parser.
 		final SAXParser parser = parserFactory.newSAXParser();
 		final XMLReader reader = parser.getXMLReader();
 		// disable DTD validation
 		try {
 			reader.setFeature("http://xml.org/sax/features/validation", false); //$NON-NLS-1$
-			reader
-					.setFeature(
-							"http://apache.org/xml/features/nonvalidating/load-external-dtd", false); //$NON-NLS-1$
+			reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false); //$NON-NLS-1$
 		} catch (SAXNotRecognizedException e) {
 		} catch (SAXNotSupportedException e) {
 		}
@@ -95,8 +83,7 @@ public class SmooksConfigFileHandle extends DefaultHandler {
 		return fFactory;
 	}
 
-	public boolean parseContents(InputSource contents)
-			throws ParserConfigurationException, IOException {
+	public boolean parseContents(InputSource contents) throws ParserConfigurationException, IOException {
 		try {
 			fFactory = getFactory();
 			if (fFactory == null) {
@@ -119,14 +106,12 @@ public class SmooksConfigFileHandle extends DefaultHandler {
 	 * @see org.xml.sax.helpers.DefaultHandler#resolveEntity(java.lang.String,
 	 * java.lang.String)
 	 */
-	public InputSource resolveEntity(String publicId, String systemId)
-			throws SAXException {
+	public InputSource resolveEntity(String publicId, String systemId) throws SAXException {
 		return new InputSource(new StringReader("")); //$NON-NLS-1$
 	}
 
 	@Override
-	public void startPrefixMapping(String prefix, String uri)
-			throws SAXException {
+	public void startPrefixMapping(String prefix, String uri) throws SAXException {
 		super.startPrefixMapping(prefix, uri);
 		if (containtSmooksURI(uri)) {
 			setCorrectContentFile(true);
@@ -151,9 +136,8 @@ public class SmooksConfigFileHandle extends DefaultHandler {
 	 * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
 	 * java.lang.String, java.lang.String, org.xml.sax.Attributes)
 	 */
-	public final void startElement(final String uri, final String elementName,
-			final String qualifiedName, final Attributes attributes)
-			throws SAXException {
+	public final void startElement(final String uri, final String elementName, final String qualifiedName,
+			final Attributes attributes) throws SAXException {
 		if (isCorrectContentFile()) {
 			throw new SAXException(Messages.SmooksConfigFileHandle_exception);
 		}

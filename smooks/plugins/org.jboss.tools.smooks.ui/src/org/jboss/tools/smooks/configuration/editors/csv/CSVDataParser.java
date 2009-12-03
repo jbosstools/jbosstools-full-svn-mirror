@@ -26,7 +26,6 @@ import org.dom4j.DocumentException;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
-import org.jboss.tools.smooks.model.csv.CsvReader;
 import org.jboss.tools.smooks.model.csv12.CSV12Reader;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -73,14 +72,14 @@ public class CSVDataParser {
 		if (readerObj == null)
 			return null;
 
-		if (readerObj instanceof CsvReader) {
-			CsvReader reader = (CsvReader) readerObj;
-			fields = reader.getFields();
-			separator = reader.getSeparator();
-			skiplines = reader.getSkipLines().toString();
-			quoteChar = reader.getQuote();
-			encoding = reader.getEncoding();
-		}
+//		if (readerObj instanceof CsvReader) {
+//			CsvReader reader = (CsvReader) readerObj;
+//			fields = reader.getFields();
+//			separator = reader.getSeparator();
+//			skiplines = reader.getSkipLines().toString();
+//			quoteChar = reader.getQuote();
+//			encoding = reader.getEncoding();
+//		}
 		if (readerObj instanceof CSV12Reader) {
 			CSV12Reader reader = (CSV12Reader) readerObj;
 			fields = reader.getFields();
@@ -101,7 +100,7 @@ public class CSVDataParser {
 		int index = -1;
 		for (Iterator<?> iterator2 = readers.iterator(); iterator2.hasNext();) {
 			AbstractReader abstractReader = (AbstractReader) iterator2.next();
-			if (abstractReader instanceof CsvReader || abstractReader instanceof CSV12Reader) {
+			if ( abstractReader instanceof CSV12Reader) {
 				count++;
 				if (index == -1) {
 					index = readers.indexOf(abstractReader);

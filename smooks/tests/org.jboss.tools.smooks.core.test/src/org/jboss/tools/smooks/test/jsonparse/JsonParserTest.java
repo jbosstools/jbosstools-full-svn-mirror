@@ -11,7 +11,7 @@ import org.dom4j.DocumentException;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.uitls.JsonInputDataParser;
-import org.jboss.tools.smooks.model.json.JsonReader;
+import org.jboss.tools.smooks.model.json12.Json12Reader;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
 import org.jboss.tools.smooks.test.model11.BaseTestCase;
@@ -29,12 +29,12 @@ public class JsonParserTest extends BaseTestCase {
 
 		JsonInputDataParser parser = new JsonInputDataParser();
 
-		JsonReader reader = null;
+		Json12Reader reader = null;
 		List<?> list = resourceList.getAbstractReader();
 		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 			Object object = (Object) iterator.next();
-			if (object instanceof JsonReader) {
-				reader = (JsonReader) object;
+			if (object instanceof Json12Reader) {
+				reader = (Json12Reader) object;
 			}
 		}
 		try {

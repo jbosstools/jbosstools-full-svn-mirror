@@ -14,7 +14,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.jboss.tools.smooks.model.csv.CsvReader;
+import org.jboss.tools.smooks.model.csv12.CSV12Reader;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
@@ -38,7 +38,7 @@ public class Csv2XMLConfigFileTestCase extends AbstractSmooks11ModelTestCase {
 		List<AbstractReader> readerList = resourceConfig.getAbstractReader();
 		Assert.assertEquals(readerList.size(), 1);
 		
-		CsvReader reader = (CsvReader) readerList.get(0);
+		CSV12Reader reader = (CSV12Reader) readerList.get(0);
 		
 		Assert.assertEquals("firstname,lastname,gender,age,country", reader.getFields());
 	}

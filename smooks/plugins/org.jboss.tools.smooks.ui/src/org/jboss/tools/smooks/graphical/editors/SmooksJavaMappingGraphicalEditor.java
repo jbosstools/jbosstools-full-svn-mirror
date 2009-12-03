@@ -26,10 +26,6 @@ import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.autolayout.JavaMappingAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaMappingActionCreator;
-import org.jboss.tools.smooks.model.javabean.BindingsType;
-import org.jboss.tools.smooks.model.javabean.ExpressionType;
-import org.jboss.tools.smooks.model.javabean.ValueType;
-import org.jboss.tools.smooks.model.javabean.WiringType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 
 /**
@@ -160,35 +156,35 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 				}
 				return p;
 			}
-			if (obj instanceof BindingsType) {
-				String p = ((BindingsType) obj).getBeanId();
-				if (p == null) {
-					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
-				}
-				return p;
-			}
-
-			if (obj instanceof ValueType) {
-				String p = ((ValueType) obj).getProperty();
-				if (p == null) {
-					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
-				}
-				return p;
-			}
-			if (obj instanceof WiringType) {
-				String p = ((WiringType) obj).getProperty();
-				if (p == null) {
-					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
-				}
-				return p;
-			}
-			if (obj instanceof ExpressionType) {
-				String p = ((ExpressionType) obj).getProperty();
-				if (p == null) {
-					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
-				}
-				return p;
-			}
+//			if (obj instanceof BindingsType) {
+//				String p = ((BindingsType) obj).getBeanId();
+//				if (p == null) {
+//					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
+//				}
+//				return p;
+//			}
+//
+//			if (obj instanceof ValueType) {
+//				String p = ((ValueType) obj).getProperty();
+//				if (p == null) {
+//					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
+//				}
+//				return p;
+//			}
+//			if (obj instanceof WiringType) {
+//				String p = ((WiringType) obj).getProperty();
+//				if (p == null) {
+//					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
+//				}
+//				return p;
+//			}
+//			if (obj instanceof ExpressionType) {
+//				String p = ((ExpressionType) obj).getProperty();
+//				if (p == null) {
+//					p = Messages.SmooksJavaMappingGraphicalEditor_NullLabel;
+//				}
+//				return p;
+//			}
 
 			if (obj instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
 				String p = ((org.jboss.tools.smooks.model.javabean12.ValueType) obj).getProperty();
@@ -231,7 +227,7 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 						.getAdapterFactory());
 				ILabelProvider labelProvider = createLabelProvider(editingDomain.getAdapterFactory());
 
-				if (model instanceof BindingsType || model instanceof BeanType) {
+				if (model instanceof BeanType) {
 					graphModel = new JavaBeanGraphModel(model, contentProvider, labelProvider, provider,
 							SmooksJavaMappingGraphicalEditor.this);
 					((JavaBeanGraphModel) graphModel).setHeaderVisable(true);
