@@ -78,36 +78,6 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 							resourceListType, new ArrayList<String>());
 					String figureID = null;
 					int index = 0;
-					// for (Iterator<?> iterator = models.iterator();
-					// iterator.hasNext();) {
-					// Object object = (Object) iterator.next();
-					// if (object instanceof EObject) {
-					// figureID =
-					// SmooksGraphUtil.generateFigureIDViaModel((EObject)
-					// object);
-					// if (figureID != null && editorPart instanceof
-					// SmooksGraphicalEditorPart) {
-					// SmooksGraphicsExtType ext = ((SmooksGraphicalEditorPart)
-					// editorPart)
-					// .getSmooksGraphicsExtType();
-					// GraphType graph = ext.getGraph();
-					// if (graph != null) {
-					// FigureType figureType =
-					// SmooksGraphUtil.findFigureType(graph, figureID);
-					// if (figureType == null) {
-					// figureType = GraphFactory.eINSTANCE.createFigureType();
-					// graph.getFigure().add(figureType);
-					// figureType.setId(figureID);
-					// }
-					// String x = String.valueOf(this.x + index);
-					// String y = String.valueOf(this.y + index);
-					// figureType.setX(x);
-					// figureType.setY(y);
-					// index += 20;
-					// }
-					// }
-					// }
-					// }
 
 					List<Object> creationModels = new ArrayList<Object>();
 
@@ -143,7 +113,7 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 		if (parent instanceof BeanType) {
 			((BeanType) parent).setBeanId(beanID);
 			((BeanType) parent).setClass(parentBeanModel.getBeanClassString());
-			if (properties != null) {
+			if (properties != null && properties.length > 0) {
 				for (int i = 0; i < properties.length; i++) {
 					Object pro = properties[i];
 					if (pro instanceof JavaBeanModel && belongsToMe(parentBeanModel, (JavaBeanModel) pro)) {
@@ -167,6 +137,9 @@ public class CreateJavaBeanModelCommand extends GEFAdapterCommand {
 						}
 					}
 				}
+			} else if(parentBeanModel.isList()) {
+				WiringType value = Javabean12Factory.eINSTANCE.createWiringType();
+				((BeanType) parent).getWiring().add(value);				
 			}
 		}
 //		if (parent instanceof BindingsType) {
