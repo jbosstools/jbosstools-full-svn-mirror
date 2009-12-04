@@ -11,11 +11,9 @@
 package org.jboss.tools.smooks.graphical.wizard.freemarker;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.wizard.Wizard;
-import org.jboss.tools.smooks.graphical.wizard.freemarker.FreemarkerCSVCreationWizardPage.FieldText;
 
 /**
  * @author Dart
@@ -28,6 +26,7 @@ public class FreemarkerCSVTemplateCreationWizard extends Wizard {
 	private String quote;
 
 	private List<String> fields = new ArrayList<String>();
+	private String fieldsString;
 
 	public FreemarkerCSVTemplateCreationWizard() {
 		super();
@@ -51,9 +50,9 @@ public class FreemarkerCSVTemplateCreationWizard extends Wizard {
 	/**
 	 * @return the fields
 	 */
-	public List<String> getFields() {
-		return fields;
-	}
+//	public List<String> getFields() {
+//		return fields;
+//	}
 
 	/*
 	 * (non-Javadoc)
@@ -68,6 +67,12 @@ public class FreemarkerCSVTemplateCreationWizard extends Wizard {
 		this.addPage(page);
 		super.addPages();
 	}
+	
+	
+
+	public String getFieldsString() {
+		return fieldsString;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -79,11 +84,12 @@ public class FreemarkerCSVTemplateCreationWizard extends Wizard {
 		if (page != null) {
 			seprator = page.getSeperatorText().getText();
 			quote = page.getQuoteText().getText();
-			List<FieldText> fieldList = page.getFieldsList();
-			for (Iterator<?> iterator = fieldList.iterator(); iterator.hasNext();) {
-				FieldText fieldText = (FieldText) iterator.next();
-				fields.add(fieldText.getText());
-			}
+			fieldsString = page.getFieldsText().getText();
+//			List<FieldText> fieldList = page.getFieldsList();
+//			for (Iterator<?> iterator = fieldList.iterator(); iterator.hasNext();) {
+//				FieldText fieldText = (FieldText) iterator.next();
+//				fields.add(fieldText.getText());
+//			}
 			return true;
 		}
 		return true;

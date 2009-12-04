@@ -39,7 +39,7 @@ import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
  */
 public class SmooksConfigurationFileNewWizard extends Wizard implements INewWizard {
 	private SmooksFileContainerSelectionPage containerSelectionPage;
-	private SmooksVersionSelectionPage versionSelectionPage;
+//	private SmooksVersionSelectionPage versionSelectionPage;
 	private ISelection selection;
 
 	/**
@@ -60,8 +60,8 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 				(IStructuredSelection) selection);
 		addPage(containerSelectionPage);
 
-		versionSelectionPage = new SmooksVersionSelectionPage(Messages.SmooksConfigurationFileNewWizard_VersionPageName);
-		addPage(versionSelectionPage);
+//		versionSelectionPage = new SmooksVersionSelectionPage(Messages.SmooksConfigurationFileNewWizard_VersionPageName);
+//		addPage(versionSelectionPage);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 	public boolean performFinish() {
 		final IPath containerPath = containerSelectionPage.getContainerFullPath();
 		final String fileName = containerSelectionPage.getFileName();
-		final String version = versionSelectionPage.getVersion();
+		final String version = SmooksConstants.VERSION_1_2;
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException {
 				try {
@@ -193,7 +193,6 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 					+ "		<params>\n"//$NON-NLS-1$
 					+ "			<param name=\"stream.filter.type\">SAX</param>\n"//$NON-NLS-1$
 					+ "		</params>\n"//$NON-NLS-1$
-//					+ "		<graph:smooks-graphics-ext platformVersion = \"1.2\"/>\n"//$NON-NLS-1$
 					+ "</smooks-resource-list>"; //$NON-NLS-1$
 		}
 		return new ByteArrayInputStream(contents.getBytes());

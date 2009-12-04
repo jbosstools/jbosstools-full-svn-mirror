@@ -170,7 +170,7 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 			}
 			List<TreeNodeConnection> collectionConnections = csvRecordGraphModel.getTargetConnections();
 			if (collectionConnections.isEmpty()) {
-				csvRecordGraphModel.addMessage("Must be linked with source node");
+				csvRecordGraphModel.addMessage("Must be linked with collection java class node");
 				csvRecordGraphModel.setSeverity(AbstractSmooksGraphicalModel.WARNING);
 				List<AbstractSmooksGraphicalModel> csvFields = csvRecordGraphModel.getChildren();
 				for (Iterator<?> iterator2 = csvFields.iterator(); iterator2.hasNext();) {
