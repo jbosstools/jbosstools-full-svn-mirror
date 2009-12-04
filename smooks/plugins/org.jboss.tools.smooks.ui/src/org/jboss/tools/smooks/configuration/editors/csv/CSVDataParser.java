@@ -135,15 +135,15 @@ public class CSVDataParser {
 		// SmooksResourceConfiguration readerConfig = new
 		// SmooksResourceConfiguration("org.xml.sax.driver",
 		// CSVReader.class.getName());
-		if ((quoteChar == null) || (encoding == null) || (fields == null)) {
-			return null;
-		}
-		if (quoteChar == null)
-			quoteChar = "\""; //$NON-NLS-1$
-		if (skiplines == null)
-			skiplines = "0"; //$NON-NLS-1$
-		if (encoding == null)
-			encoding = "UTF-8"; //$NON-NLS-1$
+//		if ((quoteChar == null) || (encoding == null) || (fields == null)) {
+//			return null;
+//		}
+//		if (quoteChar == null)
+//			quoteChar = "\""; //$NON-NLS-1$
+//		if (skiplines == null)
+//			skiplines = "0"; //$NON-NLS-1$
+//		if (encoding == null)
+//			encoding = "UTF-8"; //$NON-NLS-1$
 
 		CSVReaderConfigurator readerConfigurator = new CSVReaderConfigurator(fields);
 		if (separator != null && separator.length() >= 1) {
