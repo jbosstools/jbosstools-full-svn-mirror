@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ODE Deploy Descriptor EMF Model
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.bpel.apache.ode.deploy.model; singleton:=true
 Bundle-Version: 0.4.0.qualifier
-Bundle-Vendor: Eclipse.org
+Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.bpel.apache.ode.deploy.model.dd,

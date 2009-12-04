@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: BPEL Editor (Incubation)
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.bpel.ui; singleton:=true 
-Bundle-Version: 0.5.0
+Bundle-Version: 0.5.0.qualifier
 Bundle-Activator: org.eclipse.bpel.ui.BPELUIPlugin
-Bundle-Vendor: Eclipse.org
+Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)",
