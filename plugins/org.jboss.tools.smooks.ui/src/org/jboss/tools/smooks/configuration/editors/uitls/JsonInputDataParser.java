@@ -201,11 +201,7 @@ public class JsonInputDataParser {
 
 		// Filter the message through Smooks and capture the result as a DOM in
 		// the domResult instance...
-		try {
-			smooks.filterSource(new StreamSource(inputStream), result);
-		} catch (Exception t) {
-			throw new RuntimeException(t);
-		}
+		smooks.filterSource(new StreamSource(inputStream), result);
 
 		XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();
 		ByteArrayInputStream byteinputStream = new ByteArrayInputStream(result.getResult().getBytes());
