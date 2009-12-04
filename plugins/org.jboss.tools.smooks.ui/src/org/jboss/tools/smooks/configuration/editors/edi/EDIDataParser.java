@@ -170,8 +170,9 @@ public class EDIDataParser {
 		// SmooksResourceConfiguration("org.xml.sax.driver",
 		// SmooksEDIReader.class.getName());
 
-		if (mappingModel == null)
-			return null;
+		if (mappingModel == null){
+			throw new RuntimeException("EDI Mapping file can't be empty");
+		}
 		// If the MappingModel is absolute file path :
 		File f = new File(mappingModel);
 		String modelPath = mappingModel;
@@ -211,7 +212,7 @@ public class EDIDataParser {
 			ediFileEncoding = "UTF-8"; //$NON-NLS-1$
 		}
 		// readerConfig.
-		// readerConfig.setParameter("encoding", ediFileEncoding);
+//		 readerConfig.setParameter("encoding", ediFileEncoding);
 
 		smooks.setReaderConfig(readerConfig);
 		// SmooksUtil.registerResource(readerConfig, smooks);

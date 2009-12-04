@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -56,6 +57,7 @@ import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.w3c.dom.Document;
@@ -74,6 +76,25 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 	public SmooksFreemarkerTemplateGraphicalEditor(ISmooksModelProvider provider) {
 		super(provider);
 		// TODO Auto-generated constructor stub
+	}
+
+	protected void autoLayoutWhenCommandChange(Command command) {
+		Collection<?> affectedObjects = command.getAffectedObjects();
+		for (Iterator<?> iterator2 = affectedObjects.iterator(); iterator2.hasNext();) {
+			Object object = (Object) iterator2.next();
+			if (object instanceof ParamType) {
+				Object parent = ((ParamType) object).eContainer();
+				if (SmooksModelUtils.KEY_CSV_FIELDS.equals(((ParamType) object).getName())) {
+					if (parent instanceof Freemarker) {
+						TaskType task = this.getTaskType();
+						if (task != null && task.inTheTask(parent)) {
+							autoLayout(true);
+							break;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/*

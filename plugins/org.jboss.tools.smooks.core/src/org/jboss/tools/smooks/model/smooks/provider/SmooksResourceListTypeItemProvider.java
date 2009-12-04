@@ -26,16 +26,12 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.jboss.tools.smooks.model.calc.CalcFactory;
 import org.jboss.tools.smooks.model.calc.CalcPackage;
 import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
-import org.jboss.tools.smooks.model.csv.CsvFactory;
-import org.jboss.tools.smooks.model.csv.CsvPackage;
 import org.jboss.tools.smooks.model.csv12.Csv12Factory;
 import org.jboss.tools.smooks.model.csv12.Csv12Package;
 import org.jboss.tools.smooks.model.datasource.DatasourceFactory;
 import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
 import org.jboss.tools.smooks.model.dbrouting.DbroutingFactory;
 import org.jboss.tools.smooks.model.dbrouting.DbroutingPackage;
-import org.jboss.tools.smooks.model.edi.EdiFactory;
-import org.jboss.tools.smooks.model.edi.EdiPackage;
 import org.jboss.tools.smooks.model.edi12.Edi12Factory;
 import org.jboss.tools.smooks.model.edi12.Edi12Package;
 import org.jboss.tools.smooks.model.esbrouting.EsbroutingFactory;
@@ -48,16 +44,12 @@ import org.jboss.tools.smooks.model.groovy.GroovyFactory;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.iorouting.IoroutingFactory;
 import org.jboss.tools.smooks.model.iorouting.IoroutingPackage;
-import org.jboss.tools.smooks.model.javabean.JavabeanFactory;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Factory;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.jmsrouting.JmsroutingFactory;
 import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Factory;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
-import org.jboss.tools.smooks.model.json.JsonFactory;
-import org.jboss.tools.smooks.model.json.JsonPackage;
 import org.jboss.tools.smooks.model.json12.Json12Factory;
 import org.jboss.tools.smooks.model.json12.Json12Package;
 import org.jboss.tools.smooks.model.persistence12.Persistence12Factory;
@@ -302,18 +294,23 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 								.createResourceConfigType())));
 		/***********************************************/
 		// for CSV
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil.createEntry(
-						CsvPackage.Literals.CSV_DOCUMENT_ROOT__READER, CsvFactory.eINSTANCE.createCsvReader())));
-		// for EDI
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil.createEntry(
-						EdiPackage.Literals.EDI_DOCUMENT_ROOT__READER, EdiFactory.eINSTANCE.createEDIReader())));
-
-		// for JSON
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, FeatureMapUtil.createEntry(
-						JsonPackage.Literals.JSON_DOCUMENT_ROOT__READER, JsonFactory.eINSTANCE.createJsonReader())));
+		// newChildDescriptors.add(createChildParameter(
+		// SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP,
+		// FeatureMapUtil.createEntry(
+		// CsvPackage.Literals.CSV_DOCUMENT_ROOT__READER,
+		// CsvFactory.eINSTANCE.createCsvReader())));
+		// // for EDI
+		// newChildDescriptors.add(createChildParameter(
+		// SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP,
+		// FeatureMapUtil.createEntry(
+		// EdiPackage.Literals.EDI_DOCUMENT_ROOT__READER,
+		// EdiFactory.eINSTANCE.createEDIReader())));
+		//
+		// // for JSON
+		// newChildDescriptors.add(createChildParameter(
+		// SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP,
+		// FeatureMapUtil.createEntry(
+		// JsonPackage.Literals.JSON_DOCUMENT_ROOT__READER, JsonFactory.eINSTANCE.createJsonReader())));
 
 		// for calc
 		newChildDescriptors.add(createChildParameter(
@@ -340,10 +337,10 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 								DatasourceFactory.eINSTANCE.createDataSourceJndi())));
 
 		// for javabean
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(JavabeanPackage.Literals.DOCUMENT_ROOT__BINDINGS, JavabeanFactory.eINSTANCE
-								.createBindingsType())));
+//		newChildDescriptors.add(createChildParameter(
+//				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+//						.createEntry(JavabeanPackage.Literals.DOCUMENT_ROOT__BINDINGS, JavabeanFactory.eINSTANCE
+//								.createBindingsType())));
 		// for xsl
 		newChildDescriptors.add(createChildParameter(
 				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
