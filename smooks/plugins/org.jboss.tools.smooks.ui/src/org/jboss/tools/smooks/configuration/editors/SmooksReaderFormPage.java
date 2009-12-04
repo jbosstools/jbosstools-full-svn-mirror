@@ -115,6 +115,7 @@ import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
+import org.milyn.SmooksException;
 
 /**
  * @author Dart
@@ -1193,8 +1194,11 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				Throwable t = SelectorCreationDialog.getCurrentException();
 				if (t != null) {
 					if (this.getManagedForm() != null) {
+						if(t instanceof SmooksException && t.getCause() != null) {
+							t = t.getCause();
+						}
 						this.getManagedForm().getMessageManager().addMessage("input error",
-								"Input Error : " + t.getMessage(), null, IMessageProvider.ERROR);
+								"Check Reader Configuration.  Error creating Input Model from Input Data.\nError: " + t.getMessage(), null, IMessageProvider.ERROR);
 					}
 				}
 			}
