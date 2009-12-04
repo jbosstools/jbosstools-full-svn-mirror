@@ -18,6 +18,11 @@ maven-jdocbook-plugin 2.1.0-200803311251UTC-MPJDOCBOOK-8
    <id>jboss</id>
    <repositories>
       <repository>
+         <id>java.net</id>
+         <url>http://download.java.net/maven/1</url>
+         <layout>legacy</layout>
+      </repository>
+      <repository>
          <releases>
             <enabled>true</enabled>
          </releases>
