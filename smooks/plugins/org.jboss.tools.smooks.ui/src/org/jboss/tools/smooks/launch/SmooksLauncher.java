@@ -70,6 +70,7 @@ public class SmooksLauncher {
 			try {
 				Set<ProcessNodeType> processNodeTypes = SmooksLauncher.fromNodeTypeString(args[3]);
 				JavaResult javaResult = new JavaResult();
+				boolean nothingDisplayed = true;
 				
 				if(processNodeTypes.contains(ProcessNodeType.TEMPLATING)) {
 					StringResult stringResult = new StringResult();
@@ -79,6 +80,7 @@ public class SmooksLauncher {
 					System.out.println("    |--");
 					System.out.println(indent(stringResult.toString()));
 					System.out.println("    |--\n");
+					nothingDisplayed = false;
 				} else {
 					smooks.filterSource(new StreamSource(new FileInputStream(input)), javaResult);
 				}
@@ -93,8 +95,14 @@ public class SmooksLauncher {
 						System.out.println(indent((new XStream()).toXML(binding.getValue())));
 						System.out.println("    |--");
 					}
+					nothingDisplayed = false;
 				}
 				
+				if(nothingDisplayed) {
+					System.out.println("Nothing to Display:");
+					System.out.println("    - No Java Mappings.");
+					System.out.println("    - No Templates Applied.");
+				}
 			} finally {
 				smooks.close();
 			}
