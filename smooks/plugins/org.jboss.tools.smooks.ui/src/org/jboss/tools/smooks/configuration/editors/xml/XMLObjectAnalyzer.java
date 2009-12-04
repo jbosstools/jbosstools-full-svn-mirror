@@ -12,6 +12,7 @@ package org.jboss.tools.smooks.configuration.editors.xml;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
@@ -30,7 +31,12 @@ public class XMLObjectAnalyzer {
 	public TagList analyze(String xmlFilePath,String[] ignoreNodeNames)
 			throws FileNotFoundException, DocumentException {
 		FileInputStream stream = new FileInputStream(xmlFilePath);
-		return this.analyze(stream,ignoreNodeNames);
+		TagList list =  this.analyze(stream,ignoreNodeNames);
+		try {
+			stream.close();
+		} catch (IOException e) {
+		}
+		return list;
 	}
 
 	public TagList analyze(InputStream stream , String[] ignoreNodeNames) throws DocumentException {

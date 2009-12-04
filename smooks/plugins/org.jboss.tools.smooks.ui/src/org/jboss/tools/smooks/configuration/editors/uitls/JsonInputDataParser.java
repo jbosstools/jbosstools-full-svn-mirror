@@ -64,24 +64,26 @@ public class JsonInputDataParser {
 		Map<String, String> keyMap = new HashMap<String, String>();
 		if (readerObj == null)
 			return null;
-//		if (readerObj instanceof JsonReader) {
-//			JsonReader reader = (JsonReader) readerObj;
-//			rootName = reader.getRootName();
-//			arrayElementName = reader.getArrayElementName();
-//			keyPrefixOnNumeric = reader.getKeyPrefixOnNumeric();
-//			keyWhitspaceReplacement = reader.getKeyWhitspaceReplacement();
-//			illegalElementNameCharReplacement = reader.getIllegalElementNameCharReplacement();
-//			nullValueReplacement = reader.getNullValueReplacement();
-//			encoding = reader.getEncoding();
-//			KeyMap km = reader.getKeyMap();
-//			if (km != null) {
-//				List<Key> keyList = km.getKey();
-//				for (Iterator<?> iterator = keyList.iterator(); iterator.hasNext();) {
-//					Key key = (Key) iterator.next();
-//					keyMap.put(key.getFrom(), key.getTo());
-//				}
-//			}
-//		}
+		// if (readerObj instanceof JsonReader) {
+		// JsonReader reader = (JsonReader) readerObj;
+		// rootName = reader.getRootName();
+		// arrayElementName = reader.getArrayElementName();
+		// keyPrefixOnNumeric = reader.getKeyPrefixOnNumeric();
+		// keyWhitspaceReplacement = reader.getKeyWhitspaceReplacement();
+		// illegalElementNameCharReplacement =
+		// reader.getIllegalElementNameCharReplacement();
+		// nullValueReplacement = reader.getNullValueReplacement();
+		// encoding = reader.getEncoding();
+		// KeyMap km = reader.getKeyMap();
+		// if (km != null) {
+		// List<Key> keyList = km.getKey();
+		// for (Iterator<?> iterator = keyList.iterator(); iterator.hasNext();)
+		// {
+		// Key key = (Key) iterator.next();
+		// keyMap.put(key.getFrom(), key.getTo());
+		// }
+		// }
+		// }
 
 		if (readerObj instanceof Json12Reader) {
 			Json12Reader reader = (Json12Reader) readerObj;
@@ -199,7 +201,11 @@ public class JsonInputDataParser {
 
 		// Filter the message through Smooks and capture the result as a DOM in
 		// the domResult instance...
-		smooks.filterSource(new StreamSource(inputStream), result);
+		try {
+			smooks.filterSource(new StreamSource(inputStream), result);
+		} catch (Exception t) {
+			throw new RuntimeException(t);
+		}
 
 		XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();
 		ByteArrayInputStream byteinputStream = new ByteArrayInputStream(result.getResult().getBytes());

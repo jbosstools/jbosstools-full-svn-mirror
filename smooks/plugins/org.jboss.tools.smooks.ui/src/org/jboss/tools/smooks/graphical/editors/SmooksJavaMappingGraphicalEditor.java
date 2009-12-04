@@ -41,6 +41,36 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#needToLayoutWhenAddModel(java.lang.Object)
+	 */
+	@Override
+	protected boolean needToLayoutWhenAddModel(Object model) {
+		model = AdapterFactoryEditingDomain.unwrap(model);
+		if(model instanceof BeanType){
+			return true;
+		}
+		return super.needToLayoutWhenAddModel(model);
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#needToLayoutWhenRemoveModel(java.lang.Object)
+	 */
+	@Override
+	protected boolean needToLayoutWhenRemoveModel(Object model) {
+		model = AdapterFactoryEditingDomain.unwrap(model);
+		if(model instanceof BeanType){
+			return true;
+		}
+		return super.needToLayoutWhenRemoveModel(model);
+	}
+
+
+
 	/*
 	 * (non-Javadoc)
 	 * 

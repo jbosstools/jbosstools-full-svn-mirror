@@ -75,10 +75,19 @@ public class SelectorCreationDialog extends Dialog {
 	private SelectorAttributes selectorAttributes = null;
 	private IEditorPart editorPart = null;
 
+	private static Throwable currentException = null;
+
 	private FormToolkit toolkit;
 
 	public SelectorCreationDialog(IShellProvider parentShell) {
 		super(parentShell);
+	}
+
+	/**
+	 * @return the currentException
+	 */
+	public static Throwable getCurrentException() {
+		return currentException;
 	}
 
 	public SelectorCreationDialog(Shell parentShell, IEditorPart editorPart) {
@@ -113,7 +122,8 @@ public class SelectorCreationDialog extends Dialog {
 
 		toolkit = new FormToolkit(getShell().getDisplay());
 
-		Hyperlink link = toolkit.createHyperlink(composite, Messages.SelectorCreationDialog_AddInputLinkLabel, SWT.NONE);// new
+		Hyperlink link = toolkit
+				.createHyperlink(composite, Messages.SelectorCreationDialog_AddInputLinkLabel, SWT.NONE);// new
 		// Hyperlink(composite,SWT.NONE);
 		link.setBackground(composite.getBackground());
 		link.addHyperlinkListener(new IHyperlinkListener() {
@@ -241,6 +251,7 @@ public class SelectorCreationDialog extends Dialog {
 	}
 
 	public static List<Object> generateInputData(SmooksResourceListType smooksResourceListType) {
+		currentException = null;
 		List<Object> list = new ArrayList<Object>();
 		if (smooksResourceListType != null) {
 			IJavaProject project = SmooksUIUtils.getJavaProject(smooksResourceListType);
@@ -263,7 +274,7 @@ public class SelectorCreationDialog extends Dialog {
 									list.addAll(((TagList) tl).getChildren());
 								}
 							} catch (Throwable t) {
-								t.printStackTrace();
+								currentException = t;
 							}
 						}
 						if (SmooksModelUtils.INPUT_TYPE_CSV.equals(type)
@@ -275,7 +286,7 @@ public class SelectorCreationDialog extends Dialog {
 									list.addAll(((TagList) tl).getChildren());
 								}
 							} catch (Throwable t) {
-								t.printStackTrace();
+								currentException = t;
 							}
 						}
 						if (SmooksModelUtils.INPUT_TYPE_JSON_1_1.equals(type)
@@ -290,8 +301,7 @@ public class SelectorCreationDialog extends Dialog {
 									list.add(tagList);
 								}
 							} catch (Throwable tt) {
-								// ignore
-								// SmooksConfigurationActivator.getDefault().log(tt);
+								currentException = tt;
 							}
 						}
 						if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(type)) {
@@ -302,7 +312,7 @@ public class SelectorCreationDialog extends Dialog {
 									list.add(model);
 								}
 							} catch (Throwable t) {
-								// ignore
+								currentException = t;
 							}
 						}
 						if (SmooksModelUtils.INPUT_TYPE_XSD.equals(type)) {
@@ -323,7 +333,7 @@ public class SelectorCreationDialog extends Dialog {
 									list.add(new XSDObjectAnalyzer().loadElement(path, rootElementName));
 								}
 							} catch (Throwable tt) {
-								// ingore
+								currentException = tt;
 							}
 						}
 						if (SmooksModelUtils.INPUT_TYPE_XML.equals(type)) {
@@ -343,12 +353,13 @@ public class SelectorCreationDialog extends Dialog {
 									}
 								}
 							} catch (Throwable e) {
-								e.printStackTrace();
+								currentException = e;
 							}
 						}
 					}
 				}
 			} catch (Exception e) {
+				currentException = e;
 				// SmooksConfigurationActivator.getDefault().log(e);
 			}
 		}

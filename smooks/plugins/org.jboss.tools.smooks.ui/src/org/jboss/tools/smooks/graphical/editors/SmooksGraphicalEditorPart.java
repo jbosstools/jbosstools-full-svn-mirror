@@ -26,6 +26,7 @@ import org.eclipse.draw2d.graph.DirectedGraph;
 import org.eclipse.draw2d.graph.Edge;
 import org.eclipse.draw2d.graph.Node;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.command.CommandWrapper;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -109,9 +110,9 @@ import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLTemplateGraphicalMo
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
+import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.ParamType;
-import org.jboss.tools.smooks.model.smooks.ParamsType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.validation10.RuleType;
 
@@ -121,6 +122,8 @@ import org.jboss.tools.smooks.model.validation10.RuleType;
  */
 public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelectionChangedListener,
 		ISourceSynchronizeListener, IGraphicalEditorPart, ITaskNodeProvider, ISmooksModelValidateListener {
+
+	private CommandStackListener emfCommandStackListener = null;
 
 	public static final int EXECUTE_COMMAND = 0;
 
@@ -182,48 +185,12 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		});
 		this.smooksModelProvider = provider;
 		this.setEditDomain(editDomain);
+
+		this.createEMFCommandStackListener();
 	}
 
-	/**
-	 * @return the taskType
-	 */
-	public TaskType getTaskType() {
-		return taskType;
-	}
-
-	/**
-	 * @param taskType
-	 *            the taskType to set
-	 */
-	public void setTaskType(TaskType taskType) {
-		this.taskType = taskType;
-	}
-
-	@Override
-	public void createPartControl(Composite parent) {
-
-		IEditorSite site = getEditorSite();
-		if (site instanceof SmooksTaskDetailsEditorSite) {
-			FormPage page = ((SmooksTaskDetailsEditorSite) site).getParentEditor();
-			FormToolkit tool = page.getManagedForm().getToolkit();
-			Composite mainComposite = tool.createComposite(parent);
-			mainComposite.setBackground(tool.getColors().getBorderColor());
-			FillLayout fillLayout = new FillLayout();
-			fillLayout.marginHeight = 1;
-			fillLayout.marginWidth = 1;
-			mainComposite.setLayout(fillLayout);
-			super.createPartControl(mainComposite);
-			return;
-		}
-		super.createPartControl(parent);
-	}
-
-	public GraphicalViewer getGraphicalViewer() {
-		return super.getGraphicalViewer();
-	}
-
-	private void handleCommandStack(org.eclipse.emf.common.command.CommandStack commandStack) {
-		commandStack.addCommandStackListener(new org.eclipse.emf.common.command.CommandStackListener() {
+	private void createEMFCommandStackListener() {
+		emfCommandStackListener = new org.eclipse.emf.common.command.CommandStackListener() {
 			public void commandStackChanged(EventObject event) {
 				final Command mostRecentCommand = ((org.eclipse.emf.common.command.CommandStack) event.getSource())
 						.getMostRecentCommand();
@@ -272,7 +239,117 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 
 				});
 			}
-		});
+		};
+	}
+
+	/**
+	 * @return the taskType
+	 */
+	public TaskType getTaskType() {
+		return taskType;
+	}
+
+	/**
+	 * @param taskType
+	 *            the taskType to set
+	 */
+	public void setTaskType(TaskType taskType) {
+		this.taskType = taskType;
+	}
+
+	@Override
+	public void createPartControl(Composite parent) {
+
+		IEditorSite site = getEditorSite();
+		if (site instanceof SmooksTaskDetailsEditorSite) {
+			FormPage page = ((SmooksTaskDetailsEditorSite) site).getParentEditor();
+			FormToolkit tool = page.getManagedForm().getToolkit();
+			Composite mainComposite = tool.createComposite(parent);
+			mainComposite.setBackground(tool.getColors().getBorderColor());
+			FillLayout fillLayout = new FillLayout();
+			fillLayout.marginHeight = 1;
+			fillLayout.marginWidth = 1;
+			mainComposite.setLayout(fillLayout);
+			super.createPartControl(mainComposite);
+			return;
+		}
+		super.createPartControl(parent);
+	}
+
+	public GraphicalViewer getGraphicalViewer() {
+		return super.getGraphicalViewer();
+	}
+
+	private void handleCommandStack(org.eclipse.emf.common.command.CommandStack commandStack) {
+		if (emfCommandStackListener != null) {
+			commandStack.addCommandStackListener(emfCommandStackListener);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.gef.ui.parts.GraphicalEditor#dispose()
+	 */
+	@Override
+	public void dispose() {
+		if (smooksModelProvider != null) {
+			smooksModelProvider.getEditingDomain().getCommandStack()
+					.removeCommandStackListener(emfCommandStackListener);
+		}
+		super.dispose();
+	}
+
+	protected void autoLayoutWhenCommandChange(Command command) {
+		Collection<?> affectedObjects = command.getAffectedObjects();
+		boolean refreshInputModel = false;
+		for (Iterator<?> iterator2 = affectedObjects.iterator(); iterator2.hasNext();) {
+			Object object = (Object) iterator2.next();
+			if (command instanceof AddCommand) {
+				if (needToLayoutWhenAddModel(object)) {
+					refreshInputModel = true;
+					break;
+				}
+			}
+
+			Collection<?> deletedObjs = null;
+			// if(command instanceof AddCommand){
+			// deletedObjs = ((AddCommand)command).getCollection();
+			// }
+			if (command instanceof DeleteCommand) {
+				deletedObjs = ((DeleteCommand) command).getCollection();
+			}
+			if (command instanceof RemoveCommand) {
+				deletedObjs = ((RemoveCommand) command).getCollection();
+			}
+			if (deletedObjs != null) {
+				for (Iterator<?> iterator = deletedObjs.iterator(); iterator.hasNext();) {
+					Object object2 = (Object) iterator.next();
+					if (needToLayoutWhenRemoveModel(object2)) {
+						refreshInputModel = true;
+						break;
+					}
+					// if (needToLayoutWhenAddModel(object2)) {
+					// refreshInputModel = true;
+					// break;
+					// }
+				}
+			}
+			if (refreshInputModel)
+				break;
+		}
+
+		if (refreshInputModel) {
+			autoLayout(true);
+		}
+	}
+
+	protected boolean needToLayoutWhenAddModel(Object model) {
+		return false;
+	}
+
+	protected boolean needToLayoutWhenRemoveModel(Object model) {
+		return false;
 	}
 
 	protected void handleInputParamChange(Command command) {
@@ -283,25 +360,32 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 			if (object instanceof ParamType) {
 				if (SmooksUIUtils.isInputParamType((ParamType) object)) {
 					refreshInputModel = true;
+					break;
 				}
 			}
-			if (object instanceof ParamsType) {
-				Collection<?> deletedObjs = null;
-				if (command instanceof DeleteCommand) {
-					deletedObjs = ((DeleteCommand) command).getCollection();
-				}
-				if (command instanceof RemoveCommand) {
-					deletedObjs = ((RemoveCommand) command).getCollection();
-				}
-				if (deletedObjs != null) {
-					for (Iterator<?> iterator = deletedObjs.iterator(); iterator.hasNext();) {
-						Object object2 = (Object) iterator.next();
-						if (object2 instanceof ParamType) {
-							if (SmooksUIUtils.isInputParamType((ParamType) object2)) {
-								refreshInputModel = true;
-								break;
-							}
+			if (object instanceof AbstractReader) {
+				refreshInputModel = true;
+				break;
+			}
+			Collection<?> deletedObjs = null;
+			if (command instanceof DeleteCommand) {
+				deletedObjs = ((DeleteCommand) command).getCollection();
+			}
+			if (command instanceof RemoveCommand) {
+				deletedObjs = ((RemoveCommand) command).getCollection();
+			}
+			if (deletedObjs != null) {
+				for (Iterator<?> iterator = deletedObjs.iterator(); iterator.hasNext();) {
+					Object object2 = (Object) iterator.next();
+					if (object2 instanceof ParamType) {
+						if (SmooksUIUtils.isInputParamType((ParamType) object2)) {
+							refreshInputModel = true;
+							break;
 						}
+					}
+					if (object2 instanceof AbstractReader) {
+						refreshInputModel = true;
+						break;
 					}
 				}
 			}
@@ -641,6 +725,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 				continue;
 			}
 		}
+		autoLayoutWhenCommandChange(command);
 	}
 
 	private AbstractSmooksGraphicalModel findGraphicalModel(Object object) {
@@ -1316,6 +1401,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 				createConnection(inputGraphModel, connections);
 				expandConnectedModels(connections);
 			}
+			autoLayout();
 		}
 	}
 
@@ -1369,7 +1455,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		if (datas.size() == 2) {
 			Object parentObj = datas.get(0);
 
-			if (parentObj instanceof BeanType ) {
+			if (parentObj instanceof BeanType) {
 				Object obj = datas.get(1);
 				if (obj == Javabean12Package.Literals.BEAN_TYPE__BEAN_ID) {
 					String message = diagnostic.getMessage();
