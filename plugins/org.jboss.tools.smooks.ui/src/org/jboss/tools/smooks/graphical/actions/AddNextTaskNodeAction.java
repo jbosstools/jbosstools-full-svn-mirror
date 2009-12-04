@@ -10,9 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.actions;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -65,15 +62,16 @@ public class AddNextTaskNodeAction extends AddTaskNodeAction {
 					IWizard currentWizard = wizard.getWizard();
 					if (currentWizard instanceof FreemarkerCSVTemplateCreationWizard) {
 
-						List<String> fields = ((FreemarkerCSVTemplateCreationWizard) currentWizard).getFields();
-						String fieldsString = "";
-						for (Iterator<?> iterator = fields.iterator(); iterator.hasNext();) {
-							String string = (String) iterator.next();
-							fieldsString += string + ",";
-						}
-						if (fieldsString.length() > 0) {
-							fieldsString = fieldsString.substring(0, fieldsString.length() - 1);
-						}
+						String fieldsString = ((FreemarkerCSVTemplateCreationWizard) currentWizard).getFieldsString();
+						// for (Iterator<?> iterator = fields.iterator();
+						// iterator.hasNext();) {
+						// String string = (String) iterator.next();
+						// fieldsString += string + ",";
+						// }
+						// if (fieldsString.length() > 0) {
+						// fieldsString = fieldsString.substring(0,
+						// fieldsString.length() - 1);
+						// }
 						String quote = ((FreemarkerCSVTemplateCreationWizard) currentWizard).getQuote();
 						String seperator = ((FreemarkerCSVTemplateCreationWizard) currentWizard).getSeprator();
 
@@ -99,11 +97,15 @@ public class AddNextTaskNodeAction extends AddTaskNodeAction {
 						freemarker.getParam().add(speratorParam);
 						freemarker.getParam().add(quoteParam);
 						freemarker.getParam().add(fieldsParam);
-						
-//						SmooksModelUtils.addParam(freemarker.getTemplate(), messageTypeParam);
-//						SmooksModelUtils.addParam(freemarker.getTemplate(), quoteParam);
-//						SmooksModelUtils.addParam(freemarker.getTemplate(), speratorParam);
-//						SmooksModelUtils.addParam(freemarker.getTemplate(), fieldsParam);
+
+						// SmooksModelUtils.addParam(freemarker.getTemplate(),
+						// messageTypeParam);
+						// SmooksModelUtils.addParam(freemarker.getTemplate(),
+						// quoteParam);
+						// SmooksModelUtils.addParam(freemarker.getTemplate(),
+						// speratorParam);
+						// SmooksModelUtils.addParam(freemarker.getTemplate(),
+						// fieldsParam);
 
 						Command addFreemarkerCommand = AddCommand.create(this.provider.getEditingDomain(),
 								resourceList,
