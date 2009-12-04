@@ -32,7 +32,7 @@
    <plugin
          id="org.mozilla.xulrunner.carbon.macosx"
          os="macosx"
-         ws="carbon"
+         ws="carbon,cocoa"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
@@ -78,13 +78,5 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
-         id="org.mozilla.xulrunner.cocoa.macosx.x86"
-         os="macosx"
-         ws="cocoa"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
 
 </feature>
