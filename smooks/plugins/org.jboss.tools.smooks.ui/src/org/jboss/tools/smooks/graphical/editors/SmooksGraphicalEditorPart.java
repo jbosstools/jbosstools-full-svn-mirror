@@ -311,11 +311,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 					break;
 				}
 			}
-
 			Collection<?> deletedObjs = null;
-			// if(command instanceof AddCommand){
-			// deletedObjs = ((AddCommand)command).getCollection();
-			// }
 			if (command instanceof DeleteCommand) {
 				deletedObjs = ((DeleteCommand) command).getCollection();
 			}
@@ -329,10 +325,6 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 						refreshInputModel = true;
 						break;
 					}
-					// if (needToLayoutWhenAddModel(object2)) {
-					// refreshInputModel = true;
-					// break;
-					// }
 				}
 			}
 			if (refreshInputModel)
