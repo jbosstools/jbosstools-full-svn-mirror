@@ -58,4 +58,12 @@ public class NewPortletClassOperation extends NewWebClassOperation {
 	protected Object getTemplateImplementation() {
 		return null;
 	}
+
+	@Override
+	protected String generateTemplateSource(WTPPlugin plugin,
+			CreateJavaEEArtifactTemplateModel templateModel,
+			String templateFile, Object templateImpl, IProgressMonitor monitor)
+			throws JETException {
+		return generateTemplateSource(plugin, templateModel, templateFile, monitor);
+	}
 }
