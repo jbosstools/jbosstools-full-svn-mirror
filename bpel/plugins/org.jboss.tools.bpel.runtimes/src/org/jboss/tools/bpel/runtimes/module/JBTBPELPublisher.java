@@ -17,7 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Iterator;
 
 import org.eclipse.core.resources.IProject;
@@ -153,8 +153,24 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 	
 	public static String getNewLastSegment(IModule[] moduleTree) {
 		IModule last = moduleTree[moduleTree.length-1];
-		long stamp = new Date().getTime();
-		return last.getName() + "-" + stamp + IWTPConstants.EXT_JAR;
+		Calendar cal = Calendar.getInstance();
+		StringBuffer lastSeg = new StringBuffer(formatString(cal.get(Calendar.YEAR)));
+		lastSeg.append(formatString(cal.get(Calendar.MONTH)));
+		lastSeg.append(formatString(cal.get(Calendar.DAY_OF_MONTH)));
+		lastSeg.append(formatString(cal.get(Calendar.HOUR_OF_DAY)));
+		lastSeg.append(formatString(cal.get(Calendar.MINUTE)));
+		lastSeg.append(formatString(cal.get(Calendar.SECOND)));
+
+		
+		return last.getName() + "-" + lastSeg.toString() + IWTPConstants.EXT_JAR;
+	}
+	
+	private static String formatString(int dateUnit){
+		if(String.valueOf(dateUnit).length() < 2){
+			return "0" + dateUnit;
+		}
+		
+		return String.valueOf(dateUnit);
 	}
 	
 	private static final String DEPLOYMENTS = "deployments";
