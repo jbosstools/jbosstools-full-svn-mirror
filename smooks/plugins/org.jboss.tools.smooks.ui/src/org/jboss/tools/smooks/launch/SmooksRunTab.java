@@ -19,17 +19,27 @@
  */
  package org.jboss.tools.smooks.launch;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
-
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
+import org.eclipse.jdt.core.IJavaModel;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
+import org.eclipse.jdt.ui.JavaElementLabelProvider;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -41,11 +51,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.window.Window;
-
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -55,21 +60,6 @@ import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.FileEditorInput;
-
-import org.eclipse.debug.core.ILaunchConfiguration;
-import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
-import org.eclipse.debug.core.ILaunchManager;
-
-import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
-
-import org.eclipse.jdt.core.IJavaModel;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.JavaModelException;
-
-import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
-
-import org.eclipse.jdt.ui.JavaElementLabelProvider;
 import org.jboss.tools.smooks.configuration.RuntimeMetadata;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 
@@ -86,8 +76,6 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 	private Button fSearchButton;
 	private RuntimeMetadata launchMetaData = new RuntimeMetadata();
 	
-	private ILaunchConfiguration fLaunchConfiguration;
-
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#createControl(org.eclipse.swt.widgets.Composite)
 	 */
@@ -105,12 +93,12 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 		validatePage();
 	}
 
-	private void createSpacer(Composite comp) {
-		Label label= new Label(comp, SWT.NONE);
-		GridData gd= new GridData();
-		gd.horizontalSpan= 3;
-		label.setLayoutData(gd);
-	}
+//	private void createSpacer(Composite comp) {
+//		Label label= new Label(comp, SWT.NONE);
+//		GridData gd= new GridData();
+//		gd.horizontalSpan= 3;
+//		label.setLayoutData(gd);
+//	}
 	
 	private void createFormElements(Composite comp) {
 		GridData gd = new GridData();
@@ -199,7 +187,6 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#initializeFrom(org.eclipse.debug.core.ILaunchConfiguration)
 	 */
 	public void initializeFrom(ILaunchConfiguration config) {
-		fLaunchConfiguration = config;
 		try {
 			fProjText.setText(config.getAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, ""));  //$NON-NLS-1$
 			fConfigurationText.setText(config.getAttribute(IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, ""));  //$NON-NLS-1$
@@ -353,7 +340,7 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 			setErrorMessage("Unknown project name '" + projectName + "'.");
 			return;
 		}
-		IJavaProject javaProject= JavaCore.create(project);
+//		IJavaProject javaProject= JavaCore.create(project);
 
 		String configName= fConfigurationText.getText().trim();
 		try {

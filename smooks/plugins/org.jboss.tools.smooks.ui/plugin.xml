@@ -217,5 +217,29 @@
 	        id="org.jboss.tools.smooks.ui.launchConfigurationTabGroup.smooksLauncher">
 	    </launchConfigurationTabGroup>
 	</extension>
+ <extension
+       point="org.eclipse.debug.ui.launchShortcuts">
+    <shortcut
+          class="org.jboss.tools.smooks.launch.SmooksLaunchShortcut"
+          icon="icons/smooks-sm.gif"
+          id="org.jboss.tools.smooks.ui.launch.shortcut"
+          label="%launch.shortcut.text"
+          modes="run">
+       <configurationType
+             id="org.jboss.tools.smooks.ui.smooksLauncher">
+       </configurationType>
+       <contextualLaunch>
+           <enablement>
+             <with variable="selection">
+               <count value="1"/>
+               <iterate>
+                 <test property="org.eclipse.debug.ui.matchesPattern" value="*.xml"/>
+               </iterate>
+             </with>
+           </enablement>
+  		 </contextualLaunch>
+    </shortcut>
+   
+ </extension>
  
 </plugin>

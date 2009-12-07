@@ -1,8 +1,12 @@
 package org.jboss.tools.smooks.configuration;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.osgi.framework.BundleContext;
@@ -57,8 +61,8 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 		return plugin;
 	}
 
-	public void log(Throwable e) {
-		getLog().log(new Status(Status.ERROR, PLUGIN_ID, Status.ERROR, Messages.SmooksConfigurationActivator_Smooks_ErrorDialog_Title, e));
+	public static void log(Throwable e) {
+		log(new Status(Status.ERROR, PLUGIN_ID, Status.ERROR, Messages.SmooksConfigurationActivator_Smooks_ErrorDialog_Title, e));
 	}
 
 	@Override
@@ -177,4 +181,25 @@ public class SmooksConfigurationActivator extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
+
+	public static Shell getActiveWorkbenchShell() {
+		IWorkbenchWindow workBenchWindow= getActiveWorkbenchWindow();
+		if (workBenchWindow == null)
+			return null;
+		return workBenchWindow.getShell();
+	}
+
+	public static IWorkbenchWindow getActiveWorkbenchWindow() {
+		if (plugin == null)
+			return null;
+		IWorkbench workBench= plugin.getWorkbench();
+		if (workBench == null)
+			return null;
+		return workBench.getActiveWorkbenchWindow();
+	}
+
+	public static void log(IStatus status) {
+		getDefault().getLog().log(status);
+	}
+
 }
