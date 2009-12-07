@@ -364,6 +364,11 @@ public class XPathValidator extends Validator {
 
 		IProblem problem;
 		Expr expr = xpathExpr ;
+		
+		if( expr instanceof UnaryExpr){
+			expr = ((UnaryExpr)expr).getExpr();
+		}
+		
 		if (expr instanceof LiteralExpr) {
 			LiteralExpr lexpr = (LiteralExpr) expr;
 			try {
