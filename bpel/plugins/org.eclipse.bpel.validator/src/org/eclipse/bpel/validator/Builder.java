@@ -198,10 +198,12 @@ public class Builder extends IncrementalProjectBuilder {
 			p("File Resource : " + file.getName() );
 			 
 			// TODO: This should be a better check
-			if ( file.getName().endsWith(".bpel")) {
-				file.deleteMarkers(IBPELMarker.ID, true,  IResource.DEPTH_INFINITE);
-				deleteMarkersInReferencialResources(file);
-				makeMarkers ( validate (  file, monitor  ) );	
+			if ( file.getName().endsWith(".bpel") ||  file.getName().endsWith(".wsdl")) {
+				IProject project = file.getProject();
+				validate(project, monitor);
+//				file.deleteMarkers(IBPELMarker.ID, true,  IResource.DEPTH_INFINITE);
+//				deleteMarkersInReferencialResources(file);
+//				makeMarkers ( validate (  file, monitor  ) );	
 			} 
 			break;
 			
