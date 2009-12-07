@@ -1,6 +1,6 @@
-/*
+/**
  * JBoss, Home of Professional Open Source
- * Copyright 2006, JBoss Inc., and others contributors as indicated
+ * Copyright 2009, JBoss Inc., and others contributors as indicated
  * by the @authors tag. All rights reserved.
  * See the copyright.txt in the distribution for a
  * full listing of individual contributors.
@@ -15,7 +15,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA  02110-1301, USA.
  *
- * (C) 2005-2006, JBoss Inc.
+ * (C) 2009, JBoss Inc.
  */
 package org.jboss.tools.smooks.launch;
 
@@ -24,12 +24,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.jboss.tools.smooks.configuration.ProcessNodeType;
