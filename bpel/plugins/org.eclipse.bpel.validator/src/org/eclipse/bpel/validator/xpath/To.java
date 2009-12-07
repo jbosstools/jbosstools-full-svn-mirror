@@ -15,6 +15,7 @@ import org.eclipse.bpel.validator.model.IProblem;
 
 import org.eclipse.bpel.xpath10.Expr;
 import org.eclipse.bpel.xpath10.PathExpr;
+import org.eclipse.bpel.xpath10.UnaryExpr;
 import org.eclipse.bpel.xpath10.VariableReferenceExpr;
 
 /**
@@ -45,7 +46,9 @@ public class To extends XPathValidator {
 				
 		IProblem problem;
 		Expr expr = xpathExpr;
-		
+		if(expr instanceof UnaryExpr){
+			expr = ((UnaryExpr)expr).getExpr();
+		}
 		if (expr instanceof VariableReferenceExpr) {
 			mVisitor.visit( expr );
 		} else if (expr instanceof PathExpr) {
