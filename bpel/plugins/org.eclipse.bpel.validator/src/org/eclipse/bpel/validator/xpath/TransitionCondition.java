@@ -29,7 +29,8 @@ public class TransitionCondition extends XPathValidator {
 		sa = 1022,
 		desc = "Checks for boolean expression on transitionCondition",
 		author = "michal.chmielewski@oracle.com",
-		date = "01/30/2007"
+		date = "01/30/2007",
+		order = 999
 	)
 	@Override
 	public void checkBooleanExpression () {
