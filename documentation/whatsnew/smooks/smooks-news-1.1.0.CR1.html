@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>Smooks tools 1.1.0.CR1 What's New</title>
+</head>
+<body>
+<h1>Smooks tools 1.1.0.CR1 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a></p>
+
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>Smooks Configuration Editor</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right"><a name="itemname1" id="itemname1"></a><b>Multiple
+		Page Editor</b></td>
+		<td valign="top">
+		<p>Input tab has been moved into the Process page. To access the Input configuration, 
+		select the "Input Task" in the Processing Tasks pane.</p>
+
+		<img src="images/smookseditor_process_page_input_task.png"/>
+
+		<p>The functionality for the Input Task embedded on the Process page is the same as 
+		the "Input" page in M4, which in turn inherited many functions from the 'Reader' page.</p>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right"><a name="itemname1" id="itemname1"></a><b>New Options Page</b></td>
+		<td valign="top">
+		<p>A new page has been added to handle a couple of options. The Options page displays the 
+		Smooks Platform version for your configuration as well as a couple of filter settings:</p>
+		<ul>
+			<li>Stream Filter Type - Determines the type of processing model that will be used. Either SAX or DOM. Please refer to Filtering Process Selection for more information about the processing models. Default is SAX in the editor.</li>
+			<li>Default Serialization is On: Determines if default serialization should be switched on (default "unchecked" in the editor). Default serialization being turned on simply tells Smooks to locate a StreamResult (or DOMResult) in the Result objects provided to the Smooks.filterSource method and to, by default, serialize all events to that Result. This behavior can be turned off using this global configuration parameter and can be overridden on a per fragment basis by targeting a Visitor implementation at that fragment that takes ownership of the Result writer (in the case of SAX filtering), or simply modifies the DOM (in the case of DOM filtering). As an example of this, see the FreeMarkerTemplateProcessor.</li>
+		</ul>
+		<p>For more details about these settings, see the <a href="http://www.smooks.org/mediawiki/index.php?title=V1.3:Smooks_v1.3_User_Guide#Filter_Settings">Smooks User Guide online.</a></p>
+
+		<img src="images/smookseditor_options_page.png"/>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right"><a name="itemname1" id="itemname1"></a><b>Apply Templates</b></td>
+		<td valign="top">
+		<p>You now have the ability to apply a FreeMarker template after a Java Mapping task. In CR1,  
+		we only have CSV templates working, but there will be more template types in the future.</p>
+		<p>When you add the Apply Template task to the tasks pane, a wizard pops up prompting you to 
+		select a template type. Once you've selected it, you can provide details (such as a 
+		comma-separated list of fields). When you hit Finish, the template model is added to the canvas 
+		and you can drag and drop to create links from the Java Mapping model to the template model.</p>
+		<p>Below is an example of mapping a set of Java classes to a CSV template.</p>
+		<img src="images/smookseditor_process_page_template_task.png"/>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right"><a name="itemname1" id="itemname1"></a><b>Smooks Run Configuration</b></td>
+		<td valign="top">
+		<p>In addition to being able to create Smooks Configuration files more easily using drag and drop, you
+		now have the ability to test your Smooks configurations from within the Eclipse runtime using Smooks
+		Run Configurations.</p>
+		<p>To create a Smooks Run Configuration, select a Smooks configuration file in the navigator or open
+		one in the Smooks Configuration Editor. Click on the drop-down menu for the Run button in the toolbar,
+		select Run As-> Smooks Run Configuration.</p>
+		<img src="images/smookseditor_run_configuration.png"/>
+		<p>Your new Smooks Run Configuration will test the Smooks configuration and display any results in the
+		Console. If any errors occur, an error dialog will appear with specifics.</p>
+		<img src="images/smookseditor_run_configuration_console.png"/>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+
+</table>
+
+</body>
+
+</html>
+
+
