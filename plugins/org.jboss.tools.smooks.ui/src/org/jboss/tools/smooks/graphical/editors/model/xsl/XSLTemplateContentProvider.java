@@ -10,13 +10,10 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model.xsl;
 
-import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.dom4j.DocumentException;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.wst.xsl.core.XSLCore;
@@ -69,26 +66,23 @@ public class XSLTemplateContentProvider implements ITreeContentProvider {
 						IFile file = SmooksUIUtils.getFile(filePath, SmooksUIUtils.getResource(template).getProject());
 						if (file != null && XSLCore.isXSLFile(file)) {
 							XSLModelAnalyzer analyzer = new XSLModelAnalyzer();
-							try {
-								obj = analyzer.parse(file.getContents());
-							} catch (DocumentException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (CoreException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+//							try {
+//								obj = analyzer.parse(file.getContents());
+//							} catch (CoreException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
 						}
 					}else{
 						String contents = SmooksModelUtils.getAnyTypeCDATA(template);
 						if(contents != null){
 							XSLModelAnalyzer analyzer = new XSLModelAnalyzer();
-							try {
-								obj = analyzer.parse(new ByteArrayInputStream(contents.getBytes()));
-							} catch (DocumentException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} 
+//							try {
+//								obj = analyzer.parse(new ByteArrayInputStream(contents.getBytes()));
+//							} catch (DocumentException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							} 
 						}
 					}
 				}

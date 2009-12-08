@@ -13,11 +13,8 @@ package org.jboss.tools.smooks.configuration.editors.xml;
 import java.util.Collections;
 import java.util.List;
 
-import org.dom4j.Attribute;
-import org.dom4j.Element;
-import org.dom4j.Namespace;
-import org.dom4j.QName;
-import org.dom4j.dom.DOMDocumentFactory;
+import org.w3c.dom.Attr;
+
 
 /**
  * @author Dart Peng
@@ -29,10 +26,10 @@ public class TagPropertyObject extends AbstractXMLObject {
 
 	protected String value = null;
 
-	protected Attribute referenceAttibute;
+	protected Attr referenceAttibute;
 
 	public String getValue() {
-		Attribute attribute = getReferenceAttibute();
+		Attr attribute = getReferenceAttibute();
 		if (attribute != null) {
 			return attribute.getValue();
 		}
@@ -41,7 +38,7 @@ public class TagPropertyObject extends AbstractXMLObject {
 
 	public void setValue(String value) {
 		this.value = value;
-		Attribute attribute = getReferenceAttibute();
+		Attr attribute = getReferenceAttibute();
 		if (attribute != null) {
 			attribute.setValue(value);
 		}
@@ -50,7 +47,7 @@ public class TagPropertyObject extends AbstractXMLObject {
 	/**
 	 * @return the referenceAttibute
 	 */
-	public Attribute getReferenceAttibute() {
+	public Attr getReferenceAttibute() {
 		return referenceAttibute;
 	}
 
@@ -63,7 +60,7 @@ public class TagPropertyObject extends AbstractXMLObject {
 	 */
 	@Override
 	public String getName() {
-		Attribute attribute = getReferenceAttibute();
+		Attr attribute = getReferenceAttibute();
 		if (attribute != null) {
 			return attribute.getName();
 		} else {
@@ -79,9 +76,9 @@ public class TagPropertyObject extends AbstractXMLObject {
 	 */
 	@Override
 	public String getNameSpacePrefix() {
-		Attribute attribute = getReferenceAttibute();
+		Attr attribute = getReferenceAttibute();
 		if (attribute != null) {
-			return attribute.getNamespacePrefix();
+			return attribute.getPrefix();
 		}
 		return null;
 	}
@@ -94,7 +91,7 @@ public class TagPropertyObject extends AbstractXMLObject {
 	 */
 	@Override
 	public String getNamespaceURI() {
-		Attribute attribute = getReferenceAttibute();
+		Attr attribute = getReferenceAttibute();
 		if (attribute != null) {
 			return attribute.getNamespaceURI();
 		}
@@ -114,17 +111,17 @@ public class TagPropertyObject extends AbstractXMLObject {
 			return;
 		}
 		super.setName(name);
-		Attribute attribute = getReferenceAttibute();
+		Attr attribute = getReferenceAttibute();
 		if (attribute != null) {
-			String namespace = attribute.getNamespaceURI();
-			String namespacePrefix = attribute.getNamespacePrefix();
-			Element container = attribute.getParent();
-			String value = attribute.getValue();
-			container.remove(attribute);
-			Attribute newAttribute = DOMDocumentFactory.getInstance().createAttribute(container,
-					new QName(name, new Namespace(namespacePrefix, namespace)), value);
-			container.add(newAttribute);
-			this.setReferenceAttibute(newAttribute);
+//			String namespace = attribute.getNamespaceURI();
+//			String namespacePrefix = attribute.getNamespacePrefix();
+//			Element container = attribute.getParent();
+//			String value = attribute.getValue();
+//			container.remove(attribute);
+//			Attr newAttribute = DOMDocumentFactory.getInstance().createAttribute(container,
+//					new QName(name, new Namespace(namespacePrefix, namespace)), value);
+//			container.add(newAttribute);
+//			this.setReferenceAttibute(newAttribute);
 		}
 	}
 
@@ -136,9 +133,9 @@ public class TagPropertyObject extends AbstractXMLObject {
 	 */
 	@Override
 	public void setNameSpacePrefix(String nameSpacePrefix) {
-		Attribute attribute = getReferenceAttibute();
+		Attr attribute = getReferenceAttibute();
 		if (attribute != null) {
-			attribute.setNamespace(new Namespace(nameSpacePrefix, attribute.getNamespaceURI()));
+			attribute.setPrefix(nameSpacePrefix);
 		}
 	}
 
@@ -150,9 +147,9 @@ public class TagPropertyObject extends AbstractXMLObject {
 	 */
 	@Override
 	public void setNamespaceURI(String namespaceURI) {
-		Attribute attribute = getReferenceAttibute();
+		Attr attribute = getReferenceAttibute();
 		if (attribute != null) {
-			attribute.setNamespace(new Namespace(attribute.getNamespacePrefix(), namespaceURI));
+//			attribute.setNamespace(new Namespace(attribute.getNamespacePrefix(), namespaceURI));
 		}
 	}
 
@@ -160,7 +157,7 @@ public class TagPropertyObject extends AbstractXMLObject {
 	 * @param referenceAttibute
 	 *            the referenceAttibute to set
 	 */
-	public void setReferenceAttibute(Attribute referenceAttibute) {
+	public void setReferenceAttibute(Attr referenceAttibute) {
 		this.referenceAttibute = referenceAttibute;
 	}
 
@@ -184,7 +181,7 @@ public class TagPropertyObject extends AbstractXMLObject {
 
 	@Override
 	public List<AbstractXMLObject> getXMLNodeChildren() {
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 
 	@Override

@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.dom4j.Attribute;
-import org.dom4j.Element;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
 
 /**
  * @author Dart Peng
@@ -37,13 +37,13 @@ public class TagObject extends AbstractXMLObject {
 		this.getProperties().add(pro);
 		if (pro != null)
 			pro.setParent(this);
-		Attribute attribute = pro.getReferenceAttibute();
+		Attr attribute = pro.getReferenceAttibute();
 		Element parentElement = getReferenceElement();
 		if (attribute != null && parentElement != null) {
-			if (attribute.getParent() == parentElement) {
+			if (attribute.getParentNode() == parentElement) {
 				return;
 			}
-			parentElement.add(attribute);
+			parentElement.appendChild(attribute);
 		}
 	}
 
@@ -52,10 +52,10 @@ public class TagObject extends AbstractXMLObject {
 		if (pro != null)
 			pro.setParent(null);
 
-		Attribute attribute = pro.getReferenceAttibute();
+		Attr attribute = pro.getReferenceAttibute();
 		Element parentElement = getReferenceElement();
 		if (attribute != null && parentElement != null) {
-			parentElement.remove(attribute);
+			parentElement.removeAttributeNode(attribute);
 		}
 	}
 
@@ -66,10 +66,10 @@ public class TagObject extends AbstractXMLObject {
 		Element childElement = tag.getReferenceElement();
 		Element parentElement = getReferenceElement();
 		if (childElement != null && parentElement != null) {
-			if (childElement.getParent() == parentElement) {
+			if (childElement.getParentNode() == parentElement) {
 				return;
 			}
-			parentElement.add(childElement);
+			parentElement.appendChild(childElement);
 		}
 	}
 
@@ -81,16 +81,16 @@ public class TagObject extends AbstractXMLObject {
 		Element childElement = tag.getReferenceElement();
 		Element parentElement = getReferenceElement();
 		if (childElement != null && parentElement != null) {
-			parentElement.remove(childElement);
+			parentElement.removeChild(childElement);
 		}
 
 	}
 
 	@Override
 	public List<IXMLStructuredObject> getChildren() {
-		List all = new ArrayList();
-		List tags = this.getXMLNodeChildren();
-		List properties = this.getProperties();
+		List<IXMLStructuredObject> all = new ArrayList<IXMLStructuredObject>();
+		List<AbstractXMLObject> tags = this.getXMLNodeChildren();
+		List<TagPropertyObject> properties = this.getProperties();
 		all.addAll(properties);
 		all.addAll(tags);
 		return all;

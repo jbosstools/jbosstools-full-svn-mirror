@@ -14,11 +14,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.dom4j.Attribute;
-import org.dom4j.DocumentFactory;
-import org.dom4j.Element;
-import org.dom4j.QName;
-import org.dom4j.dom.DOMDocumentFactory;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
 
 /**
  * @author Dart
@@ -72,8 +69,8 @@ public class XSLTagObject extends TagObject {
 		}
 		return null;
 	}
-	
-	public void removeSelectProperty(){
+
+	public void removeSelectProperty() {
 		TagPropertyObject tagPropertyObject = null;
 		List<TagPropertyObject> properties = this.getProperties();
 		for (Iterator<?> iterator = properties.iterator(); iterator.hasNext();) {
@@ -83,15 +80,15 @@ public class XSLTagObject extends TagObject {
 				break;
 			}
 		}
-		if(tagPropertyObject != null){
+		if (tagPropertyObject != null) {
 			Element parentElement = this.getReferenceElement();
-			Attribute att = tagPropertyObject.getReferenceAttibute();
-			parentElement.remove(att);
+			Attr att = tagPropertyObject.getReferenceAttibute();
+			parentElement.removeAttributeNode(att);
 			this.removeProperty(tagPropertyObject);
 		}
 	}
-	
-	public void removeMatchProperty(){
+
+	public void removeMatchProperty() {
 		TagPropertyObject tagPropertyObject = null;
 		List<TagPropertyObject> properties = this.getProperties();
 		for (Iterator<?> iterator = properties.iterator(); iterator.hasNext();) {
@@ -101,16 +98,16 @@ public class XSLTagObject extends TagObject {
 				break;
 			}
 		}
-		if(tagPropertyObject != null){
+		if (tagPropertyObject != null) {
 			Element parentElement = this.getReferenceElement();
-			Attribute att = tagPropertyObject.getReferenceAttibute();
-			parentElement.remove(att);
+			Attr att = tagPropertyObject.getReferenceAttibute();
+			parentElement.removeAttributeNode(att);
 			this.removeProperty(tagPropertyObject);
 		}
 	}
-	
-	public void setSelectValue(String value){
-		if(value == null){
+
+	public void setSelectValue(String value) {
+		if (value == null) {
 			removeSelectProperty();
 			return;
 		}
@@ -123,20 +120,20 @@ public class XSLTagObject extends TagObject {
 				break;
 			}
 		}
-		if(tagPropertyObject == null){
+		if (tagPropertyObject == null) {
 			tagPropertyObject = new TagPropertyObject();
-			DocumentFactory factory = DOMDocumentFactory.getInstance();
 			Element parentElement = this.getReferenceElement();
-			Attribute attribute = factory.createAttribute(parentElement, new QName("select"), value); //$NON-NLS-1$
+			Attr attribute = parentElement.getOwnerDocument().createAttribute("select");//.createAttribute(parentElement, new QName("select"), value); //$NON-NLS-1$
+			attribute.setNodeValue(value);
 			tagPropertyObject.setReferenceAttibute(attribute);
-			parentElement.add(attribute);
+			parentElement.appendChild(attribute);
 			this.addProperty(tagPropertyObject);
-			
+
 		}
 		tagPropertyObject.setValue(value);
 	}
-	
-	public void setMatchValue(String value){
+
+	public void setMatchValue(String value) {
 		TagPropertyObject tagPropertyObject = null;
 		List<TagPropertyObject> properties = this.getProperties();
 		for (Iterator<?> iterator = properties.iterator(); iterator.hasNext();) {
@@ -146,12 +143,12 @@ public class XSLTagObject extends TagObject {
 				break;
 			}
 		}
-		if(tagPropertyObject == null){
+		if (tagPropertyObject == null) {
 			tagPropertyObject = new TagPropertyObject();
-			DocumentFactory factory = DOMDocumentFactory.getInstance();
 			Element parentElement = this.getReferenceElement();
-			Attribute attribute = factory.createAttribute(parentElement, new QName("match"), value); //$NON-NLS-1$
-			parentElement.add(attribute);
+			Attr attribute = parentElement.getOwnerDocument().createAttribute("match");//.createAttribute(parentElement, new QName("select"), value); //$NON-NLS-1$
+			attribute.setNodeValue(value);
+			parentElement.appendChild(attribute);
 			tagPropertyObject.setReferenceAttibute(attribute);
 			this.addProperty(tagPropertyObject);
 		}

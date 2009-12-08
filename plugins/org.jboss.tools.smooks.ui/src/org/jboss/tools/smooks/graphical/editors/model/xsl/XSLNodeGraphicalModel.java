@@ -15,13 +15,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.Iterator;
 import java.util.List;
 
-import org.dom4j.Attribute;
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.Namespace;
-import org.dom4j.QName;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -34,6 +27,7 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
+import org.jboss.tools.smooks.configuration.editors.xml.XMLUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.XSLModelAnalyzer;
 import org.jboss.tools.smooks.configuration.editors.xml.XSLTagObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
@@ -43,6 +37,8 @@ import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
 import org.jboss.tools.smooks.model.xsl.Template;
 import org.jboss.tools.smooks.model.xsl.Xsl;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * @author Dart
@@ -174,7 +170,7 @@ public class XSLNodeGraphicalModel extends TreeNodeModel {
 								if (node == xmlObject) {
 									Element parentElement = ((XSLTagObject) data).getReferenceElement();
 									Element thisElement = ((XSLTagObject) object).getReferenceElement();
-									parentElement.remove(thisElement);
+									parentElement.removeChild(thisElement);
 									((XSLTagObject) data).removeChildTag((XSLTagObject) object);
 									relatedTag = (XSLTagObject) object;
 									break;
@@ -229,14 +225,15 @@ public class XSLNodeGraphicalModel extends TreeNodeModel {
 				if (relateTag == null) {
 					relateTag = new XSLTagObject();
 					Element element = ((XSLTagObject) data).getReferenceElement();
-					Document doc = element.getDocument();
-					Element rootElement = doc.getRootElement();
-					Namespace namespace = rootElement.getNamespaceForURI(XSLModelAnalyzer.XSL_NAME_SPACE);
+					Document doc = element.getOwnerDocument();
+					Element rootElement = doc.getDocumentElement();
+					String namespace = rootElement.getNamespaceURI();
 					if (namespace == null) {
-						namespace = new Namespace("xsl", XSLModelAnalyzer.XSL_NAME_SPACE);
-						rootElement.addNamespace("xsl", XSLModelAnalyzer.XSL_NAME_SPACE);
+						namespace = XSLModelAnalyzer.XSL_NAME_SPACE;
 					}
-					Element newElement = element.addElement(new QName("value-of", namespace));
+
+					Element newElement = doc.createElementNS(namespace, "value-of");
+					element.appendChild(newElement);
 					relateTag.setName("value-of");
 					relateTag.setReferenceElement(newElement);
 					((XSLTagObject) data).getRelatedIgnoreXSLTagObjects().add(relateTag);
@@ -254,12 +251,9 @@ public class XSLNodeGraphicalModel extends TreeNodeModel {
 		if (rootElement != null) {
 
 			ByteArrayOutputStream stream = null;
-			XMLWriter writer = null;
 			try {
 				stream = new ByteArrayOutputStream();
-				OutputFormat format = OutputFormat.createPrettyPrint();
-				writer = new XMLWriter(stream, format);
-				writer.write(rootElement);
+				XMLUtils.outDOMNode(rootElement, stream);
 				String string = new String(stream.toByteArray());
 				return string;
 			} catch (Exception e1) {
@@ -268,8 +262,6 @@ public class XSLNodeGraphicalModel extends TreeNodeModel {
 				try {
 					if (stream != null)
 						stream.close();
-					if (writer != null)
-						writer.close();
 				} catch (Throwable t) {
 				}
 			}
@@ -332,27 +324,28 @@ public class XSLNodeGraphicalModel extends TreeNodeModel {
 			AbstractXMLObject xmlNode = (AbstractXMLObject) node.getData();
 			AbstractXMLObject thisNode = (AbstractXMLObject) this.getData();
 			Element element = thisNode.getReferenceElement();
-			if (xmlNode instanceof TagObject) {
-				Element childElement = xmlNode.getReferenceElement();
-				if (element.elements().indexOf(childElement) != -1) {
-					element.elements().remove(childElement);
-					int size = element.attributes().size();
-					int realIndex = index;
-					if (!XSLModelAnalyzer.isXSLTagObject(thisNode)) {
-						realIndex = index - size;
-					}
-					element.elements().add(realIndex, childElement);
-				}
-			}
-			if (xmlNode instanceof TagPropertyObject) {
-				Attribute attribute = ((TagPropertyObject) xmlNode).getReferenceAttibute();
-				if (element.attributes().indexOf(attribute) != -1) {
-					int size = element.elements().size();
-					int realIndex = index - size;
-					element.attributes().remove(attribute);
-					element.attributes().add(realIndex, attribute);
-				}
-			}
+			// if (xmlNode instanceof TagObject) {
+			// Element childElement = xmlNode.getReferenceElement();
+			// if (element..indexOf(childElement) != -1) {
+			// element.elements().remove(childElement);
+			// int size = element.attributes().size();
+			// int realIndex = index;
+			// if (!XSLModelAnalyzer.isXSLTagObject(thisNode)) {
+			// realIndex = index - size;
+			// }
+			// element.elements().add(realIndex, childElement);
+			// }
+			// }
+			// if (xmlNode instanceof TagPropertyObject) {
+			// Attribute attribute = ((TagPropertyObject)
+			// xmlNode).getReferenceAttibute();
+			// if (element.attributes().indexOf(attribute) != -1) {
+			// int size = element.elements().size();
+			// int realIndex = index - size;
+			// element.attributes().remove(attribute);
+			// element.attributes().add(realIndex, attribute);
+			// }
+			// }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -365,14 +358,14 @@ public class XSLNodeGraphicalModel extends TreeNodeModel {
 		Element rootElement = null;
 		Element parentElement = null;
 		if (data instanceof TagPropertyObject) {
-			parentElement = ((TagPropertyObject) data).getReferenceAttibute().getParent();
+			parentElement = ((TagPropertyObject) data).getReferenceAttibute().getOwnerElement();
 		}
 		if (data instanceof XSLTagObject) {
 			parentElement = ((XSLTagObject) data).getReferenceElement();
 		}
 		if (parentElement != null) {
-			Document d = parentElement.getDocument();
-			rootElement = d.getRootElement();
+			Document d = parentElement.getOwnerDocument();
+			rootElement = d.getDocumentElement();
 		}
 		return getXSLContents(rootElement);
 	}

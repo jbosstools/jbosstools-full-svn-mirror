@@ -14,7 +14,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import org.dom4j.DocumentException;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
@@ -25,6 +26,7 @@ import org.jboss.tools.smooks.model.xsl.Template;
 import org.jboss.tools.smooks.model.xsl.Xsl;
 import org.jboss.tools.smooks.model.xsl.XslFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
+import org.xml.sax.SAXException;
 
 /**
  * @author Dart
@@ -114,9 +116,13 @@ public class XSLTemplateCreationWizard extends SmooksCreationModelConfigureWizar
 					}
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
-				} catch (DocumentException e) {
-					e.printStackTrace();
 				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				} catch (ParserConfigurationException e) {
+					e.printStackTrace();
+				} catch (SAXException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
