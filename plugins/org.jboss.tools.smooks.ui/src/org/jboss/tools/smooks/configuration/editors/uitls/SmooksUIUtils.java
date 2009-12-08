@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.core.runtime.content.IContentTypeManager;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
@@ -195,7 +196,7 @@ public class SmooksUIUtils {
 			Csv12Package.eNS_URI, Edi12Package.eNS_URI, Jmsrouting12Package.eNS_URI, Json12Package.eNS_URI,
 			Persistence12Package.eNS_URI, Rules10Package.eNS_URI, Validation10Package.eNS_URI };
 
-	public static String[] SMOOKS_PLATFORM_1_1_CONFLICT_NAMESPACES = new String[] { };
+	public static String[] SMOOKS_PLATFORM_1_1_CONFLICT_NAMESPACES = new String[] {};
 
 	public static final String FILE_PRIX = "File:/"; //$NON-NLS-1$
 
@@ -336,20 +337,23 @@ public class SmooksUIUtils {
 		return beanIdList;
 	}
 
-//	public static List<BindingsType> getBindingsTypeList(SmooksResourceListType resourceList) {
-//		if (resourceList == null) {
-//			return null;
-//		}
-//		List<AbstractResourceConfig> rlist = resourceList.getAbstractResourceConfig();
-//		List<BindingsType> beanIdList = new ArrayList<BindingsType>();
-//		for (Iterator<?> iterator = rlist.iterator(); iterator.hasNext();) {
-//			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
-//			if (abstractResourceConfig instanceof BindingsType) {
-//				beanIdList.add((BindingsType) abstractResourceConfig);
-//			}
-//		}
-//		return beanIdList;
-//	}
+	// public static List<BindingsType>
+	// getBindingsTypeList(SmooksResourceListType resourceList) {
+	// if (resourceList == null) {
+	// return null;
+	// }
+	// List<AbstractResourceConfig> rlist =
+	// resourceList.getAbstractResourceConfig();
+	// List<BindingsType> beanIdList = new ArrayList<BindingsType>();
+	// for (Iterator<?> iterator = rlist.iterator(); iterator.hasNext();) {
+	// AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig)
+	// iterator.next();
+	// if (abstractResourceConfig instanceof BindingsType) {
+	// beanIdList.add((BindingsType) abstractResourceConfig);
+	// }
+	// }
+	// return beanIdList;
+	// }
 
 	public static List<BeanType> getBeanTypeList(SmooksResourceListType resourceList) {
 		if (resourceList == null) {
@@ -1305,13 +1309,17 @@ public class SmooksUIUtils {
 		return null;
 	}
 
-//	public static AttributeFieldEditPart createJavaMethodSearchFieldEditor(BindingsType container, Composite parent,
-//			FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor, String buttonName,
-//			final EObject model) {
-//		String classString = ((BindingsType) container).getClass_();
-//		return createJavaMethodSearchFieldEditor(classString, container, parent, toolkit, propertyDescriptor,
-//				buttonName, model);
-//	}
+	// public static AttributeFieldEditPart
+	// createJavaMethodSearchFieldEditor(BindingsType container, Composite
+	// parent,
+	// FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor,
+	// String buttonName,
+	// final EObject model) {
+	// String classString = ((BindingsType) container).getClass_();
+	// return createJavaMethodSearchFieldEditor(classString, container, parent,
+	// toolkit, propertyDescriptor,
+	// buttonName, model);
+	// }
 
 	public static AttributeFieldEditPart createJavaMethodSearchFieldEditor(String classString, EObject container,
 			Composite parent, FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor, String buttonName,
@@ -1574,13 +1582,17 @@ public class SmooksUIUtils {
 		return editPart;
 	}
 
-//	public static AttributeFieldEditPart createJavaPropertySearchFieldEditor(BindingsType container, Composite parent,
-//			FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor, String buttonName,
-//			final EObject model) {
-//		String classString = ((BindingsType) container).getClass_();
-//		return createJavaPropertySearchFieldEditor(classString, container, parent, toolkit, propertyDescriptor,
-//				buttonName, model);
-//	}
+	// public static AttributeFieldEditPart
+	// createJavaPropertySearchFieldEditor(BindingsType container, Composite
+	// parent,
+	// FormToolkit toolkit, final IItemPropertyDescriptor propertyDescriptor,
+	// String buttonName,
+	// final EObject model) {
+	// String classString = ((BindingsType) container).getClass_();
+	// return createJavaPropertySearchFieldEditor(classString, container,
+	// parent, toolkit, propertyDescriptor,
+	// buttonName, model);
+	// }
 
 	public static Object getEditValue(IItemPropertyDescriptor propertyDescriptor, Object model) {
 		Object value = propertyDescriptor.getPropertyValue(model);
@@ -2571,7 +2583,7 @@ public class SmooksUIUtils {
 	}
 
 	public static List<InputType> recordInputDataInfomation(EditingDomain domain, ParamsType paramsType, String type,
-			String path, Properties properties) {
+			String path, Properties properties, CompoundCommand compoundCommand) {
 		List<InputType> inputTypeList = new ArrayList<InputType>();
 		if (type != null && path != null && domain != null) {
 			String[] values = path.split(";"); //$NON-NLS-1$
@@ -2591,6 +2603,7 @@ public class SmooksUIUtils {
 
 				inputParam.setName(type);
 				inputParam.setStringValue(path);
+				input.setRelatedParameter(inputParam);
 				List<ParamType> params = generateExtParams(type, path, properties);
 				for (Iterator<?> iterator = params.iterator(); iterator.hasNext();) {
 					ParamType paramType2 = (ParamType) iterator.next();
@@ -2598,31 +2611,28 @@ public class SmooksUIUtils {
 					p.setName(getInputParameterName(input.getType(), paramType2.getName()));
 					p.setValue(paramType2.getStringValue());
 					input.getParameters().add(p);
+					// input.setRelatedParameter(paramType2);
 				}
 				params.add(inputParam);
 				Command command = AddCommand.create(domain, paramsType, SmooksPackage.Literals.PARAMS_TYPE__PARAM,
 						params);
 				if (command.canExecute()) {
-					domain.getCommandStack().execute(command);
+					if (compoundCommand != null) {
+						compoundCommand.append(command);
+					} else {
+						domain.getCommandStack().execute(command);
+					}
+					input.setRelatedParameter(inputParam);
 					inputTypeList.add(input);
 				}
 			}
-			// try {
-			// extType.eResource().save(Collections.emptyMap());
-			// List<ISmooksGraphChangeListener> listeners =
-			// extType.getChangeListeners();
-			// for (Iterator<?> iterator = listeners.iterator();
-			// iterator.hasNext();) {
-			// ISmooksGraphChangeListener smooksGraphChangeListener =
-			// (ISmooksGraphChangeListener) iterator.next();
-			// smooksGraphChangeListener.inputTypeChanged(extType);
-			// }
-			// } catch (IOException e) {
-			// SmooksConfigurationActivator.getDefault().log(e);
-			// }
 		}
-
 		return inputTypeList;
+	}
+
+	public static List<InputType> recordInputDataInfomation(EditingDomain domain, ParamsType paramsType, String type,
+			String path, Properties properties) {
+		return recordInputDataInfomation(domain, paramsType, type, path, properties, null);
 	}
 
 	public static void expandGraphTree(List<?> expandNodes, TreeNodeEditPart rootEditPart) {
@@ -2733,9 +2743,9 @@ public class SmooksUIUtils {
 			return true;
 		}
 
-//		if (feature == JavabeanPackage.Literals.BINDINGS_TYPE__BEAN_ID) {
-//			return true;
-//		}
+		// if (feature == JavabeanPackage.Literals.BINDINGS_TYPE__BEAN_ID) {
+		// return true;
+		// }
 
 		if (feature == Javabean12Package.Literals.BEAN_TYPE__BEAN_ID) {
 			return true;
@@ -2748,17 +2758,18 @@ public class SmooksUIUtils {
 		if (Jmsrouting12Package.Literals.JMS12_ROUTER__BEAN_ID == feature) {
 			return true;
 		}
-//		if (JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF == feature) {
-//			return true;
-//		}
+		// if (JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF == feature) {
+		// return true;
+		// }
 		if (Javabean12Package.Literals.WIRING_TYPE__BEAN_ID_REF == feature) {
 			return true;
 		}
 
 		// for selector :
-//		if (JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT == feature) {
-//			return true;
-//		}
+		// if (JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT ==
+		// feature) {
+		// return true;
+		// }
 		if (CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT == feature) {
 			return true;
 		}
@@ -2789,15 +2800,17 @@ public class SmooksUIUtils {
 		if (SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR == feature) {
 			return true;
 		}
-//		if (JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT == feature) {
-//			return true;
-//		}
-//		if (JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT == feature) {
-//			return true;
-//		}
-//		if (JavabeanPackage.Literals.VALUE_TYPE__DATA == feature) {
-//			return true;
-//		}
+		// if (JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT == feature)
+		// {
+		// return true;
+		// }
+		// if (JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT ==
+		// feature) {
+		// return true;
+		// }
+		// if (JavabeanPackage.Literals.VALUE_TYPE__DATA == feature) {
+		// return true;
+		// }
 		if (Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT == feature) {
 			return true;
 		}
@@ -2845,19 +2858,19 @@ public class SmooksUIUtils {
 		}
 		return false;
 	}
-	
-	public static EStructuralFeature getClassFeature(EObject model){
-		if(model == null){
+
+	public static EStructuralFeature getClassFeature(EObject model) {
+		if (model == null) {
 			return null;
 		}
-		
-//		if( model instanceof BindingsType){
-//			return JavabeanPackage.Literals.BINDINGS_TYPE__CLASS;
-//		}
-		if(model instanceof BeanType){
+
+		// if( model instanceof BindingsType){
+		// return JavabeanPackage.Literals.BINDINGS_TYPE__CLASS;
+		// }
+		if (model instanceof BeanType) {
 			return Javabean12Package.Literals.BEAN_TYPE__CLASS;
 		}
-		
+
 		return null;
 	}
 
@@ -2872,9 +2885,9 @@ public class SmooksUIUtils {
 			return XslPackage.Literals.BIND_TO__ID;
 		}
 
-//		if (model instanceof BindingsType) {
-//			return JavabeanPackage.Literals.BINDINGS_TYPE__BEAN_ID;
-//		}
+		// if (model instanceof BindingsType) {
+		// return JavabeanPackage.Literals.BINDINGS_TYPE__BEAN_ID;
+		// }
 
 		if (model instanceof BeanType) {
 			return Javabean12Package.Literals.BEAN_TYPE__BEAN_ID;
@@ -2893,9 +2906,9 @@ public class SmooksUIUtils {
 		if (model instanceof JMS12Router) {
 			return Jmsrouting12Package.Literals.JMS12_ROUTER__BEAN_ID;
 		}
-//		if (model instanceof WiringType) {
-//			return JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF;
-//		}
+		// if (model instanceof WiringType) {
+		// return JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF;
+		// }
 
 		if (model instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
 			return Javabean12Package.Literals.WIRING_TYPE__BEAN_ID_REF;
@@ -2906,9 +2919,9 @@ public class SmooksUIUtils {
 	public static EStructuralFeature getSelectorFeature(EObject model) {
 		if (model == null)
 			return null;
-//		if (model instanceof BindingsType) {
-//			return JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT;
-//		}
+		// if (model instanceof BindingsType) {
+		// return JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT;
+		// }
 		if (model instanceof Counter) {
 			return CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT;
 		}
@@ -2942,15 +2955,15 @@ public class SmooksUIUtils {
 			return SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR;
 		}
 
-//		if (model instanceof WiringType) {
-//			return JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
-//		}
-//		if (model instanceof ExpressionType) {
-//			return JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT;
-//		}
-//		if (model instanceof ValueType) {
-//			return JavabeanPackage.Literals.VALUE_TYPE__DATA;
-//		}
+		// if (model instanceof WiringType) {
+		// return JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
+		// }
+		// if (model instanceof ExpressionType) {
+		// return JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT;
+		// }
+		// if (model instanceof ValueType) {
+		// return JavabeanPackage.Literals.VALUE_TYPE__DATA;
+		// }
 
 		if (model instanceof BeanType) {
 			return Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT;
@@ -2978,12 +2991,13 @@ public class SmooksUIUtils {
 	}
 
 	public static boolean isSmooks1_1PlatformConflictXMLNS(String ns) {
-//		for (int i = 0; i < SMOOKS_PLATFORM_1_1_CONFLICT_NAMESPACES.length; i++) {
-//			String n = SMOOKS_PLATFORM_1_1_CONFLICT_NAMESPACES[i];
-//			if (n.equals(ns)) {
-//				return true;
-//			}
-//		}
+		// for (int i = 0; i < SMOOKS_PLATFORM_1_1_CONFLICT_NAMESPACES.length;
+		// i++) {
+		// String n = SMOOKS_PLATFORM_1_1_CONFLICT_NAMESPACES[i];
+		// if (n.equals(ns)) {
+		// return true;
+		// }
+		// }
 		return false;
 	}
 
@@ -2991,11 +3005,11 @@ public class SmooksUIUtils {
 		if (version == null || element == null)
 			return false;
 		String ns = element.eClass().getEPackage().getNsURI();
-//		if (SmooksConstants.VERSION_1_1.equals(version)) {
-//			if (isSmooks1_2PlatformSpecialXMLNS(ns)) {
-//				return true;
-//			}
-//		}
+		// if (SmooksConstants.VERSION_1_1.equals(version)) {
+		// if (isSmooks1_2PlatformSpecialXMLNS(ns)) {
+		// return true;
+		// }
+		// }
 
 		if (SmooksConstants.VERSION_1_2.equals(version)) {
 			if (isSmooks1_1PlatformConflictXMLNS(ns)) {
@@ -3007,17 +3021,20 @@ public class SmooksUIUtils {
 	}
 
 	public static String judgeSmooksPlatformVersion(EObject smooksModel) {
-//		if (smooksModel instanceof org.jboss.tools.smooks.model.smooks.DocumentRoot) {
-//			EMap<String, String> nsMap = ((org.jboss.tools.smooks.model.smooks.DocumentRoot) smooksModel)
-//					.getXMLNSPrefixMap();
-//			for (Iterator<String> iterator = nsMap.values().iterator(); iterator.hasNext();) {
-//				String ns = iterator.next();
-//				if (isSmooks1_2PlatformSpecialXMLNS(ns)) {
-//					return SmooksConstants.VERSION_1_2;
-//				}
-//			}
-////			return SmooksConstants.VERSION_1_1;
-//		}
+		// if (smooksModel instanceof
+		// org.jboss.tools.smooks.model.smooks.DocumentRoot) {
+		// EMap<String, String> nsMap =
+		// ((org.jboss.tools.smooks.model.smooks.DocumentRoot) smooksModel)
+		// .getXMLNSPrefixMap();
+		// for (Iterator<String> iterator = nsMap.values().iterator();
+		// iterator.hasNext();) {
+		// String ns = iterator.next();
+		// if (isSmooks1_2PlatformSpecialXMLNS(ns)) {
+		// return SmooksConstants.VERSION_1_2;
+		// }
+		// }
+		// // return SmooksConstants.VERSION_1_1;
+		// }
 		return SmooksConstants.VERSION_1_2;
 	}
 
@@ -3129,13 +3146,13 @@ public class SmooksUIUtils {
 				}
 			} else {
 				AbstractReader reader = rlist.getAbstractReader().get(0);
-				if ( CSV12Reader.class.isInstance(reader)) {
+				if (CSV12Reader.class.isInstance(reader)) {
 					inputType = SmooksModelUtils.INPUT_TYPE_CSV;
 				}
-				if ( EDI12Reader.class.isInstance(reader)) {
+				if (EDI12Reader.class.isInstance(reader)) {
 					inputType = SmooksModelUtils.INPUT_TYPE_EDI_1_1;
 				}
-				if ( Json12Reader.class.isInstance(reader)) {
+				if (Json12Reader.class.isInstance(reader)) {
 					inputType = SmooksModelUtils.INPUT_TYPE_JSON_1_1;
 				}
 				if (ReaderType.class.isInstance(reader)) {

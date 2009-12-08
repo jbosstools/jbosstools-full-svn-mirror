@@ -1147,7 +1147,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	}
 
 	public boolean autoLayout(boolean animation) {
-		GraphAnimation graphAnimation = new GraphAnimation();
+		final GraphAnimation graphAnimation = new GraphAnimation();
 		HashMap<Object, Node> nodeMap = new HashMap<Object, Node>();
 		DirectedGraph directedGraph = collectionGraphInformation(nodeMap);
 		IAutoLayout layout = getAutoLayout();
@@ -1155,7 +1155,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 			layout.visit(directedGraph);
 			Iterator<?> it = nodeMap.keySet().iterator();
 			Map<IMoveableModel, Point> map = new HashMap<IMoveableModel, Point>();
-			List<GraphicalEditPart> figureList = new ArrayList<GraphicalEditPart>();
+			final List<GraphicalEditPart> figureList = new ArrayList<GraphicalEditPart>();
 			while (it.hasNext()) {
 				GraphicalEditPart part = (GraphicalEditPart) it.next();
 				Node node = (Node) nodeMap.get(part);
@@ -1165,8 +1165,25 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 				map.put(graphicalModel, new Point(node.x, node.y));
 				graphAnimation.recordFinal(part, new Rectangle(node.x, node.y, 0, 0));
 			}
+			IEditorSite editorSite = getEditorSite();
+
 			if (animation) {
-				graphAnimation.start(figureList);
+				if (editorSite != null) {
+					editorSite.getShell().getDisplay().syncExec(new Runnable() {
+
+						/*
+						 * (non-Javadoc)
+						 * 
+						 * @see java.lang.Runnable#run()
+						 */
+						public void run() {
+							graphAnimation.start(figureList);
+						}
+
+					});
+				} else {
+//					graphAnimation.start(figureList);
+				}
 			}
 			Iterator<IMoveableModel> it1 = map.keySet().iterator();
 			while (it1.hasNext()) {

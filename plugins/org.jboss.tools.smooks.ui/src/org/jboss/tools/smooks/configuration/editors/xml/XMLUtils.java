@@ -27,10 +27,12 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.xml.serialize.XMLSerializer;
+import org.w3c.dom.DOMConfiguration;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSSerializer;
 
 /**
@@ -148,9 +150,32 @@ public class XMLUtils {
 
 	public static void outDOMNode(Node node, OutputStream os) throws TransformerConfigurationException,
 			TransformerException {
-		Transformer transformer = XMLUtils.getTransformer();
-		Source source = new DOMSource(node);
-		Result result = new StreamResult(os);
-		transformer.transform(source, result);
+
+		Document document = null;
+		if (node instanceof Document) {
+			document = (Document) node;
+		} else {
+			document = node.getOwnerDocument();
+		}
+		Object ls = null;
+		if (document != null) {
+			ls = document.getImplementation().getFeature("LS", "3.0");
+		}
+		if (ls != null && ls instanceof DOMImplementationLS) {
+			LSSerializer lss = ((DOMImplementationLS) ls).createLSSerializer();
+			DOMConfiguration domConfiguration = lss.getDomConfig();
+			if (domConfiguration.canSetParameter("format-pretty-print", Boolean.TRUE)) {
+				lss.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE);
+			}
+			LSOutput lsoutput = ((DOMImplementationLS) ls).createLSOutput();
+			lsoutput.setByteStream(os);
+			lss.write(node, lsoutput);
+		} else {
+			Transformer transformer = XMLUtils.getTransformer();
+			Source source = new DOMSource(node);
+			Result result = new StreamResult(os);
+			transformer.transform(source, result);
+		}
+
 	}
 }

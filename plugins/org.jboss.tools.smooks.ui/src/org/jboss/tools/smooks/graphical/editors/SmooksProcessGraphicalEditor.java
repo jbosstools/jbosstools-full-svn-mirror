@@ -923,66 +923,79 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 			return;
 		if (model == null)
 			pageBook.showEmptyPage();
-		FormToolkit toolkit = ((AbstractSmooksFormEditor) this.smooksModelProvider).getToolkit();
-		if (model instanceof TaskType) {
-			String id = ((TaskType) model).getId();
-			if (!isSingltonEditor(id)) {
-				String idref = generateTaskSpecailID((TaskType) model);
-				if (idref != null) {
-					// idref = id + "_" + idref;
-					if (getRegisteTaskPage(idref) == null) {
-						IEditorPart editor = createEditorPart(id);
-						this.registeTaskDetailsPage(editor, idref);
-					}
-					id = idref;
-				} else {
-					id = id + "_unknown"; //$NON-NLS-1$
-				}
-			}
-			if (id != null) {
-				if (!pageBook.hasPage(id)) {
-					Composite parent = pageBook.createPage(id);
-					Object page = getRegisteTaskPage(id);
-					if (page != null && page instanceof IEditorPart) {
-						try {
-							parent.setLayout(new FillLayout());
+		final Object finalModel = model;
+		pageBook.getShell().getDisplay().syncExec(new Runnable() {
 
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see java.lang.Runnable#run()
+			 */
+			public void run() {
+				FormToolkit toolkit = ((AbstractSmooksFormEditor) smooksModelProvider).getToolkit();
+				if (finalModel instanceof TaskType) {
+					String id = ((TaskType) finalModel).getId();
+					if (!isSingltonEditor(id)) {
+						String idref = generateTaskSpecailID((TaskType) finalModel);
+						if (idref != null) {
+							// idref = id + "_" + idref;
+							if (getRegisteTaskPage(idref) == null) {
+								IEditorPart editor = createEditorPart(id);
+								registeTaskDetailsPage(editor, idref);
+							}
+							id = idref;
+						} else {
+							id = id + "_unknown"; //$NON-NLS-1$
+						}
+					}
+					if (id != null) {
+						if (!pageBook.hasPage(id)) {
+							Composite parent = pageBook.createPage(id);
+							Object page = getRegisteTaskPage(id);
+							if (page != null && page instanceof IEditorPart) {
+								try {
+									parent.setLayout(new FillLayout());
+
+									ITaskNodeProvider nodeProvider = (ITaskNodeProvider) ((IEditorPart) page)
+											.getAdapter(ITaskNodeProvider.class);
+									if (nodeProvider != null) {
+										nodeProvider.setTaskType((TaskType) finalModel);
+									}
+									createTaskPage((IEditorPart) page, parent);
+									pageBook.showPage(id);
+									parent.setData(page);
+
+								} catch (Throwable e) {
+									e.printStackTrace();
+									pageBook.removePage(id);
+									pageBook.showPage(emptyKey);
+								}
+							} else {
+								Control control = createTaskPanel(parent, toolkit, id);
+								if (control != null) {
+									pageBook.showPage(id);
+								} else {
+									pageBook.removePage(id);
+									pageBook.showPage(emptyKey);
+								}
+							}
+						} else {
+							Object page = getRegisteTaskPage(id);
 							ITaskNodeProvider nodeProvider = (ITaskNodeProvider) ((IEditorPart) page)
 									.getAdapter(ITaskNodeProvider.class);
 							if (nodeProvider != null) {
-								nodeProvider.setTaskType((TaskType) model);
+								nodeProvider.setTaskType((TaskType) finalModel);
 							}
-							createTaskPage((IEditorPart) page, parent);
 							pageBook.showPage(id);
-							parent.setData(page);
-
-						} catch (Throwable e) {
-							e.printStackTrace();
-							pageBook.removePage(id);
-							pageBook.showPage(emptyKey);
-						}
-					} else {
-						Control control = createTaskPanel(parent, toolkit, id);
-						if (control != null) {
-							pageBook.showPage(id);
-						} else {
-							pageBook.removePage(id);
-							pageBook.showPage(emptyKey);
 						}
 					}
 				} else {
-					Object page = getRegisteTaskPage(id);
-					ITaskNodeProvider nodeProvider = (ITaskNodeProvider) ((IEditorPart) page)
-							.getAdapter(ITaskNodeProvider.class);
-					if (nodeProvider != null) {
-						nodeProvider.setTaskType((TaskType) model);
-					}
-					pageBook.showPage(id);
+					// pageBook.showEmptyPage();
 				}
 			}
-		} else {
-			// pageBook.showEmptyPage();
-		}
+
+		});
+
 	}
 
 	protected IEditorSite createSite(IEditorPart editor) {

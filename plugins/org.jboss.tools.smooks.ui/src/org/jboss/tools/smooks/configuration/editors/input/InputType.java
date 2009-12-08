@@ -3,10 +3,14 @@ package org.jboss.tools.smooks.configuration.editors.input;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.tools.smooks.model.smooks.ParamType;
+
 public class InputType {
 	private String path;
 	private String type;
 	private boolean actived = false;
+	
+	private ParamType relatedParameter = null;
 
 	private List<InputParameter> parameters = null;
 
@@ -19,6 +23,24 @@ public class InputType {
 		}
 		return parameters;
 	}
+	
+
+	/**
+	 * @return the relatedParameter
+	 */
+	public ParamType getRelatedParameter() {
+		return relatedParameter;
+	}
+
+
+	/**
+	 * @param relatedParameter the relatedParameter to set
+	 */
+	public void setRelatedParameter(ParamType relatedParameter) {
+		this.relatedParameter = relatedParameter;
+	}
+
+
 
 	/**
 	 * @return the path
