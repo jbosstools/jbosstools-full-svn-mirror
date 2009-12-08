@@ -13,12 +13,6 @@ package org.jboss.tools.smooks.graphical.editors.editparts.xsl;
 import java.util.Iterator;
 import java.util.List;
 
-import org.dom4j.Attribute;
-import org.dom4j.Element;
-import org.dom4j.Namespace;
-import org.dom4j.QName;
-import org.dom4j.dom.DOMDocumentFactory;
-import org.dom4j.tree.DefaultElement;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -50,6 +44,8 @@ import org.jboss.tools.smooks.graphical.editors.commands.AddSmooksGraphicalModel
 import org.jboss.tools.smooks.graphical.editors.commands.ChangeXSLNodeNameCommand;
 import org.jboss.tools.smooks.graphical.editors.commands.DeleteXSLNodeCommand;
 import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLNodeGraphicalModel;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
 
 /**
  * @author Dart
@@ -153,31 +149,31 @@ public class XSLNodeEditPart extends TreeNodeEditPart {
 					if (model instanceof XSLTagObject) {
 						String name = ((XSLTagObject) model).getName();
 						String namespace = ((XSLTagObject) model).getNamespaceURI();
-						String namespaceprefix = ((XSLTagObject) model).getNameSpacePrefix();
+//						String namespaceprefix = ((XSLTagObject) model).getNameSpacePrefix();
 						if (XSLModelAnalyzer.isXSLTagObject((XSLTagObject) parentNode)
 								&& XSLModelAnalyzer.isXSLTagObject((XSLTagObject) model)) {
 							if (!canCreateAddCommand(name, parentNode.getName())) {
 								return null;
 							}
 						}
-						Element element = new DefaultElement(new QName(name, new Namespace(namespaceprefix, namespace)));
+						Element element = ((XSLTagObject) parentNode).getReferenceElement().getOwnerDocument()
+								.createElementNS(namespace, name);
 						((XSLTagObject) model).setReferenceElement(element);
 					}
 					if (model instanceof TagPropertyObject) {
 						String name = ((TagPropertyObject) model).getName();
 						String namespace = ((TagPropertyObject) model).getNamespaceURI();
-						String namespaceprefix = ((TagPropertyObject) model).getNameSpacePrefix();
+//						String namespaceprefix = ((TagPropertyObject) model).getNameSpacePrefix();
 						if (XSLModelAnalyzer.isXSLTagObject((XSLTagObject) parentNode)) {
 							return null;
 						}
 						Element parentElement = ((XSLTagObject) parentNode).getReferenceElement();
-						Attribute element = DOMDocumentFactory.getInstance().createAttribute(parentElement,
-								new QName(name, new Namespace(namespaceprefix, namespace)), "");
+						Attr element = parentElement.getOwnerDocument().createAttributeNS(namespace, name);
 						((TagPropertyObject) model).setReferenceAttibute(element);
 
 					}
-					AddSmooksGraphicalModelCommand command = new AddSmooksGraphicalModelCommand((AbstractSmooksGraphicalModel) graphModel,
-							childGraphModel);
+					AddSmooksGraphicalModelCommand command = new AddSmooksGraphicalModelCommand(
+							(AbstractSmooksGraphicalModel) graphModel, childGraphModel);
 					return command;
 				}
 				return null;

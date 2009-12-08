@@ -3,7 +3,6 @@
  */
 package org.jboss.tools.smooks.configuration.editors.uitls;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -18,9 +17,9 @@ import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.dom4j.DocumentException;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
@@ -31,7 +30,7 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.milyn.Smooks;
 import org.milyn.cdr.Parameter;
 import org.milyn.json.JSONReaderConfigurator;
-import org.milyn.payload.StringResult;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
@@ -52,7 +51,7 @@ public class JsonInputDataParser {
 	public static final String ROOT_NAME = "rootName"; //$NON-NLS-1$
 
 	public IXMLStructuredObject parseJsonFile(InputStream inputStream, Object readerObj)
-			throws ParserConfigurationException, DocumentException {
+			throws ParserConfigurationException {
 		String rootName = null;
 		String arrayElementName = null;
 		String keyWhitspaceReplacement = null;
@@ -114,7 +113,7 @@ public class JsonInputDataParser {
 	}
 
 	public IXMLStructuredObject parseJsonFile(InputStream stream, SmooksResourceListType resourceList)
-			throws FileNotFoundException, ParserConfigurationException, DocumentException, InvocationTargetException {
+			throws FileNotFoundException, ParserConfigurationException, InvocationTargetException {
 
 		List<AbstractReader> readers = resourceList.getAbstractReader();
 		int count = 0;
@@ -140,7 +139,7 @@ public class JsonInputDataParser {
 	}
 
 	public IXMLStructuredObject parseJsonFile(String filePath, SmooksResourceListType resourceList)
-			throws FileNotFoundException, ParserConfigurationException, DocumentException, InvocationTargetException {
+			throws FileNotFoundException, ParserConfigurationException, InvocationTargetException {
 		FileInputStream stream = new FileInputStream(filePath);
 		return this.parseJsonFile(stream, resourceList);
 	}
@@ -148,7 +147,7 @@ public class JsonInputDataParser {
 	public IXMLStructuredObject parseJsonFile(String filePath, String rootName, String arrayElementName,
 			String keyWhitspaceReplacement, String keyPrefixOnNumeric, String illegalElementNameCharReplacement,
 			String nullValueReplacement, Map<String, String> keyMap, String indent, String encoding)
-			throws FileNotFoundException, ParserConfigurationException, DocumentException, InvocationTargetException {
+			throws FileNotFoundException, ParserConfigurationException, InvocationTargetException {
 		return this.parseJsonFile(new FileInputStream(SmooksUIUtils.parseFilePath(filePath)), rootName,
 				arrayElementName, keyWhitspaceReplacement, keyPrefixOnNumeric, illegalElementNameCharReplacement,
 				nullValueReplacement, keyMap, indent, encoding);
@@ -157,7 +156,7 @@ public class JsonInputDataParser {
 	public IXMLStructuredObject parseJsonFile(InputStream inputStream, String rootName, String arrayElementName,
 			String keyWhitspaceReplacement, String keyPrefixOnNumeric, String illegalElementNameCharReplacement,
 			String nullValueReplacement, Map<String, String> keyMap, String indent, String encoding)
-			throws ParserConfigurationException, DocumentException {
+			throws ParserConfigurationException {
 
 		Smooks smooks = new Smooks();
 
@@ -197,21 +196,18 @@ public class JsonInputDataParser {
 
 		// Use a DOM result to capture the message model for the supplied CSV
 		// message...
-		StringResult result = new StringResult();
+		DOMResult result = new DOMResult();
 
 		// Filter the message through Smooks and capture the result as a DOM in
 		// the domResult instance...
 		smooks.filterSource(new StreamSource(inputStream), result);
 
+		Document document = (Document) result.getNode();
+
 		XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();
-		ByteArrayInputStream byteinputStream = new ByteArrayInputStream(result.getResult().getBytes());
-		TagList tagList = analyzer.analyze(byteinputStream, null);
+		TagList tagList = analyzer.analyze(document, null);
 
 		try {
-			if (byteinputStream != null) {
-				byteinputStream.close();
-				byteinputStream = null;
-			}
 			if (smooks != null) {
 				smooks.close();
 				smooks = null;

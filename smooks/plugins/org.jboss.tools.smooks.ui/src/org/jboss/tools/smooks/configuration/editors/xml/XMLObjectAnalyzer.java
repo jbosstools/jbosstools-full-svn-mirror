@@ -11,53 +11,73 @@
 package org.jboss.tools.smooks.configuration.editors.xml;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
-import org.dom4j.Attribute;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 
 /**
  * @author Dart Peng
  * @Date Jul 25, 2008
  */
 public class XMLObjectAnalyzer {
-	public TagList analyze(String xmlFilePath,String[] ignoreNodeNames)
-			throws FileNotFoundException, DocumentException {
+	public TagList analyze(String xmlFilePath, String[] ignoreNodeNames) throws ParserConfigurationException, SAXException, IOException  {
 		FileInputStream stream = new FileInputStream(xmlFilePath);
-		TagList list =  this.analyze(stream,ignoreNodeNames);
+		TagList list = this.analyze(stream, ignoreNodeNames);
 		try {
 			stream.close();
 		} catch (IOException e) {
 		}
 		return list;
 	}
-
-	public TagList analyze(InputStream stream , String[] ignoreNodeNames) throws DocumentException {
-		SAXReader reader = new SAXReader();
-		Document doc = reader.read(stream);
-		Element rootElement = doc.getRootElement();
+	
+	public TagList analyze(Document doc , String[] ignoreNodeNames){
+		if(doc == null) return null;
+		Element rootElement = doc.getDocumentElement();
 		TagList dco = new TagList();
 		dco.setName("Docuement"); //$NON-NLS-1$
-		dco.addRootTag( parseElement(rootElement, null , ignoreNodeNames));
+		dco.addRootTag(parseElement(rootElement, null, ignoreNodeNames));
 		return dco;
 	}
-	
-	public TagObject analyzeFregment(InputStream stream,String[] ignoreNodeNames) throws DocumentException {
-		SAXReader reader = new SAXReader();
-		Document doc = reader.read(stream);
-		Element rootElement = doc.getRootElement();
-		return parseElement(rootElement, null ,ignoreNodeNames);
+
+	public TagList analyze(InputStream stream, String[] ignoreNodeNames) throws ParserConfigurationException, SAXException, IOException {
+		DocumentBuilder builder = createDocumentBuildingFactory();
+		Document doc = builder.parse(stream);
+		return analyze(doc, ignoreNodeNames);
 	}
 
-	protected TagObject getChildTagByName(String name, TagObject tag , String[] ignoreNodeNames) {
-		if(isIgnoreNode(name, ignoreNodeNames)) return null;
+	public DocumentBuilder createDocumentBuildingFactory() throws ParserConfigurationException {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		factory.setValidating(true);
+
+		factory.setExpandEntityReferences(false);
+		return factory.newDocumentBuilder();
+	}
+
+	public TagObject analyzeFregment(InputStream stream, String[] ignoreNodeNames) throws ParserConfigurationException,
+			SAXException, IOException {
+		DocumentBuilder builder = createDocumentBuildingFactory();
+		org.w3c.dom.Document doc = builder.parse(stream);
+		Element rootElement = doc.getDocumentElement();
+		return parseElement(rootElement, null, ignoreNodeNames);
+	}
+
+	protected TagObject getChildTagByName(String name, TagObject tag, String[] ignoreNodeNames) {
+		if (isIgnoreNode(name, ignoreNodeNames))
+			return null;
 		if (tag == null)
 			return null;
 		List<?> list = tag.getXMLNodeChildren();
@@ -68,45 +88,51 @@ public class XMLObjectAnalyzer {
 		}
 		return null;
 	}
-	
-	private boolean isIgnoreNode(Element element , String[] ignoreNodeNames){
-		return isIgnoreNode(element.getName(), ignoreNodeNames);
+
+	private boolean isIgnoreNode(Element element, String[] ignoreNodeNames) {
+		return isIgnoreNode(element.getNodeName(), ignoreNodeNames);
 	}
-	
-//	private boolean isIgnoreNode(TagObject element , String[] ignoreNodeNames){
-//		return isIgnoreNode(element.getName(), ignoreNodeNames);
-//	}
-	
-	private boolean isIgnoreNode(String name , String[] ignoreNodeNames){
-		if(ignoreNodeNames == null) return false;
+
+	// private boolean isIgnoreNode(TagObject element , String[]
+	// ignoreNodeNames){
+	// return isIgnoreNode(element.getName(), ignoreNodeNames);
+	// }
+
+	private boolean isIgnoreNode(String name, String[] ignoreNodeNames) {
+		if (ignoreNodeNames == null)
+			return false;
 		for (int i = 0; i < ignoreNodeNames.length; i++) {
 			String ignore = ignoreNodeNames[i];
-			if(ignore.trim().equalsIgnoreCase(name)) return true;
+			if (ignore.trim().equalsIgnoreCase(name))
+				return true;
 		}
 		return false;
 	}
 
-	protected TagObject parseElement(Element element, TagObject parentTag , String[] ignoreNodeNames) {
-		
-		if(isIgnoreNode(element, ignoreNodeNames))
+	protected TagObject parseElement(Element element, TagObject parentTag, String[] ignoreNodeNames) {
+
+		if (isIgnoreNode(element, ignoreNodeNames))
 			return null;
 		boolean canAdd = false;
-		TagObject tag = getChildTagByName(element.getName(), parentTag , ignoreNodeNames);
+		TagObject tag = getChildTagByName(element.getNodeName(), parentTag, ignoreNodeNames);
 		if (tag == null) {
 			tag = new TagObject();
 			canAdd = true;
 		}
 		tag.setReferenceElement(element);
-		tag.setName(element.getName());
-		fillProperties(element, tag ,ignoreNodeNames);
+		tag.setName(element.getNodeName());
+		fillProperties(element, tag, ignoreNodeNames);
 		tag.setNamespaceURI(element.getNamespaceURI());
-		List<?> list = element.elements();
-		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-			Element childElement = (Element) iterator.next();
-			TagObject t = parseElement(childElement, tag , ignoreNodeNames);
-			if (t != null){
-				t.setReferenceElement(childElement);
-				tag.addChildTag(t);
+		NodeList nodeList = element.getChildNodes();
+		for(int i = 0 ; i < nodeList.getLength() ; i++){
+			Node node = nodeList.item(i);
+			if(node instanceof Element){
+				Element childElement = (Element)node;
+				TagObject t = parseElement(childElement, tag, ignoreNodeNames);
+				if (t != null) {
+					t.setReferenceElement(childElement);
+					tag.addChildTag(t);
+				}
 			}
 		}
 		if (canAdd)
@@ -125,21 +151,25 @@ public class XMLObjectAnalyzer {
 		return false;
 	}
 
-	protected void fillProperties(Element element, TagObject tag , String[] ignoreNodeNames) {
-		Iterator<?> it = element.attributeIterator();
-		for (Iterator<?> iterator = it; iterator.hasNext();) {
-			Attribute attr = (Attribute) iterator.next();
-			String attrName = attr.getName();
-			String value = attr.getValue();
-			if(isIgnoreNode(attrName, ignoreNodeNames)) continue;
-			if (hasSameNameProperty(attrName, tag)) {
-				continue;
+	protected void fillProperties(Element element, TagObject tag, String[] ignoreNodeNames) {
+		NamedNodeMap attrMap = element.getAttributes();
+		for (int i = 0; i < attrMap.getLength(); i++) {
+			Node node = attrMap.item(i);
+			if(node instanceof Attr){
+				Attr attr = (Attr)node;
+				String attrName = attr.getName();
+				String value = attr.getValue();
+				if (isIgnoreNode(attrName, ignoreNodeNames))
+					continue;
+				if (hasSameNameProperty(attrName, tag)) {
+					continue;
+				}
+				TagPropertyObject pro = new TagPropertyObject();
+				pro.setName(attr.getName());
+				pro.setValue(value);
+				pro.setNamespaceURI(attr.getNamespaceURI());
+				tag.addProperty(pro);
 			}
-			TagPropertyObject pro = new TagPropertyObject();
-			pro.setName(attr.getName());
-			pro.setValue(value);
-			pro.setNamespaceURI(attr.getNamespaceURI());
-			tag.addProperty(pro);
 		}
 	}
 }

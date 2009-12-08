@@ -10,11 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.editparts.xsl;
 
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.Namespace;
-import org.dom4j.QName;
-import org.dom4j.dom.DOMDocumentFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -23,6 +20,7 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.jboss.tools.smooks.configuration.editors.xml.XMLUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.XSLModelAnalyzer;
 import org.jboss.tools.smooks.configuration.editors.xml.XSLTagObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
@@ -32,6 +30,8 @@ import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfig
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLNodeGraphicalModel;
 import org.jboss.tools.smooks.model.xsl.XslPackage;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * @author Dart
@@ -62,7 +62,7 @@ public class XSLTemplateEditPart extends AbstractResourceConfigEditPart {
 		Object model = request.getNewObject();
 		Object graphModel = host.getModel();
 		if (graphModel instanceof AbstractResourceConfigGraphModel) {
-			if(!((AbstractResourceConfigGraphModel)graphModel).getChildrenWithoutDynamic().isEmpty()){
+			if (!((AbstractResourceConfigGraphModel) graphModel).getChildrenWithoutDynamic().isEmpty()) {
 				return null;
 			}
 			if (model instanceof XSLTagObject) {
@@ -70,28 +70,35 @@ public class XSLTemplateEditPart extends AbstractResourceConfigEditPart {
 				ITreeContentProvider provider1 = ((AbstractResourceConfigGraphModel) graphModel).getContentProvider();
 				IEditingDomainProvider provider2 = ((AbstractResourceConfigGraphModel) graphModel).getDomainProvider();
 				XSLNodeGraphicalModel childGraphModel = new XSLNodeGraphicalModel(model, provider1, provider, provider2);
-				
-				Document documentRoot = DOMDocumentFactory.getInstance().createDocument();
-				
+
+				Document documentRoot = null;
+				try {
+					documentRoot = XMLUtils.createDocument();
+				} catch (ParserConfigurationException e) {
+					e.printStackTrace();
+				}
+
 				String name = ((XSLTagObject) model).getName();
 				String namespace = ((XSLTagObject) model).getNamespaceURI();
 				String namespaceprefix = ((XSLTagObject) model).getNameSpacePrefix();
-				
-				if(XSLModelAnalyzer.isXSLTagObject((XSLTagObject)model)){
-					if(!XSLConstants.STYLESHEET.equals(name)){
+
+				if (XSLModelAnalyzer.isXSLTagObject((XSLTagObject) model)) {
+					if (!XSLConstants.STYLESHEET.equals(name)) {
 						return null;
 					}
 				}
-				
-				Element element = DOMDocumentFactory.getInstance().createElement(
-						new QName(name, new Namespace(namespaceprefix, namespace)));
-				
-				documentRoot.setRootElement(element);
-				
-				((XSLTagObject) model).setReferenceElement(element);
-				AddSmooksGraphicalModelCommand command = new AddSmooksGraphicalModelCommand((AbstractSmooksGraphicalModel) graphModel,
-						childGraphModel);
-				return command;
+
+				if (documentRoot != null) {
+
+					Element element = documentRoot.createElementNS(namespace, name);
+
+					documentRoot.appendChild(element);
+
+					((XSLTagObject) model).setReferenceElement(element);
+					AddSmooksGraphicalModelCommand command = new AddSmooksGraphicalModelCommand(
+							(AbstractSmooksGraphicalModel) graphModel, childGraphModel);
+					return command;
+				}
 			}
 		}
 		return null;

@@ -17,11 +17,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.SAXReader;
-import org.dom4j.io.XMLWriter;
+import org.apache.xml.serialize.OutputFormat;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -67,6 +63,7 @@ import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.SmooksXMLEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.editors.xml.XMLUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.configuration.validate.SmooksMarkerHelper;
 import org.jboss.tools.smooks.configuration.validate.SmooksModelValidator;
@@ -98,6 +95,10 @@ import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
 import org.jboss.tools.smooks.model.validation10.provider.Validation10ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
+import org.w3c.dom.Comment;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 public class AbstractSmooksFormEditor extends FormEditor implements IEditingDomainProvider,
 		ISmooksModelValidateListener, ISmooksModelProvider {
@@ -232,23 +233,18 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	}
 
 	protected ByteArrayOutputStream getFormattedXMLContentsStream(InputStream outstream) throws IOException {
-		XMLWriter writer = null;
+
 		try {
-			SAXReader parser = new SAXReader();
-			Document doc = parser.read(outstream);
+			Document doc = XMLUtils.getDOMBuilder().parse(outstream);
 			EObject rootModel = this.getSmooksModel();
 			fillComments(doc, rootModel);
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			OutputFormat format = OutputFormat.createPrettyPrint();
-			writer = new XMLWriter(stream, format);
-			writer.write(doc);
+			
+			XMLUtils.outDOMNode(doc, stream);
 			return stream;
 		} catch (Throwable t) {
 
 		} finally {
-			if (writer != null) {
-				writer.close();
-			}
 		}
 		return null;
 	}
@@ -257,7 +253,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		try {
 			if (rootModel instanceof DocumentRoot) {
 				EObject rootElementModel = ((DocumentRoot) rootModel).getSmooksResourceList();
-				Element rootElement = document.getRootElement();
+				Element rootElement = document.getDocumentElement();
 				try {
 					fillComments(rootElementModel, rootElement);
 				} catch (Exception e) {
@@ -275,26 +271,28 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			for (Iterator<?> iterator = comments.iterator(); iterator.hasNext();) {
 				String string = (String) iterator.next();
 				Integer commentIndex = ((AbstractAnyType) rootElementModel).getCommentIndex(string);
-				List<?> content = rootElement.elements();
+				List<?> content = XMLUtils.getAllChildElements(rootElement);
 				List<Object> deletedElementList = new ArrayList<Object>();
 				if (commentIndex.intValue() < content.size()) {
 					List<Object> tempelements = new ArrayList<Object>(content);
 					for (int i = commentIndex.intValue(); i < content.size(); i++) {
 						Element deleteObj = (Element) tempelements.get(i);
-						if (rootElement.remove(deleteObj)) {
-							deletedElementList.add(deleteObj);
+						Node remodedObj = rootElement.removeChild(deleteObj);
+						if (remodedObj != null) {
+							deletedElementList.add(remodedObj);
 						}
 					}
 				}
-				rootElement.addComment(string);
+				Comment comment = rootElement.getOwnerDocument().createComment(string);
+				rootElement.appendChild(comment);
 				for (int j = 0; j < deletedElementList.size(); j++) {
 					Element deleteElement = (Element) deletedElementList.get(j);
-					rootElement.add(deleteElement);
+					rootElement.appendChild(deleteElement);
 				}
 			}
 
 			List<EObject> childrenModel = ((AbstractAnyType) rootElementModel).eContents();
-			List<?> elements = rootElement.elements();
+			List<?> elements = XMLUtils.getAllChildElements(rootElement);
 			int length = Math.min(childrenModel.size(), elements.size());
 			for (int index = 0; index < length; index++) {
 				EObject child = childrenModel.get(index);
@@ -561,7 +559,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		if (exception != null) {
 			message = exception.getMessage();
 		}
-		if(message == null){
+		if (message == null) {
 			message = "Unknown error.Please check the file";
 		}
 		for (Iterator<?> iterator = this.smooksInitListener.iterator(); iterator.hasNext();) {

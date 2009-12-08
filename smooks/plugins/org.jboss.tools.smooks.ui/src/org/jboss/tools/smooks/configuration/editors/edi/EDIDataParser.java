@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.edi;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,9 +21,9 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.dom4j.DocumentException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -38,9 +37,9 @@ import org.jboss.tools.smooks.model.edi12.EDI12Reader;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.milyn.Smooks;
-import org.milyn.payload.StringResult;
 import org.milyn.smooks.edi.EDIReaderConfigurator;
 import org.osgi.framework.Bundle;
+import org.w3c.dom.Document;
 
 /**
  * @author Dart
@@ -56,18 +55,18 @@ public class EDIDataParser {
 	public static final Object VALIDATE = "validate"; //$NON-NLS-1$
 
 	public TagList parseEDIFile(InputStream stream, SmooksResourceListType resourceList, IProject project)
-			throws IOException, DocumentException {
+			throws IOException {
 		List<AbstractReader> readers = resourceList.getAbstractReader();
 		int count = 0;
 		int index = -1;
 		for (Iterator<?> iterator2 = readers.iterator(); iterator2.hasNext();) {
 			AbstractReader abstractReader = (AbstractReader) iterator2.next();
-//			if (abstractReader instanceof EDIReader) {
-//				count++;
-//				if (index == -1) {
-//					index = readers.indexOf(abstractReader);
-//				}
-//			}
+			// if (abstractReader instanceof EDIReader) {
+			// count++;
+			// if (index == -1) {
+			// index = readers.indexOf(abstractReader);
+			// }
+			// }
 			if (abstractReader instanceof EDI12Reader) {
 				count++;
 				if (index == -1) {
@@ -86,8 +85,7 @@ public class EDIDataParser {
 		return null;
 	}
 
-	public TagList parseEDIFile(InputStream stream, SmooksResourceListType resourceList) throws IOException,
-			DocumentException {
+	public TagList parseEDIFile(InputStream stream, SmooksResourceListType resourceList) throws IOException {
 		// String encoding = null;
 		// String mappingModel = null;
 		// String validate = null;
@@ -117,16 +115,15 @@ public class EDIDataParser {
 		// resourceList);
 	}
 
-	public TagList parseEDIFile(InputStream ediInputStream, EObject readerObj, IProject project) throws IOException,
-			DocumentException {
+	public TagList parseEDIFile(InputStream ediInputStream, EObject readerObj, IProject project) throws IOException {
 		String encoding = null;
 		String mappingModel = null;
 		String validate = null;
-//		if (readerObj instanceof EDIReader) {
-//			EDIReader reader = (EDIReader) readerObj;
-//			encoding = reader.getEncoding();
-//			mappingModel = reader.getMappingModel();
-//		}
+		// if (readerObj instanceof EDIReader) {
+		// EDIReader reader = (EDIReader) readerObj;
+		// encoding = reader.getEncoding();
+		// mappingModel = reader.getMappingModel();
+		// }
 		if (readerObj instanceof EDI12Reader) {
 			EDI12Reader reader = (EDI12Reader) readerObj;
 			encoding = reader.getEncoding();
@@ -135,15 +132,15 @@ public class EDIDataParser {
 		return parseEDIFile(ediInputStream, mappingModel, encoding, validate, project);
 	}
 
-	public TagList parseEDIFile(InputStream ediInputStream, EObject readerObj) throws IOException, DocumentException {
+	public TagList parseEDIFile(InputStream ediInputStream, EObject readerObj) throws IOException {
 
 		String encoding = null;
 		String mappingModel = null;
-//		if (readerObj instanceof EDIReader) {
-//			EDIReader reader = (EDIReader) readerObj;
-//			encoding = reader.getEncoding();
-//			mappingModel = reader.getMappingModel();
-//		}
+		// if (readerObj instanceof EDIReader) {
+		// EDIReader reader = (EDIReader) readerObj;
+		// encoding = reader.getEncoding();
+		// mappingModel = reader.getMappingModel();
+		// }
 		if (readerObj instanceof EDI12Reader) {
 			EDI12Reader reader = (EDI12Reader) readerObj;
 			encoding = reader.getEncoding();
@@ -153,7 +150,7 @@ public class EDIDataParser {
 	}
 
 	public TagList parseEDIFile(InputStream ediInputStream, String mappingModel, String ediFileEncoding,
-			String validate, EObject emodel) throws IOException, DocumentException {
+			String validate, EObject emodel) throws IOException {
 		IResource resource = SmooksUIUtils.getResource(emodel);
 		IProject project = null;
 		if (resource != null) {
@@ -163,14 +160,14 @@ public class EDIDataParser {
 	}
 
 	public TagList parseEDIFile(InputStream ediInputStream, String mappingModel, String ediFileEncoding,
-			String validate, IProject project) throws IOException, DocumentException {
+			String validate, IProject project) throws IOException {
 		Smooks smooks = new Smooks();
 
 		// SmooksResourceConfiguration readerConfig = new
 		// SmooksResourceConfiguration("org.xml.sax.driver",
 		// SmooksEDIReader.class.getName());
 
-		if (mappingModel == null){
+		if (mappingModel == null) {
 			throw new RuntimeException("EDI Mapping file can't be empty");
 		}
 		// If the MappingModel is absolute file path :
@@ -212,7 +209,7 @@ public class EDIDataParser {
 			ediFileEncoding = "UTF-8"; //$NON-NLS-1$
 		}
 		// readerConfig.
-//		 readerConfig.setParameter("encoding", ediFileEncoding);
+		// readerConfig.setParameter("encoding", ediFileEncoding);
 
 		smooks.setReaderConfig(readerConfig);
 		// SmooksUtil.registerResource(readerConfig, smooks);
@@ -225,18 +222,13 @@ public class EDIDataParser {
 		// in
 		// the domResult instance...
 		// FileInputStream stream
-		StringResult result = new StringResult();
+		DOMResult result = new DOMResult();
 		smooks.filterSource(new StreamSource(ediInputStream), result);
-		String resultXMLContent = result.getResult();
+		Document resultXMLContent = (Document) result.getNode();
 		XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();
-		ByteArrayInputStream byteinputStream = new ByteArrayInputStream(resultXMLContent.getBytes());
-		TagList tagList = analyzer.analyze(byteinputStream, null);
+		TagList tagList = analyzer.analyze(resultXMLContent, null);
 
 		try {
-			if (byteinputStream != null) {
-				byteinputStream.close();
-				byteinputStream = null;
-			}
 			if (smooks != null) {
 				smooks.close();
 				smooks = null;
@@ -254,7 +246,7 @@ public class EDIDataParser {
 	}
 
 	public TagList parseEDIFile(String path, SmooksResourceListType smooksResourceListType)
-			throws InvocationTargetException, FileNotFoundException, IOException, DocumentException {
+			throws InvocationTargetException, FileNotFoundException, IOException {
 		String filePath = SmooksUIUtils.parseFilePath(path);
 
 		return parseEDIFile(new FileInputStream(filePath), smooksResourceListType);

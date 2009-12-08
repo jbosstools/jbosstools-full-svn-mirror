@@ -13,7 +13,6 @@ package org.jboss.tools.smooks.graphical.editors.model.xsl;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
-import org.dom4j.Element;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -29,6 +28,7 @@ import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGrap
 import org.jboss.tools.smooks.model.xsl.Template;
 import org.jboss.tools.smooks.model.xsl.Xsl;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
+import org.w3c.dom.Element;
 
 /**
  * @author Dart
@@ -52,7 +52,7 @@ public class XSLTemplateGraphicalModel extends AbstractResourceConfigGraphModel 
 	@Override
 	protected TreeNodeModel createChildModel(Object model, ITreeContentProvider contentProvider,
 			ILabelProvider labelProvider) {
-		return new XSLNodeGraphicalModel(model, contentProvider, labelProvider,domainProvider);
+		return new XSLNodeGraphicalModel(model, contentProvider, labelProvider, domainProvider);
 	}
 
 	/*
@@ -77,8 +77,8 @@ public class XSLTemplateGraphicalModel extends AbstractResourceConfigGraphModel 
 		if (node instanceof XSLNodeGraphicalModel) {
 			Object data = node.getData();
 			if (data instanceof XSLTagObject) {
-				Element element = ((XSLTagObject)data).getReferenceElement();
-				Element rootElement = element.getDocument().getRootElement();
+				Element element = ((XSLTagObject) data).getReferenceElement();
+				Element rootElement = element.getOwnerDocument().getDocumentElement();
 				String contents = XSLNodeGraphicalModel.getXSLContents(rootElement);
 				Template template = ((Xsl) getData()).getTemplate();
 				String filePath = SmooksModelUtils.getAnyTypeText(template);

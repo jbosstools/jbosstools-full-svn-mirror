@@ -15,10 +15,8 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dom4j.Element;
-import org.dom4j.Namespace;
-import org.dom4j.QName;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
+import org.w3c.dom.Element;
 
 /**
  * @author Dart Peng
@@ -31,9 +29,9 @@ public class AbstractXMLObject implements IXMLStructuredObject {
 	protected Element referenceElement = null;
 
 	protected boolean canEdit = false;
-	
+
 	private String namespaceURI = null;
-	
+
 	private String namespacePrefix = null;
 
 	public boolean isCanEdit() {
@@ -55,8 +53,7 @@ public class AbstractXMLObject implements IXMLStructuredObject {
 	public String getNamespaceURI() {
 		Element element = this.getReferenceElement();
 		if (element != null) {
-			Namespace ns = element.getNamespace();
-			return ns.getURI();
+			return element.getNamespaceURI();
 		}
 		return namespaceURI;
 	}
@@ -64,9 +61,9 @@ public class AbstractXMLObject implements IXMLStructuredObject {
 	public void setNamespaceURI(String namespaceURL) {
 		Element element = this.getReferenceElement();
 		if (element != null) {
-			Namespace ns = element.getNamespace();
-			Namespace nns = new Namespace(ns.getPrefix(), namespaceURL);
-			element.setQName(new QName(name, nns));
+			// Namespace ns = element.getNamespace();
+			// Namespace nns = new Namespace(ns.getPrefix(), namespaceURL);
+			// element.setQName(new QName(name, nns));
 		}
 		this.namespaceURI = namespaceURL;
 	}
@@ -77,8 +74,7 @@ public class AbstractXMLObject implements IXMLStructuredObject {
 	public String getNameSpacePrefix() {
 		Element element = this.getReferenceElement();
 		if (element != null) {
-			Namespace ns = element.getNamespace();
-			return ns.getPrefix();
+			return element.getPrefix();
 		}
 		return namespacePrefix;
 	}
@@ -90,9 +86,9 @@ public class AbstractXMLObject implements IXMLStructuredObject {
 	public void setNameSpacePrefix(String nameSpacePrefix) {
 		Element element = this.getReferenceElement();
 		if (element != null) {
-			Namespace ns = element.getNamespace();
-			Namespace nns = new Namespace(nameSpacePrefix, ns.getURI());
-			element.setQName(new QName(name, nns));
+			// Namespace ns = element.getNamespace();
+			// Namespace nns = new Namespace(nameSpacePrefix, ns.getURI());
+			// element.setQName(new QName(name, nns));
 		}
 		this.namespacePrefix = nameSpacePrefix;
 	}
@@ -111,17 +107,17 @@ public class AbstractXMLObject implements IXMLStructuredObject {
 		this.name = name;
 		Element element = this.getReferenceElement();
 		if (element != null) {
-			element.setQName(new QName(name, element.getNamespace()));
+			// element.setQName(new QName(name, element.getNamespace()));
 		}
 	}
 
-	public void setQName(QName name) {
-		this.name = name.getName();
-		Element element = this.getReferenceElement();
-		if (element != null) {
-			element.setQName(name);
-		}
-	}
+	// public void setQName(QName name) {
+	// this.name = name.getName();
+	// Element element = this.getReferenceElement();
+	// if (element != null) {
+	// element.setQName(name);
+	// }
+	// }
 
 	public List<AbstractXMLObject> getXMLNodeChildren() {
 		return children;

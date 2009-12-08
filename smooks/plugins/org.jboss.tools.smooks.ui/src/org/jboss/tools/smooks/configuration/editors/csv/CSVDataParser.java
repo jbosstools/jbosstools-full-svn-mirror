@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.csv;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -20,9 +19,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.dom4j.DocumentException;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
@@ -31,7 +30,7 @@ import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.milyn.Smooks;
 import org.milyn.csv.CSVReaderConfigurator;
-import org.milyn.payload.StringResult;
+import org.w3c.dom.Document;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -56,12 +55,11 @@ public class CSVDataParser {
 	public static final String RECORD_NAME = "recordName"; //$NON-NLS-1$
 
 	public TagList parseCSV(String filePath, SmooksResourceListType resourceList)
-			throws FileNotFoundException, DocumentException, InvocationTargetException, ParserConfigurationException {
+			throws FileNotFoundException, InvocationTargetException, ParserConfigurationException {
 		return parseCSV(new FileInputStream(SmooksUIUtils.parseFilePath(filePath)), resourceList);
 	}
 
-	public TagList parseCSV(InputStream inputStream, Object readerObj) throws ParserConfigurationException,
-			DocumentException {
+	public TagList parseCSV(InputStream inputStream, Object readerObj) throws ParserConfigurationException {
 		String fields = null;
 		String separator = null;
 		String quoteChar = null;
@@ -94,7 +92,7 @@ public class CSVDataParser {
 	}
 
 	public TagList parseCSV(InputStream stream, SmooksResourceListType resourceList)
-			throws DocumentException, ParserConfigurationException {
+			throws  ParserConfigurationException {
 		List<AbstractReader> readers = resourceList.getAbstractReader();
 		int count = 0;
 		int index = -1;
@@ -122,13 +120,13 @@ public class CSVDataParser {
 	}
 
 	public TagList parseCSV(String filePath, String fields, String rootName, String recordName, String separator,
-			String quoteChar, String skiplines, String encoding) throws DocumentException, FileNotFoundException {
+			String quoteChar, String skiplines, String encoding) throws  FileNotFoundException {
 		return parseCSV(new FileInputStream(filePath), fields, rootName, recordName, separator, quoteChar, skiplines,
 				encoding);
 	}
 
 	public TagList parseCSV(InputStream stream, String fields, String rootName, String recordName, String separator,
-			String quoteChar, String skiplines, String encoding) throws DocumentException {
+			String quoteChar, String skiplines, String encoding) {
 
 		Smooks smooks = new Smooks();
 
@@ -171,18 +169,15 @@ public class CSVDataParser {
 
 		smooks.setReaderConfig(readerConfigurator);
 
-		StringResult result = new StringResult();
+		DOMResult result = new DOMResult();
 		smooks.filterSource(new StreamSource(stream), result);
+		
+		Document document = (Document) result.getNode();
 
 		XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();
-		ByteArrayInputStream byteinputStream = new ByteArrayInputStream(result.getResult().getBytes());
-		TagList tagList = analyzer.analyze(byteinputStream, null);
+		TagList tagList = analyzer.analyze(document, null);
 
 		try {
-			if (byteinputStream != null) {
-				byteinputStream.close();
-				byteinputStream = null;
-			}
 			if (smooks != null) {
 				smooks.close();
 				smooks = null;
