@@ -8,9 +8,10 @@
  * Contributors: 
  * Red Hat, Inc. - initial API and implementation 
  ******************************************************************************/ 
-package org.jboss.tools.jst.web.kb.el;
+package org.jboss.tools.common.el.core.ca;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -23,7 +24,9 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.Signature;
 import org.eclipse.jdt.internal.ui.text.java.ProposalInfo;
 import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.swt.graphics.Image;
+import org.jboss.tools.common.el.core.ELCorePlugin;
 import org.jboss.tools.common.el.core.model.ELArgumentInvocation;
 import org.jboss.tools.common.el.core.model.ELExpression;
 import org.jboss.tools.common.el.core.model.ELInstance;
@@ -32,6 +35,7 @@ import org.jboss.tools.common.el.core.model.ELMethodInvocation;
 import org.jboss.tools.common.el.core.model.ELModel;
 import org.jboss.tools.common.el.core.model.ELObjectType;
 import org.jboss.tools.common.el.core.model.ELPropertyInvocation;
+import org.jboss.tools.common.el.core.model.ELUtil;
 import org.jboss.tools.common.el.core.parser.ELParser;
 import org.jboss.tools.common.el.core.parser.ELParserFactory;
 import org.jboss.tools.common.el.core.parser.ELParserUtil;
@@ -53,7 +57,6 @@ import org.jboss.tools.common.el.core.resolver.TypeInfoCollector.MemberInfo;
 import org.jboss.tools.common.el.core.resolver.TypeInfoCollector.MemberPresentation;
 import org.jboss.tools.common.el.internal.core.parser.token.JavaNameTokenDescription;
 import org.jboss.tools.common.text.TextProposal;
-import org.jboss.tools.jst.web.kb.WebKbPlugin;
 
 public abstract class AbstractELCompletionEngine<V extends IVariable> implements ELResolver, ELCompletionEngine {
 
@@ -62,6 +65,8 @@ public abstract class AbstractELCompletionEngine<V extends IVariable> implements
 	public abstract Image getELProposalImage();
 
 	protected abstract void log(Exception e);
+
+	private static ELParserFactory defaultFactory = ELParserUtil.getJbossFactory();
 
 	/*
 	 * (non-Javadoc)
@@ -825,7 +830,7 @@ public abstract class AbstractELCompletionEngine<V extends IVariable> implements
 						return;
 					}
 				} catch (JavaModelException jme) {
-					WebKbPlugin.getDefault().logError(jme);
+					ELCorePlugin.getDefault().logError(jme);
 				}
 				segment.setMemberInfo(mbr);
 			}
@@ -920,5 +925,77 @@ public abstract class AbstractELCompletionEngine<V extends IVariable> implements
 
 	protected void setImage(TextProposal kbProposal, V var) {
 		kbProposal.setImage(getELProposalImage());
+	}
+
+	/**
+	 * 
+	 * @param document
+	 * @param offset
+	 * @param start  start of relevant region in document
+	 * @param end    end of relevant region in document
+	 * @return
+	 */
+	public static ELInvocationExpression findExpressionAtOffset(IDocument document, int offset, int start, int end) {
+		return findExpressionAtOffset(document.get(), offset, start, end);
+	}
+
+	public static ELInvocationExpression findExpressionAtOffset(String content, int offset, int start, int end) {
+		//TODO this naive calculations should be removed; 
+		//	   this method should be called with reasonable start and end. 
+		if(start <= 0) start = guessStart(content, offset);
+		if(end >= content.length()) end = guessEnd(content, offset);
+		
+		ELParser parser = defaultFactory.createParser();
+		ELModel model = parser.parse(content, start, end - start);
+		
+		return ELUtil.findExpression(model, offset);
+	}
+
+	static int guessStart(String content, int offset) {
+		if(offset > content.length()) offset = content.length();
+		if(offset < 2) return 0;
+		int s = offset - 2;
+		
+		while(s >= 0) {
+			if(content.charAt(s + 1) == '{') {
+				char ch = content.charAt(s);
+				if(ch == '#' || ch == '$') return s;
+			}
+			s--;
+		}
+		return 0;
+	}
+
+	static int guessEnd(String content, int offset) {
+		if(offset >= content.length()) return content.length();
+		while(offset < content.length()) {
+			if(content.charAt(offset) == '}') return offset;
+			offset++;
+		}
+		return content.length();
+	}
+
+	/**
+	 * Removes duplicates of completion strings
+	 *
+	 * @param suggestions a list of suggestions ({@link String}).
+	 * @return a list of unique completion suggestions.
+	 */
+	public static List<TextProposal> makeProposalsUnique(List<TextProposal> suggestions) {
+		HashSet<String> present = new HashSet<String>();
+		ArrayList<TextProposal> unique= new ArrayList<TextProposal>();
+
+		if (suggestions == null)
+			return unique;
+
+		for (TextProposal item : suggestions) {
+			if (!present.contains(item.getReplacementString())) {
+				present.add(item.getReplacementString());
+				unique.add(item);
+			}
+		}
+
+		present.clear();
+		return unique;
 	}
 }
