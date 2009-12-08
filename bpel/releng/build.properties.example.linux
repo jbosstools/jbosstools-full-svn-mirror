@@ -26,22 +26,30 @@ relengBaseBuilderDir=/home/nboldt/eclipse/workspace-jboss/org.eclipse.releng.bas
 relengCommonBuilderDir=/home/nboldt/eclipse/workspace-jboss/org.eclipse.dash.common.releng
 
 JAVA_HOME=/usr/lib/jvm/java
+JAVA14_HOME=/usr/lib/jvm/java
 JAVA50_HOME=/usr/lib/jvm/java
+JAVA60_HOME=/usr/lib/jvm/java
 
-dependencyURLs=\
-http://repository.jboss.org/eclipse/galileo/GEF-runtime-3.5.1.zip,\
-http://repository.jboss.org/eclipse/galileo/emf-runtime-2.5.0.zip,\
-http://repository.jboss.org/eclipse/galileo/xsd-runtime-2.5.0.zip,\
-http://repository.jboss.org/eclipse/galileo/wtp-R-3.1.1-20090917225226.zip,\
-http://repository.jboss.org/eclipse/galileo/dtp_1.7.1.zip
-#http://repository.jboss.org/eclipse/galileo/eclipse-SDK-3.5.1-linux-gtk.tar.gz
+dependencyURLs=http://repository.jboss.org/eclipse/galileo/eclipse-SDK-3.5.1-linux-gtk.tar.gz
+#http://repository.jboss.org/eclipse/galileo/GEF-runtime-3.5.1.zip,\
+#http://repository.jboss.org/eclipse/galileo/emf-runtime-2.5.0.zip,\
+#http://repository.jboss.org/eclipse/galileo/xsd-runtime-2.5.0.zip,\
+#http://repository.jboss.org/eclipse/galileo/wtp-R-3.1.1-20090917225226.zip,\
+#http://repository.jboss.org/eclipse/galileo/dtp_1.7.1.zip,
 #http://repository.jboss.org/eclipse/galileo/eclipse-SDK-3.5.1-linux-gtk-x86_64.tar.gz
 
 # use precompiled binaries from latest build as input to this build
-repositoryURLs=http://download.jboss.org/jbosstools/updates/nightly/trunk/,\
-http://repository.jboss.org/eclipse/galileo/eclipse-Update-R-3.5.1-200909170800.zip
-#,http://download.eclipse.org/releases/galileo/
-IUsToInstall=org.eclipse.sdk.feature.group+org.eclipse.sdk.ide+org.eclipse.core.net+org.eclipse.equinox.common+org.eclipse.core.runtime+org.eclipse.wst.common.emfworkbench.integration+org.eclipse.wst.xml.core+org.jboss.ide.eclipse.as.wtp.core+org.jboss.tools.vpe.resref+org.jboss.tools.jst.web.ui+org.jboss.ide.eclipse.as.core+org.jboss.ide.eclipse.archives.webtools+org.jboss.tools.jmx.feature.feature.group
+jar:file:/tmp/build/downloads/eclipse-Update-R-3.5.1-200909170800.zip!/,\
+repositoryURLs=http://download.eclipse.org/releases/galileo/,\
+http://download.jboss.org/jbosstools/updates/nightly/trunk/,\
+jar:file:/tmp/build/downloads/GEF-Update-3.5.1.zip!/,\
+jar:file:/tmp/build/downloads/dali-buildrepo-R-3.1.1-20090917225226.zip!/,\
+jar:file:/tmp/build/downloads/dtp-Updates-1.7-20090908.zip!/,\
+jar:file:/tmp/build/downloads/emf-xsd-Update-2.5.0.zip!/,\
+jar:file:/tmp/build/downloads/jst-buildrepo-R-3.1.1-20090917225226.zip!/,\
+jar:file:/tmp/build/downloads/wst-buildrepo-R-3.1.1-20090917225226.zip!/
+# org.eclipse.sdk.feature.group+org.eclipse.sdk.ide+org.eclipse.core.net+org.eclipse.equinox.common+org.eclipse.core.runtime+org.eclipse.debug.core,
+IUsToInstall=org.eclipse.wst.common.emfworkbench.integration+org.eclipse.wst.xml.core+org.jboss.ide.eclipse.as.wtp.core,org.jboss.tools.vpe.resref+org.jboss.tools.jst.web.ui+org.jboss.ide.eclipse.as.core+org.jboss.ide.eclipse.archives.webtools+org.jboss.tools.jmx.feature.feature.group,org.eclipse.gmf.runtime.diagram.ui+org.eclipse.emf.compare.match+org.eclipse.emf.compare.diff+org.eclipse.emf.compare.ui
 
 flattenDependencies=true
 parallelCompilation=true
