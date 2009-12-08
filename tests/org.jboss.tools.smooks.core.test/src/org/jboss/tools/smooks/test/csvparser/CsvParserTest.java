@@ -14,7 +14,6 @@ import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.dom4j.DocumentException;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.csv.CSVDataParser;
@@ -30,7 +29,7 @@ import org.jboss.tools.smooks.test.model11.BaseTestCase;
  */
 public class CsvParserTest extends BaseTestCase {
 
-	public void testCsvParser() throws IOException, DocumentException, ParserConfigurationException {
+	public void testCsvParser() throws IOException,  ParserConfigurationException {
 
 		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(null);
 		smooksResource.load(CsvParserTest.class.getResourceAsStream("smooks-config.xml"), null);

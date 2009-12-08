@@ -17,7 +17,6 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.dom4j.DocumentException;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.edi.EDIDataParser;
@@ -33,7 +32,7 @@ import org.jboss.tools.smooks.test.model11.BaseTestCase;
  */
 public class EDIParserTest extends BaseTestCase {
 
-	public void testEDIParser() throws IOException, DocumentException, ParserConfigurationException {
+	public void testEDIParser() throws IOException,  ParserConfigurationException {
 
 		Resource smooksResource = new SmooksResourceFactoryImpl().createResource(null);
 
