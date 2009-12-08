@@ -148,7 +148,9 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 							while (command2 instanceof CommandWrapper) {
 								command2 = ((CommandWrapper) command2).getCommand();
 							}
-							handleInputParamChange(command2);
+							if (handleInputParamChange(command2)) {
+								break;
+							}
 						}
 					} else {
 						handleInputParamChange(rawCommand);
@@ -156,7 +158,6 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				}
 			}
 		});
-
 	}
 
 	private CheckboxTableViewer inputDataViewer;
@@ -306,7 +307,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		}
 	}
 
-	protected void handleInputParamChange(Command command) {
+	protected boolean handleInputParamChange(Command command) {
 		Collection<?> affectedObjects = command.getAffectedObjects();
 		boolean refreshInputModel = false;
 		for (Iterator<?> iterator2 = affectedObjects.iterator(); iterator2.hasNext();) {
@@ -350,6 +351,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		if (refreshInputModel) {
 			refreshInputModelView();
 		}
+
+		return refreshInputModel;
 	}
 
 	private void handleCommandStack(CommandStack commandStack) {
@@ -857,7 +860,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				getEditingDomain().getCommandStack().execute(c);
 			}
 		}
-		this.inputTypeChanged();
+		// if (command == null)
+		// this.inputTypeChanged();
 		// SmooksGraphicsExtType ext = getSmooksGraphicsExtType();
 		// if (ext != null) {
 		// List<ISmooksGraphChangeListener> listeners = ((SmooksGraphicsExtType)
@@ -1128,7 +1132,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	}
 
 	protected void showInputDataWizard() {
-
+		CompoundCommand compoundCommand = new CompoundCommand();
 		// SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
 		String inputType = getSmooksModelProvider().getInputType();
 		List<InputType> inputTypes = null;
@@ -1145,7 +1149,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				String path = dialog.getPath();
 				Properties pros = dialog.getProperties();
 				inputTypes = SmooksUIUtils.recordInputDataInfomation(getEditingDomain(), getSmooksConfigResourceList()
-						.getParams(), type, path, pros);
+						.getParams(), type, path, pros, compoundCommand);
 			}
 		} else {
 			IStructuredDataSelectionWizard wizard = ViewerInitorStore.getInstance().getStructuredDataCreationWizard(
@@ -1156,7 +1160,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				String path = wizard.getStructuredDataSourcePath();
 				Properties pros = wizard.getProperties();
 				inputTypes = SmooksUIUtils.recordInputDataInfomation(getEditingDomain(), getSmooksConfigResourceList()
-						.getParams(), inputType, path, pros);
+						.getParams(), inputType, path, pros, compoundCommand);
 			}
 		}
 
@@ -1167,13 +1171,26 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				((List) obj).add(addedInputType);
 			}
 
-			deactiveAllInputFile(null);
+			deactiveAllInputFile(compoundCommand);
 			if (inputType.equals(SmooksModelUtils.INPUT_TYPE_CUSTOME)) {
 				// don't active the input file
 			} else {
-				setInputDataActiveStatus(true, addedInputType, null);
+				addedInputType.setActived(true);
+				ParamType param = addedInputType.getRelatedParameter();
+				if (param != null) {
+					String value = SmooksModelUtils.INPUT_ACTIVE_TYPE;
+					Command c = SetCommand.create(this.getEditingDomain(), param,
+							SmooksPackage.Literals.PARAM_TYPE__TYPE, value);
+					if (c.canExecute()) {
+						compoundCommand.append(c);
+					}
+				}
 			}
-			inputTypeChanged();
+			if (!compoundCommand.isEmpty()) {
+				getSmooksModelProvider().getEditingDomain().getCommandStack().execute(compoundCommand);
+			}
+			if (inputDataViewer != null)
+				inputDataViewer.refresh();
 		}
 	}
 
@@ -1194,11 +1211,13 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				Throwable t = SelectorCreationDialog.getCurrentException();
 				if (t != null) {
 					if (this.getManagedForm() != null) {
-						if(t instanceof SmooksException && t.getCause() != null) {
+						if (t instanceof SmooksException && t.getCause() != null) {
 							t = t.getCause();
 						}
-						this.getManagedForm().getMessageManager().addMessage("input error",
-								"Check Reader Configuration.  Error creating Input Model from Input Data.\nError: " + t.getMessage(), null, IMessageProvider.ERROR);
+						this.getManagedForm().getMessageManager().addMessage(
+								"input error",
+								"Check Reader Configuration.  Error creating Input Model from Input Data. Error: \""
+										+ t.getMessage() + "\"", null, IMessageProvider.ERROR);
 					}
 				}
 			}
