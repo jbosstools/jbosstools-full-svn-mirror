@@ -16,6 +16,7 @@ import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.IDebugModelPresentation;
 import org.eclipse.jdt.junit.launcher.JUnitLaunchShortcut;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -23,6 +24,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
+import org.jboss.tools.smooks.configuration.RuntimeMetadata;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 
 public class SmooksLaunchShortcut extends JUnitLaunchShortcut {
@@ -95,6 +97,12 @@ public class SmooksLaunchShortcut extends JUnitLaunchShortcut {
 				}
 				if (selected instanceof IFile) {
 					elementToLaunch = (IFile) selected;
+				}
+				RuntimeMetadata metadata = new RuntimeMetadata();
+				metadata.setSmooksConfig(elementToLaunch);
+				if (!metadata.isValidSmooksConfig()) {
+					MessageDialog.openError(getShell(), "Launch Failed", metadata.getErrorMessage());
+					return;
 				}
 			}
 			performLaunch(elementToLaunch, mode);
