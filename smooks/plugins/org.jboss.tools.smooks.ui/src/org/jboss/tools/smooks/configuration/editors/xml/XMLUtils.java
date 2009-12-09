@@ -44,7 +44,9 @@ public class XMLUtils {
 	public static DocumentBuilder getDOMBuilder() throws ParserConfigurationException {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		dbf.setNamespaceAware(true);
-		return dbf.newDocumentBuilder();
+		dbf.setValidating(false);
+		DocumentBuilder builder = dbf.newDocumentBuilder();
+		return builder;
 	}
 
 	public static Transformer getTransformer() throws TransformerConfigurationException {
