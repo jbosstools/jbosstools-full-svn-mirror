@@ -39,6 +39,8 @@ import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jdt.ui.JavaElementLabelProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -170,7 +172,34 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 			if(editor instanceof AbstractSmooksFormEditor) {
 				IEditorInput editorInput = editor.getEditorInput();
 
-				if(editorInput instanceof FileEditorInput) {
+				// added for Issue JBIDE-5360 - now will get defaults from the navigator first (if valid smooks config) or the smooks editor if it's open
+				if (activePage.getActivePart().getSite().getSelectionProvider() != null) {
+					
+					ISelection selection = activePage.getActivePart().getSite().getSelectionProvider().getSelection();
+					
+					if (selection instanceof IStructuredSelection) {
+						
+						IStructuredSelection ssel = (IStructuredSelection) selection;
+						
+						if (!ssel.isEmpty() && ssel.getFirstElement() instanceof IFile) {
+							
+							IFile file = (IFile) ssel.getFirstElement();
+							RuntimeMetadata metadata = new RuntimeMetadata();
+							metadata.setSmooksConfig(file);
+							
+							if (metadata.isValidSmooksConfig()) {
+								
+								String configName = getLaunchManager().generateUniqueLaunchConfigurationNameFrom(file.getName());
+								
+								launchConfigWC.rename(configName);
+								launchConfigWC.setAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, file.getProject().getName()); //$NON-NLS-1$
+								launchConfigWC.setAttribute(IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, file.getProjectRelativePath().toString()); //$NON-NLS-1$
+							}
+						}
+					}
+				}
+				else if(editorInput instanceof FileEditorInput) {
+					
 					FileEditorInput fileEI = (FileEditorInput) editorInput;					
 					IFile file = fileEI.getFile();
 					String configName = getLaunchManager().generateUniqueLaunchConfigurationNameFrom(editor.getTitle());
@@ -340,7 +369,6 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 			setErrorMessage(Messages.SmooksRunTab_Error_Unknown_Project_Name + projectName + "'."); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 			return;
 		}
-//		IJavaProject javaProject= JavaCore.create(project);
 
 		String configName= fConfigurationText.getText().trim();
 		try {
