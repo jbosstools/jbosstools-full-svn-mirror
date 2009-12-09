@@ -62,7 +62,7 @@ public class FreemarkerCSVTemplateCreationWizard extends Wizard {
 	@Override
 	public void addPages() {
 		if (page == null) {
-			page = new FreemarkerCSVCreationWizardPage("CSV");
+			page = new FreemarkerCSVCreationWizardPage("CSV"); //$NON-NLS-1$
 		}
 		this.addPage(page);
 		super.addPages();

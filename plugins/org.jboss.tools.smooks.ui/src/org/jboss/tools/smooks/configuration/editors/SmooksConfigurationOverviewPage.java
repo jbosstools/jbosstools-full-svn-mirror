@@ -626,7 +626,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 			if (this.getManagedForm() != null) {
 				streamFilterTypeCombo.setEnabled(false);
 				defaultSerializationOnCheckbox.setEnabled(false);
-				String[] messages = currentMessage.split("\n");
+				String[] messages = currentMessage.split("\n"); //$NON-NLS-1$
 				List<IMessage> messageList = new ArrayList<IMessage>();
 				for (int i = 0; i < messages.length; i++) {
 					String message = messages[i];

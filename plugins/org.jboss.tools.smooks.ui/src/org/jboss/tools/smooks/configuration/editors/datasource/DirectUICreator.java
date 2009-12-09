@@ -101,7 +101,7 @@ public class DirectUICreator extends PropertyUICreator {
 
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return this.createElementSelectionSection("Binding On Element", editingdomain, toolkit, parent, model,
+		return this.createElementSelectionSection(Messages.DirectUICreator_Binding_On_Element, editingdomain, toolkit, parent, model,
 				formEditor, part,DatasourcePackage.eINSTANCE.getDirect_BindOnElement(), DatasourcePackage.eINSTANCE
 						.getDirect_BindOnElementNS());
 	}
@@ -139,7 +139,7 @@ public class DirectUICreator extends PropertyUICreator {
 
 		gd = new GridData();
 		gd.verticalAlignment = GridData.CENTER;
-		Label imageLabel = toolkit.createLabel(linkComposite, "");
+		Label imageLabel = toolkit.createLabel(linkComposite, ""); //$NON-NLS-1$
 		imageLabel.setLayoutData(gd);
 		imageLabel.setImage(SmooksConfigurationActivator.getDefault().getImageRegistry().get(
 				GraphicsConstants.IMAGE_JAVA_ARRAY));
@@ -147,7 +147,7 @@ public class DirectUICreator extends PropertyUICreator {
 		gd = new GridData();
 		gd.verticalAlignment = GridData.CENTER;
 		gd.horizontalAlignment = GridData.BEGINNING;
-		Hyperlink testConnectLink = toolkit.createHyperlink(linkComposite, "DB Connection Test", SWT.NONE);
+		Hyperlink testConnectLink = toolkit.createHyperlink(linkComposite, Messages.DirectUICreator_DB_Connection_Test, SWT.NONE);
 		testConnectLink.setLayoutData(gd);
 		final Object fm = model;
 		final Shell shell = parent.getShell();
@@ -168,7 +168,7 @@ public class DirectUICreator extends PropertyUICreator {
 							 */
 							public void run(IProgressMonitor monitor) throws InvocationTargetException,
 									InterruptedException {
-								monitor.beginTask("Test Connection", 2);
+								monitor.beginTask(Messages.DirectUICreator_Test_Connection, 2);
 								String driver = ((Direct)fm).getDriver();
 								String url = ((Direct)fm).getUrl();
 								String userName = ((Direct)fm).getUsername();
@@ -178,7 +178,7 @@ public class DirectUICreator extends PropertyUICreator {
 									if(monitor.isCanceled()){
 										throw new InterruptedException();
 									}
-									monitor.setTaskName("Load driver class and database connection properties...");
+									monitor.setTaskName(Messages.DirectUICreator_Load_DB_Properties);
 									ProjectClassLoader classLoader = new ProjectClassLoader(JavaCore.create(resource.getProject()));
 									if(monitor.isCanceled()){
 										throw new InterruptedException();
@@ -189,12 +189,12 @@ public class DirectUICreator extends PropertyUICreator {
 										throw new InterruptedException();
 									}
 									Properties pros = new Properties();
-									pros.setProperty("name", userName);
-									pros.setProperty("password", password);
+									pros.setProperty("name", userName); //$NON-NLS-1$
+									pros.setProperty("password", password); //$NON-NLS-1$
 									if(monitor.isCanceled()){
 										throw new InterruptedException();
 									}
-									monitor.setTaskName("Try to connect database...");
+									monitor.setTaskName(Messages.DirectUICreator_Trying_to_Connect);
 									dri.connect(url, pros);
 									monitor.worked(1);
 								} catch (JavaModelException e1) {
@@ -217,10 +217,10 @@ public class DirectUICreator extends PropertyUICreator {
 						SmooksUIUtils.showErrorDialog(shell, SmooksUIUtils.createErrorStatus(e2));
 						return;
 					} catch (InterruptedException e2) {
-						MessageDialog.openConfirm(shell, "User Cancle", "Connection test was cancled by users");
+						MessageDialog.openConfirm(shell, Messages.DirectUICreator_User_Canceled, Messages.DirectUICreator_Msg_User_Canceled);
 						return;
 					}
-					MessageDialog.openConfirm(shell, "Test success", "Connection test success");
+					MessageDialog.openConfirm(shell, Messages.DirectUICreator_Test_Success, Messages.DirectUICreator_Msg_Test_Success);
 				}
 			}
 

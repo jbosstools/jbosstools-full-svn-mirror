@@ -31,7 +31,7 @@ import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
  */
 public class SmooksMarkerHelper extends EditUIMarkerHelper {
 
-	public static final String MARKER_ID = "org.jboss.tools.smooks.ui.problem";
+	public static final String MARKER_ID = "org.jboss.tools.smooks.ui.problem"; //$NON-NLS-1$
 	
 	public IRunnableWithProgress getWorkspaceModifyOperation(IRunnableWithProgress runnableWithProgress) {
 		return new WorkspaceModifyDelegatingOperation(runnableWithProgress);
@@ -56,7 +56,7 @@ public class SmooksMarkerHelper extends EditUIMarkerHelper {
 		if (parentDiagnostic != null) {
 			String parentMessage = parentDiagnostic.getMessage();
 			if (parentMessage != null) {
-				message = message != null ? parentMessage + ". " + message : parentMessage;
+				message = message != null ? parentMessage + ". " + message : parentMessage; //$NON-NLS-1$
 			}
 		}
 		return message;

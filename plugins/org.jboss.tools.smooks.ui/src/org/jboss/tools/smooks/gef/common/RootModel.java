@@ -13,9 +13,9 @@ public class RootModel extends AbstractSmooksGraphicalModel{
 		super(null);
 	}
 
-	public static final String ADD_CHILDREN = "__pro_add_children";
+	public static final String ADD_CHILDREN = "__pro_add_children"; //$NON-NLS-1$
 
-	public static final String REMOVE_CHILDREN = "__pro_remove_children";
+	public static final String REMOVE_CHILDREN = "__pro_remove_children"; //$NON-NLS-1$
 
 	private PropertyChangeSupport support = new PropertyChangeSupport(this);
 

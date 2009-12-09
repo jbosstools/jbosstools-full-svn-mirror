@@ -91,7 +91,7 @@ public abstract class AddSmooksObjectAction extends AddSmooksModelAction {
 	@Override
 	public String getActionText() {
 		Object object = getNewObject();
-		if(object == null) return "";
+		if(object == null) return ""; //$NON-NLS-1$
 		object = AdapterFactoryEditingDomain.unwrap(object);
 		AdapterFactoryEditingDomain editDomain = (AdapterFactoryEditingDomain) provider.getEditingDomain();
 		IItemLabelProvider itemLabelProvider = (IItemLabelProvider) editDomain.getAdapterFactory().adapt(object,

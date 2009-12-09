@@ -40,24 +40,24 @@ public class SmooksGraphUtil {
 				return null;
 			}
 			beanId = beanId.trim();
-			return "BeanType_" + beanId;
+			return "BeanType_" + beanId; //$NON-NLS-1$
 		}
 		
 		if (data instanceof Xsl) {
 			String id = ((Xsl) data).getApplyOnElement();
 			if (id == null) {
-				id = "";
+				id = ""; //$NON-NLS-1$
 			}
 			id = id.trim();
-			return "XSL_" + id;
+			return "XSL_" + id; //$NON-NLS-1$
 		}
 		
 		if (data instanceof Freemarker) {
 			String id = SmooksModelUtils.getParamValue(((Freemarker)data).getParam(), SmooksModelUtils.KEY_OBJECT_ID);
 			if (id == null) {
-				id = "freemarker";
+				id = "freemarker"; //$NON-NLS-1$
 			}else{
-				id = "freemarker_"+id;
+				id = "freemarker_"+id; //$NON-NLS-1$
 			}
 			return id;
 		}
@@ -135,9 +135,9 @@ public class SmooksGraphUtil {
 	public static AbstractSmooksGraphicalModel findInputGraphModel(String selector, IXMLStructuredObject root,
 			RootModel graphRoot) {
 		IXMLStructuredObject model = null;
-		model = SmooksUIUtils.localXMLNodeWithPath(selector, root, "/", false);
+		model = SmooksUIUtils.localXMLNodeWithPath(selector, root, "/", false); //$NON-NLS-1$
 		if (model == null) {
-			model = SmooksUIUtils.localXMLNodeWithPath(selector, root, " ", false);
+			model = SmooksUIUtils.localXMLNodeWithPath(selector, root, " ", false); //$NON-NLS-1$
 		}
 		if (model == null)
 			return null;

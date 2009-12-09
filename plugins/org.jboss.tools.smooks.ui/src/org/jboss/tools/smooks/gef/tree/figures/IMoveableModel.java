@@ -13,7 +13,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
  */
 public interface IMoveableModel {
 	
-	public static final String PRO_BOUNDS_CHANGED = "__pro_bounds_changed";
+	public static final String PRO_BOUNDS_CHANGED = "__pro_bounds_changed"; //$NON-NLS-1$
 	
 	public Point getLocation();
 

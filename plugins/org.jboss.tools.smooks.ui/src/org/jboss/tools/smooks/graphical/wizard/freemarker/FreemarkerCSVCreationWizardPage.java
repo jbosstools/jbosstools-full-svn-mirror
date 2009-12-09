@@ -315,11 +315,11 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 			error = "Quote must be only one character"; //$NON-NLS-1$
 		}
 		if (fields == null) {
-			error = "Fields can't be empty";
+			error = Messages.FreemarkerCSVCreationWizardPage_Error_Fields_Empty;
 		} else {
 			fields = fields.trim();
 			if ("".equals(fields)) { //$NON-NLS-1$
-				error = "Fields can't be empty";
+				error = Messages.FreemarkerCSVCreationWizardPage_Error_Fields_Empty;
 			} else {
 				char[] chars = fields.toCharArray();
 				for (int i = 0; i < chars.length; i++) {
@@ -330,19 +330,19 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 					if (Character.isLetterOrDigit(c)) {
 
 					} else {
-						error = "The '" + c + "' is incorrect in the fields string";
+						error = Messages.FreemarkerCSVCreationWizardPage_Error_Incorrect + c + Messages.FreemarkerCSVCreationWizardPage_Error_Incorrect2;
 						break;
 					}
 				}
 				
-				String[] fieldsArray = fields.split(",");
+				String[] fieldsArray = fields.split(","); //$NON-NLS-1$
 				if(fieldsArray.length == 0){
-					error = "Fields can't be empty";
+					error = Messages.FreemarkerCSVCreationWizardPage_Error_Fields_Empty;
 				}
 				for (int i = 0; i < fieldsArray.length; i++) {
 					String f = fieldsArray[i];
-					if(f == null || "".equals(f.trim())){
-						error = "Fields can't be empty";
+					if(f == null || "".equals(f.trim())){ //$NON-NLS-1$
+						error = Messages.FreemarkerCSVCreationWizardPage_Error_Fields_Empty;
 						break;
 					}
 				}

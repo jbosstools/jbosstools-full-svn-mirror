@@ -37,7 +37,7 @@ public class SmooksGraphicalEditorMenuContextProvider extends SmooksGraphicalMen
 
 	public void buildContextMenu(IMenuManager menu) {
 		super.buildContextMenu(menu);
-		MenuManager addChildActionMenu = new MenuManager("Add");
+		MenuManager addChildActionMenu = new MenuManager(Messages.SmooksGraphicalEditorMenuContextProvider_Add_Menu_Text);
 		menu.appendToGroup(GROUP_CUSTOME, addChildActionMenu);
 
 		Iterator<?> iterator = getActionRegistry().getActions();

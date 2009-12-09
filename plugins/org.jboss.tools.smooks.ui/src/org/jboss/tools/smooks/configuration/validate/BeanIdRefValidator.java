@@ -78,7 +78,7 @@ public class BeanIdRefValidator extends AbstractValidator {
 
 		if (idRef != null) {
 			if (!idList.contains(idRef) && beanIDRefFeature != null && beanIDRefFeature instanceof EAttribute) {
-				return newWaringDiagnostic("The Java Bean '" + idRef + "' dosen't exist.", model,
+				return newWaringDiagnostic(Messages.BeanIdRefValidator_Warning_Java_Bean + idRef + Messages.BeanIdRefValidator_Warning_Does_Not_Exist, model,
 						(EAttribute) beanIDRefFeature);
 			}
 		}

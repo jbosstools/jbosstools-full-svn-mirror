@@ -63,7 +63,7 @@ public class EDIFileParser {
 		char[] separators = new char[] { field, component, subcomponent };
 		for (Iterator<?> iterator = segmentList.iterator(); iterator.hasNext();) {
 			String string = (String) iterator.next();
-			String[] fields = string.split("\\" + new String(new char[] { field }));
+			String[] fields = string.split("\\" + new String(new char[] { field })); //$NON-NLS-1$
 			TagObject tag = null;
 			if (fields.length != 0) {
 				if (names.indexOf(fields[0]) == -1) {
@@ -95,8 +95,8 @@ public class EDIFileParser {
 	}
 
 	private String getSeparator(String s) {
-		if (s.equals("*") || s.equals("+") || s.equals("^")) {
-			return "\\" + s;
+		if (s.equals("*") || s.equals("+") || s.equals("^")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			return "\\" + s; //$NON-NLS-1$
 		}
 		return s;
 	}

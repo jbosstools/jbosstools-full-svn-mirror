@@ -45,7 +45,7 @@ public class AddAttributeAction extends AddXSLNodeAction {
 	 */
 	@Override
 	public String getActionText() {
-		return "Add Attribute";
+		return Messages.AddAttributeAction_Action_Text;
 	}
 
 	/* (non-Javadoc)
@@ -53,7 +53,7 @@ public class AddAttributeAction extends AddXSLNodeAction {
 	 */
 	@Override
 	protected String getNodeName() {
-		return "attribute";
+		return "attribute"; //$NON-NLS-1$
 	}
 
 	/* (non-Javadoc)

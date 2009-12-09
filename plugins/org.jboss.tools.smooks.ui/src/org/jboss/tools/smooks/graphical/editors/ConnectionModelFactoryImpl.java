@@ -242,12 +242,12 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 
 	private String processSelectString(String select, String skm) {
 		if (select != null) {
-			if (select.startsWith(".")) {
+			if (select.startsWith(".")) { //$NON-NLS-1$
 				select = select.substring(1, select.length());
 			}
 			if (skm != null) {
-				if (select.indexOf(skm + ":") != -1) {
-					select = select.replaceAll(skm + ":", "");
+				if (select.indexOf(skm + ":") != -1) { //$NON-NLS-1$
+					select = select.replaceAll(skm + ":", ""); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
 		}
@@ -298,7 +298,7 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 			String value = tagPropertyObject.getValue();
 			if (value != null) {
 				value = value.trim();
-				if (value.startsWith("{") && value.endsWith("}")) {
+				if (value.startsWith("{") && value.endsWith("}")) { //$NON-NLS-1$ //$NON-NLS-2$
 					value = value.substring(1, value.length() - 1);
 					fillSelectorConnection(inputDataList, root, model, value, connections);
 				}

@@ -62,7 +62,7 @@ public abstract class AbstractValidator implements ISmooksValidator {
 	}
 
 	protected Diagnostic newDiagnostic(int severity, String message, Object model, EAttribute property) {
-		return new BasicDiagnostic(severity, "org.jboss.tools", 0, message, new Object[] { model, property });
+		return new BasicDiagnostic(severity, "org.jboss.tools", 0, message, new Object[] { model, property }); //$NON-NLS-1$
 	}
 
 	protected Diagnostic newWaringDiagnostic(String message, Object model, EAttribute property) {

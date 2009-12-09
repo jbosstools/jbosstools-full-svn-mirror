@@ -88,7 +88,7 @@ public class EDIMappingConfigFileWizard extends Wizard implements INewWizard {
 			return false;
 		} catch (InvocationTargetException e) {
 			Throwable realException = e.getTargetException();
-			MessageDialog.openError(getShell(), "Error", realException.getMessage());
+			MessageDialog.openError(getShell(), Messages.EDIMappingConfigFileWizard_Error_Title, realException.getMessage());
 			return false;
 		}
 		return true;
@@ -102,11 +102,11 @@ public class EDIMappingConfigFileWizard extends Wizard implements INewWizard {
 	@Override
 	public void addPages() {
 		if (pathPage == null) {
-			pathPage = new EDIMappingConfigFileContainerSelectionPage("File Selection", this.selection);
+			pathPage = new EDIMappingConfigFileContainerSelectionPage(Messages.EDIMappingConfigFileWizard_File_Selection_Page_Title, this.selection);
 		}
 		this.addPage(pathPage);
 		if (configPage == null) {
-			configPage = new EDIMappingConfigFileConfigPage("Config", this.selection);
+			configPage = new EDIMappingConfigFileConfigPage(Messages.EDIMappingConfigFileWizard_Config_Title, this.selection);
 		}
 		this.addPage(configPage);
 		super.addPages();
@@ -114,7 +114,7 @@ public class EDIMappingConfigFileWizard extends Wizard implements INewWizard {
 
 	private void doFinish(IPath containerPath, String fileName, IProgressMonitor monitor) throws CoreException {
 		// create a sample file
-		monitor.beginTask("Creating " + fileName, 2);
+		monitor.beginTask(Messages.EDIMappingConfigFileWizard_Creating_Task + fileName, 2);
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IResource resource = root.findMember(containerPath);
 		IContainer container = null;
@@ -122,9 +122,9 @@ public class EDIMappingConfigFileWizard extends Wizard implements INewWizard {
 			container = (IContainer) resource;
 		}
 		if (container == null)
-			throwCoreException("Container \"" + containerPath.toPortableString() + "\" does not exist.");
+			throwCoreException(Messages.EDIMappingConfigFileWizard_Exception_Container_Does_Not_Exist + containerPath.toPortableString() + Messages.EDIMappingConfigFileWizard_Exception_Container_Does_Not_Exist2);
 		final IFile configFile = container.getFile(new Path(fileName));
-		String extFileName = fileName + ".ext";
+		String extFileName = fileName + ".ext"; //$NON-NLS-1$
 		final IFile extFile = container.getFile(new Path(extFileName));
 		try {
 			// create config file
@@ -141,7 +141,7 @@ public class EDIMappingConfigFileWizard extends Wizard implements INewWizard {
 			SmooksConfigurationActivator.getDefault().log(e);
 		}
 		monitor.worked(1);
-		monitor.setTaskName("Opening file with Smooks Editor.");
+		monitor.setTaskName(Messages.EDIMappingConfigFileWizard_Task_Opening_Smooks_Editor);
 		getShell().getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
@@ -236,12 +236,12 @@ public class EDIMappingConfigFileWizard extends Wizard implements INewWizard {
 	public static InputStream createExtContentStream(String filePath) {
 		String path = filePath;
 		if (path == null) {
-			path = "";
+			path = ""; //$NON-NLS-1$
 		}
-		String contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-				+ "    <smooks-graphics-ext xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\">\n"
-				+ "        <input type=\"EDI\">\n" + "            <param name=\"path\">" + path + "</param>\n"
-				+ "        </input>\n" + "        <graph/>\n" + "    </smooks-graphics-ext>";
+		String contents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" //$NON-NLS-1$
+				+ "    <smooks-graphics-ext xmlns=\"http://www.jboss.org/jbosstools/smooks/smooks-graphics-ext.xsd\">\n" //$NON-NLS-1$
+				+ "        <input type=\"EDI\">\n" + "            <param name=\"path\">" + path + "</param>\n" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ "        </input>\n" + "        <graph/>\n" + "    </smooks-graphics-ext>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		return new ByteArrayInputStream(contents.getBytes());
 	}
 

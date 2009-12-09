@@ -51,10 +51,10 @@ public class EDIReader12DataWizard extends Wizard implements IStructuredDataSele
 
 	@Override
 	public void addPages() {
-		ediFilePage = new EDIReader12DataPathWizardPage("EDI Data Page", new String[] {});
+		ediFilePage = new EDIReader12DataPathWizardPage(Messages.EDIReader12DataWizard_Page_Title_EDI_Data_Page, new String[] {});
 		this.addPage(ediFilePage);
 
-		mappingFilePage = new EDIReader12MappingDataPathWizardPage("EDI Config Page", null);
+		mappingFilePage = new EDIReader12MappingDataPathWizardPage(Messages.EDIReader12DataWizard_Page_Title_EDI_Config_Page, null);
 		this.addPage(mappingFilePage);
 		super.addPages();
 	}
@@ -118,7 +118,7 @@ public class EDIReader12DataWizard extends Wizard implements IStructuredDataSele
 	public Properties getProperties() {
 		Properties pros = new Properties();
 		if (mappingFilePage.isUseAvaliableReader() || mappingFilePage.isCreateNewReader()) {
-			pros.put(EDIDataParser.USE_AVAILABEL_READER, "true");
+			pros.put(EDIDataParser.USE_AVAILABEL_READER, "true"); //$NON-NLS-1$
 			return pros;
 		}
 		String encoding = mappingFilePage.getEncoding();

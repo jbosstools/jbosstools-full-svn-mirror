@@ -105,7 +105,7 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 		
 		Label fProjLabel = new Label(comp, SWT.NONE);
 		gd.horizontalIndent = 10;
-		fProjLabel.setText("Project:"); 
+		fProjLabel.setText(Messages.SmooksRunTab_Label_Project); 
 		fProjLabel.setLayoutData(gd);
 		
 		fProjText= new Text(comp, SWT.SINGLE | SWT.BORDER);
@@ -119,7 +119,7 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 		});
 			
 		fProjButton = new Button(comp, SWT.PUSH);
-		fProjButton.setText("Browse"); 
+		fProjButton.setText(Messages.SmooksRunTab_Button_Browse); 
 		fProjButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent evt) {
 				handleProjectButtonSelected();
@@ -131,7 +131,7 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 		gd = new GridData();
 		gd.horizontalIndent = 10;
 		fConfigLabel.setLayoutData(gd);
-		fConfigLabel.setText("Configuration:"); 
+		fConfigLabel.setText(Messages.SmooksRunTab_Label_Configuration); 
 		
 	
 		fConfigurationText = new Text(comp, SWT.SINGLE | SWT.BORDER);
@@ -146,7 +146,7 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 		
 		fSearchButton = new Button(comp, SWT.PUSH);
 		fSearchButton.setEnabled(fProjText.getText().length() > 0);
-		fSearchButton.setText("Search"); 
+		fSearchButton.setText(Messages.SmooksRunTab_Button_Search); 
 		fSearchButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent evt) {
 				handleSearchButtonSelected();
@@ -222,7 +222,7 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 			dialog.setInput(root);			
 		}
 
-		dialog.setTitle("Select Smooks Configuration File...");
+		dialog.setTitle(Messages.SmooksRunTab_Dialog_Title_Select_Config);
 		if (dialog.open() == Window.CANCEL) {
 			return;
 		}
@@ -269,8 +269,8 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 		
 		ILabelProvider labelProvider= new JavaElementLabelProvider(JavaElementLabelProvider.SHOW_DEFAULT);
 		ElementListSelectionDialog dialog= new ElementListSelectionDialog(getShell(), labelProvider);
-		dialog.setTitle("Select Smooks Configuration"); 
-		dialog.setMessage("Type Project name to narrow selection:"); 
+		dialog.setTitle(Messages.SmooksRunTab_Title_Select_Config); 
+		dialog.setMessage(Messages.SmooksRunTab_Message_Select_Config); 
 		dialog.setElements(projects);
 		
 		IJavaProject javaProject = getJavaProject();
@@ -325,19 +325,19 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 
 		String projectName= fProjText.getText().trim();
 		if (projectName.length() == 0) {
-			setErrorMessage("Project name not configured.");
+			setErrorMessage(Messages.SmooksRunTab_Error_Need_Project_Name);
 			return;
 		}
 
 		IStatus status= ResourcesPlugin.getWorkspace().validatePath(IPath.SEPARATOR + projectName, IResource.PROJECT);
 		if (!status.isOK() || !Path.ROOT.isValidSegment(projectName)) {
-			setErrorMessage("Invalid project name '" + projectName + "'.");
+			setErrorMessage(Messages.SmooksRunTab_Error_Invalid_Project_Name + projectName + "'."); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 			return;
 		}
 
 		IProject project= getWorkspaceRoot().getProject(projectName);
 		if (!project.exists()) {
-			setErrorMessage("Unknown project name '" + projectName + "'.");
+			setErrorMessage(Messages.SmooksRunTab_Error_Unknown_Project_Name + projectName + "'."); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 			return;
 		}
 //		IJavaProject javaProject= JavaCore.create(project);
@@ -345,15 +345,15 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 		String configName= fConfigurationText.getText().trim();
 		try {
 			if (!project.hasNature(JavaCore.NATURE_ID)) {
-				setErrorMessage("Project '" + projectName + "' is not a Java Project.");
+				setErrorMessage(Messages.SmooksRunTab_Error_Not_A_Java_Project + projectName + Messages.SmooksRunTab_Error_Not_A_Java_Project2);
 				return;
 			}
 			if (configName.length() == 0) {
-				setErrorMessage("Smooks Configuration not specified.");
+				setErrorMessage(Messages.SmooksRunTab_Error_Smooks_Configuration_Missing);
 				return;
 			}
 		} catch (CoreException e) {
-			setErrorMessage("Unexpected Validation Error: " + e.getMessage());
+			setErrorMessage(Messages.SmooksRunTab_Error_Validation + e.getMessage());
 		}
 		
 		if(!launchMetaData.isValidSmooksConfig()) {
@@ -380,7 +380,7 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 	}
 
 	private static IResource getSmooksConfig(String projectName, String configName) {
-		if(projectName != null && !projectName.trim().equals("") && configName != null && !configName.trim().equals("")) {
+		if(projectName != null && !projectName.trim().equals("") && configName != null && !configName.trim().equals("")) { //$NON-NLS-1$ //$NON-NLS-2$
 			IProject project = getWorkspaceRoot().getProject(projectName);
 			if(assertProjectOK(project)) {
 				return project.findMember(configName);
@@ -394,7 +394,7 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#getName()
 	 */
 	public String getName() {
-		return "Run"; 
+		return Messages.SmooksRunTab_Tab_Name; 
 	}
 
 	private void setButtonGridData(Button button) {

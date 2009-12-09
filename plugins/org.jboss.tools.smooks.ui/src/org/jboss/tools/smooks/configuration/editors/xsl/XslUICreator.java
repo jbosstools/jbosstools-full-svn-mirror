@@ -104,7 +104,7 @@ public class XslUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingDomain,
 			FormToolkit formToolkit, Composite detailsComposite, Object model, ISmooksModelProvider formEditor,IEditorPart editorPart) {
-		return createElementSelectionSection("Apply On Element", editingDomain, formToolkit, detailsComposite, model, formEditor,editorPart,
+		return createElementSelectionSection(Messages.XslUICreator_Apply_On_Element, editingDomain, formToolkit, detailsComposite, model, formEditor,editorPart,
 				XslPackage.Literals.XSL__APPLY_ON_ELEMENT, XslPackage.Literals.XSL__APPLY_ON_ELEMENT_NS);
 	}
 

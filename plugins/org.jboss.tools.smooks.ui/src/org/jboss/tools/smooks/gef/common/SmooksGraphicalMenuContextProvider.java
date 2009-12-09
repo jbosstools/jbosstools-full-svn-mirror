@@ -31,7 +31,7 @@ import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
  */
 public class SmooksGraphicalMenuContextProvider extends ContextMenuProvider {
 
-	public static final String GROUP_CUSTOME = "custome_group";
+	public static final String GROUP_CUSTOME = "custom_group"; //$NON-NLS-1$
 
 	protected ActionRegistry actionRegistry;
 
@@ -76,13 +76,13 @@ public class SmooksGraphicalMenuContextProvider extends ContextMenuProvider {
 				DefaultEditDomain domain = (DefaultEditDomain) getViewer().getEditDomain();
 				IWorkbenchWindow window = domain.getEditorPart().getSite().getWorkbenchWindow();
 				try {
-					window.getActivePage().showView("org.eclipse.ui.views.PropertySheet");
+					window.getActivePage().showView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
 				} catch (PartInitException e) {
 					e.printStackTrace();
 				}
 			}
 		};
-		action.setText("Properties");
+		action.setText(Messages.SmooksGraphicalMenuContextProvider_Action_Properties);
 		action.setImageDescriptor(SmooksConfigurationActivator
 				.getImageDescriptor(GraphicsConstants.IMAGE_PROPERTY_SHEET_PAGE));
 		menu.add(action);

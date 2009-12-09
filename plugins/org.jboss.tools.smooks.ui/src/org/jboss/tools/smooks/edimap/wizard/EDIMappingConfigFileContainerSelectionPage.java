@@ -22,10 +22,10 @@ public class EDIMappingConfigFileContainerSelectionPage extends WizardNewFileCre
 
 	public EDIMappingConfigFileContainerSelectionPage(String pageName, IStructuredSelection selection) {
 		super(pageName, selection);
-		setTitle("EDI Mapping Configuration File Wizard Page");
-		setDescription("Create a new EDI mapping configuration file.");
-		setFileExtension("xml");
-		setFileName("edi-to-xml-mapping.xml");
+		setTitle(Messages.EDIMappingConfigFileContainerSelectionPage_page_title);
+		setDescription(Messages.EDIMappingConfigFileContainerSelectionPage_page_description);
+		setFileExtension("xml"); //$NON-NLS-1$
+		setFileName("edi-to-xml-mapping.xml"); //$NON-NLS-1$
 	}
 	
 	@Override

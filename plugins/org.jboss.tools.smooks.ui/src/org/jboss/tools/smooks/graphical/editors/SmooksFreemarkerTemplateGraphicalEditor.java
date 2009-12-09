@@ -141,13 +141,13 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 		char seperator = SmooksModelUtils.getFreemarkerCSVSeperator((Freemarker) data);
 
 		if (seperator == 0) {
-			templateGraphModel.getMessage().add("Seperator character can't be empty");
+			templateGraphModel.getMessage().add(Messages.SmooksFreemarkerTemplateGraphicalEditor_Warning_Separator_Empty);
 			s = AbstractSmooksGraphicalModel.WARNING;
 		}
 
 		char quote = SmooksModelUtils.getFreemarkerCSVQuote((Freemarker) data);
 		if (quote == 0) {
-			templateGraphModel.getMessage().add("Quote character can't be empty");
+			templateGraphModel.getMessage().add(Messages.SmooksFreemarkerTemplateGraphicalEditor_Warning_Quote_Empty);
 			s = AbstractSmooksGraphicalModel.WARNING;
 		}
 
@@ -165,18 +165,18 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 		for (Iterator<?> iterator = csvRecordNode.iterator(); iterator.hasNext();) {
 			AbstractSmooksGraphicalModel csvRecordGraphModel = (AbstractSmooksGraphicalModel) iterator.next();
 			if (missFields) {
-				csvRecordGraphModel.getMessage().add("CSV fields can't be empty");
+				csvRecordGraphModel.getMessage().add(Messages.SmooksFreemarkerTemplateGraphicalEditor_Warning_CSV_Fields_Empty);
 				csvRecordGraphModel.setSeverity(AbstractSmooksGraphicalModel.WARNING);
 			}
 			List<TreeNodeConnection> collectionConnections = csvRecordGraphModel.getTargetConnections();
 			if (collectionConnections.isEmpty()) {
-				csvRecordGraphModel.addMessage("Must be linked with collection java class node");
+				csvRecordGraphModel.addMessage(Messages.SmooksFreemarkerTemplateGraphicalEditor_Warning_Must_Link_to_Collection);
 				csvRecordGraphModel.setSeverity(AbstractSmooksGraphicalModel.WARNING);
 				List<AbstractSmooksGraphicalModel> csvFields = csvRecordGraphModel.getChildren();
 				for (Iterator<?> iterator2 = csvFields.iterator(); iterator2.hasNext();) {
 					AbstractSmooksGraphicalModel csvFieldsGModel = (AbstractSmooksGraphicalModel) iterator2.next();
 					csvFieldsGModel
-							.addMessage("Case CSV-Record isn't linked with source node , this node can't be linked.");
+							.addMessage(Messages.SmooksFreemarkerTemplateGraphicalEditor_Warning_Must_Link_CSV_Record);
 					csvFieldsGModel.setSeverity(AbstractSmooksGraphicalModel.ERROR);
 				}
 			}

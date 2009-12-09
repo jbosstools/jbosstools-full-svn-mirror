@@ -117,12 +117,12 @@ public class XSLTemplateCreationWizardPage extends WizardPage {
 		mainComposite.setLayout(gridLayout);
 
 		Label templateType = new Label(mainComposite, SWT.NONE);
-		templateType.setText("Template Type :");
+		templateType.setText(Messages.XSLTemplateCreationWizardPage_Label_Template_Type);
 
 		typeCombo = new Combo(mainComposite, SWT.BORDER | SWT.READ_ONLY);
-		typeCombo.add("");
-		typeCombo.add("External File");
-		typeCombo.add("Inner Contents");
+		typeCombo.add(""); //$NON-NLS-1$
+		typeCombo.add(Messages.XSLTemplateCreationWizardPage_Combo_External_File);
+		typeCombo.add(Messages.XSLTemplateCreationWizardPage_Combo_Inner_Contents);
 
 		typeCombo.addSelectionListener(new SelectionAdapter() {
 
@@ -157,7 +157,7 @@ public class XSLTemplateCreationWizardPage extends WizardPage {
 		// create external file selection text and button
 
 		Label externalFilePathLabel = new Label(mainComposite, SWT.NONE);
-		externalFilePathLabel.setText("External File :");
+		externalFilePathLabel.setText(Messages.XSLTemplateCreationWizardPage_Label_External_Path);
 
 		Composite externalFileComposite = new Composite(mainComposite, SWT.NONE);
 
@@ -179,12 +179,12 @@ public class XSLTemplateCreationWizardPage extends WizardPage {
 		});
 
 		fileBrowseButton = new Button(externalFileComposite, SWT.NONE);
-		fileBrowseButton.setText("Browse...");
+		fileBrowseButton.setText(Messages.XSLTemplateCreationWizardPage_Button_Browse);
 		fileBrowseButton.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent e) {
 				FileSelectionWizard wizard = new FileSelectionWizard();
-				wizard.setExtensionNames(new String[] { "xsl", "xslt" });
+				wizard.setExtensionNames(new String[] { "xsl", "xslt" }); //$NON-NLS-1$ //$NON-NLS-2$
 				EObject fm = smooksModelProvider.getSmooksModel();
 				IResource resource = SmooksUIUtils.getResource((EObject) fm);
 				Object[] initSelections = new Object[] {};
@@ -209,7 +209,7 @@ public class XSLTemplateCreationWizardPage extends WizardPage {
 		// create XML/XSD file selection text and button
 
 		Label xslInnerContentFileLabel = new Label(mainComposite, SWT.NONE);
-		xslInnerContentFileLabel.setText("XML/XSD File :");
+		xslInnerContentFileLabel.setText(Messages.XSLTemplateCreationWizardPage_Label_XML_XSD_File);
 
 		Composite xslInnerContentFileComposite = new Composite(mainComposite, SWT.NONE);
 
@@ -250,12 +250,12 @@ public class XSLTemplateCreationWizardPage extends WizardPage {
 			}
 		});
 		fileBrowseButton1 = new Button(xslInnerContentFileComposite, SWT.NONE);
-		fileBrowseButton1.setText("Browse...");
+		fileBrowseButton1.setText(Messages.XSLTemplateCreationWizardPage_Button_Browse);
 		fileBrowseButton1.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent e) {
 				FileSelectionWizard wizard = new FileSelectionWizard();
-				wizard.setExtensionNames(new String[] { "xml", "xsd" });
+				wizard.setExtensionNames(new String[] { "xml", "xsd" }); //$NON-NLS-1$ //$NON-NLS-2$
 				EObject fm = smooksModelProvider.getSmooksModel();
 				IResource resource = SmooksUIUtils.getResource((EObject) fm);
 				Object[] initSelections = new Object[] {};
@@ -281,7 +281,7 @@ public class XSLTemplateCreationWizardPage extends WizardPage {
 		// create XSD root element selection composite;
 
 		Label chooseElementLabel = new Label(mainComposite, SWT.NONE);
-		chooseElementLabel.setText("Choose root element :");
+		chooseElementLabel.setText(Messages.XSLTemplateCreationWizardPage_Label_Choose_Root);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		chooseElementLabel.setLayoutData(gd);
@@ -333,19 +333,19 @@ public class XSLTemplateCreationWizardPage extends WizardPage {
 		if (type == 1) {
 			String path = externalFileText.getText();
 			if (path == null || path.length() == 0) {
-				error = "Externla file path is empty";
+				error = Messages.XSLTemplateCreationWizardPage_Error_External_Path_Empty;
 			}
 		}
 		if (type == 2) {
 			String path = contentFileText.getText();
 			if (path == null || path.length() == 0) {
-				error = "XSD/XML file path is empty";
+				error = Messages.XSLTemplateCreationWizardPage_Error_XSD_XML_Path_Empty;
 			}
 
 			Object input = tableViewer.getInput();
 			if (input != EMPTY_TABLEVIEWER_INPUT) {
 				if (tableViewer.getCheckedElements().length == 0) {
-					error = "Root element selection is empty";
+					error = Messages.XSLTemplateCreationWizardPage_Error_Root_Element_Empty;
 				}
 			}
 		}

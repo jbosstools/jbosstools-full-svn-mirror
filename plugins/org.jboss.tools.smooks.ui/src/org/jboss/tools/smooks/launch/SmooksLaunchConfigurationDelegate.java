@@ -59,7 +59,7 @@ import org.jboss.tools.smooks.core.SmooksInputType;
  */
 public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationDelegate {
 	
-	private static final String PLUGIN_ID = "org.jboss.tools.smooks.ui.smooksLauncher";
+	private static final String PLUGIN_ID = "org.jboss.tools.smooks.ui.smooksLauncher"; //$NON-NLS-1$
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
@@ -67,7 +67,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 	public void launch(ILaunchConfiguration launchConfig, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
 		IJavaProject javaProject = getJavaProject(launchConfig);
 		IProject project = javaProject.getProject();
-		final String smooksConfigName = launchConfig.getAttribute(IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, "");
+		final String smooksConfigName = launchConfig.getAttribute(IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, ""); //$NON-NLS-1$
 		final RuntimeMetadata launchMetadata = new RuntimeMetadata();
 
 		launchMetadata.setSmooksConfig(project.findMember(smooksConfigName));
@@ -81,7 +81,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 			
 			for(RuntimeDependency dependency : dependencies) {
 				if(!dependency.isOnProjectClasspath(projectClassLoader)) {
-					displayError(smooksConfigName, "This configuration depends on the '" + dependency.getGroupId() + ":" + dependency.getArtifactId() + "' Smooks artifact.  Download Smooks and add the Smooks jars to the Project classpath, or update your Maven POM to include the missing artifact.");
+					displayError(smooksConfigName, Messages.SmooksLaunchConfigurationDelegate_Error_missing_artifact + dependency.getGroupId() + ":" + dependency.getArtifactId() + Messages.SmooksLaunchConfigurationDelegate_Error_missing_artifact2); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$
 					return;
 				}
 			}
@@ -109,7 +109,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		display.syncExec(new Runnable() {
 		    public void run(){
 				Shell shell = display.getActiveShell();
-				ErrorDialog.openError(shell, "Error", "Error Launching Smooks Configuration '" + smooksConfigName + "'.", new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, errorMessage, new Exception()));
+				ErrorDialog.openError(shell, Messages.SmooksLaunchConfigurationDelegate_Error_Title, Messages.SmooksLaunchConfigurationDelegate_Error_launching + smooksConfigName + "'.", new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, errorMessage, new Exception())); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$
 		    }
 		});
 	}
@@ -118,7 +118,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		List<String> classpath = new ArrayList<String>(Arrays.asList(getClasspath(launchConfig)));
 
 		File wsRootDir = ResourcesPlugin.getWorkspace().getRoot().getRawLocation().toFile();
-		File wsTempClasses = new File(wsRootDir, "temp/classes");
+		File wsTempClasses = new File(wsRootDir, "temp/classes"); //$NON-NLS-1$
 		
 		// We need to add the SmooksLauncher to the launch classpath because it will not be part of the projects
 		// classpath.  Bit of a hack... there's probably a nicer way of doing this!!!
@@ -131,7 +131,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		String[] envp= getEnvironment(launchConfig);
 		ArrayList<String> vmArguments= new ArrayList<String>();
 		String vmArgs= getVMArguments(launchConfig);
-		ExecutionArguments execArgs= new ExecutionArguments(vmArgs, "");
+		ExecutionArguments execArgs= new ExecutionArguments(vmArgs, ""); //$NON-NLS-1$
 		File workingDir = verifyWorkingDirectory(launchConfig);
 
 		vmArguments.addAll(Arrays.asList(execArgs.getVMArgumentsArray()));
@@ -147,8 +147,8 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 	}
 
 	private void addToCP(File wsTempClasses, Class<?> theClass) throws CoreException {
-		String className = theClass.getName().replace(".", "/") + ".class";
-		URL classURI = getClass().getResource("/" + className);
+		String className = theClass.getName().replace(".", "/") + ".class"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		URL classURI = getClass().getResource("/" + className); //$NON-NLS-1$
 		
 		if(classURI != null) {
 			try {
@@ -186,7 +186,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 					}
 				}
 			} catch (IOException e) {
-				new CoreException(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, "Error copying SmooksLauncher to classpath.", e));
+				new CoreException(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, Messages.SmooksLaunchConfigurationDelegate_Error_Copying_Smooks_Launcher, e));
 			}
 		}
 	}

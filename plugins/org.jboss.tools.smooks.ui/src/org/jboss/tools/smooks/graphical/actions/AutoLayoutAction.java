@@ -30,7 +30,7 @@ import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
  */
 public class AutoLayoutAction extends SelectionAction {
 
-	public static final String ID = "_smooks_auto_layout";
+	public static final String ID = "_smooks_auto_layout"; //$NON-NLS-1$
 
 	public AutoLayoutAction(IWorkbenchPart part, int style) {
 		super(part, style);
@@ -48,7 +48,7 @@ public class AutoLayoutAction extends SelectionAction {
 	@Override
 	protected void init() {
 		super.init();
-		this.setText("Auto Layout");
+		this.setText(Messages.AutoLayoutAction_Action_Text);
 	}
 
 	/*
@@ -98,9 +98,9 @@ public class AutoLayoutAction extends SelectionAction {
 			if (file.isFile()) {
 				IFile ifile = parent.getFile(new Path(file.getName()));
 				if (ifile.exists() && SmooksUIUtils.isSmooksFile(ifile)) {
-					IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject("validation-test");
-					IFolder folder = project.getFolder("src");
-					IFile newFile = folder.getFile(parent.getName()+ "_" + ifile.getName());
+					IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject("validation-test"); //$NON-NLS-1$
+					IFolder folder = project.getFolder("src"); //$NON-NLS-1$
+					IFile newFile = folder.getFile(parent.getName()+ "_" + ifile.getName()); //$NON-NLS-1$
 					try {
 						if (newFile.exists()) {
 							newFile.setContents(ifile.getContents(), true, false, null);

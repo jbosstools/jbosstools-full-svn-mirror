@@ -36,7 +36,7 @@ public class TemplateMessageTypeWizard extends Wizard {
 	 */
 	@Override
 	public void addPages() {
-		page = new TemplateWizardSelectionPage("Template Output Type");
+		page = new TemplateWizardSelectionPage(Messages.TemplateMessageTypeWizard_Page_Name);
 		this.addPage(page);
 		super.addPages();
 	}

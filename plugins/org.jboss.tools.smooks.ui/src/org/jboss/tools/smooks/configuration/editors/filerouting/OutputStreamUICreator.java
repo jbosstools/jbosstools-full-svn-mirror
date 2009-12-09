@@ -74,7 +74,7 @@ public class OutputStreamUICreator extends PropertyUICreator {
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
 
-		return createElementSelectionSection("Open On Element", editingdomain, toolkit, parent, model, formEditor,part,
+		return createElementSelectionSection(Messages.OutputStreamUICreator_Open_On_Element, editingdomain, toolkit, parent, model, formEditor,part,
 				FileRoutingPackage.Literals.OUTPUT_STREAM__OPEN_ON_ELEMENT,
 				FileRoutingPackage.Literals.OUTPUT_STREAM__OPEN_ON_ELEMENT_NS);
 	}

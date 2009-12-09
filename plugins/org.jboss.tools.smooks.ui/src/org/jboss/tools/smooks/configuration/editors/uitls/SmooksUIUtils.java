@@ -3064,7 +3064,7 @@ public class SmooksUIUtils {
 
 	protected static boolean isJavaPatternSelector(String selector) {
 		if (selector.indexOf('.') != -1) {
-			String[] ss = selector.split("\\.");
+			String[] ss = selector.split("\\."); //$NON-NLS-1$
 			for (int i = 0; i < ss.length; i++) {
 				String s = ss[i];
 				if (s != null) {
@@ -3107,12 +3107,12 @@ public class SmooksUIUtils {
 			String[] selectors = null;
 
 			// '/' is selector seperator
-			if (fullSelector.indexOf("/") != -1) {
-				selectors = fullSelector.split("/");
+			if (fullSelector.indexOf("/") != -1) { //$NON-NLS-1$
+				selectors = fullSelector.split("/"); //$NON-NLS-1$
 			} else {
 				// ' ' is selector seperator too
-				if (fullSelector.indexOf(" ") != -1) {
-					selectors = fullSelector.split(" ");
+				if (fullSelector.indexOf(" ") != -1) { //$NON-NLS-1$
+					selectors = fullSelector.split(" "); //$NON-NLS-1$
 				}
 			}
 			if (selectors != null) {

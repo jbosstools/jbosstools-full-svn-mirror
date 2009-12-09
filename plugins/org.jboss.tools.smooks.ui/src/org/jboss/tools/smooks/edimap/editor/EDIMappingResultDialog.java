@@ -70,7 +70,7 @@ public class EDIMappingResultDialog extends Dialog {
 		if (content != null) {
 			text.setText(content);
 		}
-		this.getShell().setText("EDI Mapping Result");
+		this.getShell().setText(Messages.EDIMappingResultDialog_Window_Title);
 		return mainComposite;
 	}
 

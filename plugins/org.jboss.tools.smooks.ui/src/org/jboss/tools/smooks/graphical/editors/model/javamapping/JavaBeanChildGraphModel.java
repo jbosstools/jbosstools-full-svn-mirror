@@ -198,10 +198,10 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 	public String getText() {
 		int index = this.getParent().getChildrenWithoutDynamic().indexOf(this);
 		if (parentIsArray() && index == 0) {
-			return "Array Entry";
+			return Messages.JavaBeanChildGraphModel_Array_Entry;
 		}
 		if (parentIsCollection() && index == 0) {
-			return "Collection Entry";
+			return Messages.JavaBeanChildGraphModel_Collection_Entry;
 		}
 		return super.getText();
 	}

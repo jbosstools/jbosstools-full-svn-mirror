@@ -38,7 +38,7 @@ public class AddFreemarkerCSVFieldAction extends AddSmooksModelAction {
 
 	@Override
 	public String getActionText() {
-		return "CSV Field";
+		return Messages.AddFreemarkerCSVFieldAction_Action_Text;
 	}
 
 	@Override

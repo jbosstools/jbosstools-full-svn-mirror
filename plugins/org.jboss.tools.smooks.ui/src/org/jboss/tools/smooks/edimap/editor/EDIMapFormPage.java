@@ -159,7 +159,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 
 	private Composite delimitersComposite;
 
-	private String ediFileEncoding = "UTF-8";
+	private String ediFileEncoding = "UTF-8"; //$NON-NLS-1$
 
 	public EDIMapFormPage(FormEditor editor, String id, String title) {
 		super(editor, id, title);
@@ -563,7 +563,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 
 		this.segments = root.getEdimap().getSegments();
 		if (segments.getXmltag() == null) {
-			segments.setXmltag("root");
+			segments.setXmltag("root"); //$NON-NLS-1$
 		}
 
 		editingDomain = (AdapterFactoryEditingDomain) modelProvider.getEditingDomain();
@@ -616,7 +616,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		final ScrolledForm form = managedForm.getForm();
 		FormToolkit toolkit = managedForm.getToolkit();
 		toolkit.decorateFormHeading(form.getForm());
-		form.setText("EDI Message Mapping");
+		form.setText(Messages.EDIMapFormPage_Form_Title);
 
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.marginHeight = 13;
@@ -628,7 +628,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.verticalAlignment = GridData.BEGINNING;
 		descriptionSection.setLayoutData(gd);
-		descriptionSection.setText("Description");
+		descriptionSection.setText(Messages.EDIMapFormPage_Description_Section_Title);
 		FillLayout flayout = new FillLayout();
 		descriptionSection.setLayout(flayout);
 
@@ -655,7 +655,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		gd.verticalAlignment = GridData.BEGINNING;
 		gd.verticalSpan = 2;
 		delimiterSection.setLayoutData(gd);
-		delimiterSection.setText("Delimiters");
+		delimiterSection.setText(Messages.EDIMapFormPage_Delimiter_Section_Title);
 		FillLayout flayout1 = new FillLayout();
 		delimiterSection.setLayout(flayout1);
 
@@ -677,7 +677,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		gd.verticalAlignment = GridData.BEGINNING;
 		// gd.horizontalSpan = 2;
 		testSection.setLayoutData(gd);
-		testSection.setText("EDI File Setting");
+		testSection.setText(Messages.EDIMapFormPage_EDI_File_Setting_Section);
 		FillLayout flayout2 = new FillLayout();
 		testSection.setLayout(flayout2);
 
@@ -687,7 +687,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		fileComposite.setLayout(fgl);
 		testSection.setClient(fileComposite);
 
-		AttributeFieldEditPart pathEditPart = SmooksUIUtils.createStringFieldEditor("EDI File", fileComposite,
+		AttributeFieldEditPart pathEditPart = SmooksUIUtils.createStringFieldEditor(Messages.EDIMapFormPage_EDI_File_Field, fileComposite,
 				editingDomain, toolkit, null, null, false, false, true, new IFilePathProcessor() {
 
 					/*
@@ -723,7 +723,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		}
 		ediFileText.addModifyListener(this);
 
-		AttributeFieldEditPart encodingEditPart = SmooksUIUtils.createStringFieldEditor("EDI File Encoding",
+		AttributeFieldEditPart encodingEditPart = SmooksUIUtils.createStringFieldEditor(Messages.EDIMapFormPage_EDI_File_Encoding_Field,
 				fileComposite, editingDomain, toolkit, null, null, false, false, false, 0, null, -1, null);
 		final Text encodingText = (Text) encodingEditPart.getContentControl();
 		String encoding = getEDIFileEncoding();
@@ -808,7 +808,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.horizontalSpan = 2;
 		ediModelViewerSection.setLayoutData(gd);
-		ediModelViewerSection.setText("Graphical Mapping");
+		ediModelViewerSection.setText(Messages.EDIMapFormPage_Graphical_Mapping_Section);
 		FillLayout flayout3 = new FillLayout();
 		ediModelViewerSection.setLayout(flayout3);
 
@@ -819,7 +819,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 
 		viewerComposite.setLayout(vgl);
 
-		Hyperlink showTransformResultLink = toolkit.createHyperlink(viewerComposite, "Test EDI to XML transform",
+		Hyperlink showTransformResultLink = toolkit.createHyperlink(viewerComposite, Messages.EDIMapFormPage_Show_Result_Link,
 				SWT.NONE);
 		// showTransformResultLink.setVisible(false);
 		showTransformResultLink.addHyperlinkListener(new IHyperlinkListener() {
@@ -861,7 +861,7 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 		GridLayout mcgl = new GridLayout();
 		mc.setLayout(mcgl);
 
-		toolkit.createLabel(mc, "Properties:");
+		toolkit.createLabel(mc, Messages.EDIMapFormPage_Label_Properties);
 		Composite cs = toolkit.createCompositeSeparator(mc);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.heightHint = 1;
@@ -1207,8 +1207,8 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 	protected void testEDITransform() {
 		try {
 			if (this.getEditor().isDirty()) {
-				MessageDialog.openInformation(getEditorSite().getShell(), "Info",
-						"The configuration file should be saved");
+				MessageDialog.openInformation(getEditorSite().getShell(), Messages.EDIMapFormPage_Info_Dialog_Title,
+						Messages.EDIMapFormPage_Info_Dialog_Msg);
 				return;
 			}
 			IFileEditorInput input = (IFileEditorInput) getEditorInput();
@@ -1217,14 +1217,14 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			File ediFile = new File(SmooksUIUtils.parseFilePath(ediFilePath));
 
 			if (ediFile == null || !ediFile.exists()) {
-				MessageDialog.openError(getEditorSite().getShell(), "Transform Error", "Can't the find the EDI file : "
+				MessageDialog.openError(getEditorSite().getShell(), Messages.EDIMapFormPage_Transform_Error_Dialog_Title, Messages.EDIMapFormPage_Transform_Error_Dialog_Msg
 						+ ediFilePath);
 				return;
 			}
 
 			if (file == null || !file.exists()) {
-				MessageDialog.openError(getEditorSite().getShell(), "Transform Error",
-						"Can't find the EDI mapping configuration file : " + path);
+				MessageDialog.openError(getEditorSite().getShell(), Messages.EDIMapFormPage_Transform_Error_Dialog_Title,
+						Messages.EDIMapFormPage_Transform_Error_Dialog_Msg2 + path);
 				return;
 			}
 
@@ -1236,15 +1236,15 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 			// Thread.currentThread().setContextClassLoader(classLoader);
 			Smooks smooks = new Smooks();
 
-			SmooksResourceConfiguration readerConfig = new SmooksResourceConfiguration("org.xml.sax.driver",
+			SmooksResourceConfiguration readerConfig = new SmooksResourceConfiguration("org.xml.sax.driver", //$NON-NLS-1$
 					SmooksEDIReader.class.getName());
 			File f = new File(file.getLocation().toOSString());
 
-			readerConfig.setParameter("mapping-model", f.toURI().toString());
+			readerConfig.setParameter("mapping-model", f.toURI().toString()); //$NON-NLS-1$
 			if (ediFileEncoding == null || ediFileEncoding.trim().length() == 0) {
-				ediFileEncoding = "UTF-8";
+				ediFileEncoding = "UTF-8"; //$NON-NLS-1$
 			}
-			readerConfig.setParameter("encoding", ediFileEncoding);
+			readerConfig.setParameter("encoding", ediFileEncoding); //$NON-NLS-1$
 
 			SmooksUtil.registerResource(readerConfig, smooks);
 

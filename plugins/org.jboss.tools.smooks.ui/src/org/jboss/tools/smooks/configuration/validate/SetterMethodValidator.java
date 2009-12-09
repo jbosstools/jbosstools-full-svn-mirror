@@ -178,7 +178,7 @@ public class SetterMethodValidator extends AbstractValidator {
 								}
 							}
 							if (!correct) {
-								String message = "Setter method '" + setterMethodString + "' can't be found in class.";
+								String message = Messages.SetterMethodValidator_Warning_Setter_Method + setterMethodString + Messages.SetterMethodValidator_Warning_Cannot_Be_Found;
 								list.add(newWaringDiagnostic(message, object, (EAttribute) sFeature));
 							}
 						}

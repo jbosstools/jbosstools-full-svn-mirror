@@ -27,7 +27,7 @@ public class SmooksMessage implements IMessage {
 	
 	private Object key;
 	
-	private String prefix = "-";
+	private String prefix = "-"; //$NON-NLS-1$
 	
 	private String message;
 	

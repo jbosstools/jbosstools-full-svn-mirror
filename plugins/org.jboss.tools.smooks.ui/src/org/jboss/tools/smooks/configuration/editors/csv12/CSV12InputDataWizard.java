@@ -62,7 +62,7 @@ public class CSV12InputDataWizard extends Wizard implements IStructuredDataSelec
 		// }
 
 		if (pathPage == null) {
-			pathPage = new CSV12DataPathWizardPage(Messages.CSV12InputDataWizard_1, new String[] { "csv" }, configPage); //$NON-NLS-2$ //$NON-NLS-1$
+			pathPage = new CSV12DataPathWizardPage(Messages.CSV12InputDataWizard_1, new String[] { "csv" }, configPage); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 		}
 
 		this.addPage(pathPage);

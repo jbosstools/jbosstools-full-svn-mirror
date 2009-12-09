@@ -46,8 +46,8 @@ public class AddComponentAction extends AbstractEDIMappingAction {
 	@Override
 	protected void init() {
 		super.init();
-		setText("Add Component");
-		setToolTipText("Add Component");
+		setText(Messages.AddComponentAction_Action_Text);
+		setToolTipText(Messages.AddComponentAction_Action_Tooltip);
 	}
 
 	/* (non-Javadoc)
@@ -56,7 +56,7 @@ public class AddComponentAction extends AbstractEDIMappingAction {
 	@Override
 	protected Object createAddModel() {
 		Component field = MEdiFactory.eINSTANCE.createComponent();
-		field.setXmltag("xmltag");
+		field.setXmltag("xmltag"); //$NON-NLS-1$
 		return field;
 	}
 

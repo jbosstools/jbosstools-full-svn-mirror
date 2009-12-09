@@ -415,14 +415,14 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 	protected void openFileSelection(Text relationText) {
 		FileDialog dialog = new FileDialog(this.getShell());
 		if (fileExtensionNames != null) {
-			String s = "";
+			String s = ""; //$NON-NLS-1$
 			for (int i = 0; i < fileExtensionNames.length; i++) {
 				String exname = fileExtensionNames[i];
-				s += "*." + exname + ";";
+				s += "*." + exname + ";"; //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			if (s.length() != 0) {
 				s = s.substring(0, s.length() - 1);
-				dialog.setFilterExtensions(new String[]{s,"*.*"});
+				dialog.setFilterExtensions(new String[]{s,"*.*"}); //$NON-NLS-1$
 			}
 		}
 		String path = dialog.open();

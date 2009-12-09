@@ -64,13 +64,13 @@ public class TemplateUICreator extends PropertyUICreator {
 		String version = formEditor.getPlatformVersion();
 
 		OpenEditorEditInnerContentsAction openCDATAEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,
-				(AnyType) model, SmooksUIUtils.VALUE_TYPE_CDATA, "flt");
+				(AnyType) model, SmooksUIUtils.VALUE_TYPE_CDATA, "flt"); //$NON-NLS-1$
 		// OpenEditorEditInnerContentsAction openCommentEditorAction = new
 		// OpenEditorEditInnerContentsAction(editingdomain,(AnyType) model,
 		// SmooksUIUtils.VALUE_TYPE_COMMENT, "flt");
 
 		TextTypeSwicher swicher = new TextTypeSwicher();
-		swicher.createSwicherGUI("External Template File", "Inline Template", parent, toolkit);
+		swicher.createSwicherGUI(Messages.TemplateUICreator_External_Template_File, Messages.TemplateUICreator_Inline_Template, parent, toolkit);
 
 //		if (SmooksConstants.VERSION_1_1.equals(version)) {
 //
@@ -109,7 +109,7 @@ public class TemplateUICreator extends PropertyUICreator {
 //		}
 		if (SmooksConstants.VERSION_1_2.equals(version)) {
 
-			AttributeFieldEditPart cdatatext = SmooksUIUtils.createCommentFieldEditor("Inline Template", editingdomain,
+			AttributeFieldEditPart cdatatext = SmooksUIUtils.createCommentFieldEditor(Messages.TemplateUICreator_Inline_Template, editingdomain,
 					toolkit, parent, model, openCDATAEditorAction, true);
 			Control c = cdatatext.getContentControl();
 
@@ -135,7 +135,7 @@ public class TemplateUICreator extends PropertyUICreator {
 			openCDATAEditorAction.setRelateText((Text) cdatatext.getContentControl());
 			
 			AttributeFieldEditPart textFieldEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor(
-					"External Template File", parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
+					Messages.TemplateUICreator_External_Template_File, parent, editingdomain, toolkit, null, model, SmooksUIUtils.VALUE_TYPE_TEXT,
 					null, null);
 			
 			swicher.hookSwicher(textFieldEditPart, cdatatext, editingdomain, model , SmooksUIUtils.VALUE_TYPE_COMMENT);

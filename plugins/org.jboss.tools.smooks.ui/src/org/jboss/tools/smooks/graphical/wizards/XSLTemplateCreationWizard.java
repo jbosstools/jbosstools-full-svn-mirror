@@ -51,7 +51,7 @@ public class XSLTemplateCreationWizard extends SmooksCreationModelConfigureWizar
 	public void addPages() {
 		super.addPages();
 		if (page == null) {
-			page = new XSLTemplateCreationWizardPage("XSL Template", this.modelProvider);
+			page = new XSLTemplateCreationWizardPage(Messages.XSLTemplateCreationWizard_page_name, this.modelProvider);
 			this.addPage(page);
 		}
 	}
@@ -74,7 +74,7 @@ public class XSLTemplateCreationWizard extends SmooksCreationModelConfigureWizar
 	public boolean performFinish() {
 		int type = page.getTemplateType();
 		xslModel = XslFactory.eINSTANCE.createXsl();
-		xslModel.setApplyOnElement("#document");
+		xslModel.setApplyOnElement("#document"); //$NON-NLS-1$
 		Template template = xslModel.getTemplate();
 
 		if (type == XSLTemplateCreationWizardPage.TEMPLATE_TYPE_NONE) {
@@ -133,11 +133,11 @@ public class XSLTemplateCreationWizard extends SmooksCreationModelConfigureWizar
 	public static String generateXSLContents(TagObject tag) {
 		String tagXML = tag.toString();
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n");
-		buffer.append("\t<xsl:template match=\"\\\">\n");
+		buffer.append("<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n"); //$NON-NLS-1$
+		buffer.append("\t<xsl:template match=\"\\\">\n"); //$NON-NLS-1$
 		buffer.append(tagXML);
-		buffer.append("\t</xsl:template>\n");
-		buffer.append("</xsl:stylesheet>");
+		buffer.append("\t</xsl:template>\n"); //$NON-NLS-1$
+		buffer.append("</xsl:stylesheet>"); //$NON-NLS-1$
 		return buffer.toString();
 	}
 

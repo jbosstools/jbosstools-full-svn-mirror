@@ -39,10 +39,10 @@ public class EDIMapFormEditor extends AbstractSmooksFormEditor {
 	@Override
 	protected void addPages() {
 		try {
-			ediPage = new EDIMapFormPage(this,"EDIMap", "EDIMap");
+			ediPage = new EDIMapFormPage(this,"EDIMap", "EDIMap"); //$NON-NLS-1$ //$NON-NLS-2$
 			this.addValidateListener(ediPage);
 			int index = this.addPage(ediPage);
-			setPageText(index, "Design");
+			setPageText(index, Messages.EDIMapFormEditor_Page_Text);
 		} catch (PartInitException e) {
 			SmooksConfigurationActivator.getDefault().log(e);
 		}

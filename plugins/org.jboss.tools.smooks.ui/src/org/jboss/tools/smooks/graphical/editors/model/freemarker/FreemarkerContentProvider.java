@@ -67,8 +67,8 @@ public class FreemarkerContentProvider implements ITreeContentProvider {
 				List<ParamType> params = SmooksModelUtils.getParams(template);
 				
 				ParamType param = SmooksFactory.eINSTANCE.createParamType();
-				param.setName("name");
-				param.setStringValue("aaa");
+				param.setName("name"); //$NON-NLS-1$
+				param.setStringValue("aaa"); //$NON-NLS-1$
 				
 				
 				System.out.println(comments);

@@ -151,7 +151,7 @@ public class FreemarkerCSVContentGenerator {
 
 		List<Object> nodesList = new ArrayList<Object>();
 		fillParentList(nodesList, parentModel, recordRootNode);
-		String mappingString = "";
+		String mappingString = ""; //$NON-NLS-1$
 		for (int i = 0; i < nodesList.size(); i++) {
 			Object node = nodesList.get(i);
 			String beanName = null;
@@ -159,7 +159,7 @@ public class FreemarkerCSVContentGenerator {
 				beanName = ((BeanType) node).getBeanId();
 			}
 			if (beanName != null) {
-				mappingString += (beanName + ".");
+				mappingString += (beanName + "."); //$NON-NLS-1$
 			}
 		}
 		if (s != null) {

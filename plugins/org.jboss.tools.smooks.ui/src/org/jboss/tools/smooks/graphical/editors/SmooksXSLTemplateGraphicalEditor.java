@@ -86,7 +86,7 @@ public class SmooksXSLTemplateGraphicalEditor extends SmooksGraphicalEditorPart 
 						AbstractSmooksActionGrouper xslgrouper = new AbstractSmooksActionGrouper() {
 							
 							public String getGroupName() {
-								return "XSL Template";
+								return Messages.SmooksXSLTemplateGraphicalEditor_Group_Name;
 							}
 							
 							@Override

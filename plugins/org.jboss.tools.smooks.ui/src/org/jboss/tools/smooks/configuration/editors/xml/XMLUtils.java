@@ -161,13 +161,13 @@ public class XMLUtils {
 		}
 		Object ls = null;
 		if (document != null) {
-			ls = document.getImplementation().getFeature("LS", "3.0");
+			ls = document.getImplementation().getFeature("LS", "3.0"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		if (ls != null && ls instanceof DOMImplementationLS) {
 			LSSerializer lss = ((DOMImplementationLS) ls).createLSSerializer();
 			DOMConfiguration domConfiguration = lss.getDomConfig();
-			if (domConfiguration.canSetParameter("format-pretty-print", Boolean.TRUE)) {
-				lss.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE);
+			if (domConfiguration.canSetParameter("format-pretty-print", Boolean.TRUE)) { //$NON-NLS-1$
+				lss.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE); //$NON-NLS-1$
 			}
 			LSOutput lsoutput = ((DOMImplementationLS) ls).createLSOutput();
 			lsoutput.setByteStream(os);

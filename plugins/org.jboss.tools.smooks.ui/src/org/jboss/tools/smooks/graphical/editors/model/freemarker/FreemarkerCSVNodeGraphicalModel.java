@@ -82,10 +82,10 @@ public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
 			model = (CSVNodeModel) record.getData();
 		}
 		List<AbstractSmooksGraphicalModel> children = record.getChildrenWithoutDynamic();
-		String fieldsString = "";
+		String fieldsString = ""; //$NON-NLS-1$
 		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
 			AbstractSmooksGraphicalModel ixmlStructuredObject = (AbstractSmooksGraphicalModel) iterator.next();
-			fieldsString += ((IXMLStructuredObject) ixmlStructuredObject.getData()).getNodeName() + ",";
+			fieldsString += ((IXMLStructuredObject) ixmlStructuredObject.getData()).getNodeName() + ","; //$NON-NLS-1$
 		}
 		if (fieldsString.length() > 1) {
 			fieldsString = fieldsString.substring(0, fieldsString.length() - 1);

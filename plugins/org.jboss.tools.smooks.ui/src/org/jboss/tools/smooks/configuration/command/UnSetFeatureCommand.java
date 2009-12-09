@@ -32,7 +32,7 @@ public class UnSetFeatureCommand extends AbstractCommand implements Command {
 		super();
 		this.model = model;
 		this.attribute = attribute;
-		this.setLabel(Messages.UnSetFeatureCommand_commandlabel + this.attribute.getName() + "\""); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$
+		this.setLabel(Messages.UnSetFeatureCommand_commandlabel + this.attribute.getName() + "\""); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 	}
 
 	public UnSetFeatureCommand(String label, String description) {

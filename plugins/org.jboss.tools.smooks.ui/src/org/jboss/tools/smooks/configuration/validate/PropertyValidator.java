@@ -177,7 +177,7 @@ public class PropertyValidator extends AbstractValidator {
 								}
 							}
 							if (!correct) {
-								String message = "Property '" + propertyValueString + "' can't be found in class.";
+								String message = Messages.PropertyValidator_Warning_Property_Cannot_Be_Found + propertyValueString + Messages.PropertyValidator_Warning_Property_Cannot_Be_Found2;
 								list.add(newWaringDiagnostic(message, object, (EAttribute) pFeature));
 							}
 						}

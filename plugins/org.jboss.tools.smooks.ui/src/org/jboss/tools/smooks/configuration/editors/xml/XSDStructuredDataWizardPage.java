@@ -62,14 +62,14 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 	public XSDStructuredDataWizardPage(String pageName, boolean multiSelect, Object[] initSelections,
 			List<ViewerFilter> filters) {
 		super(pageName, multiSelect, initSelections, filters);
-		this.setTitle("XSD Input Data Selection");
-		this.setDescription("Select a XSD file to be the input data");
+		this.setTitle(Messages.XSDStructuredDataWizardPage_Page_Title);
+		this.setDescription(Messages.XSDStructuredDataWizardPage_page_description);
 	}
 
 	public XSDStructuredDataWizardPage(String pageName) {
-		super(pageName, new String[] { "xsd", "wsdl" });
-		this.setTitle("XSD Input Data Selection");
-		this.setDescription("Select a XSD file to be the input data");
+		super(pageName, new String[] { "xsd", "wsdl" }); //$NON-NLS-1$ //$NON-NLS-2$
+		this.setTitle(Messages.XSDStructuredDataWizardPage_Page_Title);
+		this.setDescription(Messages.XSDStructuredDataWizardPage_page_description);
 	}
 
 	/*
@@ -85,10 +85,10 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 		if (errorMessage == null) {
 			if (reasourceLoaded) {
 				if(tableViewer.getCheckedElements() == null || tableViewer.getCheckedElements().length == 0){
-					errorMessage = "Must select a root element.";
+					errorMessage = Messages.XSDStructuredDataWizardPage_Error_Must_Select_Root;
 				}
 			} else {
-				errorMessage = "The elements of XSD file should click the 'Load' button to load.";
+				errorMessage = Messages.XSDStructuredDataWizardPage_Error_Must_Click_Load;
 			}
 			setErrorMessage(errorMessage);
 			setPageComplete(errorMessage == null);
@@ -148,7 +148,7 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 		gd.grabExcessHorizontalSpace = true;
 
 		final Button loadXSDButton = new Button(fileTextComposite, SWT.NONE);
-		loadXSDButton.setText("Load");
+		loadXSDButton.setText(Messages.XSDStructuredDataWizardPage_Button_Load);
 		loadXSDButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -177,7 +177,7 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 		if (path == null)
 			return null;
 		String pp = path.toLowerCase();
-		if (pp.endsWith(".wsdl")) {
+		if (pp.endsWith(".wsdl")) { //$NON-NLS-1$
 			try {
 				return WSDLObjectAnalyzer.loadAllElement(path);
 			} catch (ParserConfigurationException e) {
@@ -195,7 +195,7 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		Label label = new Label(mainComposite, SWT.NONE);
 		label.setLayoutData(gd);
-		label.setText("Select root element");
+		label.setText(Messages.XSDStructuredDataWizardPage_Label_Select_Root);
 		tableViewer = CheckboxTableViewer.newCheckList(mainComposite, SWT.BORDER);
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.heightHint = 250;

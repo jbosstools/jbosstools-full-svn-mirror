@@ -41,15 +41,15 @@ public class EDIGraphicalTreeLabelProvider extends AdapterFactoryLabelProvider {
 				int max = ((Segment) object).getMaxOccurs();
 				String minString = String.valueOf(min);
 				if (min < 0) {
-					minString = "*";
+					minString = "*"; //$NON-NLS-1$
 				}
 
 				String maxString = String.valueOf(max);
 				if (max < 0) {
-					maxString = "*";
+					maxString = "*"; //$NON-NLS-1$
 				}
 
-				return tagName + " [" + minString + ".." + maxString + "]";
+				return tagName + " [" + minString + ".." + maxString + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
 			return tagName;
 		}

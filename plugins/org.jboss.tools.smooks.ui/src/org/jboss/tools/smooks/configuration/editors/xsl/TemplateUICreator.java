@@ -78,9 +78,9 @@ public class TemplateUICreator extends PropertyUICreator {
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart editorPart) {
 		List<AttributeFieldEditPart> list = new ArrayList<AttributeFieldEditPart>();
 		OpenEditorEditInnerContentsAction openCdataEditorAction = new OpenEditorEditInnerContentsAction(editingdomain,
-				(AnyType) model, SmooksUIUtils.VALUE_TYPE_CDATA, "xsl");
+				(AnyType) model, SmooksUIUtils.VALUE_TYPE_CDATA, "xsl"); //$NON-NLS-1$
 		TextTypeSwicher swicher = new TextTypeSwicher();
-		swicher.createSwicherGUI("External Template File", "Inline Template", parent, toolkit);
+		swicher.createSwicherGUI(Messages.TemplateUICreator_External_Template_File, Messages.TemplateUICreator_Inline_Template, parent, toolkit);
 
 		String version = formEditor.getPlatformVersion();
 
@@ -99,11 +99,11 @@ public class TemplateUICreator extends PropertyUICreator {
 		
 		if (SmooksConstants.VERSION_1_2.equals(version)) {
 
-			AttributeFieldEditPart cdataFieldEditPart = SmooksUIUtils.createCommentFieldEditor("Inline Template",
+			AttributeFieldEditPart cdataFieldEditPart = SmooksUIUtils.createCommentFieldEditor(Messages.TemplateUICreator_Inline_Template,
 					editingdomain, toolkit, parent, model, openCdataEditorAction, true);
 			openCdataEditorAction.setRelateText((Text) cdataFieldEditPart.getContentControl());
 			AttributeFieldEditPart textFieldEditPart = SmooksUIUtils.createFileSelectionTextFieldEditor(
-					"External Template File", parent, editingdomain, toolkit, null, model,
+					Messages.TemplateUICreator_External_Template_File, parent, editingdomain, toolkit, null, model,
 					SmooksUIUtils.VALUE_TYPE_TEXT, null, null);
 			list.add(textFieldEditPart);
 			list.add(cdataFieldEditPart);

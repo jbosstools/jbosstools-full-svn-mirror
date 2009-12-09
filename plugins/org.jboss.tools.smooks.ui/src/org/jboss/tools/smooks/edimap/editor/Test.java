@@ -29,7 +29,7 @@ public class Test {
 	}
 
 	public void test() throws IOException {
-		InputStream stream = Test.class.getResourceAsStream("input-message.edi");
+		InputStream stream = Test.class.getResourceAsStream("input-message.edi"); //$NON-NLS-1$
 		InputStreamReader reader = new InputStreamReader(stream);
 		BufferedReader br = new BufferedReader(reader);
 		char segment = '\n';
@@ -52,12 +52,12 @@ public class Test {
 		reader.close();
 		stream.close();
 		TagObject rootTag = new TagObject();
-		rootTag.setName("root");
+		rootTag.setName("root"); //$NON-NLS-1$
 		List<String> names = new ArrayList<String>();
 		char[] separators = new char[]{field,component,subcomponent};
 		for (Iterator<?> iterator = segmentList.iterator(); iterator.hasNext();) {
 			String string = (String) iterator.next();
-			String[] fields = string.split("\\" + new String(new char[] { field }));
+			String[] fields = string.split("\\" + new String(new char[] { field })); //$NON-NLS-1$
 			TagObject tag = null;
 			if (fields.length != 0) {
 				tag = new TagObject();
@@ -77,8 +77,8 @@ public class Test {
 	}
 	
 	private String getSeparator(String s){
-		if(s.equals("*") || s.equals("+") || s.equals("^")){
-			return "\\" + s;
+		if(s.equals("*") || s.equals("+") || s.equals("^")){ //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			return "\\" + s; //$NON-NLS-1$
 		}
 		return s;
 	}

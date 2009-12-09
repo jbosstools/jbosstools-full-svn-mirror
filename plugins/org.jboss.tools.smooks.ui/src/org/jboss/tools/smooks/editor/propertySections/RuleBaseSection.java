@@ -89,7 +89,7 @@ public class RuleBaseSection extends AbstractSmooksPropertySection {
 		TabbedPropertySheetWidgetFactory factory = aTabbedPropertySheetPage.getWidgetFactory();
 
 		Section section = createRootSection(factory, parent);
-		section.setText("Rule Bases Setting");
+		section.setText(Messages.RuleBaseSection_Section_Rules_Bases);
 		SashForm sashForm = new SashForm(section, SWT.NONE);
 		section.setClient(sashForm);
 
@@ -171,8 +171,8 @@ public class RuleBaseSection extends AbstractSmooksPropertySection {
 			}
 		});
 
-		final MenuManager manager = new MenuManager("Add Rule Base");
-		final MenuManager manager1 = new MenuManager("Add Child");
+		final MenuManager manager = new MenuManager(Messages.RuleBaseSection_Menu_Add_Rule_Base);
+		final MenuManager manager1 = new MenuManager(Messages.RuleBaseSection_Menu_Add_Child);
 		manager.add(manager1);
 		manager1.addMenuListener(new IMenuListener() {
 
@@ -181,7 +181,7 @@ public class RuleBaseSection extends AbstractSmooksPropertySection {
 				initMenu(manager1);
 			}
 		});
-		manager1.add(new Action("test") {
+		manager1.add(new Action(Messages.RuleBaseSection_Action_Test) {
 
 		});
 		Menu menu = manager.createContextMenu(ruleBasesViewer.getControl());
@@ -194,7 +194,7 @@ public class RuleBaseSection extends AbstractSmooksPropertySection {
 		GridLayout gl2 = new GridLayout();
 		buttonComposite.setLayout(gl2);
 
-		Button newRuleBasesButton = factory.createButton(buttonComposite, "Add", SWT.NONE);
+		Button newRuleBasesButton = factory.createButton(buttonComposite, Messages.RuleBaseSection_Button_Add, SWT.NONE);
 		newRuleBasesButton.addSelectionListener(new SelectionAdapter() {
 
 			/*
@@ -229,7 +229,7 @@ public class RuleBaseSection extends AbstractSmooksPropertySection {
 			}
 
 		});
-		Button deleteButton = factory.createButton(buttonComposite, "Delete", SWT.NONE);
+		Button deleteButton = factory.createButton(buttonComposite, Messages.RuleBaseSection_Button_Delete, SWT.NONE);
 		deleteButton.addSelectionListener(new SelectionAdapter() {
 
 			/*

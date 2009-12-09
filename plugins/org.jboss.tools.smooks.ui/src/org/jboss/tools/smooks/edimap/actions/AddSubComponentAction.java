@@ -45,8 +45,8 @@ public class AddSubComponentAction extends AbstractEDIMappingAction {
 	@Override
 	protected void init() {
 		super.init();
-		setText("Add SubComponent");
-		setToolTipText("Add SubComponent");
+		setText(Messages.AddSubComponentAction_Action_Text);
+		setToolTipText(Messages.AddSubComponentAction_Action_Tooltip);
 	}
 
 	/* (non-Javadoc)
@@ -55,7 +55,7 @@ public class AddSubComponentAction extends AbstractEDIMappingAction {
 	@Override
 	protected Object createAddModel() {
 		SubComponent field = MEdiFactory.eINSTANCE.createSubComponent();
-		field.setXmltag("xmltag");
+		field.setXmltag("xmltag"); //$NON-NLS-1$
 		return field;
 	}
 

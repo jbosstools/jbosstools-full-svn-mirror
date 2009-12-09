@@ -67,8 +67,8 @@ public class NewSmooksElementWizardPage extends org.eclipse.jface.wizard.WizardP
 			Collection<IAction> childDescriptor, ViewerFilter[] filters, String text, String description) {
 		super(pageName, title, titleImage);
 		this.childDescriptor = childDescriptor;
-		this.setTitle("Add Child");
-		this.setDescription("Add Smooks Elements");
+		this.setTitle(Messages.NewSmooksElementWizardPage_Page_Title);
+		this.setDescription(Messages.NewSmooksElementWizardPage_Page_Description);
 		if (text != null) {
 			this.setTitle(text);
 		}
@@ -82,8 +82,8 @@ public class NewSmooksElementWizardPage extends org.eclipse.jface.wizard.WizardP
 			String text, String description) {
 		super(pageName);
 		this.childDescriptor = childDescriptor;
-		this.setTitle("Add Child");
-		this.setDescription("Add Smooks Elements");
+		this.setTitle(Messages.NewSmooksElementWizardPage_Page_Title);
+		this.setDescription(Messages.NewSmooksElementWizardPage_Page_Description);
 		if (text != null) {
 			this.setTitle(text);
 		}

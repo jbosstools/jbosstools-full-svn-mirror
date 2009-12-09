@@ -9,7 +9,7 @@ package org.jboss.tools.smooks.configuration.editors.xml;
 public class XMLStructuredDataWizardPage extends AbstractFileSelectionWizardPage {
 
 	public XMLStructuredDataWizardPage(String pageName) {
-		super(pageName,new String[]{"xml","xsd","wsdl","xsl"});
+		super(pageName,new String[]{"xml","xsd","wsdl","xsl"}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		setPageText();
 	}
 
