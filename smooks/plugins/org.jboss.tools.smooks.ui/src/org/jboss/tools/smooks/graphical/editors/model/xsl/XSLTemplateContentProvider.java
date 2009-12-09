@@ -62,7 +62,7 @@ public class XSLTemplateContentProvider implements ITreeContentProvider {
 				if (obj == null) {
 					String filePath = SmooksModelUtils.getAnyTypeText(template);
 					if(filePath != null) filePath = filePath.trim();
-					if (filePath != null && !"".equals(filePath)) {
+					if (filePath != null && !"".equals(filePath)) { //$NON-NLS-1$
 						IFile file = SmooksUIUtils.getFile(filePath, SmooksUIUtils.getResource(template).getProject());
 						if (file != null && XSLCore.isXSLFile(file)) {
 							XSLModelAnalyzer analyzer = new XSLModelAnalyzer();

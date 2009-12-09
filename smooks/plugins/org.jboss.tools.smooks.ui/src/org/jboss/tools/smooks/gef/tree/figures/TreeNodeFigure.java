@@ -288,7 +288,7 @@ public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHi
 		if (model != null) {
 			label.setText(model.getText());
 		} else {
-			label.setText("");
+			label.setText(""); //$NON-NLS-1$
 		}
 		if (needClickFigure()) {
 			labelContainer.add(clickNode);
@@ -313,7 +313,7 @@ public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHi
 		if (model != null) {
 			label.setText(model.getText());
 		} else {
-			label.setText("");
+			label.setText(""); //$NON-NLS-1$
 		}
 	}
 

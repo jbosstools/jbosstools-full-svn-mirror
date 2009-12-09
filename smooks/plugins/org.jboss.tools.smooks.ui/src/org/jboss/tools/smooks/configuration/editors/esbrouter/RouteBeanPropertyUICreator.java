@@ -54,7 +54,7 @@ public class RouteBeanPropertyUICreator extends PropertyUICreator {
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingDomain,
 			FormToolkit formToolkit, Composite detailsComposite, Object model, ISmooksModelProvider formEditor,
 			IEditorPart part) {
-		List<AttributeFieldEditPart> attributeEditPartList = createElementSelectionSection("Route On Element",
+		List<AttributeFieldEditPart> attributeEditPartList = createElementSelectionSection(Messages.RouteBeanPropertyUICreator_Route_On_Element,
 				editingDomain, formToolkit, detailsComposite, model, formEditor, part,
 				EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_ON_ELEMENT,
 				EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_ON_ELEMENT_NS);
@@ -127,7 +127,7 @@ public class RouteBeanPropertyUICreator extends PropertyUICreator {
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		// section.setText("Route To Serivce");
-		group.setText("Route To Serivce");
+		group.setText(Messages.RouteBeanPropertyUICreator_Route_To_Service);
 		// section.setLayoutData(gd);
 		group.setLayoutData(gd);
 		FillLayout fl = new FillLayout();
@@ -152,13 +152,13 @@ public class RouteBeanPropertyUICreator extends PropertyUICreator {
 
 		composite.setLayout(gl);
 
-		AttributeFieldEditPart serviceCategoryEditPart = SmooksUIUtils.createStringFieldEditor("Category", composite,
+		AttributeFieldEditPart serviceCategoryEditPart = SmooksUIUtils.createStringFieldEditor(Messages.RouteBeanPropertyUICreator_Category, composite,
 				editingdomain, toolkit, getPropertyDescriptor(editingdomain,
 						EsbroutingPackage.Literals.ROUTE_BEAN__TO_SERVICE_CATEGORY, model), model, false, false, false,
 				0, null, SmooksUIUtils.VALUE_TYPE_VALUE, null);
 		list.add(serviceCategoryEditPart);
 
-		AttributeFieldEditPart serviceNameEditPart = SmooksUIUtils.createStringFieldEditor("Name", composite,
+		AttributeFieldEditPart serviceNameEditPart = SmooksUIUtils.createStringFieldEditor(Messages.RouteBeanPropertyUICreator_Name, composite,
 				editingdomain, toolkit, getPropertyDescriptor(editingdomain,
 						EsbroutingPackage.Literals.ROUTE_BEAN__TO_SERVICE_NAME, model), model, false, false, false, 0,
 				null, SmooksUIUtils.VALUE_TYPE_VALUE, null);
@@ -169,12 +169,12 @@ public class RouteBeanPropertyUICreator extends PropertyUICreator {
 			public Object unwrapValue(Object model) {
 				if (model instanceof Boolean) {
 					if ((Boolean) model) {
-						return "TRUE";
+						return "TRUE"; //$NON-NLS-1$
 					} else {
-						return "FALSE";
+						return "FALSE"; //$NON-NLS-1$
 					}
 				}
-				return "FALSE";
+				return "FALSE"; //$NON-NLS-1$
 			}
 
 			public Object wrapValue(Object model) {
@@ -188,7 +188,7 @@ public class RouteBeanPropertyUICreator extends PropertyUICreator {
 		};
 		AttributeFieldEditPart routeBeforeEP = SmooksUIUtils.createChoiceFieldEditor(parent, toolkit,
 				getPropertyDescriptor(editingdomain, EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_BEFORE, model),
-				model, new String[] { "TRUE", "FALSE" }, processer, true);
+				model, new String[] { "TRUE", "FALSE" }, processer, true); //$NON-NLS-1$ //$NON-NLS-2$
 		list.add(routeBeforeEP);
 
 		list.add(SmooksUIUtils.createStringFieldEditor(parent, toolkit, getPropertyDescriptor(editingdomain,

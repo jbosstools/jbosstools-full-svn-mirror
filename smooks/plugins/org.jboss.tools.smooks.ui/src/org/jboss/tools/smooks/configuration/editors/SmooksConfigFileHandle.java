@@ -53,7 +53,7 @@ public class SmooksConfigFileHandle extends DefaultHandler {
 
 	protected String[] createSupportURI() {
 		return new String[] { org.jboss.tools.smooks.model.smooks.SmooksPackage.eNS_URI,
-				"http://www.milyn.org/xsd/smooks-1.0.xsd", XslPackage.eNS_URI, FreemarkerPackage.eNS_URI,
+				"http://www.milyn.org/xsd/smooks-1.0.xsd", XslPackage.eNS_URI, FreemarkerPackage.eNS_URI, //$NON-NLS-1$
 				GroovyPackage.eNS_URI, CalcPackage.eNS_URI, DatasourcePackage.eNS_URI, FileRoutingPackage.eNS_URI,
 				IoroutingPackage.eNS_URI, JmsroutingPackage.eNS_URI };
 	}

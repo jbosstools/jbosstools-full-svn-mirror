@@ -28,7 +28,7 @@ public class EDIDataContainerEditPart extends EDITreeContainerEditPart {
 		TreeNodeModel obj = (TreeNodeModel) getModel();
 		if(obj.getData() instanceof EDIDataContainerModel){
 			if(((EDIDataContainerModel)obj.getData()).isMultipe()){
-				labelText += " *";
+				labelText += " *"; //$NON-NLS-1$
 			}
 		}
 		return labelText;

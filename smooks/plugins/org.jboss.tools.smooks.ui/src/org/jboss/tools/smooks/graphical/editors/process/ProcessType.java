@@ -30,13 +30,13 @@ import java.util.List;
  */
 public interface ProcessType {
 	
-	public static final String PRO_NAME_CHANGE = "pro_name_change";
+	public static final String PRO_NAME_CHANGE = "pro_name_change"; //$NON-NLS-1$
 
-	public static final String PRO_ID_CHANGE = "pro_id_change";
+	public static final String PRO_ID_CHANGE = "pro_id_change"; //$NON-NLS-1$
 
-	public static final String PRO_ADD_CHILD = "pro_add_child";
+	public static final String PRO_ADD_CHILD = "pro_add_child"; //$NON-NLS-1$
 
-	public static final String PRO_REMOVE_CHILD = "pro_remove_child";
+	public static final String PRO_REMOVE_CHILD = "pro_remove_child"; //$NON-NLS-1$
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener);
 	

@@ -15,8 +15,8 @@ package org.jboss.tools.smooks.edimap.actions;
  *
  */
 public class EDIMappingActionConstants {
-	public static final String ID_ADD_SEGEMENT_ACTION = "__add_segment";
-	public static final String ID_ADD_FIELD_ACTION = "__add_field";
-	public static final String ID_ADD_COMPONENT_ACTION = "__add_compoenent";
-	public static final String ID_ADD_SUBCOMPONENT_ACTION = "__add_subcomponent";
+	public static final String ID_ADD_SEGEMENT_ACTION = "__add_segment"; //$NON-NLS-1$
+	public static final String ID_ADD_FIELD_ACTION = "__add_field"; //$NON-NLS-1$
+	public static final String ID_ADD_COMPONENT_ACTION = "__add_compoenent"; //$NON-NLS-1$
+	public static final String ID_ADD_SUBCOMPONENT_ACTION = "__add_subcomponent"; //$NON-NLS-1$
 }	

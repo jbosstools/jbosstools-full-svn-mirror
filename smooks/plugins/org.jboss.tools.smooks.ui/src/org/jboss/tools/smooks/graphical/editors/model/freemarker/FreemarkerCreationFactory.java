@@ -21,9 +21,9 @@ public class FreemarkerCreationFactory implements CreationFactory{
 	
 	private Object model;
 	
-	public static final String CSV_RECORD = "record";
+	public static final String CSV_RECORD = "record"; //$NON-NLS-1$
 	
-	public static final String CSV_FIELD = "field";
+	public static final String CSV_FIELD = "field"; //$NON-NLS-1$
 	
 	public FreemarkerCreationFactory(Object type , Object model){
 		this.setType(type);
@@ -32,7 +32,7 @@ public class FreemarkerCreationFactory implements CreationFactory{
 	
 	public static FreemarkerCreationFactory newCSVRecordFactory(){
 		CSVNodeModel recordModel = new CSVNodeModel();
-		recordModel.setName("record");
+		recordModel.setName("record"); //$NON-NLS-1$
 		recordModel.setRecord(true);
 		recordModel.setSperator(',');
 		recordModel.setQuto('\"');
@@ -41,7 +41,7 @@ public class FreemarkerCreationFactory implements CreationFactory{
 	
 	public static FreemarkerCreationFactory newCSVFieldFactory(){
 		CSVNodeModel fieldModel = new CSVNodeModel();
-		fieldModel.setName("field");
+		fieldModel.setName("field"); //$NON-NLS-1$
 		fieldModel.setRecord(false);
 		return new FreemarkerCreationFactory(CSV_FIELD, fieldModel);
 	}

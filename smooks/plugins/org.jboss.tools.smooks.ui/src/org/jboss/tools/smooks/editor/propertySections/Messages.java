@@ -4,6 +4,19 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jboss.tools.smooks.editor.propertySections.messages"; //$NON-NLS-1$
+	public static String CSVRecordSection_Label_Quote;
+	public static String CSVRecordSection_Label_Separator;
+	public static String CSVRecordSection_Section_Title;
+	public static String RuleBaseSection_Action_Test;
+	public static String RuleBaseSection_Button_Add;
+	public static String RuleBaseSection_Button_Delete;
+	public static String RuleBaseSection_Menu_Add_Child;
+	public static String RuleBaseSection_Menu_Add_Rule_Base;
+	public static String RuleBaseSection_Section_Rules_Bases;
+	public static String SmooksPropertySection_Section_Title;
+	public static String ValidationSection_Button_Delete_Rule;
+	public static String ValidationSection_Button_New_Rule;
+	public static String ValidationSection_Section_Validation;
 	public static String ValueDecodeParamSection_DeleteButtonText;
 	public static String ValueDecodeParamSection_NewParamButtonText;
 	public static String ValueDecodeParamSection_NullText;

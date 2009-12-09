@@ -84,7 +84,7 @@ public class XSLTemplateGraphicalModel extends AbstractResourceConfigGraphModel 
 				String filePath = SmooksModelUtils.getAnyTypeText(template);
 				if (filePath != null)
 					filePath = filePath.trim();
-				if (filePath != null && !"".equals(filePath)) {
+				if (filePath != null && !"".equals(filePath)) { //$NON-NLS-1$
 					IFile file = SmooksUIUtils.getFile(filePath, SmooksUIUtils.getResource(template).getProject());
 					if (file != null && XSLCore.isXSLFile(file) && file.exists()) {
 						try {
@@ -118,11 +118,11 @@ public class XSLTemplateGraphicalModel extends AbstractResourceConfigGraphModel 
 			String filePath = SmooksModelUtils.getAnyTypeText(template);
 			if (filePath != null)
 				filePath = filePath.trim();
-			if (filePath != null && !"".equals(filePath)) {
+			if (filePath != null && !"".equals(filePath)) { //$NON-NLS-1$
 				IFile file = SmooksUIUtils.getFile(filePath, SmooksUIUtils.getResource(template).getProject());
 				if (file != null && XSLCore.isXSLFile(file) && file.exists()) {
 					try {
-						file.setContents(new ByteArrayInputStream("".getBytes()), IResource.FORCE, null);
+						file.setContents(new ByteArrayInputStream("".getBytes()), IResource.FORCE, null); //$NON-NLS-1$
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

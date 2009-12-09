@@ -182,7 +182,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	protected void createFormContent(IManagedForm managedForm) {
 		final ScrolledForm form = managedForm.getForm();
 		FormToolkit toolkit = managedForm.getToolkit();
-		form.setText("");
+		form.setText(""); //$NON-NLS-1$
 		// toolkit.decorateFormHeading(form.getForm());
 		// // create master details UI
 		// createMasterDetailBlock(managedForm);
@@ -1215,9 +1215,9 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 							t = t.getCause();
 						}
 						this.getManagedForm().getMessageManager().addMessage(
-								"input error",
-								"Check Reader Configuration.  Error creating Input Model from Input Data. Error: \""
-										+ t.getMessage() + "\"", null, IMessageProvider.ERROR);
+								Messages.SmooksReaderFormPage_Input_Error,
+								Messages.SmooksReaderFormPage_Error_Creating_Input_Model
+										+ t.getMessage() + "\"", null, IMessageProvider.ERROR); //$NON-NLS-1$
 					}
 				}
 			}

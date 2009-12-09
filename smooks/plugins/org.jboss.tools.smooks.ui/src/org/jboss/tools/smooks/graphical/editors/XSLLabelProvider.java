@@ -47,7 +47,7 @@ public class XSLLabelProvider extends LabelProvider {
 			String name = ((TagPropertyObject) element).getName();
 			String value = ((TagPropertyObject) element).getValue();
 			if (value == null || value.trim().length() == 0 ) {
-					return name + " (Null Value)";
+					return name + Messages.XSLLabelProvider_Text_Null_Value;
 			}
 		}
 		if(element instanceof XSLTagObject){
@@ -57,8 +57,8 @@ public class XSLLabelProvider extends LabelProvider {
 					String name = ((XSLTagObject)element).getName();
 					if (match != null) {
 						match = match.trim();
-						if (!"".equals(match)) {
-							return name + " (" + match+")";
+						if (!"".equals(match)) { //$NON-NLS-1$
+							return name + " (" + match+")"; //$NON-NLS-1$ //$NON-NLS-2$
 						}
 					}
 				}
@@ -70,8 +70,8 @@ public class XSLLabelProvider extends LabelProvider {
 					String name = ((XSLTagObject)element).getName();
 					if (select != null) {
 						select = select.trim();
-						if (!"".equals(select)) {
-							return name + " -> " + select;
+						if (!"".equals(select)) { //$NON-NLS-1$
+							return name + " -> " + select; //$NON-NLS-1$
 						}
 					}
 				}

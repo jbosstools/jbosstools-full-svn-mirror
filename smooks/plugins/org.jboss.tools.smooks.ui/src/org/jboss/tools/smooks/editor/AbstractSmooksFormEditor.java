@@ -113,7 +113,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 	protected List<ISourceSynchronizeListener> sourceSynchronizeListener = new ArrayList<ISourceSynchronizeListener>();
 
-	public static final String EDITOR_ID = "org.jboss.tools.smooks.edimap.editors.MultiPageEditor";
+	public static final String EDITOR_ID = "org.jboss.tools.smooks.edimap.editors.MultiPageEditor"; //$NON-NLS-1$
 
 	protected StructuredTextEditor textEditor = null;
 
@@ -441,7 +441,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		textEditor = createTextEditor();
 		try {
 			int index = this.addPage(textEditor, getEditorInput());
-			setPageText(index, "Source");
+			setPageText(index, Messages.AbstractSmooksFormEditor_Source_Page_Title);
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
@@ -560,7 +560,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			message = exception.getMessage();
 		}
 		if (message == null) {
-			message = "Unknown error.Please check the file";
+			message = Messages.AbstractSmooksFormEditor_Error_Unknown;
 		}
 		for (Iterator<?> iterator = this.smooksInitListener.iterator(); iterator.hasNext();) {
 			ISmooksEditorInitListener initListener = (ISmooksEditorInitListener) iterator.next();
@@ -607,7 +607,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 				if (editingDomain != null) {
 					ResourceSet resourceSet = editingDomain.getResourceSet();
 					List<Resource> resourceList = resourceSet.getResources();
-					monitor.beginTask("Saving Smooks config file", resourceList.size());
+					monitor.beginTask(Messages.AbstractSmooksFormEditor_Task_Saving_File, resourceList.size());
 
 					for (Iterator<Resource> iterator = resourceList.iterator(); iterator.hasNext();) {
 						handleEMFModelChange = true;
@@ -657,7 +657,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
 		super.init(site, input);
 		String filePath = null;
-		String partName = "smooks editor";
+		String partName = "smooks editor"; //$NON-NLS-1$
 		IFile file = null;
 		RuntimeMetadata runtimeMetadata = new RuntimeMetadata();
 
@@ -666,7 +666,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 				filePath = ((FileStoreEditorInput) input).getURI().toURL().getFile();
 				runtimeMetadata.setSmooksConfig(new File(filePath));
 			} catch (MalformedURLException e) {
-				throw new PartInitException("Transform URL to URL error.", e);
+				throw new PartInitException(Messages.AbstractSmooksFormEditor_Exception_Transform_URL, e);
 			}
 		}
 		if (input instanceof IFileEditorInput) {
@@ -677,7 +677,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		}
 
 		if (filePath == null)
-			throw new PartInitException("Can't get the input file");
+			throw new PartInitException(Messages.AbstractSmooksFormEditor_Exception_Cannot_Get_Input_File);
 
 		// create EMF resource
 		Resource smooksResource = null;
@@ -723,13 +723,13 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		for (RuntimeDependency dependency : dependencies) {
 			if (!dependency.isSupportedByEditor()) {
 				java.net.URI changeToNS = dependency.getChangeToNS();
-				String errorMsg = "\n\nSorry, this configuration is not yet supported by the Smooks Editor because it contains configurations from the '"
+				String errorMsg = Messages.AbstractSmooksFormEditor_Error_Unsupported
 						+ dependency.getNamespaceURI()
-						+ "' configuration namespace.\n\nPlease open this configuration using the XML Editor.";
+						+ Messages.AbstractSmooksFormEditor_Error_Unsupported2;
 
 				if (changeToNS != null) {
-					errorMsg += "\n\nFix: Update the configuration to use the '" + changeToNS
-							+ "' configuration namespace.";
+					errorMsg += Messages.AbstractSmooksFormEditor_Error_Update_Namespace + changeToNS
+							+ Messages.AbstractSmooksFormEditor_Error_Update_Namespace2;
 				}
 
 				throw new PartInitException(errorMsg);
@@ -816,7 +816,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	public IPath getNewPath(IFile file) {
 		IPath fullPath = file.getFullPath();
 		fullPath.removeLastSegments(1);
-		fullPath.append("New name");
+		fullPath.append("New name"); //$NON-NLS-1$
 		return fullPath;
 	}
 

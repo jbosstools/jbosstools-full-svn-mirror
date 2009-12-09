@@ -45,8 +45,8 @@ public class AddFieldAction extends AbstractEDIMappingAction {
 	@Override
 	protected void init() {
 		super.init();
-		setText("Add Field");
-		setToolTipText("Add Field");
+		setText(Messages.AddFieldAction_Action_Text);
+		setToolTipText(Messages.AddFieldAction_Action_Tooltip);
 	}
 
 	/* (non-Javadoc)
@@ -55,7 +55,7 @@ public class AddFieldAction extends AbstractEDIMappingAction {
 	@Override
 	protected Object createAddModel() {
 		Field field = MEdiFactory.eINSTANCE.createField();
-		field.setXmltag("field");
+		field.setXmltag("field"); //$NON-NLS-1$
 		return field;
 	}
 

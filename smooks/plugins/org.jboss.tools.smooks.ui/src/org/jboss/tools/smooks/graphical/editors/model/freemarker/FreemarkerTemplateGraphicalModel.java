@@ -57,7 +57,7 @@ public class FreemarkerTemplateGraphicalModel extends AbstractResourceConfigGrap
 		// Template template = freemarker.getTemplate();
 		if (freemarker != null) {
 			CSVNodeModel recordModel = new CSVNodeModel();
-			recordModel.setName("CSV-Record");
+			recordModel.setName(Messages.FreemarkerTemplateGraphicalModel_CSV_Record_Name);
 			recordModel.setRecord(true);
 			FreemarkerCSVNodeGraphicalModel recordGraphNode = new FreemarkerCSVNodeGraphicalModel(recordModel,
 					contentProvider, labelProvider, smooksModelProvider);
@@ -125,7 +125,7 @@ public class FreemarkerTemplateGraphicalModel extends AbstractResourceConfigGrap
 	@Override
 	public String getText() {
 		if (getTemplateType() == TYPE_CSV) {
-			return "CSV Template";
+			return Messages.FreemarkerTemplateGraphicalModel_CSV_Template_Name;
 		}
 		return super.getText();
 	}

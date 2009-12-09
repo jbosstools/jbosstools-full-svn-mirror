@@ -76,7 +76,7 @@ public class SelectorValidator extends AbstractValidator {
 				if (feature instanceof EAttribute) {
 					if (model instanceof BeanType) {
 						return newWaringDiagnostic(
-								"Must be linked with source input node", model,
+								Messages.SelectorValidator_Warning_Must_Be_Linked_to_Source, model,
 								(EAttribute) feature);
 					}
 				}
@@ -93,21 +93,21 @@ public class SelectorValidator extends AbstractValidator {
 			// "' isn't available",
 			// model, feature);
 			// }
-			String sperator = "/";
+			String sperator = "/"; //$NON-NLS-1$
 			if (path.indexOf('/') == -1) {
-				sperator = " ";
+				sperator = " "; //$NON-NLS-1$
 			}
 			if (path == null || path.length() == 0) {
 				if (feature instanceof EAttribute) {
 					if (model instanceof BeanType) {
 						return newWaringDiagnostic(
-								"Must be linked with source input node", model,
+								Messages.SelectorValidator_Warning_Must_Be_Linked_to_Source, model,
 								(EAttribute) feature);
 					}
 				}
 			}
 			if (feature != null && path != null) {
-				if ("#document".equals(path)) {
+				if ("#document".equals(path)) { //$NON-NLS-1$
 					return null;
 				}
 				Object node = null;
@@ -135,11 +135,11 @@ public class SelectorValidator extends AbstractValidator {
 							|| model instanceof org.jboss.tools.smooks.model.javabean12.WiringType
 							|| model instanceof org.jboss.tools.smooks.model.javabean12.ExpressionType) {
 						return newWaringDiagnostic(
-								"Can't find the input source node :   '" + path
-										+ "'", model, (EAttribute) feature);
+								Messages.SelectorValidator_Warning_Cannot_Find_Input_Source + path
+										+ "'", model, (EAttribute) feature); //$NON-NLS-1$
 					}
-					return newWaringDiagnostic("Selector '" + path
-							+ "' isn't available", model, (EAttribute) feature);
+					return newWaringDiagnostic(Messages.SelectorValidator_Warning_Selector + path
+							+ Messages.SelectorValidator_Warning_Is_Not_Available, model, (EAttribute) feature);
 				}
 			}
 		}
@@ -182,10 +182,10 @@ public class SelectorValidator extends AbstractValidator {
 			}
 			IContentType smooksContentType = Platform.getContentTypeManager()
 					.getContentType(
-							"org.jboss.tools.smooks.ui.smooks.contentType");
+							"org.jboss.tools.smooks.ui.smooks.contentType"); //$NON-NLS-1$
 			IContentType ediMappingContentType = Platform
 					.getContentTypeManager().getContentType(
-							"org.jboss.tools.smooks.ui.edimap.contentType");
+							"org.jboss.tools.smooks.ui.edimap.contentType"); //$NON-NLS-1$
 
 			if (!(smooksContentType.equals(contentType) || ediMappingContentType
 					.equals(contentType))) {

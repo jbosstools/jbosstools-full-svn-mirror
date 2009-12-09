@@ -57,7 +57,7 @@ public class GraphicalModelFactoryImpl implements GraphicalModelFactory {
 		if (obj instanceof BeanType) {
 			String p = ((BeanType) obj).getBeanId();
 			if (p == null) {
-				p = "<NULL>";
+				p = "<NULL>"; //$NON-NLS-1$
 			}
 			return p;
 		}
@@ -65,21 +65,21 @@ public class GraphicalModelFactoryImpl implements GraphicalModelFactory {
 		if (obj instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
 			String p = ((org.jboss.tools.smooks.model.javabean12.ValueType) obj).getProperty();
 			if (p == null) {
-				p = "<NULL>";
+				p = "<NULL>"; //$NON-NLS-1$
 			}
 			return p;
 		}
 		if (obj instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
 			String p = ((org.jboss.tools.smooks.model.javabean12.WiringType) obj).getProperty();
 			if (p == null) {
-				p = "<NULL>";
+				p = "<NULL>"; //$NON-NLS-1$
 			}
 			return p;
 		}
 		if (obj instanceof org.jboss.tools.smooks.model.javabean12.ExpressionType) {
 			String p = ((org.jboss.tools.smooks.model.javabean12.ExpressionType) obj).getProperty();
 			if (p == null) {
-				p = "<NULL>";
+				p = "<NULL>"; //$NON-NLS-1$
 			}
 			return p;
 		}

@@ -45,8 +45,8 @@ public class AddSegmentAction extends AbstractEDIMappingAction{
 	@Override
 	protected void init() {
 		super.init();
-		setText("Add Segement");
-		setToolTipText("Add Segement");
+		setText(Messages.AddSegmentAction_Action_Text);
+		setToolTipText(Messages.AddSegmentAction_Action_Tooltip);
 	}
 
 	/* (non-Javadoc)
@@ -55,9 +55,9 @@ public class AddSegmentAction extends AbstractEDIMappingAction{
 	@Override
 	protected Object createAddModel() {
 		Segment segment = MEdiFactory.eINSTANCE.createSegment();
-		segment.setXmltag("xmltag");
+		segment.setXmltag("xmltag"); //$NON-NLS-1$
 		Field field = MEdiFactory.eINSTANCE.createField();
-		field.setXmltag("field");
+		field.setXmltag("field"); //$NON-NLS-1$
 		segment.getField().add(field);
 		return segment;
 	}

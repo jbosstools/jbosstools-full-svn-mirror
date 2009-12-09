@@ -174,7 +174,7 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 
 		});
 		this.installEditPolicy(EditPolicy.NODE_ROLE, new TreeNodeGraphicalNodeEditPolicy());
-		this.installEditPolicy("SELECTED", new TreeNodeSelectEditPolicy());
+		this.installEditPolicy("SELECTED", new TreeNodeSelectEditPolicy()); //$NON-NLS-1$
 		this.installEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE, new FigureHighlightEditPolicy());
 	}
 
@@ -238,9 +238,9 @@ public class TreeNodeEditPart extends AbstractTreeEditPart implements ITreeFigur
 		for (Iterator<?> iterator = messages.iterator(); iterator.hasNext();) {
 			String string = (String) iterator.next();
 			if (message == null) {
-				message = " - " + string;
+				message = " - " + string; //$NON-NLS-1$
 			} else {
-				message = message + "\n" + " - " + string;
+				message = message + "\n" + " - " + string; //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 		return message;

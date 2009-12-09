@@ -1193,7 +1193,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 			}
 			if (this.getManagedForm() != null) {
 
-				String[] messages = currentMessage.split("\n");
+				String[] messages = currentMessage.split("\n"); //$NON-NLS-1$
 				List<IMessage> messageList = new ArrayList<IMessage>();
 				for (int i = 0; i < messages.length; i++) {
 					String message = messages[i];

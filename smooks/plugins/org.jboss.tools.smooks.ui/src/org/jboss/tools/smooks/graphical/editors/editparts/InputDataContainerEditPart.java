@@ -176,7 +176,7 @@ public class InputDataContainerEditPart extends TreeContainerEditPart {
 			Image image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
 					GraphicsConstants.IMAGE_INPUT_DATA_HEADER);
 
-			String text = "Input Model";
+			String text = Messages.InputDataContainerEditPart_Input_Model;
 
 			if (inputType != null) {
 				if (inputType.equals(provider.getInputType())) {
@@ -189,36 +189,36 @@ public class InputDataContainerEditPart extends TreeContainerEditPart {
 				image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
 						GraphicsConstants.IMAGE_JAVA_FILE);
 
-				text = "Java Input Model";
+				text = Messages.InputDataContainerEditPart_Java_Input_Model;
 			}
 
 			if (inputType.equals(SmooksModelUtils.INPUT_TYPE_XML)) {
 				image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
 						GraphicsConstants.IMAGE_XML_FILE);
 
-				text = "XML Input Model";
+				text = Messages.InputDataContainerEditPart_XML_Input_Model;
 			}
 
 			if (inputType.equals(SmooksModelUtils.INPUT_TYPE_XSD)) {
 				image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
 						GraphicsConstants.IMAGE_XSD_FILE);
 
-				text = "XSD Input Model";
+				text = Messages.InputDataContainerEditPart_XSD_Input_Model;
 			}
 
 			if (inputType.equals(SmooksModelUtils.INPUT_TYPE_CSV)) {
 
-				text = "CSV Input Model";
+				text = Messages.InputDataContainerEditPart_CSV_Input_Model;
 			}
 
 			if (inputType.equals(SmooksModelUtils.INPUT_TYPE_EDI_1_1)) {
 
-				text = "EDI Input Model";
+				text = Messages.InputDataContainerEditPart_EDI_Input_Model;
 			}
 
 			if (inputType.equals(SmooksModelUtils.INPUT_TYPE_JSON_1_1)) {
 
-				text = "JSON Input Model";
+				text = Messages.InputDataContainerEditPart_JSON_Input_Model;
 			}
 
 			TreeContainerFigure figure = (TreeContainerFigure) getFigure();

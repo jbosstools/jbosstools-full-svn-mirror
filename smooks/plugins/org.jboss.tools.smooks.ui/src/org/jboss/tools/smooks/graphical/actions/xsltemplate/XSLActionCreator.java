@@ -31,9 +31,9 @@ public class XSLActionCreator {
 
 			String name1 = name;
 			name1 = name1.toLowerCase();
-			String[] names = name1.split("_");
-			String nn = "";
-			for (int j = 0; j < names.length; j++, nn += " ") {
+			String[] names = name1.split("_"); //$NON-NLS-1$
+			String nn = ""; //$NON-NLS-1$
+			for (int j = 0; j < names.length; j++, nn += " ") { //$NON-NLS-1$
 				char[] chars = names[j].toCharArray();
 				String fN = new String(new char[] { chars[0] });
 				fN = fN.toUpperCase();
@@ -44,11 +44,11 @@ public class XSLActionCreator {
 				nn += fN;
 			}
 
-			String label = " \"Add XSL " + nn + "\"";
-			String content = "addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants." + name + ", "
-					+ label + ", null);";
-			String content1 = "actionRegistry.registerAction(addXSLNodeAction);";
-			String content2 = "selectionActions.add(addXSLNodeAction.getId());";
+			String label = " \"Add XSL " + nn + "\""; //$NON-NLS-1$ //$NON-NLS-2$
+			String content = "addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants." + name + ", " //$NON-NLS-1$ //$NON-NLS-2$
+					+ label + ", null);"; //$NON-NLS-1$
+			String content1 = "actionRegistry.registerAction(addXSLNodeAction);"; //$NON-NLS-1$
+			String content2 = "selectionActions.add(addXSLNodeAction.getId());"; //$NON-NLS-1$
 			System.out.println(content);
 			System.out.println(content1);
 			System.out.println(content2);
@@ -67,115 +67,115 @@ public class XSLActionCreator {
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 		// if(true) return;
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.ATTRIBUTE,  "Add XSL Attribute ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.ATTRIBUTE,  Messages.XSLActionCreator_Action_Add_XSL_Attribute, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.ATTRIBUTE_SET,  "Add XSL Attribute Set ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.ATTRIBUTE_SET,  Messages.XSLActionCreator_Action_Add_XSL_Attribute_Set, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.DECIMAL_FORMAT,  "Add XSL Decimal Format ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.DECIMAL_FORMAT,  Messages.XSLActionCreator_Action_Add_XSL_Decimal_Format, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.IMPORT,  "Add XSL Import ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.IMPORT,  Messages.XSLActionCreator_Action_Add_XSL_Import, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.INCLUDE,  "Add XSL Include ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.INCLUDE,  Messages.XSLActionCreator_Action_Add_XSL_Include, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.KEY,  "Add XSL Key ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.KEY,  Messages.XSLActionCreator_Action_Add_XSL_Key, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.NAMESPACE_ALIAS,  "Add XSL Namespace Alias ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.NAMESPACE_ALIAS,  Messages.XSLActionCreator_Action_Add_XSL_NS_Alias, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.OUTPUT,  "Add XSL Output ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.OUTPUT,  Messages.XSLActionCreator_Action_Add_XSL_Output, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.PARAM,  "Add XSL Param ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.PARAM,  Messages.XSLActionCreator_Action_Add_XSL_Param, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.PRESERVE_SPACE,  "Add XSL Preserve Space ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.PRESERVE_SPACE,  Messages.XSLActionCreator_Action_Add_XSL_Preserve_Space, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.STYLESHEET,  "Add XSL Stylesheet ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.STYLESHEET,  Messages.XSLActionCreator_Action_Add_XSL_Stylesheet, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.TEMPLATE,  "Add XSL Template ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.TEMPLATE,  Messages.XSLActionCreator_Action_Add_XSL_Template, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.VARIABLE,  "Add XSL Variable ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.VARIABLE,  Messages.XSLActionCreator_Action_Add_XSL_Variable, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.APPLY_TEMPLATES,  "Add XSL Apply Templates ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.APPLY_TEMPLATES,  Messages.XSLActionCreator_Action_Add_XSL_Apply_Templates, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.CALL_TEMPLATE,  "Add XSL Call Template ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.CALL_TEMPLATE,  Messages.XSLActionCreator_Action_Add_XSL_Call_Template, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.CHOOSE,  "Add XSL Choose ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.CHOOSE,  Messages.XSLActionCreator_Action_Add_XSL_Choose, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.COMMENT,  "Add XSL Comment ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.COMMENT,  Messages.XSLActionCreator_Action_Add_XSL_Comment, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.COPY,  "Add XSL Copy ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.COPY,  Messages.XSLActionCreator_Action_Add_XSL_Copy, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.COPY_OF,  "Add XSL Copy Of ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.COPY_OF,  Messages.XSLActionCreator_Action_Add_XSL_Copy_Of, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.ELEMENT,  "Add XSL Element ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.ELEMENT,  Messages.XSLActionCreator_Action_Add_XSL_Element, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.FALLBACK,  "Add XSL Fallback ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.FALLBACK,  Messages.XSLActionCreator_Action_Add_XSL_Fallback, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.FOR_EACH,  "Add XSL For Each ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.FOR_EACH,  Messages.XSLActionCreator_Action_Add_XSL_For_Each, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.IF,  "Add XSL If ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.IF,  Messages.XSLActionCreator_Action_Add_XSL_If, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.MESSAGE,  "Add XSL Message ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.MESSAGE,  Messages.XSLActionCreator_Action_Add_XSL_Msg, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.NUMBER,  "Add XSL Number ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.NUMBER,  Messages.XSLActionCreator_Action_Add_XSL_Number, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.TEXT,  "Add XSL Text ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.TEXT,  Messages.XSLActionCreator_Action_Add_XSL_Text, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.VALUE_OF,  "Add XSL Value Of ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.VALUE_OF,  Messages.XSLActionCreator_Action_Add_XSL_Value_Of, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 
-		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.PROCESSING_INSTRUCTION,  "Add XSL Processing Instruction ", null);
+		addXSLNodeAction = new AddXSLNodeModelAction(editorPart, XSLConstants.PROCESSING_INSTRUCTION,  Messages.XSLActionCreator_Action_Add_XSL_Processing, null);
 		actionRegistry.registerAction(addXSLNodeAction);
 		selectionActions.add(addXSLNodeAction.getId());
 

@@ -73,7 +73,7 @@ public class JsonDataWizard extends Wizard implements IStructuredDataSelectionWi
 	public void addPages() {
 		super.addPages();
 		if (pathPage == null) {
-			pathPage = new JsonDataPathWizardPage(Messages.JsonDataWizard_PageText, new String[] { "jsn" }); //$NON-NLS-2$
+			pathPage = new JsonDataPathWizardPage(Messages.JsonDataWizard_PageText, new String[] { "jsn" }); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 			if (folder != null) {
 				pathPage.setInitSelections(new Object[] { folder });
 			}

@@ -116,7 +116,7 @@ public class ExceptionHandler {
 			msg.write("\n\n"); //$NON-NLS-1$
 		}
 		if (exceptionMessage == null || exceptionMessage.length() == 0)
-			msg.write("An exception has occurred. Please check the log for details.");
+			msg.write(Messages.ExceptionHandler_Exception_Msg);
 		else
 			msg.write(exceptionMessage);
 		MessageDialog.openError(shell, title, msg.toString());

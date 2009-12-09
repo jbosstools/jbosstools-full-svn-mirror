@@ -73,7 +73,7 @@ public class ProcessAnalyzer {
 				String refid = SmooksModelUtils.getParamValue(((Freemarker) abstractResourceConfig).getParam(),
 						SmooksModelUtils.KEY_OBJECT_ID);
 				if (refid == null) {
-					refid = SmooksModelUtils.generateTaskID(resourceList, Freemarker.class, "freemarker");
+					refid = SmooksModelUtils.generateTaskID(resourceList, Freemarker.class, "freemarker"); //$NON-NLS-1$
 					ParamType idParam = SmooksFactory.eINSTANCE.createParamType();
 					idParam.setName(SmooksModelUtils.KEY_OBJECT_ID);
 					idParam.setStringValue(refid);

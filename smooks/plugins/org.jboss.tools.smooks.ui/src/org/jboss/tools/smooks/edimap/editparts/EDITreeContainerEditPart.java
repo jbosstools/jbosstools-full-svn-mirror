@@ -106,10 +106,10 @@ public class EDITreeContainerEditPart extends TreeContainerEditPart {
 		if(data instanceof Segments){
 //			String xml = ((MappingNode)data).getXmltag();
 //			return "segments_" + xml;
-			return "segments";
+			return "segments"; //$NON-NLS-1$
 		}
 		if(data instanceof TagObject){
-			return "edi_" + ((TagObject)data).getName();
+			return "edi_" + ((TagObject)data).getName(); //$NON-NLS-1$
 		}
 		return null;
 	}

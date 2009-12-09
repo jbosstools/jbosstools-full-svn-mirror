@@ -50,7 +50,7 @@ public class TemplateWizardSelectionPage extends WizardSelectionPage {
 		main.setLayout(gridLayout);
 
 		Label label = new Label(main, SWT.NONE);
-		label.setText("Message Type");
+		label.setText(Messages.TemplateWizardSelectionPage_Message_Type_Label);
 
 		final Combo combo = new Combo(main, SWT.BORDER | SWT.READ_ONLY);
 		combo.addSelectionListener(new SelectionAdapter() {
@@ -106,7 +106,7 @@ public class TemplateWizardSelectionPage extends WizardSelectionPage {
 			des = node.getDescription();
 		}
 		if (des == null) {
-			des = "";
+			des = ""; //$NON-NLS-1$
 		}
 		desLabel.setText(des);
 	}
@@ -142,7 +142,7 @@ public class TemplateWizardSelectionPage extends WizardSelectionPage {
 		setDescription("Choose \"Message Type\" ."); //$NON-NLS-1$
 		setTitle("Message Type Selection"); //$NON-NLS-1$
 		TemplateMessageTypeWizardNode node = new TemplateMessageTypeWizardNode();
-		node.setName("CSV");
+		node.setName(Messages.TemplateWizardSelectionPage_CSV_Node);
 //		node.setDescription("CSV");
 		node.setWizard(new FreemarkerCSVTemplateCreationWizard());
 

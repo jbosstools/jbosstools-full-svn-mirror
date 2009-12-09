@@ -110,7 +110,7 @@ public class ClassFieldEditorValidator extends AbstractValidator {
 							continue;
 						}
 						if (target.isSupportArrayClass()) {
-							if (classString.endsWith("[]")) {
+							if (classString.endsWith("[]")) { //$NON-NLS-1$
 								classString = classString.substring(0, classString.length() - 2);
 							}
 						}
@@ -124,17 +124,17 @@ public class ClassFieldEditorValidator extends AbstractValidator {
 						}
 						String message = null;
 						if (clazz1 == null) {
-							message = "Can't find class : \"" + classString + "\"";
+							message = Messages.ClassFieldEditorValidator_Warning_Cannot_Find_Class + classString + "\""; //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$
 						}else{
 							if(Modifier.isAbstract(clazz1.getModifiers())){
-								message = "The class can't be abstract";
+								message = Messages.ClassFieldEditorValidator_Warning_Abstract_Class;
 							}else{
 								try {
 									Constructor<?> constructor = clazz1.getConstructor(null);
 								} catch (SecurityException e) {
-									message = "The class '"+classString+"'can't be instanced";
+									message = Messages.ClassFieldEditorValidator_Warning_Class_Cannot_Be_Instanced+classString+Messages.ClassFieldEditorValidator_Warning_Class_Cannot_Be_Instanced2;
 								} catch (NoSuchMethodException e) {
-									message = "The class '"+classString+"'can't be instanced";
+									message = Messages.ClassFieldEditorValidator_Warning_Class_Cannot_Be_Instanced+classString+Messages.ClassFieldEditorValidator_Warning_Class_Cannot_Be_Instanced2;
 								}
 							}
 							

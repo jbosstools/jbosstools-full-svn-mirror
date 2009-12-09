@@ -43,7 +43,7 @@ public class AddFreemarkerCSVRecordAction extends AddSmooksModelAction {
 	 */
 	@Override
 	public String getActionText() {
-		return "CSV Record";
+		return Messages.AddFreemarkerCSVRecordAction_Action_Text;
 	}
 
 	/* (non-Javadoc)

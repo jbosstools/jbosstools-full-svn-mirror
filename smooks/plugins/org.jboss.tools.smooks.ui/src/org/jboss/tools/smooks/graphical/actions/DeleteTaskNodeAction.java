@@ -40,7 +40,7 @@ public class DeleteTaskNodeAction extends AbstractProcessGraphAction {
 	private IProcessProvider processProvider;
 
 	public DeleteTaskNodeAction(IProcessProvider processProvider, ISmooksModelProvider modelProvider, IEditorPart editor) {
-		super("Delete", modelProvider, editor);
+		super(Messages.DeleteTaskNodeAction_Action_Delete, modelProvider, editor);
 		this.processProvider = processProvider;
 	}
 

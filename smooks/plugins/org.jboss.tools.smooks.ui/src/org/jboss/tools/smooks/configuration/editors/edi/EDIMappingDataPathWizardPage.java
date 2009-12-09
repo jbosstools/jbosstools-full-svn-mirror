@@ -43,7 +43,7 @@ public class EDIMappingDataPathWizardPage extends AbstractFileSelectionWizardPag
 
 	private Composite fileComposite = null;
 
-	private String encoding = "UTF-8";
+	private String encoding = "UTF-8"; //$NON-NLS-1$
 
 	private Button createNewReaderButton;
 
@@ -54,15 +54,15 @@ public class EDIMappingDataPathWizardPage extends AbstractFileSelectionWizardPag
 	public EDIMappingDataPathWizardPage(String pageName, boolean multiSelect, Object[] initSelections,
 			List<ViewerFilter> filters) {
 		super(pageName, multiSelect, initSelections, filters);
-		this.setTitle("EDI Mapping file configuration");
-		this.setDescription("Select a EDI mapping config file");
+		this.setTitle(Messages.EDIMappingDataPathWizardPage_EDI_Wizard_Title);
+		this.setDescription(Messages.EDIMappingDataPathWizardPage_EDI_Wizard_Description);
 		this.setFilePathProcessor(new ClassPathFileProcessor());
 	}
 
 	public EDIMappingDataPathWizardPage(String pageName, String[] fileExtensionNames) {
 		super(pageName, fileExtensionNames);
-		this.setTitle("EDI Mapping file configuration");
-		this.setDescription("Select a EDI mapping config file");
+		this.setTitle(Messages.EDIMappingDataPathWizardPage_EDI_Wizard_Title);
+		this.setDescription(Messages.EDIMappingDataPathWizardPage_EDI_Wizard_Description);
 		this.setFilePathProcessor(new ClassPathFileProcessor());
 	}
 
@@ -83,7 +83,7 @@ public class EDIMappingDataPathWizardPage extends AbstractFileSelectionWizardPag
 	}
 
 	private void initData() {
-		encoding = "UTF-8";
+		encoding = "UTF-8"; //$NON-NLS-1$
 		hasReader = false;
 		useAvaliableReader = false;
 		createNewReader = true;
@@ -121,7 +121,7 @@ public class EDIMappingDataPathWizardPage extends AbstractFileSelectionWizardPag
 	@Override
 	protected void createExtensionGUIFirst(Composite parent) {
 		Label encodingLabel = new Label(parent, SWT.NONE);
-		encodingLabel.setText("Encoding:");
+		encodingLabel.setText(Messages.EDIMappingDataPathWizardPage_Label_Encoding);
 		final Text encodingText = new Text(parent, SWT.BORDER);
 		encodingText.addModifyListener(new ModifyListener() {
 
@@ -144,15 +144,15 @@ public class EDIMappingDataPathWizardPage extends AbstractFileSelectionWizardPag
 		chooseComposite.setLayout(gl);
 
 		Button newReaderButton = new Button(chooseComposite, SWT.RADIO);
-		newReaderButton.setText("Create new EDI reader configurations");
+		newReaderButton.setText(Messages.EDIMappingDataPathWizardPage_Button_Create_Readers);
 
 		final Button useReaderButton = new Button(chooseComposite, SWT.RADIO);
-		useReaderButton.setText("Use available EDI reader configurations");
+		useReaderButton.setText(Messages.EDIMappingDataPathWizardPage_Button_Use_Existing_Reader);
 
 		fileComposite = super.createFileSelectionComposite(parent);
 
 		createNewReaderButton = new Button(fileComposite, SWT.CHECK);
-		createNewReaderButton.setText("Create New EDI Reader");
+		createNewReaderButton.setText(Messages.EDIMappingDataPathWizardPage_Button_Create_New_Reader);
 		createNewReaderButton.setSelection(true);
 
 		if (hasReader) {

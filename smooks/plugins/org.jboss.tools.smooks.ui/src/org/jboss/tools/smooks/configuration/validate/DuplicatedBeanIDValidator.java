@@ -59,7 +59,7 @@ public class DuplicatedBeanIDValidator extends AbstractValidator {
 			if (object instanceof BeanType) {
 				String beanId = ((BeanType) object).getBeanId();
 				if(isDuplicateBeanId(beanId)){
-					list.add(newWaringDiagnostic("Duplicated beanId : " + beanId, object,
+					list.add(newWaringDiagnostic(Messages.DuplicatedBeanIDValidator_Warning_Duplicate_Bean_ID + beanId, object,
 				Javabean12Package.Literals.BEAN_TYPE__BEAN_ID));
 				}
 				continue;
@@ -67,7 +67,7 @@ public class DuplicatedBeanIDValidator extends AbstractValidator {
 			if (object instanceof BindTo) {
 				String beanId = ((BindTo) object).getId();
 				if(isDuplicateBeanId(beanId)){
-					list.add(newWaringDiagnostic("Duplicated beanId : " + beanId, object,
+					list.add(newWaringDiagnostic(Messages.DuplicatedBeanIDValidator_Warning_Duplicate_Bean_ID + beanId, object,
 				FreemarkerPackage.Literals.BIND_TO__ID));
 				}
 				continue;
@@ -75,7 +75,7 @@ public class DuplicatedBeanIDValidator extends AbstractValidator {
 			if (object instanceof org.jboss.tools.smooks.model.xsl.BindTo) {
 				String beanId = ((org.jboss.tools.smooks.model.xsl.BindTo) object).getId();
 				if(isDuplicateBeanId(beanId)){
-					list.add(newWaringDiagnostic("Duplicated beanId : " + beanId, object,
+					list.add(newWaringDiagnostic(Messages.DuplicatedBeanIDValidator_Warning_Duplicate_Bean_ID + beanId, object,
 				XslPackage.Literals.BIND_TO__ID));
 				}
 				continue;

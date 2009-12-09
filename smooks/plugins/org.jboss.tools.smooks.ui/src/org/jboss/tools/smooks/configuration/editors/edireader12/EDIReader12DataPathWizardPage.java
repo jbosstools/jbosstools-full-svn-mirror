@@ -28,8 +28,8 @@ public class EDIReader12DataPathWizardPage extends AbstractFileSelectionWizardPa
 
 	public EDIReader12DataPathWizardPage(String pageName, String[] fileExtensionNames) {
 		super(pageName, fileExtensionNames);
-		this.setTitle("EDI file selection");
-		this.setDescription("Select a EDI data file");
+		this.setTitle(Messages.EDIReader12DataPathWizardPage_Page_Title_EDI_File_Select);
+		this.setDescription(Messages.EDIReader12DataPathWizardPage_Page_Description_EDI_File_Select);
 	}
 	
 	

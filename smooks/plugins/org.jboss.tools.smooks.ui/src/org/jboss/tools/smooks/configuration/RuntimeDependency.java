@@ -73,6 +73,22 @@ public class RuntimeDependency {
 	 */
 	private List<SmooksVersion> runtimeVersions;
 	
+	private static final String GROUP_ID = "org.milyn"; //$NON-NLS-1$
+	private static final String META_INF = "META-INF"; //$NON-NLS-1$
+	private static final String MILYN_SMOOKS_CORE = "milyn-smooks-core"; //$NON-NLS-1$
+	private static final String MILYN_SMOOKS_CSV = "milyn-smooks-csv"; //$NON-NLS-1$
+	private static final String MILYN_SMOOKS_EDI = "milyn-smooks-edi"; //$NON-NLS-1$
+	private static final String MILYN_SMOOKS_JSON = "milyn-smooks-json"; //$NON-NLS-1$
+	private static final String MILYN_SMOOKS_TEMPLATING = "milyn-smooks-templating"; //$NON-NLS-1$
+	private static final String MILYN_SMOOKS_JAVABEAN = "milyn-smooks-javabean"; //$NON-NLS-1$
+	private static final String MILYN_SMOOKS_FIXED_LENGTH = "milyn-smooks-fixed-length"; //$NON-NLS-1$
+	private static final String MILYN_SMOOKS_CALC = "milyn-smooks-calc"; //$NON-NLS-1$
+	private static final String MILYN_SMOOKS_PERSISTENCE = "milyn-smooks-persistence"; //$NON-NLS-1$
+	private static final String MILYN_SMOOKS_ROUTING = "milyn-smooks-routing"; //$NON-NLS-1$
+	private static final String MILYN_SMOOKS_RULES = "milyn-smooks-rules"; //$NON-NLS-1$
+	private static final String MILYN_SMOOKS_SCRIPTING = "milyn-smooks-scripting"; //$NON-NLS-1$
+	private static final String MILYN_SMOOKS_VALIDATION = "milyn-smooks-validation"; //$NON-NLS-1$
+	
 	private RuntimeDependency(String artifactId, URI namespaceURI, URI changeToNS, boolean supportedByEditor, List<SmooksVersion> runtimeVersions) {
 		this.artifactId = artifactId;
 		this.namespaceURI = namespaceURI;
@@ -81,7 +97,7 @@ public class RuntimeDependency {
 	}
 	
 	public String getGroupId() {
-		return "org.milyn";
+		return GROUP_ID;
 	}
 	public String getArtifactId() {
 		return artifactId;
@@ -99,52 +115,52 @@ public class RuntimeDependency {
 		return runtimeVersions.contains(smooksVersion);
 	}
 	public boolean isOnProjectClasspath(ClassLoader projectClassloader) {
-        String resourcePath = "META-INF" + namespaceURI.getPath();
+        String resourcePath = META_INF + namespaceURI.getPath();
 		return (projectClassloader.getResource(resourcePath) != null);
 	}
 	
 	public static void addDependencyChecklist(Smooks metadataExtractor) {
 		// Add the supported feature dependency details...
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-core",       ProcessNodeType.BASE,         "smooks-1.1.xsd",            null, true, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list");
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-csv",        ProcessNodeType.INPUT_CSV,    "smooks/csv-1.2.xsd",        null, true, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/reader");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-edi",        ProcessNodeType.INPUT_EDI,    "smooks/edi-1.2.xsd",        null, true, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/reader");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-json",       ProcessNodeType.INPUT_JSON,   "smooks/json-1.2.xsd",       null, true, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/reader");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-templating", ProcessNodeType.TEMPLATING,   "smooks/freemarker-1.1.xsd", null, true, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/freemarker");
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-javabean",   ProcessNodeType.JAVA_BINDING, "smooks/javabean-1.2.xsd",   null, true, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/bean");		
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_CORE,       ProcessNodeType.BASE,         "smooks-1.1.xsd",            null, true, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list"); //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_CSV,        ProcessNodeType.INPUT_CSV,    "smooks/csv-1.2.xsd",        null, true, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/reader");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_EDI,        ProcessNodeType.INPUT_EDI,    "smooks/edi-1.2.xsd",        null, true, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/reader");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_JSON,       ProcessNodeType.INPUT_JSON,   "smooks/json-1.2.xsd",       null, true, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/reader");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_TEMPLATING, ProcessNodeType.TEMPLATING,   "smooks/freemarker-1.1.xsd", null, true, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/freemarker"); //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_JAVABEAN,   ProcessNodeType.JAVA_BINDING, "smooks/javabean-1.2.xsd",   null, true, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/bean");		 //$NON-NLS-1$ //$NON-NLS-2$
 
 		// Add the unsupported feature dependency details...
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-core",         ProcessNodeType.BASE,         "smooks-1.0.xsd",              "smooks-1.1.xsd", false, SmooksVersion.v1_0, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list");
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-csv",          ProcessNodeType.INPUT_CSV,    "smooks/csv-1.1.xsd",          "smooks/csv-1.2.xsd", false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/reader");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-csv",          ProcessNodeType.INPUT_CSV,    "smooks/csv-1.3.xsd",          "smooks/csv-1.2.xsd", false, SmooksVersion.v1_3), "/smooks-resource-list/reader");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-edi",          ProcessNodeType.INPUT_EDI,    "smooks/edi-1.1.xsd",          "smooks/edi-1.2.xsd", false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/reader");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-json",         ProcessNodeType.INPUT_JSON,   "smooks/json-1.1.xsd",         "smooks/json-1.2.xsd", false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/reader");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-fixed-length", ProcessNodeType.FIXED_LENGTH, "smooks/fixed-length-1.3.xsd", null, false, SmooksVersion.v1_3), "/smooks-resource-list/reader");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-core",         ProcessNodeType.DATASOURCE,   "smooks/datasource-1.1.xsd",   null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/direct");
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-core",         ProcessNodeType.DATASOURCE,   "smooks/datasource-1.1.xsd",   null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/JNDI");
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-core",         ProcessNodeType.DATASOURCE,   "smooks/datasource-1.3.xsd",   null, false, SmooksVersion.v1_3), "/smooks-resource-list/direct");
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-core",         ProcessNodeType.DATASOURCE,   "smooks/datasource-1.3.xsd",   null, false, SmooksVersion.v1_3), "/smooks-resource-list/JNDI");
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-core",         ProcessNodeType.CORE,         "smooks/core-1.3.xsd",         null, false, SmooksVersion.v1_3), "/smooks-resource-list/filterSettings");
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-core",         ProcessNodeType.CORE,         "smooks/core-1.3.xsd",         null, false, SmooksVersion.v1_3), "/smooks-resource-list/namespaces");
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-core",         ProcessNodeType.CORE,         "smooks/core-1.3.xsd",         null, false, SmooksVersion.v1_3), "/smooks-resource-list/terminate");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-templating",   ProcessNodeType.TEMPLATING,   "smooks/xsl-1.1.xsd",          null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/xsl");
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-javabean",     ProcessNodeType.JAVA_BINDING, "smooks/javabean-1.1.xsd",     null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/binding");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-javabean",     ProcessNodeType.JAVA_BINDING, "smooks/javabean-1.3.xsd",     null, false, SmooksVersion.v1_3), "/smooks-resource-list/bean");
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-calc",         ProcessNodeType.CALC,         "smooks/calc-1.1.xsd",         null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/counter");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-persistence",  ProcessNodeType.PERSISTENCE,  "smooks/persistence-1.2.xsd",  null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/inserter");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-persistence",  ProcessNodeType.PERSISTENCE,  "smooks/persistence-1.2.xsd",  null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/updater");
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-persistence",  ProcessNodeType.PERSISTENCE,  "smooks/persistence-1.2.xsd",  null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/deleter");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-persistence",  ProcessNodeType.PERSISTENCE,  "smooks/persistence-1.2.xsd",  null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/deleter");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-persistence",  ProcessNodeType.PERSISTENCE,  "smooks/persistence-1.2.xsd",  null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/flusher");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-persistence",  ProcessNodeType.PERSISTENCE,  "smooks/persistence-1.2.xsd",  null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/locator");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-routing",      ProcessNodeType.ROUTING,      "smooks/db-routing-1.1.xsd",   null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/executor");
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-routing",      ProcessNodeType.ROUTING,      "smooks/db-routing-1.1.xsd",   null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/resultSetRowSelector");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-routing",      ProcessNodeType.ROUTING,      "smooks/file-routing-1.1.xsd", null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/outputStream");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-routing",      ProcessNodeType.ROUTING,      "smooks/io-routing-1.1.xsd",   null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/router");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-routing",      ProcessNodeType.ROUTING,      "smooks/jms-routing-1.1.xsd",  null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/router");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-routing",      ProcessNodeType.ROUTING,      "smooks/jms-routing-1.2.xsd",  null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/router");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-rules",        ProcessNodeType.RULES,        "smooks/rules-1.0.xsd",        null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/ruleBases");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-scripting",    ProcessNodeType.SCRIPTING,    "smooks/groovy-1.1.xsd",       null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/groovy");		
-		metadataExtractor.addVisitor(new RuntimeDependencyTracker("milyn-smooks-validation",   ProcessNodeType.VALIDATION,   "smooks/validation-1.0.xsd",   null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/rule");		
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_CORE,         ProcessNodeType.BASE,         "smooks-1.0.xsd",              "smooks-1.1.xsd", false, SmooksVersion.v1_0, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_CSV,          ProcessNodeType.INPUT_CSV,    "smooks/csv-1.1.xsd",          "smooks/csv-1.2.xsd", false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/reader");		 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_CSV,          ProcessNodeType.INPUT_CSV,    "smooks/csv-1.3.xsd",          "smooks/csv-1.2.xsd", false, SmooksVersion.v1_3), "/smooks-resource-list/reader");		 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_EDI,          ProcessNodeType.INPUT_EDI,    "smooks/edi-1.1.xsd",          "smooks/edi-1.2.xsd", false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/reader");		 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_JSON,         ProcessNodeType.INPUT_JSON,   "smooks/json-1.1.xsd",         "smooks/json-1.2.xsd", false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/reader");		 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_FIXED_LENGTH, ProcessNodeType.FIXED_LENGTH, "smooks/fixed-length-1.3.xsd", null, false, SmooksVersion.v1_3), "/smooks-resource-list/reader");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_CORE,         ProcessNodeType.DATASOURCE,   "smooks/datasource-1.1.xsd",   null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/direct"); //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_CORE,         ProcessNodeType.DATASOURCE,   "smooks/datasource-1.1.xsd",   null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/JNDI"); //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_CORE,         ProcessNodeType.DATASOURCE,   "smooks/datasource-1.3.xsd",   null, false, SmooksVersion.v1_3), "/smooks-resource-list/direct"); //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_CORE,         ProcessNodeType.DATASOURCE,   "smooks/datasource-1.3.xsd",   null, false, SmooksVersion.v1_3), "/smooks-resource-list/JNDI"); //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_CORE,         ProcessNodeType.CORE,         "smooks/core-1.3.xsd",         null, false, SmooksVersion.v1_3), "/smooks-resource-list/filterSettings"); //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_CORE,         ProcessNodeType.CORE,         "smooks/core-1.3.xsd",         null, false, SmooksVersion.v1_3), "/smooks-resource-list/namespaces"); //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_CORE,         ProcessNodeType.CORE,         "smooks/core-1.3.xsd",         null, false, SmooksVersion.v1_3), "/smooks-resource-list/terminate");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_TEMPLATING,   ProcessNodeType.TEMPLATING,   "smooks/xsl-1.1.xsd",          null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/xsl"); //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_JAVABEAN,     ProcessNodeType.JAVA_BINDING, "smooks/javabean-1.1.xsd",     null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/binding");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_JAVABEAN,     ProcessNodeType.JAVA_BINDING, "smooks/javabean-1.3.xsd",     null, false, SmooksVersion.v1_3), "/smooks-resource-list/bean"); //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_CALC,         ProcessNodeType.CALC,         "smooks/calc-1.1.xsd",         null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/counter");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_PERSISTENCE,  ProcessNodeType.PERSISTENCE,  "smooks/persistence-1.2.xsd",  null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/inserter");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_PERSISTENCE,  ProcessNodeType.PERSISTENCE,  "smooks/persistence-1.2.xsd",  null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/updater"); //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_PERSISTENCE,  ProcessNodeType.PERSISTENCE,  "smooks/persistence-1.2.xsd",  null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/deleter");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_PERSISTENCE,  ProcessNodeType.PERSISTENCE,  "smooks/persistence-1.2.xsd",  null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/deleter");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_PERSISTENCE,  ProcessNodeType.PERSISTENCE,  "smooks/persistence-1.2.xsd",  null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/flusher");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_PERSISTENCE,  ProcessNodeType.PERSISTENCE,  "smooks/persistence-1.2.xsd",  null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/locator");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_ROUTING,      ProcessNodeType.ROUTING,      "smooks/db-routing-1.1.xsd",   null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/executor"); //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_ROUTING,      ProcessNodeType.ROUTING,      "smooks/db-routing-1.1.xsd",   null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/resultSetRowSelector");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_ROUTING,      ProcessNodeType.ROUTING,      "smooks/file-routing-1.1.xsd", null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/outputStream");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_ROUTING,      ProcessNodeType.ROUTING,      "smooks/io-routing-1.1.xsd",   null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/router");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_ROUTING,      ProcessNodeType.ROUTING,      "smooks/jms-routing-1.1.xsd",  null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/router");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_ROUTING,      ProcessNodeType.ROUTING,      "smooks/jms-routing-1.2.xsd",  null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/router");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_RULES,        ProcessNodeType.RULES,        "smooks/rules-1.0.xsd",        null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/ruleBases");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_SCRIPTING,    ProcessNodeType.SCRIPTING,    "smooks/groovy-1.1.xsd",       null, false, SmooksVersion.v1_1, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/groovy");		 //$NON-NLS-1$ //$NON-NLS-2$
+		metadataExtractor.addVisitor(new RuntimeDependencyTracker(MILYN_SMOOKS_VALIDATION,   ProcessNodeType.VALIDATION,   "smooks/validation-1.0.xsd",   null, false, SmooksVersion.v1_2, SmooksVersion.v1_3), "/smooks-resource-list/rule");		 //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private static class RuntimeDependencyTracker implements SAXVisitBefore {
@@ -167,9 +183,9 @@ public class RuntimeDependency {
 		public RuntimeDependencyTracker(String artifactId, ProcessNodeType nodeType, String xsd, String changeToXSD, boolean supportedByEditor, SmooksVersion... runtimeVersions) {
 			this.artifactId = artifactId;
 			this.nodeType = nodeType;
-			this.namespaceURI = URI.create("http://www.milyn.org/xsd/" + xsd);
+			this.namespaceURI = URI.create("http://www.milyn.org/xsd/" + xsd); //$NON-NLS-1$
 			if(changeToXSD != null) {
-				this.changeToNS = URI.create("http://www.milyn.org/xsd/" + changeToXSD);
+				this.changeToNS = URI.create("http://www.milyn.org/xsd/" + changeToXSD); //$NON-NLS-1$
 			}
 			this.supportedByEditor = supportedByEditor;
 			if(runtimeVersions != null) {

@@ -25,18 +25,18 @@ public class XMLStructuredDataWizard extends AbstractStructuredDdataWizard {
 	Properties properties = new Properties();
 	String filePath = null;
 
-	public static final String XML_FILE = "xmlFile";
+	public static final String XML_FILE = "xmlFile"; //$NON-NLS-1$
 	
 	
 
 	public XMLStructuredDataWizard() {
 		super();
-		setWindowTitle("XML File Input Data Wizard");
+		setWindowTitle(Messages.XMLStructuredDataWizard_Window_Title);
 	}
 
 	@Override
 	protected AbstractFileSelectionWizardPage createAbstractFileSelectionWizardPage() {
-		return new XMLStructuredDataWizardPage("XML");
+		return new XMLStructuredDataWizardPage("XML"); //$NON-NLS-1$
 	}
 
 	public boolean performFinish() {

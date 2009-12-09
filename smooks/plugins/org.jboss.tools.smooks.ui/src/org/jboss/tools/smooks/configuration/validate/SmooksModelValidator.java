@@ -128,7 +128,7 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 			++count;
 		}
 
-		progressMonitor.beginTask("", count);
+		progressMonitor.beginTask("", count); //$NON-NLS-1$
 
 		final AdapterFactory adapterFactory = domain instanceof AdapterFactoryEditingDomain ? ((AdapterFactoryEditingDomain) domain)
 				.getAdapterFactory()
@@ -156,7 +156,7 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 			}
 		};
 
-		progressMonitor.setTaskName("Validating...");
+		progressMonitor.setTaskName(Messages.SmooksModelValidator_Task_Validating);
 
 		Diagnostic diagnostic = diagnostician.validate(eObject);
 
@@ -246,7 +246,7 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 				}
 			}
 		};
-		thread.setName("Validate Smooks model");
+		thread.setName(Messages.SmooksModelValidator_Task_Validating_Smooks_Model);
 		thread.start();
 	}
 

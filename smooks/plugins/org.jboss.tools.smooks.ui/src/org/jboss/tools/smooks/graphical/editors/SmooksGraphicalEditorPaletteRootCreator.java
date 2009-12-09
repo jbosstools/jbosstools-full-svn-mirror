@@ -79,12 +79,12 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 
 	public PaletteRoot createPaletteRoot() {
 		PaletteRoot root = new PaletteRoot();
-		PaletteDrawer drawer = new PaletteDrawer("General");
+		PaletteDrawer drawer = new PaletteDrawer(Messages.SmooksGraphicalEditorPaletteRootCreator_General_Palette_Drawer);
 		drawer.add(new SelectionToolEntry());
 		drawer.add(new MarqueeToolEntry());
 		CreationFactory factory = createConnectionCreationFactory();
 		ImageRegistry imageRegistry = SmooksConfigurationActivator.getDefault().getImageRegistry();
-		drawer.add(new ConnectionCreationToolEntry("Link", "Connect node", factory, imageRegistry
+		drawer.add(new ConnectionCreationToolEntry(Messages.SmooksGraphicalEditorPaletteRootCreator_Link_Tool_Text, Messages.SmooksGraphicalEditorPaletteRootCreator_Link_Tool_Tooltip, factory, imageRegistry
 				.getDescriptor(GraphicsConstants.IMAGE_LINK16), imageRegistry
 				.getDescriptor(GraphicsConstants.IMAGE_LINK24)));
 		root.add(drawer);

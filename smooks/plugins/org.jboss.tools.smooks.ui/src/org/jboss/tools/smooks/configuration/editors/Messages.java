@@ -63,6 +63,8 @@ public class Messages extends NLS {
 	public static String SmooksReaderFormPage_AddButtonLabel;
 	public static String SmooksReaderFormPage_CantFindTypeErrorTitle;
 	public static String SmooksReaderFormPage_DeleteButtonLabel;
+	public static String SmooksReaderFormPage_Error_Creating_Input_Model;
+	public static String SmooksReaderFormPage_Input_Error;
 	public static String SmooksReaderFormPage_InputConfigurationSectionDes;
 	public static String SmooksReaderFormPage_InputConfigurationSectionTitle;
 	public static String SmooksReaderFormPage_InputDataSectionDes;

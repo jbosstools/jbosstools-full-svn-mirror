@@ -78,7 +78,7 @@ public class ValidationSection extends AbstractSmooksPropertySection {
 		TabbedPropertySheetWidgetFactory factory = aTabbedPropertySheetPage.getWidgetFactory();
 
 		Section section = createRootSection(factory, parent);
-		section.setText("Validation Rules Setting");
+		section.setText(Messages.ValidationSection_Section_Validation);
 		SashForm sashForm = new SashForm(section, SWT.NONE);
 		section.setClient(sashForm);
 
@@ -167,7 +167,7 @@ public class ValidationSection extends AbstractSmooksPropertySection {
 		GridLayout gl2 = new GridLayout();
 		buttonComposite.setLayout(gl2);
 
-		Button newRuleButton = factory.createButton(buttonComposite, "New Rule", SWT.NONE);
+		Button newRuleButton = factory.createButton(buttonComposite, Messages.ValidationSection_Button_New_Rule, SWT.NONE);
 		newRuleButton.addSelectionListener(new SelectionAdapter() {
 
 			/*
@@ -205,7 +205,7 @@ public class ValidationSection extends AbstractSmooksPropertySection {
 			}
 
 		});
-		Button deleteRuleButton = factory.createButton(buttonComposite, "Delete Rule", SWT.NONE);
+		Button deleteRuleButton = factory.createButton(buttonComposite, Messages.ValidationSection_Button_Delete_Rule, SWT.NONE);
 		deleteRuleButton.addSelectionListener(new SelectionAdapter() {
 
 			/*
@@ -313,7 +313,7 @@ public class ValidationSection extends AbstractSmooksPropertySection {
 	private String getCurrentModelSelectorPath() {
 		Object model = getPresentSelectedModel();
 		if (model instanceof IXMLStructuredObject) {
-			return SmooksUIUtils.generateFullPath((IXMLStructuredObject) model, "/");
+			return SmooksUIUtils.generateFullPath((IXMLStructuredObject) model, "/"); //$NON-NLS-1$
 		}
 		return null;
 

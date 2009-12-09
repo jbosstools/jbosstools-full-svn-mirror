@@ -62,10 +62,10 @@ public class RuntimeMetadata {
 
 	public RuntimeMetadata() {
 		metadataExtractor = new Smooks();
-		metadataExtractor.addVisitor(new SmooksConfigAsserter(), "/smooks-resource-list",
-				"http://www.milyn.org/xsd/smooks-1.1.xsd");
-		metadataExtractor.addVisitor(new InputParamExtractor(), "/smooks-resource-list/params/param",
-				"http://www.milyn.org/xsd/smooks-1.1.xsd");
+		metadataExtractor.addVisitor(new SmooksConfigAsserter(), "/smooks-resource-list", //$NON-NLS-1$
+				"http://www.milyn.org/xsd/smooks-1.1.xsd"); //$NON-NLS-1$
+		metadataExtractor.addVisitor(new InputParamExtractor(), "/smooks-resource-list/params/param", //$NON-NLS-1$
+				"http://www.milyn.org/xsd/smooks-1.1.xsd"); //$NON-NLS-1$
 
 		// Build dependency map...
 		RuntimeDependency.addDependencyChecklist(metadataExtractor);
@@ -82,26 +82,26 @@ public class RuntimeMetadata {
 	public String getErrorMessage() {
 		if (isValidSmooksConfig) {
 			throw new IllegalStateException(
-					"Invalid call to 'getErrorMessage()'.  Smooks configuration is NOT invalid.");
+					Messages.RuntimeMetadata_Error_Invalid_GetErrorMessage_Call);
 		}
 
 		if (configFile == null) {
-			return "Smooks configuration file not configured, or does not exist.";
+			return Messages.RuntimeMetadata_Error_SmooksFile_Does_Not_Exist;
 		} else if (!configFile.exists()) {
-			return "Specified Smooks configuration file not found.";
+			return Messages.RuntimeMetadata_Error_SmooksFile_Not_Found;
 		} else if (!configFile.isFile()) {
-			return "Specified Smooks configuration file is not a readable file.";
+			return Messages.RuntimeMetadata_Error_SmooksFile_Not_Readable;
 		} else if (!isSmooksConfig) {
-			return "Specified Smooks configuration file is not a valid Smooks Configuration.";
+			return Messages.RuntimeMetadata_Error_SmooksFile_Not_Valid;
 		} else if (inputFile == null) {
-			return "Specified Smooks configuration 'Input' task is not configured with a sample input file.  Please configure the 'Input' task in the Process flow.";
+			return Messages.RuntimeMetadata_Error_Input_Task_No_Input_File;
 		} else if (!inputFile.exists()) {
-			return "Specified Smooks configuration 'Input' task is configured with a sample input file, but the file cannot be found.  Please reconfigure the 'Input' task in the Process flow.";
+			return Messages.RuntimeMetadata_Error_Input_Task_Input_File_Not_Found;
 		} else if (!inputFile.isFile()) {
-			return "Specified Smooks configuration 'Input' task is configured with a sample input file, but the file cannot be read.  Please reconfigure the 'Input' task in the Process flow.";
+			return Messages.RuntimeMetadata_Error_Input_Task_Input_File_Cannot_Be_Read;
 		}
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	public File getConfigFile() {
@@ -233,13 +233,13 @@ public class RuntimeMetadata {
 			Properties inputParams = (Properties) execContext.getAttribute(InputParamExtractor.class);
 
 			if (inputParams != null) {
-				String paramName = paramElement.getAttribute("name");
+				String paramName = paramElement.getAttribute("name"); //$NON-NLS-1$
 
 				if (paramName != null) {
 					if (paramName.equals(SmooksModelUtils.INPUT_TYPE)) {
 						inputParams.setProperty(SmooksModelUtils.INPUT_TYPE, paramElement.getTextContent());
 					} else {
-						String paramType = paramElement.getAttribute("type");
+						String paramType = paramElement.getAttribute("type"); //$NON-NLS-1$
 						if (paramType != null && paramType.equals(SmooksModelUtils.INPUT_ACTIVE_TYPE)) {
 							inputParams.setProperty(paramName, paramElement.getTextContent());
 						}

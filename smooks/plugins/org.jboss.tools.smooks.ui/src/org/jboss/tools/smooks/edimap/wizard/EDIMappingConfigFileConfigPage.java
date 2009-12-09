@@ -61,15 +61,15 @@ public class EDIMappingConfigFileConfigPage extends WizardPage {
 	public EDIMappingConfigFileConfigPage(String pageName, String title, ImageDescriptor titleImage,ISelection selection) {
 		super(pageName, title, titleImage);
 		this.selection = selection;
-		this.setTitle("Config EDI Mapping File");
-		this.setDescription("Define the demiliters and other details of EDI mapping file");
+		this.setTitle(Messages.EDIMappingConfigFileConfigPage_Page_Title);
+		this.setDescription(Messages.EDIMappingConfigFileConfigPage_Page_Description);
 	}
 
 	public EDIMappingConfigFileConfigPage(String pageName,ISelection selection) {
 		super(pageName);
 		this.selection = selection;
-		this.setTitle("Config EDI Mapping File");
-		this.setDescription("Define the demiliters and other details of EDI mapping file");
+		this.setTitle(Messages.EDIMappingConfigFileConfigPage_Page_Title);
+		this.setDescription(Messages.EDIMappingConfigFileConfigPage_Page_Description);
 	}
 
 	/*
@@ -91,7 +91,7 @@ public class EDIMappingConfigFileConfigPage extends WizardPage {
 		mgl.horizontalSpacing = 5;
 
 		Label nameLabel = new Label(mainComposite, SWT.NONE);
-		nameLabel.setText("Name:");
+		nameLabel.setText(Messages.EDIMappingConfigFileConfigPage_Label_Name);
 		final Text nameText = new Text(mainComposite, SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		nameText.setLayoutData(gd);
@@ -107,7 +107,7 @@ public class EDIMappingConfigFileConfigPage extends WizardPage {
 		});
 		
 		Label versionLabel = new Label(mainComposite, SWT.NONE);
-		versionLabel.setText("Version:");
+		versionLabel.setText(Messages.EDIMappingConfigFileConfigPage_Label_Version);
 		final Text versionText = new Text(mainComposite, SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		versionText.setLayoutData(gd);
@@ -123,7 +123,7 @@ public class EDIMappingConfigFileConfigPage extends WizardPage {
 		});
 		
 		Label segmentsNameLabel = new Label(mainComposite, SWT.NONE);
-		segmentsNameLabel.setText("Root XMLTag Name:");
+		segmentsNameLabel.setText(Messages.EDIMappingConfigFileConfigPage_Label_Root_Tag_Name);
 		final Text segmentsNameText = new Text(mainComposite, SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		segmentsNameText.setLayoutData(gd);
@@ -147,7 +147,7 @@ public class EDIMappingConfigFileConfigPage extends WizardPage {
 		separator.setLayoutData(gd);
 		
 		Group group = new Group(mainComposite,SWT.NONE);
-		group.setText("EDI File Delimiter");
+		group.setText(Messages.EDIMappingConfigFileConfigPage_Group_Delimiter);
 		GridLayout dgl = new GridLayout();
 		dgl.numColumns = 2;
 		dgl.verticalSpacing = 5;
@@ -160,7 +160,7 @@ public class EDIMappingConfigFileConfigPage extends WizardPage {
 		group.setLayoutData(gd);
 		
 		Label segmentLabel = new Label(group, SWT.NONE);
-		segmentLabel.setText("Segment:");
+		segmentLabel.setText(Messages.EDIMappingConfigFileConfigPage_Label_Segment);
 		final Text segmentText = new Text(group, SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		segmentText.setLayoutData(gd);
@@ -176,7 +176,7 @@ public class EDIMappingConfigFileConfigPage extends WizardPage {
 		});
 		
 		Label fieldLabel = new Label(group, SWT.NONE);
-		fieldLabel.setText("Field:");
+		fieldLabel.setText(Messages.EDIMappingConfigFileConfigPage_Label_Field);
 		final Text fieldText = new Text(group, SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		fieldText.setLayoutData(gd);
@@ -193,7 +193,7 @@ public class EDIMappingConfigFileConfigPage extends WizardPage {
 		});
 		
 		Label componentLabel = new Label(group, SWT.NONE);
-		componentLabel.setText("Component:");
+		componentLabel.setText(Messages.EDIMappingConfigFileConfigPage_Label_Component);
 		final Text compoenentText = new Text(group, SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		compoenentText.setLayoutData(gd);
@@ -209,7 +209,7 @@ public class EDIMappingConfigFileConfigPage extends WizardPage {
 		});
 		
 		Label subcomponentLabel = new Label(group, SWT.NONE);
-		subcomponentLabel.setText("SubComponent:");
+		subcomponentLabel.setText(Messages.EDIMappingConfigFileConfigPage_Label_Subcomponent);
 		final Text subcompoenentText = new Text(group, SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		subcompoenentText.setLayoutData(gd);
@@ -304,14 +304,14 @@ public class EDIMappingConfigFileConfigPage extends WizardPage {
 	protected void openFileSelection(Text relationText) {
 		FileDialog dialog = new FileDialog(this.getShell());
 		if (fileExtensionNames != null) {
-			String s = "";
+			String s = ""; //$NON-NLS-1$
 			for (int i = 0; i < fileExtensionNames.length; i++) {
 				String exname = fileExtensionNames[i];
-				s += "*." + exname + ";";
+				s += "*." + exname + ";"; //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			if (s.length() != 0) {
 				s = s.substring(0, s.length() - 1);
-				dialog.setFilterExtensions(new String[]{s,"*.*"});
+				dialog.setFilterExtensions(new String[]{s,"*.*"}); //$NON-NLS-1$
 			}
 		}
 		String path = dialog.open();
@@ -479,7 +479,7 @@ public class EDIMappingConfigFileConfigPage extends WizardPage {
 	private void updatePageStatus(){
 		String error = null;
 		if(segments == null || segments.length() == 0){
-			error = "The xml root name can't be null";
+			error = Messages.EDIMappingConfigFileConfigPage_Error_Root_Name_Cannot_Be_Null;
 		}
 		this.setErrorMessage(error);
 		this.setPageComplete(error == null);

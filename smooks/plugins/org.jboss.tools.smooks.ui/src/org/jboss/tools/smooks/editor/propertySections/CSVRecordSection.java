@@ -58,7 +58,7 @@ public class CSVRecordSection extends AbstractSmooksPropertySection {
 		TabbedPropertySheetWidgetFactory factory = aTabbedPropertySheetPage.getWidgetFactory();
 
 		Section section = createRootSection(factory, parent);
-		section.setText("CSV Properties");
+		section.setText(Messages.CSVRecordSection_Section_Title);
 		Composite mainComposite = factory.createComposite(section);
 		section.setClient(mainComposite);
 
@@ -66,14 +66,14 @@ public class CSVRecordSection extends AbstractSmooksPropertySection {
 		gl.numColumns = 2;
 		mainComposite.setLayout(gl);
 
-		factory.createLabel(mainComposite, "Sperator Character : ");
-		speratorText = factory.createText(mainComposite, "");
+		factory.createLabel(mainComposite, Messages.CSVRecordSection_Label_Separator);
+		speratorText = factory.createText(mainComposite, ""); //$NON-NLS-1$
 		speratorText.setTextLimit(1);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		speratorText.setLayoutData(gd);
 
-		factory.createLabel(mainComposite, "Quote Character : ");
-		quoteText = factory.createText(mainComposite, "");
+		factory.createLabel(mainComposite, Messages.CSVRecordSection_Label_Quote);
+		quoteText = factory.createText(mainComposite, ""); //$NON-NLS-1$
 		quoteText.setTextLimit(1);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		quoteText.setLayoutData(gd);
@@ -177,8 +177,8 @@ public class CSVRecordSection extends AbstractSmooksPropertySection {
 		if (freemarker != null) {
 			String quote = SmooksModelUtils.getParamValue(freemarker.getParam(), SmooksModelUtils.KEY_CSV_QUOTE);
 			String sperator = SmooksModelUtils.getParamValue(freemarker.getParam(), SmooksModelUtils.KEY_CSV_SEPERATOR);
-			if(quote == null) quote = "";
-			if(sperator == null) sperator = "";
+			if(quote == null) quote = ""; //$NON-NLS-1$
+			if(sperator == null) sperator = ""; //$NON-NLS-1$
 			speratorText.setText(sperator);
 			quoteText.setText(quote);
 		}

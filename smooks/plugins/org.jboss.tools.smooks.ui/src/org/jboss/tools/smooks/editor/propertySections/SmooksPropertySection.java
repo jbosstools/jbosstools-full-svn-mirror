@@ -48,7 +48,7 @@ public class SmooksPropertySection extends AbstractSmooksPropertySection {
 		TabbedPropertySheetWidgetFactory factory = aTabbedPropertySheetPage.getWidgetFactory();
 
 		Section section = createRootSection(factory, parent);
-		section.setText("Properties");
+		section.setText(Messages.SmooksPropertySection_Section_Title);
 		controlComposite = factory.createComposite(section);
 		section.setClient(controlComposite);
 		GridLayout gl = new GridLayout();

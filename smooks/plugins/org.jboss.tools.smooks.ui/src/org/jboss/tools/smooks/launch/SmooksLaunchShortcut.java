@@ -101,7 +101,7 @@ public class SmooksLaunchShortcut extends JUnitLaunchShortcut {
 				RuntimeMetadata metadata = new RuntimeMetadata();
 				metadata.setSmooksConfig(elementToLaunch);
 				if (!metadata.isValidSmooksConfig()) {
-					MessageDialog.openError(getShell(), "Launch Failed", metadata.getErrorMessage());
+					MessageDialog.openError(getShell(), Messages.SmooksLaunchShortcut_Title_Launch_Failed, metadata.getErrorMessage());
 					return;
 				}
 			}
@@ -110,8 +110,8 @@ public class SmooksLaunchShortcut extends JUnitLaunchShortcut {
 			// OK, silently move on
 		} catch (CoreException e) {
 			ExceptionHandler.handle(e, getShell(), 
-					"Launch Failed", 
-					"An exception occurred while testing the Smooks Configuration.");
+					Messages.SmooksLaunchShortcut_Title_Launch_Failed, 
+					Messages.SmooksLaunchShortcut_Exception_Occurred);
 		}
 	}
 
@@ -156,9 +156,9 @@ public class SmooksLaunchShortcut extends JUnitLaunchShortcut {
 		IDebugModelPresentation labelProvider= DebugUITools.newDebugModelPresentation();
 		ElementListSelectionDialog dialog= new ElementListSelectionDialog(getShell(), labelProvider);
 		dialog.setElements(configList.toArray());
-		dialog.setTitle("Select Runtime Configuration");
+		dialog.setTitle(Messages.SmooksLaunchShortcut_Title_Select_Config);
 		if (mode.equals(ILaunchManager.RUN_MODE)) {
-			dialog.setMessage("Select from the available Smooks Runtime Configurations.");
+			dialog.setMessage(Messages.SmooksLaunchShortcut_Message_Select_Config);
 		}
 		dialog.setMultipleSelection(false);
 		int result= dialog.open();
@@ -169,7 +169,7 @@ public class SmooksLaunchShortcut extends JUnitLaunchShortcut {
 	}
 
 	protected String getLaunchConfigurationTypeId() {
-		return "org.jboss.tools.smooks.ui.smooksLauncher";
+		return "org.jboss.tools.smooks.ui.smooksLauncher"; //$NON-NLS-1$
 	}
 
 	protected ILaunchConfigurationWorkingCopy createLaunchConfiguration(IFile file) throws CoreException {

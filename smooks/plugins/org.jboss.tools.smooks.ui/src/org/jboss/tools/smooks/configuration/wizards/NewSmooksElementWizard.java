@@ -56,7 +56,7 @@ public class NewSmooksElementWizard extends Wizard {
 		Collection<?> childDescriptors = editingDomain.getNewChildDescriptors(parentElement, null);
 		Collection<IAction> actions = SmooksUIUtils.generateCreateChildActions(editingDomain, childDescriptors,
 				new StructuredSelection(parentElement));
-		page = new NewSmooksElementWizardPage("Smooks Elements", actions , filters , text , description);
+		page = new NewSmooksElementWizardPage(Messages.NewSmooksElementWizard_Smooks_Elements, actions , filters , text , description);
 
 		this.addPage(page);
 	}

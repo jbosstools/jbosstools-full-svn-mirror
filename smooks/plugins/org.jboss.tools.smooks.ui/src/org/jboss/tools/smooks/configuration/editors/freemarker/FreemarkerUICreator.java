@@ -78,7 +78,7 @@ public class FreemarkerUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return createElementSelectionSection("Apply On Element", editingdomain, toolkit, parent, model, formEditor,part,
+		return createElementSelectionSection(Messages.FreemarkerUICreator_Apply_On_Element, editingdomain, toolkit, parent, model, formEditor,part,
 				FreemarkerPackage.Literals.FREEMARKER__APPLY_ON_ELEMENT,
 				FreemarkerPackage.Literals.FREEMARKER__APPLY_ON_ELEMENT_NS);
 	}

@@ -75,11 +75,11 @@ public class XSLElementNodeCreationFactory implements CreationFactory {
 	}
 
 	public static XSLElementNodeCreationFactory newXSLTypeElementCreationFactory(String name) {
-		return new XSLElementNodeCreationFactory(name, XSLModelAnalyzer.XSL_NAME_SPACE, "xsl", null, TYPE_ELEMENT);
+		return new XSLElementNodeCreationFactory(name, XSLModelAnalyzer.XSL_NAME_SPACE, "xsl", null, TYPE_ELEMENT); //$NON-NLS-1$
 	}
 	
 	public static XSLElementNodeCreationFactory newXSLTypeAttributeCreationFactory(String name) {
-		return new XSLElementNodeCreationFactory(name, XSLModelAnalyzer.XSL_NAME_SPACE, "xsl", null, TYPE_ATTRIBUTE);
+		return new XSLElementNodeCreationFactory(name, XSLModelAnalyzer.XSL_NAME_SPACE, "xsl", null, TYPE_ATTRIBUTE); //$NON-NLS-1$
 	}
 	
 	public static XSLElementNodeCreationFactory newNormalAttributeCreationFactory(String name) {

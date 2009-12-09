@@ -202,13 +202,13 @@ public class XSLNodeGraphicalModel extends TreeNodeModel {
 		Object source = sourceModel.getData();
 		String selectorString = null;
 		if (source instanceof IXMLStructuredObject) {
-			selectorString = SmooksUIUtils.generateFullPath((IXMLStructuredObject) source, "/");
+			selectorString = SmooksUIUtils.generateFullPath((IXMLStructuredObject) source, "/"); //$NON-NLS-1$
 		}
 
 		Object data = getData();
 
 		if (data instanceof TagPropertyObject) {
-			((TagPropertyObject) data).setValue("{" + selectorString + "}");
+			((TagPropertyObject) data).setValue("{" + selectorString + "}"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 		if (data instanceof XSLTagObject) {
@@ -232,9 +232,9 @@ public class XSLNodeGraphicalModel extends TreeNodeModel {
 						namespace = XSLModelAnalyzer.XSL_NAME_SPACE;
 					}
 
-					Element newElement = doc.createElementNS(namespace, "value-of");
+					Element newElement = doc.createElementNS(namespace, "value-of"); //$NON-NLS-1$
 					element.appendChild(newElement);
-					relateTag.setName("value-of");
+					relateTag.setName("value-of"); //$NON-NLS-1$
 					relateTag.setReferenceElement(newElement);
 					((XSLTagObject) data).getRelatedIgnoreXSLTagObjects().add(relateTag);
 				}
@@ -377,12 +377,12 @@ public class XSLNodeGraphicalModel extends TreeNodeModel {
 			String filePath = SmooksModelUtils.getAnyTypeText(template);
 			if (filePath != null)
 				filePath = filePath.trim();
-			if (filePath != null && !"".equals(filePath)) {
+			if (filePath != null && !"".equals(filePath)) { //$NON-NLS-1$
 				IFile file = SmooksUIUtils.getFile(filePath, SmooksUIUtils.getResource(template).getProject());
 				if (file != null && XSLCore.isXSLFile(file) && file.exists()) {
 					try {
 						if (contents == null)
-							contents = "";
+							contents = ""; //$NON-NLS-1$
 						file.setContents(new ByteArrayInputStream(contents.getBytes()), IResource.FORCE, null);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -417,7 +417,7 @@ public class XSLNodeGraphicalModel extends TreeNodeModel {
 		AbstractXMLObject obj = (AbstractXMLObject) getData();
 		String oldName = obj.getName();
 		if (oldName == null) {
-			oldName = "";
+			oldName = ""; //$NON-NLS-1$
 		}
 		if (oldName.equals(name)) {
 			return;

@@ -106,7 +106,7 @@ public class TreeNodeModel extends AbstractSmooksGraphicalModel {
 		if (data != null && labelProvider != null) {
 			return labelProvider.getText(data);
 		}
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	public Image getImage() {

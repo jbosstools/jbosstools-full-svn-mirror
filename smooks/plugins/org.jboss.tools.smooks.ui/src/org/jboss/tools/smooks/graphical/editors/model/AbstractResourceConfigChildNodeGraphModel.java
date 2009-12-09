@@ -155,7 +155,7 @@ public class AbstractResourceConfigChildNodeGraphModel extends TreeNodeModel {
 			AbstractSmooksGraphicalModel targetGraphModel = connection.getSourceNode();
 			Object tm = targetGraphModel.getData();
 			if (tm instanceof IXMLStructuredObject) {
-				String selector = SmooksUIUtils.generateFullPath((IXMLStructuredObject) tm, "/");
+				String selector = SmooksUIUtils.generateFullPath((IXMLStructuredObject) tm, "/"); //$NON-NLS-1$
 				Command command = SetCommand.create(domainProvider.getEditingDomain(), owner, feature, selector);
 				domainProvider.getEditingDomain().getCommandStack().execute(command);
 			}

@@ -12,10 +12,10 @@ public class SmooksFileContainerSelectionPage extends WizardNewFileCreationPage 
 
 	public SmooksFileContainerSelectionPage(String pageName, IStructuredSelection selection) {
 		super(pageName, selection);
-		setTitle("Smooks Configuration File Wizard Page");
-		setDescription("Create a new Smooks configuration file.");
-		setFileExtension("xml");
-		setFileName("smooks-config.xml");
+		setTitle(Messages.SmooksFileContainerSelectionPage_Page_Title);
+		setDescription(Messages.SmooksFileContainerSelectionPage_Page_Description);
+		setFileExtension("xml"); //$NON-NLS-1$
+		setFileName("smooks-config.xml"); //$NON-NLS-1$
 	}
 
 	@Override

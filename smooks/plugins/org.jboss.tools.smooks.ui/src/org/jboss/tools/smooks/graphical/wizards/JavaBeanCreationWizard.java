@@ -79,7 +79,7 @@ public class JavaBeanCreationWizard extends SmooksCreationModelConfigureWizard {
 			}
 		}
 		if (project != null) {
-			wizardPage = new JavaBeanCreationWizardPage("Wizard Page 1", project, ids);
+			wizardPage = new JavaBeanCreationWizardPage("Java Bean Creation Page", project, ids); //$NON-NLS-1$
 			this.addPage(wizardPage);
 		}
 	}

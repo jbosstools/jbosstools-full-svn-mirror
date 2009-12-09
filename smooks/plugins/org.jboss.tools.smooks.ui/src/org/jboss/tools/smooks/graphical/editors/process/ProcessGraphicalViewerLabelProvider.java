@@ -65,11 +65,11 @@ public class ProcessGraphicalViewerLabelProvider extends LabelProvider implement
 				name = id;
 			}
 			if (name == null) {
-				name = "null";
+				name = "null"; //$NON-NLS-1$
 			}
 			return name;
 		}
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	/*

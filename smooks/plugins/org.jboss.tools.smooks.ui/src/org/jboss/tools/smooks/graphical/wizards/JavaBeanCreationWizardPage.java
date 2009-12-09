@@ -544,14 +544,14 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 				ProjectClassLoader loader = new ProjectClassLoader(project);
 				Class<?> clazz = loader.loadClass(beanClass);
 				if (Modifier.isAbstract(clazz.getModifiers())) {
-					error = "Class is Abstract.  Cannot be instantiated.";
+					error = Messages.JavaBeanCreationWizardPage_Error_Abstract;
 				} else {
 					try {
 						clazz.getConstructor(null);
 					} catch (SecurityException e) {
-						error = "Unable to determine if the class can be instantiated.";
+						error = Messages.JavaBeanCreationWizardPage_Error_Cannot_Be_Instantiated;
 					} catch (NoSuchMethodException e) {
-						error = "Class does not have a Public Default Constructor.";
+						error = Messages.JavaBeanCreationWizardPage_Error_Class_Needs_Public_Default_Const;
 					}
 				}
 			} catch (JavaModelException e) {

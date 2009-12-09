@@ -168,7 +168,7 @@ public class EDIDataParser {
 		// SmooksEDIReader.class.getName());
 
 		if (mappingModel == null) {
-			throw new RuntimeException("EDI Mapping file can't be empty");
+			throw new RuntimeException(Messages.EDIDataParser_Exception_EDI_Mapping_Cannot_Be_Empty);
 		}
 		// If the MappingModel is absolute file path :
 		File f = new File(mappingModel);

@@ -92,7 +92,7 @@ public class TreeNodeTextDirectManager extends DirectEditManager {
 			initialLabelText = ((MappingNode) model).getXmltag();
 		}
 		if (initialLabelText == null) {
-			initialLabelText = "";
+			initialLabelText = ""; //$NON-NLS-1$
 		}
 		getCellEditor().setValue(initialLabelText);
 		IFigure figure = getEditPart().getFigure();

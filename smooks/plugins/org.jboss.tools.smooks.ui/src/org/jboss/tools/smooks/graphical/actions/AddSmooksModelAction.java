@@ -73,7 +73,7 @@ public abstract class AddSmooksModelAction extends SelectionAction {
 		addReq.setLocation(location);
 		addReq.setFactory(getCreationFactory());
 
-		CompoundCommand compoundCmd = new CompoundCommand("Add " + getActionText());
+		CompoundCommand compoundCmd = new CompoundCommand("Add " + getActionText()); //$NON-NLS-1$
 		for (int i = 0; i < objects.size(); i++) {
 			EditPart object = (EditPart) objects.get(i);
 			Command cmd = object.getCommand(addReq);
@@ -125,7 +125,7 @@ public abstract class AddSmooksModelAction extends SelectionAction {
 	 */
 	@Override
 	public String getId() {
-		return "add_chlid_" + getText();
+		return "add_chlid_" + getText(); //$NON-NLS-1$
 	}
 
 }

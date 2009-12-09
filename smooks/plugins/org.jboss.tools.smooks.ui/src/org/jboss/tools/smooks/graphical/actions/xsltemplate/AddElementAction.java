@@ -36,7 +36,7 @@ public class AddElementAction extends AddXSLNodeAction {
 	 */
 	@Override
 	public String getActionText() {
-		return "Add Element";
+		return Messages.AddElementAction_Action_Text;
 	}
 
 	/* (non-Javadoc)
@@ -44,7 +44,7 @@ public class AddElementAction extends AddXSLNodeAction {
 	 */
 	@Override
 	protected String getNodeName() {
-		return "element";
+		return "element"; //$NON-NLS-1$
 	}
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.smooks.graphical.actions.xsltemplate.AddXSLNodeAction#getActionImageDescriptor()
