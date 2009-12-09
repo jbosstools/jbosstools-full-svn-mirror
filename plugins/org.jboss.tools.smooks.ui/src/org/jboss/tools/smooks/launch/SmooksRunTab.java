@@ -169,36 +169,41 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 		if(activePage != null) {
 			IEditorPart editor = activePage.getActiveEditor();
 			
-			if(editor instanceof AbstractSmooksFormEditor) {
-				IEditorInput editorInput = editor.getEditorInput();
-
-				// added for Issue JBIDE-5360 - now will get defaults from the navigator first (if valid smooks config) or the smooks editor if it's open
-				if (activePage.getActivePart().getSite().getSelectionProvider() != null) {
+			// added for Issue JBIDE-5360 - now will get defaults from the navigator first (if valid smooks config) or the smooks editor if it's open
+			boolean foundInNavigator = false;
+			
+			if (activePage.getActivePart().getSite().getSelectionProvider() != null) {
+				
+				ISelection selection = activePage.getActivePart().getSite().getSelectionProvider().getSelection();
+				
+				if (selection instanceof IStructuredSelection) {
 					
-					ISelection selection = activePage.getActivePart().getSite().getSelectionProvider().getSelection();
+					IStructuredSelection ssel = (IStructuredSelection) selection;
 					
-					if (selection instanceof IStructuredSelection) {
+					if (!ssel.isEmpty() && ssel.getFirstElement() instanceof IFile) {
 						
-						IStructuredSelection ssel = (IStructuredSelection) selection;
+						IFile file = (IFile) ssel.getFirstElement();
+						RuntimeMetadata metadata = new RuntimeMetadata();
+						metadata.setSmooksConfig(file);
 						
-						if (!ssel.isEmpty() && ssel.getFirstElement() instanceof IFile) {
+						if (metadata.isValidSmooksConfig()) {
 							
-							IFile file = (IFile) ssel.getFirstElement();
-							RuntimeMetadata metadata = new RuntimeMetadata();
-							metadata.setSmooksConfig(file);
+							String configName = getLaunchManager().generateUniqueLaunchConfigurationNameFrom(file.getName());
 							
-							if (metadata.isValidSmooksConfig()) {
-								
-								String configName = getLaunchManager().generateUniqueLaunchConfigurationNameFrom(file.getName());
-								
-								launchConfigWC.rename(configName);
-								launchConfigWC.setAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, file.getProject().getName()); //$NON-NLS-1$
-								launchConfigWC.setAttribute(IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, file.getProjectRelativePath().toString()); //$NON-NLS-1$
-							}
+							launchConfigWC.rename(configName);
+							launchConfigWC.setAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, file.getProject().getName()); //$NON-NLS-1$
+							launchConfigWC.setAttribute(IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, file.getProjectRelativePath().toString()); //$NON-NLS-1$
+							
+							foundInNavigator = true;
 						}
 					}
 				}
-				else if(editorInput instanceof FileEditorInput) {
+			}
+
+			if (editor instanceof AbstractSmooksFormEditor && !foundInNavigator ) {
+				IEditorInput editorInput = editor.getEditorInput();
+				
+				if (editorInput instanceof FileEditorInput && !foundInNavigator) {
 					
 					FileEditorInput fileEI = (FileEditorInput) editorInput;					
 					IFile file = fileEI.getFile();
