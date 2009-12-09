@@ -6,6 +6,7 @@ plugin@org.eclipse.bpel.apache.ode.deploy.ui=SVN,,http://anonsvn.jboss.org/repos
 plugin@org.eclipse.bpel.apache.ode.runtime=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.apache.ode.runtime
 plugin@org.eclipse.bpel.common.model=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.common.model
 plugin@org.eclipse.bpel.common.ui=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.common.ui
+plugin@org.eclipse.bpel.compare.ui=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.compare.ui
 plugin@org.eclipse.bpel.model=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.model
 plugin@org.eclipse.bpel.runtimes=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.runtimes
 plugin@org.eclipse.bpel.ui=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/bpel/plugins/org.eclipse.bpel.ui
