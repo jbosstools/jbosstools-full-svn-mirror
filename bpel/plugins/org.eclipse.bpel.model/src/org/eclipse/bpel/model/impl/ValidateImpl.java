@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ValidateImpl.java,v 1.8 2009/04/14 10:50:36 smoser Exp $
+ * $Id: ValidateImpl.java,v 1.9 2009/12/07 09:52:18 smoser Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -142,24 +142,31 @@ public class ValidateImpl extends ActivityImpl implements Validate {
 				&& !isReconciling) {
 			String varAttribute = element
 					.getAttribute(BPELConstants.AT_VARIABLES);
-			if (variables == null || variables.size() == 0) {
-				ReconciliationHelper.replaceAttribute(this,
-						BPELConstants.AT_VARIABLES, (String) null);
-			} else {
-				StringBuilder val = new StringBuilder();
-				Iterator<Variable> i = variables.iterator();
-				for (; i.hasNext();) {
-					Variable var = i.next();
-					val.append(var.getName());
-					if (i.hasNext()) {
-						val.append(" ");
-					}
-				}
-				ReconciliationHelper.replaceAttribute(this,
-						BPELConstants.AT_VARIABLES, val.toString());
-			}
+			String valString = createVariablesString(variables);
+			ReconciliationHelper.replaceAttribute(this, BPELConstants.AT_VARIABLES, valString);
 		}
 		super.changeReference(reference);
+	}
+	
+	/**
+	 * Creates the String representation of the given variables list. 
+	 * @param variables
+	 */
+	private static String createVariablesString(EList<Variable> variables) {
+		if (variables == null || variables.size() == 0) {
+			return null; 
+		} else {
+			StringBuilder val = new StringBuilder();
+			Iterator<Variable> i = variables.iterator();
+			for (; i.hasNext();) {
+				Variable var = i.next();
+				val.append(var.getName());
+				if (i.hasNext()) {
+					val.append(" ");
+				}
+			}
+			return val.toString(); 
+		}
 	}
 
 } //ValidateImpl

@@ -19,7 +19,6 @@ import org.eclipse.bpel.model.impl.ExtensibilityElementImpl;
 import org.eclipse.bpel.model.impl.ExtensibleElementImpl;
 import org.eclipse.bpel.model.util.BPELConstants;
 import org.eclipse.bpel.model.util.BPELUtils;
-import org.eclipse.bpel.ui.commands.util.UpdateModelCommand;
 import org.eclipse.bpel.ui.util.BPELEditorUtil;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;

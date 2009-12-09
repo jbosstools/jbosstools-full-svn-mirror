@@ -15,6 +15,7 @@ package org.eclipse.bpel.model.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.namespace.QName;
@@ -78,6 +79,7 @@ import org.eclipse.bpel.model.Throw;
 import org.eclipse.bpel.model.To;
 import org.eclipse.bpel.model.ToPart;
 import org.eclipse.bpel.model.ToParts;
+import org.eclipse.bpel.model.Validate;
 import org.eclipse.bpel.model.Variable;
 import org.eclipse.bpel.model.Variables;
 import org.eclipse.bpel.model.While;
@@ -305,181 +307,356 @@ public class ReconciliationHelper {
 		return null;
 	}
 	
-	
+	/**
+	 * Updates the target and source of the link to show to the new name.
+	 * 
+	 * @param link
+	 *            that will be renamed
+	 * @param name
+	 *            new name
+	 */
 	private static void updateLinkNameReferences(Link link, String name) {
-		if(link.getSources() != null && !link.getSources().isEmpty()) {
-			((Source)link.getSources().get(0)).getElement().setAttribute(BPELConstants.AT_LINK_NAME, name);
+		if (link.getSources() != null && !link.getSources().isEmpty()) {
+			((Source) link.getSources().get(0)).getElement().setAttribute(BPELConstants.AT_LINK_NAME, name);
 		}
-		if(link.getTargets() != null && !link.getTargets().isEmpty()) {
-			((Target)link.getTargets().get(0)).getElement().setAttribute(BPELConstants.AT_LINK_NAME, name);
+		if (link.getTargets() != null && !link.getTargets().isEmpty()) {
+			((Target) link.getTargets().get(0)).getElement().setAttribute(BPELConstants.AT_LINK_NAME, name);
 		}
 	}
 	
-	private static void updateMessageExchangeNameReferences(MessageExchange messExchange, String name) {
-		Process process = BPELUtils.getProcess(messExchange); 
-		TreeIterator iter = process.eAllContents();
-		//TODO make more efficient for Scope!!!
-		while(iter.hasNext()) {
+	/**
+	 * Updates all places where message exchanges are referenced by their name.
+	 * Does work for local and global message exchanges as well.
+	 * 
+	 * @param messExchange
+	 *            that will be renamed
+	 * @param name
+	 *            new name
+	 */
+	private static void updateMessageExchangeNameReferences(
+			MessageExchange messExchange, String name) {
+		// make more efficient for local messageExchanges
+		EObject nearestScopeOrProcess = BPELUtils.getNearestScopeOrProcess(messExchange);
+		if (nearestScopeOrProcess == null)
+			return;
+
+		TreeIterator iter = nearestScopeOrProcess.eAllContents();
+		while (iter.hasNext()) {
 			Object object = iter.next();
-			// receive
-			if(object instanceof Receive) {
-				Receive receive = (Receive) object; 
-				if(messExchange.equals(receive.getMessageExchange())) {
+			
+			// Receive
+			if (object instanceof Receive) {
+				Receive receive = (Receive) object;
+				if (messExchange.equals(receive.getMessageExchange())) {
 					receive.getElement().setAttribute(BPELConstants.AT_MESSAGE_EXCHANGE, name);
 				}
-			// reply
-			} else if(object instanceof Reply) {
-				Reply reply = (Reply) object; 
-				if(messExchange.equals(reply.getMessageExchange())) {
+				
+			// Reply
+			} else if (object instanceof Reply) {
+				Reply reply = (Reply) object;
+				if (messExchange.equals(reply.getMessageExchange())) {
 					reply.getElement().setAttribute(BPELConstants.AT_MESSAGE_EXCHANGE, name);
 				}
-			// onMessage
-			} else if(object instanceof OnMessage) {
-				OnMessage onMessage = (OnMessage)object; 
-				if(messExchange.equals(onMessage.getMessageExchange())) {
+				
+			// OnMessage
+			} else if (object instanceof OnMessage) {
+				OnMessage onMessage = (OnMessage) object;
+				if (messExchange.equals(onMessage.getMessageExchange())) {
 					onMessage.getElement().setAttribute(BPELConstants.AT_MESSAGE_EXCHANGE, name);
 				}
-			// onEvent
-			} else if(object instanceof OnEvent) {
-				OnEvent onEvent = (OnEvent)object; 
-				if(messExchange.equals(onEvent.getMessageExchange())) {
+				
+			// OnEvent
+			} else if (object instanceof OnEvent) {
+				OnEvent onEvent = (OnEvent) object;
+				if (messExchange.equals(onEvent.getMessageExchange())) {
 					onEvent.getElement().setAttribute(BPELConstants.AT_MESSAGE_EXCHANGE, name);
 				}
 			}
-			// scope
 		}
 	}
 	
+	/**
+	 * Updates all places where correlation sets are referenced by name. Does
+	 * differentiate for global and local variables.
+	 * 
+	 * @param corrSet
+	 *            correlation set that will be renamed
+	 * @param name
+	 *            new name of the correlation set
+	 */
 	private static void updateCorrelationSetNameReferences(CorrelationSet corrSet, String name) {
-		// difference correlation and correlationsets?
-		Process process = BPELUtils.getProcess(corrSet); 
-		TreeIterator iter = process.eAllContents();
-		while(iter.hasNext()) {
-			Object object = iter.next();
-			// receive, reply, invoke
-			if(object instanceof PartnerActivity) {
-				PartnerActivity partnerAct = (PartnerActivity) object; 
-				partnerAct.getCorrelations();
-				// TODO
-			}
-			// scope
-			// correlation
+		// make more efficient for local correlationSets
+		EObject nearestScopeOrProcess = BPELUtils.getNearestScopeOrProcess(corrSet);
+		if (nearestScopeOrProcess == null)
+			return;
 
-			// onMessage
-			else if(object instanceof OnMessage) {
-				OnMessage onMessage = (OnMessage)object; 
-				onMessage.getCorrelations();
-				// TODO
-			// onEvent
-			} else if(object instanceof OnEvent) {
-				OnEvent onEvent = (OnEvent)object; 
-				Correlations correlations = onEvent.getCorrelations(); 
-				// TODO
-			}
-			// TODO onEvent.getcorrelationssets does what?
-		}
-	}
-	
-	private static void updatePartnerLinkNameReferences(PartnerLink partnerLink, String name) {
-		// TODO
-	}
-	
-	private static void updateVariableNameReferences(Variable variable, String name) {
-		Process process = BPELUtils.getProcess(variable); 
-		TreeIterator iter = process.eAllContents();
-		while(iter.hasNext()) {
+		TreeIterator iter = nearestScopeOrProcess.eAllContents();
+		while (iter.hasNext()) {
 			Object object = iter.next();
 			
-			// TODO refactor the code if possible
-			// from
-			if(object instanceof From) {
-				From from = (From) object; 
-				if(variable.equals(from.getVariable())) {
+			// PartnerActivities: Receive, Reply, Invoke
+			if (object instanceof PartnerActivity) {
+				PartnerActivity partnerAct = (PartnerActivity) object;
+				Correlations correlations = partnerAct.getCorrelations();
+				EList<Correlation> list = correlations.getChildren();
+				for (Correlation correlation : list) {
+					CorrelationSet corrSet2 = correlation.getSet();
+					if (corrSet.equals(correlation.getSet())) {
+						correlation.getElement().setAttribute(BPELConstants.AT_SET, name);
+					}
+				}
+			}
+
+			// OnMessage
+			else if (object instanceof OnMessage) {
+				OnMessage onMessage = (OnMessage) object;
+				Correlations correlations = onMessage.getCorrelations();
+				EList<Correlation> list = correlations.getChildren();
+				for (Correlation correlation : list) {
+					if (corrSet.equals(correlation.getSet())) {
+						correlation.getElement().setAttribute(BPELConstants.AT_SET, name);
+					}
+				}
+
+			// OnEvent
+			} else if (object instanceof OnEvent) {
+				OnEvent onEvent = (OnEvent) object;
+				Correlations correlations = onEvent.getCorrelations();
+				EList<Correlation> list = correlations.getChildren();
+				for (Correlation correlation : list) {
+					if (corrSet.equals(correlation.getSet())) {
+						correlation.getElement().setAttribute(BPELConstants.AT_SET, name);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Does update all places where partner links are referenced by name. Does
+	 * work for local and global partner links.
+	 * 
+	 * @param partnerLink
+	 *            that will be renamed
+	 * @param name
+	 *            new name partnerLink will be renamed to
+	 */
+	private static void updatePartnerLinkNameReferences(PartnerLink partnerLink, String name) {
+		EObject nearestScopeOrProcess = BPELUtils.getNearestScopeOrProcess(partnerLink);
+		if (nearestScopeOrProcess == null)
+			return;
+
+		TreeIterator iter = nearestScopeOrProcess.eAllContents();
+		while (iter.hasNext()) {
+			Object object = iter.next();
+
+			// PartnerActivity: Receive, Reply, Invoke
+			if (object instanceof PartnerActivity) {
+				PartnerActivity partnerAct = (PartnerActivity) object;
+				if (partnerLink.equals(partnerAct.getPartnerLink())) {
+					partnerAct.getElement().setAttribute(BPELConstants.AT_PARTNER_LINK, name);
+				}
+				
+			// OnEvent
+			} else if (object instanceof OnEvent) {
+				OnEvent onEvent = (OnEvent) object;
+				if (partnerLink.equals(onEvent.getPartnerLink())) {
+					onEvent.getElement().setAttribute(BPELConstants.AT_PARTNER_LINK, name);
+				}
+				
+			// OnMessage
+			} else if (object instanceof OnMessage) {
+				OnMessage onMessage = (OnMessage) object;
+				if (partnerLink.equals(onMessage.getPartnerLink())) {
+					onMessage.getElement().setAttribute(BPELConstants.AT_PARTNER_LINK, name);
+				}
+				
+			// From
+			} else if (object instanceof From) {
+				From from = (From) object;
+				if (partnerLink.equals(from.getPartnerLink())) {
+					from.getElement().setAttribute(BPELConstants.AT_PARTNER_LINK, name);
+				}
+				
+			// To
+			} else if (object instanceof To) {
+				To to = (To) object;
+				if (partnerLink.equals(to.getPartnerLink())) {
+					to.getElement().setAttribute(BPELConstants.AT_PARTNER_LINK, name);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Updates the references to the counter variable of the Foreach activity
+	 * 
+	 * @param forEach
+	 *            from which the counter variable is renamed
+	 * @param name
+	 *            new name of the counter variable
+	 */
+	private static void updateForeachCounterVariableNameReferences(ForEach forEach, String name) {
+		EObject nearestScopeOrProcess = BPELUtils.getNearestScopeOrProcess(forEach);
+		if (nearestScopeOrProcess == null)
+			return;
+
+		updateVariableNameReferencesOnScope(nearestScopeOrProcess, forEach.getCounterName(), name); 
+	}
+	
+	/**
+	 * Helper method used by updateVariableNameReferences or
+	 * updateForeachCounterVariableNameReferences to finally update the variable
+	 * in a given scope
+	 * 
+	 * @param scope
+	 *            where variable references will be renamed in doubt use the
+	 *            process or use method updateVariableNameReferences or
+	 *            updateForeachCounterVariableNameReferences
+	 * @param variable
+	 * @param name
+	 */
+	private static void updateVariableNameReferencesOnScope(EObject scope, Variable variable, String name) {
+		TreeIterator iter = scope.eAllContents();
+		while (iter.hasNext()) {
+			Object object = iter.next();
+			
+			// Assign: From / Variable Initialization: From
+			if (object instanceof From) {
+				From from = (From) object;
+				if (variable.equals(from.getVariable())) {
 					from.getElement().setAttribute(BPELConstants.AT_VARIABLE, name);
 				}
-			// to
+				
+			// Assign: To
 			} else if (object instanceof To) {
-				To to = (To) object; 
-				if(variable.equals(to.getVariable())) {
+				To to = (To) object;
+				if (variable.equals(to.getVariable())) {
 					to.getElement().setAttribute(BPELConstants.AT_VARIABLE, name);
 				}
-			// receive
-			} else if(object instanceof Receive) {
-				Receive receive = (Receive)object;
-				if(variable.equals(receive.getVariable())) {
+			
+			// Receive
+			} else if (object instanceof Receive) {
+				Receive receive = (Receive) object;
+				if (variable.equals(receive.getVariable())) {
 					receive.getElement().setAttribute(BPELConstants.AT_VARIABLE, name);
 				}
-			// reply
+				
+			// Reply
 			} else if (object instanceof Reply) {
-				Reply reply = (Reply)object;
-				if(variable.equals(reply.getVariable())) {
+				Reply reply = (Reply) object;
+				if (variable.equals(reply.getVariable())) {
 					reply.getElement().setAttribute(BPELConstants.AT_VARIABLE, name);
 				}
-			// invoke
+				
+			// Invoke
 			} else if (object instanceof Invoke) {
-				Invoke invoke = (Invoke)object;
-				// fromparts
-				if(invoke.getFromParts() != null) {
+				Invoke invoke = (Invoke) object;
+				// FromParts
+				if (invoke.getFromParts() != null) {
 					FromParts fromParts = invoke.getFromParts();
-					EList<FromPart> list = fromParts.getChildren(); 
+					EList<FromPart> list = fromParts.getChildren();
 					for (FromPart fromPart : list) {
-						if(variable.equals(fromPart.getToVariable())) {
+						if (variable.equals(fromPart.getToVariable())) {
 							fromPart.getElement().setAttribute(BPELConstants.AT_TO_VARIABLE, name);
 						}
 					}
 				}
-				// toparts
-				if(invoke.getToParts() != null) {
+				// ToParts
+				if (invoke.getToParts() != null) {
 					ToParts toParts = invoke.getToParts();
-					EList<ToPart> list = toParts.getChildren(); 
+					EList<ToPart> list = toParts.getChildren();
 					for (ToPart toPart : list) {
-						if(variable.equals(toPart.getFromVariable())) {
+						if (variable.equals(toPart.getFromVariable())) {
 							toPart.getElement().setAttribute(BPELConstants.AT_FROM_VARIABLE, name);
 						}
 					}
 				}
-				// inputvariable
-				if(variable.equals(invoke.getInputVariable())) {
-					invoke.getElement().setAttribute(BPELConstants.AT_INPUT_VARIABLE, name); 
+				// InputVariable
+				if (variable.equals(invoke.getInputVariable())) {
+					invoke.getElement().setAttribute(BPELConstants.AT_INPUT_VARIABLE, name);
 				}
-				// outputvariable
-				if(variable.equals(invoke.getOutputVariable())) {
+				// OutputVariable
+				if (variable.equals(invoke.getOutputVariable())) {
 					invoke.getElement().setAttribute(BPELConstants.AT_OUTPUT_VARIABLE, name);
 				}
-			// throw 
-			} else if(object instanceof Throw) {
+				
+			// Throw
+			} else if (object instanceof Throw) {
 				Throw _throw = (Throw) object;
-				if(variable.equals(_throw.getFaultVariable())) {
+				if (variable.equals(_throw.getFaultVariable())) {
 					_throw.getElement().setAttribute(BPELConstants.AT_FAULT_VARIABLE, name);
 				}
-			// catch
+				
+			// Catch
 			} else if (object instanceof Catch) {
-				Catch _catch = (Catch) object; 
-				if(variable.equals(_catch.getFaultVariable())) {
+				Catch _catch = (Catch) object;
+				if (variable.equals(_catch.getFaultVariable())) {
 					_catch.getElement().setAttribute(BPELConstants.AT_FAULT_VARIABLE, name);
 				}
-			// validate: has list to reference real variable: nothing to implement
-			
-			// onMessage
+
+			// Validate
+			} else if (object instanceof Validate) {
+				Validate validate = (Validate) object;
+				EList<Variable> variables = validate.getVariables();
+				// update the string directly
+				// TODO refactor with: ValidateImpl.createVariablesString()
+				if (variables == null || variables.size() == 0) {
+					ReconciliationHelper.replaceAttribute(validate, BPELConstants.AT_VARIABLES, (String) null);
+				} else {
+					StringBuilder val = new StringBuilder();
+					Iterator<Variable> i = variables.iterator();
+					for (; i.hasNext();) {
+						Variable var = i.next();
+
+						if (variable.equals(var)) {
+							val.append(name);
+						} else {
+							val.append(var.getName());
+						}
+						if (i.hasNext()) {
+							val.append(" ");
+						}
+					}
+					ReconciliationHelper.replaceAttribute(validate, BPELConstants.AT_VARIABLES, val.toString());
+				}
+
+			// OnMessage
 			} else if (object instanceof OnMessage) {
-				OnMessage onMessage = (OnMessage) object; 
-				if(variable.equals(onMessage)) {
+				OnMessage onMessage = (OnMessage) object;
+				if (variable.equals(onMessage)) {
 					onMessage.getElement().setAttribute(BPELConstants.AT_VARIABLE, name);
 				}
-			// onEvent
+
+			// OnEvent
 			} else if (object instanceof OnEvent) {
-				OnEvent onEvent = (OnEvent) object; 
-				if(variable.equals(onEvent.getVariable())) {
+				OnEvent onEvent = (OnEvent) object;
+				if (variable.equals(onEvent.getVariable())) {
 					onEvent.getElement().setAttribute(BPELConstants.AT_VARIABLE, name);
 				}
 			}
-			// forEach nothing to do: defines its own new variable, does not use existing one
-			// --> what if it uses existing one... this is not forbidden by UI
-			
-			// initialize variables from other variables?
-			// XPATH, Expressions, etc.?
-			// TODO TEST with local variables. make faster for local variables
+			// TODO XPATH, Expressions, etc.?
 		}
+	}
+
+	
+	/**
+	 * Update all locations where variables are referenced by name to reference
+	 * the new name. Does work for both local and global variables without
+	 * problems
+	 * 
+	 * @param variable
+	 *            that will be renamed
+	 * @param name
+	 *            the new name the variable will be renamed to
+	 */
+	private static void updateVariableNameReferences(Variable variable, String name) {
+		// make more efficient for local variables
+		EObject nearestScopeOrProcess = BPELUtils.getNearestScopeOrProcess(variable);
+		if (nearestScopeOrProcess == null)
+			return;
+
+		updateVariableNameReferencesOnScope(nearestScopeOrProcess, variable, name); 
 	}
 	
 	public static void replaceAttribute(WSDLElement element, String attributeName, String attributeValue) {
@@ -510,36 +687,39 @@ public class ReconciliationHelper {
 				parseElement.removeAttribute(attributeName);
 			}
 			
-			// HACK!!! 
-			// This is very hacky, but works and could show the way to another solution
-			if("name".equals(attributeName)) {
-				// link
-				if(element instanceof Link) {
-					updateLinkNameReferences((Link)element, attributeValue); 
+			// update references in DOM if necessary!
+			if (BPELConstants.AT_NAME.equals(attributeName)) {
+				
+				// Link
+				if (element instanceof Link) {
+					updateLinkNameReferences((Link) element, attributeValue);
 				}
-				
-				// variable
-				if(element instanceof Variable) {
-					updateVariableNameReferences((Variable)element, attributeValue); 
+
+				// Variable
+				if (element instanceof Variable) {
+					updateVariableNameReferences((Variable) element, attributeValue);
 				}
-				
-				// message exchange
-				else if(element instanceof MessageExchange) {
-					updateMessageExchangeNameReferences((MessageExchange)element, attributeValue); 
+
+				// MessageExchange
+				else if (element instanceof MessageExchange) {
+					updateMessageExchangeNameReferences(
+							(MessageExchange) element, attributeValue);
 				}
-				
-				// correlation set
-				else if(element instanceof CorrelationSet) {
-					updateCorrelationSetNameReferences((CorrelationSet)element, attributeValue);
-				}	
-				
-				// partner link
-				else if(element instanceof PartnerLink) {
-					updatePartnerLinkNameReferences((PartnerLink)element, attributeValue); 
+
+				// CorrelationSet
+				else if (element instanceof CorrelationSet) {
+					updateCorrelationSetNameReferences(
+							(CorrelationSet) element, attributeValue);
 				}
-				
-				// partner link type: equivalent, but not with BPEL but WSDL
-				// property: correlation set + property alias --> WSDL
+
+				// PartnerLink
+				else if (element instanceof PartnerLink) {
+					updatePartnerLinkNameReferences((PartnerLink) element, attributeValue);
+				}
+			} else if (BPELConstants.AT_COUNTER_NAME.equals(attributeName)) {
+				if (element instanceof ForEach) {
+					updateForeachCounterVariableNameReferences((ForEach) element, attributeValue);
+				}
 			}
 			
 		} finally {
