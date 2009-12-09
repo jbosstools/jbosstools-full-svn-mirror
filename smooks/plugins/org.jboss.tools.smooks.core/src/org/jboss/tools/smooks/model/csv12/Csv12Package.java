@@ -55,7 +55,7 @@ public interface Csv12Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "csv12";
+	String eNS_PREFIX = "csv";
 
 	/**
 	 * The singleton instance of the package.
