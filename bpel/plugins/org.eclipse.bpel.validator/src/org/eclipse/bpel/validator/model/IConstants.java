@@ -250,6 +250,7 @@ public interface IConstants {
     public static final QName AT_OUTPUT_VARIABLE = new QName("outputVariable");
     public static final QName AT_CREATE_INSTANCE = new QName("createInstance");
     public static final QName AT_PART = new QName("part");
+    public static final QName AT_HEADER = new QName("header");
     public static final QName AT_QUERY = new QName("query");
     public static final QName AT_OPAQUE = new QName("opaque");
     public static final QName AT_PROPERTY = new QName("property");

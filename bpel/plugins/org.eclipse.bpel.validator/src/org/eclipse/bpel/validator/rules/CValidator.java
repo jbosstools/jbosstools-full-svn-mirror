@@ -277,7 +277,7 @@ public class CValidator extends Validator {
 	 * @param toNode
 	 */
 	public void compatibleCopyCheck ( INode fromNode, INode toNode ) {
-		int i =0;
+//		int i =0;
 		INode fromTypeNode = getValue(fromNode,"type",null);
 		INode toTypeNode = getValue(toNode,"type",null);
 		
@@ -303,6 +303,12 @@ public class CValidator extends Validator {
 			return ;
 		}
 		
+		String fHeaderName = getValue(fromNode, "header", null);
+		//if there is a header defined in from, it should ODE ws-bpel extension, so ignore
+		//the compatibleCopyCheck
+		if(!isEmpty(fHeaderName)){
+			return ;
+		}
 		
 		// source -> destination		
 		boolean bCompatible = mModelQuery.check(IModelQueryLookups.TEST_COMPATIBLE_TYPE, fromTypeNode, toTypeNode);

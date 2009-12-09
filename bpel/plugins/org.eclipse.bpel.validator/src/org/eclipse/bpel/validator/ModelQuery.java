@@ -200,6 +200,8 @@ public class ModelQuery extends ModelQueryImpl {
 		 }
 		 		 
 		 // set it.
+//			System.out.println(elm.getOwnerDocument().getDocumentURI() + " " + elm.getLocalName() + "----" + obj);
+
 		 elm.setUserData("emf.model", eObj, null);
 
 		 
@@ -217,6 +219,8 @@ public class ModelQuery extends ModelQueryImpl {
 				 domElement = ((XSDConcreteComponent)next).getElement();
 			 } 
 			 if ( domElement != null ) {
+//					System.out.println(elm.getOwnerDocument().getDocumentURI() + " " + elm.getLocalName() + "----" + next);
+
 				 domElement.setUserData("emf.model",next,null);
 			 }			 
 		 }

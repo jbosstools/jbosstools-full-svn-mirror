@@ -182,6 +182,8 @@ public class Main extends CmdValidator {
 				WSDLElement wsdle = (WSDLElement) obj;
 				Element el = wsdle.getElement();
 				if (el != null) {
+//					System.out.println(el.getOwnerDocument().getDocumentURI() + " " + el.getLocalName() + "----" + obj);
+
 					el.setUserData("emf.model", obj, null); //$NON-NLS-1$
 				}
 			}

@@ -94,6 +94,8 @@ public class FromValidator extends CValidator {
 
 	protected String fPartName;
 	
+	protected String fHeaderName;
+	
 	/**
 	 * 
 	 */
@@ -101,12 +103,13 @@ public class FromValidator extends CValidator {
 	@Override
 	protected void start () {
 		super.start();
-		
 		fVariableNode = mModelQuery.lookup(mNode,
 							IModelQueryLookups.LOOKUP_NODE_VARIABLE,
 							mNode.getAttribute(AT_VARIABLE));
 		
 		fPartName = mNode.getAttribute(AT_PART);
+		
+		fHeaderName = mNode.getAttribute(AT_HEADER);
 		
 		fQueryNode = mNode.getNode(ND_QUERY);
 				
@@ -144,6 +147,10 @@ public class FromValidator extends CValidator {
 		
 		if (fLiteralNode != null) {		
 			variant += 1;
+		}
+		
+		if(!isEmpty(fHeaderName)){
+			setValue("header", fHeaderName);
 		}
 		
 		if (fVariableNode != null) {
