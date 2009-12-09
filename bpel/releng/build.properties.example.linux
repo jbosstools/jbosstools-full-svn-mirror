@@ -42,6 +42,7 @@ dependencyURLs=http://repository.jboss.org/eclipse/galileo/eclipse-SDK-3.5.1-lin
 #jar:file:/tmp/build/downloads/eclipse-Update-R-3.5.1-200909170800.zip!/,\
 #http://download.jboss.org/jbosstools/updates/nightly/trunk/,\
 
+# TODO switch to 1.9.1.2
 repositoryURLs=http://download.eclipse.org/releases/galileo/,\
 jar:file:/tmp/build/downloads/JBossTools-Update-3.1.0.v200912081204N-H34-GA.zip!/,
 jar:file:/tmp/build/downloads/GEF-Update-3.5.1.zip!/,\
@@ -51,7 +52,7 @@ jar:file:/tmp/build/downloads/emf-xsd-Update-2.5.0.zip!/,\
 jar:file:/tmp/build/downloads/jst-buildrepo-R-3.1.1-20090917225226.zip!/,\
 jar:file:/tmp/build/downloads/wst-buildrepo-R-3.1.1-20090917225226.zip!/
 # org.eclipse.sdk.feature.group+org.eclipse.sdk.ide+org.eclipse.core.net+org.eclipse.equinox.common+org.eclipse.core.runtime+org.eclipse.debug.core,
-IUsToInstall=javax.wsdl+org.eclipse.wst.wsdl+org.eclipse.wst.xml_ui.feature.feature.group+org.eclipse.wst.jsdt.feature.feature.group,org.jboss.tools.vpe.resref+org.jboss.tools.jst.web.ui+org.jboss.ide.eclipse.as.core+org.jboss.ide.eclipse.archives.webtools+org.jboss.tools.jmx.feature.feature.group,org.eclipse.gmf.runtime.diagram.ui+org.eclipse.emf.compare.match+org.eclipse.emf.compare.diff+org.eclipse.emf.compare.ui
+IUsToInstall=org.mozilla.xpcom+org.eclipse.rcp.feature.group,org.eclipse.jst.server.generic.core+org.eclipse.wst.ws_core.feature.feature.group+org.eclipse.wst.web_ui.feature.feature.group+org.eclipse.wst.ws_wsdl15.feature.feature.group+org.eclipse.wst.xml_ui.feature.feature.group+org.eclipse.wst.common_ui.feature.feature.group+org.eclipse.wst.common_core.feature.feature.group+org.eclipse.xsd.feature.group+org.eclipse.gef.feature.group,org.jboss.tools.vpe.resref+org.jboss.tools.jst.web.ui+org.jboss.ide.eclipse.as.core+org.jboss.ide.eclipse.archives.webtools+org.jboss.tools.jmx.feature.feature.group,org.eclipse.gmf.runtime.diagram.ui+org.eclipse.emf.compare.match+org.eclipse.emf.compare.diff+org.eclipse.emf.compare.ui
 
 flattenDependencies=true
 parallelCompilation=true
