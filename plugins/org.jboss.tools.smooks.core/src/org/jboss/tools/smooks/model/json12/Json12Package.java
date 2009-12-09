@@ -56,7 +56,7 @@ public interface Json12Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "json12";
+	String eNS_PREFIX = "json";
 
 	/**
 	 * The singleton instance of the package.

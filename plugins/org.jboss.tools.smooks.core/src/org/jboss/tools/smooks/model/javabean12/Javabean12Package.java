@@ -56,7 +56,7 @@ public interface Javabean12Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "javabean";
+	String eNS_PREFIX = "jb";
 
 	/**
 	 * The singleton instance of the package.
