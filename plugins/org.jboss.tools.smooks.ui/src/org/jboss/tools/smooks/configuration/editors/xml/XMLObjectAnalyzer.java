@@ -17,7 +17,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Attr;
@@ -28,13 +27,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-
 /**
  * @author Dart Peng
  * @Date Jul 25, 2008
  */
 public class XMLObjectAnalyzer {
-	public TagList analyze(String xmlFilePath, String[] ignoreNodeNames) throws ParserConfigurationException, SAXException, IOException  {
+	public TagList analyze(String xmlFilePath, String[] ignoreNodeNames) throws ParserConfigurationException,
+			SAXException, IOException {
 		FileInputStream stream = new FileInputStream(xmlFilePath);
 		TagList list = this.analyze(stream, ignoreNodeNames);
 		try {
@@ -43,9 +42,10 @@ public class XMLObjectAnalyzer {
 		}
 		return list;
 	}
-	
-	public TagList analyze(Document doc , String[] ignoreNodeNames){
-		if(doc == null) return null;
+
+	public TagList analyze(Document doc, String[] ignoreNodeNames) {
+		if (doc == null)
+			return null;
 		Element rootElement = doc.getDocumentElement();
 		TagList dco = new TagList();
 		dco.setName("Docuement"); //$NON-NLS-1$
@@ -53,18 +53,15 @@ public class XMLObjectAnalyzer {
 		return dco;
 	}
 
-	public TagList analyze(InputStream stream, String[] ignoreNodeNames) throws ParserConfigurationException, SAXException, IOException {
+	public TagList analyze(InputStream stream, String[] ignoreNodeNames) throws ParserConfigurationException,
+			SAXException, IOException {
 		DocumentBuilder builder = createDocumentBuildingFactory();
 		Document doc = builder.parse(stream);
 		return analyze(doc, ignoreNodeNames);
 	}
 
 	public DocumentBuilder createDocumentBuildingFactory() throws ParserConfigurationException {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		factory.setValidating(true);
-
-		factory.setExpandEntityReferences(false);
-		return factory.newDocumentBuilder();
+		return XMLUtils.getDOMBuilder();
 	}
 
 	public TagObject analyzeFregment(InputStream stream, String[] ignoreNodeNames) throws ParserConfigurationException,
@@ -124,10 +121,10 @@ public class XMLObjectAnalyzer {
 		fillProperties(element, tag, ignoreNodeNames);
 		tag.setNamespaceURI(element.getNamespaceURI());
 		NodeList nodeList = element.getChildNodes();
-		for(int i = 0 ; i < nodeList.getLength() ; i++){
+		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node node = nodeList.item(i);
-			if(node instanceof Element){
-				Element childElement = (Element)node;
+			if (node instanceof Element) {
+				Element childElement = (Element) node;
 				TagObject t = parseElement(childElement, tag, ignoreNodeNames);
 				if (t != null) {
 					t.setReferenceElement(childElement);
@@ -155,8 +152,8 @@ public class XMLObjectAnalyzer {
 		NamedNodeMap attrMap = element.getAttributes();
 		for (int i = 0; i < attrMap.getLength(); i++) {
 			Node node = attrMap.item(i);
-			if(node instanceof Attr){
-				Attr attr = (Attr)node;
+			if (node instanceof Attr) {
+				Attr attr = (Attr) node;
 				String attrName = attr.getName();
 				String value = attr.getValue();
 				if (isIgnoreNode(attrName, ignoreNodeNames))
