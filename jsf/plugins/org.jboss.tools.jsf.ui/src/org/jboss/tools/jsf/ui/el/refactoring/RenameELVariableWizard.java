@@ -8,7 +8,7 @@
   * Contributors:
   *     Red Hat, Inc. - initial API and implementation
   ******************************************************************************/
-package org.jboss.tools.common.el.ui.refactoring;
+package org.jboss.tools.jsf.ui.el.refactoring;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -23,10 +23,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.jboss.tools.common.el.core.refactoring.RenameELVariableProcessor;
-import org.jboss.tools.common.el.ui.ElUIMessages;
 import org.jboss.tools.common.ui.widget.editor.CompositeEditor;
 import org.jboss.tools.common.ui.widget.editor.IFieldEditor;
+import org.jboss.tools.jsf.el.refactoring.RenameELVariableProcessor;
+import org.jboss.tools.jsf.ui.JsfUIMessages;
 
 /**
  * @author Daniel Azarov
@@ -67,7 +67,7 @@ public class RenameELVariableWizard extends RefactoringWizard {
 	        layout.numColumns = 2;
 	        
 	        String defaultName = variableName;
-	        editor = FieldEditorFactory.createTextEditor(variableName, ElUIMessages.RENAME_EL_VARIABLE_WIZARD_EL_VARIABLE_NAME, defaultName);
+	        editor = FieldEditorFactory.createTextEditor(variableName, JsfUIMessages.RENAME_EL_VARIABLE_WIZARD_EL_VARIABLE_NAME, defaultName);
 	        editor.doFillIntoGrid(container);
 	        
 	        ((CompositeEditor)editor).addPropertyChangeListener(new PropertyChangeListener(){

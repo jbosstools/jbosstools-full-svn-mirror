@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.common.el.ui.refactoring;
+package org.jboss.tools.jsf.ui.el.refactoring;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -27,10 +27,10 @@ import org.eclipse.jdt.ui.search.IQueryParticipant;
 import org.eclipse.jdt.ui.search.ISearchRequestor;
 import org.eclipse.jdt.ui.search.QuerySpecification;
 import org.eclipse.search.ui.text.Match;
-import org.jboss.tools.common.el.core.refactoring.ELProjectSetExtension;
-import org.jboss.tools.common.el.core.refactoring.ProjectsSet;
-import org.jboss.tools.common.el.core.refactoring.RefactorSearcher;
 import org.jboss.tools.common.model.project.ProjectHome;
+import org.jboss.tools.jsf.el.refactoring.ELProjectSetExtension;
+import org.jboss.tools.jsf.el.refactoring.ProjectsSet;
+import org.jboss.tools.jsf.el.refactoring.RefactorSearcher;
 
 public class ELReferencesQueryParticipant implements IQueryParticipant{
 	private ELSearcher searcher;

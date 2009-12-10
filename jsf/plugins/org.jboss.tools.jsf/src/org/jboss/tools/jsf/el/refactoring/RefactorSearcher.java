@@ -8,7 +8,7 @@
   * Contributors:
   *     Red Hat, Inc. - initial API and implementation
   ******************************************************************************/
-package org.jboss.tools.common.el.core.refactoring;
+package org.jboss.tools.jsf.el.refactoring;
 
 import java.io.IOException;
 import java.util.List;
@@ -168,22 +168,29 @@ public abstract class RefactorSearcher {
 		}
 	}
 	
+	private String getFileContent(IFile file){
+		try {
+			return FileUtil.readStream(file);
+			//collectStatistic(content.length());
+		} catch (CoreException e) {
+			ELCorePlugin.getDefault().logError(e);
+		}
+		return null;
+	}
+	
 	private void scanForJava(IFile file){
 		if(isFileCorrect(file)) {
 			String content = null;
-			try {
-				content = FileUtil.readStream(file);
-				//collectStatistic(content.length());
-			} catch (CoreException e) {
-				ELCorePlugin.getDefault().logError(e);
-			}
 			if(content!= null) { 
 				String ext = file.getFileExtension();
 				if(JAVA_EXT.equalsIgnoreCase(ext)){
+					content = getFileContent(file);
 					scanJava(file, content);
 				} else if(XML_EXT.equalsIgnoreCase(ext)) {
+					content = getFileContent(file);
 					scanDOM(file, content);
 				} else if(PROPERTIES_EXT.equalsIgnoreCase(ext)) {
+					content = getFileContent(file);
 					scanProperties(file, content);
 				}
 			}
@@ -192,20 +199,12 @@ public abstract class RefactorSearcher {
 
 	private void scan(IFile file){
 		if(isFileCorrect(file)) {
-			String content = null;
-			try {
-				content = FileUtil.readStream(file);
-				//collectStatistic(content.length());
-			} catch (CoreException e) {
-				ELCorePlugin.getDefault().logError(e);
-			}
-			if(content!=null) {
-				String ext = file.getFileExtension();			
-				if(XML_EXT.equalsIgnoreCase(ext) 
-					|| XHTML_EXT.equalsIgnoreCase(ext) 
-					|| JSP_EXT.equalsIgnoreCase(ext)) {
-					scanDOM(file, content);
-				}
+			String ext = file.getFileExtension();			
+			if(XML_EXT.equalsIgnoreCase(ext) 
+				|| XHTML_EXT.equalsIgnoreCase(ext) 
+				|| JSP_EXT.equalsIgnoreCase(ext)) {
+				String content = getFileContent(file);
+				scanDOM(file, content);
 			}
 		}
 	}
@@ -231,6 +230,11 @@ public abstract class RefactorSearcher {
 			ELCorePlugin.getDefault().logError(e);
 		}
 	}
+	
+//	private void searchInCach(IFile file){
+//		//ELResolver[] resolvers = PageContextFactory.createPageContext(file).getElResolvers();
+//		
+//	}
 	
 	private void scanDOM(IFile file, String content){
 		IModelManager manager = StructuredModelManager.getModelManager();

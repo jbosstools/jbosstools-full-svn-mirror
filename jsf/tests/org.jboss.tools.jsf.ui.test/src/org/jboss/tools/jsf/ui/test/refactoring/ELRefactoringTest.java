@@ -1,4 +1,4 @@
-package org.jboss.tools.common.el.core.test.refactoring;
+package org.jboss.tools.jsf.ui.test.refactoring;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.jboss.tools.common.el.core.test.refactoring;
+package org.jboss.tools.jsf.ui.test.refactoring;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,11 @@ import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.ltk.core.refactoring.CompositeChange;
+import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 import org.eclipse.ltk.core.refactoring.TextFileChange;
 import org.eclipse.text.edits.MultiTextEdit;
-import org.jboss.tools.common.el.ui.refactoring.RenameMethodParticipant;
 import org.jboss.tools.common.util.FileUtil;
+import org.jboss.tools.jsf.ui.el.refactoring.RenameMethodParticipant;
 import org.jboss.tools.test.util.JobUtils;
 
 public class ELReferencesRenameTest extends ELRefactoringTest {
@@ -71,7 +72,12 @@ public class ELReferencesRenameTest extends ELRefactoringTest {
 		// Rename EL references
 		RenameMethodParticipant participant = new RenameMethodParticipant();
 		participant.initialize(element, newName);
-		participant.checkConditions(new NullProgressMonitor(), null);
+		RefactoringStatus status = participant.checkConditions(new NullProgressMonitor(), null);
+		
+		assertNotNull("Rename participant returned null status", status);
+		
+		assertFalse("There is fatal errors in rename participant", status.hasFatalError());
+		
 		CompositeChange rootChange = (CompositeChange)participant.createChange(new NullProgressMonitor());
 		
 		assertEquals("There is unexpected number of changes",changeList.size(), rootChange.getChildren().length);

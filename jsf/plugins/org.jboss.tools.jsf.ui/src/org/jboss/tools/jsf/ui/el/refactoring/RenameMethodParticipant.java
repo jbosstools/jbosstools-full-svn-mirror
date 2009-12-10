@@ -8,7 +8,7 @@
   * Contributors:
   *     Red Hat, Inc. - initial API and implementation
   ******************************************************************************/
-package org.jboss.tools.common.el.ui.refactoring;
+package org.jboss.tools.jsf.ui.el.refactoring;
 
 import java.util.ArrayList;
 
@@ -33,11 +33,11 @@ import org.eclipse.ltk.internal.core.refactoring.Messages;
 import org.eclipse.text.edits.MultiTextEdit;
 import org.eclipse.text.edits.ReplaceEdit;
 import org.eclipse.text.edits.TextEdit;
-import org.jboss.tools.common.el.core.refactoring.ELProjectSetExtension;
-import org.jboss.tools.common.el.core.refactoring.ProjectsSet;
-import org.jboss.tools.common.el.core.refactoring.RefactorSearcher;
-import org.jboss.tools.common.el.ui.ElUIMessages;
 import org.jboss.tools.common.model.project.ProjectHome;
+import org.jboss.tools.jsf.el.refactoring.ELProjectSetExtension;
+import org.jboss.tools.jsf.el.refactoring.ProjectsSet;
+import org.jboss.tools.jsf.el.refactoring.RefactorSearcher;
+import org.jboss.tools.jsf.ui.JsfUIMessages;
 
 public class RenameMethodParticipant extends RenameParticipant{
 	private IJavaElement element;
@@ -61,9 +61,9 @@ public class RenameMethodParticipant extends RenameParticipant{
 			IMethod method = (IMethod)element;
 			if(method != null && !added){
 				if(searcher.isGetter(method))
-					status.addWarning(ElUIMessages.RENAME_METHOD_PARTICIPANT_GETTER_WARNING);
+					status.addWarning(JsfUIMessages.RENAME_METHOD_PARTICIPANT_GETTER_WARNING);
 				else if(searcher.isSetter(method))
-					status.addWarning(ElUIMessages.RENAME_METHOD_PARTICIPANT_SETTER_WARNING);
+					status.addWarning(JsfUIMessages.RENAME_METHOD_PARTICIPANT_SETTER_WARNING);
 				added = true;
 			}
 		}
@@ -90,7 +90,7 @@ public class RenameMethodParticipant extends RenameParticipant{
 			IMethod method = (IMethod)element;
 			status = new RefactoringStatus();
 			
-			rootChange = new CompositeChange(ElUIMessages.RENAME_METHOD_PARTICIPANT_UPDATE_METHOD_REFERENCES);
+			rootChange = new CompositeChange(JsfUIMessages.RENAME_METHOD_PARTICIPANT_UPDATE_METHOD_REFERENCES);
 			
 			this.element = method;
 			
@@ -104,7 +104,7 @@ public class RenameMethodParticipant extends RenameParticipant{
 			IType type = (IType)element;
 			status = new RefactoringStatus();
 			
-			rootChange = new CompositeChange(ElUIMessages.RENAME_METHOD_PARTICIPANT_UPDATE_METHOD_REFERENCES);
+			rootChange = new CompositeChange(JsfUIMessages.RENAME_METHOD_PARTICIPANT_UPDATE_METHOD_REFERENCES);
 			
 			this.element = type;
 			
@@ -124,7 +124,7 @@ public class RenameMethodParticipant extends RenameParticipant{
 			IMethod method = (IMethod)element;
 			status = new RefactoringStatus();
 			
-			rootChange = new CompositeChange(ElUIMessages.RENAME_METHOD_PARTICIPANT_UPDATE_METHOD_REFERENCES);
+			rootChange = new CompositeChange(JsfUIMessages.RENAME_METHOD_PARTICIPANT_UPDATE_METHOD_REFERENCES);
 			
 			this.element = method;
 			
@@ -138,7 +138,7 @@ public class RenameMethodParticipant extends RenameParticipant{
 			IType type = (IType)element;
 			status = new RefactoringStatus();
 			
-			rootChange = new CompositeChange(ElUIMessages.RENAME_METHOD_PARTICIPANT_UPDATE_METHOD_REFERENCES);
+			rootChange = new CompositeChange(JsfUIMessages.RENAME_METHOD_PARTICIPANT_UPDATE_METHOD_REFERENCES);
 			
 			this.element = type;
 			
@@ -196,13 +196,13 @@ public class RenameMethodParticipant extends RenameParticipant{
 		@Override
 		protected boolean isFileCorrect(IFile file) {
 			if(!file.isSynchronized(IResource.DEPTH_ZERO)){
-				status.addFatalError(Messages.format(ElUIMessages.RENAME_METHOD_PARTICIPANT_OUT_OF_SYNC_FILE, file.getFullPath().toString()));
+				status.addFatalError(Messages.format(JsfUIMessages.RENAME_METHOD_PARTICIPANT_OUT_OF_SYNC_FILE, file.getFullPath().toString()));
 				return false;
 			}else if(file.isPhantom()){
-				status.addFatalError(Messages.format(ElUIMessages.RENAME_METHOD_PARTICIPANT_ERROR_PHANTOM_FILE, file.getFullPath().toString()));
+				status.addFatalError(Messages.format(JsfUIMessages.RENAME_METHOD_PARTICIPANT_ERROR_PHANTOM_FILE, file.getFullPath().toString()));
 				return false;
 			}else if(file.isReadOnly()){
-				status.addFatalError(Messages.format(ElUIMessages.RENAME_METHOD_PARTICIPANT_ERROR_READ_ONLY_FILE, file.getFullPath().toString()));
+				status.addFatalError(Messages.format(JsfUIMessages.RENAME_METHOD_PARTICIPANT_ERROR_READ_ONLY_FILE, file.getFullPath().toString()));
 				return false;
 			}
 			return true;

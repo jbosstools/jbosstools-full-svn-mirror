@@ -1,4 +1,4 @@
-package org.jboss.tools.common.el.core.refactoring;
+package org.jboss.tools.jsf.el.refactoring;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.eclipse.core.runtime.Platform;
 import org.jboss.tools.common.el.core.ELCorePlugin;
 
 public class ELProjectSetExtension {
-	public static String EXTENSION_POINT = "org.jboss.tools.common.el.core.elProjectSet"; //$NON-NLS-1$
+	public static String EXTENSION_POINT = "org.jboss.tools.jsf.elProjectSet"; //$NON-NLS-1$
 
 	String id;
 	ProjectsSet searcher;

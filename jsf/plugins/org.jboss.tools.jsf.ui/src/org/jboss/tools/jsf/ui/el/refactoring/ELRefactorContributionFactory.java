@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.common.el.ui.refactoring;
+package org.jboss.tools.jsf.ui.el.refactoring;
 
 import java.io.IOException;
 
@@ -60,14 +60,14 @@ import org.jboss.tools.common.el.core.model.ELModel;
 import org.jboss.tools.common.el.core.model.ELPropertyInvocation;
 import org.jboss.tools.common.el.core.parser.ELParser;
 import org.jboss.tools.common.el.core.parser.ELParserUtil;
-import org.jboss.tools.common.el.core.refactoring.RenameELVariableProcessor;
-import org.jboss.tools.common.el.core.refactoring.RenameELVariableRefactoring;
-import org.jboss.tools.common.el.ui.ElUIMessages;
-import org.jboss.tools.common.el.ui.ElUiPlugin;
 import org.jboss.tools.common.model.ui.editor.EditorPartWrapper;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.propertieseditor.PropertiesCompoundEditor;
 import org.jboss.tools.common.util.FileUtil;
+import org.jboss.tools.jsf.el.refactoring.RenameELVariableProcessor;
+import org.jboss.tools.jsf.el.refactoring.RenameELVariableRefactoring;
+import org.jboss.tools.jsf.ui.JsfUiPlugin;
+import org.jboss.tools.jsf.ui.JsfUIMessages;
 import org.jboss.tools.jst.web.ui.editors.WebCompoundEditor;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -124,7 +124,7 @@ public class ELRefactorContributionFactory extends AbstractContributionFactory {
 					&& !PROPERTIES_EXT.equalsIgnoreCase(ext))
 				return;
 			
-			MenuManager mm = new MenuManager(ElUIMessages.REFACTOR_CONTRIBUTOR_MAIN_MENU);
+			MenuManager mm = new MenuManager(JsfUIMessages.REFACTOR_CONTRIBUTOR_MAIN_MENU);
 			mm.setVisible(true);
 			
 			boolean separatorIsAdded = false;
@@ -155,7 +155,7 @@ public class ELRefactorContributionFactory extends AbstractContributionFactory {
 				try {
 					fileContent = FileUtil.readStream(editorFile);
 				} catch (CoreException e) {
-					ElUiPlugin.getDefault().logError(e);
+					JsfUiPlugin.getDefault().logError(e);
 				}
 
 				boolean status = false;
@@ -198,7 +198,7 @@ public class ELRefactorContributionFactory extends AbstractContributionFactory {
 				token = scaner.nextToken();
 			}
 		} catch (BadLocationException e) {
-			ElUiPlugin.getDefault().logError(e);
+			JsfUiPlugin.getDefault().logError(e);
 		}
 		return false;
 	}
@@ -251,9 +251,9 @@ public class ELRefactorContributionFactory extends AbstractContributionFactory {
 				return scanChildNodes(file, document, selection);
 			}
 		} catch (CoreException e) {
-			ElUiPlugin.getDefault().logError(e);
+			JsfUiPlugin.getDefault().logError(e);
         } catch (IOException e) {
-        	ElUiPlugin.getDefault().logError(e);
+        	JsfUiPlugin.getDefault().logError(e);
 		} finally {
 			if (model != null) {
 				model.releaseFromRead();
@@ -318,7 +318,7 @@ public class ELRefactorContributionFactory extends AbstractContributionFactory {
 	}
 	
 	private static void saveAndBuild(){
-		if(!ElUiPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().saveAllEditors(true))
+		if(!JsfUiPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().saveAllEditors(true))
 			return;
 		
 		try {
@@ -336,7 +336,7 @@ public class ELRefactorContributionFactory extends AbstractContributionFactory {
 		RenameELVariableWizard wizard = new RenameELVariableWizard(refactoring, editorFile);
 		RefactoringWizardOpenOperation op = new RefactoringWizardOpenOperation(wizard);
 		try {
-			String titleForFailedChecks = ElUIMessages.EL_REFACTOR_RENAME_HANDLER_ERROR;
+			String titleForFailedChecks = JsfUIMessages.EL_REFACTOR_RENAME_HANDLER_ERROR;
 			op.run(activeShell, titleForFailedChecks);
 		} catch (final InterruptedException irex) {
 			// operation was canceled
@@ -345,7 +345,7 @@ public class ELRefactorContributionFactory extends AbstractContributionFactory {
 	
 	class RenameELVariableAction extends Action{
 		public RenameELVariableAction(){
-			super(ElUIMessages.REFACTOR_CONTRIBUTOR_RENAME_EL_VARIABLE);
+			super(JsfUIMessages.REFACTOR_CONTRIBUTOR_RENAME_EL_VARIABLE);
 		}
 		public void run(){
 			saveAndBuild();
