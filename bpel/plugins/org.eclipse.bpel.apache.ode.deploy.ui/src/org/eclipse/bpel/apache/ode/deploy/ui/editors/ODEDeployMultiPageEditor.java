@@ -40,6 +40,7 @@ import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
@@ -74,6 +75,7 @@ public class ODEDeployMultiPageEditor extends FormEditor implements IEditingDoma
 		commitPages(true);
 		saveDeploymentDescriptor();
 		((BasicCommandStack)editingDomain.getCommandStack()).saveIsDone();
+		firePropertyChange(IEditorPart.PROP_DIRTY);
 	}
 	
 	/**
