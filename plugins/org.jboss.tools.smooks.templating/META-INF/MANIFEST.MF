@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.jboss.tools.smooks.templating;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: org.jboss.tools.smooks.configuration.SmooksConfigurationActivator
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
